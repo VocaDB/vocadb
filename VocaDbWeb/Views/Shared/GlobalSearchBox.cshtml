@@ -1,0 +1,124 @@
+﻿@using VocaDb.Model
+@using VocaDb.Model.Domain.Globalization
+@using VocaDb.Web.Helpers;
+@using Res = ViewRes.TopBarStrings;
+@model VocaDb.Web.Models.GlobalSearchBoxModel
+
+@using (Html.BeginForm("GlobalSearch", "Home", FormMethod.Post, new { @class = "navbar-form form-inline pull-left navbar-search", id = "globalSearchBox" })) {
+	
+	<input type="hidden" id="globalSearchObjectType" name="objectType" data-bind="value: entryType" />
+	
+	<div class="input-prepend input-append navbar-searchBox">
+		<div class="btn-group">
+			<a class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+				<span data-bind="text: entryTypeName">@Model.AllObjectTypes.GetName(Model.ObjectType)</span>
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				@foreach (var entryType in Model.AllObjectTypes.ValuesAndNames) {
+					<li>
+						<a data-bind="click: function() { entryType('@entryType.Key'); }" href="#">@entryType.Value</a>
+					</li>
+				}
+			</ul>
+		</div>
+		<input type="text" name="globalSearchTerm" id="globalSearchTerm" class="globalSearchBox search-query input-xlarge" size="50" placeholder="@ViewRes.SharedStrings.Search" maxlength="255" />	
+		<button type="submit" class="btn btn-info" title="@ViewRes.SharedStrings.Search">
+			<i class="icon-search"></i>
+		</button>
+	</div>
+	
+	<div class="btn-group navbar-languageBar">
+		<a class="btn btn-info navbar-languageBtn dropdown-toggle" data-toggle="dropdown" href="#">
+			<i class="icon-user"></i>
+			@ViewRes._LayoutStrings.Account
+			<span data-bind="visible: hasNotifications" class="badge badge-small badge-important" style="display: none;">!</span>
+			<span class="caret"></span>		
+		</a>
+	
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+			@if (!Login.Manager.IsLoggedIn) {
+				<li><a href="@Url.Action("Login", "User")" onclick=" vdb.functions.showLoginPopup(); return false; ">@ViewRes._LayoutStrings.LogIn</a></li>
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.Register, "Create", "User")</li>
+			} else {
+				<li>@Html.ActionLink(ViewRes.User.MySettingsStrings.Profile, "Profile", "User", new { id = Login.Manager.Name }, null)</li>
+				<li>
+					<a href="@Url.Action("Profile", "User", new { id = Login.Manager.Name })#Albums">@Res.MyAlbums</a>
+				</li>
+				<li>
+					<a href="@Url.Action("Profile", "User", new { id = Login.Manager.Name })#Songs">@Res.MySongs</a>
+				</li>
+				<li>@Html.ActionLink(ViewRes.User.DetailsStrings.MySettings, "MySettings", "User")</li>
+				if (Login.CanManageEntryReports) {
+					<li>
+						<a href="@Url.Action("ViewEntryReports", "Admin")">
+							@Res.EntryReports
+							<span data-bind="visible: reportCount() > 0, text: reportCount" class="badge badge-small badge-important" style="display: none"></span>
+						</a>
+					</li>	 
+				}
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.LogOut, "Logout", "User")</li>				
+			}
+			<li class="divider"></li>
+			<li><h6>@ViewRes.User.MySettingsStrings.DefaultLanguageSelection</h6></li>
+			@foreach (var lp in EnumVal<ContentLanguagePreference>.Values) {
+				<li>
+					<a href="#" onclick="return setLanguagePreferenceCookie('@lp');">
+						<i class="menuIcon icon-ok" style="@(lp == Login.Manager.LanguagePreference ? "" : "display: none;")"></i>
+						<i class="menuIcon icon-" style="@(lp == Login.Manager.LanguagePreference ? "display: none;" : "")"></i>
+						@Translate.ContentLanguagePreferenceName(lp)
+					</a>
+				</li>				
+			}
+		</ul>
+	</div>
+	
+	if (Login.Manager.IsLoggedIn) {
+	<div class="btn-group navbar-languageBar">
+		<a class="btn btn-info navbar-languageBtn dropdown-toggle" data-bind="click: ensureMessagesLoaded" data-toggle="dropdown" href="#">
+			<i class="icon-envelope"></i>
+			<span data-bind="visible: unreadMessagesCount, text: unreadMessagesCount" class="badge badge-small badge-important" style="display: none;"></span>
+			<span class="caret"></span>		
+		</a>
+	
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+			<li data-bind="visible: unreadMessagesCount() > 0 && !isLoaded()">
+				<p>
+					@ViewRes.SharedStrings.Loading				
+				</p>
+			</li>
+			<!-- ko foreach: unreadMessages -->
+			<li>
+				<a href="#" data-bind="attr: { href: '@Url.Action("Messages", "User")' + '?messageId=' + id }">
+					<div class="media">
+					    <div class="pull-left media-image-usermessage" style="width: 40px; height: 40px;">
+					        <!-- ko if: sender -->
+					        @UserHelpers.ProfileIconKnockout("sender.iconUrl", 40)
+					        <!-- /ko -->
+                            <!-- ko ifnot: sender -->
+                            <img src="@Url.Content("~/Content/vocadb_40.png")" alt="Notification" />
+                            <!-- /ko -->
+					    </div>
+						<div class="media-body media-body-usermessage">
+							<span data-bind="text: sender ? sender.name + ' -' : ''"></span>
+							<small data-bind="text: createdFormatted"></small><br />
+							<span data-bind="text: subject"></span>							
+						</div>
+					</div>
+				</a>				
+			</li>
+			<!-- /ko -->
+			<li data-bind="visible: isLoaded() && unreadMessages().length == 0">
+				<p>
+					@ViewRes.TopBarStrings.NoUnreadMessages				
+				</p>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="@Url.Action("Messages", "User")">@ViewRes.TopBarStrings.ViewAllMessages</a>								
+			</li>
+		</ul>
+	</div>
+	}
+	 
+}

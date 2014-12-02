@@ -1,0 +1,11 @@
+﻿
+<div 
+	data-bind="
+		dialog: {
+			autoOpen: false, width: 400,
+			position: { my: 'left top', at: 'left bottom', of: $('#songInListsLink') }
+		},
+		dialogVisible: songInListsDialog.dialogVisible,
+		html: songInListsDialog.contentHtml"
+	title="@ViewRes.Song.DetailsStrings.SongInLists" style="display: none;">
+</div>

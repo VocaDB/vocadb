@@ -1,0 +1,180 @@
+﻿@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.HelperPage
+
+@helper CheckBoxButtons(Dictionary<string, string> options, string binding) {
+	<div style="display: inline-block;">
+		@foreach (var option in options) {
+			<button class="btn" data-bind="click: function() { @(binding)('@option.Key'); }, enable: @(binding)() != '@option.Key'">@option.Value</button>
+		}
+	</div>
+}
+
+@helper DraftIcon(string statusBinding) {
+	<img data-bind="visible: @statusBinding == 'Draft'" src="@Url.Content("~/Content/draft.png")" title="@HelperRes.HelperStrings.DraftIconTitle" alt="draft" />
+}
+
+@helper Dropdown(Dictionary<string, string> items, string valueBinding, string currentTextBinding) {
+	<div class="btn-group">
+		<button class="btn dropdown-toggle" data-toggle="dropdown">
+			<span data-bind="text: @currentTextBinding"></span>
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			@foreach (var item in items) {
+				<li><a data-bind="click: function() { @(valueBinding)('@item.Key'); }" href="#">@item.Value</a></li>
+			}
+		</ul>
+	</div>
+}
+
+@helper DropdownList(Dictionary<string, string> items, string valueBinding) {
+	<select data-bind="value: @valueBinding">
+		@foreach (var item in items) {
+			<option value="@item.Key">@item.Value</option>
+		}
+	</select>
+}
+
+@helper EntryCount() {
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		Showing
+		<span data-bind="text: pageSize"></span>
+		items of
+		<span data-bind="text: totalItems"></span>
+	</a>
+	<ul class="dropdown-menu">
+		<li><a data-bind="click: function() { pageSize(10); }" href="#">10 items per page</a></li>
+		<li><a data-bind="click: function() { pageSize(20); }" href="#">20 items per page</a></li>
+		<li><a data-bind="click: function() { pageSize(40); }" href="#">40 items per page</a></li>
+	</ul>
+}
+
+@helper EntryValidationMessage(bool draft, Dictionary<string, string> validationMessages, string helpSection) {
+
+	if (draft) {
+		<div class="alert alert-success alert-no-bottom-margin" data-bind="visible: !hasValidationErrors()" style="display: none;">
+			<span class="icon-line tickIcon"></span>
+			This entry contains all the required information to be marked as finalized (not draft).
+		</div>
+	} else {
+		<div class="alert alert-success alert-no-bottom-margin" data-bind="visible: !hasValidationErrors()" style="display: none;">
+			<span class="icon-line tickIcon"></span>
+			This entry contains all the required information.
+		</div>
+	}
+
+	<div class="alert alert-no-bottom-margin" data-bind="visible: hasValidationErrors()" style="display: none;">
+		<div class="pull-right">
+			<a data-bind="click: function() { validationExpanded(!validationExpanded()); }, css: { active: validationExpanded }" class="btn btn-mini" href="#">
+				<i class="icon-plus noMargin"></i>
+				Details
+			</a>
+		</div>
+
+		<!-- ko if: !validationExpanded() -->
+		<div class="entry-validation-error-summary">
+			<span class="icon-line errorIcon"></span>
+			<strong>This entry is missing the following information:</strong>
+			@foreach (var validationMessage in validationMessages) {
+				<span data-bind="visible: @validationMessage.Key">
+					@validationMessage.Value
+				</span>
+			}
+		</div>
+		<!-- /ko -->
+		<!-- ko if: validationExpanded -->
+		<h4>This entry is missing the following information:</h4>
+		<ul class="entry-validation-list">
+			@foreach (var validationMessage in validationMessages) {
+				<li data-bind="visible: @validationMessage.Key">@validationMessage.Value</li>
+			}
+		</ul>
+		<span>See the <a href="@(Url.Action("Index", "Help") + "?guidelines+" + helpSection)">guide</a> for more information.</span>
+		<!-- /ko -->
+	</div>
+
+}
+
+@helper LanguageSelectionDropDown(string valueBinding) {
+	@DropdownList(Translate.ContentLanguageSelectionNames.ValuesAndNamesStrings, valueBinding)
+}
+
+@helper LockingAutoComplete(string bindingHandler, string binding, string textBinding = null, string valBinding = null) {
+	<input type="text" class="input-large" data-bind="@bindingHandler: @binding, visible: !@(valBinding ?? binding)()" placeholder="Search" />
+	<div class="input-append" data-bind="visible: @(valBinding ?? binding)()" style="display: none;">
+		<input type="text" class="input-large" readonly data-bind="value: @(textBinding ?? binding)" />
+		<button type="button" class="btn btn-danger" data-bind="click: function() { @(valBinding ?? binding)(null); }">Clear</button>
+	</div>
+}
+
+@helper ServerSidePaging() {
+
+	<div class="pagination" data-bind="visible: $data">
+		<ul>
+			<li data-bind="css: { disabled: isFirstPage }">
+				<a data-bind="click: page(1)" href="#">&laquo;&laquo; @VocaDb.Web.Resources.Other.PagedListStrings.First</a>
+			</li>
+			<li data-bind="css: { disabled: isFirstPage }">
+				<a data-bind="click: previousPage" href="#">&laquo; @VocaDb.Web.Resources.Other.PagedListStrings.Previous</a>
+			</li>
+
+			<li data-bind="visible: showMoreBegin" class="disabled">
+				<a href="#">…</a>
+			</li>
+
+			<!-- ko foreach: pages -->
+			<li data-bind="css: { active: $data == $parent.page() }">
+				<a data-bind="click: function() { $parent.page($data) }, text: $data" href="#"></a>
+			</li>
+			<!-- /ko -->
+
+			<li data-bind="visible: showMoreEnd" class="disabled">
+				<a href="#">…</a>
+			</li>
+
+			<li data-bind="css: { disabled: isLastPage }">
+				<a data-bind="click: nextPage" href="#">@VocaDb.Web.Resources.Other.PagedListStrings.Next &raquo;</a>
+			</li>
+			<li data-bind="css: { disabled: isLastPage }">
+				<a data-bind="click: goToLastPage" href="#">@VocaDb.Web.Resources.Other.PagedListStrings.Last &raquo;&raquo;</a>
+			</li>
+
+		</ul>
+	</div>
+
+}
+
+@helper WebLinksEditViewKnockout(bool showCategory = true) {
+	<!-- binding context: WebLinksEditViewModel -->
+	<table>
+		<thead>
+			<tr data-bind="visible: webLinks && webLinks().length">
+				<th>
+					@HelperRes.HelperStrings.WebLinkUrlTitle
+					@Helpers.RequiredField()
+				</th>
+				<th>@HelperRes.HelperStrings.WebLinkDescriptionTitle</th>
+				@if (showCategory) {
+					<th>@HelperRes.HelperStrings.WebLinkCategoryTitle</th>
+				}
+				<th></th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: webLinks">
+			<tr>
+				<td><input type="text" data-bind="value: url" maxlength="512" class="input-xlarge" /></td>
+				<td><input type="text" data-bind="value: description" maxlength="512" /></td>
+				@if (showCategory) {
+					<td>
+						<select data-bind="value: category, options: $parent.categories, optionsText: 'name', optionsValue: 'id'" class="input-medium"></select>
+					</td>
+				}
+				<td>
+					<a href="#" class="textLink deleteLink" data-bind="click: $parent.remove">@ViewRes.SharedStrings.Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="#" class="textLink addLink" data-bind="click: add">@HelperRes.HelperStrings.WebLinkNewRow</a>
+}

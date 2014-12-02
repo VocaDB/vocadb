@@ -1,0 +1,344 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Model.DataContracts.Artists;
+@using VocaDb.Model.Domain
+@using VocaDb.Model.Helpers
+@using VocaDb.Model.Service
+@using VocaDb.Model.Utils
+@using VocaDb.Web.Helpers;
+@using VocaDb.Model.Domain.Security
+@using R = ViewRes.Artist;
+@inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
+
+@{
+	ViewBag.Title = Model.Name;
+	ViewBag.Subtitle = "(" + Translate.ArtistTypeName(Model.ArtistType) + ")";
+	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Artists, "Index") };
+	ViewContext.Controller.ViewBag.Banner = VocaUriBuilder.CreateAbsolute(Url.Action("Picture", new { id = Model.Id }));
+
+	var url = UrlMapper.FullAbsolute(Url.Action("Details", new {id = Model.Id}));
+	
+}
+
+@section Head {
+	@HtmlHelpers.OpenGraphMetaTags(
+		url: url, 
+		title: Model.Name + " (" + Translate.ArtistTypeName(Model.ArtistType) + ")", 
+		description: Model.Description)
+	<link rel="canonical" href="@url" />
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/Pager.css")" type="text/css" />	
+}
+
+@section Toolbar {
+<a href="#" id="addToUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@(Model.IsAdded ? "display: none;" : "")">@ViewRes.Artist.DetailsStrings.Follow</a>
+<span id="removeFromUserSplitBtn" style="@(Model.IsAdded ? "" : "display: none;")">
+	<a href="#" id="removeFromUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Artist.DetailsStrings.Unfollow</a>
+	<a data-bind="click: customizeSubscriptionDialog.show" href="#" id="customizeSubscription">@R.DetailsStrings.Customize</a>
+</span>
+
+@Html.ActionLink(@ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editArtistLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
+
+@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+
+<a href="#" id="reportEntryLink">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+
+@Helpers.EntryStatusMessage(Model.Status)
+}
+
+@if (Model.Deleted) {
+	@EntryDetailsHelpers.DeletedBanner(Model.MergedTo)
+}
+
+@if (Model.Draft && !Model.Deleted) {
+	@Helpers.DraftMessage("glproducers")
+}
+
+<div id="tabs">
+
+	<ul>
+		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
+		<li><a href="@Url.Action("Comments", "Artist", new { id = Model.Id })" title="Discussion">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a></li>
+		<li><a href="#picturesTab">@ViewRes.EntryDetailsStrings.PicturesTab (@(Model.Pictures.Length + 1))</a></li>
+		<li>
+			<a href="@Url.Action("AlbumsPaged", "Artist", new { id = Model.Id, artistParticipation = VocaDb.Model.Service.Search.AlbumSearch.ArtistAlbumParticipationStatus.OnlyMainAlbums })">
+				<span>@R.DetailsStrings.MainAlbums</span>
+			</a>
+		</li>
+		<li>
+			<a href="@Url.Action("AlbumsPaged", "Artist", new { id = Model.Id, artistParticipation = VocaDb.Model.Service.Search.AlbumSearch.ArtistAlbumParticipationStatus.OnlyCollaborations })">
+				<span>@R.DetailsStrings.CollaborationAlbums</span>
+			</a>
+		</li>
+		<li><a href="@Url.Action("SongsPaged", "Artist", new { id = Model.Id })" title="All songs"><span>@ViewRes.Artist.DetailsStrings.AllSongs</span></a></li>
+		<li><a href="#shareTab">@R.DetailsStrings.Share</a></li>
+	</ul>
+
+	<div id="basicInfoTab">
+
+		<table class="properties">
+			<tr>
+				<td rowspan="12">
+					<a href="@Url.Action("Picture", new { id = Model.Id, v = Model.Version })">
+						<img src="@Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Thumb)" alt="@ViewRes.Artist.DetailsStrings.ArtistPicture" class="coverPic" />
+					</a>
+				</td>
+				<td>@ViewRes.SharedStrings.ArtistName</td>
+				<td>
+					@Model.Name<br />
+					<span class="extraInfo">@Model.AdditionalNames</span>
+				</td>
+			</tr>
+		@if (!string.IsNullOrEmpty(Model.Description)) {
+			<tr>
+				<td>@ViewRes.SharedStrings.Description</td>
+				<td>
+					@Helpers.ConvertNewlinesToBreaks(Model.Description)
+				</td>	
+			</tr>
+		}
+			<tr>
+				<td>@ViewRes.SharedStrings.Type</td>
+				<td>
+					@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
+					@Html.ActionLink(Translate.ArtistTypeName(Model.ArtistType), "Index", new { artistType = Model.ArtistType })<br />
+				</td>	
+			</tr>
+
+			<tr>
+				<td>@ViewRes.SharedStrings.Tags</td>
+				<td>
+					<span id="tagList">
+						@{ Html.RenderPartial("TagList", Model.Tags); }
+					</span>
+					<a href="#" id="editTags" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.EntryDetailsStrings.EditTags</a>
+					@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {
+						@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
+					}
+				</td>
+			</tr>
+
+			@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
+			
+			@if (Model.OwnerUsers.Any()) {
+				<tr>
+					<td>
+						@R.DetailsStrings.AuthoredBy						
+					</td>
+					<td>
+						@foreach (var user in Model.OwnerUsers) {
+							@UserHelpers.UserIconLink(user)
+							<br />
+						}						
+					</td>
+				</tr>
+			}
+			
+			@if (Model.BaseVoicebank != null) {
+			<tr>
+				<td>
+					<span>
+						@ViewRes.Artist.DetailsStrings.BaseVoicebank
+					</span>
+				</td>
+				<td id="baseVoicebank">
+					@ArtistHelpers.ArtistLink(Model.BaseVoicebank)
+				</td>
+			</tr>				
+			}
+
+			@if (Model.ChildVoicebanks.Any()) {
+				<tr>
+					<td>
+						<span>
+							@ViewRes.Artist.DetailsStrings.ChildVoicebanks
+						</span>
+					</td>
+					<td id="childVoicebanks">
+						@foreach (var a in Model.ChildVoicebanks) {
+							@ArtistHelpers.ArtistLink(a)
+							if (a != Model.ChildVoicebanks.Last()) {
+								@(", ")
+							}
+						}
+					</td>
+				</tr>
+			}
+
+			@if (Model.Groups.Any()) {
+			<tr>
+				<td>
+					<span title="@ViewRes.Artist.DetailsStrings.GroupsHelp">
+						@ViewRes.Artist.DetailsStrings.Groups
+					</span>
+				</td>
+				<td id="groups">
+					@foreach (var grp in Model.Groups) {
+						@ArtistHelpers.ArtistLink(grp.Group)
+						if (grp != Model.Groups.Last()) {
+							@(", ")
+						}
+					}
+				</td>
+			</tr>
+			}
+  
+			<tr>
+				<td>@ViewRes.EntryDetailsStrings.Stats</td>
+				<td>
+					@string.Format(R.DetailsStrings.FollowCount, Model.FollowCount)
+					@if (Model.SharedStats.RatedSongCount > 0) {
+						@(Model.SharedStats.RatedSongCount)@: rated song(s).
+					}
+					@if (Model.SharedStats.RatedAlbumCount > 0) {
+						@(Model.SharedStats.RatedAlbumCount)@: rated album(s) (Average album rating is @(Model.SharedStats.AlbumRatingAverage)).
+					}
+					@if (Model.PersonalStats != null && Model.PersonalStats.SongRatingCount > 0) {
+						@:You have rated @Model.PersonalStats.SongRatingCount song(s) by this artist.
+					}
+				</td>
+			</tr>
+
+			<tr>
+				<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
+				<td>
+					@Helpers.UniversalTimeLabel(Model.CreateDate)
+				</td>	
+			</tr>	   
+			
+		</table>
+	
+
+		@if (Model.Members.Any()) {
+			<h3>@ViewRes.Artist.DetailsStrings.Members</h3>
+			@ArtistHelpers.ArtistGrid(Model.Members.Select(g => g.Member), 3, true)
+		}
+
+		@if (Model.LatestAlbums.Any()) {
+			<br />
+			<h3>
+				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.AdditionDate }, null)
+				<small>(@string.Format("{0} total", Model.SharedStats.AlbumCount))</small>
+			</h3>
+            <div id="newAlbums">                
+    			@AlbumHelpers.AlbumThumbs(Model.LatestAlbums)
+            </div>
+        }
+        
+		@if (Model.TopAlbums.Any()) {
+			<br />
+			<h3>
+				@Html.ActionLink(ViewRes.Artist.DetailsStrings.TopAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.RatingTotal }, null)
+				<small>(@string.Format("{0} rated albums total", Model.SharedStats.RatedAlbumCount))</small>
+			</h3>
+            <div id="topAlbums">
+			    @AlbumHelpers.AlbumThumbs(Model.TopAlbums)                
+            </div>
+	    }
+        
+
+		@if (Model.LatestSongs.Any()) {
+			<br />
+			<h3>
+				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.AdditionDate), null)
+				<small>(@string.Format("{0} total", Model.SharedStats.SongCount))</small>
+			</h3>
+			@SongHelpers.SongGrid(Model.LatestSongs, 2, true)
+	    }
+        
+		@if (Model.TopSongs.Any()) {
+			<br />
+			<h3>
+				@Html.ActionLink(ViewRes.Artist.DetailsStrings.TopSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.RatingScore), null)
+				<small>(@string.Format("{0} rated songs total", Model.SharedStats.RatedSongCount))</small>
+			</h3>
+			@SongHelpers.SongGrid(Model.TopSongs, 2, true)
+	    }
+		
+		<br />
+		<h3>@ViewRes.EntryDetailsStrings.LatestComments</h3>
+		
+		@if (Model.LatestComments.Any()) {
+
+		  foreach (var comment in Model.LatestComments) {
+					@CommentHelpers.CommentBodyLarge(comment, false);
+		  }
+
+		} else {
+	  
+			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
+	  
+		}
+		
+		<p>
+			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
+		</p>
+
+	</div>
+
+	<div id="Discussion">
+	</div>
+	
+	<div id="picturesTab">
+		
+		<ul class="thumbs">
+			@Helpers.ThumbItem(Url.Action("Picture", "Artist", new { id = Model.Id }),
+				Url.Action("PictureThumb", "Artist", new { id = Model.Id }), 
+				ViewRes.Album.DetailsStrings.CoverPicture)
+			@foreach (var pic in Model.Pictures) {
+			   @Helpers.ThumbItem(ImageHelper.GetImageUrl(pic), ImageHelper.GetImageUrlThumb(pic), pic.Name)
+			}
+		</ul>
+		
+	</div>
+	<div id="All_albums">
+	</div>
+
+	<div id="All_songs">
+	</div>
+	
+	<div id="shareTab">
+		<div>
+			@ViewRes.EntryDetailsStrings.Link<br />
+			<input type="text" value="@url" class="input-large" onclick="this.select();" />
+		</div>
+		<div>
+			<a href="http://daringfireball.net/projects/markdown/">Markdown</a><br />
+			<input type="text" value="@VocaDb.Model.Service.Helpers.MarkdownHelper.CreateMarkdownLink(url, Model.Name)" class="input-xxlarge" onclick="this.select();" />
+		</div>
+	</div>
+
+</div>
+
+<div id="editTagsPopup" style="display:none;" title="@ViewRes.SharedStrings.Tags">
+
+	<input type="hidden" id="editTagsArtistId" />
+
+	<div id="editTagsContent"></div>
+
+</div>
+
+@EntryDetailsHelpers.ReportEntryPopup(Html.EnumDropDownList("reportType", Translate.ArtistReportTypeNames, new { id = "reportType" }))
+
+@if (Login.IsLoggedIn) {
+	Html.RenderPartial("Partials/_CustomizeArtistSubscriptionDialog");
+}
+
+@section BodyScripts {
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Shared/DiscussionTab.js")"></script>
+	@Scripts.Render("~/bundles/Artist/Details")
+	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function() { 
+
+			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");		    
+
+			var userRepository = new vdb.repositories.UserRepository(urlMapper);
+			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications), userRepository);
+			ko.applyBindings(viewModel);
+
+			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper);
+
+		});
+
+	</script>
+}

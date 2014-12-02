@@ -1,0 +1,921 @@
+body {
+	font-size: 80%;
+	font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+	background: url(teto.jpg)top center no-repeat fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Rockwell,Georgia,Palatino Linotype,Palatino, "Arial Unicode MS", "Times New Roman" ,Times,serif;
+}
+
+header, footer, nav, section {
+	display: block;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset {
+	border: 1px solid #ddd;
+	padding: 0 1.4em 1.4em 1.4em;
+	margin: 0 0 1.5em 0;
+}
+
+legend {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+textarea {
+	min-height: 75px;
+}
+
+.editor-label {
+	margin: 1em 0 0 0;
+}
+
+.editor-field {
+	margin: 0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+	color: #ff0000;
+}
+
+.field-validation-valid {
+	display: none;
+}
+
+.input-validation-error {
+	border: 1px solid #ff0000;
+	background-color: #ffeeee;
+}
+
+.validation-summary-errors {
+	font-weight: bold;
+	color: #ff0000;
+}
+
+.validation-summary-valid {
+	display: none;
+}
+
+/* Custom styles */
+span.extraInfo, small.extraInfo {
+	color: #222222;
+	font-size: small;
+}
+
+td {
+	padding: 5px;
+}
+
+/* Thumbnails */
+
+img.coverPic {
+	max-width: 250px;
+	max-height: 250px;
+}
+
+img.smallCover {
+	max-width: 150px;
+	max-height: 150px;
+}
+
+ul.smallThumbs div.pictureFrame img.coverPic {
+	max-width: 150px;
+	max-height: 150px;
+}
+
+a.coverPic {
+	width: 250px;
+	height: 250px;	
+	display: block;
+}
+
+img.coverPicIcon {
+	max-width: 35px;
+	max-height: 35px;
+}
+
+img.coverPicThumb {
+	max-width: 70px;
+	max-height: 70px;
+}
+
+div.songListItem img.coverPicThumb {
+	max-height: 60px;
+}
+
+a.coverPicThumb {
+	width: 70px;
+	height: 70px;	
+	display: block;
+}
+
+div.thumbnail {
+	float: left;
+	margin-right: 5px;
+	border: none;
+}
+
+div.thumbItem {
+	width: 250px;
+	height: 250px;	
+}
+
+ul.thumbs, ul.smallThumbs {
+	list-style: none;	
+	display: block;
+	overflow: hidden;
+	font-size: 11px;
+	line-height: 1.181818em;
+}
+
+ul.thumbs li {
+	position: relative;
+	float: left;
+	display: inline;
+	width: 255px;
+	height: 280px;
+	margin: 0 9px 0 0;
+	overflow: hidden;	
+}
+
+ul.thumbs div.pictureFrame {
+	position: relative;
+	display: block;
+	width: 250px;
+	height: 250px;
+	overflow: hidden;
+	cursor: pointer;
+	border: 1px solid lightgray;	
+}
+
+ul.smallThumbs li {
+	position: relative;
+	float: left;
+	display: inline;
+	width: 155px;
+	height: 190px;
+	margin: 0 9px 0 0;
+	overflow: hidden;	
+}
+
+ul.smallThumbs div.pictureFrame {
+	position: relative;
+	display: block;
+	width: 150px;
+	height: 150px;
+	overflow: hidden;
+	cursor: pointer;
+	border: 1px solid lightgray;	
+}
+
+/* Layout */
+
+table.properties tr, .rightFrame, .recentAlbums, .recentSongs, .alignTop {
+	vertical-align: top;
+}
+
+.rightFrame {
+	/*background-color: #E8FAFF;
+	opacity: 0.95;*/
+	background-color: rgb(255, 245, 245);
+	background-color: rgba(255, 245, 245, 0.85);
+	border: solid #FFE0E0 2px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+
+.rightFrame td {
+	/*font-weight: bold;*/
+	color: #000000;
+}
+
+/* TODO: replace colors with defaults or edit bootstrap.css */
+.rightFrame a {
+	color: #89222B !important;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+
+.rightFrame a.btn-nomargin {
+	margin-bottom: 0;
+}
+
+.rightFrame a:visited {
+	color: #89222B !important;
+}
+
+.rightFrame a:hover {
+	color: #A02832 !important;	
+}
+
+.rightFrame a.btn-danger {
+	color: white !important;
+}
+
+.rightFrame a.btn-danger:visited {
+	color: white !important;
+}
+
+.rightFrame a.btn-danger:hover {
+	color: white !important;
+}
+
+.rightFrame li {
+	margin-bottom: 2px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+
+/* Menu */
+.menu {
+	/*background-color: #CDECF4;
+	opacity: 0.95;*/
+	background-color: rgb(255, 239, 242);
+	background-color: rgba(255, 239, 242, 0.90);
+	border: solid #FFAFBB 2px;
+	float: left;
+	vertical-align: top;	
+}
+
+ul {
+	list-style: url(star5.png);
+}
+
+.tracklist ul {
+	list-style: none;
+}
+
+.menu ul {
+	list-style: none;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+}
+
+.menu li {
+	padding-bottom: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 1px;
+}
+
+.menu a {
+	text-decoration: none;
+	color: #89222B;
+}
+
+.menu a:hover {
+	color: #A02832 !important;
+	text-decoration: underline;
+}
+
+.menu a:visited {
+	color: #89222B;
+}
+
+#socialSites {
+	margin-left: 15px;
+}
+
+#socialSites img {
+	margin-right: 3px;
+	margin-bottom: 8px;
+}
+
+#banners {
+	margin-left: 10px;
+}
+
+#banners img {
+	margin-bottom: 10px;
+}
+
+.user a {
+	text-decoration: none;
+	color: #89222B;
+	border-bottom-color: #333333;
+	border-bottom-style: dashed;
+	border-bottom-width: 1px;
+}
+
+.user a:hover {
+	text-decoration: none;
+	border-bottom-color: #333333;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+
+.user a:visited {
+	color: #89222B;
+}
+
+.recentAlbums a {
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 1px;
+}
+
+span.tag {
+	padding: 6px;
+	display: inline-block;
+}
+
+.about-disclaimer {
+	color: #aaa;
+	font-size: 0.7em;
+}
+
+.about-disclaimer a {
+	color: #99A9F0;
+	text-decoration: none;
+}
+
+.about-disclaimer a:link {
+	color: #99A9F0;
+	text-decoration: none;
+}
+
+.about-disclaimer a:hover {
+	color: #99A9F0;
+	text-decoration: none;
+}
+
+.about-disclaimer a:visited {
+	color: #99A9F0;
+	text-decoration: none;
+}
+
+.aboutvocaloid-ytiframe {
+	margin-left: 15px;
+	margin-bottom: 15px;
+}
+
+.incorrect-example-input {
+	border-color: #FFADAD;
+	color: #FF6161;
+	margin-right: 7px;
+	margin-bottom: 5px;
+}
+
+div.message, div.activityEntry, div.newsEntry {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div#viewMessage {
+	min-height: 200px;
+}
+
+div.activityEntry {
+	min-height: 30px;
+}
+
+div.messageTitleText, p.messageContent {
+	margin: 5px;
+}
+
+p.messageContent {
+	margin: 10px;
+}
+
+td.trackNameCol {
+	min-width: 200px;
+}
+
+div.panel {
+	padding: .7em;
+	margin: .5em;
+}
+
+.formLabel {
+	vertical-align: top;
+	padding-top: 10px;	
+}
+
+/* Links */
+
+button.textLink {
+	background:none;
+	border:none; 
+	padding:0!important;
+	border-bottom:1px solid #444;	
+}
+
+.textLink {
+	display: -moz-inline-box;
+	display: inline-block;
+	height: 16px;
+	padding: 4px 4px 4px 24px;
+	margin: 0 10px 0 0;
+	background-position: 4px 4px;
+	background-repeat: no-repeat;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.textLink:hover {
+	padding: 3px 3px 3px 23px;
+	background-position: 3px 3px;
+	text-decoration: none;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.textLink:hover, .iconLink:hover {
+	border-color: #ddd; 
+	border-right-color: #aaa; 
+	border-bottom-color: #aaa;
+}
+
+input + .textLink {
+	margin-left: 3px;
+}
+
+.iconLink, .tooltipIcon {
+	float: left;
+	width: 24px;
+	height: 24px;
+	background-position: 4px 4px;
+	background-repeat: no-repeat;
+	text-indent: -10000px;
+	overflow: hidden;
+	padding: 0 !important;
+}
+
+.iconLink {
+	cursor: pointer;
+}
+
+.iconLink:hover {
+	left: -1px;
+	top: -1px;
+	width: 22px;
+	height: 22px;
+	background-position: 3px 3px;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.showInfoLink {
+	cursor: help;
+}
+
+h2.pageTitle {
+	margin-bottom: 10px;
+}
+
+.globalSearchBox {
+	margin: 10px;
+}
+
+div.activityEntry p {
+	margin: 4px;	
+}
+
+/* Lists */
+div.albumListItem {
+	display: block;
+	min-height: 85px;
+}
+
+div.songListItem {
+	display: block;
+	min-height: 70px;
+}
+
+
+/* Messages */
+#messages .wrapper {
+  z-index: 2000;
+  position: absolute;
+  left: 50%;
+}
+
+#messages.fixed .wrapper {
+  position: fixed;
+  top: 50px;
+}
+
+#messages .alert {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  display: none;
+  float: left;
+  clear: left;
+  position: relative;
+  width: 320px;
+  left: -50%;
+  border: 0;
+}
+
+#messages #ajaxLoadingMessage {
+  display: none;
+  background: #fff9af;
+  position: absolute;
+  padding: 5px;
+  width: 100px;
+  left: -55px;
+  text-align: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+table.messages tbody tr {
+	cursor: pointer;
+}
+
+
+/* External links */
+a.extLink {
+	background: url("/Content/Icons/world.png") no-repeat left 50%;
+    padding: 2px 0 2px 20px;
+}
+
+a.extLink[href^="mailto:"] {
+	background: url("/Content/Icons/email.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://alice-books.com/"] {
+	background: url("/Content/ExtIcons/alicebooks.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.amazon.co.jp/"] {
+	background: url("/Content/ExtIcons/amazon.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.amazon.com/"] {
+	background: url("/Content/ExtIcons/amazon.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://ameblo.jp/"] {
+	background: url("/Content/ExtIcons/ameblo.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.amiami.com/"] {
+	background: url("/Content/ExtIcons/amiami.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www5.atwiki.jp/hmiku/"] {
+	background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://space.bilibili.tv/"], a.extLink[href^="http://www.bilibili.tv/"] {
+	background: url("/Content/ExtIcons/bilibili.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.cdjapan.co.jp/"] {
+	background: url("/Content/ExtIcons/cdjapan.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.crypton.co.jp/"] {
+	background: url("/Content/ExtIcons/cfm.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.discogs.com/"] {
+	background: url("/Content/ExtIcons/discogs.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://exittunes.com/"] {
+	background: url("/Content/ExtIcons/exittunes.png") no-repeat left 50%;
+}
+
+a.extLink[href*="www.facebook.com/"] {
+	background: url("/Content/ExtIcons/facebook.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://itunes.apple.com/"], a.extLink[href^="https://itunes.apple.com/"] {
+	background: url("/Content/ExtIcons/itunes.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://karent.jp/"] {
+	background: url("/Content/ExtIcons/karent.png") no-repeat left 50%;
+}
+
+a.extLink[href*="last.fm/"] {
+	background: url("/Content/ExtIcons/lastfm.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://listen.jp/store/"] {
+	background: url("/Content/ExtIcons/listenjapan.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://shop.melonbooks.co.jp/"] {
+	background: url("/Content/ExtIcons/melonbooks.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://mikudb.com/"] {
+	background: url("/Content/ExtIcons/mikudb.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://mora.jp/"] {
+	background: url("/Content/ExtIcons/mora.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://dic.nicovideo.jp/"] {
+	background: url("/Content/ExtIcons/nicopedia.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://com.nicovideo.jp/community/"] {
+	background: url("/Content/nico.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.nicovideo.jp/"] {
+	background: url("/Content/nico.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://piapro.jp/"] {
+	background: url("/Content/ExtIcons/piapro.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.pixiv.net/"] {
+	background: url("/Content/ExtIcons/pixiv.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://books.rakuten.co.jp/"] {
+	background: url("/Content/ExtIcons/rakuten.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://soundcloud.com/"], a.extLink[href^="https://soundcloud.com/"] {
+	background: url("/Content/Icons/soundcloud.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.toranoana.jp/"] {
+	background: url("/Content/ExtIcons/tora.png") no-repeat left 50%;
+}
+
+a.extLink[href*="twitter.com/"] {
+	background: url("/Content/ExtIcons/twitter.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"] {
+	background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://vgmdb.net/"] {
+	background: url("/Content/ExtIcons/vgmdb.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://vimeo.com/"] {
+	background: url("/Content/ExtIcons/vimeo.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://shop.vocaloidstore.com/"] {
+	background: url("/Content/ExtIcons/vocastore.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.yesasia.com/"] {
+	background: url("/Content/ExtIcons/yesasia.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://www.youtube.com/"], a.extLink[href^="http://youtu.be/"] {
+	background: url("/Content/youtube.png") no-repeat left 50%;
+}
+
+a.extLink[href^="http://vocaloid.wikia.com/wiki/"] {
+	background: url("/Content/ExtIcons/vocawiki.png") no-repeat left 50%;
+}
+
+
+/* PV viewer */
+div.pvViewerContent {
+  position:relative;
+  overflow:hidden;
+  height: 461px;
+  min-width: 555px;
+  max-width: 560px;
+  padding:10px;
+  background-color:#333
+}
+
+div.pvViewerContent a {
+	color: white !important;
+	/*color: #46A7D9 !important;*/
+}
+
+div.pvViewerContent a:visited {
+	color: white !important;
+	/*color: #46A7D9 !important;*/
+}
+
+div.pvViewerContent a:hover {
+	color: white !important;
+	/*color: #69C9F0 !important;*/
+}
+
+div.pvViewerContent .songPreviewTitle {
+	color: white;
+}
+
+div.pvViewerContent .songPreviewTranslations {
+	margin-left: 5px;
+	color: lightgray;
+	font-size: smaller;
+}
+
+div.pvViewerContent .ratingButtons {
+	float: right;
+}
+
+div.pvViewerContent .songInfoButton {
+	float: right;
+}
+
+.scrollable-navi {
+  float:left;
+  padding:0px !important;
+  margin:0px !important;
+  margin-left:-45px;
+  background-color:#333;
+  }
+
+div.item {
+	padding:7px;
+	overflow: hidden;
+}
+
+.scrollable-navi .item {
+  background-color:#333;
+  border-top:1px solid #666;
+  clear:both;
+  color:#FFFFFF;
+  font-size:12px;
+  height:81px;
+  list-style-type:none;
+  list-style:none;
+  width:190px;
+  cursor:pointer;
+	margin-top:0 !important;
+	margin-bottom: 0;
+  }
+
+.scrollable-navi .item:hover {
+  background-color:#444;
+  }
+
+.scrollable-navi .item.active {
+  background-color:#555;
+  }
+
+div.item img {
+  float:left;
+  margin-right:10px;
+  }
+
+div.item strong {
+  display:block;
+  }
+
+/* root element for scrollable */
+.vertical {
+
+    /* required settings */
+    position:relative;
+    overflow:hidden;
+
+    /* vertical scrollers have typically larger height than width */
+    height: 380px;
+    width: 200px;
+	border-bottom:1px solid #666;
+}
+
+/* root element for scrollable items */
+.items {
+    position:absolute;
+
+    /* this time we have very large space for height */
+    height:20000em;
+    margin: 0px;
+}
+
+/* Navigation buttons */
+/* prev, next, prevPage and nextPage buttons */
+a.browse {
+    display:block;
+    width:30px;
+    height:30px;
+    float:left;
+    margin:40px 10px;
+    cursor:pointer;
+    font-size:1px;
+}
+
+/* up and down */
+a.up, a.down  {
+    background:url(/Content/vert_large.png) no-repeat;
+    float: none;
+    margin: 10px 85px;
+}
+
+/* up */
+a.up:hover { background-position:-30px 0; }
+a.up:active { background-position:-60px 0; }
+
+/* down */
+a.down { background-position: 0 -30px; }
+a.down:hover { background-position:-30px -30px; }
+a.down:active { background-position:-60px -30px; }
+
+
+/* disabled navigational button */
+a.disabled {
+    visibility:hidden !important;
+}
+
+
+
+/* jQuery UI */
+ul.ui-autocomplete {
+    max-height: 400px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+	z-index: 1050;
+}
+
+.ui-autocomplete-loading {
+    background: white url('ajax-loader.gif') right center no-repeat;
+}
+
+
+/* Bootstrap-specific */
+.navbar .nav-radio {
+	color: #FF282F;	
+	padding: 8px;
+}
+
+.navbar div.brand a:visited {	
+	color: #D32127;
+}
+
+.navbar-search {
+	margin-top: 0px;	
+}
+
+.navbar-search .search-query {
+	background-color: #7F1419;
+	color: -webkit-input-placeholder(#D1A5A7)
+}
+
+.navbar-search .search-query::-webkit-input-placeholder {
+    color: #D1A5A7;
+}
+
+.navbar-search .search-query:-moz-placeholder {
+    color: #D1A5A7;
+}
+
+.navbar-inner {
+	background-color: #210101;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#350202), to(#210101));	
+	background-image: -webkit-linear-gradient(top, #350202, #210101);
+	background-image: -o-linear-gradient(top, #350202, #210101);
+	background-image: -moz-linear-gradient(center top , #350202, #210101);
+	background-image: linear-gradient(top, #350202, #210101);
+}
+
+.navbar .btn {
+	margin: 5px 0 0 0 !important;
+}
+
+.well {
+	padding: 13px !important;
+}
+
+div.comment p {
+	padding-top: 5px;
+}
+
+.row-fluid {
+	max-width: 1600px;	
+	margin-left: auto;
+	margin-right: auto;
+}
+
+form.form-topMargin {
+	margin-top: 18px;
+	margin-bottom: 0;
+}
+
+.form-horizontal .control-group {
+	margin-bottom: 7px;
+}
+
+.dropdown-menu li > a:hover {
+	color: white !important;
+}

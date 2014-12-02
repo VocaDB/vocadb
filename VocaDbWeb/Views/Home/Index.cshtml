@@ -1,0 +1,103 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain
+@using VocaDb.Web.Helpers;
+@using VocaDb.Model.Utils.Search
+@using R = ViewRes.Home;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.FrontPageContract>
+
+@{
+	ViewBag.DisplaySocialLinks = true;
+	var br = BrandableStrings.Home;
+}
+
+<h3 class="pageTitle">@br.Welcome <small>@br.WelcomeSubtitle</small></h3>
+
+@if (Model.NewSongs.Any()) {
+<h3 class="withMargin">@R.IndexStrings.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h3>
+    
+<div class="pvPlayer">
+	<div class="scrollable-navi">
+		<a class="prev scrollable-browse-up disabled"></a>
+		<div class="scrollable scrollable-vertical" id="songs-navi">
+			<div class="scrollable-items">
+				@for (var i = 0; i * 4 < Model.NewSongs.Length; ++i) {
+				<div>
+					@foreach (var song in Model.NewSongs.Skip(i * 4).Take(4)) {
+						<div class="scrollable-item alignTop" id="@("#songPV_" + PVHelper.PrimaryPV(song.PVs).Id)">
+							<input type="hidden" class="js-songId" value="@song.Id" />
+							<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
+							<strong class="songName">@song.Name</strong>
+							<span class="songArtists">@song.ArtistString</span>
+						</div>
+					}
+				</div>
+				}
+			</div>
+		</div>	
+		<a class="next scrollable-browse-down"></a>    
+	</div>
+
+	<div id="songPreview" class="pvViewerContent">
+		@{ Html.RenderPartial("PVs/_PVContent", Model.FirstSong); }
+	</div>
+</div>
+}
+
+<br />
+
+<h3 class="withMargin">@R.IndexStrings.NewAlbums (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
+<div id="newAlbums">
+    @AlbumHelpers.AlbumThumbs(Model.NewAlbums)    
+</div>
+
+<h3 class="withMargin">@R.IndexStrings.TopAlbums (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
+<div id="topAlbums">
+    @AlbumHelpers.AlbumThumbs(Model.TopAlbums)    
+</div>
+
+@{ Html.RenderPartial("Partials/_NewsItems"); }
+
+<div class="row-fluid">
+    <div class="span8">
+        <h3 class="withMargin">@ViewRes.Home.IndexStrings.RecentActivity (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "ActivityEntry"))</h3>
+
+        @foreach (var entry in Model.ActivityEntries) {
+	        @ActivityfeedHelpers.ActivityEntry(entry);
+        }            
+    </div>
+    <div class="span4">
+        <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Comment"))</h3>
+            
+        @foreach (var comment in Model.RecentComments) {
+			@CommentHelpers.CommentWithEntryVertical(comment)
+        }
+    </div>
+</div>
+
+<h4 class="withMargin">@R.IndexStrings.SearchSite</h4>
+@Helpers.GoogleSiteSearch()
+
+@section Head {
+	<link rel="alternate" type="application/rss+xml" title="RSS" href='@Url.Action("LatestVideos", "Song")'>
+	<link rel="canonical" href="@UrlMapper.HostAddress" />
+}
+
+@section BodyScripts {
+    
+    <script type="text/javascript">
+        vdb.resources.song = {
+            thanksForRating: '@Html.Raw(AjaxRes.SongStrings.ThanksForRating)'
+        };
+    </script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tools.min.js")"></script>
+	@Scripts.Render("~/bundles/Home/Index")
+
+    <script type="text/javascript">
+    	$(document).ready(function () {
+
+    		var viewModel = new vdb.viewModels.NewsListViewModel('@Config.SiteSettings.BlogUrl');
+    		ko.applyBindings(viewModel);
+
+    	});
+    </script>
+}

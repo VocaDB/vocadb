@@ -1,0 +1,62 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Model.DataContracts.PVs
+@using VocaDb.Model.Service.Security
+@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.Songs.SongWithPVAndVoteContract
+
+@Styles.Render("~/Content/embedSong")
+
+@{
+    
+    var pvIdStr = Request["pvId"];
+    int pvId;
+    PVContract current = null;
+    
+    if (int.TryParse(pvIdStr, out pvId)) {
+        current = Model.PVs.FirstOrDefault(p => p.Id == pvId);
+    }
+        
+    if (current == null) {
+        current = PVHelper.PrimaryPV(Model.PVs);
+    }
+        
+    var mainPVs = PVHelper.GetMainPVs(Model.PVs);
+    
+}
+
+<script type="text/javascript">
+    // Hack to make NND work
+    self.parent = undefined;
+</script>
+
+<div class="pvViewerContent" style="width: 560px">
+	
+    <input type="hidden" class="songId" value="@Model.Id" />
+	<h4 class="songPreviewTitle">
+		<span id="songPreviewName" title="@Model.AdditionalNames">
+			<a target="_top" href="@Url.Action("Details", "Song", new { id = Model.Id })">@Model.Name</a>
+		</span>
+		&nbsp;
+		<small id="songPreviewArtists">
+			@Model.ArtistString
+			(@Translate.SongTypeNames[Model.SongType])
+		</small>
+	</h4>
+	<div>
+		@if (current != null) {
+			Html.RenderPartial("PVs/_PVEmbedDynamic", current);
+		}
+	</div>
+  
+    <div class="pvLinks">
+    @foreach (var pv in mainPVs) {
+	    <a href="@Url.Action("EmbedSong", new { songId = Model.Id, pvId = pv.Id, lang = Request.Params[LoginManager.LangParamName] })">			
+    	    <div class="item@(pv.Id == current.Id ? " active" : string.Empty)">
+		        <img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" /> 
+                @pv.Service
+	        </div>
+	    </a>
+	}
+    </div>
+</div>
+

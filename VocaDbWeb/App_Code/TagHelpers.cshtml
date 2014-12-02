@@ -1,0 +1,93 @@
+﻿@using System.Web.Mvc.Html;
+@using VocaDb.Model.DataContracts.Tags
+@using VocaDb.Model.Domain
+@using VocaDb.Model.Domain.Images
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Helpers
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.HelperPage
+
+@helper TagGrid(IEnumerable<TagWithImageContract> tags, int columns) {
+	
+	<table>
+		@{ int i = 0; }
+	
+		@foreach (var tag in tags) {
+				if (i % columns == 0) {
+				@Html.Raw("<tr>")
+				}
+			<td>
+				@TagIconLink(tag)
+			</td>
+			<td>
+				@TagLink(tag.Name)
+			</td>
+			{ i++; }
+			if (i % columns == 0) {
+				@Html.Raw("</tr>")
+			}
+		}
+		@if (i % columns != 0) {
+			@Html.Raw("</tr>")
+		}
+	</table>
+			
+}
+
+@helper TagIconLink(TagWithImageContract tag) {
+	var smallThumbUrl = ImageHelper.GetImageUrl(tag.Thumb, ImageSize.SmallThumb);
+	if (!string.IsNullOrEmpty(smallThumbUrl)) {
+		<a href="@Url.Action("Details", "Tag", new { id = tag.Name })">
+			<img src="@smallThumbUrl" alt="Thumb" class="coverPicThumb" />
+		</a>
+	}
+}
+
+@helper TagLink(string tagName) {
+	@Html.ActionLink(tagName, "Details", "Tag", new { id = tagName }, null)	
+}
+
+@helper TagList(string[] tagNames) {
+	@Html.LinkList(tagNames, tagName => Html.ActionLink(tagName, "Details", "Tag", new System.Web.Routing.RouteValueDictionary { { "id", tagName } }, null))
+}
+
+@helper TagUsagesManageTable(EntryType entryType, TagUsageWithVotesContract[] tagUsages) {
+
+	<div class="alert">
+		You can use this to deassociate tags that are no longer valid for this entry. Be careful, this cannot be undone.
+	</div>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>Tag</th>
+				<th>Count</th>
+				@if (Login.CanManageUsers) { 
+					<th>Votes</th>
+				}
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var usage in tagUsages) {
+				<tr>
+					<td>@TagLink(usage.TagName)</td>
+					<td>@usage.Count</td>
+					@if (Login.CanManageUsers) {
+						<td>
+							@foreach (var user in usage.Votes) {
+								@UserHelpers.UserIconLink(user)<br />
+							}
+						</td>
+					}
+					<td>
+						@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {
+							@Html.ActionLink("Remove tag usage", "RemoveTagUsage", entryType.ToString(), new { id = usage.Id }, new { @class = "removeLink textLink", @onclick = "javascript: return confirm('Really delete?');" })
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+}

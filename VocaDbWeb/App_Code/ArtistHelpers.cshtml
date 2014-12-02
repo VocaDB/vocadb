@@ -1,0 +1,200 @@
+﻿@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
+@using System.Web.Routing
+@using VocaDb.Model.DataContracts.Artists;
+@using VocaDb.Model.Domain.Artists
+@using VocaDb.Model.Utils
+@using VocaDb.Web.Helpers;
+@using VocaDb.Model.DataContracts.Songs;
+@using VocaDb.Model.DataContracts.Albums;
+@using VocaDb.Model.Domain.Images;
+@inherits VocaDb.Web.Code.HelperPage
+
+@helper ArtistTypeLabel(ArtistType artistType) {
+	switch (artistType) {
+		case ArtistType.Vocaloid:
+			<span class="label label-info" title="@Translate.ArtistTypeName(artistType)">V</span>
+			break;
+
+		case ArtistType.UTAU:
+			<span class="label label-important" title="@Translate.ArtistTypeName(artistType)">U</span>
+			break;		
+				
+		case ArtistType.OtherVoiceSynthesizer:
+			<span class="label label-inverse" title="@Translate.ArtistTypeName(artistType)">O</span>
+			break;		
+					
+		case ArtistType.Utaite:
+			<span class="label label-info" title="@Translate.ArtistTypeName(artistType)">U</span>
+			break;
+			
+		case ArtistType.OtherVocalist:
+			<span class="label" title="@Translate.ArtistTypeName(artistType)">O</span>
+			break;		
+	}
+}
+
+@helper ArtistGrid(IEnumerable<ArtistContract> artists, int columns,
+	bool displayType = false) {
+	
+	<table>
+		@{ int i = 0; }
+	
+		@foreach (var artist in artists) {
+			if (i % columns == 0) {
+				@Html.Raw("<tr>")
+			}
+			<td>
+				@ArtistIconLink(artist)
+			</td>
+			<td>
+				@ArtistLink(artist)
+				@if (displayType) {
+					@("(")@Translate.ArtistTypeName(artist.ArtistType)@(")")
+				}
+				@if (!string.IsNullOrEmpty(artist.AdditionalNames)) {
+					<br />
+					<span class="extraInfo">@artist.AdditionalNames</span>
+				}
+			</td>
+			{ i++; }
+			if (i % columns == 0) {
+				@Html.Raw("</tr>")
+			}
+		}
+		@if (i % columns != 0) {
+			@Html.Raw("</tr>")
+		}
+	</table>
+			
+}
+
+@helper ArtistIconLink(ArtistContract artist) {
+	<a href="@Url.Action("Details", "Artist", new { id = artist.Id })">
+		<img src="@Url.ImageThumb(artist, ImageSize.TinyThumb)" alt="Thumb" class="coverPicThumb" />
+	</a>		
+}
+
+@helper ArtistLink(ArtistContract artist) {
+	@Html.ActionLink(artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
+}
+
+@helper ArtistList(IEnumerable<ArtistForAlbumContract> artists, bool showRoles = false, bool showType = false) {
+	var ordered = artists.OrderBy(a => a.IsSupport).ToArray();
+	foreach (var artist in ordered) {
+		if (artist.IsSupport) {
+			@("(")
+		}
+		if (artist.Artist != null) {
+			if (showType) {
+				@ArtistTypeLabel(artist.Artist.ArtistType)
+			}			
+			@ArtistLink(artist.Artist)
+		} else {
+			@artist.Name
+		}
+		if (showRoles && artist.EffectiveRoles != ArtistRoles.Default) {
+			@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistRoles.Default) + ")</small>")
+		}
+		if (artist.IsSupport) {
+			@(")")
+		}
+		if (artist != ordered.Last()) {
+			@(", ")
+		}
+	}
+}
+
+@helper ArtistList(IEnumerable<ArtistForSongContract> artists, bool showRoles = false, bool showType = false) {
+	var ordered = artists.OrderBy(a => a.IsSupport).ToArray();
+	foreach (var artist in ordered) {
+		if (artist.IsSupport) {
+			@("(")
+		}
+		if (artist.Artist != null) {
+			if (showType) {
+				@ArtistTypeLabel(artist.Artist.ArtistType)
+			}			
+			@ArtistLink(artist.Artist)
+		} else {
+			@artist.Name
+		}
+		if (showRoles && artist.EffectiveRoles != ArtistRoles.Default) {
+			@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistRoles.Default) + ")</small>")
+		}
+		if (artist.IsSupport) {
+			@(")")
+		}
+		if (artist != ordered.Last()) {
+			@(", ")
+		}
+	}
+}
+
+@helper PrintArchivedArtistData(ComparedArtistsContract comparedArtists) {
+
+	<div class="well well-transparent archived-entry-contents">
+		<h4>Content</h4>
+
+		<table class="table table-bordered">
+			@ArchivedEntryHelpers.DataRow("Id", comparedArtists.FirstData.Id)
+			@ArchivedEntryHelpers.PictureRow("Main picture", comparedArtists, id => Url.Action("ArchivedVersionPicture", "Artist", new { id }))
+			@ArchivedEntryHelpers.DataRow("Main picture MIME", comparedArtists, d => d.MainPictureMime)
+			@ArchivedEntryHelpers.TranslatedNameRow(comparedArtists, d => d.TranslatedName)
+			@ArchivedEntryHelpers.DataRowList("Names", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+			@ArchivedEntryHelpers.DataRow("Description", comparedArtists, d => d.Description)
+			@ArchivedEntryHelpers.DataRow("Artist type", comparedArtists, d => Translate.ArtistTypeName(d.ArtistType))
+			@ArchivedEntryHelpers.DataRowList("External links", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+			@ArchivedEntryHelpers.DataRow("Base voicebank", comparedArtists, d => ArchivedEntryHelpers.ObjectRefInfo(d.BaseVoicebank))
+			@ArchivedEntryHelpers.ObjectRefList("Groups", comparedArtists, d => d.Groups)
+			@ArchivedEntryHelpers.ObjectRefList("Members", comparedArtists, d => d.Members)
+			@ArchivedEntryHelpers.DataRowList("Pictures", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.Pictures, ArchivedEntryHelpers.PictureFileInfo))
+			@ArchivedEntryHelpers.ObjectRefList("Albums", comparedArtists, d => d.Albums)
+		</table>
+
+	</div>
+
+}
+
+@helper ArtistList(IEnumerable<ArtistContract> artists, bool showType = false) {
+	
+	<table>
+		@foreach (var artist in artists) {
+		<tr>
+			<td>
+				@ArtistIconLink(artist)
+			</td>
+			<td>
+				@Html.ActionLink(artist.Name, "Details", "Artist", new { id = artist.Id }, null)
+				@if (showType) {
+					@("(")@Translate.ArtistTypeName(artist.ArtistType)@(")")
+				}
+				<br />
+				<span class="extraInfo">@artist.AdditionalNames</span>
+			</td>
+	   </tr>
+		}	
+	</table>
+		
+}
+
+@helper ArtistListFlat(IList<ArtistContract> artists, bool showType = false) {
+	
+	foreach (var artist in artists) {
+		if (showType) {
+			@ArtistTypeLabel(artist.ArtistType)
+		}
+		@ArtistLink(artist)
+		if (artist != artists.Last()) {
+			@(", ")
+		}
+	}
+}
+
+@helper ArtistTypesDropdownKnockout(string binding) {
+	<select data-bind="value: @(binding)">
+		@foreach (var artistType in Translate.ArtistTypeNames.GetValuesAndNames(AppConfig.ArtistTypes)) {
+			<option value="@artistType.Key">@artistType.Value</option>
+		}
+	</select>
+}

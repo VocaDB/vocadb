@@ -1,0 +1,107 @@
+﻿@using VocaDb.Web.Helpers;
+@using R = ViewRes.Album;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Album.Create>
+
+@{
+    ViewBag.Title = R.CreateStrings.SubmitAlbum;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Albums, "Index")
+	};	
+}
+
+<form action="@Url.Action("Create", "Album")" method="POST" data-bind="submit: submit">
+
+	@Helpers.ValidationSymmaryDiv(R.CreateStrings.UnableToCreateAlbum)
+																								
+	<div class="row-fluid">
+		<div class="span5 well well-transparent">
+
+			<div class="editor-label">
+				@ViewRes.EntryCreateStrings.Name
+				@Helpers.RequiredField()
+			</div>
+
+			<div class="editor-field">
+				@Html.ValidationMessage("Names")
+
+				<table><tr><td class="formLabel">				
+				@Html.LabelFor(m => m.NameOriginal)
+				</td><td>
+				@Html.TextBoxFor(m => m.NameOriginal, new { id = "nameOriginal", @class = "nameField span12", maxlength = 255, size = 40 })
+				</td></tr>
+
+				<tr><td class="formLabel">
+				@Html.LabelFor(m => m.NameRomaji)
+				</td><td>
+				@Html.TextBoxFor(m => m.NameRomaji, new { id = "nameRomaji", @class = "nameField span12", maxlength = 255, size = 40 })
+				</td></tr>
+					
+				<tr><td class="formLabel">
+				@Html.LabelFor(m => m.NameEnglish)
+				</td><td>
+				@Html.TextBoxFor(m => m.NameEnglish, new { id = "nameEnglish", @class = "nameField span12", maxlength = 255, size = 40 })
+				</td></tr></table>
+			</div>
+			
+			<div class="editor-label">
+				@Html.LabelFor(m => m.DiscType)
+			</div>
+			<div class="editor-field">
+				@Html.DiscTypeDropDownListFor(m => m.DiscType)
+			</div>
+
+			<div class="editor-label">
+				<span>@R.CreateStrings.ArtistsInfo</span>
+				@Helpers.RequiredField()
+				<br />
+				<span class="extraInfo">@BrandableStrings.Album.NewAlbumArtistDesc</span>
+			</div>
+			<div class="editor-field">
+				@Html.ValidationMessage("Artists")
+				<table>
+					<tbody id="artistsTableBody">
+					@if (Model != null && Model.Artists != null) {
+						foreach (var artist in Model.Artists) {
+							Html.RenderPartial("ArtistContractRow", artist);
+						}
+					}
+					</tbody>
+				</table>
+				<br />
+				<input type="text" id="artistAddName" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8" />
+			</div>
+			
+			<br />
+			<button type="submit" data-bind="disable: submitting" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+
+		</div>
+
+		<div class="span4">
+			<div class="alert">
+				@Html.Raw(BrandableStrings.Album.NewAlbumInfo)
+			</div>			     
+			<div class="alert alert-info">
+				<p>@Html.Raw(R.CreateStrings.AlbumInfo2)</p>
+				<p>@ViewRes.EntryCreateStrings.NoArtistsToName</p>
+				<p>@ViewRes.EntryCreateStrings.NameHelp</p>				
+			</div>
+			<div id="duplicateEntryWarning" style="display:none">
+			</div>
+		</div>
+		
+	</div>
+	
+</form>
+
+@section BodyScripts {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Album/AlbumCreateViewModel.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Album/Create.js")"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            initPage();
+            ko.applyBindings(new vdb.viewModels.AlbumCreateViewModel());
+        });
+
+    </script>
+}

@@ -1,0 +1,28 @@
+﻿@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.Songs.SongWithPVAndVoteContract
+
+<input type="hidden" class="js-songId" value="@Model.Id" />
+<h4 class="pvViewer-title">
+	<span id="songPreviewName" class="pvViewer-songName" title="@Model.AdditionalNames">
+		@Html.ActionLink(Model.Name, "Details", "Song", new { id = Model.Id }, null)
+	</span>
+    &nbsp;
+    <small id="songPreviewArtists" class="pvViewer-artists">
+		@Model.ArtistString
+        (@Translate.SongTypeNames[Model.SongType])
+	</small>
+</h4>
+<span class="pvViewer-translatedNames">@Model.AdditionalNames</span>
+<span id="ratingButtons" class="ratingButtons pull-right" style="@((Model.Vote != SongVoteRating.Nothing ? "display: none;" : ""))">
+    <a href="#" id="addLikeLink" class="btn btn-inverse @(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Song.DetailsStrings.Like</a>
+	<a href="#" id="addFavoriteLink" class="btn btn-inverse @(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Song.DetailsStrings.AddToFavorites</a>
+</span>
+<a href="#" id="removeFavoriteLink" class="btn btn-inverse ratingButtons pull-right @(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@((Model.Vote != SongVoteRating.Nothing ? "" : "display: none;"))">@ViewRes.Song.DetailsStrings.RemoveFromFavorites</a>	
+<div>
+	@{ Html.RenderPartial("PVs/_PVEmbedDynamic", PVHelper.PrimaryPV(Model.PVs)); }
+</div>
+<a class="btn btn-info songInfoButton pull-right" href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(Model))">
+	<i class="icon icon-info-sign"></i>
+	@ViewRes.Home.IndexStrings.ViewSongInfo
+</a>

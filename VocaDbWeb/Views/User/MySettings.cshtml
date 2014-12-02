@@ -1,0 +1,251 @@
+﻿@using System.Activities.Expressions
+@using System.Web.Optimization
+@using VocaDb.Web.Models
+@using VocaDb.Web.Helpers
+@using R = ViewRes.User;
+@using Res = ViewRes.User.MySettingsStrings
+@model MySettingsModel
+
+@{
+    ViewBag.Title = R.MySettingsStrings.MySettingsTitle;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"), 
+		Html.ActionLink(Model.Username, "Profile", new { id = Model.Username }) 
+	};		
+}
+
+@Helpers.ValidationSymmaryDiv(R.MySettingsStrings.UnableToSave)
+
+@using (Html.BeginForm("MySettings", "User", FormMethod.Post)) {
+    
+	@Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Username)
+    @Html.HiddenFor(m => m.HasPassword)
+    @Html.HiddenFor(m => m.HasTwitterToken)
+    @Html.HiddenFor(m => m.AccessKey)
+    @Html.HiddenFor(m => m.TwitterName)
+
+	@Helpers.SaveBtn()
+	
+	<div id="tabs">
+
+		<ul>
+			<li><a href="#accountSettings">@R.MySettingsStrings.AccountSettings</a></li>
+			<li><a href="#interface">@R.MySettingsStrings.Interface</a></li>
+			<li><a href="#profile">@R.MySettingsStrings.Profile</a></li>
+			<li><a href="#connectivity">@R.MySettingsStrings.Connectivity</a></li>
+		</ul>
+
+		<div id="accountSettings">
+			<div>
+				<div class="editor-label">
+					@R.MySettingsStrings.Username
+				</div>
+				<div class="editor-field">
+					@Html.DisplayFor(m => m.Username)
+				</div>
+
+				<div class="editor-label">
+					@R.MySettingsStrings.Email
+					@R.MySettingsStrings.EmailNote
+				</div>
+				<div class="editor-field">
+					@Html.TextBoxForKnockout(m => m.Email, "value: email", maxLength: 50)
+					<a data-bind="click: verifyEmail, visible: canVerifyEmail" href="#" class="textLink acceptLink" style="display: none;">Verify email</a>
+					<img data-bind="visible: emailVerified" src="@Url.Content("~/Content/Icons/tick.png")" style="display: none;" title="Verified email" />
+					@Html.ValidationMessageFor(m => m.Email)
+				</div>
+
+				<div class="editor-label">
+					@R.MySettingsStrings.EmailOptions
+				</div>
+				<div class="editor-field">
+					@Html.EmailOptionsDropDownListFor(m => m.EmailOptions)
+				</div>
+				
+				<div class="editor-label">
+					@R.MySettingsStrings.Privacy
+				</div>
+				<div class="editor-field">
+					<p>
+						<label class="checkbox">
+							@Html.CheckBoxFor(m => m.ShowActivity)
+							@R.MySettingsStrings.AnonymousActivity
+						</label>
+					</p>
+					<p>
+						<label class="checkbox">
+							@Html.CheckBoxFor(m => m.PublicRatings)
+							@R.MySettingsStrings.PublicRatings
+						</label>
+					</p>
+					<p>
+						<label class="checkbox">
+							@Html.CheckBoxFor(m => m.PublicAlbumCollection)
+							@Res.PublicAlbumCollection
+						</label>
+					</p>
+				</div>
+                
+				@if (Model.HasPassword) {
+				<div class="editor-label">
+					@R.MySettingsStrings.CurrentPass
+					@R.MySettingsStrings.RequiredForChangingPassword
+				</div>
+				<div class="editor-field">
+					@Html.PasswordFor(m => m.OldPass)
+					@Html.ValidationMessageFor(m => m.OldPass)
+				</div>
+                }
+
+				<div class="editor-label">
+					@R.MySettingsStrings.NewPass
+					@R.MySettingsStrings.FillIfChangingPassword
+				</div>
+				<div class="editor-field">
+					@Html.PasswordFor(m => m.NewPass)
+					@Html.ValidationMessageFor(m => m.NewPass)
+				</div>
+
+				<div class="editor-label">
+					@R.MySettingsStrings.NewPassAgain
+				</div>
+				<div class="editor-field">
+					@Html.PasswordFor(m => m.NewPassAgain)
+ 					@Html.ValidationMessageFor(m => m.NewPassAgain)
+				</div>
+				   
+			</div>
+		</div>
+	
+		<div id="interface">
+		
+			<div class="editor-label">
+				@R.MySettingsStrings.InterfaceLanguageSelection
+			</div>
+			<div class="editor-field">
+				@Html.DropDownListFor(m => m.InterfaceLanguageSelection,
+					new SelectList(Model.AllInterfaceLanguages, "Key", "Value", Model.InterfaceLanguageSelection), 
+					new { @class = "input-xlarge" })
+			</div>
+
+			<div class="editor-label">
+				<label>
+				@R.MySettingsStrings.CultureName
+				</label>
+			</div>
+			<div class="editor-field">
+				@Html.DropDownListFor(m => m.CultureSelection,
+					new SelectList(Model.AllInterfaceLanguages, "Key", "Value", Model.CultureSelection),
+					new { @class = "input-xlarge" })
+			</div>
+			
+			<div class="editor-label">
+				@R.MySettingsStrings.DefaultLanguageSelection
+			</div>
+			<div class="editor-field">
+				@Html.LanguagePreferenceDropDownListFor(m => m.DefaultLanguageSelection)
+			</div>
+
+			<div class="editor-label">
+				@R.MySettingsStrings.PreferredVideoService
+			</div>
+			<div class="editor-field">
+				@Html.DropDownListFor(m => m.PreferredVideoService, new SelectList(Model.AllVideoServices, Model.PreferredVideoService))
+			</div>
+
+		</div>
+        
+        <div id="profile">
+			
+ 			<div class="editor-label">
+				@R.MySettingsStrings.AboutMe
+				@Helpers.MarkdownNotice()
+			</div>
+			<div class="editor-field">
+				@Html.TextAreaForKnockout(m => m.AboutMe, binding: "textInput: aboutMe", cssClass: "input-xxlarge", rows: 7)
+				<br />
+
+				@Res.LivePreview
+				<div data-bind="markdown: aboutMe"></div>
+				<br />
+			</div>
+           
+ 			<div class="editor-label">
+				@R.MySettingsStrings.Location
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Location, new { @class = "input-xlarge" })
+			</div>
+ 
+			<div class="editor-label">
+				@R.MySettingsStrings.ExternalLinks
+			</div>
+			<div class="editor-field" data-bind="with: webLinksViewModel">
+				@KnockoutHelpers.WebLinksEditViewKnockout(false)
+				<input type="hidden" name="webLinks" data-bind="value: ko.toJSON(webLinks)" />
+			</div>
+
+		</div>
+
+		<div id="connectivity">
+	
+			<div class="alert alert-info">
+				@Res.AccessKeyDescription
+			</div>
+
+			<div class="editor-label">
+				@R.MySettingsStrings.AccessKey				
+			</div>
+			<div class="editor-field">
+				@Model.AccessKey
+				@Html.ActionLink(R.MySettingsStrings.Reset, "ResetAccesskey", "User", null, new { onclick = "return confirm(\"" + R.MySettingsStrings.ReallyReset + "\");", @class = "textLink refreshLink" })				
+            </div>
+
+			<div class="editor-label">
+				Twitter
+			</div>
+			<div class="editor-field">
+				@if (Model.HasTwitterToken) {
+                    @Model.TwitterName
+					
+					if (Model.HasPassword) {
+						@:&nbsp;
+						@Html.ActionLink("Disconnect", "DisconnectTwitter", null, new { @class = "textLink removeLink"})
+					}
+					
+                } else {
+				    @Html.ActionLink(R.MySettingsStrings.Connect, "ConnectTwitter", "User", null, new { @class = "textLink addLink" })
+                }
+            </div>
+
+		</div>
+	</div>
+	
+	<br />
+	@Helpers.SaveBtn()
+	
+}
+
+@section BodyScripts {
+	@Scripts.Render("~/bundles/shared/edit", "~/bundles/User/MySettings")
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+
+			$("#tabs").tabs();
+
+			var urlMapper = new vdb.UrlMapper('@Url.Content("~/")');
+			var repository = new vdb.repositories.UserRepository(urlMapper);
+
+			@* Can't encode about me text here because textarea needs unencoded. It's user's own content anyway. *@
+			@{ var data = new { Model.AboutMe, Model.Email, Model.EmailVerified, Model.WebLinks };	}
+			var model = @Html.Raw(JsonHelpers.Serialize(data));
+
+			var viewModel = new vdb.viewModels.MySettingsViewModel(repository, model.aboutMe, model.email, model.emailVerified, model.webLinks);
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
+}

@@ -1,0 +1,176 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Model.DataContracts.Songs;
+@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers;
+@using VocaDb.Model.Domain.Images
+@using VocaDb.Model.Utils
+@using VocaDb.Model.Helpers
+@using MvcPaging;
+@using R = ViewRes.SongList;
+@inherits VocaDb.Web.Code.VocaDbPage<SongListContract>
+		   
+@{
+	
+	if (Model.FeaturedCategory == SongListFeaturedCategory.Nothing) {
+		ViewBag.PageTitle = string.Format("{0} - {1}", R.DetailsStrings.SongList, Model.Name);
+		ViewBag.Title = Model.Name;
+		ViewBag.SubTitle = R.DetailsStrings.SongList;
+		ViewBag.Parents = new[] {
+			Html.ActionLink(Model.Author.Name, "Details", "User", new {id = Model.Author.Id}, null)
+		};
+	} else {
+
+		var categoryName = Translate.SongListFeaturedCategoryNames[Model.FeaturedCategory];
+
+		ViewBag.PageTitle = string.Format("{0} - {1}", categoryName, Model.Name);
+		ViewBag.Title = Model.Name;
+		ViewBag.SubTitle = categoryName;
+		
+		ViewBag.Parents = new[] {
+			Html.ActionLink(categoryName, "Featured", "SongList")
+		};		
+	}
+
+	var smallThumbUrl = ImageHelper.GetImageUrl(Model.Thumb, ImageSize.SmallThumb);
+	var thumbUrl = ImageHelper.GetImageUrl(Model.Thumb, ImageSize.Original) ?? ImageHelper.GetImageUrl(Model.Thumb, ImageSize.Thumb);
+	if (!string.IsNullOrEmpty(thumbUrl)) {
+		ViewContext.Controller.ViewBag.Banner = thumbUrl;
+	}
+	
+	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id = Model.Id })).ToString();
+	
+}
+
+@section Head {
+	@HtmlHelpers.OpenGraphMetaTags(
+		url: url, 
+		description: Model.Description
+	)
+	<link rel="canonical" href="@url" />	
+}
+
+@section Toolbar {	
+@if (Model.CanEdit) {
+	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editListLink" })
+	@:
+	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+}
+}
+
+@section BodyScripts {
+<link rel="stylesheet" href="@Url.Content("~/Content/Styles/Pager.css")" type="text/css" />
+<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
+<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+@Scripts.Render("~/bundles/SongList/Details")
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		$("#editListLink").button({ icons: { primary: 'ui-icon-wrench' } });
+		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+
+		var languageSelection = '@UserContext.LanguagePreference';
+		var listId = @Model.Id;
+
+		var rootPath = '@RootPath';
+		var urlMapper = new vdb.UrlMapper(rootPath);
+		var userRepo = new vdb.repositories.UserRepository(urlMapper);
+		var songRepo = new vdb.repositories.SongRepository(rootPath, @LanguagePreferenceInt);
+		var songListRepo = new vdb.repositories.SongListRepository(urlMapper);
+		var pvPlayerElem = $("#pv-player-wrapper")[0];
+
+		var vm = new vdb.viewModels.songList.SongListViewModel(urlMapper, songListRepo, songRepo, userRepo, languageSelection, listId, pvPlayerElem);
+		ko.applyBindings(vm);
+
+	});
+
+</script>
+}
+
+<div class="media">
+	@if (!string.IsNullOrEmpty(smallThumbUrl)) {
+		<a class="pull-left" href="@thumbUrl">
+			<img class="media-object" src="@smallThumbUrl" alt="Thumb" />				
+		</a>		
+	}
+	<div class="media-body">
+		@if (!string.IsNullOrWhiteSpace(Model.Description)) {
+			<p>@HtmlHelpers.FormatText(Model.Description)</p>
+		}
+	</div>
+</div>
+
+<div class="btn-group songlist-mode-selection">
+	<a data-bind="click: function() { playlistMode(false); }, css: { active: playlistMode() == false }" class="btn" href="#">
+		<i class="icon-th-list noMargin"></i>
+		Details
+	</a>
+	<a data-bind="click: function() { playlistMode(true); }, css: { active: playlistMode() == true }" class="btn" href="#">
+		<i class="icon-list noMargin"></i>
+		Playlist
+	</a>
+</div>
+
+<div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">
+
+	<div data-bind="with: paging" class="dropdown pull-right">
+		@KnockoutHelpers.EntryCount()
+	</div>
+
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
+	<table class="table table-striped">
+		<tbody data-bind="foreach: page">
+			<tr>
+				<td style="width: 75px">
+					<a data-bind="visible: song.thumbUrl, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#">
+						<img data-bind="attr: { src: song.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" />
+					</a>
+				</td>
+				<td>
+
+					<div class="pull-right" data-bind="visible: song.pvServices, with: song.previewViewModel">
+						<a data-bind="click: togglePreview, css: { active: preview }" class="btn previewSong" href="#">
+							<i class="icon-film"></i>
+							Preview
+						</a>
+					</div>
+					
+					<span data-bind="text: order"></span>.
+					<a data-bind="text: song.name, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
+					
+					<span data-bind="visible: notes">
+						(<span data-bind="text: notes"></span>)
+					</span>
+
+					<span data-bind="songTypeLabel: song.songType"></span>
+					<!-- ko foreach: $parent.pvServiceIcons.getIconUrls(song.pvServices) -->
+					<img data-bind="attr: { src: url, title: service }" />
+					<!-- /ko -->
+
+					@KnockoutHelpers.DraftIcon("status")
+					
+					<br />
+					<small class="extraInfo" data-bind="text: song.artistString"></small>
+
+					<div data-bind="visible: song.pvServices, with: song.previewViewModel">
+						@SongHelpers.PVPreviewKnockout("$parents[2].pvServiceIcons.getIconUrls")
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
+</div>
+
+<div data-bind="visible: playlistMode()" style="display: none;">
+	<div data-bind="with: playlistViewModel" class="well well-transparent songlist-playlist">
+		@{ Html.RenderPartial("Partials/_PlayList"); }
+	</div>
+</div>

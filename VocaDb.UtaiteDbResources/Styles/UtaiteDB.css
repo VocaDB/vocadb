@@ -1,0 +1,115 @@
+.navbar .navbar-inner,
+.navbar-inverse .navbar-inner {
+  background-color: #221018;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#793954), to(#221018));
+  background-image: -webkit-linear-gradient(top, #793954, #221018);
+  background-image: -o-linear-gradient(top, #793954, #221018);
+  background-image: -moz-linear-gradient(center top, #793954, #221018);
+  background-image: linear-gradient(top, #793954, #221018);
+}
+.navbar .navbar-inner div.brand a:visited,
+.navbar-inverse .navbar-inner div.brand a:visited {
+  color: #ad51a4;
+}
+.navbar .navbar-inner .navbar-search .search-query,
+.navbar-inverse .navbar-inner .navbar-search .search-query {
+  background-color: #823D7C;
+  color: -webkit-input-placeholder(#d7aabf);
+  border-radius: 3px;
+}
+.navbar .navbar-inner .navbar-search .search-query:focus,
+.navbar-inverse .navbar-inner .navbar-search .search-query:focus {
+  background-color: #dbcfe9;
+}
+.navbar .navbar-inner .navbar-search .search-query::-webkit-input-placeholder,
+.navbar-inverse .navbar-inner .navbar-search .search-query::-webkit-input-placeholder {
+  color: #D7AABF;
+}
+.rightFrame a {
+  color: #46202d;
+}
+.rightFrame a:visited {
+  color: #46202d;
+}
+.rightFrame a:hover {
+  color: #7a384f;
+}
+.rightFrame .btn-inverse,
+.rightFrame .btn-inverse:visited {
+  color: white;
+}
+.btn-info,
+.rightFrame .btn-info,
+.rightFrame .btn-primary {
+  color: white;
+  background-color: #ad51a4;
+  *background-color: #ad51a4;
+  background-image: -moz-linear-gradient(top, #9c4893, #b662ad);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#9c4893), to(#b662ad));
+  background-image: -webkit-linear-gradient(top, #9c4893, #b662ad);
+  background-image: -o-linear-gradient(top, #9c4893, #b662ad);
+  background-image: linear-gradient(to bottom, #9c4893, #b662ad);
+  background-repeat: repeat-x;
+  border-color: #B662AD #B662AD #B662AD;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@btn-bggradientbegin', endColorstr='@btn-bggradientend', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.btn-info:visited,
+.rightFrame .btn-info:visited,
+.rightFrame .btn-primary:visited,
+.btn-info:hover,
+.rightFrame .btn-info:hover,
+.rightFrame .btn-primary:hover,
+.btn-info:focus,
+.rightFrame .btn-info:focus,
+.rightFrame .btn-primary:focus,
+.btn-info:active,
+.rightFrame .btn-info:active,
+.rightFrame .btn-primary:active,
+.btn-info.active,
+.rightFrame .btn-info.active,
+.rightFrame .btn-primary.active,
+.btn-info.disabled,
+.rightFrame .btn-info.disabled,
+.rightFrame .btn-primary.disabled,
+.btn-info[disabled],
+.rightFrame .btn-info[disabled],
+.rightFrame .btn-primary[disabled] {
+  color: #ffffff;
+  background-color: #b662ad;
+  *background-color: #b662ad;
+}
+.btn-group.open .btn-info.dropdown-toggle {
+  background-color: #b662ad;
+}
+.pvViewer-songName a {
+  color: #ad51a4;
+}
+.pvViewer-songName a:hover,
+.pvViewer-songName a:visited {
+  color: #ad51a4;
+}
+.rightFrame {
+  background-color: #dbcfe9;
+  background-color: rgba(219, 207, 233, 0.9);
+  border: solid #d7aabf 2px;
+}
+/* Menu */
+.menu > .well {
+  vertical-align: top;
+  border: solid #d7aabf 2px;
+  background-color: #dbcfe9;
+  background-color: rgba(219, 207, 233, 0.9);
+}
+.menu a,
+.menu a:visited {
+  text-decoration: none;
+  color: #46202d;
+}
+.menu a:hover,
+.menu a:hover:visited {
+  color: #7a384f;
+  text-decoration: underline;
+}
+/*# sourceMappingURL=UtaiteDB.css.map */

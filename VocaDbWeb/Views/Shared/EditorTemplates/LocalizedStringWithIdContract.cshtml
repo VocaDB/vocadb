@@ -1,0 +1,7 @@
+﻿@model VocaDb.Model.DataContracts.LocalizedStringWithIdContract
+
+@* Note: not in use *@
+
+@Html.HiddenFor(m => m.Id)
+@Html.HiddenFor(m => m.Language)
+@Html.TextBoxFor(m => m.Value, new { maxlength = 255, size = 50, @class = "nameEdit" })

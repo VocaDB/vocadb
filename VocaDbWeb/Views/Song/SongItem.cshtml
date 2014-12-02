@@ -1,0 +1,8 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.Songs.SongContract
+
+<div style="float:left;">
+	@SongHelpers.SongIconLink(Model)
+</div>
+<br />
+<small>@Model.ArtistString (@Translate.SongTypeNames[Model.SongType])</small>

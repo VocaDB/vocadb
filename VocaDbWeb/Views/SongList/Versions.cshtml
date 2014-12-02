@@ -1,0 +1,15 @@
+﻿@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared
+@model VocaDb.Model.DataContracts.Songs.SongListWithArchivedVersionsContract
+
+@{
+	ViewBag.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
+	ViewBag.Parents = new[] {
+		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
+	};
+}
+
+
+@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions.Select(
+	a => new ArchivedObjectVersion(a, Translate.SongListEditableFieldNames.GetAllNameNames(a.ChangedFields, SongListEditableFields.Nothing))))

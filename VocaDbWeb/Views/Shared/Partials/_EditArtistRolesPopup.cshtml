@@ -1,0 +1,14 @@
+﻿
+<div id="editArtistRolesPopup" style="display:none;" title="@ViewRes.Album.EditStrings.ArtistRolesTitle">
+	
+	@* TODO: this can probably be removed *@
+	<input type="hidden" id="rolesArtistId" />
+
+	@foreach (var role in VocaDb.Web.Helpers.Translate.ArtistRoleNames.GetValuesAndNames(VocaDb.Model.Helpers.ArtistHelper.ValidRoles)) {
+		<span class="tag">
+			@Html.CheckBox("artistRole_" + role.Key.ToString(), new { id = "artistRole_" + role.Key.ToString(), @class = "artistRoleCheck" })
+			@Html.Label("artistRole_" + role.Key.ToString(), role.Value)
+		</span>
+	}
+
+</div>

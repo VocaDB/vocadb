@@ -1,0 +1,21 @@
+﻿@using Res = ViewRes.Album.DetailsStrings;
+
+<div 
+	data-bind="
+		dialog: {
+			autoOpen: false, width: 400,
+			position: { my: 'left top', at: 'left bottom', of: $('#downloadTags') }
+		},
+		dialogVisible: downloadTagsDialog.dialogVisible,
+		dialogButtons: downloadTagsDialog.dialogButtons"
+	title="@Res.DownloadTrackList" style="display: none;">
+	
+	<div data-bind="with: downloadTagsDialog">			
+		<label>@Res.CustomFormatStringLabel</label>
+		<div class="form-inline">
+			<input type="text" data-bind="value: formatString" maxlength="200" class="input-xlarge" />
+			<button data-bind="click: function () { formatString(''); }" class="btn">@Res.Reset</button>			
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,151 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers
+@using VocaDb.Model.Utils
+@using VocaDb.Web.Code
+@inherits VocaDbPage
+
+@{
+	var searchObjectType = Html.GlobalSearchObjectType();
+	var searchTerm = Html.GlobalSearchTerm();
+}
+
+@functions {
+
+	PagePropertiesData PageProperties {
+		get { return PagePropertiesData.Get(ViewBag); }
+	}
+
+	string PageTitle {
+		get {
+			if (!string.IsNullOrEmpty(ViewBag.PageTitle))
+				return ViewBag.PageTitle;
+
+			return !string.IsNullOrEmpty(ViewBag.Title) ? ViewBag.Title : string.Empty;
+		}
+	}
+	
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@(!string.IsNullOrEmpty(PageTitle) ? PageTitle + " - " : "")@BrandableStrings.Layout.SiteTitle</title>
+	<meta name="description" content="@PageProperties.SummarizedDescription" />	
+	<meta name="keywords" content="Vocaloid, VocaDB, Vocaloid database, Hatsune Miku" />
+	<meta name="og:image" content="@ViewContext.Controller.ViewBag.Banner"/>
+
+	<link rel="shortcut icon" href="@Url.Content("~/Content/favicon.ico")" type="image/x-icon" />
+	@Styles.Render("~/Content/css")
+	<link href="@Url.Content("~/Content/Styles/Icons.css")" rel="stylesheet" type="text/css" />	
+	<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.10.1.custom.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/jquery.qtip.css")" rel="stylesheet" type="text/css" />
+	<link rel="search" type="application/opensearchdescription+xml" title="@BrandableStrings.Layout.SiteName" href="@Config.SiteSettings.OpenSearchPath" />
+	
+	@RenderSection("Head", false)
+	
+	@{ Html.RenderPartial("Partials/_GoogleAnalytics"); }
+
+</head>
+
+	<body style="padding-top: 50px">
+		  
+	    <div data-bind="stopBinding: true" class="navbar navbar-inverse navbar-fixed-top">
+		    <div class="navbar-inner">
+			    <div id="topBar" class="container">
+				    <div class="brand">@Html.ActionLink(BrandableStrings.Layout.SiteName, "Index", "Home")</div>
+				    @{ Html.RenderPartial("GlobalSearchBox", new VocaDb.Web.Models.GlobalSearchBoxModel(searchObjectType, searchTerm)); }
+			    </div>
+		    </div>
+	    </div>
+	
+		<div class="container-fluid">
+			<div class="row-fluid">
+				@{ Html.RenderPartial("Partials/_LeftMenu"); }
+
+				<div class="span10 rightFrame well">
+                    
+							@if (ViewBag.Parents != null) {
+		   var arr = (MvcHtmlString[])ViewBag.Parents;
+								<ul class="breadcrumb">
+								@foreach (var link in arr) {
+									<li>
+										@link 
+										@if (link != arr.Last()) {
+											<span class="divider">/</span>
+		  }
+									</li>
+		}
+								</ul>
+	   }
+                                        
+							@if (!string.IsNullOrEmpty(ViewBag.Title)) {
+								<h2 class="pageTitle">@ViewBag.Title
+								@if (!string.IsNullOrEmpty(ViewBag.Subtitle)) {
+									<small>&nbsp;@ViewBag.Subtitle</small>
+		}
+								</h2>
+	   }
+                    
+                            @if (Login.Manager.LockdownEnabled) {
+                                <div class="alert">
+                                    @AppConfig.LockdownMessage
+                                </div>
+                            }
+							
+							@if (!string.IsNullOrEmpty(Config.SiteSettings.SitewideAnnouncement)) {
+								<div class="alert">
+									@Html.Raw(Config.SiteSettings.SitewideAnnouncement)
+								</div>
+							}								
+
+							@if (IsSectionDefined("Toolbar")) {
+								<p>
+									@RenderSection("Toolbar")
+								</p>
+	   }
+				
+		
+                            <div id="messages">
+                                <div class="wrapper">
+                                    <div id="ajaxLoadingMessage" style="display: none;">@ViewRes.SharedStrings.Loading</div>
+
+								    <div id="errorMessage" class="alert alert-error" style="display: none;">
+									    <a class="close" data-dismiss="alert" href="#">&times;</a>
+									    <span id="errorMessageString">@TempData.ErrorMessage()</span>
+								    </div>
+
+                                    <div id="successMessage" class="alert alert-success" style="display: none;">
+                                        <a class="close" data-dismiss="alert" href="#">&times;</a>
+                                        <span id="successMessageString">@TempData.SuccessMessage()</span>
+                                    </div>
+                                    
+                                    <div id="warnMessage" class="alert" style="display: none;">
+                                        <a class="close" data-dismiss="alert" href="#">&times;</a>
+                                        <span id="warnMessageString">@TempData.WarnMessage()</span>
+                                    </div>
+                                </div>
+                            </div>
+                                                            		
+							@if (!string.IsNullOrEmpty(TempData.StatusMessage())) {
+								@Helpers.NotificationPanel(TempData.StatusMessage())
+							}
+		
+							@RenderBody()
+					
+						<div id="loginPopup" title="@ViewRes._LayoutStrings.LogIn" style="display: none;">
+						</div>
+
+				</div>
+			</div>  
+		</div>
+			
+        <!-- Footer -->	
+		@*<span class="about-disclaimer">Background illustration by <a href="http://www.pixiv.net/member_illust.php?mode=medium&illust_id=39733249">火神レオ</a> | <a href="https://code.google.com/p/vocadb/">Other credits</a></span>*@
+		<span class="about-disclaimer">Background illustration by <a href="http://www.pixiv.net/member_illust.php?mode=medium&illust_id=34786809">みゆ</a> | <a href="https://code.google.com/p/vocadb/">Other credits</a></span>
+        
+	    @{ Html.RenderPartial("Partials/_LayoutScripts"); }
+        
+        <!-- Page-specific scripts -->
+	    @RenderSection("BodyScripts", false)
+	</body>
+</html>

@@ -1,0 +1,13 @@
+﻿
+<tr>
+	<td>
+		<img data-bind="attr: { src: $data.thumbUrl }, visible: $data.thumbUrl" alt="Preview" class="coverPicThumb" />
+		<input type="file" name="pictureUpload" data-bind="visible: !$data.thumbUrl" />
+	</td>
+	<td>
+		<input type="text" data-bind="textInput: name" size="40" maxlength="200" class="input-xlarge" placeholder="Picture description" />
+	</td>
+	<td>
+		<a data-bind="click: $parent.remove" href="#" class="textLink deleteLink">Delete</a>
+	</td>
+</tr>

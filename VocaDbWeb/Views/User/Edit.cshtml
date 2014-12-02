@@ -1,0 +1,66 @@
+﻿@using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Helpers;
+@model VocaDb.Web.Models.UserEdit
+
+@{
+	ViewBag.Title = "Edit user - " + Model.Name;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Users", "Index"), 
+		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 
+	};	
+}
+
+@section Toolbar {
+	@if (!Model.Active) {
+		<a id="clearRatingsLink" href="@Url.Action("Clear", new { id = Model.Id })" onclick="return confirm('Are you sure you want to clear ratings for this user?');">Clear user ratings</a>
+	}
+}
+
+@using(Html.BeginForm()) {	
+	@Html.HiddenFor(m => m.Id)
+	
+	<fieldset>
+		<legend>Account settings</legend>
+		<p>
+			@Html.CheckBoxFor(m => m.Active)
+			Active
+		</p>
+		<p>
+			@Html.CheckBoxFor(m => m.Poisoned)
+			Poisoned (autoban for logging in)
+		</p>
+
+		@Html.LabelFor(m => m.GroupId)
+		@Html.EnumDropDownListFor(m => m.GroupId, Model.EditableGroups)
+	</fieldset>
+
+    if (EntryPermissionManager.CanEditAdditionalPermissions(Login.Manager)) {
+ 	
+	<fieldset>
+		<legend>Additional permissions</legend>
+		@foreach (var entry in Model.Permissions) {	 
+			Html.RenderPartial("PermissionEditRow", entry);
+		}
+	</fieldset>
+	        
+    }
+	
+	<fieldset>
+		<legend>Owned artists</legend>
+		<table>
+			<tbody id="ownedArtistsTableBody">
+				@foreach (var entry in Model.OwnedArtists) {
+					Html.RenderPartial("OwnedArtistForUserEditRow", entry);
+				}				
+			</tbody>			
+		</table>
+		@Helpers.EntrySearchNameBox("ownedArtistAddName")
+	</fieldset>
+		
+	@Helpers.SaveBtn()
+	
+}
+
+@section BodyScripts {
+	<script type="text/javascript" src="@Url.Content("~/Scripts/User/Edit.js")"></script>
+}

@@ -1,0 +1,79 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers
+@model string
+
+@{
+    ViewBag.Title = "Request account verification";
+}
+
+<div class="row-fluid">
+
+	@if (!Login.Manager.IsLoggedIn) {
+		<div class="span6 alert">Sorry, you need to @Html.ActionLink("log in", "Login") or @Html.ActionLink("sign up", "Create") to use this feature.</div>
+	} else {
+	
+		<form action="@Url.Action("RequestVerification")" method="POST" class="span6 form">
+			<input type="hidden" name="selectedArtist" data-bind="value: ko.toJSON(selectedArtist)" />
+
+			<label>
+				Artist entry whom I represent (required)
+			</label>
+			<div data-bind="if: selectedArtist, visible: selectedArtist" style="display: none;">
+				<a data-bind="text: selectedArtist().name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selectedArtist().id) }" href="#"></a>
+				<button data-bind="click: clearArtist" class="btn btn-mini btn-danger">Clear</button>
+			</div>
+			<div data-bind="ifnot: selectedArtist">
+				<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />				
+			</div>
+	
+			<br />
+			<label>
+				Request message (required)
+			</label>
+			<textarea name="message" class="span11" cols="50" rows="10">@Model</textarea>
+	
+			<br />
+			<button class="btn btn-primary">Send request</button>
+
+		</form>	
+	
+	}
+
+	<div class="span4 alert alert-info">
+		<p>
+			If you are a producer, illustrator, animator or any other content creator working with Vocaloid music or videos,
+			or a representative of a circle, you may use this form to request your account to be verified by the site staff.
+		</p>
+		<p>
+			After verification, your account name will be displayed on the artist entry page(s), and vice versa.
+			You need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.
+			For example, posting on your Twitter or blog, linking to your VocaDB account is an acceptable way of proving you are the one you say you are.
+			You should also have at least one or two accepted and finalized (Vocaloid or UTAU) song entries on the site - you can submit those yourself if others already haven't.
+		</p>
+		<p>
+			At the moment, account verification does not provide any additional permissions, but in the future we will likely allow artists
+			exclusive access to their entries, if they so choose.
+		</p>
+		<p>
+			Please understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.
+			Unless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.
+		</p>
+	</div>
+
+</div>
+
+@section BodyScripts {
+
+	@Scripts.Render("~/bundles/shared/edit")
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Repositories/ArtistRepository.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/User/RequestVerificationViewModel.js")"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			var artistRepo = new vdb.repositories.ArtistRepository(vdb.values.baseAddress);
+			ko.applyBindings(new vdb.viewModels.RequestVerificationViewModel(artistRepo));
+		});
+
+	</script>
+		
+}

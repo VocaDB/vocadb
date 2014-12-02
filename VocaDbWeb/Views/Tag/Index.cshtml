@@ -1,0 +1,22 @@
+﻿@model VocaDb.Model.DataContracts.Tags.TagCategoryContract[]
+
+@{
+    ViewBag.Title = ViewRes.SharedStrings.Tags;
+}
+
+@foreach (var category in Model) {
+
+	if (category.Name != string.Empty) {
+		<h3>@category.Name</h3>
+	} else {
+		<h3>@ViewRes.SharedStrings.Unsorted</h3>
+	}
+	
+	foreach (var tag in category.Tags) {
+		<span class="tag">
+			@Html.ActionLink(tag.Name, "Details", new { id = tag.Name })
+		</span>
+	}
+	<br /><br />
+	
+}

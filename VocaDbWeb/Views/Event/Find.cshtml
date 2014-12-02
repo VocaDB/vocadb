@@ -1,0 +1,45 @@
+﻿@using VocaDb.Web.Helpers;
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventFindResultContract
+
+@{
+    ViewBag.Title = ViewRes.Event.FindStrings.FindEvent + " - " + Model.EventName;
+}
+
+<div class="alert alert-danger">
+	@ViewRes.Event.FindStrings.EventNotFound
+</div>
+
+@if (Login.CanManageDb && !string.IsNullOrEmpty(Model.EventName)) {
+
+	<p>@ViewRes.Event.FindStrings.YouMayAddTheEvent</p>
+	
+	using (Html.BeginForm()) {
+	
+		Html.Hidden("query");
+		
+		if (Model.Series != null) {
+
+			@Html.HiddenFor(m => m.Series.Id)
+			@Html.HiddenFor(m => m.Series.Name)
+			
+			<input type="radio" name="EventTarget" value="Series" checked="checked" />
+	 
+			<text>@ViewRes.Event.FindStrings.Series:</text>
+			@Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })
+			<text>, @ViewRes.Event.FindStrings.Number</text>	 
+			@Html.TextBoxFor(m => m.SeriesNumber)
+	 
+			<br /><br />
+			<input type="radio" name="EventTarget" value="Ungrouped" />
+	
+		}
+			
+		<text>@ViewRes.Event.FindStrings.UngroupedEventNamed</text>
+		@Html.TextBoxFor(m => m.EventName, new { size = 30 })
+			
+		<br /><br />
+		<button type="submit" class="btn btn-primary">@ViewRes.Event.FindStrings.CreateEvent</button>
+	
+	}
+	
+}

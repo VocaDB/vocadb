@@ -1,0 +1,15 @@
+﻿@model VocaDb.Web.Models.Shared.PagingData<VocaDb.Model.DataContracts.Albums.AlbumContract>
+
+@{
+    ViewBag.Title = "Deleted albums";
+	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Albums, "Index") };
+}
+
+<div id="albums">
+	@{ Html.RenderPartial("PagedAlbums", Model); }
+</div>
+
+@section BodyScripts {
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/Pager.css")" type="text/css" />
+	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+}

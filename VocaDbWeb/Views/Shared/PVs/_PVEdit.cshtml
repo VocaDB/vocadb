@@ -1,0 +1,29 @@
+﻿
+<tr>
+	<td>
+		<a href="{{url}}">
+			<img data-bind="attr: { src: $parent.pvServiceIcons.getIconUrl(service) }" alt="{{service}}" />
+			{{service}}
+		</a>
+	</td>
+	<td>
+		{{ pvType }}
+	</td>
+	<td>
+		<input type="text" data-bind="textInput: name" size="40" maxlength="200" class="input-xlarge" />
+	</td>
+	<td>
+		{{ length | formatLengthSeconds }}
+	</td>
+	<td>
+		{{#if author && $parent.canBulkDeletePVs}}
+			<a href="{{ $parent.urlMapper.mapRelative('/Admin/PVsByAuthor?author=' + author) }}">{{author}}</a>
+		{{/if}}
+		{{#ifnot author && $parent.canBulkDeletePVs}}
+			{{ author }}
+		{{/if}}
+	</td>
+	<td>
+		<a data-bind="click: $parent.remove" class="textLink deleteLink" href="#">@ViewRes.SharedStrings.Delete</a>
+	</td>
+</tr>

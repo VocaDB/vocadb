@@ -1,0 +1,159 @@
+﻿/* jQuery UI overrides */
+ul.ui-autocomplete {
+  max-height: 400px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  z-index: 1050;
+}
+.ui-autocomplete-loading {
+  background: #ffffff url('ajax-loader.gif') right center no-repeat;
+}
+/* Override retarded widget link colors */
+.rightFrame .ui-widget-header a,
+.rightFrame .ui-widget-content a,
+.ui-dialog.ui-widget-content a {
+  color: #003399;
+}
+.rightFrame .ui-widget-header a:visited,
+.rightFrame .ui-widget-content a:visited,
+.ui-dialog.ui-widget-content a:visited {
+  color: #001155;
+}
+.rightFrame .ui-widget-header a:hover,
+.rightFrame .ui-widget-content a:hover,
+.ui-dialog.ui-widget-content a:hover {
+  color: #0065B2;
+}
+.ui-dialog.ui-widget-content .ui-menu-item a,
+.ui-dialog.ui-widget-content .ui-menu-item a:hover,
+.ui-dialog.ui-widget-content .ui-menu-item a:visited {
+  color: black;
+}
+body .ui-widget {
+  font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
+}
+body .ui-widget input,
+body .ui-widget select,
+body .ui-widget textarea,
+body .ui-widget button {
+  font-family: arial, sans-serif;
+  font-size: 14px;
+}
+/* Bootstrap overrides and additions */
+.withMargin {
+  margin-top: 20px;
+}
+.alert-no-bottom-margin {
+  margin-bottom: 0;
+}
+.navbar .nav-radio {
+  color: #0DC69B;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.navbar div.brand a:visited {
+  color: #08C;
+}
+.navbar-search {
+  margin-top: 4px;
+}
+.navbar-inverse .navbar-search .search-query {
+  background-color: #005B5B;
+  color: -webkit-input-placeholder(#0dc69b);
+  border-radius: 3px;
+}
+.navbar-inverse .navbar-search .search-query::-webkit-input-placeholder {
+  color: #0DC69B;
+}
+.navbar .navbar-inner,
+.navbar-inverse .navbar-inner {
+  background-color: #0D2B35;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#133d4c), to(#081a21));
+  background-image: -webkit-linear-gradient(top, #133d4c, #081a21);
+  background-image: -o-linear-gradient(top, #133d4c, #081a21);
+  background-image: -moz-linear-gradient(center top, #133d4c, #081a21);
+  background-image: linear-gradient(top, #133d4c, #081a21);
+}
+.navbar-form .navbar-searchBox {
+  margin-top: 0;
+}
+.navbar .navbar-languageBar {
+  padding: 0;
+  padding-left: 15px;
+  margin-top: 1px;
+  margin-left: 0;
+}
+.navbar .navbar-languageBtn {
+  margin: 4px 0 0 0;
+}
+.well {
+  padding: 13px !important;
+}
+div.comment p {
+  padding-top: 5px;
+}
+.row-fluid {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+form.form-topMargin {
+  margin-top: 18px;
+  margin-bottom: 0;
+}
+form.form-noBottomMargin {
+  margin-bottom: 0;
+}
+.form-horizontal .control-group {
+  margin-bottom: 7px;
+}
+ul {
+  padding-left: 3px;
+}
+.dropdown-menu li > a:hover {
+  color: white !important;
+}
+.dropdown-menu h6 {
+  text-transform: none;
+  cursor: default;
+}
+.btn > [class^="icon-"],
+.btn > [class*=" icon-"],
+.menuIcon {
+  margin-top: 2px;
+}
+.btn > [class^="icon-"].noMargin,
+.btn > [class*=" icon-"].noMargin,
+.menuIcon.noMargin {
+  margin-top: 0px;
+}
+div:hover > ul.dropdown-menu-hover {
+  display: block;
+}
+.dropdown-menu {
+  margin-top: 0;
+}
+.menuIcon {
+  margin-left: -5px;
+}
+.badge-small {
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-bottom: 0;
+  padding-top: 0;
+  margin-left: 2px;
+}
+.dropdown-menu > li > p {
+  padding: 3px 20px;
+  cursor: default;
+}
+ul.nav.nav-pills {
+  list-style: none;
+}
+ul.nav.nav-pills li a {
+  margin-right: 5px;
+}
+ul.nav.nav-pills li.active a {
+  color: white;
+}

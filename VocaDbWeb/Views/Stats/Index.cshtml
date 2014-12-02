@@ -1,0 +1,85 @@
+﻿
+@{
+	ViewBag.Title = "Statistics / Reports";
+}
+
+@*
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#" class="active">Songs per producer</a></li>
+		<li><a href="#">Albums per producer</a></li>
+		<li><a href="#">Followers per producer</a></li>
+	</ul>*@
+<select data-bind="foreach: categories, value: selectedUrl" class="input-large">
+	<optgroup label="NA" data-bind="attr: {label: name }, foreach: reports">
+		<option data-bind="text: name, value: url"></option>
+	</optgroup>
+</select>
+
+<div id="chartContainer"></div>
+
+@section BodyScripts {
+	<script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/ViewModels/StatsViewModel.js")" type="text/javascript"></script>
+
+	<script type="text/javascript">
+
+		$(function () {
+
+			var categories = [
+				{
+					name: 'Producers', reports: [
+					  { name: 'Songs by producer', url: 'songsPerProducer' },
+					  { name: 'Albums by producer', url: 'albumsPerProducer' },
+					  { name: 'Followers by producer', url: 'followersPerProducer' }
+					]
+				},
+				{
+					name: 'Vocaloids', reports: [
+					  { name: 'Songs by Vocaloid', url: 'songsPerVocaloid' },
+					  { name: 'Albums by Vocaloid', url: 'albumsPerVocaloid' }
+					]
+				},
+				{
+					name: 'Albums', reports: [
+						{ name: 'Releases by month', url: 'albumsPerMonth' },
+						{ name: 'Hits per album', url: 'hitsPerAlbum' },
+						{ name: 'Albums per genre', url: 'albumsPerGenre' }
+					]
+				},
+				{
+					name: 'Songs', reports: [
+					  { name: 'Hits per song', url: 'hitsPerSong' },
+					  { name: 'Songs per genre', url: 'songsPerGenre' }
+					]
+				},
+				{
+					name: 'General', reports: [
+					  { name: 'Edits per day', url: 'editsPerDay' }
+					]
+				},
+			];
+			var vm = new vdb.viewModels.StatsViewModel(categories);
+
+			vm.selectedUrl.subscribe(function (url) {
+
+				$.getJSON("/stats/" + url, function (data) {
+
+					$('#chartContainer').highcharts(data);
+
+				});
+
+			});
+
+			ko.applyBindings(vm);
+
+			$.getJSON("/stats/" + vm.selectedUrl(), function (data) {
+
+				$('#chartContainer').highcharts(data);
+
+			});
+
+		});
+
+	</script>
+
+}

@@ -1,0 +1,72 @@
+﻿@using VocaDb.Web.Helpers
+@using rule = VocaDb.Web.Controllers.DataAccess.EventSortRule;
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventContract[]
+
+@{
+	ViewBag.Title = ViewRes.SharedStrings.ReleaseEvents;
+}
+
+@helper SortDirection(rule rule) {
+	if (ViewBag.SortRule == rule) {
+		<span class="sortDirection_down"></span>
+	}
+}
+
+@section Toolbar {
+
+	<ul class="nav nav-pills">
+		<li class="active">
+			@Html.ActionLink("List", "Index")
+		</li>
+		<li>
+			@Html.ActionLink("By series", "EventsBySeries")
+		</li>
+		<li>
+			@Html.ActionLink("By date", "EventsByDate")
+		</li>
+	</ul>
+
+	@if (Login.CanManageEventSeries) {
+		@Html.ActionLink(ViewRes.Event.EventsBySeriesStrings.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+	}
+}
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>
+				@Html.ActionLink("Date", "Index", new { sortRule = rule.Date })
+				@SortDirection(rule.Date)
+			</th>
+			<th>
+				@Html.ActionLink("Name", "Index", new { sortRule = rule.Name })
+				@SortDirection(rule.Name)
+			</th>
+			<th>
+				@Html.ActionLink("Series", "Index", new { sortRule = rule.SeriesName })
+				@SortDirection(rule.SeriesName)
+			</th>
+		</tr>
+	</thead>
+	@foreach (var ev in Model) {
+		<tr>
+			<td>@(ev.Date != null ? ev.Date.Value.ToShortDateString() : string.Empty)</td>
+			<td>@Html.ActionLink(ev.Name, "Details", new { id = ev.Id})</td>
+			<td>
+				@if (ev.Series != null) {
+					@Html.ActionLink(ev.Series.Name, "SeriesDetails", new { id = ev.Series.Id })
+				}
+			</td>
+		</tr>
+	}
+</table>
+
+@section BodyScripts {
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
+		});
+
+	</script>
+}

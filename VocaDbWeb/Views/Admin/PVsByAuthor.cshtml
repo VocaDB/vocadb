@@ -1,0 +1,55 @@
+﻿@using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Helpers
+@model VocaDb.Web.Models.Admin.PVsByAuthor
+
+@{
+    ViewBag.Title = "PVs by author";
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Manage", "Index"), 
+	};		
+}
+
+@using (Html.BeginForm("PVsByAuthor", "Admin", FormMethod.Post, new { @class = "form form-inline" })) {
+
+	@Html.TextBoxFor(m => m.Author, new { id = "author" })
+
+	<button type="submit" class="btn btn-primary">Apply</button>
+	
+}
+
+@if (Model.PVs.Any()) {
+	<p>@Model.PVs.Length PVs found</p>
+
+	<table>
+		@foreach (var pv in Model.PVs) {
+			<tr>
+				<td><a href="@pv.Url"><img src="@pv.ThumbUrl" alt="@pv.Name"/></a></td>
+				<td>
+					<a href="@pv.Url">@pv.Name</a><br />
+					@pv.Service (@pv.PVType): @pv.PVId
+				</td>
+				<td>@SongHelpers.SongLink(pv.Song)</td>
+			</tr>
+		}
+	</table>
+
+	if (Login.Manager.HasPermission(PermissionToken.BulkDeletePVs)) {
+		<br />
+		<a href="@Url.Action("DeletePVsByAuthor", new { author = Model.Author })" class="btn btn-danger" onclick="return confirm('@Model.PVs.Length PVs will be deleted. Are you sure?');">Delete PVs by this author</a>
+	}
+
+}
+	
+@section BodyScripts {
+	
+	<script type="text/javascript">
+		
+		$(document).ready(function () {
+
+			$("#author").autocomplete({ source: '@Url.Action("PVAuthorNames")' });
+
+		});
+
+	</script>
+
+}

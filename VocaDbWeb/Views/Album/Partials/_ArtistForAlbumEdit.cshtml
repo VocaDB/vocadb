@@ -1,0 +1,35 @@
+﻿@* Binding context: ArtistForAlbumEditViewModel *@
+
+<tr>
+	<td>
+		<div data-bind="with: artist">
+			<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
+			<br />
+			<span data-bind="text: additionalNames" class="extraInfo"></span>
+		</div>
+		<div data-bind="ifnot: artist">
+			<span data-bind="text: name"></span>
+		</div>
+	</td>
+	<td>
+		<label class="checkbox inline">
+			<input type="checkbox" data-bind="checked: isSupport" />
+			@ViewRes.Album.ArtistForAlbumEditRowStrings.Support
+		</label>
+	</td>
+	<td>
+		<div data-bind="foreach: rolesArray">
+			<div data-bind="ifnot: $data == 'Default'">
+				<span data-bind="text: $root.translateArtistRole($data)"></span>
+				<br />				
+			</div>
+		</div>
+
+		<div data-bind="visible: isCustomizable">
+			<a href="#" class="artistRolesEdit textLink editLink">@ViewRes.Album.ArtistForAlbumEditRowStrings.Customize</a>
+		</div>
+	</td>
+	<td>
+		<a data-bind="click: $root.removeArtist" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
+	</td>
+</tr>

@@ -1,0 +1,40 @@
+﻿
+<table>
+	<tr>
+		<td>@Resources.ContentLanguageSelectionNames.Japanese</td>
+		<td>
+			<input type="text" data-bind="value: originalName.value" maxlength="255" class="nameEdit" />
+		</td>
+	</tr>
+	<tr>
+		<td>@Resources.ContentLanguageSelectionNames.Romaji</td>
+		<td>
+			<input type="text" data-bind="value: romajiName.value" maxlength="255" class="nameEdit" />			
+		</td>
+	</tr>
+	<tr>
+		<td>@Resources.ContentLanguageSelectionNames.English</td>
+		<td>
+			<input type="text" data-bind="value: englishName.value" maxlength="255" class="nameEdit" />			
+		</td>
+	</tr>
+</table>
+
+<label class="helpTip" data-bind="qTip" title="@ViewRes.EntryEditStrings.AliasesDesc">
+	@ViewRes.EntryEditStrings.Aliases
+</label>
+
+<table>
+	<tbody data-bind="foreach: aliases">
+		<tr>
+			<td>
+				<input type="text" data-bind="value: value" maxlength="255" class="nameEdit" />				
+			</td>
+			<td>
+				<a data-bind="click: $parent.deleteAlias" href="#" class="nameDelete textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<a data-bind="click: createAlias" href="#" class="textLink addLink">@HelperRes.HelperStrings.NameNewRow</a>

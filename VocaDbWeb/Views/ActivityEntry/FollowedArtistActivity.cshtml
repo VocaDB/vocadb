@@ -1,0 +1,18 @@
+﻿@model VocaDb.Model.DataContracts.Activityfeed.ActivityEntryContract[]
+
+@{
+    ViewBag.Title = "New activity by followed artists";
+}
+
+<ul class="nav nav-pills">
+	<li>
+		@Html.ActionLink("All activity", "Index")
+	</li>
+	<li class="active">
+		@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
+	</li>
+</ul>
+
+@foreach (var entry in Model) {
+	@ActivityfeedHelpers.ActivityEntry(entry);
+}

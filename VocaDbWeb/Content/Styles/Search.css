@@ -1,0 +1,10 @@
+﻿@media all and (min-width: 1024px) {
+  .search-album-release-date-column {
+    width: 220px;
+  }
+}
+@media all and (min-width: 1680px) {
+  .search-tags-column {
+    width: 340px;
+  }
+}

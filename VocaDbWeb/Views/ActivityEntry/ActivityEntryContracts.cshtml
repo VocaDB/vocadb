@@ -1,0 +1,5 @@
+﻿@model VocaDb.Model.DataContracts.Activityfeed.ActivityEntryContract[]
+
+@foreach (var entry in Model) {
+	@ActivityfeedHelpers.ActivityEntry(entry);
+}

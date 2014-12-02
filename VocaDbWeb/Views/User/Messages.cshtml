@@ -1,0 +1,123 @@
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
+@using VocaDb.Web.Helpers
+@using System.Web.Optimization
+@using R = ViewRes.User;
+
+@{
+	ViewBag.Title = R.MessagesStrings.Messages;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"), 
+		Html.ActionLink(Model.User.Name, "Details", new { id = Model.User.Id }) 
+	};		
+}
+
+@helper MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
+	<div id="@id" data-bind="with: @binding">
+		<table class="table messages">
+			<thead>
+				<tr>
+					<th>@R.MessagesStrings.Date</th>
+					@if (colFrom) {
+						<th>@R.MessagesStrings.From</th>						
+					}
+					@if (colTo) {
+						<th>@R.MessagesStrings.To</th>						
+					}
+					<th>@R.MessagesStrings.Subject</th>
+					@if (allowDelete) {
+						<th></th>
+					}
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: messages">
+				<tr data-bind="css: { info: selected }">
+					<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
+					@if (colFrom) {
+						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("sender.iconUrl", "sender.name")</td>						
+					}
+					@if (colTo) {
+						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("receiver.iconUrl", "receiver.name")</td>						
+					}
+					<td data-bind="click: $root.selectMessage">
+						<span data-bind="visible: highPriority" style="display: none;">
+							@Helpers.NotificationIcon();
+							&nbsp;
+						</span>
+						@if (showUnread) {
+						<span data-bind="visible: !read()" style="display: none;">
+							<img src="@Url.Content("~/Content/star5.png")" alt="unread" />
+						</span>
+						}
+						<span data-bind="text: subject"></span>
+					</td>
+					@if (allowDelete) {
+						<td><a data-bind="click: $parent.deleteMessage" href="#" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Delete</a></td>						
+					}
+				</tr>
+			</tbody>
+		</table>		
+	</div>
+}
+
+@Helpers.ValidationSymmaryPanel(R.MessagesStrings.MessageSendError)
+
+<div data-bind="with: selectedMessage, visible: selectedMessage" id="viewMessage" style="display: none;">
+	@{ Html.RenderPartial("Partials/_UserMessageKnockout"); }
+</div>
+
+<div id="tabs" data-bind="visible: true" style="display: none;">
+
+	<ul>
+		<li>
+			<a href="#receivedTabContent" id="receivedTab">
+				@R.MessagesStrings.Received 
+				<span data-bind="visible: receivedMessages.unread() > 0, text: receivedMessages.unread" class="badge badge-small badge-important" style="display: none;">!</span>
+			</a>
+		</li>
+		<li>
+			<a href="#sentTabContent" id="sentTab">
+				@R.MessagesStrings.Sent
+			</a>
+		</li>
+		<li>
+			<a href="#notificationsTabContent" id="notificationsTab">
+				@R.MessagesStrings.Notifications
+				<span data-bind="visible: notifications.unread() > 0, text: notifications.unread" class="badge badge-small badge-important" style="display: none;">!</span>
+			</a>
+		</li>
+		<li><a href="#composeTab">@R.MessagesStrings.Compose</a></li>
+	</ul>
+	
+	@MessageFolderTab("receivedTabContent", "receivedMessages", true, false, true, false)
+	@MessageFolderTab("sentTabContent", "sentMessages", false, true, false, false)
+	@MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true)
+
+	<div id="composeTab">
+		@{ Html.RenderPartial("ComposeMessage", new VocaDb.Web.Models.User.ComposeMessage(Model.ReceiverName)); }
+	</div>
+
+</div>
+
+@section BodyScripts {
+    @Scripts.Render("~/bundles/shared/edit", "~/bundles/User/Messages")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#tabs").tabs();
+		
+            var urlMapper = new vdb.UrlMapper('@Url.Content("~/")');
+            var repository = new vdb.repositories.UserRepository(urlMapper);		
+            repository.getMessageSummaries(200, false, 20, function (json) {
+                var viewModel = new vdb.viewModels.UserMessagesViewModel(urlMapper, repository, json, @ToJS(Model.SelectedMessageId));
+                ko.applyBindings(viewModel);
+            });
+
+            $("#receiverName").autocomplete({
+                source: urlMapper.mapRelative("/User/FindByName")
+            });
+		
+        });
+
+    </script>
+}

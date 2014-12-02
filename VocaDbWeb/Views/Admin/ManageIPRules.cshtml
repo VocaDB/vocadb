@@ -1,0 +1,64 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Model.Domain.Security.IPRule[]
+
+@{
+    ViewBag.Title = "Manage blocked IPs";
+    ViewBag.Parents = new[] { 
+		Html.ActionLink("Manage", "Index"), 
+	};    
+}
+
+@section BodyScripts {
+<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Admin/ManageIPRulesViewModel.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var rules = @Html.Raw(JsonHelpers.Serialize(Model, true, true));
+    	var viewModel = new vdb.viewModels.ManageIPRulesViewModel(rules);
+    	ko.applyBindings(viewModel);
+	});
+</script>    
+}
+
+<form id="manageRules" data-bind="submit: save">
+    
+	@Helpers.SaveBtn()
+    
+	<table>
+		<thead>
+			<tr>
+				<th>Address</th>
+				<th>Notes</th>
+				<th>Created</th>			    
+				<th></th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: rules">
+			<tr>
+				<td data-bind="text: address"></td>
+				<td>
+					<input type="text" data-bind="value: notes" />
+				</td>
+				<td data-bind="text: createdFormatted"></td>
+				<td><a href="#" class="textLink deleteLink" data-bind="click: $parent.remove">@ViewRes.SharedStrings.Remove</a></td>
+			</tr>			
+		</tbody>
+	</table>
+	<table>
+		<tr data-bind="with: newRule">
+			<td><input type="text" maxlength="40" data-bind="value: address" /></td>
+			<td><a href="#" class="textLink addLink" data-bind="click: $parent.add">@ViewRes.SharedStrings.Add</a></td>
+		</tr>
+	</table>
+    
+	@Helpers.SaveBtn()
+
+</form>
+
+<div data-bind="if: bannedIPs().length > 0">
+	<h2>Automatically banned IPs</h2>
+	<ul data-bind="foreach: bannedIPs">
+		<li>
+			@{ Html.RenderPartial("KnockoutPartials/_IPManage"); }
+		</li>
+	</ul>
+</div>

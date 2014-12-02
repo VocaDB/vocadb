@@ -1,0 +1,49 @@
+﻿@using VocaDb.Web.Helpers;
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract
+
+@{
+	
+    ViewBag.Title = ViewRes.MiscStrings.EventSeries + " - " + Model.Name;
+	ViewBag.Subtitle = string.Join(", ", Model.Aliases);
+
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries")
+	};	
+	
+}
+
+@section Toolbar {
+	@if (Login.CanManageEventSeries) {
+		@Html.ActionLink(ViewRes.SharedStrings.Edit, "EditSeries", new { id = Model.Id }, new { id = "editEventLink" })
+	}
+	@if (Login.CanManageDb) {
+		<a href="@Url.Action("Edit", new { seriesId = Model.Id != 0 ? (int?)Model.Id : null })" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
+	}	
+}
+
+@if (!string.IsNullOrEmpty(Model.Description)) {
+	<p>@HtmlHelpers.FormatText(Model.Description)</p>
+}
+
+<h3>@ViewRes.SharedStrings.ReleaseEvents</h3>
+<ul>
+	@foreach (var ev in Model.Events) {
+		<li>
+			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id })
+			@if (ev.Date != null) {
+				<small>(@ev.Date.Value.ToString("d"))</small>
+			}
+		</li>
+	}
+</ul>
+
+@section BodyScripts {
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		$("#editEventLink").button({ icons: { primary: 'ui-icon-wrench'} });
+		$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
+	});
+
+</script>
+}

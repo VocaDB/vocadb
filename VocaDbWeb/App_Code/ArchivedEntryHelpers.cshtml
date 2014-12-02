@@ -1,0 +1,375 @@
+﻿@using System.Web.Mvc;
+@using VocaDb.Model.DataContracts;
+@using VocaDb.Model.DataContracts.PVs;
+@using VocaDb.Model.DataContracts.Versioning
+@using VocaDb.Model.Domain;
+@using VocaDb.Model.Domain.Globalization
+@using VocaDb.Web.Helpers;
+@inherits VocaDb.Web.Code.HelperPage
+
+@functions {
+	public static HelperResult DataRow<T>(string name, T primary, T compared, Func<T, object> valGetter)
+		where T : class {
+
+		var val1 = valGetter(primary);
+		var val2 = (compared != null ? valGetter(compared) : null);
+
+		return DataRow(name, val1, val2);
+		
+    }
+
+	public static HelperResult DataRow<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<T, object> valGetter)
+		where T : class {
+
+		var val1 = valGetter(comparedVersions.FirstData);
+		var val2 = (comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null);
+
+		return DataRow(name, val1, val2);
+
+	}
+
+	public static HelperResult DataRowList<T>(string name, T primary, T compared, Func<T, IEnumerable<MvcHtmlString>> valGetter)
+		where T : class {
+
+		var val1 = valGetter(primary);
+		var val2 = (compared != null ? valGetter(compared) : null);
+
+		return DataRowList(name, val1, val2);
+			
+	}
+
+	public static HelperResult DataRowList<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<T, IEnumerable<MvcHtmlString>> valGetter)
+		where T : class {
+
+		var val1 = valGetter(comparedVersions.FirstData);
+		var val2 = (comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null);
+
+		return DataRowList(name, val1, val2);
+
+	}
+		
+	public static string FormatReleaseDate(OptionalDateTimeContract contract) {
+		return OptionalDateTime.ToDateTime(contract.Year, contract.Month, contract.Day).ToShortDateString();
+	}
+
+	public static HelperResult ObjectRefList<T>(string name, ComparedVersionsContract<T> comparedVersions, 
+		Func<T, IEnumerable<ObjectRefContract>> valGetter) where T : class {
+		
+		return DataRowList(name, comparedVersions, d => DataFormatUtils.GenerateHtmlFromHelper(valGetter(d), ObjectRefInfo));
+		
+	}
+
+	public static HelperResult PictureRow<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<int, string> urlGetter)
+		where T : class {
+
+		var val1 = urlGetter(comparedVersions.FirstId);
+		var val2 = (comparedVersions.SecondId != 0 ? urlGetter(comparedVersions.SecondId) : null);
+
+		return PictureRow(name, val1, val2);
+				
+	}
+	
+	public static HelperResult TranslatedNameRow<T>(ComparedVersionsContract<T> comparedVersions, Func<T, TranslatedStringContract> valGetter)
+		where T : class {
+
+		var val1 = valGetter(comparedVersions.FirstData);
+		var val2 = comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null;
+
+		return TranslatedNameRow(val1, val2);
+		
+	}
+
+	public static HelperResult TranslatedNameRow<T>(ComparedVersionsContract<T> comparedVersions, Func<T, ArchivedTranslatedStringContract> valGetter)
+		where T : class {
+
+		var val1 = valGetter(comparedVersions.FirstData);
+		var val2 = comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null;
+
+		return TranslatedNameRow(val1, val2);
+
+	}
+	
+}
+	
+@helper ArchivedObjectVersions(IEnumerable<VocaDb.Web.Models.Shared.ArchivedObjectVersion> archivedVersions, Func<int, string> linkFunc = null) {
+	
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>@ViewRes.ArchivedObjectVersionsStrings.Version</th>
+				<th>@ViewRes.ArchivedObjectVersionsStrings.Created</th>
+				<th>@ViewRes.ArchivedObjectVersionsStrings.Author</th>
+				<th>@ViewRes.ArchivedObjectVersionsStrings.Changes</th>
+				<th>@ViewRes.ArchivedObjectVersionsStrings.Notes</th>
+			</tr>
+		</thead>
+		<tbody>
+		@foreach (var ver in archivedVersions.OrderByDescending(v => v.Contract.Version)) {
+			var style = (ver.AnythingChanged ? "" : "muted");
+			<tr>
+				<td>
+					@if (linkFunc != null) {
+						<a href="@linkFunc(ver.Id)" class="@style">
+							@ver.Contract.Version
+							(@Translate.EntryStatusNames[ver.Status])
+						</a>
+					} else {
+						<text>
+							@ver.Contract.Version
+							(@Translate.EntryStatusNames[ver.Status])
+						</text>
+					}
+				</td>
+				<td>
+					<span class="@style">
+						@Helpers.UniversalTimeLabel(ver.Contract.Created)
+					</span>
+				</td>
+				<td>					
+					@UserHelpers.UserIconLink(ver.Contract.Author, ver.Contract.AgentName)
+				</td>
+				<td>
+					<span class="@style">						
+						@ver.Reason
+						@if (!string.IsNullOrEmpty(ver.ChangeMessage)) {
+							@(" (" + ver.ChangeMessage + ")")
+						}
+					</span>
+				</td>
+				<td>
+					<span class="@style">
+						@ver.Notes
+					</span>
+				</td>
+			</tr>
+		}
+		</tbody>
+	</table>	
+	
+}
+
+@helper ArchivedObjectVersionProperties(VocaDb.Web.Models.Shared.ArchivedObjectVersion ver, 
+VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
+
+	<div class="well well-transparent">
+		<h4>Properties</h4>
+
+		<table class="table-bordered">
+			<tr>
+				<td>Version</td>
+				<td>@ver.Contract.Version</td>
+				<td>
+					@if (compareTo != null) {
+						@compareTo.Contract.Version
+					}
+				</td>
+			</tr>
+			<tr>
+				<td>Status</td>
+				<td>@ver.Status</td>
+				<td>
+					@if (compareTo != null) {
+						@compareTo.Status
+					}
+				</td>
+			</tr>
+			<tr>
+				<td>Snapshot</td>
+				<td>@ver.Contract.IsSnapshot</td>
+				<td>
+					@if (compareTo != null) {
+						@compareTo.Contract.IsSnapshot
+					}
+				</td>
+			</tr>
+			<tr>
+				<td>Created</td>
+				<td>@Helpers.UniversalTimeLabel(ver.Contract.Created)</td>
+				<td>
+					@if (compareTo != null) {
+						@Helpers.UniversalTimeLabel(compareTo.Contract.Created)
+					}
+				</td>
+			</tr>
+			<tr>
+				<td>Author</td>
+				<td>@UserHelpers.UserIconLink(ver.Contract.Author, ver.Contract.AgentName)</td>
+				<td>
+					@if (compareTo != null) {
+						@UserHelpers.UserIconLink(compareTo.Contract.Author, compareTo.Contract.AgentName)
+					}
+				</td>
+			</tr>
+			<tr>
+				<td>Reason</td>
+				<td>@ver.Reason</td>
+				<td>
+					@if (compareTo != null) {
+						@compareTo.Reason
+					}
+				</td>
+			</tr>
+			<tr>
+				<td>Changed</td>
+				<td>@ver.ChangeMessage</td>
+				<td>
+					@if (compareTo != null) {
+						@compareTo.ChangeMessage
+					}
+				</td>
+			</tr>
+			<tr>
+				<td>Notes</td>
+				<td>@ver.Notes</td>
+				<td>
+					@if (compareTo != null) {
+						@compareTo.Notes
+					}
+				</td>
+			</tr>
+		</table>
+
+	</div>
+
+}
+
+@helper CurrentVersionMessage(int version, EntryStatus status) {
+	<p>@ViewRes.ArchivedObjectVersionsStrings.CurrentVersionIs @version (@Translate.EntryStatusNames[status]).</p>	
+}
+
+@helper DataRow(string name, object val, object compareVal = null) {
+	<tr class="@(compareVal != null && val != compareVal ? "changed" : "")">
+		<td>@name</td>
+		<td colspan="@(compareVal != null ? 1 : 2)">@val</td>
+		@if (compareVal != null) {
+		<td>@compareVal</td>			
+		}
+	</tr>	
+}
+
+@helper DataRowList(string name, IEnumerable<MvcHtmlString> rows, IEnumerable<MvcHtmlString> compareRows = null) {
+	if (rows != null) {
+	<tr>
+		<td>@name</td>
+		<td colspan="@(compareRows != null ? 1 : 2)">
+			<ul>
+			@foreach (var row in rows) {
+				<li>@row</li>
+			}			
+			</ul>
+		</td>
+		@if (compareRows != null) {
+		<td>
+				<ul>
+				@foreach (var row in compareRows) {
+					<li>@row</li>
+				}			
+				</ul>	
+		</td>
+		}		
+	</tr>	
+	}
+}
+
+@helper NameInfo(LocalizedStringContract name) {
+	<text>@Translate.ContentLanguageSelectionName(name.Language): @name.Value</text>
+}
+
+@helper ObjectRefInfo(ObjectRefContract objRef) {
+	if (objRef != null) {
+	<text>@objRef.NameHint [@objRef.Id]</text>
+	}
+}
+
+@helper ObjectRefList(string name, IEnumerable<ObjectRefContract> objRefs) {
+	@DataRowList(name, DataFormatUtils.GenerateHtmlFromHelper(objRefs, ObjectRefInfo));
+}
+
+@helper PictureFileInfo(ArchivedEntryPictureFileContract pic) {
+	<text>@pic.Name (@pic.Mime) - @pic.Author, @pic.Created</text>
+}
+
+@helper PictureRow(string name, string url, string compareToUrl = null) {
+	<tr>
+		<td>@name</td>
+		<td colspan="@(!string.IsNullOrEmpty(compareToUrl) ? 1 : 2)">
+			<img src="@url" alt="@name" class="coverPic" />
+		</td>
+		@if (!string.IsNullOrEmpty(compareToUrl)) {
+			<td>
+				<img src="@compareToUrl" alt="@name" class="coverPic" />
+			</td>
+		}
+	</tr>	
+
+}
+
+@helper PVInfo(ArchivedPVContract pv) {
+	<text>@pv.Service (@pv.PVType): @pv.PVId by @pv.Author (@DateTimeUtils.FormatFromSeconds(pv.Length))</text>
+}
+
+@helper TranslatedNameRow(TranslatedStringContract name, TranslatedStringContract compareToName = null) {
+	<tr>
+		<td>Original language:</td>
+		<td colspan="@(compareToName != null ? 1 : 2)">
+			@Translate.ContentLanguageSelectionName(name.DefaultLanguage)
+		</td>
+		@if (compareToName != null) {
+			<td>			
+				@Translate.ContentLanguageSelectionName(compareToName.DefaultLanguage)
+			</td>
+		}
+	</tr>
+	<tr>
+		<td>Primary names</td>
+		<td colspan="@(compareToName != null ? 1 : 2)">
+			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese): @name.Japanese<br />
+			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji): @name.Romaji<br />
+			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.English): @name.English<br />
+		</td>
+		@if (compareToName != null) {
+			<td>			
+				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese) + ": " + compareToName.Japanese)<br />
+				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji) + ": " + compareToName.Romaji)<br />
+				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.English) + ": " +  compareToName.English)<br />			
+			</td>
+		}
+	</tr>
+}
+
+@helper TranslatedNameRow(ArchivedTranslatedStringContract name, ArchivedTranslatedStringContract compareToName = null) {
+	<tr>
+		<td>Original language</td>
+		<td colspan="@(compareToName != null ? 1 : 2)">
+			@Translate.ContentLanguageSelectionName(name.DefaultLanguage)
+		</td>
+		@if (compareToName != null) {
+			<td>			
+				@Translate.ContentLanguageSelectionName(compareToName.DefaultLanguage)
+			</td>
+		}
+	</tr>
+	<tr>
+		<td>Primary names</td>
+		<td colspan="@(compareToName != null ? 1 : 2)">
+			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese): @name.Japanese<br />
+			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji): @name.Romaji<br />
+			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.English): @name.English<br />
+		</td>
+		@if (compareToName != null) {
+			<td>			
+				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese) + ": " + compareToName.Japanese)<br />
+				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji) + ": " + compareToName.Romaji)<br />
+				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.English) + ": " +  compareToName.English)<br />
+			</td>
+		}
+	</tr>
+}
+
+@helper WebLinkInfo(ArchivedWebLinkContract link) {
+	if (!string.IsNullOrEmpty(link.Description)) {
+		@link.Description<text>: </text>
+	}
+	@link.Url
+    @(" (")@link.Category@(")")
+}

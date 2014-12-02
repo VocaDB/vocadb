@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+	<ShortName>VocaDB albums</ShortName>
+	<Description>Vocaloid Database with artists, albums, songs, PVs and more.</Description>
+	<Tags>vocaloid hatsune_miku</Tags>
+	<Contact>support@vocadb.net</Contact>
+	<Image width="16" height="16" type="image/x-icon">http://vocadb.net/Content/favicon.ico</Image>
+	<Url type="application/x-suggestions+json"
+			 template="http://vocadb.net/Album/FindNames?term={searchTerms}"/>
+	<Url type="text/html" template="http://vocadb.net/Album/Index?filter={searchTerms}" />
+</OpenSearchDescription>

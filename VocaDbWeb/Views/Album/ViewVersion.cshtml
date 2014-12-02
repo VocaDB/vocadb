@@ -1,0 +1,51 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Album;
+@model VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract
+
+@{
+	
+    ViewBag.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	
+	if (Model.Album != null) {
+		ViewBag.Parents = new[] { 
+			Html.ActionLink("Albums", "Index"), 
+			Html.ActionLink(Model.Album.Name, "Details", new { id = Model.Album.Id }),
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Album.Id }) 
+		};
+	} else {
+		ViewBag.Parents = new[] { 
+			Html.ActionLink("Albums", "Index")
+		};
+	}
+
+}
+
+@section Toolbar {
+@if (Login.CanRevertEntryVersions) {
+	@Html.ActionLink("Revert to this version", "RevertToVersion", new { archivedAlbumVersionId = Model.ArchivedVersion.Id }, new { id = "revertLink", onclick = "return confirm(\"Are you sure you want to revert to this version?\");" })
+}
+&nbsp;
+<a href="@Url.Action("ArchivedVersionXml", new { id = Model.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
+}
+
+@if (Model.ComparableVersions.Any()) {
+	using (Html.BeginForm("ViewVersion", "Album", FormMethod.Post, new { @class = "form form-inline" })) {
+		<p>Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, new SelectList(Model.ComparableVersions, "Id", "Version", Model.ComparedVersionId), new { @class = "input-small" })
+		<button type="submit" class="btn btn-primary">Compare</button></p>
+	}
+}
+
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForAlbum(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForAlbum(Model.ComparedVersion) : null)
+
+@AlbumHelpers.PrintArchivedAlbumData(Model.Versions)
+
+@section BodyScripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#revertLink").button({ icons: { primary: 'ui-icon-arrowrefresh-1-w'} });
+            $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+        });
+
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Model.Domain.Security;
+
+@{
+    ViewBag.Title = "Site management";
+}
+<h3>Common tasks</h3>
+
+<p>@Html.ActionLink("View users list", "Index", "User")</p>
+
+<p>@Html.ActionLink("View recent comments", "Index", "Comment")</p>	
+
+@if (Login.Manager.HasPermission(PermissionToken.ViewAuditLog)) {
+<p>@Html.ActionLink("View audit log", "ViewAuditLog")</p>
+}
+
+@if (Login.Manager.HasPermission(PermissionToken.ManageEntryReports)) {
+<p>@Html.ActionLink("Manage entry reports", "ViewEntryReports")</p>	
+}
+
+@if (Login.Manager.HasPermission(PermissionToken.BulkDeletePVs)) {
+<p>@Html.ActionLink("Delete PVs by author", "PVsByAuthor")</p>	
+}
+
+@if (Login.Manager.HasPermission(PermissionToken.ManageIPRules)) {
+<p>@Html.ActionLink("Manage IP rules", "ManageIPRules")</p>	
+}
+<br />
+
+@if (Login.Manager.HasPermission(PermissionToken.Admin)) {
+<h3>Database maintenance tasks</h3>
+<p>
+@Html.ActionLink("Cleanup old log entries", "CleanupOldLogEntries")
+</p>
+<p>
+@Html.ActionLink("Missing thumbs", "CreateMissingThumbs")
+</p>	
+<p>
+@Html.ActionLink("Create XML dump", "CreateXmlDump")
+</p>	
+<p>
+@Html.ActionLink("Refresh NHibernate cache", "RefreshDbCache")
+</p>
+<p>
+@Html.ActionLink("Generate image thumbnails", "GeneratePictureThumbs")
+</p>
+<p>
+@Html.ActionLink("Update entry sort names", "UpdateAdditionalNames")
+</p>
+<p>
+@Html.ActionLink("Update NicoIDs", "UpdateNicoIds")
+</p>
+<p>
+@Html.ActionLink("Update all artist strings", "UpdateArtistStrings")
+</p>
+<p>
+@Html.ActionLink("Update album ratings", "UpdateAlbumRatingTotals")
+</p>
+<p>
+@Html.ActionLink("Update link categories", "UpdateLinkCategories")
+</p>    
+<p>
+@Html.ActionLink("Update PV Icons", "UpdatePVIcons")
+</p>
+<p>
+@Html.ActionLink("Update favorited song counts", "UpdateSongFavoritedTimes")
+</p>
+<p>
+@Html.ActionLink("Update tag vote counts", "UpdateTagVoteCounts")
+</p>	
+}

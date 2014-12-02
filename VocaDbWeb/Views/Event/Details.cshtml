@@ -1,0 +1,45 @@
+﻿@using VocaDb.Web.Helpers;
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract
+
+@{
+	
+	ViewBag.Title = ViewRes.Event.DetailsStrings.Event + " - " + Model.Name;
+
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries")
+	};
+	
+}
+
+@section Toolbar {
+	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editEventLink", @class = (Login.CanManageDb ? "" : "disabled") })
+	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+}
+
+@if (Model.Series != null) {
+	<p>@ViewRes.Event.DetailsStrings.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })</p>
+}
+
+@if (Model.Date != null) {
+	<p>@ViewRes.Event.DetailsStrings.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
+}
+
+@if (!string.IsNullOrEmpty(Model.Description)) {
+	@HtmlHelpers.FormatText(Model.Description)
+}
+
+@if (Model.Albums.Any()) {
+	<br />
+	@AlbumHelpers.AlbumGrid(Model.Albums, 2, false, false, true)
+}
+	
+@section BodyScripts {
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
+		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock'} });
+	});
+
+</script>
+}

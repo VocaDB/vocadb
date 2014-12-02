@@ -1,0 +1,35 @@
+﻿@inherits VocaDb.Web.Code.HelperPage
+@using MarkdownSharp
+@using VocaDb.Model.Helpers
+@using VocaDb.Web.Helpers;
+
+@helper ConvertNewlinesToBreaks(string text) {
+	var lines = text.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.None);
+	foreach (var line in lines) {
+		@Html.Raw(line)
+		<br />
+	}
+}
+
+@helper FormatText(string text) {
+	text = ViewHelper.ParseBBCode(text);
+	<text>@ConvertNewlinesToBreaks(text)</text>
+}
+
+@* Transforms Markdown-formatted text into HTML. The input will be sanitized for any HTML tags first. *@
+@helper FormatMarkdown(string text) {
+	@Html.Raw(MarkdownHelper.TranformMarkdown(text))
+}
+
+@helper MetaTag(string name, string content) {
+	if (content != null) {
+		<meta name="@name" content="@content" />
+	}
+}
+
+@helper OpenGraphMetaTags(string url = null, string title = null, string description = null, string type = null) {
+	@MetaTag("og:url", url)
+	@MetaTag("og:title", title)
+	@MetaTag("og:description", description.Summarize(20, 400))
+	@MetaTag("og:type", type)
+}

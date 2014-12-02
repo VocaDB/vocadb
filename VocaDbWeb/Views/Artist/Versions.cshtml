@@ -1,0 +1,13 @@
+﻿@model VocaDb.Web.Models.Artist.Versions
+
+@{
+	ViewBag.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Artist.Name;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Artists, "Index"), 
+		LinkExtensions.ActionLink(Html, Model.Artist.Name, "Details", new { id = Model.Artist.Id }) 
+	};
+}
+
+@ArchivedEntryHelpers.CurrentVersionMessage(Model.Artist.Version, Model.Artist.Status)
+
+@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id = id }))

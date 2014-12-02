@@ -1,0 +1,53 @@
+﻿@model EntryReportContract[]
+@using VocaDb.Model.DataContracts
+@using VocaDb.Model.Domain
+@using VocaDb.Web.Helpers;
+
+@helper TypeName(EntryReportContract contract) {
+	switch (contract.Entry.EntryType) {
+		case EntryType.Album:
+			@Translate.AlbumReportTypeNames[contract.AlbumReportType]
+			break;
+		case EntryType.Artist:
+			@Translate.ArtistReportTypeNames[contract.ArtistReportType]
+			break;
+		case EntryType.Song:
+			@Translate.SongReportTypeNames[contract.SongReportType]
+			break;
+		case EntryType.User:
+			@Translate.UserReportTypeNames[contract.UserReportType]
+			break;			
+	}
+}
+
+@{
+	ViewBag.Title = "View entry reports";
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Manage", "Index"), 
+	};		
+}
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Time</th>
+			<th>Author</th>
+			<th>Entry</th>
+			<th>Type</th>
+			<th>Notes</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var r in Model) {
+			<tr>
+				<td>@r.Created</td>
+				<td>@UserHelpers.UserIconLink(r.User, r.Hostname)</td>
+				<td>@Helpers.EntryLink(r.Entry)</td>
+				<td>@TypeName(r)</td>
+				<td>@r.Notes</td>
+				<td><a href="@Url.Action("DeleteEntryReport", new { id = r.Id })" class="textLink deleteLink">Delete</a></td>
+			</tr>
+		}		
+	</tbody>
+</table>

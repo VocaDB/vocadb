@@ -1,0 +1,155 @@
+﻿@inherits VocaDb.Web.Code.HelperPage
+@using System.Web.Mvc.Html;
+@using Microsoft.Web.Helpers
+@using Resources
+@using VocaDb.Model.DataContracts.Users;
+@using VocaDb.Model.Domain.Users
+@using VocaDb.Web.Helpers
+
+@helper IconAndName(IUserWithEmail user, int size = 20) {
+	@ProfileIcon(user, size)
+	<span>@user.Name</span>
+}
+
+@helper IconAndName(IUserWithEmail user, string name, int size = 20) {
+	if (user != null) {	
+		@IconAndName(user, size)
+	} else {
+		@name
+	}
+}
+
+@helper IconAndNameKnockout(string iconBinding, string nameBinding, int size = 20) {
+	@ProfileIconKnockout(iconBinding, size)
+	<span data-bind="text: @nameBinding"></span>
+}
+
+@helper ProfileIcon(IUserWithEmail user, int size = 80) {
+	if (user != null && !string.IsNullOrEmpty(user.Email)) {
+		<div style="width: @(size)px; height: @(size)px; display: inline-block">
+			@Gravatar.GetHtml(user.Email, size)
+		</div>
+	}
+}
+
+@helper ProfileIconKnockout(string binding, int size = 80) {
+	<div data-bind="visible: @binding" style="width: @(size)px; height: @(size)px; display: inline-block">
+		<img data-bind="attr: { src: @binding }" alt="User avatar" src="@Url.Content("~/Content/unknown.png")" />
+	</div>
+}
+
+@helper SongVoteRatingsRadioKnockout(string binding) {
+	<button class="btn" data-bind="click: function() { @(binding)('Nothing'); }, css: { active: @(binding)() == 'Nothing' }">Anything</button>
+	<button class="btn" data-bind="click: function() { @(binding)('Like'); }, css: { active: @(binding)() == 'Like' }">
+		<i class="icon-star"></i>
+		@SongVoteRatingNames.Like
+	</button>
+	<button class="btn" data-bind="click: function() { @(binding)('Favorite'); }, css: { active: @(binding)() == 'Favorite' }">
+		<i class="icon-heart"></i>
+		@SongVoteRatingNames.Favorite
+	</button>
+}
+
+@helper UserGrid(IEnumerable<IUserWithEmail> users, int columns) {
+	
+	<table>
+		@{ int i = 0; }
+	
+		@foreach (var user in users) {
+			if (i % columns == 0) {
+				@Html.Raw("<tr>")
+			}
+			<td>
+				@ProfileIcon(user, 20)
+			</td>
+			<td>
+				@UserLink(user)
+			</td>
+			{ i++; }
+			if (i % columns == 0) {
+				@Html.Raw("</tr>")
+			}
+		}
+		@if (i % columns != 0) {
+			@Html.Raw("</tr>")
+		}
+	</table>
+			
+}
+
+@helper UserIconLink(IUserWithEmail user, int size = 20) {	
+	<a href="@Url.Action("Profile", "User", new { id = user.Name })">@ProfileIcon(user, size)<span>@user.Name</span></a>
+}
+
+@helper UserIconLink(IUserWithEmail user, string name, int size = 20) {
+	if	(user != null) {
+		@UserIconLink(user, size)
+	} else {
+		@name	
+	}
+}
+
+@helper UserLink(IUser user) {
+	@Html.ActionLink(user.Name, "Profile", "User", new { id = user.Name }, null)
+}
+
+@helper UserLink(IUser user, string name) {
+	if (user != null) {
+		@UserLink(user)	
+	} else {
+		@name		
+	}
+}
+
+@helper UserTable(IEnumerable<UserContract> users, UserGroupId groupId, string name) {
+
+    <table class="table table-striped table-hover">
+	    <thead>
+		    <tr>
+			    <th colspan="2">
+			        @Html.ActionLink(ViewRes.User.DetailsStrings.UserName, "Index", "User", new { GroupId = groupId, Name = name, sort = VocaDb.Model.Service.UserSortRule.Name }, null)
+			    </th>
+			    <th>
+			        @Html.ActionLink(ViewRes.User.DetailsStrings.MemberSince, "Index", "User", new { GroupId = groupId, Name = name, sort = VocaDb.Model.Service.UserSortRule.RegisterDate }, null)
+			    </th>
+			    <th>
+			        @Html.ActionLink(ViewRes.User.DetailsStrings.UserGroup, "Index", "User", new { GroupId = groupId, Name = name, sort = VocaDb.Model.Service.UserSortRule.Group }, null)
+			    </th>
+			    <th></th>
+		    </tr>
+	    </thead>
+	    <tbody>
+	    @foreach (var user in users) {
+		    <tr>
+			    <td>
+				    <a href="@Url.Action("Profile", "User", new { id = user.Name })">
+					    @ProfileIcon(user)					
+				    </a>
+			    </td>
+			    <td>
+					@if (!user.Active) {
+						<div class="disabled">
+							@UserLink(user)
+						</div>
+					} else {
+						@UserLink(user)						
+					}
+			    </td>
+			    <td>
+				    @user.CreateDate
+			    </td>
+			    <td>
+				    @Translate.UserGroups[user.GroupId]
+			    </td>
+			    <td>
+				    @if (Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.ManageUserPermissions)) {
+					    <text>&nbsp;</text>
+					    @Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", "User", new { id = user.Id }, new { @class = "textLink editLink" });	
+				    }
+			    </td>
+		    </tr>
+	    }
+	    </tbody>
+    </table>    
+        
+}

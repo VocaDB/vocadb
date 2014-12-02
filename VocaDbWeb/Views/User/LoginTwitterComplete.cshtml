@@ -1,0 +1,37 @@
+﻿@model VocaDb.Web.Models.User.RegisterOpenAuthModel
+
+@{
+    ViewBag.Title = ViewRes.User.LoginUsingAuthStrings.LoginUsingTwitter;
+}
+
+@Helpers.ValidationSymmaryPanel(ViewRes.User.LoginStrings.UnableToLogin)
+
+<p>@ViewRes.User.LoginUsingAuthStrings.AlmostDone</p>
+
+@using (Html.BeginForm()) {
+	
+    @Html.AntiForgeryToken()
+	@Html.HiddenFor(m => m.AccessToken)
+    @Html.HiddenFor(m => m.TwitterId)
+    @Html.HiddenFor(m => m.TwitterName)
+	
+    <div class="editor-label">
+        @Html.LabelFor(m => m.UserName)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(m => m.UserName, new { size = 40, maxlength = 100 })
+        @Html.ValidationMessageFor(m => m.UserName)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(m => m.Email)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(m => m.Email, new { size = 40, maxlength = 50 })
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <p>
+		<button type="submit" class="btn btn-primary">@ViewRes.User.CreateStrings.DoRegister</button>
+    </p>
+}

@@ -1,0 +1,914 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{024D07DF-F669-46E9-9514-3AB8094F74AC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VocaDb.Model</RootNamespace>
+    <AssemblyName>VocaDb.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentNHibernate, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Google.GData.Extensions.2.2.0.0\lib\Google.GData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.YouTube, Version=2.2.0.0, Culture=neutral, PublicKeyToken=af04a32718ae8833, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Google.GData.YouTube.2.2.0.0\lib\Google.GData.YouTube.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="IvanAkcheurov.Commons">
+      <HintPath>..\packages\IvanAkcheurov.NTextCat.Lib.0.2.1.1\lib\net40\IvanAkcheurov.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="IvanAkcheurov.NClassify">
+      <HintPath>..\packages\IvanAkcheurov.NTextCat.Lib.0.2.1.1\lib\net40\IvanAkcheurov.NClassify.dll</HintPath>
+    </Reference>
+    <Reference Include="IvanAkcheurov.NTextCat.Lib">
+      <HintPath>..\packages\IvanAkcheurov.NTextCat.Lib.0.2.1.1\lib\net40\IvanAkcheurov.NTextCat.Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache2, Version=4.0.0.4000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.Caches.SysCache2.4.0.0.4000\lib\net40\NHibernate.Caches.SysCache2.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PiaproClient, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PiaproClient.1.0.4.0\lib\net45\PiaproClient.dll</HintPath>
+    </Reference>
+    <Reference Include="RSS.NET">
+      <HintPath>..\Libs\RSS.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataContracts\Activityfeed\ActivityEntryContract.cs" />
+    <Content Include="DataContracts\Activityfeed\ActivityEntryContractFactory.cs" />
+    <Compile Include="DataContracts\Activityfeed\NewsEntryContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumReleaseContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumWithArchivedVersions.cs" />
+    <Compile Include="DataContracts\Albums\AlbumWithCoverPictureContract.cs" />
+    <Compile Include="DataContracts\Albums\ArchivedAlbumContract.cs" />
+    <Compile Include="DataContracts\Albums\ArchivedAlbumReleaseContract.cs" />
+    <Compile Include="DataContracts\Albums\ArchivedAlbumVersionContract.cs" />
+    <Compile Include="DataContracts\Albums\ArchivedAlbumVersionDetailsContract.cs" />
+    <Compile Include="DataContracts\Albums\ArchivedArtistForAlbumContract.cs" />
+    <Compile Include="DataContracts\Albums\ArtistForAlbumForApiContract.cs" />
+    <Compile Include="DataContracts\Albums\ComparedAlbumsContract.cs" />
+    <Compile Include="DataContracts\Albums\RelatedAlbumsContract.cs" />
+    <Compile Include="DataContracts\Albums\TranslatedAlbumContract.cs" />
+    <Compile Include="DataContracts\Albums\ExportedAlbumContract.cs" />
+    <Compile Include="DataContracts\Albums\ArtistForAlbumContract.cs" />
+    <Compile Include="DataContracts\Albums\CreateAlbumContract.cs" />
+    <Compile Include="DataContracts\Albums\ParseAlbumFileResultContract.cs" />
+    <Compile Include="DataContracts\Api\EntryForApiContract.cs" />
+    <Compile Include="DataContracts\CommentForApiContract.cs" />
+    <Compile Include="DataContracts\EntryThumbForApiContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />
+    <Compile Include="DataContracts\Songs\ArchivedSongListVersionContract.cs" />
+    <Compile Include="DataContracts\Songs\RelatedSongsContract.cs" />
+    <Compile Include="DataContracts\Songs\SongInListForApiContract.cs" />
+    <Compile Include="DataContracts\Songs\SongListWithArchivedVersionsContract.cs" />
+    <Compile Include="DataContracts\Tags\TagForApiContract.cs" />
+    <Compile Include="DataContracts\Tags\TagUsageForApiContract.cs" />
+    <Compile Include="DataContracts\ArchivedEntryPictureFileContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistForApiContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistForApiContractOld.cs" />
+    <Compile Include="DataContracts\Artists\ComparedArtistsContract.cs" />
+    <Compile Include="DataContracts\EntryBaseContract.cs" />
+    <Compile Include="DataContracts\EntryPictureFileContract.cs" />
+    <Compile Include="DataContracts\EntryRefWithCommonPropertiesContract.cs" />
+    <Compile Include="DataContracts\EntryRefWithNameContract.cs" />
+    <Compile Include="DataContracts\EntryReportContract.cs" />
+    <Compile Include="DataContracts\EntryThumbContract.cs" />
+    <Compile Include="DataContracts\EntryWithImageContract.cs" />
+    <Compile Include="DataContracts\EntryWithNameAndVersionContract.cs" />
+    <Compile Include="DataContracts\MikuDb\ImportedAlbumOptions.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ArchivedEventContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ArchivedEventSeriesContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ArchivedEventVersionContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventDetailsContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventFindResultContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventSeriesContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventSeriesDetailsContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventSeriesForEditContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventSeriesWithEventsContract.cs" />
+    <Compile Include="DataContracts\Albums\SongInAlbumRefContract.cs" />
+    <Compile Include="DataContracts\Artists\ArchivedArtistVersionContract.cs" />
+    <Compile Include="DataContracts\Artists\ArchivedArtistVersionDetailsContract.cs" />
+    <Compile Include="DataContracts\EntryNameContract.cs" />
+    <Compile Include="DataContracts\EntryRefContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventWithArchivedVersionsContract.cs" />
+    <Compile Include="DataContracts\Security\PermissionTokenContract.cs" />
+    <Compile Include="DataContracts\Songs\ArchivedArtistForSongContract.cs" />
+    <Compile Include="DataContracts\Songs\ComparedSongsContract.cs" />
+    <Compile Include="DataContracts\Songs\PVForSongContract.cs" />
+    <Compile Include="DataContracts\Songs\SongInListContract.cs" />
+    <Compile Include="DataContracts\Songs\SongInListEditContract.cs" />
+    <Compile Include="DataContracts\Songs\SongListBaseContract.cs" />
+    <Compile Include="DataContracts\Songs\SongListContract.cs" />
+    <Compile Include="DataContracts\Songs\SongListForEditContract.cs" />
+    <Compile Include="DataContracts\Songs\SongListsByCategoryContract.cs" />
+    <Compile Include="DataContracts\Songs\SongMatchProperty.cs" />
+    <Compile Include="DataContracts\Songs\ArchivedSongVersionContract.cs" />
+    <Compile Include="DataContracts\Songs\ArchivedSongVersionDetailsContract.cs" />
+    <Compile Include="DataContracts\Songs\SongInAlbumEditContract.cs" />
+    <Compile Include="DataContracts\Songs\SongWithAlbumAndPVsContract.cs" />
+    <Compile Include="DataContracts\Songs\SongWithAlbumContract.cs" />
+    <Compile Include="DataContracts\Songs\SongForApiContract.cs" />
+    <Compile Include="DataContracts\Songs\SongWithComponentsContract.cs" />
+    <Compile Include="DataContracts\Songs\SongWithPVAndVoteContract.cs" />
+    <Compile Include="DataContracts\Songs\SongWithPVPlayerAndVoteContract.cs" />
+    <Compile Include="DataContracts\Tags\ArchivedTagContract.cs" />
+    <Compile Include="DataContracts\Tags\ArchivedTagVersionContract.cs" />
+    <Compile Include="DataContracts\Tags\TagUsageWithVotesContract.cs" />
+    <Compile Include="DataContracts\Tags\TagWithImageContract.cs" />
+    <Compile Include="DataContracts\UploadedFileContract.cs" />
+    <Compile Include="DataContracts\UseCases\DuplicateEntryResultContract.cs" />
+    <Compile Include="DataContracts\UseCases\EntryIdAndVersionContract.cs" />
+    <Compile Include="DataContracts\UseCases\EntryWithTagUsagesContract.cs" />
+    <Compile Include="DataContracts\Tags\TagCategoryContract.cs" />
+    <Compile Include="DataContracts\Tags\TagContract.cs" />
+    <Compile Include="DataContracts\Tags\TagDetailsContract.cs" />
+    <Compile Include="DataContracts\Tags\TagSelectionContract.cs" />
+    <Compile Include="DataContracts\ArchivedObjectVersionContract.cs" />
+    <Compile Include="DataContracts\ArchivedTranslatedStringContract.cs" />
+    <Compile Include="DataContracts\ArchivedWebLinkContract.cs" />
+    <Compile Include="DataContracts\Artists\ArchivedArtistContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistDetailsContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistWithArchivedVersions.cs" />
+    <Compile Include="DataContracts\Artists\ArtistWithPictureContract.cs" />
+    <Compile Include="DataContracts\Artists\CreateArtistContract.cs" />
+    <Compile Include="DataContracts\Artists\GroupForArtistContract.cs" />
+    <Compile Include="DataContracts\CommentContract.cs" />
+    <Compile Include="DataContracts\GenericResponse.cs" />
+    <Compile Include="DataContracts\LocalizedStringContract.cs" />
+    <Compile Include="DataContracts\LocalizedStringWithIdContract.cs" />
+    <Compile Include="DataContracts\MikuDb\ImportedAlbumDataContract.cs" />
+    <Compile Include="DataContracts\MikuDb\ImportedAlbumTrack.cs" />
+    <Compile Include="DataContracts\MikuDb\InspectedAlbum.cs" />
+    <Compile Include="DataContracts\MikuDb\MikuDbAlbumContract.cs" />
+    <Compile Include="DataContracts\ObjectRefContract.cs" />
+    <Compile Include="DataContracts\OptionalDateTimeContract.cs" />
+    <Compile Include="DataContracts\PictureContract.cs" />
+    <Compile Include="DataContracts\PVs\PVContract.cs" />
+    <Compile Include="DataContracts\Schemas.cs" />
+    <Compile Include="DataContracts\Security\AuditLogEntryContract.cs" />
+    <Compile Include="DataContracts\PVs\ArchivedPVContract.cs" />
+    <Compile Include="DataContracts\Songs\SongWithArchivedVersionsContract.cs" />
+    <Compile Include="DataContracts\Tags\TagForEditContract.cs" />
+    <Compile Include="DataContracts\Tags\TagUsageContract.cs" />
+    <Compile Include="DataContracts\Tags\TagWithArchivedVersionsContract.cs" />
+    <Compile Include="DataContracts\UnifiedCommentContract.cs" />
+    <Compile Include="DataContracts\UseCases\AlbumForArtistEditContract.cs" />
+    <Compile Include="DataContracts\UseCases\AllEntriesSearchResult.cs" />
+    <Compile Include="DataContracts\UseCases\ArtistSelectionForTrackContract.cs" />
+    <Compile Include="DataContracts\UseCases\EntryForPictureDisplayContract.cs" />
+    <Compile Include="DataContracts\UseCases\EntryRevertedContract.cs" />
+    <Compile Include="DataContracts\UseCases\FrontPageContract.cs" />
+    <Compile Include="DataContracts\UseCases\NewSongCheckResultContract.cs" />
+    <Compile Include="DataContracts\UseCases\TrackPropertiesContract.cs" />
+    <Compile Include="DataContracts\Users\AlbumForUserContract.cs" />
+    <Compile Include="DataContracts\Users\AlbumForUserForApiContract.cs" />
+    <Compile Include="DataContracts\Users\ArtistForUserContract.cs" />
+    <Compile Include="DataContracts\Users\ArtistForUserForApiContract.cs" />
+    <Compile Include="DataContracts\Users\FavoriteSongForUserContract.cs" />
+    <Compile Include="DataContracts\Users\IUserIconFactory.cs" />
+    <Compile Include="DataContracts\Users\RatedSongForUserForApiContract.cs" />
+    <Compile Include="DataContracts\Users\UserBaseContract.cs" />
+    <Compile Include="DataContracts\Users\UserDetailsContract.cs" />
+    <Compile Include="DataContracts\Songs\ArchivedSongContract.cs" />
+    <Compile Include="DataContracts\Songs\ArtistForSongContract.cs" />
+    <Compile Include="DataContracts\Songs\LyricsForSongContract.cs" />
+    <Compile Include="DataContracts\TranslatedStringContract.cs" />
+    <Compile Include="DataContracts\PictureDataContract.cs" />
+    <Compile Include="DataContracts\Ranking\SongInRankingContract.cs" />
+    <Compile Include="DataContracts\Users\UserContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumDetailsContract.cs" />
+    <Compile Include="DataContracts\Songs\SongContract.cs" />
+    <Compile Include="DataContracts\Songs\SongInAlbumContract.cs" />
+    <Compile Include="DataContracts\UseCases\AlbumForEditContract.cs" />
+    <Compile Include="DataContracts\UseCases\ArtistForEditContract.cs" />
+    <Compile Include="DataContracts\UseCases\CreateSongContract.cs" />
+    <Compile Include="DataContracts\Songs\SongDetailsContract.cs" />
+    <Compile Include="DataContracts\UseCases\SongForEditContract.cs" />
+    <Compile Include="DataContracts\Ranking\RankingContract.cs" />
+    <Compile Include="DataContracts\Users\UpdateUserSettingsContract.cs" />
+    <Compile Include="DataContracts\Users\UserForMySettingsContract.cs" />
+    <Compile Include="DataContracts\Users\UserMessageContract.cs" />
+    <Compile Include="DataContracts\Users\UserWithActivityEntriesContract.cs" />
+    <Compile Include="DataContracts\Users\UserWithEmailContract.cs" />
+    <Compile Include="DataContracts\Users\UserWithIconContract.cs" />
+    <Compile Include="DataContracts\Users\UserWithMessagesContract.cs" />
+    <Compile Include="DataContracts\Users\UserWithPermissionsContract.cs" />
+    <Compile Include="DataContracts\VersioningInfoContract.cs" />
+    <Compile Include="DataContracts\Versioning\ArchivedObjectVersionWithFieldsContract.cs" />
+    <Compile Include="DataContracts\Versioning\ComparedVersionsContract.cs" />
+    <Compile Include="Domain\Activityfeed\ActivityEntry.cs" />
+    <Content Include="Domain\Activityfeed\EntryEditedEntry.cs" />
+    <Compile Include="Domain\Activityfeed\GenericActivityEntry.cs" />
+    <Compile Include="Domain\Activityfeed\IActivityEntryVisitor.cs" />
+    <Compile Include="Domain\Activityfeed\NewsEntry.cs" />
+    <Content Include="Domain\Activityfeed\PlaintextEntry.cs" />
+    <Compile Include="Domain\Albums\AlbumArchiveReason.cs" />
+    <Compile Include="Domain\Albums\AlbumDiff.cs" />
+    <Compile Include="Domain\Albums\AlbumEditableFields.cs" />
+    <Compile Include="Domain\Albums\AlbumHit.cs" />
+    <Compile Include="Domain\Albums\AlbumIdentifier.cs" />
+    <Compile Include="Domain\Albums\AlbumMergeRecord.cs" />
+    <Compile Include="Domain\Albums\AlbumPictureFile.cs" />
+    <Compile Include="Domain\Albums\AlbumReport.cs" />
+    <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
+    <Compile Include="Domain\Albums\AlbumTagVote.cs" />
+    <Compile Include="Domain\Albums\ArchivedReleaseEventVersion.cs" />
+    <Compile Include="Domain\Albums\IAlbumLink.cs" />
+    <Compile Include="Domain\Albums\IAlbumRelease.cs" />
+    <Compile Include="Domain\Albums\OtherArtistForAlbum.cs" />
+    <Compile Include="Domain\Albums\ReleaseEventDiff.cs" />
+    <Compile Include="Domain\Albums\ReleaseEventEditableFields.cs" />
+    <Compile Include="Domain\Albums\TrackIndex.cs" />
+    <Compile Include="Domain\Artists\ArtistMergeRecord.cs" />
+    <Compile Include="Domain\Artists\ArtistPictureFile.cs" />
+    <Compile Include="Domain\Artists\ArtistCategories.cs" />
+    <Compile Include="Domain\Albums\PVForAlbum.cs" />
+    <Compile Include="Domain\Albums\ReleaseEvent.cs" />
+    <Compile Include="Domain\Albums\ReleaseEventSeries.cs" />
+    <Compile Include="Domain\Albums\ReleaseEventSeriesAlias.cs" />
+    <Compile Include="Domain\Artists\ArtistReport.cs" />
+    <Compile Include="Domain\Artists\ArtistRoles.cs" />
+    <Compile Include="Domain\Artists\CustomArtist.cs" />
+    <Compile Include="Domain\Artists\IArtistLink.cs" />
+    <Compile Include="Domain\Artists\IArtistWithSupport.cs" />
+    <Compile Include="Domain\Caching\ObjectCacheExtender.cs" />
+    <Compile Include="Domain\EntryIdAndName.cs" />
+    <Compile Include="Domain\EntryPictureFile.cs" />
+    <Compile Include="Domain\EntryPictureFileManager.cs" />
+    <Compile Include="Domain\EntryRef.cs" />
+    <Compile Include="Domain\EntryReport.cs" />
+    <Compile Include="Domain\EntryThumb.cs" />
+    <Compile Include="Domain\Globalization\ILanguageDetector.cs" />
+    <Compile Include="Domain\Globalization\ILocalizedString.cs" />
+    <Compile Include="Domain\Globalization\InterfaceLanguage.cs" />
+    <Compile Include="Domain\Globalization\ITranslatedString.cs" />
+    <Compile Include="Domain\Globalization\NTextCatLibLanguageDetector.cs" />
+    <Compile Include="Domain\Globalization\SingleNameManager.cs" />
+    <Compile Include="Domain\Globalization\TranslatedStringWithDefault.cs" />
+    <Compile Include="Domain\IDeletableEntry.cs" />
+    <Compile Include="Domain\IEntryWithIntId.cs" />
+    <Compile Include="Domain\IEntryWithStatus.cs" />
+    <Compile Include="Domain\Images\IEntryImagePersisterOld.cs" />
+    <Compile Include="Domain\Images\IEntryThumbPersister.cs" />
+    <Compile Include="Domain\Images\ImageThumbGenerator.cs" />
+    <Compile Include="Domain\Images\ServerEntryImagePersisterOld.cs" />
+    <Compile Include="Domain\Images\IEntryImageInformation.cs" />
+    <Compile Include="Domain\Images\IEntryImagePersister.cs" />
+    <Compile Include="Domain\Images\ServerEntryThumbPersister.cs" />
+    <Compile Include="Domain\IOptionalDateTime.cs" />
+    <Compile Include="Domain\IPictureWithThumbs.cs" />
+    <Compile Include="Domain\LinkAlreadyExistsException.cs" />
+    <Compile Include="Domain\Activityfeed\ActivityEntryType.cs" />
+    <Compile Include="Domain\MergeRecord.cs" />
+    <Compile Include="Domain\PVs\IEditablePV.cs" />
+    <Compile Include="Domain\PVs\IPV.cs" />
+    <Compile Include="Domain\PVs\IPVWithThumbnail.cs" />
+    <Compile Include="Domain\PVs\PVManager.cs" />
+    <Compile Include="Domain\Security\AuditLogCategory.cs" />
+    <Compile Include="Domain\Security\EntryPermissionManager.cs" />
+    <Compile Include="Domain\Security\IPRule.cs" />
+    <Compile Include="Domain\Security\PermissionCollection.cs" />
+    <Compile Include="Domain\Security\PermissionToken.cs" />
+    <Compile Include="Domain\Security\IUserPermissionContextExtender.cs" />
+    <Compile Include="Domain\Songs\ArchivedSongListVersion.cs" />
+    <Compile Include="Domain\Songs\ISongLink.cs" />
+    <Compile Include="Domain\Songs\SongComment.cs" />
+    <Compile Include="Domain\Songs\SongHit.cs" />
+    <Compile Include="Domain\Songs\SongInList.cs" />
+    <Compile Include="Domain\Songs\SongList.cs" />
+    <Compile Include="Domain\Songs\SongListDiff.cs" />
+    <Compile Include="Domain\Songs\SongListEditableFields.cs" />
+    <Compile Include="Domain\Songs\SongListFeaturedCategory.cs" />
+    <Compile Include="Domain\Songs\SongMergeRecord.cs" />
+    <Compile Include="Domain\Songs\SongReport.cs" />
+    <Compile Include="Domain\Songs\SongTagUsage.cs" />
+    <Compile Include="Domain\Songs\SongTagVote.cs" />
+    <Compile Include="Domain\Songs\SongVoteRating.cs" />
+    <Compile Include="Domain\Tags\ArchivedTagVersion.cs" />
+    <Compile Include="Domain\Tags\TagDiff.cs" />
+    <Compile Include="Domain\Tags\TagEditableFields.cs" />
+    <Compile Include="Domain\TrashedEntry.cs" />
+    <Compile Include="Domain\Users\ArtistForUser.cs" />
+    <Compile Include="Domain\Users\IUser.cs" />
+    <Compile Include="Domain\Users\IUserWithEmail.cs" />
+    <Compile Include="Domain\Users\IUserWithIcon.cs" />
+    <Compile Include="Domain\Users\OwnedArtistForUser.cs" />
+    <Compile Include="Domain\Users\PurchaseStatus.cs" />
+    <Compile Include="Domain\Users\UserComment.cs" />
+    <Compile Include="Domain\Users\UserReport.cs" />
+    <Compile Include="Domain\Users\UserOptions.cs" />
+    <Compile Include="Domain\Users\UserWebLink.cs" />
+    <Compile Include="Domain\Versioning\ArchivedVersionManager.cs" />
+    <Compile Include="Domain\Artists\ArtistArchiveReason.cs" />
+    <Compile Include="Domain\Artists\ArtistComment.cs" />
+    <Compile Include="Domain\Artists\ArtistEditableFields.cs" />
+    <Compile Include="Domain\Artists\ArtistTagUsage.cs" />
+    <Compile Include="Domain\Artists\ArtistTagVote.cs" />
+    <Compile Include="Domain\IEntryBase.cs" />
+    <Compile Include="Domain\EntryType.cs" />
+    <Compile Include="Domain\Globalization\INameManager.cs" />
+    <Compile Include="Domain\Versioning\EntryDiff.cs" />
+    <Compile Include="Domain\Versioning\IArchivedObjectVersionWithFields.cs" />
+    <Compile Include="Domain\Versioning\IEntryDiff.cs" />
+    <Compile Include="Domain\IEntryWithNames.cs" />
+    <Compile Include="Domain\PVs\PV.cs" />
+    <Compile Include="Domain\Songs\AlternateVersionForSong.cs" />
+    <Compile Include="Domain\Songs\SongArchiveReason.cs" />
+    <Compile Include="Domain\Songs\SongEditableFields.cs" />
+    <Compile Include="Domain\Tags\ITagFactory.cs" />
+    <Compile Include="Domain\Tags\ITagUsageFactory.cs" />
+    <Compile Include="Domain\Tags\ITagVoteFactory.cs" />
+    <Compile Include="Domain\Tags\Tag.cs" />
+    <Compile Include="Domain\Tags\TagManager.cs" />
+    <Compile Include="Domain\Tags\TagUsage.cs" />
+    <Compile Include="Domain\Tags\TagVote.cs" />
+    <Compile Include="Domain\Users\PasswordResetRequest.cs" />
+    <Compile Include="Domain\Users\UserEmailOptions.cs" />
+    <Compile Include="Domain\Users\UserGroup.cs" />
+    <Compile Include="Domain\Users\UserMessage.cs" />
+    <Compile Include="DataContracts\WebLinkContract.cs" />
+    <Compile Include="Domain\Albums\AlbumComment.cs" />
+    <Compile Include="DataContracts\Albums\AlbumDiffContract.cs" />
+    <Compile Include="Domain\Albums\AlbumRelease.cs" />
+    <Compile Include="Domain\Albums\AlbumWebLink.cs" />
+    <Compile Include="Domain\Albums\ArchivedAlbumVersion.cs" />
+    <Compile Include="Domain\Albums\MediaTypes.cs" />
+    <Compile Include="Domain\Artists\ArtistDiff.cs" />
+    <Compile Include="Domain\Comment.cs" />
+    <Compile Include="Domain\DateTimeYearAndDate.cs" />
+    <Compile Include="Domain\EntryStatus.cs" />
+    <Compile Include="Domain\Globalization\ContentLanguagePreference.cs" />
+    <Compile Include="Domain\Globalization\INameFactory.cs" />
+    <Compile Include="Domain\Globalization\NameManager.cs" />
+    <Compile Include="Domain\IWebLinkFactory.cs" />
+    <Compile Include="Domain\MikuDb\AlbumStatus.cs" />
+    <Compile Include="Domain\MikuDb\MikuDbAlbum.cs" />
+    <Compile Include="Domain\Security\AgentLoginData.cs" />
+    <Compile Include="Domain\Versioning\ArchivedObjectVersion.cs" />
+    <Compile Include="Domain\Artists\Artist.cs" />
+    <Compile Include="Domain\Artists\ArtistName.cs" />
+    <Compile Include="Domain\Artists\ArtistType.cs" />
+    <Compile Include="Domain\Artists\ArchivedArtistVersion.cs" />
+    <Compile Include="Domain\Artists\ArtistWebLink.cs" />
+    <Compile Include="Domain\Globalization\ContentLanguageSelection.cs" />
+    <Compile Include="Domain\Globalization\LocalizedString.cs" />
+    <Compile Include="Domain\Globalization\LocalizedStringWithId.cs" />
+    <Compile Include="Domain\Globalization\TranslatedString.cs" />
+    <Compile Include="Domain\PictureData.cs" />
+    <Compile Include="Domain\Security\AuditLogEntry.cs" />
+    <Compile Include="Domain\Security\NotAllowedException.cs" />
+    <Compile Include="Domain\Security\RoleTypes.cs" />
+    <Compile Include="Domain\Songs\PVForSong.cs" />
+    <Compile Include="Domain\PVs\PVService.cs" />
+    <Compile Include="Domain\PVs\PVType.cs" />
+    <Compile Include="Domain\Songs\SongDiff.cs" />
+    <Compile Include="Domain\Songs\SongType.cs" />
+    <Compile Include="Domain\Users\AlbumForUser.cs" />
+    <Compile Include="Domain\Users\FavoriteSongForUser.cs" />
+    <Compile Include="Domain\Users\MediaType.cs" />
+    <Compile Include="Domain\Users\User.cs" />
+    <Compile Include="Domain\Albums\Album.cs" />
+    <Compile Include="Domain\Albums\AlbumName.cs" />
+    <Compile Include="Domain\Albums\ArtistForAlbum.cs" />
+    <Compile Include="Domain\Songs\ArchivedSongVersion.cs" />
+    <Compile Include="Domain\Songs\ArtistForSong.cs" />
+    <Compile Include="Domain\Songs\LyricsForSong.cs" />
+    <Compile Include="Domain\Songs\Song.cs" />
+    <Compile Include="Domain\Songs\SongInAlbum.cs" />
+    <Compile Include="Domain\Songs\SongName.cs" />
+    <Compile Include="Domain\Songs\SongWebLink.cs" />
+    <Compile Include="Domain\WebLink.cs" />
+    <Compile Include="EmbeddedResources\EmbeddedResourceManager.cs" />
+    <Compile Include="EnumVal.cs" />
+    <Compile Include="Helpers\AlbumHelper.cs" />
+    <Compile Include="Helpers\AlphaPassGenerator.cs" />
+    <Compile Include="Helpers\ArtistHelper.cs" />
+    <Compile Include="Helpers\CollectionAddResult.cs" />
+    <Compile Include="Helpers\CollectionHelper.cs" />
+    <Compile Include="Helpers\EnumerableExtender.cs" />
+    <Compile Include="Helpers\HtmlHelperFunctions.cs" />
+    <Compile Include="Helpers\HtmlRequestHelper.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Helpers\LambdaComparer.cs" />
+    <Compile Include="Helpers\LocalizedStringHelper.cs" />
+    <Compile Include="Helpers\NameHelper.cs" />
+    <Compile Include="EmbeddedResources\EmbeddedResourceHelper.cs" />
+    <Compile Include="Helpers\SongHelper.cs" />
+    <Compile Include="Helpers\StreamHelper.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\UrlValidator.cs" />
+    <Compile Include="Helpers\UserHelper.cs" />
+    <Compile Include="Helpers\XmlHelper.cs" />
+    <Compile Include="Mapping\Activityfeed\ActivityEntryMap.cs" />
+    <Compile Include="Mapping\Activityfeed\NewsEntryMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumCommentMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumHitMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumMergeRecordMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumNameMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumPictureFileMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumTagUsageMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumTagVoteMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumWebLinkMap.cs" />
+    <Compile Include="Domain\Albums\DiscType.cs" />
+    <Compile Include="Mapping\Albums\OtherArtistForAlbumMap.cs" />
+    <Compile Include="Mapping\Albums\PVForAlbumMap.cs" />
+    <Compile Include="Mapping\Albums\ReleaseEventMap.cs" />
+    <Compile Include="Mapping\Artists\ArtistMergeRecordMap.cs" />
+    <Compile Include="Mapping\Artists\ArtistPictureFileMap.cs" />
+    <Compile Include="Mapping\Artists\ArtistCommentMap.cs" />
+    <Compile Include="Mapping\Artists\ArtistMap.cs" />
+    <Compile Include="Mapping\Artists\ArtistNameMap.cs" />
+    <Compile Include="Mapping\Artists\ArtistTagUsageMap.cs" />
+    <Compile Include="Mapping\Artists\ArtistTagVoteMap.cs" />
+    <Compile Include="Mapping\Artists\ArtistWebLinkMap.cs" />
+    <Compile Include="Domain\Artists\GroupForArtist.cs" />
+    <Compile Include="Mapping\ClassConventions.cs" />
+    <Compile Include="Mapping\CustomTypes\XDocumentType.cs" />
+    <Compile Include="Mapping\EntryReportMap.cs" />
+    <Compile Include="Mapping\MikuDb\MikuDbAlbumMap.cs" />
+    <Compile Include="Mapping\Security\AuditLogEntryMap.cs" />
+    <Content Include="Mapping\Security\PermissionTokenMap.cs" />
+    <Compile Include="Mapping\Security\IPRuleMap.cs" />
+    <Compile Include="Mapping\Songs\SongCommentMap.cs" />
+    <Compile Include="Mapping\Songs\SongHitMap.cs" />
+    <Compile Include="Mapping\Songs\SongListMap.cs" />
+    <Compile Include="Mapping\Songs\SongMergeRecordMap.cs" />
+    <Compile Include="Mapping\Songs\SongTagUsageMap.cs" />
+    <Compile Include="Mapping\Songs\SongTagVoteMap.cs" />
+    <Compile Include="Mapping\Tags\TagMap.cs" />
+    <Compile Include="Mapping\TrashedEntryMap.cs" />
+    <Compile Include="Mapping\Users\OwnedArtistForUserMap.cs" />
+    <Compile Include="Mapping\Users\PasswordResetRequestMap.cs" />
+    <Compile Include="Mapping\Users\UserCommentMap.cs" />
+    <Compile Include="Mapping\Users\UserMap.cs" />
+    <Compile Include="Mapping\Songs\LyricsForSongMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumMap.cs" />
+    <Compile Include="Mapping\Songs\SongMap.cs" />
+    <Compile Include="Mapping\Users\UserMessageMap.cs" />
+    <Compile Include="Mapping\Users\UserWebLinkMap.cs" />
+    <Compile Include="ParamIs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Albums\DiscTypeNames.Designer.cs">
+      <DependentUpon>DiscTypeNames.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Albums\DiscTypeNames.fi.designer.cs">
+      <DependentUpon>DiscTypeNames.fi.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Albums\DiscTypeNames.ja.designer.cs">
+      <DependentUpon>DiscTypeNames.ja.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Albums\DiscTypeNames.ru.designer.cs">
+      <DependentUpon>DiscTypeNames.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\AlbumValidationErrors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumValidationErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ArtistTypeNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistTypeNames.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ArtistValidationErrors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistValidationErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ExtSites.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExtSites.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Songs\SongTypeNames.Designer.cs">
+      <DependentUpon>SongTypeNames.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Songs\SongTypeNames.fi.designer.cs">
+      <DependentUpon>SongTypeNames.fi.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Songs\SongTypeNames.ja.designer.cs">
+      <DependentUpon>SongTypeNames.ja.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Songs\SongTypeNames.ru.designer.cs">
+      <DependentUpon>SongTypeNames.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\SongValidationErrors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongValidationErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\AlbumRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\ArtistRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\HomeRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\LayoutRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LayoutRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\SongRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ActivityFeedService.cs" />
+    <Compile Include="Service\AdminService.cs" />
+    <Compile Include="Service\AlbumImport\AlbumImporters.cs" />
+    <Compile Include="Service\AlbumImport\IAlbumImporter.cs" />
+    <Compile Include="Service\AlbumImport\IPictureDownloader.cs" />
+    <Compile Include="Service\AlbumImport\KarenTAlbumImporter.cs" />
+    <Compile Include="Service\AlbumImport\WebPictureDownloader.cs" />
+    <Compile Include="Service\BrandableStrings\BrandableStringsManager.cs" />
+    <Compile Include="Service\BrandableStrings\Collections\AlbumStrings.cs" />
+    <Compile Include="Service\BrandableStrings\Collections\ArtistStrings.cs" />
+    <Compile Include="Service\BrandableStrings\Collections\HomeStrings.cs" />
+    <Compile Include="Service\BrandableStrings\Collections\LayoutStrings.cs" />
+    <Compile Include="Service\BrandableStrings\Collections\ResStringCollection.cs" />
+    <Compile Include="Service\BrandableStrings\Collections\SongStrings.cs" />
+    <Compile Include="Service\BrandableStrings\IBrandedStringsAssemblyHeader.cs" />
+    <Compile Include="Service\Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="Service\Exceptions\InvalidEmailFormatException.cs" />
+    <Compile Include="Service\Exceptions\NoPasswordException.cs" />
+    <Compile Include="Service\Exceptions\RequestNotValidException.cs" />
+    <Compile Include="Service\Exceptions\TooFastRegistrationException.cs" />
+    <Compile Include="Service\Helpers\AlbumForUserQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\AlbumQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\ArtistForAlbumQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\ArtistForSongQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\EntryWithNamesQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\EntryWithStatusQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\FavoriteSongForUserQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\FollowedArtistNotifier.cs" />
+    <Compile Include="Service\Helpers\IUserMessageMailer.cs" />
+    <Compile Include="Service\Helpers\MarkdownHelper.cs" />
+    <Compile Include="Service\Helpers\TagQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\UserCommentNotifier.cs" />
+    <Compile Include="Service\Queries\ArtistRelationsQuery.cs" />
+    <Compile Include="Service\Queries\PreviousAndNextAlbumsQuery.cs" />
+    <Compile Include="Service\Queries\RelatedAlbumsQuery.cs" />
+    <Compile Include="Service\Queries\RelatedSongsQuery.cs" />
+    <Compile Include="Service\QueryableExtenders\QueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\QueryableForAlbumLinkExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\QueryableForArtistLinkExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\QueryableForSongLinkExtender.cs" />
+    <Compile Include="Service\Repositories\IArtistRepository.cs" />
+    <Compile Include="Service\Repositories\IEntryReportRepository.cs" />
+    <Compile Include="Service\Repositories\IEventRepository.cs" />
+    <Compile Include="Service\Repositories\ISongRepository.cs" />
+    <Compile Include="Service\Repositories\IUserMessageRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\AlbumNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\IAlbumRepository.cs" />
+    <Compile Include="Service\Repositories\IAuditLogger.cs" />
+    <Compile Include="Service\Repositories\IRepositoryContextExtender.cs" />
+    <Compile Include="Service\Repositories\ISongListRepository.cs" />
+    <Compile Include="Service\Repositories\ITagRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\ArtistNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\EntryReportNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\EventNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\NHibernateAuditLogger.cs" />
+    <Compile Include="Service\BBCode\EntryLinkTransformer.cs" />
+    <Compile Include="Service\ExtSites\AffiliateLinkGenerator.cs" />
+    <Compile Include="Service\AlbumService.cs" />
+    <Compile Include="Service\ArtistService.cs" />
+    <Compile Include="Service\BBCode\AutoLinkTransformer.cs" />
+    <Compile Include="Service\BBCode\SimpleBBCodeTransformer.cs" />
+    <Compile Include="Service\BBCode\BBCodeConverter.cs" />
+    <Compile Include="Service\BBCode\IBBCodeElementTransformer.cs" />
+    <Compile Include="Service\BBCode\BBElement.cs" />
+    <Compile Include="Service\DatabaseConfiguration.cs" />
+    <Compile Include="Service\DataSharing\XmlDumper.cs" />
+    <Compile Include="Service\EntryViewMode.cs" />
+    <Compile Include="Service\ExtSites\ExtLinkGenerator.cs" />
+    <Compile Include="Service\Helpers\AlbumFileParser.cs" />
+    <Compile Include="Service\Helpers\ArtistQueryableExtender.cs" />
+    <Compile Include="Helpers\ConcurrentEntryEditManager.cs" />
+    <Compile Include="Service\Helpers\DatabaseHelper.cs" />
+    <Compile Include="Service\Helpers\QueryableExtender.cs" />
+    <Compile Include="Service\Helpers\FindHelpers.cs" />
+    <Compile Include="Service\Helpers\SongQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\TagFactory.cs" />
+    <Compile Include="Service\Helpers\TagHelpers.cs" />
+    <Compile Include="Service\Helpers\UrlHelper.cs" />
+    <Compile Include="Service\Helpers\UserMessageMailer.cs" />
+    <Compile Include="Service\Helpers\WebLinkCategoryHelper.cs" />
+    <Compile Include="Service\Repositories\IRepository.cs" />
+    <Compile Include="Service\Repositories\IRepositoryContext.cs" />
+    <Compile Include="Service\Repositories\IUserRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\NHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\NHibernateRepositoryContext.cs" />
+    <Compile Include="Service\Repositories\NHibernate\SongNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\TagNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\SongListNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\UserMessageNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\UserNHibernateRepository.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumSearchSort.cs" />
+    <Compile Include="Service\Search\AlbumSearch\ArtistAlbumParticipationStatus.cs" />
+    <Compile Include="Service\Search\AlbumSearch\ParsedAlbumQuery.cs" />
+    <Compile Include="Service\Search\QueryProcessor.cs" />
+    <Compile Include="Service\Search\ReleaseEventSearch.cs" />
+    <Compile Include="Service\Search\SongSearch\ParsedSongQuery.cs" />
+    <Compile Include="Service\Search\SongSearch\SongListQueryParams.cs" />
+    <Compile Include="Service\Search\User\FollowedArtistQueryParams.cs" />
+    <Compile Include="Service\VideoServices\HtmlParsingHelper.cs" />
+    <Compile Include="Service\IEntryLinkFactory.cs" />
+    <Compile Include="Service\MikuDbAlbumService.cs" />
+    <Compile Include="Service\AlbumImport\MikuDbAlbumImporter.cs" />
+    <Compile Include="Service\AlbumImport\AlbumImportResult.cs" />
+    <Compile Include="Service\NewsEntryService.cs" />
+    <Compile Include="Service\Paging\PagingProperties.cs" />
+    <Compile Include="Service\Rankings\InvalidFeedException.cs" />
+    <Compile Include="Service\Rankings\NNDWVRParser.cs" />
+    <Compile Include="Service\ReleaseEventService.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumArtistFilter.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumArtistNameFilter.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumNameFilter.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumQueryBuilder.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumQueryParams.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumSearch.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumTagFilter.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumUniversalFilter.cs" />
+    <Compile Include="Service\Search\Artists\ArtistQueryParams.cs" />
+    <Compile Include="Service\Search\Artists\ArtistSearch.cs" />
+    <Compile Include="Service\Search\IQuerySource.cs" />
+    <Compile Include="Service\Search\ISearchFilter.cs" />
+    <Compile Include="Service\Search\AlbumSearch\AlbumSearchProperty.cs" />
+    <Compile Include="Service\Search\CommonSearchParams.cs" />
+    <Compile Include="Service\Search\QueryCost.cs" />
+    <Compile Include="Service\Search\QueryPlan.cs" />
+    <Compile Include="Service\Search\SearchParser.cs" />
+    <Compile Include="Service\Search\SearchWordCollection.cs" />
+    <Compile Include="Service\Search\SearchWord.cs" />
+    <Compile Include="Service\Search\SongSearch\SongQueryParams.cs" />
+    <Compile Include="Service\Search\SongSearch\SongSearch.cs" />
+    <Compile Include="Service\Search\User\AlbumCollectionQueryParams.cs" />
+    <Compile Include="Service\Search\User\RatedSongQueryParams.cs" />
+    <Compile Include="Service\Security\CryptoHelper.cs" />
+    <Compile Include="Service\TagFormatting\TagFormatter.cs" />
+    <Compile Include="Service\TagService.cs" />
+    <Compile Include="Service\VideoServices\IPVParser.cs" />
+    <Compile Include="Service\VideoServices\IVideoService.cs" />
+    <Compile Include="Service\VideoServices\IVideoServiceParser.cs" />
+    <Compile Include="Service\VideoServices\NicoParser.cs" />
+    <Compile Include="Service\VideoServices\NicoTagMappingFactory.cs" />
+    <Compile Include="Service\VideoServices\NicoTitleParseResult.cs" />
+    <Compile Include="Service\VideoServices\RegexLinkMatcher.cs" />
+    <Compile Include="Service\Helpers\SessionHelper.cs" />
+    <Compile Include="Service\VideoServices\VideoParseException.cs" />
+    <Compile Include="Service\VideoServices\VideoService.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceBilibili.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceHelper.cs" />
+    <Compile Include="Service\OtherService.cs" />
+    <Compile Include="Service\RankingService.cs" />
+    <Compile Include="Domain\Security\IUserPermissionContext.cs" />
+    <Compile Include="Service\Security\LoginManager.cs" />
+    <Compile Include="Service\Security\VocaDbPrincipal.cs" />
+    <Compile Include="Service\ServiceBase.cs" />
+    <Compile Include="Service\ServiceException.cs" />
+    <Compile Include="Service\ServiceModel.cs" />
+    <Compile Include="Service\SongService.cs" />
+    <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceFile.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceNND.cs" />
+    <Compile Include="Service\VideoServices\VideoServicePiapro.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceSoundCloud.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceYoutube.cs" />
+    <Compile Include="Service\VideoServices\VideoUrlParseResult.cs" />
+    <Compile Include="Service\VideoServices\VimeoParser.cs" />
+    <Compile Include="Service\VideoServices\YoutubeParser.cs" />
+    <Compile Include="Utils\AppConfig.cs" />
+    <Compile Include="Utils\Config\AffiliatesSection.cs" />
+    <Compile Include="Utils\Config\GlobalLinksSection.cs" />
+    <Compile Include="Utils\Config\SiteSettingsSection.cs" />
+    <Compile Include="Utils\Config\VdbConfigManager.cs" />
+    <Compile Include="Utils\Search\SearchRouteParams.cs" />
+    <Compile Include="Utils\VocaUriBuilder.cs" />
+    <Compile Include="Utils\VocaUrlMapper.cs" />
+    <Compile Include="Utils\XmlCache.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EmbeddedResource Include="EmbeddedResources\nicoTagMapping.json" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Albums\DiscTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\Albums\DiscTypeNames.fi.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>DiscTypeNames.fi.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Albums\DiscTypeNames.ja.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>DiscTypeNames.ja.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Albums\DiscTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DiscTypeNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Albums\DiscTypeNames.ru.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>DiscTypeNames.ru.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AlbumValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\AlbumValidationErrors.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AlbumValidationErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AlbumValidationErrors.ru.resx" />
+    <EmbeddedResource Include="Resources\ArtistTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\ArtistTypeNames.fi.resx" />
+    <EmbeddedResource Include="Resources\ArtistTypeNames.ja.resx" />
+    <EmbeddedResource Include="Resources\ArtistTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArtistTypeNames.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ArtistTypeNames.ru.resx" />
+    <EmbeddedResource Include="Resources\ArtistValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\ArtistValidationErrors.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArtistValidationErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ArtistValidationErrors.ru.resx" />
+    <EmbeddedResource Include="Resources\ExtSites.de.resx" />
+    <EmbeddedResource Include="Resources\ExtSites.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExtSites.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.fi.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongTypeNames.fi.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.ja.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongTypeNames.ja.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SongTypeNames.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.ru.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongTypeNames.ru.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SongValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\SongValidationErrors.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SongValidationErrors.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SongValidationErrors.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\AlbumRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\AlbumRes.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\AlbumRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AlbumRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\ArtistRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\ArtistRes.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\ArtistRes.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\ArtistRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArtistRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\HomeRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\HomeRes.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\HomeRes.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\HomeRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\LayoutRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\LayoutRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LayoutRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\SongRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\SongRes.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\SongRes.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\SongRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SongRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Shared\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

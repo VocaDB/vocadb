@@ -1,0 +1,62 @@
+﻿@using VocaDb.Model.Utils;
+@using Res = ViewRes.User.LoginStrings;
+@model VocaDb.Web.Models.LoginModel
+
+@{
+	ViewBag.Title = Res.Login;
+}
+
+@Helpers.ValidationSymmaryDiv(Res.UnableToLogin)
+
+<form action="@VocaUriBuilder.Absolute(Url.Action("Login", "User"), Model.SecureLogin)" method="POST">
+	@Html.HiddenFor(m => m.ReturnToMainSite)
+	@Html.HiddenFor(m => m.ReturnUrl)
+	@Html.HiddenFor(m => m.SecureLogin)
+
+	<div>
+		<div class="editor-label">
+			@Html.LabelFor(m => m.UserName)
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(m => m.UserName)
+			@Html.ValidationMessageFor(m => m.UserName)
+		</div>
+
+		<div class="editor-label">
+			@Html.LabelFor(m => m.Password)
+		</div>
+		<div class="editor-field">
+			@Html.PasswordFor(m => m.Password)
+			@Html.ValidationMessageFor(m => m.Password)
+		</div>
+
+		<br />
+		<label class="checkbox">
+			@Html.CheckBoxFor(m => m.KeepLoggedIn)
+			@Res.KeepMeLoggedIn
+		</label>
+		<br />
+
+		<p>
+			<button type="submit" class="btn btn-primary">@Res.DoLogin</button>
+		</p>
+		
+	</div>
+
+</form>
+
+@ViewRes.User.LoginStrings.NoAccount @Html.ActionLink(Res.RegisterHere, "Create"). <br />
+
+@ViewRes.User.LoginStrings.ForgotPassword @Html.ActionLink(Res.ResetPass, "ForgotPassword"). <br />
+
+@if (Model.SecureLogin) {
+	@Html.ActionLink(Res.LoginWithoutSSL, "Login", new { secureLogin = false })
+} else {
+	@Html.ActionLink(Res.LoginUsingSSL, "Login", new { secureLogin = true })	
+}
+
+<br />
+<hr />
+<a href="@Url.Action("LoginTwitter")">
+	<img src="@Url.Content("~/Content/Sign-in-with-Twitter-darker.png")" alt="Sign in with Twitter" />
+</a>

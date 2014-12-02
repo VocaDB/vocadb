@@ -1,0 +1,18 @@
+﻿.jqx-widget-summer{border-color: #cacaca;}
+.jqx-fill-state-normal-summer, .jqx-widget-header-summer{ border-color: #cacaca; background-color:#e4e5e5;}
+.jqx-fill-state-hover-summer, .jqx-scrollbar-thumb-state-normal-summer, .jqx-scrollbar-thumb-state-normal-horizontal-summer{ border-color:#222;  background-color:#888888; color: #fff;}
+.jqx-fill-state-pressed-summer{border-color: #fe5815; background-color: #fe5815; color: #fff; }
+.jqx-fill-state-focus-summer { border-color: #555; }
+
+.jqx-scrollbar-state-normal-summer, .jqx-grid-bottomright-summer, .jqx-panel-bottomright-summer, .jqx-listbox-bottomright-summer{background-color: #e4e5e5;}
+.jqx-scrollbar-button-state-pressed, .jqx-scrollbar-button-state-hover{background-color: #e4e5e5; border-color: #222;}
+/*icons*/
+.jqx-menu-item-arrow-up-selected-summer, .icon-arrow-up-hover-summer, .icon-arrow-up-selected-summer{background-image:url('images/icon-up-white.png');background-repeat:no-repeat;background-position:center;}
+.jqx-menu-item-arrow-down-selected-summer, .icon-arrow-down-hover-summer, .icon-arrow-down-selected-summer{background-image:url('images/icon-down-white.png');background-repeat:no-repeat;background-position:center;}
+.jqx-menu-item-arrow-left-selected-summer, .icon-arrow-left-hover-summer, .icon-arrow-left-selected-summer{background-image:url('images/icon-left-white.png');background-repeat:no-repeat;background-position:center;}
+.jqx-menu-item-arrow-right-selected-summer, .icon-arrow-right-hover-summer, .icon-arrow-right-selected-summer{background-image:url('images/icon-right-white.png');background-repeat:no-repeat;background-position:center;}
+.jqx-tabs-close-button-hover-summer, .jqx-tabs-close-button-selected-summer{background-image:url(images/close_white.png);  background-repeat:no-repeat;  background-position:center;}
+.jqx-scrollbar-summer .icon-arrow-up-selected-summer, .jqx-scrollbar-summer .icon-arrow-up-hover-summer{background-image:url('images/icon-up.png'); background-repeat:no-repeat; background-position:center;}
+.jqx-scrollbar-summer .icon-arrow-down-selected-summer, .jqx-scrollbar-summer .icon-arrow-down-hover-summer{background-image:url('images/icon-down.png'); background-repeat:no-repeat; background-position:center;}
+.jqx-scrollbar-summer .icon-arrow-left-selected-summer, .jqx-scrollbar-summer .icon-arrow-left-hover-summer{background-image:url('images/icon-left.png'); background-repeat:no-repeat; background-position:center;}
+.jqx-scrollbar-summer .icon-arrow-right-selected-summer, .jqx-scrollbar-summer .icon-arrow-right-hover-summer{background-image:url('images/icon-right.png');background-repeat:no-repeat; background-position:center;}

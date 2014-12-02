@@ -1,0 +1,21 @@
+﻿@using VocaDb.Model.Domain.Songs
+@model VocaDb.Model.DataContracts.Users.FavoriteSongForUserContract[]
+
+@{
+
+	var favorited = Model.Where(u => u.Rating == SongVoteRating.Favorite).Select(u => u.User).ToArray();
+	var liked = Model.Where(u => u.Rating == SongVoteRating.Like).Select(u => u.User).ToArray();
+	
+}
+
+@if (favorited.Any()) {
+	<h4>@ViewRes.Song.DetailsStrings.FavoritedByTitle</h4>
+
+	@UserHelpers.UserGrid(favorited, 2)
+}
+
+@if (liked.Any()) {
+	<h4>@ViewRes.Song.DetailsStrings.LikedByTitle</h4>
+
+	@UserHelpers.UserGrid(liked, 2)
+}

@@ -1,0 +1,14 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.MikuDb.InspectedTrack
+
+@{ var item = Html.BeginCollectionItem("Tracks"); }
+
+	<span>(Disc @Model.ImportedTrack.DiscNum) @Model.ImportedTrack.TrackNum</span>. <span> @Model.ImportedTrack.Title (@Model.ImportedTrack.ArtistString)</span>:
+	@if (Model.ExistingSong != null) {
+		@Html.HiddenFor(m => m.ExistingSong.Id)
+		@Html.CheckBoxFor(m => m.Selected)
+		<span>@Html.ActionLink(Model.ExistingSong.Name + " (" + Model.ExistingSong.ArtistString + ")", "Details", "Song", new { id = Model.ExistingSong.Id }, new { title = Model.ExistingSong.AdditionalNames })</span>
+	} else {
+		<span>(no match)</span>
+	}
+@{ item.Dispose(); }

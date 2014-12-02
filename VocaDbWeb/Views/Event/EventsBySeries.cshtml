@@ -1,0 +1,62 @@
+﻿@using VocaDb.Web.Helpers;
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesWithEventsContract[]
+
+@{
+	ViewBag.Title = ViewRes.SharedStrings.ReleaseEvents;
+}
+
+@section Toolbar {
+	
+	<ul class="nav nav-pills">
+		<li>
+			@Html.ActionLink("List", "Index")
+		</li>
+		<li class="active">
+			@Html.ActionLink("By series", "EventsBySeries")
+		</li>
+		<li>
+			@Html.ActionLink("By date", "EventsByDate")
+		</li>
+	</ul>	
+
+	@if (Login.CanManageEventSeries) {
+		@Html.ActionLink(ViewRes.Event.EventsBySeriesStrings.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+	}	
+}
+
+@foreach (var series in Model) {
+
+	<h3 class="withMargin">
+	@if (!string.IsNullOrEmpty(series.Name)) {
+		@Html.ActionLink(series.Name, "SeriesDetails", new { id = series.Id })
+	} else {
+		<text>@ViewRes.SharedStrings.Unsorted</text>
+	}
+	</h3>
+	if (!string.IsNullOrEmpty(series.Description)) {
+		<p>@HtmlHelpers.FormatText(series.Description)</p>
+	}
+	
+	<ul>
+	@foreach (var ev in series.Events) {
+		<li>
+			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id })
+		</li>
+	}
+	</ul>
+	
+	if (Login.CanManageDb) {
+		@Html.ActionLink(ViewRes.Event.EventsBySeriesStrings.CreateEvent, "Edit", new { seriesId = series.Id != 0 ? (int?)series.Id : null }, new { @class = "textLink addLink" })
+	}
+	
+}
+
+@section BodyScripts {
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
+		});
+
+	</script>
+}

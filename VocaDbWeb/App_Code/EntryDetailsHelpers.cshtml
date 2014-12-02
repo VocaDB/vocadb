@@ -1,0 +1,87 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Microsoft.Web.Helpers;
+@using VocaDb.Model.DataContracts
+@using VocaDb.Model.DataContracts.PVs
+@using VocaDb.Model.Domain
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.HelperPage
+	
+@helper DeletedBanner(IEntryBase mergedTo) {
+	<div class="alert">
+		@Resources.CommonMessages.EntryDeleted
+		@if (mergedTo != null) {
+			@(Resources.CommonMessages.EntryMergedTo + " ")
+			@Helpers.EntryLink(new EntryBaseContract(mergedTo))
+			@(".")
+		}		
+	</div>
+}
+
+@helper ExternalLinksList(IEnumerable<WebLinkContract> webLinks, bool showCategory = false) {
+    
+    foreach (var link in webLinks) {
+        <a class="extLink" href="@VocaDb.Model.Service.Helpers.UrlHelper.MakePossileAffiliateLink(link.Url)">@link.DescriptionOrUrl</a>
+        if (showCategory) {
+            @("(")@Translate.WebLinkCategoryNames[link.Category]@(")")
+        }
+        <br />
+	}		
+    	    
+}
+
+@helper ExternalLinksRows(ICollection<WebLinkContract> webLinks) {
+    
+    var official = webLinks.Where(l => l.Category == WebLinkCategory.Official || l.Category == WebLinkCategory.Commercial).ToArray();
+    var other = webLinks.Where(l => !official.Contains(l)).ToArray();
+    
+    if (official.Any()) {
+        <tr>
+            <td>@ViewRes.EntryDetailsStrings.OfficialLinks</td>
+            <td>
+                @ExternalLinksList(official, false)
+            </td>	
+        </tr>
+    }    
+
+    if (other.Any()) {
+        <tr>
+            <td>@ViewRes.EntryDetailsStrings.OtherLinks</td>
+            <td>
+                @ExternalLinksList(other, true)
+            </td>	
+        </tr>
+    }    
+        
+}
+		  
+@helper ReportEntryPopup(MvcHtmlString reportTypesDropdown) {
+	
+<div id="reportEntryPopup" style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError">
+	
+	<label>
+		@ViewRes.EntryDetailsStrings.ReportType
+	</label>
+	@reportTypesDropdown
+	
+	<label>
+		@ViewRes.EntryDetailsStrings.ReportNotes
+	</label>
+	@Html.TextArea("reportNotes", new { id = "reportNotes", @class = "input-xlarge" })
+
+</div>
+
+}
+
+@helper ShareLinks(string title, string url) {
+	@(ViewRes.EntryDetailsStrings.Share + ":")
+	@LinkShare.GetHtml(title, pageLinkBack: url, linkSites: new[] { LinkShareSite.Facebook, LinkShareSite.Reddit, LinkShareSite.Twitter })	
+}
+
+@helper LargeShareLinks(string title, string url) {
+	var urlEncodedTitle = Url.Encode(title);
+	<a href="https://www.facebook.com/sharer/sharer.php?u=@url" target="_blank"><img alt="Share on Facebook" src="@Url.Content("~/Content/ExtIcons/facebook32.png")" style="border:0; height:32px; width:32px; margin:0 1px;" title="Share on Facebook"></a>
+	<a href="http://reddit.com/submit?url=@url&title=@urlEncodedTitle" target="_blank" title="Reddit!"><img alt="Reddit!" src="@Url.Content("~/Content/ExtIcons/reddit32.png")" style="border:0; height:32px; width:32px; margin:0 1px;" title="Reddit!"></a>
+	<a href="http://twitter.com/home/?status=@urlEncodedTitle: @url" target="_blank" title="Share on Twitter"><img alt="Twitter" src="@Url.Content("~/Content/ExtIcons/twitter32.png")" style="border:0; height:32px; width:32px; margin:0 1px;" title="Share on Twitter"></a>
+	<a href="https://plus.google.com/share?url=@url" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" title="Share on Google+"><img alt="Google+" src="https://www.gstatic.com/images/icons/gplus-32.png" style="border:0; height:32px; width:32px; margin:0 1px;" title="Share on Google+"></a>
+}

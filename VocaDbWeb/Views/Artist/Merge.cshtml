@@ -1,0 +1,45 @@
+﻿@using System.Web.Optimization
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Artists.ArtistContract>
+
+@{
+    ViewBag.Title = "Merge artist - " + Model.Name;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Artists", "Index"), 
+		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }),
+		Html.ActionLink("Edit", "Edit", new { id = Model.Id }),
+	};	
+}
+
+@using (Html.BeginForm()) {
+
+	@Helpers.MergeEntryInfo()
+
+	<input type="hidden" name="targetArtistId" id="targetArtistId" data-bind="value: target.id" />
+
+	<br />
+	@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "targetSearchParams", "target.name", "target.id")
+
+	<br /><br />
+
+	<button type="submit" class="btn btn-primary" id="mergeBtn" data-bind="enable: target.id">Merge</button>
+
+}
+
+@section BodyScripts {
+	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Merge")
+	<script type="text/javascript">
+
+		$(function() {
+
+			var repo = new vdb.repositories.ArtistRepository('@RootPath');
+			var vm = new vdb.viewModels.artists.ArtistMergeViewModel(repo, @Model.Id);
+			ko.applyBindings(vm);
+
+			$("#mergeBtn").click(function () {
+				return confirm("Are you sure you want to merge the artists?");
+			});
+
+		});
+
+	</script> 
+}

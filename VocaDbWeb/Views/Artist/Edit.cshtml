@@ -1,0 +1,210 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain
+@using VocaDb.Model.Helpers
+@using VocaDb.Web.Helpers;
+@using ValidationErrors = VocaDb.Model.Resources.ArtistValidationErrors;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.ArtistEditViewModel>
+
+@{
+	ViewBag.Title = "Edit artist - " + Model.Artist.Name;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Artists", "Index"), 
+		Html.ActionLink(Model.Artist.Name, "Details", new { id = Model.Artist.Id }) 
+	};
+
+	var validationErrors = new Dictionary<string, string> {
+		{ "validationError_unspecifiedNames", ValidationErrors.UnspecifiedNames },
+		{ "validationError_needReferences", ValidationErrors.NeedReferences },
+		{ "validationError_needType", ValidationErrors.NeedType },
+	};
+	
+}
+
+@section Toolbar {
+@if (Login.CanDeleteEntries) {
+	if (!Model.Artist.Deleted) {
+		@Html.ActionLink("Delete", "Delete", new { id = Model.Artist.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this artist?\");" })
+	} else {
+		@Html.ActionLink("Restore", "Restore", new { id = Model.Artist.Id }, new { id = "restoreLink" })		
+	}
+}
+@if (Login.CanMergeEntries) {
+	@Html.ActionLink("Merge", "Merge", new { id = Model.Artist.Id }, new { id = "mergeLink" })
+}
+}
+
+@Helpers.ValidationSymmaryPanel("Unable to save")
+
+@KnockoutHelpers.EntryValidationMessage(Model.Artist.Status == EntryStatus.Draft, validationErrors, "glartists")
+
+<br />
+<form action="@Url.Action("Edit", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
+
+	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Artist.Id }))
+	
+	<div id="tabs">
+
+		<ul>
+			<li><a href="#basicInfoTab">Basic info</a></li>
+			<li><a href="#picsTab">Additional pictures</a></li>
+		</ul>
+
+		<div id="basicInfoTab">
+			<div>
+				<div class="editor-label">
+					<label>Original language</label>
+				</div>
+				<div class="editor-field">
+					@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+				</div>
+
+				<div class="editor-label">
+					@Helpers.HelpLabel("Primary name (in one or more languages)", ViewRes.EntryEditStrings.NameHelp)
+					@Helpers.RequiredField()
+					<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
+				</div>
+				<div class="editor-field" data-bind="with: names">
+					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor"); }
+				</div>
+
+				<div class="editor-label">
+					<label>Main picture</label>
+				</div>
+				<div class="editor-field">
+					<table>
+						<tr>
+							<td>
+								<img src="@Url.Action("PictureThumb", new { id = Model.Artist.Id })" alt="Artist picture" class="coverPic" />					
+							</td><td>
+								<p>Allowed types: @string.Join(", ", ImageHelper.AllowedExtensions) . Maximum size is @ImageHelper.MaxImageSizeMB MB.</p>
+								<input type="file" id="pictureUpload" name="pictureUpload" />					
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="editor-label">
+					<label class="inline-block">Description</label>
+					<span data-bind="visible: validationError_needReferences, qTip" class="icon errorIcon" title="@ValidationErrors.NeedReferences"></span>
+				</div>
+				<div class="editor-field">
+					<textarea rows="8" cols="70" class="span5" data-bind="value: description"></textarea>
+				</div>
+
+				<div class="editor-label">
+					<label>Artist type</label>
+				</div>
+				<div class="editor-field">
+					@KnockoutHelpers.DropdownList(Model.AllArtistTypes, "artistTypeStr")
+					<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
+				</div>
+
+				<!-- ko if: canHaveCircles -->
+					<div class="editor-label">
+						<label>Groups and circles</label>
+					</div>
+					<div class="editor-field">
+						@* TODO: extract template and viewmodel *@
+						<table>
+							<tbody data-bind="foreach: groups">
+								<tr>
+									<td>
+										<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', group.id) }, text: group.name, artistToolTip: group.id"></a>
+									</td>
+									<td>
+										<a data-bind="click: $parent.removeGroup" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<input type="text" data-bind="artistAutoComplete: groupSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
+					</div>
+				<!-- /ko -->
+
+				<!-- ko if: allowBaseVoicebank -->			
+				<div class="editor-label">
+					<label>
+						Base voicebank
+					</label>
+				</div>
+				<div class="editor-field">
+					<div style="display: inline-block;" class="input-append">
+						@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "baseVoicebankSearchParams", textBinding: "baseVoicebank.name", valBinding: "baseVoicebank.id")
+					</div>
+				</div>		
+				<!-- /ko -->		
+
+				<div class="editor-label">
+					@Helpers.HelpLabel("Web links", ViewRes.EntryEditStrings.ExternalLinksQuickHelp)
+				</div>
+				<div class="editor-field" data-bind="with: webLinks">
+					@KnockoutHelpers.WebLinksEditViewKnockout(true)
+				</div>
+
+				<div class="editor-label">
+					@Helpers.HelpLabel("Entry status", Resources.CommonMessages.EntryStatusExplanation)
+				</div>
+				<div class="editor-field">
+					@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
+				</div>
+
+			</div>
+		</div>
+		
+		<div id="picsTab" data-bind="with: pictures">
+			
+			<p>Please only upload pictures relevant to this artist, nothing else.</p>
+			<p>Allowed types: @string.Join(", ", ImageHelper.AllowedExtensions) . Maximum size is @ImageHelper.MaxImageSizeMB MB.</p>
+
+			<table>
+				<tbody data-bind="foreach: pictures">
+					@{ Html.RenderPartial("KnockoutPartials/_EntryPictureFileEdit"); }
+				</tbody>
+			</table>
+			
+			<a data-bind="click: add" href="#" class="addLink textLink">Create new</a>
+
+		</div>
+
+	</div>
+	<br />
+	
+	<p>Update notes (optional)</p>
+	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
+	
+	<br />	
+	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Artist.Id }))
+	
+	<!-- JSON model to be posted to the server -->
+	@Html.HiddenForKnockout(m => m.EditedArtist, "value: submittedJson")
+
+</form>
+
+@section BodyScripts {
+@Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Edit")
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+
+		var artistRepo = new vdb.repositories.ArtistRepository('@RootPath');
+		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedArtist));
+		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
+
+		if (editedModel) {
+			ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, webLinkCategoryJson, editedModel));
+		} else {
+
+			artistRepo.getForEdit(@Model.Artist.Id, function (model) {
+				ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, webLinkCategoryJson, model));
+			});
+
+		}
+
+		initPage();
+
+	});
+
+</script>
+}

@@ -1,0 +1,10 @@
+﻿@using VocaDb.Model.Domain.PVs
+@model VocaDb.Model.DataContracts.PVs.PVContract
+
+@* Embeds a PV that can be loaded dynamically by JavaScript. For NicoNico, wrapping the actual embed inside an iframe is necessary. *@
+
+@if (Model.Service == PVService.NicoNicoDouga) {
+	<iframe width="560" height="315" frameborder="0" scrolling="no" src="@Url.Action("PVEmbedNicoIFrame", "Song", new { pvId = Model.Id })"></iframe>
+} else {
+	@Helpers.EmbedPV(Model)
+}

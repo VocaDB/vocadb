@@ -1,0 +1,52 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Song;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.ArchivedSongVersionDetailsContract>
+
+@{
+	
+    ViewBag.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	
+	if (Model.Song != null) {
+		ViewBag.Parents = new[] { 
+			Html.ActionLink("Song", "Index", "Search", UrlMapper.Search.Songs(), null), 
+			Html.ActionLink(Model.Song.Name, "Details", new { id = Model.Song.Id }),
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Song.Id }) 
+		};
+	} else {
+		ViewBag.Parents = new[] { 
+			Html.ActionLink("Song", "Index", "Search", UrlMapper.Search.Songs(), null)
+		};
+	}
+
+}
+
+@section Toolbar {
+@if (Login.CanRevertEntryVersions) {
+	@Html.ActionLink("Revert to this version", "RevertToVersion", new { archivedSongVersionId = Model.ArchivedVersion.Id }, new { id = "revertLink", onclick = "return confirm(\"Are you sure you want to revert to this version?\");" })
+}
+&nbsp;
+<a href="@Url.Action("ArchivedVersionXml", new { id = Model.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
+}
+
+@if (Model.ComparableVersions.Any()) {
+	using (Html.BeginForm("ViewVersion", "Song", FormMethod.Post, new { @class = "form form-inline" })) {
+		<p>Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, new SelectList(Model.ComparableVersions, "Id", "Version", ViewHelper.GetComparedEntryId(Model.ArchivedVersion, Model.ComparedVersionId, Model.ComparableVersions)), new { @class = "input-small" })
+		<button type="submit" class="btn btn-primary">Compare</button></p>
+	}
+}
+
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForSong(Model.ArchivedVersion), 
+	Model.ComparedVersion != null ? Versions.CreateForSong(Model.ComparedVersion) : null)
+
+@SongHelpers.PrintArchivedSongData(Model.Versions)
+
+@section BodyScripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#revertLink").button({ icons: { primary: 'ui-icon-arrowrefresh-1-w'} });
+            $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+        });
+
+    </script>
+}

@@ -1,0 +1,27 @@
+﻿
+<div data-bind="
+		dialog: {
+			autoOpen: false, width: 400, height: 160,
+			position: { my: 'left top', at: 'left bottom', of: $('#customizeSubscription') }
+		},
+		dialogVisible: customizeSubscriptionDialog.dialogVisible"
+	 title="Customize subscription">
+
+	<div data-bind="with: customizeSubscriptionDialog">
+		<p>Notifications for new songs and albums.</p>
+
+		<label>
+			<input type="radio" value="Nothing" data-bind="checked: notificationsMethod" />
+			No notifications
+		</label>
+		<label>
+			<input type="radio" value="Site" data-bind="checked: notificationsMethod" />
+			Notify me on-site.
+		</label>
+		<label>
+			<input type="radio" value="Email" data-bind="checked: notificationsMethod" />
+			Notify me both on-site and by email.
+		</label>
+	</div>
+
+</div>

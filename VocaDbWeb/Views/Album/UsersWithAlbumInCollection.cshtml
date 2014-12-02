@@ -1,0 +1,27 @@
+﻿@using VocaDb.Model.DataContracts.Users
+@using VocaDb.Model.Domain.Users
+@using VocaDb.Web.Helpers;
+@model AlbumForUserContract[]
+
+@helper UserGrid(IEnumerable<AlbumForUserContract> users) {
+	@Html.Grid(users, 2, u => new MvcHtmlString(UserHelpers.UserIconLink(u.User).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
+}
+
+@{
+
+	var owned = Model.Where(u => u.PurchaseStatus == PurchaseStatus.Owned).ToArray();
+	var wishlisted = Model.Where(u => u.PurchaseStatus == PurchaseStatus.Wishlisted).ToArray();
+	
+}
+
+@if (owned.Any()) {
+	<h4>@ViewRes.Album.DetailsStrings.OwnedByTitle</h4>
+
+	@UserGrid(owned)
+}
+
+@if (wishlisted.Any()) {
+	<h4>@ViewRes.Album.DetailsStrings.WishlistedByTitle</h4>
+
+	@UserGrid(wishlisted)
+}

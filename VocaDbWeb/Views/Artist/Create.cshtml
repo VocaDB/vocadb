@@ -1,0 +1,135 @@
+﻿@using VocaDb.Model.Helpers
+@using VocaDb.Web.Helpers;
+@using System.Web.Optimization
+@using R = ViewRes.Artist;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.Create>
+
+@{
+	ViewBag.Title = R.CreateStrings.AddArtist;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Artists, "Index")
+	};	
+}
+
+<form action="@Url.Action("Create", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
+
+	@Helpers.ValidationSymmaryDiv(R.CreateStrings.UnableToCreateArtist)
+	
+	<div class="row-fluid">
+		<div class="span5 well well-transparent">
+
+			<div class="editor-label">
+				@R.CreateStrings.Name
+				@Helpers.RequiredField()
+			</div>
+
+			<div class="editor-field">
+				@Html.ValidationMessage("Names")
+
+				<table><tr><td class="formLabel">				
+					@Html.LabelFor(m => m.NameOriginal)
+				</td><td>
+					@Html.TextBoxForKnockout(m => m.NameOriginal, "value: nameOriginal, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
+				</td></tr>
+
+				<tr><td class="formLabel">
+					@Html.LabelFor(m => m.NameRomaji)
+				</td><td>
+					@Html.TextBoxForKnockout(m => m.NameRomaji, "value: nameRomaji, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
+				</td></tr>
+					
+				<tr><td class="formLabel">
+					@Html.LabelFor(m => m.NameEnglish)
+				</td><td>
+					@Html.TextBoxForKnockout(m => m.NameEnglish, "value: nameEnglish, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
+				</td></tr></table>
+			</div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.ArtistType)
+			</div>
+			<div class="editor-field">
+				@Html.ArtistTypeDropDownListFor(m => m.ArtistType)
+			</div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Description)
+			</div>
+			<div class="editor-field">
+				@Html.TextAreaFor(m => m.Description, 7, 70, new { @class = "span12" })<br />
+			</div>
+
+			<div class="editor-label">
+				@BrandableStrings.Artist.NewArtistExternalLink
+			</div>
+			<div class="editor-field">
+				<table>
+					<tr><td class="formLabel">
+						@R.CreateStrings.WebLinkURL
+						@Helpers.RequiredField()
+					</td><td>
+						@Html.TextBoxForKnockout(m => m.WebLinkUrl, "value: webLink.url, focusout: checkDuplicates",  "input-xlarge", maxLength: 512)     
+					</td></tr>
+					
+					<tr><td class="formLabel">				
+						@R.CreateStrings.WebLinkDescription @R.CreateStrings.Optional
+					</td><td>
+						@Html.TextBoxForKnockout(m => m.WebLinkDescription, "value: webLink.description",  "input-xlarge", maxLength: 512)     
+					</td></tr>
+                    
+                    <tr><td class="formLabel">
+                        @R.CreateStrings.WebLinkCategory
+                    </td>
+                    <td>
+                        @Html.DropdownForKnockout(m => m.WebLinkCategory, ViewHelper.CreateEnumList(Model.WebLinkCategory, Translate.WebLinkCategoryNames), "value: webLink.category")
+                    </td></tr>
+				</table>
+			</div>
+            
+			<div class="editor-label">
+				@R.CreateStrings.Picture
+			</div>
+			<div class="editor-field">
+				<p>@string.Format(ViewRes.EntryCreateStrings.PictureInfo, string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
+				<input type="file" id="pictureUpload" name="pictureUpload" />					
+			</div>
+			
+			<br />
+			<p>
+				<label class="checkbox">					
+					@Html.CheckBoxFor(m => m.Draft)
+					@R.CreateStrings.Draft
+				</label>
+			</p>
+			
+			<br />
+			<button type="submit" data-bind="disable: submitting" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+
+		</div>
+		<div class="span4">
+			<div class="alert alert-info">
+				@R.CreateStrings.ArtistInfo
+			</div>			
+			<div class="alert alert-info">
+				<p>@R.CreateStrings.NameHelp</p>
+			</div>
+
+			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
+		</div>
+		
+	</div>	
+	
+</form>
+
+@section BodyScripts {
+    @Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Create")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var repo = new vdb.repositories.ArtistRepository(vdb.values.baseAddress);
+            var json = @Html.Raw(JsonHelpers.Serialize(Model));
+            ko.applyBindings(new vdb.viewModels.ArtistCreateViewModel(repo, json));
+        });
+
+    </script>
+}

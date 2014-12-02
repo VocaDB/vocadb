@@ -1,0 +1,167 @@
+﻿@using System.Web.Mvc;
+@using System.Web.Mvc.Html
+@using System.Web.Routing
+@using VocaDb.Model.DataContracts.Albums;
+@using VocaDb.Model.Domain.Users
+@using VocaDb.Model.Service.Search.AlbumSearch
+@using VocaDb.Web.Helpers;
+@using VocaDb.Model.Domain.Images;
+@inherits VocaDb.Web.Code.HelperPage
+
+@helper AlbumIconLink(AlbumContract album) {
+	<a href="@Url.Action("Details", "Album", new { id = album.Id })">
+		<img src="@Url.ImageThumb(album, ImageSize.TinyThumb)" alt="Cover" class="coverPicThumb" />
+	</a>		
+}
+
+@helper AlbumLink(AlbumContract album) {
+	@Html.ActionLink(album.Name, "Details", "Album", new RouteValueDictionary { { "id", album.Id } }, new Dictionary<string, object> { { "title", album.AdditionalNames }, { "data-entry-id", album.Id }, { "class", "albumLink" }})
+}
+
+@helper AlbumList(IEnumerable<AlbumContract> albums,
+	bool displayRating, bool displayReleaseDate, bool displayType = false) {
+	
+	<table>
+		@foreach (var album in albums) {
+		<tr>
+			<td>
+				@AlbumIconLink(album)
+			</td>
+			<td>
+				@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
+				@if (displayType) {
+					@("(")@Translate.DiscTypeName(album.DiscType)@(")")
+	}
+				<br />
+				<span class="extraInfo">@album.ArtistString</span>
+				@if (displayReleaseDate && !album.ReleaseDate.IsEmpty) {
+					<br />
+					<span>@HelperRes.AlbumHelpersStrings.Released @album.ReleaseDate.Formatted</span>
+	}
+			</td>
+	   </tr>
+  }	
+	</table>
+		
+}
+
+@helper AlbumGrid(IEnumerable<AlbumContract> albums, int columns,
+	bool displayRating, bool displayReleaseDate, bool displayType = false) {
+	
+	<table>
+		@{ int i = 0; }
+	
+		@foreach (var album in albums) {
+	  if (i % columns == 0) {
+				@Html.Raw("<tr>")
+	  }
+			<td>
+				@AlbumIconLink(album)
+			</td>
+			<td>
+				@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
+				@if (displayType) {
+					@("(")@Translate.DiscTypeName(album.DiscType)@(")")
+	}
+				<br />
+				<span class="extraInfo">@album.ArtistString</span>
+				@if (displayReleaseDate && !album.ReleaseDate.IsEmpty) {
+					<br />
+					<span>@HelperRes.AlbumHelpersStrings.Released @album.ReleaseDate.Formatted</span>
+	}
+			</td>
+			{ i++; }
+			if (i % columns == 0) {
+				@Html.Raw("</tr>")
+			}
+  }
+		@if (i % columns != 0) {
+			@Html.Raw("</tr>")
+  }
+	</table>
+			
+}
+
+@helper AlbumThumbs(IEnumerable<AlbumContract> albums) {
+	
+	<ul class="smallThumbs">
+		@foreach (var album in albums) {
+			@Helpers.ThumbItem(Url.Action("Details", "Album", new { id = album.Id }),
+                Url.ImageThumb(album, ImageSize.SmallThumb), album.Name, album)	  
+		}
+	</ul>
+	
+}
+
+@helper ArtistAlbumParticipationStatusOptionsKnockout(string binding) {
+	{
+		var options = new Dictionary<string, string> {
+			{ ArtistAlbumParticipationStatus.Everything.ToString(), "Everything" },
+			{ ArtistAlbumParticipationStatus.OnlyMainAlbums.ToString(), "Only main albums" },
+			{ ArtistAlbumParticipationStatus.OnlyCollaborations.ToString(), "Only collaborations" },
+		};
+		@KnockoutHelpers.CheckBoxButtons(options, binding)
+	} 
+}
+
+@helper CoverLink(IEntryImageInformation imageInfo) {
+    <a href="@Url.ImageThumb(imageInfo, ImageSize.Original)">
+        <img src="@Url.ImageThumb(imageInfo, ImageSize.Thumb)" alt="@ViewRes.Album.DetailsStrings.CoverPicture" class="coverPic" />
+    </a>
+}
+
+@helper DetailsLink(AlbumContract album) {
+	@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
+}
+
+@helper DiscTypesDropdownKnockout(string binding) {
+	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.ValuesAndNames.ToDictionary(k => k.Key.ToString(), k => k.Value), binding)
+}
+
+@helper EditCollectionDialog(PurchaseStatus purchaseStatus, MediaType mediaType) {
+	
+<div id="editCollectionDialog" style="display:none" title="@ViewRes.Album.DetailsStrings.EditAlbumInCollection">
+
+	@ViewRes.Album.DetailsStrings.Status: 
+	@Html.EnumDropDownList("collectionStatusSelect", Translate.AlbumCollectionStatusNames, new { id = "collectionStatusSelect", @class = "input-medium" }, purchaseStatus)
+	<br />
+
+	@ViewRes.Album.DetailsStrings.MediaType:
+	@Html.EnumDropDownList("collectionMediaSelect", Translate.AlbumMediaTypeNames, new { id = "collectionMediaSelect", @class = "input-medium" }, mediaType)
+
+	<div>
+		@ViewRes.Album.DetailsStrings.MyRating: 
+		<div id="collectionRating"></div>
+		@Html.Raw("&nbsp;")
+		<a href="#" id="removeRating" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+	</div>
+</div>
+	
+}
+
+@helper PrintArchivedAlbumData(ComparedAlbumsContract comparedAlbums) {
+
+	<div class="well well-transparent archived-entry-contents">
+		<h4>Content</h4>
+	
+		<table class="table table-bordered">
+			@ArchivedEntryHelpers.DataRow("Album Id", comparedAlbums.FirstData.Id)
+			@ArchivedEntryHelpers.PictureRow("Main picture", comparedAlbums, id => Url.Action("ArchivedVersionCoverPicture", "Album", new { id }))
+			@ArchivedEntryHelpers.DataRow("Main picture MIME", comparedAlbums, d => d.MainPictureMime)
+			@ArchivedEntryHelpers.TranslatedNameRow(comparedAlbums, d => d.TranslatedName)
+			@ArchivedEntryHelpers.DataRowList("Names", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+			@ArchivedEntryHelpers.DataRow("Description", comparedAlbums, d => d.Description)
+			@ArchivedEntryHelpers.DataRow("Disc type", comparedAlbums, d => Translate.DiscTypeName(d.DiscType))
+			@ArchivedEntryHelpers.DataRow("Release date", comparedAlbums, d => d.OriginalRelease != null && d.OriginalRelease.ReleaseDate != null && !d.OriginalRelease.ReleaseDate.IsEmpty ? ArchivedEntryHelpers.FormatReleaseDate(d.OriginalRelease.ReleaseDate) : string.Empty)
+			@ArchivedEntryHelpers.DataRow("Catalog number", comparedAlbums, d => d.OriginalRelease != null ? d.OriginalRelease.CatNum : string.Empty)
+			@ArchivedEntryHelpers.DataRow("Release event", comparedAlbums, d => d.OriginalRelease != null ? d.OriginalRelease.EventName : string.Empty)
+			@ArchivedEntryHelpers.DataRowList("External links", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+			@ArchivedEntryHelpers.DataRowList("Artists", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Artists != null ? d.Artists.OrderBy(a => a.NameHint) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
+			@ArchivedEntryHelpers.DataRowList("Tracks", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Songs != null ? d.Songs.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber) : null, song => MvcHtmlString.Create("(Disc " + song.DiscNumber + ") " + song.TrackNumber + ". " + song.NameHint + " [" + song.Id + "]")))
+			@ArchivedEntryHelpers.DataRowList("Pictures", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.Pictures, ArchivedEntryHelpers.PictureFileInfo))
+			@ArchivedEntryHelpers.DataRowList("PVs", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
+		</table>	
+
+	</div>
+
+}

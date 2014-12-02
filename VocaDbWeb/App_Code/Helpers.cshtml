@@ -1,0 +1,360 @@
+﻿@inherits VocaDb.Web.Code.HelperPage
+@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
+@using System.Web.Routing
+@using VocaDb.Model
+@using VocaDb.Model.Helpers
+@using VocaDb.Model.DataContracts
+@using VocaDb.Model.Domain;
+@using VocaDb.Model.Domain.PVs
+@using VocaDb.Model.Domain.Songs;
+@using VocaDb.Model.Utils
+@using VocaDb.Web.Helpers;
+
+@functions {
+
+	static string GetAbsoluteUrl(string relative) {
+		return AppConfig.HostAddress + relative;
+	}
+
+}
+
+@helper AjaxLoader(string id) {
+	<img id="@id" src="@Url.Content("~/Content/ajax-loader.gif")" alt="loading..." style="display:none;" />
+}
+
+@helper ConvertNewlinesToBreaks(string text) {
+	var lines = text.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.None);
+	foreach (var line in lines) {
+		@line
+		<br />
+	}
+}
+
+@helper DraftIcon(VocaDb.Model.DataContracts.Albums.AlbumContract album) {
+	@DraftIcon(album.Status)
+}
+
+@helper DraftIcon(VocaDb.Model.Domain.EntryStatus status) {
+	if (status == VocaDb.Model.Domain.EntryStatus.Draft) {
+		<img src="@Url.Content("~/Content/draft.png")" title="@HelperRes.HelperStrings.DraftIconTitle" alt="draft" />
+	}
+}
+
+@helper DraftMessage(string section) {
+	<div class="alert">
+		@NotificationIcon()
+		<span>@HelperRes.HelperStrings.DraftMessage</span>
+		<span>@HelperRes.HelperStrings.SeeGuidePre <a href="@(Url.Action("Index", "Help") + "?guidelines+" + section)">@HelperRes.HelperStrings.SeeGuide</a> @HelperRes.HelperStrings.SeeGuidePost</span>
+	</div>
+}
+
+@helper EntryLink(EntryRefWithNameContract entryRef) {
+	@Html.ActionLink(entryRef.Name.DisplayName, "Details", entryRef.EntryType.ToString(), new RouteValueDictionary { { "id", entryRef.Id } }, new Dictionary<string, object> { { "title", entryRef.Name.AdditionalNames }, { "data-entry-id", entryRef.Id } })
+}
+
+@helper EntryLink(EntryBaseContract entry) {
+	@Html.ActionLink(entry.DefaultName, "Details", entry.EntryType.ToString(), new { id = entry.Id }, null)	
+}
+
+@helper EmbedPV(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 560, int height = 315, bool autoplay = false, bool enableApi = false, string id = null) {
+	
+	switch (pv.Service) {
+		case VocaDb.Model.Domain.PVs.PVService.Bilibili:
+			<iframe width="@width" height="@height" src="http://static.hdslb.com/miniloader.swf?aid=@(pv.PVId)" style="border: 0"></iframe>
+			break;
+
+		case VocaDb.Model.Domain.PVs.PVService.File:
+			<audio id="@id" controls src="@pv.Url"></audio>
+			break;
+
+		case VocaDb.Model.Domain.PVs.PVService.NicoNicoDouga:
+			<script type="text/javascript" src="@(string.Format("http://ext.nicovideo.jp/thumb_watch/{0}?w={1}&h={2}", pv.PVId, width, height))"></script>
+			break;
+
+		case VocaDb.Model.Domain.PVs.PVService.Piapro:
+			<iframe src="http://piapro.jp/modpub/swf/player03_h.swf?030503&id=@(pv.PVId)&c=1" width="340" height="80" allowTransparency="true" style="border: 0"></iframe>
+			break;
+								   
+		case VocaDb.Model.Domain.PVs.PVService.SoundCloud:
+			var scId = new VocaDb.Model.Service.VideoServices.SoundCloudId(pv.PVId);
+			<iframe id="@id" width="@width" height="@Math.Min(height, 166)" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F@(scId.TrackId)&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
+			break;
+
+		case VocaDb.Model.Domain.PVs.PVService.Youtube:
+			var apParam = (autoplay ? 1 : 0);
+			var apiParam = (enableApi ? 1 : 0);
+			var originParam = (enableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress() : string.Empty);
+			id = id ?? string.Empty;
+			<iframe id="@id" width="@width" height="@height" src="http://www.youtube.com/embed/@(pv.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
+			break;
+
+		case VocaDb.Model.Domain.PVs.PVService.Vimeo:
+            <iframe src="http://player.vimeo.com/video/@pv.PVId" width="@width" height="@height" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+            break;
+    }
+	
+}
+
+@helper EmbedPVThumb(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 340, int height = 200) {	
+    if (pv != null) {
+        switch (pv.Service) {
+            case VocaDb.Model.Domain.PVs.PVService.NicoNicoDouga:
+				<iframe width="@width" height="@height" src="http://ext.nicovideo.jp/thumb/@pv.PVId" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"></iframe>
+                break;
+
+            case VocaDb.Model.Domain.PVs.PVService.SoundCloud:
+                var scId = new VocaDb.Model.Service.VideoServices.SoundCloudId(pv.PVId);
+				<iframe width="@width" height="@Math.Min(height, 166)" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F@(scId.TrackId)&amp;auto_play=false&amp;show_artwork=false&amp;color=ff7700"></iframe>			
+                break;
+				
+			default:
+				@EmbedPV(pv, width, height)
+				break; 
+        }
+    }
+}
+
+@helper EntryPictureFileLink(EntryPictureFileContract entryPictureFile) {
+	<a href="@VocaDb.Model.Helpers.ImageHelper.GetImageUrl(entryPictureFile)">
+		<img src="@VocaDb.Model.Helpers.ImageHelper.GetImageUrlThumb(entryPictureFile)" alt="Preview" class="coverPic" />
+	</a>
+}
+
+@helper EntrySearchNameBox(string id, string cls = "input-xlarge") {
+	<input type="text" id="@id" maxlength="128" class="@cls" placeholder="@ViewRes.SharedStrings.Search" />	
+}
+
+
+@helper EntryStatusMessage(EntryStatus status) {
+    switch (status) {
+        case EntryStatus.Draft:
+			<span title="@HelperRes.HelperStrings.StatusDescriptionDraft">
+				<span class="icon draftIcon"></span>
+				@Translate.EntryStatusNames[EntryStatus.Draft]
+			</span>
+            break;
+
+        case EntryStatus.Finished:
+			<span title="@HelperRes.HelperStrings.StatusDescriptionFinished">
+				<span class="icon asteriskIcon"></span>
+				@Translate.EntryStatusNames[EntryStatus.Finished]
+			</span>
+            break;
+
+        case EntryStatus.Approved:
+			<span title="@HelperRes.HelperStrings.StatusDescriptionApproved">
+				<span class="icon tickIcon"></span>
+				@Translate.EntryStatusNames[EntryStatus.Approved]
+			</span>
+            break;
+
+        case EntryStatus.Locked:
+			<span title="@HelperRes.HelperStrings.StatusDescriptionLocked">
+				<span class="icon lockIcon"></span>
+				@Translate.EntryStatusNames[EntryStatus.Locked]
+			</span>
+            break;
+
+    }	
+}
+
+@helper FormatPVLink(VocaDb.Model.DataContracts.PVs.PVContract pv, bool type = true) {
+	<a href="@pv.Url"><img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" /> @(!string.IsNullOrEmpty(pv.Name) ? pv.Name : pv.Service.ToString())
+	@if (type) {
+		@("(" + Translate.PVTypeNames[pv.PVType] + ")")
+ }
+	</a>
+}
+
+@helper GoogleSiteSearch() {
+	
+<div id="cse" style="width: 100%;">Loading</div>
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+	google.load('search', '1', { language: 'en' });
+	google.setOnLoadCallback(function () {
+		var customSearchControl = new google.search.CustomSearchControl('010575853430721629857:uosxb117-zg');
+		customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+		customSearchControl.draw('cse');
+	}, true);
+</script>
+<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />	
+	
+}
+
+@* Displays label element with attached qTip tooltip *@
+@helper HelpLabel(string label, string title, string forElem = null) {
+	<label class="helpTip" data-bind="qTip: null" title="@title" for="@(forElem ?? "")">@label</label>			
+}
+
+@* NOT IN USE, can be removed *@
+@helper HelpMessage(string message, string id = null) {
+    if (string.IsNullOrEmpty(id)) {
+		<span class="helpIcon helpToolTip" title="@message"></span>
+    } else {
+		<span class="helpIcon helpToolTip" title="@message" id="@id"></span>	 
+    }
+}
+
+@helper ImageUploadMessage() {
+	<p>
+		@string.Format(HelperRes.HelperStrings.UploadPictureInfo, string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)
+	</p>
+}
+
+@helper MarkdownNotice() {
+	<small>(<a href="https://help.github.com/articles/github-flavored-markdown">@HelperRes.HelperStrings.GitHubMarkdown</a> @HelperRes.HelperStrings.IsSupportedForFormatting)</small>
+}
+
+@helper MergeEntryInfo() {
+	<div class="alert">
+		<h4>This action cannot be undone! Please make sure the entries really need to be merged before proceeding.</h4>
+	</div>
+	<div class="alert alert-info">
+		Choose the entry which this one will be merged to. All references will be pointed to that new entry and this entry will be deleted.
+		<br />
+		Prefer merging the later entry to the earlier one, unless the new entry is finalized while the older one is draft.
+	</div>	
+}
+
+@helper NotificationIcon() {
+	<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+}
+
+@helper NotificationPanel(string message, string messageId = "") {
+	<div class="alert">
+		@NotificationIcon()
+		<span id="@messageId">@message</span>		
+	</div>   
+}
+
+@helper PrintComment(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false) {	
+	@CommentHelpers.PrintComment(contract, allowDelete, alwaysAllowDelete)
+}
+
+@helper PVServiceIcon(PVService service) {
+    
+	var iconUrl = @Html.VideoServiceLinkUrl(service);
+        
+	<img src="@iconUrl" alt="@service.ToString()" title="@service.ToString()" />
+    
+}
+
+@helper PVServiceIcons(PVServices services) {
+    
+	foreach (var service in EnumVal<PVService>.Values.Where(service => services.HasFlag((PVServices)service))) {
+        @PVServiceIcon(service)           
+	}
+    
+}
+
+@helper RequiredField() {
+	<span class="required-field">*</span>	
+}
+
+@helper SaveBtn() {
+	<p>
+		<button type="submit" class="btn btn-primary">
+			<i class="icon-ok icon-white"></i>
+			&nbsp;@HelperRes.HelperStrings.SaveChanges
+		</button>	
+	</p>
+}
+
+@helper SaveAndBackBtn(string backAction) {
+	<p>
+		<button type="submit" class="btn btn-primary" data-bind="disable: submitting">
+			<i class="icon-ok icon-white"></i>
+			&nbsp;@HelperRes.HelperStrings.SaveChanges
+		</button>	
+		<a class="btn btn-nomargin" href="@backAction">
+			<i class="icon-backward"></i>
+			&nbsp;@HelperRes.HelperStrings.ReturnWithoutSaving
+		</a>	
+	</p>
+}
+
+@helper ShowMore(string js = null, string href = null) {
+	<div class="pull-right">
+		<small>
+			<a href="@(href ?? "#")" @(js != null ? "data-bind='click: function() { " + js + " }'" : "")>@ViewRes.SharedStrings.ShowMore</a>
+		</small>
+	</div>
+}
+
+@helper Stars(int current, int max) {
+	for (int i = 1; i <= max; ++i) {
+		if (current >= i) {
+			<img src="@GetAbsoluteUrl(Url.Content("~/Content/star.png"))" alt="*" />
+		} else {
+			<img src="@GetAbsoluteUrl(Url.Content("~/Content/star_disabled.png"))" alt="" />
+		}
+	}
+}
+
+@helper Stars(double current, int max) {
+	<span title="@Math.Round(current, 2)">
+		@Stars((int)Math.Round(current, MidpointRounding.AwayFromZero), max)
+	</span>
+}
+
+@helper StarsMeta(int current, int max) {
+	for (int i = 1; i <= max; ++i) {
+		if (current >= i) {
+			<img class="rating" src="@Url.Content("~/Content/star.png")" alt="@current" />
+		} else {
+			<img class="rating" src="@Url.Content("~/Content/star_disabled.png")" alt="@current" />
+		}
+	}
+}
+
+@helper StarsMeta(double current, int max) {
+	<span title="@Math.Round(current, 2)">		
+        @StarsMeta((int)Math.Round(current, MidpointRounding.AwayFromZero), max)
+	</span>
+}
+
+
+@helper ThumbItem(string url, string thumbUrl, string caption, IEntryBase entry = null) {
+	
+	<li>
+		<a href="@url">
+			<div class="pictureFrame">
+			    @if (entry != null) {
+				    <img src="@thumbUrl" alt="Preview" class="coverPic" data-entry-type="@entry.EntryType" data-entry-id="@entry.Id" />										           
+	   } else {
+				    <img src="@thumbUrl" alt="Preview" class="coverPic" />										
+	   }
+			</div>
+		</a>
+		@if (!string.IsNullOrEmpty(caption)) {
+			<p>@caption</p>
+  }
+	</li>
+	  	  
+}
+
+@helper UniversalTimeLabel(DateTime dateTime) {
+	<span title="UTC">@dateTime.ToUniversalTime()</span>
+}
+
+@helper ValidationSymmaryPanel(string message) {
+	if (!ViewData.ModelState.IsValid) {
+		using (Html.BeginErrorPanel()) {
+			<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+			@Html.ValidationSummary(false, message)
+		}
+	}
+}
+
+@helper ValidationSymmaryDiv(string message) {
+	if (!ViewData.ModelState.IsValid) {
+        <div class="alert alert-error">
+			<h4>
+				@message
+			</h4>
+			@Html.ValidationSummary(false)
+        </div>
+	}
+}

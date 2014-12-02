@@ -1,0 +1,28 @@
+﻿/*states, content and header*/
+.jqx-widget-darkblue{border-color:#004a73}
+.jqx-widget-content-darkblue{color:#004a73; border-color:#004a73}
+.jqx-fill-state-normal-darkblue, .jqx-widget-header-darkblue, .jqx-menu-vertical-darkblue{color: #fff; border-color: #004a73; background-color:#449bca; background-image:-webkit-gradient(linear,0 0,0 100%,from(#3c91c2),to(#449bca));  background-image:-moz-linear-gradient(top,#3c91c2,#449bca);  background-image:-o-linear-gradient(top,#3c91c2,#449bca)}
+.jqx-fill-state-hover-darkblue{background-color: #2f7097; background-image: none; border-color:#004a73; color:#fff}
+.jqx-fill-state-pressed-darkblue, .jqx-menu-item-top-hover-darkblue{background-color: #004a73; background-image: none; border-color:#004a73; color:#fff}
+/*checkbox images, grid cells*/
+.jqx-checkbox-check-checked-darkblue{background:transparent url(images/check_white.png) left top no-repeat}
+.jqx-checkbox-check-indeterminate-darkblue{background:transparent url(images/check_indeterminate_white.png) left top no-repeat}
+.jqx-grid-darkblue, .jqx-grid-header-darkblue, .jqx-grid-cell-darkblue{border-color:#60aad2}
+.jqx-widget-darkblue .jqx-grid-cell-darkblue, .jqx-widget-darkblue .jqx-grid-group-cell-darkblue{border-color:#60aad2}
+.jqx-widget-darkblue .jqx-grid-column-menubutton-darkblue, .jqx-widget-darkblue .jqx-grid-column-sortascbutton-darkblue, .jqx-widget-darkblue .jqx-grid-column-sortdescbutton-darkblue, .jqx-widget-darkblue .jqx-grid-column-filterbutton-darkblue{   background-color:#449bca;border-color:#449bca}
+.jqx-widget-darkblue .jqx-grid-column-header-darkblue{border-color:#449bca}
+.jqx-grid-bottomright-darkblue, .jqx-panel-bottomright-darkblue, .jqx-listbox-bottomright-darkblue{   background-color:#449bca}
+.jqx-widget-darkblue .jqx-grid-column-menubutton-darkblue, .jqx-menu-vertical-darkblue{background-color:#0a73a7;border-color:#0a73a7}
+ .jqx-grid-selectionarea-darkblue{background-color:#60aad2;border:1px solid #60aad2; opacity:0.5}
+.jqx-grid-group-cell-darkblue{border-color:#60aad2; background-color:#fff}
+.jqx-grid-cell-sort-darkblue, .jqx-grid-cell-filter-darkblue, .jqx-grid-cell-pinned-darkblue{background-color:#deedf5}
+.jqx-grid-cell-alt-darkblue, .jqx-grid-cell-sort-alt-darkblue, .jqx-grid-cell-filter-alt-darkblue{background-color:#deedf5}
+.jqx-grid-cell-selected-darkblue{background-color:#cee4f0; color:#003451}
+.jqx-grid-cell-hover-darkblue{background-color:#eaf8ff; color:#003451}
+.jqx-scrollbar-state-normal-darkblue{background-color:#449bca; border:1px solid #449bca}
+/*icons*/
+.jqx-grid-column-sortascbutton-darkblue, .jqx-expander-arrow-bottom-darkblue, .jqx-window-collapse-button-darkblue, .jqx-menu-item-arrow-up-darkblue, .jqx-menu-item-arrow-up-selected-darkblue, .jqx-menu-item-arrow-top-up-darkblue, .icon-arrow-up-darkblue, .icon-arrow-up-hover-darkblue, .icon-arrow-up-selected-darkblue{background-image:url('images/icon-up-white.png');background-repeat:no-repeat;background-position:center}
+.jqx-grid-column-menubutton-darkblue, .jqx-grid-column-sortdescbutton-darkblue, .jqx-expander-arrow-top-darkblue, .jqx-window-collapse-button-collapsed-darkblue, .jqx-menu-item-arrow-down-darkblue, .jqx-menu-item-arrow-down-selected-darkblue, .jqx-menu-item-arrow-down-darkblue, .icon-arrow-down-darkblue, .icon-arrow-down-hover-darkblue, .icon-arrow-down-selected-darkblue{background-image:url('images/icon-down-white.png');background-repeat:no-repeat;background-position:center}
+.jqx-tabs-arrow-left-darkblue, .jqx-menu-item-arrow-left-selected-darkblue, .jqx-menu-item-arrow-top-left-darkblue, .icon-arrow-left-darkblue, .icon-arrow-down-left-darkblue, .icon-arrow-left-selected-darkblue{background-image:url('images/icon-left-white.png');background-repeat:no-repeat;background-position:center}
+.jqx-tabs-arrow-right-darkblue, .jqx-menu-item-arrow-right-selected-darkblue, .jqx-menu-item-arrow-top-right-darkblue, .icon-arrow-right-darkblue, .icon-arrow-right-hover-darkblue, .icon-arrow-right-selected-darkblue{background-image:url('images/icon-right-white.png');background-repeat:no-repeat;background-position:center}
+.jqx-window-close-button-darkblue, .icon-close-darkblue, .jqx-tabs-close-button-darkblue, .jqx-tabs-close-button-hover-darkblue, .jqx-tabs-close-button-selected-darkblue{background-image:url(images/close_white.png);  background-repeat:no-repeat;  background-position:center}

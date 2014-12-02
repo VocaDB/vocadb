@@ -1,0 +1,121 @@
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Web.Helpers
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Models.Song
+@using VocaDb.Web.Code
+@using VocaDb.Model.Utils
+@using VocaDb.Model.Utils.Search
+@inherits MenuPage
+
+@helper Banner(string title, string url, string img) {
+    <li><a href="@url"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a></li>
+}
+
+@helper SmallBanner(string title, string url, string img) {
+    <div><a href="@url"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a></div>
+}
+
+@helper SocialLink(string title, string url, string img ){
+    <a href="@url"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a>
+}
+
+<div class="span2 menu">
+	<div class="well">
+		<a href="@Url.Action("Index", "Home")">
+			<img src="@VocaUrlHelper.StaticResource("/img/vocaDB-title.png")" class="site-logo" alt="@BrandableStrings.Layout.SiteName" title="@BrandableStrings.Layout.SiteName" />
+		</a>
+		<p class="slogan">@VocaDb.Web.Code.SloganGenerator.Generate()</p>
+	</div>
+
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li>@Html.ActionLink(ViewRes._LayoutStrings.Home, "Index", "Home")</li>
+			<li>
+				@Html.ActionLink(ViewRes.SharedStrings.Artists, "Index", "Search", new { searchType = EntryType.Artist }, null)
+				<ul>
+					@if (Login.CanManageDb) {
+						<li>@Html.ActionLink(ViewRes._LayoutStrings.AddArtist, "Create", "Artist")</li>
+					}
+				</ul>
+			</li>
+			<li>
+				@Html.ActionLink(ViewRes.SharedStrings.Albums, "Index", "Search", new { searchType = EntryType.Album }, null)
+				<ul>
+					@if (Login.CanManageDb) {
+						<li>@Html.ActionLink(ViewRes._LayoutStrings.AddAlbum, "Create", "Album")</li>
+					}
+					<li>@Html.ActionLink(ViewRes.SharedStrings.TopRatedAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingAverage }, null)</li>
+					<li>@Html.ActionLink(ViewRes._LayoutStrings.NewAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null)</li>
+					<li>@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries", "Event")</li>
+					<li>@Html.ActionLink(ViewRes._LayoutStrings.FreeAlbums, "Index", "Search", new { searchType = "Album", tag = "free" }, null)</li>
+				</ul>
+			</li>
+			<li>
+				@Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", new SearchRouteParams{ searchType = EntryType.Song }, null)
+				<ul>
+					@if (Login.CanManageDb) {
+						<li>@Html.ActionLink(ViewRes._LayoutStrings.AddSong, "Create", "Song")</li>
+					}
+					<li>@Html.ActionLink(ViewRes.SharedStrings.TopFavoritedSongs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.RatingScore }, null)</li>
+					<li>@Html.ActionLink(ViewRes._LayoutStrings.NewPVs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null)</li>
+				</ul>
+			</li>
+			<li>@Html.ActionLink(ViewRes.SharedStrings.FeaturedSongLists, "Featured", "SongList")</li>
+			<li>@Html.ActionLink(ViewRes._LayoutStrings.Tags, "Index", "Tag")</li>
+			<li>@Html.ActionLink(ViewRes._LayoutStrings.Help, "Index", "Help")</li>
+			<li><a href="http://wiki.vocadb.net/">@ViewRes._LayoutStrings.Wiki</a></li>
+			<li><a href="@BlogUrl">@ViewRes._LayoutStrings.Blog</a></li>
+			@if (Login.Manager.HasPermission(PermissionToken.MikuDbImport)) {
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.MikuDbAlbum, "Index", "MikuDbAlbum")</li>		 
+			}
+			@if (Login.CanAccessManageMenu) {
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.Manage, "Index", "Admin")</li>
+			}
+			@if (!Login.Manager.IsLoggedIn) {
+				<li><a href="@Url.Action("Login", "User")" onclick="vdb.functions.showLoginPopup(); return false;">@ViewRes._LayoutStrings.LogIn</a></li>
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.Register, "Create", "User")</li>
+			}
+		</ul>
+		@if (Login.Manager.IsLoggedIn) {
+			<br />
+			<p class="user">@ViewRes._LayoutStrings.Welcome @Html.ActionLink(Login.User.Name, "Profile", "User", new { id = Login.User.Name }, null)</p>
+		}
+	</div>			
+		
+	<div class="well">
+		@if (AppLinks.Any()) {
+			<div id="appLinks">
+				@foreach (var link in AppLinks) {
+					@SmallBanner(link.Title, link.Url, link.BannerImg)
+				}
+				<br />
+			</div>
+		}
+
+		<h4>@ViewRes._LayoutStrings.SocialSites</h4>
+		<div id="socialSites">
+			@foreach (var link in SocialLinks) {
+				@SocialLink(link.Title, link.Url, link.BannerImg)
+			}
+			<br />
+			@Html.ActionLink(ViewRes._LayoutStrings.IRCLink, "Chat", "Home")
+		</div>
+
+		<br />
+		<h4>@ViewRes._LayoutStrings.RelatedSites</h4>
+		<ul id="banners">
+			@foreach (var link in BigBanners) {
+				@Banner(link.Title, link.Url, link.BannerImg)
+			}
+		</ul>					
+		<div id="banners-small">
+			@foreach (var link in SmallBanners) {
+				@SmallBanner(link.Title, link.Url, link.BannerImg)
+			}
+		</div>
+		@if (!string.IsNullOrEmpty(Config.SiteSettings.PaypalDonateCert)) {
+			<hr />
+			Html.RenderPartial("Partials/_PaypalDonateButton");
+		}
+	</div>						
+</div>

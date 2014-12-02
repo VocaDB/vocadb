@@ -1,0 +1,4 @@
+﻿@using VocaDb.Model.Domain.Users
+@model VocaDb.Web.Models.Shared.PagingData<VocaDb.Model.DataContracts.Users.UserContract>
+
+@PagingHelpers.PagingTemplate(Model, null, () => UserHelpers.UserTable(Model.Items, (UserGroupId)Model.RouteValues["groupId"], (string)Model.RouteValues["name"]))

@@ -1,0 +1,78 @@
+﻿@using VocaDb.Model.Utils
+@using Microsoft.Web.Helpers;
+@using R = ViewRes.User.CreateStrings;
+
+@model VocaDb.Web.Models.RegisterModel
+@{
+	ViewBag.Title = ViewRes.User.CreateStrings.Register;
+}
+
+@Helpers.ValidationSymmaryDiv(ViewRes.User.CreateStrings.RegistrationUnsuccessful)
+
+@using (Html.BeginForm()) {
+	<div class="row-fluid">
+		<div class="span5 well well-transparent">
+			<div class="editor-label">
+				@Html.LabelFor(m => m.UserName)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.UserName, new { size = 40, maxlength = 100 })
+				@Html.ValidationMessageFor(m => m.UserName)
+			</div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Password)
+			</div>
+			<div class="editor-field">
+				@Html.PasswordFor(m => m.Password, new { size = 40, maxlength = 100 })
+				@Html.ValidationMessageFor(m => m.Password)
+			</div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Email)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Email, new { size = 40, maxlength = 50 })
+				@Html.ValidationMessageFor(m => m.Email)
+			</div>
+
+			<div class="editor-label">
+				CAPTCHA
+			</div>
+			<div class="editor-field">
+				@ReCaptcha.GetHtml(publicKey: AppConfig.ReCAPTCHAPublicKey)
+
+				@Html.ValidationMessage("CAPTCHA")
+			</div>
+
+			<div class="editor-field" style="display: none;">
+				@Html.TextBoxFor(m => m.Extra)
+			</div>
+
+			@Html.HiddenFor(m => m.EntryTime)
+
+			<br /><br />
+			<p>
+				<button type="submit" class="btn btn-primary">@ViewRes.User.CreateStrings.DoRegister</button>
+			</p>
+
+			<hr />
+			<a href="@Url.Action("LoginTwitter")">
+				<img src="@Url.Content("~/Content/Sign-in-with-Twitter-darker.png")" alt="Sign in with Twitter" />
+			</a>
+		</div>
+		
+		<div class="span3">
+			<div class="alert alert-info">
+				@R.UsernameNote
+			</div>
+			<div class="alert alert-info">
+				@R.EmailNote
+			</div>
+			<div class="alert alert-info">
+				@R.TwitterNote
+			</div>
+		</div>
+	</div>
+
+}

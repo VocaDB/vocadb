@@ -1,0 +1,24 @@
+﻿@using System.Web.Optimization
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+	<title>QUnit Tests for VocaDB</title>
+	<link rel="stylesheet" href="@Url.Content("~/Content/qunit-1.11.0.css")" type="text/css" />
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+
+	@Scripts.Render("~/bundles/shared/libs", "~/bundles/shared/jqui", "~/bundles/VocaDB", "~/bundles/shared/common")
+	<script src="@Url.Content("~/Scripts/Models/SongVoteRating.js")"></script>
+	<script src="@Url.Content("~/Scripts/ViewModels/PVRatingButtonsViewModel.js")"></script>
+	<script src="@Url.Content("~/Scripts/Libraries/qunit-1.11.0.js")"></script>
+	@Scripts.Render("~/bundles/tests")
+</body>
+</html>

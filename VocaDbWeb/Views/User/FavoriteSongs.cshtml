@@ -1,0 +1,43 @@
+﻿@using System.Web.Optimization
+@using Res = ViewRes.User.FavoriteSongsStrings;
+@using SharedRes = ViewRes.SharedStrings;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.FavoriteSongs>
+
+@{
+    ViewBag.Title = "Songs rated by " + Model.User.Name;
+	ViewBag.Parents = new[] {
+		Html.ActionLink(Model.User.Name, "Details", "User", new {id = Model.User.Id}, null)
+	};	
+}
+
+@{ Html.RenderPartial("Partials/_RatedSongs"); }
+
+@section BodyScripts {
+	@Scripts.Render("~/bundles/User/RatedSongs")
+
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+
+			var cultureCode = '@UICulture';
+			var languageSelection = '@UserContext.LanguagePreference';
+			var loggedUserId = @Model.User.Id;
+			var sort = @Html.Raw(Model.Sort != null ? string.Format("'{0}'", Model.Sort) : "null");
+			var groupByRating = @ToJS(Model.GroupByRating);
+
+			var rootPath = '@RootPath';
+			var urlMapper = new vdb.UrlMapper(rootPath);
+			var userRepo = new vdb.repositories.UserRepository(urlMapper);
+			var artistRepo = new vdb.repositories.ArtistRepository(rootPath);
+			var songRepo = new vdb.repositories.SongRepository(rootPath, @LanguagePreferenceInt);
+			var resourceRepo = new vdb.repositories.ResourceRepository(rootPath);
+
+			var vm = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
+				sort, groupByRating);
+			ko.applyBindings(vm);
+
+		});
+
+	</script>
+
+}

@@ -1,0 +1,152 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers;
+@using R = ViewRes.Song;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.Create>
+
+@{
+    ViewBag.Title = R.CreateStrings.SubmitSong;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null)
+	};	
+}
+
+<form action="@Url.Action("Create", "Song")" method="POST" data-bind="submit: submit">
+
+	@Helpers.ValidationSymmaryDiv(R.CreateStrings.UnableToCreateSong)
+																								
+	<div class="row-fluid">
+		<div class="span5 well well-transparent">
+			
+			<div class="pull-right">
+				@Helpers.AjaxLoader("pvLoader")				
+			</div>
+
+			<div class="alert alert-danger" data-bind="visible: isDuplicatePV" style="display:none">
+				@R.CreateStrings.DuplicatePV
+			</div>
+			
+			<div class="editor-label">
+				@Html.LabelFor(m => m.PVUrl)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, focusout: checkDuplicatesAndPV", cssClass: "span8", maxLength: 255, size: 30)
+				@Html.ValidationMessageFor(m => m.PVUrl)
+			</div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.ReprintPVUrl)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, focusout: checkDuplicatesAndPV", cssClass: "span8", maxLength: 255, size: 30)
+				@Html.ValidationMessageFor(m => m.ReprintPVUrl)
+			</div>
+
+			<div class="editor-label">
+				@R.CreateStrings.Name
+				@Helpers.RequiredField()
+			</div>
+
+			<div class="editor-field">
+				@Html.ValidationMessage("Names")
+
+				<table><tr><td class="formLabel">				
+					@Html.LabelFor(m => m.NameOriginal)
+				</td><td>
+					@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, focusout: checkDuplicatesAndPV", cssClass: "span12", maxLength: 255, size: 40)
+				</td></tr>
+
+				<tr><td class="formLabel">
+					@Html.LabelFor(m => m.NameRomaji)
+				</td><td>
+					@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, focusout: checkDuplicatesAndPV", cssClass: "span12", maxLength: 255, size: 40)
+				</td></tr>
+					
+				<tr><td class="formLabel">
+					@Html.LabelFor(m => m.NameEnglish)
+				</td><td>
+					@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, focusout: checkDuplicatesAndPV", cssClass: "span12", maxLength: 255, size: 40)
+				</td></tr></table>
+			</div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.SongType)
+			</div>
+			<div class="editor-field">
+				@Html.DropdownForKnockout(m => m.SongType, ViewHelper.CreateSongTypesList(null), "value: songType")
+			</div>
+
+			<div class="editor-label">
+				<span>@R.CreateStrings.ArtistsInfo</span>
+				@Helpers.RequiredField()
+				<br />
+				<span class="extraInfo">@R.CreateStrings.ArtistDesc</span>
+			</div>
+			<div class="editor-field">
+				@Html.ValidationMessage("Artists")
+				<table data-bind="foreach: artists">
+					<tbody>
+						<tr>
+							<td>
+								<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, text: name, artistToolTip: id"></a>								
+							</td>
+							<td>
+								<a data-bind="click: $parent.removeArtist" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>								
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br />
+				<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8" />
+				<input type="hidden" name="artists" data-bind="value: ko.toJSON(artists)" />
+			</div>
+			
+			<br />
+			<p>
+				<label class="checkbox">
+					@Html.CheckBoxFor(m => m.Draft)
+					@R.CreateStrings.Draft
+				</label>
+			</p>
+			
+			<br />
+			<button type="submit" data-bind="disable: submitting" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+
+		</div>
+		
+		<div class="span4">
+			<div class="alert alert-info">
+				@Html.Raw(BrandableStrings.Song.NewSongInfo)
+			</div>			     
+			<div class="alert alert-info">
+				<p>@R.CreateStrings.NoArtistsToName</p>
+				<p>@R.CreateStrings.NameHelp</p>
+				<p>@R.CreateStrings.ArtistHelp</p>
+			</div>	
+			
+			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
+		</div>
+		
+	</div>
+	
+</form>
+
+@section BodyScripts {
+
+	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Song/Create")
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			var repo = new vdb.repositories.SongRepository(vdb.values.baseAddress, @LanguagePreferenceInt);
+			var artistRepo = new vdb.repositories.ArtistRepository(vdb.values.baseAddress);
+			var json = @Html.Raw(JsonHelpers.Serialize(Model));
+			ko.applyBindings(new vdb.viewModels.SongCreateViewModel(repo, artistRepo, json));
+
+			$("#pvLoader")
+				.ajaxStart(function() { $(this).show(); })
+				.ajaxStop(function () { $(this).hide(); });
+
+		});
+
+</script>
+		
+}

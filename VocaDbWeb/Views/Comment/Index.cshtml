@@ -1,0 +1,27 @@
+﻿@model IEnumerable<IGrouping<VocaDb.Model.DataContracts.EntryRefWithNameContract, VocaDb.Model.DataContracts.UnifiedCommentContract>>
+
+@{
+    ViewBag.Title = ViewRes.Comment.IndexStrings.RecentComments;
+    
+}
+
+@foreach (var entry in Model) {
+    
+	<div class="row-fluid">
+		
+		<div class="span5">
+			@foreach (var comment in entry) {
+				@CommentHelpers.CommentBodyLarge(comment, false);
+			}			
+		</div>
+
+		<div class="span5 item">
+		
+			@CommentHelpers.CommentEntryItem(entry.First())
+				
+		</div>
+		    		
+	</div>
+	<hr />
+    
+}

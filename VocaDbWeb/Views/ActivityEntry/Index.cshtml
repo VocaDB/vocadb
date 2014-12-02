@@ -1,0 +1,44 @@
+﻿@using Login = VocaDb.Web.Helpers.Login
+
+@{
+    ViewBag.Title = "Activity entries";
+	var page = (int)ViewBag.Page;
+}
+
+<ul class="nav nav-pills">
+	<li class="active">
+		@Html.ActionLink("All activity", "Index")
+	</li>
+	@if (Login.IsLoggedIn) {
+	<li>
+		@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
+	</li>	
+	}	
+</ul>
+
+<input type="hidden" id="page" value="@page"/>
+
+<div id="activityEntriesPaged">
+	@{ Html.RenderAction("Entries", page); }
+</div>
+
+<hr />
+<h3>
+<a href="@Url.Action("Index", new { page = page + 1 })" id="loadMoreLink">View more</a>
+</h3>
+
+@section BodyScripts {
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		$("#loadMoreLink").click(function () {
+			$.get("ActivityEntry/Entries", { page: parseInt($("#page").val()) + 1 }, function (result) {
+				$("#activityEntriesPaged").append(result);
+				$("#page").val(parseInt($("#page").val()) + 1);
+			});
+			return false;
+		});
+	});
+
+</script>
+}

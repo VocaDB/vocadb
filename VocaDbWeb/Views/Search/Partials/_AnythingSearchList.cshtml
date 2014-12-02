@@ -1,0 +1,74 @@
+﻿@using SharedRes = ViewRes.SharedStrings;
+@using Res = ViewRes.Search.IndexStrings;
+
+<div data-bind="visible: showAnythingSearch, with: anythingSearchViewModel">
+
+	@{ Html.RenderPartial("Partials/_EntryCountBox"); }
+
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
+	<table class="table table-striped" data-bind="css: { loading: loading }">
+		<thead>
+			<tr>
+				<th colspan="2">
+					@SharedRes.Name
+				</th>
+				<th>
+					@Res.EntryType
+				</th>
+				<th data-bind="if: $parent.showTags">
+					@SharedRes.Tags
+				</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: page">
+			<tr>
+				<td style="width: 80px">
+					<a data-bind="visible: $data.mainPicture && mainPicture.urlTinyThumb, attr: { href: $parent.entryUrl($data), title: $data.additionalNames }" href="#" class="coverPicThumb">
+						<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlTinyThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
+					</a>
+				</td>
+				<td>
+					<a data-bind="text: name, attr: { href: $parent.entryUrl($data), title: $data.additionalNames }" href="#"></a>
+					&nbsp;
+					<span data-bind="artistTypeLabel: $data.artistType"></span>
+					<span data-bind="songTypeLabel: $data.songType"></span>
+					@KnockoutHelpers.DraftIcon("status")
+					<!-- ko if: $data.artistString -->
+					<br />
+					<small class="extraInfo" data-bind="text: artistString"></small>
+					<!-- /ko -->
+				</td>
+				<td>
+					<a data-bind="text: $parent.searchViewModel.resources().entryTypeNames[entryType], click: function() { $parent.searchViewModel.searchType(entryType); }" href="#"></a>
+					<!-- ko if: $data.artistType -->
+					<small class="extraInfo" data-bind="text: '(' + $parent.searchViewModel.resources().artistTypeNames[artistType] + ')'"></small>
+					<!-- /ko -->
+					<!-- ko if: $data.discType -->
+					<small class="extraInfo" data-bind="text: '(' + $parent.searchViewModel.resources().discTypeNames[discType] + ')'"></small>
+					<!-- /ko -->
+					<!-- ko if: $data.songType -->
+					<small class="extraInfo" data-bind="text: '(' + $parent.searchViewModel.resources().songTypeNames[songType] + ')'"></small>
+					<!-- /ko -->
+				</td>
+				<td data-bind="if: $parents[1].showTags() && $data.tags" class="search-tags-column">
+					<div data-bind="visible: tags.length">
+						<i class="icon icon-tags"></i>
+						<!-- ko foreach: tags -->
+						<a href="#" data-bind="text: name, click: function() { $parents[2].tag(name); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+						<!-- /ko -->
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
+</div>
+
+

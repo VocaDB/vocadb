@@ -1,0 +1,43 @@
+﻿@using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Helpers;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.SongListsByCategoryContract[]>
+
+@{
+    ViewBag.Title = ViewRes.SharedStrings.FeaturedSongLists;
+}
+
+@section Toolbar {
+	@if (Login.Manager.HasPermission(PermissionToken.EditFeaturedLists)) {
+		@Html.ActionLink(ViewRes.User.DetailsStrings.CreateNewList, "Edit", null, new { id = "createLink" })
+	}
+}
+
+<div id="tabs">
+	<ul>
+@foreach (var cat in Model) {
+		<li><a href="@("#" + cat.Category + "Tab")">@Translate.SongListFeaturedCategoryNames[cat.Category]</a></li>
+}
+	</ul>	
+
+@foreach (var cat in Model) {
+	<div id="@(cat.Category + "Tab")" style="padding:10px;">
+
+		@SongHelpers.SongLists(cat.Lists)
+
+	</div>
+}
+
+</div>
+
+@section BodyScripts {
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#createLink").button({ icons: { primary: 'ui-icon-plusthick' } });
+		$("#tabs").tabs();
+	});
+</script>
+}
+
+@section Head {
+	<link rel="canonical" href="@UrlMapper.FullAbsolute(Url.Action("Featured"))" />
+}

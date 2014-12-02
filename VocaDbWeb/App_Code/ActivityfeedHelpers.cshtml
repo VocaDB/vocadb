@@ -1,0 +1,89 @@
+﻿@inherits VocaDb.Web.Code.HelperPage
+@using System.Web.Mvc.Html;
+@using VocaDb.Web.Code
+@using VocaDb.Web.Helpers;
+@using VocaDb.Model.DataContracts.Activityfeed;
+@using VocaDb.Model.Domain.Activityfeed;
+
+@helper EntryType(ActivityEntryContract entry) {
+    
+    var tr = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString(entry.EditEvent.ToString() + entry.EntryRef.EntryType);
+    
+    if (!string.IsNullOrEmpty(tr)) {
+        
+       <span>@tr</span> 
+        
+    } else {
+     
+		if (entry.EditEvent == EntryEditEvent.Created) {
+			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.CreatedNew, HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entry.EntryRef.EntryType.ToString()))</span>
+		} else {
+			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.Updated, HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entry.EntryRef.EntryType.ToString()))</span>
+		}
+           
+    }
+    
+}
+
+@helper ActivityEntry(ActivityEntryContract entry) {
+	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.SongThumbUrl);
+	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
+		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
+			@UserHelpers.UserIconLink(entry.Author)
+		} else {
+			@HelperRes.ActivityFeedHelperStrings.Someone
+		}
+
+		@EntryType(entry)
+
+		<small class="pull-right extraInfo">
+			@TimeAgoStringBuilder.FormatTimeAgo(entry.CreateDate)
+		</small>
+
+		<div class="media">
+			@if (!string.IsNullOrEmpty(thumbUrl)) {
+			<a class="pull-left" href="@Url.Action("Details", entry.EntryRef.EntryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
+				<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
+			</a>
+			}
+			<div class="media-body">
+				<h4 class="media-heading">
+					<a href="@Url.Action("Details", entry.EntryRef.EntryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
+						<strong>@entry.EntryRef.Name.DisplayName</strong>
+					</a>
+				</h4>
+				@if (!string.IsNullOrEmpty(entry.ArtistString)) {
+					@entry.ArtistString
+				}
+			</div>
+		</div>
+	</div>
+}
+
+@helper NewsEntry(NewsEntryContract entry) {
+
+	var panelClass = entry.Important ? "ui-state-highlight " : string.Empty;
+	
+	<div class="@(panelClass + " message newsEntry ui-tabs ui-widget ui-widget-content ui-corner-all")">
+		<div class="messageTitle ui-widget-header ui-corner-all">
+			<div class="messageTitleText">
+				@if (!entry.Anonymous || Login.CanModerateUsers) {
+					@UserHelpers.UserIconLink(entry.Author)
+					<span> @HelperRes.ActivityFeedHelperStrings.At </span>
+	}
+				@Helpers.UniversalTimeLabel(entry.CreateDate)
+
+				@if (Login.CanEditNews) {
+					@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", "NewsEntry", new { id = entry.Id }, null)
+	}
+			</div>	
+		</div>	
+		<p class="messageContent">
+			@if (entry.Important) {
+				@Helpers.NotificationIcon()
+   }
+			<span>@HtmlHelpers.FormatText(entry.Text)</span>
+		</p>
+	</div>
+	
+}

@@ -1,0 +1,16 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.Users.ArtistForUserContract
+
+<tr>
+	<td>
+		@using (Html.BeginCollectionItem("OwnedArtists")) {
+			@Html.HiddenFor(m => m.Id)
+			@Html.HiddenFor(m => m.Artist.Id)
+			@Html.HiddenFor(m => m.Artist.Name)
+			@ArtistHelpers.ArtistLink(Model.Artist)
+		}
+	</td>
+	<td>
+		<a href="#" class="artistRemove textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+	</td>
+</tr>

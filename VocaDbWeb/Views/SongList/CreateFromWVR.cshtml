@@ -1,0 +1,82 @@
+﻿@model VocaDb.Web.Models.SongLists.CreateFromWVR
+
+@{
+	ViewBag.Title = "Create song list from NicoNicoDouga MyList";
+}
+
+@Helpers.ValidationSymmaryDiv("Unable to parse list")
+
+@using (Html.BeginForm("CreateFromWVR", "SongList", new { commit = false }, FormMethod.Post, new { @class = "form-horizontal" })) {
+
+	<div class="control-group">
+		<div class="control-label">NicoNico mylist or RSS feed</div>
+		<div class="controls">
+			@Html.TextBoxFor(m => m.Url, new { size = 60, @class = "input-xlarge" })
+			<br />
+			<small>Can be any NicoNicoDouga MyList, for example http://www.nicovideo.jp/mylist/1234567 </small>
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox inline">
+				@Html.CheckBoxFor(m => m.ParseAll)
+				@Html.LabelFor(m => m.ParseAll)
+			</label>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<button class="btn btn-primary">Process</button>
+			@Html.ValidationMessageFor(m => m.Url)
+		</div>
+	</div>
+
+}
+
+@using (Html.BeginForm(new { commit = true })) {
+
+	@Html.HiddenFor(m => m.Url)
+
+	if (Model.ListResult != null) {
+
+		<h4>MyList description</h4>
+		<p>@Model.ListResult.WVRNumber - @Model.ListResult.Name</p>
+
+		<h4 class="withMargin">Songs in the list</h4>
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th>Order</th>
+					<th>NicoNico PV</th>
+					<th>VocaDB song entry</th>
+				</tr>
+			</thead>
+			@foreach (var row in Model.ListResult.Entries) {
+				<tr>
+					<td>@row.Order</td>
+					<td><a href="@row.Url">@row.Name</a></td>
+					<td>
+						@if (row.Song != null) {
+							@SongHelpers.SongLink(row.Song)
+						} else {
+							<span>MISSING</span>
+							@("(")
+							@Html.ActionLink("Submit", "Create", "Song", new { PVUrl = row.Url }, null)
+							@(")")
+						}
+					</td>
+				</tr>
+			}
+
+		</table>
+
+		if (!Model.ListResult.IsIncomplete) {
+			<p>
+				<input type="submit" value="Accept" class="btn btn-primary" />
+			</p>
+		}
+
+	}
+
+}

@@ -1,0 +1,22 @@
+﻿@model VocaDb.Model.DataContracts.Tags.TagSelectionContract[]
+
+<div class="trackProperties">
+
+	<p>@ViewRes.TagSelectionsStrings.Info</p>
+
+	<div id="tagSelections">
+		@foreach (var tagSelection in Model) {
+			Html.RenderPartial("TagSelection", tagSelection);
+		}
+	</div>
+	<br />
+
+	<div class="form-inline">
+		@ViewRes.TagSelectionsStrings.AddTag:
+		<div class="input-append">
+			<input type="text" class="input-large" id="newTagName" maxlength="30" />
+			<button type="button" class="btn" id="addNewTag">@ViewRes.SharedStrings.Add</button>			
+		</div>
+	</div>
+
+</div>
