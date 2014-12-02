@@ -31,7 +31,8 @@
 
 		$(function() {
 
-			var repo = new vdb.repositories.ArtistRepository('@RootPath');
+			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var repo = repoFactory.artistRepository();
 			var vm = new vdb.viewModels.artists.ArtistMergeViewModel(repo, @Model.Id);
 			ko.applyBindings(vm);
 

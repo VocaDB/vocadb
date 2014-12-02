@@ -1,6 +1,6 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers
-@model string
+@inherits VocaDb.Web.Code.VocaDbPage<string>
 
 @{
     ViewBag.Title = "Request account verification";
@@ -70,7 +70,8 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			var artistRepo = new vdb.repositories.ArtistRepository(vdb.values.baseAddress);
+			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var artistRepo = repoFactory.artistRepository();
 			ko.applyBindings(new vdb.viewModels.RequestVerificationViewModel(artistRepo));
 		});
 

@@ -27,10 +27,11 @@
 
 			var rootPath = '@RootPath';
 			var urlMapper = new vdb.UrlMapper(rootPath);
-			var userRepo = new vdb.repositories.UserRepository(urlMapper);
-			var artistRepo = new vdb.repositories.ArtistRepository(rootPath);
-			var songRepo = new vdb.repositories.SongRepository(rootPath, @LanguagePreferenceInt);
-			var resourceRepo = new vdb.repositories.ResourceRepository(rootPath);
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var userRepo = repoFactory.userRepository();
+			var artistRepo = repoFactory.artistRepository();
+			var songRepo = repoFactory.songRepository();
+			var resourceRepo = repoFactory.resourceRepository();
 
 			var vm = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
 				sort, groupByRating);

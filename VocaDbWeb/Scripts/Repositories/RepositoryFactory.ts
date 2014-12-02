@@ -16,7 +16,7 @@ module vdb.repositories {
 		}
 
 		public artistRepository = () => {
-			return new ArtistRepository(this.urlMapper.baseUrl);
+			return new ArtistRepository(this.urlMapper.baseUrl, this.lang);
 		}
 
 		public entryRepository = () => {

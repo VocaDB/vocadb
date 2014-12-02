@@ -120,16 +120,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult DataById(int id = invalidId) {
-
-			if (id == invalidId)
-				return NoId();
-
-			var artist = Service.GetArtist(id);
-			return new JsonNetResult { Data = artist };
-
-		}
-
 		[HttpPost]
 		public void DeleteComment(int commentId) {
 

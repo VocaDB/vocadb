@@ -125,8 +125,9 @@
     @Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Create")
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            var repo = new vdb.repositories.ArtistRepository(vdb.values.baseAddress);
+		$(document).ready(function () {
+			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var repo = repoFactory.artistRepository();
             var json = @Html.Raw(JsonHelpers.Serialize(Model));
             ko.applyBindings(new vdb.viewModels.ArtistCreateViewModel(repo, json));
         });

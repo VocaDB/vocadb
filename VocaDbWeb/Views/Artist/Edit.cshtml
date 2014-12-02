@@ -188,7 +188,8 @@
 
 	$(document).ready(function() {
 
-		var artistRepo = new vdb.repositories.ArtistRepository('@RootPath');
+		var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+		var artistRepo = repoFactory.artistRepository();
 		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedArtist));
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
 

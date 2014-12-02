@@ -5,11 +5,12 @@
 
 module vdb.repositories {
 
+	import cls = vdb.models;
     import dc = vdb.dataContracts;
 
     // Repository for managing artists and related objects.
     // Corresponds to the ArtistController class.
-    export class ArtistRepository {
+    export class ArtistRepository extends BaseRepository {
 
         public findDuplicate: (params, callback: (result: dc.DuplicateEntryResultContract[]) => void ) => void;
 
@@ -20,7 +21,12 @@ module vdb.repositories {
 					
 		}
 
-        public getOne: (id: number, callback: (result: dc.ArtistContract) => void) => void;
+		public getOne = (id: number, callback: (result: dc.ArtistContract) => void) => {
+
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists/" + id);
+			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);
+
+		};
 
 		public getList = (paging: dc.PagingProperties, lang: string, query: string, sort: string,
 			artistTypes: string, tag: string, followedByUserId: number, fields: string, status: string, callback) => {
@@ -42,7 +48,9 @@ module vdb.repositories {
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
 
-        constructor(private baseUrl: string) {
+        constructor(baseUrl: string, lang?: cls.globalization.ContentLanguagePreference) {
+
+			super(baseUrl, lang);
 
             this.mapUrl = (relative: string) => {
                 return vdb.functions.mergeUrls(baseUrl, "/Artist") + relative;
@@ -52,12 +60,6 @@ module vdb.repositories {
 
                 $.post(this.mapUrl("/FindDuplicate"), params, callback);
 
-            }
-
-            this.getOne = (id: number, callback: (result: dc.ArtistContract) => void) => {
-                
-                $.post(this.mapUrl("/DataById"), { id: id }, callback);
-                    
             }
 
         }
