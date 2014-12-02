@@ -1,1 +1,14 @@
 packages/
+VocaDbWeb/bin/
+VocaDbWeb/obj/
+VocaDbWeb/Web.config
+Tests/bin/
+Tests/obj/
+VocaDb.UtaiteDbResources/obj/
+VocaDb.UtaiteDbResources/bin/
+VocaDbModel/obj/
+VocaDbModel/bin/
+VocaDb.SiteMapGenerator/bin/
+VocaDb.SiteMapGenerator/obj/
+VocaDbWeb/App_Data/XmlDocument.xml
+*.js
