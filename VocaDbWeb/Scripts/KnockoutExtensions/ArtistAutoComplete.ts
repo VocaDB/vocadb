@@ -9,7 +9,7 @@ interface KnockoutBindingHandlers {
 
 // Artist autocomplete search box.
 ko.bindingHandlers.artistAutoComplete = {
-    init: function (element, valueAccessor) {
+    init: (element: HTMLElement, valueAccessor) => {
 
         var properties: vdb.knockoutExtensions.AutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
 

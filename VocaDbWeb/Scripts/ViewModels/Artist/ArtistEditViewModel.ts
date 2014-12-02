@@ -103,7 +103,7 @@ module vdb.viewModels {
 			this.baseVoicebankSearchParams = {
 				acceptSelection: this.baseVoicebank.id,
 				extraQueryParams: { artistTypes: "Vocaloid,UTAU,OtherVocalist,OtherVoiceSynthesizer,Unknown" },
-				filter: (item) => item.Id != this.id,
+				ignoreId: this.id,
 			};
 
 			this.canHaveCircles = ko.computed(() => {
