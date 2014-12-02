@@ -6,7 +6,6 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs {
 
-	// TODO: replace with SongForApiContract
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongWithComponentsContract : SongContract {
 

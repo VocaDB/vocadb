@@ -14,3 +14,4 @@ VocaDbWeb/App_Data/XmlDocument.xml
 *.js
 *.suo
 VocaDbWeb/EntryImg/
+*.user

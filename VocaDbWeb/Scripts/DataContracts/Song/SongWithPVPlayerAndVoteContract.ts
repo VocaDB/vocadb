@@ -1,6 +1,6 @@
 /// <reference path="../SongContract.ts" />
 
-module vdb.dataContracts {
+module vdb.dataContracts.songs {
 
     export interface SongWithPVPlayerAndVoteContract {
         
@@ -8,7 +8,7 @@ module vdb.dataContracts {
 
 		pvService: string;
 
-        song: SongWithComponentsContract;
+		song: SongWithPVAndVoteContract;
     
     }
 

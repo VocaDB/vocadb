@@ -1494,6 +1494,8 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongInAlbumEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongInListContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithComponentsContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVAndVoteContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagUsageForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\ArtistHelper.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumContract.ts" />
@@ -2264,6 +2266,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\sitemaps\" />
     <Folder Include="EntryImg\Album\" />
     <Folder Include="EntryImg\Artist\" />
     <Folder Include="logs\" />

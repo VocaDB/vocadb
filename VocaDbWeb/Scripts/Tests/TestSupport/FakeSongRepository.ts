@@ -9,7 +9,7 @@ module vdb.tests.testSupport {
 
         addedSongId: number;
         results: dc.NewSongCheckResultContract = null;
-        song: dc.SongWithComponentsContract = null;
+        song: dc.songs.SongWithComponentsContract = null;
         songLists: dc.SongListBaseContract[] = [];
 
         constructor() {

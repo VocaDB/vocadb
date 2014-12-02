@@ -15,7 +15,7 @@ module vdb.tests.viewModels {
 	var pvRep = null;
 	var urlMapper = null;
 
-    var song: dc.SongWithComponentsContract;
+    var song: dc.songs.SongWithComponentsContract;
     var categories: dc.TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
 
     var producer: dc.ArtistContract = { id: 1, name: "Tripshots", additionalNames: "", artistType: "Producer" };

@@ -31,7 +31,7 @@ module vdb.repositories {
         private getJSON: (relative: string, params: any, callback: any) => void;
 
 		// TODO: migrate to API
-        public getOneWithComponents = (id: number, includeArtists: boolean, callback?: (result: dc.SongWithComponentsContract) => void) => {
+        public getOneWithComponents = (id: number, includeArtists: boolean, callback?: (result: dc.songs.SongWithComponentsContract) => void) => {
 			this.post("/DataById", { id: id, includeArtists: includeArtists }, callback);
         }
 
@@ -78,11 +78,11 @@ module vdb.repositories {
 
 		public pvForSongAndService: (songId: number, pvService: cls.pvs.PVService, callback: (result: string) => void) => void; 
 
-		public pvPlayer = (songId: number, params: PVEmbedParams, callback: (result: dc.SongWithPVPlayerAndVoteContract) => void) => {
+		public pvPlayer = (songId: number, params: PVEmbedParams, callback: (result: dc.songs.SongWithPVPlayerAndVoteContract) => void) => {
 			this.getJSON("/PVPlayer/" + songId, params, callback);
 		}
 
-        public pvPlayerWithRating: (songId: number, callback: (result: dc.SongWithPVPlayerAndVoteContract) => void) => void; 
+        public pvPlayerWithRating: (songId: number, callback: (result: dc.songs.SongWithPVPlayerAndVoteContract) => void) => void; 
 
         //public songListsForSong: (songId: number, callback: (result: dc.SongListContract[]) => void) => void;
 
