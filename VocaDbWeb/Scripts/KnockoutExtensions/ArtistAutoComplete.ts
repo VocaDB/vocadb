@@ -17,9 +17,9 @@ ko.bindingHandlers.artistAutoComplete = {
 
 		if (properties.ignoreId) {
 
-			filter = (item) => {
+			filter = (item: vdb.dataContracts.ArtistContract) => {
 
-				if (properties.ignoreId && item.Id == properties.ignoreId) {
+				if (properties.ignoreId && item.id == properties.ignoreId) {
 					return false;
 				}
 
@@ -29,16 +29,22 @@ ko.bindingHandlers.artistAutoComplete = {
 
 		}
 
-        initEntrySearch(element, null, "Artist", vdb.functions.mapAbsoluteUrl("/Artist/FindJson"),
+		var queryParams = { nameMatchMode: 'Auto', lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference] };
+		if (properties.extraQueryParams)
+			jQuery.extend(queryParams, properties.extraQueryParams);
+
+        initEntrySearch(element, null, "Artist", vdb.functions.mapAbsoluteUrl("/api/artists"),
             {
                 allowCreateNew: properties.allowCreateNew,
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,
-                createOptionFirstRow: function (item) { return item.Name + " (" + item.ArtistType + ")"; },
-                createOptionSecondRow: function (item) { return item.AdditionalNames; },
-                extraQueryParams: properties.extraQueryParams,
+				createOptionFirstRow: (item: vdb.dataContracts.ArtistContract) => (item.name + " (" + item.artistType + ")"),
+				createOptionSecondRow: (item: vdb.dataContracts.ArtistContract) => (item.additionalNames),
+				extraQueryParams: queryParams,
 				filter: filter,
-                height: properties.height
+                height: properties.height,
+				termParamName: 'query',
+				method: 'GET'
             });
 
 
