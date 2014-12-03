@@ -105,22 +105,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult FindJson(string term) {
-
-			var matchMode = NameMatchMode.Auto;
-			term = FindHelpers.GetMatchModeAndQueryForSearch(term, ref matchMode);
-			var albums = Service.Find(term, DiscType.Unknown, 0, 20, false, false, moveExactToTop: true, nameMatchMode: matchMode);
-
-			return Json(albums);
-
-		}
-
-		public ActionResult MikuDbRedirect() {
-
-			return RedirectToActionPermanent("Index", "Home");
-
-		}
-
 		public ActionResult Name(int id) {
 
 			var contract = Service.GetAlbum(id);

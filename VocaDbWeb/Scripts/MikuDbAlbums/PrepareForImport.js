@@ -17,12 +17,15 @@ function initPage() {
     var artistAddName = $("input#albumSearchName");
     var artistAddBtn = $("#albumSearchAcceptBtn");
 
-    initEntrySearch(artistAddName, artistAddList, "Album", "../../Album/FindJson",
+    initEntrySearch(artistAddName, artistAddList, "Album", "../../api/albums",
 		{
 		    acceptBtnElem: artistAddBtn,
 		    acceptSelection: acceptArtistSelection,
-		    createOptionFirstRow: function (item) { return item.Name; },
-		    createOptionSecondRow: function (item) { return item.AdditionalNames; }
+		    createOptionFirstRow: function (item) { return item.name; },
+		    createOptionSecondRow: function (item) { return item.additionalNames; },
+			extraQueryParams: { nameMatchMode: 'Auto' },
+			termParamName: 'query',
+			method: 'GET'
 		});
 
 }
