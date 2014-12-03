@@ -129,28 +129,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult FindJsonByName(string term, string songTypes, bool alwaysExact = false, int[] ignoredIds = null) {
-
-			var matchMode = (alwaysExact ? NameMatchMode.Exact : NameMatchMode.Auto);
-			term = FindHelpers.GetMatchModeAndQueryForSearch(term, ref matchMode);
-
-			var typeVals = !string.IsNullOrEmpty(songTypes)
-				? songTypes.Split(',').Select(EnumVal<SongType>.Parse).ToArray()
-				: new SongType[] { };
-
-			var songs = Service.Find(new SongQueryParams(term, typeVals, 0, 40, 
-				draftsOnly: false, 
-				getTotalCount: false, 
-				onlyByName: true, 
-				nameMatchMode: matchMode, 
-				sortRule: SongSortRule.Name, 
-				ignoredIds: ignoredIds,
-				moveExactToTop: true));
-
-			return Json(songs);
-
-		}
-
 		public ActionResult SongListsForSong(int songId = invalidId) {
 
 			if (songId == invalidId)

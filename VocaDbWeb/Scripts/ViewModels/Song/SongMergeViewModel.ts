@@ -13,7 +13,7 @@ module vdb.viewModels.songs {
 			this.targetSearchParams = {
 				acceptSelection: this.target.id,
 				allowCreateNew: false,
-				filter: (item) => item.Id != id
+				ignoreId: id
 			};
 
 		}

@@ -12,7 +12,9 @@ module vdb.dataContracts {
 
 		lengthSeconds: number;
 
-        name: string;
+		name: string;
+
+		songType: string;
 
 		thumbUrl?: string;
 

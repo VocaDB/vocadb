@@ -161,7 +161,7 @@ module vdb.viewModels {
 				extraQueryParams: {
 					songTypes: "Unspecified,Original,Remaster,Remix,Cover,Mashup,DramaPV,Other"
 				},
-				filter: (item) => item.Id != this.id,
+				ignoreId: this.id,
 				height: 250
 			};
 
