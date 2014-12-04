@@ -234,22 +234,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult FindJson(string term, string artistTypes) {
-
-			var matchMode = NameMatchMode.Auto;
-			term = FindHelpers.GetMatchModeAndQueryForSearch(term, ref matchMode);
-
-			var typeVals = !string.IsNullOrEmpty(artistTypes)
-				? artistTypes.Split(',').Select(EnumVal<ArtistType>.Parse).ToArray()
-				: new ArtistType[] {};
-
-			var queryParams = new ArtistQueryParams(term, typeVals, 0, 20, false, false, matchMode, ArtistSortRule.Name, true);
-			var artists = Service.FindArtists(queryParams);
-
-			return Json(artists);
-
-		}
-
         //
         // GET: /Artist/Details/5
 

@@ -22,14 +22,17 @@ $(document).ready(function () {
 	var artistAddName = $("input#ownedArtistAddName");
 	var artistAddBtn = $("#ownedArtistAddAcceptBtn");
 
-	initEntrySearch(artistAddName, artistAddList, "Artist", "../../Artist/FindJson",
+	initEntrySearch(artistAddName, artistAddList, "Artist", "../../api/artists",
 		{
 			allowCreateNew: false,
 			acceptBtnElem: artistAddBtn,
 			acceptSelection: acceptArtistSelection,
 			autoHide: true,
-			createOptionFirstRow: function (item) { return item.Name + " (" + item.ArtistType + ")"; },
-			createOptionSecondRow: function (item) { return item.AdditionalNames; }
+			createOptionFirstRow: function (item) { return item.name + " (" + item.artistType + ")"; },
+			createOptionSecondRow: function (item) { return item.additionalNames; },
+			extraQueryParams: { nameMatchMode: 'Auto', lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference] },
+			termParamName: 'query',
+			method: 'GET'
 		});
 
 	$(document).on("click", "a.artistRemove", function () {

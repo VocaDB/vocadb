@@ -23,7 +23,7 @@ function initPage() {
 		    acceptSelection: acceptArtistSelection,
 		    createOptionFirstRow: function (item) { return item.name; },
 		    createOptionSecondRow: function (item) { return item.additionalNames; },
-			extraQueryParams: { nameMatchMode: 'Auto' },
+		    extraQueryParams: { nameMatchMode: 'Auto', lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference] },
 			termParamName: 'query',
 			method: 'GET'
 		});
