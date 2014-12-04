@@ -2308,7 +2308,6 @@
     <Content Include="Views\Song\Edit.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\MySettings.cshtml" />
-    <Content Include="Views\Artist\ArtistForAlbumRow.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\PermissionEditRow.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />

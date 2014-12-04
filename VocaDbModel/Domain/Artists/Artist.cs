@@ -520,30 +520,6 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		[Obsolete]
-		public virtual CollectionDiff<ArtistForAlbum, ArtistForAlbum> SyncAlbums(
-			IEnumerable<AlbumForArtistEditContract> newAlbums, Func<AlbumForArtistEditContract, Album> albumGetter) {
-
-			var albumDiff = CollectionHelper.Diff(Albums, newAlbums, (a1, a2) => (a1.Id == a2.ArtistForAlbumId));
-			var created = new List<ArtistForAlbum>();
-
-			foreach (var removed in albumDiff.Removed) {
-				removed.Delete();
-				AllAlbums.Remove(removed);
-			}
-
-			foreach (var added in albumDiff.Added) {
-
-				var album = albumGetter(added);
-				var link = AddAlbum(album);
-				created.Add(link);
-
-			}
-
-			return new CollectionDiff<ArtistForAlbum, ArtistForAlbum>(created, albumDiff.Removed, albumDiff.Unchanged);
-
-		}
-
 		public override string ToString() {
 			return string.Format("artist '{0}' [{1}]", DefaultName, Id);
 		}

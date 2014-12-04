@@ -368,29 +368,6 @@ namespace VocaDb.Web.Controllers
 
         }
 
-		[AcceptVerbs(HttpVerbs.Post)]
-		[Obsolete("Happens on the album side")]
-		public PartialViewResult AddNewAlbum(int artistId, string newAlbumName) {
-
-			ParamIs.NotNullOrWhiteSpace(() => newAlbumName);
-
-			var link = new AlbumForArtistEditContract(newAlbumName);
-
-			return PartialView("ArtistForAlbumRow", link);
-
-		}
-
-		[AcceptVerbs(HttpVerbs.Post)]
-		[Obsolete("Happens on the album side")]
-		public PartialViewResult AddExistingAlbum(int artistId, int albumId) {
-
-			var album = Services.Albums.GetAlbumWithAdditionalNames(albumId);
-			var link = new AlbumForArtistEditContract(album);
-
-			return PartialView("ArtistForAlbumRow", link);
-
-		}
-
         //
         // GET: /Artist/Delete/5
  
