@@ -107,14 +107,6 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
-    </Reference>
-    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Net.Http" />
@@ -840,7 +832,6 @@
     <Compile Include="Code\IdNotNumberConstraint.cs" />
     <Compile Include="Code\IPropertyBinder.cs" />
     <Compile Include="Code\JsonNetResult.cs" />
-    <Compile Include="Code\LocalizedPagedListRenderOptions.cs" />
     <Compile Include="Code\MenuPage.cs" />
     <Compile Include="Code\PagePropertiesData.cs" />
     <Compile Include="Code\PropertyModelBinder.cs" />
