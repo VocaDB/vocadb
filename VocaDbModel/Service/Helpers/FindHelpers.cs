@@ -196,14 +196,21 @@ namespace VocaDb.Model.Service.Helpers {
 			if (string.IsNullOrEmpty(query))
 				return query;
 
+			// Remove SQL wildcard characters from the query, regardless of name match mode
 			query = CleanTerm(query.Trim());
 
+			// If name match mode is already decided, there's nothing more to do
 			if (matchMode != NameMatchMode.Auto)
 				return query;
 
 			if (query.Length > 1 && query.EndsWith("*")) {
 				matchMode = NameMatchMode.StartsWith;
 				return query.Substring(0, query.Length - 1);
+			}
+
+			if (query.Length > 2 && query.StartsWith("\"") && query.EndsWith("\"")) {
+				matchMode = NameMatchMode.Exact;
+				return query.Substring(1, query.Length - 2);
 			}
 
 			if (query.Length <= 2) {
