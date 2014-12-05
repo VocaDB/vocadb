@@ -19,7 +19,7 @@ ko.bindingHandlers.songAutoComplete = {
 
 			filter = (item) => {
 
-				if (properties.ignoreId && item.id == properties.ignoreId) {
+				if (item.id == properties.ignoreId) {
 					return false;
 				}
 
@@ -35,7 +35,6 @@ ko.bindingHandlers.songAutoComplete = {
 
         vdb.initEntrySearch(element, "Song", vdb.functions.mapAbsoluteUrl("/api/songs"),
             {
-                allowCreateNew: properties.allowCreateNew,
                 acceptSelection: properties.acceptSelection,
                 createNewItem: properties.createNewItem,
 				createCustomItem: properties.createCustomItem,

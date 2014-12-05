@@ -23,7 +23,6 @@ $(document).ready(function () {
 
 	vdb.initEntrySearch(artistAddName, "Artist", "../../api/artists",
 		{
-			allowCreateNew: false,
 			acceptBtnElem: artistAddBtn,
 			acceptSelection: acceptArtistSelection,
 			autoHide: true,

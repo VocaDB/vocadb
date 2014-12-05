@@ -19,7 +19,7 @@ ko.bindingHandlers.artistAutoComplete = {
 
 			filter = (item) => {
 
-				if (properties.ignoreId && item.id == properties.ignoreId) {
+				if (item.id == properties.ignoreId) {
 					return false;
 				}
 
@@ -35,7 +35,6 @@ ko.bindingHandlers.artistAutoComplete = {
 
         vdb.initEntrySearch(element, "Artist", vdb.functions.mapAbsoluteUrl("/api/artists"),
             {
-                allowCreateNew: properties.allowCreateNew,
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,
 				createOptionFirstRow: (item: vdb.dataContracts.ArtistContract) => (item.name + " (" + item.artistType + ")"),

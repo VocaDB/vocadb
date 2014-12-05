@@ -38,7 +38,6 @@ function initPage() {
 
 	vdb.initEntrySearch(artistAddName, "Artist", "../../api/artists",
 		{
-			allowCreateNew: false,
 			acceptBtnElem: artistAddBtn,
 			acceptSelection: acceptArtistSelection,
 			createOptionFirstRow: function (item) { return item.name + " (" + item.artistType + ")"; },

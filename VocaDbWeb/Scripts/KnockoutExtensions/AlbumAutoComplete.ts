@@ -15,7 +15,7 @@ ko.bindingHandlers.albumAutoComplete = {
 			
 			filter = (item) => {
 
-				if (properties.ignoreId && item.id == properties.ignoreId) {
+				if (item.id == properties.ignoreId) {
 					return false;
 				}
 
@@ -31,7 +31,6 @@ ko.bindingHandlers.albumAutoComplete = {
 
 		vdb.initEntrySearch(element, "Album", vdb.functions.mapAbsoluteUrl("/api/albums"),
 			{
-				allowCreateNew: properties.allowCreateNew,
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,
 				createCustomItem: properties.createCustomItem,
