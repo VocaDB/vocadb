@@ -19,7 +19,7 @@ module vdb.viewModels.artists {
 		}
 
 		public target: BasicEntryLinkViewModel<dc.ArtistContract>;
-		public targetSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		public targetSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 
 	}
 

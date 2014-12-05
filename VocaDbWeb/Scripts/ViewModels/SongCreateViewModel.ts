@@ -8,7 +8,7 @@ module vdb.viewModels {
         
         addArtist: (artistId: number) => void;
 
-        artistSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+        artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
         
         artists = ko.observableArray<dc.ArtistContract>([]);
 

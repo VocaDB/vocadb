@@ -19,7 +19,7 @@ module vdb.viewModels.albums {
 		}
 
 		public target: BasicEntryLinkViewModel<dc.AlbumContract>;
-		public targetSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		public targetSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 
 	}
 

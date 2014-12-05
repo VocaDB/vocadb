@@ -58,7 +58,7 @@ module vdb.viewModels {
 
         private artistsForTracks: () => dc.ArtistContract[];
 
-		artistSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 
         // List of artist links for this album.
         public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
@@ -178,7 +178,7 @@ module vdb.viewModels {
         public tracks: KnockoutObservableArray<SongInAlbumEditViewModel>;
 
         // Search parameters for new tracks.
-        public trackSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+        public trackSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
 
         // Gets a translated name for an artist role.
         public translateArtistRole: (role: string) => string;

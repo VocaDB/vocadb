@@ -14,4 +14,17 @@ module vdb.repositories {
 
 	}
 
+	// Common parameters for entry queries (listings).
+	export interface CommonQueryParams {
+
+		// Comma-separated list of optional fields
+		fields?: string;
+
+		// Content language preference
+		lang?: string;
+
+		nameMatchMode?: string;
+
+	}
+
 }

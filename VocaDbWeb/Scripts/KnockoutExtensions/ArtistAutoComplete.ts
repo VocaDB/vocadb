@@ -11,13 +11,13 @@ interface KnockoutBindingHandlers {
 ko.bindingHandlers.artistAutoComplete = {
     init: (element: HTMLElement, valueAccessor) => {
 
-        var properties: vdb.knockoutExtensions.AutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
+        var properties: vdb.knockoutExtensions.ArtistAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
 
 		var filter = properties.filter;
 
 		if (properties.ignoreId) {
 
-			filter = (item: vdb.dataContracts.ArtistContract) => {
+			filter = (item) => {
 
 				if (properties.ignoreId && item.id == properties.ignoreId) {
 					return false;

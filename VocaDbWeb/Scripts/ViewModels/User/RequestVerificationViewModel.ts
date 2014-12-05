@@ -21,7 +21,7 @@ module vdb.viewModels {
 
         }
 
-        public artistSearchParams: vdb.knockoutExtensions.AutoCompleteParams = {
+        public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams = {
             allowCreateNew: false,
             acceptSelection: this.setArtist,
             height: 300

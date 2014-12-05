@@ -7,13 +7,13 @@ interface KnockoutBindingHandlers {
 ko.bindingHandlers.albumAutoComplete = {
 	init: (element: HTMLElement, valueAccessor) => {
 
-		var properties: vdb.knockoutExtensions.AutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
+		var properties: vdb.knockoutExtensions.AlbumAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
 
 		var filter = properties.filter;
 
 		if (properties.ignoreId) {
 			
-			filter = (item: vdb.dataContracts.AlbumContract) => {
+			filter = (item) => {
 
 				if (properties.ignoreId && item.id == properties.ignoreId) {
 					return false;

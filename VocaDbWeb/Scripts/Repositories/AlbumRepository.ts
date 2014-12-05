@@ -61,4 +61,10 @@ module vdb.repositories {
 
     }
 
+	export interface AlbumQueryParams extends CommonQueryParams {
+
+		discTypes: string;
+
+	}
+
 }

@@ -14,7 +14,7 @@ module vdb.viewModels {
 
         // List of artist links for this song.
         public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
-		artistSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public canHaveOriginalVersion: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public deleted: boolean;
@@ -25,7 +25,7 @@ module vdb.viewModels {
 		public names: globalization.NamesEditViewModel;
 		public notes: KnockoutObservable<string>;
 		public originalVersion: BasicEntryLinkViewModel<dc.SongContract>;
-		public originalVersionSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		public originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
 		public pvs: pvs.PVListEditViewModel;
 		public songType: KnockoutComputed<cls.songs.SongType>;
 		public songTypeStr: KnockoutObservable<string>;

@@ -24,13 +24,13 @@ module vdb.viewModels {
 		public artistTypeStr: KnockoutObservable<string>;
 		public allowBaseVoicebank: KnockoutComputed<boolean>;
 		public baseVoicebank: BasicEntryLinkViewModel<dc.ArtistContract>;
-		public baseVoicebankSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		public baseVoicebankSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public canHaveCircles: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public description: KnockoutObservable<string>;
 		public groups: KnockoutObservableArray<dc.artists.GroupForArtistContract>;
 
-		public groupSearchParams: vdb.knockoutExtensions.AutoCompleteParams = {
+		public groupSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams = {
 			allowCreateNew: false,
 			acceptSelection: this.addGroup,
 			extraQueryParams: { artistTypes: "Label,Circle,OtherGroup,Band" },

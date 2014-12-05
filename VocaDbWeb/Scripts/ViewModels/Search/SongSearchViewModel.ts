@@ -85,7 +85,7 @@ module vdb.viewModels.search {
 		public artistId = ko.observable<number>(null);
 		public artistName = ko.observable("");
 		public artistParticipationStatus = ko.observable("Everything");
-		public artistSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public artistType = ko.observable<cls.artists.ArtistType>(null);
 		public childVoicebanks = ko.observable(false);
 		public onlyRatedSongs = ko.observable(false);

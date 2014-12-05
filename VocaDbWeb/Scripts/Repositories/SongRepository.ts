@@ -154,4 +154,10 @@ module vdb.repositories {
 
 	}
 
+	export interface SongQueryParams extends CommonQueryParams {
+
+		songTypes: string;
+
+	}
+
 }

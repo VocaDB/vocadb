@@ -64,6 +64,12 @@ module vdb.repositories {
 
         }
 
-    }
+	}
+
+	export interface ArtistQueryParams extends CommonQueryParams {
+
+		artistTypes: string;
+
+	}
 
 }

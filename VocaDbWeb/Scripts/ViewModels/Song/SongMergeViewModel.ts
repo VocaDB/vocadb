@@ -19,7 +19,7 @@ module vdb.viewModels.songs {
 		}
 
 		public target: BasicEntryLinkViewModel<dc.SongContract>;
-		public targetSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		public targetSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
 
 	}
 

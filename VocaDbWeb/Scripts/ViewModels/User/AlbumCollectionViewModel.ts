@@ -34,7 +34,7 @@ module vdb.viewModels.user {
 
 		public artistId = ko.observable<number>(null);
 		public artistName = ko.observable("");
-		public artistSearchParams: vdb.knockoutExtensions.AutoCompleteParams;
+		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public collectionStatus = ko.observable('');
 		public isInit = false;
 		public loading = ko.observable(true); // Currently loading for data
