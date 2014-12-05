@@ -62,5 +62,19 @@ namespace VocaDb.Tests.Service.Helpers {
 
 		}
 
+		[TestMethod]
+		public void GetMatchModeAndQueryForSearch_ExactQuery() {
+			
+			TestGetMatchModeAndQueryForSearch("\"アキ\"", "アキ", NameMatchMode.Exact);
+
+		}
+
+		[TestMethod]
+		public void GetMatchModeAndQueryForSearch_CleanTerm() {
+
+			TestGetMatchModeAndQueryForSearch("alone [SNDI RMX]", "alone [[]SNDI RMX]");
+
+		}
+
 	}
 }
