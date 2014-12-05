@@ -30,7 +30,7 @@ $(document).ready(function () {
 			autoHide: true,
 			createOptionFirstRow: function (item) { return item.name + " (" + item.artistType + ")"; },
 			createOptionSecondRow: function (item) { return item.additionalNames; },
-			extraQueryParams: { nameMatchMode: 'Auto', lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference] },
+			extraQueryParams: { nameMatchMode: 'Auto', lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference], fields: 'AdditionalNames' },
 			termParamName: 'query',
 			method: 'GET'
 		});
