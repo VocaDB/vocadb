@@ -29,7 +29,7 @@ ko.bindingHandlers.albumAutoComplete = {
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		initEntrySearch(element, null, "Album", vdb.functions.mapAbsoluteUrl("/api/albums"),
+		vdb.initEntrySearch(element, "Album", vdb.functions.mapAbsoluteUrl("/api/albums"),
 			{
 				allowCreateNew: properties.allowCreateNew,
 				acceptSelection: properties.acceptSelection,

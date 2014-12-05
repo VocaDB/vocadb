@@ -1,6 +1,6 @@
 /// <reference path="../typings/knockout/knockout.d.ts" />
 /// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../Shared/EntrySearchDrop.d.ts" />
+/// <reference path="../Shared/EntryAutoComplete.ts" />
 /// <reference path="AutoCompleteParams.ts" />
 
 interface KnockoutBindingHandlers {
@@ -33,7 +33,7 @@ ko.bindingHandlers.songAutoComplete = {
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-        initEntrySearch(element, null, "Song", vdb.functions.mapAbsoluteUrl("/api/songs"),
+        vdb.initEntrySearch(element, "Song", vdb.functions.mapAbsoluteUrl("/api/songs"),
             {
                 allowCreateNew: properties.allowCreateNew,
                 acceptSelection: properties.acceptSelection,

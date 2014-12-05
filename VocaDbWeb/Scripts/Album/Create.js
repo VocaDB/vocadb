@@ -33,11 +33,10 @@ function initPage() {
 
 	}
 
-	var artistAddList = $("#artistAddList");
 	var artistAddName = $("input#artistAddName");
 	var artistAddBtn = $("#artistAddAcceptBtn");
 
-	initEntrySearch(artistAddName, artistAddList, "Artist", "../../api/artists",
+	vdb.initEntrySearch(artistAddName, "Artist", "../../api/artists",
 		{
 			allowCreateNew: false,
 			acceptBtnElem: artistAddBtn,

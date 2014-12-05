@@ -33,7 +33,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Shared/UrlMapper.js",
 				"~/Scripts/Shared/EntryUrlMapper.js",
 				"~/Scripts/Shared/ReportEntryPopup.js",
-				"~/Scripts/Shared/EntrySearchDrop.js",
+				"~/Scripts/Shared/EntryAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ConfirmClick.js",
 				"~/Scripts/KnockoutExtensions/Dialog.js",
 				"~/Scripts/KnockoutExtensions/EntryToolTip.js",

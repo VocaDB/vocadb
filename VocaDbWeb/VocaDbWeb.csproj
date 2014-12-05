@@ -1930,6 +1930,7 @@
     <TypeScriptCompile Include="Scripts\Repositories\ReleaseEventRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\RepositoryFactory.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\SongListRepository.ts" />
+    <TypeScriptCompile Include="Scripts\Shared\EntryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />
     <TypeScriptCompile Include="Scripts\typings\highcharts\highcharts.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
@@ -1979,7 +1980,6 @@
     <TypeScriptCompile Include="Scripts\Shared\GlobalValues.ts" />
     <TypeScriptCompile Include="Scripts\Shared\GlobalFunctions.ts" />
     <TypeScriptCompile Include="Scripts\Shared\EntryUrlMapper.ts" />
-    <TypeScriptCompile Include="Scripts\Shared\EntrySearchDrop.d.ts" />
     <TypeScriptCompile Include="Scripts\Shared\WebLinkMatcher.ts" />
     <TypeScriptCompile Include="Scripts\Shared\Messages.d.ts" />
     <TypeScriptCompile Include="Scripts\Shared\UrlMapper.ts" />
@@ -2023,8 +2023,6 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\Shared\EntrySearchDrop.js" />
-    <Content Include="Scripts\Shared\EntrySearchJqx.js" />
     <Content Include="Scripts\Shared\DiscussionTab.js" />
     <Content Include="Scripts\Shared\Messages.js" />
     <Content Include="Scripts\Shared\ReportEntryPopup.js" />

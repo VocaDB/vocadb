@@ -18,11 +18,10 @@ $(document).ready(function () {
 
 	$("#clearRatingsLink").button();
 
-	var artistAddList = $("#ownedArtistAddList");
 	var artistAddName = $("input#ownedArtistAddName");
 	var artistAddBtn = $("#ownedArtistAddAcceptBtn");
 
-	initEntrySearch(artistAddName, artistAddList, "Artist", "../../api/artists",
+	vdb.initEntrySearch(artistAddName, "Artist", "../../api/artists",
 		{
 			allowCreateNew: false,
 			acceptBtnElem: artistAddBtn,

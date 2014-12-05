@@ -13,11 +13,10 @@ function initPage() {
 
     }
 
-    var artistAddList = $("#albumSearchList");
     var artistAddName = $("input#albumSearchName");
     var artistAddBtn = $("#albumSearchAcceptBtn");
 
-    initEntrySearch(artistAddName, artistAddList, "Album", "../../api/albums",
+    vdb.initEntrySearch(artistAddName, "Album", "../../api/albums",
 		{
 		    acceptBtnElem: artistAddBtn,
 		    acceptSelection: acceptArtistSelection,
