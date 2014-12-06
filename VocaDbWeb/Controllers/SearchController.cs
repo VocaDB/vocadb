@@ -1,10 +1,12 @@
 ﻿using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
@@ -33,8 +35,8 @@ namespace VocaDb.Web.Controllers
 
 		private ActionResult TryRedirect(string filter, EntryType searchType) {
 			
-			var matchMode = NameMatchMode.Auto;
-			filter = FindHelpers.GetMatchModeAndQueryForSearch(filter, ref matchMode);
+			var textQuery = SearchTextQuery.Create(filter);
+			var artistTextQuery = ArtistSearchTextQuery.Create(filter);
 
 			switch (searchType) {
 				
@@ -61,21 +63,21 @@ namespace VocaDb.Web.Controllers
 				break;
 
 				case EntryType.Artist:
-					var artist = artistService.FindArtists(new ArtistQueryParams(filter, null, 0, 2, false, false, matchMode, ArtistSortRule.None, false));
+					var artist = artistService.FindArtists(new ArtistQueryParams(artistTextQuery, null, 0, 2, false, false, ArtistSortRule.None, false));
 					if (artist.Items.Length == 1) {
 						return RedirectToArtist(artist.Items[0].Id);
 					}
 					break;
 
 				case EntryType.Album:
-					var album = albumService.Find(new AlbumQueryParams(filter, DiscType.Unknown, 0, 2, false, false, matchMode, AlbumSortRule.None, false));
+					var album = albumService.Find(new AlbumQueryParams(textQuery, DiscType.Unknown, 0, 2, false, false, AlbumSortRule.None, false));
 					if (album.Items.Length == 1) {
 						return RedirectToAlbum(album.Items[0].Id);
 					}
 					break;
 
 				case EntryType.Song:
-					var song = songService.Find(new SongQueryParams(filter, null, 0, 2, false, false, matchMode, SongSortRule.None, false, false, null));
+					var song = songService.Find(new SongQueryParams(textQuery, null, 0, 2, false, false, SongSortRule.None, false, false, null));
 					if (song.Items.Length == 1) {
 						return RedirectToSong(song.Items[0].Id);
 					}

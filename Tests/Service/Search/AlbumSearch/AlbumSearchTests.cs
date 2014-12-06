@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Tests.TestSupport;
 
@@ -155,7 +156,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		[TestMethod]
 		public void QueryName() {
 
-			queryParams.Common.Query = "DIVINE";
+			queryParams.Common.TextQuery = SearchTextQuery.Create("DIVINE");
 
 			var result = Find();
 
@@ -189,8 +190,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 			CreateName(album, "Synthesis Miku", ContentLanguageSelection.Unspecified);
 			CreateName(albumWithArtist, "DIVINE Miku", ContentLanguageSelection.Unspecified);
 
-			queryParams.Common.NameMatchMode = NameMatchMode.Auto;
-			queryParams.Common.Query = "Miku Miku";
+			queryParams.Common.TextQuery = SearchTextQuery.Create("Miku Miku");
 			queryParams.Paging.Start = 1;		// Skip the first result
 			queryParams.Paging.MaxEntries = 1;
 

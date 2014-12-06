@@ -12,6 +12,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Search;
@@ -281,9 +282,10 @@ namespace VocaDb.Web.Controllers
 			var onlyWithPVs = indexParams.onlyWithPVs ?? false;
 			var minScore = indexParams.minScore ?? 0;
 
-			var queryParams = new SongQueryParams(filter,
+			var textQuery = SearchTextQuery.Create(filter, matchMode);
+			var queryParams = new SongQueryParams(textQuery,
 				songType != SongType.Unspecified ? new[] { songType } : new SongType[] { },
-				0, pageSize, draftsOnly, false, matchMode, sortRule, false, false, null) {
+				0, pageSize, draftsOnly, false, sortRule, false, false, null) {
 
 					TimeFilter = timeFilter,
 					OnlyWithPVs = onlyWithPVs,

@@ -193,13 +193,14 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Note: this code should be optimized after switching to EF.
 		/// Cannot be optimized as is for NH.
 		/// </remarks>
-		public static IQueryable<T> WhereChildHasName<T>(this IQueryable<T> query, string nameFilter, 
-			NameMatchMode matchMode, string[] words = null) where T : ISongLink {
+		public static IQueryable<T> WhereChildHasName<T>(this IQueryable<T> query, SearchTextQuery textQuery) where T : ISongLink {
 
-			if (string.IsNullOrEmpty(nameFilter))
+			if (textQuery.IsEmpty)
 				return query;
 
-			switch (FindHelpers.GetMatchMode(nameFilter, matchMode)) {
+			var nameFilter = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
 				case NameMatchMode.Exact:
 					return query.Where(m => m.Song.Names.Names.Any(n => n.Value == nameFilter));
 
@@ -210,7 +211,7 @@ namespace VocaDb.Model.Service.Helpers {
 					return query.Where(m => m.Song.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
 
 				case NameMatchMode.Words:
-					words = words ?? FindHelpers.GetQueryWords(nameFilter);
+					var words = textQuery.Words;
 
 					switch (words.Length) {
 						case 1:

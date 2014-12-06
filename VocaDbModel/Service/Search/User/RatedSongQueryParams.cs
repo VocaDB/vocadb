@@ -18,6 +18,7 @@ namespace VocaDb.Model.Service.Search.User {
 			FilterByRating = SongVoteRating.Nothing;
 			GroupByRating = true;
 			SortRule = SongSortRule.Name;
+			TextQuery = new SearchTextQuery();
 
 		}
 
@@ -32,14 +33,10 @@ namespace VocaDb.Model.Service.Search.User {
 		/// </summary>
 		public bool GroupByRating { get; set; }
 
-		public NameMatchMode NameMatchMode { get; set; }
-
 		/// <summary>
 		/// Paging properties. Cannot be null.
 		/// </summary>
 		public PagingProperties Paging { get; set; }
-
-		public string Query { get; set; }
 
 		public int SonglistId { get; set; }
 
@@ -49,6 +46,8 @@ namespace VocaDb.Model.Service.Search.User {
 		public SongSortRule SortRule { get; set; }
 
 		public string Tag { get; set; }
+
+		public SearchTextQuery TextQuery { get; set; }
 
 		/// <summary>
 		/// Id of the user whose songs to get.

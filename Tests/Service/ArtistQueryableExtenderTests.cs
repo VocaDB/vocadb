@@ -76,15 +76,14 @@ namespace VocaDb.Tests.Service {
 		/// <summary>
 		/// Query is not a P name, just above the minimum length for a partial match.
 		/// The query ends in P however.
-		/// 8#P -> nothing
-		/// Note: this is a special case that could be handled with Contains as well.
+		/// 8#P -> 8#Prince.
 		/// </summary>
 		[TestMethod]
 		public void FilterByArtistName_NotPNameButEndsInP_QueryJustAboveMinLengthForContains_Found() {
 
 			var result = FilterByArtistName("8#P");
 
-			SequenceEqual(result, "result");
+			SequenceEqual(result, "result", "8#Prince");
 
 		}
 

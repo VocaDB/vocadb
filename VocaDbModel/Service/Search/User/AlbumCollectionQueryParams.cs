@@ -13,9 +13,8 @@ namespace VocaDb.Model.Service.Search.User {
 			UserId = userId;
 
 			FilterByStatus = null;
-			NameMatchMode = NameMatchMode.Auto;
-			Query = string.Empty;
 			Sort = AlbumSortRule.Name;
+			TextQuery = new SearchTextQuery();
 
 		}
 
@@ -23,14 +22,12 @@ namespace VocaDb.Model.Service.Search.User {
 
 		public PurchaseStatus[] FilterByStatus { get; set; }
 
-		public NameMatchMode NameMatchMode { get; set; }
+		public SearchTextQuery TextQuery { get; set; }
 
 		/// <summary>
 		/// Paging properties. Cannot be null.
 		/// </summary>
 		public PagingProperties Paging { get; set; }
-
-		public string Query { get; set; }
 
 		public string ReleaseEventName { get; set; }
 

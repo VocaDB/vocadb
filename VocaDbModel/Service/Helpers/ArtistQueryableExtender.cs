@@ -2,7 +2,6 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service.Helpers {

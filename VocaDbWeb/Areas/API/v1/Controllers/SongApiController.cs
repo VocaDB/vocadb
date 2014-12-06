@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Controllers;
@@ -54,16 +55,14 @@ namespace VocaDb.Web.API.v1.Controllers
 			bool includeAlbums = true, bool includeArtists = true, bool includeNames = true, bool includePVs = false, bool includeTags = true, bool includeWebLinks = false,
 			string callback = null, DataFormat format = DataFormat.Auto) {
 
-			var param = new SongQueryParams(query, new SongType[] {}, 0, defaultMax, false, true, NameMatchMode.Exact, SongSortRule.Name, true, false, new int[] {});
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode ?? NameMatchMode.Exact);
+			var param = new SongQueryParams(textQuery, new SongType[] {}, 0, defaultMax, false, true, SongSortRule.Name, true, false, new int[] {});
 
 			if (start.HasValue)
 				param.Paging.Start = start.Value;
 
 			if (maxResults.HasValue)
 				param.Paging.MaxEntries = Math.Min(maxResults.Value, defaultMax);
-
-			if (nameMatchMode.HasValue)
-				param.Common.NameMatchMode = nameMatchMode.Value;
 
 			var songs = Service.Find(s => new SongForApiContract(s, null, lang ?? ContentLanguagePreference.Default, includeAlbums, includeArtists, includeNames, includePVs, includeTags, true, includeWebLinks), param);
 

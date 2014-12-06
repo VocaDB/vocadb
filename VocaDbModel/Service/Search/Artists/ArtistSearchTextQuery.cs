@@ -15,14 +15,22 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		}
 
-		public ArtistSearchTextQuery(string query, NameMatchMode matchMode, string canonizedName) 
-			: base(canonizedName, matchMode) {
+		public ArtistSearchTextQuery() {
+			OriginalQuery = string.Empty;
+		}
+
+		public ArtistSearchTextQuery(string query, NameMatchMode matchMode, string canonizedName, string[] words = null) 
+			: base(canonizedName, matchMode, words) {
 			
 			OriginalQuery = query;
 
 		}
 
 		public string OriginalQuery { get; private set; }
+
+		public ArtistSearchTextQuery OverrideMatchMode(NameMatchMode? matchMode) {			
+			return matchMode.HasValue ? new ArtistSearchTextQuery(OriginalQuery, matchMode.Value, Query, words) : this;
+		}
 
 	}
 

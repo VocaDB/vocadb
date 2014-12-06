@@ -6,9 +6,22 @@ namespace VocaDb.Model.Service.Search {
 	/// <summary>
 	/// Represents a textual filter for entry name.
 	/// </summary>
+	/// <remarks>
+	/// Name filter is usually combined with <see cref="NameMatchMode"/> which can be specified by the client 
+	/// or determined automatically based on the text query.
+	/// This class is intended to encapsulate the relationship between those two values.
+	/// </remarks>
 	public class SearchTextQuery {
 
-		private string[] words;
+		protected string[] words;
+		private readonly NameMatchMode matchMode;
+		private readonly string query;
+
+		public static SearchTextQuery Empty {
+			get {
+				return new SearchTextQuery();
+			}
+		}
 
 		/// <summary>
 		/// Creates search text query.
@@ -29,6 +42,10 @@ namespace VocaDb.Model.Service.Search {
 
 		}
 
+		public SearchTextQuery() {
+			query = string.Empty;
+		}
+
 		/// <summary>
 		/// Initializes a new search text query.
 		/// In most cases the <see cref="Create"/> factory method should be used.
@@ -41,12 +58,16 @@ namespace VocaDb.Model.Service.Search {
 			if (!string.IsNullOrEmpty(query) && matchMode == NameMatchMode.Auto)
 				throw new ArgumentException("'Auto' is not allowed here; specific name match mode is required", "matchMode");
 
-			this.Query = query;
-			this.MatchMode = matchMode;
+			this.query = query;
+			this.matchMode = matchMode;
 			this.words = words;
 
 		}
 
+		/// <summary>
+		/// Whether no name filter is specified.
+		/// Usually this means no filtering is done.
+		/// </summary>
 		public bool IsEmpty {
 			get {
 				return string.IsNullOrEmpty(Query);
@@ -63,12 +84,17 @@ namespace VocaDb.Model.Service.Search {
 		/// <summary>
 		/// Selected name match mode. This cannot be Auto.
 		/// </summary>
-		public NameMatchMode MatchMode { get; private set; }
+		public NameMatchMode MatchMode {
+			get { return matchMode; }
+		}
 
 		/// <summary>
 		/// Textual filter for entry name.
+		/// Can be null or empty.
 		/// </summary>
-		public string Query { get; private set; }
+		public string Query {
+			get { return query; }
+		}
 
 		/// <summary>
 		/// List of search query words.

@@ -6,7 +6,6 @@ using System.Runtime.Caching;
 using System.Threading;
 using System.Web;
 using NHibernate;
-using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
@@ -646,7 +645,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.Where(a => a.User.Id == user.Id 
 						&& !a.Album.Deleted 
 						&& (shouldShowCollectionStatus || a.Rating > 0))
-					.WhereHasName(queryParams.Query, queryParams.NameMatchMode)
+					.WhereHasName(queryParams.TextQuery)
 					.WhereHasCollectionStatus(queryParams.FilterByStatus)
 					.WhereHasArtist(queryParams.ArtistId)
 					.WhereHasReleaseEventName(queryParams.ReleaseEventName)
@@ -742,7 +741,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				// Apply initial filter
 				var q = session.OfType<FavoriteSongForUser>().Query()
 					.Where(a => !a.Song.Deleted && a.User.Id == queryParams.UserId)
-					.WhereChildHasName(queryParams.Query, queryParams.NameMatchMode)
+					.WhereChildHasName(queryParams.TextQuery)
 					.WhereSongHasArtist(queryParams.ArtistId, queryParams.ChildVoicebanks)
 					.WhereHasRating(queryParams.FilterByRating)
 					.WhereSongIsInList(queryParams.SonglistId)

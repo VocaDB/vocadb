@@ -15,8 +15,8 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Web.Controllers.DataAccess;
@@ -84,14 +84,13 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 		
 			maxResults = Math.Min(maxResults, absoluteMax);
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref nameMatchMode);
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var ssl = WebHelper.IsSSL(Request);
 
 			var queryParams = new AlbumCollectionQueryParams(userId, new PagingProperties(start, maxResults, getTotalCount)) {
 				ArtistId = artistId ?? 0,
 				FilterByStatus = purchaseStatuses != null ? purchaseStatuses.Value.ToIndividualSelections().ToArray() : null,
-				NameMatchMode = nameMatchMode,
-				Query = query,
+				TextQuery = textQuery,
 				ReleaseEventName = releaseEventName,
 				Sort = sort ?? AlbumSortRule.Name,
 				Tag = tag
@@ -200,11 +199,10 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref nameMatchMode);
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new RatedSongQueryParams(userId, new PagingProperties(start, maxResults, getTotalCount)) {
-				Query = query,
-				NameMatchMode = nameMatchMode,
+				TextQuery = textQuery,
 				SortRule = sort ?? SongSortRule.Name,
 				ArtistId = artistId ?? 0,
 				ChildVoicebanks = childVoicebanks,

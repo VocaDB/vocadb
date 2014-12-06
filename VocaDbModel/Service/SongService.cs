@@ -265,7 +265,8 @@ namespace VocaDb.Model.Service {
 					var result = Find(session,
 						new SongQueryParams {
 							Common = new CommonSearchParams {
-								Query = q, NameMatchMode = nameMatchMode, OnlyByName = true, MoveExactToTop = true
+								TextQuery = SearchTextQuery.Create(q, nameMatchMode),
+								OnlyByName = true, MoveExactToTop = true
 							},
 							Paging = new PagingProperties(0, 30, false)
 						});
@@ -281,9 +282,9 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongDetailsContract FindFirstDetails(string query, NameMatchMode nameMatchMode) {
+		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery) {
 
-			return FindFirst(s => new SongDetailsContract(s, PermissionContext.LanguagePreference), new[]{ query }, nameMatchMode);
+			return FindFirst(s => new SongDetailsContract(s, PermissionContext.LanguagePreference), new[]{ textQuery.Query }, textQuery.MatchMode);
 
 		}
 
@@ -404,8 +405,9 @@ namespace VocaDb.Model.Service {
 
 			return HandleQuery(session => {
 
-				var songContract = Find(session, new SongQueryParams(query, new SongType[] {}, 0, 10, false, false, 
-					NameMatchMode.Auto, SongSortRule.Name, false, true, null)).Items;
+				var songContract = Find(session, new SongQueryParams(SearchTextQuery.Create(query), 
+					new SongType[] {}, 0, 10, false, false, 
+					SongSortRule.Name, false, true, null)).Items;
 
 				if (!songContract.Any())
 					return null;

@@ -113,10 +113,10 @@ namespace VocaDb.Web.Controllers.Api {
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref nameMatchMode);
+			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 			var types = ArtistHelper.GetArtistTypesFromFlags(artistTypes);
 
-			var param = new ArtistQueryParams(query, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, nameMatchMode, sort, false) {
+			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false) {
 				Tag = tag,
 				UserFollowerId = followedByUserId ?? 0
 			};

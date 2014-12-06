@@ -215,10 +215,10 @@ namespace VocaDb.Model.Service {
 		}
 
 		public PartialFindResult<AlbumContract> Find(
-			string query, DiscType discType, int start, int maxResults, bool draftsOnly, bool getTotalCount, 
-			NameMatchMode nameMatchMode = NameMatchMode.Auto, AlbumSortRule sortRule = AlbumSortRule.Name, bool moveExactToTop = false) {
+			SearchTextQuery textQuery, DiscType discType, int start, int maxResults, bool draftsOnly, bool getTotalCount, 
+			AlbumSortRule sortRule = AlbumSortRule.Name, bool moveExactToTop = false) {
 
-			var queryParams = new AlbumQueryParams(query, discType, start, maxResults, draftsOnly, getTotalCount, nameMatchMode, sortRule, moveExactToTop);
+			var queryParams = new AlbumQueryParams(textQuery, discType, start, maxResults, draftsOnly, getTotalCount, sortRule, moveExactToTop);
 			return Find(queryParams);
 
 		}

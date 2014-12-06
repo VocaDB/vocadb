@@ -55,13 +55,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		protected IQueryable<T> AddNameMatchFilter<T>(IQueryable<T> criteria, string name, NameMatchMode matchMode) 
-			where T : IEntryWithNames {
-
-			return FindHelpers.AddSortNameFilter(criteria, name, matchMode);
-
-		}
-
 		protected IEntryLinkFactory EntryLinkFactory {
 			get { return entryLinkFactory; }
 		}

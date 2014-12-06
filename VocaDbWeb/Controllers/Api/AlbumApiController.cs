@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
@@ -114,9 +115,9 @@ namespace VocaDb.Web.Controllers.Api {
 			AlbumOptionalFields fields = AlbumOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref nameMatchMode);
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			var queryParams = new AlbumQueryParams(query, discTypes, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, nameMatchMode, sort ?? AlbumSortRule.Name) {
+			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort ?? AlbumSortRule.Name) {
 				Tag = tag,
 				ArtistId = artistId ?? 0,
 				ArtistParticipationStatus = artistParticipationStatus,

@@ -21,7 +21,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 			ArtistQueryParams queryParams, 
 			NameMatchMode? nameMatchMode = null) {
 			
-			var textQuery = ArtistSearchTextQuery.Create(queryParams.Common.Query, nameMatchMode ?? queryParams.Common.NameMatchMode);
+			var textQuery = queryParams.Common.TextQuery.OverrideMatchMode(nameMatchMode);
 
 			var query = context.Query()
 				.Where(s => !s.Deleted)

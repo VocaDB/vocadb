@@ -34,16 +34,13 @@ namespace VocaDb.Web.API.v1.Controllers {
 			if (string.IsNullOrEmpty(query))
 				return Object(new PartialFindResult<SongForApiContract>(), format, callback);
 
-			var param = new ArtistQueryParams(query, new ArtistType[] { }, 0, defaultMax, false, true, NameMatchMode.Exact, ArtistSortRule.Name, false);
+			var param = new ArtistQueryParams(ArtistSearchTextQuery.Create(query, nameMatchMode ?? NameMatchMode.Exact), new ArtistType[] { }, 0, defaultMax, false, true, ArtistSortRule.Name, false);
 
 			if (start.HasValue)
 				param.Paging.Start = start.Value;
 
 			if (maxResults.HasValue)
 				param.Paging.MaxEntries = Math.Min(maxResults.Value, defaultMax);
-
-			if (nameMatchMode.HasValue)
-				param.Common.NameMatchMode = nameMatchMode.Value;
 
 			var songs = Service.FindArtists(s => new ArtistForApiContractOld(s, null, lang ?? ContentLanguagePreference.Default), param);
 

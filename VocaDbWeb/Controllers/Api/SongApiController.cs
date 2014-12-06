@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Web.Controllers.DataAccess;
@@ -118,10 +119,10 @@ namespace VocaDb.Web.Controllers.Api {
 			SongOptionalFields fields = SongOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref nameMatchMode);
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = songTypes.ToIndividualSelections(true).ToArray();
 
-			var param = new SongQueryParams(query, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, nameMatchMode, sort, false, false, null) {
+			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, false, null) {
 				Tag = tag, 
 				OnlyWithPVs = onlyWithPvs,
 				ArtistId = artistId ?? 0,		

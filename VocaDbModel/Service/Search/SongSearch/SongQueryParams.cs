@@ -35,11 +35,11 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// <param name="onlyByName">Whether to search items only by name, and not for example NicoId. Ignored when query string is null or empty.</param>
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
 		/// <param name="ignoredIds">List of entries to be ignored. Can be null in which case no filtering is done.</param>
-		public SongQueryParams(string query, SongType[] songTypes, int start, int maxResults,
-			bool draftsOnly, bool getTotalCount, NameMatchMode nameMatchMode, SongSortRule sortRule, 
+		public SongQueryParams(SearchTextQuery textQuery, SongType[] songTypes, int start, int maxResults,
+			bool draftsOnly, bool getTotalCount, SongSortRule sortRule, 
 			bool onlyByName, bool moveExactToTop, int[] ignoredIds) {
 
-			Common = new CommonSearchParams(query, draftsOnly, nameMatchMode, onlyByName, moveExactToTop);
+			Common = new CommonSearchParams(textQuery, draftsOnly, onlyByName, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
 
 			ArtistParticipationStatus = ArtistAlbumParticipationStatus.Everything;

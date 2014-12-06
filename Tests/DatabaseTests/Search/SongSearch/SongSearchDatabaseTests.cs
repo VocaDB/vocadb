@@ -143,8 +143,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestMethod]
 		public void QueryNamePartial() {
 
-			queryParams.Common.NameMatchMode = NameMatchMode.Partial;
-			queryParams.Common.Query = "Tears";
+			queryParams.Common.TextQuery = new SearchTextQuery("Tears", NameMatchMode.Partial);
 
 			var result = CallFind();
 
@@ -162,8 +161,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestMethod]
 		public void QueryNameWords() {
 
-			queryParams.Common.NameMatchMode = NameMatchMode.Words;
-			queryParams.Common.Query = "Tears Crystal";
+			queryParams.Common.TextQuery = new SearchTextQuery("Tears Crystal", NameMatchMode.Words);
 
 			var result = CallFind();
 
@@ -183,7 +181,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestMethod]
 		public void QueryNameMoveExactToTop() {
 
-			queryParams.Common.Query = "Tears";
+			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears");
 			queryParams.Common.MoveExactToTop = true;
 			queryParams.Paging.MaxEntries = 1;
 
@@ -201,7 +199,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestMethod]
 		public void QueryTag() {
 
-			queryParams.Common.Query = "tag:Electronic";
+			queryParams.Common.TextQuery = SearchTextQuery.Create("tag:Electronic");
 
 			var result = CallFind();
 
@@ -248,7 +246,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		public void QueryArtistAndName() {
 			
 			queryParams.ArtistId = Db.Producer.Id;
-			queryParams.Common.Query = "Azalea";
+			queryParams.Common.TextQuery = SearchTextQuery.Create("Azalea");
 
 			var result = CallFind();
 

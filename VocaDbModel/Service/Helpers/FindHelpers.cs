@@ -16,13 +16,15 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <summary>
 		/// Adds a filter for a list of names.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="query"></param>
-		/// <param name="nameFilter"></param>
-		/// <param name="matchMode"></param>
-		/// <returns></returns>
+		/// <typeparam name="T">Entry name type</typeparam>
+		/// <param name="query">Entry name query. Cannot be null.</param>
+		/// <param name="textQuery">Name query filter. Cannot be null.</param>
+		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<T> AddEntryNameFilter<T>(IQueryable<T> query, SearchTextQuery textQuery)
 			where T : LocalizedString {
+
+			if (textQuery.IsEmpty)
+				return query;
 
 			var nameFilter = textQuery.Query;
 
@@ -115,44 +117,6 @@ namespace VocaDb.Model.Service.Helpers {
 		}
 
 		/// <summary>
-		/// Adds a filter for entry's SortName.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="criteria"></param>
-		/// <param name="name"></param>
-		/// <param name="matchMode"></param>
-		/// <returns></returns>
-		public static IQueryable<T> AddSortNameFilter<T>(IQueryable<T> criteria, string name, NameMatchMode matchMode)
-			where T : IEntryWithNames {
-
-			var mode = GetMatchMode(name, matchMode);
-
-			if (mode == NameMatchMode.Exact) {
-
-				return criteria.Where(s =>
-					s.Names.SortNames.English == name
-						|| s.Names.SortNames.Romaji == name
-						|| s.Names.SortNames.Japanese == name);
-
-			} else if (mode == NameMatchMode.StartsWith) {
-
-				return criteria.Where(s =>
-					s.Names.SortNames.English.StartsWith(name)
-						|| s.Names.SortNames.Romaji.StartsWith(name)
-						|| s.Names.SortNames.Japanese.StartsWith(name));
-
-			} else {
-
-				return criteria.Where(s =>
-					s.Names.SortNames.English.Contains(name)
-						|| s.Names.SortNames.Romaji.Contains(name)
-						|| s.Names.SortNames.Japanese.Contains(name));
-
-			}
-
-		}
-
-		/// <summary>
 		/// Processes T-SQL wildcards, specifically the brackets "[]" and percent wildcard "%" from the search term.
 		/// </summary>
 		/// <param name="term">Search term, for example "alone [SNDI RMX]". Can be null or empty.</param>
@@ -167,22 +131,6 @@ namespace VocaDb.Model.Service.Helpers {
 				return term;
 
 			return term.Replace("[", "[[]").Replace("%", "[%]");
-
-		}
-
-		public static bool ExactMatch(string query, NameMatchMode matchMode) {
-			return GetMatchMode(query, matchMode) == NameMatchMode.Exact;
-		}
-
-		public static NameMatchMode GetMatchMode(string query, NameMatchMode matchMode, NameMatchMode defaultMode = NameMatchMode.Exact) {
-
-			if (matchMode != NameMatchMode.Auto)
-				return matchMode;
-
-			if (query.Length < 3 && defaultMode != NameMatchMode.Auto)
-				return defaultMode;
-
-			return NameMatchMode.Words;
 
 		}
 

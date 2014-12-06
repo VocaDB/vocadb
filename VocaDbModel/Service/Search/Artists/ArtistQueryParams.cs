@@ -10,7 +10,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		public ArtistQueryParams() {
 
-			Common = new CommonSearchParams();
+			Common = new CommonSearchParams<ArtistSearchTextQuery>();
 			Paging = new PagingProperties(0, 30, true);
 			ArtistTypes = new ArtistType[] { };
 
@@ -25,10 +25,10 @@ namespace VocaDb.Model.Service.Search.Artists {
 		/// <param name="nameMatchMode">Mode for name maching. Ignored when query string is null or empty.</param>
 		/// <param name="sortRule">Sort rule for results.</param>
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
-		public ArtistQueryParams(string query, ArtistType[] songTypes, int start, int maxResults,
-			bool draftsOnly, bool getTotalCount, NameMatchMode nameMatchMode, ArtistSortRule sortRule, bool moveExactToTop) {
+		public ArtistQueryParams(ArtistSearchTextQuery textQuery, ArtistType[] songTypes, int start, int maxResults,
+			bool draftsOnly, bool getTotalCount, ArtistSortRule sortRule, bool moveExactToTop) {
 
-			Common = new CommonSearchParams(query, draftsOnly, nameMatchMode, true, moveExactToTop);
+			Common = CommonSearchParams.Create(textQuery, draftsOnly, true, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
 
 			ArtistTypes = songTypes ?? new ArtistType[] { };
@@ -38,7 +38,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		public ArtistType[] ArtistTypes { get; set; }
 
-		public CommonSearchParams Common { get; set; }
+		public CommonSearchParams<ArtistSearchTextQuery> Common { get; set; }
 
 		public PagingProperties Paging { get; set; }
 

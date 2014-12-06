@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
@@ -64,7 +65,7 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var ssl = WebHelper.IsSSL(Request);
-			var queryParams = new CommonSearchParams(query, false, nameMatchMode, false, false);
+			var queryParams = new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, false, false);
 			var paging = new PagingProperties(start, maxResults, getTotalCount);
 
 			var tags = queries.Find(t => new TagForApiContract(t, thumbPersister, ssl, fields), 

@@ -5,6 +5,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Web.Controllers;
 using VocaDb.Model.Domain.Globalization;
@@ -48,7 +49,7 @@ namespace VocaDb.Web.API.v1.Controllers {
 			DataFormat format = DataFormat.Auto, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			var queryParams = new AlbumQueryParams(query, discType, start, maxResults, false, getTotalCount, nameMatchMode, sort);
+			var queryParams = new AlbumQueryParams(SearchTextQuery.Create(query, nameMatchMode), discType, start, maxResults, false, getTotalCount, sort);
 
 			var entries = Service.Find(a => new AlbumForApiContract(a, null, lang, includeArtists, includeNames, includePVs, includeTags, includeWebLinks), queryParams);
 
