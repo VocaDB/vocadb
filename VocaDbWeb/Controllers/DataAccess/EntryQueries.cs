@@ -11,6 +11,8 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Repositories;
+using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -34,15 +36,15 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			bool ssl
 			) {
 
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref nameMatchMode);
-			var canonized = ArtistHelper.GetCanonizedName(query);
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var artistTextQuery = ArtistSearchTextQuery.Create(query, textQuery.MatchMode); // Can't use the existing words collection here as they are noncanonized
 
 			return repository.HandleQuery(ctx => {
 
 				// Get all applicable names per entry type
 				var artistNames = ctx.OfType<Artist>().Query()
 					.Where(a => !a.Deleted)
-					.WhereHasName_Canonized(query, canonized, nameMatchMode)
+					.WhereHasName_Canonized(artistTextQuery)
 					.WhereHasTag(tag)
 					.WhereStatusIs(status)
 					.OrderBy(ArtistSortRule.Name, lang)
@@ -52,7 +54,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var albumNames = ctx.OfType<Album>().Query()
 					.Where(a => !a.Deleted)
-					.WhereHasName(query, nameMatchMode)
+					.WhereHasName(textQuery)
 					.WhereHasTag(tag)
 					.WhereStatusIs(status)
 					.OrderBy(AlbumSortRule.Name, lang)
@@ -62,7 +64,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var songNames = ctx.OfType<Song>().Query()
 					.Where(a => !a.Deleted)
-					.WhereHasName(query, nameMatchMode)
+					.WhereHasName(textQuery)
 					.WhereHasTag(tag)
 					.WhereStatusIs(status)
 					.OrderBy(SongSortRule.Name, lang)
@@ -108,19 +110,19 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					count = 
 						ctx.OfType<Artist>().Query()
 							.Where(a => !a.Deleted)
-							.WhereHasName_Canonized(query, canonized, nameMatchMode)
+							.WhereHasName_Canonized(artistTextQuery)
 							.WhereHasTag(tag)
 							.WhereStatusIs(status)
 							.Count() + 
 						ctx.OfType<Album>().Query()
 							.Where(a => !a.Deleted)
-							.WhereHasName(query, nameMatchMode)
+							.WhereHasName(textQuery)
 							.WhereHasTag(tag)
 							.WhereStatusIs(status)
 							.Count() +
 						ctx.OfType<Song>().Query()
 							.Where(a => !a.Deleted)
-							.WhereHasName(query, nameMatchMode)
+							.WhereHasName(textQuery)
 							.WhereHasTag(tag)
 							.WhereStatusIs(status)
 							.Count();

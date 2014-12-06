@@ -25,10 +25,11 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			NameMatchMode? nameMatchMode = null) {
 			
 			var artistId = queryParams.ArtistId != 0 ? queryParams.ArtistId : parsedQuery.ArtistId;
+			var textQuery = SearchTextQuery.Create(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode);
 
 			var query = Query<Album>()
 				.Where(s => !s.Deleted)
-				.WhereHasName(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode, allowCatNum: true)
+				.WhereHasName(textQuery, allowCatNum: true)
 				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasArtistParticipationStatus(artistId, queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))

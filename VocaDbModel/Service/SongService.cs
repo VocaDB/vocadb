@@ -26,6 +26,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
 
@@ -356,14 +357,13 @@ namespace VocaDb.Model.Service {
 			if (string.IsNullOrWhiteSpace(query))
 				return new string[] { };
 
-			var matchMode = NameMatchMode.Auto;
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref matchMode);
+			var textQuery = SearchTextQuery.Create(query);
 
 			return HandleQuery(session => {
 
 				var names = session.Query<SongName>()
 					.Where(a => !a.Song.Deleted)
-					.AddEntryNameFilter(query, matchMode)
+					.AddEntryNameFilter(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()
@@ -877,7 +877,7 @@ namespace VocaDb.Model.Service {
 				if (!string.IsNullOrEmpty(artist)) {
 
 					artists = session.Query<ArtistName>()
-						.FilterByArtistName(artist)
+						.FilterByArtistName(ArtistSearchTextQuery.Create(artist))
 						.Select(n => n.Artist)
 						.Take(10)
 						.ToArray();
@@ -892,7 +892,7 @@ namespace VocaDb.Model.Service {
 				if (!string.IsNullOrEmpty(album)) {
 
 					albums = session.Query<AlbumName>()
-						.AddEntryNameFilter(album, NameMatchMode.Auto)
+						.AddEntryNameFilter(SearchTextQuery.Create(album))
 						.Select(n => n.Album)
 						.Take(10)
 						.ToArray();
@@ -909,7 +909,7 @@ namespace VocaDb.Model.Service {
 					return null;
 
 				matches = session.Query<SongName>()
-					.AddEntryNameFilter(name, NameMatchMode.Auto)
+					.AddEntryNameFilter(SearchTextQuery.Create(name))
 					.Select(n => n.Song)
 					.ToArray();
 

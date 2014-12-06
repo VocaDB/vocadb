@@ -2,6 +2,7 @@
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -52,13 +53,14 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <returns>Filtered query. Cannot be null.</returns>
 		/// <typeparam name="TEntry">Entry type.</typeparam>
 		/// <typeparam name="TName">Entry name type.</typeparam>
-		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, string nameFilter, 
-			NameMatchMode matchMode, string[] words = null) where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId {
+		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, SearchTextQuery textQuery) where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId {
 
-			if (string.IsNullOrEmpty(nameFilter))
+			if (textQuery.IsEmpty)
 				return query;
 
-			switch (FindHelpers.GetMatchMode(nameFilter, matchMode)) {
+			var nameFilter = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
 				case NameMatchMode.Exact:
 					return query.Where(m => m.Names.Names.Any(n => n.Value == nameFilter));
 
@@ -69,7 +71,7 @@ namespace VocaDb.Model.Service.Helpers {
 					return query.Where(m => m.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
 
 				case NameMatchMode.Words:
-					words = words ?? FindHelpers.GetQueryWords(nameFilter);
+					var words = textQuery.Words;
 
 					switch (words.Length) {
 						case 1:

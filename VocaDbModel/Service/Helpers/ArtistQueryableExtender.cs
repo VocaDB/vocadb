@@ -3,17 +3,17 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service.Helpers {
 
 	public static class ArtistQueryableExtender {
 
-		public static IQueryable<ArtistName> FilterByArtistName(this IQueryable<ArtistName> query, string originalQuery,
-			string canonizedName = null, NameMatchMode matchMode = NameMatchMode.Auto, string[] words = null) {
+		public static IQueryable<ArtistName> FilterByArtistName(this IQueryable<ArtistName> query, ArtistSearchTextQuery textQuery) {
 
-			canonizedName = canonizedName ?? ArtistHelper.GetCanonizedName(originalQuery);
+			var canonizedName = textQuery.Query;
 
-			if (FindHelpers.ExactMatch(canonizedName, matchMode)) {
+			if (textQuery.IsExact) {
 
 				return query.Where(m => m.Value == canonizedName
 					|| m.Value == string.Format("{0}P", canonizedName)
@@ -21,7 +21,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 			} else {
 
-				return FindHelpers.AddEntryNameFilter(query, canonizedName, matchMode, words);
+				return FindHelpers.AddEntryNameFilter(query, textQuery);
 
 			}
 
@@ -79,13 +79,14 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Can be null, in which case the words list will be parsed from <paramref name="nameFilter"/>.
 		/// </param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<Artist> WhereHasName(this IQueryable<Artist> query, string nameFilter, 
-			NameMatchMode matchMode, string[] words = null) {
+		public static IQueryable<Artist> WhereHasName(this IQueryable<Artist> query, ArtistSearchTextQuery textQuery) {
 
-			if (string.IsNullOrEmpty(nameFilter))
+			if (textQuery.IsEmpty)
 				return query;
 
-			switch (FindHelpers.GetMatchMode(nameFilter, matchMode)) {
+			var nameFilter = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
 				case NameMatchMode.Exact:
 					return query.Where(m => m.Names.Names.Any(n => n.Value == nameFilter));
 
@@ -96,7 +97,7 @@ namespace VocaDb.Model.Service.Helpers {
 					return query.Where(m => m.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
 
 				case NameMatchMode.Words:
-					words = words ?? FindHelpers.GetQueryWords(nameFilter);
+					var words = textQuery.Words;
 
 					switch (words.Length) {
 						case 1:
@@ -161,15 +162,14 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="matchMode">Name match mode.</param>
 		/// <param name="words">Words list if available. Can be null in which case words list is parsed.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<Artist> WhereHasName_Canonized(this IQueryable<Artist> query, string originalQuery,
-			string canonizedName = null, NameMatchMode matchMode = NameMatchMode.Auto, string[] words = null) {
+		public static IQueryable<Artist> WhereHasName_Canonized(this IQueryable<Artist> query, ArtistSearchTextQuery textQuery) {
 
-			canonizedName = canonizedName ?? ArtistHelper.GetCanonizedName(originalQuery);
-
-			if (string.IsNullOrEmpty(canonizedName))
+			if (textQuery.IsEmpty)
 				return query;
 
-			if (FindHelpers.ExactMatch(canonizedName, matchMode)) {
+			var canonizedName = textQuery.Query;
+
+			if (textQuery.IsExact) {
 
 				return query.Where(m => m.Names.Names.Any(n => 
 					n.Value == canonizedName
@@ -178,7 +178,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 			} else {
 
-				return query.WhereHasName(canonizedName, matchMode, words);
+				return query.WhereHasName(textQuery);
 
 			}
 

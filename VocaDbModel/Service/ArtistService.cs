@@ -211,14 +211,13 @@ namespace VocaDb.Model.Service {
 			if (string.IsNullOrWhiteSpace(query))
 				return new string[] {};
 
-			var matchMode = NameMatchMode.Auto;
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref matchMode);
+			var textQuery = ArtistSearchTextQuery.Create(query);
 
 			return HandleQuery(session => {
 
 				var names = session.Query<ArtistName>()
 					.Where(a => !a.Artist.Deleted)
-					.FilterByArtistName(query, matchMode: matchMode)
+					.FilterByArtistName(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()

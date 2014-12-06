@@ -2,16 +2,16 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.Helpers {
 
 	public static class QueryableExtender {
 
-		public static IQueryable<T> AddEntryNameFilter<T>(this IQueryable<T> query, string nameFilter, NameMatchMode matchMode,
-			string[] words = null)
+		public static IQueryable<T> AddEntryNameFilter<T>(this IQueryable<T> query, SearchTextQuery textQuery)
 			where T : LocalizedString {
 
-			return FindHelpers.AddEntryNameFilter(query, nameFilter, matchMode, words);
+			return FindHelpers.AddEntryNameFilter(query, textQuery);
 
 		}
 

@@ -83,9 +83,11 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			ParsedSongQuery parsedQuery, 
 			NameMatchMode? nameMatchMode = null) {
 			
+			var textQuery = SearchTextQuery.Create(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode);
+
 			var query = Query<Song>()
 				.Where(s => !s.Deleted)
-				.WhereHasName(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode)
+				.WhereHasName(textQuery)
 				.WhereHasArtistParticipationStatus(queryParams.ArtistId, queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
 				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)

@@ -4,6 +4,8 @@ using NHibernate;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Tags;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -19,11 +21,12 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="nameFilter"></param>
 		/// <param name="matchMode"></param>
 		/// <returns></returns>
-		public static IQueryable<T> AddEntryNameFilter<T>(IQueryable<T> query, string nameFilter, 
-			NameMatchMode matchMode, string[] words = null)
+		public static IQueryable<T> AddEntryNameFilter<T>(IQueryable<T> query, SearchTextQuery textQuery)
 			where T : LocalizedString {
 
-			switch (GetMatchMode(nameFilter, matchMode)) {
+			var nameFilter = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
 				case NameMatchMode.Exact:
 					return query.Where(m => m.Value == nameFilter);
 
@@ -34,7 +37,7 @@ namespace VocaDb.Model.Service.Helpers {
 					return query.Where(m => m.Value.StartsWith(nameFilter));
 
 				case NameMatchMode.Words:
-					words = words ?? GetQueryWords(nameFilter);
+					var words = textQuery.Words;
 
 					switch (words.Length) {
 						case 1:
@@ -91,12 +94,14 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		public static IQueryable<Tag> AddTagNameFilter(IQueryable<Tag> query, string name, NameMatchMode matchMode) {
+		public static IQueryable<Tag> AddTagNameFilter(IQueryable<Tag> query, TagSearchTextQuery textQuery) {
 
-			if (string.IsNullOrEmpty(name))
+			if (textQuery.IsEmpty)
 				return query;
 
-			switch (GetMatchMode(name, matchMode)) {
+			var name = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
 				case NameMatchMode.Exact:
 					return query.Where(m => m.Name == name);
 

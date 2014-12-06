@@ -4,6 +4,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -171,10 +172,9 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Can be null, in which case the words list will be parsed from <paramref name="nameFilter"/>.
 		/// </param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<Song> WhereHasName(this IQueryable<Song> query, string nameFilter, 
-			NameMatchMode matchMode, string[] words = null) {
+		public static IQueryable<Song> WhereHasName(this IQueryable<Song> query, SearchTextQuery textQuery) {
 
-			return query.WhereHasNameGeneric<Song, SongName>(nameFilter, matchMode, words);
+			return query.WhereHasNameGeneric<Song, SongName>(textQuery);
 
 		}
 

@@ -706,10 +706,13 @@
     <Compile Include="Service\Search\AlbumSearch\AlbumSearchSort.cs" />
     <Compile Include="Service\Search\AlbumSearch\ArtistAlbumParticipationStatus.cs" />
     <Compile Include="Service\Search\AlbumSearch\ParsedAlbumQuery.cs" />
+    <Compile Include="Service\Search\Artists\ArtistSearchTextQuery.cs" />
     <Compile Include="Service\Search\QueryProcessor.cs" />
     <Compile Include="Service\Search\ReleaseEventSearch.cs" />
+    <Compile Include="Service\Search\SearchTextQuery.cs" />
     <Compile Include="Service\Search\SongSearch\ParsedSongQuery.cs" />
     <Compile Include="Service\Search\SongSearch\SongListQueryParams.cs" />
+    <Compile Include="Service\Search\Tags\TagSearchTextQuery.cs" />
     <Compile Include="Service\Search\User\FollowedArtistQueryParams.cs" />
     <Compile Include="Service\VideoServices\HtmlParsingHelper.cs" />
     <Compile Include="Service\IEntryLinkFactory.cs" />

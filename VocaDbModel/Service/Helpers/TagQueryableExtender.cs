@@ -1,19 +1,20 @@
 ﻿using System.Linq;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.Search.Tags;
 
 namespace VocaDb.Model.Service.Helpers {
 
 	public static class TagQueryableExtender {
 
-		public static IQueryable<Tag> AddTagNameFilter(this IQueryable<Tag> query, string nameFilter, NameMatchMode matchMode) {
+		public static IQueryable<Tag> AddTagNameFilter(this IQueryable<Tag> query, TagSearchTextQuery textQuery) {
 
-			return WhereHasName(query, nameFilter, matchMode);
+			return WhereHasName(query, textQuery);
 
 		}
 
-		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, string nameFilter, NameMatchMode matchMode) {
+		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, TagSearchTextQuery textQuery) {
 
-			return FindHelpers.AddTagNameFilter(query, nameFilter, matchMode);
+			return FindHelpers.AddTagNameFilter(query, textQuery);
 
 		}
 

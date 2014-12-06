@@ -23,6 +23,7 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service {
 
@@ -413,14 +414,14 @@ namespace VocaDb.Model.Service {
 
 			var artist = session.Query<ArtistName>()
 				.Where(m => !m.Artist.Deleted)
-				.FilterByArtistName(artistName, artistName, NameMatchMode.Exact)
+				.FilterByArtistName(new ArtistSearchTextQuery(artistName, NameMatchMode.Exact, artistName))
 				.Select(an => an.Artist)
 				.FirstOrDefault();
 
 			if (artist == null)
 				artist = session.Query<ArtistName>()
 					.Where(m => !m.Artist.Deleted)
-					.FilterByArtistName(artistName, artistName, NameMatchMode.Words)
+					.FilterByArtistName(new ArtistSearchTextQuery(artistName, NameMatchMode.Words, artistName))
 					.Select(an => an.Artist)
 					.FirstOrDefault();
 

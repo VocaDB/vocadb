@@ -20,6 +20,7 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Tags;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -164,14 +165,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			bool allowAliases = false, string categoryName = "")
 			where T : class {
 
-			var matchMode = queryParams.NameMatchMode;
-			queryParams.Query = FindHelpers.GetMatchModeAndQueryForSearch(queryParams.Query ?? string.Empty, ref matchMode, NameMatchMode.Partial);
-			queryParams.Query = queryParams.Query.Replace(' ', '_');
+			var textQuery = TagSearchTextQuery.Create(queryParams.Query, queryParams.NameMatchMode);
 
 			return HandleQuery(ctx => {
 
 				var query = ctx.Query()
-					.WhereHasName(queryParams.Query, matchMode)
+					.WhereHasName(textQuery)
 					.WhereAllowAliases(allowAliases)
 					.WhereHasCategoryName(categoryName);
 

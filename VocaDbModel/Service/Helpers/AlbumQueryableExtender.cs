@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Google.GData.Extensions;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -143,13 +143,14 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Can be null, in which case the words list will be parsed from <paramref name="nameFilter"/>.
 		/// </param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<Album> WhereHasName(this IQueryable<Album> query, string nameFilter, 
-			NameMatchMode matchMode, string[] words = null, bool allowCatNum = false) {
+		public static IQueryable<Album> WhereHasName(this IQueryable<Album> query, SearchTextQuery textQuery, bool allowCatNum = false) {
 
-			if (string.IsNullOrEmpty(nameFilter))
+			if (textQuery.IsEmpty)
 				return query;
 
-			switch (FindHelpers.GetMatchMode(nameFilter, matchMode)) {
+			var nameFilter = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
 				case NameMatchMode.Exact:
 					return query.Where(m => m.Names.Names.Any(n => n.Value == nameFilter));
 
@@ -164,7 +165,7 @@ namespace VocaDb.Model.Service.Helpers {
 						m.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
 
 				case NameMatchMode.Words:
-					words = words ?? FindHelpers.GetQueryWords(nameFilter);
+					var words = textQuery.Words;
 
 					switch (words.Length) {
 						case 1:

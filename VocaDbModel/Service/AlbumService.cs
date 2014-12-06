@@ -300,14 +300,13 @@ namespace VocaDb.Model.Service {
 			if (string.IsNullOrWhiteSpace(query))
 				return new string[] { };
 
-			var matchMode = NameMatchMode.Auto;
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref matchMode);
+			var textQuery = SearchTextQuery.Create(query);
 
 			return HandleQuery(session => {
 
 				var names = session.Query<AlbumName>()
 					.Where(a => !a.Album.Deleted)
-					.AddEntryNameFilter(query, matchMode)
+					.AddEntryNameFilter(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()

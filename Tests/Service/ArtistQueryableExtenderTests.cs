@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Tests.Service {
 
@@ -16,7 +17,11 @@ namespace VocaDb.Tests.Service {
 			return names.Select(name => new ArtistName { Value = name }).ToList();
 		}
 
-		private List<ArtistName> artists; 
+		private List<ArtistName> artists;
+
+		private IQueryable<ArtistName> FilterByArtistName(string artistName) {
+			return artists.AsQueryable().FilterByArtistName(ArtistSearchTextQuery.Create(artistName));
+		} 
 
 		private void SequenceEqual(IEnumerable<ArtistName> actual, string message, params string[] expected) {
 			Assert.IsTrue(actual.Select(n => n.Value).SequenceEqual(expected), message);
@@ -36,7 +41,7 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void FilterByArtistName_NotMatch_NotFound() {
 
-			var result = artists.AsQueryable().FilterByArtistName("HSS");
+			var result = FilterByArtistName("HSS");
 
 			SequenceEqual(result, "result");
 
@@ -49,7 +54,7 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void FilterByArtistName_PName_QueryJustBelowMinLengthForContains_Found() {
 
-			var result = artists.AsQueryable().FilterByArtistName("HSP");
+			var result = FilterByArtistName("HSP");
 
 			SequenceEqual(result, "result", "HSP");
 
@@ -62,7 +67,7 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void FilterByArtistName_NotPName_QueryJustBelowMinLengthForContains_Found() {
 
-			var result = artists.AsQueryable().FilterByArtistName("HS");
+			var result = FilterByArtistName("HS");
 
 			SequenceEqual(result, "result", "HSP");
 
@@ -77,7 +82,7 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void FilterByArtistName_NotPNameButEndsInP_QueryJustAboveMinLengthForContains_Found() {
 
-			var result = artists.AsQueryable().FilterByArtistName("8#P");
+			var result = FilterByArtistName("8#P");
 
 			SequenceEqual(result, "result");
 
@@ -90,7 +95,7 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void FilterByArtistName_NotPNameDoesNotEndInP_QueryJustAboveMinLengthForContains_Found() {
 
-			var result = artists.AsQueryable().FilterByArtistName("Hir");
+			var result = FilterByArtistName("Hir");
 
 			SequenceEqual(result, "result", "Hiroyuki ODA");
 
@@ -103,7 +108,7 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void FilterByArtistName_NotPName_QueryLongEnoughForContains_Found() {
 
-			var result = artists.AsQueryable().FilterByArtistName("Hiroyuki");
+			var result = FilterByArtistName("Hiroyuki");
 
 			SequenceEqual(result, "result", "Hiroyuki ODA");
 
