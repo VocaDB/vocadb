@@ -143,6 +143,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("names")]
+		public string[] GetNames(string query = "", int maxResults = 15) {
+			
+			return service.FindNames(query, maxResults);
+
+		}
+
 		[Route("versions")]
 		[ApiExplorerSettings(IgnoreApi=true)]
 		public EntryIdAndVersionContract[] GetVersions() {

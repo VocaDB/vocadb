@@ -19,13 +19,15 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int defaultMax = 10;
 
 		private readonly EntryQueries queries;
+		private readonly OtherService otherService;
 
 		private int GetMaxResults(int max) {
 			return Math.Min(max, absoluteMax);	
 		}
 
-		public EntryApiController(EntryQueries queries) {
+		public EntryApiController(EntryQueries queries, OtherService otherService) {
 			this.queries = queries;
+			this.otherService = otherService;
 		}
 
 		/// <summary>
@@ -57,6 +59,13 @@ namespace VocaDb.Web.Controllers.Api {
 			maxResults = GetMaxResults(maxResults);
 
 			return queries.GetList(query, tag, status, start, maxResults, getTotalCount, nameMatchMode, fields, lang, ssl);
+
+		}
+
+		[Route("names")]
+		public string[] GetNames(string query = "", int maxResults = 10) {
+			
+			return otherService.FindNames(query, maxResults);
 
 		}
 

@@ -96,7 +96,7 @@ namespace VocaDb.Web.Controllers.Api {
 			string query = "", bool allowAliases = true,
 			int maxResults = 10) {
 			
-			return queries.FindNames(query, allowAliases, true, maxResults);
+			return queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, true, maxResults);
 
 		}
 

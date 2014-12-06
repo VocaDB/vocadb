@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -93,6 +94,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[Obsolete]
 		public ActionResult FindNames(string term) {
 
 			return Json(Service.FindNames(term, 15));
@@ -105,6 +107,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[Obsolete]
 		public ActionResult Name(int id) {
 
 			var contract = Service.GetAlbum(id);

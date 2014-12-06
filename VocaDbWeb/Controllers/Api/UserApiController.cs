@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -137,6 +138,13 @@ namespace VocaDb.Web.Controllers.Api {
 				new ArtistForUserForApiContract(afu, lang, thumbPersister, ssl, fields));
 
 			return artists;
+
+		}
+
+		[Route("names")]
+		public IEnumerable<string> GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) {
+			
+			return queries.FindNames(query, nameMatchMode, maxResults);
 
 		}
 

@@ -19,6 +19,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.Services {
@@ -84,7 +85,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public string[] FindTags(string term, int maxResults) {
 
-			return tagQueries.FindNames(term, true, false, 10);
+			return tagQueries.FindNames(TagSearchTextQuery.Create(term), true, false, 10);
 
 		}
 

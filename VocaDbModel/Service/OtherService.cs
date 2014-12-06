@@ -201,9 +201,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string[] FindNames(string query) {
-
-			const int maxResults = 10;
+		public string[] FindNames(string query, int maxResults) {
 
 			if (string.IsNullOrWhiteSpace(query))
 				return new string[] {};

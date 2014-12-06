@@ -653,6 +653,7 @@
     <Compile Include="Service\QueryableExtenders\QueryableForAlbumLinkExtender.cs" />
     <Compile Include="Service\QueryableExtenders\QueryableForArtistLinkExtender.cs" />
     <Compile Include="Service\QueryableExtenders\QueryableForSongLinkExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\QueryableForUserExtender.cs" />
     <Compile Include="Service\Repositories\IArtistRepository.cs" />
     <Compile Include="Service\Repositories\IEntryReportRepository.cs" />
     <Compile Include="Service\Repositories\IEventRepository.cs" />

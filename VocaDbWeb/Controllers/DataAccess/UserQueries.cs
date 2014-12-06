@@ -28,6 +28,7 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Web.Code.Security;
@@ -619,6 +620,28 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				ctx.AuditLogger.AuditLog(string.Format("disabled {0}.", EntryLinkFactory.CreateEntryLink(user)));
 
 				ctx.Update(user);
+
+			});
+
+		}
+
+		public string[] FindNames(string query, NameMatchMode nameMatchMode, int maxResults) {
+
+			if (string.IsNullOrWhiteSpace(query))
+				return new string[] { };
+
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+
+			return HandleQuery(session => {
+
+				var names = session.Query<User>()
+					.WhereHasName(textQuery)
+					.Select(n => n.Name)
+					.OrderBy(n => n)
+					.Take(maxResults)
+					.ToArray();
+
+				return names;
 
 			});
 

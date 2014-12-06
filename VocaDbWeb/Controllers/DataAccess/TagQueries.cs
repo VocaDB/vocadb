@@ -196,21 +196,15 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public string[] FindNames(string query, bool allowAliases, bool allowEmptyName, int maxEntries) {
+		public string[] FindNames(TagSearchTextQuery textQuery, bool allowAliases, bool allowEmptyName, int maxEntries) {
 
-			if (!allowEmptyName && string.IsNullOrWhiteSpace(query))
+			if (!allowEmptyName && textQuery.IsEmpty)
 				return new string[] { };
-
-			query = query != null ? query.Trim().Replace(' ', '_') : string.Empty;
 
 			return HandleQuery(session => {
 
-				var q = session.Query();
-
-				if (query.Length < 3)
-					q = q.Where(t => t.Name.StartsWith(query));
-				else
-					q = q.Where(t => t.Name.Contains(query));
+				var q = session.Query()
+					.WhereHasName(textQuery);
 
 				if (!allowAliases)
 					q = q.Where(t => t.AliasedTo == null);

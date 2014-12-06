@@ -134,6 +134,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("names")]
+		public string[] GetNames(string query = "", int maxResults = 15) {
+			
+			return service.FindNames(query, maxResults);
+
+		}
+
 		/// <summary>
 		/// Gets tracks for an album.
 		/// </summary>

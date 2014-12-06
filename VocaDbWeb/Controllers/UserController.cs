@@ -216,6 +216,7 @@ namespace VocaDb.Web.Controllers
 		/// <param name="term">Query term.</param>
 		/// <param name="startsWith">Whether to search from the beginning of the name. If false, will be searched anywhere in the name (contains).</param>
 		/// <returns>List of usernames.</returns>
+		[Obsolete]
 		public JsonResult FindByName(string term, bool startsWith = false) {
 
 			var users = Service.FindUsersByName(term, startsWith ? NameMatchMode.StartsWith : NameMatchMode.Partial).Select(u => u.Name).ToArray();

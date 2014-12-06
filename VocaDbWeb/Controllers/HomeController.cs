@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.SessionState;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -28,9 +29,10 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[Obsolete]
 		public ActionResult FindNames(string term) {
 
-			var result = Services.Other.FindNames(term);
+			var result = Services.Other.FindNames(term, 10);
 
 			return Json(result);
 
