@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		public IQueryable<Album> Filter(IQueryable<Album> query, IQuerySource session) {
 
-			return query.SelectMany(a => FindHelpers.AddEntryNameFilter(a.Names.Names.AsQueryable(), new SearchTextQuery(string.Empty, NameMatchMode.Words, names))).Select(n => n.Album);
+			return query.SelectMany(a => FindHelpers.AddEntryNameFilter(a.Names.Names.AsQueryable(), new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, names))).Select(n => n.Album);
 
 		}
 
@@ -48,7 +48,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 			var q = session.Query<AlbumName>();
 
-			return FindHelpers.AddEntryNameFilter(q, new SearchTextQuery(string.Empty, NameMatchMode.Words, names))
+			return FindHelpers.AddEntryNameFilter(q, new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, names))
 				.Select(n => n.Album);
 
 		}

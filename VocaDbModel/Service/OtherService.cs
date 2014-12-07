@@ -201,14 +201,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string[] FindNames(string query, int maxResults) {
+		public string[] FindNames(SearchTextQuery textQuery, int maxResults) {
 
-			if (string.IsNullOrWhiteSpace(query))
+			if (textQuery.IsEmpty)
 				return new string[] {};
 
-			var textQuery = SearchTextQuery.Create(query);
-			var artistTextQuery = ArtistSearchTextQuery.Create(query, textQuery.MatchMode); // Can't use the existing words collection here as they are noncanonized
-			var tagTextQuery = TagSearchTextQuery.Create(query, textQuery.MatchMode);
+			var artistTextQuery = ArtistSearchTextQuery.Create(textQuery);
+			var tagTextQuery = TagSearchTextQuery.Create(textQuery);
 
 			return HandleQuery(session => {
 
@@ -255,7 +254,7 @@ namespace VocaDb.Model.Service {
 					.Take(maxResults)
 					.ToArray();
 
-				return NameHelper.MoveExactNamesToTop(allNames, query);
+				return NameHelper.MoveExactNamesToTop(allNames, textQuery.Query);
 
 			});
 

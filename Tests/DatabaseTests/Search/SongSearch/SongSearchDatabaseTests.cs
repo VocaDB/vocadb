@@ -143,7 +143,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestMethod]
 		public void QueryNamePartial() {
 
-			queryParams.Common.TextQuery = new SearchTextQuery("Tears", NameMatchMode.Partial);
+			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears", NameMatchMode.Partial);
 
 			var result = CallFind();
 
@@ -161,7 +161,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestMethod]
 		public void QueryNameWords() {
 
-			queryParams.Common.TextQuery = new SearchTextQuery("Tears Crystal", NameMatchMode.Words);
+			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears Crystal", NameMatchMode.Words);
 
 			var result = CallFind();
 

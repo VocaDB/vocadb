@@ -141,6 +141,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets a list of user names. Ideal for autocomplete boxes.
+		/// </summary>
+		/// <param name="query">Text query.</param>
+		/// <param name="nameMatchMode">Name match mode. Words is treated the same as Partial.</param>
+		/// <param name="maxResults">Maximum number of results.</param>
+		/// <returns>List of user names.</returns>
 		[Route("names")]
 		public IEnumerable<string> GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) {
 			

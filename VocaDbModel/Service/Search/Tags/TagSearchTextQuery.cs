@@ -8,14 +8,21 @@ namespace VocaDb.Model.Service.Search.Tags {
 			NameMatchMode selectedMode = NameMatchMode.Auto,
 			NameMatchMode defaultMode = NameMatchMode.Words) {
 			
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
-			var tagNameQuery = !string.IsNullOrEmpty(query) ? query.Replace(' ', '_') : query;
-			return new TagSearchTextQuery(tagNameQuery, selectedMode);
+			var parsedQuery = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
+			var tagNameQuery = !string.IsNullOrEmpty(parsedQuery) ? parsedQuery.Replace(' ', '_') : parsedQuery;
+			return new TagSearchTextQuery(tagNameQuery, selectedMode, query);
 
 		}
 
-		public TagSearchTextQuery(string query, NameMatchMode matchMode, string[] words = null) 
-			: base(query, matchMode, words) {}
+		public static TagSearchTextQuery Create(SearchTextQuery textQuery) {
+			
+			var tagNameQuery = !textQuery.IsEmpty ? textQuery.Query.Replace(' ', '_') : textQuery.Query;
+			return new TagSearchTextQuery(tagNameQuery, textQuery.MatchMode, textQuery.OriginalQuery);
+
+		}
+
+		public TagSearchTextQuery(string query, NameMatchMode matchMode, string originalQuery, string[] words = null) 
+			: base(query, matchMode, originalQuery, words) {}
 
 	}
 

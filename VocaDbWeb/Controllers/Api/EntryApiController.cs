@@ -4,6 +4,7 @@ using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Search;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 
@@ -62,10 +63,17 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets a list of entry names. Ideal for autocomplete boxes.
+		/// </summary>
+		/// <param name="query">Text query.</param>
+		/// <param name="nameMatchMode">Name match mode.</param>
+		/// <param name="maxResults">Maximum number of results.</param>
+		/// <returns>List of album names.</returns>
 		[Route("names")]
-		public string[] GetNames(string query = "", int maxResults = 10) {
+		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) {
 			
-			return otherService.FindNames(query, maxResults);
+			return otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		}
 

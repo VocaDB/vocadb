@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
+using VocaDb.Model.Service.Search;
 using VocaDb.Web.Models;
 
 namespace VocaDb.Web.Controllers
@@ -33,7 +34,7 @@ namespace VocaDb.Web.Controllers
 		[Obsolete("Moved to web api")]
 		public ActionResult FindNames(string term) {
 
-			var result = Services.Other.FindNames(term, 10);
+			var result = Services.Other.FindNames(SearchTextQuery.Create(term), 10);
 
 			return Json(result);
 

@@ -15,6 +15,7 @@ namespace VocaDb.Model.Service.Search {
 
 		protected string[] words;
 		private readonly NameMatchMode matchMode;
+		private readonly string originalQuery;
 		private readonly string query;
 
 		public static SearchTextQuery Empty {
@@ -27,18 +28,18 @@ namespace VocaDb.Model.Service.Search {
 		/// Creates search text query.
 		/// Determines the actual name match mode.
 		/// Parses and caches the words list for words query.
-		/// The query will also be trimmed and cleaned for SQL wildcards.
+		/// If using the 'Auto' name match mode, the query will also be trimmed and cleaned for wildcards (SQL wildcards, asterisks and quotes).
 		/// </summary>
-		/// <param name="query">Text query. Can be null or empty.</param>
+		/// <param name="query">Text query. Can include wildcards. Can be null or empty.</param>
 		/// <param name="selectedMode">Selected name match mode. If 'Auto', the name match mode will be selected automatically.</param>
 		/// <param name="defaultMode">Default name match mode to be used for normal queries, if no special rules apply and no name match mode is specified.</param>
-		/// <returns></returns>
+		/// <returns>Search text query. Cannot be null.</returns>
 		public static SearchTextQuery Create(string query, 
 			NameMatchMode selectedMode = NameMatchMode.Auto, 
 			NameMatchMode defaultMode = NameMatchMode.Words) {
 			
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
-			return new SearchTextQuery(query, selectedMode);
+			var parsedQuery = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
+			return new SearchTextQuery(parsedQuery, selectedMode, query);
 
 		}
 
@@ -52,14 +53,18 @@ namespace VocaDb.Model.Service.Search {
 		/// </summary>
 		/// <param name="query">Text query. Can be null or empty.</param>
 		/// <param name="matchMode">Name match mode. Cannot be 'Auto'. Use the factory method to determine the match mode.</param>
+		/// <param name="originalQuery">Original query without any processing. Can be null or empty.</param>
 		/// <param name="words">List of query words, if any. Can be null.</param>
-		public SearchTextQuery(string query, NameMatchMode matchMode, string[] words = null) {
+		public SearchTextQuery(string query, NameMatchMode matchMode, 
+			string originalQuery,
+			string[] words = null) {
 
 			if (!string.IsNullOrEmpty(query) && matchMode == NameMatchMode.Auto)
 				throw new ArgumentException("'Auto' is not allowed here; specific name match mode is required", "matchMode");
 
 			this.query = query;
 			this.matchMode = matchMode;
+			this.originalQuery = originalQuery;
 			this.words = words;
 
 		}
@@ -89,9 +94,21 @@ namespace VocaDb.Model.Service.Search {
 		}
 
 		/// <summary>
+		/// Original query without any processing.
+		/// Can be null or empty.
+		/// </summary>
+		public string OriginalQuery {
+			get { return originalQuery; }
+		}
+
+		/// <summary>
 		/// Textual filter for entry name.
 		/// Can be null or empty.
 		/// </summary>
+		/// <remarks>
+		/// Usually this field is processed by trimming any whitespace, 
+		/// and by removing any SQL or query wildcards (such as asterisks and quotes).
+		/// </remarks>
 		public string Query {
 			get { return query; }
 		}

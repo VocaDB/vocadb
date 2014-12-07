@@ -353,12 +353,10 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string[] FindNames(string query, int maxResults) {
+		public string[] FindNames(SearchTextQuery textQuery, int maxResults) {
 
-			if (string.IsNullOrWhiteSpace(query))
+			if (textQuery.IsEmpty)
 				return new string[] { };
-
-			var textQuery = SearchTextQuery.Create(query);
 
 			return HandleQuery(session => {
 
@@ -371,7 +369,7 @@ namespace VocaDb.Model.Service {
 					.Take(maxResults)
 					.ToArray();
 
-				return NameHelper.MoveExactNamesToTop(names, query);
+				return NameHelper.MoveExactNamesToTop(names, textQuery.Query);
 
 			});
 

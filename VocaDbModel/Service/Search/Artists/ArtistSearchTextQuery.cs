@@ -9,27 +9,30 @@ namespace VocaDb.Model.Service.Search.Artists {
 			NameMatchMode selectedMode = NameMatchMode.Auto, 
 			NameMatchMode defaultMode = NameMatchMode.Words) {
 			
-			query = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
-			var canonizedName = ArtistHelper.GetCanonizedName(query);
-			return new ArtistSearchTextQuery(query, selectedMode, canonizedName);
+			var parsedQuery = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
+			var canonizedName = ArtistHelper.GetCanonizedName(parsedQuery);
+			return new ArtistSearchTextQuery(canonizedName, selectedMode, query);
 
 		}
 
-		public ArtistSearchTextQuery() {
-			OriginalQuery = string.Empty;
-		}
-
-		public ArtistSearchTextQuery(string query, NameMatchMode matchMode, string canonizedName, string[] words = null) 
-			: base(canonizedName, matchMode, words) {
+		public static ArtistSearchTextQuery Create(SearchTextQuery textQuery) {
 			
-			OriginalQuery = query;
+			var canonizedName = ArtistHelper.GetCanonizedName(textQuery.Query);
+
+			// Can't use the existing words collection here as they are noncanonized
+			return new ArtistSearchTextQuery(canonizedName, textQuery.MatchMode, textQuery.OriginalQuery);
 
 		}
 
-		public string OriginalQuery { get; private set; }
+		public ArtistSearchTextQuery() {}
+
+		public ArtistSearchTextQuery(string canonizedName, NameMatchMode matchMode, string originalQuery, string[] words = null) 
+			: base(canonizedName, matchMode, originalQuery, words) {
+			
+		}
 
 		public ArtistSearchTextQuery OverrideMatchMode(NameMatchMode? matchMode) {			
-			return matchMode.HasValue ? new ArtistSearchTextQuery(OriginalQuery, matchMode.Value, Query, words) : this;
+			return matchMode.HasValue ? new ArtistSearchTextQuery(Query, matchMode.Value, OriginalQuery, words) : this;
 		}
 
 	}

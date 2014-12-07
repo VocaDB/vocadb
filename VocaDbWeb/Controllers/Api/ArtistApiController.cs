@@ -150,10 +150,17 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets a list of artist names. Ideal for autocomplete boxes.
+		/// </summary>
+		/// <param name="query">Text query.</param>
+		/// <param name="nameMatchMode">Name match mode.</param>
+		/// <param name="maxResults">Maximum number of results.</param>
+		/// <returns>List of artist names.</returns>
 		[Route("names")]
-		public string[] GetNames(string query = "", int maxResults = 15) {
+		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) {
 			
-			return service.FindNames(query, maxResults);
+			return service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		}
 
