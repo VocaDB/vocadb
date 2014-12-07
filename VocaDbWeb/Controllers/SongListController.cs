@@ -82,7 +82,7 @@ namespace VocaDb.Web.Controllers
 
 			Service.DeleteSongList(id);
 
-			return RedirectToAction("Profile", "User", new { id = LoginManager.LoggedUser.Name });
+			return RedirectToAction("Profile", "User", new { id = PermissionContext.LoggedUser.Name });
 
 		}
 

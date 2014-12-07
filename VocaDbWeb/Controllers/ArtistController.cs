@@ -198,7 +198,7 @@ namespace VocaDb.Web.Controllers
 
 		public PartialViewResult TagSelections(int artistId = invalidId) {
 
-			var contract = Service.GetTagSelections(artistId, LoginManager.LoggedUserId);
+			var contract = Service.GetTagSelections(artistId, PermissionContext.LoggedUserId);
 
 			return PartialView(contract);
 
@@ -351,7 +351,7 @@ namespace VocaDb.Web.Controllers
 				return View("Edit", new ArtistEditViewModel(Service.GetArtist(model.Id), PermissionContext, model));
 			}
 
-			queries.Update(model, pictureData, LoginManager);
+			queries.Update(model, pictureData, PermissionContext);
 
 			return RedirectToAction("Details", new { id = model.Id });
 

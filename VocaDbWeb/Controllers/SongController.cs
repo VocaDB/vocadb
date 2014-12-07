@@ -148,7 +148,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var song = Service.GetSong(id, s => new SongWithComponentsContract(s, LoginManager.LanguagePreference, includeArtists));
+			var song = Service.GetSong(id, s => new SongWithComponentsContract(s, PermissionContext.LanguagePreference, includeArtists));
 			return new JsonNetResult { Data = song };
 
 		}
@@ -473,7 +473,7 @@ namespace VocaDb.Web.Controllers
 
 		public PartialViewResult TagSelections(int songId = invalidId) {
 
-			var contract = Service.GetTagSelections(songId, LoginManager.LoggedUserId);
+			var contract = Service.GetTagSelections(songId, PermissionContext.LoggedUserId);
 
 			return PartialView(contract);
 

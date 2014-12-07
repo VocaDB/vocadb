@@ -24,7 +24,7 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			if (string.IsNullOrEmpty(Request.Params[Model.Service.Security.LoginManager.LangParamName]))
-				LoginManager.OverrideLanguage(ContentLanguagePreference.Default);
+				PermissionContext.OverrideLanguage(ContentLanguagePreference.Default);
 
 			var song = Services.Songs.GetSongWithPVAndVote(songId);
 

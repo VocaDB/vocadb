@@ -46,6 +46,8 @@ namespace VocaDb.Model.Domain.Security {
 		/// <param name="languagePreference">Language preference.</param>
 		void OverrideLanguage(ContentLanguagePreference languagePreference);
 
+		void SetLanguagePreferenceCookie(ContentLanguagePreference languagePreference);
+
 		void VerifyLogin();
 
 		void VerifyPermission(PermissionToken flag);

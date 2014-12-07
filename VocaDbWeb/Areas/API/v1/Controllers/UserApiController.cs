@@ -36,11 +36,11 @@ namespace VocaDb.Web.API.v1.Controllers {
 
 		public ActionResult PostRating(int songId, SongVoteRating rating, string callback) {
 
-			if (!LoginManager.IsLoggedIn) {
+			if (!PermissionContext.IsLoggedIn) {
 				return HttpStatusCodeResult(HttpStatusCode.Forbidden, "Error: Must be logged in.");				
 			}
 
-			Service.UpdateSongRating(LoginManager.LoggedUserId, songId, rating);
+			Service.UpdateSongRating(PermissionContext.LoggedUserId, songId, rating);
 			return Object("OK", DataFormat.Auto, callback);
 
 		}

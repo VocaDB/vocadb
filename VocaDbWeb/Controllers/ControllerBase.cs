@@ -12,7 +12,6 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Service.Security;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model;
 using VocaDb.Model.Service;
@@ -40,15 +39,11 @@ namespace VocaDb.Web.Controllers {
 		protected int LoggedUserId {
 			get {
 
-				LoginManager.VerifyLogin();
+				PermissionContext.VerifyLogin();
 
-				return LoginManager.LoggedUser.Id;
+				return PermissionContext.LoggedUser.Id;
 
 			}
-		}
-
-		protected LoginManager LoginManager {
-			get { return MvcApplication.LoginManager; }
 		}
 
 		protected PagePropertiesData PageProperties {
@@ -58,7 +53,7 @@ namespace VocaDb.Web.Controllers {
 		}
 
 		protected IUserPermissionContext PermissionContext {
-			get { return LoginManager; }
+			get { return MvcApplication.LoginManager; }
 		}
 
 		protected ServiceModel Services {

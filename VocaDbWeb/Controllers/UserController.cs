@@ -46,7 +46,7 @@ namespace VocaDb.Web.Controllers
 
 		private UserForMySettingsContract GetUserForMySettings() {
 
-			return Service.GetUserForMySettings(LoginManager.LoggedUser.Id);
+			return Service.GetUserForMySettings(PermissionContext.LoggedUser.Id);
 
 		}
 
@@ -467,7 +467,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Clear(int id) {
 			
-			LoginManager.VerifyPermission(PermissionToken.DisableUsers);
+			PermissionContext.VerifyPermission(PermissionToken.DisableUsers);
 
 			Data.ClearRatings(id);
 			TempData.SetSuccessMessage("User ratings cleared");
@@ -605,7 +605,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Edit(int id)
         {
 
-			LoginManager.VerifyPermission(PermissionToken.ManageUserPermissions);
+			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
         	var user = Service.GetUserWithPermissions(id);
             return View(new UserEdit(user));
@@ -618,7 +618,7 @@ namespace VocaDb.Web.Controllers
         [HttpPost]
 		public ActionResult Edit(UserEdit model, IEnumerable<PermissionFlagEntry> permissions) {
 
-			LoginManager.VerifyPermission(PermissionToken.ManageUserPermissions);
+			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 			if (permissions != null)
 				model.Permissions = permissions.ToArray();
@@ -654,7 +654,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Messages(int? messageId, string receiverName) {
 
-			var user = LoginManager.LoggedUser;
+			var user = PermissionContext.LoggedUser;
 			RestoreErrorsFromTempData();
 			var model = new Messages(user, messageId, receiverName);
 
@@ -673,7 +673,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult MySettings() {
 
-			LoginManager.VerifyPermission(PermissionToken.EditProfile);			
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);			
 
 			var user = GetUserForMySettings();
 
@@ -684,7 +684,7 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public ActionResult MySettings(MySettingsModel model) {
 
-			var user = LoginManager.LoggedUser;
+			var user = PermissionContext.LoggedUser;
 
 			if (user == null || user.Id != model.Id)
 				return new HttpStatusCodeResult(403);
@@ -695,7 +695,7 @@ namespace VocaDb.Web.Controllers
 			try {
 				var newUser = Data.UpdateUserSettings(model.ToContract());
 				LoginManager.SetLoggedUser(newUser);
-				LoginManager.SetLanguagePreferenceCookie(model.DefaultLanguageSelection);
+				PermissionContext.SetLanguagePreferenceCookie(model.DefaultLanguageSelection);
 			} catch (InvalidPasswordException x) {
 				ModelState.AddModelError("OldPass", x.Message);
 				return View(model);

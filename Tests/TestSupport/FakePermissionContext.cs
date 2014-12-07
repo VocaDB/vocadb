@@ -42,6 +42,11 @@ namespace VocaDb.Tests.TestSupport {
 		}
 
 		public string Name { get; private set; }
+
+		public void SetLanguagePreferenceCookie(ContentLanguagePreference languagePreference) {
+			throw new System.NotImplementedException();
+		}
+
 		public UserGroupId UserGroupId { get; private set; }
 
 		public void OverrideLanguage(ContentLanguagePreference languagePreference) {

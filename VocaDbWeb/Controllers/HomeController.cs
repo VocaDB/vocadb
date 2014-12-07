@@ -95,9 +95,9 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult SetContentPreferenceCookie(ContentLanguagePreference languagePreference) {
 
-			LoginManager.SetLanguagePreferenceCookie(languagePreference);
+			PermissionContext.SetLanguagePreferenceCookie(languagePreference);
 
-			if (LoginManager.HasPermission(PermissionToken.EditProfile))
+			if (PermissionContext.HasPermission(PermissionToken.EditProfile))
 				Services.Users.UpdateContentLanguagePreference(languagePreference);
 
 			return Content(string.Empty);

@@ -135,7 +135,7 @@ namespace VocaDb.Web.Controllers
 
 			if (result.EventId != 0) {
 
-				if (result.EventName != query && LoginManager.HasPermission(PermissionToken.ManageDatabase))
+				if (result.EventName != query && PermissionContext.HasPermission(PermissionToken.ManageDatabase))
 					Services.Albums.UpdateAllReleaseEventNames(query, result.EventName);
 
 				return RedirectToAction("Details", new { id = result.EventId });

@@ -145,8 +145,8 @@ namespace VocaDb.Web.Controllers
 
 			if (setFormatString) {
 				userQueries.SetAlbumFormatString(formatString);
-			} else if (string.IsNullOrEmpty(formatString) && LoginManager.IsLoggedIn) {
-				formatString = LoginManager.LoggedUser.AlbumFormatString;
+			} else if (string.IsNullOrEmpty(formatString) && PermissionContext.IsLoggedIn) {
+				formatString = PermissionContext.LoggedUser.AlbumFormatString;
 			}
 
 			if (string.IsNullOrEmpty(formatString))
@@ -403,7 +403,7 @@ namespace VocaDb.Web.Controllers
 
 		public PartialViewResult TagSelections(int albumId = invalidId) {
 
-			var contract = Service.GetTagSelections(albumId, LoginManager.LoggedUserId);
+			var contract = Service.GetTagSelections(albumId, PermissionContext.LoggedUserId);
 
 			return PartialView(contract);
 

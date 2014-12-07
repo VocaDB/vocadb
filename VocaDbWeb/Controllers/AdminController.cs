@@ -27,7 +27,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult AuditLogEntries(ViewAuditLogModel model, int start = 0) {
 
-			LoginManager.VerifyPermission(PermissionToken.ViewAuditLog);
+			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
 			var excludeUsers = (!string.IsNullOrEmpty(model.ExcludeUsers) 
 				? model.ExcludeUsers.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(u => u.Trim()).ToArray() 
@@ -44,7 +44,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult BannedIPs() {
 
-			LoginManager.VerifyPermission(PermissionToken.ManageIPRules);
+			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			var hosts = MvcApplication.BannedIPs.ToArray();
 			return Json(hosts);
@@ -54,7 +54,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult CheckSFS(string ip) {
 
-			LoginManager.VerifyPermission(PermissionToken.ManageUserPermissions);
+			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 			var result = new StopForumSpamClient().CallApi(ip);
 
@@ -98,7 +98,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult DeleteEntryReport(int id) {
 
-			LoginManager.VerifyPermission(PermissionToken.ManageEntryReports);
+			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
 			Service.DeleteEntryReports(new[] { id });
 			TempData.SetStatusMessage("Reports deleted");
@@ -124,7 +124,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Index()
         {
 
-			LoginManager.VerifyPermission(PermissionToken.AccessManageMenu);
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
             return View();
 
@@ -143,7 +143,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult ManageIPRules() {
 
-			LoginManager.VerifyPermission(PermissionToken.ManageIPRules);
+			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			var rules = Services.Other.GetIPRules();
 			return View(rules);
@@ -154,7 +154,7 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public ActionResult ManageIPRules([FromJson] IPRule[] rules) {
 
-			LoginManager.VerifyPermission(PermissionToken.ManageIPRules);
+			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			Service.UpdateIPRules(rules);
 			MvcApplication.IPRules.Reset();
@@ -261,7 +261,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult ViewAuditLog(ViewAuditLogModel model) {
 
-			LoginManager.VerifyPermission(PermissionToken.ViewAuditLog);
+			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
 			return View(model ?? new ViewAuditLogModel());
 
@@ -270,7 +270,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult ViewEntryReports() {
 
-			LoginManager.VerifyPermission(PermissionToken.ManageEntryReports);
+			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
 			var reports = Service.GetEntryReports();
 
@@ -281,7 +281,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult ViewSysLog() {
 
-			LoginManager.VerifyPermission(PermissionToken.ViewAuditLog);
+			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
 			var logContents = new LogFileReader().GetLatestLogFileContents();
 
