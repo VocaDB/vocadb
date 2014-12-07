@@ -7,9 +7,11 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Helpers;
+using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Album {
 
+	[PropertyModelBinder]
 	public class Create {
 
 		public Create() {
@@ -18,6 +20,7 @@ namespace VocaDb.Web.Models.Album {
 		}
 
 		[Display(ResourceType = typeof(SharedStrings), Name = "Artists")]
+		[FromJson]
 		public IList<ArtistContract> Artists { get; set; }
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "DiscType")]

@@ -91,15 +91,6 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public PartialViewResult CreateArtistContractRow(int artistId) {
-
-			var artist = Service.GetArtist(artistId);
-
-			return PartialView("ArtistContractRow", artist);
-
-		}
-
-		[HttpPost]
 		public PartialViewResult CreateComment(int entryId, string message) {
 
 			var comment = queries.CreateComment(entryId, message);

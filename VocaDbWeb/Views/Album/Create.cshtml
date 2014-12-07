@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers;
 @using R = ViewRes.Album;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Album.Create>
 
@@ -27,19 +28,19 @@
 				<table><tr><td class="formLabel">				
 				@Html.LabelFor(m => m.NameOriginal)
 				</td><td>
-				@Html.TextBoxFor(m => m.NameOriginal, new { id = "nameOriginal", @class = "nameField span12", maxlength = 255, size = 40 })
+					 @Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr>
 
 				<tr><td class="formLabel">
 				@Html.LabelFor(m => m.NameRomaji)
 				</td><td>
-				@Html.TextBoxFor(m => m.NameRomaji, new { id = "nameRomaji", @class = "nameField span12", maxlength = 255, size = 40 })
+					 @Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameRomaji, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr>
 					
 				<tr><td class="formLabel">
 				@Html.LabelFor(m => m.NameEnglish)
 				</td><td>
-				@Html.TextBoxFor(m => m.NameEnglish, new { id = "nameEnglish", @class = "nameField span12", maxlength = 255, size = 40 })
+				 	@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameEnglish, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr></table>
 			</div>
 			
@@ -59,16 +60,20 @@
 			<div class="editor-field">
 				@Html.ValidationMessage("Artists")
 				<table>
-					<tbody id="artistsTableBody">
-					@if (Model != null && Model.Artists != null) {
-						foreach (var artist in Model.Artists) {
-							Html.RenderPartial("ArtistContractRow", artist);
-						}
-					}
+					<tbody data-bind="foreach: artists">
+						<tr>
+							<td>
+								<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, text: name, artistToolTip: id"></a>
+							</td>
+							<td>
+								<a data-bind="click: $parent.removeArtist" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 				<br />
-				<input type="text" id="artistAddName" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8" />
+				<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8" />
+				@Html.HiddenForKnockout(m => m.Artists, "value: ko.toJSON(artists)")
 			</div>
 			
 			<br />
@@ -85,8 +90,8 @@
 				<p>@ViewRes.EntryCreateStrings.NoArtistsToName</p>
 				<p>@ViewRes.EntryCreateStrings.NameHelp</p>				
 			</div>
-			<div id="duplicateEntryWarning" style="display:none">
-			</div>
+			
+			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
 		</div>
 		
 	</div>
@@ -94,14 +99,19 @@
 </form>
 
 @section BodyScripts {
-    <script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Album/AlbumCreateViewModel.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/Album/Create.js")"></script>
+	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Album/Create")
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            initPage();
-            ko.applyBindings(new vdb.viewModels.AlbumCreateViewModel());
+		$(function () {
+
+        	var urlMapper = new vdb.UrlMapper('@RootPath');
+        	var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+        	var albumRepo = repoFactory.albumRepository();
+        	var artistRepo = repoFactory.artistRepository();
+
+        	ko.applyBindings(new vdb.viewModels.AlbumCreateViewModel(albumRepo, artistRepo));
+
         });
 
-    </script>
+</script>
 }

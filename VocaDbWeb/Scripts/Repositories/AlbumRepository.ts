@@ -23,6 +23,13 @@ module vdb.repositories {
 
 		}
 
+		public findDuplicate = (params, callback: (result: dc.DuplicateEntryResultContract[]) => void) => {
+
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/Album/FindDuplicate");
+			$.getJSON(url, params, callback);
+
+		};
+
 		public getForEdit = (id: number, callback: (result: dc.albums.AlbumForEditContract) => void) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + id + "/for-edit");

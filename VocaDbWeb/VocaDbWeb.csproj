@@ -1464,7 +1464,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="robots.txt" />
-    <Content Include="Scripts\Album\Create.js" />
     <Content Include="Scripts\Album\Edit.js" />
     <Content Include="Scripts\Album\Details.js" />
     <Content Include="Scripts\Artist\Details.js" />
@@ -2309,7 +2308,6 @@
     <Content Include="Views\MikuDbAlbum\PrepareForImport.cshtml" />
     <Content Include="Views\MikuDbAlbum\InspectedAlbumRow.cshtml" />
     <Content Include="Views\Song\Create.cshtml" />
-    <Content Include="Views\Shared\ArtistContractRow.cshtml" />
     <Content Include="Views\Song\Merge.cshtml" />
     <Content Include="Views\Song\Versions.cshtml" />
     <Content Include="Views\Album\Versions.cshtml" />

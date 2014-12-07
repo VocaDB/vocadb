@@ -11,7 +11,6 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code.Exceptions;
@@ -22,6 +21,7 @@ using System.Drawing;
 using VocaDb.Model.Helpers;
 using VocaDb.Web.Models.Album;
 using VocaDb.Web.Models.Shared;
+using VocaDb.Model.DataContracts.UseCases;
 
 namespace VocaDb.Web.Controllers
 {
@@ -81,16 +81,12 @@ namespace VocaDb.Web.Controllers
 
         }
 
-		[HttpPost]
 		public ActionResult FindDuplicate(string term1, string term2, string term3) {
 
 			var result = Service.FindDuplicates(new[] { term1, term2, term3 });
+			var contracts = result.Select(f => new DuplicateEntryResultContract<AlbumMatchProperty>(f, AlbumMatchProperty.Title)).ToArray();
 
-			if (result.Any()) {
-				return PartialView("DuplicateEntryMessage", result);
-			} else {
-				return Content("Ok");
-			}
+			return LowercaseJson(contracts);
 
 		}
 
@@ -454,4 +450,11 @@ namespace VocaDb.Web.Controllers
 		}
 
     }
+
+	public enum AlbumMatchProperty {
+
+		Title,
+
+	}
+
 }
