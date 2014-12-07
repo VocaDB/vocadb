@@ -122,13 +122,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		[Obsolete("Use web API")]
-		public ActionResult FindNames(string term) {
-
-			return Json(Service.FindNames(term, 15));
-
-		}
-
         [Obsolete]
 		public ActionResult Index(IndexRouteParams routeParams) {
 

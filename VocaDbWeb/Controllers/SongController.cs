@@ -124,12 +124,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult FindNames(string term) {
-
-			return Json(Service.FindNames(term, 15));
-
-		}
-
 		public ActionResult SongListsForSong(int songId = invalidId) {
 
 			if (songId == invalidId)

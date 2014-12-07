@@ -29,7 +29,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		[Obsolete]
+		// Might still be used by some clients with opensearch
+		[Obsolete("Moved to web api")]
 		public ActionResult FindNames(string term) {
 
 			var result = Services.Other.FindNames(term, 10);
