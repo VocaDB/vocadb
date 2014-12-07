@@ -2,7 +2,6 @@
 using System.Net;
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -10,7 +9,6 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
-using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Controllers;
 
 namespace VocaDb.Web.API.v1.Controllers
@@ -81,20 +79,6 @@ namespace VocaDb.Web.API.v1.Controllers
 			var song = Service.GetSongWithMergeRecord(id, (s, m) => new SongForApiContract(s, m, lang, includeAlbums, includeArtists, includeNames, includePVs, includeTags, true, includeWebLinks));
 
 			return Object(song, format, callback);
-
-		}
-
-		public ActionResult ParsePVUrl(string pvUrl, string callback, DataFormat format = DataFormat.Auto) {
-
-			var result = VideoServiceHelper.ParseByUrl(pvUrl, true, LoginManager);
-
-			if (!result.IsOk) {
-				return Json(new GenericResponse<string>(false, result.Exception.Message));
-			}
-
-			var contract = new PVContract(result, PVType.Original);
-
-			return Object(contract, format, callback);
 
 		}
 

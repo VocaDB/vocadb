@@ -69,20 +69,6 @@ namespace VocaDb.Web.API.v1.Controllers {
 
 		}
 
-		public ActionResult Versions(DataFormat format = DataFormat.Auto) {
-
-			var versions = queries
-				.HandleQuery(ctx => ctx.Query()
-					.Where(a => !a.Deleted)
-					.Select(a => new { a.Id, a.Version })
-					.ToArray()
-					.Select(v => new EntryIdAndVersionContract(v.Id, v.Version))
-					.ToArray());
-
-			return ObjectLowercase(versions, format);
-
-		}
-
 	}
 
 }

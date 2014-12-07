@@ -646,8 +646,6 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var msg = messageQueries.Get(messageId, null);
-			//return PartialView("Message", messageQueries.Get(messageId, new GravatarUserIconFactory(20)));
-			//return LowercaseJson(msg);
 			var body = MarkdownHelper.TranformMarkdown(msg.Body);
 			return Content(body);
 
