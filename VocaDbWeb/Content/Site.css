@@ -1,7 +1,7 @@
 body {
 	font-size: 80%;
 	font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
-	background: url(/Content/miku3.jpg) top left no-repeat fixed #001155;
+	background: url(//static.vocadb.net/img/miku3.jpg) top left no-repeat fixed #001155;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	-webkit-background-size: cover;
