@@ -29,7 +29,12 @@ ko.bindingHandlers.artistAutoComplete = {
 
 		}
 
-		var queryParams = { nameMatchMode: 'Auto', lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference], fields: 'AdditionalNames' };
+		var queryParams = {
+			nameMatchMode: 'Auto',
+			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			fields: 'AdditionalNames',
+			preferAccurateMatches: true
+		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 

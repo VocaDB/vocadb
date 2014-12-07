@@ -90,6 +90,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Sort rule (optional, defaults to Name). 
 		/// Possible values are None, Name, ReleaseDate, ReleaseDateWithNulls, AdditionDate, RatingAverage, RatingTotal, NameThenReleaseDate.
 		/// </param>
+		/// <param name="preferAccurateMatches">
+		/// Whether the search should prefer accurate matches. 
+		/// If this is true, entries that match by prefix will be moved first, instead of being sorted alphabetically.
+		/// Requires a text query. Does not support pagination.
+		/// This is mostly useful for autocomplete boxes.
+		/// </param>
 		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Exact).</param>
 		/// <param name="fields">
 		/// Optional fields (optional). Possible values are artists, names, pvs, tags, webLinks.
@@ -111,13 +117,14 @@ namespace VocaDb.Web.Controllers.Api {
 			int maxResults = defaultMax,
 			bool getTotalCount = false, 
 			AlbumSortRule? sort = null,
+			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact, 
 			AlbumOptionalFields fields = AlbumOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort ?? AlbumSortRule.Name) {
+			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches) {
 				Tag = tag,
 				ArtistId = artistId ?? 0,
 				ArtistParticipationStatus = artistParticipationStatus,

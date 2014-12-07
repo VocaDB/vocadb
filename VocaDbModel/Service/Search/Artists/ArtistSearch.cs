@@ -49,11 +49,11 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		public PartialFindResult<Artist> Find(ArtistQueryParams queryParams) {
 
-			var isMoveToTopQuery = 	(queryParams.Common.MoveExactToTop 
+			var isMoveToTopQuery = (queryParams.Common.MoveExactToTop 
 				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith 
-				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact 
+				&& !queryParams.Common.TextQuery.IsExact
 				&& queryParams.Paging.Start == 0
-				&& !string.IsNullOrEmpty(queryParams.Common.Query));
+				&& !queryParams.Common.TextQuery.IsEmpty);
 
 			if (isMoveToTopQuery) {
 				return GetArtistsMoveExactToTop(queryParams);

@@ -95,6 +95,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="sort">Sort rule (optional, defaults to Name). Possible values are None, Name, AdditionDate, AdditionDateAsc.</param>
+		/// <param name="preferAccurateMatches">
+		/// Whether the search should prefer accurate matches. 
+		/// If this is true, entries that match by prefix will be moved first, instead of being sorted alphabetically.
+		/// Requires a text query. Does not support pagination.
+		/// This is mostly useful for autocomplete boxes.
+		/// </param>
 		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Exact).</param>
 		/// <param name="fields">List of optional fields (optional). Possible values are Description, Groups, Members, Names, Tags, WebLinks.</param>
 		/// <param name="lang">Content language preference (optional).</param>
@@ -109,6 +115,7 @@ namespace VocaDb.Web.Controllers.Api {
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			ArtistSortRule sort = ArtistSortRule.Name,
+			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
@@ -116,7 +123,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 			var types = ArtistHelper.GetArtistTypesFromFlags(artistTypes);
 
-			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false) {
+			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, preferAccurateMatches) {
 				Tag = tag,
 				UserFollowerId = followedByUserId ?? 0
 			};

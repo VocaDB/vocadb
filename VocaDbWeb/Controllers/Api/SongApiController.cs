@@ -93,6 +93,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="sort">Sort rule (optional, defaults to Name). Possible values are None, Name, AdditionDate, FavoritedTimes, RatingScore.</param>
+		/// <param name="preferAccurateMatches">
+		/// Whether the search should prefer accurate matches. 
+		/// If this is true, entries that match by prefix will be moved first, instead of being sorted alphabetically.
+		/// Requires a text query. Does not support pagination.
+		/// This is mostly useful for autocomplete boxes.
+		/// </param>
 		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Exact).</param>
 		/// <param name="fields">
 		/// List of optional fields (optional). Possible values are Albums, Artists, Names, PVs, Tags, ThumbUrl, WebLinks.
@@ -115,6 +121,7 @@ namespace VocaDb.Web.Controllers.Api {
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule sort = SongSortRule.Name,
+			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			SongOptionalFields fields = SongOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
@@ -122,7 +129,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = songTypes.ToIndividualSelections(true).ToArray();
 
-			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, false, null) {
+			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, preferAccurateMatches, null) {
 				Tag = tag, 
 				OnlyWithPVs = onlyWithPvs,
 				ArtistId = artistId ?? 0,		

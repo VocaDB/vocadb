@@ -29,7 +29,11 @@ ko.bindingHandlers.songAutoComplete = {
 
 		}
 
-		var queryParams = { nameMatchMode: 'Auto', lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference] };
+		var queryParams = {
+			nameMatchMode: 'Auto',
+			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			preferAccurateMatches: true
+		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 

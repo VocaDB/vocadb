@@ -43,7 +43,12 @@ function initPage() {
 			createOptionFirstRow: function (item) { return item.name + " (" + item.artistType + ")"; },
 			createOptionSecondRow: function (item) { return item.additionalNames; },
 			height: 300,
-			extraQueryParams: { nameMatchMode: 'Auto', lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference], fields: 'AdditionalNames' },
+			extraQueryParams: {
+				nameMatchMode: 'Auto',
+				lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+				fields: 'AdditionalNames',
+				preferAccurateMatches: true
+			},
 			termParamName: 'query',
 			method: 'GET'
 		});

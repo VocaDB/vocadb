@@ -53,9 +53,6 @@ $(() => {
 function entryFindCallback(response: (items: string[]) => void, results: string[]) {
 
 	response(results);
-	/*response($.map(results, function (item) {
-		return item;
-	}));*/
 
 }
 
