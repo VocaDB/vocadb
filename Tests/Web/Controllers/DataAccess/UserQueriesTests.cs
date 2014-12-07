@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
@@ -48,7 +49,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		private PartialFindResult<UserContract> CallGetUsers(UserGroupId groupId = UserGroupId.Nothing, string name = null, bool disabled = false, bool verifiedArtists = false, UserSortRule sortRule = UserSortRule.Name, PagingProperties paging = null) {
-			return data.GetUsers(groupId, name, disabled, verifiedArtists, sortRule, paging ?? new PagingProperties(0, 10, true));
+			return data.GetUsers(SearchTextQuery.Create(name), groupId, disabled, verifiedArtists, sortRule, paging ?? new PagingProperties(0, 10, true));
 		}
 
 		private User GetUserFromRepo(string username) {

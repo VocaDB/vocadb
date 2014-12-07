@@ -625,12 +625,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public string[] FindNames(string query, NameMatchMode nameMatchMode, int maxResults) {
+		public string[] FindNames(SearchTextQuery textQuery, int maxResults) {
 
-			if (string.IsNullOrWhiteSpace(query))
+			if (textQuery.IsEmpty)
 				return new string[] { };
-
-			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			return HandleQuery(session => {
 
@@ -645,12 +643,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			});
 
-		}
-
-		public PartialFindResult<AlbumForUserContract> GetAlbumCollection(AlbumCollectionQueryParams queryParams) {
-			return GetAlbumCollection(queryParams, (albumForUser, shouldShowCollectionStatus) => new AlbumForUserContract(albumForUser, PermissionContext.LanguagePreference) {
-				ShouldShowCollectionStatus = shouldShowCollectionStatus
-			});
 		}
 
 		public PartialFindResult<T> GetAlbumCollection<T>(AlbumCollectionQueryParams queryParams, Func<AlbumForUser, bool, T> fac) {
@@ -895,12 +887,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public PartialFindResult<UserContract> GetUsers(UserGroupId groupId, string name, bool disabled, bool verifiedArtists, UserSortRule sortRule, PagingProperties paging) {
+		public PartialFindResult<UserContract> GetUsers(SearchTextQuery textQuery, UserGroupId groupId, bool disabled, bool verifiedArtists, UserSortRule sortRule, PagingProperties paging) {
 
 			return repository.HandleQuery(ctx => {
 
 				var usersQuery = ctx.Query()
-					.WhereHasName(SearchTextQuery.Create(name));
+					.WhereHasName(textQuery);
 
 				if (groupId != UserGroupId.Nothing) {
 					usersQuery = usersQuery.Where(u => u.GroupId == groupId);

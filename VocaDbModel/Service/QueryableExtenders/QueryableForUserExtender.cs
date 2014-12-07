@@ -15,6 +15,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case NameMatchMode.StartsWith:
 					return query.Where(u => u.Name.StartsWith(textQuery.Query));
 				case NameMatchMode.Partial:
+				case NameMatchMode.Words: // Words search doesn't really make sense for usernames, so using partial matching
 					return query.Where(u => u.Name.Contains(textQuery.Query));
 				case NameMatchMode.Exact:
 					return query.Where(u => u.Name == textQuery.Query);

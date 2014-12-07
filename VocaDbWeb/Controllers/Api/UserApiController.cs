@@ -144,7 +144,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("names")]
 		public IEnumerable<string> GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) {
 			
-			return queries.FindNames(query, nameMatchMode, maxResults);
+			return queries.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		}
 

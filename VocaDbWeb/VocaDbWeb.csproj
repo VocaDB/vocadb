@@ -2338,7 +2338,6 @@
     <Content Include="Views\Artist\ViewVersion.cshtml" />
     <Content Include="App_Code\SongHelpers.cshtml" />
     <Content Include="Views\Song\ViewVersion.cshtml" />
-    <Content Include="Views\User\AlbumCollectionPaged.cshtml" />
     <Content Include="Views\Shared\Artists.cshtml" />
     <Content Include="Views\SongList\Edit.cshtml" />
     <Content Include="Views\SongList\Details.cshtml" />

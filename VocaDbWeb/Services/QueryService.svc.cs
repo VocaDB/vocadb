@@ -13,6 +13,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Paging;
@@ -32,11 +33,13 @@ namespace VocaDb.Web.Services {
 		private readonly TagQueries tagQueries;
 		private readonly IUserPermissionContext userPermissionContext;
 		private ServiceModel Services { get; set; }
+		private readonly UserQueries userQueries;
 
-		public QueryService(ServiceModel services, ArtistQueries artistQueries, TagQueries tagQueries, IUserPermissionContext userPermissionContext) {
+		public QueryService(ServiceModel services, ArtistQueries artistQueries, TagQueries tagQueries, UserQueries userQueries, IUserPermissionContext userPermissionContext) {
 			Services = services;
 			this.artistQueries = artistQueries;
 			this.tagQueries = tagQueries;
+			this.userQueries = userQueries;
 			this.userPermissionContext = userPermissionContext;
 		}
 
@@ -178,8 +181,8 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public UserContract GetUserInfo(string name) {
 
-			var users = Services.Users.FindUsersByName(name, NameMatchMode.Exact);
-			return users.FirstOrDefault();
+			var users = userQueries.GetUsers(SearchTextQuery.Create(name, NameMatchMode.Exact), UserGroupId.Nothing, false, false, UserSortRule.Name, new PagingProperties(0, 1, false));
+			return users.Items.FirstOrDefault();
 
 		}
 

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
-using System.Web.SessionState;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth.Messages;
 using Microsoft.Web.Helpers;
@@ -20,7 +19,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.Search.User;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
@@ -83,32 +82,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			if (Request.IsAjaxRequest()) {
-				return AlbumCollectionPaged(routeParams);
-			} else {
-				return View(new AlbumCollection(Service.GetUser(id, true), routeParams));
-			}
-
-		}
-
-		public ActionResult AlbumCollectionPaged(AlbumCollectionRouteParams routeParams) {
-
-			var id = routeParams.id;
-
-			if (id == invalidId)
-				return NoId();
-
-			int pageSize = Math.Min(routeParams.pageSize ?? 50, 200);
-			var pageIndex = (routeParams.page - 1) ?? 0;
-			var queryParams = new AlbumCollectionQueryParams(id, PagingProperties.CreateFromPage(pageIndex, pageSize, routeParams.totalCount == 0)) { 
-				FilterByStatus = routeParams.purchaseStatus != null ? new[] { routeParams.purchaseStatus.Value } : null 
-			};
-			var albums = Data.GetAlbumCollection(queryParams);
-			routeParams.totalCount = (albums.TotalCount != 0 ? albums.TotalCount : routeParams.totalCount);
-			var paged = new PagingData<AlbumForUserContract>(albums.Items.ToPagedList(pageIndex, pageSize, routeParams.totalCount), id, "AlbumCollection", "ui-tabs-1", addTotalCount: true);
-			paged.RouteValues = new RouteValueDictionary(new { routeParams.purchaseStatus, pageSize });
-
-			return PartialView("AlbumCollectionPaged", paged);
+			return View(new AlbumCollection(Service.GetUser(id, true), routeParams));
 
 		}
 
@@ -267,7 +241,7 @@ namespace VocaDb.Web.Controllers
 			var groupId = model.GroupId;
 			var sortRule = sort ?? UserSortRule.RegisterDate;
 
-			var result = Data.GetUsers(groupId, model.Name, model.Disabled, model.VerifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, true));
+			var result = Data.GetUsers(SearchTextQuery.Create(model.Name), groupId, model.Disabled, model.VerifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, true));
 
 			if (page == 1 && result.TotalCount == 1 && result.Items.Length == 1) {
 				return RedirectToAction("Profile", new { id = result.Items[0].Name });
@@ -924,7 +898,7 @@ namespace VocaDb.Web.Controllers
 			UserSortRule sortRule = UserSortRule.RegisterDate, int totalCount = 0, int page = 1) {
 
 			var pageIndex = page - 1;
-			var result = Data.GetUsers(groupId, name, disabled, verifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, false));
+			var result = Data.GetUsers(SearchTextQuery.Create(name), groupId, disabled, verifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, false));
 			var data = new PagingData<UserContract>(result.Items.ToPagedList(pageIndex, usersPerPage, totalCount), null, "Index", "usersList", addTotalCount: true);
 			data.RouteValues = new RouteValueDictionary(new { groupId, sortRule });
 
