@@ -899,14 +899,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			return repository.HandleQuery(ctx => {
 
-				var usersQuery = ctx.Query();
+				var usersQuery = ctx.Query()
+					.WhereHasName(SearchTextQuery.Create(name));
 
 				if (groupId != UserGroupId.Nothing) {
 					usersQuery = usersQuery.Where(u => u.GroupId == groupId);
-				}
-
-				if (!string.IsNullOrWhiteSpace(name)) {
-					usersQuery = usersQuery.Where(u => u.Name.Contains(name));
 				}
 
 				if (!disabled) {
@@ -918,8 +915,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				}
 
 				var users = AddOrder(usersQuery, sortRule)
-					.Skip(paging.Start)
-					.Take(paging.MaxEntries)
+					.Paged(paging)
 					.ToArray()
 					.Select(u => new UserContract(u))
 					.ToArray();

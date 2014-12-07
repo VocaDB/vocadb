@@ -106,6 +106,10 @@ namespace VocaDb.Model.Service.Search {
 			}
 		}
 
+		public override string ToString() {
+			return string.Format("Text filter by '{0}' ({1})", Query, MatchMode);
+		}
+
 	}
 
 }

@@ -100,14 +100,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		[Obsolete]
-		public ActionResult Name(int id) {
-
-			var contract = Service.GetAlbum(id);
-			return Content(contract.Name);
-
-		}
-
 		public ActionResult PopupContent(int id = invalidId) {
 
 			if (id == invalidId)

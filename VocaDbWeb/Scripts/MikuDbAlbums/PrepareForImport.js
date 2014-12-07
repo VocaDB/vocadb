@@ -3,9 +3,9 @@ function initPage() {
 
     function acceptArtistSelection(albumId) {
 
-        $.post("../../Album/Name", { id: albumId }, function (name) {
+        $.get("../../api/albums/" + albumId, { lang: vdb.values.languagePreference }, function (album) {
 
-            $("#mergedAlbumId").append("<option value='" + albumId + "'>" + name + "</option>");
+            $("#mergedAlbumId").append("<option value='" + albumId + "'>" + album.name + "</option>");
             $("#mergedAlbumId").val(albumId);
             $("#updateAlbumBtn").click();
 
