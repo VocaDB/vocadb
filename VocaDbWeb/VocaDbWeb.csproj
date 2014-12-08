@@ -904,7 +904,6 @@
     <Compile Include="Helpers\KnockoutHtmlExtender.cs" />
     <Compile Include="Helpers\Login.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
-    <Compile Include="Helpers\PanelExtensions.cs" />
     <Compile Include="Helpers\PVHelper.cs" />
     <Compile Include="Helpers\RadioButtonHelpers.cs">
       <SubType>Code</SubType>
@@ -1320,6 +1319,9 @@
     <Content Include="Content\Site-teto.css" />
     <Content Include="Content\star.png" />
     <Content Include="Content\star_disabled.png" />
+    <Content Include="Content\Styles\base.css">
+      <DependentUpon>base.less</DependentUpon>
+    </Content>
     <Content Include="Content\Styles\ExtLinks.css">
       <DependentUpon>ExtLinks.less</DependentUpon>
     </Content>
@@ -1549,6 +1551,7 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Styles\Search.less" />
     <Content Include="Content\Styles\songlist.less" />
+    <Content Include="Content\Styles\base.less" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />

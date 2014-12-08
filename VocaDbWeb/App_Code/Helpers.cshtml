@@ -341,20 +341,15 @@
 
 @helper ValidationSymmaryPanel(string message) {
 	if (!ViewData.ModelState.IsValid) {
-		using (Html.BeginErrorPanel()) {
-			<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-			@Html.ValidationSummary(false, message)
-		}
-	}
-}
-
-@helper ValidationSymmaryDiv(string message) {
-	if (!ViewData.ModelState.IsValid) {
-        <div class="alert alert-error">
+		<div class="alert alert-error">
 			<h4>
 				@message
 			</h4>
 			@Html.ValidationSummary(false)
-        </div>
+		</div>
 	}
+}
+
+@helper ValidationSymmaryDiv(string message) {
+	@ValidationSymmaryPanel(message)
 }

@@ -64,11 +64,9 @@
 
 @section Toolbar {
 @if (Model.OriginalPVs.Any() || Model.OtherPVs.Any()) {
-	using (Html.BeginPanel()) {
-		<div id="pvPlayer">
+	<div id="pvPlayer" class="song-pv-player">
 		@Helpers.EmbedPV(Model.PrimaryPV)
-		</div>
-	}
+	</div>
 }
 
 @if (Login.Manager.IsLoggedIn) {
