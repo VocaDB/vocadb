@@ -24,12 +24,6 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Web.Models {
 
-	public class SongList {
-
-		public string Filter { get; set; }
-
-	}
-
 	public class SongDetails {
 
 		private string GetNicoMimiUrl(SongDetailsContract contract) {
@@ -243,53 +237,6 @@ namespace VocaDb.Web.Models {
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongVoteRating UserRating { get; set; }
-
-	}
-
-	public class LyricsForSongModel {
-		
-		public LyricsForSongModel() {
-			AllLanguages = EnumVal<ContentLanguageSelection>.Values;
-		}
-
-		public LyricsForSongModel(LyricsForSongContract contract)
-			: this() {
-			
-			ParamIs.NotNull(() => contract);
-
-			Id = contract.Id;
-			Language = contract.Language;
-			Source = contract.Source;
-			Value = contract.Value;
-
-		}
-
-		public ContentLanguageSelection[] AllLanguages { get; set; }
-
-		public int Id { get; set; }
-
-		[Required]
-		[Display(Name = "Language")]
-		public ContentLanguageSelection Language { get; set; }
-
-		[Display(Name = "Source")]
-		[StringLength(255)]
-		public string Source { get; set; }
-
-		[Required]
-		[Display(Name = "Text")]
-		public string Value { get; set; }
-
-		public LyricsForSongContract ToContract() {
-
-			return new LyricsForSongContract {
-				Id = this.Id,
-				Language = this.Language,
-				Source = this.Source ?? string.Empty,
-				Value = this.Value
-			};
-
-		}
 
 	}
 

@@ -30,39 +30,4 @@ namespace VocaDb.Web.Models {
 
 	}
 
-	public class LocalizedStringEdit {
-
-		public LocalizedStringEdit() {
-			Language = ContentLanguageSelection.Unspecified;
-			Value = string.Empty;
-		}
-
-		public LocalizedStringEdit(LocalizedStringWithIdContract contract) {
-
-			ParamIs.NotNull(() => contract);
-
-			Id = contract.Id;
-			Language = contract.Language;
-			Value = contract.Value;
-
-		}
-
-		public int Id { get; set; }
-
-		[Required]
-		[Display(Name = "Language")]
-		public ContentLanguageSelection Language { get; set; }
-
-		[Required]
-		[Display(Name = "Name")]
-		public string Value { get; set; }
-
-		public LocalizedStringWithIdContract ToContract() {
-
-			return new LocalizedStringWithIdContract { Id = this.Id, Language = this.Language, Value = this.Value };
-
-		}
-
-	}
-
 }
