@@ -1,4 +1,7 @@
-﻿.songlist-mode-selection {
+﻿.songlist-playlist {
+  display: inline-block;
+}
+.songlist-mode-selection {
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -11,7 +14,7 @@
   background-color: white;
 }
 .songlist-playlist-player .song-info {
-  margin-left: 3px;
+  margin-left: 4px;
 }
 .songlist-playlist-player .song-info,
 .songlist-playlist-player .song-info:hover,
