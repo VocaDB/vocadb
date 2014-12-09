@@ -227,6 +227,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/ServerSidePagingViewModel.js",
 				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",

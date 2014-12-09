@@ -8,7 +8,7 @@ module vdb.viewModels.pvs {
 
 	export class PVPlayerViewModel {
 		
-		public static autoplayPVServicesString = "SoundCloud, Youtube";
+		public static autoplayPVServicesString = "File, SoundCloud, Youtube";
 
 		constructor(
 			private urlMapper: UrlMapper,
@@ -18,6 +18,7 @@ module vdb.viewModels.pvs {
 			) {
 			
 			this.players = {
+				File: <IPVPlayer>new PVPlayerFile(playerElementId, wrapperElement, this.songFinishedPlayback),
 				Youtube: <IPVPlayer>new PVPlayerYoutube(playerElementId, wrapperElement, this.songFinishedPlayback),
 				SoundCloud: <IPVPlayer>new PVPlayerSoundCloud(playerElementId, wrapperElement, this.songFinishedPlayback)
 			};
@@ -108,7 +109,7 @@ module vdb.viewModels.pvs {
 		}
 
 		public autoplay = ko.observable(false);
-		private autoplayServices = [serv.Youtube, serv.SoundCloud];
+		private autoplayServices = [serv.File, serv.Youtube, serv.SoundCloud];
 		private currentPlayer: IPVPlayer = null;
 
 		private loadPVId = (service: serv, songId: number, callback: (pvId: string) => void) => {
