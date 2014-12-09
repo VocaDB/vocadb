@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/dnkxh6qoqcnxfei5/branch/master?svg=true)](https://ci.appveyor.com/project/riipah/vocadb/branch/master)
+
 [VocaDB](http://vocadb.net) is a Vocaloid Database with translated artists, albums, music videos and more. Our goal is to be the most accurate and complete source of Vocaloid discography and artists.
 
 The software is based on Microsoft ASP.NET MVC 5 (.NET 4.5), jQuery, jQuery UI, Twitter Bootstrap, Knockout, and it uses a SQL database through the NHibernate ORM.
