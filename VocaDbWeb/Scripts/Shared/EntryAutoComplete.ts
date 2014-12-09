@@ -1,6 +1,6 @@
 ﻿module vdb {
 
-	interface EntryAutoCompleteParams<TContract> {
+	export interface EntryAutoCompleteParams<TContract> {
 
 		acceptSelection: (entryId?: number, name?: string, entryType?: string) => void;
 
@@ -26,7 +26,7 @@
 
 	}
 
-	interface AutoCompleteItem<TContract> {
+	export interface AutoCompleteItem<TContract> {
 
 		data?: TContract;
 
