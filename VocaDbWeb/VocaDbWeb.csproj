@@ -1873,6 +1873,7 @@
     <Content Include="Scripts\jqwidgets27\styles\jqx.ui-sunny.css" />
     <TypeScriptCompile Include="Scripts\Helpers\DateTimeHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\HighchartsHelper.ts" />
+    <TypeScriptCompile Include="Scripts\Helpers\HtmlHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\KnockoutHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\PVHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\SongHelper.ts" />
@@ -1926,6 +1927,7 @@
     <TypeScriptCompile Include="Scripts\Shared\EntryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />
+    <TypeScriptCompile Include="Scripts\Tests\Helpers\HtmlHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\typings\highcharts\highcharts.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jqueryui\jqueryui.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />

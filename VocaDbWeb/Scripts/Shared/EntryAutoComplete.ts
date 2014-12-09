@@ -8,21 +8,19 @@
 
 		createNewItem?: string;
 
+		// Creates the content for the first row of the autocomplete item.
+		// HTML is escaped.
 		createOptionFirstRow: (entry: TContract) => string;
 
-		createOptionHtml?: (entry: TContract) => string;
-
+		// Creates the content for the second row of the autocomplete item (optional).
+		// HTML is escaped.
 		createOptionSecondRow: (entry: TContract) => string;
 
 		extraQueryParams: any;
 
 		filter?: (entry: TContract) => boolean;
 
-		height?: number;
-
 		termParamName?: string;
-
-		width?: number;
 
 	}
 
@@ -42,51 +40,21 @@
 
 	export function initEntrySearch<TContract extends vdb.dataContracts.EntryWithTagUsagesContract>(nameBoxElem: HTMLElement, entityName: string, searchUrl: string, params: EntryAutoCompleteParams<TContract>) {
 
-		var w = 400;
-		var h = 350;
-		var createNewItem = null;
-		var createCustomItem = null;
-		var acceptSelection = null;
-		var extraQueryParams = null;
-		var createOptionFirstRow = null;
-		var createOptionSecondRow = null;
-		var createOptionHtml = null;
-		var filter: (entry: TContract) => boolean = null;
+		if (!params)
+			throw Error("params cannot be null");
+
+		var createNewItem = params.createNewItem;
+		var createCustomItem = params.createCustomItem;
+		var acceptSelection = params.acceptSelection;
+		var extraQueryParams = params.extraQueryParams;
+		var createOptionFirstRow = params.createOptionFirstRow;
+		var createOptionSecondRow = params.createOptionSecondRow;
+		var filter = params.filter;
+		var termParamName = params.termParamName || 'query';
 		var method = 'GET';
-		var termParamName = 'query';
-
-		if (params) {
-
-			if (params.width)
-				w = params.width;
-
-			if (params.height)
-				h = params.height;
-
-			if (params.createNewItem)
-				createNewItem = params.createNewItem;
-
-			if (params.acceptSelection != null)
-				acceptSelection = params.acceptSelection;
-
-			if (params.extraQueryParams != null)
-				extraQueryParams = params.extraQueryParams;
-
-			if (params.filter != null)
-				filter = params.filter;
-
-			if (params.termParamName)
-				termParamName = params.termParamName;
-
-			createOptionFirstRow = params.createOptionFirstRow;
-			createOptionSecondRow = params.createOptionSecondRow;
-			createOptionHtml = params.createOptionHtml;
-			createCustomItem = params.createCustomItem;
-
-		}
 
 		function bold(text: string, term: string) {
-			return vdb.functions.boldCaseInsensitive(text, term);
+			return vdb.helpers.HtmlHelper.boldAndHtmlEncode(text, term);
 		}
 
 		function createHtml(item: AutoCompleteItem<TContract>) {
@@ -97,17 +65,15 @@
 				return "<a><div>" + item.label + "</div></a>";
 			}
 
-			var html = null;
+			var html: string = null;
 			var term = item.term;
-			var firstRow;
+			var firstRow: string;
 
-			if (createOptionHtml) {
-				html = createOptionHtml(data);
-			} else if (createOptionFirstRow && createOptionSecondRow) {
+			if (createOptionFirstRow && createOptionSecondRow) {
 				firstRow = createOptionFirstRow(data);
 				var secondRow = createOptionSecondRow(data);
 				if (firstRow)
-					html = "<a><div>" + bold(firstRow, term) + "</div><div><small class='extraInfo'>" + secondRow + "</small></div></a>";
+					html = "<a><div>" + bold(firstRow, term) + "</div><div><small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";
 			} else if (createOptionFirstRow) {
 				firstRow = createOptionFirstRow(data);
 				if (firstRow)

@@ -38,19 +38,19 @@ ko.bindingHandlers.artistAutoComplete = {
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-        vdb.initEntrySearch(element, "Artist", vdb.functions.mapAbsoluteUrl("/api/artists"),
-            {
-				acceptSelection: properties.acceptSelection,
-				createNewItem: properties.createNewItem,
-				createOptionFirstRow: (item: vdb.dataContracts.ArtistContract) => (item.name + " (" + item.artistType + ")"),
-				createOptionSecondRow: (item: vdb.dataContracts.ArtistContract) => (item.additionalNames),
-				extraQueryParams: queryParams,
-				filter: filter,
-                height: properties.height,
-				termParamName: 'query',
-				method: 'GET'
-            });
+		var params: vdb.EntryAutoCompleteParams<vdb.dataContracts.ArtistContract> = {
+			acceptSelection: properties.acceptSelection,
+			createNewItem: properties.createNewItem,
+			createOptionFirstRow: (item) => (item.name + " (" + item.artistType + ")"),
+			createOptionSecondRow: (item) => (item.additionalNames),
+			extraQueryParams: queryParams,
+			filter: filter,
+			height: properties.height,
+			termParamName: 'query',
+			method: 'GET'
+		};
 
+        vdb.initEntrySearch(element, "Artist", vdb.functions.mapAbsoluteUrl("/api/artists"), params);
 
     }
 }

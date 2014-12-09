@@ -27,6 +27,7 @@ namespace VocaDb.Web.App_Start {
 			// Included on every page
 			// Generally the references go from viewmodels -> repositories -> models -> support classes
 			bundles.Add(new ScriptBundle("~/bundles/shared/common").Include(
+				"~/Scripts/Helpers/HtmlHelper.js", 
 				"~/Scripts/Shared/TopBar.js", 
 				"~/Scripts/Shared/Messages.js",
 				"~/Scripts/Shared/GlobalFunctions.js",
@@ -298,6 +299,7 @@ namespace VocaDb.Web.App_Start {
 
 #if DEBUG
 			bundles.Add(new ScriptBundle("~/bundles/tests")
+				.IncludeDirectory("~/Scripts/Helpers", "*.js")
 				.IncludeDirectory("~/Scripts/Models", "*.js")
 				.IncludeDirectory("~/Scripts/Repositories", "*.js", true)
 				.IncludeDirectory("~/Scripts/ViewModels", "*.js", true)
