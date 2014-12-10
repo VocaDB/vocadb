@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 
@@ -18,6 +21,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			CategoryName = tag.CategoryName;
 			Id = tag.Id;
 			Name = tag.Name;
+			Status = tag.Status;
 
 			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
 				Description = tag.Description;
@@ -44,12 +48,16 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember]
 		public string Name { get; set; }
 
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public EntryStatus Status { get; set; }
+
 	}
 
 	[Flags]
 	public enum TagOptionalFields {
 
-		None = 0,
+		None		= 0,
 		Description = 1,
 		MainPicture = 2,
 

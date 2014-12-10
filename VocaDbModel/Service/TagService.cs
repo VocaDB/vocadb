@@ -132,8 +132,7 @@ namespace VocaDb.Model.Service {
 					session.Query<AlbumTagUsage>().Any(a => a.Tag.Name == tagName && !a.Album.Deleted) ||
 					session.Query<SongTagUsage>().Any(a => a.Tag.Name == tagName && !a.Song.Deleted);
 
-				var contract = new TagForEditContract(session.Load<Tag>(tagName),
-					session.Query<Tag>().Select(t => t.CategoryName).OrderBy(t => t).Distinct().ToArray(), !inUse);
+				var contract = new TagForEditContract(session.Load<Tag>(tagName), !inUse);
 
 				return contract;
 

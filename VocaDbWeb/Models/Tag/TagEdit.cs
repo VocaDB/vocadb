@@ -31,8 +31,6 @@ namespace VocaDb.Web.Models.Tag {
 
 		}
 
-		public string[] AllCategoryNames { get; set; }
-
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
 		[Display(Name = "Aliased to")]
@@ -59,7 +57,6 @@ namespace VocaDb.Web.Models.Tag {
 
 		public void CopyNonEditableProperties(TagForEditContract contract) {
 
-			AllCategoryNames = contract.AllCategoryNames;
 			IsEmpty = contract.IsEmpty;
 			Thumb = contract.Thumb;
 
