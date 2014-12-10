@@ -1,4 +1,5 @@
-﻿using VocaDb.Model;
+﻿using System.Web;
+using VocaDb.Model;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
@@ -9,6 +10,10 @@ namespace VocaDb.Web.Code {
 
 		private readonly string baseUrl;
 		private readonly string hostAddress;
+
+		private string CreateAnchor(string href, string text) {
+			return string.Format("<a href=\"{0}\">{1}</a>", href, HttpUtility.HtmlEncode(text));
+		}
 
 		/// <summary>
 		/// Initializes entry anchor factory.
@@ -60,7 +65,7 @@ namespace VocaDb.Web.Code {
 
 			var url = GetUrl(baseUrl, entryType, id);
 
-			return string.Format("<a href=\"{0}\">{1}</a>", url, name);
+			return CreateAnchor(url, name);
 
 		}
 
@@ -69,7 +74,7 @@ namespace VocaDb.Web.Code {
 			if (entry.EntryType == EntryType.Tag) {
 				
 				var url = VocaUriBuilder.MergeUrls(baseUrl, string.Format("Tag/Details/{0}", entry.DefaultName));
-				return string.Format("<a href=\"{0}\">{1}</a>", url, entry.DefaultName);
+				return CreateAnchor(url, entry.DefaultName);
 
 			}
 

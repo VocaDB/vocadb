@@ -2,6 +2,7 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Tests.Web.Code {
@@ -35,6 +36,16 @@ namespace VocaDb.Tests.Web.Code {
 			var result = factory.CreateEntryLink(artist);
 
 			Assert.AreEqual("<a href=\"/Ar/39\">Hatsune Miku</a>", result, "result");
+
+		}
+
+		[TestMethod]
+		public void CreateEntryLink_HtmlEncode() {
+
+			var song = new Song(TranslatedString.Create("Sentaku <love or dead>")) { Id = 39 };
+			var result = factory.CreateEntryLink(song);
+
+			Assert.AreEqual("<a href=\"/S/39\">Sentaku &lt;love or dead&gt;</a>", result, "result");
 
 		}
 

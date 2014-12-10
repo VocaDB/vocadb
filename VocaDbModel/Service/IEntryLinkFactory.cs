@@ -7,6 +7,12 @@ namespace VocaDb.Model.Service {
 	/// </summary>
 	public interface IEntryLinkFactory {
 
+		/// <summary>
+		/// Creates HTML anchor tag for an entry.
+		/// HTML will be encoded.
+		/// </summary>
+		/// <param name="entry">Entry reference. Cannot be null.</param>
+		/// <returns>Enchor tag with a link for the entry. For example, &lt;a href='/S/3939'&gt;Miku!&lt;/a&gt;</returns>
 		string CreateEntryLink(IEntryBase entry);
 
 		string CreateEntryLink(EntryType entryType, int id, string name);
