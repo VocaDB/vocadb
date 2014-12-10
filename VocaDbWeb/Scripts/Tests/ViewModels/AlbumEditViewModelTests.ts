@@ -40,7 +40,7 @@ module vdb.tests.viewModels {
             songRep = new vdb.tests.testSupport.FakeSongRepository();
 			song = {
 				additionalNames: "", artistString: "Tripshots", artists: [producer], id: 2, lengthSeconds: 0, name: "Anger", pvServices: "Nothing",
-				songType: 'Original',
+				ratingScore: 0, songType: 'Original',
 				vote: "Nothing"
 			};
             songRep.song = song;

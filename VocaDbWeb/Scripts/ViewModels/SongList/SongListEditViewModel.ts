@@ -27,7 +27,7 @@ module vdb.viewModels.songList {
 
 	export class SongListEditViewModel {
 
-		constructor(private songListRepo: rep.SongListRepository, private songRepo: rep.SongRepository, id: number, loaded: () => void) {
+		constructor(private songListRepo: rep.SongListRepository, private songRepo: rep.SongRepository, id: number) {
 
 			this.id = id;
 			this.songLinks = ko.observableArray([]);
@@ -36,12 +36,13 @@ module vdb.viewModels.songList {
 
 		private acceptSongSelection = (songId: number) => {
 
-			if (songId) {
-				this.songRepo.getOne(songId, (song: dc.SongContract) => {
-					var songInList = new SongInListEditViewModel({ songInListId: 0, order: 0, notes: "", song: <any>song });
-					this.songLinks.push(songInList);
-				});
-			}
+			if (!songId)
+				return;
+
+			this.songRepo.getOne(songId, (song: dc.SongContract) => {
+				var songInList = new SongInListEditViewModel({ songInListId: 0, order: 0, notes: "", song: song });
+				this.songLinks.push(songInList);
+			});
 
 		}
 

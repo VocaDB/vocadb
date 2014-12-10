@@ -1509,7 +1509,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\ArtistContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ArtistForAlbumContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\TranslatedEnumField.ts" />
-    <TypeScriptCompile Include="Scripts\DataContracts\SongContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Song\SongContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\SongListBaseContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVPlayerAndVoteContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListContract.ts" />
