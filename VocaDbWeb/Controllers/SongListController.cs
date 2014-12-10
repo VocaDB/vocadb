@@ -82,8 +82,8 @@ namespace VocaDb.Web.Controllers
         public ActionResult Edit(int? id)
         {
 
-			var contract = id != null ? queries.GetSongListForEdit(id.Value, false) : new SongListForEditContract();
-			var model = new SongListEdit(contract);
+			var contract = id != null ? queries.GetSongList(id.Value) : new SongListContract();
+			var model = new SongListEditViewModel(contract, PermissionContext);
 
             return View(model);
 
@@ -91,7 +91,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-		public ActionResult Edit(SongListEdit model)
+		public ActionResult Edit(SongListEditViewModel model)
         {
 
 			var coverPicUpload = Request.Files["thumbPicUpload"];
@@ -104,7 +104,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-				return View(model);
+				return View(new SongListEditViewModel(model.ToContract(), PermissionContext));
 			}
 
 			var listId = queries.UpdateSongList(model.ToContract(), uploadedPicture);

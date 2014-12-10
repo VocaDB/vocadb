@@ -946,7 +946,7 @@
     <Compile Include="Models\Shared\PVEmbedParams.cs" />
     <Compile Include="Models\Shared\WebLinkDisplay.cs" />
     <Compile Include="Models\SongLists\CreateFromWVR.cs" />
-    <Compile Include="Models\SongLists\SongListEdit.cs" />
+    <Compile Include="Models\SongLists\SongListEditViewModel.cs" />
     <Compile Include="Models\SongModels.cs" />
     <Compile Include="Models\Song\Create.cs" />
     <Compile Include="Models\Song\Index.cs" />

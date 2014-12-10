@@ -12,17 +12,15 @@ namespace VocaDb.Model.DataContracts.Songs {
 			SongLinks = new SongInListEditContract[] {};
 		}
 
-		public SongListForEditContract(SongList songList, IUserPermissionContext permissionContext, bool loadSongs = true)
+		public SongListForEditContract(SongList songList, IUserPermissionContext permissionContext)
 			: base(songList, permissionContext) {
 
-			if (loadSongs)
-				SongLinks = songList.SongLinks
-					.OrderBy(s => s.Order)
-					.Select(s => new SongInListEditContract(s, permissionContext.LanguagePreference))
-					.ToArray();
+			SongLinks = songList.SongLinks
+				.OrderBy(s => s.Order)
+				.Select(s => new SongInListEditContract(s, permissionContext.LanguagePreference))
+				.ToArray();
 
 		}
-
 
 		[DataMember]
 		public SongInListEditContract[] SongLinks { get; set; }

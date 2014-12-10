@@ -125,9 +125,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		
 		}
 
-		public SongListForEditContract GetSongListForEdit(int listId, bool loadSongs = true) {
+		public SongListForEditContract GetSongListForEdit(int listId) {
 
-			return repository.HandleQuery(session => new SongListForEditContract(session.Load(listId), PermissionContext, loadSongs));
+			return repository.HandleQuery(session => new SongListForEditContract(session.Load(listId), PermissionContext));
 
 		}
 
