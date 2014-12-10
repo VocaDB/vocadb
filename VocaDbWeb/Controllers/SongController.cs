@@ -47,6 +47,7 @@ namespace VocaDb.Web.Controllers
 			this.songListQueries = songListQueries;
 		}
 
+		// Used from the song page
 		[HttpPost]
 		public void AddSongToList(int listId, int songId, string newListName = null) {
 
@@ -58,7 +59,7 @@ namespace VocaDb.Web.Controllers
 
 				var contract = new SongListForEditContract {
 					Name = newListName,
-					SongLinks = new[] {new SongInListEditContract {SongId = songId, Order = 1 }}
+					SongLinks = new[] {new SongInListEditContract { Song = new SongForApiContract { Id  = songId }, Order = 1 }}
 				};
 
 				songListQueries.UpdateSongList(contract, null);

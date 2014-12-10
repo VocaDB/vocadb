@@ -31,6 +31,10 @@ module vdb.repositories {
 			return new ResourceRepository(this.urlMapper.baseUrl);
 		}
 
+		public songListRepository = () => {
+			return new SongListRepository(this.urlMapper);
+		}
+
 		public songRepository = () => {
 			return new SongRepository(this.urlMapper.baseUrl, this.lang);
 		}

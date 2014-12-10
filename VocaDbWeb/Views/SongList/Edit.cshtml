@@ -3,7 +3,7 @@
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Models.SongLists;
 @using VocaDb.Web.Helpers;
-@model SongListEdit
+@inherits VocaDb.Web.Code.VocaDbPage<SongListEdit>
 @{
 	
 	var isNew = (Model.Id == 0);
@@ -29,12 +29,13 @@
 
 @section BodyScripts {
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
-@Scripts.Render("~/bundles/shared/edit")
-<script type="text/javascript" src="@Url.Content("~/Scripts/SongList/Edit.js")"></script>
+@Scripts.Render("~/bundles/shared/edit", "~/bundles/SongList/Edit")
 <script type="text/javascript">
 
-	$(document).ready(function() { 
-		initPage(@Model.Id);
+	$(document).ready(function () {
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		initPage(repoFactory, @Model.Id);
 	});
 
 </script>
@@ -108,9 +109,9 @@
 							<span data-bind="text: order"></span>
 						</td>
 						<td>
-							<span data-bind="title: songAdditionalNames, text:songName"></span>
+							<span data-bind="title: song.additionalNames, text: song.name"></span>
 							<br />
-							<span class="extraInfo" data-bind="text: songArtistString"></span>
+							<span class="extraInfo" data-bind="text: song.artistString"></span>
 						</td>
 						<td>
 							<input type="text" data-bind="value: notes" />

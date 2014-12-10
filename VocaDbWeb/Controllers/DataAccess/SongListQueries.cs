@@ -73,7 +73,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			ctx.Save(newList);
 
-			var songDiff = newList.SyncSongs(contract.SongLinks, c => ctx.OfType<Song>().Load(c.SongId));
+			var songDiff = newList.SyncSongs(contract.SongLinks, c => ctx.OfType<Song>().Load(c.Song.Id));
 			ctx.OfType<SongInList>().Sync(songDiff);
 
 			SetThumb(newList, uploadedFile);
@@ -125,6 +125,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		
 		}
 
+		public SongListForEditContract GetSongListForEdit(int listId, bool loadSongs = true) {
+
+			return repository.HandleQuery(session => new SongListForEditContract(session.Load(listId), PermissionContext, loadSongs));
+
+		}
+
 		public SongListWithArchivedVersionsContract GetSongListWithArchivedVersions(int id) {
 
 			return repository.HandleQuery(session => new SongListWithArchivedVersionsContract(session.Load(id), PermissionContext));
@@ -168,7 +174,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 						list.FeaturedCategory = contract.FeaturedCategory;						
 					}
 
-					var songDiff = list.SyncSongs(contract.SongLinks, c => ctx.OfType<Song>().Load(c.SongId));
+					var songDiff = list.SyncSongs(contract.SongLinks, c => ctx.OfType<Song>().Load(c.Song.Id));
 
 					if (songDiff.Changed) {
 						diff.Songs.Set();

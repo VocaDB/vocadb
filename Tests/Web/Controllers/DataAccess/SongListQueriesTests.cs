@@ -29,7 +29,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private User userWithSongList;
 
 		private SongInListEditContract[] SongInListEditContracts(params Song[] songs) {
-			return songs.Select(s => new SongInListEditContract(new SongContract(s, ContentLanguagePreference.Default))).ToArray();
+			return songs.Select(s => new SongInListEditContract(new SongInList(s, new SongList(), 0, string.Empty), ContentLanguagePreference.Default)).ToArray();
 		}
 
 		private Stream TestImage() {

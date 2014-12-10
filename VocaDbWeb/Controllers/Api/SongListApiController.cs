@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using System.Web.Http.Description;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -22,6 +23,14 @@ namespace VocaDb.Web.Controllers.Api {
 
 		public SongListApiController(SongListQueries queries) {
 			this.queries = queries;
+		}
+
+		[Route("{id:int}/for-edit")]
+		[ApiExplorerSettings(IgnoreApi=true)]
+		public SongListForEditContract GetForEdit(int id) {
+			
+			return queries.GetSongListForEdit(id);
+
 		}
 
 		/// <summary>

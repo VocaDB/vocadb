@@ -7,6 +7,13 @@ module vdb.repositories {
 
 		constructor(private urlMapper: vdb.UrlMapper) {}
 
+		public getForEdit = (id: number, callback: (result: dc.songs.SongListForEditContract) => void) => {
+
+			var url = this.urlMapper.mapRelative("/api/songLists/" + id + "/for-edit");
+			$.getJSON(url, callback);
+
+		}
+
 		public getSongs = (
 			listId: number,
 			pvServices: string,

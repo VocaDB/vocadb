@@ -1486,6 +1486,8 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongInAlbumEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongInListContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Song\SongInListEditContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithComponentsContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVAndVoteContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagUsageForApiContract.ts" />
@@ -2218,6 +2220,7 @@
     <Content Include="Scripts\ui\minified\jquery.ui.tabs.min.js" />
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
     <Content Include="Scripts\User\Edit.js" />
+    <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListPlayListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\LyricsForSongEditViewModel.ts" />

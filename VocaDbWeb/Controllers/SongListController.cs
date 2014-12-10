@@ -1,12 +1,9 @@
-﻿using System;
-using System.Web.Mvc;
-using MvcPaging;
+﻿using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Rankings;
 using VocaDb.Web.Controllers.DataAccess;
-using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.SongLists;
 
 namespace VocaDb.Web.Controllers
@@ -27,17 +24,6 @@ namespace VocaDb.Web.Controllers
 			this.service = service;
 			this.rankingService = rankingService;
 			this.queries = queries;
-		}
-
-		[Obsolete("Handled in view model now")]
-		[AcceptVerbs(HttpVerbs.Post)]
-		public ActionResult AddSong(int songId) {
-
-			var songContract = service.GetSongWithAdditionalNames(songId);
-			var link = new SongInListEditContract(songContract);
-
-			return Json(link);
-
 		}
 
 		public ActionResult CreateFromWVR() {
@@ -71,13 +57,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Data(int id = 0) {
-
-			var list = (id != 0 ? Service.GetSongListForEdit(id) : new SongListForEditContract());
-			return LowercaseJson(list);
-
-		}
-
 		public ActionResult Delete(int id) {
 
 			Service.DeleteSongList(id);
@@ -103,7 +82,7 @@ namespace VocaDb.Web.Controllers
         public ActionResult Edit(int? id)
         {
 
-			var contract = id != null ? Service.GetSongListForEdit(id.Value, false) : new SongListForEditContract();
+			var contract = id != null ? queries.GetSongListForEdit(id.Value, false) : new SongListForEditContract();
 			var model = new SongListEdit(contract);
 
             return View(model);

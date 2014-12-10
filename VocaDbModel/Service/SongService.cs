@@ -569,12 +569,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongListForEditContract GetSongListForEdit(int listId, bool loadSongs = true) {
-
-			return HandleQuery(session => new SongListForEditContract(session.Load<SongList>(listId), PermissionContext, loadSongs));
-
-		}
-
 		public SongListBaseContract[] GetSongListsForCurrentUser(int ignoreSongId) {
 
 			PermissionContext.VerifyLogin();
