@@ -43,11 +43,11 @@
 
 @Helpers.ValidationSymmaryPanel("Unable to save properties.")
 
-<form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data">
+<form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
 
 	@Helpers.SaveBtn()
-	
+
 	<div id="tabs">
 
 		<ul>
@@ -79,7 +79,7 @@
 					@Html.EnumDropDownListForDic(m => m.FeaturedCategory, Translate.SongListFeaturedCategoryNames, new Dictionary<string, object> { { "data-bind", "value:featuredCategory" } })
 				</div>
 			}
-			
+
 			<div class="editor-label">
 				Thumbnail
 			</div>
@@ -103,7 +103,7 @@
 				<tbody data-bind="sortable: songLinks">
 					<tr class="ui-state-default">
 						<td style="cursor: move">
-							<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>	
+							<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
 						</td>
 						<td>
 							<span data-bind="text: order"></span>
@@ -115,9 +115,10 @@
 						</td>
 						<td>
 							<input type="text" data-bind="value: notes" />
-						</td><td>
+						</td>
+						<td>
 							<a href="#" class="iconLink removeLink" title="Remove from list" data-bind="click: $parent.removeSong">Remove</a>
-						</td>						
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -130,9 +131,9 @@
 		</div>
 
 	</div>
-	
+
 	<input type="hidden" name="model" data-bind="value: ko.toJSON($root)" />
 	<br />
 	@Helpers.SaveBtn()
-	
+
 </form>
