@@ -9,13 +9,14 @@ ko.bindingHandlers.tagAutoComplete = {
 
 		var tagFilter: (string) => boolean = allBindingsAccessor().tagFilter;
 		var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
+		var allowAliases: boolean = ko.unwrap(allBindingsAccessor().allowAliases);
 
 		if (clearValue == null)
 			clearValue = true;
 
 		$(element).autocomplete({
 			source: (ui, callback) => {
-				$.getJSON(vdb.functions.mapAbsoluteUrl("/api/tags/names"), { query: ui.term }, (result: string[]) => {
+				$.getJSON(vdb.functions.mapAbsoluteUrl("/api/tags/names"), { query: ui.term, allowAliases: allowAliases }, (result: string[]) => {
 					var tags = tagFilter ? _.filter(result, tagFilter) : result;
 					callback(tags);
 				});

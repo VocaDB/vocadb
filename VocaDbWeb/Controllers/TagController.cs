@@ -71,7 +71,7 @@ namespace VocaDb.Web.Controllers
         [Authorize]
         public ActionResult Edit(string id)
         {
-			var model = new TagEdit(Service.GetTagForEdit(id));
+			var model = new TagEdit(queries.GetTagForEdit(id));
 			return View(model);
 		}
 
@@ -90,7 +90,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-				var contract = Service.GetTagForEdit(model.Name);
+				var contract = queries.GetTagForEdit(model.Name);
 				model.CopyNonEditableProperties(contract);
 				return View(model);
 			}

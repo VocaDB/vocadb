@@ -121,25 +121,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-
-		public TagForEditContract GetTagForEdit(string tagName) {
-
-			ParamIs.NotNullOrEmpty(() => tagName);
-
-			return HandleQuery(session => {
-
-				var inUse = session.Query<ArtistTagUsage>().Any(a => a.Tag.Name == tagName && !a.Artist.Deleted) ||
-					session.Query<AlbumTagUsage>().Any(a => a.Tag.Name == tagName && !a.Album.Deleted) ||
-					session.Query<SongTagUsage>().Any(a => a.Tag.Name == tagName && !a.Song.Deleted);
-
-				var contract = new TagForEditContract(session.Load<Tag>(tagName), !inUse);
-
-				return contract;
-
-			});
-
-		}
-
 		public string[] GetTagNames() {
 
 			return HandleQuery(session => session.Query<Tag>().OrderBy(t => t.Name).Select(t => t.Name).ToArray());

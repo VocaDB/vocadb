@@ -18,9 +18,11 @@ namespace VocaDb.Model.DataContracts.Tags {
 			bool ssl,			
 			TagOptionalFields optionalFields) {
 			
+			AlisedToName = tag.AliasedTo != null ? tag.AliasedTo.Name : null;
 			CategoryName = tag.CategoryName;
 			Id = tag.Id;
 			Name = tag.Name;
+			ParentName = tag.Parent != null ? tag.Parent.Name : null;
 			Status = tag.Status;
 
 			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
@@ -32,6 +34,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 			}
 
 		}
+
+		[DataMember]
+		public string AlisedToName { get; set; }
 
 		[DataMember]
 		public string CategoryName { get; set; }
@@ -47,6 +52,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string Name { get; set; }
+
+		[DataMember]
+		public string ParentName { get; set; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

@@ -30,6 +30,24 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Gets a tag by name.
+		/// </summary>
+		/// <param name="name">Tag name (required).</param>
+		/// <param name="fields">
+		/// List of optional fields (optional). 
+		/// </param>
+		/// <example>http://vocadb.net/api/tags/byName/vocarock</example>
+		/// <returns>Tag data.</returns>
+		[Route("byName/{name}")]
+		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None) {
+			
+			var tag = queries.GetTag(name, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));
+
+			return tag;
+
+		}
+
+		/// <summary>
 		/// Gets a list of tag category names.
 		/// </summary>
 		[Route("categoryNames")]

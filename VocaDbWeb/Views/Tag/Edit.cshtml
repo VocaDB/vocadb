@@ -2,7 +2,7 @@
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
-@model VocaDb.Web.Models.Tag.TagEdit
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEdit>
 
 @{
     ViewBag.Title = "Edit tag - " + Model.Name;
@@ -20,15 +20,14 @@
 <script type="text/javascript">
 
 	$(document).ready(function () {
-
-		@* Security note: encoding this would break some characters like quotes, need to find a better way, either strip HTML or return JSON from Web API *@
-		@{ var data = new { Model.Name, Model.Parent, Model.Description }; }
 		
-		var model = @Html.Raw(JsonHelpers.Serialize(data));
-		initPage(model.name);
+		initPage();
 
-		var viewModel = new vdb.viewModels.TagEditViewModel(model.name, model.parent, model.description);
-		ko.applyBindings(viewModel);
+		var tagRepo = new vdb.repositories.TagRepository('@RootPath');
+		tagRepo.getByName('@Model.Name', "Description", function (contract) {
+			var viewModel = new vdb.viewModels.TagEditViewModel(contract);
+			ko.applyBindings(viewModel);
+		});
 		
 	});
 
@@ -58,14 +57,14 @@
 		<label for="aliasedTo" class="helpTip" title="If specified, makes this tag an alias of another tag. Alias means an alternative name, for example 'dnb' and 'drumnbass'.">Aliased to</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxFor(m => m.AliasedTo, new { id = "aliasedTo", size = 40, maxlength = 30 })
+		@Html.TextBoxForKnockout(m => m.AliasedTo, "tagAutoComplete: aliasedToName, tagFilter: denySelf, clearValue: false, allowAliases: false", maxLength: 30, id: "parent")
 	</div>	
 	
 	<div class="editor-label">
 		<label for="parent" class="helpTip" title="Parent tag groups related tags under one parent. Child tags are still considered separate, unlike aliases.">Parent</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxForKnockout(m => m.Parent, "tagAutoComplete: parent, tagFilter: denySelf, clearValue: false", maxLength: 30, id: "parent")
+		@Html.TextBoxForKnockout(m => m.Parent, "tagAutoComplete: parentName, tagFilter: denySelf, clearValue: false", maxLength: 30, id: "parent")
 	</div>
 
 	<div class="editor-label">

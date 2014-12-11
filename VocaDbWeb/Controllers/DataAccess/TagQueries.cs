@@ -246,6 +246,37 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public T GetTag<T>(string tagName, Func<Tag, T> fac) {
+			
+			ParamIs.NotNullOrEmpty(() => tagName);
+
+			return HandleQuery(ctx => {
+				
+				var tag = GetTag(ctx, tagName);
+				return fac(tag);
+
+			});
+
+		}
+
+		public TagForEditContract GetTagForEdit(string tagName) {
+
+			ParamIs.NotNullOrEmpty(() => tagName);
+
+			return HandleQuery(session => {
+
+				var inUse = session.Query<ArtistTagUsage>().Any(a => a.Tag.Name == tagName && !a.Artist.Deleted) ||
+					session.Query<AlbumTagUsage>().Any(a => a.Tag.Name == tagName && !a.Album.Deleted) ||
+					session.Query<SongTagUsage>().Any(a => a.Tag.Name == tagName && !a.Song.Deleted);
+
+				var contract = new TagForEditContract(session.Load(tagName), !inUse);
+
+				return contract;
+
+			});
+
+		}
+
 		public void Update(TagContract contract, UploadedFileContract uploadedImage) {
 
 			ParamIs.NotNull(() => contract);

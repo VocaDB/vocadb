@@ -2,17 +2,23 @@
 
 module vdb.viewModels {
 
+	import dc = vdb.dataContracts;
+
 	export class TagEditViewModel {
 
-		public description: KnockoutObservable<string>;
-		public parent: KnockoutObservable<string>;
+		constructor(contract: dc.TagApiContract) {
 
-		constructor(private name: string, parent: string, description: string) {
-
-			this.description = ko.observable(description);
-			this.parent = ko.observable(parent);
+			this.aliasedToName = ko.observable(contract.aliasedToName);
+			this.description = ko.observable(contract.description);
+			this.name = contract.name;
+			this.parentName = ko.observable(contract.parentName);
 
 		}
+
+		public aliasedToName: KnockoutObservable<string>;
+		public description: KnockoutObservable<string>;
+		public name: string;
+		public parentName: KnockoutObservable<string>;
 
 		denySelf = (tagName: string) => (tagName != this.name);
 
