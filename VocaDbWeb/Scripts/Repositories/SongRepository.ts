@@ -30,9 +30,9 @@ module vdb.repositories {
 
         private getJSON: (relative: string, params: any, callback: any) => void;
 
-		// TODO: migrate to API
-        public getOneWithComponents = (id: number, includeArtists: boolean, callback?: (result: dc.songs.SongWithComponentsContract) => void) => {
-			this.post("/DataById", { id: id, includeArtists: includeArtists }, callback);
+		public getOneWithComponents = (id: number, fields: string, languagePreference: string, callback?: (result: dc.SongApiContract) => void) => {
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
+			$.getJSON(url, { fields: fields, lang: languagePreference || this.languagePreferenceStr }, callback);
         }
 
 		public getOne = (id: number, callback?: (result: dc.SongContract) => void) => {

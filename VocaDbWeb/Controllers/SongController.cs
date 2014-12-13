@@ -143,17 +143,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		// TODO: migrate to API
-		public ActionResult DataById(int id = invalidId, bool includeArtists = false) {
-
-			if (id == invalidId)
-				return NoId();
-
-			var song = Service.GetSong(id, s => new SongWithComponentsContract(s, PermissionContext.LanguagePreference, includeArtists));
-			return new JsonNetResult { Data = song };
-
-		}
-
         //
         // GET: /Song/Details/5
 

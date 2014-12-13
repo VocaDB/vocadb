@@ -233,10 +233,14 @@ module vdb.viewModels {
             this.acceptTrackSelection = (songId: number, songName: string, itemType?: string) => {
 
                 if (songId) {
-                    songRepository.getOneWithComponents(songId, true, song => {
-                        var track = new SongInAlbumEditViewModel({ artists: song.artists, artistString: song.artistString, songAdditionalNames: song.additionalNames, songId: song.id, songName: song.name, discNumber: 1, songInAlbumId: 0, trackNumber: 1 });
+					songRepository.getOneWithComponents(songId, "AdditionalNames,Artists", null, song => {
+
+						var artists = _.filter(_.map(song.artists, artistLink => artistLink.artist), artist => artist != null);
+
+						var track = new SongInAlbumEditViewModel({ artists: artists, artistString: song.artistString, songAdditionalNames: song.additionalNames, songId: song.id, songName: song.name, discNumber: 1, songInAlbumId: 0, trackNumber: 1 });
                         track.isNextDisc.subscribe(() => this.updateTrackNumbers());
-                        this.tracks.push(track);
+						this.tracks.push(track);
+
                     });
                 } else {
                     var track = new SongInAlbumEditViewModel({

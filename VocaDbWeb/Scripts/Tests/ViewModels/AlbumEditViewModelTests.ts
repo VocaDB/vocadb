@@ -15,7 +15,7 @@ module vdb.tests.viewModels {
 	var pvRep = null;
 	var urlMapper = null;
 
-    var song: dc.songs.SongWithComponentsContract;
+    var song: dc.SongApiContract;
     var categories: dc.TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
 
     var producer: dc.ArtistContract = { id: 1, name: "Tripshots", additionalNames: "", artistType: "Producer" };
@@ -39,7 +39,7 @@ module vdb.tests.viewModels {
 
             songRep = new vdb.tests.testSupport.FakeSongRepository();
 			song = {
-				additionalNames: "", artistString: "Tripshots", artists: [producer], id: 2, lengthSeconds: 0, name: "Anger", pvServices: "Nothing",
+				additionalNames: "", artistString: "Tripshots", artists: [ { id: 0, artist: producer, isSupport: false, name: null, roles: null } ], id: 2, lengthSeconds: 0, name: "Anger", pvServices: "Nothing",
 				ratingScore: 0, songType: 'Original',
 				vote: "Nothing"
 			};

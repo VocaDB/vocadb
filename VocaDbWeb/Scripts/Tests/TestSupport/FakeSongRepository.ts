@@ -9,7 +9,7 @@ module vdb.tests.testSupport {
 
         addedSongId: number;
         results: dc.NewSongCheckResultContract = null;
-        song: dc.songs.SongWithComponentsContract = null;
+        song: dc.SongApiContract = null;
         songLists: dc.SongListBaseContract[] = [];
 
         constructor() {
@@ -30,7 +30,7 @@ module vdb.tests.testSupport {
                     callback(this.results);
             };
 
-            this.getOneWithComponents = (id, includeArtists = false, callback?) => {
+            this.getOneWithComponents = (id, fields, languagePreference, callback?) => {
                 if (callback)
                     callback(this.song);
             }
