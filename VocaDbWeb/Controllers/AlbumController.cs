@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -8,7 +7,6 @@ using NLog;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.TagFormatting;
@@ -29,19 +27,16 @@ namespace VocaDb.Web.Controllers
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly IEntryThumbPersister imagePersister;
-		private readonly Size pictureThumbSize = new Size(250, 250);
 	    private readonly AlbumQueries queries;
 	    private readonly UserQueries userQueries;
 
 		private AlbumService Service { get; set; }
 
-		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries, IEntryThumbPersister imagePersister) {
+		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries) {
 
 			Service = service;
 			this.queries = queries;
 			this.userQueries = userQueries;
-			this.imagePersister = imagePersister;
 
 		}
 
@@ -87,12 +82,6 @@ namespace VocaDb.Web.Controllers
 			var contracts = result.Select(f => new DuplicateEntryResultContract<AlbumMatchProperty>(f, AlbumMatchProperty.Title)).ToArray();
 
 			return LowercaseJson(contracts);
-
-		}
-
-		public ActionResult FindReleaseEvents(string term) {
-
-			return Json(Service.FindReleaseEvents(term));
 
 		}
 

@@ -10,10 +10,6 @@ function initPage() {
 		.ajaxStart(function() { $(this).show(); })
 		.ajaxStop(function () { $(this).hide(); });
 
-	$("#releaseEvent").autocomplete({
-		source: "../../Album/FindReleaseEvents"
-	});
-
 	var editArtist;
 
 	$("#editArtistRolesPopup").dialog({ autoOpen: false, width: 550, modal: true, buttons: [{ text: vdb.resources.shared.save, click: function () {

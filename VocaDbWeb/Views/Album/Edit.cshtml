@@ -230,7 +230,7 @@
 				<label>@Res.BaReleaseEvent</label>
 			</div>
 			<div class="editor-field">
-				<input type="text" data-bind="textInput: releaseEventName" size="30" id="releaseEvent" />
+				<input type="text" data-bind="textInput: releaseEventName, releaseEventNameAutoComplete: releaseEventName, clearValue: false" size="30" id="releaseEvent" />
 			</div>
 			
 			<div class="editor-label">

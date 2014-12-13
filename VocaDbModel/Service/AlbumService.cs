@@ -317,22 +317,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string[] FindReleaseEvents(string query) {
-
-			return HandleQuery(session => {
-
-				return session.Query<Album>()
-					.Where(a => !a.Deleted)
-					.Select(a => a.OriginalRelease.EventName)
-					.Where(e => e.StartsWith(query))
-					.OrderBy(e => e)
-					.Distinct()
-					.Take(10).ToArray();
-
-			});
-
-		}
-
 		public T GetAlbum<T>(int id, Func<Album, T> fac) {
 
 			return HandleQuery(session => fac(session.Load<Album>(id)));

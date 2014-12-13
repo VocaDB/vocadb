@@ -89,6 +89,7 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/Album/Edit").Include(
 				"~/Scripts/KnockoutExtensions/ParseInteger.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
+				"~/Scripts/KnockoutExtensions/ReleaseEventNameAutoComplete.js",
 				"~/Scripts/Models/Albums/AlbumType.js",
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",

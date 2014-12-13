@@ -5,7 +5,7 @@ interface KnockoutBindingHandlers {
 
 // Tag autocomplete search box.
 ko.bindingHandlers.releaseEventNameAutoComplete = {
-	init: (element: HTMLElement, valueAccessor: () => any, allBindingsAccessor: () => any) => {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<string>, allBindingsAccessor: () => any) => {
 
 		var releaseEventFilter: (string) => boolean = allBindingsAccessor().tagFilter;
 		var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
@@ -20,14 +20,21 @@ ko.bindingHandlers.releaseEventNameAutoComplete = {
 					callback(tags);
 				});
 			},
-			select: (event, ui) => {
-				valueAccessor()(ui.item.label);
+			select: (event: Event, ui) => {
+
+				var value = valueAccessor();
+
+				if (value) {
+					value(ui.item.label);	
+				}
+				
 				if (clearValue) {
 					$(element).val("");
 					return false;
 				} else {
 					return true;
 				}
+
 			}
 		});
 
