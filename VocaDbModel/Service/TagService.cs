@@ -46,26 +46,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string[] FindCategories(string query) {
-
-			if (string.IsNullOrWhiteSpace(query))
-				return new string[] { };
-
-			return HandleQuery(session => {
-
-				string[] tags;
-
-				if (query.Length < 3)
-					tags = session.Query<Tag>().Where(t => t.CategoryName == query).Select(t => t.CategoryName).Distinct().ToArray();
-				else
-					tags = session.Query<Tag>().Where(t => t.CategoryName.Contains(query)).Select(t => t.CategoryName).Distinct().ToArray();
-
-				return tags;
-
-			});
-
-		}
-
 		/// <summary>
 		/// Attempts to find a single tag by name. Partial match is allowed.
 		/// </summary>

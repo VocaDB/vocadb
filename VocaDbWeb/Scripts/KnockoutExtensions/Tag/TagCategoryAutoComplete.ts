@@ -5,14 +5,25 @@ interface KnockoutBindingHandlers {
 
 // Tag category autocomplete search box.
 ko.bindingHandlers.tagCategoryAutoComplete = {
-	init: (element: HTMLElement, valueAccessor: () => any) => {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<string>, allBindingsAccessor: () => any) => {
+
+		var url = vdb.functions.mapAbsoluteUrl("/api/tags/categoryNames");
+		var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
 
 		$(element).autocomplete({
-			source: vdb.functions.mapAbsoluteUrl("/tag/findCategories"),
-			select: (event, ui) => {
-				valueAccessor()(ui.item.label);
-				$(element).val("");
-				return false;
+			source: (ui, callback: (result: string[]) => void) => $.getJSON(url, { query: ui.term }, callback),
+			select: (event: Event, ui) => {
+
+				var value = valueAccessor();
+				value(ui.item.label);
+
+				if (clearValue) {
+					$(element).val("");
+					return false;					
+				} else {
+					return true;
+				}
+
 			}
 		});
 

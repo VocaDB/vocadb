@@ -5,6 +5,8 @@ module vdb.dataContracts {
 
 		aliasedToName: string;
 
+		categoryName: string;
+
 		description: string;
 
 		id: number;

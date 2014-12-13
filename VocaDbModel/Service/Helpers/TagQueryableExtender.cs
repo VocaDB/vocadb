@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -29,10 +30,23 @@ namespace VocaDb.Model.Service.Helpers {
 
 		public static IQueryable<Tag> WhereHasCategoryName(this IQueryable<Tag> query, string categoryName) {
 
-			if (string.IsNullOrEmpty(categoryName))
+			return WhereHasCategoryName(query, SearchTextQuery.Create(categoryName, NameMatchMode.Exact));
+
+		}
+
+		public static IQueryable<Tag> WhereHasCategoryName(this IQueryable<Tag> query, SearchTextQuery textQuery) {
+
+			if (textQuery.IsEmpty)
 				return query;
 
-			return query.Where(t => t.CategoryName == categoryName);
+			switch (textQuery.MatchMode) {
+				case NameMatchMode.Exact:
+					return query.Where(t => t.CategoryName == textQuery.Query);
+				case NameMatchMode.StartsWith:
+					return query.Where(t => t.CategoryName.StartsWith(textQuery.Query));
+				default:
+					return query.Where(t => t.CategoryName.Contains(textQuery.Query));
+			}
 
 		}
 

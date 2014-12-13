@@ -108,12 +108,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult FindCategories(string term) {
-
-			return Json(Service.FindCategories(term));
-
-		}
-
 		public ActionResult Index(string filter = null) {
 
 			var tags = Service.GetTagsByCategories();

@@ -263,7 +263,7 @@
 							<div class="control-label">@Res.TagCategory</div>
 							<div class="controls">
 								<div class="input-append">
-									@KnockoutHelpers.LockingAutoComplete("tagCategoryAutoComplete", "categoryName")
+									@KnockoutHelpers.LockingAutoComplete("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true")
 								</div>
 							</div>
 						</div>

@@ -9,6 +9,7 @@ module vdb.viewModels {
 		constructor(contract: dc.TagApiContract) {
 
 			this.aliasedToName = ko.observable(contract.aliasedToName);
+			this.categoryName = ko.observable(contract.categoryName);
 			this.description = ko.observable(contract.description);
 			this.name = contract.name;
 			this.parentName = ko.observable(contract.parentName);
@@ -16,6 +17,7 @@ module vdb.viewModels {
 		}
 
 		public aliasedToName: KnockoutObservable<string>;
+		public categoryName: KnockoutObservable<string>;
 		public description: KnockoutObservable<string>;
 		public name: string;
 		public parentName: KnockoutObservable<string>;

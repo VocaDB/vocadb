@@ -196,6 +196,23 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public string[] FindCategories(SearchTextQuery textQuery) {
+
+			return HandleQuery(session => {
+
+				var tags = session.Query()
+					.Where(t => t.CategoryName != null && t.CategoryName != "")
+					.WhereHasCategoryName(textQuery)
+					.Select(t => t.CategoryName)
+					.Distinct()
+					.ToArray();
+
+				return tags;
+
+			});
+
+		}
+
 		public string[] FindNames(TagSearchTextQuery textQuery, bool allowAliases, bool allowEmptyName, int maxEntries) {
 
 			if (!allowEmptyName && textQuery.IsEmpty)

@@ -49,7 +49,7 @@
 		@Html.LabelFor(m => m.CategoryName)
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxFor(m => m.CategoryName, new { id = "categoryName", size = 40 })
+		@Html.TextBoxForKnockout(m => m.CategoryName, "tagCategoryAutoComplete: categoryName", maxLength: 30)
 		@Html.ValidationMessageFor(m => m.CategoryName)
 	</div>	
 	
