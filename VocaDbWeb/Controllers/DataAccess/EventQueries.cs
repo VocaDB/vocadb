@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Web.Controllers.DataAccess {
@@ -146,57 +147,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			});
 
 		}
-
-	}
-
-	public enum EventSortRule {
-		
-		None,
-
-		Name,
-
-		Date,
-
-		SeriesName
-
-	}
-
-	public static class EventQueryableExtender {
-
-		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule) {
-
-			switch (sortRule) {
-				case EventSortRule.Date:
-					return query.OrderByDescending(r => r.Date);
-				case EventSortRule.Name:
-					return query.OrderBy(r => r.Name);
-				case EventSortRule.SeriesName:
-					return query
-						.OrderBy(r => r.Series.Name)
-						.ThenBy(r => r.SeriesNumber);
-			}
-
-			return query;
-
-		}
-
-		public static IQueryable<ReleaseEvent> WhereHasName(this IQueryable<ReleaseEvent> query, string name) {
-			
-			if (string.IsNullOrEmpty(name))
-				return query;
-
-			return (name.Length < 3) ? query.Where(e => e.Name.StartsWith(name)) : query.Where(e => e.Name.Contains(name));
-
-		} 
-
-		public static IQueryable<ReleaseEvent> WhereHasSeries(this IQueryable<ReleaseEvent> query, int seriesId) {
-			
-			if (seriesId == 0)
-				return query;
-
-			return query.Where(e => e.Series.Id == seriesId);
-
-		} 
 
 	}
 

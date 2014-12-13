@@ -2,6 +2,7 @@
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Models.Event;
 

@@ -5,10 +5,10 @@ using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Repositories;
-using VocaDb.Web.Controllers.DataAccess;
+using VocaDb.Model.Service.Search;
 using VocaDb.Web.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -76,12 +76,12 @@ namespace VocaDb.Web.Controllers.Api {
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None
 			) {
 			
-			query = !string.IsNullOrEmpty(query) ? FindHelpers.CleanTerm(query.Trim()) : string.Empty;		
+			var textQuery = SearchTextQuery.Create(query);
 
 			return repository.HandleQuery(ctx => {
 				
 				var q = ctx.Query()
-					.WhereHasName(query)
+					.WhereHasName(textQuery)
 					.WhereHasSeries(seriesId);
 
 				var entries = q
@@ -121,16 +121,16 @@ namespace VocaDb.Web.Controllers.Api {
 			string query = "",
 			int maxResults = 10) {
 			
+			var textQuery = SearchTextQuery.Create(query);
+
 			return repository.HandleQuery(ctx => {
 
-				var q = ctx.Query();
-
-				if (query.Length < 3)
-					q = q.Where(r => r.Name.StartsWith(query));
-				else
-					q = q.Where(r => r.Name.Contains(query));
-
-				return q.OrderBy(r => r.Name).Take(maxResults).Select(r => r.Name).ToArray();
+				return ctx.Query()
+					.WhereHasName(textQuery)
+					.OrderBy(r => r.Name)
+					.Take(maxResults)
+					.Select(r => r.Name)
+					.ToArray();
 				
 			});
 
