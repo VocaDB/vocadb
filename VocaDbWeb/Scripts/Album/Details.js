@@ -30,7 +30,9 @@ function initDialog(urlMapper) {
 	$("input.tagSelection").button();
 
 	$("input#newTagName").autocomplete({
-		source: urlMapper.mapRelative("/Tag/Find"),
+		source: function (ui, callback) {
+			$.getJSON(urlMapper.mapRelative("/api/tags/names"), { query: ui.term }, callback);
+		},
 		select: function (event, ui) { addTag(ui.item.label); return false; }
 	});
 

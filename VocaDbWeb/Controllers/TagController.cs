@@ -1,6 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
-using VocaDb.Model.Service.Search.Tags;
+﻿using System.Web.Mvc;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.DataContracts;
@@ -98,13 +96,6 @@ namespace VocaDb.Web.Controllers
 			queries.Update(model.ToContract(), uploadedPicture);
 
 			return RedirectToAction("Details", new { id = model.Name });
-
-		}
-
-		[Obsolete("Moved to Web API")]
-		public ActionResult Find(string term, bool allowAliases = true) {
-
-			return Json(queries.FindNames(TagSearchTextQuery.Create(term), allowAliases, false, 10));
 
 		}
 
