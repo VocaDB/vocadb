@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
@@ -10,6 +12,28 @@ using VocaDb.Model.Helpers;
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class VideoServiceSoundCloud : VideoService {
+
+		class SoundCloudResult {
+
+			public string Artwork_url { get; set; }
+
+			public string Duration { get; set; }
+
+			public string Id { get; set; }
+
+			public string Title { get; set; }
+
+			public SoundCloudUser User { get; set; }
+
+		}
+
+		public class SoundCloudUser {
+
+			public string Avatar_url { get; set; }
+
+			public string Username { get; set; }
+
+		}
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
@@ -41,33 +65,33 @@ namespace VocaDb.Model.Service.VideoServices {
 			var request = WebRequest.Create(apiUrl);
 			request.Timeout = 10000;
 			XDocument doc;
+			SoundCloudResult result;
 
 			try {
 				using (var response = request.GetResponse())
-				using (var stream = response.GetResponseStream()) {
-					doc = XDocument.Load(stream);
+				using (var stream = response.GetResponseStream())
+				using (var reader = new StreamReader(stream)) {
+					result = JsonConvert.DeserializeObject<SoundCloudResult>(reader.ReadToEnd());
 				}
 			} catch (WebException x) {
 				log.WarnException("Unable to load SoundCloud URL " + url, x);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException("Unable to load SoundCloud URL: " + x.Message, x));
 			}
 
-			var trackIdElem = doc.XPathSelectElement("//track/id");
-			var titleElem = doc.XPathSelectElement("//track/title");
+			var trackId = result.Id;
+			var title = result.Title;
 
-			if (trackIdElem == null || titleElem == null)
+			if (trackId == null || title == null)
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to load SoundCloud URL: Invalid response.");
 
-			var trackId = trackIdElem.Value;
-			var title = titleElem.Value;
-			var author = XmlHelper.GetNodeTextOrEmpty(doc, "//track/user/username");
-			var length = GetLength(XmlHelper.GetNodeTextOrEmpty(doc, "//track/duration"));
+			var author = result.User.Username;
+			var length = GetLength(result.Duration);
 
-			var thumbUrl = XmlHelper.GetNodeTextOrEmpty(doc, "//track/artwork-url");
+			var thumbUrl = result.Artwork_url;
 
 			// Substitute song thumbnail with user avatar, if no actual thumbnail is provided. This is what the SoundCloud site does as well.
 			if (string.IsNullOrEmpty(thumbUrl)) {
-				thumbUrl = XmlHelper.GetNodeTextOrEmpty(doc, "//track/user/avatar-url");				
+				thumbUrl = result.User.Avatar_url;
 			}
 
 			var id = new SoundCloudId(trackId, url);
