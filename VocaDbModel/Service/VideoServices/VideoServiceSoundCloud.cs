@@ -2,12 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.Domain.PVs;
-using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -17,7 +14,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			public string Artwork_url { get; set; }
 
-			public string Duration { get; set; }
+			public int Duration { get; set; }
 
 			public string Id { get; set; }
 
@@ -27,7 +24,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public class SoundCloudUser {
+		class SoundCloudUser {
 
 			public string Avatar_url { get; set; }
 
@@ -36,16 +33,6 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-
-		private int? GetLength(string lengthStr) {
-
-			int val;
-			if (int.TryParse(lengthStr, out val))
-				return val/1000;
-			else
-				return null;
-
-		}
 
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
 			: base(service, parser, linkMatchers) {}
@@ -64,18 +51,20 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var request = WebRequest.Create(apiUrl);
 			request.Timeout = 10000;
-			XDocument doc;
 			SoundCloudResult result;
 
 			try {
 				using (var response = request.GetResponse())
 				using (var stream = response.GetResponseStream())
-				using (var reader = new StreamReader(stream)) {
-					result = JsonConvert.DeserializeObject<SoundCloudResult>(reader.ReadToEnd());
+				using (var streamReader = new StreamReader(stream))
+				using (var jsonReader = new JsonTextReader(streamReader)) {
+					var serializer = new JsonSerializer();
+					result = serializer.Deserialize<SoundCloudResult>(jsonReader);
 				}
 			} catch (WebException x) {
-				log.WarnException("Unable to load SoundCloud URL " + url, x);
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException("Unable to load SoundCloud URL: " + x.Message, x));
+				var msg = string.Format("Unable to load SoundCloud URL {0}", url);
+				log.WarnException(msg, x);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 
 			var trackId = result.Id;
@@ -85,7 +74,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to load SoundCloud URL: Invalid response.");
 
 			var author = result.User.Username;
-			var length = GetLength(result.Duration);
+			var length = result.Duration / 1000;
 
 			var thumbUrl = result.Artwork_url;
 
