@@ -12,10 +12,32 @@ namespace VocaDb.Model.Utils {
 		/// 
 		/// English or Romanized name is preferred.
 		/// </summary>
-		public static string GetUrlFriendlyName(ITranslatedString names) {
+		public static string GetUrlFriendlyName(INameManager nameManager) {
 
-			string raw;
+			string raw = null;
 
+			// Try English if English is the default language selection
+			if (nameManager.SortNames.DefaultLanguage == ContentLanguageSelection.English)
+				raw = nameManager.FirstNameValue(ContentLanguageSelection.English);
+
+			// Otherwise try Romaji
+			if (raw == null)
+				raw = nameManager.FirstNameValue(ContentLanguageSelection.Romaji);
+
+			// Try English again since there was no Romaji name
+			if (raw == null)
+				raw = nameManager.FirstNameValue(ContentLanguageSelection.English);
+
+			// No English or Romaji names, return empty.
+			if (raw == null)
+				return string.Empty;
+
+			return GetUrlFriendlyName(raw);
+
+
+			//string raw;
+
+			/*
 			// Use Romaji if it's specified and the original language is either Japanese or Romaji.
 			if ((names.DefaultLanguage == ContentLanguageSelection.Romaji || names.DefaultLanguage == ContentLanguageSelection.Japanese) 
 				&& !string.IsNullOrEmpty(names.Romaji))
@@ -23,7 +45,7 @@ namespace VocaDb.Model.Utils {
 			else
 				raw = names.English;
 
-			return GetUrlFriendlyName(raw);
+			return GetUrlFriendlyName(raw);*/
 
 		}
 

@@ -71,14 +71,6 @@ namespace VocaDb.Model.Domain.Globalization {
 			}
 		}
 
-		/// <summary>
-		/// List of all name values.
-		/// This list includes translated sort name as well as aliases, 
-		/// meaning union of <see cref="SortNames"/> and <see cref="Names"/>.
-		/// Duplicates are excluded.
-		/// Cannot be null.
-		/// This list is not persisted to the database.
-		/// </summary>
 		public virtual IEnumerable<string> AllValues {
 			get {
 
@@ -139,14 +131,11 @@ namespace VocaDb.Model.Domain.Globalization {
 			return FirstName(languageSelection);
 		}
 
-		/// <summary>
-		/// Gets a comma-separated list of additional names for a specific language.
-		/// 
-		/// For example, if the entry has names A, B and C for Japanese, Romaji and English respectively,
-		/// the return value for English would be "A, B", and for Japanese it would be "B, C".
-		/// </summary>
-		/// <param name="languagePreference">Language preference indicating the primary display name (which is EXCLUDED from this string).</param>
-		/// <returns>Additional names string. Cannot be null.</returns>
+		public string FirstNameValue(ContentLanguageSelection languageSelection) {
+			var name = FirstName(languageSelection);
+			return name != null ? name.Value : null;
+		}
+
 		public string GetAdditionalNamesStringForLanguage(ContentLanguagePreference languagePreference) {
 
 			var display = SortNames[languagePreference];
@@ -167,12 +156,6 @@ namespace VocaDb.Model.Domain.Globalization {
 			return Names.GetEnumerator();
 		}
 
-		/// <summary>
-		/// Gets entry name (with both primary display name and list of additional names)
-		/// for a specific language.
-		/// </summary>
-		/// <param name="languagePreference">Language preference.</param>
-		/// <returns>Entry name. Cannot be null.</returns>
 		public EntryNameContract GetEntryName(ContentLanguagePreference languagePreference) {
 
 			var display = SortNames[languagePreference];
@@ -183,7 +166,7 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 		public virtual string GetUrlFriendlyName() {
-			return UrlFriendlyNameFactory.GetUrlFriendlyName(SortNames);
+			return UrlFriendlyNameFactory.GetUrlFriendlyName(this);
 		}
 
 		public virtual bool HasName(LocalizedString name) {

@@ -38,12 +38,16 @@ namespace VocaDb.Model.Domain.Globalization {
 			return new LocalizedStringWithId(name, languageSelection);
 		}
 
+		public string FirstNameValue(ContentLanguageSelection languageSelection) {
+			return name;
+		}
+
 		public string GetAdditionalNamesStringForLanguage(ContentLanguagePreference languagePreference) {
 			return string.Empty;
 		}
 
 		public string GetUrlFriendlyName() {
-			return UrlFriendlyNameFactory.GetUrlFriendlyName(name);
+			return UrlFriendlyNameFactory.GetUrlFriendlyName(this);
 		}
 
 		public bool HasNameForLanguage(ContentLanguageSelection language) {
