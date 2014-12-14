@@ -41,6 +41,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/jqButton.js",
 				"~/Scripts/KnockoutExtensions/jqButtonset.js",
 				"~/Scripts/KnockoutExtensions/StopBinding.js",
+				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",
 				"~/Scripts/Models/SongVoteRating.js",				// Referred by UserRepository
 				"~/Scripts/Models/PVServiceIcons.js",				

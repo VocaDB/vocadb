@@ -123,6 +123,12 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
+		/// <summary>
+		/// Gets the first name matching a language selection.
+		/// Language substitutions are *not* applied.
+		/// </summary>
+		/// <param name="languageSelection">Language selection.</param>
+		/// <returns>Name. Can be null if there is no name for the specfied language selection.</returns>
 		public T FirstName(ContentLanguageSelection languageSelection) {
 			return Names.FirstOrDefault(n => n.Language == languageSelection);
 		}

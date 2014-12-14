@@ -33,14 +33,6 @@ namespace VocaDb.Model.Domain.Globalization {
 		TranslatedString SortNames { get; }
 
 		/// <summary>
-		/// Gets the first name matching a language selection.
-		/// Language substitutions are *not* applied.
-		/// </summary>
-		/// <param name="languageSelection">Language selection.</param>
-		/// <returns>Name. Can be null if there is no name for the specfied language selection.</returns>
-		LocalizedStringWithId FirstNameBase(ContentLanguageSelection languageSelection);
-
-		/// <summary>
 		/// Gets the value of the first name matching a language selection.
 		/// Language substitutions are *not* applied.
 		/// </summary>
