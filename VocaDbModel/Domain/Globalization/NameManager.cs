@@ -4,6 +4,7 @@ using System.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Helpers;
 using System.Collections;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Globalization {
 
@@ -179,6 +180,10 @@ namespace VocaDb.Model.Domain.Globalization {
 
 			return new EntryNameContract(display, additional);
 
+		}
+
+		public virtual string GetUrlFriendlyName() {
+			return UrlFriendlyNameFactory.GetUrlFriendlyName(SortNames);
 		}
 
 		public virtual bool HasName(LocalizedString name) {

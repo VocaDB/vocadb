@@ -173,6 +173,7 @@
     <Compile Include="TestSupport\FakeRepository.cs" />
     <Compile Include="TestSupport\PictureDownloaderStub.cs" />
     <Compile Include="TestSupport\ResourceHelper.cs" />
+    <Compile Include="Utils\UrlFriendlyNameFactoryTests.cs" />
     <Compile Include="Web\Code\EntryAnchorFactoryTests.cs" />
     <Compile Include="Web\Code\TimeAgoStringBuilderTests.cs" />
     <Compile Include="Web\Controllers\AlbumControllerTests.cs" />
@@ -191,7 +192,6 @@
     <Compile Include="Web\Controllers\SongListControllerTests.cs" />
     <Compile Include="Web\Controllers\TagControllerTests.cs" />
     <Compile Include="Web\Controllers\UserControllerTests.cs" />
-    <Compile Include="Web\Helpers\VocaUrlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
@@ -216,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mocks\" />
+    <Folder Include="Web\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestData\yokohma_bay_concert.jpg" />

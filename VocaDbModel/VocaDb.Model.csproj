@@ -787,6 +787,7 @@
     <Compile Include="Utils\Config\SiteSettingsSection.cs" />
     <Compile Include="Utils\Config\VdbConfigManager.cs" />
     <Compile Include="Utils\Search\SearchRouteParams.cs" />
+    <Compile Include="Utils\UrlFriendlyNameFactory.cs" />
     <Compile Include="Utils\VocaUriBuilder.cs" />
     <Compile Include="Utils\VocaUrlMapper.cs" />
     <Compile Include="Utils\XmlCache.cs" />
