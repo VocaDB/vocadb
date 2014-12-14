@@ -18,7 +18,9 @@ namespace VocaDb.Web.Helpers {
 
 			string raw;
 
-			if (names.DefaultLanguage == ContentLanguageSelection.Romaji && !string.IsNullOrEmpty(names.Romaji))
+			// Use Romaji if it's specified and the original language is either Japanese or Romaji.
+			if ((names.DefaultLanguage == ContentLanguageSelection.Romaji || names.DefaultLanguage == ContentLanguageSelection.Japanese) 
+				&& !string.IsNullOrEmpty(names.Romaji))
 				raw = names.Romaji;
 			else
 				raw = names.English;
