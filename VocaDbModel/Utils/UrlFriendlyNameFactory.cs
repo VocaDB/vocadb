@@ -33,6 +33,7 @@ namespace VocaDb.Model.Utils {
 		/// 
 		/// - Spaces are replaced with dashes '-'.
 		/// - All non-ASCII characters except digits, underscore '_' and dash '-' are removed.
+		/// - The name is trimmed from whitespace and special characters such as underscores and dashes.
 		/// - Name is truncated to 30 characters.
 		/// - Name is lowercased.
 		/// </summary>
@@ -44,7 +45,7 @@ namespace VocaDb.Model.Utils {
 				return string.Empty;
 
 			var cleanedName = Regex.Replace(name.Replace(' ', '-'), @"[^a-zA-Z0-9_-]", string.Empty);
-			return cleanedName.Truncate(30).ToLowerInvariant();
+			return cleanedName.Trim(' ', '-', '_').Truncate(30).ToLowerInvariant();
 
 		}
 

@@ -306,6 +306,7 @@
     <Compile Include="Domain\Artists\IArtistLink.cs" />
     <Compile Include="Domain\Artists\IArtistWithSupport.cs" />
     <Compile Include="Domain\Caching\ObjectCacheExtender.cs" />
+    <Compile Include="Domain\GlobalEntryId.cs" />
     <Compile Include="Domain\EntryIdAndName.cs" />
     <Compile Include="Domain\EntryPictureFile.cs" />
     <Compile Include="Domain\EntryPictureFileManager.cs" />
@@ -627,6 +628,7 @@
     <Compile Include="Service\BrandableStrings\Collections\ResStringCollection.cs" />
     <Compile Include="Service\BrandableStrings\Collections\SongStrings.cs" />
     <Compile Include="Service\BrandableStrings\IBrandedStringsAssemblyHeader.cs" />
+    <Compile Include="Service\EntryUrlFriendlyNameFactory.cs" />
     <Compile Include="Service\Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Service\Exceptions\InvalidEmailFormatException.cs" />
     <Compile Include="Service\Exceptions\NoPasswordException.cs" />

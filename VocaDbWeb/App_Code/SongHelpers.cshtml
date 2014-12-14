@@ -67,14 +67,14 @@
 	</div>
 }
 
-@helper SongIconLink(SongContract song) {
-	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song))">
+@helper SongIconLink(SongContract song, int? albumId = null) {
+	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">
 		<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
 	</a>		
 }
 
-@helper SongLink(SongContract song) {
-	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song), new { title = song.AdditionalNames })
+@helper SongLink(SongContract song, int? albumId = null) {
+	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song, albumId), new { title = song.AdditionalNames })
 }
 
 @helper Songs(IEnumerable<SongContract> songs, bool songType = false) {

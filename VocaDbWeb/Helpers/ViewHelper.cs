@@ -205,8 +205,8 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static object GetRouteParams(SongContract contract) {
-			return new { id = contract.Id };
+		public static object GetRouteParams(SongContract contract, int? albumId = null) {
+			return new { id = contract.Id, albumId };
 			//return new { id = contract.Id, friendlyName = VocaUrlHelper.GetUrlFriendlyName(contract.TranslatedName) };
 		}
 

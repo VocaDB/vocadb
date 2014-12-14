@@ -17,6 +17,8 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		EntryNameContract GetEntryName(ContentLanguagePreference languagePreference);
 
+		string GetUrlFriendlyName();
+
 		bool HasNameForLanguage(ContentLanguageSelection language);
 
 	}

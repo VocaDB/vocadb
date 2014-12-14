@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Globalization {
 
@@ -39,6 +40,10 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		public string GetAdditionalNamesStringForLanguage(ContentLanguagePreference languagePreference) {
 			return string.Empty;
+		}
+
+		public string GetUrlFriendlyName() {
+			return UrlFriendlyNameFactory.GetUrlFriendlyName(name);
 		}
 
 		public bool HasNameForLanguage(ContentLanguageSelection language) {

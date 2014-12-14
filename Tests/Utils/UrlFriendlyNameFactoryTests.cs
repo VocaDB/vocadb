@@ -35,6 +35,13 @@ namespace VocaDb.Tests.Utils {
 
 		}
 
+		[TestMethod]
+		public void Trim() {
+			
+			CallGetUrlFriendlyName("", "- 神想フ、時ノ境界 -");
+
+		}
+
 	}
 
 }

@@ -293,7 +293,7 @@
 								</div>
 								<div class="tracklist-trackTitle">
 									@if (song.Song != null) {
-										@Html.ActionLink(song.Song.Name, "Details", "Song", new { id = song.Song.Id, albumId = Model.Id }, new { title = song.Song.AdditionalNames })
+										@SongHelpers.SongLink(song.Song, Model.Id)
 										if (song.Song.LengthSeconds > 0) {
 											@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
 										}

@@ -3,28 +3,45 @@
 
 module vdb.utils {
 
+	import dc = vdb.dataContracts;
+
     // Maps view URLs for common entry types.
     export class EntryUrlMapper {
     
         // URL to details view.
         // typeName: entry type name.
         // id: entry Id.
-		public static details(typeName: string, id: number) {
+		public static details(typeName: string, id: number, urlFriendlyName?: string) {
+
+			var prefix;
 
 			switch (typeName.toLowerCase()) {
 				case "album":
-					return vdb.functions.mapAbsoluteUrl("/Al/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/Al/" + id);
+					break;
 				case "artist":
-					return vdb.functions.mapAbsoluteUrl("/Ar/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/Ar/" + id);
+					break;
 				case "song":
-					return vdb.functions.mapAbsoluteUrl("/S/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/S/" + id);
+					break;
+				default:
+					prefix = vdb.functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
+					break;
 			}
 
-            return vdb.functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
+			var urlFriendlyPart = urlFriendlyName ? "/" + urlFriendlyName : "";
+
+			return prefix + urlFriendlyPart;
+
         }
 
-        public static details_entry(entry: vdb.dataContracts.EntryRefContract) {            
+        public static details_entry(entry: dc.EntryRefContract) {            
             return EntryUrlMapper.details(entry.entryType, entry.id);        
+		}
+
+		public static details_song(entry: dc.SongApiContract) {
+			return EntryUrlMapper.details("Song", entry.id, entry.urlFriendlyName);
 		}
 
 		public static details_tag_byName(name: string) {
