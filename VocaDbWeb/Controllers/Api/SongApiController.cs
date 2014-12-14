@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
@@ -108,7 +109,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("")]
 		public PartialFindResult<SongForApiContract> GetList(
 			string query = "", 
-			SongTypes songTypes = SongTypes.Unspecified,
+			string songTypes = null,
 			string tag = null,
 			int? artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
@@ -126,7 +127,7 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
-			var types = songTypes.ToIndividualSelections(true).ToArray();
+			var types = songTypes != "Unspecified" ? EnumVal<SongType>.ParseMultiple(songTypes) : new SongType[0]; // TODO: change this on the UI side, so that empty is sent instead of Unspecified.
 
 			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, preferAccurateMatches, null) {
 				Tag = tag, 
