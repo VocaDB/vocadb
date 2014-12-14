@@ -1919,12 +1919,14 @@
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguagePreference.ts" />
     <TypeScriptCompile Include="Scripts\Models\IEntryWithIdAndName.ts" />
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguageSelection.ts" />
+    <TypeScriptCompile Include="Scripts\Models\NameMatchMode.ts" />
     <TypeScriptCompile Include="Scripts\Models\PVs\PVService.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\BaseRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\PVRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ReleaseEventRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\RepositoryFactory.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\SongListRepository.ts" />
+    <TypeScriptCompile Include="Scripts\Models\EntryOptionalFields.ts" />
     <TypeScriptCompile Include="Scripts\Shared\EntryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />

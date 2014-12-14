@@ -4,14 +4,18 @@
 /// <reference path="AutoCompleteParams.ts" />
 
 interface KnockoutBindingHandlers {
+	// Song autocomplete search box.
     songAutoComplete: KnockoutBindingHandler;
 }
 
-// Song autocomplete search box.
-ko.bindingHandlers.songAutoComplete = {
-    init: (element: HTMLElement, valueAccessor) => {
+module vdb.knockoutExtensions {
 
-        var properties: vdb.knockoutExtensions.SongAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
+	import cls = vdb.models;
+	import dc = vdb.dataContracts;
+
+	export function songAutoComplete(element: HTMLElement, valueAccessor) {
+		
+		var properties: SongAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
 
 		var filter = properties.filter;
 
@@ -30,27 +34,31 @@ ko.bindingHandlers.songAutoComplete = {
 		}
 
 		var queryParams = {
-			nameMatchMode: 'Auto',
-			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			nameMatchMode: cls.NameMatchMode[cls.NameMatchMode.Auto],
+			lang: cls.globalization.ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true
 		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-        vdb.initEntrySearch(element, "Song", vdb.functions.mapAbsoluteUrl("/api/songs"),
-            {
-                acceptSelection: properties.acceptSelection,
-                createNewItem: properties.createNewItem,
+		vdb.initEntrySearch(element, "Song", vdb.functions.mapAbsoluteUrl("/api/songs"),
+			{
+				acceptSelection: properties.acceptSelection,
+				createNewItem: properties.createNewItem,
 				createCustomItem: properties.createCustomItem,
-				createOptionFirstRow: (item: vdb.dataContracts.SongContract) => (item.name + " (" + item.songType + ")"),
-				createOptionSecondRow: (item: vdb.dataContracts.SongContract) => (item.artistString),
+				createOptionFirstRow: (item: dc.SongContract) => (item.name + " (" + item.songType + ")"),
+				createOptionSecondRow: (item: dc.SongContract) => (item.artistString),
 				extraQueryParams: queryParams,
-                filter: filter,
-                height: properties.height,
+				filter: filter,
+				height: properties.height,
 				termParamName: 'query',
 				method: 'GET'
-            });
+			});
 
+	}
 
-    }
+}
+
+ko.bindingHandlers.songAutoComplete = {
+	init: vdb.knockoutExtensions.songAutoComplete
 }

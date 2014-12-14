@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Remotion.Linq;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils;
@@ -18,6 +17,9 @@ namespace VocaDb.Web.Code {
 			get { return DependencyResolver.Current.GetService<VdbConfigManager>(); }
 		}
 
+		/// <summary>
+		/// Current language preference as integer.
+		/// </summary>
 		public int LanguagePreferenceInt {
 			get {
 				return (int)UserContext.LanguagePreference;

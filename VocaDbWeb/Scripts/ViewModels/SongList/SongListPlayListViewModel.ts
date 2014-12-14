@@ -13,7 +13,7 @@ module vdb.viewModels.songList {
 			private songRepo: rep.SongRepository,
 			private userRepo: rep.UserRepository, 
 			private pvPlayerViewModel: pvs.PVPlayerViewModel,
-			private languageSelection: string, 
+			private languageSelection: cls.globalization.ContentLanguagePreference, 
 			private listId: number) {
 
 			pvPlayerViewModel.nextSong = this.nextSong;
@@ -118,7 +118,9 @@ module vdb.viewModels.songList {
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 			var services = this.pvPlayerViewModel.autoplay() ? vdb.viewModels.pvs.PVPlayerViewModel.autoplayPVServicesString : "Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File";
 
-			this.songListRepo.getSongs(this.listId, services, pagingProperties, this.languageSelection,
+			this.songListRepo.getSongs(this.listId, services, pagingProperties,
+				new cls.SongOptionalFields(cls.SongOptionalField.AdditionalNames, cls.SongOptionalField.ThumbUrl),
+				this.languageSelection,
 				(result: dc.PartialFindResultContract<dc.songs.SongInListContract>) => {
 
 					this.pauseNotifications = false;

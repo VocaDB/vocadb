@@ -1,6 +1,7 @@
 ﻿
 module vdb.repositories {
 
+	import cls = vdb.models;
 	import dc = vdb.dataContracts;
 
 	export class SongListRepository {
@@ -17,13 +18,16 @@ module vdb.repositories {
 		public getSongs = (
 			listId: number,
 			pvServices: string,
-			paging: dc.PagingProperties, lang: string, callback: any) => {
+			paging: dc.PagingProperties,
+			fields: cls.SongOptionalFields,
+			lang: cls.globalization.ContentLanguagePreference,
+			callback: (result: dc.PartialFindResultContract<dc.songs.SongInListContract>) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songLists/" + listId + "/songs");
 			var data = {
 				pvServices: pvServices,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				fields: "ThumbUrl", lang: lang
+				fields: fields.fields, lang: cls.globalization.ContentLanguagePreference[lang]
 			};
 
 			$.getJSON(url, data, callback);

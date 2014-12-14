@@ -1,6 +1,7 @@
 ﻿
 module vdb.viewModels.songList {
 
+	import cls = vdb.models;
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
 
@@ -10,7 +11,7 @@ module vdb.viewModels.songList {
 			urlMapper: UrlMapper,
 			private songListRepo: rep.SongListRepository,
 			private songRepo: rep.SongRepository, private userRepo: rep.UserRepository, 
-			private languageSelection: string,
+			private languageSelection: cls.globalization.ContentLanguagePreference,
 			private listId: number,
 			pvPlayerWrapperElement: HTMLElement) {
 
@@ -31,7 +32,7 @@ module vdb.viewModels.songList {
 		}
 
 		public loading = ko.observable(true); // Currently loading for data
-		public page = ko.observableArray<dc.RatedSongForUserForApiContract>([]); // Current page of items
+		public page = ko.observableArray<dc.songs.SongInListContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
 		public playlistMode = ko.observable(false);
@@ -56,10 +57,12 @@ module vdb.viewModels.songList {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
-			this.songListRepo.getSongs(this.listId, null, pagingProperties, this.languageSelection,
-				(result: any) => {
+			this.songListRepo.getSongs(this.listId, null, pagingProperties,
+				new cls.SongOptionalFields(cls.SongOptionalField.AdditionalNames, cls.SongOptionalField.ThumbUrl),
+				this.languageSelection,
+				(result) => {
 
-					_.each(result.items, (item: dc.RatedSongForUserForApiContract) => {
+					_.each(result.items, (item) => {
 
 						var song = item.song;
 						var songAny: any = song;
