@@ -41,6 +41,7 @@
 }
 .songlist-playlist-songs tr {
   cursor: pointer;
+  height: 36px;
 }
 .songlist-playlist-songs tr.active {
   background-color: #d9edf7;
