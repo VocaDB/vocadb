@@ -54,7 +54,9 @@ module vdb.viewModels.search {
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
-				this.songRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.songType(), tag, this.artistId(),
+				this.songRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
+					this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+					tag, this.artistId(),
 					this.artistParticipationStatus(),
 					this.childVoicebanks(),
 					this.pvsOnly(),

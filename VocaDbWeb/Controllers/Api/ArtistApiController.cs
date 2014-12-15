@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VocaDb.Model;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
@@ -109,7 +110,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("")]
 		public PartialFindResult<ArtistForApiContract> GetList(
 			string query = "", 
-			ArtistTypes artistTypes = ArtistTypes.Nothing,
+			string artistTypes = null,
 			string tag = null,
 			int? followedByUserId = null,
 			EntryStatus? status = null,
@@ -121,7 +122,7 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
-			var types = ArtistHelper.GetArtistTypesFromFlags(artistTypes);
+			var types = EnumVal<ArtistType>.ParseMultiple(artistTypes);
 
 			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, preferAccurateMatches) {
 				Tag = tag,

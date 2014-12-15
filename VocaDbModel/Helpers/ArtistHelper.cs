@@ -228,7 +228,7 @@ namespace VocaDb.Model.Helpers {
 
 		/// <summary>
 		/// Gets a list of individual values from bitarray.
-		/// <see cref="ArtistTypes.Nothing"/> is skipped.
+		/// <see cref="ArtistTypes.Unknown"/> is skipped.
 		/// </summary>
 		/// <param name="flags">Bitarray of artist types.</param>
 		/// <returns>Individual artist types.</returns>
@@ -236,7 +236,7 @@ namespace VocaDb.Model.Helpers {
 			
 			return EnumVal<ArtistTypes>
 				.GetIndividualValues(flags)
-				.Where(v => v != ArtistTypes.Nothing)
+				.Where(v => v != ArtistTypes.Unknown)
 				.Select(a => EnumVal<ArtistType>.Parse(a.ToString()))
 				.ToArray();
 

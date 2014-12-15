@@ -23,7 +23,9 @@ module vdb.viewModels.search {
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
-				this.artistRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.artistType(), tag,
+				this.artistRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
+					this.artistType() != cls.artists.ArtistType[cls.artists.ArtistType.Unknown] ? this.artistType() : null,
+					tag,
 					this.onlyFollowedByMe() ? this.loggedUserId : null,
 					this.fields(), status, callback);
 

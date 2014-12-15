@@ -59,7 +59,7 @@ namespace VocaDb.Model.Domain.Artists {
 	[Flags]
 	public enum ArtistTypes {
 	
-		Nothing = 0,
+		Unknown = 0,
 
 		Circle = 1,
 

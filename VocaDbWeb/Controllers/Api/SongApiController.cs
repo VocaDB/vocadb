@@ -127,7 +127,7 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
-			var types = songTypes != "Unspecified" ? EnumVal<SongType>.ParseMultiple(songTypes) : new SongType[0]; // TODO: change this on the UI side, so that empty is sent instead of Unspecified.
+			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, preferAccurateMatches, null) {
 				Tag = tag, 
