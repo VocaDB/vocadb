@@ -4,14 +4,17 @@
 /// <reference path="AutoCompleteParams.ts" />
 
 interface KnockoutBindingHandlers {
+	// Artist autocomplete search box.
     artistAutoComplete: KnockoutBindingHandler;
 }
 
-// Artist autocomplete search box.
-ko.bindingHandlers.artistAutoComplete = {
-    init: (element: HTMLElement, valueAccessor) => {
+module vdb.knockoutExtensions {
 
-        var properties: vdb.knockoutExtensions.ArtistAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
+	import cls = vdb.models;
+
+	export function artistAutoComplete(element: HTMLElement, valueAccessor) {
+
+		var properties: ArtistAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
 
 		var filter = properties.filter;
 
@@ -31,7 +34,7 @@ ko.bindingHandlers.artistAutoComplete = {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			lang: cls.globalization.ContentLanguagePreference[vdb.values.languagePreference],
 			fields: 'AdditionalNames',
 			preferAccurateMatches: true
 		};
@@ -50,7 +53,11 @@ ko.bindingHandlers.artistAutoComplete = {
 			method: 'GET'
 		};
 
-        vdb.initEntrySearch(element, "Artist", vdb.functions.mapAbsoluteUrl("/api/artists"), params);
+		vdb.initEntrySearch(element, "Artist", vdb.functions.mapAbsoluteUrl("/api/artists"), params);
 
-    }
+	}
+}
+
+ko.bindingHandlers.artistAutoComplete = {
+    init: vdb.knockoutExtensions.artistAutoComplete
 }

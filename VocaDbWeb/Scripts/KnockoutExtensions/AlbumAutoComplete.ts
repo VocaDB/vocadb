@@ -1,18 +1,21 @@
 ﻿
 interface KnockoutBindingHandlers {
+	// Album autocomplete search box.
 	albumAutoComplete: KnockoutBindingHandler;
 }
 
-// Album autocomplete search box.
-ko.bindingHandlers.albumAutoComplete = {
-	init: (element: HTMLElement, valueAccessor) => {
+module vdb.knockoutExtensions {
+	
+	import dc = vdb.dataContracts;
 
-		var properties: vdb.knockoutExtensions.AlbumAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
+	export function albumAutoComplete(element: HTMLElement, valueAccessor) {
+
+		var properties: AlbumAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
 
 		var filter = properties.filter;
 
 		if (properties.ignoreId) {
-			
+
 			filter = (item) => {
 
 				if (item.id == properties.ignoreId) {
@@ -38,8 +41,8 @@ ko.bindingHandlers.albumAutoComplete = {
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,
 				createCustomItem: properties.createCustomItem,
-				createOptionFirstRow: (item: vdb.dataContracts.AlbumContract) => (item.name + " (" + item.discType + ")"),
-				createOptionSecondRow: (item: vdb.dataContracts.AlbumContract) => (item.artistString),
+				createOptionFirstRow: (item: dc.AlbumContract) => (item.name + " (" + item.discType + ")"),
+				createOptionSecondRow: (item: dc.AlbumContract) => (item.artistString),
 				extraQueryParams: queryParams,
 				filter: filter,
 				height: properties.height,
@@ -49,4 +52,9 @@ ko.bindingHandlers.albumAutoComplete = {
 
 
 	}
+
+}
+
+ko.bindingHandlers.albumAutoComplete = {
+	init: vdb.knockoutExtensions.albumAutoComplete
 }
