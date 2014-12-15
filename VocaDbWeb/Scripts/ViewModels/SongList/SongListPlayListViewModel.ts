@@ -31,15 +31,6 @@ module vdb.viewModels.songList {
 
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
-			var elem = $(".songlist-playlist-songs");
-			$(elem).scroll(() => {
-				var element = elem[0];
-				if (this.hasMoreSongs() && element.scrollHeight - element.scrollTop === element.clientHeight) {
-					this.paging.nextPage();
-					this.updateResultsWithoutTotalCount();
-				}
-			});
-
 		}
 
 		public formatLength = (length: number) => vdb.helpers.DateTimeHelper.formatFromSeconds(length);
@@ -95,6 +86,15 @@ module vdb.viewModels.songList {
 		public paging = new ServerSidePagingViewModel(100); // Paging view model
 		public pauseNotifications = false;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
+
+		public scrollEnd = () => {
+
+			if (this.hasMoreSongs()) {
+				this.paging.nextPage();
+				this.updateResultsWithoutTotalCount();
+			}
+
+		}
 
 		public songsLoaded = ko.computed(() => this.page().length);
 

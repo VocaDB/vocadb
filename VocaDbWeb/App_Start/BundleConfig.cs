@@ -225,6 +225,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/soundcloud-api.js",				
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
+				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/Models/PVs/PVService.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",

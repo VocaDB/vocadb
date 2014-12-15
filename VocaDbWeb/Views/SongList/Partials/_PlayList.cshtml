@@ -25,7 +25,7 @@
 </div>
 
 <div class="songlist-playlist-songs-wrapper">
-	<table class="table table-condensed songlist-playlist-songs">
+	<table class="table table-condensed songlist-playlist-songs" data-bind="scrollEnd: scrollEnd">
 		<tbody data-bind="foreach: page">
 			<tr data-bind="css: { active: ($parent.pvPlayerViewModel.selectedSong() && $parent.pvPlayerViewModel.selectedSong().song.id == song.id) }, click: $parent.pvPlayerViewModel.selectedSong">
 				<td style="width: 30px;">
