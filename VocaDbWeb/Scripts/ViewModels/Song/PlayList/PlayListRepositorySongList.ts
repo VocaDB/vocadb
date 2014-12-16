@@ -18,7 +18,7 @@ module vdb.viewModels.songList {
 			this.songListRepo.getSongs(this.songListId, pvServices, paging, fields, lang, result => {
 				var mapped = _.map(result.items, song => {
 					return {
-						name: song.order + ". " + song.song.name + " (" + song.notes + ")",
+						name: song.order + ". " + song.song.name + (song.notes ? " (" + song.notes + ")" : ""),
 						song: song.song
 					}
 				});

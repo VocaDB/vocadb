@@ -96,6 +96,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereArtistHasTag(parsedQuery.ArtistTag)
 				.WhereArtistHasType(parsedQuery.ArtistType)
 				.WhereHasNicoId(parsedQuery.NicoId)
+				.WhereHasPVService(queryParams.PVServices)
 				.WhereIdNotIn(queryParams.IgnoredIds)
 				.WhereInUserCollection(queryParams.UserCollectionId)
 				.WhereHasLyrics(queryParams.LyricsLanguages);

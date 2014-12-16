@@ -105,6 +105,17 @@
 								</a>
 							</div>
 						</div>
+						
+						<div class="inline-block" data-bind="visible: showSongSearch(), with: songSearchViewModel">
+							<div class="btn-group">
+								<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="Details">
+									<i class="icon-th-list"></i>
+								</a>
+								<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="PlayList">
+									<i class="icon-list"></i>
+								</a>
+							</div>
+						</div>
 
 						<div class="inline-block" data-bind="visible: showTagFilter()">
 							<a data-bind="css: { active: showTags() }, click: function() { showTags(!showTags()); }" class="btn btn-nomargin" href="#" title="@Res.ShowTags">

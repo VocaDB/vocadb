@@ -10,7 +10,7 @@
 
 		<div id="pv-player-wrapper" data-bind="html: playerHtml"></div>
 
-		<a class="btn" data-bind="click: $parent.nextSong" title="Next song">
+		<a class="btn" data-bind="click: $parent.nextSong, css: { disabled: $parent.paging.totalItems() == 0 }" title="Next song">
 			<i class="icon-step-forward noMargin"></i>
 		</a>
 
@@ -36,12 +36,9 @@
 				</td>
 				<td>
 					<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
-
-					<span data-bind="songTypeLabel: song.songType"></span>
-					<!-- ko foreach: $parent.pvServiceIcons.getIconUrls(song.pvServices) -->
-					<img data-bind="attr: { src: url, title: service }" />
-					<!-- /ko -->
-					@KnockoutHelpers.DraftIcon("status")
+				</td>
+				<td>
+					<span data-bind="songTypeLabel: song.songType"></span>					
 				</td>
 				@*<td>
 				<small class="extraInfo" data-bind="text: song.artistString"></small>

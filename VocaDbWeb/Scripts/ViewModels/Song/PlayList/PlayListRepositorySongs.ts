@@ -28,13 +28,14 @@ module vdb.viewModels.songList {
 			lang: cls.globalization.ContentLanguagePreference,
 			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void) => {
 
-			this.songRepo.getList(paging, this.songRepo.languagePreferenceStr, this.query(), this.sort(),
+			this.songRepo.getList(paging, cls.globalization.ContentLanguagePreference[lang], this.query(), this.sort(),
 				this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
 				this.tag(),
 				this.artistId(),
 				this.artistParticipationStatus(),
 				this.childVoicebanks(),
 				this.onlyWithPvs(),
+				pvServices,
 				this.since(),
 				this.onlyRatedSongs() ? this.userCollectionId : null,
 				this.fields(),

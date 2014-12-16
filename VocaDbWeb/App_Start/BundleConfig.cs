@@ -158,6 +158,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
+				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/Models/PVs/PVService.js",
 				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
@@ -244,8 +245,9 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
-				"~/Scripts/ViewModels/SongList/SongListViewModel.js",
-				"~/Scripts/ViewModels/SongList/SongListPlayListViewModel.js"
+				"~/Scripts/ViewModels/Song/PlayList/SongListPlayListViewModel.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositorySongList.js",
+				"~/Scripts/ViewModels/SongList/SongListViewModel.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Edit").Include(

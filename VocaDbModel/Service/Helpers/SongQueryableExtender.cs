@@ -3,6 +3,7 @@ using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
@@ -274,6 +275,22 @@ namespace VocaDb.Model.Service.Helpers {
 			return query.Where(s => s.NicoId == nicoId);
 
 		}
+
+		/// <summary>
+		/// Filter query by PV services bit array.
+		/// Song will pass the filter if ANY of the specified PV services matches.
+		/// </summary>
+		/// <param name="query">Query. Cannot be null.</param>
+		/// <param name="pvServices">PV services bit array. Can be null, in which case no filtering will be done.</param>
+		/// <returns>Filtered query.</returns>
+		public static IQueryable<Song> WhereHasPVService(this IQueryable<Song> query, PVServices? pvServices) {
+			
+			if (pvServices == null || pvServices.Value == PVServices.Nothing)
+				return query;
+
+			return query.Where(s => (s.PVServices & pvServices) != PVServices.Nothing);
+
+		} 
 
 		public static IQueryable<Song> WhereHasTag(this IQueryable<Song> query, string tagName) {
 

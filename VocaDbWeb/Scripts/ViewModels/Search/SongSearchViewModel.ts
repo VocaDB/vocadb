@@ -51,6 +51,7 @@ module vdb.viewModels.search {
 			this.since.subscribe(this.updateResultsWithTotalCount);
 			this.songType.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithTotalCount);
+			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
 
@@ -59,36 +60,42 @@ module vdb.viewModels.search {
 				this.onlyRatedSongs, this.loggedUserId, this.fields, searchViewModel.draftsOnly);
 			this.playListViewModel = new vdb.viewModels.songList.SongListPlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[lang]);
-			this.playListViewModel.init();
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
-				this.playListViewModel.updateResultsWithTotalCount();
-				this.songRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
-					this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
-					tag, this.artistId(),
-					this.artistParticipationStatus(),
-					this.childVoicebanks(),
-					this.pvsOnly(),
-					this.since(),
-					this.onlyRatedSongs() ? this.loggedUserId : null,
-					this.fields(),
-					status, result => {
+				if (this.viewMode() == "PlayList") {
+					this.playListViewModel.updateResultsWithTotalCount();		
+					callback({ items: [], totalCount: 0 });			
+				} else {
+					
+					this.songRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
+						this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+						tag, this.artistId(),
+						this.artistParticipationStatus(),
+						this.childVoicebanks(),
+						this.pvsOnly(),
+						null,
+						this.since(),
+						this.onlyRatedSongs() ? this.loggedUserId : null,
+						this.fields(),
+						status, result => {
 
-					_.each(result.items, (song: ISongSearchItem) => {
+							_.each(result.items, (song: ISongSearchItem) => {
 
-						if (song.pvServices && song.pvServices != 'Nothing') {
-							song.previewViewModel = new SongWithPreviewViewModel(this.songRepo, this.userRepo, song.id, song.pvServices);
-							song.previewViewModel.ratingComplete = vdb.ui.showThankYouForRatingMessage;							
-						} else {
-							song.previewViewModel = null;
-						}
+								if (song.pvServices && song.pvServices != 'Nothing') {
+									song.previewViewModel = new SongWithPreviewViewModel(this.songRepo, this.userRepo, song.id, song.pvServices);
+									song.previewViewModel.ratingComplete = vdb.ui.showThankYouForRatingMessage;
+								} else {
+									song.previewViewModel = null;
+								}
 
-					});
+							});
 
-					callback(result);
+							callback(result);
 
-				});
+						});
+
+				}
 
 			}
 
@@ -110,6 +117,7 @@ module vdb.viewModels.search {
 		public songType = ko.observable("Unspecified");
 		public sort = ko.observable("Name");
 		public sortName = ko.computed(() => this.searchViewModel.resources() != null ? this.searchViewModel.resources().songSortRuleNames[this.sort()] : "");
+		public viewMode = ko.observable("Details");
 
 		public fields = ko.computed(() => this.searchViewModel.showTags() ? "ThumbUrl,Tags" : "ThumbUrl");
 

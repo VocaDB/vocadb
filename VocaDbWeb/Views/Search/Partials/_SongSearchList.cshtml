@@ -2,11 +2,8 @@
 @using Res = ViewRes.Search.IndexStrings;
 
 <div data-bind="visible: showSongSearch, with: songSearchViewModel">
-	
-	<div data-bind="with: playListViewModel" class="well well-transparent songlist-playlist">
-	@{ Html.RenderPartial("Partials/_PlayList"); }
-	</div>
-
+		
+	<!-- ko if: viewMode() == 'Details' -->
 	@{ Html.RenderPartial("Partials/_EntryCountBox"); }
 
 
@@ -82,6 +79,13 @@
 	<div data-bind="with: paging">
 		@KnockoutHelpers.ServerSidePaging()
 	</div>
+	<!-- /ko -->
+	
+	<!-- ko if: viewMode() == 'PlayList' -->
+	<div data-bind="with: playListViewModel" class="well well-transparent songlist-playlist">
+		@{ Html.RenderPartial("Partials/_PlayList"); }
+	</div>
+	<!-- /ko -->
 
 </div>
 

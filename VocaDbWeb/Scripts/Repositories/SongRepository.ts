@@ -46,6 +46,7 @@ module vdb.repositories {
 			artistParticipationStatus: string,
 			childVoicebanks: boolean,
 			onlyWithPvs: boolean,
+			pvServices: string,
 			since: number,
 			userCollectionId: number,
 			fields: string,
@@ -62,6 +63,7 @@ module vdb.repositories {
 				artistParticipationStatus: artistParticipationStatus,
 				childVoicebanks: childVoicebanks,
 				onlyWithPvs: onlyWithPvs,
+				pvServices: pvServices,
 				since: since,
 				userCollectionId: userCollectionId,
 				status: status

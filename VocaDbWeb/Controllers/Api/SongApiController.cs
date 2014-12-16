@@ -115,6 +115,7 @@ namespace VocaDb.Web.Controllers.Api {
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
 			bool onlyWithPvs = false,
+			[FromUri] PVServices? pvServices = null,
 			int? since = null,
 			[FromUri] ContentLanguageSelections? lyrics = null,
 			int? userCollectionId = null,
@@ -137,6 +138,7 @@ namespace VocaDb.Web.Controllers.Api {
 				ChildVoicebanks = childVoicebanks,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,
 				LyricsLanguages = lyrics != null ? lyrics.Value.ToIndividualSelections().ToArray() : null,
+				PVServices = pvServices,
 				UserCollectionId = userCollectionId ?? 0
 			};
 			param.Common.EntryStatus = status;
