@@ -23,8 +23,7 @@ module vdb.viewModels.search {
 
 		// Method for loading a page of results.
 		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tag: string,
-		status: string,
-		callback: (result: any) => void) => void;
+			status: string, callback: (result: any) => void) => void;
 
 		public loading = ko.observable(true); // Currently loading for data
 

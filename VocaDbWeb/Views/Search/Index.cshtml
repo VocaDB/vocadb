@@ -23,6 +23,7 @@
 	<link href="@Url.Content("~/Content/Styles/Icons.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.10.1.custom.min.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Scripts/jquery.qtip.css")" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 
 	@{ Html.RenderPartial("Partials/_GoogleAnalytics"); }
 </head>
@@ -319,6 +320,7 @@
 	<!-- Scripts -->
 	@{ Html.RenderPartial("Partials/_LayoutScripts"); }
 	@Scripts.Render("~/bundles/Search/Index")
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 
 	<script type="text/javascript">
 
@@ -348,11 +350,12 @@
 			var songRepo = repoFactory.songRepository();
 			var tagRepo = repoFactory.tagRepository();
 			var userRepo = repoFactory.userRepository();
+			var pvPlayerElem = $("#pv-player-wrapper")[0];
 
 			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo, tagRepo, resourceRepo,
 				userRepo,
 				unknownPictureUrl,
-				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort, artistId, artistType, discType, songType, onlyWithPVs);
+				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort, artistId, artistType, discType, songType, onlyWithPVs, pvPlayerElem);
 			ko.applyBindings(vm);
 
 			$("#loginPopup").dialog({ autoOpen: false, width: 400, modal: true });

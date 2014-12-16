@@ -20,7 +20,8 @@ module vdb.viewModels.search {
 			sort: string,
 			artistId: number,
 			artistType: string,
-			albumType: string, songType: string, onlyWithPVs: boolean) {
+			albumType: string, songType: string, onlyWithPVs: boolean,
+			pvPlayerWrapperElement: HTMLElement) {
 
 			if (searchTerm)
 				this.searchTerm(searchTerm);
@@ -31,7 +32,7 @@ module vdb.viewModels.search {
 				searchType == "Album" ? sort : null, searchType == "Album" ? artistId : null, albumType);
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
 				loggedUserId,
-				searchType == "Song" ? sort : null, searchType == "Song" ? artistId : null, songType, onlyWithPVs);
+				searchType == "Song" ? sort : null, searchType == "Song" ? artistId : null, songType, onlyWithPVs, pvPlayerWrapperElement);
 			this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);
 
 			if (tag || artistId != null || artistType || albumType || songType || onlyWithPVs != null)

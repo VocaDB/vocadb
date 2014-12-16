@@ -16,7 +16,7 @@ module vdb.viewModels.songList {
 			pvPlayerWrapperElement: HTMLElement) {
 
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, 'pv-player', pvPlayerWrapperElement);
-			this.playlistViewModel = new SongListPlayListViewModel(urlMapper, songListRepo, songRepo, userRepo, this.pvPlayerViewModel, languageSelection, listId);
+			//this.playlistViewModel = new SongListPlayListViewModel(urlMapper, songListRepo, songRepo, userRepo, this.pvPlayerViewModel, languageSelection);
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);

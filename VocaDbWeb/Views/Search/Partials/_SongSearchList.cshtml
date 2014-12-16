@@ -2,6 +2,10 @@
 @using Res = ViewRes.Search.IndexStrings;
 
 <div data-bind="visible: showSongSearch, with: songSearchViewModel">
+	
+	<div data-bind="with: playListViewModel" class="well well-transparent songlist-playlist">
+	@{ Html.RenderPartial("Partials/_PlayList"); }
+	</div>
 
 	@{ Html.RenderPartial("Partials/_EntryCountBox"); }
 

@@ -1,4 +1,4 @@
-﻿/// <reference path="../../typings/youtube/youtube.d.ts" />
+﻿/// <reference path="../../../typings/youtube/youtube.d.ts" />
 
 module vdb.viewModels.songList {
 
@@ -9,12 +9,11 @@ module vdb.viewModels.songList {
 
 		constructor(
 			private urlMapper: UrlMapper,
-			private songListRepo: rep.SongListRepository,
+			private songListRepo: IPlayListRepository,
 			private songRepo: rep.SongRepository,
 			private userRepo: rep.UserRepository, 
 			private pvPlayerViewModel: pvs.PVPlayerViewModel,
-			private languageSelection: cls.globalization.ContentLanguagePreference, 
-			private listId: number) {
+			private languageSelection: cls.globalization.ContentLanguagePreference) {
 
 			pvPlayerViewModel.nextSong = this.nextSong;
 			pvPlayerViewModel.resetSong = () => {
@@ -82,8 +81,8 @@ module vdb.viewModels.songList {
 		}
 
 		public loading = ko.observable(true); // Currently loading for data
-		public page = ko.observableArray<dc.songs.SongInListContract>([]); // Current page of items
-		public paging = new ServerSidePagingViewModel(100); // Paging view model
+		public page = ko.observableArray<ISongForPlayList>([]); // Current page of items
+		public paging = new ServerSidePagingViewModel(30); // Paging view model
 		public pauseNotifications = false;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
 
@@ -118,10 +117,10 @@ module vdb.viewModels.songList {
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 			var services = this.pvPlayerViewModel.autoplay() ? vdb.viewModels.pvs.PVPlayerViewModel.autoplayPVServicesString : "Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File";
 
-			this.songListRepo.getSongs(this.listId, services, pagingProperties,
+			this.songListRepo.getSongs(services, pagingProperties,
 				new cls.SongOptionalFields(cls.SongOptionalField.AdditionalNames, cls.SongOptionalField.ThumbUrl),
 				this.languageSelection,
-				(result: dc.PartialFindResultContract<dc.songs.SongInListContract>) => {
+				(result: dc.PartialFindResultContract<ISongForPlayList>) => {
 
 					this.pauseNotifications = false;
 
@@ -144,6 +143,25 @@ module vdb.viewModels.songList {
 				});
 
 		}
+
+	}
+
+	export interface ISongForPlayList {
+
+		name: string;
+
+		song: dc.SongApiContract;
+
+	}
+
+	export interface IPlayListRepository {
+
+		getSongs(
+			pvServices: string,
+			paging: dc.PagingProperties,
+			fields: cls.SongOptionalFields,
+			lang: cls.globalization.ContentLanguagePreference,
+			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void);
 
 	}
 

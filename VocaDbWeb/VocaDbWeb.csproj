@@ -2223,7 +2223,9 @@
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
     <Content Include="Scripts\User\Edit.js" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListEditViewModel.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListPlayListViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositorySongList.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositorySongs.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\SongListPlayListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\LyricsForSongEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\SongMergeViewModel.ts" />
@@ -2274,6 +2276,7 @@
     <Folder Include="Scripts\KnockoutExtensions\Album\" />
     <Folder Include="Views\Integration\" />
     <Folder Include="Views\Shared\KnockoutTemplates\" />
+    <Folder Include="Views\SongList\Partials\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -2461,7 +2464,7 @@
     <Content Include="Views\User\Partials\_FollowedArtists.cshtml" />
     <Content Include="Views\Shared\Partials\_CommentBody.cshtml" />
     <Content Include="Views\SongList\Versions.cshtml" />
-    <Content Include="Views\SongList\Partials\_PlayList.cshtml" />
+    <Content Include="Views\Shared\Partials\_PlayList.cshtml" />
     <Content Include="Views\Shared\PVs\_PVEmbedDynamicCustom.cshtml" />
     <Content Include="Views\Shared\PVs\_PVEdit.cshtml" />
     <Content Include="Views\Shared\KnockoutPartials\_EntryPictureFileEdit.cshtml" />

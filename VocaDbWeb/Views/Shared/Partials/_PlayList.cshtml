@@ -1,4 +1,5 @@
-﻿
+﻿<!-- binding context: SongListPlayListViewModel -->
+
 <div data-bind="with: pvPlayerViewModel" class="songlist-playlist-player">
 	<div data-bind="if: selectedSong() && selectedSong().song">
 
@@ -34,12 +35,7 @@
 					</a>
 				</td>
 				<td>
-					<span data-bind="text: order"></span>.
-					<a data-bind="text: song.name, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
-
-					<span data-bind="visible: notes">
-						(<span data-bind="text: notes"></span>)
-					</span>
+					<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
 
 					<span data-bind="songTypeLabel: song.songType"></span>
 					<!-- ko foreach: $parent.pvServiceIcons.getIconUrls(song.pvServices) -->
