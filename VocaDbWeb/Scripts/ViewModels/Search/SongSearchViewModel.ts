@@ -55,10 +55,10 @@ module vdb.viewModels.search {
 
 			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
 
-			var songsRepoAdapter = new vdb.viewModels.songList.IPlayListRepositorySongs(songRepo, searchViewModel.searchTerm, this.sort, this.songType,
+			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, searchViewModel.searchTerm, this.sort, this.songType,
 				searchViewModel.tag, this.artistId, this.artistParticipationStatus, this.childVoicebanks, this.pvsOnly, this.since,
 				this.onlyRatedSongs, this.loggedUserId, this.fields, searchViewModel.draftsOnly);
-			this.playListViewModel = new vdb.viewModels.songList.SongListPlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
+			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[lang]);
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
@@ -108,7 +108,7 @@ module vdb.viewModels.search {
 		public artistType = ko.observable<cls.artists.ArtistType>(null);
 		public childVoicebanks = ko.observable(false);
 		public onlyRatedSongs = ko.observable(false);
-		public playListViewModel: vdb.viewModels.songList.SongListPlayListViewModel;
+		public playListViewModel: vdb.viewModels.songs.PlayListViewModel;
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;
 		public pvsOnly = ko.observable(false);
 		private pvServiceIcons: vdb.models.PVServiceIcons;

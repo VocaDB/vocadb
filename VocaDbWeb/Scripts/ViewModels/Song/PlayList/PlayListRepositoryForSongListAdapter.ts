@@ -1,10 +1,10 @@
 ﻿
-module vdb.viewModels.songList {
+module vdb.viewModels.songs {
 	
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
 
-	export class IPlayListRepositorySongList implements IPlayListRepository {
+	export class PlayListRepositoryForSongListAdapter implements IPlayListRepository {
 
 		constructor(private songListRepo: rep.SongListRepository, private songListId: number) { }
 

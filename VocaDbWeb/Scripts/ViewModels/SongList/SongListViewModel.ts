@@ -16,8 +16,8 @@ module vdb.viewModels.songList {
 			pvPlayerWrapperElement: HTMLElement) {
 
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, 'pv-player', pvPlayerWrapperElement);
-			var playListRepoAdapter = new vdb.viewModels.songList.IPlayListRepositorySongList(songListRepo, listId);
-			this.playlistViewModel = new SongListPlayListViewModel(urlMapper, playListRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel, languageSelection);
+			var playListRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongListAdapter(songListRepo, listId);
+			this.playlistViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, playListRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel, languageSelection);
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
@@ -37,7 +37,7 @@ module vdb.viewModels.songList {
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
 		public playlistMode = ko.observable(false);
-		public playlistViewModel: SongListPlayListViewModel;
+		public playlistViewModel: vdb.viewModels.songs.PlayListViewModel;
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
 

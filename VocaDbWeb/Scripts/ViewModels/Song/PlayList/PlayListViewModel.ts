@@ -1,11 +1,11 @@
 ﻿/// <reference path="../../../typings/youtube/youtube.d.ts" />
 
-module vdb.viewModels.songList {
+module vdb.viewModels.songs {
 
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
 
-	export class SongListPlayListViewModel {
+	export class PlayListViewModel {
 
 		constructor(
 			private urlMapper: UrlMapper,

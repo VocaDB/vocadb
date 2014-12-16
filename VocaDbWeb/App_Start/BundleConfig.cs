@@ -174,8 +174,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
-				"~/Scripts/ViewModels/Song/PlayList/SongListPlayListViewModel.js",
-				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositorySongs.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongsAdapter.js",
 				"~/Scripts/ViewModels/Search/SearchViewModel.js",
 				"~/Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js",
 				"~/Scripts/ViewModels/Search/ArtistSearchViewModel.js",
@@ -245,8 +245,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
-				"~/Scripts/ViewModels/Song/PlayList/SongListPlayListViewModel.js",
-				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositorySongList.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter.js",
 				"~/Scripts/ViewModels/SongList/SongListViewModel.js"
 			));
 
