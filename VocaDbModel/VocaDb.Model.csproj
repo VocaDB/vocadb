@@ -112,7 +112,6 @@
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumReleaseContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumWithArchivedVersions.cs" />
-    <Compile Include="DataContracts\Albums\AlbumWithCoverPictureContract.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumContract.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumReleaseContract.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumVersionContract.cs" />
@@ -122,10 +121,8 @@
     <Compile Include="DataContracts\Albums\ComparedAlbumsContract.cs" />
     <Compile Include="DataContracts\Albums\RelatedAlbumsContract.cs" />
     <Compile Include="DataContracts\Albums\TranslatedAlbumContract.cs" />
-    <Compile Include="DataContracts\Albums\ExportedAlbumContract.cs" />
     <Compile Include="DataContracts\Albums\ArtistForAlbumContract.cs" />
     <Compile Include="DataContracts\Albums\CreateAlbumContract.cs" />
-    <Compile Include="DataContracts\Albums\ParseAlbumFileResultContract.cs" />
     <Compile Include="DataContracts\Api\EntryForApiContract.cs" />
     <Compile Include="DataContracts\CommentForApiContract.cs" />
     <Compile Include="DataContracts\EntryThumbForApiContract.cs" />
