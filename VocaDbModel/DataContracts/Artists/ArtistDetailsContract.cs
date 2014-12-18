@@ -67,9 +67,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public bool EmailNotifications { get; set; }
 
 		[DataMember]
-		public int FollowCount { get; set; }
-
-		[DataMember]
 		public GroupForArtistContract[] Groups { get; set; }
 
 		/// <summary>
@@ -144,6 +141,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public double AlbumRatingAverage { get; set; }
+
+		[DataMember]
+		public int FollowerCount { get; set; }
 
 		[DataMember]
 		public int RatedAlbumCount { get; set; }

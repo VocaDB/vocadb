@@ -5,7 +5,6 @@ namespace VocaDb.Model.Domain.Caching {
 
 	public static class ObjectCacheExtender {
 
-
 		public static T GetOrInsert<T>(this ObjectCache cache, string key, CacheItemPolicy cacheItemPolicy, Func<T> func) {
 			
 			// Note: not thread safe

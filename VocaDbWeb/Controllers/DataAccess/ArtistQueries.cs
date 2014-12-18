@@ -64,6 +64,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var stats = ctx.Query()
 					.Where(a => a.Id == artist.Id)
 					.Select(a => new {
+						FollowCount = a.Users.Count,
 						AlbumCount = a.AllAlbums.Count(l => !l.Album.Deleted),
 						RatedAlbumCount = a.AllAlbums.Count(l => !l.Album.Deleted && l.Album.RatingCount > 0),
 						SongCount = a.AllSongs.Count(s => !s.Song.Deleted),
@@ -75,6 +76,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				return new SharedArtistStatsContract {
 					AlbumCount = stats.AlbumCount,
+					FollowerCount = stats.FollowCount,
 					RatedAlbumCount = stats.RatedAlbumCount,
 					SongCount = stats.SongCount,
 					RatedSongCount = stats.RatedSongCount,
@@ -206,7 +208,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.Where(a => a.Id == id)
 					.Select(a => new {
 						CommentCount = a.Comments.Count,
-						FollowCount = a.Users.Count
 					})
 					.FirstOrDefault();
 
@@ -215,7 +216,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var contract = new ArtistDetailsContract(artist, LanguagePreference) {
 					CommentCount = stats.CommentCount,
-					FollowCount = stats.FollowCount,
 					SharedStats = GetSharedArtistStats(session, artist),
 					PersonalStats = GetPersonalArtistStats(session, artist)
 				};
@@ -237,6 +237,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				contract.TopAlbums = relations.PopularAlbums;
 				contract.LatestSongs = relations.LatestSongs;
 				contract.TopSongs = relations.PopularSongs;
+
+				// If song and album counts are out of date and we know there's more albums/songs than that, update counts.
+				contract.SharedStats.AlbumCount = Math.Max(contract.SharedStats.AlbumCount, contract.LatestAlbums.Length + contract.TopAlbums.Length);
+				contract.SharedStats.SongCount = Math.Max(contract.SharedStats.SongCount, contract.LatestSongs.Length + contract.TopSongs.Length);
 
 				contract.LatestComments = session.OfType<ArtistComment>().Query()
 					.Where(c => c.Artist.Id == id)

@@ -184,7 +184,7 @@
 			<tr>
 				<td>@ViewRes.EntryDetailsStrings.Stats</td>
 				<td>
-					@string.Format(R.DetailsStrings.FollowCount, Model.FollowCount)
+					@string.Format(R.DetailsStrings.FollowCount, Model.SharedStats.FollowerCount)
 					@if (Model.SharedStats.RatedSongCount > 0) {
 						@(Model.SharedStats.RatedSongCount)@: rated song(s).
 					}
