@@ -792,7 +792,6 @@
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\App_Start\SampleObjects.cs" />
     <Compile Include="Areas\HelpPage\Controllers\ApiHelpController.cs" />
-    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
     <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
     <Compile Include="Areas\HelpPage\IExampleDocumentationProvider.cs" />
