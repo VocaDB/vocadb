@@ -52,6 +52,17 @@ module vdb.viewModels.pvs {
 			this.player = null;
 		}
 
+		private getUrlFromId = (pvId: string) => {
+
+			if (!pvId)
+				return null;
+
+			var parts = pvId.split(' ');
+			var url = "http://api.soundcloud.com/tracks/" + parts[0];
+			return url;
+
+		}
+
 		private player: SC.SoundCloudWidget = null;
 
 		public play = (pvId?: string) => {
@@ -60,7 +71,7 @@ module vdb.viewModels.pvs {
 				this.attach(false);
 
 			if (pvId) {
-				this.player.load(pvId, { auto_play: true });
+				this.player.load(this.getUrlFromId(pvId), { auto_play: true });
 			} else {
 				this.player.play();
 				
