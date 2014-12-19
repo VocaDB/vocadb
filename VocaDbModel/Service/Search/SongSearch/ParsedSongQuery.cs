@@ -12,6 +12,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public ArtistType ArtistType { get; set; }
 
+		public int Id { get; set; }
+
 		public string Name { get; set; }
 
 		public string NicoId { get; set; }

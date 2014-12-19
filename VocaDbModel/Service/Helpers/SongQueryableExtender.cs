@@ -310,6 +310,15 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
+		public static IQueryable<Song> WhereIdIs(this IQueryable<Song> query, int id) {
+			
+			if (id == 0)
+				return query;
+
+			return query.Where(m => m.Id == id);
+
+		} 
+
 		public static IQueryable<Song> WhereIdNotIn(this IQueryable<Song> query, int[] ignoreIds) {
 
 			if (ignoreIds == null || !ignoreIds.Any())

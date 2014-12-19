@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.VideoServices;
@@ -29,15 +30,6 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		private IQueryable<SongName> AddPVFilter(IQueryable<SongName> criteria, bool onlyWithPVs) {
-
-			if (onlyWithPVs)
-				return criteria.Where(t => t.Song.PVServices != PVServices.Nothing);
-			else
-				return criteria;
-
-		}
-
 		private IQueryable<Song> AddScoreFilter(IQueryable<Song> query, int minScore) {
 
 			if (minScore <= 0)
@@ -47,15 +39,6 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		private IQueryable<SongName> AddScoreFilter(IQueryable<SongName> query, int minScore) {
-
-			if (minScore <= 0)
-				return query;
-
-			return query.Where(q => q.Song.RatingScore >= minScore);
-
-		} 
-
 		private IQueryable<Song> AddTimeFilter(IQueryable<Song> criteria, TimeSpan timeFilter) {
 
 			if (timeFilter == TimeSpan.Zero)
@@ -64,17 +47,6 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			var since = DateTime.Now - timeFilter;
 
 			return criteria.Where(t => t.CreateDate >= since);
-
-		}
-
-		private IQueryable<SongName> AddTimeFilter(IQueryable<SongName> criteria, TimeSpan timeFilter) {
-
-			if (timeFilter == TimeSpan.Zero)
-				return criteria;
-
-			var since = DateTime.Now - timeFilter;
-
-			return criteria.Where(t => t.Song.CreateDate >= since);
 
 		}
 
@@ -97,6 +69,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereArtistHasType(parsedQuery.ArtistType)
 				.WhereHasNicoId(parsedQuery.NicoId)
 				.WhereHasPVService(queryParams.PVServices)
+				.WhereIdIs(parsedQuery.Id)
 				.WhereIdNotIn(queryParams.IgnoredIds)
 				.WhereInUserCollection(queryParams.UserCollectionId)
 				.WhereHasLyrics(queryParams.LyricsLanguages);
@@ -110,12 +83,6 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		}
 
 		private SearchWord GetTerm(string query, params string[] testTerms) {
-			//var match = Regex.Match(query, @"^(\w+)\s?:\s?(.+)"); // Search for term at the start of query
-
-			/*if (match.Success)
-				return new SearchWord(match.Groups[1].Value.ToLowerInvariant(), match.Groups[2].Value);
-			else
-				return null;*/
 
 			return (
 				from term in testTerms 
@@ -127,7 +94,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public static Song[] SortByIds(IEnumerable<Song> songs, int[] idList) {
 			
-			return Model.Helpers.CollectionHelper.SortByIds(songs, idList);
+			return CollectionHelper.SortByIds(songs, idList);
 
 		} 
 
@@ -140,7 +107,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			if (string.IsNullOrWhiteSpace(query))
 				return new ParsedSongQuery();
 
-			var term = GetTerm(query.Trim(), "tag", "artist-tag", "artist-type");
+			var term = GetTerm(query.Trim(), "id", "tag", "artist-tag", "artist-type");
 			
 			if (term == null) {
 
@@ -159,6 +126,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 						return new ParsedSongQuery { ArtistTag = term.Value };
 					case "artist-type":
 						return new ParsedSongQuery { ArtistType = EnumVal<ArtistType>.ParseSafe(term.Value, ArtistType.Unknown) };
+					case "id":
+						return new ParsedSongQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) };
 				}
 				
 			}

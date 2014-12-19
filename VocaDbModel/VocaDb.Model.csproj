@@ -465,6 +465,7 @@
     <Compile Include="Helpers\LocalizedStringHelper.cs" />
     <Compile Include="Helpers\NameHelper.cs" />
     <Compile Include="EmbeddedResources\EmbeddedResourceHelper.cs" />
+    <Compile Include="Helpers\PrimitiveParseHelper.cs" />
     <Compile Include="Helpers\SongHelper.cs" />
     <Compile Include="Helpers\StreamHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
