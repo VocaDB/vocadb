@@ -28,7 +28,6 @@
 }
 
 @section BodyScripts {
-<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/SongList/Edit")
 <script type="text/javascript">
 
@@ -61,7 +60,7 @@
 				@Html.LabelFor(m => m.Name)
 			</div>
 			<div class="editor-field">
-				<input type="text" data-bind="value: name" class="required input-xlarge" minlength="1" size="40" />
+				<input type="text" data-bind="value: name" class="required input-xlarge" size="40" required />
 			</div>
 
 			<div class="editor-label">
