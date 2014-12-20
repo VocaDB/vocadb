@@ -241,7 +241,7 @@ namespace VocaDb.Web.Controllers
 			var groupId = model.GroupId;
 			var sortRule = sort ?? UserSortRule.RegisterDate;
 
-			var result = Data.GetUsers(SearchTextQuery.Create(model.Name), groupId, model.Disabled, model.VerifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, true));
+			var result = Data.GetUsers(SearchTextQuery.Create(model.Name), groupId, model.Disabled, model.VerifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, true), u => new UserContract(u));
 
 			if (page == 1 && result.TotalCount == 1 && result.Items.Length == 1) {
 				return RedirectToAction("Profile", new { id = result.Items[0].Name });
@@ -896,7 +896,7 @@ namespace VocaDb.Web.Controllers
 			UserSortRule sortRule = UserSortRule.RegisterDate, int totalCount = 0, int page = 1) {
 
 			var pageIndex = page - 1;
-			var result = Data.GetUsers(SearchTextQuery.Create(name), groupId, disabled, verifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, false));
+			var result = Data.GetUsers(SearchTextQuery.Create(name), groupId, disabled, verifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, false), u => new UserContract(u));
 			var data = new PagingData<UserContract>(result.Items.ToPagedList(pageIndex, usersPerPage, totalCount), null, "Index", "usersList", addTotalCount: true);
 			data.RouteValues = new RouteValueDictionary(new { groupId, sortRule });
 

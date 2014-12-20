@@ -887,7 +887,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public PartialFindResult<UserContract> GetUsers(SearchTextQuery textQuery, UserGroupId groupId, bool disabled, bool verifiedArtists, UserSortRule sortRule, PagingProperties paging) {
+		public PartialFindResult<T> GetUsers<T>(SearchTextQuery textQuery, UserGroupId groupId, bool disabled, bool verifiedArtists, UserSortRule sortRule, PagingProperties paging,
+			Func<User, T> fac) {
 
 			return repository.HandleQuery(ctx => {
 
@@ -908,13 +909,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var users = AddOrder(usersQuery, sortRule)
 					.Paged(paging)
-					.ToArray()
-					.Select(u => new UserContract(u))
 					.ToArray();
 
 				var count = paging.GetTotalCount ? usersQuery.Count() : 0;
+				var contracts = users.Select(fac).ToArray();
 
-				return new PartialFindResult<UserContract>(users, count);
+				return new PartialFindResult<T>(contracts, count);
 
 			});
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Description;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
@@ -37,8 +38,10 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly UserQueries queries;
 		private readonly UserService service;
 		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IUserIconFactory iconFactory;
 
-		public UserApiController(UserQueries queries, UserService service, IUserPermissionContext permissionContext, IEntryThumbPersister thumbPersister) {
+		public UserApiController(UserQueries queries, UserService service, IUserPermissionContext permissionContext, IEntryThumbPersister thumbPersister,
+			IUserIconFactory iconFactory) {
 			this.queries = queries;
 			this.service = service;
 			this.permissionContext = permissionContext;
@@ -139,6 +142,37 @@ namespace VocaDb.Web.Controllers.Api {
 
 			return artists;
 
+		}
+
+		/// <summary>
+		/// Gets a list of users.
+		/// </summary>
+		/// <param name="query">User name query (optional).</param>
+		/// <param name="groups">Filter by user group. Only one value supported for now. Optional.</param>
+		/// <param name="nameMatchMode">Name match mode.</param>
+		/// <param name="start">Index of the first entry to be loaded.</param>
+		/// <param name="maxResults">Maximum number of results to be loaded.</param>
+		/// <param name="getTotalCount">Whether to get total number of results.</param>
+		/// <param name="sort">Sort rule.</param>
+		/// <param name="includeDisabled">Whether to include disabled user accounts.</param>
+		/// <param name="onlyVerified">Whether to only include verified artists.</param>
+		/// <returns>Partial result of users.</returns>
+		[Route("")]
+		[ApiExplorerSettings(IgnoreApi=true)]
+		public PartialFindResult<UserWithIconContract> GetList(
+			string query = "", 
+			UserGroupId groups = UserGroupId.Nothing,
+			NameMatchMode nameMatchMode = NameMatchMode.Auto, 
+			int start = 0, 
+			int maxResults = 10,
+			bool getTotalCount = false,
+			UserSortRule? sort = null,
+			bool includeDisabled = false,
+			bool onlyVerified = false) {
+
+			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, sort ?? UserSortRule.Name, 
+				new PagingProperties(start, maxResults, getTotalCount), user => new UserWithIconContract(user, iconFactory));
+			
 		}
 
 		/// <summary>

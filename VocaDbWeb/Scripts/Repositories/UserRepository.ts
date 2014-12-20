@@ -63,6 +63,27 @@ module vdb.repositories {
 
 		}
 
+		public getList = (
+			paging: dc.PagingProperties,
+			query: string,
+			sort: string,
+			groups: string,
+			includeDisabled: boolean,
+			onlyVerified: boolean,
+			callback: (result: dc.PartialFindResultContract<dc.UserWithIconContract>) => void) => {
+
+			var url = this.urlMapper.mapRelative("/api/users");
+			var data = {
+				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
+				query: query, nameMatchMode: 'Auto', sort: sort,
+				includeDisabled: includeDisabled,
+				onlyVerified: onlyVerified
+			};
+
+			$.getJSON(url, data, callback);
+
+		}
+
         public getMessageBody = (messageId: number, callback?: (result: string) => void) => {
 
             var url = this.mapUrl("/MessageBody");
