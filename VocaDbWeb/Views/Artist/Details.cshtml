@@ -372,14 +372,14 @@
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 
-	$(document).ready(function() {
+		$(function() {
 
-		var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
+			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
 
-		var cultureCode = '@UICulture';
-		var languageSelection = '@UserContext.LanguagePreference';
-		var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var cultureCode = '@UICulture';
+			var languageSelection = '@UserContext.LanguagePreference';
+			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 			var albumRepository = repoFactory.albumRepository();
 			var songRepo = repoFactory.songRepository();
 			var resourceRepo = repoFactory.resourceRepository();
@@ -390,11 +390,11 @@
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
 			unknownPictureUrl,
 			languageSelection, urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, pvPlayerElem);
-		ko.applyBindings(viewModel);
+			ko.applyBindings(viewModel);
 
-		initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
+			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 
-	});
+		});
 
 	</script>
 }
