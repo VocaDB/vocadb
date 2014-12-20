@@ -10,9 +10,21 @@ module vdb.viewModels.search {
 		constructor(searchViewModel: SearchViewModel,
 			private unknownPictureUrl: string,
 			lang: string, private albumRepo: rep.AlbumRepository,
-			private artistRepo: rep.ArtistRepository, sort: string, artistId: number, albumType: string) {
+			private artistRepo: rep.ArtistRepository,
+			resourceRep: rep.ResourceRepository,
+			cultureCode: string,
+			sort: string, artistId: number, albumType: string) {
 
 			super(searchViewModel);
+
+			if (searchViewModel) {
+				this.resourceManager = searchViewModel.resourcesManager;
+				this.showTags = searchViewModel.showTags;
+			} else {
+				this.resourceManager = new cls.ResourcesManager(resourceRep, cultureCode);
+				this.resourceManager.loadResources(null, "albumSortRuleNames", "discTypeNames");
+				this.showTags = ko.observable(false);
+			}
 
 			this.artistSearchParams = { acceptSelection: this.selectArtist };
 
@@ -27,6 +39,9 @@ module vdb.viewModels.search {
 			this.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
 
 			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
+			this.sortName = ko.computed(() => {
+				return this.resourceManager.resources().albumSortRuleNames != null ? this.resourceManager.resources().albumSortRuleNames[this.sort()] : "";
+			});
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
@@ -44,12 +59,16 @@ module vdb.viewModels.search {
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public artistType = ko.observable<cls.artists.ArtistType>(null);
 		public childVoicebanks = ko.observable(false);
+		private resourceManager: cls.ResourcesManager;
 		public showChildVoicebanks: KnockoutComputed<boolean>;
+		public showTags: KnockoutObservable<boolean>;
 		public sort: KnockoutObservable<string>;
-		public sortName = ko.computed(() => this.searchViewModel.resources() != null ? this.searchViewModel.resources().albumSortRuleNames[this.sort()] : "");
+		public sortName: KnockoutComputed<string>;
 		public viewMode = ko.observable("Details");
 
-		public fields = ko.computed(() => this.searchViewModel.showTags() ? "MainPicture,Tags" : "MainPicture");
+		public discTypeName = (discTypeStr: string) => this.resourceManager.resources().discTypeNames != null ? this.resourceManager.resources().discTypeNames[discTypeStr] : "";
+
+		public fields = ko.computed(() => this.showTags() ? "MainPicture,Tags" : "MainPicture");
 
 		public ratingStars = (album: dc.AlbumContract) => {
 

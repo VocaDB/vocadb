@@ -310,8 +310,10 @@
 				@{ Html.RenderPartial("Partials/_AnythingSearchList"); }
 
 				@{ Html.RenderPartial("Partials/_ArtistSearchList"); }
-
-				@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+				
+				<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
+					@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+				</div>
 
 				@{ Html.RenderPartial("Partials/_SongSearchList"); }
 
@@ -388,19 +390,5 @@
 </html>
 
 @helper SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
-	<div data-bind="visible: @visibleBinding, with: @viewModel" class="inline-block search-sort-menu">
-		@ViewRes.EntryIndexStrings.SortBy
-		<div class="btn-group">
-			<button class="btn dropdown-toggle" data-toggle="dropdown">
-				<span data-bind="text: sortName"></span>
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				@foreach (var sortRule in sortRules) {
-					<li><a data-bind="click: function() { sort('@sortRule.Key'); }" href="#">@sortRule.Value</a></li>
-				}
-			</ul>
-		</div>
-	</div>
-
+	@:@KnockoutHelpers.SearchDropDown(visibleBinding, viewModel, sortRules)
 }

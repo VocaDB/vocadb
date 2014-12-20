@@ -116,7 +116,7 @@ module vdb.viewModels.search {
 		public since = ko.observable<number>(null);
 		public songType = ko.observable("Unspecified");
 		public sort = ko.observable("Name");
-		public sortName = ko.computed(() => this.searchViewModel.resources() != null ? this.searchViewModel.resources().songSortRuleNames[this.sort()] : "");
+		public sortName = ko.computed(() => this.searchViewModel.resources().songSortRuleNames != null ? this.searchViewModel.resources().songSortRuleNames[this.sort()] : "");
 		public viewMode = ko.observable("Details");
 
 		public fields = ko.computed(() => this.searchViewModel.showTags() ? "ThumbUrl,Tags" : "ThumbUrl");

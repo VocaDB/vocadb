@@ -45,7 +45,7 @@ function initDialog(urlMapper) {
 
 }
 
-function initPage(artistId, saveStr, urlMapper) {
+function initPage(artistId, saveStr, urlMapper, viewModel) {
 
 	$("#addToUserLink").button({ disabled: $("#addToUserLink").hasClass("disabled"), icons: { primary: 'ui-icon-heart'} });
 	$("#removeFromUserLink").button({ disabled: $("#removeFromUserLink").hasClass("disabled"), icons: { primary: 'ui-icon-close' } })
@@ -74,6 +74,13 @@ function initPage(artistId, saveStr, urlMapper) {
 
 		}
 	});
+
+	if (window.location.hash == "#mainAlbumsTab") {
+		viewModel.initMainAlbums();
+	}
+	if (window.location.hash == "#collaborationAlbumsTab") {
+		viewModel.initCollaborationAlbums();
+	}
 
 	$("#addToUserLink").click(function () {
 

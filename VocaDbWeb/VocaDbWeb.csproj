@@ -1938,6 +1938,7 @@
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguageSelection.ts" />
     <TypeScriptCompile Include="Scripts\Models\NameMatchMode.ts" />
     <TypeScriptCompile Include="Scripts\Models\PVs\PVService.ts" />
+    <TypeScriptCompile Include="Scripts\Models\ResourcesManager.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\BaseRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\PVRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ReleaseEventRepository.ts" />
@@ -2467,11 +2468,11 @@
     <Content Include="Views\Help\External.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-    <Content Include="Views\Search\Partials\_AlbumSearchList.cshtml" />
+    <Content Include="Views\Shared\Partials\_AlbumSearchList.cshtml" />
     <Content Include="Views\Search\Partials\_SongSearchList.cshtml" />
     <Content Include="Views\Search\Partials\_ArtistSearchList.cshtml" />
     <Content Include="Views\Search\Partials\_AnythingSearchList.cshtml" />
-    <Content Include="Views\Search\Partials\_EntryCountBox.cshtml" />
+    <Content Include="Views\Shared\Partials\_EntryCountBox.cshtml" />
     <Content Include="Views\Shared\Partials\_GoogleAnalytics.cshtml" />
     <Content Include="Views\Search\Partials\_TagSearchList.cshtml" />
     <Content Include="Views\Song\Partials\_ArtistForSongEdit.cshtml" />

@@ -37,7 +37,7 @@ module vdb.viewModels.search {
 		public onlyFollowedByMe = ko.observable(false);
 		public showTags = ko.observable(false);
 		public sort = ko.observable("Name");
-		public sortName = ko.computed(() => this.searchViewModel.resources() != null ? this.searchViewModel.resources().artistSortRuleNames[this.sort()] : "");
+		public sortName = ko.computed(() => this.searchViewModel.resources().artistSortRuleNames != null ? this.searchViewModel.resources().artistSortRuleNames[this.sort()] : "");
 
 		public fields = ko.computed(() => this.searchViewModel.showTags() ? "MainPicture,Tags" : "MainPicture");
 

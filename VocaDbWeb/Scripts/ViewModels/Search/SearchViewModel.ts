@@ -23,12 +23,16 @@ module vdb.viewModels.search {
 			albumType: string, songType: string, onlyWithPVs: boolean,
 			pvPlayerWrapperElement: HTMLElement) {
 
+			this.resourcesManager = new vdb.models.ResourcesManager(resourceRepo, cultureCode);
+			this.resources = this.resourcesManager.resources;
+
 			if (searchTerm)
 				this.searchTerm(searchTerm);
 
 			this.anythingSearchViewModel = new AnythingSearchViewModel(this, languageSelection, entryRepo);
 			this.artistSearchViewModel = new ArtistSearchViewModel(this, languageSelection, artistRepo, loggedUserId, artistType);
 			this.albumSearchViewModel = new AlbumSearchViewModel(this, unknownPictureUrl, languageSelection, albumRepo, artistRepo,
+				resourceRepo, cultureCode,
 				searchType == "Album" ? sort : null, searchType == "Album" ? artistId : null, albumType);
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
 				loggedUserId,
@@ -83,7 +87,9 @@ module vdb.viewModels.search {
 		public draftsOnly = ko.observable(false);
 		public genreTags = ko.observableArray<string>();
 		public pageSize = ko.observable(10);
-		public resources = ko.observable<dc.ResourcesContract>();
+		public resourcesManager: vdb.models.ResourcesManager;
+		public resources: KnockoutObservable<dc.ResourcesContract>;
+		//public resources = ko.observable<dc.ResourcesContract>();
 		public showAdvancedFilters = ko.observable(false);
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public searchType = ko.observable("Anything");

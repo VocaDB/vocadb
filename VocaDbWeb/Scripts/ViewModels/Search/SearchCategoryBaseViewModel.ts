@@ -16,10 +16,29 @@ module vdb.viewModels.search {
 
 		constructor(public searchViewModel: SearchViewModel) {
 
-			searchViewModel.pageSize.subscribe(pageSize => this.paging.pageSize(pageSize));
+			if (searchViewModel) {
+				this.draftsOnly = searchViewModel.draftsOnly;
+				this.searchTerm = searchViewModel.searchTerm;
+				this.showTags = searchViewModel.showTags;
+				this.tag = searchViewModel.tag;
+				searchViewModel.pageSize.subscribe(pageSize => this.paging.pageSize(pageSize));				
+				this.paging.pageSize.subscribe(pageSize => searchViewModel.pageSize(pageSize));
+			} else {
+				this.draftsOnly = ko.observable(false);
+				this.searchTerm = ko.observable("");
+				this.showTags = ko.observable(false);
+				this.tag = ko.observable("");
+				this.draftsOnly.subscribe(this.updateResultsWithTotalCount);
+				this.searchTerm.subscribe(this.updateResultsWithTotalCount);
+				this.tag.subscribe(this.updateResultsWithTotalCount);
+				this.tag.subscribe(this.updateResultsWithTotalCount);
+			}
+
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 
 		}
+
+		private draftsOnly: KnockoutObservable<boolean>;
 
 		// Method for loading a page of results.
 		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tag: string,
@@ -29,7 +48,13 @@ module vdb.viewModels.search {
 
 		public page = ko.observableArray<dc.EntryContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(); // Paging view model
-		public pauseNotifications = false
+		public pauseNotifications = false;
+
+		private searchTerm: KnockoutObservable<string>;
+
+		public showTags: KnockoutObservable<boolean>;
+
+		private tag: KnockoutObservable<string>;
 
 		// Update results loading the first page and updating total number of items.
 		// Commonly this is done after changing the filters or sorting.
@@ -53,10 +78,10 @@ module vdb.viewModels.search {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
-			this.loadResults(pagingProperties, this.searchViewModel.searchTerm(), this.searchViewModel.tag(),
-				this.searchViewModel.draftsOnly() ? "Draft" : null, (result: any) => {
+			this.loadResults(pagingProperties, this.searchTerm(), this.tag(),
+				this.draftsOnly() ? "Draft" : null, (result: any) => {
 
-					if (this.searchViewModel.showTags()) {
+					if (this.showTags()) {
 
 						_.forEach(result.items, (item: dc.EntryWithTagUsagesContract) => {
 

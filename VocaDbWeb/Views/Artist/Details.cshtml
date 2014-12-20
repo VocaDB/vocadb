@@ -59,12 +59,12 @@
 		<li><a href="@Url.Action("Comments", "Artist", new { id = Model.Id })" title="Discussion">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a></li>
 		<li><a href="#picturesTab">@ViewRes.EntryDetailsStrings.PicturesTab (@(Model.Pictures.Length + 1))</a></li>
 		<li>
-			<a href="@Url.Action("AlbumsPaged", "Artist", new { id = Model.Id, artistParticipation = VocaDb.Model.Service.Search.AlbumSearch.ArtistAlbumParticipationStatus.OnlyMainAlbums })">
+			<a href="#mainAlbumsTab" data-bind="click: initMainAlbums">
 				<span>@R.DetailsStrings.MainAlbums</span>
 			</a>
 		</li>
 		<li>
-			<a href="@Url.Action("AlbumsPaged", "Artist", new { id = Model.Id, artistParticipation = VocaDb.Model.Service.Search.AlbumSearch.ArtistAlbumParticipationStatus.OnlyCollaborations })">
+			<a href="#collaborationAlbumsTab" data-bind="click: initCollaborationAlbums">
 				<span>@R.DetailsStrings.CollaborationAlbums</span>
 			</a>
 		</li>
@@ -289,7 +289,35 @@
 		</ul>
 		
 	</div>
-	<div id="All_albums">
+	
+	@helper AlbumOptions(string viewModel) {
+		<div class="clearfix">
+			<div class="pull-right">
+				@KnockoutHelpers.SearchDropDown("true", viewModel, Translate.AlbumSortRuleNames.ValuesAndNamesStrings)
+				<div class="btn-group" data-bind="with: @viewModel">
+					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="Details">
+						<i class="icon-list"></i>
+					</a>
+					<a data-bind="css: { active: viewMode() == 'Tiles' }, click: function() { viewMode('Tiles'); }" class="btn btn-nomargin" href="#" title="Tiles">
+						<i class="icon-th"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	}
+
+	<div id="mainAlbumsTab">
+		@AlbumOptions("mainAlbumsViewModel")
+		<div data-bind="with: mainAlbumsViewModel">
+			@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+		</div>
+	</div>
+	
+	<div id="collaborationAlbumsTab">
+		@AlbumOptions("collaborationAlbumsViewModel")
+		<div data-bind="with: collaborationAlbumsViewModel">
+			@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+		</div>
 	</div>
 
 	<div id="All_songs">
@@ -332,11 +360,19 @@
 
 			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");		    
 
-			var userRepository = new vdb.repositories.UserRepository(urlMapper);
-			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications), userRepository);
+			var cultureCode = '@UICulture';
+			var languageSelection = '@UserContext.LanguagePreference';
+			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var albumRepository = repoFactory.albumRepository();
+			var resourceRepo = repoFactory.resourceRepository();
+			var userRepository = repoFactory.userRepository();
+			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications), 
+				unknownPictureUrl,
+				languageSelection, albumRepository, resourceRepo, userRepository, cultureCode);
 			ko.applyBindings(viewModel);
 
-			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper);
+			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 
 		});
 
