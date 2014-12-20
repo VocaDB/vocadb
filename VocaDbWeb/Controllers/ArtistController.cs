@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
 using NLog;
-using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code.Exceptions;
@@ -40,35 +37,6 @@ namespace VocaDb.Web.Controllers
     	private ArtistService Service {
     		get { return service; }
     	}
-
-		public ActionResult Albums(int id = invalidId) {
-
-			if (id == invalidId)
-				return NoId();
-
-			return RedirectToActionPermanent("AlbumsPaged", new { id });
-
-		}
-
-		public PartialViewResult AlbumsPaged(int id, ArtistAlbumParticipationStatus? artistParticipation, int? page) {
-
-			var pageIndex = (page - 1) ?? 0;
-			var queryParams = new AlbumQueryParams {
-				Paging = PagingProperties.CreateFromPage(pageIndex, entriesPerPage, true),
-				SortRule = AlbumSortRule.ReleaseDateWithNulls,
-				ArtistId = id,
-				ArtistParticipationStatus = artistParticipation ?? ArtistAlbumParticipationStatus.Everything
-			};
-
-			var result = Services.Albums.Find(queryParams);
-
-			var target = queryParams.ArtistParticipationStatus == ArtistAlbumParticipationStatus.OnlyCollaborations ? "ui-tabs-3" : "ui-tabs-2";
-			var data = new PagingData<AlbumContract>(result.Items.ToPagedList(pageIndex, entriesPerPage, result.TotalCount), id, "AlbumsPaged", target);
-			data.RouteValues = new RouteValueDictionary(new { artistParticipation });
-
-			return PartialView("PagedAlbums", data);
-
-		}
 
 		public ActionResult ArchivedVersionPicture(int id) {
 
