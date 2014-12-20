@@ -47,7 +47,7 @@ module vdb.viewModels.search {
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
 				this.albumRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.albumType(), tag, this.artistId(),
-					this.artistParticipationStatus(), this.childVoicebanks(), this.fields(), status, callback);
+					this.artistParticipationStatus(), this.childVoicebanks(), this.fields(), status, false, callback);
 
 			}
 

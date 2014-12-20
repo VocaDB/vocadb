@@ -95,6 +95,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Requires a text query. Does not support pagination.
 		/// This is mostly useful for autocomplete boxes.
 		/// </param>
+		/// <param name="deleted">Whether to search for deleted entries. If this is true, only deleted entries will be returned.</param>
 		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Exact).</param>
 		/// <param name="fields">
 		/// Optional fields (optional). Possible values are artists, names, pvs, tags, webLinks.
@@ -117,6 +118,7 @@ namespace VocaDb.Web.Controllers.Api {
 			bool getTotalCount = false, 
 			AlbumSortRule? sort = null,
 			bool preferAccurateMatches = false,
+			bool deleted = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact, 
 			AlbumOptionalFields fields = AlbumOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
@@ -128,7 +130,8 @@ namespace VocaDb.Web.Controllers.Api {
 				ArtistId = artistId ?? 0,
 				ArtistParticipationStatus = artistParticipationStatus,
 				ChildVoicebanks = childVoicebanks,
-				Barcode = barcode
+				Barcode = barcode,
+				Deleted = deleted
 			};
 			queryParams.Common.EntryStatus = status;
 

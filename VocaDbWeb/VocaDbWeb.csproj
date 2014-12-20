@@ -1959,6 +1959,7 @@
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
     <TypeScriptCompile Include="Scripts\User\Details.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Album\DeletedAlbumsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicEntryLinkViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicListEditViewModel.ts" />
@@ -2426,7 +2427,6 @@
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\Find.cshtml" />
     <Content Include="Views\Event\SeriesDetails.cshtml" />
-    <Content Include="Views\Shared\PagedAlbums.cshtml" />
     <Content Include="Views\Shared\PVs\_PVEmbedDynamic.cshtml" />
     <Content Include="Views\Shared\PVs\_PVEmbedNicoIFrame.cshtml" />
     <Content Include="Views\Song\SongItem.cshtml" />

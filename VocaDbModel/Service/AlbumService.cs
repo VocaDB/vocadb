@@ -510,29 +510,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PartialFindResult<AlbumContract> GetDeleted(int start, int maxEntries) {
-
-			return HandleQuery(session => {
-
-				var albums = session
-					.Query<Album>()
-					.Where(a => a.Deleted)
-					.AddNameOrder(LanguagePreference)
-					.Skip(start)
-					.Take(maxEntries)
-					.ToArray()
-					.Select(a => new AlbumContract(a, PermissionContext.LanguagePreference))
-					.ToArray();
-
-				var count = session
-					.Query<Album>().Count(a => a.Deleted);
-
-				return new PartialFindResult<AlbumContract>(albums, count);
-
-			});
-
-		}
-
 		public EntryWithTagUsagesContract GetEntryWithTagUsages(int albumId) {
 
 			return HandleQuery(session => { 

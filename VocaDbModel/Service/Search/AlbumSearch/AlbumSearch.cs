@@ -28,7 +28,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			var textQuery = SearchTextQuery.Create(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode);
 
 			var query = Query<Album>()
-				.Where(s => !s.Deleted)
+				.WhereIsDeleted(queryParams.Deleted)
 				.WhereHasName(textQuery, allowCatNum: true)
 				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)

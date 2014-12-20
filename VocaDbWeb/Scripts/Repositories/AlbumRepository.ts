@@ -48,7 +48,8 @@ module vdb.repositories {
 			childVoicebanks: boolean,
 			fields: string,
 			status: string,
-			callback) => {
+			deleted: boolean,
+			callback: (result: dc.PartialFindResultContract<dc.AlbumContract>) => void) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums");
 			var data = {
@@ -59,7 +60,8 @@ module vdb.repositories {
 				artistId: artistId,
 				artistParticipationStatus: artistParticipationStatus,
 				childVoicebanks: childVoicebanks,
-				status: status
+				status: status,
+				deleted: deleted
 			};
 
 			$.getJSON(url, data, callback);

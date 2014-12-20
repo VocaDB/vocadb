@@ -253,5 +253,11 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
+		public static IQueryable<Album> WhereIsDeleted(this IQueryable<Album> query, bool deleted) {
+			
+			return query.Where(m => m.Deleted == deleted);
+
+		} 
+
 	}
 }

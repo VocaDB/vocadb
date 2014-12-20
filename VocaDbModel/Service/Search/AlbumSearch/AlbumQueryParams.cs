@@ -44,6 +44,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		public CommonSearchParams Common { get; set; }
 
+		public bool Deleted { get; set; }
+
 		public PagingProperties Paging { get; set; }
 
 		public AlbumSortRule SortRule { get; set; }

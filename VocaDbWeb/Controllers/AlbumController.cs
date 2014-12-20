@@ -329,25 +329,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Deleted() {
 
-			var result = Service.GetDeleted(0, entriesPerPage);
-
-			var data = new PagingData<AlbumContract>(result.Items.ToPagedList(0, entriesPerPage, result.TotalCount), null, "DeletedPaged", "albums");
-			data.RouteValues = new RouteValueDictionary(new { action = "DeletedPaged" });
-
-			return View(data);
-
-		}
-
-		[Authorize]
-		public ActionResult DeletedPaged(int? page) {
-
-			var p = (page - 1) ?? 0;
-			var result = Service.GetDeleted(p * entriesPerPage, entriesPerPage);
-
-			var data = new PagingData<AlbumContract>(result.Items.ToPagedList(p, entriesPerPage, result.TotalCount), null, "DeletedPaged", "albums");
-			data.RouteValues = new RouteValueDictionary(new { action = "DeletedPaged" });
-
-			return PartialView("PagedAlbums", data);
+			return View();
 
 		}
 
