@@ -19,11 +19,9 @@ module vdb.viewModels.search {
 
 			if (searchViewModel) {
 				this.resourceManager = searchViewModel.resourcesManager;
-				this.showTags = searchViewModel.showTags;
 			} else {
 				this.resourceManager = new cls.ResourcesManager(resourceRep, cultureCode);
 				this.resourceManager.loadResources(null, "albumSortRuleNames", "discTypeNames");
-				this.showTags = ko.observable(false);
 			}
 
 			this.artistSearchParams = { acceptSelection: this.selectArtist };
@@ -31,6 +29,9 @@ module vdb.viewModels.search {
 			this.albumType = ko.observable(albumType || "Unknown");
 			this.artistId = ko.observable(artistId);
 			this.sort = ko.observable(sort || "Name");
+
+			if (artistId)
+				this.selectArtist(artistId);
 
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.albumType.subscribe(this.updateResultsWithTotalCount);
@@ -61,7 +62,6 @@ module vdb.viewModels.search {
 		public childVoicebanks = ko.observable(false);
 		private resourceManager: cls.ResourcesManager;
 		public showChildVoicebanks: KnockoutComputed<boolean>;
-		public showTags: KnockoutObservable<boolean>;
 		public sort: KnockoutObservable<string>;
 		public sortName: KnockoutComputed<string>;
 		public viewMode = ko.observable("Details");
@@ -87,10 +87,12 @@ module vdb.viewModels.search {
 		public selectArtist = (selectedArtistId: number) => {
 			this.artistId(selectedArtistId);
 			this.artistType(null);
-			this.artistRepo.getOne(selectedArtistId, artist => {
-				this.artistName(artist.name);
-				this.artistType(cls.artists.ArtistType[artist.artistType]);
-			});
+			if (this.artistRepo) {
+				this.artistRepo.getOne(selectedArtistId, artist => {
+					this.artistName(artist.name);
+					this.artistType(cls.artists.ArtistType[artist.artistType]);
+				});				
+			}
 		};
 
 	}

@@ -314,8 +314,10 @@
 				<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
 					@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
 				</div>
-
-				@{ Html.RenderPartial("Partials/_SongSearchList"); }
+				
+				<div data-bind="visible: showSongSearch, with: songSearchViewModel">
+					@{ Html.RenderPartial("Partials/_SongSearchList"); }
+				</div>
 
 				@{ Html.RenderPartial("Partials/_TagSearchList"); }
 

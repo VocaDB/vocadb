@@ -2469,7 +2469,7 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\Partials\_AlbumSearchList.cshtml" />
-    <Content Include="Views\Search\Partials\_SongSearchList.cshtml" />
+    <Content Include="Views\Shared\Partials\_SongSearchList.cshtml" />
     <Content Include="Views\Search\Partials\_ArtistSearchList.cshtml" />
     <Content Include="Views\Search\Partials\_AnythingSearchList.cshtml" />
     <Content Include="Views\Shared\Partials\_EntryCountBox.cshtml" />

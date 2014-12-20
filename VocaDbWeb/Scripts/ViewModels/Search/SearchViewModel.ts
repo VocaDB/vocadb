@@ -35,6 +35,8 @@ module vdb.viewModels.search {
 				resourceRepo, cultureCode,
 				searchType == "Album" ? sort : null, searchType == "Album" ? artistId : null, albumType);
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
+				resourceRepo,
+				cultureCode,
 				loggedUserId,
 				searchType == "Song" ? sort : null, searchType == "Song" ? artistId : null, songType, onlyWithPVs, pvPlayerWrapperElement);
 			this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);

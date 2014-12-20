@@ -14,6 +14,8 @@ module vdb.viewModels.search {
 			private songRepo: rep.SongRepository,
 			private artistRepo: rep.ArtistRepository,
 			private userRepo: rep.UserRepository,
+			resourceRep: rep.ResourceRepository,
+			cultureCode: string,
 			private loggedUserId: number,
 			sort: string,
 			artistId: number,
@@ -22,13 +24,16 @@ module vdb.viewModels.search {
 
 			super(searchViewModel);
 
+			if (searchViewModel) {
+				this.resourceManager = searchViewModel.resourcesManager;
+			} else {
+				this.resourceManager = new cls.ResourcesManager(resourceRep, cultureCode);
+				this.resourceManager.loadResources(null, "songSortRuleNames");
+			}
+
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
-			this.artistSearchParams = {
-				allowCreateNew: false,
-				acceptSelection: this.selectArtist,
-				height: 300
-			};
+			this.artistSearchParams = { acceptSelection: this.selectArtist };
 
 			if (sort)
 				this.sort(sort);
@@ -54,10 +59,11 @@ module vdb.viewModels.search {
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
+			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
-			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, searchViewModel.searchTerm, this.sort, this.songType,
-				searchViewModel.tag, this.artistId, this.artistParticipationStatus, this.childVoicebanks, this.pvsOnly, this.since,
-				this.onlyRatedSongs, this.loggedUserId, this.fields, searchViewModel.draftsOnly);
+			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
+				this.tag, this.artistId, this.artistParticipationStatus, this.childVoicebanks, this.pvsOnly, this.since,
+				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly);
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[lang]);
 
@@ -112,14 +118,15 @@ module vdb.viewModels.search {
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;
 		public pvsOnly = ko.observable(false);
 		private pvServiceIcons: vdb.models.PVServiceIcons;
+		private resourceManager: cls.ResourcesManager;
 		public showChildVoicebanks: KnockoutComputed<boolean>;
 		public since = ko.observable<number>(null);
 		public songType = ko.observable("Unspecified");
 		public sort = ko.observable("Name");
-		public sortName = ko.computed(() => this.searchViewModel.resources().songSortRuleNames != null ? this.searchViewModel.resources().songSortRuleNames[this.sort()] : "");
+		public sortName: KnockoutComputed<string>;
 		public viewMode = ko.observable("Details");
 
-		public fields = ko.computed(() => this.searchViewModel.showTags() ? "ThumbUrl,Tags" : "ThumbUrl");
+		public fields = ko.computed(() => this.showTags() ? "ThumbUrl,Tags" : "ThumbUrl");
 
 		public getPVServiceIcons = (services: string) => {
 			return this.pvServiceIcons.getIconUrls(services);
@@ -128,10 +135,12 @@ module vdb.viewModels.search {
 		public selectArtist = (selectedArtistId: number) => {
 			this.artistId(selectedArtistId);
 			this.artistType(null);
-			this.artistRepo.getOne(selectedArtistId, artist => {
-				this.artistName(artist.name);
-				this.artistType(cls.artists.ArtistType[artist.artistType]);
-			});
+			if (this.artistRepo) {
+				this.artistRepo.getOne(selectedArtistId, artist => {
+					this.artistName(artist.name);
+					this.artistType(cls.artists.ArtistType[artist.artistType]);
+				});				
+			}
 		};
 
 	}

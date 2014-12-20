@@ -25,7 +25,7 @@
 		title: Model.Name + " (" + Translate.ArtistTypeName(Model.ArtistType) + ")", 
 		description: Model.Description)
 	<link rel="canonical" href="@url" />
-	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/Pager.css")" type="text/css" />	
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 }
 
 @section Toolbar {
@@ -68,7 +68,7 @@
 				<span>@R.DetailsStrings.CollaborationAlbums</span>
 			</a>
 		</li>
-		<li><a href="@Url.Action("SongsPaged", "Artist", new { id = Model.Id })" title="All songs"><span>@ViewRes.Artist.DetailsStrings.AllSongs</span></a></li>
+		<li><a href="#songsTab" data-bind="click: initSongs"><span>@ViewRes.Artist.DetailsStrings.AllSongs</span></a></li>
 		<li><a href="#shareTab">@R.DetailsStrings.Share</a></li>
 	</ul>
 
@@ -320,7 +320,23 @@
 		</div>
 	</div>
 
-	<div id="All_songs">
+	<div id="songsTab">
+		<div class="clearfix">
+			<div class="pull-right">
+				@KnockoutHelpers.SearchDropDown("true", "songsViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)
+				<div class="btn-group" data-bind="with: songsViewModel">
+					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="Details">
+						<i class="icon-th-list"></i>
+					</a>
+					<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="PlayList">
+						<i class="icon-list"></i>
+					</a>
+				</div>
+			</div>
+		</div>		
+		<div data-bind="with: songsViewModel">
+			@{ Html.RenderPartial("Partials/_SongSearchList"); }
+		</div>		
 	</div>
 	
 	<div id="shareTab">
@@ -353,7 +369,7 @@
 @section BodyScripts {
 	<script type="text/javascript" src="@Url.Content("~/Scripts/Shared/DiscussionTab.js")"></script>
 	@Scripts.Render("~/bundles/Artist/Details")
-	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 
 		$(document).ready(function() { 
@@ -365,11 +381,14 @@
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 			var albumRepository = repoFactory.albumRepository();
+			var songRepo = repoFactory.songRepository();
 			var resourceRepo = repoFactory.resourceRepository();
 			var userRepository = repoFactory.userRepository();
+			var pvPlayerElem = $("#pv-player-wrapper")[0];
+
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications), 
 				unknownPictureUrl,
-				languageSelection, albumRepository, resourceRepo, userRepository, cultureCode);
+				languageSelection, urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, pvPlayerElem);
 			ko.applyBindings(viewModel);
 
 			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);

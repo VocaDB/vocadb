@@ -81,6 +81,9 @@ function initPage(artistId, saveStr, urlMapper, viewModel) {
 	if (window.location.hash == "#collaborationAlbumsTab") {
 		viewModel.initCollaborationAlbums();
 	}
+	if (window.location.hash == "#songsTab") {
+		viewModel.initSongs();
+	}
 
 	$("#addToUserLink").click(function () {
 

@@ -9,18 +9,23 @@ module vdb.viewModels {
 
 		customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
 
-		constructor(private artistId: number, emailNotifications: boolean, siteNotifications: boolean,
+		constructor(
+			private artistId: number, emailNotifications: boolean, siteNotifications: boolean,
 			private unknownPictureUrl: string,
 			private lang: string,
+			private urlMapper: vdb.UrlMapper,
 			private albumRepo: rep.AlbumRepository,
+			private songRepo: rep.SongRepository,
 			private resourceRepo: rep.ResourceRepository,
-			userRepository: rep.UserRepository,
-			private cultureCode: string) {
+			private userRepository: rep.UserRepository,
+			private cultureCode: string,
+			private pvPlayerWrapperElement: HTMLElement) {
 
 			this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(artistId, emailNotifications, siteNotifications, userRepository);
 
 		}
 
+		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
 		public collaborationAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
 		public mainAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
 
@@ -43,6 +48,17 @@ module vdb.viewModels {
 			this.collaborationAlbumsViewModel().artistParticipationStatus("OnlyCollaborations");
 
 		};
+
+		public initSongs = () => {
+
+			if (this.songsViewModel())
+				return;
+
+			this.songsViewModel(new vdb.viewModels.search.SongSearchViewModel(null, this.urlMapper, this.lang, this.songRepo, null, this.userRepository, this.resourceRepo,
+				this.cultureCode, null, null, this.artistId, null, false, this.pvPlayerWrapperElement));
+			this.songsViewModel().updateResults(true);
+
+		}
 
 	}
 

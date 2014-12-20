@@ -7,7 +7,7 @@ ul.ui-autocomplete {
   z-index: 1050;
 }
 .ui-autocomplete-loading {
-  background: #ffffff url('ajax-loader.gif') right center no-repeat;
+  background: white url('ajax-loader.gif') right center no-repeat;
 }
 /* Override retarded widget link colors */
 .rightFrame .ui-widget-header a,
@@ -24,6 +24,17 @@ ul.ui-autocomplete {
 .rightFrame .ui-widget-content a:hover,
 .ui-dialog.ui-widget-content a:hover {
   color: #0065B2;
+}
+.rightFrame .ui-widget-header .btn-info,
+.rightFrame .ui-widget-content .btn-info,
+.ui-dialog.ui-widget-content .btn-info,
+.rightFrame .ui-widget-header .btn-info:hover,
+.rightFrame .ui-widget-content .btn-info:hover,
+.ui-dialog.ui-widget-content .btn-info:hover,
+.rightFrame .ui-widget-header .btn-info:visited,
+.rightFrame .ui-widget-content .btn-info:visited,
+.ui-dialog.ui-widget-content .btn-info:visited {
+  color: white;
 }
 .ui-dialog.ui-widget-content .ui-menu-item a,
 .ui-dialog.ui-widget-content .ui-menu-item a:hover,

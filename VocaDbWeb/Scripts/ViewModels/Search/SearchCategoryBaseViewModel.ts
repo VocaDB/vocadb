@@ -30,7 +30,7 @@ module vdb.viewModels.search {
 				this.tag = ko.observable("");
 				this.draftsOnly.subscribe(this.updateResultsWithTotalCount);
 				this.searchTerm.subscribe(this.updateResultsWithTotalCount);
-				this.tag.subscribe(this.updateResultsWithTotalCount);
+				this.showTags.subscribe(this.updateResultsWithoutTotalCount);
 				this.tag.subscribe(this.updateResultsWithTotalCount);
 			}
 
@@ -38,7 +38,7 @@ module vdb.viewModels.search {
 
 		}
 
-		private draftsOnly: KnockoutObservable<boolean>;
+		public draftsOnly: KnockoutObservable<boolean>;
 
 		// Method for loading a page of results.
 		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tag: string,
@@ -50,11 +50,11 @@ module vdb.viewModels.search {
 		public paging = new ServerSidePagingViewModel(); // Paging view model
 		public pauseNotifications = false;
 
-		private searchTerm: KnockoutObservable<string>;
+		public searchTerm: KnockoutObservable<string>;
 
 		public showTags: KnockoutObservable<boolean>;
 
-		private tag: KnockoutObservable<string>;
+		public tag: KnockoutObservable<string>;
 
 		// Update results loading the first page and updating total number of items.
 		// Commonly this is done after changing the filters or sorting.
