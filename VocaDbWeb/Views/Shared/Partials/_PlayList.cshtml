@@ -1,14 +1,15 @@
 ﻿<!-- binding context: SongListPlayListViewModel -->
 
 <div data-bind="with: pvPlayerViewModel" class="songlist-playlist-player">
-	<div data-bind="if: selectedSong() && selectedSong().song">
+	<div>		
+		<div data-bind="if: selectedSong() && selectedSong().song">
+			<h4>
+				<span data-bind="text: selectedSong().song.name"></span>
+				<span class="songlist-playlist-player-artists" data-bind="text: selectedSong().song.artistString"></span>
+			</h4>
 
-		<h4>
-			<span data-bind="text: selectedSong().song.name"></span>
-			<span class="songlist-playlist-player-artists" data-bind="text: selectedSong().song.artistString"></span>
-		</h4>
-
-		<div id="pv-player-wrapper" data-bind="html: playerHtml"></div>
+			<div id="pv-player-wrapper" data-bind="html: playerHtml"></div>
+		</div>
 
 		<a class="btn" data-bind="click: $parent.nextSong, css: { disabled: $parent.paging.totalItems() == 0 }" title="Next song">
 			<i class="icon-step-forward noMargin"></i>
@@ -18,7 +19,7 @@
 			Autoplay (Youtube and SoundCloud)
 		</a>
 
-		<a class="btn btn-info song-info pull-right" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Song', selectedSong().song.id) }">
+		<a class="btn btn-info song-info pull-right" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Song', selectedSong() && selectedSong().song ? selectedSong().song.id : null) }, visible: selectedSong() && selectedSong().song">
 			<i class="icon icon-info-sign"></i>
 			@ViewRes.Home.IndexStrings.ViewSongInfo
 		</a>
