@@ -77,55 +77,6 @@
 	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song, albumId), new { title = song.AdditionalNames })
 }
 
-@helper Songs(IEnumerable<SongContract> songs, bool songType = false) {
-	
-	<table>
-		@foreach (var song in songs) {
-		<tr>
-			<td>
-				@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
-					@SongIconLink(song)
-				}
-			</td>
-			<td>
-				@SongLink(song)
-				(@Translate.SongTypeNames[song.SongType])
-				<br />
-				<span class="extraInfo">@song.ArtistString</span>
-			</td>
-	   </tr>
-	 }	
-	</table>
-		
-}
-
-@helper Songs(IEnumerable<SongWithAlbumContract> songs, bool songType = false, bool album = false) {
-	
-	<table class="table-striped table-hover">
-		@foreach (var song in songs) {
-		<tr>
-			<td>
-				@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
-					@SongIconLink(song)
-				}
-			</td>
-			<td>
-				@SongLink(song)
-				&nbsp;
-				@SongTypeLabel(song.SongType)
-				@Helpers.PVServiceIcons(song.PVServices)
-				<br />
-				<span class="extraInfo">@song.ArtistString</span><br />
-				@if (album && song.Album != null) {
-				<span class="extraInfo">@HelperRes.SongHelpersStrings.FromAlbum @AlbumHelpers.DetailsLink(song.Album)</span><br />
-				}
-			</td>
-	   </tr>
-	 }	
-	</table>
-		
-}
-
 @helper SongGrid(IEnumerable<SongContract> songs, int columns,
 	bool displayType = false) {
 	

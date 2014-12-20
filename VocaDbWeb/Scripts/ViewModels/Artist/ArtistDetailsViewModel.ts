@@ -19,6 +19,7 @@ module vdb.viewModels {
 			private resourceRepo: rep.ResourceRepository,
 			private userRepository: rep.UserRepository,
 			private cultureCode: string,
+			private loggedUserId: number,
 			private pvPlayerWrapperElement: HTMLElement) {
 
 			this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(artistId, emailNotifications, siteNotifications, userRepository);
@@ -55,7 +56,7 @@ module vdb.viewModels {
 				return;
 
 			this.songsViewModel(new vdb.viewModels.search.SongSearchViewModel(null, this.urlMapper, this.lang, this.songRepo, null, this.userRepository, this.resourceRepo,
-				this.cultureCode, null, null, this.artistId, null, false, this.pvPlayerWrapperElement));
+				this.cultureCode, this.loggedUserId, null, this.artistId, null, false, this.pvPlayerWrapperElement));
 			this.songsViewModel().updateResults(true);
 
 		}

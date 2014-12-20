@@ -2,13 +2,10 @@
 using System.Linq;
 using System.Web.Mvc;
 using NLog;
-using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Controllers.DataAccess;
@@ -16,8 +13,6 @@ using System.Drawing;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Web.Models.Artist;
 using VocaDb.Web.Helpers;
-using MvcPaging;
-using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Controllers
 {
@@ -127,31 +122,6 @@ namespace VocaDb.Web.Controllers
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 
 			return RedirectToAction("Edit", new { id = result.Id });
-
-		}
-
-		public ActionResult Songs(int id = invalidId) {
-
-			if (id == invalidId)
-				return NoId();
-
-			return RedirectToActionPermanent("SongsPaged", new { id });
-
-		}
-
-		public PartialViewResult SongsPaged(int id = invalidId, int? page = null) {
-
-			var pageIndex = (page - 1) ?? 0;
-			var queryParams = new SongQueryParams {
-				Paging = PagingProperties.CreateFromPage(pageIndex, entriesPerPage, true),
-				SortRule = SongSortRule.Name,
-				ArtistId = id
-			};
-			var result = Services.Songs.Find(queryParams);
-
-			var data = new PagingData<SongContract>(result.Items.ToPagedList(pageIndex, entriesPerPage, result.TotalCount), id, "SongsPaged", "ui-tabs-4");
-
-			return PartialView("PagedSongs", data);
 
 		}
 

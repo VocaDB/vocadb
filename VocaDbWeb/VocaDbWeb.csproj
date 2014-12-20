@@ -2427,7 +2427,6 @@
     <Content Include="Views\Event\Find.cshtml" />
     <Content Include="Views\Event\SeriesDetails.cshtml" />
     <Content Include="Views\Shared\PagedAlbums.cshtml" />
-    <Content Include="Views\Shared\PagedSongs.cshtml" />
     <Content Include="Views\Shared\PVs\_PVEmbedDynamic.cshtml" />
     <Content Include="Views\Shared\PVs\_PVEmbedNicoIFrame.cshtml" />
     <Content Include="Views\Song\SongItem.cshtml" />

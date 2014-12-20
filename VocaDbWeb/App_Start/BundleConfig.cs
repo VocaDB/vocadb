@@ -132,6 +132,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
+				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
