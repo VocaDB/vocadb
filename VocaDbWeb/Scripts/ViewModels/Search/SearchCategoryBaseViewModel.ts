@@ -81,47 +81,4 @@ module vdb.viewModels.search {
 
 	}
 
-	export class AnythingSearchViewModel extends SearchCategoryBaseViewModel<dc.EntryContract> {
-
-		constructor(searchViewModel: SearchViewModel, lang: string, private entryRepo: rep.EntryRepository) {
-
-			super(searchViewModel);
-
-			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) =>
-				this.entryRepo.getList(pagingProperties, lang, searchTerm, tag, this.fields(), status, callback);
-
-		}
-
-		public entryUrl = (entry: dc.EntryContract) => {
-
-			return vdb.utils.EntryUrlMapper.details(entry.entryType, entry.id);
-
-		}
-
-		public fields = ko.computed(() => this.searchViewModel.showTags() ? "MainPicture,Tags" : "MainPicture");
-
-	}
-
-	export class TagSearchViewModel extends SearchCategoryBaseViewModel<dc.TagApiContract> {
-
-		constructor(searchViewModel: SearchViewModel, private tagRepo: rep.TagRepository) {
-
-			super(searchViewModel);
-
-			this.allowAliases.subscribe(this.updateResultsWithTotalCount);
-			this.categoryName.subscribe(this.updateResultsWithTotalCount);
-
-			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
-
-				this.tagRepo.getList(pagingProperties, searchTerm, this.allowAliases(), this.categoryName(), callback);
-
-			}
-
-		}
-
-		public allowAliases = ko.observable(false);
-		public categoryName = ko.observable("");
-
-	}
-
 }

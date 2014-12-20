@@ -2012,10 +2012,12 @@
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerYoutube.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AlbumSearchViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\AnythingSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchCategoryBaseViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SongSearchViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\TagSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ServerSidePagingViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongCreateViewModel.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\SongCreateViewModelTests.ts" />

@@ -14,20 +14,11 @@ module vdb.viewModels.search {
 
 			super(searchViewModel);
 
-			this.artistSearchParams = {
-				allowCreateNew: false,
-				acceptSelection: this.selectArtist,
-				height: 300
-			};
+			this.artistSearchParams = { acceptSelection: this.selectArtist };
 
-			if (sort)
-				this.sort(sort);
-
-			if (artistId)
-				this.selectArtist(artistId);
-
-			if (albumType)
-				this.albumType(albumType);
+			this.albumType = ko.observable(albumType || "Unknown");
+			this.artistId = ko.observable(artistId);
+			this.sort = ko.observable(sort || "Name");
 
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.albumType.subscribe(this.updateResultsWithTotalCount);
@@ -46,15 +37,15 @@ module vdb.viewModels.search {
 
 		}
 
-		public albumType = ko.observable("Unknown");
-		public artistId = ko.observable<number>(null);
+		public albumType: KnockoutObservable<string>;
+		public artistId: KnockoutObservable<number>;
 		public artistName = ko.observable("");
 		public artistParticipationStatus = ko.observable("Everything");
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public artistType = ko.observable<cls.artists.ArtistType>(null);
 		public childVoicebanks = ko.observable(false);
 		public showChildVoicebanks: KnockoutComputed<boolean>;
-		public sort = ko.observable("Name");
+		public sort: KnockoutObservable<string>;
 		public sortName = ko.computed(() => this.searchViewModel.resources() != null ? this.searchViewModel.resources().albumSortRuleNames[this.sort()] : "");
 		public viewMode = ko.observable("Details");
 
@@ -65,7 +56,11 @@ module vdb.viewModels.search {
 			if (!album)
 				return [];
 
-			var ratings = _.map([1, 2, 3, 4, 5], rating => { return { enabled: (Math.round(album.ratingAverage) >= rating) } });
+			var ratings = _.map([1, 2, 3, 4, 5], rating => {
+				return {
+					enabled: (Math.round(album.ratingAverage) >= rating)
+				}
+			});
 			return ratings;
 
 		};

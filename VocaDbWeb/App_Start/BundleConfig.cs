@@ -179,9 +179,11 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongsAdapter.js",
 				"~/Scripts/ViewModels/Search/SearchViewModel.js",
 				"~/Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js",
+				"~/Scripts/ViewModels/Search/AnythingSearchViewModel.js",
 				"~/Scripts/ViewModels/Search/ArtistSearchViewModel.js",
 				"~/Scripts/ViewModels/Search/AlbumSearchViewModel.js",
-				"~/Scripts/ViewModels/Search/SongSearchViewModel.js"
+				"~/Scripts/ViewModels/Search/SongSearchViewModel.js",
+				"~/Scripts/ViewModels/Search/TagSearchViewModel.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Create").Include(
