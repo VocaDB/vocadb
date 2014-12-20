@@ -83,7 +83,7 @@ module vdb.viewModels.search {
 		public draftsOnly = ko.observable(false);
 		public genreTags = ko.observableArray<string>();
 		public pageSize = ko.observable(10);
-		public resources = ko.observable<any>();
+		public resources = ko.observable<dc.ResourcesContract>();
 		public showAdvancedFilters = ko.observable(false);
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public searchType = ko.observable("Anything");
