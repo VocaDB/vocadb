@@ -7,7 +7,7 @@ namespace VocaDb.Model.Mapping.Albums {
 
 		public AlbumHitMap() {
 
-			Cache.ReadOnly();
+			Cache.NonStrictReadWrite();
 			Id(m => m.Id);
 			ReadOnly();
 
