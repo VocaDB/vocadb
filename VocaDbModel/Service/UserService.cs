@@ -196,61 +196,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		/*
-		/// <summary>
-		/// Creates a new user account.
-		/// </summary>
-		/// <param name="name">User name. Must be unique. Cannot be null or empty.</param>
-		/// <param name="pass">Password. Cannot be null or empty.</param>
-		/// <param name="email">Email address. Must be unique. Cannot be null.</param>
-		/// <param name="hostname">Host name where the registration is from.</param>
-		/// <param name="timeSpan">Time in which the user filled the registration form.</param>
-		/// <returns>Data contract for the created user. Cannot be null.</returns>
-		/// <exception cref="UserNameAlreadyExistsException">If the user name was already taken.</exception>
-		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
-		public UserContract Create(string name, string pass, string email, string hostname, TimeSpan timeSpan) {
-
-			ParamIs.NotNullOrEmpty(() => name);
-			ParamIs.NotNullOrEmpty(() => pass);
-			ParamIs.NotNull(() => email);
-
-			return HandleTransaction(session => {
-
-				var lc = name.ToLowerInvariant();
-				var existing = session.Query<User>().FirstOrDefault(u => u.NameLC == lc);
-
-				if (existing != null)
-					throw new UserNameAlreadyExistsException();
-
-				if (!string.IsNullOrEmpty(email)) {
-
-					existing = session.Query<User>().FirstOrDefault(u => u.Email == email);
-
-					if (existing != null)
-						throw new UserEmailAlreadyExistsException();
-					
-				}
-
-				var salt = new Random().Next();
-				var hashed = LoginManager.GetHashedPass(lc, pass, salt);
-				var user = new User(name, hashed, email, salt);
-				user.UpdateLastLogin(hostname);
-				session.Save(user);
-
-				AuditLog(string.Format("registered from {0} in {1}.", MakeGeoIpToolLink(hostname), timeSpan), session, user);
-
-				return new UserContract(user);
-
-			});
-
-		}*/
-
-		public void DeleteAlbumForUser(int albumForUserId) {
-
-			DeleteEntity<AlbumForUser>(albumForUserId, PermissionToken.EditProfile);
-
-		}
-
 		public void DeleteComment(int commentId) {
 
 			HandleTransaction(session => {
@@ -450,24 +395,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		[Obsolete("Handled by update")]
-		public void RemoveAlbumFromUser(int userId, int albumId) {
-
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
-
-			HandleTransaction(session => {
-
-				var link = session.Query<AlbumForUser>().FirstOrDefault(a => a.Album.Id == albumId && a.User.Id == userId);
-
-				if (link != null) {
-					AuditLog("deleting " + link, session);
-					session.Delete(link);
-				}
-
-			});
-
-		}
-
 		public void RemoveArtistFromUser(int userId, int artistId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
@@ -536,30 +463,6 @@ namespace VocaDb.Model.Service {
 				}
 
 				session.Save(message);
-
-			});
-
-		}
-
-		[Obsolete]
-		public void UpdateAlbumForUserMediaType(int albumForUserId, MediaType mediaType) {
-
-			UpdateEntity<AlbumForUser>(albumForUserId, albumForUser => albumForUser.MediaType = mediaType, PermissionToken.EditProfile);
-
-		}
-
-		[Obsolete]
-		public void UpdateAlbumForUserRating(int albumForUserId, int rating) {
-
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
-
-			HandleTransaction(session => {
-
-				var albumForUser = session.Load<AlbumForUser>(albumForUserId);
-
-				albumForUser.Rating = rating;
-				albumForUser.Album.UpdateRatingTotals();
-				session.Update(albumForUser.Album);
 
 			});
 

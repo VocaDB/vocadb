@@ -174,20 +174,6 @@ function initPage(albumId, collectionRating, saveStr, confirmDeleteStr, urlMappe
 
 	});
 
-	// TODO: not in use AFAIK
-	$("#removeAlbumLink").click(function () {
-
-		$.post(urlMapper.mapRelative("/User/RemoveAlbumFromUser"), { albumId: albumId }, function (result) {
-
-			$("#addAlbumLink").show();
-			$("#removeAlbumLink").hide();
-
-		});
-
-		return false;
-
-	});
-
 	initReportEntryPopup(saveStr, urlMapper.mapRelative("/Album/CreateReport"), { albumId: albumId });
 
 	$("#editTags").click(function () {

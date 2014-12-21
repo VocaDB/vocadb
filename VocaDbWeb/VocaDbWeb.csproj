@@ -2037,7 +2037,6 @@
     <Content Include="Scripts\SongList\Edit.js" />
     <Content Include="Scripts\Song\Details.js" />
     <Content Include="Scripts\Song\Edit.js" />
-    <Content Include="Scripts\Song\Index.js" />
     <Content Include="Scripts\soundcloud-api.js" />
     <Content Include="Scripts\Tag\Edit.js" />
     <Content Include="Scripts\ui\i18n\jquery-ui-i18n.js" />

@@ -33,7 +33,6 @@ namespace VocaDb.Web.Controllers
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private const int usersPerPage = 50;
 
 		private UserQueries Data { get; set; }
 
@@ -704,14 +703,6 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
-		[Obsolete("Handled by update")]
-		public void RemoveAlbumFromUser(int albumId) {
-			
-			Service.RemoveAlbumFromUser(LoggedUserId, albumId);
-
-		}
-
-		[AcceptVerbs(HttpVerbs.Post)]
 		public void RemoveArtistFromUser(int artistId) {
 
 			Service.RemoveArtistFromUser(LoggedUserId, artistId);
@@ -826,32 +817,9 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
-		[Obsolete]
-		public void UpdateAlbumForUserMediaType(int albumForUserId, MediaType mediaType) {
-			
-			Service.UpdateAlbumForUserMediaType(albumForUserId, mediaType);
-
-		}
-
-		[AcceptVerbs(HttpVerbs.Post)]
-		[Obsolete]
-		public void UpdateAlbumForUserRating(int albumForUserId, int rating) {
-
-			Service.UpdateAlbumForUserRating(albumForUserId, rating);
-
-		}
-
-		[AcceptVerbs(HttpVerbs.Post)]
 		public void UpdateArtistSubscription(int artistId, bool? emailNotifications, bool? siteNotifications) {
 			
 			Data.UpdateArtistSubscriptionForCurrentUser(artistId, emailNotifications, siteNotifications);
-
-		}
-
-		[AcceptVerbs(HttpVerbs.Post)]
-		public void DeleteAlbumForUser(int albumForUserId) {
-
-			Service.DeleteAlbumForUser(albumForUserId);
 
 		}
 
