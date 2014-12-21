@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Linq.Expressions;
@@ -60,18 +59,6 @@ namespace VocaDb.Web.Helpers {
 			}
 		}
 
-		public static SelectList LanguageSelectionList {
-			get {
-				return new SelectList(LanguageSelections, "Key", "Value");
-			}
-		}
-
-		public static SelectList LanguageSelectionListWithoutUnspecified {
-			get {
-				return new SelectList(LanguageSelectionsWithoutUnspecified, "Key", "Value");
-			}
-		}
-
 		public static string ConvertNewlinesToBreaks(this HtmlHelper html, string text) {
 
 			return text.Replace(Environment.NewLine, "<br />").Replace("\n", "<br />");
@@ -110,10 +97,6 @@ namespace VocaDb.Web.Helpers {
 			return new SelectList(AppConfig.SongTypes.ToDictionary(s => s, Translate.SongTypeNames.GetName), "Key", "Value", selectedValue);
 		}
 
-		public static CSSClassBuilder<TModel> CSS<TModel>(this HtmlHelper<TModel> htmlHelper, string initial) where TModel : class {
-			return new CSSClassBuilder<TModel>(htmlHelper.ViewData.Model, initial);
-		}
-
 		public static MvcHtmlString ArtistTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, ArtistType>> expression, object htmlAttributes = null, object selectedValue = null) {
 
@@ -133,10 +116,6 @@ namespace VocaDb.Web.Helpers {
 
 			return htmlHelper.DropDownListFor(expression, CreateEmailOptionsList(selectedValue), htmlAttributes);
 
-		}
-
-		public static MvcHtmlString Encode(this HtmlHelper htmlHelper, string str) {
-			return new MvcHtmlString(HttpUtility.HtmlEncode(str));
 		}
 
 		public static MvcHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
@@ -249,37 +228,7 @@ namespace VocaDb.Web.Helpers {
 			if (trTag != null)
 				tableTag.InnerHtml += trTag.ToString();
 
-			/*
-			 * 		@{ int i = 0; }
-	
-		@foreach (var user in users) {
-			if (i % columns == 0) {
-				@Html.Raw("<tr>")
-			}
-			<td>
-				@ProfileIcon(user, 20)
-			</td>
-			<td>
-				@UserLink(user)
-			</td>
-			{ i++; }
-			if (i % columns == 0) {
-				@Html.Raw("</tr>")
-			}
-		}
-		@if (i % columns != 0) {
-			@Html.Raw("</tr>")
-		}
-
-			 */
-
 			return new MvcHtmlString(tableTag.ToString());
-
-		}
-
-		public static MvcHtmlString Image(this HtmlHelper htmlHelper, string src, string alt) {
-
-			return new MvcHtmlString(string.Format("<img src='{0}' alt='{1}' />", src, alt));
 
 		}
 
@@ -294,12 +243,6 @@ namespace VocaDb.Web.Helpers {
 			Expression<Func<TModel, ContentLanguageSelection>> expression, object htmlAttributes = null, bool allowUnspecified = false, object selectedValue = null) {
 
 			return htmlHelper.DropDownListFor(expression, allowUnspecified ? CreateLanguageSelectionList(selectedValue) : CreateLanguageSelectionListWithoutUnspecified(selectedValue), htmlAttributes);
-
-		}
-
-		public static MvcHtmlString LanguageSelectionDropDownList(this HtmlHelper htmlHelper, string name, object htmlAttributes, bool allowUnspecified) {
-
-			return htmlHelper.DropDownList(name, allowUnspecified ? LanguageSelectionList : LanguageSelectionListWithoutUnspecified, htmlAttributes);
 
 		}
 
@@ -319,21 +262,6 @@ namespace VocaDb.Web.Helpers {
 		public static string ParseBBCode(string bbCode) {
 
 			return new BBCodeCache(BBCodeConverters.Default()).GetHtml(bbCode);
-
-		}
-
-		[Obsolete]
-		public static MvcHtmlString PVServiceIcons(this HtmlHelper htmlHelper, PVServices services) {
-
-			var sb = new StringBuilder();
-
-			if (services.HasFlag(PVServices.NicoNicoDouga))
-				sb.Append(Image(htmlHelper, VideoServiceLinkUrl(htmlHelper, PVService.NicoNicoDouga), "NicoNicoDouga"));
-
-			if (services.HasFlag(PVServices.Youtube))
-				sb.Append(Image(htmlHelper, VideoServiceLinkUrl(htmlHelper, PVService.Youtube), "Youtube"));
-
-			return new MvcHtmlString(sb.ToString());
 
 		}
 
@@ -357,12 +285,6 @@ namespace VocaDb.Web.Helpers {
 				default:
 					return string.Empty;
 			}
-
-		}
-
-		public static void RenderPartialTyped<T>(this HtmlHelper htmlHelper, string partialViewName, T model) {
-
-			htmlHelper.RenderPartial(partialViewName, model);
 
 		}
 

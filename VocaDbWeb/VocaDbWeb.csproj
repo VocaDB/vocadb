@@ -894,7 +894,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ActivityFeedRenderer.cs" />
     <Compile Include="Helpers\DataFormatUtils.cs" />
     <Compile Include="Helpers\DateTimeUtils.cs" />
     <Compile Include="Helpers\HighchartsHelper.cs" />
@@ -905,14 +904,10 @@
     <Compile Include="Helpers\Login.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
     <Compile Include="Helpers\PVHelper.cs" />
-    <Compile Include="Helpers\RadioButtonHelpers.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Helpers\ResourceHelpers.cs" />
     <Compile Include="Helpers\RouteInfo.cs" />
     <Compile Include="Helpers\SearchHelpers.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Helpers\Support\CSSClassBuilder.cs" />
     <Compile Include="Helpers\Support\TranslateableEnum.cs" />
     <Compile Include="Helpers\TempDataExtender.cs" />
     <Compile Include="Helpers\Translate.cs" />
