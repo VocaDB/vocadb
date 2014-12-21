@@ -18,11 +18,12 @@
 			var uiCultureCode = '@UICulture';
 			moment.locale(cultureCode);
 
+			var filter = '@ViewBag.Filter';
 			var urlMapper = new vdb.UrlMapper('@RootPath');
 			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper);
 			var repo = repoFactory.userRepository();
 			var resourceRepo = repoFactory.resourceRepository();
-			var viewModel = new vdb.viewModels.user.ListUsersViewModel(repo, resourceRepo, uiCultureCode);
+			var viewModel = new vdb.viewModels.user.ListUsersViewModel(repo, resourceRepo, uiCultureCode, filter);
 			ko.applyBindings(viewModel);
 
 		});

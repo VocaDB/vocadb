@@ -8,7 +8,10 @@ module vdb.viewModels.user {
 		constructor(
 			private repo: repositories.UserRepository,
 			resourceRepo: repositories.ResourceRepository,
-			cultureCode: string) {
+			cultureCode: string,
+			searchTerm: string) {
+
+			this.searchTerm = ko.observable(searchTerm || "").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 
 			this.resources = new vdb.models.ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(null, "userGroupNames");
@@ -33,7 +36,7 @@ module vdb.viewModels.user {
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
 		public resources: vdb.models.ResourcesManager;
-		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+		public searchTerm: KnockoutObservable<string>;
 		public sort = ko.observable("RegisterDate");
 
 		public userGroupName = (userGroup: string) => {

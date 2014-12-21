@@ -17,6 +17,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
@@ -225,7 +226,19 @@ namespace VocaDb.Web.Controllers
 			//
         // GET: /User/
 
-        public ActionResult Index() {
+        public ActionResult Index(string filter = null) {
+
+			if (!string.IsNullOrEmpty(filter)) {
+
+				var result = Data.GetUsers(SearchTextQuery.Create(filter), UserGroupId.Nothing, false, false, UserSortRule.Name, new PagingProperties(0, 1, true), u => u.Name);
+
+				if (result.TotalCount == 1 && result.Items.Length == 1) {
+					return RedirectToAction("Profile", new { id = result.Items[0] });
+				}
+
+				ViewBag.Filter = filter;
+				
+			}
 
 			return View();
 
