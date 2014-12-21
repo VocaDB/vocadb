@@ -1,5 +1,5 @@
-﻿@using VocaDb.Web.Helpers;
-@using VocaDb.Model.Domain.Security;
+﻿@using VocaDb.Model.Domain.Security;
+@inherits VocaDb.Web.Code.VocaDbPage
 
 @{
     ViewBag.Title = "Site management";
@@ -10,24 +10,28 @@
 
 <p>@Html.ActionLink("View recent comments", "Index", "Comment")</p>	
 
-@if (Login.Manager.HasPermission(PermissionToken.ViewAuditLog)) {
+@if (UserContext.HasPermission(PermissionToken.ViewAuditLog)) {
 <p>@Html.ActionLink("View audit log", "ViewAuditLog")</p>
 }
 
-@if (Login.Manager.HasPermission(PermissionToken.ManageEntryReports)) {
+@if (UserContext.HasPermission(PermissionToken.ManageEntryReports)) {
 <p>@Html.ActionLink("Manage entry reports", "ViewEntryReports")</p>	
 }
 
-@if (Login.Manager.HasPermission(PermissionToken.BulkDeletePVs)) {
+@if (UserContext.HasPermission(PermissionToken.BulkDeletePVs)) {
 <p>@Html.ActionLink("Delete PVs by author", "PVsByAuthor")</p>	
 }
 
-@if (Login.Manager.HasPermission(PermissionToken.ManageIPRules)) {
+@if (UserContext.HasPermission(PermissionToken.MoveToTrash)) {
+	<p>@Html.ActionLink("Manage deleted albums", "Deleted", "Album")</p>
+}
+
+@if (UserContext.HasPermission(PermissionToken.ManageIPRules)) {
 <p>@Html.ActionLink("Manage IP rules", "ManageIPRules")</p>	
 }
 <br />
 
-@if (Login.Manager.HasPermission(PermissionToken.Admin)) {
+@if (UserContext.HasPermission(PermissionToken.Admin)) {
 <h3>Database maintenance tasks</h3>
 <p>
 @Html.ActionLink("Cleanup old log entries", "CleanupOldLogEntries")

@@ -5,6 +5,8 @@
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Albums, "Index") };
 }
 
+<input type="text" data-bind="textInput: searchTerm" maxlength="200" />
+
 @{ Html.RenderPartial("Partials/_AlbumSearchList"); }
 
 @section BodyScripts {
