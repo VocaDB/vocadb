@@ -40,7 +40,10 @@ module vdb.viewModels {
                 || data.onlyNewUsers);
             
             $("#userNameField").autocomplete({
-                source: vdb.functions.mapAbsoluteUrl("/User/FindByName"),
+                source: (ui, callback) => {
+					var url = vdb.functions.mapAbsoluteUrl("/api/users/names");
+					$.getJSON(url, { query: ui.term }, callback);
+                },
                 select: (event, ui) => {
                     this.userName(ui.item.value);
                     return false;
@@ -62,7 +65,7 @@ module vdb.viewModels {
                         if (name.length == 0)
                             response({});
                         else
-                            $.get("/User/FindByName", { term: name, startsWith: true }, response);
+							$.getJSON("/api/users/names", { query: name, startsWith: true }, response);
                     },
                     focus: function () {
                         // prevent value inserted on focus

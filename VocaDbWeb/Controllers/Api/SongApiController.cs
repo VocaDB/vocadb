@@ -85,6 +85,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
 		/// <param name="onlyWithPvs">Whether to only include songs with at least one PV.</param>
+		/// <param name="pvServices">Filter by one or more PV services (separated by commas). The song will pass the filter if it has a PV for any of the matched services.</param>
 		/// <param name="since">Allow only entries that have been created at most this many hours ago. By default there is no filtering.</param>
 		/// <param name="lyrics">Filter by lyrics in the specified language. By default there is no filtering.</param>
 		/// <param name="userCollectionId">Filter by user's rated songs. By default there is no filtering.</param>

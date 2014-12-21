@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using System.Web.Http.Description;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
@@ -159,6 +158,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="onlyVerified">Whether to only include verified artists.</param>
 		/// <param name="fields">Optional fields. Possible values are None and MainPicture. Optional.</param>
 		/// <returns>Partial result of users.</returns>
+		/// <example>http://vocadb.net/api/users?query=Shiro&amp;groups=Trusted</example>
 		[Route("")]
 		public PartialFindResult<UserForApiContract> GetList(
 			string query = "", 

@@ -114,7 +114,10 @@
             });
 
             $("#receiverName").autocomplete({
-                source: urlMapper.mapRelative("/User/FindByName")
+                source: function (ui, callback) {
+                	var url = vdb.functions.mapAbsoluteUrl("/api/users/names");  
+                	$.getJSON(url, { query: ui.term }, callback);
+                } 
             });
 		
         });

@@ -215,32 +215,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		[Obsolete]
-		public UserContract[] FindUsersByName(string term, NameMatchMode matchMode = NameMatchMode.StartsWith,
-			int maxResults = 10) {
-
-			if (string.IsNullOrEmpty(term))
-				return new UserContract[0];
-
-			term = FindHelpers.CleanTerm(term.Trim());
-
-			return HandleQuery(session => {
-
-				User[] users;
-				if (matchMode == NameMatchMode.StartsWith) {
-					users = session.Query<User>().Where(u => u.Name.StartsWith(term)).OrderBy(u => u.Name).Take(maxResults).ToArray();										
-				} else if (matchMode == NameMatchMode.Partial) {
-					users = session.Query<User>().Where(u => u.Name.Contains(term)).OrderBy(u => u.Name).Take(maxResults).ToArray();
-				} else {
-					users = session.Query<User>().Where(u => u.Name == term).OrderBy(u => u.Name).Take(maxResults).ToArray();					
-				}
-
-				return users.Select(u => new UserContract(u)).ToArray();
-
-			});
-
-		}
-
 		public CommentContract[] GetComments(int userId) {
 
 			return HandleQuery(session => {
@@ -257,27 +231,6 @@ namespace VocaDb.Model.Service {
 			});
 
 		}
-
-		/*public UserMessageContract GetMessageDetails(int messageId) {
-
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
-
-			return HandleTransaction(session => {
-
-				var msg = session.Load<UserMessage>(messageId);
-
-				VerifyResourceAccess(msg.Sender, msg.Receiver);
-
-				if (!msg.Read && PermissionContext.LoggedUser.Id == msg.Receiver.Id) {
-					msg.Read = true;
-					session.Update(msg);
-				}
-
-				return new UserMessageContract(msg);
-
-			});
-
-		}*/
 
 		public UserContract GetUser(int id, bool getPublicCollection = false) {
 
