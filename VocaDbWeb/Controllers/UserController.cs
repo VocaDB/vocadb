@@ -82,14 +82,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Artists(int id) {
-
-			var artists = Data.GetArtists(id);
-
-			return PartialView(artists);
-
-		}
-
 		public ActionResult ConnectTwitter() {
 
 			// Make sure session ID is initialized

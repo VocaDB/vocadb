@@ -1,5 +1,4 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
-@using System.Web.Mvc;
 @using System.Web.Mvc.Html;
 @using System.Web.Routing
 @using VocaDb.Model
@@ -7,7 +6,6 @@
 @using VocaDb.Model.DataContracts
 @using VocaDb.Model.Domain;
 @using VocaDb.Model.Domain.PVs
-@using VocaDb.Model.Domain.Songs;
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 
@@ -29,10 +27,6 @@
 		@line
 		<br />
 	}
-}
-
-@helper DraftIcon(VocaDb.Model.DataContracts.Albums.AlbumContract album) {
-	@DraftIcon(album.Status)
 }
 
 @helper DraftIcon(VocaDb.Model.Domain.EntryStatus status) {
@@ -188,15 +182,6 @@
 	<label class="helpTip" data-bind="qTip: null" title="@title" for="@(forElem ?? "")">@label</label>			
 }
 
-@* NOT IN USE, can be removed *@
-@helper HelpMessage(string message, string id = null) {
-    if (string.IsNullOrEmpty(id)) {
-		<span class="helpIcon helpToolTip" title="@message"></span>
-    } else {
-		<span class="helpIcon helpToolTip" title="@message" id="@id"></span>	 
-    }
-}
-
 @helper ImageUploadMessage() {
 	<p>
 		@string.Format(HelperRes.HelperStrings.UploadPictureInfo, string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)
@@ -227,10 +212,6 @@
 		@NotificationIcon()
 		<span id="@messageId">@message</span>		
 	</div>   
-}
-
-@helper PrintComment(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false) {	
-	@CommentHelpers.PrintComment(contract, allowDelete, alwaysAllowDelete)
 }
 
 @helper PVServiceIcon(PVService service) {

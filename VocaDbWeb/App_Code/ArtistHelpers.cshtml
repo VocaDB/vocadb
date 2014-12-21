@@ -156,41 +156,6 @@
 
 }
 
-@helper ArtistList(IEnumerable<ArtistContract> artists, bool showType = false) {
-	
-	<table>
-		@foreach (var artist in artists) {
-		<tr>
-			<td>
-				@ArtistIconLink(artist)
-			</td>
-			<td>
-				@Html.ActionLink(artist.Name, "Details", "Artist", new { id = artist.Id }, null)
-				@if (showType) {
-					@("(")@Translate.ArtistTypeName(artist.ArtistType)@(")")
-				}
-				<br />
-				<span class="extraInfo">@artist.AdditionalNames</span>
-			</td>
-	   </tr>
-		}	
-	</table>
-		
-}
-
-@helper ArtistListFlat(IList<ArtistContract> artists, bool showType = false) {
-	
-	foreach (var artist in artists) {
-		if (showType) {
-			@ArtistTypeLabel(artist.ArtistType)
-		}
-		@ArtistLink(artist)
-		if (artist != artists.Last()) {
-			@(", ")
-		}
-	}
-}
-
 @helper ArtistTypesDropdownKnockout(string binding) {
 	<select data-bind="value: @(binding)">
 		@foreach (var artistType in Translate.ArtistTypeNames.GetValuesAndNames(AppConfig.ArtistTypes)) {

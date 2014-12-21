@@ -2282,6 +2282,7 @@
     <Folder Include="Scripts\Admin\" />
     <Folder Include="Scripts\KnockoutExtensions\Album\" />
     <Folder Include="Views\Integration\" />
+    <Folder Include="Views\Shared\EditorTemplates\" />
     <Folder Include="Views\Shared\KnockoutTemplates\" />
     <Folder Include="Views\SongList\Partials\" />
   </ItemGroup>
@@ -2357,7 +2358,6 @@
     <Content Include="Views\Artist\ViewVersion.cshtml" />
     <Content Include="App_Code\SongHelpers.cshtml" />
     <Content Include="Views\Song\ViewVersion.cshtml" />
-    <Content Include="Views\Shared\Artists.cshtml" />
     <Content Include="Views\SongList\Edit.cshtml" />
     <Content Include="Views\SongList\Details.cshtml" />
     <Content Include="App_Code\ActivityfeedHelpers.cshtml" />
@@ -2426,7 +2426,6 @@
     <Content Include="Views\User\OwnedArtistForUserEditRow.cshtml" />
     <Content Include="Views\Song\ManageTagUsages.cshtml" />
     <Content Include="Views\User\FavoriteSongs.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\LocalizedStringWithIdContract.cshtml" />
     <Content Include="Views\User\AlbumCollection.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Song\UsersWithSongRating.cshtml" />
