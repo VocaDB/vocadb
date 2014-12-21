@@ -2,9 +2,7 @@
 @using System.Web.Mvc.Html;
 @using Microsoft.Web.Helpers
 @using Resources
-@using VocaDb.Model.DataContracts.Users;
 @using VocaDb.Model.Domain.Users
-@using VocaDb.Web.Helpers
 
 @helper IconAndName(IUserWithEmail user, int size = 20) {
 	@ProfileIcon(user, size)
@@ -99,57 +97,4 @@
 	} else {
 		@name		
 	}
-}
-
-@helper UserTable(IEnumerable<UserContract> users, UserGroupId groupId, string name) {
-
-    <table class="table table-striped table-hover">
-	    <thead>
-		    <tr>
-			    <th colspan="2">
-			        @Html.ActionLink(ViewRes.User.DetailsStrings.UserName, "Index", "User", new { GroupId = groupId, Name = name, sort = VocaDb.Model.Service.UserSortRule.Name }, null)
-			    </th>
-			    <th>
-			        @Html.ActionLink(ViewRes.User.DetailsStrings.MemberSince, "Index", "User", new { GroupId = groupId, Name = name, sort = VocaDb.Model.Service.UserSortRule.RegisterDate }, null)
-			    </th>
-			    <th>
-			        @Html.ActionLink(ViewRes.User.DetailsStrings.UserGroup, "Index", "User", new { GroupId = groupId, Name = name, sort = VocaDb.Model.Service.UserSortRule.Group }, null)
-			    </th>
-			    <th></th>
-		    </tr>
-	    </thead>
-	    <tbody>
-	    @foreach (var user in users) {
-		    <tr>
-			    <td>
-				    <a href="@Url.Action("Profile", "User", new { id = user.Name })">
-					    @ProfileIcon(user)					
-				    </a>
-			    </td>
-			    <td>
-					@if (!user.Active) {
-						<div class="disabled">
-							@UserLink(user)
-						</div>
-					} else {
-						@UserLink(user)						
-					}
-			    </td>
-			    <td>
-				    @user.CreateDate
-			    </td>
-			    <td>
-				    @Translate.UserGroups[user.GroupId]
-			    </td>
-			    <td>
-				    @if (Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.ManageUserPermissions)) {
-					    <text>&nbsp;</text>
-					    @Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", "User", new { id = user.Id }, new { @class = "textLink editLink" });	
-				    }
-			    </td>
-		    </tr>
-	    }
-	    </tbody>
-    </table>    
-        
 }

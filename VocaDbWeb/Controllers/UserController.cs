@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.Security;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth.Messages;
 using Microsoft.Web.Helpers;
-using MvcPaging;
 using NLog;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Users;
@@ -19,14 +17,12 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Models;
-using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.User;
 using VocaDb.Web.Helpers;
 
@@ -229,28 +225,9 @@ namespace VocaDb.Web.Controllers
 			//
         // GET: /User/
 
-        public ActionResult Index(Index model, string filter = null, UserSortRule? sort = null, int totalCount = 0, int page = 1) {
+        public ActionResult Index() {
 
-	        if (!string.IsNullOrEmpty(filter) && string.IsNullOrEmpty(model.Name))
-		        model.Name = filter;
-
-			if (Request.IsAjaxRequest())
-				return UsersPaged(model.GroupId, model.Name, model.Disabled, model.VerifiedArtists, sort ?? UserSortRule.RegisterDate, totalCount, page);
-
-			var pageIndex = page - 1;
-			var groupId = model.GroupId;
-			var sortRule = sort ?? UserSortRule.RegisterDate;
-
-			var result = Data.GetUsers(SearchTextQuery.Create(model.Name), groupId, model.Disabled, model.VerifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, true), u => new UserContract(u));
-
-			if (page == 1 && result.TotalCount == 1 && result.Items.Length == 1) {
-				return RedirectToAction("Profile", new { id = result.Items[0].Name });
-			}
-
-			var data = new PagingData<UserContract>(result.Items.ToPagedList(pageIndex, usersPerPage, result.TotalCount), null, "Index", "usersList");
-			data.RouteValues = new RouteValueDictionary(new { groupId, name = model.Name, disabled = model.Disabled, sortRule, totalCount = result.TotalCount, action = "Index" });
-
-			return View(new Index(data, groupId, model.Name, model.VerifiedArtists));
+			return View();
 
         }
 
@@ -889,21 +866,6 @@ namespace VocaDb.Web.Controllers
 			TempData.SetSuccessMessage("Twitter login disconnected");
 
 			return RedirectToAction("MySettings");
-
-		}
-
-		public ActionResult UsersPaged(UserGroupId groupId = UserGroupId.Nothing, string name = "", bool disabled = false, bool verifiedArtists = false,
-			UserSortRule sortRule = UserSortRule.RegisterDate, int totalCount = 0, int page = 1) {
-
-			var pageIndex = page - 1;
-			var result = Data.GetUsers(SearchTextQuery.Create(name), groupId, disabled, verifiedArtists, sortRule, PagingProperties.CreateFromPage(pageIndex, usersPerPage, false), u => new UserContract(u));
-			var data = new PagingData<UserContract>(result.Items.ToPagedList(pageIndex, usersPerPage, totalCount), null, "Index", "usersList", addTotalCount: true);
-			data.RouteValues = new RouteValueDictionary(new { groupId, sortRule });
-
-			if (Request.IsAjaxRequest())
-				return PartialView("PagedUsers", data);
-			else
-				return View("PagedUsers", data);
 
 		}
 

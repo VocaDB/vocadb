@@ -89,9 +89,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="MvcPaging">
-      <HintPath>..\packages\MvcPaging.2.0.1\lib\net40\MvcPaging.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -945,7 +942,6 @@
     <Compile Include="Models\NewsEntry\NewsEntryEdit.cs" />
     <Compile Include="Models\SharedModels.cs" />
     <Compile Include="Models\Shared\ArchivedObjectVersion.cs" />
-    <Compile Include="Models\Shared\PagingData.cs" />
     <Compile Include="Models\Shared\PVEmbedParams.cs" />
     <Compile Include="Models\Shared\WebLinkDisplay.cs" />
     <Compile Include="Models\SongLists\CreateFromWVR.cs" />
@@ -960,7 +956,6 @@
     <Compile Include="Models\User\AlbumCollection.cs" />
     <Compile Include="Models\User\ComposeMessage.cs" />
     <Compile Include="Models\User\ForgotPassword.cs" />
-    <Compile Include="Models\User\Index.cs" />
     <Compile Include="Models\User\FavoriteSongs.cs" />
     <Compile Include="Models\User\Messages.cs" />
     <Compile Include="Models\User\RegisterOpenAuthModel.cs" />
@@ -1532,7 +1527,6 @@
     <Content Include="App_Code\KnockoutHelpers.cshtml" />
     <Content Include="Content\Styles\PVViewer_Blue.less" />
     <Content Include="Content\Styles\PVViewer_Black.less" />
-    <Content Include="App_Code\PagingHelpers.cshtml" />
     <Content Include="Content\Styles\Snow2013.less" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\ApiHelp\ResourceModel.cshtml" />
@@ -1585,8 +1579,6 @@
     <Content Include="Scripts\jquery.qtip.js" />
     <Content Include="Scripts\jquery.qtip.min.js" />
     <Content Include="Scripts\jquery.tools.min.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jqwidgets27\globalization\globalize.js" />
     <Content Include="Scripts\jqwidgets27\globalization\jquery.glob.cs-CZ.js" />
     <Content Include="Scripts\jqwidgets27\globalization\jquery.glob.de-DE.js" />
@@ -2437,7 +2429,6 @@
     <Content Include="Views\Help\Index.ja.cshtml" />
     <Content Include="Views\Shared\PVs\_PVContent.cshtml" />
     <Content Include="Views\Ext\EmbedSong.cshtml" />
-    <Content Include="Views\User\PagedUsers.cshtml" />
     <Content Include="Views\User\OwnedArtistForUserEditRow.cshtml" />
     <Content Include="Views\Song\ManageTagUsages.cshtml" />
     <Content Include="Views\User\FavoriteSongs.cshtml" />

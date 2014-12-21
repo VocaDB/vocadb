@@ -1,10 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using System.Web.Routing;
-using MvcPaging;
 using NLog;
-using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Resources;
@@ -18,7 +15,6 @@ using VocaDb.Web.Models;
 using System.Drawing;
 using VocaDb.Model.Helpers;
 using VocaDb.Web.Models.Album;
-using VocaDb.Web.Models.Shared;
 using VocaDb.Model.DataContracts.UseCases;
 
 namespace VocaDb.Web.Controllers
