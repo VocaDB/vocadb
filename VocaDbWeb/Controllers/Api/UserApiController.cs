@@ -157,9 +157,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="sort">Sort rule.</param>
 		/// <param name="includeDisabled">Whether to include disabled user accounts.</param>
 		/// <param name="onlyVerified">Whether to only include verified artists.</param>
+		/// <param name="fields">Optional fields. Possible values are None and MainPicture. Optional.</param>
 		/// <returns>Partial result of users.</returns>
 		[Route("")]
-		[ApiExplorerSettings(IgnoreApi=true)]
 		public PartialFindResult<UserForApiContract> GetList(
 			string query = "", 
 			UserGroupId groups = UserGroupId.Nothing,
@@ -169,10 +169,11 @@ namespace VocaDb.Web.Controllers.Api {
 			bool getTotalCount = false,
 			UserSortRule? sort = null,
 			bool includeDisabled = false,
-			bool onlyVerified = false) {
+			bool onlyVerified = false,
+			UserOptionalFields fields = UserOptionalFields.None) {
 
 			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, sort ?? UserSortRule.Name, 
-				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, iconFactory));
+				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, iconFactory, fields));
 			
 		}
 

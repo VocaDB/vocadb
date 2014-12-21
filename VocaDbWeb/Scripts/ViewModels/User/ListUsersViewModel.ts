@@ -32,7 +32,7 @@ module vdb.viewModels.user {
 		public group = ko.observable("Nothing");
 		public loading = ko.observable(false);
 		public onlyVerifiedArtists = ko.observable(false);
-		public page = ko.observableArray<dc.UserWithIconContract>([]); // Current page of items
+		public page = ko.observableArray<dc.user.UserApiContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
 		public resources: vdb.models.ResourcesManager;
@@ -58,7 +58,8 @@ module vdb.viewModels.user {
 				this.paging.page(1);
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
-			this.repo.getList(pagingProperties, this.searchTerm(), this.sort(), this.group(), this.disabledUsers(), this.onlyVerifiedArtists(), result => {
+			this.repo.getList(pagingProperties, this.searchTerm(), this.sort(), this.group(), this.disabledUsers(),
+				this.onlyVerifiedArtists(), "MainPicture", result => {
 
 				this.pauseNotifications = false;
 

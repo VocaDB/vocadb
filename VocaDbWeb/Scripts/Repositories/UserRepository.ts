@@ -70,7 +70,8 @@ module vdb.repositories {
 			groups: string,
 			includeDisabled: boolean,
 			onlyVerified: boolean,
-			callback: (result: dc.PartialFindResultContract<dc.UserWithIconContract>) => void) => {
+			fields: string,
+			callback: (result: dc.PartialFindResultContract<dc.user.UserApiContract>) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users");
 			var data = {
@@ -78,7 +79,8 @@ module vdb.repositories {
 				query: query, nameMatchMode: 'Auto', sort: sort,
 				includeDisabled: includeDisabled,
 				onlyVerified: onlyVerified,
-				groups: groups
+				groups: groups,
+				fields: fields
 			};
 
 			$.getJSON(url, data, callback);

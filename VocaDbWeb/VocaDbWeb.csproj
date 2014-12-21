@@ -1484,6 +1484,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVAndVoteContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagUsageForApiContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\User\UserApiContract.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\ArtistHelper.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistApiContract.ts" />

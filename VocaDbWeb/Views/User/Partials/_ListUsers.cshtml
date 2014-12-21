@@ -79,8 +79,8 @@
 		<tbody data-bind="foreach: page">
 			<tr>
 				<td style="width: 85px">
-					<a data-bind="visible: iconUrl, attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }" href="#">
-						<img data-bind="attr: { src: iconUrl }" title="Picture" class="img-rounded" />
+					<a data-bind="visible: $data.mainPicture && mainPicture.urlThumb, attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }" href="#">
+						<img data-bind="attr: { src: $data.mainPicture ? mainPicture.urlThumb : '' }" title="Picture" class="img-rounded" />
 					</a>
 				</td>
 				<td>
