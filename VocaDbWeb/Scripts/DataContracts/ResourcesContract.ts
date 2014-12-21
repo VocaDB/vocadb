@@ -18,6 +18,8 @@ module vdb.dataContracts {
 
 		songTypeNames?: { [key: string]: string; }
 
+		userGroupNames?: { [key: string]: string; }
+
 	}
 
 }

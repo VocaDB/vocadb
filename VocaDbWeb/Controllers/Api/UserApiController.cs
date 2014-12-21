@@ -46,6 +46,7 @@ namespace VocaDb.Web.Controllers.Api {
 			this.service = service;
 			this.permissionContext = permissionContext;
 			this.thumbPersister = thumbPersister;
+			this.iconFactory = iconFactory;
 		}
 
 		/// <summary>
@@ -159,7 +160,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Partial result of users.</returns>
 		[Route("")]
 		[ApiExplorerSettings(IgnoreApi=true)]
-		public PartialFindResult<UserWithIconContract> GetList(
+		public PartialFindResult<UserForApiContract> GetList(
 			string query = "", 
 			UserGroupId groups = UserGroupId.Nothing,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto, 
@@ -171,7 +172,7 @@ namespace VocaDb.Web.Controllers.Api {
 			bool onlyVerified = false) {
 
 			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, sort ?? UserSortRule.Name, 
-				new PagingProperties(start, maxResults, getTotalCount), user => new UserWithIconContract(user, iconFactory));
+				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, iconFactory));
 			
 		}
 

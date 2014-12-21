@@ -48,6 +48,9 @@ module vdb.utils {
 			return vdb.functions.mapAbsoluteUrl("/Tag/Details/" + name);
 		}
     
+		public static details_user_byName(name: string) {
+			return vdb.functions.mapAbsoluteUrl("/User/Profile/" + name);
+		}
     }
 
 }

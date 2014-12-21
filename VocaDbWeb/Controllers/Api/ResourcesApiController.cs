@@ -42,6 +42,7 @@ namespace VocaDb.Web.Controllers.Api {
 			{ "entryTypeNames", global::Resources.EntryTypeNames.ResourceManager },
 			{ "songSortRuleNames", global::Resources.SongSortRuleNames.ResourceManager },
 			{ "songTypeNames", Model.Resources.Songs.SongTypeNames.ResourceManager },
+			{ "userGroupNames", global::Resources.UserGroupNames.ResourceManager },
 		};
 
 		private Dictionary<string, string> GetResources(string setName, CultureInfo culture) {

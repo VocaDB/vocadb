@@ -257,6 +257,7 @@
     <Compile Include="DataContracts\UseCases\SongForEditContract.cs" />
     <Compile Include="DataContracts\Ranking\RankingContract.cs" />
     <Compile Include="DataContracts\Users\UpdateUserSettingsContract.cs" />
+    <Compile Include="DataContracts\Users\UserForApiContract.cs" />
     <Compile Include="DataContracts\Users\UserForMySettingsContract.cs" />
     <Compile Include="DataContracts\Users\UserMessageContract.cs" />
     <Compile Include="DataContracts\Users\UserWithActivityEntriesContract.cs" />

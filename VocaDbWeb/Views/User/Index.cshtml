@@ -1,41 +1,31 @@
-﻿@using VocaDb.Web.Helpers;
-@using R = ViewRes.User.IndexStrings;
-@model VocaDb.Web.Models.User.Index
+﻿@using System.Web.Optimization
+@inherits VocaDb.Web.Code.VocaDbPage
+
 @{
 	ViewBag.Title = ViewRes.SharedStrings.Users;
 }
 
-@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "form-inline" })) {
-
-	<p>
-		@ViewRes.SharedStrings.Filter 
-		@Html.TextBoxFor(m => m.Name, new { maxlength = "200" })
-		@Html.EnumDropDownListFor(m => m.GroupId, Translate.UserGroups, null, Model.GroupId)
-		<label class="checkbox inline">
-			@Html.CheckBoxFor(m => m.VerifiedArtists)
-			@R.VerifiedArtists
-		</label>
-		@if (Login.CanModerateUsers) {
-			<label class="checkbox inline">
-			@Html.CheckBoxFor(m => m.Disabled)
-			@R.ShowDisabledUsers
-			</label>
-		}
-		
-		<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Apply</button>
-	</p>
-
-}
-
-<p>@string.Format(ViewRes.SharedStrings.EntriesFound, Model.Users.Items.TotalItemCount)</p>
-	
-<div id="usersList">
-    @{ Html.RenderPartial("PagedUsers", Model.Users); }
-</div>
+@{ Html.RenderPartial("Partials/_ListUsers"); }
 
 @section BodyScripts {
     
-<link rel="stylesheet" href="@Url.Content("~/Content/Styles/Pager.css")" type="text/css" />
-<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+	@Scripts.Render("~/bundles/User/Index")
+
+	<script type="text/javascript">
+		$(function () {
+
+			var cultureCode = '@Culture';
+			var uiCultureCode = '@UICulture';
+			moment.locale(cultureCode);
+
+			var urlMapper = new vdb.UrlMapper('@RootPath');
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper);
+			var repo = repoFactory.userRepository();
+			var resourceRepo = repoFactory.resourceRepository();
+			var viewModel = new vdb.viewModels.user.ListUsersViewModel(repo, resourceRepo, uiCultureCode);
+			ko.applyBindings(viewModel);
+
+		});
+	</script>
 
 }

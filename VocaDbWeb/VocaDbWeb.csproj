@@ -2253,6 +2253,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\TagEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\AlbumCollectionViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\FollowedArtistsViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\User\ListUsersViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\MySettingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\RatedSongsSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\WebLinkEditViewModel.ts" />
@@ -2487,6 +2488,7 @@
     <Content Include="Views\Shared\PVs\_PVEdit.cshtml" />
     <Content Include="Views\Shared\KnockoutPartials\_EntryPictureFileEdit.cshtml" />
     <Content Include="Views\Song\Partials\_LyricsForSongEdit.cshtml" />
+    <Content Include="Views\User\Partials\_ListUsers.cshtml" />
     <None Include="VocaDB.log" />
     <None Include="Web.config.default">
       <SubType>Designer</SubType>

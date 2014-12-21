@@ -77,7 +77,8 @@ module vdb.repositories {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, nameMatchMode: 'Auto', sort: sort,
 				includeDisabled: includeDisabled,
-				onlyVerified: onlyVerified
+				onlyVerified: onlyVerified,
+				groups: groups
 			};
 
 			$.getJSON(url, data, callback);

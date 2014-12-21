@@ -543,7 +543,7 @@ div.disabled > a, div.disabled > a:visited {
 	color: gray;
 }
 
-.rightFrame .muted {
+.rightFrame .muted, .rightFrame a.muted, .rightFrame a.muted:visited {
 	color: gray;
 }
 

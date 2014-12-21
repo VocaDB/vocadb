@@ -1,0 +1,103 @@
+﻿@using VocaDb.Web.Helpers
+@using SharedRes = ViewRes.SharedStrings;
+@using R = ViewRes.User.IndexStrings;
+
+<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
+
+	<div class="control-label">
+		<i class="icon-search"></i>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<div class="input-append">
+				<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="Type something..." />
+				<button class="btn btn-danger" data-bind="click: function() { searchTerm(''); }, visible: searchTerm">@SharedRes.Clear</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">Group</div>
+		<div class="controls">
+			@KnockoutHelpers.DropdownList(Translate.UserGroups.ValuesAndNamesStrings, "group")
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox">
+				<input type="checkbox" data-bind="checked: onlyVerifiedArtists" />
+				@R.VerifiedArtists
+			</label>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox">
+				<input type="checkbox" data-bind="checked: disabledUsers" />
+				@R.ShowDisabledUsers
+			</label>
+		</div>
+	</div>
+
+</div>
+
+<div data-bind="css: { loading: loading }, visible: true" style="display: none;">
+
+	<div data-bind="with: paging" class="dropdown pull-right">
+		@KnockoutHelpers.EntryCount()
+	</div>
+
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th colspan="2">
+					<a data-bind="click: function() { sort('Name') }" href="#">
+						@ViewRes.User.DetailsStrings.UserName
+						<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
+					</a>
+				</th>
+				<th>
+					<a data-bind="click: function() { sort('RegisterDate') }" href="#">
+						@ViewRes.User.DetailsStrings.MemberSince
+						<span class="sortDirection_down" data-bind="visible: sort() == 'RegisterDate'"></span>
+					</a>
+				</th>
+				<th>
+					<a data-bind="click: function() { sort('Group') }" href="#">
+						@ViewRes.User.DetailsStrings.UserGroup
+						<span class="sortDirection_down" data-bind="visible: sort() == 'Group'"></span>
+					</a>
+				</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: page">
+			<tr>
+				<td style="width: 85px">
+					<a data-bind="visible: iconUrl, attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }" href="#">
+						<img data-bind="attr: { src: iconUrl }" title="Picture" class="img-rounded" />
+					</a>
+				</td>
+				<td>
+					<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }, text: name, css: { muted: !active }" href="#"></a>
+				</td>
+				<td>
+					<span data-bind="text: moment(memberSince).format('L')"></span>
+				</td>
+				<td>
+					<span data-bind="text: $parent.userGroupName(groupId)"></span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
+</div>
