@@ -32,7 +32,8 @@
 	var lyricsLanguages = string.Join(", ", Model.Lyrics.Select(l => l.Language).Distinct().Select(l => Translate.ContentLanguageSelectionName(l)));
 
 	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id = Model.Id})).ToString();
-	var loveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
+	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
+	var favoriteText = eeLoveIt ? "Love It!" : Res.AddToFavorites;
 	
 }
 
@@ -76,7 +77,7 @@
 		<span data-bind="visible: isRatingLike" style="display: none;" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>        
 		<span data-bind="visible: isRated() == false" style="display: none;" class="js-ratingButtons">
 			<a href="#" data-bind="click: setRating_like, jqButton: { icon: 'ui-icon-plus' }">@ViewRes.Song.DetailsStrings.Like</a>
-			<a href="#" data-bind="click: setRating_favorite, jqButton: { icon: 'ui-icon-heart' }">@(!loveIt ? ViewRes.Song.DetailsStrings.AddToFavorites : "Love It!")</a>
+			<a href="#" data-bind="click: setRating_favorite, jqButton: { icon: 'ui-icon-heart' }">@favoriteText</a>
 		</span>
 		<a href="#" data-bind="visible: isRated, click: setRating_nothing, jqButton: { icon: 'ui-icon-close' }" style="display: none;">@ViewRes.Song.DetailsStrings.RemoveFromFavorites</a>			
 	</span>
