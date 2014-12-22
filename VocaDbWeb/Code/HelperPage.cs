@@ -13,7 +13,7 @@ namespace VocaDb.Web.Code {
 
 		public static string RequestUrlScheme {
 			get {
-				return WebHelper.IsSSL(Request) ? "http" : "https";
+				return WebHelper.IsSSL(Request) ? "https" : "http";
 			}
 		}
 
