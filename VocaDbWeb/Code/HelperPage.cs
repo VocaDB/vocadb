@@ -1,5 +1,6 @@
 ﻿using System.Web.WebPages;
 using System.Web.Mvc;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code {
 
@@ -8,6 +9,12 @@ namespace VocaDb.Web.Code {
 		// Workaround - exposes the MVC HtmlHelper instead of the normal helper
 		public static new HtmlHelper Html {
 			get { return ((WebViewPage)WebPageContext.Current.Page).Html; }
+		}
+
+		public static string RequestUrlScheme {
+			get {
+				return WebHelper.IsSSL(Request) ? "http" : "https";
+			}
 		}
 
 		public static UrlHelper Url {

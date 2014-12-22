@@ -20,6 +20,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Web.Code;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 
@@ -37,15 +38,12 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly UserQueries queries;
 		private readonly UserService service;
 		private readonly IEntryThumbPersister thumbPersister;
-		private readonly IUserIconFactory iconFactory;
 
-		public UserApiController(UserQueries queries, UserService service, IUserPermissionContext permissionContext, IEntryThumbPersister thumbPersister,
-			IUserIconFactory iconFactory) {
+		public UserApiController(UserQueries queries, UserService service, IUserPermissionContext permissionContext, IEntryThumbPersister thumbPersister) {
 			this.queries = queries;
 			this.service = service;
 			this.permissionContext = permissionContext;
 			this.thumbPersister = thumbPersister;
-			this.iconFactory = iconFactory;
 		}
 
 		/// <summary>
@@ -171,6 +169,8 @@ namespace VocaDb.Web.Controllers.Api {
 			bool includeDisabled = false,
 			bool onlyVerified = false,
 			UserOptionalFields fields = UserOptionalFields.None) {
+
+			var iconFactory = new GravatarUserIconFactory(ssl: WebHelper.IsSSL(Request));
 
 			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, sort ?? UserSortRule.Name, 
 				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, iconFactory, fields));

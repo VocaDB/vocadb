@@ -10,9 +10,11 @@ namespace VocaDb.Web.Code {
 	public class GravatarUserIconFactory : IUserIconFactory {
 
 		private readonly int size;
+		private readonly bool ssl;
 
-		public GravatarUserIconFactory(int size = 80) {
+		public GravatarUserIconFactory(int size = 80, bool ssl = false) {
 			this.size = size;
+			this.ssl = ssl;
 		}
 
 		public string GetIconUrl(User user) {
@@ -20,7 +22,7 @@ namespace VocaDb.Web.Code {
 			if (string.IsNullOrEmpty(user.Email))
 				return string.Empty;
 
-			return Gravatar.GetUrl(user.Email, size);
+			return Gravatar.GetUrl(user.Email, size, scheme: ssl ? "https" : "http");
 
 		}
 
