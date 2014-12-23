@@ -21,11 +21,7 @@ function initReportEntryPopup(saveStr, createReportUrl, params) {
 
 	$("#reportEntryLink").click(function () {
 
-		var addToListLinkPos = $("#reportEntryLink").offset();
-		if (addToListLinkPos != null) {
-			$("#reportEntryPopup").dialog("option", "position", [addToListLinkPos.left, addToListLinkPos.top - $(window).scrollTop() + 35]);
-		}
-
+		$("#reportEntryPopup").dialog("option", "position", { my: "left top", at: "left bottom", of: $("#reportEntryLink") });
 		$("#reportEntryPopup").dialog("open");
 		return false;
 

@@ -152,13 +152,13 @@ function initPage(albumId, collectionRating, saveStr, confirmDeleteStr, urlMappe
 
 	}}]});
 
-	var addAlbumLinkPos;
+	var addAlbumLink;
 	if ($("#addAlbumLink").is(":visible"))
-		addAlbumLinkPos = $("#addAlbumLink").offset();
+		addAlbumLink = $("#addAlbumLink");
 	else
-		addAlbumLinkPos = $("#updateAlbumLink").offset();
+		addAlbumLink = $("#updateAlbumLink");
 
-	$("#editCollectionDialog").dialog("option", "position", [addAlbumLinkPos.left, addAlbumLinkPos.top + 35]);
+	$("#editCollectionDialog").dialog("option", "position", { my: "left top", at: "left bottom", of: addAlbumLink });
 
 	$("#addAlbumLink").click(function () {
 
