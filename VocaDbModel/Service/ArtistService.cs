@@ -40,10 +40,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private ArtistMergeRecord GetMergeRecord(ISession session, int sourceId) {
-			return session.Query<ArtistMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
-		}
-
 		public ArtistService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory) {}
 
@@ -611,7 +607,9 @@ namespace VocaDb.Model.Service {
 
 		SongCount,
 
-		SongRating
+		SongRating,
+
+		FollowerCount
 
 	}
 

@@ -123,6 +123,9 @@
   <data name="AdditionDateAsc" xml:space="preserve">
     <value>Addition date (ascending)</value>
   </data>
+  <data name="FollowerCount" xml:space="preserve">
+    <value>Number of followers</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>

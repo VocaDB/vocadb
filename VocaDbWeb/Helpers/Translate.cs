@@ -1,19 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NHibernate.Hql.Ast.ANTLR;
-using VocaDb.Model;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Resources;
 using VocaDb.Model.Domain.Globalization;
 using Resources;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Resources.Albums;
 using VocaDb.Model.Service;
 using VocaDb.Web.Helpers.Support;
 using VocaDb.Model.Domain.Security;
@@ -47,7 +43,7 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<ArtistSortRule> ArtistSortRuleNames =
 			new TranslateableEnum<ArtistSortRule>(() => global::Resources.ArtistSortRuleNames.ResourceManager, new[] {
 				ArtistSortRule.Name, ArtistSortRule.AdditionDate, ArtistSortRule.AdditionDateAsc,
-				ArtistSortRule.SongCount, ArtistSortRule.SongRating
+				ArtistSortRule.SongCount, ArtistSortRule.SongRating, ArtistSortRule.FollowerCount
 			});
 
 		public static TranslateableEnum<ArtistType> ArtistTypeNames {

@@ -51,6 +51,8 @@ namespace VocaDb.Model.Service.Helpers {
 					return criteria.OrderByDescending(a => a.AllSongs
 						.Where(s => !s.Song.Deleted)
 						.Sum(s => s.Song.RatingScore));
+				case ArtistSortRule.FollowerCount:
+					return criteria.OrderByDescending(a => a.Users.Count);
 			}
 
 			return criteria;
