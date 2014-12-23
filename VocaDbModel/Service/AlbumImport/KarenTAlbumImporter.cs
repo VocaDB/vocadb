@@ -189,7 +189,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 			try {
 				doc = HtmlRequestHelper.Download(url, "en-US");
 			} catch (WebException x) {
-				log.WarnException("Unable to download album post '" + url + "'", x);
+				log.Warn("Unable to download album post '" + url + "'", x);
 				throw;
 			}
 

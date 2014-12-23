@@ -225,7 +225,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 			try {
 				doc = HtmlRequestHelper.Download(url);	
 			} catch (WebException x) {
-				log.WarnException("Unable to download album post '" + url + "'", x);
+				log.Warn("Unable to download album post '" + url + "'", x);
 				throw;
 			}
 
@@ -327,7 +327,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 			try {
 				albumIndex = HtmlRequestHelper.Download(albumIndexUrl);
 			} catch (WebException x) {
-				log.WarnException("Unable to read albums index", x);
+				log.Warn("Unable to read albums index", x);
 				throw;
 			}
 

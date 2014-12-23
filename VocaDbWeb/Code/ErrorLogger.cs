@@ -42,7 +42,7 @@ namespace VocaDb.Web.Code {
 
 		public static void LogException(HttpRequest request, Exception ex, LogLevel level = null) {
 
-			log.LogException(level ?? LogLevel.Error, RequestInfo("Exception for", new HttpRequestWrapper(request)), ex);
+			log.Log(level ?? LogLevel.Error, RequestInfo("Exception for", new HttpRequestWrapper(request)), ex);
 
 		}
 

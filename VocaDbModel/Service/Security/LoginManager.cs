@@ -76,7 +76,7 @@ namespace VocaDb.Model.Service.Security {
 					Thread.CurrentThread.CurrentUICulture = c;
 
 			} catch (ArgumentException x) { 
-				log.WarnException("Unable to set culture", x);
+				log.Warn("Unable to set culture", x);
 			}
 
 		}

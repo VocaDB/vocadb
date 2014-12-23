@@ -50,10 +50,10 @@ namespace VocaDb.Model.Service.VideoServices {
 					doc = XDocument.Load(stream);
 				}
 			} catch (WebException x) {
-				log.WarnException(string.Format("Unable to load Bilibili URL {0}", url), x);
+				log.Warn(string.Format("Unable to load Bilibili URL {0}", url), x);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
 			} catch (XmlException x) {
-				log.WarnException(string.Format("Unable to load Bilibili URL {0}", url), x);
+				log.Warn(string.Format("Unable to load Bilibili URL {0}", url), x);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
 			}
 
