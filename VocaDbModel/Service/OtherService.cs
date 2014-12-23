@@ -171,9 +171,11 @@ namespace VocaDb.Model.Service {
 					.Take(songCount - recentSongs.Length)
 					.ToArray();
 
-				return recentSongs
+				return 
+					new [] { session.Load<Song>(1072) }
+					.Concat((recentSongs
 					.Concat(moreSongs)
-					.OrderByDescending(s => s.RatingScore)
+					.OrderByDescending(s => s.RatingScore)))
 					.ToArray();
 
 			}
