@@ -11,7 +11,6 @@ function initPage(repoFactory, listId) {
 	var viewModel = new vdb.viewModels.songList.SongListEditViewModel(songListRepo, songRepo, listId)
 	viewModel.init(function () {
 		ko.applyBindings(viewModel);
-		$("#songListForm").validate();
 	});
 
 }
