@@ -493,8 +493,9 @@ namespace VocaDb.Model.Domain.Albums {
 			foreach (var user in users)
 				user.Delete();
 
-			//ArchivedVersionsManager.Clear();
-			//Comments.Clear();
+			Tags.DeleteUsages();
+
+			// Archived versions and comments are cascaded
 
 		}
 

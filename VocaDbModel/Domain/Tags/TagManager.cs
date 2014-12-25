@@ -46,6 +46,18 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		/// <summary>
+		/// Deletes all tag usages, updating caches.
+		/// </summary>
+		public virtual void DeleteUsages() {
+
+			var list = Usages.ToArray();
+
+			foreach (var usage in list)
+				usage.Delete();
+
+		}
+
 		public virtual T GetTagUsage(Tag tag) {
 			ParamIs.NotNull(() => tag);
 			return Usages.FirstOrDefault(t => t.Tag.Equals(tag));
