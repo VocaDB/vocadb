@@ -186,8 +186,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Strathweb.CacheOutput.WebApi2.0.6\lib\net45\WebApi.OutputCache.V2.dll</HintPath>
     </Reference>
-    <Reference Include="WebApiContrib.Formatting.Jsonp">
-      <HintPath>..\packages\WebApiContrib.Formatting.Jsonp.2.0.0.0\lib\net45\WebApiContrib.Formatting.Jsonp.dll</HintPath>
+    <Reference Include="WebApiContrib.Formatting.Jsonp, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebApiContrib.Formatting.Jsonp.3.0.0.0\lib\net45\WebApiContrib.Formatting.Jsonp.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
