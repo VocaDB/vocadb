@@ -29,6 +29,7 @@
 	}
 }
 @if (Login.CanMergeEntries) {
+	@Html.Raw("&nbsp;")	
 	@Html.ActionLink("Merge", "Merge", new { id = Model.Artist.Id }, new { id = "mergeLink" })
 }
 }

@@ -429,8 +429,6 @@
 		var resources = @ResourceHelpers.ToJSON(AjaxRes.SongStrings.ResourceManager, true);
 		vdb.resources.song = resources;
 
-		//var featuredCategoryNames = @ResourceHelpers.ToJSON(Resources.SongListFeaturedCategoryNames.ResourceManager, false);
-
 		var jsonModel = @Html.Raw(Model.Json);
 		var rootPath = '@RootPath';
 		var urlMapper = new vdb.UrlMapper(rootPath);
