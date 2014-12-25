@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model;
@@ -25,27 +24,6 @@ using VocaDb.Model.Domain.Artists;
 namespace VocaDb.Web.Models {
 
 	public class SongDetails {
-
-		private string GetNicoMimiUrl(SongDetailsContract contract) {
-			
-			// Don't show nicomimi link for free songs.
-			if (contract.Tags.Any(t => 
-				t.TagName.Equals(Model.Domain.Tags.Tag.CommonTag_Free, StringComparison.InvariantCultureIgnoreCase)
-				|| t.TagName.Equals(Model.Domain.Tags.Tag.CommonTag_Nicovideo_downloadmusic, StringComparison.InvariantCultureIgnoreCase)))
-				return string.Empty;
-
-			var nicoId = contract.Song.NicoId;
-			var nicoPvId = PVHelper.GetNicoId(contract.PVs, nicoId);
-
-			if (!string.IsNullOrEmpty(nicoPvId)) {
-
-				return string.Format("http://www.nicomimi.net/play/{0}", nicoPvId);
-
-			} else {
-				return string.Empty;
-			}
-
-		}
 
 		public SongDetails(SongDetailsContract contract) {
 
