@@ -19,7 +19,7 @@ namespace VocaDb.Web.App_Start {
 			json.SerializerSettings.Converters.Add(new StringEnumConverter());	// All enums as strings by default
 			json.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 			
-			config.Formatters.Insert(0, new JsonpMediaTypeFormatter(json));
+			config.AddJsonpFormatter(json);
 
 			var cors = new EnableCorsAttribute(origins: "*", headers: "*", methods: "get");
 			config.EnableCors(cors);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using NLog;
 using VocaDb.Model.DataContracts.UseCases;
@@ -246,6 +247,10 @@ namespace VocaDb.Web.Controllers
         [Authorize]
         public ActionResult Edit(ArtistEditViewModel viewModel)
         {
+
+			if (viewModel == null) {
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");				
+			}
 
 			var model = viewModel.EditedArtist;
 

@@ -3,7 +3,6 @@ using System.Net;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
 using NLog;
-using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
@@ -11,12 +10,10 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Search;
-using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Feeds;
 using VocaDb.Web.Controllers.DataAccess;
@@ -213,6 +210,10 @@ namespace VocaDb.Web.Controllers
         [Authorize]
         public ActionResult Edit(SongEditViewModel viewModel)
         {
+
+			if (viewModel == null) {
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");				
+			}
 
 			var model = viewModel.EditedSong;
 
