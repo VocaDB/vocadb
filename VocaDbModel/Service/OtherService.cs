@@ -135,8 +135,7 @@ namespace VocaDb.Model.Service {
 
 		private Song[] GetHighlightedSongs(ISession session) {
 
-			//var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
-			var cutoffDate = DateTime.Now - TimeSpan.FromDays(7);
+			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
 			var maxSongs = 100;
 			var songCount = 20;
 
@@ -145,7 +144,6 @@ namespace VocaDb.Model.Service {
 				.Where(s => !s.Deleted 
 					&& s.PVServices != PVServices.Nothing 
 					&& s.CreateDate >= cutoffDate
-					&& s.Tags.Usages.Any(t => t.Tag.Name == "Christmas" || t.Tag.Name == "winter")
 				)
 				.OrderByDescending(s => s.CreateDate)
 				.Take(maxSongs)
@@ -165,17 +163,15 @@ namespace VocaDb.Model.Service {
 					.Where(s => !s.Deleted 
 						&& s.PVServices != PVServices.Nothing 						
 						&& s.CreateDate < cutoffDate
-						&& s.Tags.Usages.Any(t => t.Tag.Name == "Christmas" || t.Tag.Name == "winter")
 					)
 					.OrderByDescending(s => s.CreateDate)
 					.Take(songCount - recentSongs.Length)
 					.ToArray();
 
 				return 
-					new [] { session.Load<Song>(1072) }
-					.Concat((recentSongs
+					recentSongs
 					.Concat(moreSongs)
-					.OrderByDescending(s => s.RatingScore)))
+					.OrderByDescending(s => s.RatingScore)
 					.ToArray();
 
 			}
