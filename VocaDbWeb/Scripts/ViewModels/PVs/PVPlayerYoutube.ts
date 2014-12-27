@@ -14,8 +14,11 @@ module vdb.viewModels.pvs {
 
 		public attach = (reset: boolean = false, readyCallback?: () => void) => {
 
-			if (!reset && this.player)
+			if (!reset && this.player) {
+				if (readyCallback)
+					readyCallback();
 				return;
+			}
 
 			if (reset) {
 				$(this.wrapperElement).empty();
@@ -47,15 +50,22 @@ module vdb.viewModels.pvs {
 
 		private player: YT.Player = null;
 
-		public play = (pvId) => {
-
-			if (!this.player)
-				this.attach(false);
-
+		private doPlay = (pvId: string) => {
+		
 			if (pvId) {
-				this.player.loadVideoById(pvId);				
+				this.player.loadVideoById(pvId);
 			} else {
 				this.player.playVideo();
+			}
+
+		}
+
+		public play = (pvId) => {
+
+			if (!this.player) {
+				this.attach(false, () => this.doPlay(pvId));
+			} else {
+				this.doPlay(pvId);
 			}
 
 		}

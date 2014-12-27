@@ -34,6 +34,10 @@ module vdb.viewModels.songs {
 
 		public formatLength = (length: number) => vdb.helpers.DateTimeHelper.formatFromSeconds(length);
 
+		private getRandomSongIndex = () => {
+			return Math.floor(Math.random() * this.paging.totalItems());
+		}
+
 		// Gets the index of the currently playing song.
 		// -1 if the currently playing song isn't in the current list of songs, which is possible if the search filters were changed.
 		private getSongIndex = (song: viewModels.pvs.IPVPlayerSong) => {
@@ -79,7 +83,7 @@ module vdb.viewModels.songs {
 			if (this.pvPlayerViewModel.shuffle()) {
 
 				// Get a random index
-				index = Math.floor(Math.random() * this.paging.totalItems());
+				index = this.getRandomSongIndex();
 
 				// Check if song is already loaded
 				var song = this.getSongWithPlayListIndex(index);
@@ -184,8 +188,10 @@ module vdb.viewModels.songs {
 					
 					this.loading(false);
 
-					if (result.items && result.items.length && !this.pvPlayerViewModel.selectedSong())
-						this.playSong(result.items[0]);
+					if (result.items && result.items.length && !this.pvPlayerViewModel.selectedSong()) {
+						var song = this.pvPlayerViewModel.shuffle() ? (result.items[Math.floor(Math.random() * result.items.length)]) : result.items[0];
+						this.playSong(song);
+					}
 
 					if (callback)
 						callback();

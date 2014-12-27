@@ -15,11 +15,15 @@ module vdb.viewModels.pvs {
 			private songRepo: rep.SongRepository,
 			private playerElementId: string,
 			private wrapperElement: HTMLElement,
-			autoplay?: boolean
+			autoplay?: boolean,
+			shuffle?: boolean
 			) {
 
-			if (autoplay !== null)
+			if (autoplay !== null && autoplay !== undefined)
 				this.autoplay(autoplay);
+
+			if (shuffle !== null && shuffle !== undefined)
+				this.shuffle(shuffle);
 
 			this.players = {
 				File: <IPVPlayer>new PVPlayerFile(playerElementId, wrapperElement, this.songFinishedPlayback),

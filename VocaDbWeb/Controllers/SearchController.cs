@@ -110,7 +110,8 @@ namespace VocaDb.Web.Controllers
 			SongType? songType = null,
 			bool? onlyWithPVs = null,
 			string viewMode = null,
-			bool? autoplay = null
+			bool? autoplay = null,
+			bool? shuffle = null
 			) {
 
 			filter = !string.IsNullOrEmpty(filter) ? filter.Trim() : string.Empty;
@@ -136,6 +137,7 @@ namespace VocaDb.Web.Controllers
 			ViewBag.OnlyWithPVs = onlyWithPVs;
 			ViewBag.ViewMode = viewMode;
 			ViewBag.Autoplay = autoplay;
+			ViewBag.Shuffle = shuffle;
 
 			SetSearchEntryType(searchType);
 			return View();

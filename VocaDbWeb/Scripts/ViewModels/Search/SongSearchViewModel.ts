@@ -23,6 +23,7 @@ module vdb.viewModels.search {
 			songType: string, onlyWithPVs: boolean,
 			viewMode: string,
 			autoplay: boolean,
+			shuffle: boolean,
 			pvPlayerWrapperElement: HTMLElement) {
 
 			super(searchViewModel);
@@ -57,7 +58,7 @@ module vdb.viewModels.search {
 			this.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
 			this.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
-			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, 'pv-player', pvPlayerWrapperElement, autoplay);
+			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, 'pv-player', pvPlayerWrapperElement, autoplay, shuffle);
 			this.pvsOnly.subscribe(this.updateResultsWithTotalCount);
 			this.since.subscribe(this.updateResultsWithTotalCount);
 			this.songType.subscribe(this.updateResultsWithTotalCount);

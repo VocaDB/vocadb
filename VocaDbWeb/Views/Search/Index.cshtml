@@ -355,6 +355,7 @@
 			var onlyWithPVs = @ToJS((bool?)ViewBag.OnlyWithPVs);
 			var viewMode = '@ViewBag.ViewMode';
 			var autoplay = @ToJS((bool?)ViewBag.Autoplay);
+			var shuffle = @ToJS((bool?)ViewBag.Shuffle);
 			var loggedUserId = @ToJS(Login.Manager.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 
@@ -379,6 +380,7 @@
 				artistType, discType, songType, onlyWithPVs, 
 				viewMode, 
 				autoplay, 
+				shuffle,
 				pvPlayerElem);
 			ko.applyBindings(vm);
 
