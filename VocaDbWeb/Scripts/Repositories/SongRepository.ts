@@ -48,6 +48,7 @@ module vdb.repositories {
 			onlyWithPvs: boolean,
 			pvServices: string,
 			since: number,
+			minScore: number,
 			userCollectionId: number,
 			fields: string,
 			status: string,
@@ -65,6 +66,7 @@ module vdb.repositories {
 				onlyWithPvs: onlyWithPvs,
 				pvServices: pvServices,
 				since: since,
+				minScore: minScore,
 				userCollectionId: userCollectionId,
 				status: status
 			};

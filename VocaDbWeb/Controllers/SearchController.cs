@@ -109,6 +109,7 @@ namespace VocaDb.Web.Controllers
 			DiscType? discType = null,
 			SongType? songType = null,
 			bool? onlyWithPVs = null,
+			int? minScore = null,
 			string viewMode = null,
 			bool? autoplay = null,
 			bool? shuffle = null
@@ -135,6 +136,7 @@ namespace VocaDb.Web.Controllers
 			ViewBag.DiscType = discType;
 			ViewBag.SongType = songType;
 			ViewBag.OnlyWithPVs = onlyWithPVs;
+			ViewBag.MinScore = minScore;
 			ViewBag.ViewMode = viewMode;
 			ViewBag.Autoplay = autoplay;
 			ViewBag.Shuffle = shuffle;

@@ -20,7 +20,9 @@ module vdb.viewModels.search {
 			sort: string,
 			artistId: number,
 			childVoicebanks: boolean,
-			songType: string, onlyWithPVs: boolean,
+			songType: string,
+			onlyWithPVs: boolean,
+			minScore: number,
 			viewMode: string,
 			autoplay: boolean,
 			shuffle: boolean,
@@ -52,11 +54,13 @@ module vdb.viewModels.search {
 				this.pvsOnly(onlyWithPVs);
 
 			this.childVoicebanks = ko.observable(childVoicebanks || false);
+			this.minScore = ko.observable(minScore || undefined);
 			this.viewMode = ko.observable(viewMode || "Details");
 
 			this.artistId.subscribe(this.updateResultsWithTotalCount);
 			this.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
 			this.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
+			this.minScore.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, 'pv-player', pvPlayerWrapperElement, autoplay, shuffle);
 			this.pvsOnly.subscribe(this.updateResultsWithTotalCount);
@@ -70,6 +74,7 @@ module vdb.viewModels.search {
 
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
 				this.tag, this.artistId, this.artistParticipationStatus, this.childVoicebanks, this.pvsOnly, this.since,
+				this.minScore,
 				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly);
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[lang]);
@@ -89,6 +94,7 @@ module vdb.viewModels.search {
 						this.pvsOnly(),
 						null,
 						this.since(),
+						this.minScore(),
 						this.onlyRatedSongs() ? this.loggedUserId : null,
 						this.fields(),
 						status, result => {
@@ -120,6 +126,7 @@ module vdb.viewModels.search {
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public artistType = ko.observable<cls.artists.ArtistType>(null);
 		public childVoicebanks: KnockoutObservable<boolean>;
+		public minScore: KnockoutObservable<number>;
 		public onlyRatedSongs = ko.observable(false);
 		public playListViewModel: vdb.viewModels.songs.PlayListViewModel;
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;

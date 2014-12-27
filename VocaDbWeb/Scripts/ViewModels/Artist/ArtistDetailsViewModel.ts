@@ -58,7 +58,7 @@ module vdb.viewModels {
 				return;
 
 			this.songsViewModel(new vdb.viewModels.search.SongSearchViewModel(null, this.urlMapper, this.lang, this.songRepo, null, this.userRepository, this.resourceRepo,
-				this.cultureCode, this.loggedUserId, null, this.artistId, null, null, false, null, null, null, this.pvPlayerWrapperElement));
+				this.cultureCode, this.loggedUserId, null, this.artistId, null, null, false, null, null, null, null, this.pvPlayerWrapperElement));
 			this.songsViewModel().updateResults(true);
 
 		}
