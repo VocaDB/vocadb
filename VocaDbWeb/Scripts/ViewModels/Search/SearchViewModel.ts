@@ -19,6 +19,7 @@ module vdb.viewModels.search {
 			tag: string,
 			sort: string,
 			artistId: number,
+			childVoicebanks: boolean,
 			artistType: string,
 			albumType: string, songType: string, onlyWithPVs: boolean,
 			viewMode: string,
@@ -31,18 +32,28 @@ module vdb.viewModels.search {
 			if (searchTerm)
 				this.searchTerm(searchTerm);
 
+			var isAlbum = searchType == "Album";
+			var isSong = searchType == "Song";
+
 			this.anythingSearchViewModel = new AnythingSearchViewModel(this, languageSelection, entryRepo);
 			this.artistSearchViewModel = new ArtistSearchViewModel(this, languageSelection, artistRepo, loggedUserId, artistType);
 			this.albumSearchViewModel = new AlbumSearchViewModel(this, unknownPictureUrl, languageSelection, albumRepo, artistRepo,
 				resourceRepo, cultureCode,
-				searchType == "Album" ? sort : null, searchType == "Album" ? artistId : null, albumType);
+				isAlbum ? sort : null,
+				isAlbum ? artistId : null,
+				isAlbum ? childVoicebanks : null,
+				albumType,
+				isAlbum ? viewMode : null);
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
 				resourceRepo,
 				cultureCode,
 				loggedUserId,
-				searchType == "Song" ? sort : null, searchType == "Song" ? artistId : null, songType,
+				isSong ? sort : null,
+				isSong ? artistId : null,
+				isSong ? childVoicebanks : null,
+				songType,
 				onlyWithPVs,
-				viewMode,
+				isSong ? viewMode : null,
 				autoplay,
 				pvPlayerWrapperElement);
 			this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);

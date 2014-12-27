@@ -348,6 +348,7 @@
 			var searchType = '@ViewBag.SearchType';
 			var sort = '@ViewBag.Sort';
 			var artistId = @ToJS((int?)ViewBag.ArtistId);
+			var childVoicebanks = @ToJS((bool?)ViewBag.ChildVoicebanks);
 			var artistType = '@ViewBag.ArtistType';
 			var discType = '@ViewBag.DiscType';
 			var songType ='@ViewBag.SongType';
@@ -372,7 +373,10 @@
 			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo, tagRepo, resourceRepo,
 				userRepo,
 				unknownPictureUrl,
-				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort, artistId, artistType, discType, songType, onlyWithPVs, 
+				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort, 
+				artistId, 
+				childVoicebanks,
+				artistType, discType, songType, onlyWithPVs, 
 				viewMode, 
 				autoplay, 
 				pvPlayerElem);

@@ -104,6 +104,7 @@ namespace VocaDb.Web.Controllers
 			string tag = null,
 			string sort = null, 
 			int? artistId = null,
+			bool? childVoicebanks = null,
 			ArtistType? artistType = null,
 			DiscType? discType = null,
 			SongType? songType = null,
@@ -128,6 +129,7 @@ namespace VocaDb.Web.Controllers
 			ViewBag.Tag = tag;
 			ViewBag.Sort = sort;
 			ViewBag.ArtistId = artistId;
+			ViewBag.ChildVoicebanks = childVoicebanks;
 			ViewBag.ArtistType = artistType;
 			ViewBag.DiscType = discType;
 			ViewBag.SongType = songType;

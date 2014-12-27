@@ -13,7 +13,11 @@ module vdb.viewModels.search {
 			private artistRepo: rep.ArtistRepository,
 			resourceRep: rep.ResourceRepository,
 			cultureCode: string,
-			sort: string, artistId: number, albumType: string) {
+			sort: string,
+			artistId: number,
+			childVoicebanks: boolean,
+			albumType: string,
+			viewMode: string) {
 
 			super(searchViewModel);
 
@@ -28,7 +32,9 @@ module vdb.viewModels.search {
 
 			this.albumType = ko.observable(albumType || "Unknown");
 			this.artistId = ko.observable(artistId);
+			this.childVoicebanks = ko.observable(childVoicebanks || false);
 			this.sort = ko.observable(sort || "Name");
+			this.viewMode = ko.observable(viewMode || "Details");
 
 			if (artistId)
 				this.selectArtist(artistId);
@@ -59,12 +65,12 @@ module vdb.viewModels.search {
 		public artistParticipationStatus = ko.observable("Everything");
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public artistType = ko.observable<cls.artists.ArtistType>(null);
-		public childVoicebanks = ko.observable(false);
+		public childVoicebanks: KnockoutObservable<boolean>;
 		private resourceManager: cls.ResourcesManager;
 		public showChildVoicebanks: KnockoutComputed<boolean>;
 		public sort: KnockoutObservable<string>;
 		public sortName: KnockoutComputed<string>;
-		public viewMode = ko.observable("Details");
+		public viewMode: KnockoutObservable<string>;
 
 		public discTypeName = (discTypeStr: string) => this.resourceManager.resources().discTypeNames != null ? this.resourceManager.resources().discTypeNames[discTypeStr] : "";
 

@@ -19,6 +19,7 @@ module vdb.viewModels.search {
 			private loggedUserId: number,
 			sort: string,
 			artistId: number,
+			childVoicebanks: boolean,
 			songType: string, onlyWithPVs: boolean,
 			viewMode: string,
 			autoplay: boolean,
@@ -49,6 +50,7 @@ module vdb.viewModels.search {
 			if (onlyWithPVs)
 				this.pvsOnly(onlyWithPVs);
 
+			this.childVoicebanks = ko.observable(childVoicebanks || false);
 			this.viewMode = ko.observable(viewMode || "Details");
 
 			this.artistId.subscribe(this.updateResultsWithTotalCount);
@@ -116,7 +118,7 @@ module vdb.viewModels.search {
 		public artistParticipationStatus = ko.observable("Everything");
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public artistType = ko.observable<cls.artists.ArtistType>(null);
-		public childVoicebanks = ko.observable(false);
+		public childVoicebanks: KnockoutObservable<boolean>;
 		public onlyRatedSongs = ko.observable(false);
 		public playListViewModel: vdb.viewModels.songs.PlayListViewModel;
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;
