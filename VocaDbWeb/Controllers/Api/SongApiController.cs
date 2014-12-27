@@ -87,6 +87,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="onlyWithPvs">Whether to only include songs with at least one PV.</param>
 		/// <param name="pvServices">Filter by one or more PV services (separated by commas). The song will pass the filter if it has a PV for any of the matched services.</param>
 		/// <param name="since">Allow only entries that have been created at most this many hours ago. By default there is no filtering.</param>
+		/// <param name="minScore">Minimum rating score. Optional.</param>
 		/// <param name="lyrics">Filter by lyrics in the specified language. By default there is no filtering.</param>
 		/// <param name="userCollectionId">Filter by user's rated songs. By default there is no filtering.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
@@ -118,6 +119,7 @@ namespace VocaDb.Web.Controllers.Api {
 			bool onlyWithPvs = false,
 			[FromUri] PVServices? pvServices = null,
 			int? since = null,
+			int? minScore = null,
 			[FromUri] ContentLanguageSelections? lyrics = null,
 			int? userCollectionId = null,
 			EntryStatus? status = null,
@@ -139,6 +141,7 @@ namespace VocaDb.Web.Controllers.Api {
 				ChildVoicebanks = childVoicebanks,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,
 				LyricsLanguages = lyrics != null ? lyrics.Value.ToIndividualSelections().ToArray() : null,
+				MinScore = minScore ?? 0,
 				PVServices = pvServices,
 				UserCollectionId = userCollectionId ?? 0
 			};
