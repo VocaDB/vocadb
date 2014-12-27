@@ -54,7 +54,7 @@ module vdb.viewModels.search {
 				this.pvsOnly(onlyWithPVs);
 
 			this.childVoicebanks = ko.observable(childVoicebanks || false);
-			this.minScore = ko.observable(minScore || undefined);
+			this.minScore = ko.observable(minScore || undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });;
 			this.viewMode = ko.observable(viewMode || "Details");
 
 			this.artistId.subscribe(this.updateResultsWithTotalCount);

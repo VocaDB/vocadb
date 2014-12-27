@@ -62,7 +62,7 @@ module vdb.viewModels.search {
 				pvPlayerWrapperElement);
 			this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);
 
-			if (tag || artistId != null || artistType || albumType || songType || onlyWithPVs != null)
+			if (tag || artistId != null || artistType || albumType || songType || onlyWithPVs != null || minScore)
 				this.showAdvancedFilters(true);
 
 			if (searchType)
