@@ -11,20 +11,33 @@ namespace VocaDb.Model.Helpers {
 
 		public const string VariousArtists = "Various artists";
 
+		/// <summary>
+		/// Gets the sort order for an artist in an artist string. 
+		/// Determines the order the artist appear in the list.
+		/// </summary>
+		/// <param name="artistLink">Artist link. Cannot be null.</param>
+		/// <param name="isAnimation">Whether the album is animation (video).</param>
+		/// <returns>Sort order, 0-based.</returns>
 		private static int GetSortOrderForArtistString(IArtistWithSupport artistLink, bool isAnimation) {
 
 			var categories = GetCategories(artistLink);
 
+			// Animator appears first for animation discs.
 			if (isAnimation && categories.HasFlag(ArtistCategories.Animator))
 				return 0;
 
-			if (categories.HasFlag(ArtistCategories.Producer))
+			// Composer role always appears first
+			if (categories.HasFlag(ArtistCategories.Producer) && artistLink.Roles.HasFlag(ArtistRoles.Composer))
 				return 1;
 
-			if (categories.HasFlag(ArtistCategories.Circle) || categories.HasFlag(ArtistCategories.Band))
+			// Other producers appear after composers
+			if (categories.HasFlag(ArtistCategories.Producer))
 				return 2;
 
-			return 3;
+			if (categories.HasFlag(ArtistCategories.Circle) || categories.HasFlag(ArtistCategories.Band))
+				return 3;
+
+			return 4;
 
 		}
 

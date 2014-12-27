@@ -1,11 +1,9 @@
 ﻿using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.Artists;
@@ -109,7 +107,9 @@ namespace VocaDb.Web.Controllers
 			ArtistType? artistType = null,
 			DiscType? discType = null,
 			SongType? songType = null,
-			bool? onlyWithPVs = null
+			bool? onlyWithPVs = null,
+			string viewMode = null,
+			bool? autoplay = null
 			) {
 
 			filter = !string.IsNullOrEmpty(filter) ? filter.Trim() : string.Empty;
@@ -132,6 +132,8 @@ namespace VocaDb.Web.Controllers
 			ViewBag.DiscType = discType;
 			ViewBag.SongType = songType;
 			ViewBag.OnlyWithPVs = onlyWithPVs;
+			ViewBag.ViewMode = viewMode;
+			ViewBag.Autoplay = autoplay;
 
 			SetSearchEntryType(searchType);
 			return View();

@@ -20,6 +20,8 @@ module vdb.viewModels.search {
 			sort: string,
 			artistId: number,
 			songType: string, onlyWithPVs: boolean,
+			viewMode: string,
+			autoplay: boolean,
 			pvPlayerWrapperElement: HTMLElement) {
 
 			super(searchViewModel);
@@ -47,11 +49,13 @@ module vdb.viewModels.search {
 			if (onlyWithPVs)
 				this.pvsOnly(onlyWithPVs);
 
+			this.viewMode = ko.observable(viewMode || "Details");
+
 			this.artistId.subscribe(this.updateResultsWithTotalCount);
 			this.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
 			this.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
-			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, 'pv-player', pvPlayerWrapperElement);
+			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, 'pv-player', pvPlayerWrapperElement, autoplay);
 			this.pvsOnly.subscribe(this.updateResultsWithTotalCount);
 			this.since.subscribe(this.updateResultsWithTotalCount);
 			this.songType.subscribe(this.updateResultsWithTotalCount);
@@ -124,7 +128,7 @@ module vdb.viewModels.search {
 		public songType = ko.observable("Unspecified");
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
-		public viewMode = ko.observable("Details");
+		public viewMode: KnockoutObservable<string>;
 
 		public fields = ko.computed(() => this.showTags() ? "ThumbUrl,Tags" : "ThumbUrl");
 

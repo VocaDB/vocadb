@@ -21,6 +21,8 @@ module vdb.viewModels.search {
 			artistId: number,
 			artistType: string,
 			albumType: string, songType: string, onlyWithPVs: boolean,
+			viewMode: string,
+			autoplay: boolean,
 			pvPlayerWrapperElement: HTMLElement) {
 
 			this.resourcesManager = new vdb.models.ResourcesManager(resourceRepo, cultureCode);
@@ -38,7 +40,11 @@ module vdb.viewModels.search {
 				resourceRepo,
 				cultureCode,
 				loggedUserId,
-				searchType == "Song" ? sort : null, searchType == "Song" ? artistId : null, songType, onlyWithPVs, pvPlayerWrapperElement);
+				searchType == "Song" ? sort : null, searchType == "Song" ? artistId : null, songType,
+				onlyWithPVs,
+				viewMode,
+				autoplay,
+				pvPlayerWrapperElement);
 			this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);
 
 			if (tag || artistId != null || artistType || albumType || songType || onlyWithPVs != null)

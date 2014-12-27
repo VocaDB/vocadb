@@ -352,6 +352,8 @@
 			var discType = '@ViewBag.DiscType';
 			var songType ='@ViewBag.SongType';
 			var onlyWithPVs = @ToJS((bool?)ViewBag.OnlyWithPVs);
+			var viewMode = '@ViewBag.ViewMode';
+			var autoplay = @ToJS((bool?)ViewBag.Autoplay);
 			var loggedUserId = @ToJS(Login.Manager.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 
@@ -370,7 +372,10 @@
 			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo, tagRepo, resourceRepo,
 				userRepo,
 				unknownPictureUrl,
-				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort, artistId, artistType, discType, songType, onlyWithPVs, pvPlayerElem);
+				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort, artistId, artistType, discType, songType, onlyWithPVs, 
+				viewMode, 
+				autoplay, 
+				pvPlayerElem);
 			ko.applyBindings(vm);
 
 			$("#loginPopup").dialog({ autoOpen: false, width: 400, modal: true });

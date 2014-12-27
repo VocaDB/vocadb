@@ -14,9 +14,13 @@ module vdb.viewModels.pvs {
 			private urlMapper: UrlMapper,
 			private songRepo: rep.SongRepository,
 			private playerElementId: string,
-			private wrapperElement: HTMLElement
+			private wrapperElement: HTMLElement,
+			autoplay?: boolean
 			) {
-			
+
+			if (autoplay !== null)
+				this.autoplay(autoplay);
+
 			this.players = {
 				File: <IPVPlayer>new PVPlayerFile(playerElementId, wrapperElement, this.songFinishedPlayback),
 				Youtube: <IPVPlayer>new PVPlayerYoutube(playerElementId, wrapperElement, this.songFinishedPlayback),
