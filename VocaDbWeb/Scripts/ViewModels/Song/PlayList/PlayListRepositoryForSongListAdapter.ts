@@ -16,13 +16,17 @@ module vdb.viewModels.songs {
 			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void) => {
 
 			this.songListRepo.getSongs(this.songListId, pvServices, paging, fields, lang, result => {
-				var mapped = _.map(result.items, song => {
+
+				var mapped = _.map(result.items, (song, idx) => {
 					return {
 						name: song.order + ". " + song.song.name + (song.notes ? " (" + song.notes + ")" : ""),
-						song: song.song
+						song: song.song,
+						indexInPlayList: paging.start + idx
 					}
 				});
+
 				callback({ items: mapped, totalCount: result.totalCount });
+
 			});
 
 		}

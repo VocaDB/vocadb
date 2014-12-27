@@ -42,8 +42,12 @@ module vdb.viewModels.songs {
 				this.draftsOnly() ? "Draft" : null,
 				(result: dc.PartialFindResultContract<dc.SongApiContract>) => {
 
-				var mapped = _.map(result.items, song => {
-					return { name: song.name, song: song }
+				var mapped = _.map(result.items, (song, idx) => {
+					return {
+						name: song.name,
+						song: song,
+						indexInPlayList: paging.start + idx
+					}
 				});
 
 				callback({ items: mapped, totalCount: result.totalCount });

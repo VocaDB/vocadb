@@ -129,6 +129,7 @@ module vdb.viewModels.pvs {
 		public resetSong: () => void = null;
 		public selectedSong = ko.observable<IPVPlayerSong>(null);
 		private static serviceName = (service: serv) => serv[service];
+		public shuffle = ko.observable(false);
 
 		private songFinishedPlayback = () => {
 

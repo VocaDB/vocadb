@@ -15,6 +15,10 @@
 			<i class="icon-step-forward noMargin"></i>
 		</a>
 
+		<a class="btn" data-bind="click: function() { shuffle(!shuffle()); }, css: { active: shuffle }" title="Shuffle">
+			<i class="icon icon-random"></i>
+		</a>
+
 		<a class="btn" data-bind="click: function() { autoplay(!autoplay()); }, css: { active: autoplay }">
 			Autoplay (Youtube and SoundCloud)
 		</a>

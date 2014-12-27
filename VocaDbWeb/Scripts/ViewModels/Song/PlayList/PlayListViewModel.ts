@@ -34,8 +34,11 @@ module vdb.viewModels.songs {
 
 		public formatLength = (length: number) => vdb.helpers.DateTimeHelper.formatFromSeconds(length);
 
+		// Gets the index of the currently playing song.
+		// -1 if the currently playing song isn't in the current list of songs, which is possible if the search filters were changed.
 		private getSongIndex = (song: viewModels.pvs.IPVPlayerSong) => {
 			
+			// Might need to build a lookup for this for large playlists
 			for (var i = 0; i < this.page().length; ++i) {
 				if (this.page()[i].song.id == song.song.id)
 					return i;
@@ -43,6 +46,13 @@ module vdb.viewModels.songs {
 
 			return -1;
 
+		}
+
+		// Gets a song with a specific playlist index.
+		// If shuffle is enabled, this index is NOT the same as the song index in the list of songs.
+		private getSongWithPlayListIndex = (index: number) => {
+			// Might need to build a lookup for this for large playlists
+			return _.find(this.page(), s => s.indexInPlayList == index);
 		}
 
 		private hasMoreSongs: KnockoutComputed<boolean>;
@@ -61,21 +71,50 @@ module vdb.viewModels.songs {
 
 		public nextSong = () => {
 
-			var index = this.getSongIndex(this.pvPlayerViewModel.selectedSong());
+			if (this.paging.totalItems() == 0)
+				return;
 
-			if (index + 1 < this.songsLoaded()) {
-				this.pvPlayerViewModel.selectedSong(this.page()[index + 1]);			
-			} else {
+			var index;
 
-				if (this.hasMoreSongs()) {
-					this.paging.nextPage();
-					this.updateResults(false, () => {
-						this.pvPlayerViewModel.selectedSong(this.page()[index + 1]);
-					});					
+			if (this.pvPlayerViewModel.shuffle()) {
+
+				// Get a random index
+				index = Math.floor(Math.random() * this.paging.totalItems());
+
+				// Check if song is already loaded
+				var song = this.getSongWithPlayListIndex(index);
+
+				if (song) {
+					this.playSong(song);				
 				} else {
-					this.pvPlayerViewModel.selectedSong(this.page()[0]);					
+
+					// Song not loaded, load that one song
+					this.updateResults(false, index, () => {
+						this.playSong(this.getSongWithPlayListIndex(index));
+					});
+
 				}
 
+			} else {
+
+				// Get the index of the next song to be played
+				index = this.getSongIndex(this.pvPlayerViewModel.selectedSong()) + 1;
+
+				if (index < this.songsLoaded()) {
+					this.playSong(this.page()[index]);
+				} else {
+
+					if (this.hasMoreSongs()) {
+						this.paging.nextPage();
+						this.updateResults(false, null, () => {
+							this.playSong(this.page()[index]);
+						});
+					} else {
+						this.playSong(this.page()[0]);
+					}
+
+				}
+				
 			}
 			
 		}
@@ -86,9 +125,14 @@ module vdb.viewModels.songs {
 		public pauseNotifications = false;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
 
+		private playSong = (song: ISongForPlayList) => {
+			this.pvPlayerViewModel.selectedSong(song);
+		}
+
 		public scrollEnd = () => {
 
-			if (this.hasMoreSongs()) {
+			// For now, disable autoload in shuffle mode
+			if (this.hasMoreSongs() && !this.pvPlayerViewModel.shuffle()) {
 				this.paging.nextPage();
 				this.updateResultsWithoutTotalCount();
 			}
@@ -100,7 +144,7 @@ module vdb.viewModels.songs {
 		public updateResultsWithTotalCount = () => this.updateResults(true);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);
 
-		public updateResults = (clearResults: boolean = true, callback?: () => void) => {
+		public updateResults = (clearResults: boolean = true, songWithIndex?: number, callback?: () => void) => {
 
 			// Disable duplicate updates
 			if (this.pauseNotifications)
@@ -115,6 +159,12 @@ module vdb.viewModels.songs {
 			}
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
+
+			if (songWithIndex !== null && songWithIndex !== undefined) {
+				pagingProperties.start = songWithIndex;
+				pagingProperties.maxEntries = 1;
+			}
+
 			var services = this.pvPlayerViewModel.autoplay() ? vdb.viewModels.pvs.PVPlayerViewModel.autoplayPVServicesString : "Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File";
 
 			this.songListRepo.getSongs(services, pagingProperties,
@@ -135,7 +185,7 @@ module vdb.viewModels.songs {
 					this.loading(false);
 
 					if (result.items && result.items.length && !this.pvPlayerViewModel.selectedSong())
-						this.pvPlayerViewModel.selectedSong(result.items[0]);
+						this.playSong(result.items[0]);
 
 					if (callback)
 						callback();
@@ -147,6 +197,10 @@ module vdb.viewModels.songs {
 	}
 
 	export interface ISongForPlayList {
+
+		// Song index in playlist with current filters, starting from 0.
+		// In shuffle mode songs may be loaded out of order.
+		indexInPlayList: number;
 
 		name: string;
 
@@ -161,7 +215,7 @@ module vdb.viewModels.songs {
 			paging: dc.PagingProperties,
 			fields: cls.SongOptionalFields,
 			lang: cls.globalization.ContentLanguagePreference,
-			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void);
+			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void): void;
 
 	}
 
