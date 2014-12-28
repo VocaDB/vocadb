@@ -18,10 +18,11 @@
 		</a>
 
 		<a class="btn" data-bind="click: function() { shuffle(!shuffle()); }, css: { active: shuffle }" title="@Res.Shuffle">
-			<i class="icon icon-random"></i>
+			<i class="icon icon-random noMargin"></i>
 		</a>
 
-		<a class="btn" data-bind="click: function() { autoplay(!autoplay()); }, css: { active: autoplay }">
+		<a class="btn" data-bind="click: function() { autoplay(!autoplay()); }, css: { active: autoplay }" title="@Res.AutoplayNote">
+			<i class="icon icon-play noMargin"></i>
 			@Res.Autoplay
 		</a>
 

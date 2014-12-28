@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Autoplay" xml:space="preserve">
-    <value>Automaattinen toisto (Youtube ja SoundCloud)</value>
+    <value>Automaattinen toisto</value>
+  </data>
+  <data name="AutoplayNote" xml:space="preserve">
+    <value>Automaattista toistoa tuetaan vain Youtuben ja SoundCloudin kanssa</value>
   </data>
   <data name="NextSong" xml:space="preserve">
     <value>Seuraava kappale</value>

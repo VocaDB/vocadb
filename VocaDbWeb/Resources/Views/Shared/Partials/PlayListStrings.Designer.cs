@@ -61,11 +61,20 @@ namespace VocaDb.Web.Resources.Views.Shared.Partials {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autoplay (Youtube and SoundCloud).
+        ///   Looks up a localized string similar to Autoplay.
         /// </summary>
         public static string Autoplay {
             get {
                 return ResourceManager.GetString("Autoplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autoplay is supported only for Youtube and SoundCloud.
+        /// </summary>
+        public static string AutoplayNote {
+            get {
+                return ResourceManager.GetString("AutoplayNote", resourceCulture);
             }
         }
         
