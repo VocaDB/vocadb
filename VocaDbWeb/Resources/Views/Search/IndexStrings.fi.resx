@@ -186,4 +186,19 @@
   <data name="TypeSomething" xml:space="preserve">
     <value>Kirjoita jotain...</value>
   </data>
+  <data name="IncludeDerivedVoicebanks" xml:space="preserve">
+    <value>Myös tähän perustuvat äänet</value>
+  </data>
+  <data name="MinScore" xml:space="preserve">
+    <value>Pisteet vähintään</value>
+  </data>
+  <data name="OnlyMyFollowedArtists" xml:space="preserve">
+    <value>Vain seuraamani artistit</value>
+  </data>
+  <data name="Playlist" xml:space="preserve">
+    <value>Soittolista</value>
+  </data>
+  <data name="TopGenres" xml:space="preserve">
+    <value>Yleisimmät genret</value>
+  </data>
 </root>

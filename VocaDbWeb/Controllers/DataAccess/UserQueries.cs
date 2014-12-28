@@ -159,7 +159,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.ToArray();
 
 			details.FavoriteTags = session.Query<Tag>()
-				.Where(t => t.CategoryName != "Lyrics" && t.CategoryName != "Distribution")
+				.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution)
 				.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
 				.Select(t => t.Name)
 				.Take(8)

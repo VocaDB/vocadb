@@ -117,88 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlbumDetails" xml:space="preserve">
-    <value>Details</value>
+  <data name="Autoplay" xml:space="preserve">
+    <value>Automaattinen toisto (Youtube ja SoundCloud)</value>
   </data>
-  <data name="AlbumTiles" xml:space="preserve">
-    <value>Tiles</value>
+  <data name="NextSong" xml:space="preserve">
+    <value>Seuraava kappale</value>
   </data>
-  <data name="AlbumType" xml:space="preserve">
-    <value>Album type</value>
-  </data>
-  <data name="ArtistType" xml:space="preserve">
-    <value>Artist type</value>
-  </data>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="EntryType" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="InMyCollection" xml:space="preserve">
-    <value>In my collection</value>
-  </data>
-  <data name="ItemsOf" xml:space="preserve">
-    <value>items of</value>
-  </data>
-  <data name="ItemsPerPage" xml:space="preserve">
-    <value>{0} items per page</value>
-  </data>
-  <data name="MoreFilters" xml:space="preserve">
-    <value>More filters</value>
-  </data>
-  <data name="MoreRecentThan" xml:space="preserve">
-    <value>More recent than</value>
-  </data>
-  <data name="OnlyWithPVs" xml:space="preserve">
-    <value>Only with PVs</value>
-  </data>
-  <data name="Preview" xml:space="preserve">
-    <value>Preview</value>
-  </data>
-  <data name="Rating" xml:space="preserve">
-    <value>Rating</value>
-  </data>
-  <data name="ReleaseDate" xml:space="preserve">
-    <value>Release date</value>
-  </data>
-  <data name="Showing" xml:space="preserve">
-    <value>Showing</value>
-  </data>
-  <data name="ShowTags" xml:space="preserve">
-    <value>Show tags</value>
-  </data>
-  <data name="SongType" xml:space="preserve">
-    <value>Song type</value>
-  </data>
-  <data name="TagCategory" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="TagInformation" xml:space="preserve">
-    <value>Tag information</value>
-  </data>
-  <data name="Times" xml:space="preserve">
-    <value>time(s)</value>
-  </data>
-  <data name="TotalScore" xml:space="preserve">
-    <value>total score</value>
-  </data>
-  <data name="TypeSomething" xml:space="preserve">
-    <value>Type something...</value>
-  </data>
-  <data name="IncludeDerivedVoicebanks" xml:space="preserve">
-    <value>Include derived voicebanks</value>
-  </data>
-  <data name="MinScore" xml:space="preserve">
-    <value>Minimum rating score</value>
-  </data>
-  <data name="OnlyMyFollowedArtists" xml:space="preserve">
-    <value>Only my followed artists</value>
-  </data>
-  <data name="Playlist" xml:space="preserve">
-    <value>Playlist</value>
-  </data>
-  <data name="TopGenres" xml:space="preserve">
-    <value>Top genres</value>
+  <data name="Shuffle" xml:space="preserve">
+    <value>Sekoita</value>
   </data>
 </root>

@@ -1,4 +1,6 @@
-﻿<!-- binding context: SongListPlayListViewModel -->
+﻿@using Res = VocaDb.Web.Resources.Views.Shared.Partials.PlayListStrings
+
+<!-- binding context: SongListPlayListViewModel -->
 
 <div data-bind="with: pvPlayerViewModel" class="songlist-playlist-player">
 	<div>		
@@ -11,16 +13,16 @@
 			<div id="pv-player-wrapper" data-bind="html: playerHtml"></div>
 		</div>
 
-		<a class="btn" data-bind="click: $parent.nextSong, css: { disabled: $parent.paging.totalItems() == 0 }" title="Next song">
+		<a class="btn" data-bind="click: $parent.nextSong, css: { disabled: $parent.paging.totalItems() == 0 }" title="@Res.NextSong">
 			<i class="icon-step-forward noMargin"></i>
 		</a>
 
-		<a class="btn" data-bind="click: function() { shuffle(!shuffle()); }, css: { active: shuffle }" title="Shuffle">
+		<a class="btn" data-bind="click: function() { shuffle(!shuffle()); }, css: { active: shuffle }" title="@Res.Shuffle">
 			<i class="icon icon-random"></i>
 		</a>
 
 		<a class="btn" data-bind="click: function() { autoplay(!autoplay()); }, css: { active: autoplay }">
-			Autoplay (Youtube and SoundCloud)
+			@Res.Autoplay
 		</a>
 
 		<a class="btn btn-info song-info pull-right" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Song', selectedSong() && selectedSong().song ? selectedSong().song.id : null) }, visible: selectedSong() && selectedSong().song">
@@ -45,9 +47,6 @@
 				<td>
 					<span data-bind="songTypeLabel: song.songType"></span>					
 				</td>
-				@*<td>
-				<small class="extraInfo" data-bind="text: song.artistString"></small>
-			</td>*@
 				<td>
 					<span data-bind="visible: song.lengthSeconds, text: $parent.formatLength(song.lengthSeconds)"></span>
 				</td>

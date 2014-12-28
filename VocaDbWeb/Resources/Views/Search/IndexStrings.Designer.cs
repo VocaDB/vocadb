@@ -115,6 +115,15 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include derived voicebanks.
+        /// </summary>
+        public static string IncludeDerivedVoicebanks {
+            get {
+                return ResourceManager.GetString("IncludeDerivedVoicebanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In my collection.
         /// </summary>
         public static string InMyCollection {
@@ -142,6 +151,15 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimum rating score.
+        /// </summary>
+        public static string MinScore {
+            get {
+                return ResourceManager.GetString("MinScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to More filters.
         /// </summary>
         public static string MoreFilters {
@@ -160,11 +178,29 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only my followed artists.
+        /// </summary>
+        public static string OnlyMyFollowedArtists {
+            get {
+                return ResourceManager.GetString("OnlyMyFollowedArtists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only with PVs.
         /// </summary>
         public static string OnlyWithPVs {
             get {
                 return ResourceManager.GetString("OnlyWithPVs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlist.
+        /// </summary>
+        public static string Playlist {
+            get {
+                return ResourceManager.GetString("Playlist", resourceCulture);
             }
         }
         
@@ -246,6 +282,15 @@ namespace ViewRes.Search {
         public static string Times {
             get {
                 return ResourceManager.GetString("Times", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top genres.
+        /// </summary>
+        public static string TopGenres {
+            get {
+                return ResourceManager.GetString("TopGenres", resourceCulture);
             }
         }
         

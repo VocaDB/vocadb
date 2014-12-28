@@ -45,7 +45,9 @@ namespace VocaDb.Model.Domain.Tags {
 			return TagNameRegex.IsMatch(tagName);
 		}
 
+		public const string CommonCategory_Distribution = "Distribution";
 		public const string CommonCategory_Genres = "Genres";
+		public const string CommonCategory_Lyrics = "Lyrics";
 		public const string CommonTag_ChangedLyrics = "changed_lyrics";
 		public const string CommonTag_Free = "free";
 		public const string CommonTag_Instrumental = "instrumental";

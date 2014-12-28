@@ -1100,6 +1100,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MiscStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Shared\Partials\PlayListStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlayListStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Shared\SharedStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3257,6 +3262,12 @@
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PlayListStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.ja.resx" />

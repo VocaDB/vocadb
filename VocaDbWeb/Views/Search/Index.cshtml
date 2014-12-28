@@ -108,10 +108,10 @@
 						
 						<div class="inline-block" data-bind="visible: showSongSearch(), with: songSearchViewModel">
 							<div class="btn-group">
-								<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="Details">
+								<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumDetails">
 									<i class="icon-th-list"></i>
 								</a>
-								<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="PlayList">
+								<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="@Res.Playlist">
 									<i class="icon-list"></i>
 								</a>
 							</div>
@@ -155,7 +155,7 @@
 								</div>
 								<div class="btn-group">
 									<button class="btn dropdown-toggle btn-nomargin" data-toggle="dropdown">
-										Top genres
+										@Res.TopGenres
 										<span class="caret"></span>
 									</button>
 									<ul data-bind="foreach: genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
@@ -179,7 +179,7 @@
 								<div class="controls">
 									<label class="checkbox">
 										<input type="checkbox" data-bind="checked: onlyFollowedByMe" />
-										Only my followed artists
+										@Res.OnlyMyFollowedArtists
 									</label>
 								</div>
 							</div>
@@ -213,7 +213,7 @@
 								<div class="controls">
 									<label class="checkbox">
 										<input type="checkbox" data-bind="checked: childVoicebanks" />
-										Include derived voicebanks
+										@Res.IncludeDerivedVoicebanks
 									</label>
 								</div>
 							</div>
@@ -247,7 +247,7 @@
 								<div class="controls">
 									<label class="checkbox">
 										<input type="checkbox" data-bind="checked: childVoicebanks" />
-										Include derived voicebanks
+										@Res.IncludeDerivedVoicebanks
 									</label>
 								</div>
 							</div>
@@ -269,7 +269,7 @@
 							</div>
 
 							<div class="control-group">
-								<div class="control-label">Minimum rating score</div>
+								<div class="control-label">@Res.MinScore</div>
 								<div class="controls">
 									<input type="number" data-bind="textInput: minScore" maxlength="10" class="input-small" />
 								</div>
