@@ -158,11 +158,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.Select(c => new AlbumContract(c, LanguagePreference))
 				.ToArray();
 
-			details.FavoriteTags = session.Query<SongTagUsage>()
-				.Where(c => c.Song.UserFavorites.Any(f => f.User.Id == user.Id) && c.Tag.CategoryName != "Lyrics" && c.Tag.CategoryName != "Distribution")
-				.GroupBy(t => t.Tag.Name)
-				.OrderByDescending(t => t.Count())
-				.Select(t => t.Key)
+			details.FavoriteTags = session.Query<Tag>()
+				.Where(t => t.CategoryName != "Lyrics" && t.CategoryName != "Distribution")
+				.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
+				.Select(t => t.Name)
 				.Take(8)
 				.ToArray();
 

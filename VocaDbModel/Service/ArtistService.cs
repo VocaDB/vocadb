@@ -525,7 +525,7 @@ namespace VocaDb.Model.Service {
 					SessionHelper.Sync(session, webLinkDiff);
 				}
 
-				Archive(session, artist, ArtistArchiveReason.Reverted);
+				Archive(session, artist, ArtistArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
 				AuditLog(string.Format("reverted {0} to revision {1}", EntryLinkFactory.CreateEntryLink(artist), archivedVersion.Version), session);
 
 				return new EntryRevertedContract(artist, warnings);

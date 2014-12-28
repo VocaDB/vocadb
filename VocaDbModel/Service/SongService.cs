@@ -823,8 +823,8 @@ namespace VocaDb.Model.Service {
 
 				song.UpdateFavoritedTimes();
 
-				Archive(session, song, SongArchiveReason.Reverted);
-				AuditLog("reverted " + EntryLinkFactory.CreateEntryLink(song) + " to revision " + archivedVersion.Version, session);
+				Archive(session, song, SongArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
+				AuditLog(string.Format("reverted {0} to revision {1}", EntryLinkFactory.CreateEntryLink(song), archivedVersion.Version), session);
 
 				return new EntryRevertedContract(song, warnings);
 

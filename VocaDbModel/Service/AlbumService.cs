@@ -701,7 +701,7 @@ namespace VocaDb.Model.Service {
 				album.UpdateArtistString();
 				album.UpdateRatingTotals();
 
-				Archive(session, album, AlbumArchiveReason.Reverted);
+				Archive(session, album, AlbumArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
 				AuditLog(string.Format("reverted {0} to revision {1}", EntryLinkFactory.CreateEntryLink(album), archivedVersion.Version), session);
 
 				return new EntryRevertedContract(album, warnings);
