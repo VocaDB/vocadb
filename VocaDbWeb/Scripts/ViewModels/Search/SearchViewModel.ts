@@ -21,7 +21,9 @@ module vdb.viewModels.search {
 			artistId: number,
 			childVoicebanks: boolean,
 			artistType: string,
-			albumType: string, songType: string, onlyWithPVs: boolean,
+			albumType: string, songType: string,
+			onlyWithPVs: boolean,
+			since: number,
 			minScore: number,
 			viewMode: string,
 			autoplay: boolean,
@@ -34,11 +36,12 @@ module vdb.viewModels.search {
 			if (searchTerm)
 				this.searchTerm(searchTerm);
 
-			var isAlbum = searchType == "Album";
-			var isSong = searchType == "Song";
+			var isAlbum = searchType === "Album";
+			var isSong = searchType === "Song";
 
 			this.anythingSearchViewModel = new AnythingSearchViewModel(this, languageSelection, entryRepo);
 			this.artistSearchViewModel = new ArtistSearchViewModel(this, languageSelection, artistRepo, loggedUserId, artistType);
+
 			this.albumSearchViewModel = new AlbumSearchViewModel(this, unknownPictureUrl, languageSelection, albumRepo, artistRepo,
 				resourceRepo, cultureCode,
 				isAlbum ? sort : null,
@@ -46,6 +49,7 @@ module vdb.viewModels.search {
 				isAlbum ? childVoicebanks : null,
 				albumType,
 				isAlbum ? viewMode : null);
+
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
 				resourceRepo,
 				cultureCode,
@@ -55,14 +59,16 @@ module vdb.viewModels.search {
 				isSong ? childVoicebanks : null,
 				songType,
 				onlyWithPVs,
+				since,
 				isSong ? minScore : null,
 				isSong ? viewMode : null,
 				autoplay,
 				shuffle,
 				pvPlayerWrapperElement);
+
 			this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);
 
-			if (tag || artistId != null || artistType || albumType || songType || onlyWithPVs != null || minScore)
+			if (tag || artistId != null || artistType || albumType || songType || onlyWithPVs != null || since || minScore)
 				this.showAdvancedFilters(true);
 
 			if (searchType)

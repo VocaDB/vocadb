@@ -22,6 +22,7 @@ module vdb.viewModels.search {
 			childVoicebanks: boolean,
 			songType: string,
 			onlyWithPVs: boolean,
+			since: number,
 			minScore: number,
 			viewMode: string,
 			autoplay: boolean,
@@ -55,6 +56,7 @@ module vdb.viewModels.search {
 
 			this.childVoicebanks = ko.observable(childVoicebanks || false);
 			this.minScore = ko.observable(minScore || undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });;
+			this.since = ko.observable(since);
 			this.viewMode = ko.observable(viewMode || "Details");
 
 			this.artistId.subscribe(this.updateResultsWithTotalCount);
@@ -134,7 +136,7 @@ module vdb.viewModels.search {
 		private pvServiceIcons: vdb.models.PVServiceIcons;
 		private resourceManager: cls.ResourcesManager;
 		public showChildVoicebanks: KnockoutComputed<boolean>;
-		public since = ko.observable<number>(null);
+		public since: KnockoutObservable<number>;
 		public songType = ko.observable("Unspecified");
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;

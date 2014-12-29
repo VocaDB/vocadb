@@ -360,6 +360,7 @@
 			var discType = '@ViewBag.DiscType';
 			var songType ='@ViewBag.SongType';
 			var onlyWithPVs = @ToJS((bool?)ViewBag.OnlyWithPVs);
+			var since = @ToJS((int?)ViewBag.Since);
 			var minScore = @ToJS((int?)ViewBag.MinScore);
 			var viewMode = '@ViewBag.ViewMode';
 			var autoplay = @ToJS((bool?)ViewBag.Autoplay);
@@ -386,6 +387,7 @@
 				artistId, 
 				childVoicebanks,
 				artistType, discType, songType, onlyWithPVs, 
+				since,
 				minScore,
 				viewMode, 
 				autoplay, 
