@@ -8,7 +8,7 @@ module vdb.repositories {
 		constructor(
 			private urlMapper: vdb.UrlMapper,
 			private lang: cls.globalization.ContentLanguagePreference,
-			private loggedUserId) { }
+			private loggedUserId: number) { }
 
 		public adminRepository = () => {
 			return new AdminRepository(this.urlMapper);

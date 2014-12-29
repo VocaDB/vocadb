@@ -6,7 +6,7 @@
 	<div>		
 		<div data-bind="if: selectedSong() && selectedSong().song">
 			<h4 class="pull-left">
-				<span data-bind="text: selectedSong().song.name"></span>
+				<a data-bind="text: selectedSong().song.name, attr: { href: vdb.utils.EntryUrlMapper.details_song(selectedSong().song) }" href="#"></a>
 				<span class="songlist-playlist-player-artists" data-bind="text: selectedSong().song.artistString"></span>
 			</h4>
 			
