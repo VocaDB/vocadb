@@ -40,30 +40,30 @@ namespace VocaDb.Web.Controllers.DataAccess {
 	/// </summary>
 	public class UserQueries : QueriesBase<IUserRepository, User> {
 
-		class UserStats {
-			
-			public int AlbumCollectionCount { get; set;}
+		/// <summary>
+		/// Cached user stats, these might be slightly inaccurate.
+		/// Most of the values are just "fun" statistical information, some of them aren't even displayed directly.
+		/// </summary>
+		class CachedUserStats {
+
+			public int AlbumCollectionCount { get; set; }
 
 			public int ArtistCount { get; set; }
 
 			public int CommentCount { get; set; }
 
+			public int EditCount { get; set; }
+
 			public int FavoriteSongCount { get; set; }
 
+			// Statistical information, not essential
+			public string[] FavoriteTags { get; set; }
+
+			// Only used for "power"
 			public int OwnedAlbumCount { get; set; }
 
-			public int RatedAlbumCount { get; set;}
-
-		}
-
-		/// <summary>
-		/// Cached user stats, these might be slightly inaccurate
-		/// </summary>
-		class CachedUserStats {
-
-			public int CommentCount { get; set; }
-
-			public int EditCount { get; set; }
+			// Only used for "power"
+			public int RatedAlbumCount { get; set; }
 
 			public int SubmitCount { get; set; }
 
@@ -104,7 +104,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			var key = string.Format("CachedUserStats.{0}", user.Id);
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
 
-				var stats = new CachedUserStats();
+				var stats = ctx.Query().Where(u => u.Id == user.Id).Select(u => new CachedUserStats {
+					AlbumCollectionCount = u.AllAlbums.Count(a => !a.Album.Deleted),
+					ArtistCount = u.AllArtists.Count(a => !a.Artist.Deleted),
+					FavoriteSongCount = u.FavoriteSongs.Count(c => !c.Song.Deleted),
+					OwnedAlbumCount = u.AllAlbums.Count(a => !a.Album.Deleted && a.PurchaseStatus == PurchaseStatus.Owned),
+					RatedAlbumCount = u.AllAlbums.Count(a => !a.Album.Deleted && a.Rating != 0),
+				}).First();
 
 				stats.CommentCount
 					= ctx.Query<AlbumComment>().Count(c => c.Author.Id == user.Id)
@@ -126,6 +132,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					+ ctx.Query<AlbumTagVote>().Count(t => t.User.Id == user.Id)
 					+ ctx.Query<ArtistTagVote>().Count(t => t.User.Id == user.Id);
 
+				stats.FavoriteTags = ctx.Query<Tag>()
+					.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution)
+					.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
+					.Select(t => t.Name)
+					.Take(8)
+					.ToArray();
+
 				return stats;
 
 			});
@@ -136,17 +149,15 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			var details = new UserDetailsContract(user, PermissionContext);
 
-			var stats = session.Query().Where(u => u.Id == user.Id).Select(u => new UserStats {
-				AlbumCollectionCount = u.AllAlbums.Count(a => !a.Album.Deleted),
-				ArtistCount = u.AllArtists.Count(a => !a.Artist.Deleted),
-				FavoriteSongCount = u.FavoriteSongs.Count(c => !c.Song.Deleted),
-				OwnedAlbumCount = u.AllAlbums.Count(a => !a.Album.Deleted && a.PurchaseStatus == PurchaseStatus.Owned),
-				RatedAlbumCount = u.AllAlbums.Count(a => !a.Album.Deleted && a.Rating != 0),
-			}).First();
-
-			details.AlbumCollectionCount = stats.AlbumCollectionCount;
-			details.ArtistCount = stats.ArtistCount;
-			details.FavoriteSongCount = stats.FavoriteSongCount;
+			var cachedStats = GetCachedUserStats(session, user);
+			details.AlbumCollectionCount = cachedStats.AlbumCollectionCount;
+			details.ArtistCount = cachedStats.ArtistCount;
+			details.FavoriteSongCount = cachedStats.FavoriteSongCount;
+			details.FavoriteTags = cachedStats.FavoriteTags;
+			details.CommentCount = cachedStats.CommentCount;
+			details.EditCount = cachedStats.EditCount;
+			details.SubmitCount = cachedStats.SubmitCount;
+			details.TagVotes = cachedStats.TagVotes;
 
 			details.FavoriteAlbums = session.Query<AlbumForUser>()
 				.Where(c => c.User.Id == user.Id && !c.Album.Deleted && c.Rating > 3)
@@ -156,13 +167,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.Take(7)
 				.ToArray()
 				.Select(c => new AlbumContract(c, LanguagePreference))
-				.ToArray();
-
-			details.FavoriteTags = session.Query<Tag>()
-				.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution)
-				.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
-				.Select(t => t.Name)
-				.Take(8)
 				.ToArray();
 
 			details.FollowedArtists = session.Query<ArtistForUser>()
@@ -188,13 +192,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.Select(c => new SongContract(c, LanguagePreference))
 				.ToArray();
 
-			var cachedStats = GetCachedUserStats(session, user);
-			details.CommentCount = cachedStats.CommentCount;
-			details.EditCount = cachedStats.EditCount;
-			details.SubmitCount = cachedStats.SubmitCount;
-			details.TagVotes = cachedStats.TagVotes;
-
-			details.Power = UserHelper.GetPower(details, stats.OwnedAlbumCount, stats.RatedAlbumCount);
+			details.Power = UserHelper.GetPower(details, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount);
 			details.Level = UserHelper.GetLevel(details.Power);
 
 			if (user.Active && user.GroupId >= UserGroupId.Regular && user.Equals(PermissionContext.LoggedUser) && !user.AllOwnedArtists.Any()) {
