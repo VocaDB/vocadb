@@ -5,7 +5,10 @@ module vdb.repositories {
 
 	export class RepositoryFactory {
 		
-		constructor(private urlMapper: vdb.UrlMapper, private lang: cls.globalization.ContentLanguagePreference) { }
+		constructor(
+			private urlMapper: vdb.UrlMapper,
+			private lang: cls.globalization.ContentLanguagePreference,
+			private loggedUserId) { }
 
 		public adminRepository = () => {
 			return new AdminRepository(this.urlMapper);
@@ -44,7 +47,7 @@ module vdb.repositories {
 		}
 
 		public userRepository = () => {
-			return new UserRepository(this.urlMapper);
+			return new UserRepository(this.urlMapper, this.loggedUserId);
 		}
 
 	}

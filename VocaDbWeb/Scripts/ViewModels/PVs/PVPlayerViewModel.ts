@@ -13,6 +13,7 @@ module vdb.viewModels.pvs {
 		constructor(
 			private urlMapper: UrlMapper,
 			private songRepo: rep.SongRepository,
+			userRepo: rep.UserRepository,
 			private playerElementId: string,
 			private wrapperElement: HTMLElement,
 			autoplay?: boolean,
@@ -41,8 +42,13 @@ module vdb.viewModels.pvs {
 					}
 
 					this.playerHtml("");
+					this.ratingButtonsViewModel(null);
 					return;					
 				}
+
+				userRepo.getSongRating(null, song.song.id, rating => {
+					this.ratingButtonsViewModel(new PVRatingButtonsViewModel(userRepo, { id: song.song.id, vote: rating }, null));
+				});
 
 				// Use current player
 				if (this.currentPlayer && this.songHasPVService(song, this.currentPlayer.service)) {
@@ -130,6 +136,7 @@ module vdb.viewModels.pvs {
 		public nextSong: () => void;
 		public playerHtml = ko.observable<string>(null);
 		public playerService: serv = null;
+		public ratingButtonsViewModel: KnockoutObservable<PVRatingButtonsViewModel> = ko.observable(null);
 		public resetSong: () => void = null;
 		public selectedSong = ko.observable<IPVPlayerSong>(null);
 		private static serviceName = (service: serv) => serv[service];

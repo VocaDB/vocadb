@@ -146,6 +146,24 @@ module vdb.repositories {
 
 		}
 
+		// Gets a specific user's rating for a specific song.
+		// userId: User ID. Can be null, in which case the logged user will be used (if any).
+		// songId: ID of the song for which to get the rating. Cannot be null.
+		// callback: Callback receiving the rating. If the user has not rated the song, or if the user is not logged in, this will be "Nothing".
+		public getSongRating = (userId: number, songId: number, callback: (rating: string) => void) => {
+
+			userId = userId || this.loggedUserId;
+
+			if (!userId) {
+				callback('Nothing');
+				return;				
+			}
+
+			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/ratedSongs/" + songId);
+			$.getJSON(url, callback);
+
+		}
+
 		public requestEmailVerification = (callback?: () => void) => {
 
 			var url = this.mapUrl("/RequestEmailVerification");
@@ -171,7 +189,7 @@ module vdb.repositories {
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
 
-        constructor(private urlMapper: vdb.UrlMapper) {
+        constructor(private urlMapper: vdb.UrlMapper, private loggedUserId?: number) {
 
             this.mapUrl = (relative: string) => {
                 return urlMapper.mapRelative("/User") + relative;

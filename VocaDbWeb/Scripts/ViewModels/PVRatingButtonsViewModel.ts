@@ -24,14 +24,14 @@ module vdb.viewModels {
 
             var songId = songWithVoteContract.id;
             this.rating = ko.observable(cls.parseSongVoteRating(songWithVoteContract.vote));
-            this.isRated = ko.computed(() => this.rating() != cls.SongVoteRating.Nothing);
-            this.isRatingFavorite = ko.computed(() => this.rating() == cls.SongVoteRating.Favorite);
-            this.isRatingLike = ko.computed(() => this.rating() == cls.SongVoteRating.Like);
+            this.isRated = ko.computed(() => this.rating() !== cls.SongVoteRating.Nothing);
+            this.isRatingFavorite = ko.computed(() => this.rating() === cls.SongVoteRating.Favorite);
+            this.isRatingLike = ko.computed(() => this.rating() === cls.SongVoteRating.Like);
 
             var setRating = (rating: cls.SongVoteRating) => {
                 this.rating(rating);
                 repository.updateSongRating(songId, rating, () => {
-                    if (rating != cls.SongVoteRating.Nothing &&  _.isFunction(ratingCallback))
+                    if (rating !== cls.SongVoteRating.Nothing && ratingCallback)
                         ratingCallback();
                 });
             }

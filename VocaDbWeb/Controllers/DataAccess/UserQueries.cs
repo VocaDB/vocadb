@@ -842,6 +842,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public SongVoteRating GetSongRating(int userId, int songId) {
 			
+			if (userId == 0)
+				return SongVoteRating.Nothing;
+
 			return HandleQuery(ctx => {
 				
 				var r = ctx.OfType<FavoriteSongForUser>().Query().FirstOrDefault(s => s.Song.Id == songId && s.User.Id == userId);

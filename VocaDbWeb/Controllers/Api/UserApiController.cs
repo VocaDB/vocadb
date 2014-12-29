@@ -281,6 +281,19 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Gets a specific user's rating for a song.
+		/// </summary>
+		/// <param name="userId">User whose rating is to be checked.</param>
+		/// <param name="songId">ID of the song whose rating is to be checked.</param>
+		/// <returns>Specified user's rating for the specified song. If the song is not rated by the user, this will be Nothing.</returns>
+		[Route("{userId:int}/ratedSongs/{songId:int}")]
+		public SongVoteRating GetSongRating(int userId, int songId) {
+			
+			return queries.GetSongRating(userId, songId);
+
+		}
+
+		/// <summary>
 		/// Gets currently logged in user's rating for a song.
 		/// Requires authentication.
 		/// </summary>
@@ -291,7 +304,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[EnableCors(origins: "*", headers: "*", methods: "get", SupportsCredentials = true)]
 		public SongVoteRating GetSongRating(int songId) {
 			
-			return queries.GetSongRating(permissionContext.LoggedUserId, songId);
+			return GetSongRating(permissionContext.LoggedUserId, songId);
 
 		}
 

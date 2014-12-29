@@ -378,14 +378,15 @@
 
 			var cultureCode = '@UICulture';
 			var languageSelection = '@UserContext.LanguagePreference';
+			var loggedUserId = @ToJS(UserContext.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, loggedUserId);
 			var albumRepository = repoFactory.albumRepository();
 			var songRepo = repoFactory.songRepository();
 			var resourceRepo = repoFactory.resourceRepository();
 			var userRepository = repoFactory.userRepository();
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
-			var loggedUserId = @ToJS(UserContext.LoggedUserId);
 
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
 			unknownPictureUrl,

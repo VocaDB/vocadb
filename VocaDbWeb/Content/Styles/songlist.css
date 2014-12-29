@@ -6,6 +6,7 @@
   margin-bottom: 5px;
 }
 .songlist-playlist-player {
+  max-width: 560px;
   margin-bottom: 20px;
   display: inline-block;
   vertical-align: top;

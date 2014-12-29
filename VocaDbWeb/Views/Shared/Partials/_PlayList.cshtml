@@ -5,10 +5,14 @@
 <div data-bind="with: pvPlayerViewModel" class="songlist-playlist-player">
 	<div>		
 		<div data-bind="if: selectedSong() && selectedSong().song">
-			<h4>
+			<h4 class="pull-left">
 				<span data-bind="text: selectedSong().song.name"></span>
 				<span class="songlist-playlist-player-artists" data-bind="text: selectedSong().song.artistString"></span>
 			</h4>
+			
+			<div data-bind="with: ratingButtonsViewModel">
+				@{ Html.RenderPartial("Partials/_PVRatingButtonsForIndex"); }
+			</div>
 
 			<div id="pv-player-wrapper" data-bind="html: playerHtml"></div>
 		</div>
@@ -46,7 +50,7 @@
 					<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
 				</td>
 				<td>
-					<span data-bind="songTypeLabel: song.songType"></span>					
+					<span data-bind="songTypeLabel: song.songType"></span>
 				</td>
 				<td>
 					<span data-bind="visible: song.lengthSeconds, text: $parent.formatLength(song.lengthSeconds)"></span>
