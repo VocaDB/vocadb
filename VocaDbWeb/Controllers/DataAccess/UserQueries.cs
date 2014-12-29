@@ -102,7 +102,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private CachedUserStats GetCachedUserStats(IRepositoryContext<User> ctx, User user) {
 			
 			var key = string.Format("CachedUserStats.{0}", user.Id);
-			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
+			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(4), () => {
 
 				var stats = ctx.Query().Where(u => u.Id == user.Id).Select(u => new CachedUserStats {
 					AlbumCollectionCount = u.AllAlbums.Count(a => !a.Album.Deleted),
@@ -191,6 +191,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.ToArray()
 				.Select(c => new SongContract(c, LanguagePreference))
 				.ToArray();
+
+			// Correct cached stats if we can determine they're out of date
+			details.AlbumCollectionCount = Math.Max(details.AlbumCollectionCount, details.FavoriteAlbums.Length);
+			details.ArtistCount = Math.Max(details.ArtistCount, details.FollowedArtists.Length);
+			details.FavoriteSongCount = Math.Max(details.FavoriteSongCount, details.LatestRatedSongs.Length);
 
 			details.Power = UserHelper.GetPower(details, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount);
 			details.Level = UserHelper.GetLevel(details.Power);
