@@ -47,7 +47,7 @@ module vdb.viewModels.pvs {
 				}
 
 				userRepo.getSongRating(null, song.song.id, rating => {
-					this.ratingButtonsViewModel(new PVRatingButtonsViewModel(userRepo, { id: song.song.id, vote: rating }, null));
+					this.ratingButtonsViewModel(new PVRatingButtonsViewModel(userRepo, { id: song.song.id, vote: rating }, ui.showThankYouForRatingMessage));
 				});
 
 				// Use current player
