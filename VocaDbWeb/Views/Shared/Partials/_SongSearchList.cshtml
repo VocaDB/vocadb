@@ -1,4 +1,6 @@
-﻿@using SharedRes = ViewRes.SharedStrings;
+﻿@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers
+@using SharedRes = ViewRes.SharedStrings;
 @using Res = ViewRes.Search.IndexStrings;
 
 <!-- binding context: SongSearchViewModel -->
@@ -51,6 +53,10 @@
 				<!-- ko foreach: $parent.getPVServiceIcons($data.pvServices) -->
 				<img data-bind="attr: { src: url, title: service }" />
 				<!-- /ko -->
+				
+				<span data-bind="visible: $data.rating === 'Favorite'" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
+				<span data-bind="visible: $data.rating === 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
+				
 				@KnockoutHelpers.DraftIcon("status")
 				<br />
 				<small class="extraInfo" data-bind="text: artistString"></small>

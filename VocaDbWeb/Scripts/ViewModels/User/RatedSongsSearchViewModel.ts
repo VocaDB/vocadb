@@ -56,7 +56,7 @@ module vdb.viewModels.user {
 		public groupByRating = ko.observable(true);
 		public isInit = false;
 		public loading = ko.observable(true); // Currently loading for data
-		public page = ko.observableArray<dc.RatedSongForUserForApiContract>([]); // Current page of items
+		public page = ko.observableArray<IRatedSongSearchItem>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
@@ -64,11 +64,17 @@ module vdb.viewModels.user {
 		public resources = ko.observable<any>();
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public showChildVoicebanks: KnockoutComputed<boolean>;
+		public showTags = ko.observable(false);
 		public songListId = ko.observable<number>(undefined);
 		public songLists = ko.observableArray<dc.SongListBaseContract>([]);
 		public sort = ko.observable("Name");
 		public sortName = ko.computed(() => this.resources() != null ? this.resources().songSortRuleNames[this.sort()] : "");
 		public tag = ko.observable("");
+		public viewMode = ko.observable("Details");
+
+		public getPVServiceIcons = (services: string) => {
+			return this.pvServiceIcons.getIconUrls(services);
+		}
 
 		public init = () => {
 
@@ -116,19 +122,24 @@ module vdb.viewModels.user {
 				this.artistId(),
 				this.childVoicebanks(),
 				this.rating(), this.songListId(), this.groupByRating(), this.sort(),
-				(result: any) => {
+				(result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => {
 
-					_.each(result.items, (item: dc.RatedSongForUserForApiContract) => {
+					var songs: IRatedSongSearchItem[] = [];
 
-						var song = item.song;
-						var songAny: any = song;
+					_.each(result.items, (item) => {
 
-						if (song.pvServices && song.pvServices != 'Nothing') {
-							songAny.previewViewModel = new SongWithPreviewViewModel(this.songRepo, this.userRepo, song.id, song.pvServices);
-							songAny.previewViewModel.ratingComplete = vdb.ui.showThankYouForRatingMessage;
+						var song: IRatedSongSearchItem = item.song;
+
+						song.rating = item.rating;
+
+						if (song.pvServices && song.pvServices !== 'Nothing') {
+							song.previewViewModel = new SongWithPreviewViewModel(this.songRepo, this.userRepo, song.id, song.pvServices);
+							song.previewViewModel.ratingComplete = vdb.ui.showThankYouForRatingMessage;
 						} else {
-							songAny.previewViewModel = null;
+							song.previewViewModel = null;
 						}
+
+						songs.push(song);
 
 					});
 
@@ -137,12 +148,20 @@ module vdb.viewModels.user {
 					if (pagingProperties.getTotalCount)
 						this.paging.totalItems(result.totalCount);
 
-					this.page(result.items);
+					this.page(songs);
 					this.loading(false);
 
 				});
 
 		}
+
+	}
+
+	export interface IRatedSongSearchItem extends dc.SongApiContract {
+
+		previewViewModel?: SongWithPreviewViewModel;
+
+		rating?: string;
 
 	}
 

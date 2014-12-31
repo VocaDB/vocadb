@@ -77,78 +77,9 @@
 
 </div>
 
-<div data-bind="css: { loading: loading }, visible: true" style="display: none;">
+<div data-bind="visible: true" style="display: none;">
 
-	<div data-bind="with: paging" class="dropdown pull-right">
-		@KnockoutHelpers.EntryCount()
-	</div>
-
-	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
-	</div>
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th colspan="2">
-					<a data-bind="click: function() { sort('Name') }" href="#">
-						Name
-						<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
-					</a>
-				</th>
-				<th>
-					<a data-bind="click: function() { sort('RatingScore') }" href="#">
-						Rating
-						<span class="sortDirection_down" data-bind="visible: sort() == 'RatingScore'"></span>
-					</a>
-				</th>
-			</tr>
-		</thead>
-		<tbody data-bind="foreach: page">
-			<tr>
-				<td style="width: 75px">
-					<a data-bind="visible: song.thumbUrl, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#">
-						<img data-bind="attr: { src: song.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" />
-					</a>
-				</td>
-				<td>
-
-					<div class="pull-right" data-bind="visible: song.pvServices, with: song.previewViewModel">
-						<a data-bind="click: togglePreview, css: { active: preview }" class="btn previewSong" href="#">
-							<i class="icon-film"></i>
-							Preview
-						</a>
-					</div>
-
-					<a data-bind="text: song.name, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
-
-					<span data-bind="songTypeLabel: song.songType"></span>
-					<!-- ko foreach: $parent.pvServiceIcons.getIconUrls(song.pvServices) -->
-					<img data-bind="attr: { src: url, title: service }" />
-					<!-- /ko -->
-
-					<span data-bind="visible: rating == 'Favorite'" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
-					<span data-bind="visible: rating == 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
-
-					@KnockoutHelpers.DraftIcon("status")
-					<br />
-					<small class="extraInfo" data-bind="text: song.artistString"></small>
-
-					<div data-bind="visible: song.pvServices, with: song.previewViewModel">
-						@SongHelpers.PVPreviewKnockout("$parents[2].pvServiceIcons.getIconUrls")
-					</div>
-				</td>
-				<td>
-					<span data-bind="text: song.ratingScore"></span>
-					total score
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
-	</div>
+	@{ Html.RenderPartial("Partials/_SongSearchList"); }
 
 </div>
 
