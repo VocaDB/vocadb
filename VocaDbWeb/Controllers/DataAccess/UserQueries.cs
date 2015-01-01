@@ -762,7 +762,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.WhereSongHasArtist(queryParams.ArtistId, queryParams.ChildVoicebanks)
 					.WhereHasRating(queryParams.FilterByRating)
 					.WhereSongIsInList(queryParams.SonglistId)
-					.WhereSongHasTag(queryParams.Tag);
+					.WhereSongHasTag(queryParams.Tag)
+					.WhereSongHasPVService(queryParams.PVServices);
 
 				var queryWithSort = q;
 

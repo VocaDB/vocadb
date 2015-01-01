@@ -14,6 +14,7 @@ module vdb.viewModels.user {
 			private resourceRepo: rep.ResourceRepository,
 			private languageSelection: string, private loggedUserId: number, private cultureCode: string,
 			sort: string, groupByRating: boolean,
+			pvPlayerWrapperElement: HTMLElement,
 			initialize = true) {
 
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
@@ -40,8 +41,16 @@ module vdb.viewModels.user {
 			this.songListId.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithoutTotalCount);
 			this.tag.subscribe(this.updateResultsWithTotalCount);
+			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
+
+			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, 'pv-player', pvPlayerWrapperElement);
+			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForRatedSongsAdapter(userRepo, loggedUserId, this.searchTerm, this.sort,
+				this.tag, this.artistId, this.childVoicebanks,
+				this.rating, this.songListId, this.groupByRating, ko.observable("AdditionalNames,ThumbUrl"));
+			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
+				cls.globalization.ContentLanguagePreference[languageSelection]);
 
 			if (initialize)
 				this.init();
@@ -59,6 +68,8 @@ module vdb.viewModels.user {
 		public page = ko.observableArray<IRatedSongSearchItem>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
+		public playListViewModel: vdb.viewModels.songs.PlayListViewModel;
+		public pvPlayerViewModel: pvs.PVPlayerViewModel;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
 		public rating = ko.observable("Nothing");
 		public resources = ko.observable<any>();
@@ -117,11 +128,21 @@ module vdb.viewModels.user {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
+			if (this.viewMode() === "PlayList") {
+				this.playListViewModel.updateResultsWithTotalCount(() => {
+					this.pauseNotifications = false;
+					this.loading(false);					
+				});
+				return;
+			}
+
 			this.userRepo.getRatedSongsList(this.loggedUserId, pagingProperties, this.languageSelection, this.searchTerm(),
 				this.tag(),
 				this.artistId(),
 				this.childVoicebanks(),
-				this.rating(), this.songListId(), this.groupByRating(), this.sort(),
+				this.rating(), this.songListId(), this.groupByRating(),
+				null,
+				this.sort(),
 				(result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => {
 
 					var songs: IRatedSongSearchItem[] = [];

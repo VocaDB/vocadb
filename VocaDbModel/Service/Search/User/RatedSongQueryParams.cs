@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.Songs;
+﻿using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.User {
@@ -37,6 +38,8 @@ namespace VocaDb.Model.Service.Search.User {
 		/// Paging properties. Cannot be null.
 		/// </summary>
 		public PagingProperties Paging { get; set; }
+
+		public PVServices? PVServices { get; set; }
 
 		public int SonglistId { get; set; }
 

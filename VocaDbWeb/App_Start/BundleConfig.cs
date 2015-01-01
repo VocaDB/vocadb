@@ -56,7 +56,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/SongRepository.js",
 				"~/Scripts/Repositories/ArtistRepository.js",
 				"~/Scripts/ViewModels/TopBarViewModel.js",
-				"~/Scripts/ViewModels/ServerSidePagingViewModel.js"
+				"~/Scripts/ViewModels/ServerSidePagingViewModel.js",
+				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js"
 			));
 
 			// Included on all entry edit and create pages (album, artist, my settings etc.)
@@ -135,7 +136,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
-				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
@@ -192,7 +192,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/EntryRepository.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/TagRepository.js",
-				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
@@ -214,7 +213,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Details").Include(				
-				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongDetailsViewModel.js",
 				"~/Scripts/Song/Details.js"
 			));
@@ -255,7 +253,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Repositories/SongListRepository.js",
-				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
@@ -289,6 +286,7 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/User/Details").Include(
+				"~/Scripts/soundcloud-api.js",				
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
@@ -297,10 +295,18 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/Highcharts.js",				
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
+				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/Helpers/HighchartsHelper.js",				
 				"~/Scripts/Helpers/ArtistHelper.js",
+				"~/Scripts/Helpers/PVHelper.js",
+				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
-				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/User/FollowedArtistsViewModel.js",
 				"~/Scripts/ViewModels/User/RatedSongsSearchViewModel.js",
@@ -325,13 +331,22 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/User/RatedSongs").Include(
+				"~/Scripts/soundcloud-api.js",				
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
+				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/Helpers/ArtistHelper.js",
+				"~/Scripts/Helpers/PVHelper.js",
+				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
-				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
+				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/User/RatedSongsSearchViewModel.js"
 			));

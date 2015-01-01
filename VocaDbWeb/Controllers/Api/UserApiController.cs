@@ -20,6 +20,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Web.Code;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
@@ -223,6 +224,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="rating">Filter songs by given rating (optional).</param>
 		/// <param name="songListId">Filter songs by song list (optional).</param>
 		/// <param name="groupByRating">Group results by rating so that highest rated are first.</param>
+		/// <param name="pvServices">Filter by one or more PV services (separated by commas). The song will pass the filter if it has a PV for any of the matched services.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -243,6 +245,7 @@ namespace VocaDb.Web.Controllers.Api {
 			SongVoteRating? rating = null,
 			int? songListId = null,
 			bool groupByRating = true,
+			[FromUri] PVServices? pvServices = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto, 
@@ -259,6 +262,7 @@ namespace VocaDb.Web.Controllers.Api {
 				ChildVoicebanks = childVoicebanks,
 				FilterByRating = rating ?? SongVoteRating.Nothing,
 				GroupByRating = groupByRating,
+				PVServices = pvServices,
 				SonglistId = songListId ?? 0,
 				Tag = tag
 			};

@@ -2232,6 +2232,7 @@
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
     <Content Include="Scripts\User\Edit.js" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForRatedSongsAdapter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForSongListAdapter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForSongsAdapter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListViewModel.ts" />

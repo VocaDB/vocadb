@@ -373,8 +373,10 @@
 }
 
 @section BodyScripts {
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
 	@Scripts.Render("~/bundles/jqxRating", "~/bundles/User/Details")
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 
 		$(document).ready(function() {
@@ -406,7 +408,7 @@
 				publicCollection, false);
 
 			var ratedSongsViewModel = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, userId, cultureCode,
-				sort, groupByRating, false);
+				sort, groupByRating, $("#pv-player-wrapper"), false);
 
 			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, canDeleteComments, urlMapper, userRepo, adminRepo, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel);
 			ko.applyBindings(viewModel);

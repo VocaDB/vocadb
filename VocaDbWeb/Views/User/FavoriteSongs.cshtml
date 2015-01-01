@@ -13,6 +13,8 @@
 @{ Html.RenderPartial("Partials/_RatedSongs"); }
 
 @section BodyScripts {
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	@Scripts.Render("~/bundles/User/RatedSongs")
 
 	<script type="text/javascript">
@@ -34,7 +36,7 @@
 			var resourceRepo = repoFactory.resourceRepository();
 
 			var vm = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
-				sort, groupByRating);
+				sort, groupByRating, $("#pv-player-wrapper"));
 			ko.applyBindings(vm);
 
 		});

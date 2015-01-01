@@ -6,6 +6,9 @@ using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
+	/// <summary>
+	/// Query extension methods for <see cref="ISongLink"/>.
+	/// </summary>
 	public static class QueryableForSongLinkExtender {
 
 		public static IQueryable<T> AddSongOrder<T>(this IQueryable<T> criteria, SongSortRule sortRule, ContentLanguagePreference languagePreference)

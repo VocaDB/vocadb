@@ -1,11 +1,14 @@
 ﻿@using VocaDb.Web.Helpers
-@using VocaDb.Model.Domain.Songs
 @using Resources
-@using SharedRes = ViewRes.SharedStrings;
+@using SharedRes = ViewRes.SharedStrings
+@using SearchRes = ViewRes.Search.IndexStrings
+
+<!-- binding context: RatedSongsSearchViewModel -->
 
 <div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
 
 	<div class="pull-right">
+		
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
 			@KnockoutHelpers.Dropdown(Translate.SongSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")
@@ -14,6 +17,17 @@
 		<button class="btn" data-bind="click: function() { groupByRating(!groupByRating()); }, css: { active: groupByRating }">
 			Group by rating
 		</button>
+		
+		<div class="inline-block">
+			<div class="btn-group">
+				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@ViewRes.Search.IndexStrings.AlbumDetails">
+					<i class="icon-th-list"></i>
+				</a>
+				<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="@ViewRes.Search.IndexStrings.Playlist">
+					<i class="icon-list"></i>
+				</a>
+			</div>
+		</div>
 
 	</div>
 
@@ -61,7 +75,7 @@
 		<div class="controls">
 			<label class="checkbox">
 				<input type="checkbox" data-bind="checked: childVoicebanks" />
-				Include derived voicebanks
+				@SearchRes.IncludeDerivedVoicebanks
 			</label>
 		</div>
 	</div>

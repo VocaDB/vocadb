@@ -122,8 +122,9 @@ module vdb.repositories {
 			rating: string,
 			songListId: number,
 			groupByRating: boolean,
+			pvServices: string,
 			sort: string,
-			callback) => {
+			callback: (result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/ratedSongs");
 			var data = {
@@ -131,7 +132,9 @@ module vdb.repositories {
 				query: query, tag: tag,
 				artistId: artistId,
 				childVoicebanks: childVoicebanks,
-				rating: rating, songListId: songListId, groupByRating: groupByRating,
+				rating: rating, songListId: songListId,
+				groupByRating: groupByRating,
+				pvServices: pvServices,
 				fields: "ThumbUrl", lang: lang, nameMatchMode: 'Auto', sort: sort
 			};
 

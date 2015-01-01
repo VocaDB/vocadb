@@ -145,7 +145,7 @@ module vdb.viewModels.songs {
 
 		public songsLoaded = ko.computed(() => this.page().length);
 
-		public updateResultsWithTotalCount = () => this.updateResults(true);
+		public updateResultsWithTotalCount = (callback?: () => void) => this.updateResults(true, null, callback);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);
 
 		public updateResults = (clearResults: boolean = true, songWithIndex?: number, callback?: () => void) => {

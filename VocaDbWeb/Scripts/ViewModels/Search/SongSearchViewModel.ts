@@ -72,6 +72,7 @@ module vdb.viewModels.search {
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
+			this.showTags = this.searchViewModel.showTags;
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
@@ -83,7 +84,7 @@ module vdb.viewModels.search {
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
-				if (this.viewMode() == "PlayList") {
+				if (this.viewMode() === "PlayList") {
 					this.playListViewModel.updateResultsWithTotalCount();		
 					callback({ items: [], totalCount: 0 });			
 				} else {
@@ -158,6 +159,8 @@ module vdb.viewModels.search {
 				});				
 			}
 		};
+
+		public showTags: KnockoutObservable<boolean>;
 
 	}
 
