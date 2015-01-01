@@ -20,6 +20,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
+using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Controllers.DataAccess;
@@ -33,6 +34,8 @@ namespace VocaDb.Web.Controllers
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
+		private VdbConfigManager config;
 
 		private UserQueries Data { get; set; }
 
@@ -58,10 +61,11 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public UserController(UserService service, UserQueries data, UserMessageQueries messageQueries) {
+		public UserController(UserService service, UserQueries data, UserMessageQueries messageQueries, VdbConfigManager config) {
 			Service = service;
 			Data = data;
 			this.messageQueries = messageQueries;
+			this.config = config;
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
@@ -488,6 +492,10 @@ namespace VocaDb.Web.Controllers
 				log.Warn(string.Format("An attempt was made to fill the bot decoy field from {0}.", Hostname));
 				MvcApplication.BannedIPs.Add(Hostname);
 				return View(model);				
+			}
+
+			if (config.SiteSettings.SignupsDisabled) {
+				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
 			if (!ReCaptcha.Validate(ConfigurationManager.AppSettings["ReCAPTCHAKey"])) {

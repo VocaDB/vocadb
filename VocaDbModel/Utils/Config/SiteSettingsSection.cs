@@ -31,6 +31,12 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["paypalDonateCert"] = value; }			
 		}
 
+		[ConfigurationProperty("signupsDisabled", DefaultValue = "false")]
+		public bool SignupsDisabled {
+			get { return (bool)this["signupsDisabled"]; }
+			set { this["signupsDisabled"] = value; }						
+		}
+
 		[ConfigurationProperty("sitewideAnnouncement", DefaultValue = "")]
 		public string SitewideAnnouncement {
 			get { return (string)this["sitewideAnnouncement"]; }
