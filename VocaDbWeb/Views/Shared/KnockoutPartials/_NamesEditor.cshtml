@@ -3,19 +3,19 @@
 	<tr>
 		<td>@Resources.ContentLanguageSelectionNames.Japanese</td>
 		<td>
-			<input type="text" data-bind="value: originalName.value" maxlength="255" class="nameEdit" />
+			<input type="text" data-bind="textInput: originalName.value" maxlength="255" class="nameEdit" />
 		</td>
 	</tr>
 	<tr>
 		<td>@Resources.ContentLanguageSelectionNames.Romaji</td>
 		<td>
-			<input type="text" data-bind="value: romajiName.value" maxlength="255" class="nameEdit" />			
+			<input type="text" data-bind="textInput: romajiName.value" maxlength="255" class="nameEdit" />			
 		</td>
 	</tr>
 	<tr>
 		<td>@Resources.ContentLanguageSelectionNames.English</td>
 		<td>
-			<input type="text" data-bind="value: englishName.value" maxlength="255" class="nameEdit" />			
+			<input type="text" data-bind="textInput: englishName.value" maxlength="255" class="nameEdit" />			
 		</td>
 	</tr>
 </table>
@@ -28,7 +28,7 @@
 	<tbody data-bind="foreach: aliases">
 		<tr>
 			<td>
-				<input type="text" data-bind="value: value" maxlength="255" class="nameEdit" />				
+				<input type="text" data-bind="textInput: value" maxlength="255" class="nameEdit" />				
 			</td>
 			<td>
 				<a data-bind="click: $parent.deleteAlias" href="#" class="nameDelete textLink deleteLink">@ViewRes.SharedStrings.Delete</a>

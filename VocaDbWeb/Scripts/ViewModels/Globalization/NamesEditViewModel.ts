@@ -22,7 +22,7 @@ module vdb.viewModels.globalization {
 		};
 
 		public hasNameWithLanguage = () => {
-			return _.some(this.allNames(), (name: vdb.viewModels.globalization.LocalizedStringWithIdEditViewModel) => name.language() != langSelection.Unspecified);
+			return _.some(this.allNames(), (name: vdb.viewModels.globalization.LocalizedStringWithIdEditViewModel) => name.language() !== langSelection.Unspecified);
 		}
 
 		public toContracts = () => {
@@ -46,7 +46,7 @@ module vdb.viewModels.globalization {
 
 		private static nameOrEmpty(names: LocalizedStringWithIdEditViewModel[], lang: cls.globalization.ContentLanguageSelection) {
 
-			var name = _.find(names, n => n.language() == lang);
+			var name = _.find(names, n => n.language() === lang);
 			return name || new LocalizedStringWithIdEditViewModel(lang, "");
 
 		}
@@ -57,10 +57,11 @@ module vdb.viewModels.globalization {
 			this.originalName = NamesEditViewModel.nameOrEmpty(names, langSelection.Japanese);
 			this.romajiName = NamesEditViewModel.nameOrEmpty(names, langSelection.Romaji);
 
-			this.aliases = ko.observableArray(_.where(names, n => n.id != this.englishName.id && n.id != this.originalName.id && n.id != this.romajiName.id));
+			this.aliases = ko.observableArray(_.where(names, n => n.id !== this.englishName.id && n.id !== this.originalName.id && n.id !== this.romajiName.id));
 
 			this.allNames = ko.computed(() => _.filter([this.originalName, this.romajiName, this.englishName]
-				.concat(this.aliases()), name => name != null && name.value != null && name.value() != null && name.value().length > 0));
+				.concat(this.aliases()),
+				name => name && name.value && name.value()));
 
 		}
 
