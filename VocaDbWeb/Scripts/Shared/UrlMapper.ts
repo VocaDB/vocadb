@@ -4,7 +4,7 @@ module vdb {
 
     export class UrlMapper {
 
-		public static buildUrl = (...args: string[]) => {
+		public static buildUrl = (...args: string[]): string => {
 
 			return _.reduce(args, (list: string, item: string) => UrlMapper.mergeUrls(list, item));
 

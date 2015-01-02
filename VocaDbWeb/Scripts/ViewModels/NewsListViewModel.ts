@@ -7,6 +7,11 @@ module vdb.viewModels {
 
         constructor(blogUrl: string) {
 
+			if (!blogUrl) {
+				this.loaded(true);
+				return;
+			}
+
 			var url = UrlMapper.buildUrl("https://public-api.wordpress.com/rest/v1/sites/", blogUrl, "/posts/");
 
             $.ajax({ dataType: 'jsonp', url: url, data: { number: 3 } }).done((response: WordpressResponse) => {
