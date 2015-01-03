@@ -28,7 +28,7 @@ module vdb.viewModels.search {
 			viewMode: string,
 			autoplay: boolean,
 			shuffle: boolean,
-			pvPlayerWrapperElement: HTMLElement) {
+			pvPlayersFactory: pvs.PVPlayersFactory) {
 
 			this.resourcesManager = new vdb.models.ResourcesManager(resourceRepo, cultureCode);
 			this.resources = this.resourcesManager.resources;
@@ -64,7 +64,7 @@ module vdb.viewModels.search {
 				isSong ? viewMode : null,
 				autoplay,
 				shuffle,
-				pvPlayerWrapperElement);
+				pvPlayersFactory);
 
 			this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);
 

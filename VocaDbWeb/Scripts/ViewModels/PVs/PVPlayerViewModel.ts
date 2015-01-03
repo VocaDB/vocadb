@@ -14,8 +14,7 @@ module vdb.viewModels.pvs {
 			private urlMapper: UrlMapper,
 			private songRepo: rep.SongRepository,
 			userRepo: rep.UserRepository,
-			private playerElementId: string,
-			private wrapperElement: HTMLElement,
+			pvPlayersFactory: PVPlayersFactory,
 			autoplay?: boolean,
 			shuffle?: boolean
 			) {
@@ -26,11 +25,7 @@ module vdb.viewModels.pvs {
 			if (shuffle !== null && shuffle !== undefined)
 				this.shuffle(shuffle);
 
-			this.players = {
-				File: <IPVPlayer>new PVPlayerFile(playerElementId, wrapperElement, this.songFinishedPlayback),
-				Youtube: <IPVPlayer>new PVPlayerYoutube(playerElementId, wrapperElement, this.songFinishedPlayback),
-				SoundCloud: <IPVPlayer>new PVPlayerSoundCloud(playerElementId, wrapperElement, this.songFinishedPlayback)
-			};
+			this.players = pvPlayersFactory.createPlayers(this.songFinishedPlayback);
 
 			this.selectedSong.subscribe(song => {
 
@@ -66,7 +61,7 @@ module vdb.viewModels.pvs {
 					var services = this.autoplay() ? vdb.viewModels.pvs.PVPlayerViewModel.autoplayPVServicesString : null;
 
 					// Load new player from server and attach it
-					songRepo.pvPlayer(song.song.id, { elementId: playerElementId, enableScriptAccess: true, pvServices: services }, result => {
+					songRepo.pvPlayer(song.song.id, { elementId: pvPlayersFactory.playerElementId, enableScriptAccess: true, pvServices: services }, result => {
 
 						this.playerHtml(result.playerHtml);
 						this.playerService = serv[result.pvService];

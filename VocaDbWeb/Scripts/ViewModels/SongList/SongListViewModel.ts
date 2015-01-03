@@ -14,10 +14,10 @@ module vdb.viewModels.songList {
 			private userRepo: rep.UserRepository, 
 			private languageSelection: cls.globalization.ContentLanguagePreference,
 			private listId: number,
-			pvPlayerWrapperElement: HTMLElement) {
+			pvPlayersFactory: pvs.PVPlayersFactory) {
 
 			// TODO
-			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, 'pv-player', pvPlayerWrapperElement);
+			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
 			var playListRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongListAdapter(songListRepo, listId);
 			this.playlistViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, playListRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel, languageSelection);
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);

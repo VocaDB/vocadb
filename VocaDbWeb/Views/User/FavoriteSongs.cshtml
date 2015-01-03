@@ -34,9 +34,10 @@
 			var artistRepo = repoFactory.artistRepository();
 			var songRepo = repoFactory.songRepository();
 			var resourceRepo = repoFactory.resourceRepository();
+			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory($("#pv-player-wrapper"));
 
 			var vm = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
-				sort, groupByRating, $("#pv-player-wrapper"));
+				sort, groupByRating, pvPlayersFactory);
 			ko.applyBindings(vm);
 
 		});

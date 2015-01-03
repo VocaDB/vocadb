@@ -379,6 +379,7 @@
 			var tagRepo = repoFactory.tagRepository();
 			var userRepo = repoFactory.userRepository();
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
+			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 
 			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo, tagRepo, resourceRepo,
 				userRepo,
@@ -392,7 +393,7 @@
 				viewMode, 
 				autoplay, 
 				shuffle,
-				pvPlayerElem);
+				pvPlayersFactory);
 			ko.applyBindings(vm);
 
 			$("#loginPopup").dialog({ autoOpen: false, width: 400, modal: true });

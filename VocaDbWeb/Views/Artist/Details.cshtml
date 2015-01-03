@@ -387,10 +387,11 @@
 			var resourceRepo = repoFactory.resourceRepository();
 			var userRepository = repoFactory.userRepository();
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
+			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
-			unknownPictureUrl,
-			languageSelection, urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, pvPlayerElem);
+				unknownPictureUrl,
+				languageSelection, urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, pvPlayersFactory);
 			ko.applyBindings(viewModel);
 
 			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);

@@ -14,7 +14,7 @@ module vdb.viewModels.user {
 			private resourceRepo: rep.ResourceRepository,
 			private languageSelection: string, private loggedUserId: number, private cultureCode: string,
 			sort: string, groupByRating: boolean,
-			pvPlayerWrapperElement: HTMLElement,
+			pvPlayersFactory: pvs.PVPlayersFactory,
 			initialize = true) {
 
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
@@ -45,7 +45,7 @@ module vdb.viewModels.user {
 
 			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
 
-			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, 'pv-player', pvPlayerWrapperElement);
+			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForRatedSongsAdapter(userRepo, loggedUserId, this.searchTerm, this.sort,
 				this.tag, this.artistId, this.childVoicebanks,
 				this.rating, this.songListId, this.groupByRating, ko.observable("AdditionalNames,ThumbUrl"));
