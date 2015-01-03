@@ -112,7 +112,7 @@ module vdb.viewModels {
 
 			this.validationError_needReferences = ko.computed(() => (this.description() == null || this.description().length) == 0 && this.webLinks.webLinks().length == 0);
 			this.validationError_needType = ko.computed(() => this.artistType() == cls.artists.ArtistType.Unknown);
-			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasNameWithLanguage());
+			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 
 			this.hasValidationErrors = ko.computed(() =>
 				this.validationError_needReferences() ||

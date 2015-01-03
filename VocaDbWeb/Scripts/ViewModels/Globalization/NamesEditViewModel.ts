@@ -8,7 +8,6 @@ module vdb.viewModels.globalization {
 	export class NamesEditViewModel {
 
 		public aliases: KnockoutObservableArray<LocalizedStringWithIdEditViewModel>;
-		public allNames: KnockoutComputed<LocalizedStringWithIdEditViewModel[]>;
 		public englishName: LocalizedStringWithIdEditViewModel;
 		public originalName: LocalizedStringWithIdEditViewModel;
 		public romajiName: LocalizedStringWithIdEditViewModel;
@@ -21,13 +20,24 @@ module vdb.viewModels.globalization {
 			this.aliases.remove(alias);
 		};
 
-		public hasNameWithLanguage = () => {
-			return _.some(this.allNames(), (name: vdb.viewModels.globalization.LocalizedStringWithIdEditViewModel) => name.language() !== langSelection.Unspecified);
+		private getAllNames = () => {
+			return _.filter(
+				this.getPrimaryNames().concat(this.aliases()),
+				name => name && name.value && name.value());
+		}
+
+		private getPrimaryNames: () => LocalizedStringWithIdEditViewModel[] = () => {
+			return [this.originalName, this.romajiName, this.englishName];
+		}
+
+		// Whether the primary name is specified (in any language). This excludes aliases.
+		public hasPrimaryName = () => {
+			return _.some(this.getPrimaryNames(), (name) => name && name.value && name.value());
 		}
 
 		public toContracts = () => {
-			// TODO: ko.toJS?
-			return _.map(this.allNames(), (name) => {
+
+			return _.map(this.getAllNames(), (name) => {
 
 				var contract: dc.globalization.LocalizedStringWithIdContract = {
 					id: name.id,
@@ -58,10 +68,6 @@ module vdb.viewModels.globalization {
 			this.romajiName = NamesEditViewModel.nameOrEmpty(names, langSelection.Romaji);
 
 			this.aliases = ko.observableArray(_.where(names, n => n.id !== this.englishName.id && n.id !== this.originalName.id && n.id !== this.romajiName.id));
-
-			this.allNames = ko.computed(() => _.filter([this.originalName, this.romajiName, this.englishName]
-				.concat(this.aliases()),
-				name => name && name.value && name.value()));
 
 		}
 
