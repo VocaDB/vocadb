@@ -1305,7 +1305,7 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="Content\qunit-1.11.0.css" />
+    <Content Include="Content\qunit-1.16.0.css" />
     <Content Include="Content\Sign-in-with-Twitter-darker.png" />
     <Content Include="Content\Site-bs.css" />
     <Content Include="Content\Site-teto.css" />
@@ -1913,7 +1913,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Sortable.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\StopBinding.ts" />
     <Content Include="Scripts\knockout.punches.min.js" />
-    <Content Include="Scripts\Libraries\qunit-1.11.0.js" />
+    <Content Include="Scripts\Libraries\qunit-1.16.0.js" />
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\marked.js" />

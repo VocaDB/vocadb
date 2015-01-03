@@ -4,20 +4,21 @@
 
 module vdb.tests.viewModels {
 
-    import vm = vdb.viewModels;
+	import vm = vdb.viewModels;
 	import dc = vdb.dataContracts;
 	import sup = vdb.tests.testSupport;
 
-    var categories: dc.TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
-    var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
-    var data: dc.songs.SongForEditContract = {
+	var categories: dc.TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
+	var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
+	var data: dc.songs.SongForEditContract = {
 		artists: [], defaultNameLanguage: 'English', deleted: false, id: 0, lengthSeconds: 39,
 		lyrics: [], names: [], notes: '', originalVersion: null, pvs: [], songType: 'Original',
 		status: 'Draft', tags: [], webLinks: [webLinkData]
-	}; 
+	};
 	var songRepo = new sup.FakeSongRepository();
 	var artistRepo = new sup.FakeArtistRepository();
 	var pvRepo = null;
+	resources.song = { addExtraArtist: 'Add extra artist' };
 
     QUnit.module("SongEditViewModelTests");
 
@@ -25,7 +26,7 @@ module vdb.tests.viewModels {
 		return new vm.SongEditViewModel(songRepo, artistRepo, pvRepo, new vdb.UrlMapper(''), [], categories, data, false);
     }
 
-    test("constructor", () => {
+    QUnit.test("constructor", () => {
 
         var target = createViewModel();
 
@@ -35,7 +36,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("lengthFormatted only seconds", () => {
+	QUnit.test("lengthFormatted only seconds", () => {
 
         var target = createViewModel();
 
@@ -45,7 +46,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("lengthFormatted over 1 minute", () => {
+	QUnit.test("lengthFormatted over 1 minute", () => {
 
         var target = createViewModel();
 
@@ -55,7 +56,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("lengthFormatted minutes and seconds", () => {
+	QUnit.test("lengthFormatted minutes and seconds", () => {
 
         var target = createViewModel();
 

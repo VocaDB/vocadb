@@ -354,9 +354,10 @@ namespace VocaDb.Web.App_Start {
 
 #if DEBUG
 			bundles.Add(new ScriptBundle("~/bundles/tests")
+				.IncludeDirectory("~/Scripts/Models", "*.js", true)
 				.IncludeDirectory("~/Scripts/Helpers", "*.js")
-				.IncludeDirectory("~/Scripts/Models", "*.js")
 				.IncludeDirectory("~/Scripts/Repositories", "*.js", true)
+				.Include("~/Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js")
 				.IncludeDirectory("~/Scripts/ViewModels", "*.js", true)
 				.Include("~/Scripts/Shared/WebLinkMatcher.js")
 				.IncludeDirectory("~/Scripts/Tests", "*.js", true)

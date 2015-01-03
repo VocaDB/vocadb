@@ -13,7 +13,7 @@ module vdb.tests.viewModels {
 	var songRep: vdb.tests.testSupport.FakeSongRepository;
 	var artistRep: vdb.tests.testSupport.FakeArtistRepository;
 	var pvRep = null;
-	var urlMapper = null;
+	var urlMapper = new UrlMapper("");
 
     var song: dc.SongApiContract;
     var categories: dc.TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
@@ -94,7 +94,7 @@ module vdb.tests.viewModels {
         return _.find(target.artistSelections, a => a.artist == artist);
     }
 
-    test("constructor", () => {
+	QUnit.test("constructor", () => {
 
         var target = createViewModel();
 
@@ -114,7 +114,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("acceptTrackSelection existing", () => {
+	QUnit.test("acceptTrackSelection existing", () => {
 
         var target = createViewModel();
         target.tracks.removeAll();
@@ -127,7 +127,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("acceptTrackSelection new", () => {
+	QUnit.test("acceptTrackSelection new", () => {
 
         var target = createViewModel();
         target.tracks.removeAll();
@@ -140,7 +140,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("acceptTrackSelection add a second track", () => {
+	QUnit.test("acceptTrackSelection add a second track", () => {
 
         var target = createViewModel();
 
@@ -151,7 +151,7 @@ module vdb.tests.viewModels {
 
 	});
 
-	test("addArtist existing", () => {
+	QUnit.test("addArtist existing", () => {
 
 		var newVocalist: dc.ArtistContract = { id: 4, name: "Kagamine Rin", additionalNames: "", artistType: "Vocaloid" };
 		artistRep.result = newVocalist;
@@ -164,7 +164,7 @@ module vdb.tests.viewModels {
 
 	});
 
-	test("addArtist custom", () => {
+	QUnit.test("addArtist custom", () => {
 
 		var target = createViewModel();
 		target.addArtist(null, "Custom artist");
@@ -174,7 +174,7 @@ module vdb.tests.viewModels {
 
 	});
 
-    test("allTracksSelected", () => {
+	QUnit.test("allTracksSelected", () => {
 
         var target = createViewModel();
 
@@ -185,7 +185,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("editTrackProperties", () => {
+	QUnit.test("editTrackProperties", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -206,7 +206,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("saveTrackProperties not changed", () => {
+	QUnit.test("saveTrackProperties not changed", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -219,7 +219,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("saveTrackProperties changed", () => {
+	QUnit.test("saveTrackProperties changed", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -232,7 +232,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("filter displayName", () => {
+	QUnit.test("filter displayName", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -246,7 +246,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("filter additionalName", () => {
+	QUnit.test("filter additionalName", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -260,7 +260,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("editMultipleTrackProperties", () => {
+	QUnit.test("editMultipleTrackProperties", () => {
 
         var target = createViewModel();
 
@@ -275,7 +275,7 @@ module vdb.tests.viewModels {
     });
 
     // Add an artist to a track that was not added before
-    test("addArtistsToSelectedTracks add new artists", () => {
+	QUnit.test("addArtistsToSelectedTracks add new artists", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -291,7 +291,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("addArtistsToSelectedTracks not changed", () => {
+	QUnit.test("addArtistsToSelectedTracks not changed", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -306,7 +306,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("removeArtistsFromSelectedTracks remove artist", () => {
+	QUnit.test("removeArtistsFromSelectedTracks remove artist", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -320,7 +320,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("removeArtistsFromSelectedTracks not changed", () => {
+	QUnit.test("removeArtistsFromSelectedTracks not changed", () => {
 
         var target = createViewModel();
         var track = target.tracks()[0];
@@ -335,7 +335,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("getArtistLink found", () => {
+	QUnit.test("getArtistLink found", () => {
 
         var target = createViewModel();
 
@@ -346,7 +346,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("getArtistLink not found", () => {
+	QUnit.test("getArtistLink not found", () => {
 
         var target = createViewModel();
 
@@ -356,7 +356,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("translateArtistRole", () => {
+	QUnit.test("translateArtistRole", () => {
 
         var target = createViewModel();
 
@@ -366,7 +366,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("updateTrackNumbers updated by setting isNextDisc", () => {
+	QUnit.test("updateTrackNumbers updated by setting isNextDisc", () => {
 
         var target = createViewModel();
         target.acceptTrackSelection(3, null); // Adds a new track
@@ -379,7 +379,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("TrackPropertiesViewModel constructor", () => {
+	QUnit.test("TrackPropertiesViewModel constructor", () => {
 
         var target = createTrackPropertiesViewModel();
 
@@ -400,7 +400,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("TrackPropertiesViewModel filter matches artist", () => {
+	QUnit.test("TrackPropertiesViewModel filter matches artist", () => {
 
         var target = createTrackPropertiesViewModel();
 
@@ -411,7 +411,7 @@ module vdb.tests.viewModels {
 
     });
 
-    test("TrackPropertiesViewModel filter does not match artist", () => {
+	QUnit.test("TrackPropertiesViewModel filter does not match artist", () => {
 
         var target = createTrackPropertiesViewModel();
 
