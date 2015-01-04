@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Keywords" xml:space="preserve">
+    <value>Vocaloid, VocaDB, Vocaloid database, Hatsune Miku</value>
+  </data>
   <data name="SiteName" xml:space="preserve">
     <value>VocaDB</value>
   </data>

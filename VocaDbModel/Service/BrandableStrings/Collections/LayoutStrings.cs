@@ -10,6 +10,10 @@ namespace VocaDb.Model.Service.BrandableStrings.Collections {
 
 		public ResourceManager ResourceManager { get; private set; }
 
+		public string Keywords {
+			get { return ResourceManager.GetString("Keywords"); }
+		}
+
 		public string SiteName {
 			get { return ResourceManager.GetString("SiteName"); }
 		}

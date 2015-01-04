@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.BrandableStrings {
 			try {
 				assembly = Assembly.LoadFrom(brandedStringsAssembly);
 			} catch (FileNotFoundException) {
-				log.Warn("Branded strings assembly '" + brandedStringsAssembly + "' not found.");
+				log.Warn("Branded strings assembly '{0}' not found.", brandedStringsAssembly);
 				return false;
 			}
 			
