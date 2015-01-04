@@ -33,9 +33,11 @@ module vdb.viewModels.search {
 
 			if (searchViewModel) {
 				this.resourceManager = searchViewModel.resourcesManager;
+				this.showTags = this.searchViewModel.showTags;
 			} else {
 				this.resourceManager = new cls.ResourcesManager(resourceRep, cultureCode);
 				this.resourceManager.loadResources(null, "songSortRuleNames");
+				this.showTags = ko.observable(false);
 			}
 
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
@@ -72,7 +74,6 @@ module vdb.viewModels.search {
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
-			this.showTags = this.searchViewModel.showTags;
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
