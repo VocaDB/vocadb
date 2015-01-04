@@ -398,6 +398,7 @@
 			var artistRepo = repoFactory.artistRepository();
 			var resourceRepo = repoFactory.resourceRepository();
 			var songRepo = repoFactory.songRepository();
+			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory($("#pv-player-wrapper"));
 
 			var sort = 'Name';
 			var groupByRating = true;
@@ -408,7 +409,7 @@
 				publicCollection, false);
 
 			var ratedSongsViewModel = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, userId, cultureCode,
-				sort, groupByRating, $("#pv-player-wrapper"), false);
+				sort, groupByRating, pvPlayersFactory, false);
 
 			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, canDeleteComments, urlMapper, userRepo, adminRepo, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel);
 			ko.applyBindings(viewModel);
