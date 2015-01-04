@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
@@ -22,7 +23,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			Identifiers = album.Identifiers.Select(i => i.Value).ToArray();
 			Names = album.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease) : null);
-			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p)).ToArray();
+			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p)).ToList();
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 			Songs = album.Songs
 				.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber)
@@ -51,7 +52,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		[DataMember]
-		public EntryPictureFileContract[] Pictures { get; set; }
+		public IList<EntryPictureFileContract> Pictures { get; set; }
 
 		[DataMember(Name = "pvs")]
 		public PVContract[] PVs { get; set; }
