@@ -68,7 +68,6 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<RankingService>().AsSelf();
 			builder.RegisterType<ReleaseEventService>().AsSelf();
 			builder.RegisterType<SongService>().AsSelf();
-			builder.RegisterType<TagService>().AsSelf();
 			builder.RegisterType<UserService>().AsSelf();
 
 			// Repositories

@@ -4,7 +4,6 @@ using VocaDb.Web.Helpers;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Service;
 using VocaDb.Web.Models.Tag;
 using VocaDb.Web.Resources.Controllers;
 
@@ -13,15 +12,9 @@ namespace VocaDb.Web.Controllers
     public class TagController : ControllerBase {
 
 	    private readonly TagQueries queries;
-	    private readonly TagService service;
 
-		private TagService Service {
-			get { return service; }
-		}
+		public TagController(TagQueries queries) {
 
-		public TagController(TagService service, TagQueries queries) {
-
-			this.service = service;
 			this.queries = queries;
 
 		}
@@ -101,18 +94,17 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Index(string filter = null) {
 
-			var tags = Service.GetTagsByCategories();
-
 			if (!string.IsNullOrEmpty(filter)) {
 
-				var tag = Service.GetTag(filter);
+				var tagName = queries.GetTag(filter, t => t.Name);
 
-				if (tag != null) {
-					return RedirectToAction("Details", new { id = tag.Name});
+				if (tagName != null) {
+					return RedirectToAction("Details", new { id = tagName });
 				}
 
 			}
 
+			var tags = queries.GetTagsByCategories();
 			return View(tags);
 
 		}
@@ -122,7 +114,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(id))
 				return NoId();
 
-			var contract = Service.GetTagWithArchivedVersions(id);
+			var contract = queries.GetTagWithArchivedVersions(id);
 
 			if (contract == null)
 				return HttpNotFound();

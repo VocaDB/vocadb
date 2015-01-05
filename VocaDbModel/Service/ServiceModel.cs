@@ -78,12 +78,6 @@ namespace VocaDb.Model.Service {
 			}
 		}
 
-		public TagService Tags {
-			get {
-				return new TagService(sessionFactory, permissionContext, entryLinkFactory);
-			}
-		}
-
 		public UserService Users {
 			get {
 				return new UserService(sessionFactory, permissionContext, entryLinkFactory, brandableStringsManager);

@@ -276,6 +276,30 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public TagCategoryContract[] GetTagsByCategories() {
+
+			return HandleQuery(ctx => {
+
+				var tags = ctx.Query()
+					.Where(t => t.AliasedTo == null)
+					.OrderBy(t => t.Name)
+					.ToArray()					
+					.GroupBy(t => t.CategoryName)
+					.ToArray();
+
+				var empty = tags.Where(c => c.Key == string.Empty).ToArray();
+
+				var tagsByCategories = tags
+					.Except(empty).Concat(empty)
+					.Select(t => new TagCategoryContract(t.Key, t))
+					.ToArray();
+
+				return tagsByCategories;
+
+			});
+
+		}
+
 		public TagForEditContract GetTagForEdit(string tagName) {
 
 			ParamIs.NotNullOrEmpty(() => tagName);
@@ -293,6 +317,22 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			});
 
 		}
+
+		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(string tagName) {
+
+			return HandleQuery(ctx => {
+
+				var tag = GetTag(ctx, tagName);
+
+				if (tag == null)
+					return null;
+
+				return new TagWithArchivedVersionsContract(tag);
+
+			});
+
+		}
+
 
 		public void Update(TagContract contract, UploadedFileContract uploadedImage) {
 

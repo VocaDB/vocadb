@@ -415,8 +415,6 @@ namespace VocaDb.Model.Service {
 				var songs = session.Query<Song>().Where(s => songIds.Contains(s.Id)).ToArray();
 				var allLyrics = songs.SelectMany(s => s.Lyrics).ToArray();
 
-				//var song = session.Query<Song>().Where(s => s.Id) session.Load<Song>(songContract.Id);)
-
 				if (!allLyrics.Any())
 					return null;
 
