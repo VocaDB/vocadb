@@ -157,7 +157,7 @@ module vdb.viewModels {
             this.showSongLists = () => {
                 repository.songListsForUser(songId, songLists => {
 
-                    songLists.push({ id: 0, name: resources.createNewList })
+					songLists.push({ id: 0, name: resources.createNewList });
                     this.songLists(songLists);
                     this.newListName("");
                     this.selectedListId(songLists.length > 0 ? songLists[0].id : undefined);

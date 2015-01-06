@@ -575,14 +575,21 @@ namespace VocaDb.Model.Service {
 
 			return HandleQuery(session => {
 
-				var ignoredSong = session.Load<Song>(ignoreSongId);
+				var ignoredLists = session
+					.Query<SongInList>()
+					.Where(sil => sil.Song.Id == ignoreSongId)
+					.Select(sil => sil.List.Id)
+					.Distinct()
+					.ToArray();
 
 				return session.Query<SongList>()
-					.Where(l => (l.Author.Id == PermissionContext.LoggedUser.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing) 
-						|| (canEditPools && l.FeaturedCategory == SongListFeaturedCategory.Pools))
-					.OrderBy(l => l.Name).ToArray()
-					.Where(l => !ignoredSong.ListLinks.Any(i => i.List.Equals(l)))
-					.Select(l => new SongListBaseContract(l)).ToArray();
+					.Where(l => !ignoredLists.Contains(l.Id) && 
+						((l.Author.Id == PermissionContext.LoggedUser.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing) 
+							|| (canEditPools && l.FeaturedCategory == SongListFeaturedCategory.Pools)))
+					.OrderBy(l => l.Name)
+					.ToArray()
+					.Select(l => new SongListBaseContract(l))
+					.ToArray();
 
 			});
 
