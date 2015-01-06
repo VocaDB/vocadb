@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service.Search;
 
@@ -34,6 +35,21 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 						.OrderBy(r => r.Series.Name)
 						.ThenBy(r => r.SeriesNumber);
 			}
+
+			return query;
+
+		}
+
+		public static IQueryable<ReleaseEvent> WhereDateIsBetween(this IQueryable<ReleaseEvent> query, DateTime? begin, DateTime? end) {
+			
+			if (begin.HasValue && end.HasValue)
+				return query.Where(e => e.Date != null && e.Date >= begin && e.Date < end);
+
+			if (begin.HasValue)
+				return query.Where(e => e.Date != null && e.Date >= begin);
+
+			if (end.HasValue)
+				return query.Where(e => e.Date != null && e.Date < end);
 
 			return query;
 

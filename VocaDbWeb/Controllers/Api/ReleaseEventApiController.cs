@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Http;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -53,6 +54,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="query">Event name query (optional).</param>
 		/// <param name="seriesId">Filter by series Id.</param>
+		/// <param name="afterDate">Filter by events after this date (inclusive).</param>
+		/// <param name="beforeDate">Filter by events before this date (exclusive).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -69,6 +72,8 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<ReleaseEventForApiContract> GetList(
 			string query = "", 
 			int seriesId = 0,
+			DateTime? afterDate = null,
+			DateTime? beforeDate = null,
 			int start = 0, 
 			int maxResults = defaultMax,
 			bool getTotalCount = false, 
@@ -82,7 +87,8 @@ namespace VocaDb.Web.Controllers.Api {
 				
 				var q = ctx.Query()
 					.WhereHasName(textQuery)
-					.WhereHasSeries(seriesId);
+					.WhereHasSeries(seriesId)
+					.WhereDateIsBetween(afterDate, beforeDate);
 
 				var entries = q
 					.OrderBy(sort)
