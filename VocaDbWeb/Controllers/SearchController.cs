@@ -144,7 +144,13 @@ namespace VocaDb.Web.Controllers
 			ViewBag.Shuffle = shuffle;
 
 			SetSearchEntryType(searchType);
-			return View();
+			return View("Index");
+
+		}
+
+		public ActionResult Radio() {
+			
+			return Index(null, EntryType.Song, false, minScore: 1, sort: "AdditionDate", viewMode: "PlayList", autoplay: true, shuffle: true);
 
 		}
 
