@@ -220,9 +220,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					PersonalStats = GetPersonalArtistStats(session, artist)
 				};
 
-				if (PermissionContext.LoggedUser != null) {
+				if (PermissionContext.IsLoggedIn) {
 
-					var subscription = session.OfType<ArtistForUser>().Query().FirstOrDefault(s => s.Artist.Id == id && s.User.Id == PermissionContext.LoggedUser.Id);
+					var subscription = session.OfType<ArtistForUser>()
+						.Query()
+						.FirstOrDefault(s => s.Artist.Id == id && s.User.Id == PermissionContext.LoggedUserId);
 
 					if (subscription != null) {
 						contract.IsAdded = true;
