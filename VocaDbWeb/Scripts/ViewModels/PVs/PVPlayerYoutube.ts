@@ -38,6 +38,15 @@ module vdb.viewModels.pvs {
 					'onReady': () => {
 						if (readyCallback)
 							readyCallback();
+					},
+					'onError': () => {
+
+						setTimeout(() => {
+							if (this.player && this.songFinishedCallback) {
+								this.songFinishedCallback();
+							}
+						}, 3000);
+						
 					}
 				}
 			});
