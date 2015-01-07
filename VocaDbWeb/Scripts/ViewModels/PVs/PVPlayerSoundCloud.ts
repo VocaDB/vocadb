@@ -41,6 +41,15 @@ module vdb.viewModels.pvs {
 
 			});
 
+			this.player.bind(SC.Widget.Events.ERROR, () => {
+
+				setTimeout(() => {
+					if (this.player && this.songFinishedCallback)
+						this.songFinishedCallback();
+				}, 3000);
+
+			});
+
 		}
 
 		public detach = () => {

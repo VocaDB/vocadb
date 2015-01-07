@@ -27,6 +27,7 @@ declare module SC {
 	}
 
 	interface SoundCloudEvents {
+		ERROR: string;
 		FINISH: string;
 		READY: string;
 	}
