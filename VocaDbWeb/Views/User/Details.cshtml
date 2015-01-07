@@ -392,7 +392,7 @@
 			var publicCollection = @ToJS(Model.PublicAlbumCollection || Model.Id == UserContext.LoggedUserId);
 			var rootPath = '@RootPath';
 			var urlMapper = new vdb.UrlMapper(rootPath);
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
 			var adminRepo = repoFactory.adminRepository();
 			var userRepo = repoFactory.userRepository();
 			var artistRepo = repoFactory.artistRepository();

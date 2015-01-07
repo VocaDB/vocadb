@@ -41,6 +41,7 @@ module vdb.viewModels.pvs {
 					},
 					'onError': () => {
 
+						// Some delay, to let the user read the error message and to prevent infinite loop
 						setTimeout(() => {
 							if (this.player && this.songFinishedCallback) {
 								this.songFinishedCallback();
