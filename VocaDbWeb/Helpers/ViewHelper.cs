@@ -93,6 +93,13 @@ namespace VocaDb.Web.Helpers {
 			return new SelectList(LanguageSelectionsWithoutUnspecified, "Key", "Value", selectedValue);
 		}
 
+		public static SelectList CreateSelectList<T>(IEnumerable<T> items, Func<T, object> keyFactory, Func<T, object> labelFactory, object selectedValue) {
+			return new SelectList(items.Select(i => new{
+				Key = keyFactory(i).ToString(),
+				Label = labelFactory(i).ToString()
+			}), "Key", "Label", selectedValue);
+		}
+
 		public static SelectList CreateSongTypesList(object selectedValue) {
 			return new SelectList(AppConfig.SongTypes.ToDictionary(s => s, Translate.SongTypeNames.GetName), "Key", "Value", selectedValue);
 		}

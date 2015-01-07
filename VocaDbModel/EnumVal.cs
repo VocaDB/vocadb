@@ -111,6 +111,12 @@ namespace VocaDb.Model {
 			this.val = flags;
 		}
 
+		public bool IsDefaultVal {
+			get {
+				return val.Equals(default(T));
+			}
+		}
+
 		/// <summary>
 		/// Gets or sets the current value
 		/// </summary>

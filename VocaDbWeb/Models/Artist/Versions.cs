@@ -16,7 +16,7 @@ namespace VocaDb.Web.Models.Artist {
 
 		}
 
-		private static string GetChangeString(ArtistEditableFields fields) {
+		public static string GetChangeString(ArtistEditableFields fields) {
 
 			if (fields == ArtistEditableFields.Nothing)
 				return string.Empty;

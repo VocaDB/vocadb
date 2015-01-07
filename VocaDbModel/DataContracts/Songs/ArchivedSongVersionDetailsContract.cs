@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
@@ -20,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			ComparableVersions = archived.Song.ArchivedVersionsManager
 				.GetPreviousVersions(archived)
-				.Select(a => new ArchivedObjectVersionContract(a))
+				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields, a.Reason))
 				.ToArray();
 
 			Versions = ComparedSongsContract.Create(archived, comparedVersion);
@@ -31,7 +32,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		public ArchivedSongVersionContract ArchivedVersion { get; set; }
 
-		public ArchivedObjectVersionContract[] ComparableVersions { get; set; }
+		public ArchivedObjectVersionWithFieldsContract<SongEditableFields, SongArchiveReason>[] ComparableVersions { get; set; }
 
 		public ArchivedSongVersionContract ComparedVersion { get; set; }
 

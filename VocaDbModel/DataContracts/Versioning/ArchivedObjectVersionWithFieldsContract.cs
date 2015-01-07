@@ -22,4 +22,14 @@ namespace VocaDb.Model.DataContracts.Versioning {
 
 	}
 
+	public static class ArchivedObjectVersionWithFieldsContract {
+		
+		public static ArchivedObjectVersionWithFieldsContract<TFields, TReason> Create<TFields, TReason>(
+			ArchivedObjectVersion archivedVersion,
+			TFields fields, TReason reason) {
+			return new ArchivedObjectVersionWithFieldsContract<TFields, TReason>(archivedVersion, fields, reason);
+		}
+
+	}
+
 }
