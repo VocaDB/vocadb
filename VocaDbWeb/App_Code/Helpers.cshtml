@@ -291,7 +291,7 @@
 }
 
 @helper StarsMeta(double current, int max) {
-	<span title="@Math.Round(current, 2)">		
+	<span title="@NumberFormatHelper.DecimalDot(Math.Round(current, 2))">
         @StarsMeta((int)Math.Round(current, MidpointRounding.AwayFromZero), max)
 	</span>
 }

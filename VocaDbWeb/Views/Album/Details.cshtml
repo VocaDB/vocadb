@@ -8,7 +8,7 @@
 @using VocaDb.Web.Models;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
-@model AlbumDetails
+@inherits VocaDb.Web.Code.VocaDbPage<AlbumDetails>
 		   
 @{
 	ViewBag.Title = Model.Name;
@@ -105,7 +105,7 @@
 					
 					@if (Model.RatingCount > 0) {
 						<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-							<meta itemprop="ratingValue" content="@Model.RatingAverage" />
+							<meta itemprop="ratingValue" content="@DecimalDot(Model.RatingAverage)" />
 							@Helpers.StarsMeta(Model.RatingAverage, 5)<br />
 							(<span itemprop="ratingCount">@Model.RatingCount</span> @ViewRes.Album.DetailsStrings.Ratings)
 						</div>

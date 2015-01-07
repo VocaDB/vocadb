@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Globalization;
+using System.Web.Mvc;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils;
@@ -35,6 +36,10 @@ namespace VocaDb.Web.Code {
 		/// </summary>
 		public string RootPath {
 			get { return Url.Content("~/"); }
+		}
+
+		public string DecimalDot(double val) {
+			return NumberFormatHelper.DecimalDot(val);
 		}
 
 		public string ToJS(bool val) {

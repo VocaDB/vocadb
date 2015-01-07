@@ -897,6 +897,7 @@
     <Compile Include="Helpers\KnockoutHtmlExtender.cs" />
     <Compile Include="Helpers\Login.cs" />
     <Compile Include="Helpers\MarkdownHelper.cs" />
+    <Compile Include="Helpers\NumberFormatHelper.cs" />
     <Compile Include="Helpers\PVHelper.cs" />
     <Compile Include="Helpers\ResourceHelpers.cs" />
     <Compile Include="Helpers\RouteInfo.cs" />
