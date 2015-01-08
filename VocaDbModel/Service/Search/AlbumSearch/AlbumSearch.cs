@@ -64,7 +64,10 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 					case "tag":
 						return new ParsedAlbumQuery { TagName = term.Value };
 					case "artist":
-						return new ParsedAlbumQuery { ArtistId = int.Parse(term.Value) };
+						int artistId;
+						if (int.TryParse(term.Value, out artistId))
+							return new ParsedAlbumQuery { ArtistId = int.Parse(term.Value) };						
+						break;
 				}
 				
 			}
