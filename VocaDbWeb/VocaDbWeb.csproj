@@ -1212,8 +1212,6 @@
     <Content Include="Content\banners\en_app_rgb_wo_45.png" />
     <Content Include="Content\banners\facebook.png" />
     <Content Include="Content\banners\googleplus-icon.png" />
-    <Content Include="Content\banners\mikuchan.jpg" />
-    <Content Include="Content\banners\mikudb.png" />
     <Content Include="Content\banners\mikufan_bannertest.png" />
     <Content Include="Content\banners\mikufan_small.png" />
     <Content Include="Content\banners\mikustar.jpg" />
@@ -1224,6 +1222,7 @@
     <Content Include="Content\banners\Twitter_Logo.png" />
     <Content Include="Content\banners\VirtualEmotions.png" />
     <Content Include="Content\banners\vo.jpg" />
+    <Content Include="Content\banners\vocallective.png" />
     <Content Include="Content\banners\vocaloidism-180px.png" />
     <Content Include="Content\banners\vo_small.png" />
     <Content Include="Content\banners\vuslogo.png" />
