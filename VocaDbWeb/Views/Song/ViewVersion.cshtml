@@ -31,6 +31,7 @@
 @if (Model.ComparableVersions.Any()) {
 	using (Html.BeginForm("ViewVersion", "Song", FormMethod.Post, new { @class = "form form-inline" })) {
 		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.ComparableVersions, i => i.Id, i => i.Version + " (" + Versions.GetChangeString(i.ChangedFields) + " by " + i.AgentName + ")", Model.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
+		<button type="submit" class="btn btn-primary">Compare</button>
 	}
 }
 
