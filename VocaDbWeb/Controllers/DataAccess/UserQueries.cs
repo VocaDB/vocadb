@@ -133,7 +133,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					+ ctx.Query<ArtistTagVote>().Count(t => t.User.Id == user.Id);
 
 				stats.FavoriteTags = ctx.Query<Tag>()
-					.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution)
+					.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution
+						&& t.AllSongTagUsages.Any(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
 					.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
 					.Select(t => t.Name)
 					.Take(8)
