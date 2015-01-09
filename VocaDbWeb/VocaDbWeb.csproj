@@ -1566,6 +1566,9 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="connections.config" />
+    <Content Include="appsettings.config" />
+    <Content Include="machinekey.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2266,12 +2269,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2477,10 +2474,13 @@
     <Content Include="Views\Song\Partials\_LyricsForSongEdit.cshtml" />
     <Content Include="Views\User\Partials\_ListUsers.cshtml" />
     <None Include="VocaDB.log" />
-    <None Include="Web.config.default">
-      <SubType>Designer</SubType>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Debug.config.default" />
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <None Include="Web.Release.config.default" />
   </ItemGroup>
   <ItemGroup>

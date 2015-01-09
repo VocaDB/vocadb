@@ -1,7 +1,6 @@
 packages/
 VocaDbWeb/bin/
 VocaDbWeb/obj/
-VocaDbWeb/Web.config
 Tests/bin/
 Tests/obj/
 VocaDb.UtaiteDbResources/obj/
@@ -16,3 +15,7 @@ VocaDbWeb/App_Data/XmlDocument.xml
 VocaDbWeb/EntryImg/
 *.user
 VocaDbWeb/Content/miku3.jpg
+VocaDbWeb/connections.config
+VocaDbWeb/appsettings.config
+VocaDbWeb/machinekey.config
+VocaDbWeb/smtp.config

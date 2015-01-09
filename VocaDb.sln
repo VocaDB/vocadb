@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDbWeb", "VocaDbWeb\VocaDbWeb.csproj", "{543CB31E-8641-44AA-95D4-DF0E06D41D02}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.UtaiteDb.Resources", "VocaDb.UtaiteDbResources\VocaDb.UtaiteDb.Resources.csproj", "{C5A20185-136F-45B0-81C4-84102D3F2A80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.SiteMapGenerator", "VocaDb.SiteMapGenerator\VocaDb.SiteMapGenerator.csproj", "{AA29FF8E-8EC1-4EA7-BA82-C5210272EFD2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5AC41811-E9D4-40B2-8514-3825882A72E4}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
