@@ -46,7 +46,11 @@ namespace VocaDb.Web.Controllers
 
 			var entryId = entryUrlParser.Parse(url, allowRelative: true);
 
-			string data = string.Empty;
+			if (entryId.IsEmpty) {
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid URL");
+			}
+
+			var data = string.Empty;
 			var id = entryId.Id;
 
 			switch (entryId.EntryType) {
@@ -70,13 +74,11 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
 
-			Uri uri;
+			var entryId = entryUrlParser.Parse(url);
 
-			if (!Uri.TryCreate(url, UriKind.Absolute, out uri)) {
+			if (entryId.IsEmpty) {
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid URL");
 			}
-
-			var entryId = entryUrlParser.Parse(url);
 
 			if (entryId.EntryType != EntryType.Song) {
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Only song embeds are supported");
