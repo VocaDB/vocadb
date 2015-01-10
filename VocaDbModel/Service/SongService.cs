@@ -38,36 +38,15 @@ namespace VocaDb.Model.Service {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 #pragma warning restore 169
 
+		private readonly IEntryUrlParser entryUrlParser;
+
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams) {
-			return new SongSearch(new QuerySourceSession(session), LanguagePreference).Find(queryParams);
+			return new SongSearch(new QuerySourceSession(session), LanguagePreference, entryUrlParser).Find(queryParams);
 		}
 
 		private SongMergeRecord GetMergeRecord(ISession session, int sourceId) {
 			return session.Query<SongMergeRecord>().FirstOrDefault(s => s.Source == sourceId);			
 		}
-
-		/*
-		private VideoUrlParseResult ParsePV(ISession session, string url) {
-
-			if (string.IsNullOrEmpty(url))
-				return null;
-
-			var pvResult = VideoServiceHelper.ParseByUrl(url, true);
-
-			if (!pvResult.IsOk)
-				throw pvResult.Exception;
-
-			var existing = session.Query<PVForSong>().FirstOrDefault(
-				s => s.Service == pvResult.Service && s.PVId == pvResult.Id && !s.Song.Deleted);
-
-			if (existing != null) {
-				throw new VideoParseException(string.Format("Song '{0}' already contains this PV",
-					existing.Song.TranslatedName[PermissionContext.LanguagePreference]));
-			}
-
-			return pvResult;
-
-		}*/
 
 		private ArtistForSong RestoreArtistRef(Song song, Artist artist, ArchivedArtistForSongContract albumRef) {
 
@@ -83,8 +62,10 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory)
+		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser)
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
+
+			this.entryUrlParser = entryUrlParser;
 
 		}
 

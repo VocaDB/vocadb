@@ -102,6 +102,7 @@ namespace VocaDb.Tests.TestSupport {
 			builder.RegisterType<TestDatabase>().AsSelf();
 			builder.RegisterType<QuerySourceSession>().As<IQuerySource>();
 			builder.RegisterType<FakePermissionContext>().As<IUserPermissionContext>();
+			builder.RegisterType<EntryUrlParser>().As<IEntryUrlParser>().SingleInstance();
 
 			builder.RegisterType<AlbumNHibernateRepository>().As<IAlbumRepository>();
 			builder.RegisterType<ArtistNHibernateRepository>().As<IArtistRepository>();

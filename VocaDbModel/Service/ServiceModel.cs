@@ -8,14 +8,17 @@ namespace VocaDb.Model.Service {
 
 		private readonly BrandableStringsManager brandableStringsManager;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryUrlParser entryUrlParser;
 		private readonly IUserPermissionContext permissionContext;
 		private readonly ISessionFactory sessionFactory;
 
-		public ServiceModel(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, BrandableStringsManager brandableStringsManager) {
+		public ServiceModel(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, 
+			IEntryLinkFactory entryLinkFactory, BrandableStringsManager brandableStringsManager, IEntryUrlParser entryUrlParser) {
 			this.sessionFactory = sessionFactory;
 			this.permissionContext = permissionContext;
 			this.entryLinkFactory = entryLinkFactory;
 			this.brandableStringsManager = brandableStringsManager;
+			this.entryUrlParser = entryUrlParser;
 		}
 
 		public ActivityFeedService ActivityFeed {
@@ -74,7 +77,7 @@ namespace VocaDb.Model.Service {
 
 		public SongService Songs {
 			get {
-				return new SongService(sessionFactory, permissionContext, entryLinkFactory);
+				return new SongService(sessionFactory, permissionContext, entryLinkFactory, entryUrlParser);
 			}
 		}
 

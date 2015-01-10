@@ -15,6 +15,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 	public class SongSearchDatabaseTests {
 
 		private DatabaseTestContext<IQuerySource> context;
+		private EntryUrlParser entryUrlParser;
 		private SongQueryParams queryParams;
 
 		private TestDatabase Db {
@@ -31,6 +32,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		public void SetUp() {
 			
 			queryParams = new SongQueryParams { SortRule = SongSortRule.Name };
+			entryUrlParser = new EntryUrlParser();
 			context = new DatabaseTestContext<IQuerySource>();
 
 		}
@@ -39,7 +41,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 			
 			return context.RunTest(querySource => {
 				
-				var search = new Model.Service.Search.SongSearch.SongSearch(querySource, languagePreference);
+				var search = new Model.Service.Search.SongSearch.SongSearch(querySource, languagePreference, entryUrlParser);
 
 				var watch = new Stopwatch();
 				watch.Start();

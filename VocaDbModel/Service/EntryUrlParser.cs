@@ -7,7 +7,7 @@ namespace VocaDb.Model.Service {
 	/// <summary>
 	/// Parses entry type and ID from URLs to common entries, for example http://vocadb.net/S/3939
 	/// </summary>
-	public class EntryUrlParser {
+	public class EntryUrlParser : IEntryUrlParser {
 
 		private readonly Regex entryUrlRegex;
 		private readonly Regex entryUrlRegexOptionalPrefix;
@@ -29,19 +29,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		/// <summary>
-		/// Parse URL.
-		/// </summary>
-		/// <param name="url">URL to be parsed. Can be null or empty.</param>
-		/// <param name="allowRelative">
-		/// Whether relative URLs are allowed.
-		/// If this is true, relative URLs without hostname, for example /S/3939 are parsed as well.
-		/// If this is false (default), only absolute URLs such as http://vocadb.net/S/3939 are allowed.
-		/// </param>
-		/// <returns>
-		/// Global ID, including type and ID of the entry.
-		/// If the URL could not be parsed, this will be <see cref="GlobalEntryId.Empty" />.
-		/// </returns>
 		public GlobalEntryId Parse(string url, bool allowRelative = false) {
 			
 			if (string.IsNullOrEmpty(url))
@@ -76,6 +63,25 @@ namespace VocaDb.Model.Service {
 			return new GlobalEntryId(entryType, int.Parse(entryId));
 
 		}
+
+	}
+
+	public interface IEntryUrlParser {
+
+		/// <summary>
+		/// Parse URL.
+		/// </summary>
+		/// <param name="url">URL to be parsed. Can be null or empty.</param>
+		/// <param name="allowRelative">
+		/// Whether relative URLs are allowed.
+		/// If this is true, relative URLs without hostname, for example /S/3939 are parsed as well.
+		/// If this is false (default), only absolute URLs such as http://vocadb.net/S/3939 are allowed.
+		/// </param>
+		/// <returns>
+		/// Global ID, including type and ID of the entry.
+		/// If the URL could not be parsed, this will be <see cref="GlobalEntryId.Empty" />.
+		/// </returns>
+		GlobalEntryId Parse(string url, bool allowRelative = false);
 
 	}
 

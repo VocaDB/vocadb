@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -14,6 +15,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 	public class SongSearch {
 
+		private readonly IEntryUrlParser entryUrlParser;
 		private readonly ContentLanguagePreference languagePreference;
 		private readonly IQuerySource querySource;
 
@@ -116,6 +118,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				if (!string.IsNullOrEmpty(nicoId))
 					return new ParsedSongQuery { NicoId = nicoId };
 
+				var entryId = entryUrlParser.Parse(query.Trim(), allowRelative: true);
+
+				if (entryId.EntryType == EntryType.Song)
+					return new ParsedSongQuery { Id = entryId.Id };
 
 			} else {
 
@@ -136,9 +142,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		public SongSearch(IQuerySource querySource, ContentLanguagePreference languagePreference) {
+		public SongSearch(IQuerySource querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser) {
 			this.querySource = querySource;
 			this.languagePreference = languagePreference;
+			this.entryUrlParser = entryUrlParser;
 		}
 
 		/// <summary>

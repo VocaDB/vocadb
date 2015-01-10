@@ -18,9 +18,9 @@ namespace VocaDb.Web.Controllers
 
 	    private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private readonly EntryUrlParser entryUrlParser;
+		private readonly IEntryUrlParser entryUrlParser;
 
-		public ExtController(EntryUrlParser entryUrlParser) {
+		public ExtController(IEntryUrlParser entryUrlParser) {
 			this.entryUrlParser = entryUrlParser;
 		}
 

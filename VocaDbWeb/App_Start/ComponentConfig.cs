@@ -55,7 +55,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<BrandableStringsManager>().AsSelf().SingleInstance();
 			builder.RegisterType<VdbConfigManager>().AsSelf().SingleInstance();
 			builder.RegisterType<GravatarUserIconFactory>().As<IUserIconFactory>();
-			builder.RegisterType<EntryUrlParser>().AsSelf().SingleInstance();
+			builder.RegisterType<EntryUrlParser>().As<IEntryUrlParser>().SingleInstance();
 			builder.Register(_ => MemoryCache.Default).As<ObjectCache>().ExternallyOwned(); // Disable dispose
 
 			// Legacy services
