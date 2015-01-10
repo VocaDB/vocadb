@@ -900,7 +900,6 @@
     <Compile Include="Helpers\NumberFormatHelper.cs" />
     <Compile Include="Helpers\PVHelper.cs" />
     <Compile Include="Helpers\ResourceHelpers.cs" />
-    <Compile Include="Helpers\RouteInfo.cs" />
     <Compile Include="Helpers\SearchHelpers.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\Support\TranslateableEnum.cs" />

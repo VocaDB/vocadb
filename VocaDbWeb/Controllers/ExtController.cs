@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.SessionState;
 using NLog;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Service;
+using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
-using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Ext;
 
 namespace VocaDb.Web.Controllers
@@ -17,13 +18,19 @@ namespace VocaDb.Web.Controllers
 
 	    private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+		private readonly EntryUrlParser entryUrlParser;
+
+		public ExtController(EntryUrlParser entryUrlParser) {
+			this.entryUrlParser = entryUrlParser;
+		}
+
 		[OutputCache(Duration = 600, VaryByParam = "songId;pvId;lang")]
         public ActionResult EmbedSong(int songId = invalidId, int pvId = invalidId) {
 
 			if (songId == invalidId)
 				return NoId();
 
-			if (string.IsNullOrEmpty(Request.Params[Model.Service.Security.LoginManager.LangParamName]))
+			if (string.IsNullOrEmpty(Request.Params[LoginManager.LangParamName]))
 				PermissionContext.OverrideLanguage(ContentLanguagePreference.Default);
 
 			var song = Services.Songs.GetSongWithPVAndVote(songId);
@@ -37,24 +44,25 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrWhiteSpace(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
 
-			var route = new RouteInfo(new Uri(url), AppConfig.HostAddress, HttpContext).RouteData;
-			var controller = route.Values["controller"].ToString();
-			var id = int.Parse(route.Values["id"].ToString());
-			string data = string.Empty;
+			var entryId = entryUrlParser.Parse(url, allowRelative: true);
 
-			switch (controller) {
-				case "Album":
+			string data = string.Empty;
+			var id = entryId.Id;
+
+			switch (entryId.EntryType) {
+				case EntryType.Album:
 					data = RenderPartialViewToString("AlbumWithCoverPopupContent", Services.Albums.GetAlbum(id));
 					break;
-				case "Artist":
+				case EntryType.Artist:
 					data = RenderPartialViewToString("ArtistPopupContent", Services.Artists.GetArtist(id));
 					break;
-				case "Song":
+				case EntryType.Song:
 					data = RenderPartialViewToString("SongPopupContent", Services.Songs.GetSongWithPVAndVote(id));
 					break;
 			}
 
 			return Json(data, callback);
+
 		}
 
 		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json) {
@@ -68,24 +76,15 @@ namespace VocaDb.Web.Controllers
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid URL");
 			}
 
-			var route = new RouteInfo(uri, AppConfig.HostAddress, HttpContext).RouteData;
-			var controller = route.Values["controller"].ToString().ToLowerInvariant();
+			var entryId = entryUrlParser.Parse(url);
 
-			if (controller != "song" && controller != "s") {
+			if (entryId.EntryType != EntryType.Song) {
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Only song embeds are supported");
 			}
 
-			int id;
+			var id = entryId.Id;
 
-			if (controller == "s") {
-				var match = Regex.Match(route.Values["action"].ToString(), @"(\d+)");
-				id = int.Parse(match.Groups[1].Value);
-			}
-			else {
-				id = int.Parse(route.Values["id"].ToString());
-			}
-
-			var song = Services.Songs.GetSong(id);
+			var song = Services.Songs.GetSong(entryId.Id);
 			var html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>",
 				VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new {songId = id})), maxwidth, maxheight);
 

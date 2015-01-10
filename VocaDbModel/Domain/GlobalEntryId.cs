@@ -6,6 +6,8 @@
 	/// </summary>
 	public struct GlobalEntryId {
 
+		public static readonly GlobalEntryId Empty = new GlobalEntryId();
+
 		public GlobalEntryId(EntryType entryType, int id) 
 			: this() {
 
@@ -17,6 +19,10 @@
 		public EntryType EntryType { get; private set; }
 
 		public int Id { get; private set; }
+
+		public bool IsEmpty {
+			get { return Id == 0; }
+		}
 
 		public override string ToString() {
 			return string.Format("{0}.{1}", EntryType, Id);
