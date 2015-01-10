@@ -109,7 +109,9 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			if (string.IsNullOrWhiteSpace(query))
 				return new ParsedSongQuery();
 
-			var term = GetTerm(query.Trim(), "id", "tag", "artist-tag", "artist-type");
+			var trimmed = query.Trim();
+
+			var term = GetTerm(trimmed, "id", "tag", "artist-tag", "artist-type");
 			
 			if (term == null) {
 
@@ -118,10 +120,16 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				if (!string.IsNullOrEmpty(nicoId))
 					return new ParsedSongQuery { NicoId = nicoId };
 
-				var entryId = entryUrlParser.Parse(query.Trim(), allowRelative: true);
+				// Optimization: check prefix, in most cases the user won't be searching by URL
+				if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase) 
+					|| trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
 
-				if (entryId.EntryType == EntryType.Song)
-					return new ParsedSongQuery { Id = entryId.Id };
+					var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
+
+					if (entryId.EntryType == EntryType.Song)
+						return new ParsedSongQuery { Id = entryId.Id };
+					
+				}
 
 			} else {
 
