@@ -5,7 +5,8 @@ using VocaDb.Model.Utils;
 namespace VocaDb.Model.Service {
 
 	/// <summary>
-	/// Parses entry type and ID from URLs to common entries, for example http://vocadb.net/S/3939
+	/// Parses entry type and ID from URLs to common entries, for example http://vocadb.net/S/3939.
+	/// This default implementation is based on regular expressions and handles most common cases.
 	/// </summary>
 	public class EntryUrlParser : IEntryUrlParser {
 

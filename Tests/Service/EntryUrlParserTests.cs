@@ -5,19 +5,22 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Tests.Service {
 
+	/// <summary>
+	/// Unit tests for <see cref="EntryUrlParser"/>.
+	/// </summary>
 	[TestClass]
 	public class EntryUrlParserTests {
 
 		private const string baseUrl = "http://test.vocadb.net";
 		private const string baseUrlSsl = "https://test.vocadb.net";
 
-		private string GetFullUrl(string relative) {
+		private string GetAbsoluteUrl(string relative) {
 			return VocaUriBuilder.MergeUrls(baseUrl, relative);
 		}
 
-		private void TestParse(string url, int expectedId, EntryType expectedType) {
+		private void TestParseAbsolute(string url, int expectedId, EntryType expectedType) {
 			
-			var result = new EntryUrlParser(baseUrl, baseUrlSsl).Parse(GetFullUrl(url));
+			var result = new EntryUrlParser(baseUrl, baseUrlSsl).Parse(GetAbsoluteUrl(url));
 
 			Assert.AreEqual(expectedId, result.Id, "Id");
 			Assert.AreEqual(expectedType, result.EntryType, "EntryType");
@@ -36,7 +39,7 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void HostAddressesAreSame() {
 			
-			var result = new EntryUrlParser(baseUrl, baseUrl).Parse(GetFullUrl("/Artist/Details/39"));
+			var result = new EntryUrlParser(baseUrl, baseUrl).Parse(GetAbsoluteUrl("/Artist/Details/39"));
 			Assert.AreEqual(39, result.Id, "Id");
 			Assert.AreEqual(EntryType.Artist, result.EntryType, "EntryType");
 
@@ -45,28 +48,35 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void NoMatch() {
 			
-			TestParse("/Search", 0, EntryType.Undefined);
+			TestParseAbsolute("/Search", 0, EntryType.Undefined);
+
+		}
+
+		[TestMethod]
+		public void IdIsNotInteger() {
+			
+			TestParseAbsolute("/Al/undefined", 0, EntryType.Undefined);
 
 		}
 
 		[TestMethod]
 		public void Long() {
 			
-			TestParse("/Artist/Details/39", 39, EntryType.Artist);
+			TestParseAbsolute("/Artist/Details/39", 39, EntryType.Artist);
 
 		}
 
 		[TestMethod]
 		public void Short() {
 
-			TestParse("/S/39", 39, EntryType.Song);
+			TestParseAbsolute("/S/39", 39, EntryType.Song);
 			
 		}
 
 		[TestMethod]
 		public void Short_Lowercase() {
 
-			TestParse("/al/39", 39, EntryType.Album);
+			TestParseAbsolute("/al/39", 39, EntryType.Album);
 			
 		}
 
@@ -75,6 +85,13 @@ namespace VocaDb.Tests.Service {
 		
 			TestParseRelative("/S/10", 10, EntryType.Song);
 	
+		}
+
+		[TestMethod]
+		public void QueryParameters() {
+
+			TestParseAbsolute("/Al/1?pv=39", 1, EntryType.Album);
+			
 		}
 
 	}
