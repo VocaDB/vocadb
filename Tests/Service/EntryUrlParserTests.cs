@@ -94,6 +94,13 @@ namespace VocaDb.Tests.Service {
 			
 		}
 
+		[TestMethod]
+		public void FriendlyUrl() {
+
+			TestParseAbsolute("/Ar/39/miku-hatsune", 39, EntryType.Artist);
+			
+		}
+
 	}
 
 }
