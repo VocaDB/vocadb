@@ -75,7 +75,10 @@
 	</a>		
 }
 
-@helper ArtistLink(ArtistContract artist, string name = null) {
+@helper ArtistLink(ArtistContract artist, bool typeLabel = false, string name = null) {
+	if (typeLabel) {
+		@ArtistTypeLabel(artist.ArtistType)	 
+	}
 	@Html.ActionLink(name ?? artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
 }
 

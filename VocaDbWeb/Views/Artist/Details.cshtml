@@ -196,7 +196,7 @@
 					}
 					@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 						<p>
-							Mostly uses: @Html.LinkList(Model.AdvancedStats.TopVocaloids, a => new MvcHtmlString(ArtistHelpers.ArtistLink(a.Data).ToString())).
+							Mostly uses: @Html.LinkList(Model.AdvancedStats.TopVocaloids, a => new MvcHtmlString(ArtistHelpers.ArtistLink(a.Data, typeLabel: true).ToString())).
 						</p>
 					}
 				</td>

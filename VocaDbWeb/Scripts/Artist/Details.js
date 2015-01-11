@@ -135,6 +135,7 @@ function initPage(artistId, saveStr, urlMapper, viewModel) {
 	$("#baseVoicebank a").vdbArtistToolTip();
 	$("#childVoicebanks a").vdbArtistToolTip();
 	$("#groups a").vdbArtistToolTip();
+	$(".artistLink").vdbArtistToolTip();
 
 	function saveTagSelections() {
 

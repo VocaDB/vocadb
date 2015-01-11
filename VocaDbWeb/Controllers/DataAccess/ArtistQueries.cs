@@ -45,7 +45,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			if (artist.ArtistType != ArtistType.Producer)
 				return null;
 
-			var key = string.Format("AdvancedArtistStatsContract.{0}", artist.Id);
+			var key = string.Format("ArtistQueries.AdvancedArtistStatsContract.{0}", artist.Id);
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
 
@@ -53,7 +53,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var topVocaloidIdsAndCounts = ctx
 					.Query<ArtistForSong>()
-					.Where(a => types.Contains(a.Artist.ArtistType) && a.Song.AllArtists.Any(ar => !ar.IsSupport && ar.Artist.Id == artist.Id))
+					.Where(a => types.Contains(a.Artist.ArtistType) && !a.Song.Deleted && a.Song.AllArtists.Any(ar => !ar.IsSupport && ar.Artist.Id == artist.Id))
 					.GroupBy(a => a.Artist.Id)
 					.Select(a => new {
 						ArtistId = a.Key,
@@ -94,7 +94,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			if (!PermissionContext.IsLoggedIn)
 				return null;
 
-			var key = string.Format("PersonalArtistStatsContract.{0}.{1}", artist.Id, PermissionContext.LoggedUserId);
+			var key = string.Format("ArtistQueries.PersonalArtistStatsContract.{0}.{1}", artist.Id, PermissionContext.LoggedUserId);
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
 				
 				return new PersonalArtistStatsContract {
@@ -109,7 +109,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		private SharedArtistStatsContract GetSharedArtistStats(IRepositoryContext<Artist> ctx, Artist artist) {
 			
-			var key = string.Format("SharedArtistStatsContract.{0}", artist.Id);
+			var key = string.Format("ArtistQueries.SharedArtistStatsContract.{0}", artist.Id);
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
 				
 				var stats = ctx.Query()
