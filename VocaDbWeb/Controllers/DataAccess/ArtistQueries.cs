@@ -3,18 +3,15 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web;
-using System.Web.Caching;
 using NHibernate;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -25,7 +22,6 @@ using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
-using VocaDb.Model.Domain.Caching;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -37,6 +33,61 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryThumbPersister imagePersister;
+
+		class CachedAdvancedArtistStatsContract {
+			
+			public TopStatContract<TranslatedArtistContract>[] TopVocaloids { get; set; }
+
+		}
+
+		private AdvancedArtistStatsContract GetAdvancedStats(IRepositoryContext<Artist> ctx, Artist artist) {
+			
+			if (artist.ArtistType != ArtistType.Producer)
+				return null;
+
+			var key = string.Format("AdvancedArtistStatsContract.{0}", artist.Id);
+
+			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
+
+				var types = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.OtherVoiceSynthesizer };
+
+				var topVocaloidIdsAndCounts = ctx
+					.Query<ArtistForSong>()
+					.Where(a => types.Contains(a.Artist.ArtistType) && a.Song.AllArtists.Any(ar => !ar.IsSupport && ar.Artist.Id == artist.Id))
+					.GroupBy(a => a.Artist.Id)
+					.Select(a => new {
+						ArtistId = a.Key,
+						Count = a.Count()
+					})
+					.OrderByDescending(a => a.Count)
+					.Take(3)
+					.ToDictionary(a => a.ArtistId, a => a.Count);
+
+				var topVocaloidIds = topVocaloidIdsAndCounts.Select(i => i.Key).ToArray();
+					
+				var topVocaloids = ctx.Query().Where(a => topVocaloidIds.Contains(a.Id))
+					.ToArray()
+					.Select(a => new TopStatContract<TranslatedArtistContract> {
+						Data = new TranslatedArtistContract(a),
+						Count = topVocaloidIdsAndCounts[a.Id]
+					})
+					.OrderByDescending(d => d.Count)
+					.ToArray();
+
+				return new CachedAdvancedArtistStatsContract {
+					TopVocaloids = topVocaloids
+				};
+
+			});
+
+			return new AdvancedArtistStatsContract {
+				TopVocaloids = cached.TopVocaloids.Select(v => new TopStatContract<ArtistContract> {
+					Data = new ArtistContract(v.Data, LanguagePreference),
+					Count = v.Count
+				}).ToArray()
+			};
+
+		}
 
 		private PersonalArtistStatsContract GetPersonalArtistStats(IRepositoryContext<Artist> ctx, Artist artist) {
 			
@@ -217,7 +268,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var contract = new ArtistDetailsContract(artist, LanguagePreference) {
 					CommentCount = stats.CommentCount,
 					SharedStats = GetSharedArtistStats(session, artist),
-					PersonalStats = GetPersonalArtistStats(session, artist)
+					PersonalStats = GetPersonalArtistStats(session, artist),
+					AdvancedStats = GetAdvancedStats(session, artist)
 				};
 
 				if (PermissionContext.IsLoggedIn) {
@@ -421,4 +473,5 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 	}
+
 }

@@ -44,6 +44,21 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		}
 
+		public ArtistContract(TranslatedArtistContract artist, ContentLanguagePreference preference) {
+
+			ParamIs.NotNull(() => artist);
+
+			AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
+			ArtistType = artist.ArtistType;
+			Deleted = artist.Deleted;
+			Id = artist.Id;
+			Name = artist.Names.SortNames[preference];
+			PictureMime = artist.PictureMime;
+			Status = artist.Status;
+			Version = artist.Version;
+
+		}
+
 		[DataMember]
 		public string AdditionalNames { get; set; }
 

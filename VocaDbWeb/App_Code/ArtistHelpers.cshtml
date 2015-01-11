@@ -75,8 +75,8 @@
 	</a>		
 }
 
-@helper ArtistLink(ArtistContract artist) {
-	@Html.ActionLink(artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
+@helper ArtistLink(ArtistContract artist, string name = null) {
+	@Html.ActionLink(name ?? artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
 }
 
 @helper ArtistList(IEnumerable<ArtistForAlbumContract> artists, bool showRoles = false, bool showType = false) {

@@ -40,6 +40,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 		}
 
 		[DataMember]
+		public AdvancedArtistStatsContract AdvancedStats { get; set; }
+
+		[DataMember]
 		public string AllNames { get; set; }
 
 		[DataMember]

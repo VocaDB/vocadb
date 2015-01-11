@@ -125,6 +125,8 @@
     <Compile Include="DataContracts\Albums\ArtistForAlbumContract.cs" />
     <Compile Include="DataContracts\Albums\CreateAlbumContract.cs" />
     <Compile Include="DataContracts\Api\EntryForApiContract.cs" />
+    <Compile Include="DataContracts\Artists\AdvancedArtistStatsContract.cs" />
+    <Compile Include="DataContracts\Artists\TranslatedArtistContract.cs" />
     <Compile Include="DataContracts\CommentForApiContract.cs" />
     <Compile Include="DataContracts\EntryThumbForApiContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />

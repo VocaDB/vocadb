@@ -299,4 +299,20 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 	}
+
+	public class BasicNameManager : NameManager<LocalizedStringWithId> {
+
+		public BasicNameManager() { }
+
+		public BasicNameManager(INameManager nameManager) {
+			
+			ParamIs.NotNull(() => nameManager);
+
+			Names = nameManager.NamesBase.Select(n => new LocalizedStringWithId(n.Value, n.Language)).ToArray();
+			SortNames = new TranslatedString(nameManager.SortNames);
+
+		}
+
+	}
+
 }
