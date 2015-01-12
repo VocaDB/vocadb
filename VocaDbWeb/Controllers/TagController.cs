@@ -96,7 +96,7 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(filter)) {
 
-				var tagName = queries.GetTag(filter, t => t.Name);
+				var tagName = queries.GetTag(filter, t => t != null ? t.Name : null);
 
 				if (tagName != null) {
 					return RedirectToAction("Details", new { id = tagName });
