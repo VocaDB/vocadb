@@ -1941,9 +1941,13 @@
     <TypeScriptCompile Include="Scripts\Tests\Helpers\HtmlHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\typings\highcharts\highcharts.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jqueryui\jqueryui.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\lodash\lodash.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\marked\marked.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\other.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\qunit\qunit.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\soundcloud\soundcloud.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\vdb\functions.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
@@ -1968,11 +1972,7 @@
     <TypeScriptCompile Include="Scripts\Repositories\ResourceRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\TagRepository.ts" />
     <TypeScriptCompile Include="Scripts\Shared\Resources.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\lodash\lodash.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\marked\marked.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\qTip2\qtip.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\qunit\qunit.d.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Globalization\NamesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVRatingButtonsViewModel.ts" />
