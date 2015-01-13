@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -38,13 +39,14 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private AlbumContract AcceptImportedAlbum(ISession session, ContentLanguageSelection languageSelection, 
+		private AlbumContract AcceptImportedAlbum(ISession session, IAlbumImporter importer, ContentLanguageSelection languageSelection, 
 			InspectedAlbum acceptedAlbum, int[] selectedSongIds) {
 			
 			Album album;
 			var diff = new AlbumDiff(false);
+			var isNew = acceptedAlbum.MergedAlbum == null;
 
-			if (acceptedAlbum.MergedAlbum == null) {
+			if (isNew) {
 
 				album = new Album(new LocalizedString(acceptedAlbum.ImportedAlbum.Title, languageSelection));
 
@@ -87,7 +89,7 @@ namespace VocaDb.Model.Service {
 			if (acceptedAlbum.MergedAlbum == null || acceptedAlbum.MergeTracks) {
 
 				foreach (var inspectedTrack in acceptedAlbum.Tracks) {
-					if (AcceptImportedSong(session, album, inspectedTrack, languageSelection, selectedSongIds))
+					if (AcceptImportedSong(session, importer, album, inspectedTrack, languageSelection, selectedSongIds))
 						diff.Tracks = true;
 				}
 
@@ -115,15 +117,21 @@ namespace VocaDb.Model.Service {
 				diff.OriginalRelease = true;
 			}
 
-			/*if (!album.WebLinks.Any(w => w.Url.Contains("mikudb.com"))) {
-				album.CreateWebLink("MikuDB", acceptedAlbum.ImportedAlbum.SourceUrl, WebLinkCategory.Reference);
-				diff.WebLinks = true;
-			}*/
+			// Add link if not already added a link to that service
+			var sourceUrl = acceptedAlbum.ImportedAlbum.SourceUrl;
+			if (importer != null && !string.IsNullOrEmpty(sourceUrl)) {
+
+				if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url))) {
+					album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference);
+					diff.WebLinks = true;
+				}
+				
+			}
 
 			album.UpdateArtistString();
 
 			AuditLog(string.Format("accepted imported album '{0}'", acceptedAlbum.ImportedAlbum.Title), session);
-			AddEntryEditedEntry(session, album, EntryEditEvent.Created);
+			AddEntryEditedEntry(session, album, isNew ? EntryEditEvent.Created : EntryEditEvent.Updated);
 
 			Services.Albums.Archive(session, album, diff, AlbumArchiveReason.AutoImportedFromMikuDb);
 
@@ -134,7 +142,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private bool AcceptImportedSong(ISession session, Album album, InspectedTrack inspectedTrack, 
+		private bool AcceptImportedSong(ISession session, IAlbumImporter importer, Album album, InspectedTrack inspectedTrack, 
 			ContentLanguageSelection languageSelection, int[] selectedSongIds) {
 
 			Song song = null;
@@ -180,8 +188,10 @@ namespace VocaDb.Model.Service {
 
 				}
 
+				var importerName = importer != null ? importer.ServiceName : "(unknown)";
+
 				Services.Songs.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
-					string.Format("Auto-imported for album '{0}'", album.DefaultName));
+					string.Format("Auto-imported from {0} for album '{1}'", importerName, album.DefaultName));
 
 				session.Update(song);
 				return true;
@@ -436,7 +446,8 @@ namespace VocaDb.Model.Service {
 			return HandleTransaction(session => {
 
 				var inspected = Inspect(session, importedAlbum);
-				var album = AcceptImportedAlbum(session, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
+				var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
+				var album = AcceptImportedAlbum(session, importer, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
 
 				return album;
 
@@ -455,7 +466,8 @@ namespace VocaDb.Model.Service {
 				foreach (var importedAlbum in importedAlbumIds) {
 
 					var inspected = Inspect(session, importedAlbum);
-					var album = AcceptImportedAlbum(session, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
+					var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
+					var album = AcceptImportedAlbum(session, importer, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
 
 					importedAlbums.Add(album);
 
