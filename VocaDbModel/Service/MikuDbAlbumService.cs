@@ -133,7 +133,8 @@ namespace VocaDb.Model.Service {
 			AuditLog(string.Format("accepted imported album '{0}'", acceptedAlbum.ImportedAlbum.Title), session);
 			AddEntryEditedEntry(session, album, isNew ? EntryEditEvent.Created : EntryEditEvent.Updated);
 
-			Services.Albums.Archive(session, album, diff, AlbumArchiveReason.AutoImportedFromMikuDb);
+			var importerName = importer != null ? importer.ServiceName : "(unknown)";
+			Services.Albums.Archive(session, album, diff, AlbumArchiveReason.AutoImportedFromMikuDb, "Imported from " + importerName);
 
 			session.Update(album);
 			session.Update(importedAlbum);
