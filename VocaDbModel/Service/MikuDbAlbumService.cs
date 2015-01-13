@@ -115,10 +115,10 @@ namespace VocaDb.Model.Service {
 				diff.OriginalRelease = true;
 			}
 
-			if (!album.WebLinks.Any(w => w.Url.Contains("mikudb.com"))) {
+			/*if (!album.WebLinks.Any(w => w.Url.Contains("mikudb.com"))) {
 				album.CreateWebLink("MikuDB", acceptedAlbum.ImportedAlbum.SourceUrl, WebLinkCategory.Reference);
 				diff.WebLinks = true;
-			}
+			}*/
 
 			album.UpdateArtistString();
 
@@ -181,7 +181,7 @@ namespace VocaDb.Model.Service {
 				}
 
 				Services.Songs.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
-					string.Format("Auto-imported from MikuDB for album '{0}'", album.DefaultName));
+					string.Format("Auto-imported for album '{0}'", album.DefaultName));
 
 				session.Update(song);
 				return true;
@@ -513,7 +513,7 @@ namespace VocaDb.Model.Service {
 
 			return HandleTransaction(session => {
 
-				AuditLog("importing new albums from MikuDB", session);
+				AuditLog("importing new albums from " + importer.ServiceName, session);
 
 				//var all = session.Query<MikuDbAlbum>();
 

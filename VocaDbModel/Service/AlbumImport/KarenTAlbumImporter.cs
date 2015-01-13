@@ -149,7 +149,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 			if (!match.Success)
 				return null;
 
-			var title = match.Groups[1].Value;
+			var title = HtmlEntity.DeEntitize(match.Groups[1].Value);
 			string[] vocalists;
 
 			if (match.Groups[2].Value == "- off vocal") {
