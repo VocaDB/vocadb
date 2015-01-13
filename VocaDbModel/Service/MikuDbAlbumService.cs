@@ -189,10 +189,14 @@ namespace VocaDb.Model.Service {
 
 				}
 
-				var importerName = importer != null ? importer.ServiceName : "(unknown)";
+				if (diff.ChangedFields != SongEditableFields.Nothing) {
+					
+					var importerName = importer != null ? importer.ServiceName : "(unknown)";
 
-				Services.Songs.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
-					string.Format("Auto-imported from {0} for album '{1}'", importerName, album.DefaultName));
+					Services.Songs.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
+						string.Format("Auto-imported from {0} for album '{1}'", importerName, album.DefaultName));
+
+				}
 
 				session.Update(song);
 				return true;
