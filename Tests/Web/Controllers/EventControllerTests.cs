@@ -1,8 +1,6 @@
 ﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VocaDb.Model.Service;
 using VocaDb.Web.Controllers;
-using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Tests.Web.Controllers {
 
@@ -16,7 +14,7 @@ namespace VocaDb.Tests.Web.Controllers {
 
 		[TestInitialize]
 		public void SetUp() {
-			controller = new EventController(null, null);
+			controller = new EventController(null, null, null);
 		}
 
 		[TestMethod]

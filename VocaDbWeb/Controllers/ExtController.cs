@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using System.Web.SessionState;
 using NLog;
@@ -18,10 +17,16 @@ namespace VocaDb.Web.Controllers
 
 	    private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+		private readonly AlbumService albumService;
+		private readonly ArtistService artistService;
 		private readonly IEntryUrlParser entryUrlParser;
+		private readonly SongService songService;
 
-		public ExtController(IEntryUrlParser entryUrlParser) {
+		public ExtController(IEntryUrlParser entryUrlParser, AlbumService albumService, ArtistService artistService, SongService songService) {
 			this.entryUrlParser = entryUrlParser;
+			this.albumService = albumService;
+			this.artistService = artistService;
+			this.songService = songService;
 		}
 
 		[OutputCache(Duration = 600, VaryByParam = "songId;pvId;lang")]
@@ -33,7 +38,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(Request.Params[LoginManager.LangParamName]))
 				PermissionContext.OverrideLanguage(ContentLanguagePreference.Default);
 
-			var song = Services.Songs.GetSongWithPVAndVote(songId);
+			var song = songService.GetSongWithPVAndVote(songId);
 
 			return PartialView(song);
 
@@ -55,13 +60,13 @@ namespace VocaDb.Web.Controllers
 
 			switch (entryId.EntryType) {
 				case EntryType.Album:
-					data = RenderPartialViewToString("AlbumWithCoverPopupContent", Services.Albums.GetAlbum(id));
+					data = RenderPartialViewToString("AlbumWithCoverPopupContent", albumService.GetAlbum(id));
 					break;
 				case EntryType.Artist:
-					data = RenderPartialViewToString("ArtistPopupContent", Services.Artists.GetArtist(id));
+					data = RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id));
 					break;
 				case EntryType.Song:
-					data = RenderPartialViewToString("SongPopupContent", Services.Songs.GetSongWithPVAndVote(id));
+					data = RenderPartialViewToString("SongPopupContent", songService.GetSongWithPVAndVote(id));
 					break;
 			}
 
@@ -86,7 +91,7 @@ namespace VocaDb.Web.Controllers
 
 			var id = entryId.Id;
 
-			var song = Services.Songs.GetSong(entryId.Id);
+			var song = songService.GetSong(entryId.Id);
 			var html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>",
 				VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new {songId = id})), maxwidth, maxheight);
 

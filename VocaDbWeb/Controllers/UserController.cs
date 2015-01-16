@@ -35,11 +35,13 @@ namespace VocaDb.Web.Controllers
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private VdbConfigManager config;
+		private readonly ArtistService artistService;
+		private readonly VdbConfigManager config;
 
 		private UserQueries Data { get; set; }
 
 		private readonly UserMessageQueries messageQueries;
+		private readonly OtherService otherService;
 
 	    private UserService Service { get; set; }
 
@@ -61,11 +63,15 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public UserController(UserService service, UserQueries data, UserMessageQueries messageQueries, VdbConfigManager config) {
+		public UserController(UserService service, UserQueries data, ArtistService artistService, OtherService otherService, UserMessageQueries messageQueries, VdbConfigManager config) {
+
 			Service = service;
 			Data = data;
+			this.artistService = artistService;
+			this.otherService = otherService;
 			this.messageQueries = messageQueries;
 			this.config = config;
+
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
@@ -240,7 +246,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public PartialViewResult OwnedArtistForUserEditRow(int artistId) {
 
-			var artist = Services.Artists.GetArtist(artistId);
+			var artist = artistService.GetArtist(artistId);
 			var ownedArtist = new ArtistForUserContract(artist);
 
 			return PartialView(ownedArtist);
@@ -502,7 +508,7 @@ namespace VocaDb.Web.Controllers
 
 				var captchaResponse = Request.Params["recaptcha_response_field"] ?? string.Empty;
 				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (response was {0})", captchaResponse), LogLevel.Warn);
-				Services.Other.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
+				otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
 
 			}
@@ -744,7 +750,7 @@ namespace VocaDb.Web.Controllers
 				return View();
 			}
 
-			Services.Artists.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", message));
+			artistService.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", message));
 
 			TempData.SetSuccessMessage("Request sent");
 			return View();

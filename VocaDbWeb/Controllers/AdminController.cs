@@ -18,9 +18,11 @@ namespace VocaDb.Web.Controllers
 
 	    private readonly ISessionFactory sessionFactory;
 		private AdminService Service { get; set; }
+		private readonly OtherService otherService;
 
-		public AdminController(AdminService service, ISessionFactory sessionFactory) {
+		public AdminController(AdminService service, OtherService otherService, ISessionFactory sessionFactory) {
 			Service = service;
+			this.otherService = otherService;
 			this.sessionFactory = sessionFactory;
 		}
 
@@ -145,7 +147,7 @@ namespace VocaDb.Web.Controllers
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			var rules = Services.Other.GetIPRules();
+			var rules = otherService.GetIPRules();
 			return View(rules);
 
 		}

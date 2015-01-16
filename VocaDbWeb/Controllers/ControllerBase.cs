@@ -14,7 +14,6 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model;
-using VocaDb.Model.Service;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
@@ -54,10 +53,6 @@ namespace VocaDb.Web.Controllers {
 
 		protected IUserPermissionContext PermissionContext {
 			get { return MvcApplication.LoginManager; }
-		}
-
-		protected ServiceModel Services {
-			get { return MvcApplication.Services; }
 		}
 
 		protected ActionResult NoId() {

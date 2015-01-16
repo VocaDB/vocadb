@@ -2,10 +2,13 @@
 using System.Linq;
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Controllers {
 
     public class CommentController : ControllerBase {
+
+		private readonly OtherService otherService;
 
 		class EntryComparer : IEqualityComparer<EntryRefWithNameContract> {
 
@@ -19,13 +22,17 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
+		public CommentController(OtherService otherService) {
+			this.otherService = otherService;
+		}
+
         //
         // GET: /Comment/
 
         public ActionResult Index()
         {
 
-			var comments = Services.Other.GetRecentComments();
+			var comments = otherService.GetRecentComments();
 			var grouped = comments.GroupBy(c => c.Entry, new EntryComparer());
 
 			return View(grouped);

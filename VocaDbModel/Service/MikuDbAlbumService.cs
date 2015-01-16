@@ -30,12 +30,15 @@ namespace VocaDb.Model.Service {
 
 	public class MikuDbAlbumService : ServiceBase {
 
-		private ServiceModel Services { get; set; }
+		private readonly AlbumService albumService;
+		private readonly SongService songService;
 
-		public MikuDbAlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, ServiceModel services) 
+		public MikuDbAlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
+			AlbumService albumService, SongService songService) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 			
-			this.Services = services;
+			this.albumService = albumService;
+			this.songService = songService;
 
 		}
 
@@ -134,7 +137,7 @@ namespace VocaDb.Model.Service {
 			AddEntryEditedEntry(session, album, isNew ? EntryEditEvent.Created : EntryEditEvent.Updated);
 
 			var importerName = importer != null ? importer.ServiceName : "(unknown)";
-			Services.Albums.Archive(session, album, diff, AlbumArchiveReason.AutoImportedFromMikuDb, "Imported from " + importerName);
+			albumService.Archive(session, album, diff, AlbumArchiveReason.AutoImportedFromMikuDb, "Imported from " + importerName);
 
 			session.Update(album);
 			session.Update(importedAlbum);
@@ -193,7 +196,7 @@ namespace VocaDb.Model.Service {
 					
 					var importerName = importer != null ? importer.ServiceName : "(unknown)";
 
-					Services.Songs.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
+					songService.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
 						string.Format("Auto-imported from {0} for album '{1}'", importerName, album.DefaultName));
 
 				}

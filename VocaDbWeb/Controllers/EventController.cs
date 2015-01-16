@@ -11,6 +11,7 @@ namespace VocaDb.Web.Controllers
     public class EventController : ControllerBase
     {
 
+		private readonly AlbumService albumService;
 		private readonly EventQueries queries;
 		private readonly ReleaseEventService service;
 
@@ -18,9 +19,10 @@ namespace VocaDb.Web.Controllers
 			get { return service; }
 		}
 
-		public EventController(EventQueries queries, ReleaseEventService service) {
+		public EventController(EventQueries queries, ReleaseEventService service, AlbumService albumService) {
 			this.queries = queries;
 			this.service = service;
+			this.albumService = albumService;
 		}
 
 		[HttpPost]
@@ -137,7 +139,7 @@ namespace VocaDb.Web.Controllers
 			if (result.EventId != 0) {
 
 				if (result.EventName != query && PermissionContext.HasPermission(PermissionToken.ManageDatabase))
-					Services.Albums.UpdateAllReleaseEventNames(query, result.EventName);
+					albumService.UpdateAllReleaseEventNames(query, result.EventName);
 
 				return RedirectToAction("Details", new { id = result.EventId });
 

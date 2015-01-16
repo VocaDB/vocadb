@@ -59,7 +59,6 @@ namespace VocaDb.Web.App_Start {
 			builder.Register(_ => MemoryCache.Default).As<ObjectCache>().ExternallyOwned(); // Disable dispose
 
 			// Legacy services
-			builder.RegisterType<ServiceModel>().AsSelf();
 			builder.RegisterType<ActivityFeedService>().AsSelf();
 			builder.RegisterType<AdminService>().AsSelf();
 			builder.RegisterType<AlbumService>().AsSelf();

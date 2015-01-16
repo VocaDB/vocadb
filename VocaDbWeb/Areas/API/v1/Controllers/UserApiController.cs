@@ -10,14 +10,16 @@ namespace VocaDb.Web.API.v1.Controllers {
 
 	public class UserApiController : Web.Controllers.ControllerBase {
 
-		private UserService Service {
-			get { return Services.Users; }
+		private readonly UserService service;
+
+		public UserApiController(UserService service) {
+			this.service = service;
 		}
 
 		[HttpPost]
 		public ActionResult Authenticate(string username, string accesskey) {
 			
-			var user = Service.CheckAccessWithKey(username, accesskey, WebHelper.GetRealHost(Request));
+			var user = service.CheckAccessWithKey(username, accesskey, WebHelper.GetRealHost(Request));
 
 			if (user == null) {
 				//Response.StatusCode = 401;
@@ -40,7 +42,7 @@ namespace VocaDb.Web.API.v1.Controllers {
 				return HttpStatusCodeResult(HttpStatusCode.Forbidden, "Error: Must be logged in.");				
 			}
 
-			Service.UpdateSongRating(PermissionContext.LoggedUserId, songId, rating);
+			service.UpdateSongRating(PermissionContext.LoggedUserId, songId, rating);
 			return Object("OK", DataFormat.Auto, callback);
 
 		}

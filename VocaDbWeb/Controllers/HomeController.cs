@@ -18,9 +18,13 @@ namespace VocaDb.Web.Controllers
 
 		private readonly BrandableStringsManager brandableStringsManager;
 		private readonly OtherService otherService;
+		private readonly SongService songService;
+		private readonly UserService userService;
 
-		public HomeController(OtherService otherService, BrandableStringsManager brandableStringsManager) {
+		public HomeController(SongService songService, OtherService otherService, UserService userService, BrandableStringsManager brandableStringsManager) {
+			this.songService = songService;
 			this.otherService = otherService;
+			this.userService = userService;
 			this.brandableStringsManager = brandableStringsManager;
 		}
 
@@ -34,7 +38,7 @@ namespace VocaDb.Web.Controllers
 		[Obsolete("Moved to web api")]
 		public ActionResult FindNames(string term) {
 
-			var result = Services.Other.FindNames(SearchTextQuery.Create(term), 10);
+			var result = otherService.FindNames(SearchTextQuery.Create(term), 10);
 
 			return Json(result);
 
@@ -83,7 +87,7 @@ namespace VocaDb.Web.Controllers
 			if (songId == invalidId)
 				return NoId();
 
-			var song = Services.Songs.GetSongWithPVAndVote(songId);
+			var song = songService.GetSongWithPVAndVote(songId);
 
 			return PartialView("PVs/_PVContent", song);
 
@@ -98,7 +102,7 @@ namespace VocaDb.Web.Controllers
 			PermissionContext.SetLanguagePreferenceCookie(languagePreference);
 
 			if (PermissionContext.HasPermission(PermissionToken.EditProfile))
-				Services.Users.UpdateContentLanguagePreference(languagePreference);
+				userService.UpdateContentLanguagePreference(languagePreference);
 
 			return Content(string.Empty);
 

@@ -27,8 +27,20 @@ namespace VocaDb.Web {
 
 		private static string[] LoadBlockedIPs() {
 
-			return Services.Other.GetIPRules().Select(i => i.Address).ToArray();
+			return OtherService.GetIPRules().Select(i => i.Address).ToArray();
 
+		}
+
+		private static OtherService OtherService {
+			get {
+				return DependencyResolver.Current.GetService<OtherService>();				
+			}			
+		}
+
+		private static UserService UserService {
+			get {
+				return DependencyResolver.Current.GetService<UserService>();				
+			}
 		}
 
 		public static bool IsAjaxRequest(HttpRequest request) {
@@ -55,12 +67,6 @@ namespace VocaDb.Web {
 			}
 		}
 
-		public static ServiceModel Services {
-			get {
-				return DependencyResolver.Current.GetService<ServiceModel>();
-			}
-		}
-
 		protected void Application_AuthenticateRequest(object sender, EventArgs e) {
 
 			try {
@@ -69,7 +75,7 @@ namespace VocaDb.Web {
 				if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated) {
 					if (HttpContext.Current.User.Identity is FormsIdentity && !(HttpContext.Current.User is VocaDbPrincipal)) {
 						var id = (FormsIdentity)HttpContext.Current.User.Identity;
-						var user = Services.Users.GetUserByName(id.Name, IsAjaxRequest(Request));
+						var user = UserService.GetUserByName(id.Name, IsAjaxRequest(Request));
 						if (user != null)
 							LoginManager.SetLoggedUser(user);
 					}
