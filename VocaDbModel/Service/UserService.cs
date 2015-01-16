@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using System.Threading;
 using NLog;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using NHibernate;
@@ -32,8 +31,7 @@ namespace VocaDb.Model.Service {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 // ReSharper restore UnusedMember.Local
 
-		private readonly BrandableStringsManager brandableStringsManager;
-
+		private readonly IUserMessageMailer userMessageMailer;
 
 		/*private bool IsPoisoned(ISession session, string lcUserName) {
 
@@ -47,11 +45,27 @@ namespace VocaDb.Model.Service {
 
 		}
 
+		private void SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
+
+			ParamIs.NotNull(() => message);
+
+			var subject = string.Format("New private message from {0}", message.Sender.Name);
+			var body = string.Format(
+				"You have received a message from {0}. " +
+				"You can view your messages at {1}." +
+				"\n\n" +
+				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.", 
+				message.Sender.Name, messagesUrl, mySettingsUrl);
+
+			userMessageMailer.SendEmail(message.Receiver.Email, message.Receiver.Name, subject, body);
+
+		}
+
 		public UserService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			BrandableStringsManager brandableStringsManager)
+			IUserMessageMailer userMessageMailer)
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 
-			this.brandableStringsManager = brandableStringsManager;
+			this.userMessageMailer = userMessageMailer;
 
 		}
 
@@ -410,8 +424,7 @@ namespace VocaDb.Model.Service {
 					|| (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAdmins 
 						&& sender.EffectivePermissions.Has(PermissionToken.DesignatedStaff))) {
 
-					var mailer = new UserMessageMailer(brandableStringsManager);
-					mailer.SendPrivateMessageNotification(mySettingsUrl, messagesUrl, message);
+					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, message);
 
 				}
 

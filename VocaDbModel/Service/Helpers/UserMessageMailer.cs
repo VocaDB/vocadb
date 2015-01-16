@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Mail;
 using NLog;
-using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.BrandableStrings;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -53,22 +52,6 @@ namespace VocaDb.Model.Service.Helpers {
 			}
 
 			return true;
-
-		}
-
-		public void SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
-
-			ParamIs.NotNull(() => message);
-
-			var subject = string.Format("New private message from {0}", message.Sender.Name);
-			var body = string.Format(
-				"You have received a message from {0}. " +
-				"You can view your messages at {1}." +
-				"\n\n" +
-				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.", 
-				message.Sender.Name, messagesUrl, mySettingsUrl);
-
-			SendEmail(message.Receiver.Email, message.Receiver.Name, subject, body);
 
 		}
 
