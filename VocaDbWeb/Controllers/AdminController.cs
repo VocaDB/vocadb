@@ -16,14 +16,19 @@ namespace VocaDb.Web.Controllers
 {
     public class AdminController : ControllerBase {
 
+		private readonly IPRuleManager ipRuleManager;
 	    private readonly ISessionFactory sessionFactory;
 		private AdminService Service { get; set; }
 		private readonly OtherService otherService;
 
-		public AdminController(AdminService service, OtherService otherService, ISessionFactory sessionFactory) {
+		public AdminController(AdminService service, OtherService otherService, 
+			IPRuleManager ipRuleManager, ISessionFactory sessionFactory) {
+
 			Service = service;
 			this.otherService = otherService;
+			this.ipRuleManager = ipRuleManager;
 			this.sessionFactory = sessionFactory;
+
 		}
 
 		[Authorize]
@@ -159,7 +164,7 @@ namespace VocaDb.Web.Controllers
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			Service.UpdateIPRules(rules);
-			MvcApplication.IPRules.Reset();
+			ipRuleManager.Reset(rules.Select(i => i.Address));
 
 			TempData.SetSuccessMessage("IP rules updated.");
 			

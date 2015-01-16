@@ -10,9 +10,15 @@ namespace VocaDb.Web.Code.Security {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+		private readonly IPRuleManager ipRuleManager;
+
+		public RestrictBlockedIPAttribute(IPRuleManager ipRuleManager) {
+			this.ipRuleManager = ipRuleManager;
+		}
+
 		public override void OnActionExecuting(ActionExecutingContext filterContext) {
 
-			if (MvcApplication.IPRules.IsAllowed(filterContext.HttpContext.Request.UserHostAddress))
+			if (ipRuleManager.IsAllowed(filterContext.HttpContext.Request.UserHostAddress))
 				return;
 
 			if (filterContext.ActionDescriptor.IsDefined(typeof(AuthorizeAttribute), false)) {

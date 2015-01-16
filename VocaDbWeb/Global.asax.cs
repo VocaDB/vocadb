@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -22,20 +21,7 @@ namespace VocaDb.Web {
 	public class MvcApplication : HttpApplication {
 
 		private static readonly HostCollection bannedIPs = new HostCollection();
-		private static readonly IPRuleManager ipRuleManager = new IPRuleManager(LoadBlockedIPs);
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-
-		private static string[] LoadBlockedIPs() {
-
-			return OtherService.GetIPRules().Select(i => i.Address).ToArray();
-
-		}
-
-		private static OtherService OtherService {
-			get {
-				return DependencyResolver.Current.GetService<OtherService>();				
-			}			
-		}
 
 		private static UserService UserService {
 			get {
@@ -53,12 +39,6 @@ namespace VocaDb.Web {
 
 		public static HostCollection BannedIPs {
 			get { return bannedIPs; }
-		}
-
-		public static IPRuleManager IPRules {
-			get {
-				return ipRuleManager;
-			}
 		}
 
 		public static LoginManager LoginManager {
@@ -161,7 +141,6 @@ namespace VocaDb.Web {
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
 			//filters.Add(new HandleErrorAttribute { ExceptionType = typeof(ObjectNotFoundException), View = "NotFound" });
 			//filters.Add(new HandleErrorAttribute());
-			filters.Add(new RestrictBlockedIPAttribute());
 		}
 
 		protected void Application_Start() {

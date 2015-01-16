@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using System.Runtime.Caching;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -31,6 +32,12 @@ namespace VocaDb.Web.App_Start {
 	/// </summary>
 	public static class ComponentConfig {
 
+		private static string[] LoadBlockedIPs(IComponentContext componentContext) {
+
+			return componentContext.Resolve<OtherService>().GetIPRules().Select(i => i.Address).ToArray();
+
+		}
+
 		public static void RegisterComponent() {
 
 			var builder = new ContainerBuilder();
@@ -56,6 +63,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<VdbConfigManager>().AsSelf().SingleInstance();
 			builder.RegisterType<GravatarUserIconFactory>().As<IUserIconFactory>();
 			builder.RegisterType<EntryUrlParser>().As<IEntryUrlParser>().SingleInstance();
+			builder.Register(x => new IPRuleManager(LoadBlockedIPs(x))).AsSelf().SingleInstance();
 			builder.Register(_ => MemoryCache.Default).As<ObjectCache>().ExternallyOwned(); // Disable dispose
 
 			// Legacy services
@@ -90,6 +98,12 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<TagQueries>().AsSelf();
 			builder.RegisterType<UserQueries>().AsSelf();
 			builder.RegisterType<UserMessageQueries>().AsSelf();
+
+			// Enable DI for action filters
+			builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))
+                .AsActionFilterFor<Controller>().InstancePerRequest();
+
+			builder.RegisterFilterProvider();
 
 			// Build container.
 			var container = builder.Build();

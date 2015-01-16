@@ -37,12 +37,10 @@ namespace VocaDb.Web.Controllers
 
 		private readonly ArtistService artistService;
 		private readonly VdbConfigManager config;
-
 		private UserQueries Data { get; set; }
-
+		private readonly IPRuleManager ipRuleManager;
 		private readonly UserMessageQueries messageQueries;
 		private readonly OtherService otherService;
-
 	    private UserService Service { get; set; }
 
 		private UserForMySettingsContract GetUserForMySettings() {
@@ -63,13 +61,15 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public UserController(UserService service, UserQueries data, ArtistService artistService, OtherService otherService, UserMessageQueries messageQueries, VdbConfigManager config) {
+		public UserController(UserService service, UserQueries data, ArtistService artistService, OtherService otherService, 
+			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config) {
 
 			Service = service;
 			Data = data;
 			this.artistService = artistService;
 			this.otherService = otherService;
 			this.messageQueries = messageQueries;
+			this.ipRuleManager = ipRuleManager;
 			this.config = config;
 
 		}
@@ -516,7 +516,7 @@ namespace VocaDb.Web.Controllers
 			if (!ModelState.IsValid)
 				return View(model);
 
-			if (!MvcApplication.IPRules.IsAllowed(Hostname)) {
+			if (!ipRuleManager.IsAllowed(Hostname)) {
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
 			}
