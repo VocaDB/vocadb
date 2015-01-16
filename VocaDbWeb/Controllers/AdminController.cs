@@ -53,7 +53,7 @@ namespace VocaDb.Web.Controllers
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			var hosts = MvcApplication.BannedIPs.ToArray();
+			var hosts = ipRuleManager.TempBannedIPs.ToArray();
 			return Json(hosts);
 
 		}

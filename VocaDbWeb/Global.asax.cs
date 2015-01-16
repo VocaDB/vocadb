@@ -14,13 +14,11 @@ using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Security;
 using VocaDb.Web.App_Start;
 using VocaDb.Web.Code;
-using VocaDb.Web.Code.Security;
 
 namespace VocaDb.Web {
 
 	public class MvcApplication : HttpApplication {
 
-		private static readonly HostCollection bannedIPs = new HostCollection();
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private static UserService UserService {
@@ -35,10 +33,6 @@ namespace VocaDb.Web {
 
 			return (request["X-Requested-With"] == "XMLHttpRequest" || request.Headers["X-Requested-With"] == "XMLHttpRequest");
 
-		}
-
-		public static HostCollection BannedIPs {
-			get { return bannedIPs; }
 		}
 
 		public static LoginManager LoginManager {

@@ -5,6 +5,7 @@ namespace VocaDb.Web.Code.Security {
 
 	/// <summary>
 	/// Denies access to Authorized actions for IPs that are restricted.
+	/// This filter is applied globally for all actions marked with the <see cref="AuthorizeAttribute"/>.
 	/// </summary>
 	public class RestrictBlockedIPAttribute : ActionFilterAttribute {
 
@@ -18,11 +19,13 @@ namespace VocaDb.Web.Code.Security {
 
 		public override void OnActionExecuting(ActionExecutingContext filterContext) {
 
-			if (ipRuleManager.IsAllowed(filterContext.HttpContext.Request.UserHostAddress))
+			var host = filterContext.HttpContext.Request.UserHostAddress;
+
+			if (ipRuleManager.IsAllowed(host))
 				return;
 
 			if (filterContext.ActionDescriptor.IsDefined(typeof(AuthorizeAttribute), false)) {
-				log.Warn(string.Format("Restricting blocked IP {0}.", filterContext.HttpContext.Request.UserHostAddress));
+				log.Warn("Restricting blocked IP {0}.", host);
 				filterContext.Result = new HttpUnauthorizedResult();
 			}
 

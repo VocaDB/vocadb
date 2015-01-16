@@ -298,7 +298,7 @@ namespace VocaDb.Web.Controllers
 					ModelState.AddModelError("", ViewRes.User.LoginStrings.WrongPassword);
 					
 					if (result.Error == LoginError.AccountPoisoned)
-						MvcApplication.BannedIPs.Add(host);
+						ipRuleManager.TempBannedIPs.Add(host);
 
 				} else {
 
@@ -496,7 +496,7 @@ namespace VocaDb.Web.Controllers
 
 			if (!ModelState.IsValidField("Extra")) {
 				log.Warn(string.Format("An attempt was made to fill the bot decoy field from {0}.", Hostname));
-				MvcApplication.BannedIPs.Add(Hostname);
+				ipRuleManager.TempBannedIPs.Add(Hostname);
 				return View(model);				
 			}
 
@@ -527,7 +527,7 @@ namespace VocaDb.Web.Controllers
 	        try {
 
 				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
-				var user = Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname, time, MvcApplication.BannedIPs, url);
+				var user = Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname, time, ipRuleManager.TempBannedIPs, url);
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 		        return RedirectToAction("Index", "Home");
 
