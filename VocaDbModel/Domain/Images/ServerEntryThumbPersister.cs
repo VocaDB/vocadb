@@ -49,7 +49,7 @@ namespace VocaDb.Model.Domain.Images {
 
 		}
 
-		public string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl) {
+		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl) {
 			return VocaUriBuilder.StaticResource(GetRelativeUrl(picture, size), ssl);
 		}
 

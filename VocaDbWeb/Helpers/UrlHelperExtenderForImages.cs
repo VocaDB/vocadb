@@ -44,7 +44,7 @@ namespace VocaDb.Web.Helpers {
 			var shouldExist = ShouldExist(imageInfo);
 			string dynamicUrl = null;
 
-			// Use MVC dynamic actions when requesting original or an image that doesn't exist on disk.
+			// Use MVC dynamic actions (instead of static file) when requesting original or an image that doesn't exist on disk.
 			if (imageInfo.EntryType == EntryType.Album) {
 
 				if (size == ImageSize.Original)
@@ -68,6 +68,7 @@ namespace VocaDb.Web.Helpers {
 			if (!shouldExist)
 				return GetUnknownImageUrl(urlHelper, imageInfo);
 
+			// For all other cases use the static file
 			return imagePersister.GetUrlAbsolute(imageInfo, size, WebHelper.IsSSL(HttpContext.Current.Request));
 
 		}

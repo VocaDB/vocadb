@@ -3,7 +3,7 @@ using System.IO;
 
 namespace VocaDb.Model.Domain.Images {
 
-	public abstract class ServerEntryImagePersisterBase {
+	public abstract class ServerEntryImagePersisterBase : IEntryImagePersister {
 
 		private void EnsureDirExistsForFile(string path) {
 
@@ -17,6 +17,8 @@ namespace VocaDb.Model.Domain.Images {
 		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size) {
 			return File.OpenRead(GetPath(picture, size));
 		}
+
+		public abstract string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl);
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) {
 			return File.Exists(GetPath(picture, size));

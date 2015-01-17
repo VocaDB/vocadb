@@ -2,11 +2,7 @@
 namespace VocaDb.Model.Domain.Images {
 
 	/// <summary>
-	/// Provides information about an entry image.
-	/// 
-	/// This interface is used for saving entry images to disk.
-	/// Currently this means thumbnails for songlists and tags, but
-	/// will be expanded to album/artist thumbnails soon.
+	/// Provides information about an entry image (both original full size images and thumbnails).
 	/// </summary>
 	public interface IEntryImageInformation {
 
@@ -24,8 +20,10 @@ namespace VocaDb.Model.Domain.Images {
 
 		/// <summary>
 		/// Image MIME type.
-		/// Determines file extension.
-		/// Unknown MIME type (null or empty) is not supported.
+		/// Used to determine file extension.
+		/// 
+		/// If this is null or empty, it is assumed that there is no image. 
+		/// Images without MIME type (or unknown MIME type) are not supported.
 		/// </summary>
 		string Mime { get; }
 
