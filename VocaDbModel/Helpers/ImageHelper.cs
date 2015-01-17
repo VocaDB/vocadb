@@ -22,7 +22,7 @@ namespace VocaDb.Model.Helpers {
 	/// </summary>
 	public static class ImageHelper {
 
-		private static readonly string[] allowedExt = new[] { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
+		private static readonly string[] allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
 		public const int DefaultSmallThumbSize = 150;
 		public const int DefaultThumbSize = 250;
 		public const int DefaultTinyThumbSize = 70;
@@ -56,7 +56,7 @@ namespace VocaDb.Model.Helpers {
 			get { return allowedExt; }
 		}
 
-
+		// Used for persisting album and artist additional picture. TODO: this should be refactored to IEntryThumbPersister
 		public static void GenerateThumbsAndMoveImages(IEnumerable<EntryPictureFile> newPictures) {
 
 			foreach (var pic in newPictures) {
@@ -83,46 +83,9 @@ namespace VocaDb.Model.Helpers {
 						File.Copy(path, thumbPath);
 					}
 
-					/*if (original.Width > DefaultSmallThumbSize || original.Height > DefaultSmallThumbSize) {
-						var thumb = ResizeToFixedSize(original, DefaultSmallThumbSize, DefaultSmallThumbSize);
-						thumb.Save(smallThumbPath);
-					} else {
-						File.Copy(path, smallThumbPath);
-					}*/
-
 				}
 
 			}
-
-		}
-
-		public static PictureThumbContract[] GenerateThumbs(Stream input, int[] sizes) {
-
-			var thumbs = new List<PictureThumbContract>(sizes.Length);
-
-			using (var original = OpenImage(input)) {
-
-				foreach (var size in sizes) {
-
-					if (size < original.Size.Width || size < original.Size.Height) {
-
-						using (var scaled = ResizeToFixedSize(original, size, size))
-						using (var memStream = new MemoryStream()) {
-
-							//scaled.Save("C:\\Temp\\out", original.RawFormat);
-							scaled.Save(memStream, original.RawFormat);
-							var thumbBuf = StreamHelper.ReadStream(memStream, memStream.Length);
-							thumbs.Add(new PictureThumbContract(thumbBuf, size));
-
-						}
-
-					}
-
-
-				}
-			}
-
-			return thumbs.ToArray();
 
 		}
 
@@ -229,16 +192,6 @@ namespace VocaDb.Model.Helpers {
 			input.Read(buf, 0, length);
 
 			return new PictureDataContract(buf, contentType);
-
-		}
-
-		public static PictureDataContract GetOriginalAndResizedImages(Stream input, int length, string contentType) {
-
-			var contract = GetOriginal(input, length, contentType);
-			var thumbs = GenerateThumbs(input, new[] { 250 });
-			contract.Thumb250 = thumbs.FirstOrDefault(t => t.Size == 250);
-
-			return contract;
 
 		}
 

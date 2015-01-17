@@ -4,6 +4,10 @@ using System.Drawing;
 
 namespace VocaDb.Model.Domain {
 
+	/// <summary>
+	/// Picture data for an entry, persisted in the database as BLOB.
+	/// Currently in use for artist and album main pictures, everything else is saved on disk.
+	/// </summary>
 	public class PictureData {
 
 		public PictureData() {
@@ -22,6 +26,12 @@ namespace VocaDb.Model.Domain {
 
 		public virtual Byte[] Bytes { get; set; }
 
+		/// <summary>
+		/// Thumbnail data.
+		/// This was used for thumbnails persisted in the database.
+		/// This field is still mapped, and some entries might still have this thumbnail data, 
+		/// but this field should not be written to anymore as thumbnails are to be saved on disk.
+		/// </summary>
 		public virtual PictureThumb250 Thumb250 { get; set; }
 
 		/// <summary>

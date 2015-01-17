@@ -105,12 +105,7 @@ namespace VocaDb.Model.Service {
 
 				album.CoverPictureData = importedAlbum.CoverPicture;
 
-				using (var stream = new MemoryStream(album.CoverPictureData.Bytes)) {
-					var thumbs = ImageHelper.GenerateThumbs(stream, new[] { 250 });
-					if (thumbs.Any()) {
-						album.CoverPictureData.Thumb250 = new PictureThumb250(thumbs.First().Bytes);
-					}
-				}
+				// TODO: should generate thumbnail as well
 
 				diff.Cover = true;
 			}

@@ -275,65 +275,7 @@ namespace VocaDb.Model.Service {
 			VerifyAdmin();
 			int count = 0;
 
-			HandleTransaction(session => {
-
-				AuditLog("generating thumbnails", session);
-
-				var changed = new List<Album>(100);
-				var albums = session.Query<Album>().Where(a => !a.Deleted).ToArray();
-
-				foreach (var album in albums) {
-					
-					if (album.CoverPictureData != null && album.CoverPictureData.Bytes != null) {
-						
-						using (var stream = new MemoryStream(album.CoverPictureData.Bytes)) {
-							var thumbs = ImageHelper.GenerateThumbs(stream, new[] {250});
-							if (thumbs.Any()) {
-								album.CoverPictureData.Thumb250 = new PictureThumb250(thumbs.First().Bytes);
-								changed.Add(album);
-							}
-						}
-
-					}
-
-				}
-
-				foreach (var album in changed)
-					session.Update(album);
-
-				count += changed.Count;
-
-			});
-
-			HandleTransaction(session => {
-
-				var changed = new List<Artist>(100);
-				var artists = session.Query<Artist>().Where(s => !s.Deleted).ToArray();
-
-				foreach (var artist in artists) {
-
-					if (artist.Picture != null && artist.Picture.Bytes != null) {
-
-						using (var stream = new MemoryStream(artist.Picture.Bytes)) {
-							var thumbs = ImageHelper.GenerateThumbs(stream, new[] { 250 });
-							if (thumbs.Any()) {
-								artist.Picture.Thumb250 = new PictureThumb250(thumbs.First().Bytes);
-								changed.Add(artist);
-							}
-						}
-
-					}
-
-				}
-
-				foreach (var artist in changed)
-					session.Update(artist);
-
-				count += changed.Count;
-
-			});
-
-			return count;
+			throw new NotImplementedException();
 
 		}
 

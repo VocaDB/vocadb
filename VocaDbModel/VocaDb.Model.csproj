@@ -327,6 +327,7 @@
     <Compile Include="Domain\Images\IEntryImagePersisterOld.cs" />
     <Compile Include="Domain\Images\IEntryThumbPersister.cs" />
     <Compile Include="Domain\Images\ImageThumbGenerator.cs" />
+    <Compile Include="Domain\Images\ServerEntryImagePersisterBase.cs" />
     <Compile Include="Domain\Images\ServerEntryImagePersisterOld.cs" />
     <Compile Include="Domain\Images\IEntryImageInformation.cs" />
     <Compile Include="Domain\Images\IEntryImagePersister.cs" />
