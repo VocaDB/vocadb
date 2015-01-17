@@ -27,6 +27,10 @@ namespace VocaDb.Model.Domain.Albums {
 			get { return EntryType.Album; }
 		}
 
+		public override int OwnerEntryId {
+			get { return Album.Id; }
+		}
+
 		public virtual void Move(Album target) {
 
 			ParamIs.NotNull(() => target);

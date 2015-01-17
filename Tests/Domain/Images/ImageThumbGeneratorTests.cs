@@ -33,7 +33,7 @@ namespace VocaDb.Tests.Domain.Images {
 
 		private EntryThumbContract CallGenerateThumbsAndMoveImage(ImageSizes sizes) {
 
-			var thumb = new EntryThumbContract {EntryType = EntryType.SongList, FileName = "test.jpg"};
+			var thumb = new EntryThumbContract {EntryType = EntryType.SongList };
 
 			using (var input = TestImage()) {
 				target.GenerateThumbsAndMoveImage(input, thumb, sizes);				

@@ -117,7 +117,7 @@
 	<table class="table table-striped">
 		<tbody>
 		@foreach (var list in songLists) {
-			var thumbUrl = ImageHelper.GetImageUrl(list.Thumb, ImageSize.SmallThumb, checkExists: true);
+			var thumbUrl = Url.EntryImageOld(list.Thumb, ImageSize.SmallThumb, checkExists: true);
 			<tr>
 				<td style="width: 75px">
 					@if (!string.IsNullOrEmpty(thumbUrl)) {

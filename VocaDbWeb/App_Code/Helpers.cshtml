@@ -5,6 +5,7 @@
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.DataContracts
 @using VocaDb.Model.Domain;
+@using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.PVs
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
@@ -109,9 +110,9 @@
     }
 }
 
-@helper EntryPictureFileLink(EntryPictureFileContract entryPictureFile) {
-	<a href="@VocaDb.Model.Helpers.ImageHelper.GetImageUrl(entryPictureFile)">
-		<img src="@VocaDb.Model.Helpers.ImageHelper.GetImageUrlThumb(entryPictureFile)" alt="Preview" class="coverPic" />
+@helper EntryPictureFileLink(IEntryPictureFile entryPictureFile) {
+	<a href="@Url.EntryPictureFile(entryPictureFile, ImageSize.Original)">
+		<img src="@Url.EntryPictureFile(entryPictureFile, ImageSize.Thumb)" alt="Preview" class="coverPic" />
 	</a>
 }
 

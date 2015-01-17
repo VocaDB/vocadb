@@ -31,6 +31,7 @@ namespace VocaDb.Model.Domain.Images {
 		/// Image/entry version.
 		/// This is appended to the URL for caching.
 		/// If the version changes, the image is assumed to be possibly changed as well.
+		/// If the image does not support versioning this will always be 0.
 		/// </summary>
 		int Version { get; }
 

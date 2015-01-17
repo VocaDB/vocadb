@@ -7,12 +7,10 @@ using System.IO;
 using System.Drawing;
 using System.Net.Mime;
 using System.Runtime.Serialization;
-using System.Web;
 using NLog;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Helpers {
 
@@ -27,18 +25,6 @@ namespace VocaDb.Model.Helpers {
 		public const int DefaultThumbSize = 250;
 		public const int DefaultTinyThumbSize = 70;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-
-		private static string GetImagePath(EntryType entryType, string fileName) {
-
-			return HttpContext.Current.Server.MapPath(string.Format("~\\EntryImg\\{0}\\{1}", entryType, fileName));
-
-		}
-
-		private static string GetImageUrl(EntryType entryType, string fileName) {
-
-			return string.Format("{0}/EntryImg/{1}/{2}", AppConfig.HostAddress, entryType, fileName);
-
-		}
 
 		public static Image OpenImage(Stream stream) {
 			try {
@@ -56,7 +42,7 @@ namespace VocaDb.Model.Helpers {
 			get { return allowedExt; }
 		}
 
-		// Used for persisting album and artist additional picture. TODO: this should be refactored to IEntryThumbPersister
+		// Used for persisting album and artist additional pictures. TODO: this should be refactored to ImageThumbGenerator
 		public static void GenerateThumbsAndMoveImages(IEnumerable<EntryPictureFile> newPictures) {
 
 			foreach (var pic in newPictures) {
@@ -66,7 +52,6 @@ namespace VocaDb.Model.Helpers {
 
 				var path = GetImagePath(pic);
 				var thumbPath = GetImagePathThumb(pic);
-				//var smallThumbPath = GetImagePathSmallThumb(pic);
 
 				using (var f = File.Create(path)) {
 					pic.UploadedFile.CopyTo(f);
@@ -93,7 +78,7 @@ namespace VocaDb.Model.Helpers {
 		/// Gets image extension from MIME type.
 		/// </summary>
 		/// <param name="mime">MIME type. Can be null or empty.</param>
-		/// <returns>Extension. Can be null if MIME type is not recognized.</returns>
+		/// <returns>File extension, for example ".jpg". Can be null if MIME type is not recognized.</returns>
 		public static string GetExtensionFromMime(string mime) {
 
 			switch (mime) {
@@ -115,75 +100,12 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static string GetImageFileName(IPictureWithThumbs picture, ImageSize size) {
-
-			switch (size) {
-				case ImageSize.Original:
-					return picture.FileName;
-				case ImageSize.Thumb:
-					return picture.FileNameThumb;
-				case ImageSize.SmallThumb:
-					return picture.FileNameSmallThumb;
-				case ImageSize.TinyThumb:
-					return picture.FileNameTinyThumb;
-				default:
-					return null;
-			}
-
+		private static string GetImagePath(EntryPictureFile picture) {
+			return new ServerEntryImagePersisterOld().GetPath(picture, ImageSize.Original);
 		}
 
-		public static string GetImagePath(IPictureWithThumbs picture, ImageSize size) {
-
-			return GetImagePath(picture.EntryType, GetImageFileName(picture, size));
-
-		}
-
-		public static string GetImagePath(EntryPictureFileContract picture) {
-			return GetImagePath(picture.EntryType, EntryPictureFile.GetFileName(picture.Id, picture.Mime));
-		}
-
-		public static string GetImagePathThumb(EntryPictureFileContract picture) {
-			return GetImagePath(picture.EntryType, EntryPictureFile.GetFileNameThumb(picture.Id, picture.Mime));
-		}
-
-		public static string GetImagePath(EntryPictureFile picture) {
-			return GetImagePath(picture.EntryType, EntryPictureFile.GetFileName(picture.Id, picture.Mime));
-		}
-
-		public static string GetImagePathSmallThumb(EntryPictureFile picture) {
-			return GetImagePath(picture.EntryType, EntryPictureFile.GetFileNameSmallThumb(picture.Id, picture.Mime));
-		}
-
-		public static string GetImagePathThumb(EntryPictureFile picture) {
-			return GetImagePath(picture.EntryType, EntryPictureFile.GetFileNameThumb(picture.Id, picture.Mime));
-		}
-
-		public static string GetImageUrl(EntryPictureFileContract picture) {
-			return GetImageUrl(picture.EntryType, EntryPictureFile.GetFileName(picture.Id, picture.Mime));
-		}
-
-		public static string GetImageUrlThumb(EntryPictureFileContract picture) {
-			return GetImageUrl(picture.EntryType, EntryPictureFile.GetFileNameThumb(picture.Id, picture.Mime));
-		}
-
-		public static string GetImageUrl(IPictureWithThumbs picture, ImageSize size, bool checkExists = true) {
-
-			if (picture == null)
-				return null;
-
-			var fileName = GetImageFileName(picture, size);
-
-			if (checkExists) {
-
-				var path = GetImagePath(picture.EntryType, fileName);
-
-				if (!File.Exists(path))
-					return null;
-
-			}
-
-			return GetImageUrl(picture.EntryType, fileName);
-
+		private static string GetImagePathThumb(EntryPictureFile picture) {
+			return new ServerEntryImagePersisterOld().GetPath(picture, ImageSize.Thumb);
 		}
 
 		public static PictureDataContract GetOriginal(Stream input, int length, string contentType) {

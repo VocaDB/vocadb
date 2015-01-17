@@ -13,6 +13,7 @@ namespace VocaDb.Model.Domain.Images {
 		/// </summary>
 		/// <param name="picture">Image information. Cannot be null.</param>
 		/// <param name="size">Image size.</param>
+		/// <param name="ssl">Whether the URL should use the SSL domain.</param>
 		/// <returns>Absolute URL to the image, for example "http://static.vocadb.net/img/Album/Orig/Full/123.jpg"</returns>
 		string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl);
 

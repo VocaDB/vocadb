@@ -1,17 +1,8 @@
 ﻿using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain {
 
-	public class EntryThumb : IPictureWithThumbs, IEntryImageInformation {
-
-		private static string GetExtension(string mime) {
-			return ImageHelper.GetExtensionFromMime(mime) ?? string.Empty;
-		}
-
-		private static string GetFileName(int id, string mime, string suffix) {
-			return string.Format("{0}{1}{2}", id, suffix, GetExtension(mime));
-		}
+	public class EntryThumb : IEntryImageInformation {
 
 		private IEntryBase entry;
 
@@ -32,30 +23,6 @@ namespace VocaDb.Model.Domain {
 
 		public EntryType EntryType {
 			get { return Entry.EntryType; }
-		}
-
-		public virtual string FileName {
-			get {
-				return GetFileName(Entry.Id, Mime, string.Empty);
-			}
-		}
-
-		public virtual string FileNameThumb {
-			get {
-				return GetFileName(Entry.Id, Mime, "-t");
-			}
-		}
-
-		public virtual string FileNameSmallThumb {
-			get {
-				return GetFileName(Entry.Id, Mime, "-st");
-			}
-		}
-
-		public virtual string FileNameTinyThumb {
-			get {
-				return GetFileName(Entry.Id, Mime, "-tt");
-			}
 		}
 
 		public int Id {

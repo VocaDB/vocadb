@@ -35,7 +35,7 @@
 }
 
 @helper TagIconLink(TagWithImageContract tag) {
-	var smallThumbUrl = ImageHelper.GetImageUrl(tag.Thumb, ImageSize.SmallThumb);
+	var smallThumbUrl = Url.EntryImageOld(tag.Thumb, ImageSize.SmallThumb);
 	if (!string.IsNullOrEmpty(smallThumbUrl)) {
 		<a href="@Url.Action("Details", "Tag", new { id = tag.Name })">
 			<img src="@smallThumbUrl" alt="Thumb" class="coverPicThumb" />

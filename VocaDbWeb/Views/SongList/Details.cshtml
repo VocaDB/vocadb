@@ -30,8 +30,8 @@
 		};		
 	}
 
-	var smallThumbUrl = ImageHelper.GetImageUrl(Model.Thumb, ImageSize.SmallThumb);
-	var thumbUrl = ImageHelper.GetImageUrl(Model.Thumb, ImageSize.Original) ?? ImageHelper.GetImageUrl(Model.Thumb, ImageSize.Thumb);
+	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
+	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original) ?? Url.EntryImageOld(Model.Thumb, ImageSize.Thumb);
 	if (!string.IsNullOrEmpty(thumbUrl)) {
 		ViewContext.Controller.ViewBag.Banner = thumbUrl;
 	}

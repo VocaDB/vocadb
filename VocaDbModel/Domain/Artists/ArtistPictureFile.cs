@@ -27,6 +27,10 @@ namespace VocaDb.Model.Domain.Artists {
 			get { return EntryType.Artist; }
 		}
 
+		public override int OwnerEntryId {
+			get { return Artist.Id; }
+		}
+
 		public virtual void Move(Artist target) {
 
 			ParamIs.NotNull(() => target);

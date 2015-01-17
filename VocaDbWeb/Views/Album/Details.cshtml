@@ -357,7 +357,7 @@
 		        Url.ImageThumb(Model, ImageSize.Thumb), 
 		        ViewRes.Album.DetailsStrings.CoverPicture)
 		    @foreach (var pic in Model.Pictures) {
-			   @Helpers.ThumbItem(ImageHelper.GetImageUrl(pic), ImageHelper.GetImageUrlThumb(pic), pic.Name)
+			   @Helpers.ThumbItem(Url.EntryPictureFile(pic, ImageSize.Original), Url.EntryPictureFile(pic, ImageSize.Thumb), pic.Name)
 			}
 		</ul>
 		

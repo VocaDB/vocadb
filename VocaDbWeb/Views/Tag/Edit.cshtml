@@ -11,7 +11,7 @@
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Name }) 		
 	};
 
-	var thumbUrl = ImageHelper.GetImageUrl(Model.Thumb, ImageSize.SmallThumb);
+	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
 	
 }
 

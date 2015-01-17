@@ -155,7 +155,7 @@ namespace VocaDb.Web.Controllers {
 				var contract = ParsePicture(additionalPics[i], "Pictures");
 
 				if (contract != null) {
-					newPics[i].FileName = contract.FileName;
+					newPics[i].OriginalFileName = contract.OriginalFileName;
 					newPics[i].UploadedFile = contract.UploadedFile;
 					newPics[i].Mime = contract.Mime;		
 					newPics[i].ContentLength = contract.ContentLength;
@@ -184,7 +184,7 @@ namespace VocaDb.Web.Controllers {
 				}
 
 				pictureData = new EntryPictureFileContract();
-				pictureData.FileName = pictureUpload.FileName;
+				pictureData.OriginalFileName = pictureUpload.FileName;
 				pictureData.UploadedFile = pictureUpload.InputStream;
 				pictureData.Mime = pictureUpload.ContentType ?? string.Empty;
 				pictureData.ContentLength = pictureUpload.ContentLength;

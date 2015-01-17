@@ -13,8 +13,8 @@
 	ViewBag.SubTitle = R.Tag;
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Tags, "Index") };
 
-	var smallThumbUrl = ImageHelper.GetImageUrl(Model.Thumb, ImageSize.SmallThumb);
-	var thumbUrl = ImageHelper.GetImageUrl(Model.Thumb, ImageSize.Original);
+	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
+	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original);
 	if (!string.IsNullOrEmpty(thumbUrl)) {
 		ViewContext.Controller.ViewBag.Banner = thumbUrl;
 	}

@@ -333,7 +333,6 @@
     <Compile Include="Domain\Images\IEntryImagePersister.cs" />
     <Compile Include="Domain\Images\ServerEntryThumbPersister.cs" />
     <Compile Include="Domain\IOptionalDateTime.cs" />
-    <Compile Include="Domain\IPictureWithThumbs.cs" />
     <Compile Include="Domain\LinkAlreadyExistsException.cs" />
     <Compile Include="Domain\Activityfeed\ActivityEntryType.cs" />
     <Compile Include="Domain\MergeRecord.cs" />

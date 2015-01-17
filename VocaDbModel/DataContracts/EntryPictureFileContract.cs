@@ -2,12 +2,11 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class EntryPictureFileContract : IEntryImageInformation {
+	public class EntryPictureFileContract : IEntryPictureFile {
 
 		int IEntryImageInformation.Version {
 			get { return 0; }
@@ -20,11 +19,10 @@ namespace VocaDb.Model.DataContracts {
 			ParamIs.NotNull(() => picture);
 
 			EntryType = picture.EntryType;
-			FileName = picture.FileName;
 			Id = picture.Id;
 			Mime = picture.Mime;
 			Name = picture.Name;
-			ThumbUrl = ImageHelper.GetImageUrlThumb(this);
+			OwnerEntryId = picture.OwnerEntryId;
 
 		}
 
@@ -32,9 +30,6 @@ namespace VocaDb.Model.DataContracts {
 
 		[DataMember]
 		public EntryType EntryType { get; set; }
-
-		[DataMember]
-		public string FileName { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -46,7 +41,10 @@ namespace VocaDb.Model.DataContracts {
 		public string Name { get; set; }
 
 		[DataMember]
-		public string ThumbUrl { get; set; }
+		public string OriginalFileName { get; set; }
+
+		[DataMember]
+		public int OwnerEntryId { get; set; }
 
 		/// <summary>
 		/// File data stream. Only used for uploads.

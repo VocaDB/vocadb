@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
@@ -6,9 +7,18 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Helpers {
 
+	/// <summary>
+	/// Extension methods for generating URLs to entry images.
+	/// </summary>
 	public static class UrlHelperExtenderForImages {
 
 		private static readonly ServerEntryThumbPersister imagePersister = new ServerEntryThumbPersister();
+
+		private static ServerEntryImagePersisterOld EntryImagePersisterOld {
+			get {
+				return new ServerEntryImagePersisterOld();
+			}
+		}
 
 		private static string GetUnknownImageUrl(UrlHelper urlHelper, IEntryImageInformation imageInfo) {
 			return urlHelper.Content("~/Content/unknown.png");
@@ -17,6 +27,49 @@ namespace VocaDb.Web.Helpers {
 		private static bool ShouldExist(IEntryImageInformation imageInfo) {
 			// Image should have MIME type, otherwise it's assumed not to exist.
 			return !string.IsNullOrEmpty(imageInfo.Mime);
+		}
+
+		/// <summary>
+		/// Generates an URL to <see cref="IEntryPictureFile" /> that are used as additional images for albums and artists.
+		/// </summary>
+		/// <param name="urlHelper">URL helper.</param>
+		/// <param name="imageInfo">Image information. Can be null.</param>
+		/// <param name="size">Desired image size.</param>
+		/// <returns>Absolute URL to the image, or null if not found.</returns>
+		public static string EntryPictureFile(this UrlHelper urlHelper, IEntryPictureFile imageInfo, ImageSize size) {
+			
+			return EntryImageOld(urlHelper, imageInfo, size);
+
+		}
+
+		/// <summary>
+		/// Generates an URL to an entry image using the old folder structure for images.
+		/// These are used for song lists and tags, and should eventually be migrated to the newer folder structure.
+		/// </summary>
+		/// <param name="urlHelper">URL helper.</param>
+		/// <param name="imageInfo">Image information. Can be null.</param>
+		/// <param name="size">Desired image size.</param>
+		/// <param name="checkExists">
+		/// Whether to check that the image actually exists on disk. 
+		/// If this is true and the image doesn't exist, null will be returned.
+		/// </param>
+		/// <returns>Absolute URL to the image, or null if not found.</returns>
+		public static string EntryImageOld(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool checkExists = true) {
+			
+			if (imageInfo == null)
+				return null;
+
+			if (checkExists) {
+
+				var path = EntryImagePersisterOld.GetPath(imageInfo, size);
+
+				if (!File.Exists(path))
+					return null;
+
+			}
+
+			return EntryImagePersisterOld.GetUrlAbsolute(imageInfo, size, WebHelper.IsSSL(HttpContext.Current.Request));
+
 		}
 
 		/// <summary>
