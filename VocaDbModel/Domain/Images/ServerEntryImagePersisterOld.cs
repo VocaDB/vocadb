@@ -12,7 +12,7 @@ namespace VocaDb.Model.Domain.Images {
 	/// These images are saved in the EntryImg folder under the main application folder for now,
 	/// but should be migrated to the static files folder.
 	/// </remarks>
-	public class ServerEntryImagePersisterOld : ServerEntryImagePersisterBase, IEntryImagePersisterOld {
+	public class ServerEntryImagePersisterOld : ServerEntryImagePersisterBase, IEntryImagePersisterOld, IEntryPictureFilePersister {
 
 		private static string GetFileName(int id, string mime, string suffix) {
 			return string.Format("{0}{1}{2}", id, suffix, ImageHelper.GetExtensionFromMime(mime));

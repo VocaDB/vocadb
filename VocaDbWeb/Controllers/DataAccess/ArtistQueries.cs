@@ -33,6 +33,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryThumbPersister imagePersister;
+		private readonly IEntryPictureFilePersister pictureFilePersister;
 
 		class CachedAdvancedArtistStatsContract {
 			
@@ -142,12 +143,14 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return session.OfType<ArtistMergeRecord>().Query().FirstOrDefault(s => s.Source == sourceId);
 		}
 
-		public ArtistQueries(IArtistRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryThumbPersister imagePersister,
+		public ArtistQueries(IArtistRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
+			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister,
 			ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+			this.pictureFilePersister = pictureFilePersister;
 			this.cache = cache;
 
 		}
@@ -451,7 +454,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var picsDiff = artist.Pictures.SyncPictures(properties.Pictures, ctx.OfType<User>().GetLoggedUser(permissionContext), artist.CreatePicture);
 				ctx.OfType<ArtistPictureFile>().Sync(picsDiff);
-				ImageHelper.GenerateThumbsAndMoveImages(picsDiff.Added);
+				var entryPictureFileThumbGenerator = new ImageThumbGenerator(pictureFilePersister);
+				artist.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
 				if (picsDiff.Changed)
 					diff.Pictures = true;

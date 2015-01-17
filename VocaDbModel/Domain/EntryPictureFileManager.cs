@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
@@ -58,6 +59,22 @@ namespace VocaDb.Model.Domain {
 			}
 
 			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
+
+		}
+
+		/// <summary>
+		/// Generates thumbnails and writes the original file into external image files.
+		/// </summary>
+		public void GenerateThumbsAndMoveImage(ImageThumbGenerator thumbGenerator, IEnumerable<EntryPictureFile> pictureFiles, ImageSizes imageSizes) {
+
+			foreach (var pictureFile in pictureFiles) {
+				
+				if (pictureFile.UploadedFile == null)
+					continue;
+
+				thumbGenerator.GenerateThumbsAndMoveImage(pictureFile.UploadedFile, pictureFile, imageSizes);
+
+			}
 
 		}
 

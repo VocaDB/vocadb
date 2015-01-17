@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -9,14 +8,11 @@ using System.Net.Mime;
 using System.Runtime.Serialization;
 using NLog;
 using VocaDb.Model.DataContracts;
-using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Helpers {
 
 	/// <summary>
 	/// Various image helper methods.
-	/// TODO: need figure out which ones these are still in use.
 	/// </summary>
 	public static class ImageHelper {
 
@@ -40,38 +36,6 @@ namespace VocaDb.Model.Helpers {
 
 		public static string[] AllowedExtensions {
 			get { return allowedExt; }
-		}
-
-		// Used for persisting album and artist additional pictures. TODO: this should be refactored to ImageThumbGenerator
-		public static void GenerateThumbsAndMoveImages(IEnumerable<EntryPictureFile> newPictures) {
-
-			foreach (var pic in newPictures) {
-
-				if (pic.UploadedFile == null)
-					continue;
-
-				var path = GetImagePath(pic);
-				var thumbPath = GetImagePathThumb(pic);
-
-				using (var f = File.Create(path)) {
-					pic.UploadedFile.CopyTo(f);
-				}
-				pic.UploadedFile.Seek(0, SeekOrigin.Begin);
-
-				using (var original = OpenImage(pic.UploadedFile)) {
-
-					if (original.Width > DefaultThumbSize || original.Height > DefaultThumbSize) {
-						using (var thumb = ResizeToFixedSize(original, DefaultThumbSize, DefaultThumbSize)) {
-							thumb.Save(thumbPath);							
-						}
-					} else {
-						File.Copy(path, thumbPath);
-					}
-
-				}
-
-			}
-
 		}
 
 		/// <summary>
@@ -98,14 +62,6 @@ namespace VocaDb.Model.Helpers {
 					return string.Empty;
 			}
 
-		}
-
-		private static string GetImagePath(EntryPictureFile picture) {
-			return new ServerEntryImagePersisterOld().GetPath(picture, ImageSize.Original);
-		}
-
-		private static string GetImagePathThumb(EntryPictureFile picture) {
-			return new ServerEntryImagePersisterOld().GetPath(picture, ImageSize.Thumb);
 		}
 
 		public static PictureDataContract GetOriginal(Stream input, int length, string contentType) {

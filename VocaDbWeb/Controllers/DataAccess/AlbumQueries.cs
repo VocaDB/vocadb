@@ -34,6 +34,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryThumbPersister imagePersister;
+		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserMessageMailer mailer;
 
 		private IEntryLinkFactory EntryLinkFactory {
@@ -76,11 +77,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			IEntryThumbPersister imagePersister, IUserMessageMailer mailer)
+			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+			this.pictureFilePersister = pictureFilePersister;
 			this.mailer = mailer;
 
 		}
@@ -469,7 +471,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var picsDiff = album.Pictures.SyncPictures(properties.Pictures, session.OfType<User>().GetLoggedUser(PermissionContext), album.CreatePicture);
 				session.OfType<AlbumPictureFile>().Sync(picsDiff);
-				ImageHelper.GenerateThumbsAndMoveImages(picsDiff.Added);
+				var entryPictureFileThumbGenerator = new ImageThumbGenerator(pictureFilePersister);
+				album.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
 				if (picsDiff.Changed)
 					diff.Pictures = true;
