@@ -153,6 +153,9 @@
   <data name="MediaType" xml:space="preserve">
     <value>メディアの種類</value>
   </data>
+  <data name="MyRating" xml:space="preserve">
+    <value>評価</value>
+  </data>
   <data name="OtherArtists" xml:space="preserve">
     <value>他のアーティスト</value>
   </data>
