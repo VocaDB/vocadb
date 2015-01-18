@@ -8,6 +8,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security
 @using R = ViewRes.Artist;
+@using Res = ViewRes.Artist.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
 
 @{
@@ -185,19 +186,20 @@
 			<tr>
 				<td>@ViewRes.EntryDetailsStrings.Stats</td>
 				<td>
-					@string.Format(R.DetailsStrings.FollowCount, Model.SharedStats.FollowerCount)
+					@string.Format(Res.FollowCount, Model.SharedStats.FollowerCount)
 					@if (Model.SharedStats.RatedSongCount > 0) {
-						@(Model.SharedStats.RatedSongCount)@: rated song(s).
+						@:@string.Format(Res.RatedSongs, Model.SharedStats.RatedSongCount)
 					}
 					@if (Model.SharedStats.RatedAlbumCount > 0) {
-						@(Model.SharedStats.RatedAlbumCount)@: rated album(s) (Average album rating is @(Model.SharedStats.AlbumRatingAverage)).
+						@:@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount)
+						@:@string.Format(Res.AverageAlbumRating, Model.SharedStats.AlbumRatingAverage)
 					}
 					@if (Model.PersonalStats != null && Model.PersonalStats.SongRatingCount > 0) {
-						@:You have rated @Model.PersonalStats.SongRatingCount song(s) by this artist.
+						@:@string.Format(Res.YouHaveRatedSongs, Model.PersonalStats.SongRatingCount)
 					}
 					@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 						<p>
-							Mostly uses: @Html.LinkList(Model.AdvancedStats.TopVocaloids, a => new MvcHtmlString(ArtistHelpers.ArtistLink(a.Data, typeLabel: true).ToString())).
+							@Res.MostlyUses @Html.LinkList(Model.AdvancedStats.TopVocaloids, a => new MvcHtmlString(ArtistHelpers.ArtistLink(a.Data, typeLabel: true).ToString())).
 						</p>
 					}
 				</td>

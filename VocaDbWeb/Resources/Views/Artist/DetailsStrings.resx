@@ -132,6 +132,9 @@
   <data name="AuthoredBy" xml:space="preserve">
     <value>VocaDB account</value>
   </data>
+  <data name="AverageAlbumRating" xml:space="preserve">
+    <value>(average album rating is {0}).</value>
+  </data>
   <data name="BaseVoicebank" xml:space="preserve">
     <value>Base voicebank</value>
   </data>
@@ -162,6 +165,15 @@
   <data name="Members" xml:space="preserve">
     <value>Members</value>
   </data>
+  <data name="MostlyUses" xml:space="preserve">
+    <value>Mostly uses:</value>
+  </data>
+  <data name="RatedAlbums" xml:space="preserve">
+    <value>{0} rated album(s)</value>
+  </data>
+  <data name="RatedSongs" xml:space="preserve">
+    <value>{0} rated song(s).</value>
+  </data>
   <data name="RecentAlbums" xml:space="preserve">
     <value>Recent albums</value>
   </data>
@@ -179,5 +191,8 @@
   </data>
   <data name="Unfollow" xml:space="preserve">
     <value>Unfollow</value>
+  </data>
+  <data name="YouHaveRatedSongs" xml:space="preserve">
+    <value>You have rated {0} song(s) by this artist.</value>
   </data>
 </root>

@@ -132,8 +132,14 @@
   <data name="ExternalLinks" xml:space="preserve">
     <value>外部リンク</value>
   </data>
+  <data name="Hits" xml:space="preserve">
+    <value>ヒット数</value>
+  </data>
   <data name="LatestComments" xml:space="preserve">
     <value>最近のコメント</value>
+  </data>
+  <data name="ManageTags" xml:space="preserve">
+    <value>マネージ</value>
   </data>
   <data name="NoComments" xml:space="preserve">
     <value>まだ何もないッす！</value>
@@ -149,6 +155,12 @@
   </data>
   <data name="ReportAnError" xml:space="preserve">
     <value>誤りを報告する</value>
+  </data>
+  <data name="ReportType" xml:space="preserve">
+    <value>報告の種類</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>リンクをシェアする</value>
   </data>
   <data name="Stats" xml:space="preserve">
     <value>統計</value>

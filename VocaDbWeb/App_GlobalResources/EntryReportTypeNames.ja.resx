@@ -117,58 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AllSongs" xml:space="preserve">
-    <value>すべての曲</value>
+  <data name="BrokenPV" xml:space="preserve">
+    <value>Broken PV</value>
   </data>
-  <data name="AverageAlbumRating" xml:space="preserve">
-    <value>(平均アルバム評価{0}).</value>
+  <data name="Duplicate" xml:space="preserve">
+    <value>エントリーを複製する</value>
   </data>
-  <data name="BaseVoicebank" xml:space="preserve">
-    <value>元のボイスバンク</value>
+  <data name="Inappropriate" xml:space="preserve">
+    <value>不適切なコンテンツ</value>
   </data>
-  <data name="ChildVoicebanks" xml:space="preserve">
-    <value>派生ボイスバンク</value>
+  <data name="InvalidInfo" xml:space="preserve">
+    <value>誤り、または足りない情報</value>
   </data>
-  <data name="CollaborationAlbums" xml:space="preserve">
-    <value>参加したアルバム</value>
-  </data>
-  <data name="Follow" xml:space="preserve">
-    <value>フォロー</value>
-  </data>
-  <data name="FollowCount" xml:space="preserve">
-    <value>{0}人のユーザーがフォロー.</value>
-  </data>
-  <data name="Groups" xml:space="preserve">
-    <value>サークル／レコードレーベル</value>
-  </data>
-  <data name="MainAlbums" xml:space="preserve">
-    <value>オリジナルアルバム</value>
-  </data>
-  <data name="MostlyUses" xml:space="preserve">
-    <value>最も使用されたボイスバンク</value>
-  </data>
-  <data name="RatedAlbums" xml:space="preserve">
-    <value>{0}件の評価されたアルバム</value>
-  </data>
-  <data name="RatedSongs" xml:space="preserve">
-    <value>{0}件の評価された曲.</value>
-  </data>
-  <data name="RecentAlbums" xml:space="preserve">
-    <value>最近のアルバム</value>
-  </data>
-  <data name="RecentSongs" xml:space="preserve">
-    <value>最近の曲／PV</value>
-  </data>
-  <data name="Share" xml:space="preserve">
-    <value>シェア</value>
-  </data>
-  <data name="TopAlbums" xml:space="preserve">
-    <value>人気のアルバム</value>
-  </data>
-  <data name="TopSongs" xml:space="preserve">
-    <value>人気の曲</value>
-  </data>
-  <data name="YouHaveRatedSongs" xml:space="preserve">
-    <value>貴方は{0}件このアーティストの曲を評価しました</value>
+  <data name="Other" xml:space="preserve">
+    <value>その他（詳細を下記のノートに記載して下さい）</value>
   </data>
 </root>
