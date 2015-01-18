@@ -120,8 +120,17 @@
   <data name="CollectionTab" xml:space="preserve">
     <value>コレクション</value>
   </data>
+  <data name="Comments" xml:space="preserve">
+    <value>コメント</value>
+  </data>
+  <data name="FavoriteSongsTab" xml:space="preserve">
+    <value>好きな曲</value>
+  </data>
   <data name="FavoriteTags" xml:space="preserve">
     <value>好きなタグ</value>
+  </data>
+  <data name="FollowedArtistsTab" xml:space="preserve">
+    <value>フォローしているアーティスト</value>
   </data>
   <data name="Messages" xml:space="preserve">
     <value>メッセージ</value>
