@@ -169,7 +169,7 @@
     <value>Katso ulkopuolisella sivustolla</value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value>suosikki(a)</value>
+    <value>{0} suosikki(a)</value>
   </data>
   <data name="SearchYoutube" xml:space="preserve">
     <value>Etsi Youtubesta</value>

@@ -291,10 +291,10 @@
 				<td>@ViewRes.EntryDetailsStrings.Stats</td>
 				<td>
 					<a href="#" id="statsLink" data-bind="click: getUsers">
-						@Model.FavoritedTimes @R.DetailsStrings.Favorites,
-						@string.Format(@R.DetailsStrings.Likes, Model.LikedTimes),
+						@string.Format(Res.Favorites, Model.FavoritedTimes),
+						@string.Format(Res.Likes, Model.LikedTimes),
 						@(Model.Hits + " " + ViewRes.EntryDetailsStrings.Hits),
-						@string.Format(@R.DetailsStrings.TotalScore, Model.RatingScore).
+						@string.Format(Res.TotalScore, Model.RatingScore).
 					</a>
 				</td>
 			</tr>

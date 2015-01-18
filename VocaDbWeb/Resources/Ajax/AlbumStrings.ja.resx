@@ -117,61 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionDate" xml:space="preserve">
-    <value>追加日</value>
-  </data>
-  <data name="BasicInfoTab" xml:space="preserve">
-    <value>基本情報</value>
-  </data>
-  <data name="DiscussionTab" xml:space="preserve">
-    <value>話し合い</value>
-  </data>
-  <data name="EditTags" xml:space="preserve">
-    <value>タグを編集する</value>
-  </data>
-  <data name="ExternalLinks" xml:space="preserve">
-    <value>外部リンク</value>
-  </data>
-  <data name="Hits" xml:space="preserve">
-    <value>ヒット数</value>
-  </data>
-  <data name="LatestComments" xml:space="preserve">
-    <value>最近のコメント</value>
-  </data>
-  <data name="ManageTags" xml:space="preserve">
-    <value>マネージ</value>
-  </data>
-  <data name="NoComments" xml:space="preserve">
-    <value>まだ何もないッす！</value>
-  </data>
-  <data name="OfficialLinks" xml:space="preserve">
-    <value>公式サイト</value>
-  </data>
-  <data name="OtherLinks" xml:space="preserve">
-    <value>非公式サイト</value>
-  </data>
-  <data name="PicturesTab" xml:space="preserve">
-    <value>写真</value>
-  </data>
-  <data name="ReportAnError" xml:space="preserve">
-    <value>誤りを報告する</value>
-  </data>
-  <data name="ReportNotes" xml:space="preserve">
-    <value>ノート</value>
-  </data>
-  <data name="ReportType" xml:space="preserve">
-    <value>報告の種類</value>
-  </data>
-  <data name="Share" xml:space="preserve">
-    <value>リンクをシェアする</value>
-  </data>
-  <data name="Stats" xml:space="preserve">
-    <value>統計</value>
-  </data>
-  <data name="ViewAllComments" xml:space="preserve">
-    <value>すべてのコメントを表示する</value>
-  </data>
-  <data name="ViewModifications" xml:space="preserve">
-    <value>更新履歴</value>
+  <data name="Download" xml:space="preserve">
+    <value>ダウンロード</value>
   </data>
 </root>

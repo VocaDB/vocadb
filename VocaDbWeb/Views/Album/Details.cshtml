@@ -207,13 +207,13 @@
 				<td>
 					@Model.ReleaseDate.Formatted
 					@if (Model.ReleaseDateIsInThePast) {
-						<small class="muted">(Released)</small>
+						<small class="muted">@Res.ReleaseDateIsInThePast</small>
 					}
 					@if (Model.ReleaseDateIsInTheNearFuture) {
-						<small class="muted">(Coming soon)</small>
+						<small class="muted">@Res.ReleaseDateIsInTheNearFuture</small>
 					}
 					@if (Model.ReleaseDateIsInTheFarFuture) {
-						<small class="muted">(Not released)</small>
+						<small class="muted">@Res.ReleaseDateIsInTheFarFuture</small>
 					}
 					<br />
 				</td>	

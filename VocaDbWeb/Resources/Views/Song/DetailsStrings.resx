@@ -169,7 +169,7 @@
     <value>View on external site</value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value>favorite(s)</value>
+    <value>{0} favorite(s)</value>
   </data>
   <data name="SearchYoutube" xml:space="preserve">
     <value>Search Youtube</value>

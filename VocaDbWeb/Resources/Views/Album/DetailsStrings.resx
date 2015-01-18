@@ -225,4 +225,13 @@
   <data name="MatchingLikes" xml:space="preserve">
     <value>Matching likes</value>
   </data>
+  <data name="ReleaseDateIsInTheFarFuture" xml:space="preserve">
+    <value>(Not released)</value>
+  </data>
+  <data name="ReleaseDateIsInTheNearFuture" xml:space="preserve">
+    <value>(Coming soon)</value>
+  </data>
+  <data name="ReleaseDateIsInThePast" xml:space="preserve">
+    <value>(Released)</value>
+  </data>
 </root>

@@ -123,14 +123,29 @@
   <data name="AddToFavorites" xml:space="preserve">
     <value>お気に入りに追加</value>
   </data>
+  <data name="AddToList" xml:space="preserve">
+    <value>リストに追加</value>
+  </data>
   <data name="AlternateVersions" xml:space="preserve">
     <value>他のバージョン</value>
+  </data>
+  <data name="Animators" xml:space="preserve">
+    <value>動画のプロデューサー</value>
   </data>
   <data name="Duration" xml:space="preserve">
     <value>タイム</value>
   </data>
+  <data name="Favorites" xml:space="preserve">
+    <value>{0}フェイバリット</value>
+  </data>
   <data name="Like" xml:space="preserve">
     <value>いいね</value>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>{0}ライク</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>リンク</value>
   </data>
   <data name="Lyrics" xml:space="preserve">
     <value>歌詞</value>
@@ -140,6 +155,9 @@
   </data>
   <data name="MatchingArtists" xml:space="preserve">
     <value>同じアーティスト</value>
+  </data>
+  <data name="MatchingLikes" xml:space="preserve">
+    <value>好みごとのマッチング</value>
   </data>
   <data name="MatchingTags" xml:space="preserve">
     <value>同じタグ</value>
@@ -161,6 +179,12 @@
   </data>
   <data name="Share" xml:space="preserve">
     <value>シェア</value>
+  </data>
+  <data name="TotalScore" xml:space="preserve">
+    <value>{0}トータルスコア</value>
+  </data>
+  <data name="ViewExternal" xml:space="preserve">
+    <value>他のサイトで閲覧する</value>
   </data>
   <data name="Vocalists" xml:space="preserve">
     <value>ボーカリスト</value>

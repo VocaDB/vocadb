@@ -156,6 +156,9 @@
   <data name="ReleaseEvents" xml:space="preserve">
     <value>イベント</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>セーブ</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>サーチ</value>
   </data>

@@ -282,6 +282,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryReportTypeNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\EntryReportTypeNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryReportTypeNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\EntryStatusNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -376,6 +381,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WebLinkCategoryNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\WebLinkCategoryNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebLinkCategoryNames.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Areas\API\v1\ApiV1Registration.cs" />
     <Compile Include="Areas\API\v1\Controllers\AlbumApiController.cs" />
@@ -2992,8 +3002,17 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ArtistSortRuleNames.ja.designer.cs</LastGenOutput>
     </Content>
+    <Content Include="App_GlobalResources\EntryReportTypeNames.ja.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryReportTypeNames.ja.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\WebLinkCategoryNames.ja.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>WebLinkCategoryNames.ja.designer.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="Resources\Ajax\AlbumStrings.de.resx" />
     <EmbeddedResource Include="Resources\Ajax\AlbumStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Ajax\AlbumStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Ajax\AlbumStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumStrings.Designer.cs</LastGenOutput>
@@ -3017,6 +3036,7 @@
     <EmbeddedResource Include="Resources\Ajax\SharedStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Ajax\SongStrings.de.resx" />
     <EmbeddedResource Include="Resources\Ajax\SongStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Ajax\SongStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Ajax\SongStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongStrings.Designer.cs</LastGenOutput>
