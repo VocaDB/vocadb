@@ -189,4 +189,7 @@
   <data name="SongType" xml:space="preserve">
     <value>曲のタイプ</value>
   </data>
+  <data name="ShowingItemsOf" xml:space="preserve">
+    <value>{1}件中{0} を表示</value>
+  </data>
 </root>

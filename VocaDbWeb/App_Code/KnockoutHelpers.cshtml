@@ -37,15 +37,12 @@
 
 @helper EntryCount() {
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-		Showing
-		<span data-bind="text: pageSize"></span>
-		items of
-		<span data-bind="text: totalItems"></span>
+		@Html.Raw(string.Format(ViewRes.Search.IndexStrings.ShowingItemsOf, "<span data-bind='text: pageSize'></span>", "<span data-bind='text: totalItems'></span>"))
 	</a>
 	<ul class="dropdown-menu">
-		<li><a data-bind="click: function() { pageSize(10); }" href="#">10 items per page</a></li>
-		<li><a data-bind="click: function() { pageSize(20); }" href="#">20 items per page</a></li>
-		<li><a data-bind="click: function() { pageSize(40); }" href="#">40 items per page</a></li>
+		<li><a data-bind="click: function() { pageSize(10); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 10)</a></li>
+		<li><a data-bind="click: function() { pageSize(20); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 20)</a></li>
+		<li><a data-bind="click: function() { pageSize(40); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 40)</a></li>
 	</ul>
 }
 

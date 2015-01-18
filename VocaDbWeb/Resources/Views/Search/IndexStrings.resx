@@ -138,9 +138,6 @@
   <data name="InMyCollection" xml:space="preserve">
     <value>In my collection</value>
   </data>
-  <data name="ItemsOf" xml:space="preserve">
-    <value>items of</value>
-  </data>
   <data name="ItemsPerPage" xml:space="preserve">
     <value>{0} items per page</value>
   </data>
@@ -161,9 +158,6 @@
   </data>
   <data name="ReleaseDate" xml:space="preserve">
     <value>Release date</value>
-  </data>
-  <data name="Showing" xml:space="preserve">
-    <value>Showing</value>
   </data>
   <data name="ShowTags" xml:space="preserve">
     <value>Show tags</value>
@@ -200,5 +194,8 @@
   </data>
   <data name="TopGenres" xml:space="preserve">
     <value>Top genres</value>
+  </data>
+  <data name="ShowingItemsOf" xml:space="preserve">
+    <value>Showing {0} items of {1}</value>
   </data>
 </root>
