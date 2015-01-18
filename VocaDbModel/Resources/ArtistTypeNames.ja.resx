@@ -150,4 +150,7 @@
   <data name="Illustrator" xml:space="preserve">
     <value>イラストレーター</value>
   </data>
+  <data name="Utaite" xml:space="preserve">
+    <value>歌い手</value>
+  </data>
 </root>

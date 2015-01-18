@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdditionDate" xml:space="preserve">
-    <value>追加日時</value>
+    <value>追加された日時（降順）</value>
   </data>
-  <data name="CollectionCount" xml:space="preserve">
-    <value>アルバムをコレクションしているユーザーの数</value>
+  <data name="AdditionDateAsc" xml:space="preserve">
+    <value>追加された日時（昇順）</value>
+  </data>
+  <data name="FollowerCount" xml:space="preserve">
+    <value>フォロワーの数</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>名称</value>
+    <value>アーティスト名</value>
   </data>
-  <data name="RatingAverage" xml:space="preserve">
-    <value>平均評価</value>
+  <data name="SongCount" xml:space="preserve">
+    <value>曲数</value>
   </data>
-  <data name="RatingTotal" xml:space="preserve">
-    <value>総スコア</value>
-  </data>
-  <data name="ReleaseDate" xml:space="preserve">
-    <value>発売日時</value>
+  <data name="SongRating" xml:space="preserve">
+    <value>総評価数</value>
   </data>
 </root>

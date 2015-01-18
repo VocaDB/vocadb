@@ -117,22 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionDate" xml:space="preserve">
-    <value>追加日時</value>
+  <data name="Autoplay" xml:space="preserve">
+    <value>自動再生</value>
   </data>
-  <data name="CollectionCount" xml:space="preserve">
-    <value>アルバムをコレクションしているユーザーの数</value>
+  <data name="NextSong" xml:space="preserve">
+    <value>次の曲</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>名称</value>
-  </data>
-  <data name="RatingAverage" xml:space="preserve">
-    <value>平均評価</value>
-  </data>
-  <data name="RatingTotal" xml:space="preserve">
-    <value>総スコア</value>
-  </data>
-  <data name="ReleaseDate" xml:space="preserve">
-    <value>発売日時</value>
+  <data name="Shuffle" xml:space="preserve">
+    <value>シャッフル</value>
   </data>
 </root>

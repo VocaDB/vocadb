@@ -252,6 +252,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistSortRuleNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Artists\ArtistSortRuleNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistSortRuleNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\CommonMessages.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2983,6 +2988,10 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SongListEditableFieldNames.Designer.cs</LastGenOutput>
     </Content>
+    <Content Include="App_GlobalResources\Artists\ArtistSortRuleNames.ja.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistSortRuleNames.ja.designer.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="Resources\Ajax\AlbumStrings.de.resx" />
     <EmbeddedResource Include="Resources\Ajax\AlbumStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Ajax\AlbumStrings.resx">
@@ -3260,6 +3269,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PlayListStrings.Designer.cs</LastGenOutput>
