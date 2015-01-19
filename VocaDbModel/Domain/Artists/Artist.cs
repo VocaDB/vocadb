@@ -26,6 +26,7 @@ namespace VocaDb.Model.Domain.Artists {
 		private IList<ArtistComment> comments = new List<ArtistComment>();
 		private User createdBy;
 		private string description;
+		private string descriptionEng;
 		private IList<GroupForArtist> groups = new List<GroupForArtist>();
 		//private IList<AlbumHit> hits = new List<AlbumHit>();
 		private IList<GroupForArtist> members = new List<GroupForArtist>();
@@ -168,6 +169,14 @@ namespace VocaDb.Model.Domain.Artists {
 				ParamIs.NotNull(() => value);
 				description = value;
 			}
+		}
+
+		public virtual string DescriptionEng {
+			get { return descriptionEng; }
+			set {
+				ParamIs.NotNull(() => value);
+				descriptionEng = value;
+			}			
 		}
 
 		public virtual EntryType EntryType {

@@ -20,3 +20,4 @@ VocaDbWeb/appsettings.config
 VocaDbWeb/machinekey.config
 VocaDbWeb/smtp.config
 VocaDb.Migrations/obj/
+VocaDb.Migrations/bin/
