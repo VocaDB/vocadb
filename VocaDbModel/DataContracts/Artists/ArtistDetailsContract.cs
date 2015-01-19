@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			ChildVoicebanks = artist.CanHaveChildVoicebanks ? artist.ChildVoicebanks.Select(c => new ArtistContract(c, languagePreference)).ToArray() : new ArtistContract[0];
 			CreateDate = artist.CreateDate;
-			Description = artist.Description;
+			Description = artist.Description[languagePreference];
 			Draft = artist.Status == EntryStatus.Draft;
 			Groups = artist.Groups.Select(g => new GroupForArtistContract(g, languagePreference)).OrderBy(g => g.Group.Name).ToArray();
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);

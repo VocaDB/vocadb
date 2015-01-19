@@ -27,7 +27,7 @@ module vdb.viewModels {
 		public baseVoicebankSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public canHaveCircles: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
-		public description: KnockoutObservable<string>;
+		public description: globalization.EnglishTranslatedStringEditViewModel;
 		public groups: KnockoutObservableArray<dc.artists.GroupForArtistContract>;
 
 		public groupSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams = {
@@ -57,7 +57,7 @@ module vdb.viewModels {
 				artistType: this.artistTypeStr(),
 				baseVoicebank: this.baseVoicebank.entry(),
 				defaultNameLanguage: this.defaultNameLanguage(),
-				description: this.description(),
+				description: this.description.toContract(),
 				groups: this.groups(),
 				id: this.id,
 				names: this.names.toContracts(),
@@ -91,7 +91,7 @@ module vdb.viewModels {
 			this.artistType = ko.computed(() => cls.artists.ArtistType[this.artistTypeStr()]);
 			this.allowBaseVoicebank = ko.computed(() => helpers.ArtistHelper.isVocalistType(this.artistType()) || this.artistType() == cls.artists.ArtistType.OtherIndividual);
 			this.baseVoicebank = new BasicEntryLinkViewModel(data.baseVoicebank, artistRepo.getOne);
-			this.description = ko.observable(data.description);
+			this.description = new globalization.EnglishTranslatedStringEditViewModel(data.description);
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
 			this.groups = ko.observableArray(data.groups);
 			this.id = data.id;
@@ -110,7 +110,7 @@ module vdb.viewModels {
 				return this.artistType() != cls.artists.ArtistType.Label && this.artistType() != cls.artists.ArtistType.Circle;
 			});
 
-			this.validationError_needReferences = ko.computed(() => (this.description() == null || this.description().length) == 0 && this.webLinks.webLinks().length == 0);
+			this.validationError_needReferences = ko.computed(() => (this.description.original() == null || this.description.original().length) == 0 && this.webLinks.webLinks().length == 0);
 			this.validationError_needType = ko.computed(() => this.artistType() == cls.artists.ArtistType.Unknown);
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 

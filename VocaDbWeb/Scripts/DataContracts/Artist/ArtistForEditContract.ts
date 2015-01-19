@@ -9,7 +9,7 @@ module vdb.dataContracts.artists {
 
 		defaultNameLanguage: string;
 
-		description: string;
+		description: globalization.EnglishTranslatedStringContract;
 
 		groups: GroupForArtistContract[];
 

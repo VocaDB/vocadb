@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Xml.Linq;
 using NLog;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
@@ -25,7 +24,7 @@ namespace VocaDb.Model.Domain.Artists {
 		private IList<Artist> childVoicebanks = new List<Artist>();
 		private IList<ArtistComment> comments = new List<ArtistComment>();
 		private User createdBy;
-		private string description;
+		private EnglishTranslatedString description;
 		private string descriptionEng;
 		private IList<GroupForArtist> groups = new List<GroupForArtist>();
 		//private IList<AlbumHit> hits = new List<AlbumHit>();
@@ -42,7 +41,7 @@ namespace VocaDb.Model.Domain.Artists {
 			ArtistType = ArtistType.Unknown;
 			CreateDate = DateTime.Now;
 			Deleted = false;
-			Description = string.Empty;
+			Description = new EnglishTranslatedString();
 			Status = EntryStatus.Draft;
 			Version = 0;
 		}
@@ -163,20 +162,12 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
-		public virtual string Description {
+		public virtual EnglishTranslatedString Description {
 			get { return description; }
 			set {
 				ParamIs.NotNull(() => value);
 				description = value;
 			}
-		}
-
-		public virtual string DescriptionEng {
-			get { return descriptionEng; }
-			set {
-				ParamIs.NotNull(() => value);
-				descriptionEng = value;
-			}			
 		}
 
 		public virtual EntryType EntryType {

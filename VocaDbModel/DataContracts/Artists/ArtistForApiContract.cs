@@ -44,7 +44,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			}
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Description))
-				Description = artist.Description;
+				Description = artist.Description[languagePreference];
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Groups))
 				Groups = artist.Groups.Select(g => new ArtistContract(g.Group, languagePreference)).ToArray();

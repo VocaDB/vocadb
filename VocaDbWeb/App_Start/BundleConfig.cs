@@ -68,6 +68,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Shared/WebLinkMatcher.js",
 				"~/Scripts/ViewModels/WebLinkEditViewModel.js",
 				"~/Scripts/ViewModels/WebLinksEditViewModel.js",
+				"~/Scripts/ViewModels/Globalization/EnglishTranslatedStringEditViewModel.js",
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SongAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/FocusOut.js",

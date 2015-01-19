@@ -55,7 +55,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 			ArtistType = artist.ArtistType;
 			BaseVoicebank = artist.BaseVoicebank != null ? new ObjectRefContract(artist.BaseVoicebank) : null;
 			Id = artist.Id;
-			Description = (diff.IncludeDescription ? artist.Description : null);
+			Description = (diff.IncludeDescription ? artist.Description.Original : null);
+			DescriptionEng = (diff.IncludeDescription ? artist.Description.English : null);
 			Groups = artist.Groups.Select(g => new ObjectRefContract(g.Group)).ToArray();
 			MainPictureMime = artist.PictureMime;
 			Members = artist.Members.Select(m => new ObjectRefContract(m.Member)).ToArray();
@@ -77,6 +78,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public string Description { get; set; }
+
+		[DataMember]
+		public string DescriptionEng { get; set; }
 
 		[DataMember]
 		public ObjectRefContract[] Groups { get; set; }

@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			: base(artist, languagePreference) {
 
 			CreateDate = artist.CreateDate;
-			Description = artist.Description;
+			Description = artist.Description[languagePreference];
 			Groups = artist.Groups.Select(g => new ArtistContract(g.Group, languagePreference)).ToArray();
 			Members = artist.Members.Select(m => new ArtistContract(m.Member, languagePreference)).ToArray();
 			Tags = artist.Tags.Usages.Select(u => new TagUsageContract(u)).ToArray();
@@ -31,7 +31,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			: base(artist, languagePreference) {
 
 			CreateDate = artist.CreateDate;
-			Description = artist.Description;
+			Description = artist.Description[languagePreference];
 
 			if (includedFields.HasFlag(ArtistEditableFields.Groups)) {
 				Groups = artist.Groups.Select(g => new ArtistContract(g.Group, languagePreference)).ToArray();

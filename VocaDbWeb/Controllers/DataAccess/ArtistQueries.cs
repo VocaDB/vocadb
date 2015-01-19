@@ -12,6 +12,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -186,7 +187,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var artist = new Artist { 
 					ArtistType = contract.ArtistType, 
-					Description = contract.Description.Trim(), 
+					Description = new EnglishTranslatedString(contract.Description.Trim()), 
 					Status = contract.Draft ? EntryStatus.Draft : EntryStatus.Finished 
 				};
 
@@ -371,8 +372,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					diff.ArtistType = true;
 				}
 
-				if (artist.Description != properties.Description) {
-					artist.Description = properties.Description;
+				if (artist.Description.Original != properties.Description.Original) {
+					artist.Description.Original = properties.Description.Original;
+					diff.Description = true;
+				}
+
+				if (artist.Description.English != properties.Description.English) {
+					artist.Description.English = properties.Description.English;
 					diff.Description = true;
 				}
 

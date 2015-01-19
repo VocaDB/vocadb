@@ -13,7 +13,6 @@ namespace VocaDb.Model.Mapping.Artists {
 			Map(m => m.ArtistType).Not.Nullable();
 			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
-			Map(m => m.Description).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();
 			Map(m => m.Status).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
@@ -39,6 +38,11 @@ namespace VocaDb.Model.Mapping.Artists {
 
 			Component(m => m.ArchivedVersionsManager, 
 				c => c.HasMany(m => m.Versions).KeyColumn("[Artist]").Inverse().Cascade.All().OrderBy("Created DESC"));
+
+			Component(m => m.Description, c => {
+				c.Map(m => m.Original).Column("Description").Not.Nullable().Length(int.MaxValue);
+				c.Map(m => m.English).Column("DescriptionEng").Not.Nullable().Length(int.MaxValue);
+			});
 
 			Component(m => m.Names, c => {
 				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);

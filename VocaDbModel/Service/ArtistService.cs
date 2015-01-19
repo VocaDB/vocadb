@@ -414,8 +414,11 @@ namespace VocaDb.Model.Service {
 					session.Update(u);
 				}
 
-				if (target.Description == string.Empty)
-					target.Description = source.Description;
+				if (target.Description.Original == string.Empty)
+					target.Description.Original = source.Description.Original;
+
+				if (target.Description.English == string.Empty)
+					target.Description.English = source.Description.English;
 
 				// Create merge record
 				var mergeEntry = new ArtistMergeRecord(source, target);
@@ -481,7 +484,8 @@ namespace VocaDb.Model.Service {
 				var warnings = new List<string>();
 
 				artist.ArtistType = fullProperties.ArtistType;
-				artist.Description = fullProperties.Description;
+				artist.Description.Original = fullProperties.Description;
+				artist.Description.English = fullProperties.DescriptionEng;
 				artist.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 				artist.BaseVoicebank = SessionHelper.RestoreWeakRootEntityRef<Artist>(session, warnings, fullProperties.BaseVoicebank);
 

@@ -88,8 +88,16 @@
 					<label class="inline-block">Description</label>
 					<span data-bind="visible: validationError_needReferences, qTip" class="icon errorIcon" title="@ValidationErrors.NeedReferences"></span>
 				</div>
-				<div class="editor-field">
-					<textarea rows="8" cols="70" class="span5" data-bind="value: description"></textarea>
+				<div class="editor-field" data-bind="with: description">
+					<div>
+						<h4 data-bind="visible: showTranslation">Original</h4>
+						<textarea rows="8" cols="70" class="span5" data-bind="value: original"></textarea>							
+						<a href="#" class="textLink addLink" data-bind="visible: !showTranslation(), click: function() { showTranslation(true); }">Add English translation</a>
+					</div>
+					<div>
+						<h4 data-bind="visible: showTranslation">English</h4>
+						<textarea rows="8" cols="70" class="span5" data-bind="value: english, visible: showTranslation"></textarea>							
+					</div>
 				</div>
 
 				<div class="editor-label">

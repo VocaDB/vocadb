@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
@@ -17,7 +18,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			DefaultNameLanguage = artist.TranslatedName.DefaultLanguage;
-			Description = artist.Description;
+			Description = new EnglishTranslatedStringContract(artist.Description);
 			Groups = artist.Groups.Select(g => new GroupForArtistContract(g, languagePreference)).OrderBy(g => g.Group.Name).ToArray();
 			Names = artist.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p)).ToList();
@@ -33,7 +34,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public EnglishTranslatedStringContract Description { get; set; }
 
 		[DataMember]
 		public GroupForArtistContract[] Groups { get; set; }

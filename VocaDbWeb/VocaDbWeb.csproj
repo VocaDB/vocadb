@@ -1487,6 +1487,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Base\EntryWithTagUsagesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\CommentContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\EntryPictureFileContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Globalization\EnglishTranslatedStringContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringWithIdContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PartialFindResultContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PVs\PVContract.ts" />
@@ -1975,6 +1976,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\BasicListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\EntryPictureFileEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\EntryPictureFileListEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Globalization\EnglishTranslatedStringEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Globalization\LocalizedStringWithIdEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\Models\PVServiceIcons.ts" />
     <TypeScriptCompile Include="Scripts\Models\Songs\SongType.ts" />
