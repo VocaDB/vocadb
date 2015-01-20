@@ -3,6 +3,7 @@
 
 module vdb.viewModels {
 
+	import cls = vdb.models;
 	import rep = vdb.repositories;
 
 	export class ArtistDetailsViewModel {
@@ -11,7 +12,9 @@ module vdb.viewModels {
 
 		constructor(
 			private artistId: number, emailNotifications: boolean, siteNotifications: boolean,
+			hasEnglishDescription: boolean,
 			private unknownPictureUrl: string,
+			languagePreference: cls.globalization.ContentLanguagePreference,
 			private lang: string,
 			private urlMapper: vdb.UrlMapper,
 			private albumRepo: rep.AlbumRepository,
@@ -23,9 +26,12 @@ module vdb.viewModels {
 			private pvPlayersFactory: pvs.PVPlayersFactory) {
 
 			this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(artistId, emailNotifications, siteNotifications, userRepository);
+			this.showTranslatedDescription = ko.observable((hasEnglishDescription
+				&& (languagePreference === cls.globalization.ContentLanguagePreference.English || languagePreference === cls.globalization.ContentLanguagePreference.Romaji)));
 
 		}
 
+		public showTranslatedDescription: KnockoutObservable<boolean>;
 		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
 		public collaborationAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
 		public mainAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);

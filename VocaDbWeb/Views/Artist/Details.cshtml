@@ -25,7 +25,7 @@
 	@HtmlHelpers.OpenGraphMetaTags(
 		url: url, 
 		title: Model.Name + " (" + Translate.ArtistTypeName(Model.ArtistType) + ")", 
-		description: Model.Description)
+		description: Model.Description.Original)
 	<link rel="canonical" href="@url" />
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 }
@@ -89,11 +89,34 @@
 					<span class="extraInfo">@Model.AdditionalNames</span>
 				</td>
 			</tr>
-		@if (!string.IsNullOrEmpty(Model.Description)) {
+		@if (!Model.Description.IsEmpty) {
 			<tr>
 				<td>@ViewRes.SharedStrings.Description</td>
 				<td>
-					@Helpers.ConvertNewlinesToBreaks(Model.Description)
+					@if (Model.Description.HasEnglish) {
+						<div>
+							<ul class="nav nav-pills pull-right no-margin">
+								<li data-bind="css: { active: !showTranslatedDescription() }">
+									<a data-bind="click: function() { showTranslatedDescription(false); }" href="#">
+										Original
+									</a>
+								</li>
+								<li data-bind="css: { active: showTranslatedDescription() }">
+									<a data-bind="click: function() { showTranslatedDescription(true); }" href="#">
+										Translated
+									</a>
+								</li>
+							</ul>
+							<div data-bind="visible: !showTranslatedDescription()">
+								@HtmlHelpers.FormatMarkdown(Model.Description.Original)
+							</div>
+							<div data-bind="visible: showTranslatedDescription()">
+								@HtmlHelpers.FormatMarkdown(Model.Description.English)
+							</div>
+						</div>
+					} else {
+						@HtmlHelpers.FormatMarkdown(Model.Description.Original)
+					}
 				</td>	
 			</tr>
 		}
@@ -398,7 +421,9 @@
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
+				@ToJS(Model.Description.HasEnglish),
 				unknownPictureUrl,
+				@LanguagePreferenceInt,
 				languageSelection, urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, pvPlayersFactory);
 			ko.applyBindings(viewModel);
 

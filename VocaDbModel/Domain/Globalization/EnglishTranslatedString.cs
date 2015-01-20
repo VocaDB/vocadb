@@ -31,6 +31,12 @@
 			}
 		}
 
+		public virtual bool IsEmpty {
+			get {
+				return string.IsNullOrEmpty(Original);
+			}
+		}
+
 		public virtual string Original {
 			get { return original; }
 			set {

@@ -152,7 +152,7 @@ namespace VocaDb.Web.Controllers
 
 			WebHelper.VerifyUserAgent(Request);
 			var model = queries.GetDetails(id);
-			PageProperties.Description = model.Description;
+			PageProperties.Description = model.Description.Original;
             return View(model);
 
         }

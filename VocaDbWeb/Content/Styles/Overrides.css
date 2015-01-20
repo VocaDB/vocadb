@@ -168,3 +168,6 @@ ul.nav.nav-pills li a {
 ul.nav.nav-pills li.active a {
   color: white;
 }
+.nav.no-margin {
+  margin-bottom: 0;
+}
