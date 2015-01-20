@@ -161,8 +161,8 @@
 			<div class="editor-label">
 				<label>@Res.BaDescription</label>
 			</div>
-			<div class="editor-field">
-				<textarea rows="8" cols="70" class="span5" data-bind="value: description"></textarea>
+			<div class="editor-field" data-bind="with: description">
+				@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
 			</div>
 
 			<div class="editor-label">

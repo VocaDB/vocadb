@@ -103,7 +103,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongInAlbumContract NextSong { get; set; }
 
 		[DataMember]
-		public string Notes { get; set; }
+		public EnglishTranslatedString Notes { get; set; }
 
 		[DataMember]
 		public SongContract OriginalVersion { get; set; }

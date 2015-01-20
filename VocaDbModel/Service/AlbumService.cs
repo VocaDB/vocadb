@@ -643,7 +643,8 @@ namespace VocaDb.Model.Service {
 				var fullProperties = ArchivedAlbumContract.GetAllProperties(archivedVersion);
 				var warnings = new List<string>();
 
-				album.Description = fullProperties.Description;
+				album.Description.Original = fullProperties.Description;
+				album.Description.English = fullProperties.DescriptionEng;
 				album.DiscType = fullProperties.DiscType;
 				album.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 

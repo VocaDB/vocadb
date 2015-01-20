@@ -9,7 +9,7 @@ module vdb.dataContracts.albums {
 
 		defaultNameLanguage: string;
 
-		description: string;
+		description: globalization.EnglishTranslatedStringContract;
 
 		discType: string;
 

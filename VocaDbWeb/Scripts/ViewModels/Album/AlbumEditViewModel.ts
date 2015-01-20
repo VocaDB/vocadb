@@ -76,7 +76,7 @@ module vdb.viewModels {
 
 		public defaultNameLanguage: KnockoutObservable<string>;
 
-		public description: KnockoutObservable<string>;
+		public description: globalization.EnglishTranslatedStringEditViewModel;
 
         // Album disc type.
 		public discType: KnockoutObservable<cls.albums.AlbumType>;
@@ -137,7 +137,7 @@ module vdb.viewModels {
 			var submittedModel: dc.albums.AlbumForEditContract = {
 				artistLinks: _.map(this.artistLinks(), artist => artist.toContract()),
 				defaultNameLanguage: this.defaultNameLanguage(),
-				description: this.description(),
+				description: this.description.toContract(),
 				discType: this.discTypeStr(),
 				id: this.id,
 				identifiers: this.identifiers(),
@@ -213,7 +213,7 @@ module vdb.viewModels {
 
 			this.catalogNumber = ko.observable(data.originalRelease.catNum);
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
-			this.description = ko.observable(data.description);
+			this.description = new globalization.EnglishTranslatedStringEditViewModel(data.description);
 			this.discTypeStr = ko.observable(data.discType);
 			this.discType = ko.computed(() => cls.albums.AlbumType[this.discTypeStr()]);
 			this.id = data.id;

@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Globalization {
+﻿using VocaDb.Model.DataContracts.Globalization;
+
+namespace VocaDb.Model.Domain.Globalization {
 
 	/// <summary>
 	/// String that can be translated into one language.
@@ -45,14 +47,30 @@
 			}
 		}
 
-		public virtual string GetBestMatch(ContentLanguagePreference languagePreference) {
+		public virtual bool CopyFrom(EnglishTranslatedStringContract contract) {
+			
+			var changed = false;
 
-			if ((languagePreference == ContentLanguagePreference.English || languagePreference == ContentLanguagePreference.Romaji) && HasEnglish) {
-				return English;
-			} else {
-				return Original;
+			if (Original != contract.Original) {
+				Original = contract.Original;
+				changed = true;
 			}
 
+			if (English != contract.English) {
+				English = contract.English;
+				changed = true;
+			}
+
+			return changed;
+
+		}
+
+		public virtual bool ShowEnglish(ContentLanguagePreference languagePreference) {
+			return (languagePreference == ContentLanguagePreference.English || languagePreference == ContentLanguagePreference.Romaji) && HasEnglish;
+		}
+
+		public virtual string GetBestMatch(ContentLanguagePreference languagePreference) {
+			return ShowEnglish(languagePreference) ? English : Original;
 		}
 
 		public string this[ContentLanguagePreference preference] {

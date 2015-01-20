@@ -44,7 +44,7 @@ namespace VocaDb.Model.Domain.Albums {
 		private TranslatedStringWithDefault artistString;
 		private IList<ArtistForAlbum> artists = new List<ArtistForAlbum>();
 		private IList<AlbumComment> comments = new List<AlbumComment>();
-		private string description;
+		private EnglishTranslatedString description;
 		private IList<AlbumHit> hits = new List<AlbumHit>();
 		private IList<AlbumIdentifier> identifiers = new List<AlbumIdentifier>();
 		private NameManager<AlbumName> names = new NameManager<AlbumName>();
@@ -61,7 +61,7 @@ namespace VocaDb.Model.Domain.Albums {
 			ArtistString = new TranslatedStringWithDefault(string.Empty, string.Empty, string.Empty, string.Empty);
 			CreateDate = DateTime.Now;
 			Deleted = false;
-			Description = string.Empty;
+			Description = new EnglishTranslatedString();
 			DiscType = DiscType.Album;
 			OriginalRelease = new AlbumRelease();
 			Status = EntryStatus.Draft;
@@ -158,7 +158,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual bool Deleted { get; set; }
 
-		public virtual string Description {
+		public virtual EnglishTranslatedString Description {
 			get { return description; }
 			set {
 				ParamIs.NotNull(() => value);

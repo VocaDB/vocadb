@@ -30,7 +30,7 @@ namespace VocaDb.Model.Domain.Songs {
 		private IList<SongInList> lists = new List<SongInList>();
 		private IList<LyricsForSong> lyrics = new List<LyricsForSong>();
 		private NameManager<SongName> names = new NameManager<SongName>();
-		private string notes;
+		private EnglishTranslatedString notes;
 		private PVManager<PVForSong> pvs = new PVManager<PVForSong>();
 		private TagManager<SongTagUsage> tags = new TagManager<SongTagUsage>();
 		private IList<FavoriteSongForUser> userFavorites = new List<FavoriteSongForUser>();
@@ -47,7 +47,7 @@ namespace VocaDb.Model.Domain.Songs {
 			ArtistString = new TranslatedStringWithDefault(string.Empty, string.Empty, string.Empty, string.Empty);
 			CreateDate = DateTime.Now;
 			Deleted = false;
-			Notes = string.Empty;
+			Notes = new EnglishTranslatedString();
 			PVServices = PVServices.Nothing;
 			SongType = SongType.Unspecified;
 			Status = EntryStatus.Draft;
@@ -236,7 +236,7 @@ namespace VocaDb.Model.Domain.Songs {
 			get { return Names; }
 		}
 
-		public virtual string Notes {
+		public virtual EnglishTranslatedString Notes {
 			get { return notes; }
 			set {
 				ParamIs.NotNull(() => value);

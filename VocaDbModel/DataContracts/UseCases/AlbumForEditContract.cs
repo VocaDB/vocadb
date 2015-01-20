@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Albums;
@@ -19,7 +20,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			DefaultNameLanguage = album.TranslatedName.DefaultLanguage;
-			Description = album.Description;
+			Description = new EnglishTranslatedStringContract(album.Description);
 			Identifiers = album.Identifiers.Select(i => i.Value).ToArray();
 			Names = album.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease) : null);
@@ -40,7 +41,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public EnglishTranslatedStringContract Description { get; set; }
 
 		[DataMember]
 		public string[] Identifiers { get; set; }

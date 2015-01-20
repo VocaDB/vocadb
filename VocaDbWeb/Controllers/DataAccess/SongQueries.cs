@@ -495,10 +495,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				ctx.AuditLogger.SysLog(string.Format("updating properties for {0}", song));
 
-				if (song.Notes != properties.Notes) {
-					diff.Notes = true;
-					song.Notes = properties.Notes;
-				}
+				diff.Notes = song.Notes.CopyFrom(properties.Notes);
 
 				var newOriginalVersion = (properties.OriginalVersion != null && properties.OriginalVersion.Id != 0 ? ctx.Load(properties.OriginalVersion.Id) : null);
 

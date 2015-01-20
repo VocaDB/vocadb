@@ -4,9 +4,13 @@
 
 module vdb.viewModels {
 
+	import cls = vdb.models;
+
     export class AlbumDetailsViewModel {
 
         public downloadTagsDialog: DownloadTagsViewModel;
+
+		public showTranslatedDescription: KnockoutObservable<boolean>;
 
         public usersContent = ko.observable<string>();
 
@@ -23,8 +27,10 @@ module vdb.viewModels {
 
         };
 
-        constructor(private id: number, formatString: string) {
+        constructor(private id: number, formatString: string,
+			showTranslatedDescription: boolean) {
             this.downloadTagsDialog = new DownloadTagsViewModel(id, formatString);
+			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
         }
 
     }

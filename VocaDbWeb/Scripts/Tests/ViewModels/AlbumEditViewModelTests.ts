@@ -61,7 +61,10 @@ module vdb.tests.viewModels {
 				artistLinks: [producerArtistLink, vocalistArtistLink, labelArtistLink, customArtistLink],
 				coverPictureMime: "image/jpeg",
 				defaultNameLanguage: 'English',
-				description: '',
+				description: {
+					original: '',
+					english: ''
+				},
 				discType: "Album",
 				id: 0,
 				identifiers: [],

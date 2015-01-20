@@ -60,7 +60,7 @@
 	@HtmlHelpers.OpenGraphMetaTags(
 		url: url, 
 		title: string.Format("{0} ({1})", titleAndArtist, Translate.SongTypeNames[Model.SongType]), 
-		description: Model.Notes, 
+		description: Model.Notes.Original, 
 		type: "music.song")
 }
 
@@ -278,11 +278,11 @@
 			</tr>
    }
 			
-			@if (!string.IsNullOrEmpty(Model.Notes)) {
+			@if (!Model.Notes.IsEmpty) {
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.Notes</td>
 				<td>
-					@Helpers.ConvertNewlinesToBreaks(Model.Notes)
+					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Notes); }
 				</td>	
 			</tr>
    }			
@@ -434,7 +434,9 @@
 		var urlMapper = new vdb.UrlMapper(rootPath);
 		var repo = new vdb.repositories.SongRepository(rootPath, @LanguagePreferenceInt);
 		var userRepo = new vdb.repositories.UserRepository(urlMapper);
-		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources, jsonModel, vdb.ui.showThankYouForRatingMessage);
+		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources, 
+			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)), 
+			jsonModel, vdb.ui.showThankYouForRatingMessage);
 		ko.applyBindings(viewModel);
 		viewModel.songListDialog.addedToList = function() { vdb.ui.showSuccessMessage(resources.addedToList); };
 

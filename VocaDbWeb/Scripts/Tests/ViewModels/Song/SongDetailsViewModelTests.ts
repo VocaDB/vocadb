@@ -21,7 +21,7 @@ module vdb.tests.viewModels {
         setup: () => {
 			rep = new sup.FakeSongRepository();
             rep.songLists = [{ id: 1, name: "Favorite Mikus" }];
-            target = new vm.SongDetailsViewModel(rep, userRep, res, data, null);
+            target = new vm.SongDetailsViewModel(rep, userRep, res, false, data, null);
         }
     });
 

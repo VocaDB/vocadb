@@ -12,7 +12,9 @@ module vdb.tests.viewModels {
 	var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
 	var data: dc.songs.SongForEditContract = {
 		artists: [], defaultNameLanguage: 'English', deleted: false, id: 0, lengthSeconds: 39,
-		lyrics: [], names: [], notes: '', originalVersion: null, pvs: [], songType: 'Original',
+		lyrics: [], names: [],
+		notes: { original: '', english: '' },
+		originalVersion: null, pvs: [], songType: 'Original',
 		status: 'Draft', tags: [], webLinks: [webLinkData]
 	};
 	var songRepo = new sup.FakeSongRepository();

@@ -63,7 +63,10 @@ namespace VocaDb.Model.DataContracts.Albums {
 			data.TranslatedName = thisVersion.TranslatedName;
 
 			DoIfExists(version, AlbumEditableFields.Artists, xmlCache, (v, doc) => SetArtists(data, v, doc));
-			DoIfExists(version, AlbumEditableFields.Description, xmlCache, v => data.Description = v.Description);
+			DoIfExists(version, AlbumEditableFields.Description, xmlCache, v => {
+				data.Description = v.Description;
+				data.DescriptionEng = v.DescriptionEng;
+			});
 			DoIfExists(version, AlbumEditableFields.Identifiers, xmlCache, v => data.Identifiers = v.Identifiers);
 			DoIfExists(version, AlbumEditableFields.OriginalRelease, xmlCache, v => data.OriginalRelease = v.OriginalRelease);
 			DoIfExists(version, AlbumEditableFields.Names, xmlCache, v => data.Names = v.Names);
@@ -84,7 +87,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 			ParamIs.NotNull(() => diff);
 
 			Artists = (diff.IncludeArtists ? album.Artists.Select(a => new ArchivedArtistForAlbumContract(a)).ToArray() : null);
-			Description = (diff.IncludeDescription ? album.Description : null);
+			Description = (diff.IncludeDescription ? album.Description.Original : null);
+			DescriptionEng = (diff.IncludeDescription ? album.Description.English : null);
 			DiscType = album.DiscType;
 			Id = album.Id;
 			Identifiers = album.Identifiers.Select(i => new AlbumIdentifierContract(i)).ToArray();
@@ -104,6 +108,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public string Description { get; set; }
+
+		[DataMember]
+		public string DescriptionEng { get; set; }
 
 		[DataMember]
 		public DiscType DiscType { get; set; }

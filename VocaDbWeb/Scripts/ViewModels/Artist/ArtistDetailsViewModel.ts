@@ -15,7 +15,6 @@ module vdb.viewModels {
 			hasEnglishDescription: boolean,
 			private unknownPictureUrl: string,
 			languagePreference: cls.globalization.ContentLanguagePreference,
-			private lang: string,
 			private urlMapper: vdb.UrlMapper,
 			private albumRepo: rep.AlbumRepository,
 			private songRepo: rep.SongRepository,
@@ -25,12 +24,14 @@ module vdb.viewModels {
 			private loggedUserId: number,
 			private pvPlayersFactory: pvs.PVPlayersFactory) {
 
+			this.lang = cls.globalization.ContentLanguagePreference[languagePreference];
 			this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(artistId, emailNotifications, siteNotifications, userRepository);
 			this.showTranslatedDescription = ko.observable((hasEnglishDescription
 				&& (languagePreference === cls.globalization.ContentLanguagePreference.English || languagePreference === cls.globalization.ContentLanguagePreference.Romaji)));
 
 		}
 
+		private lang: string;
 		public showTranslatedDescription: KnockoutObservable<boolean>;
 		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
 		public collaborationAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);

@@ -33,7 +33,7 @@
 	@HtmlHelpers.OpenGraphMetaTags(
 		url: url, 
 		title: titleAndArtist + " (" + Translate.DiscTypeName(Model.DiscType) + ")", 
-		description: Model.Description, 
+		description: Model.Description.Original, 
 		type: "music.album")
 	<link rel="canonical" href="@url" />	
 	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
@@ -172,11 +172,11 @@
 			</tr>
    }
 
-			@if (!string.IsNullOrWhiteSpace(Model.Description)) {
+			@if (!Model.Description.IsEmpty) {
 			<tr>
 				<td>@ViewRes.SharedStrings.Description</td>
 				<td>
-					@Helpers.ConvertNewlinesToBreaks(Model.Description)
+					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
 				</td>	
 			</tr>
    }
@@ -406,7 +406,7 @@
 			vdb.resources.albumDetails = @Html.Raw(JsonHelpers.Serialize(new { download = AjaxRes.AlbumStrings.Download }));
 
 			var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
-			var viewModel = new vdb.viewModels.AlbumDetailsViewModel(@Model.Id, formatString);
+			var viewModel = new vdb.viewModels.AlbumDetailsViewModel(@Model.Id, formatString, @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
 			ko.applyBindings(viewModel);
 
 			initPage(@Model.Id, @Model.CollectionRating, 

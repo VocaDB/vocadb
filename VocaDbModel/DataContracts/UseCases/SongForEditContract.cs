@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
@@ -21,7 +22,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			DefaultNameLanguage = song.TranslatedName.DefaultLanguage;
 			Lyrics = song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray();
 			Names = song.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
-			Notes = song.Notes;
+			Notes = new EnglishTranslatedStringContract(song.Notes);
 			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? new SongContract(song.OriginalVersion, languagePreference) : null);
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			Tags = song.Tags.TagNames.ToArray();
@@ -43,7 +44,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		[DataMember]
-		public string Notes { get; set; }
+		public EnglishTranslatedStringContract Notes { get; set; }
 
 		[DataMember]
 		public SongContract OriginalVersion { get; set; }

@@ -76,8 +76,8 @@
 			<div class="editor-label">
 				<label>Notes</label>
 			</div>
-			<div class="editor-field">
-				<textarea data-bind="value: notes" rows="6" cols="70" class="span4" maxlength="800"></textarea>
+			<div class="editor-field" data-bind="with: notes">
+				@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
 			</div>
 
 			<div class="editor-label">

@@ -277,8 +277,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					session.Update(u);
 				}
 
-				if (target.Description == string.Empty)
-					target.Description = source.Description;
+				if (target.Description.Original == string.Empty)
+					target.Description.Original = source.Description.Original;
+
+				if (target.Description.English == string.Empty)
+					target.Description.English = source.Description.English;
 
 				if (target.OriginalRelease == null)
 					target.OriginalRelease = new AlbumRelease();
@@ -339,10 +342,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					diff.DiscType = true;
 				}
 
-				if (album.Description != properties.Description) {
-					album.Description = properties.Description;
-					diff.Description = true;
-				}
+				diff.Description = album.Description.CopyFrom(properties.Description);
 
 				var parsedBarcodes = properties.Identifiers.Select(Album.ParseBarcode).ToArray();
 				var barcodeDiff = album.SyncIdentifiers(parsedBarcodes);

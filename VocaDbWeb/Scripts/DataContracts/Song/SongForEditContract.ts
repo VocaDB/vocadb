@@ -17,7 +17,7 @@ module vdb.dataContracts.songs {
 
 		names: globalization.LocalizedStringWithIdContract[];
 
-		notes: string;
+		notes: globalization.EnglishTranslatedStringContract;
 
 		originalVersion: SongContract;
 

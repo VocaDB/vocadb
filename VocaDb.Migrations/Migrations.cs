@@ -15,7 +15,7 @@ namespace VocaDb.Migrations {
 
 			Create.Column("DescriptionEng").OnTable("Artists").AsString(int.MaxValue).WithDefaultValue(string.Empty);
 			Create.Column("DescriptionEng").OnTable("Albums").AsString(int.MaxValue).WithDefaultValue(string.Empty);
-			Create.Column("DescriptionEng").OnTable("Songs").AsString(int.MaxValue).WithDefaultValue(string.Empty);
+			Create.Column("NotesEng").OnTable("Songs").AsString(int.MaxValue).WithDefaultValue(string.Empty);
 
 		}
 	}

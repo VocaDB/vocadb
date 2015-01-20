@@ -2487,6 +2487,8 @@
     <Content Include="Views\Shared\KnockoutPartials\_EntryPictureFileEdit.cshtml" />
     <Content Include="Views\Song\Partials\_LyricsForSongEdit.cshtml" />
     <Content Include="Views\User\Partials\_ListUsers.cshtml" />
+    <Content Include="Views\Shared\Partials\_EnglishTranslatedString.cshtml" />
+    <Content Include="Views\Shared\Partials\_EnglishTranslatedStringEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

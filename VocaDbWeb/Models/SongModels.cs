@@ -157,7 +157,7 @@ namespace VocaDb.Web.Models {
 
 		public string NicoId { get; set; }
 
-		public string Notes { get; set; }
+		public EnglishTranslatedString Notes { get; set; }
 
 		public ArtistForSongContract[] OtherArtists { get; set; }
 

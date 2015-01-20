@@ -24,6 +24,8 @@ module vdb.viewModels {
 
         public showAllVersions: () => void;
 
+		public showTranslatedDescription: KnockoutObservable<boolean>;
+
         public songInListsDialog: SongInListsViewModel;
 
         public songListDialog: SongListsViewModel;
@@ -38,6 +40,7 @@ module vdb.viewModels {
             repository: rep.SongRepository,
             userRepository: rep.UserRepository,
             resources: SongDetailsResources,
+			showTranslatedDescription: boolean,
 			data: SongDetailsAjax,
             ratingCallback: () => void ) {
             
@@ -61,6 +64,7 @@ module vdb.viewModels {
             this.songListDialog = new SongListsViewModel(repository, resources, this.id);
 			this.selectedLyricsId = ko.observable(data.selectedLyricsId);
 			this.selectedPvId = ko.observable(data.selectedPvId);
+			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
 
             this.usersContent = ko.observable<string>();
 

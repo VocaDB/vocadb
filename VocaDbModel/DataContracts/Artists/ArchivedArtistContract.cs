@@ -36,7 +36,10 @@ namespace VocaDb.Model.DataContracts.Artists {
 			data.TranslatedName = thisVersion.TranslatedName;
 
 			DoIfExists(version, ArtistEditableFields.Albums, xmlCache, v => data.Albums = v.Albums);
-			DoIfExists(version, ArtistEditableFields.Description, xmlCache, v => data.Description = v.Description);
+			DoIfExists(version, ArtistEditableFields.Description, xmlCache, v => {
+				data.Description = v.Description;
+				data.DescriptionEng = v.DescriptionEng;
+			});
 			DoIfExists(version, ArtistEditableFields.Names, xmlCache, v => data.Names = v.Names);
 			DoIfExists(version, ArtistEditableFields.Pictures, xmlCache, v => data.Pictures = v.Pictures);
 			DoIfExists(version, ArtistEditableFields.WebLinks, xmlCache, v => data.WebLinks = v.WebLinks);

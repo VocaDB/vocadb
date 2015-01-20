@@ -62,6 +62,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			data.LengthSeconds = thisVersion.LengthSeconds;
 			data.NicoId = thisVersion.NicoId;
 			data.Notes = thisVersion.Notes;
+			data.NotesEng = thisVersion.NotesEng;
 			data.OriginalVersion = thisVersion.OriginalVersion;
 			data.SongType = thisVersion.SongType;
 			data.TranslatedName = thisVersion.TranslatedName;
@@ -89,7 +90,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Lyrics = (diff.IncludeLyrics ? song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray() : null);
 			Names = (diff.IncludeNames ? song.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null);
 			NicoId = song.NicoId;
-			Notes = song.Notes;
+			Notes = song.Notes.Original;
+			NotesEng = song.Notes.English;
 			OriginalVersion = (song.OriginalVersion != null ? new ObjectRefContract(song.OriginalVersion) : null);
 			PVs = (diff.IncludePVs ? song.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null);
 			SongType = song.SongType;
@@ -118,6 +120,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public string Notes { get; set; }
+
+		[DataMember]
+		public string NotesEng { get; set; }
 
 		[DataMember]
 		public ObjectRefContract OriginalVersion { get; set; }

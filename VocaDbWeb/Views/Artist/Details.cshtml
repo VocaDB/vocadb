@@ -93,30 +93,7 @@
 			<tr>
 				<td>@ViewRes.SharedStrings.Description</td>
 				<td>
-					@if (Model.Description.HasEnglish) {
-						<div>
-							<ul class="nav nav-pills pull-right no-margin">
-								<li data-bind="css: { active: !showTranslatedDescription() }">
-									<a data-bind="click: function() { showTranslatedDescription(false); }" href="#">
-										Original
-									</a>
-								</li>
-								<li data-bind="css: { active: showTranslatedDescription() }">
-									<a data-bind="click: function() { showTranslatedDescription(true); }" href="#">
-										Translated
-									</a>
-								</li>
-							</ul>
-							<div data-bind="visible: !showTranslatedDescription()">
-								@HtmlHelpers.FormatMarkdown(Model.Description.Original)
-							</div>
-							<div data-bind="visible: showTranslatedDescription()">
-								@HtmlHelpers.FormatMarkdown(Model.Description.English)
-							</div>
-						</div>
-					} else {
-						@HtmlHelpers.FormatMarkdown(Model.Description.Original)
-					}
+					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
 				</td>	
 			</tr>
 		}
@@ -408,7 +385,6 @@
 			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
 
 			var cultureCode = '@UICulture';
-			var languageSelection = '@UserContext.LanguagePreference';
 			var loggedUserId = @ToJS(UserContext.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 
@@ -424,7 +400,7 @@
 				@ToJS(Model.Description.HasEnglish),
 				unknownPictureUrl,
 				@LanguagePreferenceInt,
-				languageSelection, urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, pvPlayersFactory);
+				urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, pvPlayersFactory);
 			ko.applyBindings(viewModel);
 
 			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);

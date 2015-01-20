@@ -18,7 +18,6 @@ namespace VocaDb.Model.Mapping.Songs {
 			Map(m => m.FavoritedTimes).Not.Nullable();
 			Map(m => m.LengthSeconds).Not.Nullable();
 			Map(m => m.NicoId).Nullable();
-			Map(m => m.Notes).Length(800).Not.Nullable();
 			Map(m => m.PVServices).CustomType(typeof(PVServices)).Not.Nullable();
 			Map(m => m.RatingScore).Not.Nullable();
 			Map(m => m.SongType).Not.Nullable();
@@ -39,6 +38,11 @@ namespace VocaDb.Model.Mapping.Songs {
 					c2.Map(m => m.English, "EnglishName");
 					c2.Map(m => m.Romaji, "RomajiName");
 				});
+			});
+
+			Component(m => m.Notes, c => {
+				c.Map(m => m.Original).Column("Notes").Not.Nullable().Length(int.MaxValue);
+				c.Map(m => m.English).Column("NotesEng").Not.Nullable().Length(int.MaxValue);
 			});
 
 			Component(m => m.PVs, c => {

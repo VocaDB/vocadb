@@ -152,7 +152,7 @@ namespace VocaDb.Web.Controllers
 			SetSearchEntryType(EntryType.Song);
 
 			var model = new SongDetails(Service.GetSongDetails(id, albumId, WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty));
-			PageProperties.Description = model.Notes;
+			PageProperties.Description = model.Notes.Original;
 
             return View(model);
 

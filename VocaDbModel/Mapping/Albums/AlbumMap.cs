@@ -14,7 +14,6 @@ namespace VocaDb.Model.Mapping.Albums {
 			Map(m => m.CoverPictureMime).Length(32).Nullable();
 			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
-			Map(m => m.Description).Not.Nullable();
 			Map(m => m.DiscType).Column("[Type]").Not.Nullable();
 			Map(m => m.RatingAverageInt).Column("[RatingAverage]").Not.Nullable();
 			Map(m => m.RatingCount).Not.Nullable();
@@ -36,6 +35,11 @@ namespace VocaDb.Model.Mapping.Albums {
 				c.Map(m => m.Bytes, "CoverPictureBytes").Length(int.MaxValue);
 				c.Component(m => m.Thumb250, c2 => c2.Map(m => m.Bytes, "CoverPictureThumb250Bytes").Length(int.MaxValue));
 			}).LazyLoad();
+
+			Component(m => m.Description, c => {
+				c.Map(m => m.Original).Column("Description").Not.Nullable().Length(int.MaxValue);
+				c.Map(m => m.English).Column("DescriptionEng").Not.Nullable().Length(int.MaxValue);
+			});
 
 			Component(m => m.OriginalRelease, c => {
 				c.Map(m => m.CatNum, "ReleaseCatNum");

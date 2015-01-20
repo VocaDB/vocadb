@@ -23,7 +23,7 @@ module vdb.viewModels {
 		public lengthFormatted: KnockoutComputed<string>;
 		public lyrics: songs.LyricsForSongListEditViewModel;
 		public names: globalization.NamesEditViewModel;
-		public notes: KnockoutObservable<string>;
+		public notes: globalization.EnglishTranslatedStringEditViewModel;
 		public originalVersion: BasicEntryLinkViewModel<dc.SongContract>;
 		public originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
 		public pvs: pvs.PVListEditViewModel;
@@ -93,7 +93,7 @@ module vdb.viewModels {
 				lengthSeconds: this.length(),
 				lyrics: this.lyrics.toContracts(),
 				names: this.names.toContracts(),
-				notes: this.notes(),
+				notes: this.notes.toContract(),
 				originalVersion: this.originalVersion.entry(),
 				pvs: this.pvs.toContracts(),
 				songType: this.songTypeStr(),
@@ -137,7 +137,7 @@ module vdb.viewModels {
 			this.length = ko.observable(data.lengthSeconds);
 			this.lyrics = new songs.LyricsForSongListEditViewModel(data.lyrics);
 			this.names = globalization.NamesEditViewModel.fromContracts(data.names);
-			this.notes = ko.observable(data.notes);
+			this.notes = new globalization.EnglishTranslatedStringEditViewModel(data.notes);
 			this.originalVersion = new BasicEntryLinkViewModel<dc.SongContract>(data.originalVersion, songRepository.getOne);
 			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs);
 			this.songTypeStr = ko.observable(data.songType);

@@ -1,0 +1,26 @@
+﻿@model VocaDb.Model.Domain.Globalization.EnglishTranslatedString
+		   
+@if (Model.HasEnglish) {
+	<div>
+		<ul class="nav nav-pills pull-right no-margin">
+			<li data-bind="css: { active: !showTranslatedDescription() }">
+				<a data-bind="click: function() { showTranslatedDescription(false); }" href="#">
+					Original
+				</a>
+			</li>
+			<li data-bind="css: { active: showTranslatedDescription() }">
+				<a data-bind="click: function() { showTranslatedDescription(true); }" href="#">
+					Translated
+				</a>
+			</li>
+		</ul>
+		<div data-bind="visible: !showTranslatedDescription()">
+			@HtmlHelpers.FormatMarkdown(Model.Original)
+		</div>
+		<div data-bind="visible: showTranslatedDescription()">
+			@HtmlHelpers.FormatMarkdown(Model.English)
+		</div>
+	</div>
+} else {
+	@HtmlHelpers.FormatMarkdown(Model.Original)
+}

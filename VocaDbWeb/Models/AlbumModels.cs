@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Web.Models {
@@ -112,7 +113,7 @@ namespace VocaDb.Web.Models {
 
 		public bool Deleted { get; set; }
 
-		public string Description { get; set; }
+		public EnglishTranslatedString Description { get; set; }
 
 		public DiscType DiscType { get; set; }
 

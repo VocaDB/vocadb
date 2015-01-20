@@ -40,7 +40,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public int CommentCount { get; set; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public EnglishTranslatedString Description { get; set; }
 
 		[DataMember]
 		public int Hits { get; set; }
