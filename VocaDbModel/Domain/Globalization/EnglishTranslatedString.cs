@@ -49,6 +49,8 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		public virtual bool CopyFrom(EnglishTranslatedStringContract contract) {
 			
+			ParamIs.NotNull(() => contract);
+
 			var changed = false;
 
 			if (Original != contract.Original) {

@@ -372,15 +372,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					diff.ArtistType = true;
 				}
 
-				if (artist.Description.Original != properties.Description.Original) {
-					artist.Description.Original = properties.Description.Original;
-					diff.Description = true;
-				}
-
-				if (artist.Description.English != properties.Description.English) {
-					artist.Description.English = properties.Description.English;
-					diff.Description = true;
-				}
+				diff.Description = artist.Description.CopyFrom(properties.Description);
 
 				if (artist.TranslatedName.DefaultLanguage != properties.DefaultNameLanguage) {
 					artist.TranslatedName.DefaultLanguage = properties.DefaultNameLanguage;
