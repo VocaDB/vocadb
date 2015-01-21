@@ -44,7 +44,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			}
 
 			if (fields.HasFlag(SongOptionalFields.Albums))
-				Albums = song.Albums.Select(a => new AlbumContract(a.Album, languagePreference)).ToArray();
+				Albums = song.OnAlbums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.Artists))
 				Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).ToArray();

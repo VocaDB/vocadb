@@ -82,6 +82,12 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
+		/// <summary>
+		/// List of album links for this song. 
+		/// The same album may appear multiple times, if the song was added more than once. 
+		/// This list does not include deleted albums.
+		/// Cannot be null.
+		/// </summary>
 		public virtual IEnumerable<SongInAlbum> Albums {
 			get { 
 				return AllAlbums.Where(a => !a.Album.Deleted); 
@@ -241,6 +247,17 @@ namespace VocaDb.Model.Domain.Songs {
 			set {
 				ParamIs.NotNull(() => value);
 				notes = value; 
+			}
+		}
+
+		/// <summary>
+		/// List of albums this song appears on. 
+		/// Duplicates are removed. Does not include deleted albums.
+		/// Cannot be null.
+		/// </summary>
+		public virtual IEnumerable<Album> OnAlbums {
+			get {
+				return Albums.Select(a => a.Album).Distinct();
 			}
 		}
 
