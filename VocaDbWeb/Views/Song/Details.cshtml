@@ -281,7 +281,7 @@
 			@if (!Model.Notes.IsEmpty) {
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.Notes</td>
-				<td>
+				<td class="entry-description">
 					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Notes); }
 				</td>	
 			</tr>

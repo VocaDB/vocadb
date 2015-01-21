@@ -92,7 +92,7 @@
 		@if (!Model.Description.IsEmpty) {
 			<tr>
 				<td>@ViewRes.SharedStrings.Description</td>
-				<td>
+				<td class="entry-description">
 					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
 				</td>	
 			</tr>

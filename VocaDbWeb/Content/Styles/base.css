@@ -19,6 +19,9 @@
 .validation-summary-valid {
   display: none;
 }
+.entry-description p {
+  margin-bottom: 0;
+}
 .song-pv-player {
   margin: 24px;
 }
