@@ -54,11 +54,12 @@
 }
 
 @helper CommentWithEntryVertical(UnifiedCommentContract comment) {
-	
-	@CommentEntryItem(comment)
-	@PrintComment(comment, false);	
-	<hr />
-	
+
+	<div class="well well-transparent">
+		@CommentEntryItem(comment)
+		@PrintComment(comment, false)
+	</div>
+
 }
 
 @helper PrintComment(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false) {	
