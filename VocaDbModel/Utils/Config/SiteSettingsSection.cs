@@ -43,6 +43,11 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["sitewideAnnouncement"] = value; }						
 		}
 
+		[ConfigurationProperty("spotImAccId", DefaultValue = "")]
+		public string SpotImAccId {
+			get { return (string)this["spotImAccId"]; }
+			set { this["spotImAccId"] = value; }			
+		}
 
 	}
 }
