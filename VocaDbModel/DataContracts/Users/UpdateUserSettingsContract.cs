@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			AboutMe = user.Options.AboutMe;
 			Location = user.Options.Location;
 			PublicRatings = user.Options.PublicRatings;
+			ShowChatbox = user.Options.ShowChatbox;
 			WebLinks = user.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
 
 		}
@@ -28,6 +29,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public string OldPass { get; set; }
 
 		public bool PublicRatings { get; set; }
+
+		public bool ShowChatbox { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
 

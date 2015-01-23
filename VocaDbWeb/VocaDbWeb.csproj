@@ -2489,6 +2489,7 @@
     <Content Include="Views\User\Partials\_ListUsers.cshtml" />
     <Content Include="Views\Shared\Partials\_EnglishTranslatedString.cshtml" />
     <Content Include="Views\Shared\Partials\_EnglishTranslatedStringEdit.cshtml" />
+    <Content Include="Views\Shared\Partials\_Chatbox.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

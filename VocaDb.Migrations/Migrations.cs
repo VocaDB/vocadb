@@ -20,4 +20,21 @@ namespace VocaDb.Migrations {
 		}
 	}
 
+	/// <summary>
+	/// Add ShowChatbox column to UserOptions table
+	/// </summary>
+	[Migration(201501232300)]
+	public class AddShowChatboxForUser : AutoReversingMigration {
+
+		public override void Up() {
+			
+			if (Schema.Table("UserOptions").Column("ShowChatbox").Exists())
+				return;
+
+			Create.Column("ShowChatbox").OnTable("UserOptions").AsBoolean().WithDefaultValue(true);
+
+		}
+
+	}
+
 }

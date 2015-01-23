@@ -21,6 +21,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			HasTwitterToken = !string.IsNullOrEmpty(user.Options.TwitterOAuthToken);
 			Location = user.Options.Location;
 			PublicRatings = user.Options.PublicRatings;
+			ShowChatbox = user.Options.ShowChatbox;
 			TwitterId = user.Options.TwitterId;
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
@@ -40,6 +41,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public string Location { get; set; }
 
 		public bool PublicRatings { get; set; }
+
+		public bool ShowChatbox { get; set; }
 
 		public int TwitterId { get; set; }
 

@@ -28,6 +28,7 @@
 
 			PublicAlbumCollection = true;
 			PublicRatings = true;
+			ShowChatbox = true;
 			EmailVerified = false;
 
 		}
@@ -98,6 +99,8 @@
 				realname = value; 
 			}
 		}
+
+		public virtual bool ShowChatbox { get; set; }
 
 		public virtual int TwitterId { get; set; }
 

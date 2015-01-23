@@ -153,6 +153,13 @@
 			<div class="editor-field">
 				@Html.DropDownListFor(m => m.PreferredVideoService, new SelectList(Model.AllVideoServices, Model.PreferredVideoService))
 			</div>
+			
+			<div class="editor-field">
+				<label class="checkbox">
+					@Html.CheckBoxFor(m => m.ShowChatbox)
+					Show chatbox
+				</label>
+			</div>
 
 		</div>
         

@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			EffectivePermissions = new HashSet<PermissionToken>(user.EffectivePermissions.PermissionTokens);
 			OwnedArtistEntries = user.OwnedArtists.Select(a => new ArtistForUserContract(a, languagePreference)).ToArray();
 			Poisoned = user.Options.Poisoned;
+			ShowChatbox = user.Options.ShowChatbox;
 
 		}
 
@@ -44,6 +45,9 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public bool Poisoned { get; set; }
+
+		[DataMember]
+		public bool ShowChatbox { get; set; }
 
 		[DataMember]
 		public int UnreadMessagesCount { get; set; }

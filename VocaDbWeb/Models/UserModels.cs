@@ -145,6 +145,7 @@ namespace VocaDb.Web.Models {
 			PreferredVideoService = user.PreferredVideoService;
 			PublicAlbumCollection = user.PublicAlbumCollection;
 			PublicRatings = user.PublicRatings;
+			ShowChatbox = user.ShowChatbox;
 			TwitterName = user.TwitterName;
 			Username = user.Name;
 			WebLinks = user.WebLinks.Select(w => new WebLinkDisplay(w)).ToArray();
@@ -190,6 +191,8 @@ namespace VocaDb.Web.Models {
 		public bool PublicAlbumCollection { get; set; }
 
 		public bool PublicRatings { get; set; }
+
+		public bool ShowChatbox { get; set; }
 
 		[Display(Name = "Email")]
 		[DataType(DataType.EmailAddress)]
@@ -244,6 +247,7 @@ namespace VocaDb.Web.Models {
 				PreferredVideoService = this.PreferredVideoService,
 				PublicAlbumCollection = this.PublicAlbumCollection,
 				PublicRatings = this.PublicRatings,
+				ShowChatbox = this.ShowChatbox,
 				NewPass = this.NewPass,
 				WebLinks = this.WebLinks.Select(w => w.ToContract()).ToArray(),
 			};
