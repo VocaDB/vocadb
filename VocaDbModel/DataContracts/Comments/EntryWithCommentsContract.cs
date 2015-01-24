@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using VocaDb.Model.DataContracts.Api;
 
 namespace VocaDb.Model.DataContracts.Comments {
 
 	public class EntryWithCommentsContract {
 
-		public UnifiedCommentContract[] Comments { get; set; }
+		public EntryWithCommentsContract() { }
 
-		public EntryWithImageContract Entry { get; set; }
+		public EntryWithCommentsContract(EntryForApiContract entry, CommentContract[] comments) {
+			Comments = comments;
+			Entry = entry;
+		}
+
+		public CommentContract[] Comments { get; set; }
+
+		public EntryForApiContract Entry { get; set; }
 
 	}
 

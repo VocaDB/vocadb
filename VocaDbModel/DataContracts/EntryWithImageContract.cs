@@ -8,14 +8,18 @@ namespace VocaDb.Model.DataContracts {
 	// TODO: name isn't actually needed...
 	public class EntryWithImageContract : EntryWithNameAndVersionContract, IEntryImageInformation {
 
-		public EntryWithImageContract(IEntryWithNames entry, string mime, ContentLanguagePreference languagePreference) 
+		public EntryWithImageContract(IEntryWithNames entry, string mime, string songThumbUrl, ContentLanguagePreference languagePreference) 
 			: base(entry, languagePreference) {
 			
 			Mime = mime;
+			SongThumbUrl = songThumbUrl;
 
 		}
 
 		public string Mime { get; set;}
 
+		public string SongThumbUrl { get; set; }
+
 	}
+
 }

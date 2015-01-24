@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.Search;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 
 namespace VocaDb.Web.Controllers
@@ -51,7 +52,7 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.Description = brandableStringsManager.Home.SiteDescription;
 
-			var contract = otherService.GetFrontPageContent();
+			var contract = otherService.GetFrontPageContent(WebHelper.IsSSL(Request));
 
             return View(contract);
 

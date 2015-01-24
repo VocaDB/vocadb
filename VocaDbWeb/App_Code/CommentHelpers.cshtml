@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Model.DataContracts
+@using VocaDb.Model.DataContracts.Api
 @using VocaDb.Model.DataContracts.Comments
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
@@ -28,26 +29,25 @@
 	</div>		
 }
 
-@helper CommentEntryItem(UnifiedCommentContract comment) {
-	
-	var entry = comment.Entry;
-	var thumbUrl = Url.EntryThumbUrl(entry, comment.SongThumbUrl);
+@helper CommentEntryItem(EntryForApiContract entry) {
+		
+	var thumbUrl = (entry.MainPicture != null ? entry.MainPicture.UrlTinyThumb : null);
 	
 	<div class="media">
 		@if (!string.IsNullOrEmpty(thumbUrl)) {
-		<a class="pull-left" href="@Url.Action("Details", entry.EntryType.ToString(), new { id = entry.Id })" title="@entry.Name.AdditionalNames">
+		<a class="pull-left" href="@Url.Action("Details", entry.EntryType.ToString(), new { id = entry.Id })" title="@entry.AdditionalNames">
 			<img src="@thumbUrl" alt="thumb" class="coverPicThumb" />
 		</a>
 		}
 		
 		<div class="media-body">
 			<h4 class="media-heading">
-				<a href="@Url.Action("Details", entry.EntryType.ToString(), new { id = entry.Id })" title="@entry.Name.AdditionalNames">
-					@entry.Name.DisplayName
+				<a href="@Url.Action("Details", entry.EntryType.ToString(), new { id = entry.Id })" title="@entry.AdditionalNames">
+					@entry.Name
 				</a>
 			</h4>
-			@if (!string.IsNullOrEmpty(comment.ArtistString)) {
-				<span>@comment.ArtistString</span>
+			@if (!string.IsNullOrEmpty(entry.ArtistString)) {
+				<span>@entry.ArtistString</span>
 			}
 		</div>
 	</div>
@@ -57,7 +57,7 @@
 @helper CommentWithEntryVertical(EntryWithCommentsContract entry) {
 
 	<div class="well well-transparent">
-		@CommentEntryItem(entry.Comments.First())
+		@CommentEntryItem(entry.Entry)
 		@foreach (var comment in entry.Comments) {
 			@PrintComment(comment, false)
 			if (comment != entry.Comments.Last()) {

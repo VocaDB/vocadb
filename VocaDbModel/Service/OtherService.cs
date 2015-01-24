@@ -6,6 +6,7 @@ using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Comments;
 using VocaDb.Model.DataContracts.Songs;
@@ -17,6 +18,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
@@ -30,17 +32,19 @@ namespace VocaDb.Model.Service {
 
 	public class OtherService : ServiceBase {
 
-		class EntryComparer : IEqualityComparer<EntryWithImageContract> {
+		class EntryComparer : IEqualityComparer<IEntryWithNames> {
 
-			public bool Equals(EntryWithImageContract x, EntryWithImageContract y) {
+			public bool Equals(IEntryWithNames x, IEntryWithNames y) {
 				return x.EntryType == y.EntryType && x.Id == y.Id;
 			}
 
-			public int GetHashCode(EntryWithImageContract obj) {
+			public int GetHashCode(IEntryWithNames obj) {
 				return obj.Id;
 			}
 
 		}
+
+		private readonly IEntryThumbPersister thumbPersister;
 
 		private AlbumContract[] GetTopAlbums(ISession session, AlbumContract[] recentAlbums) {
 
@@ -192,32 +196,36 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private UnifiedCommentContract[] GetRecentComments(ISession session, int maxComments) {
+		private IEnumerable<EntryWithCommentsContract> CreateEntryWithCommentsContract<T>(IEnumerable<T> comments, Func<T, EntryForApiContract> entryContractFac)
+			where T : Comment {
+			
+			return comments.GroupBy(e => e.Entry, new EntryComparer()).Select(e => new EntryWithCommentsContract(entryContractFac(e.First()), e.Select(c => new CommentContract(c)).ToArray()));
+
+		}
+
+		private EntryWithCommentsContract[] GetRecentComments(ISession session, int maxComments, bool ssl) {
 
 			var albumComments = session.Query<AlbumComment>().Where(c => !c.Album.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
 			var artistComments = session.Query<ArtistComment>().Where(c => !c.Artist.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
-			var songComments = session.Query<SongComment>().Where(c => !c.Song.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
+			var songComments = session.Query<SongComment>().Where(c => !c.Song.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
 
-			var combined = albumComments.Cast<Comment>().Concat(artistComments).Concat(songComments)
-				.OrderByDescending(c => c.Created)
+			var combined = CreateEntryWithCommentsContract(albumComments, a => new EntryForApiContract(a.Album, LanguagePreference, thumbPersister, ssl, EntryOptionalFields.MainPicture))
+				.Concat(CreateEntryWithCommentsContract(artistComments, a => new EntryForApiContract(a.Artist, LanguagePreference, thumbPersister, ssl, EntryOptionalFields.MainPicture)))
+				.Concat(CreateEntryWithCommentsContract(songComments, a => new EntryForApiContract(a.Song, LanguagePreference, EntryOptionalFields.MainPicture)))
+				.OrderByDescending(c => c.Comments.First().Created)
 				.Take(maxComments)
-				.Select(c => new UnifiedCommentContract(c, LanguagePreference));
+				.ToArray();
 
-			return combined.ToArray();
+			return combined;
 
 		}
 
-		private EntryWithCommentsContract[] GroupByEntry(UnifiedCommentContract[] comments) {
+		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryThumbPersister thumbPersister) 
+			: base(sessionFactory, permissionContext, entryLinkFactory) {
 			
-			return comments.GroupBy(c => c.Entry, new EntryComparer()).Select(e => new EntryWithCommentsContract {
-					Entry = e.Key,
-					Comments = e.ToArray()
-				}).ToArray();
+			this.thumbPersister = thumbPersister;
 
 		}
-
-		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
-			: base(sessionFactory, permissionContext, entryLinkFactory) {}
 
 		public void AuditLog(string doingWhat, string who, AuditLogCategory category = AuditLogCategory.Unspecified) {
 
@@ -382,7 +390,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public FrontPageContract GetFrontPageContent() {
+		public FrontPageContract GetFrontPageContent(bool ssl) {
 
 			const int maxNewsEntries = 4;
 			const int maxActivityEntries = 15;
@@ -411,7 +419,7 @@ namespace VocaDb.Model.Service {
 
 				var firstSongVote = (newSongs.Any() ? session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
-				var recentComments = GroupByEntry(GetRecentComments(session, 8));
+				var recentComments = GetRecentComments(session, 8, ssl);
 
 				return new FrontPageContract(activityEntries, newsEntries, newAlbums, recentComments, topAlbums, newSongs, 
 					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference);
@@ -426,9 +434,9 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public EntryWithCommentsContract[] GetRecentComments() {
+		public EntryWithCommentsContract[] GetRecentComments(bool ssl) {
 
-			return GroupByEntry(HandleQuery(session => GetRecentComments(session, 50)));
+			return HandleQuery(session => GetRecentComments(session, 50, ssl));
 
 		}
 

@@ -50,8 +50,7 @@ namespace VocaDb.Model.DataContracts.Activityfeed {
 			Author = new UserContract(entry.Author);
 			CreateDate = entry.CreateDate;
 			EditEvent = entry.EditEvent;
-			EntryRef = new EntryWithImageContract(entry.EntryBase, GetMime(entry.EntryBase), languagePreference);
-			SongThumbUrl = GetSongThumbUrl(entry.EntryBase);
+			EntryRef = new EntryWithImageContract(entry.EntryBase, GetMime(entry.EntryBase), GetSongThumbUrl(entry.EntryBase), languagePreference);
 
 		}
 
@@ -63,8 +62,7 @@ namespace VocaDb.Model.DataContracts.Activityfeed {
 			Author = new UserContract(entry.Author);
 			CreateDate = entry.Created;
 			EditEvent = entry.EditEvent;
-			EntryRef = new EntryWithImageContract(entry.EntryBase, GetMime(entry.EntryBase), languagePreference);
-			SongThumbUrl = GetSongThumbUrl(entry.EntryBase);
+			EntryRef = new EntryWithImageContract(entry.EntryBase, GetMime(entry.EntryBase), GetSongThumbUrl(entry.EntryBase), languagePreference);
 
 		}
 
@@ -77,8 +75,6 @@ namespace VocaDb.Model.DataContracts.Activityfeed {
 		public EntryEditEvent EditEvent { get; set; }
 
 		public EntryWithImageContract EntryRef { get; set; }
-
-		public string SongThumbUrl { get; set; }
 
 	}
 

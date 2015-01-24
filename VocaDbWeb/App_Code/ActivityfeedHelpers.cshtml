@@ -26,7 +26,7 @@
 }
 
 @helper ActivityEntry(ActivityEntryContract entry) {
-	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.SongThumbUrl);
+	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.EntryRef.SongThumbUrl);
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
 			@UserHelpers.UserIconLink(entry.Author)
