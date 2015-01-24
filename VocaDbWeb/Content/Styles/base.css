@@ -19,6 +19,15 @@
 .validation-summary-valid {
   display: none;
 }
+.chatbox-hide {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  color: white;
+}
+.chatbox-hide:hover {
+  color: white;
+}
 .entry-description p {
   margin-bottom: 0;
 }

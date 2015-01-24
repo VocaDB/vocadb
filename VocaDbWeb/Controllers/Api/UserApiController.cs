@@ -375,5 +375,36 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Updates user setting.
+		/// </summary>
+		/// <param name="userId">ID of the user to be updated. This must match the current user OR be unspecified (or 0) if the user is not logged in.</param>
+		/// <param name="settingName">Name of the setting to be updated, for example 'showChatBox'.</param>
+		/// <param name="settingValue">Setting value, for example 'false'.</param>
+		[Route("{userId:int}/settings/{settingName}")]
+		public void PostSetting(int userId, string settingName, [FromBody] string settingValue) {
+			
+			if (userId != 0 || userId != permissionContext.LoggedUserId)
+				throw new HttpResponseException(HttpStatusCode.Unauthorized);
+
+			IUserSetting setting = null;
+
+			switch (settingName.ToLowerInvariant()) {
+				case "showchatbox":
+					setting = permissionContext.ShowChatbox;
+					break;
+			}
+
+			if (setting == null) {
+				throw new HttpResponseException(HttpStatusCode.BadRequest);
+			}
+
+			setting.ParseFromValue(settingValue);
+
+			if (permissionContext.IsLoggedIn)
+				queries.UpdateUserSetting(setting);
+
+		}
+
 	}
 }

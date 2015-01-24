@@ -189,6 +189,17 @@ module vdb.repositories {
         // callback: Callback function to be executed when the operation is complete.
         public updateSongRating: (songId: number, rating: vdb.models.SongVoteRating, callback: any) => void;
 
+		// Updates user setting.
+		// userId: user ID. Can be null in which case logged user ID (if any) will be used.
+		// settingName: name of the setting to be updated, for example 'showChatBox'.
+		// value: setting value, for example 'false'.
+		public updateUserSetting = (userId: number, settingName: string, value: string, callback: () => void) => {
+			
+			var url = this.urlMapper.mapRelative("/api/users/" + (userId || this.loggedUserId) + "/settings/" + settingName);
+			$.post(url, { '': value }, callback);
+
+		}
+
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
 

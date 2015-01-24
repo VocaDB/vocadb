@@ -25,12 +25,12 @@ namespace VocaDb.Model.Service.Security {
 
 		private UserWithPermissionsContract user;
 
-		private string GetCookieValue(string cookieName) {
+		private static string GetCookieValue(HttpRequest request, string cookieName) {
 			
 			if (HttpContext.Current == null)
 				return null;
 
-			var cookie = HttpContext.Current.Request.Cookies.Get(cookieName);
+			var cookie = request.Cookies.Get(cookieName);
 
 			if (cookie == null || string.IsNullOrEmpty(cookie.Value))
 				return null;
@@ -39,25 +39,31 @@ namespace VocaDb.Model.Service.Security {
 
 		}
 
-		private void SetCookie(string cookieName, string value, TimeSpan expires) {
+		private static void SetCookie(HttpContext context, string cookieName, string value, TimeSpan expires) {
 			
-			if (HttpContext.Current != null) {
+			if (context != null) {
 				var cookie = new HttpCookie(cookieName, value) { Expires = DateTime.Now + expires };
-				HttpContext.Current.Response.Cookies.Add(cookie);
+				context.Response.Cookies.Add(cookie);
 			}
+
+		}
+
+		private static bool TryGetCookieValue<T>(HttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter) {
+			
+			var cookieValue = GetCookieValue(request, "languagePreference");
+
+			if (cookieValue == null)
+				return false;
+
+			value = valueGetter(cookieValue);
+
+			return true;
 
 		}
 
 		private bool TryGetLanguagePreferenceFromCookie(ref ContentLanguagePreference languagePreference) {
 
-			var cookieValue = GetCookieValue("languagePreference");
-
-			if (cookieValue == null)
-				return false;
-
-			languagePreference = EnumVal<ContentLanguagePreference>.Parse(cookieValue);
-
-			return true;
+			return TryGetCookieValue(HttpContext.Current.Request, "languagePreference", ref languagePreference, EnumVal<ContentLanguagePreference>.Parse);
 
 		}
 
@@ -209,6 +215,14 @@ namespace VocaDb.Model.Service.Security {
 			}
 		}
 
+		public UserSettingShowChatbox ShowChatbox {
+			get {
+				
+				return new UserSettingShowChatbox(HttpContext.Current, this);
+
+			}
+		}
+
 		public UserGroupId UserGroupId {
 			get {
 
@@ -240,7 +254,7 @@ namespace VocaDb.Model.Service.Security {
 
 		public void SetLanguagePreferenceCookie(ContentLanguagePreference languagePreference) {
 
-			SetCookie("languagePreference", languagePreference.ToString(), TimeSpan.FromDays(30));
+			SetCookie(HttpContext.Current, "languagePreference", languagePreference.ToString(), TimeSpan.FromDays(30));
 
 		}
 

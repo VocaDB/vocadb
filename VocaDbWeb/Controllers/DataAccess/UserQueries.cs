@@ -1175,6 +1175,22 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public void UpdateUserSetting(IUserSetting setting) {
+			
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			repository.HandleTransaction(session => {
+
+				var user = session.GetLoggedUser(PermissionContext);
+
+				setting.UpdateUser(user);
+
+				session.Update(user);
+
+			});
+
+		}
+
 		/// <summary>
 		/// Verifies user email.
 		/// Logged user must be the same as the user being verified.

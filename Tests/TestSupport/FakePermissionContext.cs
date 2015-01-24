@@ -47,6 +47,10 @@ namespace VocaDb.Tests.TestSupport {
 			throw new System.NotImplementedException();
 		}
 
+		public UserSettingShowChatbox ShowChatbox {
+			get { throw new System.NotImplementedException(); }
+		}
+
 		public UserGroupId UserGroupId { get; private set; }
 
 		public void OverrideLanguage(ContentLanguagePreference languagePreference) {

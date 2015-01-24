@@ -25,6 +25,8 @@ namespace VocaDb.Model.Domain.Security {
 		/// </summary>
 		string Name { get; }
 
+		UserSettingShowChatbox ShowChatbox { get; }
+
 		/// <summary>
 		/// Group of the currently logged in user. Cannot be null. If no user is logged in, this will be <see cref="UserGroup.Nothing"/>
 		/// </summary>

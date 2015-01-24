@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Web.Helpers
 @using System.Web.Optimization
+@inherits VocaDb.Web.Code.VocaDbPage
 
 @{
 	var searchObjectType = Html.GlobalSearchObjectType();
@@ -30,7 +31,7 @@
     vdb.ui.initAll();
 
     var entryReportRepository = new vdb.repositories.EntryReportRepository(urlMapper);
-    var userRepository = new vdb.repositories.UserRepository(urlMapper);
+    var userRepository = new vdb.repositories.UserRepository(urlMapper, @UserContext.LoggedUserId);
     
     var entryTypeTranslations = @ResourceHelpers.ToJSON(Resources.EntryTypeNames.ResourceManager);
     var topBarData = @Html.Raw(JsonHelpers.Serialize(new {
