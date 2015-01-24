@@ -2,11 +2,15 @@
 
 <div>
 	<h4 data-bind="visible: showTranslation">Original</h4>
-	<textarea rows="8" cols="70" class="span5" data-bind="value: original"></textarea>
-	<a href="#" class="textLink addLink" data-bind="visible: !showTranslation(), click: function() { showTranslation(true); }">Add English translation</a>
+	<textarea rows="8" cols="70" class="edit-text" data-bind="textInput: original"></textarea>
+	<div data-bind="markdown: original" class="edit-preview"></div>
+	<p>
+		<a href="#" class="textLink addLink" data-bind="visible: !showTranslation(), click: function() { showTranslation(true); }">Add English translation</a>
+	</p>
 </div>
-<div>
-	<h4 data-bind="visible: showTranslation">English translation</h4>
-	<textarea rows="8" cols="70" class="span5" data-bind="value: english, visible: showTranslation"></textarea>
+<div data-bind="visible: showTranslation">
+	<h4>English translation</h4>
+	<textarea rows="8" cols="70" class="edit-text" data-bind="textInput: english"></textarea>
+	<div data-bind="markdown: english" class="edit-preview"></div>
 </div>
 

@@ -88,7 +88,7 @@
 					<label class="inline-block">Description</label>
 					<span data-bind="visible: validationError_needReferences, qTip" class="icon errorIcon" title="@ValidationErrors.NeedReferences"></span>
 				</div>
-				<div class="editor-field" data-bind="with: description">
+				<div class="editor-field entry-edit-description" data-bind="with: description">
 					@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
 				</div>
 

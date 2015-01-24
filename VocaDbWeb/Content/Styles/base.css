@@ -22,6 +22,16 @@
 .entry-description p {
   margin-bottom: 0;
 }
+.entry-edit-description .edit-text {
+  width: 40%;
+  margin-right: 10px;
+}
+.entry-edit-description .edit-text,
+.entry-edit-description .edit-preview {
+  display: inline-block;
+  vertical-align: top;
+  min-width: 400px;
+}
 .song-pv-player {
   margin: 24px;
 }
