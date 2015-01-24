@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using NLog;
@@ -26,17 +25,37 @@ namespace VocaDb.Model.Service.Security {
 
 		private UserWithPermissionsContract user;
 
-		private bool TryGetLanguagePreferenceFromCookie(ref ContentLanguagePreference languagePreference) {
-
+		private string GetCookieValue(string cookieName) {
+			
 			if (HttpContext.Current == null)
-				return false;
+				return null;
 
-			var cookie = HttpContext.Current.Request.Cookies.Get("languagePreference");
+			var cookie = HttpContext.Current.Request.Cookies.Get(cookieName);
 
 			if (cookie == null || string.IsNullOrEmpty(cookie.Value))
+				return null;
+			else
+				return cookie.Value;
+
+		}
+
+		private void SetCookie(string cookieName, string value, TimeSpan expires) {
+			
+			if (HttpContext.Current != null) {
+				var cookie = new HttpCookie(cookieName, value) { Expires = DateTime.Now + expires };
+				HttpContext.Current.Response.Cookies.Add(cookie);
+			}
+
+		}
+
+		private bool TryGetLanguagePreferenceFromCookie(ref ContentLanguagePreference languagePreference) {
+
+			var cookieValue = GetCookieValue("languagePreference");
+
+			if (cookieValue == null)
 				return false;
 
-			languagePreference = EnumVal<ContentLanguagePreference>.Parse(cookie.Value);
+			languagePreference = EnumVal<ContentLanguagePreference>.Parse(cookieValue);
 
 			return true;
 
@@ -221,14 +240,8 @@ namespace VocaDb.Model.Service.Security {
 
 		public void SetLanguagePreferenceCookie(ContentLanguagePreference languagePreference) {
 
+			SetCookie("languagePreference", languagePreference.ToString(), TimeSpan.FromDays(30));
 
-			if (HttpContext.Current != null) {
-				var cookie = new HttpCookie("languagePreference", languagePreference.ToString()) { Expires = DateTime.Now + TimeSpan.FromDays(30) };
-				//if (HttpContext.Current.Request.Cookies.Get("languagePreference") != null)
-				//	HttpContext.Current.Response.Cookies.Set(cookie);				
-				//else
-					HttpContext.Current.Response.Cookies.Add(cookie);
-			}
 		}
 
 		public void VerifyLogin() {
