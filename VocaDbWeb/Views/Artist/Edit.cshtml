@@ -86,6 +86,7 @@
 
 				<div class="editor-label">
 					<label class="inline-block">Description</label>
+					@Helpers.MarkdownNotice()
 					<span data-bind="visible: validationError_needReferences, qTip" class="icon errorIcon" title="@ValidationErrors.NeedReferences"></span>
 				</div>
 				<div class="editor-field entry-edit-description" data-bind="with: description">

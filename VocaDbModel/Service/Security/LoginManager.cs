@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.Security {
 
 		private static string GetCookieValue(HttpRequest request, string cookieName) {
 			
-			if (HttpContext.Current == null)
+			if (request == null)
 				return null;
 
 			var cookie = request.Cookies.Get(cookieName);
@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.Security {
 
 		private bool TryGetLanguagePreferenceFromCookie(ref ContentLanguagePreference languagePreference) {
 
-			return TryGetCookieValue(HttpContext.Current.Request, "languagePreference", ref languagePreference, EnumVal<ContentLanguagePreference>.Parse);
+			return TryGetCookieValue(HttpContext.Current != null ? HttpContext.Current.Request : null, "languagePreference", ref languagePreference, EnumVal<ContentLanguagePreference>.Parse);
 
 		}
 
