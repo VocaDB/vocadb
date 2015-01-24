@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using NHibernate;
@@ -273,7 +272,6 @@ namespace VocaDb.Model.Service {
 		public int GeneratePictureThumbs() {
 
 			VerifyAdmin();
-			int count = 0;
 
 			throw new NotImplementedException();
 

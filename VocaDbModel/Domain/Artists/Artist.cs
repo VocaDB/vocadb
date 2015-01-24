@@ -25,7 +25,6 @@ namespace VocaDb.Model.Domain.Artists {
 		private IList<ArtistComment> comments = new List<ArtistComment>();
 		private User createdBy;
 		private EnglishTranslatedString description;
-		private string descriptionEng;
 		private IList<GroupForArtist> groups = new List<GroupForArtist>();
 		//private IList<AlbumHit> hits = new List<AlbumHit>();
 		private IList<GroupForArtist> members = new List<GroupForArtist>();
