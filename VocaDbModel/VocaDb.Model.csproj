@@ -128,6 +128,7 @@
     <Compile Include="DataContracts\Artists\AdvancedArtistStatsContract.cs" />
     <Compile Include="DataContracts\Artists\TranslatedArtistContract.cs" />
     <Compile Include="DataContracts\CommentForApiContract.cs" />
+    <Compile Include="DataContracts\Comments\EntryWithCommentsContract.cs" />
     <Compile Include="DataContracts\EntryThumbForApiContract.cs" />
     <Compile Include="DataContracts\Globalization\EnglishTranslatedStringContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />

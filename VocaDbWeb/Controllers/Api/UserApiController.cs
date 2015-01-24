@@ -384,7 +384,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{userId:int}/settings/{settingName}")]
 		public void PostSetting(int userId, string settingName, [FromBody] string settingValue) {
 			
-			if (userId != 0 || userId != permissionContext.LoggedUserId)
+			if (userId != 0 && userId != permissionContext.LoggedUserId)
 				throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
 			IUserSetting setting = null;

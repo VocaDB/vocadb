@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Model.DataContracts
+@using VocaDb.Model.DataContracts.Comments
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
 @inherits VocaDb.Web.Code.HelperPage
@@ -53,11 +54,16 @@
 		
 }
 
-@helper CommentWithEntryVertical(UnifiedCommentContract comment) {
+@helper CommentWithEntryVertical(EntryWithCommentsContract entry) {
 
 	<div class="well well-transparent">
-		@CommentEntryItem(comment)
-		@PrintComment(comment, false)
+		@CommentEntryItem(entry.Comments.First())
+		@foreach (var comment in entry.Comments) {
+			@PrintComment(comment, false)
+			if (comment != entry.Comments.Last()) {
+				<hr />
+			}
+		}
 	</div>
 
 }

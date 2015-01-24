@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IGrouping<VocaDb.Model.DataContracts.EntryRefWithNameContract, VocaDb.Model.DataContracts.UnifiedCommentContract>>
+﻿@model IEnumerable<VocaDb.Model.DataContracts.Comments.EntryWithCommentsContract>
 
 @{
     ViewBag.Title = ViewRes.Comment.IndexStrings.RecentComments;
@@ -10,14 +10,14 @@
 	<div class="row-fluid comment-with-entry well well-transparent">
 		
 		<div class="span5">
-			@foreach (var comment in entry) {
+			@foreach (var comment in entry.Comments) {
 				@CommentHelpers.CommentBodyLarge(comment, false);
 			}			
 		</div>
 
 		<div class="span5 item">
 		
-			@CommentHelpers.CommentEntryItem(entry.First())
+			@CommentHelpers.CommentEntryItem(entry.Comments.First())
 				
 		</div>
 		    		

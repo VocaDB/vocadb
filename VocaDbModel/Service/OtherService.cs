@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
 using NHibernate;
@@ -6,6 +7,7 @@ using NHibernate.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.Comments;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
@@ -27,6 +29,18 @@ using VocaDb.Model.Service.Search.Tags;
 namespace VocaDb.Model.Service {
 
 	public class OtherService : ServiceBase {
+
+		class EntryComparer : IEqualityComparer<EntryWithImageContract> {
+
+			public bool Equals(EntryWithImageContract x, EntryWithImageContract y) {
+				return x.EntryType == y.EntryType && x.Id == y.Id;
+			}
+
+			public int GetHashCode(EntryWithImageContract obj) {
+				return obj.Id;
+			}
+
+		}
 
 		private AlbumContract[] GetTopAlbums(ISession session, AlbumContract[] recentAlbums) {
 
@@ -190,6 +204,15 @@ namespace VocaDb.Model.Service {
 				.Select(c => new UnifiedCommentContract(c, LanguagePreference));
 
 			return combined.ToArray();
+
+		}
+
+		private EntryWithCommentsContract[] GroupByEntry(UnifiedCommentContract[] comments) {
+			
+			return comments.GroupBy(c => c.Entry, new EntryComparer()).Select(e => new EntryWithCommentsContract {
+					Entry = e.Key,
+					Comments = e.ToArray()
+				}).ToArray();
 
 		}
 
@@ -388,7 +411,7 @@ namespace VocaDb.Model.Service {
 
 				var firstSongVote = (newSongs.Any() ? session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
-				var recentComments = GetRecentComments(session, 7);
+				var recentComments = GroupByEntry(GetRecentComments(session, 8));
 
 				return new FrontPageContract(activityEntries, newsEntries, newAlbums, recentComments, topAlbums, newSongs, 
 					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference);
@@ -403,9 +426,9 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public UnifiedCommentContract[] GetRecentComments() {
+		public EntryWithCommentsContract[] GetRecentComments() {
 
-			return HandleQuery(session => GetRecentComments(session, 50));
+			return GroupByEntry(HandleQuery(session => GetRecentComments(session, 50)));
 
 		}
 
