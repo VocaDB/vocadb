@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Security {
@@ -50,7 +51,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		private static bool TryGetCookieValue<T>(HttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter) {
+		private static bool TryGetCookieValue(HttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter) {
 			
 			var cookieValue = GetCookieValue(request, cookieName);
 
@@ -63,8 +64,21 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		delegate bool ValueGetterDelegate(string str, out T val);
+
+		private static bool TryGetFromRequest(HttpRequest request, string paramName, ref T value, ValueGetterDelegate valueGetter) {
+
+			if (request == null || string.IsNullOrEmpty(paramName) || string.IsNullOrEmpty(request.Params[paramName]))
+				return false;
+
+			return valueGetter(request.Params[paramName], out value);
+
+		}
+
 		private readonly HttpContext context;
 		private readonly IUserPermissionContext permissionContext;
+		private T requestValue;
+		private bool overrideRequestValue;
 
 		protected virtual TimeSpan CookieExpires {
 			get {
@@ -80,9 +94,31 @@ namespace VocaDb.Model.Domain.Security {
 			}
 		}
 
-		protected abstract T ParseValue(string str);
+		private T ParseValue(string str) {
+			
+			T val;
+			return TryParseValue(str, out val) ? val : Default;
+
+		}
+
+		private HttpRequest Request {
+			get {
+				return context != null ? context.Request : null;
+			}
+		}
+
+		protected virtual string RequestParamName {
+			get {
+				return null;
+			}
+		}
 
 		protected abstract T GetPersistedValue(UserWithPermissionsContract permissionContext);
+
+		public void OverrideRequestValue(T val) {
+			requestValue = val;
+			overrideRequestValue = true;			
+		}
 
 		public void ParseFromValue(string val) {
 			Value = ParseValue(val);
@@ -92,9 +128,12 @@ namespace VocaDb.Model.Domain.Security {
 
 		protected abstract void SetPersistedValue(UserWithPermissionsContract user, T val);
 
+		protected abstract bool TryParseValue(string str, out T val);
+
 		protected UserSetting(HttpContext context, IUserPermissionContext permissionContext) {
 			this.context = context;
 			this.permissionContext = permissionContext;
+			requestValue = Default;
 		}
 
 		public void UpdateUser(User user) {
@@ -108,17 +147,25 @@ namespace VocaDb.Model.Domain.Security {
 		public T Value {
 			get {
 
+				if (overrideRequestValue)
+					return requestValue;
+
+				var val = requestValue;
+				if (TryGetFromRequest(Request, RequestParamName, ref val, TryParseValue))
+					return val;
+
 				if (permissionContext.IsLoggedIn)
 					return GetPersistedValue(permissionContext.LoggedUser);
 
-				var val = Default;
-				if (TryGetCookieValue(context.Request, CookieName, ref val, ParseValue))
+				if (TryGetCookieValue(Request, CookieName, ref val, ParseValue))
 					return val;
 				
 				return val;
 					
 			}
 			set {
+
+				OverrideRequestValue(value);
 
 				if (permissionContext.IsLoggedIn)
 					SetPersistedValue(permissionContext.LoggedUser, value);
@@ -132,7 +179,8 @@ namespace VocaDb.Model.Domain.Security {
 
 	public class UserSettingShowChatbox : UserSetting<bool> {
 
-		public UserSettingShowChatbox(HttpContext context, IUserPermissionContext permissionContext) : base(context, permissionContext) {}
+		public UserSettingShowChatbox(HttpContext context, IUserPermissionContext permissionContext) 
+			: base(context, permissionContext) {}
 
 		protected override string CookieName {
 			get { return "showChatbox"; }
@@ -140,10 +188,6 @@ namespace VocaDb.Model.Domain.Security {
 
 		protected override bool Default {
 			get { return true; }
-		}
-
-		protected override bool ParseValue(string str) {
-			return bool.Parse(str);
 		}
 
 		protected override bool GetPersistedValue(UserWithPermissionsContract user) {
@@ -156,6 +200,45 @@ namespace VocaDb.Model.Domain.Security {
 
 		protected override void SetPersistedValue(UserWithPermissionsContract user, bool val) {
 			user.ShowChatbox = val;
+		}
+
+		protected override bool TryParseValue(string str, out bool val) {
+			return bool.TryParse(str, out val);
+		}
+
+	}
+
+	public class UserSettingLanguagePreference : UserSetting<ContentLanguagePreference> {
+		
+		public UserSettingLanguagePreference(HttpContext context, IUserPermissionContext permissionContext) 
+			: base(context, permissionContext) {}
+
+		protected override string CookieName {
+			get { return "languagePreference"; }
+		}
+
+		protected override ContentLanguagePreference Default {
+			get { return ContentLanguagePreference.Default; }
+		}
+
+		protected override string RequestParamName {
+			get { return "lang"; }
+		}
+
+		protected override ContentLanguagePreference GetPersistedValue(UserWithPermissionsContract user) {
+			return user.DefaultLanguageSelection;
+		}
+
+		protected override void SetPersistedValue(User user, ContentLanguagePreference val) {
+			user.DefaultLanguageSelection = val;
+		}
+
+		protected override void SetPersistedValue(UserWithPermissionsContract user, ContentLanguagePreference val) {
+			user.DefaultLanguageSelection = val;
+		}
+
+		protected override bool TryParseValue(string str, out ContentLanguagePreference val) {
+			return Enum.TryParse(str, out val);
 		}
 
 	}
