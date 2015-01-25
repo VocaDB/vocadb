@@ -8,6 +8,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		ContentLanguagePreference LanguagePreference { get; }
 
+		UserSettingLanguagePreference LanguagePreferenceSetting { get; }
+
 		bool IsLoggedIn { get; }
 
 		/// <summary>

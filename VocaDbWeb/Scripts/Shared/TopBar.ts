@@ -58,7 +58,8 @@ function entryFindCallback(response: (items: string[]) => void, results: string[
 
 function setLanguagePreferenceCookie(languagePreference: string) {
 
-	$.post("/Home/SetContentPreferenceCookie", { languagePreference: languagePreference }, () => {
+	var userRepo = new vdb.repositories.UserRepository(new vdb.UrlMapper(vdb.values.baseAddress), 0);
+	userRepo.updateUserSetting(null, 'languagePreference', languagePreference, () => {
 		window.location.reload();
 	});
 

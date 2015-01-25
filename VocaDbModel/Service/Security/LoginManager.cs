@@ -25,66 +25,6 @@ namespace VocaDb.Model.Service.Security {
 
 		private UserWithPermissionsContract user;
 
-		private static string GetCookieValue(HttpRequest request, string cookieName) {
-			
-			if (request == null)
-				return null;
-
-			var cookie = request.Cookies.Get(cookieName);
-
-			if (cookie == null || string.IsNullOrEmpty(cookie.Value))
-				return null;
-			else
-				return cookie.Value;
-
-		}
-
-		private static void SetCookie(HttpContext context, string cookieName, string value, TimeSpan expires) {
-			
-			if (context != null) {
-				var cookie = new HttpCookie(cookieName, value) { Expires = DateTime.Now + expires };
-				context.Response.Cookies.Add(cookie);
-			}
-
-		}
-
-		private static bool TryGetCookieValue<T>(HttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter) {
-			
-			var cookieValue = GetCookieValue(request, "languagePreference");
-
-			if (cookieValue == null)
-				return false;
-
-			value = valueGetter(cookieValue);
-
-			return true;
-
-		}
-
-		private bool TryGetLanguagePreferenceFromCookie(ref ContentLanguagePreference languagePreference) {
-
-			return TryGetCookieValue(HttpContext.Current != null ? HttpContext.Current.Request : null, "languagePreference", ref languagePreference, EnumVal<ContentLanguagePreference>.Parse);
-
-		}
-
-		private bool TryGetLanguagePreferenceFromRequest(ref ContentLanguagePreference languagePreference) {
-
-			if (HttpContext.Current == null || string.IsNullOrEmpty(HttpContext.Current.Request.Params[LangParamName]))
-				return false;
-
-			return Enum.TryParse(HttpContext.Current.Request.Params[LangParamName], out languagePreference);
-
-		}
-
-		private ContentLanguagePreference OverrideLang {
-			get { return (ContentLanguagePreference)HttpContext.Current.Items["overrideLang"]; }
-			set { HttpContext.Current.Items["overrideLang"] = value; }
-		}
-
-		private bool OverrideUserLang {
-			get { return HttpContext.Current != null && HttpContext.Current.Items.Contains("overrideLang"); }
-		}
-
 		private void SetCultureSafe(string name, bool culture, bool uiCulture) {
 
 			if (string.IsNullOrEmpty(name))
@@ -160,22 +100,13 @@ namespace VocaDb.Model.Service.Security {
 
 		public ContentLanguagePreference LanguagePreference {
 			get {
+				return LanguagePreferenceSetting.Value;
+			}
+		}
 
-				if (OverrideUserLang)
-					return OverrideLang;
-
-				var lp = ContentLanguagePreference.Default;
-
-				if (TryGetLanguagePreferenceFromCookie(ref lp)) {
-					return lp;
-				}
-
-				if (TryGetLanguagePreferenceFromRequest(ref lp)) {
-					return lp;
-				}
-
-				return (LoggedUser != null ? LoggedUser.DefaultLanguageSelection : ContentLanguagePreference.Default);
-
+		public UserSettingLanguagePreference LanguagePreferenceSetting {
+			get {
+				return new UserSettingLanguagePreference(HttpContext.Current, this);
 			}
 		}
 
@@ -249,12 +180,12 @@ namespace VocaDb.Model.Service.Security {
 		}
 
 		public void OverrideLanguage(ContentLanguagePreference languagePreference) {
-			OverrideLang = languagePreference;
+			LanguagePreferenceSetting.OverrideRequestValue(languagePreference);
 		}
 
 		public void SetLanguagePreferenceCookie(ContentLanguagePreference languagePreference) {
 
-			SetCookie(HttpContext.Current, "languagePreference", languagePreference.ToString(), TimeSpan.FromDays(30));
+			LanguagePreferenceSetting.Value = languagePreference;
 
 		}
 

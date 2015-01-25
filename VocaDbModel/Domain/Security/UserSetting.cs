@@ -66,19 +66,17 @@ namespace VocaDb.Model.Domain.Security {
 
 		delegate bool ValueGetterDelegate(string str, out T val);
 
-		private static bool TryGetFromRequest(HttpRequest request, string paramName, ref T value, ValueGetterDelegate valueGetter) {
+		private static bool TryGetFromQueryString(HttpRequest request, string paramName, ref T value, ValueGetterDelegate valueGetter) {
 
-			if (request == null || string.IsNullOrEmpty(paramName) || string.IsNullOrEmpty(request.Params[paramName]))
+			if (request == null || string.IsNullOrEmpty(paramName) || string.IsNullOrEmpty(request.QueryString[paramName]))
 				return false;
 
-			return valueGetter(request.Params[paramName], out value);
+			return valueGetter(request.QueryString[paramName], out value);
 
 		}
 
 		private readonly HttpContext context;
 		private readonly IUserPermissionContext permissionContext;
-		private T requestValue;
-		private bool overrideRequestValue;
 
 		protected virtual TimeSpan CookieExpires {
 			get {
@@ -86,11 +84,21 @@ namespace VocaDb.Model.Domain.Security {
 			}
 		}
 
-		protected abstract string CookieName { get; }
+		protected virtual string CookieName {
+			get {
+				return string.Format("UserSettings.{0}", SettingName);
+			}
+		}
 
 		protected virtual T Default {
 			get {
 				return default(T);
+			}
+		}
+
+		private bool IsRequestValueOverridden {
+			get {
+				return context != null && context.Items.Contains(RequestItemName);
 			}
 		}
 
@@ -113,11 +121,23 @@ namespace VocaDb.Model.Domain.Security {
 			}
 		}
 
+		private string RequestItemName {
+			get {
+				return string.Format("UserSettings.{0}", SettingName);
+			}
+		}
+
+		private T RequestValue {
+			get { return (T)HttpContext.Current.Items[RequestItemName]; }
+			set { HttpContext.Current.Items[RequestItemName] = value; }			
+		}
+
+		protected abstract string SettingName { get; }
+
 		protected abstract T GetPersistedValue(UserWithPermissionsContract permissionContext);
 
 		public void OverrideRequestValue(T val) {
-			requestValue = val;
-			overrideRequestValue = true;			
+			RequestValue = val;
 		}
 
 		public void ParseFromValue(string val) {
@@ -128,12 +148,15 @@ namespace VocaDb.Model.Domain.Security {
 
 		protected abstract void SetPersistedValue(UserWithPermissionsContract user, T val);
 
+		public override string ToString() {
+			return string.Format("User setting {0}: {1}", SettingName, Value);
+		}
+
 		protected abstract bool TryParseValue(string str, out T val);
 
 		protected UserSetting(HttpContext context, IUserPermissionContext permissionContext) {
 			this.context = context;
 			this.permissionContext = permissionContext;
-			requestValue = Default;
 		}
 
 		public void UpdateUser(User user) {
@@ -147,11 +170,11 @@ namespace VocaDb.Model.Domain.Security {
 		public T Value {
 			get {
 
-				if (overrideRequestValue)
-					return requestValue;
+				if (IsRequestValueOverridden)
+					return RequestValue;
 
-				var val = requestValue;
-				if (TryGetFromRequest(Request, RequestParamName, ref val, TryParseValue))
+				var val = Default;
+				if (TryGetFromQueryString(Request, RequestParamName, ref val, TryParseValue))
 					return val;
 
 				if (permissionContext.IsLoggedIn)
@@ -165,7 +188,8 @@ namespace VocaDb.Model.Domain.Security {
 			}
 			set {
 
-				OverrideRequestValue(value);
+				if (IsRequestValueOverridden)
+					OverrideRequestValue(value);
 
 				if (permissionContext.IsLoggedIn)
 					SetPersistedValue(permissionContext.LoggedUser, value);
@@ -182,12 +206,12 @@ namespace VocaDb.Model.Domain.Security {
 		public UserSettingShowChatbox(HttpContext context, IUserPermissionContext permissionContext) 
 			: base(context, permissionContext) {}
 
-		protected override string CookieName {
-			get { return "showChatbox"; }
-		}
-
 		protected override bool Default {
 			get { return true; }
+		}
+
+		protected override string SettingName {
+			get { return "ShowChatbox"; }
 		}
 
 		protected override bool GetPersistedValue(UserWithPermissionsContract user) {
@@ -213,16 +237,16 @@ namespace VocaDb.Model.Domain.Security {
 		public UserSettingLanguagePreference(HttpContext context, IUserPermissionContext permissionContext) 
 			: base(context, permissionContext) {}
 
-		protected override string CookieName {
-			get { return "languagePreference"; }
-		}
-
 		protected override ContentLanguagePreference Default {
 			get { return ContentLanguagePreference.Default; }
 		}
 
 		protected override string RequestParamName {
 			get { return "lang"; }
+		}
+
+		protected override string SettingName {
+			get { return "LanguagePreference"; }
 		}
 
 		protected override ContentLanguagePreference GetPersistedValue(UserWithPermissionsContract user) {

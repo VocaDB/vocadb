@@ -98,17 +98,6 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Index", "Search", new { filter });
 		}
 
-		public ActionResult SetContentPreferenceCookie(ContentLanguagePreference languagePreference) {
-
-			PermissionContext.SetLanguagePreferenceCookie(languagePreference);
-
-			if (PermissionContext.HasPermission(PermissionToken.EditProfile))
-				userService.UpdateContentLanguagePreference(languagePreference);
-
-			return Content(string.Empty);
-
-		}
-
 		public ActionResult Wiki() {
 			return View();
 		}

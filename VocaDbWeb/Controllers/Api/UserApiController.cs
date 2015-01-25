@@ -390,6 +390,9 @@ namespace VocaDb.Web.Controllers.Api {
 			IUserSetting setting = null;
 
 			switch (settingName.ToLowerInvariant()) {
+				case "languagepreference":
+					setting = permissionContext.LanguagePreferenceSetting;
+					break;
 				case "showchatbox":
 					setting = permissionContext.ShowChatbox;
 					break;
