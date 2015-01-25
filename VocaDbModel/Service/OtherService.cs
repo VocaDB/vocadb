@@ -209,14 +209,14 @@ namespace VocaDb.Model.Service {
 			var artistComments = session.Query<ArtistComment>().Where(c => !c.Artist.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
 			var songComments = session.Query<SongComment>().Where(c => !c.Song.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
 
-			var combined = CreateEntryWithCommentsContract(albumComments, a => new EntryForApiContract(a.Album, LanguagePreference, thumbPersister, ssl, EntryOptionalFields.MainPicture))
-				.Concat(CreateEntryWithCommentsContract(artistComments, a => new EntryForApiContract(a.Artist, LanguagePreference, thumbPersister, ssl, EntryOptionalFields.MainPicture)))
-				.Concat(CreateEntryWithCommentsContract(songComments, a => new EntryForApiContract(a.Song, LanguagePreference, EntryOptionalFields.MainPicture)))
-				.OrderByDescending(c => c.Comments.First().Created)
-				.Take(maxComments)
+			var combined = albumComments.Cast<Comment>().Concat(artistComments).Concat(songComments)
+				.OrderByDescending(c => c.Created)
+				.Take(maxComments);
+				
+			var contracts = CreateEntryWithCommentsContract(combined, c => EntryForApiContract.Create(c.Entry, LanguagePreference, thumbPersister, null, ssl, EntryOptionalFields.MainPicture))
 				.ToArray();
 
-			return combined;
+			return contracts;
 
 		}
 

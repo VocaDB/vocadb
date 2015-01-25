@@ -16,6 +16,25 @@ namespace VocaDb.Model.DataContracts.Api {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryForApiContract : IEntryWithIntId {
 
+		public static EntryForApiContract Create(IEntryWithNames entry, ContentLanguagePreference languagePreference, 
+			IEntryThumbPersister thumbPersister, IEntryImagePersisterOld imagePersisterOld, bool ssl,
+			EntryOptionalFields includedFields) {
+			
+			ParamIs.NotNull(() => entry);
+
+			if (entry is Album)
+				return new EntryForApiContract((Album)entry, languagePreference, thumbPersister, ssl, includedFields);
+			else if (entry is Artist)
+				return new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, ssl, includedFields);
+			else if (entry is Song)
+				return new EntryForApiContract((Song)entry, languagePreference, includedFields);
+			else if (entry is Tag)
+				return new EntryForApiContract((Tag)entry, imagePersisterOld, ssl, includedFields);
+
+			throw new ArgumentException("Unsupported entry type: " + entry, "entry");
+
+		}
+
 		private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference) {
 
 			EntryType = entry.EntryType;
