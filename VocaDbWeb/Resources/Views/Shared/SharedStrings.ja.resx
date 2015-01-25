@@ -129,6 +129,9 @@
   <data name="Artists" xml:space="preserve">
     <value>アーティスト</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>概要</value>
   </data>

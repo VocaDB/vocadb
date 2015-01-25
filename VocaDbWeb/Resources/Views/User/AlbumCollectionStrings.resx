@@ -120,13 +120,22 @@
   <data name="Album" xml:space="preserve">
     <value>Album</value>
   </data>
+  <data name="CollectionStatusAnything" xml:space="preserve">
+    <value>Anything</value>
+  </data>
   <data name="MediaType" xml:space="preserve">
     <value>Media type</value>
   </data>
   <data name="Rating" xml:space="preserve">
     <value>Rating</value>
   </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Release date</value>
+  </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Release event</value>
+  </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>Collection status</value>
   </data>
 </root>

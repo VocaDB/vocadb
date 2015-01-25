@@ -132,6 +132,9 @@
   <data name="Single" xml:space="preserve">
     <value>シングル</value>
   </data>
+  <data name="SplitAlbum" xml:space="preserve">
+    <value>スプリットアルバム</value>
+  </data>
   <data name="Unknown" xml:space="preserve">
     <value>詳細は定められていない</value>
   </data>

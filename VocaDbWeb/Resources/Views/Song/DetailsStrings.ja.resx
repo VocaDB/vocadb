@@ -135,6 +135,9 @@
   <data name="Duration" xml:space="preserve">
     <value>タイム</value>
   </data>
+  <data name="Embed" xml:space="preserve">
+    <value>埋め込む</value>
+  </data>
   <data name="Favorites" xml:space="preserve">
     <value>{0}フェイバリット</value>
   </data>
@@ -162,6 +165,12 @@
   <data name="MatchingTags" xml:space="preserve">
     <value>同じタグ</value>
   </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>ナビゲーション</value>
+  </data>
+  <data name="NewListName" xml:space="preserve">
+    <value>新しいリスト名</value>
+  </data>
   <data name="OriginalMedia" xml:space="preserve">
     <value>オリジナル投稿</value>
   </data>
@@ -179,6 +188,9 @@
   </data>
   <data name="Share" xml:space="preserve">
     <value>シェア</value>
+  </data>
+  <data name="Social" xml:space="preserve">
+    <value>ソーシャルメディア</value>
   </data>
   <data name="TotalScore" xml:space="preserve">
     <value>{0}トータルスコア</value>

@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Web.Helpers
 @using Resources
 @using SharedRes = ViewRes.SharedStrings
+@using Res = ViewRes.User.AlbumCollectionStrings
 
 <div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
 
@@ -27,18 +28,20 @@
 	<div class="control-group">
 		<div class="controls">
 			<div class="input-append">
-				<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="Type something..." />
+				<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="@ViewRes.Search.IndexStrings.TypeSomething" />
 				<button class="btn btn-danger" data-bind="click: function() { searchTerm(''); }, visible: searchTerm">@SharedRes.Clear</button>
 			</div>
 		</div>
 	</div>
 
 	<div class="control-group" data-bind="visible: publicCollection">
-		<div class="control-label">Collection status</div>
+		<div class="control-label">@Res.Status</div>
 		<div class="controls">
-			<button class="btn" data-bind="click: function() { collectionStatus(''); }, css { active: collectionStatus() == '' }">Anything</button>
+			<button class="btn" data-bind="click: function() { collectionStatus(''); }, css { active: collectionStatus() == '' }">
+				@Res.CollectionStatusAnything
+			</button>
 			<button class="btn" data-bind="click: function() { collectionStatus('Owned'); }, css { active: collectionStatus() == 'Owned' }">
-				Owned
+				@AlbumCollectionStatusNames.Owned
 			</button>
 			<button class="btn" data-bind="click: function() { collectionStatus('Wishlisted,Ordered'); }, css: { active: collectionStatus() == 'Wishlisted,Ordered' }">
 				Wished or ordered
@@ -68,7 +71,7 @@
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">Release event</div>
+		<div class="control-label">@Res.ReleaseEvent</div>
 		<div class="controls">
 			<div style="display: inline-block;" class="input-append input-prepend">
 				<a href="#" class="btn btn-nomargin" data-bind="visible: releaseEventName, attr: { href: '/Event/Find?query=' + encodeURIComponent(releaseEventName()) }" title="Release event information">
@@ -97,24 +100,24 @@
 			<tr>
 				<th colspan="2">
 					<a data-bind="click: function() { sort('Name') }" href="#">
-						Album
+						@Res.Album
 						<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
 					</a>
 				</th>
 				<th>
 					<a data-bind="click:function() { sort('ReleaseDate') }" href="#">
-						Release date
+						@Res.ReleaseDate
 						<span class="sortDirection_down" data-bind="visible: sort() == 'ReleaseDate'"></span>
 					</a>
 				</th>
 				<th data-bind="visible: publicCollection">
-					Status
+					@Res.Status
 				</th>
 				<th data-bind="visible: publicCollection">
-					Media type
+					@Res.MediaType
 				</th>
 				<th>
-					Rating
+					@Res.Rating
 				</th>
 			</tr>
 		</thead>

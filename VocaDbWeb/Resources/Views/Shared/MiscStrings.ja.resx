@@ -117,67 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CollectionTab" xml:space="preserve">
-    <value>コレクション</value>
-  </data>
-  <data name="Comments" xml:space="preserve">
-    <value>コメント</value>
-  </data>
-  <data name="CustomListsTab" xml:space="preserve">
-    <value>カスタムリスト</value>
-  </data>
-  <data name="FavoriteSongsTab" xml:space="preserve">
-    <value>好きな曲</value>
-  </data>
-  <data name="FavoriteTags" xml:space="preserve">
-    <value>好きなタグ</value>
-  </data>
-  <data name="FollowedArtistsTab" xml:space="preserve">
-    <value>フォローしているアーティスト</value>
-  </data>
-  <data name="Level" xml:space="preserve">
-    <value>レベル</value>
-  </data>
-  <data name="Location" xml:space="preserve">
-    <value>現在地</value>
-  </data>
-  <data name="MemberSince" xml:space="preserve">
-    <value>メンバー期間</value>
-  </data>
-  <data name="Messages" xml:space="preserve">
-    <value>メッセージ</value>
-  </data>
-  <data name="MySettings" xml:space="preserve">
-    <value>アカウント設定</value>
-  </data>
-  <data name="Overview" xml:space="preserve">
-    <value>概要</value>
-  </data>
-  <data name="Power" xml:space="preserve">
-    <value>パワー</value>
-  </data>
-  <data name="SomeAlbumsILike" xml:space="preserve">
-    <value>好きなアルバム</value>
-  </data>
-  <data name="SomeArtistsIFollow" xml:space="preserve">
-    <value>フォローしているアーティスト</value>
-  </data>
-  <data name="SomeSongsILike" xml:space="preserve">
-    <value>好きな曲</value>
-  </data>
-  <data name="StatsTab" xml:space="preserve">
-    <value>統計</value>
-  </data>
-  <data name="Submissions" xml:space="preserve">
-    <value>記事の記入数</value>
-  </data>
-  <data name="TagVotes" xml:space="preserve">
-    <value>評価回数</value>
-  </data>
-  <data name="TotalEdits" xml:space="preserve">
-    <value>総編集回数</value>
-  </data>
-  <data name="TwitterAccount" xml:space="preserve">
-    <value>ツイッター</value>
+  <data name="HideChatbox" xml:space="preserve">
+    <value>チャットボックスを隠す</value>
   </data>
 </root>

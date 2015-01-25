@@ -1,7 +1,7 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage
 
 @if (!string.IsNullOrEmpty(Config.SiteSettings.SpotImAccId) && UserContext.ShowChatbox.Value) {
-	<a href="#" onclick="$('#spot-im-root').hide(); $(this).hide(); userRepository.updateUserSetting(null, 'ShowChatbox', false); return false;" class="chatbox-hide" title="Hide">
+	<a href="#" onclick="$('#spot-im-root').hide(); $(this).hide(); userRepository.updateUserSetting(null, 'ShowChatbox', false); return false;" class="chatbox-hide" title="@ViewRes.MiscStrings.HideChatbox">
 		<i class="icon-remove icon-white"></i>
 	</a>
 	<div id="spot-im-root"></div>

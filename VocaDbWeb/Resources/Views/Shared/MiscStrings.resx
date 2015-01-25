@@ -129,6 +129,9 @@
   <data name="FavoritedTimes" xml:space="preserve">
     <value>times</value>
   </data>
+  <data name="HideChatbox" xml:space="preserve">
+    <value>Hide</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>

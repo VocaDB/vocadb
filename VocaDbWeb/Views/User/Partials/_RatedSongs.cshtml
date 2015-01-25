@@ -2,6 +2,7 @@
 @using Resources
 @using SharedRes = ViewRes.SharedStrings
 @using SearchRes = ViewRes.Search.IndexStrings
+@using Res = ViewRes.User.RatedSongsStrings
 
 <!-- binding context: RatedSongsSearchViewModel -->
 
@@ -37,14 +38,14 @@
 	<div class="control-group">
 		<div class="controls">
 			<div class="input-append">
-				<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="Type something..." />
+				<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="@SearchRes.TypeSomething" />
 				<button class="btn btn-danger" data-bind="click: function() { searchTerm(''); }, visible: searchTerm">@SharedRes.Clear</button>
 			</div>
 		</div>
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">Rating</div>
+		<div class="control-label">@SearchRes.Rating</div>
 		<div class="controls">
 			@UserHelpers.SongVoteRatingsRadioKnockout("rating")
 		</div>
@@ -81,10 +82,10 @@
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">Song list</div>
+		<div class="control-label">@Res.SongList</div>
 		<div class="controls">
 			<div style="display: inline-block;" class="input-append">
-				<select data-bind="options: songLists, optionsText: 'name', optionsValue: 'id', optionsCaption: 'Nothing', value: songListId"></select>
+				<select data-bind="options: songLists, optionsText: 'name', optionsValue: 'id', optionsCaption: '@Res.NoSongListSelection', value: songListId"></select>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
+@using Autofac.Integration.Mvc
 @using Microsoft.Web.Helpers
 @using Resources
 @using VocaDb.Model.Domain.Users
@@ -37,7 +38,7 @@
 }
 
 @helper SongVoteRatingsRadioKnockout(string binding) {
-	<button class="btn" data-bind="click: function() { @(binding)('Nothing'); }, css: { active: @(binding)() == 'Nothing' }">Anything</button>
+	<button class="btn" data-bind="click: function() { @(binding)('Nothing'); }, css: { active: @(binding)() == 'Nothing' }">@ViewRes.User.RatedSongsStrings.RatingAnything</button>
 	<button class="btn" data-bind="click: function() { @(binding)('Like'); }, css: { active: @(binding)() == 'Like' }">
 		<i class="icon-star"></i>
 		@SongVoteRatingNames.Like

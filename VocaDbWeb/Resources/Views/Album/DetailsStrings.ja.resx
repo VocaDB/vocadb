@@ -192,6 +192,9 @@
   <data name="Share" xml:space="preserve">
     <value>シェア</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>コレクション状態</value>
+  </data>
   <data name="Tracklist" xml:space="preserve">
     <value>トラックリスト</value>
   </data>

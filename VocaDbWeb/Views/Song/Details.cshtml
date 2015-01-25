@@ -308,7 +308,7 @@
 			
 			@if (Model.Contract.PreviousSong != null || Model.Contract.NextSong != null) {
 			<tr>
-				<td>Navigation</td>
+				<td>@Res.Navigation</td>
 				<td>
 					@if (Model.Contract.PreviousSong != null) {						
 						@SongAlbumLink(Model.Contract.PreviousSong.Song, "icon-fast-backward", Model.Contract.AlbumId)

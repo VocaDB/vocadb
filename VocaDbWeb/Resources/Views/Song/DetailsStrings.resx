@@ -246,4 +246,7 @@
   <data name="Band" xml:space="preserve">
     <value>Band/unit</value>
   </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
 </root>

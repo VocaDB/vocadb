@@ -153,4 +153,13 @@
   <data name="Utaite" xml:space="preserve">
     <value>歌い手</value>
   </data>
+  <data name="Band" xml:space="preserve">
+    <value>バンド／ユニット</value>
+  </data>
+  <data name="Lyricist" xml:space="preserve">
+    <value>作詞家</value>
+  </data>
+  <data name="OtherVoiceSynthesizer" xml:space="preserve">
+    <value>その他のボーカル音源</value>
+  </data>
 </root>

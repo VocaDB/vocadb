@@ -22,14 +22,14 @@ namespace ViewRes.User {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AlbumCollectionStrings {
+    public class RatedSongsStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AlbumCollectionStrings() {
+        internal RatedSongsStrings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace ViewRes.User {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VocaDb.Web.Resources.Views.User.AlbumCollectionStrings", typeof(AlbumCollectionStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VocaDb.Web.Resources.Views.User.RatedSongsStrings", typeof(RatedSongsStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,29 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Album.
+        ///   Looks up a localized string similar to Nothing.
         /// </summary>
-        public static string Album {
+        public static string NoSongListSelection {
             get {
-                return ResourceManager.GetString("Album", resourceCulture);
+                return ResourceManager.GetString("NoSongListSelection", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Anything.
         /// </summary>
-        public static string CollectionStatusAnything {
+        public static string RatingAnything {
             get {
-                return ResourceManager.GetString("CollectionStatusAnything", resourceCulture);
+                return ResourceManager.GetString("RatingAnything", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Media type.
+        ///   Looks up a localized string similar to Song list.
         /// </summary>
-        public static string MediaType {
+        public static string SongList {
             get {
-                return ResourceManager.GetString("MediaType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rating.
-        /// </summary>
-        public static string Rating {
-            get {
-                return ResourceManager.GetString("Rating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Release date.
-        /// </summary>
-        public static string ReleaseDate {
-            get {
-                return ResourceManager.GetString("ReleaseDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Release event.
-        /// </summary>
-        public static string ReleaseEvent {
-            get {
-                return ResourceManager.GetString("ReleaseEvent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collection status.
-        /// </summary>
-        public static string Status {
-            get {
-                return ResourceManager.GetString("Status", resourceCulture);
+                return ResourceManager.GetString("SongList", resourceCulture);
             }
         }
     }

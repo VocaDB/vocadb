@@ -1216,6 +1216,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MySettingsStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\User\RatedSongsStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RatedSongsStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\QueryService.svc.cs">
       <DependentUpon>QueryService.svc</DependentUpon>
     </Compile>
@@ -3287,6 +3292,7 @@
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MiscStrings.Designer.cs</LastGenOutput>
@@ -3312,6 +3318,7 @@
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TagSelectionsStrings.Designer.cs</LastGenOutput>
@@ -3327,6 +3334,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TopBarStrings.Designer.cs</LastGenOutput>
@@ -3387,6 +3395,7 @@
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumCollectionStrings.Designer.cs</LastGenOutput>
@@ -3472,6 +3481,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RatedSongsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

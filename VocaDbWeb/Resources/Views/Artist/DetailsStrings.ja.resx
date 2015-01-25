@@ -120,6 +120,9 @@
   <data name="AllSongs" xml:space="preserve">
     <value>すべての曲</value>
   </data>
+  <data name="AuthoredBy" xml:space="preserve">
+    <value>VocaDBアカウント</value>
+  </data>
   <data name="AverageAlbumRating" xml:space="preserve">
     <value>(平均アルバム評価{0}).</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="TopSongs" xml:space="preserve">
     <value>人気の曲</value>
+  </data>
+  <data name="Unfollow" xml:space="preserve">
+    <value>フォローを解除</value>
   </data>
   <data name="YouHaveRatedSongs" xml:space="preserve">
     <value>貴方は{0}件このアーティストの曲を評価しました</value>

@@ -121,7 +121,7 @@
     <value>カバー曲</value>
   </data>
   <data name="DramaPV" xml:space="preserve">
-    <value>Drama PV</value>
+    <value>ドラマ</value>
   </data>
   <data name="Instrumental" xml:space="preserve">
     <value>インストゥルメンタル</value>
@@ -130,7 +130,7 @@
     <value>マッシュアップ</value>
   </data>
   <data name="MusicPV" xml:space="preserve">
-    <value>Music PV</value>
+    <value>音楽PV</value>
   </data>
   <data name="Original" xml:space="preserve">
     <value>オリジナル曲</value>

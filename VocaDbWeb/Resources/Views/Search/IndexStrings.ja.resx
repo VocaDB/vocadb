@@ -192,4 +192,7 @@
   <data name="ShowingItemsOf" xml:space="preserve">
     <value>{1}件中{0} を表示</value>
   </data>
+  <data name="Times" xml:space="preserve">
+    <value>評価回数</value>
+  </data>
 </root>

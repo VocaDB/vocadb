@@ -183,6 +183,9 @@
   <data name="MySettings" xml:space="preserve">
     <value>My settings</value>
   </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
   <data name="Power" xml:space="preserve">
     <value>Power</value>
   </data>
