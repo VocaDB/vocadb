@@ -4,6 +4,8 @@ module vdb.dataContracts {
 	// From ResourcesApiController
 	export interface ResourcesContract {
 
+		albumCollectionStatusNames?: { [key: string]: string; }
+
 		albumMediaTypeNames?: { [key: string]: string; }
 
 		albumSortRuleNames?: { [key: string]: string; }

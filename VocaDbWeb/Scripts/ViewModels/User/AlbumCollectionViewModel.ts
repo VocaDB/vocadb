@@ -42,7 +42,7 @@ module vdb.viewModels.user {
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
 		public releaseEventName = ko.observable<string>(null);
-		public resources = ko.observable<any>();
+		public resources = ko.observable<dc.ResourcesContract>();
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public sort = ko.observable("Name");
 		public sortName = ko.computed(() => this.resources() != null ? this.resources().albumSortRuleNames[this.sort()] : "");
@@ -54,7 +54,7 @@ module vdb.viewModels.user {
 			if (this.isInit)
 				return;
 
-			this.resourceRepo.getList(this.cultureCode, ['albumMediaTypeNames', 'albumSortRuleNames', 'discTypeNames'], resources => {
+			this.resourceRepo.getList(this.cultureCode, ['albumCollectionStatusNames', 'albumMediaTypeNames', 'albumSortRuleNames', 'discTypeNames'], resources => {
 				this.resources(resources);
 				this.updateResultsWithTotalCount();
 				this.isInit = true;

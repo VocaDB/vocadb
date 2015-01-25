@@ -3,6 +3,8 @@
 @using SharedRes = ViewRes.SharedStrings
 @using Res = ViewRes.User.AlbumCollectionStrings
 
+<!-- binding context: AlbumCollectionViewModel -->
+
 <div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
 
 	<div class="pull-right">
@@ -142,7 +144,7 @@
 					</span>
 				</td>
 				<td data-bind="visible: $parent.publicCollection">
-					<span data-bind="text: $data.purchaseStatus"></span>
+					<span data-bind="text: $parent.resources().albumCollectionStatusNames[$data.purchaseStatus]"></span>
 				</td>
 				<td data-bind="visible: $parent.publicCollection">
 					<span data-bind="text: $parent.resources().albumMediaTypeNames[$data.mediaType]"></span>
