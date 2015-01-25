@@ -167,7 +167,7 @@ namespace VocaDb.Web.Services {
 		public SongDetailsContract GetSongDetails(string term, ContentLanguagePreference? language = null) {
 
 			if (language.HasValue)
-				userPermissionContext.OverrideLanguage(language.Value);
+				userPermissionContext.LanguagePreferenceSetting.OverrideRequestValue(language.Value);
 
 			var song = songService.FindFirstDetails(SearchTextQuery.Create(term));
 			return song;

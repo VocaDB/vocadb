@@ -35,6 +35,10 @@ namespace VocaDb.Tests.TestSupport {
 
 		public ContentLanguagePreference LanguagePreference { get; private set; }
 
+		public UserSettingLanguagePreference LanguagePreferenceSetting {
+			get { throw new System.NotImplementedException(); }
+		}
+
 		public UserWithPermissionsContract LoggedUser { get; set; }
 
 		public int LoggedUserId {			
@@ -43,19 +47,11 @@ namespace VocaDb.Tests.TestSupport {
 
 		public string Name { get; private set; }
 
-		public void SetLanguagePreferenceCookie(ContentLanguagePreference languagePreference) {
-			throw new System.NotImplementedException();
-		}
-
 		public UserSettingShowChatbox ShowChatbox {
 			get { throw new System.NotImplementedException(); }
 		}
 
 		public UserGroupId UserGroupId { get; private set; }
-
-		public void OverrideLanguage(ContentLanguagePreference languagePreference) {
-			throw new System.NotImplementedException();
-		}
 
 		/// <summary>
 		/// Updates status, including permissions, of the currently logged in user.

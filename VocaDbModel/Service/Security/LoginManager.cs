@@ -179,16 +179,6 @@ namespace VocaDb.Model.Service.Security {
 
 		}
 
-		public void OverrideLanguage(ContentLanguagePreference languagePreference) {
-			LanguagePreferenceSetting.OverrideRequestValue(languagePreference);
-		}
-
-		public void SetLanguagePreferenceCookie(ContentLanguagePreference languagePreference) {
-
-			LanguagePreferenceSetting.Value = languagePreference;
-
-		}
-
 		public void VerifyLogin() {
 
 			if (!IsLoggedIn)

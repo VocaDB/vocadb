@@ -44,14 +44,6 @@ namespace VocaDb.Model.Domain.Security {
 		/// <returns>True if the user has the permission. For users that are not logged in, this will always be false, except for 'Nothing'.</returns>
 		bool HasPermission(PermissionToken flag);
 
-		/// <summary>
-		/// Overrides user's language preference for this request.
-		/// </summary>
-		/// <param name="languagePreference">Language preference.</param>
-		void OverrideLanguage(ContentLanguagePreference languagePreference);
-
-		void SetLanguagePreferenceCookie(ContentLanguagePreference languagePreference);
-
 		void VerifyLogin();
 
 		void VerifyPermission(PermissionToken flag);
