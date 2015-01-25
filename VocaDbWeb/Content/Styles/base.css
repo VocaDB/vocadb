@@ -28,6 +28,9 @@
 .chatbox-hide:hover {
   color: white;
 }
+.entry-field-label-col {
+  min-width: 100px;
+}
 .entry-description p {
   margin-bottom: 0;
 }
