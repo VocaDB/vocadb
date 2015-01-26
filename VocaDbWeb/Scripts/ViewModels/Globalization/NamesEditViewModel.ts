@@ -67,7 +67,7 @@ module vdb.viewModels.globalization {
 			this.originalName = NamesEditViewModel.nameOrEmpty(names, langSelection.Japanese);
 			this.romajiName = NamesEditViewModel.nameOrEmpty(names, langSelection.Romaji);
 
-			this.aliases = ko.observableArray(_.where(names, n => n.id !== this.englishName.id && n.id !== this.originalName.id && n.id !== this.romajiName.id));
+			this.aliases = ko.observableArray(_.filter(names, n => n.id !== this.englishName.id && n.id !== this.originalName.id && n.id !== this.romajiName.id));
 
 		}
 
