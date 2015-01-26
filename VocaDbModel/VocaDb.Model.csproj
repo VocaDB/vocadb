@@ -308,6 +308,9 @@
     <Compile Include="Domain\Artists\IArtistLink.cs" />
     <Compile Include="Domain\Artists\IArtistWithSupport.cs" />
     <Compile Include="Domain\Caching\ObjectCacheExtender.cs" />
+    <Compile Include="Domain\Discussions\DiscussionComment.cs" />
+    <Compile Include="Domain\Discussions\DiscussionFolder.cs" />
+    <Compile Include="Domain\Discussions\DiscussionTopic.cs" />
     <Compile Include="Domain\GlobalEntryId.cs" />
     <Compile Include="Domain\EntryIdAndName.cs" />
     <Compile Include="Domain\EntryPictureFile.cs" />
@@ -505,6 +508,9 @@
     <Compile Include="Domain\Artists\GroupForArtist.cs" />
     <Compile Include="Mapping\ClassConventions.cs" />
     <Compile Include="Mapping\CustomTypes\XDocumentType.cs" />
+    <Compile Include="Mapping\Discussions\DiscussionCommentMap.cs" />
+    <Compile Include="Mapping\Discussions\DiscussionFolderMap.cs" />
+    <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
     <Compile Include="Mapping\MikuDb\MikuDbAlbumMap.cs" />
     <Compile Include="Mapping\Security\AuditLogEntryMap.cs" />
