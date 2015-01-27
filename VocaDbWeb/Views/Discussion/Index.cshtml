@@ -8,6 +8,16 @@
 
 <link rel="stylesheet" href="@Url.Content("~/Content/Styles/discussions.css")" />
 
+<ul class="breadcrumb" data-bind="visible: selectedFolder()">
+	<li>
+		<a href="#" data-bind="click: function() { selectedTopic(null); selectedFolder(null); }">Discussions</a>
+		<span data-bind="visible: selectedTopic()" class="divider">/</span>
+	</li>
+	<li>
+		<a href="#" data-bind="visible: selectedTopic(), click: function() { selectedTopic(null); }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
+	</li>
+</ul>
+
 <table class="table" data-bind="visible: selectedFolder() === null">
 	<thead>
 		<tr>
@@ -71,17 +81,6 @@
 
 <div data-bind="with: selectedTopic()">
 	
-	<ul class="breadcrumb">
-		<li>
-			<a href="#" data-bind="click: function() { $parent.selectedTopic(null); $parent.selectedFolder(null); }">Discussions</a>
-			<span class="divider">/</span>
-		</li>
-		<li>			
-			<a href="#" data-bind="click: function() { $parent.selectedTopic(null); }, text: $parent.selectedFolder().name"></a>
-		</li>
-	</ul>
-
-
 	<h3 data-bind="text: name"></h3>
 	@CommentHelpers.CommentBodyKnockout("content", true)
 	

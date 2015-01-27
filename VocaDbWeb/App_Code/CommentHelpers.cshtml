@@ -23,7 +23,7 @@
 				</small>
 			</h3>
 			@if (allowMarkdown) {
-				<p data-bind="marked: @messageBinding"></p>
+				<p data-bind="markdown: @messageBinding"></p>
 			} else {
 				<p data-bind="text: @messageBinding"></p>
 			}

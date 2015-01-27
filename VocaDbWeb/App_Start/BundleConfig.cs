@@ -172,6 +172,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Discussion/Index").Include(
+				"~/Scripts/marked.js",
+				"~/Scripts/KnockoutExtensions/Markdown.js",
 				"~/Scripts/Repositories/DiscussionRepository.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
 			));

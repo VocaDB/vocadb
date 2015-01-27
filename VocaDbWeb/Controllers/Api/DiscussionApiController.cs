@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Web.Controllers.DataAccess;
@@ -51,10 +52,35 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 			
+		[Route("folders/{folderId:int}/topics/{topicId:int}")]
+		[Authorize]
+		public void PostEditTopic(int topicId, DiscussionTopicContract contract) {
+			
+			queries.UpdateTopic(topicId, contract);
+
+		}
+
+		[Route("folders/{folderId:int}/topics/{topicId:int}/comments")]
+		[Authorize]
+		public CommentContract PostNewComment(int topicId, CommentContract contract) {
+			
+			return queries.CreateComment(topicId, contract);
+
+		}
+
 		[Route("folders")]
+		[Authorize]
 		public DiscussionFolderContract PostNewFolder(DiscussionFolderContract contract) {
 			
-			return queries.Create(contract);
+			return queries.CreateFolder(contract);
+
+		}
+
+		[Route("folders/{folderId:int}/topics")]
+		[Authorize]
+		public DiscussionTopicContract PostNewTopic(int folderId, DiscussionTopicContract contract) {
+			
+			return queries.CreateTopic(folderId, contract);
 
 		}
 
