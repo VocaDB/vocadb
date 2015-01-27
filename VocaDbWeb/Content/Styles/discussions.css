@@ -1,0 +1,35 @@
+﻿.discussion-folders,
+.discussion-topics {
+  cursor: pointer;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid lightgray;
+}
+.discussion-folders a,
+.discussion-topics a {
+  color: black;
+}
+.discussion-folders a:hover,
+.discussion-topics a:hover {
+  text-decoration: none;
+}
+.discussion-folders tr,
+.discussion-topics tr {
+  padding: 8px;
+}
+.discussion-folders tr:hover,
+.discussion-topics tr:hover {
+  background-color: #d9edf7;
+}
+.discussion-folders tr.active,
+.discussion-topics tr.active {
+  background-color: #d9edf7;
+}
+.discussion-folder-name {
+  display: block;
+}
+.discussion-folder-description {
+  display: block;
+  color: gray;
+  font-size: 0.9em;
+}

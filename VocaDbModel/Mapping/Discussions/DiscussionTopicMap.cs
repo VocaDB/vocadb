@@ -18,12 +18,12 @@ namespace VocaDb.Model.Mapping.Discussions {
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Locked).Not.Nullable();
 			Map(m => m.Pinned).Not.Nullable();
-			Map(m => m.Title).Not.Nullable().Length(200);
+			Map(m => m.Name).Not.Nullable().Length(200);
 
 			References(m => m.Author).Nullable();
 			References(m => m.Folder).Not.Nullable();
 
-			HasMany(m => m.Comments).Inverse().Cascade.AllDeleteOrphan();
+			HasMany(m => m.Comments).KeyColumn("[Topic]").Inverse().Cascade.AllDeleteOrphan();
 
 		}
 

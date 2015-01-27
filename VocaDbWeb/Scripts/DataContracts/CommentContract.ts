@@ -7,6 +7,8 @@ module vdb.dataContracts {
 
 		authorName: string;
 
+		canBeDeleted: boolean;
+
 		created: Date;
 
 		id: number;

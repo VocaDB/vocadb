@@ -8,12 +8,12 @@ namespace VocaDb.Model.Domain.Discussions {
 	public class DiscussionTopic : IEntryWithNames {
 
 		string IEntryBase.DefaultName {
-			get { return Title; }
+			get { return Name; }
 		}
 
 		INameManager IEntryWithNames.Names {
 			get {
-				return new SingleNameManager(Title);
+				return new SingleNameManager(Name);
 			}
 		}
 
@@ -75,15 +75,15 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual bool Locked { get; set; }
 
-		public virtual bool Pinned { get; set; }
-
-		public virtual string Title {
+		public virtual string Name {
 			get { return title; }
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				title = value;
 			}
 		}
+
+		public virtual bool Pinned { get; set; }
 
 	}
 

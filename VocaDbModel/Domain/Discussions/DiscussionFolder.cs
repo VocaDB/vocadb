@@ -13,6 +13,8 @@ namespace VocaDb.Model.Domain.Discussions {
 			Description = string.Empty;
 		}
 
+		public virtual bool Deleted { get; set; }
+
 		public virtual string Description {
 			get { return description; }
 			set {
@@ -23,15 +25,17 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual int Id { get; set; }
 
-		public virtual UserGroupId RequiredGroup { get; set; }
-
-		public virtual string Title {
+		public virtual string Name {
 			get { return title; }
 			set {
 				ParamIs.NotNull(() => value);
 				title = value;
 			}
 		}
+
+		public virtual UserGroupId RequiredGroup { get; set; }
+
+		public virtual int SortIndex { get; set; }
 
 		public virtual IList<DiscussionTopic> Topics {
 			get { return topics; }

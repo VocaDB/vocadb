@@ -13,8 +13,10 @@ namespace VocaDb.Model.Mapping.Discussions {
 
 			Id(m => m.Id);
 
+			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Not.Nullable().Length(int.MaxValue);
-			Map(m => m.Title).Not.Nullable().Length(200);
+			Map(m => m.Name).Not.Nullable().Length(200);
+			Map(m => m.SortIndex).Not.Nullable();
 
 			HasMany(m => m.Topics).KeyColumn("[Folder]").Inverse();
 

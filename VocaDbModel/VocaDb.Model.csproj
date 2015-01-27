@@ -129,6 +129,8 @@
     <Compile Include="DataContracts\Artists\TranslatedArtistContract.cs" />
     <Compile Include="DataContracts\CommentForApiContract.cs" />
     <Compile Include="DataContracts\Comments\EntryWithCommentsContract.cs" />
+    <Compile Include="DataContracts\Discussions\DiscussionFolderContract.cs" />
+    <Compile Include="DataContracts\Discussions\DiscussionTopicContract.cs" />
     <Compile Include="DataContracts\EntryThumbForApiContract.cs" />
     <Compile Include="DataContracts\Globalization\EnglishTranslatedStringContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />
@@ -670,6 +672,7 @@
     <Compile Include="Service\QueryableExtenders\QueryableForSongLinkExtender.cs" />
     <Compile Include="Service\QueryableExtenders\QueryableForUserExtender.cs" />
     <Compile Include="Service\Repositories\IArtistRepository.cs" />
+    <Compile Include="Service\Repositories\IDiscussionFolderRepository.cs" />
     <Compile Include="Service\Repositories\IEntryReportRepository.cs" />
     <Compile Include="Service\Repositories\IEventRepository.cs" />
     <Compile Include="Service\Repositories\ISongRepository.cs" />
@@ -681,6 +684,7 @@
     <Compile Include="Service\Repositories\ISongListRepository.cs" />
     <Compile Include="Service\Repositories\ITagRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\ArtistNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\DiscussionFolderNHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\EntryReportNHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\EventNHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\NHibernateAuditLogger.cs" />
