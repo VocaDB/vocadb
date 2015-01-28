@@ -1,0 +1,14 @@
+﻿
+<div data-bind="with: selectedTopic()">
+	
+	<div class="well well-transparent">
+		<h3 data-bind="text: name"></h3>
+
+		@CommentHelpers.CommentBodyKnockout("content", true)
+
+		<div data-bind="foreach: comments">
+			@CommentHelpers.CommentBodyKnockout("message", false)
+		</div>
+	</div>
+
+</div>

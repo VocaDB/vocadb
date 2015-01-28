@@ -1,0 +1,18 @@
+﻿
+<label>Topic</label>
+<input data-bind="textInput: name" type="text" class="input-xlarge" maxlength="200" required />
+
+<div class="discussion-topic-edit-content">
+	
+	<div class="edit-text">
+		<label>Content</label>
+		<textarea data-bind="textInput: content" cols="50" rows="6" required></textarea>		
+	</div>
+	
+	<div class="edit-preview">
+		<label>Preview</label>
+		<div data-bind="markdown: content"></div>
+	</div>
+
+</div>
+

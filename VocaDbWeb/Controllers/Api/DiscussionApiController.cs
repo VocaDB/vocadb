@@ -52,7 +52,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 			
-		[Route("folders/{folderId:int}/topics/{topicId:int}")]
+		[Route("topics/{topicId:int}")]
 		[Authorize]
 		public void PostEditTopic(int topicId, DiscussionTopicContract contract) {
 			
@@ -60,7 +60,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
-		[Route("folders/{folderId:int}/topics/{topicId:int}/comments")]
+		[Route("topics/{topicId:int}/comments")]
 		[Authorize]
 		public CommentContract PostNewComment(int topicId, CommentContract contract) {
 			

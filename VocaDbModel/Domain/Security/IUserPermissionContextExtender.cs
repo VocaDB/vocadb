@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Users;
@@ -19,6 +20,12 @@ namespace VocaDb.Model.Domain.Security {
 		public static void VerifyManageDatabase(this IUserPermissionContext permissionContext) {
 
 			permissionContext.VerifyPermission(PermissionToken.ManageDatabase);
+
+		}
+
+		public static void VerifyAccess<T>(this IUserPermissionContext permissionContext, T entry, Func<IUserPermissionContext, T, bool> accessCheck) where T : class {
+
+			EntryPermissionManager.VerifyAccess(permissionContext, entry, accessCheck);
 
 		}
 

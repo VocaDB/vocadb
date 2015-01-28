@@ -23,6 +23,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
+			if (contract.Author == null || contract.Author.Id != PermissionContext.LoggedUserId) {
+				throw new NotAllowedException("Can only post as self");
+			}
+
 			return repository.HandleTransaction(ctx => {
 				
 				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
@@ -62,14 +66,16 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			// TODO
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
+			if (contract.Author == null || contract.Author.Id != PermissionContext.LoggedUserId) {
+				throw new NotAllowedException("Can only post as self");
+			}
+
 			return repository.HandleTransaction(ctx => {
 				
 				var folder = ctx.Load(folderId);
+				var agent = ctx.OfType<User>().CreateAgentLoginData(PermissionContext, ctx.OfType<User>().Load(contract.Author.Id));
 
-				var topic = new DiscussionTopic {
-					Name = contract.Name,
-					Folder = folder
-				};
+				var topic = new DiscussionTopic(folder, contract.Name, contract.Content, agent);
 
 				ctx.Save(topic);
 
@@ -79,14 +85,33 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public void UpdateComment(int commentId, CommentContract contract) {
+			
+			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
+
+			repository.HandleTransaction(ctx => {
+				
+				var comment = ctx.OfType<DiscussionComment>().Load(commentId);
+
+				PermissionContext.VerifyAccess(comment, EntryPermissionManager.CanEdit);
+
+				comment.Message = contract.Message;
+
+				ctx.Update(comment);
+
+			});
+
+		}
+
 		public void UpdateTopic(int topicId, DiscussionTopicContract contract) {
 			
-			// TODO
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
 			repository.HandleTransaction(ctx => {
 				
 				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
+
+				PermissionContext.VerifyAccess(topic, EntryPermissionManager.CanEdit);
 
 				topic.Content = contract.Content;
 

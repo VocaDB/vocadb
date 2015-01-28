@@ -33,3 +33,16 @@
   color: gray;
   font-size: 0.9em;
 }
+.discussion-topic-edit-content .edit-text {
+  width: 40%;
+  margin-right: 20px;
+}
+.discussion-topic-edit-content .edit-text textarea {
+  width: 100%;
+}
+.discussion-topic-edit-content .edit-text,
+.discussion-topic-edit-content .edit-preview {
+  vertical-align: top;
+  display: inline-block;
+  min-width: 400px;
+}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Discussions {
@@ -27,7 +28,20 @@ namespace VocaDb.Model.Domain.Discussions {
 		private DiscussionFolder folder;
 		private string title;
 
-		public DiscussionTopic() { }
+		public DiscussionTopic() {
+		}
+
+		public DiscussionTopic(DiscussionFolder folder, string name, string content, AgentLoginData agent) {
+
+			Folder = folder;
+			Name = name;
+			Content = content;
+			Author = agent.User;
+			AuthorName = agent.Name;
+
+			CreateDate = DateTime.UtcNow;
+
+		}
 
 		public virtual User Author { get; set; }
 
