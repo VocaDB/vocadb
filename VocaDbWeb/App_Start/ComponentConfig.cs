@@ -81,6 +81,7 @@ namespace VocaDb.Web.App_Start {
 			// Repositories
 			builder.RegisterType<AlbumNHibernateRepository>().As<IAlbumRepository>();
 			builder.RegisterType<ArtistNHibernateRepository>().As<IArtistRepository>();
+			builder.RegisterType<DiscussionFolderNHibernateRepository>().As<IDiscussionFolderRepository>();
 			builder.RegisterType<EntryReportNHibernateRepository>().As<IEntryReportRepository>();
 			builder.RegisterType<EventNHibernateRepository>().As<IEventRepository>();
 			builder.RegisterType<SongNHibernateRepository>().As<ISongRepository>();
@@ -90,6 +91,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<UserMessageNHibernateRepository>().As<IUserMessageRepository>();
 			builder.RegisterType<AlbumQueries>().AsSelf();
 			builder.RegisterType<ArtistQueries>().AsSelf();
+			builder.RegisterType<DiscussionQueries>().AsSelf();
 			builder.RegisterType<EntryQueries>().AsSelf();
 			builder.RegisterType<EntryReportQueries>().AsSelf();
 			builder.RegisterType<EventQueries>().AsSelf();

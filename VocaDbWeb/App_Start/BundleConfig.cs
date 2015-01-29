@@ -171,6 +171,16 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Artist/ArtistMergeViewModel.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/Discussion/Index").Include(
+				"~/Scripts/marked.js",
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
+				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
+				"~/Scripts/KnockoutExtensions/Markdown.js",
+				"~/Scripts/Repositories/DiscussionRepository.js",
+				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/Home/Index").Include(
 				"~/Scripts/ViewModels/NewsListViewModel.js",
 				"~/Scripts/Home/Index.js"

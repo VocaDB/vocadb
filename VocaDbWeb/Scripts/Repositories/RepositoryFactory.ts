@@ -22,6 +22,10 @@ module vdb.repositories {
 			return new ArtistRepository(this.urlMapper.baseUrl, this.lang);
 		}
 
+		public discussionRepository = () => {
+			return new DiscussionRepository(this.urlMapper);
+		}
+
 		public entryRepository = () => {
 			return new EntryRepository(this.urlMapper.baseUrl);
 		}

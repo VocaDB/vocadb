@@ -863,6 +863,7 @@
     <Compile Include="Controllers\Api\AlbumApiController.cs" />
     <Compile Include="Controllers\Api\ApiRootController.cs" />
     <Compile Include="Controllers\Api\ArtistApiController.cs" />
+    <Compile Include="Controllers\Api\DiscussionApiController.cs" />
     <Compile Include="Controllers\Api\EntryApiController.cs" />
     <Compile Include="Controllers\Api\MikuApiController.cs" />
     <Compile Include="Controllers\Api\PVApiController.cs" />
@@ -877,6 +878,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\DataAccess\AlbumQueries.cs" />
     <Compile Include="Controllers\DataAccess\ArtistQueries.cs" />
+    <Compile Include="Controllers\DataAccess\DiscussionQueries.cs" />
     <Compile Include="Controllers\DataAccess\EntryQueries.cs" />
     <Compile Include="Controllers\DataAccess\EntryReportQueries.cs" />
     <Compile Include="Controllers\DataAccess\EventQueries.cs" />
@@ -886,6 +888,7 @@
     <Compile Include="Controllers\DataAccess\TagQueries.cs" />
     <Compile Include="Controllers\DataAccess\UserMessageQueries.cs" />
     <Compile Include="Controllers\DataAccess\UserQueries.cs" />
+    <Compile Include="Controllers\DiscussionController.cs" />
     <Compile Include="Controllers\EntryReportsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -1335,6 +1338,9 @@
     <Content Include="Content\Styles\base.css">
       <DependentUpon>base.less</DependentUpon>
     </Content>
+    <Content Include="Content\Styles\discussions.css">
+      <DependentUpon>discussions.less</DependentUpon>
+    </Content>
     <Content Include="Content\Styles\ExtLinks.css">
       <DependentUpon>ExtLinks.less</DependentUpon>
     </Content>
@@ -1491,6 +1497,8 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\GroupForArtistContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Base\EntryWithTagUsagesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\CommentContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Discussion\DiscussionFolderContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Discussion\DiscussionTopicContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\EntryPictureFileContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\EnglishTranslatedStringContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringWithIdContract.ts" />
@@ -1587,6 +1595,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Content\Styles\discussions.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1909,6 +1918,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\AlbumAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Artist\ArtistTypeLabel.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ConfirmClick.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatDateFilter.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatLengthSecondsFilter.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Highcharts.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\InitialValue.ts" />
@@ -1952,6 +1962,7 @@
     <TypeScriptCompile Include="Scripts\Models\PVs\PVService.ts" />
     <TypeScriptCompile Include="Scripts\Models\ResourcesManager.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\BaseRepository.ts" />
+    <TypeScriptCompile Include="Scripts\Repositories\DiscussionRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\PVRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ReleaseEventRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\RepositoryFactory.ts" />
@@ -1979,6 +1990,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicEntryLinkViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicListEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionIndexViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\EntryPictureFileEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\EntryPictureFileListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Globalization\EnglishTranslatedStringEditViewModel.ts" />
@@ -2428,6 +2440,10 @@
     <Content Include="Views\Album\Partials\_DownloadTagsDialog.cshtml" />
     <Content Include="Views\Admin\Partials\_SFSCheckResponse.cshtml" />
     <Content Include="Views\Artist\Partials\_CustomizeArtistSubscriptionDialog.cshtml" />
+    <Content Include="Views\Discussion\Index.cshtml" />
+    <Content Include="Views\Discussion\Partials\_ViewFolder.cshtml" />
+    <Content Include="Views\Discussion\Partials\_ViewTopic.cshtml" />
+    <Content Include="Views\Discussion\Partials\_EditTopic.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\AliasForSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />

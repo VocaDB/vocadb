@@ -5,11 +5,13 @@ module vdb.dataContracts {
 
 		author: UserWithIconContract;
 
-		authorName: string;
+		authorName?: string;
 
-		created: Date;
+		canBeDeleted?: boolean;
 
-		id: number;
+		created?: Date;
+
+		id?: number;
 
 		message: string;
 

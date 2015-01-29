@@ -1,0 +1,53 @@
+﻿
+<div data-bind="visible: selectedFolder() !== null && selectedTopic() === null">
+	
+	<ul data-bind="foreach: folders" class="nav nav-pills">
+		<li data-bind="css: { active: $data == $parent.selectedFolder() }">
+			<a href="#" data-bind="click: function() { $parent.selectedFolder($data); }, text: name, attr: { title: description }">
+			</a>
+		</li>
+	</ul>
+	
+	<button data-bind="visible: !showCreateNewTopic(), click: function() { showCreateNewTopic(true); }" class="btn">
+		Write a new post
+	</button>
+	
+	<form data-bind="visible: showCreateNewTopic, submit: createNewTopic" class="well well-transparent">
+		<div data-bind="with: newTopic">
+			@{ Html.RenderPartial("Partials/_EditTopic"); }
+		</div>
+		<button type="submit" class="btn btn-primary">Post</button>
+	</form>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Topic</th>
+				<th>Author</th>
+				<th>Comments</th>
+				<th>Last comment</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: topics" class="discussion-topics">
+			<tr data-bind="css: { active: $data == $parent.selectedTopic() }, click: $parent.selectTopic">
+				<td>
+					<span data-bind="text: name"></span>
+				</td>
+				<td>
+					<a data-bind="attr: { href: '/User/Profile/' + author.name }">
+						@UserHelpers.ProfileIconKnockout("author.iconUrl", 18)
+						<span data-bind="text: author.name"></span>
+					</a>
+				</td>
+				<td>
+					<span data-bind="text: commentCount"></span>
+				</td>
+				<td>
+					<span>{{$data.lastCommentDate | formatDate:'lll'}}</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+

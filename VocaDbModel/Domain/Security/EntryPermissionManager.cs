@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
@@ -35,6 +36,26 @@ namespace VocaDb.Model.Domain.Security {
 				return true;
 
 			return (songList.Author.IsTheSameUser(permissionContext.LoggedUser));
+
+		}
+
+		public static bool CanEdit(IUserPermissionContext permissionContext, Comment comment) {
+
+			if (!permissionContext.HasPermission(PermissionToken.CreateComments))
+				return false;
+
+			return (comment.Author != null && comment.Author.IsTheSameUser(permissionContext.LoggedUser));
+
+		}
+
+		public static bool CanEdit(IUserPermissionContext permissionContext, DiscussionTopic topic) {
+
+			if (!permissionContext.HasPermission(PermissionToken.CreateComments))
+				return false;
+
+			// TODO: admins should be able to edit all topics, even locked
+
+			return (topic.Author != null && topic.Author.IsTheSameUser(permissionContext.LoggedUser));
 
 		}
 
@@ -84,7 +105,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static void VerifyAccess<T>(IUserPermissionContext permissionContext, T entry, Func<IUserPermissionContext, T, bool> accessCheck) where T : class, IEntryBase {
+		public static void VerifyAccess<T>(IUserPermissionContext permissionContext, T entry, Func<IUserPermissionContext, T, bool> accessCheck) where T : class {
 
 			ParamIs.NotNull(() => entry);
 

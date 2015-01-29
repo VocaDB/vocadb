@@ -129,6 +129,8 @@
     <Compile Include="DataContracts\Artists\TranslatedArtistContract.cs" />
     <Compile Include="DataContracts\CommentForApiContract.cs" />
     <Compile Include="DataContracts\Comments\EntryWithCommentsContract.cs" />
+    <Compile Include="DataContracts\Discussions\DiscussionFolderContract.cs" />
+    <Compile Include="DataContracts\Discussions\DiscussionTopicContract.cs" />
     <Compile Include="DataContracts\EntryThumbForApiContract.cs" />
     <Compile Include="DataContracts\Globalization\EnglishTranslatedStringContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />
@@ -308,6 +310,9 @@
     <Compile Include="Domain\Artists\IArtistLink.cs" />
     <Compile Include="Domain\Artists\IArtistWithSupport.cs" />
     <Compile Include="Domain\Caching\ObjectCacheExtender.cs" />
+    <Compile Include="Domain\Discussions\DiscussionComment.cs" />
+    <Compile Include="Domain\Discussions\DiscussionFolder.cs" />
+    <Compile Include="Domain\Discussions\DiscussionTopic.cs" />
     <Compile Include="Domain\GlobalEntryId.cs" />
     <Compile Include="Domain\EntryIdAndName.cs" />
     <Compile Include="Domain\EntryPictureFile.cs" />
@@ -505,6 +510,9 @@
     <Compile Include="Domain\Artists\GroupForArtist.cs" />
     <Compile Include="Mapping\ClassConventions.cs" />
     <Compile Include="Mapping\CustomTypes\XDocumentType.cs" />
+    <Compile Include="Mapping\Discussions\DiscussionCommentMap.cs" />
+    <Compile Include="Mapping\Discussions\DiscussionFolderMap.cs" />
+    <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
     <Compile Include="Mapping\MikuDb\MikuDbAlbumMap.cs" />
     <Compile Include="Mapping\Security\AuditLogEntryMap.cs" />
@@ -664,6 +672,7 @@
     <Compile Include="Service\QueryableExtenders\QueryableForSongLinkExtender.cs" />
     <Compile Include="Service\QueryableExtenders\QueryableForUserExtender.cs" />
     <Compile Include="Service\Repositories\IArtistRepository.cs" />
+    <Compile Include="Service\Repositories\IDiscussionFolderRepository.cs" />
     <Compile Include="Service\Repositories\IEntryReportRepository.cs" />
     <Compile Include="Service\Repositories\IEventRepository.cs" />
     <Compile Include="Service\Repositories\ISongRepository.cs" />
@@ -675,6 +684,7 @@
     <Compile Include="Service\Repositories\ISongListRepository.cs" />
     <Compile Include="Service\Repositories\ITagRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\ArtistNHibernateRepository.cs" />
+    <Compile Include="Service\Repositories\NHibernate\DiscussionFolderNHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\EntryReportNHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\EventNHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\NHibernateAuditLogger.cs" />

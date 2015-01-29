@@ -1,0 +1,71 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage
+
+@{
+	ViewBag.Title = "Discussions";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/Content/Styles/discussions.css")" />
+
+<!-- binding context: DiscussionIndexViewModel -->
+
+<ul class="breadcrumb" data-bind="visible: selectedFolder()">
+	<li>
+		<a href="#" data-bind="click: function() { selectedTopic(null); selectedFolder(null); }">Discussions</a>
+		<span data-bind="visible: selectedTopic()" class="divider">/</span>
+	</li>
+	<li>
+		<a href="#" data-bind="visible: selectedTopic(), click: function() { selectedTopic(null); }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
+	</li>
+</ul>
+
+<table class="table" data-bind="visible: selectedFolder() === null">
+	<thead>
+		<tr>
+			<th>Folder</th>
+			<th>Topics</th>
+			<th>Last topic</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: folders" class="discussion-folders">
+		<tr data-bind="css: { active: $data == $parent.selectedFolder() }, click: function() { $parent.selectedFolder($data); }">
+			<td>
+				<span data-bind="text: name" class="discussion-folder-name"></span>
+				<span class="discussion-folder-description" data-bind="text: description"></span>
+			</td>
+			<td>
+				<span data-bind="text: topicCount"></span>
+			</td>
+			<td>
+				<span>{{$data.lastTopicDate | formatDate:'lll'}}</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+@{ Html.RenderPartial("Partials/_ViewFolder"); }
+
+@{ Html.RenderPartial("Partials/_ViewTopic"); }
+
+@section BodyScripts {
+	@Scripts.Render("~/bundles/Discussion/Index")
+	<script type="text/javascript">
+
+		$(function () {
+
+			moment.locale('@Culture');
+
+			ko.punches.enableAll();
+
+			var urlMapper = new vdb.UrlMapper('@RootPath');
+			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var repo = repoFactory.discussionRepository();
+			ko.applyBindings(new vdb.viewModels.discussions.DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments, @UserContext.LoggedUserId));
+
+		});
+
+	</script>
+}
