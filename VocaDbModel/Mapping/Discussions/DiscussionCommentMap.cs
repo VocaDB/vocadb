@@ -13,6 +13,7 @@ namespace VocaDb.Model.Mapping.Discussions {
 
 			Id(m => m.Id);
 
+			Map(m => m.AuthorName).Not.Nullable();
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Message).Length(800).Not.Nullable();
 

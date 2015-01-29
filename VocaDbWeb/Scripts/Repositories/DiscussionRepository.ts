@@ -11,7 +11,7 @@ module vdb.repositories {
 			return this.urlMapper.mapRelative(UrlMapper.mergeUrls("/api/discussions", relative));
 		}
 
-		public createComment = (folderId: number, topicId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+		public createComment = (topicId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
 
 			$.post(this.mapUrl("topics/" + topicId + "/comments"), contract, callback, 'json');
 
@@ -23,15 +23,27 @@ module vdb.repositories {
 
 		}
 
+		public deleteComment = (commentId: number, callback?: () => void) => {
+			
+			$.ajax(this.mapUrl("comments/" + commentId), { type: 'DELETE', success: callback });
+
+		}
+
 		public getFolders = (callback: (folders: dc.discussions.DiscussionFolderContract[]) => void) => {
 			
-			$.getJSON(this.mapUrl("folders"), callback);
+			$.getJSON(this.mapUrl("folders"), { fields: 'LastTopicDate,TopicCount' }, callback);
+
+		}
+
+		public getTopic = (topicId: number, callback: (topics: dc.discussions.DiscussionTopicContract) => void) => {
+
+			$.getJSON(this.mapUrl("topics/" + topicId), { fields: 'All' }, callback);
 
 		}
 
 		public getTopics = (folderId: number, callback: (topics: dc.discussions.DiscussionTopicContract[]) => void) => {
 
-			$.getJSON(this.mapUrl("folders/" + folderId + "/topics"), callback);
+			$.getJSON(this.mapUrl("folders/" + folderId + "/topics"), { fields: 'CommentCount,LastCommentDate' }, callback);
 
 		}
 

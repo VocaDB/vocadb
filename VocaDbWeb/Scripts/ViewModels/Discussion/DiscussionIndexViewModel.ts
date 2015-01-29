@@ -6,7 +6,10 @@ module vdb.viewModels.discussions {
 
 	export class DiscussionIndexViewModel {
 		
-		constructor(private repo: rep.DiscussionRepository, private loggedUserId: number) {
+		constructor(private repo: rep.DiscussionRepository,
+			private urlMapper: vdb.UrlMapper,
+			private canDeleteAllComments: boolean,
+			private loggedUserId: number) {
 		
 			this.newTopic = ko.observable(new DiscussionTopicEditViewModel(loggedUserId));
 
@@ -18,20 +21,12 @@ module vdb.viewModels.discussions {
 				this.showCreateNewTopic(false);
 				this.selectedTopic(null);
 
-				if (folder === null) {
+				if (!folder) {
 					return;
 				}
 
 				repo.getTopics(folder.id, topics => {
 					this.topics(topics);
-
-					_.each(topics, topic => {
-						topic.canBeDeleted = false;
-						_.each(topic.comments, comment => {
-							comment.canBeDeleted = false;
-						});
-					});
-
 				});
 
 			});
@@ -47,7 +42,7 @@ module vdb.viewModels.discussions {
 				this.newTopic(new DiscussionTopicEditViewModel(this.loggedUserId));
 				this.showCreateNewTopic(false);
 				this.topics.unshift(topic);
-				this.selectedTopic(topic);
+				this.selectTopic(topic);
 
 			});
 
@@ -57,13 +52,90 @@ module vdb.viewModels.discussions {
 
 		public newTopic: KnockoutObservable<DiscussionTopicEditViewModel>;
 
+		public selectTopic = (topic: dc.discussions.DiscussionTopicContract) => {
+			
+			if (!topic) {
+				this.selectedTopic(null);
+				return;
+			}
+
+			this.repo.getTopic(topic.id, contract => {
+
+				contract.canBeDeleted = false; // TODO
+
+				this.selectedTopic(new DiscussionTopicViewModel(this.repo, this.loggedUserId, this.canDeleteAllComments, contract));
+
+			});			
+
+		}
+
 		public selectedFolder = ko.observable<dc.discussions.DiscussionFolderContract>(null);
 
-		public selectedTopic = ko.observable<dc.discussions.DiscussionTopicContract>(null);
+		public selectedTopic = ko.observable<DiscussionTopicViewModel>(null);
 
 		public showCreateNewTopic = ko.observable(false);
 
 		public topics = ko.observableArray<dc.discussions.DiscussionTopicContract>([]);
+
+	}
+
+	export class DiscussionTopicViewModel {
+		
+		constructor(private repo: rep.DiscussionRepository, private loggedUserId: number,
+			private canDeleteAllComments: boolean,
+			public contract: dc.discussions.DiscussionTopicContract) {
+
+			_.each(contract.comments, comment => {
+				comment.canBeDeleted = this.canDeleteComment(comment);
+			});
+			
+			this.comments = ko.observableArray<dc.CommentContract>(contract.comments || []);
+
+		}
+
+		private canDeleteComment = (comment: dc.CommentContract) => {
+			return (this.canDeleteAllComments || (comment.author && comment.author.id === this.loggedUserId));
+		}
+
+		public comments: KnockoutObservableArray<dc.CommentContract>;
+
+		public createComment = () => {
+
+			var comment = this.newComment();
+
+			if (!comment)
+				return;
+
+			this.newComment("");
+
+			var commentContract: dc.CommentContract = {
+				author: { id: this.loggedUserId },
+				message: comment
+			}
+
+			this.repo.createComment(this.contract.id, commentContract, result => {
+				this.processComment(result);
+				this.comments.unshift(result);
+			});
+
+
+		}
+
+		public deleteComment = (comment: dc.CommentContract) => {
+			
+			this.comments.remove(comment);
+
+			this.repo.deleteComment(comment.id);
+
+		}
+
+		public newComment = ko.observable("");
+
+		private processComment = (comment: dc.CommentContract) => {
+
+			comment.canBeDeleted = this.canDeleteComment(comment);
+
+		}
 
 	}
 

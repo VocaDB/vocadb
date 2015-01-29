@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -38,7 +39,7 @@
 				<span data-bind="text: topicCount"></span>
 			</td>
 			<td>
-				<span data-bind="text: $data.lastTopicDate"></span>
+				<span>{{$data.lastTopicDate | formatDate:'lll'}}</span>
 			</td>
 		</tr>
 	</tbody>
@@ -53,9 +54,17 @@
 	<script type="text/javascript">
 
 		$(function () {
-			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+
+			moment.locale('@Culture');
+
+			ko.punches.enableAll();
+
+			var urlMapper = new vdb.UrlMapper('@RootPath');
+			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 			var repo = repoFactory.discussionRepository();
-			ko.applyBindings(new vdb.viewModels.discussions.DiscussionIndexViewModel(repo, @UserContext.LoggedUserId));
+			ko.applyBindings(new vdb.viewModels.discussions.DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments, @UserContext.LoggedUserId));
+
 		});
 
 	</script>

@@ -96,8 +96,7 @@ module vdb.viewModels.user {
 
 		private processComment = (comment: dc.CommentContract) => {
 
-			var commentAny: any = comment;
-			commentAny.canBeDeleted = (this.canDeleteComments || this.userId == this.loggedUserId || (comment.author && comment.author.id == this.loggedUserId));
+			comment.canBeDeleted = (this.canDeleteComments || this.userId == this.loggedUserId || (comment.author && comment.author.id == this.loggedUserId));
 
 		}
 

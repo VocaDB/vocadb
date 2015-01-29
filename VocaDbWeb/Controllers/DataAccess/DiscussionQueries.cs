@@ -19,7 +19,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentContract CreateComment(int topicId, CommentContract contract) {
+		public CommentForApiContract CreateComment(int topicId, CommentContract contract) {
 			
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
@@ -36,7 +36,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				ctx.Save(comment);
 
-				return new CommentContract(comment);
+				ctx.AuditLogger.AuditLog("created " + comment, agent);
+
+				return new CommentForApiContract(comment, userIconFactory);
 
 			});
 
@@ -55,7 +57,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				ctx.Save(folder);
 
-				return new DiscussionFolderContract(folder);
+				ctx.AuditLogger.AuditLog("created " + folder);
+
+				return new DiscussionFolderContract(folder, DiscussionFolderOptionalFields.None);
 
 			});
 
@@ -79,7 +83,28 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				ctx.Save(topic);
 
-				return new DiscussionTopicContract(topic, userIconFactory);
+				ctx.AuditLogger.AuditLog("created " + topic, agent);
+
+				return new DiscussionTopicContract(topic, userIconFactory, DiscussionTopicOptionalFields.None);
+
+			});
+
+		}
+
+		public void DeleteComment(int commentId) {
+			
+			repository.HandleTransaction(ctx => {
+
+				var comment = ctx.OfType<DiscussionComment>().Load(commentId);
+				var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+
+				ctx.AuditLogger.AuditLog("deleting " + comment, user);
+
+				if (!user.Equals(comment.Author))
+					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+
+				comment.Topic.Comments.Remove(comment);
+				ctx.Delete(comment);
 
 			});
 
@@ -98,6 +123,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				comment.Message = contract.Message;
 
 				ctx.Update(comment);
+				
+				ctx.AuditLogger.AuditLog("updated " + comment);
 
 			});
 
@@ -116,6 +143,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				topic.Content = contract.Content;
 
 				ctx.Update(topic);
+				ctx.AuditLogger.AuditLog("updated " + topic);
 
 			});
 

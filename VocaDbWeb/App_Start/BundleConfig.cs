@@ -173,6 +173,9 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Discussion/Index").Include(
 				"~/Scripts/marked.js",
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
+				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/KnockoutExtensions/Markdown.js",
 				"~/Scripts/Repositories/DiscussionRepository.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"

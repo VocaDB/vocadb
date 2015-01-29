@@ -25,7 +25,7 @@ namespace VocaDb.Migrations {
 			Create.Table("DiscussionTopics").InSchema(schema)
 				.WithColumn("[Id]").AsInt32().PrimaryKey("PK_DiscussionTopics").Identity().NotNullable()
 				.WithColumn("Content").AsString(int.MaxValue).NotNullable()
-				.WithColumn("CreateDate").AsDateTime().NotNullable()
+				.WithColumn("[Created]").AsDateTime().NotNullable()
 				.WithColumn("Deleted").AsBoolean().NotNullable().WithDefaultValue(false)
 				.WithColumn("Locked").AsBoolean().NotNullable().WithDefaultValue(false)
 				.WithColumn("Pinned").AsBoolean().NotNullable().WithDefaultValue(false)

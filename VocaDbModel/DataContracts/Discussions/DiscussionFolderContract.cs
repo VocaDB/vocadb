@@ -10,17 +10,21 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 		public DiscussionFolderContract() { }
 
-		public DiscussionFolderContract(DiscussionFolder folder) {
+		public DiscussionFolderContract(DiscussionFolder folder, DiscussionFolderOptionalFields fields) {
 
 			ParamIs.NotNull(() => folder);
 
 			this.Description = folder.Description;
 			this.Id = folder.Id;
 			this.Name = folder.Name;
-			
-			// TODO
-			this.LastTopicDate = folder.Topics.Any() ? (DateTime?)folder.Topics.Max(t => t.CreateDate) : null; 
-			this.TopicCount = folder.Topics.Count;
+
+			if (fields.HasFlag(DiscussionFolderOptionalFields.LastTopicDate)) {
+				this.LastTopicDate = folder.Topics.Any() ? (DateTime?)folder.Topics.Max(t => t.Created) : null; 				
+			}
+
+			if (fields.HasFlag(DiscussionFolderOptionalFields.TopicCount)) {
+				this.TopicCount = folder.Topics.Count;				
+			}
 
 		}
 
@@ -38,6 +42,15 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 		[DataMember]
 		public int TopicCount { get; set; }
+
+	}
+
+	[Flags]
+	public enum DiscussionFolderOptionalFields {
+		
+		None			= 0,
+		LastTopicDate	= 1,
+		TopicCount		= 2
 
 	}
 

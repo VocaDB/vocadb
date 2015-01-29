@@ -45,6 +45,10 @@ namespace VocaDb.Model.Domain.Discussions {
 			}
 		}
 
+		public override string ToString() {
+			return string.Format("Discussion folder '{0}' [{1}]", Name, Id);
+		}
+
 	}
 
 }

@@ -39,7 +39,7 @@ namespace VocaDb.Model.Domain.Discussions {
 			Author = agent.User;
 			AuthorName = agent.Name;
 
-			CreateDate = DateTime.UtcNow;
+			Created = DateTime.Now;
 
 		}
 
@@ -69,7 +69,7 @@ namespace VocaDb.Model.Domain.Discussions {
 			}
 		}
 
-		public virtual DateTime CreateDate { get; set; }
+		public virtual DateTime Created { get; set; }
 
 		public virtual bool Deleted { get; set; }
 
@@ -98,6 +98,10 @@ namespace VocaDb.Model.Domain.Discussions {
 		}
 
 		public virtual bool Pinned { get; set; }
+
+		public override string ToString() {
+			return string.Format("Discussion topic '{0}' [{1}]", Name, Id);
+		}
 
 	}
 

@@ -5,7 +5,7 @@ module vdb.dataContracts {
         
         id: number;
 
-        name: string;
+        name?: string;
     
     }
 

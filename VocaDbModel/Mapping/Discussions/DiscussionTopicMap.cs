@@ -14,7 +14,7 @@ namespace VocaDb.Model.Mapping.Discussions {
 			Id(m => m.Id);
 
 			Map(m => m.Content).Not.Nullable().Length(int.MaxValue);
-			Map(m => m.CreateDate).Not.Nullable();
+			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Locked).Not.Nullable();
 			Map(m => m.Pinned).Not.Nullable();
