@@ -29,6 +29,7 @@
 				<th>Topic</th>
 				<th>Author</th>
 				<th>Comments</th>
+				<th>Created</th>
 				<th>Last comment</th>
 			</tr>
 		</thead>
@@ -45,6 +46,9 @@
 				</td>
 				<td>
 					<span data-bind="text: commentCount"></span>
+				</td>
+				<td>
+					<span>{{created | formatDate:'lll'}}</span>
 				</td>
 				<td>
 					<span>{{$data.lastCommentDate | formatDate:'lll'}}</span>
