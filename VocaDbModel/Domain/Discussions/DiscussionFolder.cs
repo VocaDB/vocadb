@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Discussions {
@@ -11,6 +12,18 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public DiscussionFolder() {
 			Description = string.Empty;
+		}
+
+		/// <summary>
+		/// List of topics for this folder.
+		/// This list includes deleted topics.
+		/// </summary>
+		public virtual IList<DiscussionTopic> AllTopics {
+			get { return topics; }
+			set {
+				ParamIs.NotNull(() => value);
+				topics = value;
+			}
 		}
 
 		public virtual bool Deleted { get; set; }
@@ -37,11 +50,13 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual int SortIndex { get; set; }
 
-		public virtual IList<DiscussionTopic> Topics {
-			get { return topics; }
-			set {
-				ParamIs.NotNull(() => value);
-				topics = value;
+		/// <summary>
+		/// List of discussion topics for this folder.
+		/// This list does not include deleted topics.
+		/// </summary>
+		public virtual IEnumerable<DiscussionTopic> Topics {
+			get {
+				return AllTopics.Where(t => !t.Deleted);
 			}
 		}
 

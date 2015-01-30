@@ -29,6 +29,12 @@ module vdb.repositories {
 
 		}
 
+		public deleteTopic = (topicId: number, callback?: () => void) => {
+			
+			$.ajax(this.mapUrl("topics/" + topicId), { type: 'DELETE', success: callback });
+
+		}
+
 		public getFolders = (callback: (folders: dc.discussions.DiscussionFolderContract[]) => void) => {
 			
 			$.getJSON(this.mapUrl("folders"), { fields: 'LastTopicDate,TopicCount' }, callback);

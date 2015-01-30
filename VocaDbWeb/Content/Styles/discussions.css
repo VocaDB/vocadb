@@ -25,6 +25,9 @@
 .discussion-topics tr.active {
   background-color: #d9edf7;
 }
+.create-topic {
+  margin-bottom: 1em;
+}
 .discussion-folder-name {
   display: block;
 }

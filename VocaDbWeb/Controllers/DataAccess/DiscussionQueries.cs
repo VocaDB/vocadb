@@ -67,7 +67,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public DiscussionTopicContract CreateTopic(int folderId, DiscussionTopicContract contract) {
 			
-			// TODO
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
 			if (contract.Author == null || contract.Author.Id != PermissionContext.LoggedUserId) {
@@ -105,6 +104,31 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				comment.Topic.Comments.Remove(comment);
 				ctx.Delete(comment);
+
+			});
+
+		}
+
+		/// <summary>
+		/// Soft-deletes a discussion topic.
+		/// The topic is marked as deleted, not actually removed from the DB.
+		/// User can delete their own topics, moderators can delete all topics.
+		/// </summary>
+		/// <param name="topicId">Id of the topic to be deleted.</param>
+		public void DeleteTopic(int topicId) {
+			
+			repository.HandleTransaction(ctx => {
+
+				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
+				var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+
+				ctx.AuditLogger.AuditLog("deleting " + topic, user);
+
+				if (!user.Equals(topic.Author))
+					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+
+				topic.Deleted = true;
+				ctx.Update(topic);
 
 			});
 

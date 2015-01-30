@@ -27,6 +27,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("topics/{topicId:int}")]
+		public void DeleteTopic(int topicId) {
+			
+			queries.DeleteTopic(topicId);
+
+		}
+
 		[Route("folders")]
 		public IEnumerable<DiscussionFolderContract> GetFolders(
 			DiscussionFolderOptionalFields fields = DiscussionFolderOptionalFields.None) {

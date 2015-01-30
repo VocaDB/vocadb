@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 			}
 
 			if (fields.HasFlag(DiscussionFolderOptionalFields.TopicCount)) {
-				this.TopicCount = folder.Topics.Count;				
+				this.TopicCount = folder.Topics.Count();				
 			}
 
 		}
