@@ -17,6 +17,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 			Author = new UserWithIconContract(topic.Author, userIconFactory);
 			Created = topic.Created;
+			FolderId = topic.Folder.Id;
 			Id = topic.Id;
 			Name = topic.Name;
 
@@ -52,6 +53,9 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 		[DataMember]
 		public DateTime Created { get; set; }
+
+		[DataMember]
+		public int FolderId { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

@@ -1,0 +1,44 @@
+﻿
+<div data-bind="visible: selectedFolder() === null" class="row-fluid">
+	
+	<div class="span8">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Folder</th>
+					<th>Topics</th>
+					<th>Last topic</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: folders" class="discussion-folders">
+				<tr data-bind="css: { active: $data == $parent.selectedFolder() }, click: function() { $parent.selectedFolder($data); }">
+					<td>
+						<span data-bind="text: name" class="discussion-folder-name"></span>
+						<span class="discussion-folder-description" data-bind="text: description"></span>
+					</td>
+					<td>
+						<span data-bind="text: topicCount"></span>
+					</td>
+					<td>
+						<span>{{$data.lastTopicDate | formatDate:'lll'}}</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="span4" data-bind="visible: recentTopics().length">
+		<h4>Recent topics</h4>		
+		<table class="table">
+			<tbody data-bind="foreach: recentTopics" class="discussion-folders">
+				<tr data-bind="click: function() { $parent.selectTopic($data); }">
+					<td>
+						{{name}}<br />
+						<span class="extraInfo">{{created | formatDate:'lll'}}</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>

@@ -15,6 +15,8 @@ module vdb.dataContracts.discussions {
 
 		createDate: Date;
 
+		folderId: number;
+
 		id: number;
 
 		lastCommentDate: Date;

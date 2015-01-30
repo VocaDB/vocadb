@@ -21,29 +21,7 @@
 	</li>
 </ul>
 
-<table class="table" data-bind="visible: selectedFolder() === null">
-	<thead>
-		<tr>
-			<th>Folder</th>
-			<th>Topics</th>
-			<th>Last topic</th>
-		</tr>
-	</thead>
-	<tbody data-bind="foreach: folders" class="discussion-folders">
-		<tr data-bind="css: { active: $data == $parent.selectedFolder() }, click: function() { $parent.selectedFolder($data); }">
-			<td>
-				<span data-bind="text: name" class="discussion-folder-name"></span>
-				<span class="discussion-folder-description" data-bind="text: description"></span>
-			</td>
-			<td>
-				<span data-bind="text: topicCount"></span>
-			</td>
-			<td>
-				<span>{{$data.lastTopicDate | formatDate:'lll'}}</span>
-			</td>
-		</tr>
-	</tbody>
-</table>
+@{ Html.RenderPartial("Partials/_ViewFolders"); }
 
 @{ Html.RenderPartial("Partials/_ViewFolder"); }
 

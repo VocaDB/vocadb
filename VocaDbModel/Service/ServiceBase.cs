@@ -474,6 +474,14 @@ namespace VocaDb.Model.Service {
 
 	}
 
+	public static class PartialFindResult {
+
+		public static PartialFindResult<T> Create<T>(T[] items, int totalCount) {
+			return new PartialFindResult<T>(items, totalCount);
+		}
+
+	}
+
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PartialFindResult<T> {
 

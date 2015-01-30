@@ -5,6 +5,9 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Discussions;
+using VocaDb.Model.Service;
+using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -12,6 +15,7 @@ namespace VocaDb.Web.Controllers.Api {
 	[RoutePrefix("api/discussions")]	
 	public class DiscussionApiController : ApiController {
 
+		private const int defaultMax = 10;
 		private readonly DiscussionQueries queries;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -52,8 +56,35 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("topics")]
+		public PartialFindResult<DiscussionTopicContract> GetTopics(
+			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+ 			DiscussionTopicSortRule sort = DiscussionTopicSortRule.DateCreated,
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
+			
+			return queries.HandleQuery(ctx => {
+
+				var query = ctx.OfType<DiscussionTopic>()
+					.Query()
+					.Where(f => !f.Deleted);
+
+				var topics = query
+					.Paged(new PagingProperties(start, maxResults, getTotalCount))
+					.OrderBy(sort)
+					.ToArray()
+					.Select(f => new DiscussionTopicContract(f, userIconFactory, fields))
+					.ToArray();
+
+				var count = (getTotalCount ? query.Count() : 0);
+
+				return PartialFindResult.Create(topics, count);
+
+			});
+
+		}
+
 		[Route("folders/{folderId:int}/topics")]
-		public IEnumerable<DiscussionTopicContract> GetTopics(int folderId, 
+		public IEnumerable<DiscussionTopicContract> GetTopicsForFolder(int folderId, 
 			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
 			
 			return queries.HandleQuery(ctx => {

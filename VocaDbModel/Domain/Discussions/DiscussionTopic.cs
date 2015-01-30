@@ -77,6 +77,9 @@ namespace VocaDb.Model.Domain.Discussions {
 			get { return EntryType.DiscussionTopic; }
 		}
 
+		/// <summary>
+		/// Folder containing this topic. Cannot be null.
+		/// </summary>
 		public virtual DiscussionFolder Folder {
 			get { return folder; }
 			set {

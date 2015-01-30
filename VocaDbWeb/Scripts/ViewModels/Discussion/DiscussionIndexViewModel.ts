@@ -15,6 +15,7 @@ module vdb.viewModels.discussions {
 
 
 			repo.getFolders(folders => this.folders(folders));
+			repo.getTopics(result => this.recentTopics(result.items));
 				
 			this.selectedFolder.subscribe(folder => {
 
@@ -56,6 +57,10 @@ module vdb.viewModels.discussions {
 
 		public folders = ko.observableArray<dc.discussions.DiscussionFolderContract>([]);
 
+		private getFolder = (folderId: number) => {
+			return _.find(this.folders(), f => f.id === folderId);
+		}
+
 		private loadTopics = (folder: dc.discussions.DiscussionFolderContract) => {
 		
 			if (!folder) {
@@ -63,13 +68,15 @@ module vdb.viewModels.discussions {
 				return;
 			}
 
-			this.repo.getTopics(folder.id, topics => {
+			this.repo.getTopicsForFolder(folder.id, topics => {
 				this.topics(topics);
 			});
 
 		}
 
 		public newTopic: KnockoutObservable<DiscussionTopicEditViewModel>;
+
+		public recentTopics = ko.observableArray<dc.discussions.DiscussionTopicContract>([]);
 
 		public selectTopic = (topic: dc.discussions.DiscussionTopicContract) => {
 			
@@ -83,6 +90,7 @@ module vdb.viewModels.discussions {
 
 				contract.canBeDeleted = this.canDeleteTopic(contract);
 
+				this.selectedFolder(this.getFolder(contract.folderId));
 				this.selectedTopic(new DiscussionTopicViewModel(this.repo, this.loggedUserId, this.canDeleteAllComments, contract));
 
 			});			

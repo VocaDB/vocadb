@@ -2444,6 +2444,7 @@
     <Content Include="Views\Discussion\Partials\_ViewFolder.cshtml" />
     <Content Include="Views\Discussion\Partials\_ViewTopic.cshtml" />
     <Content Include="Views\Discussion\Partials\_EditTopic.cshtml" />
+    <Content Include="Views\Discussion\Partials\_ViewFolders.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\AliasForSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
