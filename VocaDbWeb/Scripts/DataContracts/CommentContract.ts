@@ -9,6 +9,8 @@ module vdb.dataContracts {
 
 		canBeDeleted?: boolean;
 
+		canBeEdited?: boolean;
+
 		created?: Date;
 
 		id?: number;
