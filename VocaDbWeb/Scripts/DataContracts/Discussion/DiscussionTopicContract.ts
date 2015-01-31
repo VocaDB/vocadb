@@ -5,7 +5,9 @@ module vdb.dataContracts.discussions {
 		
 		author: user.UserApiContract;
 
-		canBeDeleted: boolean;
+		canBeDeleted?: boolean;
+
+		canBeEdited?: boolean;
 
 		commentCount: number;
 
@@ -13,7 +15,7 @@ module vdb.dataContracts.discussions {
 
 		content: string;
 
-		createDate: Date;
+		created: Date;
 
 		folderId: number;
 

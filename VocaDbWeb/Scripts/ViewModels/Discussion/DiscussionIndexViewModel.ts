@@ -32,6 +32,10 @@ module vdb.viewModels.discussions {
 			return (this.canDeleteAllComments || (topic.author && topic.author.id === this.loggedUserId));
 		}
 
+		private canEditTopic = (topic: dc.discussions.DiscussionTopicContract) => {
+			return (this.canDeleteAllComments || (topic.author && topic.author.id === this.loggedUserId));
+		}
+
 		public createNewTopic = () => {
 			
 			var folder = this.selectedFolder();
@@ -61,15 +65,26 @@ module vdb.viewModels.discussions {
 			return _.find(this.folders(), f => f.id === folderId);
 		}
 
-		private loadTopics = (folder: dc.discussions.DiscussionFolderContract) => {
+		private loadTopics = (folder: dc.discussions.DiscussionFolderContract, callback?: () => void) => {
 		
 			if (!folder) {
+
 				this.topics([]);
+
+				if (callback)
+					callback();
+
 				return;
+
 			}
 
 			this.repo.getTopicsForFolder(folder.id, topics => {
+
 				this.topics(topics);
+
+				if (callback)
+					callback();
+
 			});
 
 		}
@@ -81,14 +96,14 @@ module vdb.viewModels.discussions {
 		public selectTopic = (topic: dc.discussions.DiscussionTopicContract) => {
 			
 			if (!topic) {
-				this.selectedTopic(null);
-				this.loadTopics(this.selectedFolder());
+				this.loadTopics(this.selectedFolder(), () => this.selectedTopic(null));
 				return;
 			}
 
 			this.repo.getTopic(topic.id, contract => {
 
 				contract.canBeDeleted = this.canDeleteTopic(contract);
+				contract.canBeEdited = this.canEditTopic(contract);
 
 				this.selectedFolder(this.getFolder(contract.folderId));
 				this.selectedTopic(new DiscussionTopicViewModel(this.repo, this.loggedUserId, this.canDeleteAllComments, contract));
@@ -111,7 +126,9 @@ module vdb.viewModels.discussions {
 		
 		constructor(private repo: rep.DiscussionRepository, private loggedUserId: number,
 			private canDeleteAllComments: boolean,
-			public contract: dc.discussions.DiscussionTopicContract) {
+			contract: dc.discussions.DiscussionTopicContract) {
+
+			this.contract = ko.observable(contract);
 
 			_.each(contract.comments, comment => {
 				comment.canBeDeleted = this.canDeleteComment(comment);
@@ -121,11 +138,21 @@ module vdb.viewModels.discussions {
 
 		}
 
+		public beginEditTopic = () => {
+			this.editModel(new DiscussionTopicEditViewModel(this.loggedUserId, this.contract()));
+		}
+
+		public cancelEdit = () => {
+			this.editModel(null);
+		}
+
 		private canDeleteComment = (comment: dc.CommentContract) => {
 			return (this.canDeleteAllComments || (comment.author && comment.author.id === this.loggedUserId));
 		}
 
 		public comments: KnockoutObservableArray<dc.CommentContract>;
+
+		public contract: KnockoutObservable<dc.discussions.DiscussionTopicContract>;
 
 		public createComment = () => {
 
@@ -141,7 +168,7 @@ module vdb.viewModels.discussions {
 				message: comment
 			}
 
-			this.repo.createComment(this.contract.id, commentContract, result => {
+			this.repo.createComment(this.contract().id, commentContract, result => {
 				this.processComment(result);
 				this.comments.unshift(result);
 			});
@@ -157,6 +184,10 @@ module vdb.viewModels.discussions {
 
 		}
 
+		public editModel = ko.observable<DiscussionTopicEditViewModel>(null);
+
+		public isBeingEdited = ko.computed(() => this.editModel() !== null);
+
 		public newComment = ko.observable("");
 
 		private processComment = (comment: dc.CommentContract) => {
@@ -165,12 +196,41 @@ module vdb.viewModels.discussions {
 
 		}
 
+		public saveEditedTopic = () => {
+			
+			if (!this.isBeingEdited())
+				return;
+
+			var editedContract = this.editModel().toContract();
+
+			this.repo.updateTopic(this.contract().id, editedContract, () => {
+
+				editedContract.id = this.contract().id;
+				editedContract.created = this.contract().created;
+				editedContract.canBeDeleted = this.contract().canBeDeleted;
+				editedContract.canBeEdited = this.contract().canBeEdited;
+
+				this.contract(editedContract);
+				this.editModel(null);
+
+			});
+
+		}
+
 	}
 
 	export class DiscussionTopicEditViewModel {
 		
-		constructor(userId: number) {
+		constructor(userId: number, contract?: dc.discussions.DiscussionTopicContract) {
+
 			this.author = { id: userId, name: '' };
+
+			if (contract) {
+				this.author = contract.author;
+				this.content(contract.content);
+				this.name(contract.name);
+			}
+
 		}
 
 		public author: dc.UserWithIconContract;

@@ -17,7 +17,7 @@
 		<span data-bind="visible: selectedTopic()" class="divider">/</span>
 	</li>
 	<li>
-		<a href="#" data-bind="visible: selectedTopic(), click: function() { selectedTopic(null); }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
+		<a href="#" data-bind="visible: selectedTopic(), click: function() { selectTopic(null); }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
 	</li>
 </ul>
 

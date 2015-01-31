@@ -112,6 +112,14 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 	
+		[Route("comments/{commentId:int}")]
+		[Authorize]
+		public void PostEditComment(int commentId, CommentForApiContract contract) {
+			
+			queries.UpdateComment(commentId, contract);
+
+		}
+
 		[Route("topics/{topicId:int}")]
 		[Authorize]
 		public void PostEditTopic(int topicId, DiscussionTopicContract contract) {

@@ -27,6 +27,29 @@ namespace VocaDb.Model.Domain.Discussions {
 			}
 		}
 
+		public virtual bool Equals(DiscussionComment another) {
+
+			if (another == null)
+				return false;
+
+			if (ReferenceEquals(this, another))
+				return true;
+
+			if (Id == 0)
+				return false;
+
+			return this.Id == another.Id;
+
+		}
+
+		public override bool Equals(object obj) {
+			return Equals(obj as DiscussionComment);
+		}
+
+		public override int GetHashCode() {
+			return GlobalId.GetHashCode();
+		}
+
 		public override void OnDelete() {
 			Topic.Comments.Remove(this);
 		}

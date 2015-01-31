@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain {
 	/// Base class for comments.
 	/// Comments can be added for entries such as albums and users.
 	/// </summary>
-	public abstract class Comment {
+	public abstract class Comment : IComment {
 
 		private string authorName;
 		private string message;
@@ -40,7 +40,20 @@ namespace VocaDb.Model.Domain {
 
 		public virtual DateTime Created { get; set; }
 
+		/// <summary>
+		/// Entry owning this comment. Cannot be null.
+		/// </summary>
 		public abstract IEntryWithNames Entry { get; }
+
+		public virtual EntryType EntryType {
+			get { return Entry.EntryType; }
+		}
+
+		public virtual GlobalEntryId GlobalId {
+			get {
+				return new GlobalEntryId(EntryType, Id);
+			}
+		}
 
 		public virtual int Id { get; set; }
 
@@ -57,6 +70,12 @@ namespace VocaDb.Model.Domain {
 		public override string ToString() {
 			return string.Format("comment [{0}] for {1}", Id, Entry);
 		}
+
+	}
+
+	public interface IComment {
+
+		string Message { get; }
 
 	}
 

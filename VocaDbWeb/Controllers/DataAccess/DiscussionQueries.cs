@@ -1,6 +1,7 @@
 ﻿using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -126,7 +127,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public void UpdateComment(int commentId, CommentContract contract) {
+		public void UpdateComment(int commentId, IComment contract) {
 			
 			repository.HandleTransaction(ctx => {
 
@@ -146,6 +147,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				PermissionContext.VerifyAccess(topic, EntryPermissionManager.CanEdit);
 
+				topic.Name = contract.Name;
 				topic.Content = contract.Content;
 
 				ctx.Update(topic);

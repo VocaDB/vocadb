@@ -59,6 +59,12 @@ module vdb.repositories {
 
 		}
 
+		public updateComment = (commentId: number, contract: dc.CommentContract, callback: () => void) => {
+
+			$.post(this.mapUrl("comments/" + commentId), contract, callback, 'json');
+
+		}
+
 		public updateTopic = (topicId: number, contract: dc.discussions.DiscussionTopicContract, callback: () => void) => {
 
 			$.post(this.mapUrl("topics/" + topicId), contract, callback, 'json');

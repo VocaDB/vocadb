@@ -6,7 +6,7 @@ using VocaDb.Model.Domain;
 namespace VocaDb.Model.DataContracts {
 
 	[DataContract]
-	public class CommentForApiContract {
+	public class CommentForApiContract : IComment {
 
 		public CommentForApiContract() { }
 

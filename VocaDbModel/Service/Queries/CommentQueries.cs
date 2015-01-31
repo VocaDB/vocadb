@@ -1,5 +1,4 @@
-﻿using VocaDb.Model.DataContracts;
-using VocaDb.Model.Domain;
+﻿using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -39,7 +38,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public void Update(int commentId, CommentContract contract) {
+		public void Update(int commentId, IComment contract) {
 			
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 				

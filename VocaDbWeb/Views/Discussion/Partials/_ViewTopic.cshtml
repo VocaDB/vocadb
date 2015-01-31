@@ -2,28 +2,40 @@
 
 <div data-bind="with: selectedTopic()">
 	
-	<div class="well well-transparent">
-		<h3 data-bind="text: contract.name"></h3>
+	<div data-bind="visible: !isBeingEdited()">
 		
-		<div data-bind="with: contract">
-			@CommentHelpers.CommentBodyKnockout("content", true, "$parents[1].deleteTopic")			
-		</div>
-		
-	</div>
-		
-	@if (Login.CanManageDb) {
 		<div class="well well-transparent">
-			<form data-bind="submit: createComment">
-				<textarea data-bind="textInput: newComment" rows="6" cols="60" maxlength="800" class="span5" placeholder="@ViewRes.DiscussionContentStrings.NewComment" required></textarea>
-				<button type="submit" class="btn btn-primary">@ViewRes.DiscussionContentStrings.AddComment</button>
-			</form>				
+			<h3 data-bind="text: contract().name"></h3>
+
+			<div data-bind="with: contract">
+				@CommentHelpers.CommentBodyKnockout("content", true, "$parents[1].deleteTopic", "$parent.beginEditTopic")
+			</div>
+
 		</div>
-	}
 		
-	<div data-bind="foreach: comments">
-		<div class="well well-transparent">
-			@CommentHelpers.CommentBodyKnockout("message", false)			
+		@if (Login.CanManageDb) {
+			<div class="well well-transparent">
+				<form data-bind="submit: createComment">
+					<textarea data-bind="textInput: newComment" rows="6" cols="60" maxlength="800" class="span5" placeholder="@ViewRes.DiscussionContentStrings.NewComment" required></textarea>
+					<button type="submit" class="btn btn-primary">@ViewRes.DiscussionContentStrings.AddComment</button>
+				</form>
+			</div>
+		}
+
+		<div data-bind="foreach: comments">
+			<div class="well well-transparent">
+				@CommentHelpers.CommentBodyKnockout("message", false, editHandler: null)
+			</div>
 		</div>
+
 	</div>
+	
+	<form data-bind="visible: isBeingEdited, submit: saveEditedTopic" class="well well-transparent">
+		<div data-bind="with: editModel">
+			@{ Html.RenderPartial("Partials/_EditTopic"); }
+		</div>
+		<button type="submit" class="btn btn-primary">Save</button>
+		<button data-bind="click: cancelEdit" class="btn">Cancel</button>
+	</form>
 
 </div>

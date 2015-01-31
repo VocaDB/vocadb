@@ -10,7 +10,7 @@ namespace VocaDb.Model.DataContracts {
 	/// SECURITY NOTE: User contract contains email, which is sensitive information.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class CommentContract {
+	public class CommentContract : IComment {
 
 		public CommentContract() { }
 
