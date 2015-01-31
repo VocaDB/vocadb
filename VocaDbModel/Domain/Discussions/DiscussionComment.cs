@@ -27,6 +27,10 @@ namespace VocaDb.Model.Domain.Discussions {
 			}
 		}
 
+		public override void OnDelete() {
+			Topic.Comments.Remove(this);
+		}
+
 	}
 
 }

@@ -662,6 +662,7 @@
     <Compile Include="Service\Helpers\TagQueryableExtender.cs" />
     <Compile Include="Service\Helpers\UserCommentNotifier.cs" />
     <Compile Include="Service\Queries\ArtistRelationsQuery.cs" />
+    <Compile Include="Service\Queries\CommentQueries.cs" />
     <Compile Include="Service\Queries\PreviousAndNextAlbumsQuery.cs" />
     <Compile Include="Service\Queries\RelatedAlbumsQuery.cs" />
     <Compile Include="Service\Queries\RelatedSongsQuery.cs" />

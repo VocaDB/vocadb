@@ -52,6 +52,8 @@ namespace VocaDb.Model.Domain {
 			}
 		}
 
+		public virtual void OnDelete() { }
+
 		public override string ToString() {
 			return string.Format("comment [{0}] for {1}", Id, Entry);
 		}

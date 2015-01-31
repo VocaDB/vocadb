@@ -4,6 +4,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Web.Controllers.DataAccess {
@@ -94,16 +95,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			
 			repository.HandleTransaction(ctx => {
 
-				var comment = ctx.OfType<DiscussionComment>().Load(commentId);
-				var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
-
-				ctx.AuditLogger.AuditLog("deleting " + comment, user);
-
-				if (!user.Equals(comment.Author))
-					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
-
-				comment.Topic.Comments.Remove(comment);
-				ctx.Delete(comment);
+				CommentQueries.Create(ctx.OfType<DiscussionComment>(), PermissionContext).Delete(commentId);
 
 			});
 
@@ -136,20 +128,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public void UpdateComment(int commentId, CommentContract contract) {
 			
-			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
-
 			repository.HandleTransaction(ctx => {
+
+				CommentQueries.Create(ctx.OfType<DiscussionComment>(), PermissionContext).Update(commentId, contract);
 				
-				var comment = ctx.OfType<DiscussionComment>().Load(commentId);
-
-				PermissionContext.VerifyAccess(comment, EntryPermissionManager.CanEdit);
-
-				comment.Message = contract.Message;
-
-				ctx.Update(comment);
-				
-				ctx.AuditLogger.AuditLog("updated " + comment);
-
 			});
 
 		}
