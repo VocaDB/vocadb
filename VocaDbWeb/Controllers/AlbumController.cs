@@ -240,7 +240,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("Names", AlbumValidationErrors.UnspecifiedNames);
 			}
 
-			if (!OptionalDateTime.IsValid(model.OriginalRelease.ReleaseDate.Year, model.OriginalRelease.ReleaseDate.Day, model.OriginalRelease.ReleaseDate.Month))
+			if (model.OriginalRelease != null && model.OriginalRelease.ReleaseDate != null && !OptionalDateTime.IsValid(model.OriginalRelease.ReleaseDate.Year, model.OriginalRelease.ReleaseDate.Day, model.OriginalRelease.ReleaseDate.Month))
 				ModelState.AddModelError("ReleaseYear", "Invalid date");
 
 			var coverPicUpload = Request.Files["coverPicUpload"];
