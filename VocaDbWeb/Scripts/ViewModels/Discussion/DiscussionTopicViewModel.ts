@@ -11,11 +11,16 @@ module vdb.viewModels.discussions {
 
 			this.contract = ko.observable(contract);
 
-			_.each(contract.comments, comment => {
-				this.processComment(comment);
-			});
+			var commentViewModels = _.sortBy(_.map(contract.comments, comment => this.processComment(comment)), comment => comment.created);
 
-			this.comments = ko.observableArray<dc.CommentContract>(contract.comments || []);
+			this.comments = ko.observableArray<CommentViewModel>(commentViewModels);
+
+		}
+
+		public beginEditComment = (comment: CommentViewModel) => {
+			
+			comment.beginEdit();
+			this.editCommentModel(comment);
 
 		}
 
@@ -27,11 +32,15 @@ module vdb.viewModels.discussions {
 			this.editModel(null);
 		}
 
+		public cancelEditComment = () => {
+			this.editCommentModel(null);
+		}
+
 		private canEditOrDeleteComment = (comment: dc.CommentContract) => {
 			return (this.canDeleteAllComments || (comment.author && comment.author.id === this.loggedUserId));
 		}
 
-		public comments: KnockoutObservableArray<dc.CommentContract>;
+		public comments: KnockoutObservableArray<CommentViewModel>;
 
 		public contract: KnockoutObservable<dc.discussions.DiscussionTopicContract>;
 
@@ -50,14 +59,12 @@ module vdb.viewModels.discussions {
 			}
 
 			this.repo.createComment(this.contract().id, commentContract, result => {
-				this.processComment(result);
-				this.comments.unshift(result);
+				this.comments.push(this.processComment(result));
 			});
-
 
 		}
 
-		public deleteComment = (comment: dc.CommentContract) => {
+		public deleteComment = (comment: CommentViewModel) => {
 
 			this.comments.remove(comment);
 
@@ -65,15 +72,31 @@ module vdb.viewModels.discussions {
 
 		}
 
+		public editCommentModel = ko.observable<CommentViewModel>(null);
+
 		public editModel = ko.observable<DiscussionTopicEditViewModel>(null);
 
 		public isBeingEdited = ko.computed(() => this.editModel() !== null);
 
 		public newComment = ko.observable("");
 
-		private processComment = (comment: dc.CommentContract) => {
+		private processComment = (contract: dc.CommentContract) => {
 
-			comment.canBeDeleted = this.canEditOrDeleteComment(comment);
+			return new CommentViewModel(contract, this.canEditOrDeleteComment(contract), this.canEditOrDeleteComment(contract));
+
+		}
+
+		public saveEditedComment = () => {
+			
+			if (!this.editCommentModel())
+				return;
+
+			this.editCommentModel().saveChanges();
+			var editedContract = this.editCommentModel().toContract();
+
+			this.repo.updateComment(editedContract.id, editedContract);
+
+			this.editCommentModel(null);
 
 		}
 

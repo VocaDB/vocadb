@@ -178,6 +178,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/KnockoutExtensions/Markdown.js",
 				"~/Scripts/Repositories/DiscussionRepository.js",
+				"~/Scripts/ViewModels/CommentViewModel.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionTopicViewModel.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
 			));
