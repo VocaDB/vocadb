@@ -75,6 +75,8 @@ namespace VocaDb.Model.Domain {
 
 	public interface IComment {
 
+		DateTime Created { get; }
+
 		string Message { get; }
 
 	}

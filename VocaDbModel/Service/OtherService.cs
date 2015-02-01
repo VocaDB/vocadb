@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -208,8 +209,9 @@ namespace VocaDb.Model.Service {
 			var albumComments = session.Query<AlbumComment>().Where(c => !c.Album.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
 			var artistComments = session.Query<ArtistComment>().Where(c => !c.Artist.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
 			var songComments = session.Query<SongComment>().Where(c => !c.Song.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
+			var discussionComments = session.Query<DiscussionComment>().Where(c => !c.Topic.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
 
-			var combined = albumComments.Cast<Comment>().Concat(artistComments).Concat(songComments)
+			var combined = albumComments.Cast<Comment>().Concat(artistComments).Concat(songComments).Concat(discussionComments)
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 				

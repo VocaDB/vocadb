@@ -5,6 +5,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
@@ -26,6 +27,8 @@ namespace VocaDb.Model.DataContracts.Api {
 				return new EntryForApiContract((Album)entry, languagePreference, thumbPersister, ssl, includedFields);
 			else if (entry is Artist)
 				return new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, ssl, includedFields);
+			else if (entry is DiscussionTopic)
+				return new EntryForApiContract((DiscussionTopic)entry, languagePreference);
 			else if (entry is Song)
 				return new EntryForApiContract((Song)entry, languagePreference, includedFields);
 			else if (entry is Tag)
@@ -102,6 +105,14 @@ namespace VocaDb.Model.DataContracts.Api {
 			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
 				WebLinks = album.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();				
 			}
+
+		}
+
+		// Only used for recent comments atm.
+		public EntryForApiContract(DiscussionTopic topic, ContentLanguagePreference languagePreference)
+			: this((IEntryWithNames)topic, languagePreference) {
+
+			CreateDate = topic.Created;
 
 		}
 
