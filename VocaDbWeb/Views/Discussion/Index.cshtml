@@ -9,23 +9,25 @@
 
 <link rel="stylesheet" href="@Url.Content("~/Content/Styles/discussions.css")" />
 
-<!-- binding context: DiscussionIndexViewModel -->
+<div id="discussions">
+	<!-- binding context: DiscussionIndexViewModel -->
 
-<ul class="breadcrumb" data-bind="visible: selectedFolder()">
-	<li>
-		<a href="#" data-bind="click: function() { selectedTopic(null); selectedFolder(null); }">Discussions</a>
-		<span data-bind="visible: selectedTopic()" class="divider">/</span>
-	</li>
-	<li>
-		<a href="#" data-bind="visible: selectedTopic(), click: function() { selectTopic(null); }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
-	</li>
-</ul>
+	<ul class="breadcrumb" data-bind="visible: selectedFolder()">
+		<li>
+			<a href="#" data-bind="click: function() { selectedTopic(null); selectedFolder(null); }">Discussions</a>
+			<span data-bind="visible: selectedTopic()" class="divider">/</span>
+		</li>
+		<li>
+			<a href="#" data-bind="visible: selectedTopic(), click: function() { selectTopic(null); }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
+		</li>
+	</ul>
 
-@{ Html.RenderPartial("Partials/_ViewFolders"); }
+	@{ Html.RenderPartial("Partials/_ViewFolders"); }
 
-@{ Html.RenderPartial("Partials/_ViewFolder"); }
+	@{ Html.RenderPartial("Partials/_ViewFolder"); }
 
-@{ Html.RenderPartial("Partials/_ViewTopic"); }
+	@{ Html.RenderPartial("Partials/_ViewTopic"); }
+</div>
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Discussion/Index")

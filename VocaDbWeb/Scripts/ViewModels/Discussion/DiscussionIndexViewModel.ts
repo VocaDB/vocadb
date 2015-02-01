@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="../../typings/sammyjs/sammyjs.d.ts" />
+
 module vdb.viewModels.discussions {
 	
 	import dc = vdb.dataContracts;
@@ -25,6 +26,31 @@ module vdb.viewModels.discussions {
 				this.loadTopics(folder);
 
 			});
+
+			var vm = this;
+
+			this.sammyApp = Sammy("#discussions", function() {
+
+				var sammy: Sammy.Application = this;
+
+				sammy.get("#/topics/:topicId", function () {
+
+					var event: Sammy.EventContext = this;
+					var topicId = event.params["topicId"];
+
+					vm.selectTopicById(topicId);
+
+				});
+
+				sammy.get("#/topics", () => {
+
+					vm.selectTopicById(null);
+
+				});
+
+			});
+
+			this.sammyApp.run();
 
 		}
 
@@ -93,14 +119,26 @@ module vdb.viewModels.discussions {
 
 		public recentTopics = ko.observableArray<dc.discussions.DiscussionTopicContract>([]);
 
+		private sammyApp: Sammy.Application;
+
 		public selectTopic = (topic: dc.discussions.DiscussionTopicContract) => {
 			
 			if (!topic) {
-				this.loadTopics(this.selectedFolder(), () => this.selectedTopic(null));
+				this.sammyApp.setLocation("#/topics");				
+			} else {
+				this.sammyApp.setLocation("#/topics/" + topic.id);				
+			}
+
+		}
+
+		public selectTopicById = (topicId: number) => {
+
+			if (!topicId) {
+				this.loadTopics(this.selectedFolder(),() => this.selectedTopic(null));
 				return;
 			}
 
-			this.repo.getTopic(topic.id, contract => {
+			this.repo.getTopic(topicId, contract => {
 
 				contract.canBeDeleted = this.canDeleteTopic(contract);
 				contract.canBeEdited = this.canEditTopic(contract);
@@ -108,7 +146,7 @@ module vdb.viewModels.discussions {
 				this.selectedFolder(this.getFolder(contract.folderId));
 				this.selectedTopic(new DiscussionTopicViewModel(this.repo, this.loggedUserId, this.canDeleteAllComments, contract));
 
-			});			
+			});
 
 		}
 
