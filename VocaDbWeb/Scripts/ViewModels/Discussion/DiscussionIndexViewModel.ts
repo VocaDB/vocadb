@@ -30,7 +30,7 @@ module vdb.viewModels.discussions {
 			this.mapRoute("/", () => {
 
 				this.selectedFolder(null);
-				this.selectTopic(null);
+				this.selectedTopic(null);
 
 			});
 
