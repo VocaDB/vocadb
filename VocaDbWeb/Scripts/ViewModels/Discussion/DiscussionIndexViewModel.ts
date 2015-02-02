@@ -27,7 +27,7 @@ module vdb.viewModels.discussions {
 
 			});
 
-			page("*", () => {
+			this.mapRoute("/", () => {
 
 				this.selectedFolder(null);
 				this.selectTopic(null);
