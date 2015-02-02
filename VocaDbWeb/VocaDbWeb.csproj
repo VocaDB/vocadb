@@ -1981,8 +1981,8 @@
     <TypeScriptCompile Include="Scripts\typings\marked\marked.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\moment\moment.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\other.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\page.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\qunit\qunit.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\sammyjs\sammyjs.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\soundcloud\soundcloud.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\vdb\functions.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
@@ -2074,8 +2074,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\sammy-0.7.5.js" />
-    <Content Include="Scripts\sammy-0.7.5.min.js" />
+    <Content Include="Scripts\page.js" />
     <Content Include="Scripts\Shared\DiscussionTab.js" />
     <Content Include="Scripts\Shared\Messages.js" />
     <Content Include="Scripts\Shared\ReportEntryPopup.js" />

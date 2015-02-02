@@ -30,6 +30,7 @@ namespace VocaDb.Web.App_Start {
 			// User profile route, for example /Profile/riipah
 			routes.MapRoute("User", "Profile/{id}", new { controller = "User", action = "Profile" });
 
+			routes.MapRoute("Discussion", "discussion/{*clientPath}", new { controller = "Discussion", action = "Index", clientPath = UrlParameter.Optional });
 
 			// Default route
 			routes.MapRoute(

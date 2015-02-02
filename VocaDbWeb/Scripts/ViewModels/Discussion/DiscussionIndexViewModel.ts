@@ -14,8 +14,19 @@ module vdb.viewModels.discussions {
 		
 			this.newTopic = ko.observable(new DiscussionTopicEditViewModel(loggedUserId));
 
+			page("/discussion/topics/:topicId?", context => {
 
-			repo.getFolders(folders => this.folders(folders));
+				var topicId: number = context.params.topicId;
+				this.selectTopicById(topicId);
+
+			});
+
+
+			repo.getFolders(folders => {
+				this.folders(folders);
+				page.start();
+			});
+
 			repo.getTopics(result => this.recentTopics(result.items));
 				
 			this.selectedFolder.subscribe(folder => {
@@ -26,31 +37,6 @@ module vdb.viewModels.discussions {
 				this.loadTopics(folder);
 
 			});
-
-			var vm = this;
-
-			this.sammyApp = Sammy("#discussions", function() {
-
-				var sammy: Sammy.Application = this;
-
-				sammy.get("#/topics/:topicId", function () {
-
-					var event: Sammy.EventContext = this;
-					var topicId = event.params["topicId"];
-
-					vm.selectTopicById(topicId);
-
-				});
-
-				sammy.get("#/topics", () => {
-
-					vm.selectTopicById(null);
-
-				});
-
-			});
-
-			this.sammyApp.run();
 
 		}
 
@@ -119,15 +105,13 @@ module vdb.viewModels.discussions {
 
 		public recentTopics = ko.observableArray<dc.discussions.DiscussionTopicContract>([]);
 
-		private sammyApp: Sammy.Application;
-
 		public selectTopic = (topic: dc.discussions.DiscussionTopicContract) => {
 			
 			if (!topic) {
-				this.sammyApp.setLocation("#/topics");				
+				page("/discussion/topics");
 			} else {
-				this.sammyApp.setLocation("#/topics/" + topic.id);				
-			}
+				page("/discussion/topics/" + topic.id);
+			}			
 
 		}
 

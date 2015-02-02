@@ -45,7 +45,7 @@ namespace VocaDb.Web.Code {
 					break;
 
 				case EntryType.DiscussionTopic:
-					relative = string.Format("Discussion/#/topics/{0}", id);
+					relative = string.Format("discussion/topics/{0}", id);
 					break;
 
 				case EntryType.Song:
