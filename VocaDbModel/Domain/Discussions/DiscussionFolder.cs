@@ -14,6 +14,13 @@ namespace VocaDb.Model.Domain.Discussions {
 			Description = string.Empty;
 		}
 
+		public DiscussionFolder(string title) 
+			: this() {
+
+			Name = title;
+
+		}
+
 		/// <summary>
 		/// List of topics for this folder.
 		/// This list includes deleted topics.

@@ -137,6 +137,7 @@
     <Compile Include="Service\VideoServices\VideoServiceFileTests.cs" />
     <Compile Include="TestData\CreateEntry.cs" />
     <Compile Include="TestSupport\FakeArtistRepository.cs" />
+    <Compile Include="TestSupport\FakeDiscussionFolderRepository.cs" />
     <Compile Include="TestSupport\FakeEventRepository.cs" />
     <Compile Include="TestSupport\FakeLanguageDetector.cs" />
     <Compile Include="TestSupport\FakeObjectCache.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Web\Controllers\ArtistControllerTests.cs" />
     <Compile Include="Web\Controllers\DataAccess\AlbumQueriesTests.cs" />
     <Compile Include="Web\Controllers\DataAccess\ArtistQueriesTests.cs" />
+    <Compile Include="Web\Controllers\DataAccess\DiscussionQueriesTests.cs" />
     <Compile Include="Web\Controllers\DataAccess\EntryQueriesTests.cs" />
     <Compile Include="Web\Controllers\DataAccess\EventQueriesTests.cs" />
     <Compile Include="Web\Controllers\DataAccess\SongListQueriesTests.cs" />
