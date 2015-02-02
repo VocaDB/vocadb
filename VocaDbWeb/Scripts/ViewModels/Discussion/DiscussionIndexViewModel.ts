@@ -1,5 +1,4 @@
-﻿/// <reference path="../../typings/sammyjs/sammyjs.d.ts" />
-
+﻿
 module vdb.viewModels.discussions {
 	
 	import dc = vdb.dataContracts;
@@ -14,10 +13,24 @@ module vdb.viewModels.discussions {
 		
 			this.newTopic = ko.observable(new DiscussionTopicEditViewModel(loggedUserId));
 
-			page("/discussion/topics/:topicId?", context => {
+			this.mapRoute("folders/:folderId?", context => {
 
-				var topicId: number = context.params.topicId;
+				var folderId = parseInt(context.params.folderId);
+				this.selectFolderById(folderId);
+
+			});
+
+			this.mapRoute("topics/:topicId?", context => {
+
+				var topicId = parseInt(context.params.topicId);
 				this.selectTopicById(topicId);
+
+			});
+
+			page("*", () => {
+
+				this.selectedFolder(null);
+				this.selectTopic(null);
 
 			});
 
@@ -101,9 +114,31 @@ module vdb.viewModels.discussions {
 
 		}
 
+		private mapRoute = (partialUrl: string, callback: (context: page.PageContext) => void) => {
+			
+			page(UrlMapper.mergeUrls("/discussion/", partialUrl), callback);
+
+		}
+
 		public newTopic: KnockoutObservable<DiscussionTopicEditViewModel>;
 
 		public recentTopics = ko.observableArray<dc.discussions.DiscussionTopicContract>([]);
+
+		public selectFolder = (folder: dc.discussions.DiscussionFolderContract) => {
+			
+			if (!folder) {
+				page("/discussion");
+			} else {
+				page("/discussion/folders/" + folder.id);
+			}			
+		
+		}
+
+		private selectFolderById = (folderId: number) => {
+			
+			this.selectedFolder(this.getFolder(folderId));
+
+		}
 
 		public selectTopic = (topic: dc.discussions.DiscussionTopicContract) => {
 			
@@ -115,7 +150,7 @@ module vdb.viewModels.discussions {
 
 		}
 
-		public selectTopicById = (topicId: number) => {
+		private selectTopicById = (topicId: number) => {
 
 			if (!topicId) {
 				this.loadTopics(this.selectedFolder(),() => this.selectedTopic(null));
@@ -127,7 +162,7 @@ module vdb.viewModels.discussions {
 				contract.canBeDeleted = this.canDeleteTopic(contract);
 				contract.canBeEdited = this.canEditTopic(contract);
 
-				this.selectedFolder(this.getFolder(contract.folderId));
+				this.selectFolderById(contract.folderId);
 				this.selectedTopic(new DiscussionTopicViewModel(this.repo, this.loggedUserId, this.canDeleteAllComments, contract));
 
 			});

@@ -4,7 +4,7 @@
 	
 	<ul data-bind="foreach: folders" class="nav nav-pills">
 		<li data-bind="css: { active: $data == $parent.selectedFolder() }">
-			<a href="#" data-bind="click: function() { $parent.selectedFolder($data); }, text: name, attr: { title: description }">
+			<a href="#" data-bind="attr: { href: '/discussion/folders/' + id }, text: name, attr: { title: description }">
 			</a>
 		</li>
 	</ul>

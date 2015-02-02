@@ -14,11 +14,11 @@
 
 	<ul class="breadcrumb" data-bind="visible: selectedFolder()">
 		<li>
-			<a href="#" data-bind="click: function() { selectedTopic(null); selectedFolder(null); }">Discussions</a>
+			<a href="@Url.Action("Index", "Discussion", new { clientPath = "" })">Discussions</a>
 			<span data-bind="visible: selectedTopic()" class="divider">/</span>
 		</li>
 		<li>
-			<a href="#" data-bind="visible: selectedTopic(), click: function() { selectTopic(null); }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
+			<a href="#" data-bind="visible: selectedTopic(), attr: { href: '/discussion/folders/' + (selectedFolder() != null ? selectedFolder().id : '') }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
 		</li>
 	</ul>
 

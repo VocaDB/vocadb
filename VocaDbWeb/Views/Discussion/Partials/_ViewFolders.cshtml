@@ -11,7 +11,7 @@
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: folders" class="discussion-folders">
-				<tr data-bind="css: { active: $data == $parent.selectedFolder() }, click: function() { $parent.selectedFolder($data); }">
+				<tr data-bind="css: { active: $data == $parent.selectedFolder() }, click: function() { $parent.selectFolder($data); }">
 					<td>
 						<span data-bind="text: name" class="discussion-folder-name"></span>
 						<span class="discussion-folder-description" data-bind="text: description"></span>
