@@ -37,7 +37,7 @@ module vdb.repositories {
 
 		public getFolders = (callback: (folders: dc.discussions.DiscussionFolderContract[]) => void) => {
 			
-			$.getJSON(this.mapUrl("folders"), { fields: 'LastTopicDate,TopicCount' }, callback);
+			$.getJSON(this.mapUrl("folders"), { fields: 'LastTopic,TopicCount' }, callback);
 
 		}
 

@@ -61,7 +61,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				ctx.AuditLogger.AuditLog("created " + folder);
 
-				return new DiscussionFolderContract(folder, DiscussionFolderOptionalFields.None);
+				return new DiscussionFolderContract(folder, DiscussionFolderOptionalFields.None, userIconFactory);
 
 			});
 

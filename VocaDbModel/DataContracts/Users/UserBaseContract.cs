@@ -21,6 +21,17 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		}
 
+		public UserBaseContract(User user, string fallbackName) {
+
+			if (user != null) {
+				Id = user.Id;
+				Name = user.Name;
+			} else {
+				Name = fallbackName;
+			}
+
+		}
+
 		[DataMember]
 		public int Id { get; set; }
 

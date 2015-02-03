@@ -13,14 +13,14 @@
 			<tbody data-bind="foreach: folders" class="discussion-folders">
 				<tr data-bind="css: { active: $data == $parent.selectedFolder() }, click: function() { $parent.selectFolder($data); }">
 					<td>
-						<span data-bind="text: name" class="discussion-folder-name"></span>
-						<span class="discussion-folder-description" data-bind="text: description"></span>
+						<span class="discussion-folder-name">{{name}}</span>
+						<span class="discussion-folder-description">{{description}}</span>
 					</td>
 					<td>
-						<span data-bind="text: topicCount"></span>
+						<span>{{topicCount}}</span>
 					</td>
 					<td>
-						<span>{{$data.lastTopicDate | formatDate:'lll'}}</span>
+						<span data-bind="visible: $data.lastTopicDate">{{$data.lastTopicDate | formatDate:'lll'}} by {{$data.lastTopicAuthor != null ? lastTopicAuthor.name : ''}}</span>
 					</td>
 				</tr>
 			</tbody>
@@ -34,7 +34,7 @@
 				<tr data-bind="click: function() { $parent.selectTopic($data); }">
 					<td>
 						{{name}}<br />
-						<span class="extraInfo">{{created | formatDate:'lll'}}</span>
+						<span class="extraInfo">{{created | formatDate:'lll'}} by {{author.name}}</span>
 					</td>
 				</tr>
 			</tbody>

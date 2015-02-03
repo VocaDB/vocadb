@@ -1,11 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace VocaDb.Model.Helpers {
 
 	public static class EnumerableExtender {
+
+		/// <summary>
+		/// Returns the item with the highest value specified by a selector.
+		/// </summary>
+		/// <typeparam name="TSource">List item type.</typeparam>
+		/// <typeparam name="TResult">Selected value type.</typeparam>
+		/// <param name="source">Source list. Cannot be null.</param>
+		/// <param name="selector">Value selector function. Cannot be null.</param>
+		/// <returns>Item with the highest value.</returns>
+		public static TSource MaxItem<TSource, TResult>(this IList<TSource> source, Func<TSource, TResult> selector) {
+		
+			var max = source.Max(selector);
+
+			return source.First(t => Equals(selector(t), max));
+
+		} 
 
 		public static Dictionary<T, T2> ToDictionaryWithEmpty<TSource, T, T2>(this IEnumerable<TSource> source, T emptyKey, T2 emptyVal, Func<TSource, T> keySelector, Func<TSource, T2> valueSelector) {
 

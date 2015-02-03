@@ -49,7 +49,7 @@ namespace VocaDb.Web.Controllers.Api {
 					.OrderBy(f => f.SortIndex)
 					.ThenBy(f => f.Name)
 					.ToArray()
-					.Select(f => new DiscussionFolderContract(f, fields))
+					.Select(f => new DiscussionFolderContract(f, fields, userIconFactory))
 					.ToArray();
 
 			});

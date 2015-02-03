@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Discussions;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.Discussions {
 
@@ -34,7 +35,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 			}
 
 			if (fields.HasFlag(DiscussionTopicOptionalFields.LastComment) && topic.Comments.Any()) {
-				LastComment = new CommentForApiContract(topic.Comments.First(c => c.Created == topic.Comments.Max(t => t.Created)), 
+				LastComment = new CommentForApiContract(topic.Comments.MaxItem(c => c.Created), 
 					userIconFactory, includeMessage: false);
 			}
 

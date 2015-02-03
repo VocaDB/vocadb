@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Discussions;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.Discussions {
 
@@ -10,7 +12,8 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 		public DiscussionFolderContract() { }
 
-		public DiscussionFolderContract(DiscussionFolder folder, DiscussionFolderOptionalFields fields) {
+		public DiscussionFolderContract(DiscussionFolder folder, DiscussionFolderOptionalFields fields,
+			IUserIconFactory userIconFactory) {
 
 			ParamIs.NotNull(() => folder);
 
@@ -18,12 +21,17 @@ namespace VocaDb.Model.DataContracts.Discussions {
 			this.Id = folder.Id;
 			this.Name = folder.Name;
 
-			if (fields.HasFlag(DiscussionFolderOptionalFields.LastTopicDate)) {
-				this.LastTopicDate = folder.Topics.Any() ? (DateTime?)folder.Topics.Max(t => t.Created) : null; 				
+			if (fields.HasFlag(DiscussionFolderOptionalFields.LastTopic) && folder.Topics.Any()) {
+
+				var lastTopic = folder.Topics.ToArray().MaxItem(t => t.Created);
+
+				LastTopicAuthor = new UserWithIconContract(lastTopic.Author, lastTopic.AuthorName, userIconFactory);
+				LastTopicDate = folder.Topics.Max(t => t.Created);
+
 			}
 
 			if (fields.HasFlag(DiscussionFolderOptionalFields.TopicCount)) {
-				this.TopicCount = folder.Topics.Count();				
+				this.TopicCount = folder.Topics.Count();			
 			}
 
 		}
@@ -33,6 +41,9 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 		[DataMember]
 		public int Id { get; set; }
+
+		[DataMember]
+		public UserWithIconContract LastTopicAuthor { get; set; }
 
 		[DataMember]
 		public DateTime? LastTopicDate { get; set; }
@@ -49,7 +60,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 	public enum DiscussionFolderOptionalFields {
 		
 		None			= 0,
-		LastTopicDate	= 1,
+		LastTopic		= 1,
 		TopicCount		= 2
 
 	}
