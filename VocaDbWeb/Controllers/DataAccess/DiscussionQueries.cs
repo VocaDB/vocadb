@@ -35,6 +35,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var agent = ctx.OfType<User>().CreateAgentLoginData(PermissionContext, ctx.OfType<User>().Load(contract.Author.Id));
 
 				var comment = new DiscussionComment(topic, contract.Message, agent);
+				topic.Comments.Add(comment);
 
 				ctx.Save(comment);
 
@@ -81,6 +82,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var agent = ctx.OfType<User>().CreateAgentLoginData(PermissionContext, ctx.OfType<User>().Load(contract.Author.Id));
 
 				var topic = new DiscussionTopic(folder, contract.Name, contract.Content, agent);
+				folder.AllTopics.Add(topic);
 
 				ctx.Save(topic);
 

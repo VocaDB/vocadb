@@ -18,7 +18,7 @@ namespace VocaDb.Model.Mapping.Discussions {
 			Map(m => m.Name).Not.Nullable().Length(200);
 			Map(m => m.SortIndex).Not.Nullable();
 
-			HasMany(m => m.Topics).KeyColumn("[Folder]").Inverse();
+			HasMany(m => m.Topics).KeyColumn("[Folder]").Inverse().Cache.ReadWrite();
 
 		}
 
