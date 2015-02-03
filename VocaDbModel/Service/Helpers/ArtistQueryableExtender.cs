@@ -203,6 +203,15 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
+		public static IQueryable<Artist> WhereIdIs(this IQueryable<Artist> query, int id) {
+			
+			if (id == 0)
+				return query;
+
+			return query.Where(m => m.Id == id);
+
+		} 
+
 		public static IQueryable<Artist> WhereIsFollowedByUser(this IQueryable<Artist> query, int userId) {
 
 			if (userId == 0)

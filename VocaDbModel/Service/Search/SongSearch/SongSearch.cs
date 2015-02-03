@@ -86,11 +86,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		private SearchWord GetTerm(string query, params string[] testTerms) {
 
-			return (
-				from term in testTerms 
-				where query.StartsWith(term + ":", StringComparison.InvariantCultureIgnoreCase) 
-				select new SearchWord(term, query.Substring(term.Length + 1).TrimStart()))
-			.FirstOrDefault();
+			return SearchWord.GetTerm(query, testTerms);
 
 		}
 
@@ -146,7 +142,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				
 			}
 
-			return new ParsedSongQuery { Name = query.Trim() };
+			return new ParsedSongQuery { Name = trimmed };
 
 		}
 

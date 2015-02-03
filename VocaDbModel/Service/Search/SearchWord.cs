@@ -1,6 +1,19 @@
-﻿namespace VocaDb.Model.Service.Search {
+﻿using System;
+using System.Linq;
+
+namespace VocaDb.Model.Service.Search {
 
 	public class SearchWord {
+
+		public static SearchWord GetTerm(string query, params string[] testTerms) {
+
+			return (
+				from term in testTerms 
+				where query.StartsWith(term + ":", StringComparison.InvariantCultureIgnoreCase) 
+				select new SearchWord(term, query.Substring(term.Length + 1).TrimStart()))
+			.FirstOrDefault();
+
+		}
 
 		private readonly string propertyName;
 		private readonly string value;
