@@ -33,8 +33,9 @@ namespace VocaDb.Model.DataContracts.Discussions {
 				Content = topic.Content;				
 			}
 
-			if (fields.HasFlag(DiscussionTopicOptionalFields.LastCommentDate)) {
-				LastCommentDate = topic.Comments.Any() ? (DateTime?)topic.Comments.Max(t => t.Created) : null; 				
+			if (fields.HasFlag(DiscussionTopicOptionalFields.LastComment) && topic.Comments.Any()) {
+				LastComment = new CommentForApiContract(topic.Comments.First(c => c.Created == topic.Comments.Max(t => t.Created)), 
+					userIconFactory, includeMessage: false);
 			}
 
 		}
@@ -61,7 +62,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 		public int Id { get; set; }
 
 		[DataMember]
-		public DateTime? LastCommentDate { get; set; }
+		public CommentForApiContract LastComment { get; set; }
 
 		[DataMember]
 		public string Name { get; set; }
@@ -76,9 +77,9 @@ namespace VocaDb.Model.DataContracts.Discussions {
 		Comments		= 1,
 		CommentCount	= 2,
 		Content			= 4,
-		LastCommentDate = 8,
+		LastComment = 8,
 
-		All = (Comments | CommentCount | Content | LastCommentDate)
+		All = (Comments | CommentCount | Content | LastComment)
 
 	}
 

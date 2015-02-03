@@ -1,14 +1,18 @@
 ﻿@using VocaDb.Web.Helpers
 
-<div data-bind="visible: selectedFolder() !== null && selectedTopic() === null">
+<div data-bind="visible: selectedFolder() !== null && selectedTopic() === null" class="discussion-folder">
 	
-	<ul data-bind="foreach: folders" class="nav nav-pills">
+	<ul data-bind="foreach: folders" class="nav nav-pills folder-list">
 		<li data-bind="css: { active: $data == $parent.selectedFolder() }">
 			<a href="#" data-bind="attr: { href: '/discussion/folders/' + id }, text: name, attr: { title: description }">
 			</a>
 		</li>
 	</ul>
 	
+	<p data-bind="visible: selectedFolder() && selectedFolder().description" class="folder-description">
+		{{selectedFolder() ? selectedFolder().description : ''}}
+	</p>
+
 	@if (Login.CanManageDb) {
 		<button data-bind="visible: !showCreateNewTopic(), click: function() { showCreateNewTopic(true); }" class="btn create-topic">
 			<i class="icon-comment"></i>
@@ -35,23 +39,25 @@
 		</thead>
 		<tbody data-bind="foreach: topics" class="discussion-topics">
 			<tr data-bind="css: { active: $data == $parent.selectedTopic() }, click: $parent.selectTopic">
-				<td>
-					<span data-bind="text: name"></span>
+				<td>					
+					<span>{{name}}</span>
 				</td>
 				<td>
 					<a data-bind="attr: { href: '/User/Profile/' + author.name }">
 						@UserHelpers.ProfileIconKnockout("author.iconUrl", 18)
-						<span data-bind="text: author.name"></span>
+						<span>{{author.name}}</span>
 					</a>
 				</td>
 				<td>
-					<span data-bind="text: commentCount"></span>
+					<span>{{commentCount}}</span>
 				</td>
 				<td>
 					<span>{{created | formatDate:'lll'}}</span>
 				</td>
 				<td>
-					<span>{{$data.lastCommentDate | formatDate:'lll'}}</span>
+					<span data-bind="if: $data.lastComment">
+						{{lastComment.created | formatDate:'lll'}} by {{lastComment.authorName}}
+					</span>
 				</td>
 			</tr>
 		</tbody>

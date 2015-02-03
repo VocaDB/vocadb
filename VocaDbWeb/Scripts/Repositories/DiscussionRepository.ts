@@ -49,13 +49,13 @@ module vdb.repositories {
 
 		public getTopics = (callback: (result: dc.PartialFindResultContract<dc.discussions.DiscussionTopicContract>) => void) => {
 		
-			$.getJSON(this.mapUrl("topics"), { fields: 'CommentCount,LastCommentDate', maxResults: 5 }, callback);
+			$.getJSON(this.mapUrl("topics"), { fields: 'CommentCount', maxResults: 5 }, callback);
 				
 		}
 
 		public getTopicsForFolder = (folderId: number, callback: (topics: dc.discussions.DiscussionTopicContract[]) => void) => {
 
-			$.getJSON(this.mapUrl("folders/" + folderId + "/topics"), { fields: 'CommentCount,LastCommentDate' }, callback);
+			$.getJSON(this.mapUrl("folders/" + folderId + "/topics"), { fields: 'CommentCount,LastComment' }, callback);
 
 		}
 

@@ -10,7 +10,7 @@ namespace VocaDb.Model.DataContracts {
 
 		public CommentForApiContract() { }
 
-		public CommentForApiContract(Comment comment, IUserIconFactory iconFactory) {
+		public CommentForApiContract(Comment comment, IUserIconFactory iconFactory, bool includeMessage = true) {
 			
 			ParamIs.NotNull(() => comment);
 
@@ -18,7 +18,7 @@ namespace VocaDb.Model.DataContracts {
 			AuthorName = comment.AuthorName;
 			Created = comment.Created;
 			Id = comment.Id;
-			Message = comment.Message;
+			Message = (includeMessage ? comment.Message : null);
 
 		}
 
