@@ -18,15 +18,18 @@ namespace VocaDb.Model.Service {
 
 		public EntryUrlParser(string hostAddress, string hostAddressSecure) {
 			
+			// Host addresses http and https
+			var hostAddresses = VocaUriBuilder.RemoveTrailingSlash(hostAddress) + "|" + VocaUriBuilder.RemoveTrailingSlash(hostAddressSecure);
+
 			var entryUrlRegexBase = @"^(?:{0})/(Al|Ar|S|Album/Details|Artist/Details|Song/Details)/(\d+)";
 
-			entryUrlRegex = new Regex(string.Format(entryUrlRegexBase, 
-				VocaUriBuilder.RemoveTrailingSlash(hostAddress) + "|" + VocaUriBuilder.RemoveTrailingSlash(hostAddressSecure)), RegexOptions.IgnoreCase);
+			entryUrlRegex = new Regex(string.Format(entryUrlRegexBase, hostAddresses), 
+				RegexOptions.IgnoreCase);
 
 			var entryUrlRegexBaseOptionalPrefix = @"^(?:{0})?/(Al|Ar|S|Album/Details|Artist/Details|Song/Details)/(\d+)";
 
-			entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexBaseOptionalPrefix, 
-				VocaUriBuilder.RemoveTrailingSlash(hostAddress) + "|" + VocaUriBuilder.RemoveTrailingSlash(hostAddressSecure)), RegexOptions.IgnoreCase);
+			entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexBaseOptionalPrefix, hostAddresses), 
+				RegexOptions.IgnoreCase);
 
 		}
 

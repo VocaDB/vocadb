@@ -115,14 +115,14 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			
 			if (term == null) {
 
-				var nicoId = VideoService.NicoNicoDouga.GetIdByUrl(query);
-
-				if (!string.IsNullOrEmpty(nicoId))
-					return new ParsedSongQuery { NicoId = nicoId };
-
 				// Optimization: check prefix, in most cases the user won't be searching by URL
 				if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase) 
 					|| trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
+
+					var nicoId = VideoService.NicoNicoDouga.GetIdByUrl(query);
+
+					if (!string.IsNullOrEmpty(nicoId))
+						return new ParsedSongQuery { NicoId = nicoId };
 
 					var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
 

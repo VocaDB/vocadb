@@ -729,6 +729,7 @@
     <Compile Include="Service\Search\AlbumSearch\ArtistAlbumParticipationStatus.cs" />
     <Compile Include="Service\Search\AlbumSearch\ParsedAlbumQuery.cs" />
     <Compile Include="Service\Search\Artists\ArtistSearchTextQuery.cs" />
+    <Compile Include="Service\Search\Artists\ParsedArtistQuery.cs" />
     <Compile Include="Service\Search\QueryProcessor.cs" />
     <Compile Include="Service\Search\ReleaseEventSearch.cs" />
     <Compile Include="Service\Search\SearchTextQuery.cs" />
