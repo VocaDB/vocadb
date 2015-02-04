@@ -1,15 +1,4 @@
-﻿function addOption(select, value, text) {
-
-	$(select).append("<option value=\"" + value + "\">" + text + "</option>");
-
-}
-
-function formatSongName(songContract) {
-
-	return (songContract.Name + (songContract.ArtistString != "" ? " (by " + songContract.ArtistString + ")" : ""));
-
-}
-
+﻿
 function getId(elem) {
 
 	if ($(elem) == null || $(elem).attr('id') == null)
@@ -17,14 +6,6 @@ function getId(elem) {
 
 	var parts = $(elem).attr('id').split("_");
 	return (parts.length >= 2 ? parts[1] : null);
-}
-
-function htmlDecode(value) {
-	if (value) {
-		return $('<div />').html(value).text();
-	} else {
-		return '';
-	}
 }
 
 function isNullOrWhiteSpace(str) {
@@ -36,36 +17,12 @@ function isNullOrWhiteSpace(str) {
 
 }
 
-String.prototype.trim = function () {
-    return this.replace(/^\s*/, "").replace(/\s*$/, "");
-};
-
 vdb = {};
 vdb.functions = vdb.functions || {};
 vdb.values = vdb.values || {};
 
 vdb.functions.disableTabReload = function (tab) {
 	tab.find("a").attr("href", "#" + tab.attr("aria-controls"));
-};
-
-vdb.functions.mapUrl = function (relative) {
-    return vdb.values.hostAddress + relative;
-};
-
-vdb.functions.boldCaseInsensitive = function (text, term) {
-
-	if (!text || !term)
-		return text;
-
-	var index = text.toLowerCase().indexOf(term.toLowerCase());
-
-	if (index < 0)
-		return text;
-
-	var actualTerm = text.substring(index, index + term.length);
-
-	return text.replace(actualTerm, "<b>" + actualTerm + "</b>");
-
 };
 
 vdb.functions.showLoginPopup = function() {
@@ -88,7 +45,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-                        url: vdb.functions.mapUrl('/Artist/PopupContent'),
+                    	url: vdb.functions.mapFullUrl('/Artist/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -115,7 +72,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-                        url: vdb.functions.mapUrl('/Album/PopupContent'),
+                    	url: vdb.functions.mapFullUrl('/Album/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -139,7 +96,7 @@ vdb.functions.showLoginPopup = function() {
 				content: {
 					text: 'Loading...',
 					ajax: {
-						url: vdb.functions.mapUrl('/Album/PopupWithCoverContent'),
+						url: vdb.functions.mapFullUrl('/Album/PopupWithCoverContent'),
 						type: 'GET',
 						data: { id: $(elem).data("entryId") }
 					}

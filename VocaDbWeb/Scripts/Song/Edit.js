@@ -41,7 +41,7 @@ function initPage() {
 		});
 
 		$(roles).each(function () {
-			var check = $("#editArtistRolesPopup #artistRole_" + this.trim());
+			var check = $("#editArtistRolesPopup #artistRole_" + _.trim(this));
 			$(check).attr("checked", "checked");
 			$(check).button("refresh");
 		});
