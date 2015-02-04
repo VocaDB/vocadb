@@ -256,6 +256,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void FindDuplicates_MatchNameAndArtist() {
+
+			var producer2 = Save(CreateEntry.Artist(ArtistType.Producer, name: "minato"));
+			var song2 = repository.Save(CreateEntry.Song(name: "Nebula"));
+			Save(song2.AddArtist(producer2));
+
+			var result = CallFindDuplicates(new []{ "Nebula"}, artistIds: new[] { producer2.Id });
+
+			// 2 songs, the one with both artist and title match appears first
+			Assert.AreEqual(2, result.Matches.Length, "Matches");
+			var match = result.Matches.First();
+			Assert.AreEqual(song2.Id, match.Entry.Id, "Matched song");
+			Assert.AreEqual(SongMatchProperty.Title, match.MatchProperty, "Matched property");
+
+		}
+
+		[TestMethod]
 		public void FindDuplicates_SkipPVInfo() {
 
 			var result = CallFindDuplicates(new []{ "Anger"}, new []{ "http://www.nicovideo.jp/watch/sm393939" }, getPvInfo: false);

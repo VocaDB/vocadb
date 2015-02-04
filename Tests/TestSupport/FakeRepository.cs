@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentNHibernate.Conventions.AcceptanceCriteria;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
@@ -77,9 +78,28 @@ namespace VocaDb.Tests.TestSupport {
 				CreateContext().Save(obj);
 		}
 
+		/// <summary>
+		/// Save the entity into the repository using the repository's own Save method.
+		/// Usually this means an Id will be assigned for the entity, if it's not persisted.
+		/// </summary>
+		/// <typeparam name="T2">Type of entity to be saved.</typeparam>
+		/// <param name="obj">Entity to be saved. Cannot be null.</param>
 		public T2 Save<T2>(T2 obj) {
 			CreateContext().Save(obj);
 			return obj;
+		}
+
+		public Song Save(Song song) {
+			
+			var ctx = CreateContext();
+
+			ctx.Save(song);
+
+			foreach (var name in song.Names)
+				ctx.Save(name);
+
+			return song;
+
 		}
 
 	}
