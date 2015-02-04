@@ -1,25 +1,56 @@
-﻿using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Discussions;
+﻿using System;
+using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
 	public static class CommentQueries {
-		public static CommentQueries<T> Create<T>(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext) where T : Comment {
-			return new CommentQueries<T>(ctx, permissionContext);
+		public static CommentQueries<T> Create<T>(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory) 
+			where T : Comment {
+			return new CommentQueries<T>(ctx, permissionContext, userIconFactory, entryLinkFactory);
 		}
 	}
 
 	public class CommentQueries<T> where T : Comment {
 
 		private readonly IRepositoryContext<T> ctx;
+		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserPermissionContext permissionContext;
+		private readonly IUserIconFactory userIconFactory;
 
-		public CommentQueries(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext) {
+		public CommentQueries(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory) {
 			this.ctx = ctx;
+			this.entryLinkFactory = entryLinkFactory;
 			this.permissionContext = permissionContext;
+			this.userIconFactory = userIconFactory;
+		}
+
+		public CommentForApiContract Create<TEntry>(int entryId, CommentContract contract, Func<TEntry, CommentContract, AgentLoginData, T> fac) {
+			
+			permissionContext.VerifyPermission(PermissionToken.CreateComments);
+
+			if (contract.Author == null || contract.Author.Id != permissionContext.LoggedUserId) {
+				throw new NotAllowedException("Can only post as self");
+			}
+			
+			var entry = ctx.OfType<TEntry>().Load(entryId);
+			var agent = ctx.OfType<User>().CreateAgentLoginData(permissionContext, ctx.OfType<User>().Load(contract.Author.Id));
+
+			var comment = fac(entry, contract, agent);
+
+			ctx.Save(comment);
+
+			ctx.AuditLogger.AuditLog("created " + comment, agent);
+
+			new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx.OfType<User>());
+
+			return new CommentForApiContract(comment, userIconFactory);
+
 		}
 
 		public void Delete(int commentId) {
@@ -42,7 +73,7 @@ namespace VocaDb.Model.Service.Queries {
 			
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 				
-			var comment = ctx.OfType<DiscussionComment>().Load(commentId);
+			var comment = ctx.OfType<T>().Load(commentId);
 
 			permissionContext.VerifyAccess(comment, EntryPermissionManager.CanEdit);
 

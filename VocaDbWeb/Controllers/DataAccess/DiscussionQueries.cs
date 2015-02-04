@@ -5,6 +5,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 
@@ -12,36 +13,33 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 	public class DiscussionQueries : QueriesBase<IDiscussionFolderRepository, DiscussionFolder> {
 
+		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserIconFactory userIconFactory;
 
-		public DiscussionQueries(IDiscussionFolderRepository repository, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory) 
+		private CommentQueries<DiscussionComment> Comments<T>(IRepositoryContext<T> ctx) {
+			return CommentQueries.Create(ctx.OfType<DiscussionComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		}
+
+		public DiscussionQueries(IDiscussionFolderRepository repository, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory,
+			IEntryLinkFactory entryLinkFactory) 
 			: base(repository, permissionContext) {
 			
 			this.userIconFactory = userIconFactory;
+			this.entryLinkFactory = entryLinkFactory;
 
 		}
 
 		public CommentForApiContract CreateComment(int topicId, CommentContract contract) {
 			
-			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
-
-			if (contract.Author == null || contract.Author.Id != PermissionContext.LoggedUserId) {
-				throw new NotAllowedException("Can only post as self");
-			}
-
 			return repository.HandleTransaction(ctx => {
 				
-				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
-				var agent = ctx.OfType<User>().CreateAgentLoginData(PermissionContext, ctx.OfType<User>().Load(contract.Author.Id));
+				return Comments(ctx).Create<DiscussionTopic>(topicId, contract, (topic, con, agent) => {
+					
+					var comment = new DiscussionComment(topic, contract.Message, agent);
+					topic.Comments.Add(comment);
+					return comment;
 
-				var comment = new DiscussionComment(topic, contract.Message, agent);
-				topic.Comments.Add(comment);
-
-				ctx.Save(comment);
-
-				ctx.AuditLogger.AuditLog("created " + comment, agent);
-
-				return new CommentForApiContract(comment, userIconFactory);
+				});
 
 			});
 
@@ -98,7 +96,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			
 			repository.HandleTransaction(ctx => {
 
-				CommentQueries.Create(ctx.OfType<DiscussionComment>(), PermissionContext).Delete(commentId);
+				Comments(ctx).Delete(commentId);
 
 			});
 
@@ -133,7 +131,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			
 			repository.HandleTransaction(ctx => {
 
-				CommentQueries.Create(ctx.OfType<DiscussionComment>(), PermissionContext).Update(commentId, contract);
+				Comments(ctx).Update(commentId, contract);
 				
 			});
 
