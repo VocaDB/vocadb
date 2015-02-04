@@ -12,7 +12,54 @@ module vdb.viewModels {
         
         artists = ko.observableArray<dc.ArtistContract>([]);
 
-        checkDuplicatesAndPV: () => void;
+		private getArtistIds = () => {
+			return _.map(this.artists(), a => a.id);
+		}
+
+		public checkDuplicatesAndPV = () => {
+			this.checkDuplicates(null, true);
+		}
+
+        public checkDuplicates = (event?: JQueryEventObject, getPVInfo = false) => {
+	   
+			var term1 = this.nameOriginal();
+			var term2 = this.nameRomaji();
+			var term3 = this.nameEnglish();
+			var pv1 = this.pv1();
+			var pv2 = this.pv2();
+			var artists = this.getArtistIds();
+
+			this.songRepository.findDuplicate(
+				{ term1: term1, term2: term2, term3: term3, pv1: pv1, pv2: pv2, artistIds: artists, getPVInfo: getPVInfo },
+				result => {
+
+                this.dupeEntries(result.matches);
+
+				if (result.title && !this.hasName()) {
+
+					if (result.titleLanguage === "English") {
+						this.nameEnglish(result.title);
+					} else {
+						this.nameOriginal(result.title);
+					}
+
+                }
+
+                if (result.songType && result.songType !== "Unspecified" && this.songType() === "Original") {
+                    this.songType(result.songType);
+                }
+
+                if (result.artists && this.artists().length === 0) {
+
+                    _.forEach(result.artists, artist => {
+                        this.artists.push(artist);
+                    });
+
+                }
+
+            });
+			 
+		}
 
         dupeEntries = ko.observableArray<dc.DuplicateEntryResultContract>([]);
 
@@ -36,7 +83,7 @@ module vdb.viewModels {
 
         removeArtist: (artist: dc.ArtistContract) => void;
 
-        constructor(songRepository: vdb.repositories.SongRepository, artistRepository: vdb.repositories.ArtistRepository, data?) {
+        constructor(private songRepository: vdb.repositories.SongRepository, artistRepository: vdb.repositories.ArtistRepository, data?) {
 
             if (data) {
                 this.nameOriginal(data.nameOriginal || "");
@@ -52,6 +99,7 @@ module vdb.viewModels {
                 if (artistId) {
                     artistRepository.getOne(artistId, artist => {
                         this.artists.push(artist);
+						this.checkDuplicates();
                     });
                 }
 
@@ -72,46 +120,6 @@ module vdb.viewModels {
                 return _.some(this.dupeEntries(), item => { return item.matchProperty == 'PV' });
             });
             
-            this.checkDuplicatesAndPV = () => {
-                
-                var term1 = this.nameOriginal();
-                var term2 = this.nameRomaji();
-                var term3 = this.nameEnglish();
-                var pv1 = this.pv1();
-                var pv2 = this.pv2();
-
-                songRepository.findDuplicate(
-                    { term1: term1, term2: term2, term3: term3, pv1: pv1, pv2: pv2, getPVInfo: true },
-                    result => {
-
-                    this.dupeEntries(result.matches);
-
-					if (result.title && !this.hasName()) {
-
-						if (result.titleLanguage == "English") {
-							this.nameEnglish(result.title);
-						} else {
-							this.nameOriginal(result.title);							
-						}
-
-                    }
-
-                    if (result.songType && result.songType != "Unspecified" && this.songType() == "Original") {
-                        this.songType(result.songType);
-                    }
-
-                    if (result.artists && this.artists().length == 0) {
-
-                        _.forEach(result.artists, artist => {
-                            this.artists.push(artist);
-                        });
-
-                    }
-
-                });
-
-            };
-
             this.removeArtist = (artist: dc.ArtistContract) => {
                 this.artists.remove(artist);
             };

@@ -37,7 +37,7 @@
 				@Html.LabelFor(m => m.ReprintPVUrl)
 			</div>
 			<div class="editor-field">
-				@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, focusout: checkDuplicatesAndPV", cssClass: "span8", maxLength: 255, size: 30)
+				@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, focusout: checkDuplicates", cssClass: "span8", maxLength: 255, size: 30)
 				@Html.ValidationMessageFor(m => m.ReprintPVUrl)
 			</div>
 
@@ -52,19 +52,19 @@
 				<table><tr><td class="formLabel">				
 					@Html.LabelFor(m => m.NameOriginal)
 				</td><td>
-					@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, focusout: checkDuplicatesAndPV", cssClass: "span12", maxLength: 255, size: 40)
+					@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr>
 
 				<tr><td class="formLabel">
 					@Html.LabelFor(m => m.NameRomaji)
 				</td><td>
-					@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, focusout: checkDuplicatesAndPV", cssClass: "span12", maxLength: 255, size: 40)
+					@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr>
 					
 				<tr><td class="formLabel">
 					@Html.LabelFor(m => m.NameEnglish)
 				</td><td>
-					@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, focusout: checkDuplicatesAndPV", cssClass: "span12", maxLength: 255, size: 40)
+					@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr></table>
 			</div>
 

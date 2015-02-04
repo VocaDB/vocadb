@@ -29,7 +29,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			folder = new DiscussionFolder("Test folder");
 			repo = new FakeDiscussionFolderRepository(folder);
 			repo.Save(user);
-			queries = new DiscussionQueries(repo, new FakePermissionContext(user), new FakeUserIconFactory());
+			queries = new DiscussionQueries(repo, new FakePermissionContext(user), new FakeUserIconFactory(), new FakeEntryLinkFactory());
 
 		}
 

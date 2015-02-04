@@ -44,9 +44,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			return queries.Create(newSongContract);
 		}
 
-		private NewSongCheckResultContract CallFindDuplicates(string[] anyName = null, string[] anyPv = null, bool getPvInfo = true) {
+		private NewSongCheckResultContract CallFindDuplicates(string[] anyName = null, string[] anyPv = null, int[] artistIds = null, bool getPvInfo = true) {
 			
-			return queries.FindDuplicates(anyName ?? new string[0], anyPv ?? new string[0], getPvInfo);
+			return queries.FindDuplicates(anyName ?? new string[0], anyPv ?? new string[0], artistIds ?? new int[0], getPvInfo);
 
 		}
 

@@ -262,6 +262,48 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		private IEnumerable<Tuple<Song, SongMatchProperty>> GetNameMatches(IRepositoryContext<Song> ctx, string[] names, int[] artistIds) {
+			
+			if (names == null || !names.Any())
+				return Enumerable.Empty<Tuple<Song, SongMatchProperty>>();
+
+			var nameMatchIds = new int[0];
+
+			var totalCount = 10;
+
+			if (artistIds != null && artistIds.Any()) {
+				
+				// Try match with both producer and title
+				nameMatchIds = ctx.OfType<SongName>().Query()
+					.Where(n => names.Contains(n.Value) && !n.Song.Deleted && n.Song.AllArtists.Any(a => a.Artist.ArtistType == ArtistType.Producer && artistIds.Contains(a.Artist.Id)))
+					.Select(n => n.Song.Id)
+					.OrderBy(s => s)
+					.Distinct()
+					.Take(totalCount)
+					.ToArray();
+
+			}
+
+			if (nameMatchIds.Length < totalCount) {
+
+				nameMatchIds = nameMatchIds.Union(ctx.OfType<SongName>().Query()
+					.Where(n => names.Contains(n.Value) && !n.Song.Deleted)
+					.Select(n => n.Song.Id)
+					.OrderBy(s => s)
+					.Distinct()
+					.Take(totalCount - nameMatchIds.Length)
+					.ToArray())
+					.ToArray();
+				
+			}
+
+			var nameMatches = (nameMatchIds.Any() ? CollectionHelper.SortByIds(ctx.Query().Where(s => nameMatchIds.Contains(s.Id)).ToArray(), nameMatchIds)
+				.Select(d => new Tuple<Song, SongMatchProperty>(d, SongMatchProperty.Title)) : new Tuple<Song, SongMatchProperty>[] { });
+
+			return nameMatches;
+
+		}
+
 		/// <summary>
 		/// Parse song and find duplicates in the database.
 		/// 
@@ -271,9 +313,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		/// </summary>
 		/// <param name="anyName">Song names to be searched for duplicates. Cannot be null. Can be empty.</param>
 		/// <param name="anyPv">List of PVs to be searched for duplicates and parsed for song info. Cannot be null. Can be empty.</param>
-		/// <param name="getPVInfo">Whether to load song metadata based on the PVs. If this is false, only matching for duplicates is done.</param>
+		/// <param name="artistIds">List of artist IDs. Can be empty.</param>
+		/// <param name="getPVInfo">
+		/// Whether to load song metadata based on the PVs. 
+		/// If this is false, only matching for duplicates is done (PV duplicates are still checked).
+		/// </param>
 		/// <returns>Result of the check. Cannot be null.</returns>
-		public NewSongCheckResultContract FindDuplicates(string[] anyName, string[] anyPv, bool getPVInfo) {
+		public NewSongCheckResultContract FindDuplicates(string[] anyName, string[] anyPv, int[] artistIds, bool getPVInfo) {
 
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
 			var firstNicoPV = getPVInfo ? anyPv.FirstOrDefault(p => VideoService.NicoNicoDouga.IsValidFor(p)) : null; // For downloading video info
@@ -296,18 +342,17 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					if (titleParseResult != null && !string.IsNullOrEmpty(titleParseResult.Title))
 						names = names.Concat(new[] { titleParseResult.Title }).ToArray();
 
+					if (titleParseResult != null && titleParseResult.Artists != null && titleParseResult.Artists.Any()) {
+
+						// Append artists from PV
+						var pvArtistIds = titleParseResult.Artists.Select(a => a.Id);
+						artistIds = artistIds != null ? artistIds.Union(pvArtistIds).ToArray() : pvArtistIds.ToArray();
+
+					}
+
 				}
 
-				var nameMatchIds = (names.Any() ? ctx.OfType<SongName>().Query()
-					.Where(n => names.Contains(n.Value) && !n.Song.Deleted)
-					.Select(n => n.Song.Id)
-					.OrderBy(s => s)
-					.Distinct()
-					.Take(10)
-					.ToArray() : new int[0]);
-
-				var nameMatches = (nameMatchIds.Any() ? ctx.Query().Where(s => nameMatchIds.Contains(s.Id)).ToArray()
-					.Select(d => new Tuple<Song, SongMatchProperty>(d, SongMatchProperty.Title)) : new Tuple<Song, SongMatchProperty>[] { });
+				var nameMatches = GetNameMatches(ctx, names, artistIds);
 
 				var pvMatches = pvs.Select(pv => ctx.OfType<PVForSong>().Query()
 					.Where(p => p.PVId == pv.Id && p.Service == pv.Service)
