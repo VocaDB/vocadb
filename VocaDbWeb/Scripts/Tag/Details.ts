@@ -13,7 +13,7 @@
 
 		for (var i = 0; i < tagList.length; i += 7) {
 			
-			str += _.reduce<string, string>(_.take(_.rest(links, i), 7), (list, item) => list + ", " + item);
+			str += _.reduce<string, string>(_.take(_.drop(links, i), 7), (list, item) => list + ", " + item);
 
 			if (i < tagList.length + 7)
 				str += "<br/>";
