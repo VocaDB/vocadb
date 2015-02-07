@@ -68,6 +68,14 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
+		/// <summary>
+		/// Filters an artist query by external link URL.
+		/// </summary>
+		/// <param name="query">Artists query. Cannot be null.</param>
+		/// <param name="extLinkUrl">
+		/// External link URL, for example http://www.nicovideo.jp/mylist/6667938.
+		/// </param>
+		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Artist> WhereHasExternalLinkUrl(this IQueryable<Artist> query, string extLinkUrl) {
 			
 			if (string.IsNullOrEmpty(extLinkUrl))
