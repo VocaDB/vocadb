@@ -653,6 +653,7 @@
     <Compile Include="Service\Helpers\AlbumQueryableExtender.cs" />
     <Compile Include="Service\Helpers\ArtistForAlbumQueryableExtender.cs" />
     <Compile Include="Service\Helpers\ArtistForSongQueryableExtender.cs" />
+    <Compile Include="Service\Helpers\ArtistExternalUrlParser.cs" />
     <Compile Include="Service\Helpers\EntryWithNamesQueryableExtender.cs" />
     <Compile Include="Service\Helpers\EntryWithStatusQueryableExtender.cs" />
     <Compile Include="Service\Helpers\FavoriteSongForUserQueryableExtender.cs" />

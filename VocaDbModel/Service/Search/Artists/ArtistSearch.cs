@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -8,7 +7,6 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
-using VocaDb.Model.Service.Search.SongSearch;
 
 namespace VocaDb.Model.Service.Search.Artists {
 
@@ -34,6 +32,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 				.WhereHasName_Canonized(textQuery)
 				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
+				.WhereHasExternalLinkUrl(parsedQuery.ExternalLinkUrl)
 				.WhereHasType(queryParams.ArtistTypes)
 				.WhereHasTag(queryParams.Tag)
 				.WhereIdIs(parsedQuery.Id)
@@ -54,15 +53,25 @@ namespace VocaDb.Model.Service.Search.Artists {
 			
 			if (term == null) {
 
+				var trimmedLc = trimmed.ToLowerInvariant();
+
 				// Optimization: check prefix, in most cases the user won't be searching by URL
-				if (trimmed.StartsWith("/ar/", StringComparison.InvariantCultureIgnoreCase) 
-					|| trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
+				if (trimmedLc.StartsWith("/ar/") || trimmedLc.StartsWith("http")) {
 
 					var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
 
 					if (entryId.EntryType == EntryType.Artist)
 						return new ParsedArtistQuery { Id = entryId.Id };
 					
+				}
+
+				if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("/mylist/") || trimmedLc.StartsWith("/user/")) {
+					
+					var extUrl = new ArtistExternalUrlParser().GetExternalUrl(trimmed);
+
+					if (extUrl != null)
+						return new ParsedArtistQuery { ExternalLinkUrl = extUrl };
+
 				}
 
 			} else {

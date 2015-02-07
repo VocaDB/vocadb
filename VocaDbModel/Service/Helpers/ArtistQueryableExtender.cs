@@ -68,6 +68,15 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
+		public static IQueryable<Artist> WhereHasExternalLinkUrl(this IQueryable<Artist> query, string extLinkUrl) {
+			
+			if (string.IsNullOrEmpty(extLinkUrl))
+				return query;
+
+			return query.Where(a => a.WebLinks.Any(link => link.Url == extLinkUrl));
+
+		} 
+
 		// TODO: should be combined with common name query somehow, but NH is making it hard
 		/// <summary>
 		/// Filters an artist query by a name query.

@@ -32,7 +32,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly NicoTagMappingFactory nicoTagMappingFactory = new NicoTagMappingFactory(MemoryCache.Default);
-		private static readonly Regex userProfileRegex = new Regex(@"^(?:http://www.nicovideo.jp)/user/(\d+)");
 
 		private static string GetUserName(Stream htmlStream, Encoding encoding) {
 
