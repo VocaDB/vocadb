@@ -113,7 +113,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			if (!string.IsNullOrEmpty(res.AuthorId)) {
 
-				var authorPage = string.Format("http://www.nicovideo.jp/user/{0}", res.AuthorId);
+				var authorPage = NicoHelper.GetUserProfileUrlById(res.AuthorId);
 
 				var author = ctx.OfType<ArtistWebLink>().Query()
 					.Where(w => w.Url == authorPage && !w.Artist.Deleted)

@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 			var trimmed = query.Trim();
 
-			var term = SearchWord.GetTerm(trimmed, "id", "tag", "artist-tag", "artist-type");
+			var term = SearchWord.GetTerm(trimmed, "id");
 			
 			if (term == null) {
 
