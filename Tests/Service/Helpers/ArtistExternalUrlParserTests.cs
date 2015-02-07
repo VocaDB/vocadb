@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Tests.Service.Helpers {
@@ -34,9 +29,16 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void NoMatch() {
+		public void NoMatch_SameDomain() {
 			
 			TestGetExternalUrl("http://www.nicovideo.jp", null);
+
+		}
+
+		[TestMethod]
+		public void NoMatch_DifferentDomain() {
+			
+			TestGetExternalUrl("http://test.vocadb.net/mylist/6667938", null);
 
 		}
 
