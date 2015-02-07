@@ -10,7 +10,7 @@ namespace VocaDb.Model.Service.Helpers {
 	public class ArtistExternalUrlParser {
 
 		private readonly Regex nicoMatcher = 
-			new Regex(@"^(?:http://www.nicovideo.jp)?/(user|mylist)/(\d+)", RegexOptions.IgnoreCase);
+			new Regex(@"^(?:http://www.nicovideo.jp)?/?(user|mylist)/(\d+)", RegexOptions.IgnoreCase);
 
 		private const string nicoUrlTemplate = "http://www.nicovideo.jp/{0}/{1}";
 

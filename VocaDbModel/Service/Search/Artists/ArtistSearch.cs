@@ -65,7 +65,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 					
 				}
 
-				if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("/mylist/") || trimmedLc.StartsWith("/user/")) {
+				if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("mylist/") || trimmedLc.StartsWith("user/")) {
 					
 					var extUrl = new ArtistExternalUrlParser().GetExternalUrl(trimmed);
 
