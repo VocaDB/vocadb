@@ -3,7 +3,7 @@ module vdb.repositories {
 	
 	import dc = vdb.dataContracts;
 
-	export class DiscussionRepository {
+	export class DiscussionRepository implements ICommentRepository {
 		
 		constructor(private urlMapper: vdb.UrlMapper) { }
 

@@ -1963,6 +1963,7 @@
     <TypeScriptCompile Include="Scripts\Models\ResourcesManager.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\BaseRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\DiscussionRepository.ts" />
+    <TypeScriptCompile Include="Scripts\Repositories\ICommentRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\PVRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ReleaseEventRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\RepositoryFactory.ts" />
@@ -1995,6 +1996,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\CommentViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionIndexViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionTopicViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\EditableCommentsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\EntryPictureFileEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\EntryPictureFileListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Globalization\EnglishTranslatedStringEditViewModel.ts" />
@@ -2517,6 +2519,7 @@
     <Content Include="Views\Shared\Partials\_EnglishTranslatedString.cshtml" />
     <Content Include="Views\Shared\Partials\_EnglishTranslatedStringEdit.cshtml" />
     <Content Include="Views\Shared\Partials\_Chatbox.cshtml" />
+    <Content Include="Views\Shared\Partials\_EditableComments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

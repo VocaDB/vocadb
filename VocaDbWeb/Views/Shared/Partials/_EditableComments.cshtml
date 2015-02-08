@@ -1,0 +1,26 @@
+﻿@using VocaDb.Web.Helpers
+
+<!-- binding context: EditableCommentsViewModel -->
+
+@if (Login.CanManageDb) {
+	<div class="well well-transparent">
+		<form data-bind="submit: createComment">
+			<textarea data-bind="textInput: newComment" rows="6" cols="60" maxlength="800" class="span5" placeholder="@ViewRes.DiscussionContentStrings.NewComment" required></textarea>
+			<button type="submit" class="btn btn-primary">@ViewRes.DiscussionContentStrings.AddComment</button>
+		</form>
+	</div>
+}
+
+<div data-bind="foreach: comments">
+	<div class="well well-transparent">
+		<div data-bind="visible: $parent.editCommentModel() !== $data">
+			@CommentHelpers.CommentBodyKnockout("message", false, editHandler: "$parent.beginEditComment")
+		</div>
+		<form data-bind="visible: $parent.editCommentModel() === $data, submit: $parent.saveEditedComment">
+			<textarea data-bind="textInput: editedMessage" rows="6" cols="60" maxlength="800" class="span5" required></textarea>
+			<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+			<button data-bind="click: $parent.cancelEditComment" class="btn">Cancel</button>
+		</form>
+	</div>
+</div>
+
