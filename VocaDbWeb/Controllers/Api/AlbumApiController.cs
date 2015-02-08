@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
@@ -34,6 +35,13 @@ namespace VocaDb.Web.Controllers.Api {
 			this.queries = queries;
 			this.service = service;
 			this.thumbPersister = thumbPersister;
+		}
+
+		[Route("comments/{commentId:int}")]
+		public void DeleteComment(int commentId) {
+			
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
+
 		}
 
 		[Route("{id:int}/for-edit")]
@@ -205,6 +213,22 @@ namespace VocaDb.Web.Controllers.Api {
 					.ToArray());
 
 			return versions;
+
+		}
+
+		[Route("comments/{commentId:int}")]
+		[Authorize]
+		public void PostEditComment(int commentId, CommentForApiContract contract) {
+			
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
+
+		}
+
+		[Route("albums/{albumId:int}/comments")]
+		[Authorize]
+		public CommentForApiContract PostNewComment(int albumId, CommentForApiContract contract) {
+			
+			return queries.CreateComment(albumId, contract);
 
 		}
 

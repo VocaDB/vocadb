@@ -8,6 +8,8 @@ module vdb.viewModels {
 
     export class AlbumDetailsViewModel {
 
+		public comments: EditableCommentsViewModel;
+
         public downloadTagsDialog: DownloadTagsViewModel;
 
 		public showTranslatedDescription: KnockoutObservable<boolean>;

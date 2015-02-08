@@ -211,7 +211,12 @@ namespace VocaDb.Model.Service {
 			var songComments = session.Query<SongComment>().Where(c => !c.Song.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
 			var discussionComments = session.Query<DiscussionComment>().Where(c => !c.Topic.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
 
-			var combined = albumComments.Cast<Comment>().Concat(artistComments).Concat(songComments).Concat(discussionComments)
+			var discussionTopics = session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
+			var discussionTopicsAsComments = discussionTopics.Select(t => new DiscussionComment(t, t.Content, new AgentLoginData(t.Author, t.AuthorName ?? t.Author.Name)) {
+				Created = t.Created
+			});
+
+			var combined = albumComments.Cast<Comment>().Concat(artistComments).Concat(songComments).Concat(discussionComments).Concat(discussionTopicsAsComments)
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 				

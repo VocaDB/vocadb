@@ -25,6 +25,7 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.ApproveEntries, 
 			PermissionToken.DeleteEntries, 
 			PermissionToken.EditFeaturedLists, 
+			PermissionToken.ManageEntryReports, 
 			PermissionToken.ManageEventSeries, 
 			PermissionToken.MergeEntries, 
 			PermissionToken.RemoveTagUsages
@@ -41,7 +42,6 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.EditNews, 
 			PermissionToken.LockEntries, 
 			PermissionToken.ManageIPRules, 
-			PermissionToken.ManageEntryReports, 
 			PermissionToken.ManageUserPermissions, 
 			PermissionToken.MikuDbImport, 
 			PermissionToken.MoveToTrash, 

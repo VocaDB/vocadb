@@ -13,13 +13,29 @@ module vdb.repositories {
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
 
+		private urlMapper: UrlMapper;
+
 		constructor(baseUrl: string, languagePreference = cls.globalization.ContentLanguagePreference.Default) {
 
 			super(baseUrl, languagePreference);
 
+			this.urlMapper = new UrlMapper(baseUrl);
+
             this.mapUrl = (relative) => {
                 return vdb.functions.mergeUrls(baseUrl, "/Album") + relative;
             };
+
+		}
+
+		public createComment = (albumId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+
+			$.post(this.urlMapper.mapRelative("/api/albums/" + albumId + "/comments"), contract, callback, 'json');
+
+		}
+
+		public deleteComment = (commentId: number, callback?: () => void) => {
+
+			$.ajax(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), { type: 'DELETE', success: callback });
 
 		}
 
@@ -65,6 +81,12 @@ module vdb.repositories {
 			};
 
 			$.getJSON(url, data, callback);
+
+		}
+
+		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
+
+			$.post(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), contract, callback, 'json');
 
 		}
 

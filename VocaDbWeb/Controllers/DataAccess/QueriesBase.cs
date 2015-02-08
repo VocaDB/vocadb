@@ -123,6 +123,27 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return repository.HandleQuery(func, failMsg);
 		}
 
+		/// <summary>
+		/// Runs an unit of work that does not return anything, inside an explicit transaction.
+		/// </summary>
+		/// <param name="func">Function running the unit of work. Cannot be null.</param>
+		/// <param name="failMsg">Failure message. Cannot be null.</param>
+		/// <returns>Result. Can be null.</returns>
+		public void HandleTransaction(Action<IRepositoryContext<TEntity>> func, string failMsg = "Unexpected database error") {
+			repository.HandleTransaction(func, failMsg);
+		}
+
+		/// <summary>
+		/// Runs an unit of work that queries the database, inside an explicit transaction.
+		/// </summary>
+		/// <typeparam name="TResult">Type of the result.</typeparam>
+		/// <param name="func">Function running the unit of work. Cannot be null.</param>
+		/// <param name="failMsg">Failure message. Cannot be null.</param>
+		/// <returns>Result. Can be null.</returns>
+		public TResult HandleTransaction<TResult>(Func<IRepositoryContext<TEntity>, TResult> func, string failMsg = "Unexpected database error") {
+			return repository.HandleTransaction(func, failMsg);
+		}
+
 	}
 
 }

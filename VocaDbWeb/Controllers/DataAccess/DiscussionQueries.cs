@@ -29,7 +29,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentForApiContract CreateComment(int topicId, CommentContract contract) {
+		public CommentForApiContract CreateComment(int topicId, CommentForApiContract contract) {
 			
 			return repository.HandleTransaction(ctx => {
 				

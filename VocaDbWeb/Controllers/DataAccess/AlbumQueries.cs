@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -36,6 +37,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserMessageMailer mailer;
+		private readonly IUserIconFactory userIconFactory;
 
 		private IEntryLinkFactory EntryLinkFactory {
 			get { return entryLinkFactory; }
@@ -77,7 +79,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer)
+			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
+			IUserIconFactory userIconFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -99,6 +102,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			Archive(ctx, album, new AlbumDiff(), reason, notes);
 
+		}
+
+		public CommentQueries<AlbumComment> Comments(IRepositoryContext<Album> ctx) {
+			return CommentQueries.Create(ctx.OfType<AlbumComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public AlbumContract Create(CreateAlbumContract contract) {
@@ -142,6 +149,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		[Obsolete]
 		public CommentContract CreateComment(int albumId, string message) {
 
 			ParamIs.NotNullOrEmpty(() => message);
@@ -167,6 +175,14 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return new CommentContract(comment);
 
 			});
+
+		}
+
+		public CommentForApiContract CreateComment(int albumId, CommentForApiContract contract) {
+
+			ParamIs.NotNull(() => contract);
+
+			return HandleTransaction(ctx => Comments(ctx).Create<Album>(albumId, contract, (album, con, agent) => album.CreateComment(con.Message, agent)));
 
 		}
 

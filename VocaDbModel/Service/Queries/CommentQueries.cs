@@ -30,7 +30,7 @@ namespace VocaDb.Model.Service.Queries {
 			this.userIconFactory = userIconFactory;
 		}
 
-		public CommentForApiContract Create<TEntry>(int entryId, CommentContract contract, Func<TEntry, CommentContract, AgentLoginData, T> fac) {
+		public CommentForApiContract Create<TEntry>(int entryId, CommentForApiContract contract, Func<TEntry, CommentForApiContract, AgentLoginData, T> fac) {
 			
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 

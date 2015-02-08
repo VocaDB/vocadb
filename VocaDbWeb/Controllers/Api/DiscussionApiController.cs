@@ -130,7 +130,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("topics/{topicId:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int topicId, CommentContract contract) {
+		public CommentForApiContract PostNewComment(int topicId, CommentForApiContract contract) {
 			
 			return queries.CreateComment(topicId, contract);
 
