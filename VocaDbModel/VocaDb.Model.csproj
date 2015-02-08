@@ -108,7 +108,6 @@
   <ItemGroup>
     <Compile Include="DataContracts\Activityfeed\ActivityEntryContract.cs" />
     <Content Include="DataContracts\Activityfeed\ActivityEntryContractFactory.cs" />
-    <Compile Include="DataContracts\Activityfeed\NewsEntryContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumReleaseContract.cs" />
@@ -278,7 +277,6 @@
     <Content Include="Domain\Activityfeed\EntryEditedEntry.cs" />
     <Compile Include="Domain\Activityfeed\GenericActivityEntry.cs" />
     <Compile Include="Domain\Activityfeed\IActivityEntryVisitor.cs" />
-    <Compile Include="Domain\Activityfeed\NewsEntry.cs" />
     <Content Include="Domain\Activityfeed\PlaintextEntry.cs" />
     <Compile Include="Domain\Albums\AlbumArchiveReason.cs" />
     <Compile Include="Domain\Albums\AlbumDiff.cs" />
@@ -486,7 +484,6 @@
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Mapping\Activityfeed\ActivityEntryMap.cs" />
-    <Compile Include="Mapping\Activityfeed\NewsEntryMap.cs" />
     <Compile Include="Mapping\Albums\AlbumCommentMap.cs" />
     <Compile Include="Mapping\Albums\AlbumHitMap.cs" />
     <Compile Include="Mapping\Albums\AlbumMergeRecordMap.cs" />
@@ -743,7 +740,6 @@
     <Compile Include="Service\MikuDbAlbumService.cs" />
     <Compile Include="Service\AlbumImport\MikuDbAlbumImporter.cs" />
     <Compile Include="Service\AlbumImport\AlbumImportResult.cs" />
-    <Compile Include="Service\NewsEntryService.cs" />
     <Compile Include="Service\Paging\PagingProperties.cs" />
     <Compile Include="Service\Rankings\InvalidFeedException.cs" />
     <Compile Include="Service\Rankings\NNDWVRParser.cs" />

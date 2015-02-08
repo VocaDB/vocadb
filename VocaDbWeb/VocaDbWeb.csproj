@@ -896,7 +896,6 @@
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MikuDbAlbumController.cs" />
-    <Compile Include="Controllers\NewsEntryController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SongController.cs" />
     <Compile Include="Controllers\SongListController.cs" />
@@ -947,7 +946,6 @@
     <Compile Include="Models\Home\SearchEntries.cs" />
     <Compile Include="Models\MikuDbAlbums\Index.cs" />
     <Compile Include="Models\MikuDbAlbums\PrepareAlbumsForImport.cs" />
-    <Compile Include="Models\NewsEntry\NewsEntryEdit.cs" />
     <Compile Include="Models\SharedModels.cs" />
     <Compile Include="Models\Shared\ArchivedObjectVersion.cs" />
     <Compile Include="Models\Shared\PVEmbedParams.cs" />
@@ -2402,14 +2400,12 @@
     <Content Include="Views\SongList\Edit.cshtml" />
     <Content Include="Views\SongList\Details.cshtml" />
     <Content Include="App_Code\ActivityfeedHelpers.cshtml" />
-    <Content Include="Views\NewsEntry\Index.cshtml" />
     <Content Include="Views\ActivityEntry\Index.cshtml" />
     <Content Include="Views\SongList\CreateFromWVR.cshtml" />
     <Content Include="Views\Tag\Edit.cshtml" />
     <Content Include="Views\User\EntryEdits.cshtml" />
     <Content Include="Views\SongList\Featured.cshtml" />
     <Content Include="App_Code\UserHelpers.cshtml" />
-    <Content Include="Views\NewsEntry\Edit.cshtml" />
     <Content Include="Views\Event\Details.cshtml" />
     <Content Include="Views\Event\EventsBySeries.cshtml" />
     <Content Include="App_Code\HtmlHelpers.cshtml" />

@@ -399,7 +399,6 @@ namespace VocaDb.Model.Service {
 
 		public FrontPageContract GetFrontPageContent(bool ssl) {
 
-			const int maxNewsEntries = 4;
 			const int maxActivityEntries = 15;
 
 			return HandleQuery(session => {
@@ -409,14 +408,6 @@ namespace VocaDb.Model.Service {
 					.Take(maxActivityEntries)
 					.ToArray()
 					.Where(a => !a.EntryBase.Deleted);
-
-				var newsEntries = session.Query<NewsEntry>().Where(n => n.Stickied).OrderByDescending(a => a.CreateDate).Take(maxNewsEntries).ToArray();
-
-				if (newsEntries.Length < maxNewsEntries)
-					newsEntries = newsEntries.Concat(session.Query<NewsEntry>()
-						.Where(n => !n.Stickied)
-						.OrderByDescending(a => a.CreateDate)
-						.Take(maxNewsEntries - newsEntries.Length)).ToArray();
 
 				var newAlbums = GetRecentAlbums(session);
 
@@ -428,7 +419,7 @@ namespace VocaDb.Model.Service {
 
 				var recentComments = GetRecentComments(session, 8, ssl);
 
-				return new FrontPageContract(activityEntries, newsEntries, newAlbums, recentComments, topAlbums, newSongs, 
+				return new FrontPageContract(activityEntries, newAlbums, recentComments, topAlbums, newSongs, 
 					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference);
 
 			});

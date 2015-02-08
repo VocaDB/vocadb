@@ -39,7 +39,6 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.DesignatedStaff, 
 			PermissionToken.DisableUsers, 
 			PermissionToken.EditAllSongLists, 
-			PermissionToken.EditNews, 
 			PermissionToken.LockEntries, 
 			PermissionToken.ManageIPRules, 
 			PermissionToken.ManageUserPermissions, 

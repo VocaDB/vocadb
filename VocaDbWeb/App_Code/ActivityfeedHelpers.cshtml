@@ -59,31 +59,3 @@
 		</div>
 	</div>
 }
-
-@helper NewsEntry(NewsEntryContract entry) {
-
-	var panelClass = entry.Important ? "ui-state-highlight " : string.Empty;
-	
-	<div class="@(panelClass + " message newsEntry ui-tabs ui-widget ui-widget-content ui-corner-all")">
-		<div class="messageTitle ui-widget-header ui-corner-all">
-			<div class="messageTitleText">
-				@if (!entry.Anonymous || Login.CanModerateUsers) {
-					@UserHelpers.UserIconLink(entry.Author)
-					<span> @HelperRes.ActivityFeedHelperStrings.At </span>
-	}
-				@Helpers.UniversalTimeLabel(entry.CreateDate)
-
-				@if (Login.CanEditNews) {
-					@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", "NewsEntry", new { id = entry.Id }, null)
-	}
-			</div>	
-		</div>	
-		<p class="messageContent">
-			@if (entry.Important) {
-				@Helpers.NotificationIcon()
-   }
-			<span>@HtmlHelpers.FormatText(entry.Text)</span>
-		</p>
-	</div>
-	
-}
