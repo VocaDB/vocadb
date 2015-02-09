@@ -45,7 +45,6 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("{albumId:int}/comments")]
-		[Authorize]
 		public IEnumerable<CommentForApiContract> GetComments(int albumId) {
 			
 			return queries.GetComments(albumId);
