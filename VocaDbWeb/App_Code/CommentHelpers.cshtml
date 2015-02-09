@@ -5,8 +5,9 @@
 @using VocaDb.Web.Code
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper CommentBodyKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null) {
-	<div class="comment media comment-large">
+@helper CommentBodyKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
+	bool standalone = true) {
+	<div class="comment media @(standalone ? "comment-large" : "")">
 		<a data-bind="attr: { href: '/User/Profile/' + author.name }" class="pull-left">
 			@UserHelpers.ProfileIconKnockout("author.iconUrl", 70)
 		</a>
@@ -98,6 +99,36 @@
 				<hr />
 			}
 		}
+	</div>
+
+}
+
+@helper EditableComments(bool allowCreateComment, bool well = true) {
+
+	var cssClass = (well ? "well well-transparent" : "standalone");
+
+	<!-- binding context: EditableCommentsViewModel -->
+
+	if (allowCreateComment) {
+		<div class="create-comment @cssClass">
+			<form data-bind="submit: createComment">
+				<textarea data-bind="textInput: newComment" rows="6" cols="60" maxlength="800" class="span5" placeholder="@ViewRes.DiscussionContentStrings.NewComment" required></textarea>
+				<button type="submit" class="btn btn-primary">@ViewRes.DiscussionContentStrings.AddComment</button>
+			</form>
+		</div>
+	}
+
+	<div data-bind="foreach: comments">
+		<div class="editable-comment @cssClass">
+			<div data-bind="visible: $parent.editCommentModel() !== $data">
+				@CommentBodyKnockout("message", false, editHandler: "$parent.beginEditComment", standalone: !well)
+			</div>
+			<form data-bind="visible: $parent.editCommentModel() === $data, submit: $parent.saveEditedComment">
+				<textarea data-bind="textInput: editedMessage" rows="6" cols="60" maxlength="800" class="span5" required></textarea>
+				<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+				<button data-bind="click: $parent.cancelEditComment" class="btn">Cancel</button>
+			</form>
+		</div>
 	</div>
 
 }

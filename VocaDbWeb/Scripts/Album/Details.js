@@ -45,52 +45,7 @@ function initDialog(urlMapper) {
 
 }
 
-function tabLoaded(albumId, event, ui, confirmDeleteStr) {
-
-	vdb.functions.disableTabReload(ui.tab);
-
-	$("#createComment").click(function () {
-
-		var message = $("#newCommentMessage").val();
-
-		if (message == "") {
-			alert("Message cannot be empty");
-			return false;
-		}
-
-		$("#newCommentMessage").val("");
-
-		$.post(urlMapper.mapRelative("/Album/CreateComment"), { entryId: albumId, message: message }, function (result) {
-
-			$("#newCommentPanel").after(result);
-
-		});
-
-		return false;
-
-	});
-
-	$(document).on("click", "a.deleteComment", function () {
-
-		if (!confirm(confirmDeleteStr))
-			return false;
-
-		var btn = this;
-		var id = getId(this);
-
-		$.post(urlMapper.mapRelative("/Album/DeleteComment"), { commentId: id }, function () {
-
-			$(btn).parent().parent().parent().parent().remove();
-
-		});
-
-		return false;
-
-	});
-
-}
-
-function initPage(albumId, collectionRating, saveStr, confirmDeleteStr, urlMapper) {
+function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 
 	$("#addAlbumLink").button({ disabled: $("#addAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-star'} });
 	$("#updateAlbumLink").button({ disabled: $("#updateAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
@@ -126,7 +81,12 @@ function initPage(albumId, collectionRating, saveStr, confirmDeleteStr, urlMappe
 
 	$("#tabs").tabs({
 		load: function(event, ui) {
-			tabLoaded(albumId, event, ui, confirmDeleteStr);
+			vdb.functions.disableTabReload(ui.tab);
+		},
+		activate: function (event, ui) {
+			if (ui.newTab.data('tab') === "Discussion") {
+				viewModel.comments.initComments();
+			}
 		}
 	});
 

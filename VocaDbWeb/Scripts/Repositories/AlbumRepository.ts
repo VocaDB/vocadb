@@ -46,6 +46,12 @@ module vdb.repositories {
 
 		};
 
+		public getComments = (albumId: number, callback: (contract: dc.CommentContract[]) => void) => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/comments"), callback);
+
+		}
+
 		public getForEdit = (id: number, callback: (result: dc.albums.AlbumForEditContract) => void) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + id + "/for-edit");

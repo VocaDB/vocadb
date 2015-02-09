@@ -144,13 +144,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public PartialViewResult Comments(int id = invalidId) {
-
-			var comments = Service.GetComments(id);
-			return PartialView("DiscussionContent", comments);
-
-		}
-
 		//[OutputCache(Duration = pictureCacheDurationSec, Location = OutputCacheLocation.Any, VaryByParam = "id,v")]
 		public ActionResult CoverPicture(int id = invalidId) {
 
@@ -170,15 +163,6 @@ namespace VocaDb.Web.Controllers
 
 			var data = queries.GetCoverPictureThumb(id);
 			return Picture(data);
-
-		}
-
-		[HttpPost]
-		public PartialViewResult CreateComment(int entryId, string message) {
-
-			var comment = queries.CreateComment(entryId, message);
-
-			return PartialView("Comment", comment);
 
 		}
 
@@ -306,13 +290,6 @@ namespace VocaDb.Web.Controllers
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 
 			return RedirectToAction("Edit", new { id = result.Id });
-
-		}
-
-		[HttpPost]
-		public void DeleteComment(int commentId) {
-
-			Service.DeleteComment(commentId);
 
 		}
 

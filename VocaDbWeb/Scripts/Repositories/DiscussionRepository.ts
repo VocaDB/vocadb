@@ -35,6 +35,12 @@ module vdb.repositories {
 
 		}
 
+		public getComments = (topicId: number, callback: (contract: dc.CommentContract[]) => void) => {
+
+			// Not supported
+
+		}
+
 		public getFolders = (callback: (folders: dc.discussions.DiscussionFolderContract[]) => void) => {
 			
 			$.getJSON(this.mapUrl("folders"), { fields: 'LastTopic,TopicCount' }, callback);

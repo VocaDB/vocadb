@@ -88,6 +88,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Album/Details").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/ViewModels/CommentViewModel.js",
 				"~/Scripts/ViewModels/EditableCommentsViewModel.js",

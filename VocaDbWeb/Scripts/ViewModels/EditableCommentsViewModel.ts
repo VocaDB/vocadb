@@ -8,14 +8,19 @@ module vdb.viewModels {
 	export class EditableCommentsViewModel {
 
 		constructor(
-			private repo: rep.ICommentRepository,
-			commentContracts: dc.CommentContract[],
+			private repo: rep.ICommentRepository,			
 			private entryId: number,
-			private loggedUserId: number, private canDeleteAllComments: boolean) {
+			private loggedUserId: number,
+			private canDeleteAllComments: boolean,
+			private ascending: boolean,
+			commentContracts?: dc.CommentContract[]) {
 			
-			var commentViewModels = _.sortBy(_.map(commentContracts, comment => this.processComment(comment)), comment => comment.created);
+			this.comments = ko.observableArray<CommentViewModel>(null);
+			this.commentsLoaded = commentContracts != null;
 
-			this.comments = ko.observableArray<CommentViewModel>(commentViewModels);
+			if (commentContracts) {
+				this.setComments(commentContracts);				
+			}
 
 		}
 	
@@ -36,6 +41,8 @@ module vdb.viewModels {
 			
 		public comments: KnockoutObservableArray<CommentViewModel>;
 
+		private commentsLoaded: boolean;
+
 		public createComment = () => {
 
 			var comment = this.newComment();
@@ -51,7 +58,14 @@ module vdb.viewModels {
 			}
 
 			this.repo.createComment(this.entryId, commentContract, result => {
-				this.comments.push(this.processComment(result));
+
+				var processed = this.processComment(result);
+
+				if (this.ascending)
+					this.comments.push(processed);
+				else
+					this.comments.unshift(processed);
+
 			});
 
 		}
@@ -65,6 +79,19 @@ module vdb.viewModels {
 		}
 
 		public editCommentModel = ko.observable<CommentViewModel>(null);
+
+		public initComments = () => {
+
+			if (this.commentsLoaded)
+				return;
+
+			this.repo.getComments(this.entryId, contracts => {
+				this.setComments(contracts);				
+			});
+
+			this.commentsLoaded = true;
+
+		}
 
 		public newComment = ko.observable("");
 
@@ -85,6 +112,17 @@ module vdb.viewModels {
 			this.repo.updateComment(editedContract.id, editedContract);
 
 			this.editCommentModel(null);
+
+		}
+
+		private setComments = (commentContracts: dc.CommentContract[]) => {
+			
+			var commentViewModels = _.sortBy(_.map(commentContracts, comment => this.processComment(comment)), comment => comment.created);
+
+			if (!this.ascending)
+				commentViewModels = commentViewModels.reverse();
+
+			this.comments(commentViewModels);
 
 		}
 

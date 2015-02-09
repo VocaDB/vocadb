@@ -7,6 +7,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -51,6 +52,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private void AssertHasArtist(Album album, Artist artist, ArtistRoles? roles) {
 			VocaDbAssert.HasArtist(album, artist, roles);
+		}
+
+		private CommentForApiContract CreateComment(int albumId, string message) {
+			var contract = new CommentForApiContract { Message = message, Author = new UserWithIconContract(user) };
+			return queries.CreateComment(albumId, contract);
 		}
 
 		private SongInAlbumEditContract CreateSongInAlbumEditContract(int trackNumber, int songId = 0, string songName = null) {
@@ -171,7 +177,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateComment() {
 
-			var result = queries.CreateComment(39, "Hello world");
+			var result = CreateComment(39, "Hello world");
 			Assert.IsNotNull(result, "Result");
 
 			var comment = repository.List<AlbumComment>().FirstOrDefault();
@@ -189,7 +195,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user.GroupId = UserGroupId.Limited;
 			permissionContext.RefreshLoggedUser(repository);
 			
-			queries.CreateComment(39, "Hello world");
+			CreateComment(39, "Hello world");
 
 		}
 

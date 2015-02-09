@@ -6,11 +6,13 @@ module vdb.repositories {
 	// Repository for managing comments
 	export interface ICommentRepository {
 		
-		createComment(entryId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void);
+		createComment(entryId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void): void;
 
-		deleteComment(commentId: number, callback?: () => void);
+		deleteComment(commentId: number, callback?: () => void): void;
 
-		updateComment(commentId: number, contract: dc.CommentContract, callback?: () => void);
+		getComments(entryId: number, callback: (contract: dc.CommentContract[]) => void): void;
+
+		updateComment(commentId: number, contract: dc.CommentContract, callback?: () => void): void;
 
 	}
 

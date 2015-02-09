@@ -173,25 +173,6 @@ namespace VocaDb.Model.Service {
 
 		}*/
 
-		public void DeleteComment(int commentId) {
-
-			HandleTransaction(session => {
-
-				var comment = session.Load<AlbumComment>(commentId);
-				var user = GetLoggedUser(session);
-
-				AuditLog("deleting " + comment, session, user);
-
-				if (!user.Equals(comment.Author))
-					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
-
-				comment.Album.Comments.Remove(comment);
-				session.Delete(comment);
-
-			});
-
-		}
-
 		public PartialFindResult<T> Find<T>(Func<Album, T> fac, AlbumQueryParams queryParams)
 			where T : class {
 
@@ -473,27 +454,6 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session =>
 				EntryForPictureDisplayContract.Create(
 				session.Load<ArchivedAlbumVersion>(archivedVersionId), PermissionContext.LanguagePreference));
-
-		}
-
-		/*
-		public ArtistContract[] GetArtists(int albumId, ArtistType[] types) {
-
-			return HandleQuery(session => session.Load<Album>(albumId).Artists.Where(a => a.Artist != null && types.Contains(a.Artist.ArtistType))
-				.Select(a => new ArtistContract(a.Artist, PermissionContext.LanguagePreference)).ToArray());
-
-		}*/
-
-		public CommentContract[] GetComments(int albumId) {
-
-			return HandleQuery(session => {
-
-				return session.Query<AlbumComment>()
-					.Where(c => c.Album.Id == albumId)
-					.OrderByDescending(c => c.Created)
-					.Select(c => new CommentContract(c)).ToArray();
-
-			});
 
 		}
 

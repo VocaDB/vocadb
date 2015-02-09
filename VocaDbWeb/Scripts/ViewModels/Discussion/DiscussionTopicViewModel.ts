@@ -11,7 +11,7 @@ module vdb.viewModels.discussions {
 
 			this.contract = ko.observable(contract);
 
-			this.comments = new EditableCommentsViewModel(repo, contract.comments, contract.id, loggedUserId, canDeleteAllComments);
+			this.comments = new EditableCommentsViewModel(repo, contract.id, loggedUserId, canDeleteAllComments, true, contract.comments);
 
 		}
 

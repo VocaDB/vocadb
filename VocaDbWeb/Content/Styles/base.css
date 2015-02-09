@@ -50,3 +50,11 @@
 .comment-with-entry {
   width: auto;
 }
+.create-comment.standalone,
+.editable-comment.standalone {
+  margin-bottom: 30px;
+}
+.create-comment.well form,
+.editable-comment.well form {
+  margin-bottom: 0;
+}

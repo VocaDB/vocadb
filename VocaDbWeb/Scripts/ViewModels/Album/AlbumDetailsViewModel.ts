@@ -5,6 +5,7 @@
 module vdb.viewModels {
 
 	import cls = vdb.models;
+	import rep = repositories;
 
     export class AlbumDetailsViewModel {
 
@@ -29,10 +30,18 @@ module vdb.viewModels {
 
         };
 
-        constructor(private id: number, formatString: string,
+        constructor(
+			repo: rep.AlbumRepository,
+			private id: number,
+			loggedUserId: number,
+			canDeleteAllComments: boolean,
+			formatString: string,
 			showTranslatedDescription: boolean) {
+
             this.downloadTagsDialog = new DownloadTagsViewModel(id, formatString);
 			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
+			this.comments = new EditableCommentsViewModel(repo, id, loggedUserId, canDeleteAllComments, false);
+
         }
 
     }

@@ -87,6 +87,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.imagePersister = imagePersister;
 			this.pictureFilePersister = pictureFilePersister;
 			this.mailer = mailer;
+			this.userIconFactory = userIconFactory;
 
 		}
 
@@ -149,40 +150,17 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		[Obsolete]
-		public CommentContract CreateComment(int albumId, string message) {
-
-			ParamIs.NotNullOrEmpty(() => message);
-
-			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
-
-			message = message.Trim();
-
-			return repository.HandleTransaction(ctx => {
-
-				var album = ctx.Load(albumId);
-				var agent = ctx.CreateAgentLoginData(PermissionContext);
-
-				ctx.AuditLogger.AuditLog(string.Format("creating comment for {0}: '{1}'",
-					entryLinkFactory.CreateEntryLink(album),
-					HttpUtility.HtmlEncode(message)), agent.User);
-
-				var comment = album.CreateComment(message, agent);
-				ctx.OfType<AlbumComment>().Save(comment);
-
-				new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx.OfType<User>());
-
-				return new CommentContract(comment);
-
-			});
-
-		}
-
 		public CommentForApiContract CreateComment(int albumId, CommentForApiContract contract) {
 
 			ParamIs.NotNull(() => contract);
 
 			return HandleTransaction(ctx => Comments(ctx).Create<Album>(albumId, contract, (album, con, agent) => album.CreateComment(con.Message, agent)));
+
+		}
+
+		public CommentForApiContract[] GetComments(int albumId) {
+			
+			return HandleQuery(ctx => ctx.Load(albumId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
 
 		}
 
