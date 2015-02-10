@@ -50,6 +50,10 @@ namespace VocaDb.Model.Domain.Albums {
 			return Id.GetHashCode();
 		}
 
+		public override void OnDelete() {
+			Album.Comments.Remove(this);
+		}
+
 		public override string ToString() {
 			return string.Format("comment [{0}] for " + Album, Id);
 		}

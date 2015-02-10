@@ -50,6 +50,10 @@ namespace VocaDb.Model.Domain.Songs {
 			return Id.GetHashCode();
 		}
 
+		public override void OnDelete() {
+			Song.Comments.Remove(this);
+		}
+
 		public override string ToString() {
 			return string.Format("comment [{0}] for " + Song, Id);
 		}

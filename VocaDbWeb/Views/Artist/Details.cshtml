@@ -58,7 +58,9 @@
 
 	<ul>
 		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
-		<li><a href="@Url.Action("Comments", "Artist", new { id = Model.Id })" title="Discussion">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a></li>
+		<li data-tab="Discussion">
+			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
+		</li>
 		<li><a href="#picturesTab">@ViewRes.EntryDetailsStrings.PicturesTab (@(Model.Pictures.Length + 1))</a></li>
 		<li>
 			<a href="#mainAlbumsTab" data-bind="click: initMainAlbums">
@@ -282,7 +284,8 @@
 
 	</div>
 
-	<div id="Discussion">
+	<div id="discussionTab" data-bind="with: comments">
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)
 	</div>
 	
 	<div id="picturesTab">
@@ -375,7 +378,6 @@
 }
 
 @section BodyScripts {
-	<script type="text/javascript" src="@Url.Content("~/Scripts/Shared/DiscussionTab.js")"></script>
 	@Scripts.Render("~/bundles/Artist/Details")
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
@@ -387,8 +389,10 @@
 			var cultureCode = '@UICulture';
 			var loggedUserId = @ToJS(UserContext.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
+			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
 			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, loggedUserId);
+			var artistRepo = repoFactory.artistRepository();
 			var albumRepository = repoFactory.albumRepository();
 			var songRepo = repoFactory.songRepository();
 			var resourceRepo = repoFactory.resourceRepository();
@@ -396,11 +400,13 @@
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 
-			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(@Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
+			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(artistRepo, @Model.Id, @ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
 				@ToJS(Model.Description.HasEnglish),
 				unknownPictureUrl,
 				@LanguagePreferenceInt,
-				urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, pvPlayersFactory);
+				urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, 
+				canDeleteAllComments,
+				pvPlayersFactory);
 			ko.applyBindings(viewModel);
 
 			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);

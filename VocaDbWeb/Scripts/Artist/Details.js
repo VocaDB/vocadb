@@ -64,14 +64,12 @@ function initPage(artistId, saveStr, urlMapper, viewModel) {
 
 	$("#tabs").tabs({
 		load: function (event, ui) {
-
-			var index = $('#tabs ul li').index(ui.tab);
-			if (index == 1)
-				tabLoaded(urlMapper.mapRelative("/Artist"), artistId, event, ui);
-
 			vdb.functions.disableTabReload(ui.tab);
-			$("#tabs").tabs("option", "spinner", 'Loading...');
-
+		},
+		activate: function (event, ui) {
+			if (ui.newTab.data('tab') === "Discussion") {
+				viewModel.comments.initComments();
+			}
 		}
 	});
 

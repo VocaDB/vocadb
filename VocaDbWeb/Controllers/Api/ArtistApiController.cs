@@ -4,15 +4,14 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search.Artists;
@@ -52,6 +51,21 @@ namespace VocaDb.Web.Controllers.Api {
 			}
 
 			return contract;
+
+		}
+
+		[Route("comments/{commentId:int}")]
+		[Authorize]
+		public void DeleteComment(int commentId) {
+			
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
+
+		}
+
+		[Route("{artistId:int}/comments")]
+		public IEnumerable<CommentForApiContract> GetComments(int artistId) {
+			
+			return queries.GetComments(artistId);
 
 		}
 
@@ -178,6 +192,22 @@ namespace VocaDb.Web.Controllers.Api {
 					.ToArray());
 
 			return versions;
+
+		}
+
+		[Route("comments/{commentId:int}")]
+		[Authorize]
+		public void PostEditComment(int commentId, CommentForApiContract contract) {
+			
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
+
+		}
+
+		[Route("{artistId:int}/comments")]
+		[Authorize]
+		public CommentForApiContract PostNewComment(int artistId, CommentForApiContract contract) {
+			
+			return queries.CreateComment(artistId, contract);
 
 		}
 

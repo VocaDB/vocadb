@@ -135,25 +135,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void DeleteComment(int commentId) {
-
-			HandleTransaction(session => {
-
-				var comment = session.Load<ArtistComment>(commentId);
-				var user = GetLoggedUser(session);
-
-				AuditLog("deleting " + comment, session, user);
-
-				if (!user.Equals(comment.Author))
-					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
-
-				comment.Artist.Comments.Remove(comment);
-				session.Delete(comment);
-
-			});
-
-		}
-
 		public PartialFindResult<ArtistContract> FindArtists(ArtistQueryParams queryParams) {
 
 			return FindArtists(a => new ArtistContract(a, PermissionContext.LanguagePreference), queryParams);
@@ -293,19 +274,6 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				return contracts;
-
-			});
-
-		}
-
-		public CommentContract[] GetComments(int artistId) {
-
-			return HandleQuery(session => {
-
-				return session.Query<ArtistComment>()
-					.Where(c => c.Artist.Id == artistId)
-					.OrderByDescending(c => c.Created)
-					.Select(c => new CommentContract(c)).ToArray();
 
 			});
 

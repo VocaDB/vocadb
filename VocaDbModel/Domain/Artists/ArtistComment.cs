@@ -51,8 +51,12 @@ namespace VocaDb.Model.Domain.Artists {
 			return Id.GetHashCode();
 		}
 
+		public override void OnDelete() {
+			Artist.Comments.Remove(this);
+		}
+
 		public override string ToString() {
-			return string.Format("comment [{0}] for " + Artist, Id);
+			return string.Format("comment [{0}] for {1}", Id, Artist);
 		}
 
 	}

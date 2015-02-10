@@ -2,12 +2,12 @@
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Web;
 using NHibernate;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
@@ -20,7 +20,6 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 
@@ -35,6 +34,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
+		private readonly IUserIconFactory userIconFactory;
 
 		class CachedAdvancedArtistStatsContract {
 			
@@ -146,14 +146,19 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public ArtistQueries(IArtistRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister,
-			ObjectCache cache)
+			ObjectCache cache, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
 			this.pictureFilePersister = pictureFilePersister;
 			this.cache = cache;
+			this.userIconFactory = userIconFactory;
 
+		}
+
+		public CommentQueries<ArtistComment> Comments(IRepositoryContext<Artist> ctx) {
+			return CommentQueries.Create(ctx.OfType<ArtistComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public void Archive(IRepositoryContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
@@ -225,31 +230,17 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentContract CreateComment(int artistId, string message) {
+		public CommentForApiContract CreateComment(int artistId, CommentForApiContract contract) {
 
-			ParamIs.NotNullOrEmpty(() => message);
+			ParamIs.NotNull(() => contract);
 
-			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
+			return HandleTransaction(ctx => Comments(ctx).Create<Artist>(artistId, contract, (artist, con, agent) => artist.CreateComment(con.Message, agent.User)));
 
-			message = message.Trim();
+		}
 
-			return repository.HandleTransaction(ctx => {
-
-				var artist = ctx.Load(artistId);
-				var author = ctx.OfType<User>().GetLoggedUser(PermissionContext);
-
-				ctx.AuditLogger.AuditLog(string.Format("creating comment for {0}: '{1}'",
-					entryLinkFactory.CreateEntryLink(artist),
-					HttpUtility.HtmlEncode(message.Truncate(60))), author);
-
-				var comment = artist.CreateComment(message, author);
-				ctx.OfType<ArtistComment>().Save(comment);
-
-				new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx.OfType<User>());
-
-				return new CommentContract(comment);
-
-			});
+		public CommentForApiContract[] GetComments(int artistId) {
+			
+			return HandleQuery(ctx => ctx.Load(artistId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
 
 		}
 

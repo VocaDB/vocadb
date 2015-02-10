@@ -55,25 +55,9 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public PartialViewResult CreateComment(int entryId, string message) {
-
-			var comment = queries.CreateComment(entryId, message);
-
-			return PartialView("Comment", comment);
-
-		}
-
-		[HttpPost]
 		public void CreateReport(int artistId, ArtistReportType reportType, string notes) {
 
 			Service.CreateReport(artistId, reportType, CfHelper.GetRealIp(Request), notes ?? string.Empty);
-
-		}
-
-		[HttpPost]
-		public void DeleteComment(int commentId) {
-
-			Service.DeleteComment(commentId);
 
 		}
 
@@ -185,13 +169,6 @@ namespace VocaDb.Web.Controllers
 
 			var artist = Service.GetArtist(id);
 			return PartialView("ArtistPopupContent", artist);
-
-		}
-
-		public PartialViewResult Comments(int id = invalidId) {
-
-			var comments = Service.GetComments(id);
-			return PartialView("DiscussionContent", comments);
 
 		}
 

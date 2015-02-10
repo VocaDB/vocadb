@@ -53,6 +53,10 @@ namespace VocaDb.Model.Domain.Users {
 			return Id.GetHashCode();
 		}
 
+		public override void OnDelete() {
+			User.Comments.Remove(this);
+		}
+
 		public override string ToString() {
 			return string.Format("comment [{0}] for {1}", Id, User);
 		}

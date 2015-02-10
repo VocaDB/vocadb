@@ -2075,7 +2075,6 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\page.js" />
-    <Content Include="Scripts\Shared\DiscussionTab.js" />
     <Content Include="Scripts\Shared\Messages.js" />
     <Content Include="Scripts\Shared\ReportEntryPopup.js" />
     <Content Include="Scripts\SongList\Edit.js" />
@@ -2377,7 +2376,6 @@
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Admin\ViewAuditLog.cshtml" />
     <Content Include="Views\Artist\Create.cshtml" />
-    <Content Include="Views\Shared\DiscussionContent.cshtml" />
     <Content Include="Views\Shared\Comment.cshtml" />
     <Content Include="Views\MikuDbAlbum\InspectedAlbumTrack.cshtml" />
     <Content Include="Views\User\Messages.cshtml" />

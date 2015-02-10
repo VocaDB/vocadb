@@ -60,7 +60,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(user);
 			imagePersister = new InMemoryImagePersister();
 
-			queries = new ArtistQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, MemoryCache.Default);
+			queries = new ArtistQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, MemoryCache.Default, new FakeUserIconFactory());
 
 			newArtistContract = new CreateArtistContract {
 				ArtistType = ArtistType.Producer,

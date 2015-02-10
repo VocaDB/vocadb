@@ -8,9 +8,8 @@ module vdb.viewModels {
 
 	export class ArtistDetailsViewModel {
 
-		customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
-
 		constructor(
+			repo: rep.ArtistRepository,
 			private artistId: number, emailNotifications: boolean, siteNotifications: boolean,
 			hasEnglishDescription: boolean,
 			private unknownPictureUrl: string,
@@ -22,6 +21,7 @@ module vdb.viewModels {
 			private userRepository: rep.UserRepository,
 			private cultureCode: string,
 			private loggedUserId: number,
+			canDeleteAllComments: boolean,
 			private pvPlayersFactory: pvs.PVPlayersFactory) {
 
 			this.lang = cls.globalization.ContentLanguagePreference[languagePreference];
@@ -29,7 +29,13 @@ module vdb.viewModels {
 			this.showTranslatedDescription = ko.observable((hasEnglishDescription
 				&& (languagePreference === cls.globalization.ContentLanguagePreference.English || languagePreference === cls.globalization.ContentLanguagePreference.Romaji)));
 
+			this.comments = new EditableCommentsViewModel(repo, artistId, loggedUserId, canDeleteAllComments, false);
+
 		}
+
+		public comments: EditableCommentsViewModel;
+
+		customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
 
 		private lang: string;
 		public showTranslatedDescription: KnockoutObservable<boolean>;
