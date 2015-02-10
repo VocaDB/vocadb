@@ -54,6 +54,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Deletes a comment.
+		/// Normal users can delete their own comments, moderators can delete all comments.
+		/// Requires login.
+		/// </summary>
+		/// <param name="commentId">ID of the comment to be deleted.</param>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
 		public void DeleteComment(int commentId) {
@@ -62,6 +68,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets a list of comments for an artist.
+		/// Note: pagination and sorting might be added later.
+		/// </summary>
+		/// <param name="artistId">ID of the artist whose comments to load.</param>
+		/// <returns>List of comments in no particular order.</returns>
 		[Route("{artistId:int}/comments")]
 		public IEnumerable<CommentForApiContract> GetComments(int artistId) {
 			
@@ -195,6 +207,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Updates a comment.
+		/// Normal users can edit their own comments, moderators can edit all comments.
+		/// Requires login.
+		/// </summary>
+		/// <param name="commentId">ID of the comment to be edited.</param>
+		/// <param name="contract">New comment data. Only message can be edited.</param>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) {
@@ -203,6 +222,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Posts a new comment.
+		/// </summary>
+		/// <param name="artistId">ID of the artist for which to create the comment.</param>
+		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
+		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{artistId:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int artistId, CommentForApiContract contract) {
