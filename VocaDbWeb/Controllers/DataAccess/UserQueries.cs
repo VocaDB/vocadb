@@ -26,6 +26,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
@@ -264,6 +265,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.userIconFactory = userIconFactory;
 			this.cache = cache;
 
+		}
+
+		public CommentQueries<UserComment> Comments(IRepositoryContext<User> ctx) {
+			return CommentQueries.Create(ctx.OfType<UserComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public void AddSongTags(int songId, string[] tags) {

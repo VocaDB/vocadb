@@ -30,8 +30,8 @@ module vdb.viewModels.user {
 
 			this.newComment("");
 
-			var url = this.urlMapper.mapRelative("/User/CreateComment");
-			$.post(url, { entryId: this.userId, message: comment }, (result: dc.CommentContract) => {
+			var contract = { message: comment, author: { id: this.userId } };
+			this.userRepo.createComment(this.userId, contract, (result: dc.CommentContract) => {
 				this.processComment(result);
 				this.comments.unshift(result);
 			});
@@ -61,7 +61,7 @@ module vdb.viewModels.user {
 			if (this.comments().length)
 				return;
 
-			this.userRepo.getProfileComments(this.userId, { start: 0, maxEntries: 300, getTotalCount: false }, (result: dc.PartialFindResultContract<dc.CommentContract>) => {
+			this.userRepo.getComments(this.userId, (result: dc.PartialFindResultContract<dc.CommentContract>) => {
 
 				_.forEach(result.items, this.processComment);
 

@@ -10,12 +10,17 @@ module vdb.repositories {
 
     // Repository for managing users and related objects.
     // Corresponds to the UserController class.
-    export class UserRepository {
+    export class UserRepository implements ICommentRepository {
 
-		public deleteComment = (commentId: number, callback) => {
+		public createComment = (userId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+
+			$.post(this.urlMapper.mapRelative("/api/users/" + userId + "/profileComments"), contract, callback, 'json');
+
+		}
+
+		public deleteComment = (commentId: number, callback: () => void) => {
 			
-			var url = this.urlMapper.mapRelative("/User/DeleteComment/");
-			$.post(url, { commentId: commentId }, callback);
+			$.ajax(this.urlMapper.mapRelative("/api/users/profileComments/" + commentId), { type: 'DELETE', success: callback });
 
 		}
 
@@ -46,6 +51,18 @@ module vdb.repositories {
 			$.getJSON(url, data, callback);
 
 		}
+
+		public getComments = (userId: number, callback) => {
+
+			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/profileComments");
+			var data = {
+				start: 0, getTotalCount: false, maxResults: 300,
+				userId: userId
+			};
+
+			$.getJSON(url, data, callback);
+
+		};
 
 		public getFollowedArtistsList = (
 			userId: number,
@@ -98,18 +115,6 @@ module vdb.repositories {
 
             var url = this.mapUrl("/MessagesJson");
             $.getJSON(url, { maxCount: maxCount, unread: unread, iconSize: iconSize }, callback);
-
-		};
-
-		public getProfileComments = (userId: number, paging: dc.PagingProperties, callback) => {
-
-			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/profileComments");
-			var data = {
-				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				userId: userId
-			};
-
-			$.getJSON(url, data, callback);
 
 		};
 
@@ -182,6 +187,12 @@ module vdb.repositories {
 			});
 
 		};
+
+		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
+
+			$.post(this.urlMapper.mapRelative("/api/users/profileComments/" + commentId), contract, callback, 'json');
+
+		}
 
         // Updates rating score for a song.
         // songId: Id of the song to be updated.

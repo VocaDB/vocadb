@@ -48,6 +48,20 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Deletes a comment.
+		/// Normal users can delete their own comments, moderators can delete all comments.
+		/// Requires login.
+		/// </summary>
+		/// <param name="commentId">ID of the comment to be deleted.</param>
+		[Route("profileComments/{commentId:int}")]
+		[Authorize]
+		public void DeleteProfileComment(int commentId) {
+			
+			service.DeleteComment(commentId);
+
+		}
+
+		/// <summary>
 		/// Gets a list of albums in a user's collection.
 		/// This includes albums that have been rated by the user as well as albums that the user has bought or wishlisted.
 		/// Note that the user might have set his album ownership status and media type as private, in which case those properties are not included.
@@ -332,6 +346,21 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Updates a comment.
+		/// Normal users can edit their own comments, moderators can edit all comments.
+		/// Requires login.
+		/// </summary>
+		/// <param name="commentId">ID of the comment to be edited.</param>
+		/// <param name="contract">New comment data. Only message can be edited.</param>
+		[Route("comments/{commentId:int}")]
+		[Authorize]
+		public void PostEditComment(int commentId, CommentForApiContract contract) {
+			
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
+
+		}
+
+		/// <summary>
 		/// Add or update rating for a specific song, for the currently logged in user.
 		/// If the user has already rated the song, any previous rating is replaced.
 		/// Authorization cookie must be included.
@@ -372,6 +401,20 @@ namespace VocaDb.Web.Controllers.Api {
 				return;
 
 			queries.AddSongTags(songId, tags);
+
+		}
+
+		/// <summary>
+		/// Posts a new comment.
+		/// </summary>
+		/// <param name="userId">ID of the user for whom to create the comment.</param>
+		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
+		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
+		[Route("{userId:int}/profileComments")]
+		[Authorize]
+		public CommentForApiContract PostNewComment(int userId, CommentForApiContract contract) {
+			
+			return queries.CreateComment(userId, contract.Message);
 
 		}
 

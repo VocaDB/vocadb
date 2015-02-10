@@ -557,24 +557,6 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult CreateComment(int entryId, string message) {
-
-			var comment = Data.CreateComment(entryId, message);
-
-			return LowercaseJson(comment);
-
-		}
-
-		[HttpPost]
-		[Authorize]
-		public void DeleteComment(int commentId) {
-
-			Service.DeleteComment(commentId);
-
-		}
-
-		[HttpPost]
-		[Authorize]
 		public void DeleteMessage(int messageId) {
 			messageQueries.Delete(messageId);
 		}
