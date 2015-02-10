@@ -2376,7 +2376,6 @@
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Admin\ViewAuditLog.cshtml" />
     <Content Include="Views\Artist\Create.cshtml" />
-    <Content Include="Views\Shared\Comment.cshtml" />
     <Content Include="Views\MikuDbAlbum\InspectedAlbumTrack.cshtml" />
     <Content Include="Views\User\Messages.cshtml" />
     <Content Include="Views\User\ComposeMessage.cshtml" />
