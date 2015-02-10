@@ -14,6 +14,8 @@ module vdb.viewModels {
         
         public allVersionsVisible: KnockoutObservable<boolean>;
 
+		public comments: EditableCommentsViewModel;
+
         public getUsers: () => void;
 
 		public id: number;
@@ -42,12 +44,16 @@ module vdb.viewModels {
             resources: SongDetailsResources,
 			showTranslatedDescription: boolean,
 			data: SongDetailsAjax,
+			loggedUserId: number,
+			canDeleteAllComments: boolean,
             ratingCallback: () => void ) {
             
             this.id = data.id;
             this.userRating = new PVRatingButtonsViewModel(userRepository, { id: data.id, vote: data.userRating }, ratingCallback);
 
             this.allVersionsVisible = ko.observable(false);
+
+			this.comments = new EditableCommentsViewModel(repository, this.id, loggedUserId, canDeleteAllComments, false);
 
             this.getUsers = () => {
                 repository.usersWithSongRating(this.id, result => {

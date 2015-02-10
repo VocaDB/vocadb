@@ -38,6 +38,7 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("comments/{commentId:int}")]
+		[Authorize]
 		public void DeleteComment(int commentId) {
 			
 			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));

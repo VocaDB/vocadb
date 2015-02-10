@@ -132,6 +132,7 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Details").Include(
 				"~/Scripts/soundcloud-api.js",				
+				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Models/Songs/SongType.js",
@@ -139,9 +140,12 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
+				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
+				"~/Scripts/ViewModels/CommentViewModel.js",
+				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
@@ -235,6 +239,10 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Details").Include(				
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
+				"~/Scripts/ViewModels/CommentViewModel.js",
+				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongDetailsViewModel.js",
 				"~/Scripts/Song/Details.js"
 			));

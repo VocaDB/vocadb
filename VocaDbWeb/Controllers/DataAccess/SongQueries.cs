@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -45,6 +46,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly ILanguageDetector languageDetector;
 		private readonly IUserMessageMailer mailer;
 		private readonly IPVParser pvParser;
+		private readonly IUserIconFactory userIconFactory;
 
 		private void AddTagsFromPV(VideoUrlParseResult pvResult, Song song, IRepositoryContext<Song> ctx) {
 			
@@ -152,14 +154,19 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
-			ILanguageDetector languageDetector)
+			ILanguageDetector languageDetector, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.pvParser = pvParser;
 			this.mailer = mailer;
 			this.languageDetector = languageDetector;
+			this.userIconFactory = userIconFactory;
 
+		}
+
+		public CommentQueries<SongComment> Comments(IRepositoryContext<Song> ctx) {
+			return CommentQueries.Create(ctx.OfType<SongComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public void Archive(IRepositoryContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
@@ -234,31 +241,17 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentContract CreateComment(int songId, string message) {
+		public CommentForApiContract CreateComment(int songId, CommentForApiContract contract) {
 
-			ParamIs.NotNullOrEmpty(() => message);
+			ParamIs.NotNull(() => contract);
 
-			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
+			return HandleTransaction(ctx => Comments(ctx).Create<Song>(songId, contract, (song, con, agent) => song.CreateComment(con.Message, agent)));
 
-			message = message.Trim();
+		}
 
-			return repository.HandleTransaction(ctx => {
-
-				var song = ctx.Load(songId);
-				var agent = ctx.OfType<User>().CreateAgentLoginData(PermissionContext);
-
-				ctx.AuditLogger.AuditLog(string.Format("creating comment for {0}: '{1}'",
-					entryLinkFactory.CreateEntryLink(song),
-					HttpUtility.HtmlEncode(message.Truncate(60))), agent.User);
-
-				var comment = song.CreateComment(message, agent);
-				ctx.OfType<SongComment>().Save(comment);
-
-				new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx.OfType<User>());
-
-				return new CommentContract(comment);
-
-			});
+		public CommentForApiContract[] GetComments(int songId) {
+			
+			return HandleQuery(ctx => ctx.Load(songId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
 
 		}
 

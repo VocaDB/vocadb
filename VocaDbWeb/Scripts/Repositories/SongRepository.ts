@@ -13,13 +13,31 @@ module vdb.repositories {
 
     // Repository for managing songs and related objects.
     // Corresponds to the SongController class.
-    export class SongRepository extends BaseRepository {
+    export class SongRepository extends BaseRepository implements ICommentRepository {
 
         public addSongToList: (listId: number, songId: number, newListName: string, callback?: Function) => void;
+
+		public createComment = (songId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+
+			$.post(this.urlMapper.mapRelative("/api/songs/" + songId + "/comments"), contract, callback, 'json');
+
+		}
+
+		public deleteComment = (commentId: number, callback?: () => void) => {
+
+			$.ajax(this.urlMapper.mapRelative("/api/songs/comments/" + commentId), { type: 'DELETE', success: callback });
+
+		}
 
         public findDuplicate: (params, callback: (result: dc.NewSongCheckResultContract) => void) => void;
 
         private get: (relative: string, params: any, callback: any) => void;
+
+		public getComments = (songId: number, callback: (contract: dc.CommentContract[]) => void) => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/comments"), callback);
+
+		}
 
 		public getForEdit = (id: number, callback: (result: dc.songs.SongForEditContract) => void) => {
 
@@ -94,11 +112,21 @@ module vdb.repositories {
 
         public songListsForUser: (ignoreSongId: number, callback: (result: dc.SongListBaseContract[]) => void ) => void;
 
+		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
+
+			$.post(this.urlMapper.mapRelative("/api/songs/comments/" + commentId), contract, callback, 'json');
+
+		}
+
+		private urlMapper: UrlMapper;
+
         public usersWithSongRating: (id: number, callback: (result: string) => void) => void;
 
         constructor(baseUrl: string, languagePreference = cls.globalization.ContentLanguagePreference.Default) {
 
 			super(baseUrl, languagePreference);
+
+			this.urlMapper = new UrlMapper(baseUrl);
 
             this.get = (relative, params, callback) => {
                 $.get(this.mapUrl(relative), params, callback);

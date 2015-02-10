@@ -198,25 +198,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void DeleteComment(int commentId) {
-
-			HandleTransaction(session => {
-
-				var comment = session.Load<SongComment>(commentId);
-				var user = GetLoggedUser(session);
-
-				AuditLog("deleting " + comment, session, user);
-
-				if (!user.Equals(comment.Author))
-					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
-
-				comment.Song.Comments.Remove(comment);
-				session.Delete(comment);
-
-			});
-
-		}
-
 		public void DeleteSongList(int listId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
@@ -351,19 +332,6 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				return NameHelper.MoveExactNamesToTop(names, textQuery.Query);
-
-			});
-
-		}
-
-		public CommentContract[] GetComments(int songId) {
-
-			return HandleQuery(session => {
-
-				return session.Query<SongComment>()
-					.Where(c => c.Song.Id == songId)
-					.OrderByDescending(c => c.Created)
-					.Select(c => new CommentContract(c)).ToArray();
 
 			});
 

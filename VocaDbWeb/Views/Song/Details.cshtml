@@ -116,7 +116,9 @@
 		@if (Model.Lyrics.Any()) {
 			<li><a href="#lyricsTab">@ViewRes.Song.DetailsStrings.Lyrics (@lyricsLanguages)</a></li>			
 		}
-		<li id="discussionTabLink"><a href="@Url.Action("Comments", "Song", new { id = Model.Id })" title="Discussion">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a></li>
+		<li data-tab="Discussion">
+			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
+		</li>
 		<li><a href="@Url.Action("Related", "Song", new { id = Model.Id })">@R.DetailsStrings.RelatedSongs</a></li>
 		<li><a href="#shareTab">@R.DetailsStrings.Share</a></li>
 	</ul>
@@ -367,7 +369,8 @@
 		</div>
 	 }
 	 
-	<div id="Discussion">
+	<div id="discussionTab" data-bind="with: comments">
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)
 	</div>	 
 	
 	<div id="shareTab">
@@ -434,13 +437,16 @@
 		var urlMapper = new vdb.UrlMapper(rootPath);
 		var repo = new vdb.repositories.SongRepository(rootPath, @LanguagePreferenceInt);
 		var userRepo = new vdb.repositories.UserRepository(urlMapper);
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+
 		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources, 
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)), 
-			jsonModel, vdb.ui.showThankYouForRatingMessage);
+			jsonModel, @UserContext.LoggedUserId, canDeleteAllComments, vdb.ui.showThankYouForRatingMessage);
 		ko.applyBindings(viewModel);
+
 		viewModel.songListDialog.addedToList = function() { vdb.ui.showSuccessMessage(resources.addedToList); };
 
-		initPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", "@ViewRes.EntryDetailsStrings.ConfirmDeleteComment", urlMapper);
+		initPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 	});
 
 </script>

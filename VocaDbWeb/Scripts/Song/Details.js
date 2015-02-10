@@ -1,5 +1,5 @@
 ﻿
-function initPage(jsonModel, songId, saveStr, deleteCommentStr, urlMapper) {
+function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
     $(".js-ratingButtons").buttonset();
 	$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
@@ -13,7 +13,12 @@ function initPage(jsonModel, songId, saveStr, deleteCommentStr, urlMapper) {
 
 	$("#tabs").tabs({
 		load: function (event, ui) {
-			tabLoaded(event, ui);
+			vdb.functions.disableTabReload(ui.tab);
+		},
+		activate: function (event, ui) {
+			if (ui.newTab.data('tab') === "Discussion") {
+				viewModel.comments.initComments();
+			}
 		}
 	});
 
@@ -126,51 +131,6 @@ function initPage(jsonModel, songId, saveStr, deleteCommentStr, urlMapper) {
 		});
 
 		$("#editTagsPopup").dialog("close");
-
-	}
-
-	function tabLoaded(event, ui) {
-
-		vdb.functions.disableTabReload(ui.tab);
-
-		$("#createComment").click(function () {
-
-			var message = $("#newCommentMessage").val();
-
-			if (message == "") {
-				alert("Message cannot be empty");
-				return false;
-			}
-
-			$("#newCommentMessage").val("");
-
-			$.post(urlMapper.mapRelative("/Song/CreateComment"), { songId: songId, message: message }, function (result) {
-
-				$("#newCommentPanel").after(result);
-
-			});
-
-			return false;
-
-		});
-
-		$(document).on("click", "a.deleteComment", function () {
-
-			if (!confirm(deleteCommentStr))
-				return false;
-
-			var btn = this;
-			var id = getId(this);
-
-			$.post(urlMapper.mapRelative("/Song/DeleteComment"), { commentId: id }, function () {
-
-				$(btn).parent().parent().parent().parent().remove();
-
-			});
-
-			return false;
-
-		});
 
 	}
 

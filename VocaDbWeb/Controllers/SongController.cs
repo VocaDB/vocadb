@@ -74,33 +74,10 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public PartialViewResult Comments(int id = invalidId) {
-
-			var comments = Service.GetComments(id);
-			return PartialView("DiscussionContent", comments);
-
-		}
-
-		[HttpPost]
-		public PartialViewResult CreateComment(int songId, string message) {
-
-			var comment = queries.CreateComment(songId, message);
-
-			return PartialView("Comment", comment);
-
-		}
-
 		[HttpPost]
 		public void CreateReport(int songId, SongReportType reportType, string notes) {
 
 			Service.CreateReport(songId, reportType, CfHelper.GetRealIp(Request), notes ?? string.Empty);
-
-		}
-
-		[HttpPost]
-		public void DeleteComment(int commentId) {
-
-			Service.DeleteComment(commentId);
 
 		}
 
