@@ -348,19 +348,9 @@
 </div>
 
 <div data-bind="visible: view() == 'Comments'" class="well well-transparent">
-	
-	@if (Login.CanManageDb) {
-		<div>
-			<textarea data-bind="textInput: newComment" rows="6" cols="60" maxlength="800" class="span5" placeholder="@ViewRes.DiscussionContentStrings.NewComment"></textarea>
-			<a data-bind="click: createComment" href="#" class="textLink addLink">@ViewRes.DiscussionContentStrings.AddComment</a>
-			<hr />
-		</div>
-	}
-
-	<div data-bind="foreach: comments">
-		@{ Html.RenderPartial("Partials/_CommentBody"); }
-	</div>
-	
+	<div data-bind="with: comments">
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)	
+	</div>	
 </div>
 
 @if (Login.CanManageUsers) {

@@ -40,7 +40,7 @@ module vdb.viewModels {
 
             this.downloadTagsDialog = new DownloadTagsViewModel(id, formatString);
 			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
-			this.comments = new EditableCommentsViewModel(repo, id, loggedUserId, canDeleteAllComments, false);
+			this.comments = new EditableCommentsViewModel(repo, id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
 
         }
 

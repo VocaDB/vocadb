@@ -352,7 +352,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be edited.</param>
 		/// <param name="contract">New comment data. Only message can be edited.</param>
-		[Route("comments/{commentId:int}")]
+		[Route("profileComments/{commentId:int}")]
 		[Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) {
 			

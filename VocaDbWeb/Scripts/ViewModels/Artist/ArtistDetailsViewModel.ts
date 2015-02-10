@@ -29,7 +29,7 @@ module vdb.viewModels {
 			this.showTranslatedDescription = ko.observable((hasEnglishDescription
 				&& (languagePreference === cls.globalization.ContentLanguagePreference.English || languagePreference === cls.globalization.ContentLanguagePreference.Romaji)));
 
-			this.comments = new EditableCommentsViewModel(repo, artistId, loggedUserId, canDeleteAllComments, false);
+			this.comments = new EditableCommentsViewModel(repo, artistId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
 
 		}
 

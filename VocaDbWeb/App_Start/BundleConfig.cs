@@ -332,6 +332,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
+				"~/Scripts/ViewModels/CommentViewModel.js",
+				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",

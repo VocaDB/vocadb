@@ -44,6 +44,9 @@ namespace VocaDb.Model.Domain.Security {
 			if (!permissionContext.HasPermission(PermissionToken.CreateComments))
 				return false;
 
+			if (permissionContext.HasPermission(PermissionToken.DeleteComments))
+				return true;
+
 			return (comment.Author != null && comment.Author.IsTheSameUser(permissionContext.LoggedUser));
 
 		}
@@ -53,7 +56,8 @@ namespace VocaDb.Model.Domain.Security {
 			if (!permissionContext.HasPermission(PermissionToken.CreateComments))
 				return false;
 
-			// TODO: admins should be able to edit all topics, even locked
+			if (permissionContext.HasPermission(PermissionToken.DeleteComments))
+				return true;
 
 			return (topic.Author != null && topic.Author.IsTheSameUser(permissionContext.LoggedUser));
 

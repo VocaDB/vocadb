@@ -60,7 +60,7 @@ module vdb.repositories {
 				userId: userId
 			};
 
-			$.getJSON(url, data, callback);
+			$.getJSON(url, data, result => callback(result.items));
 
 		};
 

@@ -21,31 +21,7 @@ module vdb.viewModels.user {
 
 		};
 
-		public createComment = () => {
-
-			var comment = this.newComment();
-
-			if (!comment)
-				return;
-
-			this.newComment("");
-
-			var contract = { message: comment, author: { id: this.userId } };
-			this.userRepo.createComment(this.userId, contract, (result: dc.CommentContract) => {
-				this.processComment(result);
-				this.comments.unshift(result);
-			});
-
-
-		}
-
-		public deleteComment = (profileComment: dc.CommentContract) => {
-
-			this.userRepo.deleteComment(profileComment.id, () => {
-				this.comments.remove(profileComment);
-			});
-
-		};
+		public comments: EditableCommentsViewModel;
 
 		public getRatingsByGenre = (callback: (data: HighchartsOptions) => void) => {
 
@@ -58,21 +34,10 @@ module vdb.viewModels.user {
 
 		public initComments = () => {
 
-			if (this.comments().length)
-				return;
-
-			this.userRepo.getComments(this.userId, (result: dc.PartialFindResultContract<dc.CommentContract>) => {
-
-				_.forEach(result.items, this.processComment);
-
-				this.comments(result.items);
-
-			});
+			this.comments.initComments();
 
 		};
 
-		public comments = ko.observableArray<dc.CommentContract>();
-		public newComment = ko.observable("");
 		public view = ko.observable(UserDetailsViewModel.overview);
 
 		private initializeView = (viewName: string) => {
@@ -92,12 +57,6 @@ module vdb.viewModels.user {
 					break;
 			}
 			
-		}
-
-		private processComment = (comment: dc.CommentContract) => {
-
-			comment.canBeDeleted = (this.canDeleteComments || this.userId == this.loggedUserId || (comment.author && comment.author.id == this.loggedUserId));
-
 		}
 
 		public setView = (viewName: string) => {
@@ -123,13 +82,17 @@ module vdb.viewModels.user {
 		constructor(
 			private userId: number,
 			private loggedUserId: number,
-			private canDeleteComments: boolean,
+			private canEditAllComments: boolean,
 			private urlMapper: UrlMapper,
 			private userRepo: rep.UserRepository,
 			private adminRepo: rep.AdminRepository,
 			public followedArtistsViewModel: FollowedArtistsViewModel,
 			public albumCollectionViewModel: AlbumCollectionViewModel,
 			public ratedSongsViewModel: RatedSongsSearchViewModel) {
+
+			var canDeleteAllComments = (userId === loggedUserId);
+
+			this.comments = new EditableCommentsViewModel(userRepo, userId, loggedUserId, canDeleteAllComments, canEditAllComments, false);
 
 			window.onhashchange = () => {
 				if (window.location.hash && window.location.hash.length >= 1)

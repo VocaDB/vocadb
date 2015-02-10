@@ -12,6 +12,7 @@ module vdb.viewModels {
 			private entryId: number,
 			private loggedUserId: number,
 			private canDeleteAllComments: boolean,
+			private canEditAllComments: boolean,
 			private ascending: boolean,
 			commentContracts?: dc.CommentContract[]) {
 			
@@ -35,8 +36,13 @@ module vdb.viewModels {
 			this.editCommentModel(null);
 		}
 
-		private canEditOrDeleteComment = (comment: dc.CommentContract) => {
-			return (this.canDeleteAllComments || (comment.author && comment.author.id === this.loggedUserId));
+		private canDeleteComment = (comment: dc.CommentContract) => {
+			// If one can edit they can also delete
+			return (this.canDeleteAllComments || this.canEditAllComments || (comment.author && comment.author.id === this.loggedUserId));
+		}
+
+		private canEditComment = (comment: dc.CommentContract) => {
+			return (this.canEditAllComments || (comment.author && comment.author.id === this.loggedUserId));
 		}
 			
 		public comments: KnockoutObservableArray<CommentViewModel>;
@@ -97,7 +103,7 @@ module vdb.viewModels {
 
 		private processComment = (contract: dc.CommentContract) => {
 
-			return new CommentViewModel(contract, this.canEditOrDeleteComment(contract), this.canEditOrDeleteComment(contract));
+			return new CommentViewModel(contract, this.canDeleteComment(contract), this.canEditComment(contract));
 
 		}
 

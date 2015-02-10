@@ -53,7 +53,7 @@ module vdb.viewModels {
 
             this.allVersionsVisible = ko.observable(false);
 
-			this.comments = new EditableCommentsViewModel(repository, this.id, loggedUserId, canDeleteAllComments, false);
+			this.comments = new EditableCommentsViewModel(repository, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
 
             this.getUsers = () => {
                 repository.usersWithSongRating(this.id, result => {
