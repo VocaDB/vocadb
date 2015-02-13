@@ -11,7 +11,7 @@ namespace VocaDb.Model.Mapping.Users {
 			Id(m => m.Id);
 
 			Map(m => m.Created).Not.Nullable();
-			Map(m => m.Message).Length(800).Not.Nullable();
+			Map(m => m.Message).Length(4000).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();
 			References(m => m.User).Not.Nullable();

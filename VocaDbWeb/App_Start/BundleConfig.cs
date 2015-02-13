@@ -13,7 +13,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/knockout-{version}.js",
 				"~/Scripts/knockout.punches.min.js",
 				"~/Scripts/lodash.js", 
-				"~/Scripts/jquery.qtip.js"
+				"~/Scripts/jquery.qtip.js",
+				"~/Scripts/marked.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/shared/jqui").Include(
@@ -41,6 +42,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/jqButton.js",
 				"~/Scripts/KnockoutExtensions/jqButtonset.js",
 				"~/Scripts/KnockoutExtensions/StopBinding.js",
+				"~/Scripts/KnockoutExtensions/Markdown.js",
 				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",
 				"~/Scripts/Models/SongVoteRating.js",				// Referred by UserRepository
@@ -63,7 +65,6 @@ namespace VocaDb.Web.App_Start {
 			// Included on all entry edit and create pages (album, artist, my settings etc.)
 			bundles.Add(new ScriptBundle("~/bundles/shared/edit").Include(
 				"~/Scripts/knockout-sortable.js",
-				"~/Scripts/marked.js",
 				"~/Scripts/Models/WebLinkCategory.js",
 				"~/Scripts/Shared/WebLinkMatcher.js",
 				"~/Scripts/ViewModels/WebLinkEditViewModel.js",
@@ -73,7 +74,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/SongAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/FocusOut.js",
 				"~/Scripts/KnockoutExtensions/qTip.js",
-				"~/Scripts/KnockoutExtensions/Markdown.js",
 				"~/Scripts/KnockoutExtensions/InitialValue.js"
 			));
 
@@ -181,12 +181,10 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Discussion/Index").Include(
-				"~/Scripts/marked.js",
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/page.js",
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-				"~/Scripts/KnockoutExtensions/Markdown.js",
 				"~/Scripts/Repositories/DiscussionRepository.js",
 				"~/Scripts/ViewModels/CommentViewModel.js",
 				"~/Scripts/ViewModels/EditableCommentsViewModel.js",

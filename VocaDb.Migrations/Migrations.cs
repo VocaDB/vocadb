@@ -3,6 +3,37 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201502131812)]
+	public class ExtendCommentTextLength : Migration {
+
+		private readonly string[] tables = { "AlbumComments", "ArtistComments", "SongComments", "UserComments" };
+
+		public override void Up() {
+
+			foreach (var table in tables) {
+	
+				Alter.Column("Message").OnTable(table).AsString(4000);
+			
+			}
+
+			Alter.Column("Message").OnTable("DiscussionComments").InSchema("discussions").AsString(4000);
+
+		}
+
+		public override void Down() {
+
+			foreach (var table in tables) {
+	
+				Alter.Column("Message").OnTable(table).AsString(800);
+			
+			}
+
+			Alter.Column("Message").OnTable("DiscussionComments").InSchema("discussions").AsString(800);
+
+		}
+
+	}
+
 	[Migration(201501271800)]
 	public class AddDiscussionFolders : AutoReversingMigration {
 
