@@ -186,6 +186,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			VerifyManageDatabase();
 
+			var diff = new ArtistDiff { Names = true };
+
 			return repository.HandleTransaction(ctx => {
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new artist with name '{0}'", contract.Names.First().Value));
@@ -200,6 +202,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				if (contract.WebLink != null) {
 					artist.CreateWebLink(contract.WebLink.Description, contract.WebLink.Url, contract.WebLink.Category);
+					diff.WebLinks = true;
 				}
 
 				ctx.Save(artist);
@@ -216,9 +219,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					var thumbGenerator = new ImageThumbGenerator(imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 
+					diff.Picture = true;
+
 				}
 
-				Archive(ctx, artist, ArtistArchiveReason.Created);
+				Archive(ctx, artist, diff, ArtistArchiveReason.Created);
 				ctx.Update(artist);
 
 				ctx.AuditLogger.AuditLog(string.Format("created artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), artist.ArtistType));
