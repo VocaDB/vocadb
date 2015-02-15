@@ -459,7 +459,7 @@ namespace VocaDb.Model.Service {
 
 				artist.ArtistType = fullProperties.ArtistType;
 				artist.Description.Original = fullProperties.Description;
-				artist.Description.English = fullProperties.DescriptionEng;
+				artist.Description.English = fullProperties.DescriptionEng ?? string.Empty;
 				artist.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 				artist.BaseVoicebank = SessionHelper.RestoreWeakRootEntityRef<Artist>(session, warnings, fullProperties.BaseVoicebank);
 

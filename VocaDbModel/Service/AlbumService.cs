@@ -604,7 +604,7 @@ namespace VocaDb.Model.Service {
 				var warnings = new List<string>();
 
 				album.Description.Original = fullProperties.Description;
-				album.Description.English = fullProperties.DescriptionEng;
+				album.Description.English = fullProperties.DescriptionEng ?? string.Empty;
 				album.DiscType = fullProperties.DiscType;
 				album.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 

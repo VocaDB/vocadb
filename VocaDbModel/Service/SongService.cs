@@ -710,7 +710,7 @@ namespace VocaDb.Model.Service {
 				song.LengthSeconds = fullProperties.LengthSeconds;
 				song.NicoId = fullProperties.NicoId;
 				song.Notes.Original = fullProperties.Notes;
-				song.Notes.English = fullProperties.NotesEng;
+				song.Notes.English = fullProperties.NotesEng ?? string.Empty;
 				song.SongType = fullProperties.SongType;
 				song.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 
