@@ -46,7 +46,9 @@
 			<h3 class="media-heading comment-large-header">
 				@UserHelpers.UserLink(contract.Author)
 				<small class="extraInfo pull-right">
-					@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
+					<span title="@contract.Created.ToUniversalTime().ToString("g") UTC">
+						@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
+					</span>					
 					@if (alwaysAllowDelete || (allowDelete && Login.CanDeleteComment(contract))) {
 						@Html.Raw("&nbsp;&nbsp;");
 						<a href="#" id="deleteComment_@(contract.Id)" class="deleteComment textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
