@@ -44,7 +44,7 @@ namespace VocaDb.Web.Models.Artist {
 		public void CheckModel() {
 			
 			if (EditedArtist == null)
-				return;
+				throw new InvalidFormException("Model was null");
 
 			if (EditedArtist.Names == null)
 				throw new InvalidFormException("Names list was null"); // Shouldn't be null

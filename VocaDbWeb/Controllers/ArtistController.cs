@@ -229,6 +229,12 @@ namespace VocaDb.Web.Controllers
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");				
 			}
 
+			try {
+				viewModel.CheckModel();
+			} catch (InvalidFormException x) {
+				AddFormSubmissionError(x.Message);
+			}
+
 			var model = viewModel.EditedArtist;
 
 			// Note: name is allowed to be whitespace, but not empty.
@@ -240,12 +246,6 @@ namespace VocaDb.Web.Controllers
 			var pictureData = ParsePicture(coverPicUpload, "Picture");
 
 			ParseAdditionalPictures(coverPicUpload, model.Pictures);
-
-			try {
-				viewModel.CheckModel();
-			} catch (InvalidFormException x) {
-				AddFormSubmissionError(x.Message);
-			}
 
 			if (!ModelState.IsValid) {
 				return View("Edit", new ArtistEditViewModel(Service.GetArtist(model.Id), PermissionContext, model));

@@ -192,6 +192,12 @@ namespace VocaDb.Web.Controllers
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");				
 			}
 
+			try {
+				viewModel.CheckModel();
+			} catch (InvalidFormException x) {
+				AddFormSubmissionError(x.Message);
+			}
+
 			var model = viewModel.EditedSong;
 
 			// Note: name is allowed to be whitespace, but not empty.
@@ -201,12 +207,6 @@ namespace VocaDb.Web.Controllers
 
 			if (model.Lyrics.Any(n => string.IsNullOrEmpty(n.Value))) {
 				ModelState.AddModelError("Lyrics", "Lyrics cannot be empty");				
-			}
-
-			try {
-				viewModel.CheckModel();
-			} catch (InvalidFormException x) {
-				AddFormSubmissionError(x.Message);
 			}
 
 			if (!ModelState.IsValid) {
