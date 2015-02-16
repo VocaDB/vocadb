@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts {
 
 			Author = comment.Author != null ? new UserWithIconContract(comment.Author, iconFactory) : null;
 			AuthorName = comment.AuthorName;
-			Created = comment.Created;
+			Created = comment.Created.ToUniversalTime();
 			Id = comment.Id;
 			Message = (includeMessage ? comment.Message : null);
 
@@ -28,6 +28,9 @@ namespace VocaDb.Model.DataContracts {
 		[DataMember]
 		public string AuthorName { get; set; }
 
+		/// <summary>
+		/// Comment creation date in UTC.
+		/// </summary>
 		[DataMember]
 		public DateTime Created { get; set; }
 

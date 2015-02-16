@@ -17,7 +17,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 			ParamIs.NotNull(() => topic);
 
 			Author = new UserWithIconContract(topic.Author, userIconFactory);
-			Created = topic.Created;
+			Created = topic.Created.ToUniversalTime();
 			FolderId = topic.Folder.Id;
 			Id = topic.Id;
 			Name = topic.Name;
@@ -53,6 +53,9 @@ namespace VocaDb.Model.DataContracts.Discussions {
 		[DataMember]
 		public string Content { get; set; }
 
+		/// <summary>
+		/// Date and time when this topic was posted, in UTC.
+		/// </summary>
 		[DataMember]
 		public DateTime Created { get; set; }
 
