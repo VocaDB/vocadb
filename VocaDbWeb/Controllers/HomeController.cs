@@ -51,6 +51,7 @@ namespace VocaDb.Web.Controllers
         public ActionResult Index() {
 
 			PageProperties.Description = brandableStringsManager.Home.SiteDescription;
+			PageProperties.AddMainScripts = false;
 
 			var contract = otherService.GetFrontPageContent(WebHelper.IsSSL(Request));
 

@@ -7,7 +7,7 @@ namespace VocaDb.Web.App_Start {
 		public static void RegisterBundles(BundleCollection bundles) {
 
 			bundles.Add(new ScriptBundle("~/bundles/shared/libs").Include(
-				"~/Scripts/jquery-1.8.2.js", 
+				"~/Scripts/jquery-{version}.js", 
 				"~/Scripts/bootstrap.js",
 				//"~/Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
 				"~/Scripts/knockout-{version}.js",
@@ -18,21 +18,29 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/shared/jqui").Include(
-				"~/Scripts/jquery-ui-1.10.4.js"
+				"~/Scripts/jquery-ui-{version}.js"
 			));
 
 			// SHARED BUNDLES
 			// Legacy common scripts - should be phased out
 			bundles.Add(new ScriptBundle("~/bundles/VocaDB").Include("~/Scripts/VocaDB.js"));
 
-			// Included on every page
+			// Included on all pages
 			// Generally the references go from viewmodels -> repositories -> models -> support classes
 			bundles.Add(new ScriptBundle("~/bundles/shared/common").Include(
-				"~/Scripts/Helpers/HtmlHelper.js", 
 				"~/Scripts/Shared/TopBar.js", 
 				"~/Scripts/Shared/Messages.js",
 				"~/Scripts/Shared/GlobalFunctions.js",
 				"~/Scripts/Shared/UrlMapper.js",
+				"~/Scripts/KnockoutExtensions/StopBinding.js",
+				"~/Scripts/Repositories/EntryReportRepository.js",
+				"~/Scripts/Repositories/UserRepository.js",
+				"~/Scripts/ViewModels/TopBarViewModel.js"
+			));
+
+			// Included on all pages except the front page (to optimize front page load time).
+			bundles.Add(new ScriptBundle("~/bundles/shared/main").Include(
+				"~/Scripts/Helpers/HtmlHelper.js", 
 				"~/Scripts/Shared/EntryUrlMapper.js",
 				"~/Scripts/Shared/ReportEntryPopup.js",
 				"~/Scripts/Shared/EntryAutoComplete.js",
@@ -41,7 +49,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/EntryToolTip.js",
 				"~/Scripts/KnockoutExtensions/jqButton.js",
 				"~/Scripts/KnockoutExtensions/jqButtonset.js",
-				"~/Scripts/KnockoutExtensions/StopBinding.js",
 				"~/Scripts/KnockoutExtensions/Markdown.js",
 				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",
@@ -53,11 +60,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/BaseRepository.js",
 				"~/Scripts/Repositories/RepositoryFactory.js",
 				"~/Scripts/Repositories/AdminRepository.js",
-				"~/Scripts/Repositories/EntryReportRepository.js",
-				"~/Scripts/Repositories/UserRepository.js",
 				"~/Scripts/Repositories/SongRepository.js",
 				"~/Scripts/Repositories/ArtistRepository.js",
-				"~/Scripts/ViewModels/TopBarViewModel.js",
 				"~/Scripts/ViewModels/ServerSidePagingViewModel.js",
 				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js"
 			));
@@ -75,6 +79,12 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/FocusOut.js",
 				"~/Scripts/KnockoutExtensions/qTip.js",
 				"~/Scripts/KnockoutExtensions/InitialValue.js"
+			));
+
+			bundles.Add(new ScriptBundle("~/bundles/Home/Index").Include(
+				"~/Scripts/jquery.tools.min.js",
+				"~/Scripts/ViewModels/NewsListViewModel.js",
+				"~/Scripts/Home/Index.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/jqxRating").Include(
@@ -190,11 +200,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionTopicViewModel.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
-			));
-
-			bundles.Add(new ScriptBundle("~/bundles/Home/Index").Include(
-				"~/Scripts/ViewModels/NewsListViewModel.js",
-				"~/Scripts/Home/Index.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Search/Index").Include(

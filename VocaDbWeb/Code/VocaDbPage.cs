@@ -82,6 +82,12 @@ namespace VocaDb.Web.Code {
 			}
 		}
 
+		public PagePropertiesData PageProperties {
+			get {
+				return PagePropertiesData.Get(ViewBag);
+			}
+		}
+
 		public string RootPath {
 			get { return Url.Content("~/"); }
 		}

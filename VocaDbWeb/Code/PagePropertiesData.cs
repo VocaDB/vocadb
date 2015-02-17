@@ -13,6 +13,15 @@ namespace VocaDb.Web.Code {
 
 		}
 
+		public PagePropertiesData() {
+			AddMainScripts = true;
+		}
+
+		/// <summary>
+		/// Include main scripts (on most pages except the front page).
+		/// </summary>
+		public bool AddMainScripts { get; set; }
+
 		/// <summary>
 		/// Description appears in both the description meta field and og:description (for Facebook).
 		/// </summary>

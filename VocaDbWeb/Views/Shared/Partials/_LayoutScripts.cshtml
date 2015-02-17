@@ -10,6 +10,10 @@
 <!-- Common scripts -->
 @Scripts.Render("~/bundles/shared/libs", "~/bundles/shared/jqui", "~/bundles/VocaDB", "~/bundles/shared/common")
 
+@if (PageProperties.AddMainScripts) {
+	@Scripts.Render("~/bundles/shared/main")
+}
+
 <script type="text/javascript">
             
     var baseAddress = '@Url.Content("~/")';

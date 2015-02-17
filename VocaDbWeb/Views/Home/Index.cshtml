@@ -89,11 +89,10 @@
             thanksForRating: '@Html.Raw(AjaxRes.SongStrings.ThanksForRating)'
         };
     </script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tools.min.js")"></script>
 	@Scripts.Render("~/bundles/Home/Index")
 
     <script type="text/javascript">
-    	$(document).ready(function () {
+    	$(function () {
 
     		var viewModel = new vdb.viewModels.NewsListViewModel('@Config.SiteSettings.BlogUrl');
     		ko.applyBindings(viewModel);

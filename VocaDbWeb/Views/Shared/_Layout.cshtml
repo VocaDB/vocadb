@@ -11,10 +11,6 @@
 
 @functions {
 
-	PagePropertiesData PageProperties {
-		get { return PagePropertiesData.Get(ViewBag); }
-	}
-
 	string PageTitle {
 		get {
 			if (!string.IsNullOrEmpty(ViewBag.PageTitle))
