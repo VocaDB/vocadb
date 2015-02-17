@@ -44,10 +44,6 @@ namespace VocaDb.Model.Domain.Activityfeed {
 		public AlbumActivityEntry(Album album, EntryEditEvent editEvent, User author)
 			: base(album, editEvent, author) { }
 
-		public override void Accept(IActivityEntryVisitor visitor) {
-			visitor.Visit(this);
-		}
-
 	}
 
 	public class ArtistActivityEntry : GenericActivityEntry<Artist> {
@@ -57,10 +53,6 @@ namespace VocaDb.Model.Domain.Activityfeed {
 		public ArtistActivityEntry(Artist artist, EntryEditEvent editEvent, User author)
 			: base(artist, editEvent, author) { }
 
-		public override void Accept(IActivityEntryVisitor visitor) {
-			visitor.Visit(this);
-		}
-
 	}
 
 	public class SongActivityEntry : GenericActivityEntry<Song> {
@@ -69,10 +61,6 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 		public SongActivityEntry(Song song, EntryEditEvent editEvent, User author)
 			: base(song, editEvent, author) { }
-
-		public override void Accept(IActivityEntryVisitor visitor) {
-			visitor.Visit(this);
-		}
 
 	}
 

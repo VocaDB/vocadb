@@ -107,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContracts\Activityfeed\ActivityEntryContract.cs" />
-    <Content Include="DataContracts\Activityfeed\ActivityEntryContractFactory.cs" />
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumReleaseContract.cs" />
@@ -276,8 +275,6 @@
     <Compile Include="Domain\Activityfeed\ActivityEntry.cs" />
     <Content Include="Domain\Activityfeed\EntryEditedEntry.cs" />
     <Compile Include="Domain\Activityfeed\GenericActivityEntry.cs" />
-    <Compile Include="Domain\Activityfeed\IActivityEntryVisitor.cs" />
-    <Content Include="Domain\Activityfeed\PlaintextEntry.cs" />
     <Compile Include="Domain\Albums\AlbumArchiveReason.cs" />
     <Compile Include="Domain\Albums\AlbumDiff.cs" />
     <Compile Include="Domain\Albums\AlbumEditableFields.cs" />

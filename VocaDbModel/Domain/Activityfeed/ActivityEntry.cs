@@ -1,6 +1,5 @@
 ﻿using System;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Domain.Activityfeed {
 
@@ -37,8 +36,6 @@ namespace VocaDb.Model.Domain.Activityfeed {
 		public abstract EntryType EntryType { get; }
 
 		public virtual int Id { get; set; }
-
-		public abstract void Accept(IActivityEntryVisitor visitor);
 
 		public virtual bool IsDuplicate(ActivityEntry entry) {
 			return (Author.Equals(entry.Author) && EntryBase.Equals(entry.EntryBase));
