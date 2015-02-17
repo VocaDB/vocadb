@@ -152,6 +152,22 @@ namespace VocaDb.Model.Service {
 
 		}
 
+		private EntryWithCommentsContract[] GetRecentComments(ISession session, bool ssl) {
+			
+			var cacheKey = string.Format("OtherService.RecentComments.{0}.{1}", LanguagePreference, ssl);
+			var cache = MemoryCache.Default;
+			var item = (EntryWithCommentsContract[])cache.Get(cacheKey);
+
+			if (item != null)
+				return item;
+
+			item = GetRecentComments(session, 8, ssl);
+			cache.Add(cacheKey, item, DateTime.Now + TimeSpan.FromMinutes(30));
+
+			return item;
+
+		}
+
 		private Song[] GetHighlightedSongs(ISession session) {
 
 			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
@@ -417,7 +433,7 @@ namespace VocaDb.Model.Service {
 
 				var firstSongVote = (newSongs.Any() ? session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
-				var recentComments = GetRecentComments(session, 8, ssl);
+				var recentComments = GetRecentComments(session, ssl);
 
 				return new FrontPageContract(activityEntries, newAlbums, recentComments, topAlbums, newSongs, 
 					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference);
