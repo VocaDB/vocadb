@@ -671,32 +671,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public TagUsageContract[] SaveTags(int albumId, string[] tags) {
-
-			ParamIs.NotNull(() => tags);
-
-			VerifyManageDatabase();
-
-			return HandleTransaction(session => {
-
-				tags = tags.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray();
-
-				var user = session.Load<User>(PermissionContext.LoggedUser.Id);
-				var album = session.Load<Album>(albumId);
-
-				AuditLog(string.Format("tagging {0} with {1}", 
-					EntryLinkFactory.CreateEntryLink(album), string.Join(", ", tags)), session, user);
-
-				var existingTags = TagHelpers.GetTags(session, tags);
-
-				album.Tags.SyncVotes(user, tags, existingTags, new TagFactory(session, new AgentLoginData(user)), new AlbumTagUsageFactory(session, album));
-
-				return album.Tags.Usages.OrderByDescending(u => u.Count).Select(t => new TagUsageContract(t)).ToArray();
-
-			});
-
-		}
-
 		public void UpdateAllReleaseEventNames(string old, string newName) {
 
 			ParamIs.NotNullOrWhiteSpace(() => old);
@@ -763,27 +737,6 @@ namespace VocaDb.Model.Service {
 				session.Update(album);
 
 			});
-
-		}
-
-	}
-
-	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage> {
-
-		private readonly Album album;
-		private readonly ISession session;
-
-		public AlbumTagUsageFactory(ISession session, Album album) {
-			this.session = session;
-			this.album = album;
-		}
-
-		public AlbumTagUsage CreateTagUsage(Tag tag) {
-
-			var usage = new AlbumTagUsage(album, tag);
-			session.Save(usage);
-
-			return usage;
 
 		}
 

@@ -661,6 +661,7 @@
     <Compile Include="Service\Queries\PreviousAndNextAlbumsQuery.cs" />
     <Compile Include="Service\Queries\RelatedAlbumsQuery.cs" />
     <Compile Include="Service\Queries\RelatedSongsQuery.cs" />
+    <Compile Include="Service\Queries\TagUsageQueries.cs" />
     <Compile Include="Service\QueryableExtenders\QueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\QueryableForAlbumLinkExtender.cs" />
     <Compile Include="Service\QueryableExtenders\QueryableForArtistLinkExtender.cs" />

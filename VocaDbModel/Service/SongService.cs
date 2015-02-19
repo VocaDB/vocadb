@@ -787,32 +787,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public TagUsageContract[] SaveTags(int songId, string[] tags) {
-
-			ParamIs.NotNull(() => tags);
-
-			VerifyManageDatabase();
-
-			return HandleTransaction(session => {
-
-				tags = tags.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray();
-
-				var user = session.Load<User>(PermissionContext.LoggedUser.Id);
-				var song = session.Load<Song>(songId);
-
-				AuditLog(string.Format("tagging {0} with {1}",
-					EntryLinkFactory.CreateEntryLink(song), string.Join(", ", tags)), session, user);
-
-				var existingTags = TagHelpers.GetTags(session, tags);
-
-				song.Tags.SyncVotes(user, tags, existingTags, new TagFactory(session, new AgentLoginData(user)), new SongTagUsageFactory(session, song));
-
-				return song.Tags.Usages.OrderByDescending(u => u.Count).Select(t => new TagUsageContract(t)).ToArray();
-
-			});
-
-		}
-
 		public SongDetailsContract XGetSongByNameArtistAndAlbum(string name, string artist, string album) {
 
 			return HandleQuery(session => {
@@ -874,48 +848,6 @@ namespace VocaDb.Model.Service {
 				return null;
 
 			});
-
-		}
-
-	}
-
-	public class SongTagUsageFactory : ITagUsageFactory<SongTagUsage> {
-
-		private readonly Song song;
-		private readonly ISession session;
-
-		public SongTagUsageFactory(ISession session, Song song) {
-			this.session = session;
-			this.song = song;
-		}
-
-		public SongTagUsage CreateTagUsage(Tag tag) {
-
-			var usage = new SongTagUsage(song, tag);
-			session.Save(usage);
-
-			return usage;
-
-		}
-
-	}
-
-	public class SongTagUsageFactoryRepository : ITagUsageFactory<SongTagUsage> {
-
-		private readonly Song song;
-		private readonly IRepositoryContext<SongTagUsage> session;
-
-		public SongTagUsageFactoryRepository(IRepositoryContext<SongTagUsage> session, Song song) {
-			this.session = session;
-			this.song = song;
-		}
-
-		public SongTagUsage CreateTagUsage(Tag tag) {
-
-			var usage = new SongTagUsage(song, tag);
-			session.Save(usage);
-
-			return usage;
 
 		}
 

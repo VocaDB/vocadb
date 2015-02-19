@@ -24,10 +24,12 @@ namespace VocaDb.Web.Controllers
 
 		private readonly ArtistQueries queries;
 		private readonly ArtistService service;
+		private readonly UserQueries userQueries;
 
-		public ArtistController(ArtistService service, ArtistQueries queries) {
+		public ArtistController(ArtistService service, ArtistQueries queries, UserQueries userQueries) {
 			this.service = service;
 			this.queries = queries;
+			this.userQueries = userQueries;
 		}
 
     	private ArtistService Service {
@@ -112,7 +114,7 @@ namespace VocaDb.Web.Controllers
 
 			string[] tagNameParts = (tagNames != null ? tagNames.Split(',').Where(s => s != string.Empty).ToArray() : new string[] { });
 
-			var tagUsages = Service.SaveTags(artistId, tagNameParts);
+			var tagUsages = userQueries.SaveArtistTags(artistId, tagNameParts, false).OrderByDescending(u => u.Count).ToArray();
 
 			return PartialView("TagList", tagUsages);
 

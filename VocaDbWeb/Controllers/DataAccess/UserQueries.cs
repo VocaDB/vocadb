@@ -12,6 +12,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -269,31 +270,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public CommentQueries<UserComment> Comments(IRepositoryContext<User> ctx) {
 			return CommentQueries.Create(ctx.OfType<UserComment>(), PermissionContext, userIconFactory, entryLinkFactory);
-		}
-
-		public void AddSongTags(int songId, string[] tags) {
-			
-			ParamIs.NotNull(() => tags);
-
-			VerifyManageDatabase();
-
-			repository.HandleTransaction(ctx => {
-				
-				tags = tags.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray();
-
-				var user = ctx.GetLoggedUser(PermissionContext);
-				var song = ctx.OfType<Song>().Load(songId);
-
-				ctx.AuditLogger.AuditLog(string.Format("appending {0} with {1}",
-					entryLinkFactory.CreateEntryLink(song), string.Join(", ", tags)), user);
-
-				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
-				var existingTags = TagHelpers.GetTags(ctx.OfType<Tag>(), tags);
-
-				song.Tags.SyncVotes(user, tags, existingTags, tagFactory, new SongTagUsageFactoryRepository(ctx.OfType<SongTagUsage>(), song), onlyAdd: true);
-
-			});
-
 		}
 
 		/// <summary>
@@ -1004,6 +980,33 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public TagUsageContract[] SaveAlbumTags(int albumId, string[] tags, bool onlyAdd) {
+			
+			return new TagUsageQueries().AddTags<Album, AlbumTagUsage>(
+				albumId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
+				album => album.Tags, 
+				(album, ctx) => new AlbumTagUsageFactory(ctx, album));
+
+		}
+
+		public TagUsageContract[] SaveArtistTags(int artistId, string[] tags, bool onlyAdd) {
+			
+			return new TagUsageQueries().AddTags<Artist, ArtistTagUsage>(
+				artistId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
+				artist => artist.Tags, 
+				(artist, ctx) => new ArtistTagUsageFactory(ctx, artist));
+
+		}
+
+		public TagUsageContract[] SaveSongTags(int songId, string[] tags, bool onlyAdd) {
+			
+			return new TagUsageQueries().AddTags<Song, SongTagUsage>(
+				songId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
+				song => song.Tags, 
+				(song, ctx) => new SongTagUsageFactory(ctx, song));
+
+		}
+
 		public void SetAlbumFormatString(string formatString) {
 
 			if (!PermissionContext.IsLoggedIn)
@@ -1238,6 +1241,69 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return true;
 
 			});
+
+		}
+
+	}
+
+	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage> {
+
+		private readonly Album album;
+		private readonly IRepositoryContext<AlbumTagUsage> session;
+
+		public AlbumTagUsageFactory(IRepositoryContext<AlbumTagUsage> session, Album album) {
+			this.session = session;
+			this.album = album;
+		}
+
+		public AlbumTagUsage CreateTagUsage(Tag tag) {
+
+			var usage = new AlbumTagUsage(album, tag);
+			session.Save(usage);
+
+			return usage;
+
+		}
+
+	}
+
+	public class ArtistTagUsageFactory : ITagUsageFactory<ArtistTagUsage> {
+
+		private readonly Artist artist;
+		private readonly IRepositoryContext<ArtistTagUsage> session;
+
+		public ArtistTagUsageFactory(IRepositoryContext<ArtistTagUsage> session, Artist artist) {
+			this.session = session;
+			this.artist = artist;
+		}
+
+		public ArtistTagUsage CreateTagUsage(Tag tag) {
+
+			var usage = new ArtistTagUsage(artist, tag);
+			session.Save(usage);
+
+			return usage;
+
+		}
+
+	}
+
+	public class SongTagUsageFactory : ITagUsageFactory<SongTagUsage> {
+
+		private readonly Song song;
+		private readonly IRepositoryContext<SongTagUsage> session;
+
+		public SongTagUsageFactory(IRepositoryContext<SongTagUsage> session, Song song) {
+			this.session = session;
+			this.song = song;
+		}
+
+		public SongTagUsage CreateTagUsage(Tag tag) {
+
+			var usage = new SongTagUsage(song, tag);
+			session.Save(usage);
+
+			return usage;
 
 		}
 

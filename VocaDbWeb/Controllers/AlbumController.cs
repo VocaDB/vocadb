@@ -359,7 +359,7 @@ namespace VocaDb.Web.Controllers
 
 			string[] tagNameParts = (tagNames != null ? tagNames.Split(',').Where(s => s != string.Empty).ToArray() : new string[] { });
 
-			var tagUsages = Service.SaveTags(albumId, tagNameParts);
+			var tagUsages = userQueries.SaveAlbumTags(albumId, tagNameParts, false).OrderByDescending(u => u.Count).ToArray();
 
 			return PartialView("TagList", tagUsages);
 

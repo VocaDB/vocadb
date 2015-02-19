@@ -512,53 +512,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public TagUsageContract[] SaveTags(int artistId, string[] tags) {
-
-			ParamIs.NotNull(() => tags);
-
-			VerifyManageDatabase();
-
-			return HandleTransaction(session => {
-
-				tags = tags.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray();
-
-				var user = session.Load<User>(PermissionContext.LoggedUser.Id);
-				var artist = session.Load<Artist>(artistId);
-
-				AuditLog(string.Format("tagging {0} with {1}", 
-					EntryLinkFactory.CreateEntryLink(artist), string.Join(", ", tags)), session, user);
-
-				var existingTags = TagHelpers.GetTags(session, tags);
-
-				artist.Tags.SyncVotes(user, tags, existingTags, new TagFactory(session, new AgentLoginData(user)), new ArtistTagUsageFactory(session, artist));
-
-				return artist.Tags.Usages.OrderByDescending(u => u.Count).Select(t => new TagUsageContract(t)).ToArray();
-
-			});
-
-		}
-
-	}
-
-	public class ArtistTagUsageFactory : ITagUsageFactory<ArtistTagUsage> {
-
-		private readonly Artist artist;
-		private readonly ISession session;
-
-		public ArtistTagUsageFactory(ISession session, Artist artist) {
-			this.session = session;
-			this.artist = artist;
-		}
-
-		public ArtistTagUsage CreateTagUsage(Tag tag) {
-
-			var usage = new ArtistTagUsage(artist, tag);
-			session.Save(usage);
-
-			return usage;
-
-		}
-
 	}
 
 	public enum ArtistSortRule {

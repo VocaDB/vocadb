@@ -33,15 +33,17 @@ namespace VocaDb.Web.Controllers
 		private readonly SongQueries queries;
 	    private readonly SongService service;
 	    private readonly SongListQueries songListQueries;
+		private readonly UserQueries userQueries;
 
 		private SongService Service {
 			get { return service; }
 		}
 
-		public SongController(SongService service, SongQueries queries, SongListQueries songListQueries) {
+		public SongController(SongService service, SongQueries queries, SongListQueries songListQueries, UserQueries userQueries) {
 			this.service = service;
 			this.queries = queries;
 			this.songListQueries = songListQueries;
+			this.userQueries = userQueries;
 		}
 
 		// Used from the song page
@@ -452,7 +454,7 @@ namespace VocaDb.Web.Controllers
 
 			string[] tagNameParts = (tagNames != null ? tagNames.Split(',').Where(s => s != string.Empty).ToArray() : new string[] { });
 
-			var tagUsages = Service.SaveTags(songId, tagNameParts);
+			var tagUsages = userQueries.SaveSongTags(songId, tagNameParts, false).OrderByDescending(u => u.Count).ToArray();
 
 			return PartialView("TagList", tagUsages);
 

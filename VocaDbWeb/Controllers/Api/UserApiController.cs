@@ -395,12 +395,18 @@ namespace VocaDb.Web.Controllers.Api {
 			if (tag == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			var tags = tag.Where(t => !string.IsNullOrEmpty(t) && Tag.IsValidTagName(t)).ToArray();
+			queries.SaveSongTags(songId, tag, true);
 
-			if (!tags.Any())
-				return;
+		}
 
-			queries.AddSongTags(songId, tags);
+		[Route("current/songTags/{songId:int}")]
+		[Authorize]
+		public void PutSongTags(int songId, [FromUri] string[] tag) {
+			
+			if (tag == null)
+				throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+			queries.SaveSongTags(songId, tag, false);
 
 		}
 

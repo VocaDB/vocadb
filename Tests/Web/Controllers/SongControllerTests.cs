@@ -14,7 +14,7 @@ namespace VocaDb.Tests.Web.Controllers {
 
 		[TestInitialize]
 		public void SetUp() {
-			controller = new SongController(null, null, null);
+			controller = new SongController(null, null, null, null);
 		}
 
 		[TestMethod]
