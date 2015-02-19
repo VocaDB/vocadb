@@ -200,6 +200,12 @@ module vdb.repositories {
         // callback: Callback function to be executed when the operation is complete.
         public updateSongRating: (songId: number, rating: vdb.models.SongVoteRating, callback: any) => void;
 
+        public updateSongTags = (songId: number, tags: string[], callback: () => void) => {
+	       
+			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), { tags: tags }, callback);
+			 
+        }
+
 		// Updates user setting.
 		// userId: user ID. Can be null in which case logged user ID (if any) will be used.
 		// settingName: name of the setting to be updated, for example 'showChatBox'.

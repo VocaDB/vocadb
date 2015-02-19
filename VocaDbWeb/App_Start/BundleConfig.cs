@@ -32,6 +32,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Shared/Messages.js",
 				"~/Scripts/Shared/GlobalFunctions.js",
 				"~/Scripts/Shared/UrlMapper.js",
+				"~/Scripts/Helpers/AjaxHelper.js", 
 				"~/Scripts/KnockoutExtensions/StopBinding.js",
 				"~/Scripts/Repositories/EntryReportRepository.js",
 				"~/Scripts/Repositories/UserRepository.js",

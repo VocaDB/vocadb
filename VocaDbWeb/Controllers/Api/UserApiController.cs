@@ -8,12 +8,12 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
@@ -326,6 +326,14 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("current/songTags/{songId:int}")]
+		[Authorize]
+		public TagSelectionContract[] GetSongTags(int songId) {
+			
+			return queries.GetSongTagSelections(songId, permissionContext.LoggedUserId);
+
+		}
+
 		/// <summary>
 		/// Add or update collection status, media type and rating for a specific album, for the currently logged in user.
 		/// If the user has already rated the album, any previous rating is replaced.
@@ -401,12 +409,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
-		public void PutSongTags(int songId, [FromUri] string[] tag) {
+		public void PutSongTags(int songId, [FromUri] string[] tags) {
 			
-			if (tag == null)
+			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			queries.SaveSongTags(songId, tag, false);
+			queries.SaveSongTags(songId, tags, false);
 
 		}
 

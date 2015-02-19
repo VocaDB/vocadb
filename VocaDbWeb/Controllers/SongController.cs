@@ -443,7 +443,7 @@ namespace VocaDb.Web.Controllers
 
 		public PartialViewResult TagSelections(int songId = invalidId) {
 
-			var contract = Service.GetTagSelections(songId, PermissionContext.LoggedUserId);
+			var contract = userQueries.GetSongTagSelections(songId, PermissionContext.LoggedUserId);
 
 			return PartialView(contract);
 
