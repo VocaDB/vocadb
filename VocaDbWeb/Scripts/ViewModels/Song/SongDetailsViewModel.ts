@@ -32,6 +32,14 @@ module vdb.viewModels {
 
         public songListDialog: SongListsViewModel;
 
+		public tagsEditViewModel: tags.TagsEditViewModel;
+
+		private tagsUpdated = (selections: dc.tags.TagUsageForApiContract[]) => {
+			
+			// TODO: update displayed tags
+
+		}
+
         public usersContent: KnockoutObservable<string>;
 
         public usersPopupVisible: KnockoutObservable<boolean>;
@@ -71,6 +79,11 @@ module vdb.viewModels {
 			this.selectedLyricsId = ko.observable(data.selectedLyricsId);
 			this.selectedPvId = ko.observable(data.selectedPvId);
 			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
+
+			this.tagsEditViewModel = new tags.TagsEditViewModel({
+				getTagSelections: callback => userRepository.getSongTagSelections(this.id, callback),
+				saveTagSelections: tags => userRepository.updateSongTags(this.id, tags, this.tagsUpdated)
+			});
 
             this.usersContent = ko.observable<string>();
 

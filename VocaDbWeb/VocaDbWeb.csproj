@@ -2282,6 +2282,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Song\SongMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\StatsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\TagEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagsEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\AlbumCollectionViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\FollowedArtistsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\ListUsersViewModel.ts" />
@@ -2514,6 +2515,7 @@
     <Content Include="Views\Shared\Partials\_EnglishTranslatedStringEdit.cshtml" />
     <Content Include="Views\Shared\Partials\_Chatbox.cshtml" />
     <Content Include="Views\Shared\Partials\_EditableComments.cshtml" />
+    <Content Include="Views\Shared\Partials\_TagsEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3077,6 +3079,7 @@
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TagControllerStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.de.resx" />

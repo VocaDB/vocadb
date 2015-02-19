@@ -172,6 +172,12 @@ module vdb.repositories {
 
 		}
 
+        public getSongTagSelections = (songId: number, callback: (tags: viewModels.tags.TagSelectionContract[]) => void) => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), callback);
+
+        }
+
 		public requestEmailVerification = (callback?: () => void) => {
 
 			var url = this.mapUrl("/RequestEmailVerification");
@@ -200,9 +206,10 @@ module vdb.repositories {
         // callback: Callback function to be executed when the operation is complete.
         public updateSongRating: (songId: number, rating: vdb.models.SongVoteRating, callback: any) => void;
 
-        public updateSongTags = (songId: number, tags: string[], callback: () => void) => {
+        public updateSongTags = (songId: number, tags: string[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
 	       
-			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), { tags: tags }, callback);
+			var tagsParam = "?tags=" + tags.join("&tags=");
+			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId + "/" + tagsParam), null, callback);
 			 
         }
 

@@ -12,7 +12,8 @@ namespace VocaDb.Model.Service.Queries {
 
 	public class TagUsageQueries {
 
-		public TagUsageContract[] AddTags<TEntry, TTag>(int entryId, string[] tags, bool onlyAdd,
+		public TagUsageContract[] AddTags<TEntry, TTag>(int entryId, string[] tags, 
+			bool onlyAdd,
 			IRepository<User> repository, IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
 			Func<TEntry, TagManager<TTag>> tagFunc,

@@ -30,7 +30,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	initReportEntryPopup(saveStr, urlMapper.mapRelative("/Song/CreateReport"), { songId: songId });
 
-	$("#editTags").click(function () {
+	/*$("#editTags").click(function () {
 
 		$.get(urlMapper.mapRelative("/Song/TagSelections"), { songId: songId }, function (content) {
 
@@ -54,7 +54,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 		return false;
 
-	});
+	});*/
 
 	$(".pvLink").click(function () {
 
@@ -113,7 +113,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	}
 
-	function saveTagSelections() {
+	/*function saveTagSelections() {
 
 		var tagNames = new Array();
 
@@ -132,7 +132,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 		$("#editTagsPopup").dialog("close");
 
-	}
+	}*/
 
 	$("td.artistList a").vdbArtistToolTip();
 	$("#albumList a").vdbAlbumWithCoverToolTip();
