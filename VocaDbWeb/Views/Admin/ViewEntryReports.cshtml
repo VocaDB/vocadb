@@ -9,23 +9,30 @@
 			@Translate.AlbumReportTypeNames[contract.AlbumReportType]
 			break;
 		case EntryType.Artist:
-			@Translate.ArtistReportTypeNames[contract.ArtistReportType]
+		@Translate.ArtistReportTypeNames[contract.ArtistReportType]
 			break;
 		case EntryType.Song:
-			@Translate.SongReportTypeNames[contract.SongReportType]
+		@Translate.SongReportTypeNames[contract.SongReportType]
 			break;
 		case EntryType.User:
-			@Translate.UserReportTypeNames[contract.UserReportType]
-			break;			
+		@Translate.UserReportTypeNames[contract.UserReportType]
+			break;
 	}
 }
 
 @{
 	ViewBag.Title = "View entry reports";
-	ViewBag.Parents = new[] { 
-		Html.ActionLink("Manage", "Index"), 
-	};		
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Manage", "Index"),
+	};
 }
+
+<div class="alert alert-info">
+	This list contains entries that have been reported for errors. It is visible to all trusted users and moderators,
+	and anyone can take action based on these reported issues.
+	If you have time, please check that the reports are valid, and either notify the user who created the entry in the first place,
+	or correct the errors yourself. After the issue has been resolved you can delete the report.
+</div>
 
 <table class="table table-striped">
 	<thead>
@@ -48,6 +55,6 @@
 				<td>@r.Notes</td>
 				<td><a href="@Url.Action("DeleteEntryReport", new { id = r.Id })" class="textLink deleteLink">Delete</a></td>
 			</tr>
-		}		
+		}
 	</tbody>
 </table>
