@@ -158,6 +158,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
+				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/ViewModels/CommentViewModel.js",
 				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
@@ -171,6 +172,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js",
 				"~/Scripts/ViewModels/Search/AlbumSearchViewModel.js",
 				"~/Scripts/ViewModels/Search/SongSearchViewModel.js",
+				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
+				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/Artist/ArtistDetailsViewModel.js",
 				"~/Scripts/Artist/Details.js"
 			));

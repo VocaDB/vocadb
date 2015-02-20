@@ -290,22 +290,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public TagSelectionContract[] GetTagSelections(int artistId, int userId) {
-
-			return HandleQuery(session => {
-
-				var tagsInUse = session.Query<ArtistTagUsage>().Where(a => a.Artist.Id == artistId).ToArray();
-				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Artist.Id == artistId).ToArray();
-
-				var tagSelections = tagsInUse.Select(t =>
-					new TagSelectionContract(t.Tag.Name, t.Votes.Any(v => tagVotes.Any(v.Equals))));
-
-				return tagSelections.ToArray();
-
-			});
-
-		}
-
 		public ArchivedArtistVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
 			return HandleQuery(session =>

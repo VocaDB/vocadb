@@ -4,13 +4,16 @@
 module vdb.viewModels {
 
 	import cls = vdb.models;
+	import dc = dataContracts;
 	import rep = vdb.repositories;
 
 	export class ArtistDetailsViewModel {
 
 		constructor(
 			repo: rep.ArtistRepository,
-			private artistId: number, emailNotifications: boolean, siteNotifications: boolean,
+			private artistId: number,
+			tagUsages: dc.tags.TagUsageForApiContract[],
+			emailNotifications: boolean, siteNotifications: boolean,
 			hasEnglishDescription: boolean,
 			private unknownPictureUrl: string,
 			languagePreference: cls.globalization.ContentLanguagePreference,
@@ -31,6 +34,13 @@ module vdb.viewModels {
 
 			this.comments = new EditableCommentsViewModel(repo, artistId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
 
+			this.tagsEditViewModel = new tags.TagsEditViewModel({
+				getTagSelections: callback => userRepository.getArtistTagSelections(artistId, callback),
+				saveTagSelections: tags => userRepository.updateArtistTags(artistId, tags, this.tagsUpdated)
+			});
+
+			this.tagUsages = new tags.TagListViewModel(tagUsages);
+
 		}
 
 		public comments: EditableCommentsViewModel;
@@ -42,6 +52,16 @@ module vdb.viewModels {
 		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
 		public collaborationAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
 		public mainAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
+
+		public tagsEditViewModel: tags.TagsEditViewModel;
+
+		public tagUsages: tags.TagListViewModel;
+
+		private tagsUpdated = (usages: dc.tags.TagUsageForApiContract[]) => {
+
+			this.tagUsages.tagUsages(usages);
+
+		}
 
 		public initMainAlbums = () => {
 			
