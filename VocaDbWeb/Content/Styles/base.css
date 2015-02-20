@@ -28,6 +28,16 @@
 .chatbox-hide:hover {
   color: white;
 }
+.link-list {
+  margin: 0;
+  display: inline-block;
+}
+.link-list .link-item {
+  display: inline-block;
+}
+.link-list .link-item:not(:last-child) > ::after {
+  content: ", ";
+}
 .entry-field-label-col {
   min-width: 100px;
 }
@@ -43,6 +53,10 @@
   display: inline-block;
   vertical-align: top;
   min-width: 400px;
+}
+.entry-tag-usages {
+  display: inline-block;
+  margin-right: 10px;
 }
 .song-pv-player {
   margin: 24px;

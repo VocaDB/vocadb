@@ -1,0 +1,15 @@
+﻿
+<!-- binding context: TagListViewModel -->
+
+<ul data-bind="foreach: displayedTagUsages" class="link-list">
+	<li class="link-item">		
+		<a data-bind="text: name + ' (' + count + ')', attr: { href: $parent.getTagUrl(name) }"></a>
+	</li>
+</ul>
+<span data-bind="visible: !expanded()">
+	-
+	<a data-bind="click: function() { expanded(true); }" href="#">
+		@ViewRes.EntryDetailsStrings.ShowAllTags
+		(<span data-bind="text: tagUsages().length"></span>)
+	</a>
+</span>

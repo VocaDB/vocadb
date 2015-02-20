@@ -34,9 +34,11 @@ module vdb.viewModels {
 
 		public tagsEditViewModel: tags.TagsEditViewModel;
 
-		private tagsUpdated = (selections: dc.tags.TagUsageForApiContract[]) => {
+		public tagUsages: tags.TagListViewModel;
+
+		private tagsUpdated = (usages: dc.tags.TagUsageForApiContract[]) => {
 			
-			// TODO: update displayed tags
+			this.tagUsages.tagUsages(usages);
 
 		}
 
@@ -84,6 +86,8 @@ module vdb.viewModels {
 				getTagSelections: callback => userRepository.getSongTagSelections(this.id, callback),
 				saveTagSelections: tags => userRepository.updateSongTags(this.id, tags, this.tagsUpdated)
 			});
+
+			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
 
             this.usersContent = ko.observable<string>();
 
@@ -200,6 +204,8 @@ module vdb.viewModels {
 		selectedLyricsId: number;
 
 		selectedPvId: number;
+
+		tagUsages: dc.tags.TagUsageForApiContract[];
 
         userRating: string;
     
