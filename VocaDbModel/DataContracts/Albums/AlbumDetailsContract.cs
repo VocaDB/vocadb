@@ -25,7 +25,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			Songs = album.Songs
 				.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber)
 				.Select(s => new SongInAlbumContract(s, languagePreference, false)).ToArray();
-			Tags = album.Tags.Usages.Select(u => new TagUsageContract(u)).OrderByDescending(t => t.Count).ToArray();
+			Tags = album.Tags.Usages.Select(u => new TagUsageForApiContract(u)).OrderByDescending(t => t.Count).ToArray();
 			WebLinks = album.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
@@ -67,7 +67,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public SongInAlbumContract[] Songs { get; set; }
 
 		[DataMember]
-		public TagUsageContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; set; }
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }

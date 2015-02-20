@@ -849,6 +849,38 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public TagSelectionContract[] GetAlbumTagSelections(int albumId, int userId) {
+
+			return HandleQuery(session => {
+
+				var tagsInUse = session.Query<AlbumTagUsage>().Where(a => a.Album.Id == albumId).ToArray();
+				var tagVotes = session.Query<AlbumTagVote>().Where(a => a.User.Id == userId && a.Usage.Album.Id == albumId).ToArray();
+
+				var tagSelections = tagsInUse.Select(t =>
+					new TagSelectionContract(t.Tag.Name, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+
+				return tagSelections.ToArray();
+
+			});
+
+		}
+
+		public TagSelectionContract[] GetArtistTagSelections(int artistId, int userId) {
+
+			return HandleQuery(session => {
+
+				var tagsInUse = session.Query<ArtistTagUsage>().Where(a => a.Artist.Id == artistId).ToArray();
+				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Artist.Id == artistId).ToArray();
+
+				var tagSelections = tagsInUse.Select(t =>
+					new TagSelectionContract(t.Tag.Name, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+
+				return tagSelections.ToArray();
+
+			});
+
+		}
+
 		public TagSelectionContract[] GetSongTagSelections(int songId, int userId) {
 
 			return HandleQuery(session => {

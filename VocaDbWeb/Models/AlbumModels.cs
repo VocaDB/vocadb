@@ -125,6 +125,12 @@ namespace VocaDb.Web.Models {
 
 		public int Id { get; set; }
 
+		public string Json {
+			get {
+				return JsonHelpers.Serialize(new AlbumDetailsAjax(this));
+			}
+		}
+
 		public ArtistForAlbumContract[] Labels { get; set; }
 
 		public CommentContract[] LatestComments { get; set; }
@@ -182,7 +188,7 @@ namespace VocaDb.Web.Models {
 
 		public EntryStatus Status { get; set; }
 
-		public TagUsageContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; set; }
 
 		public bool UserHasAlbum { get; set; }
 
@@ -193,6 +199,22 @@ namespace VocaDb.Web.Models {
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public int WishlistedBy { get; set; }
+
+	}
+
+	public class AlbumDetailsAjax {
+
+		public AlbumDetailsAjax(AlbumDetails model) {
+
+			Id = model.Id;
+
+			TagUsages = model.Tags;
+
+		}
+
+		public int Id { get; set; }
+
+		public TagUsageForApiContract[] TagUsages { get; set; }
 
 	}
 

@@ -5,6 +5,7 @@
 module vdb.viewModels {
 
 	import cls = vdb.models;
+	import dc = dataContracts;
 	import rep = repositories;
 
     export class AlbumDetailsViewModel {
@@ -13,7 +14,19 @@ module vdb.viewModels {
 
         public downloadTagsDialog: DownloadTagsViewModel;
 
+		private id: number;
+
 		public showTranslatedDescription: KnockoutObservable<boolean>;
+
+		public tagsEditViewModel: tags.TagsEditViewModel;
+
+		public tagUsages: tags.TagListViewModel;
+
+		private tagsUpdated = (usages: dc.tags.TagUsageForApiContract[]) => {
+
+			this.tagUsages.tagUsages(usages);
+
+		}
 
         public usersContent = ko.observable<string>();
 
@@ -32,17 +45,34 @@ module vdb.viewModels {
 
         constructor(
 			repo: rep.AlbumRepository,
-			private id: number,
+			userRepo: rep.UserRepository,
+			data: AlbumDetailsAjax,
 			loggedUserId: number,
 			canDeleteAllComments: boolean,
 			formatString: string,
 			showTranslatedDescription: boolean) {
 
-            this.downloadTagsDialog = new DownloadTagsViewModel(id, formatString);
+			this.id = data.id;
+            this.downloadTagsDialog = new DownloadTagsViewModel(this.id, formatString);
 			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
-			this.comments = new EditableCommentsViewModel(repo, id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
+			this.comments = new EditableCommentsViewModel(repo, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
+
+			this.tagsEditViewModel = new tags.TagsEditViewModel({
+				getTagSelections: callback => userRepo.getAlbumTagSelections(this.id, callback),
+				saveTagSelections: tags => userRepo.updateAlbumTags(this.id, tags, this.tagsUpdated)
+			});
+
+			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
 
         }
+
+    }
+
+    export interface AlbumDetailsAjax {
+
+        id: number;
+
+		tagUsages: dc.tags.TagUsageForApiContract[];
 
     }
 

@@ -1,50 +1,4 @@
 ﻿
-function initDialog(urlMapper) {
-
-	function addTag(tagName) {
-
-		if (isNullOrWhiteSpace(tagName))
-			return;
-
-		$("#newTagName").val("");
-
-		if ($("#tagSelection_" + tagName).length) {
-			$("#tagSelection_" + tagName).prop('checked', true);
-			$("#tagSelection_" + tagName).button("refresh");
-			return;
-		}
-
-		$.post(urlMapper.mapRelative("/Tag/Create"), { name: tagName }, function (response) {
-
-			if (!response.Successful) {
-				alert(response.Message);
-			} else {
-				$("#tagSelections").append(response.Result);
-				$("input.tagSelection").button();
-			}
-
-		});
-
-	}
-
-	$("input.tagSelection").button();
-
-	$("input#newTagName").autocomplete({
-		source: function (ui, callback) {
-			$.getJSON(urlMapper.mapRelative("/api/tags/names"), { query: ui.term }, callback);
-		},
-		select: function (event, ui) { addTag(ui.item.label); return false; }
-	});
-
-	$("#addNewTag").click(function () {
-
-		addTag($("#newTagName").val());
-		return false;
-
-	});
-
-}
-
 function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 
 	$("#addAlbumLink").button({ disabled: $("#addAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-star'} });
@@ -54,7 +8,6 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 	$("#viewVersions").button({ icons: { primary: 'ui-icon-clock'} });
 	$("#downloadTags").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } })
 		.next().button({ text: false, icons: { primary: "ui-icon-triangle-1-s" } }).parent().buttonset();
-	$("#editTags").button({ disabled: $("#editTags").hasClass("disabled"), icons: { primary: 'ui-icon-tag'} });
 	$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
 	$("#viewCommentsLink").click(function () {
 		$("#tabs").tabs("option", "active", 1);
@@ -76,8 +29,6 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 		return false;
 
 	});
-
-	$("#editTagsPopup").dialog({ autoOpen: false, width: 500, modal: true, buttons: [{ text: saveStr, click: saveTagSelections }] });
 
 	$("#tabs").tabs({
 		load: function(event, ui) {
@@ -136,47 +87,8 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 
 	initReportEntryPopup(saveStr, urlMapper.mapRelative("/Album/CreateReport"), { albumId: albumId });
 
-	$("#editTags").click(function () {
-
-		$.get(urlMapper.mapRelative("/Album/TagSelections"), { albumId: albumId }, function (content) {
-
-			$("#editTagsAlbumId").val(albumId);
-			$("#editTagsContent").html(content);
-
-			initDialog(urlMapper);
-
-			$("#editTagsPopup").dialog("open");
-
-		});
-
-		return false;
-
-	});
-
 	$("td.artistList a").vdbArtistToolTip();
 	
 	$("#userCollectionsPopup").dialog({ autoOpen: false, width: 400, position: { my: "left top", at: "left bottom", of: $("#statsLink") } });
-
-	function saveTagSelections() {
-
-		var tagNames = new Array();
-
-		$("input.tagSelection:checked").each(function () {
-			var name = $(this).parent().find("input.tagName").val();
-			tagNames.push(name);
-		});
-
-		var tagNamesStr = tagNames.join(",");
-		var tagsAlbumId = $("#editTagsAlbumId").val();
-
-		$.post(urlMapper.mapRelative("/Album/TagSelections"), { albumId: tagsAlbumId, tagNames: tagNamesStr }, function (content) {
-
-			$("#tagList").html(content);
-
-		});
-
-		$("#editTagsPopup").dialog("close");
-
-	}
 
 }

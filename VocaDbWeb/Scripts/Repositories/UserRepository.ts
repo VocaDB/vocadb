@@ -172,7 +172,19 @@ module vdb.repositories {
 
 		}
 
-        public getSongTagSelections = (songId: number, callback: (tags: viewModels.tags.TagSelectionContract[]) => void) => {
+        public getAlbumTagSelections = (albumId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/users/current/albumTags/" + albumId), callback);
+
+        }
+
+        public getArtistTagSelections = (artistId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/users/current/artistTags/" + artistId), callback);
+
+        }
+
+        public getSongTagSelections = (songId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), callback);
 
@@ -185,6 +197,12 @@ module vdb.repositories {
 
 		};
 
+        public updateAlbumTags = (albumId: number, tags: string[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+
+			helpers.AjaxHelper.putJSON_Url(this.urlMapper.mapRelative("/api/users/current/albumTags/" + albumId), "tags", tags, callback);
+
+        }
+
 		// Updates artist subscription settings for an artist followed by a user.
 		public updateArtistSubscription = (artistId: number, emailNotifications?: boolean, siteNotifications?: boolean) => {
 
@@ -193,6 +211,12 @@ module vdb.repositories {
 			});
 
 		};
+
+        public updateArtistTags = (artistId: number, tags: string[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+
+			helpers.AjaxHelper.putJSON_Url(this.urlMapper.mapRelative("/api/users/current/artistTags/" + artistId), "tags", tags, callback);
+
+        }
 
 		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
 
@@ -208,8 +232,7 @@ module vdb.repositories {
 
         public updateSongTags = (songId: number, tags: string[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
 	       
-			var tagsParam = "?tags=" + tags.join("&tags=");
-			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId + "/" + tagsParam), null, callback);
+			helpers.AjaxHelper.putJSON_Url(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), "tags", tags, callback);
 			 
         }
 

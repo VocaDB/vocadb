@@ -72,7 +72,7 @@ module vdb.viewModels.tags {
 
 	export class TagSelectionViewModel {
 		
-		constructor(contract: TagSelectionContract) {
+		constructor(contract: dataContracts.tags.TagSelectionContract) {
 		
 			this.tagName = contract.tagName;
 			this.selected = ko.observable(contract.selected || false);
@@ -85,17 +85,9 @@ module vdb.viewModels.tags {
 
 	}
 
-	export interface TagSelectionContract {
-		
-		selected?: boolean;
-
-		tagName: string;
-
-	}
-
 	export interface ITagSelectionsRepository {
 		
-		getTagSelections(callback: (selections: TagSelectionContract[]) => void): void;
+		getTagSelections(callback: (selections: dataContracts.tags.TagSelectionContract[]) => void): void;
 
 		saveTagSelections(tags: string[]): void;
 

@@ -326,6 +326,22 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("current/albumTags/{albumId:int}")]
+		[Authorize]
+		public TagSelectionContract[] GetAlbumTags(int albumId) {
+			
+			return queries.GetAlbumTagSelections(albumId, permissionContext.LoggedUserId);
+
+		}
+
+		[Route("current/artistTags/{artistId:int}")]
+		[Authorize]
+		public TagSelectionContract[] GetArtistTags(int artistId) {
+			
+			return queries.GetArtistTagSelections(artistId, permissionContext.LoggedUserId);
+
+		}
+
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
 		public TagSelectionContract[] GetSongTags(int songId) {
@@ -384,6 +400,30 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			service.UpdateSongRating(permissionContext.LoggedUserId, songId, rating);
 			return "OK";
+
+		}
+
+		[Route("current/albumTags/{albumId:int}")]
+		[Authorize]
+		public TagUsageForApiContract[] PutAlbumTags(int albumId, [FromUri] string[] tags) {
+			
+			if (tags == null)
+				throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+			return queries.SaveAlbumTags(albumId, tags, false)
+				.Select(t => new TagUsageForApiContract { Name = t.TagName, Count = t.Count}).ToArray();
+
+		}
+
+		[Route("current/artistTags/{artistId:int}")]
+		[Authorize]
+		public TagUsageForApiContract[] PutArtistTags(int artistId, [FromUri] string[] tags) {
+			
+			if (tags == null)
+				throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+			return queries.SaveArtistTags(artistId, tags, false)
+				.Select(t => new TagUsageForApiContract { Name = t.TagName, Count = t.Count}).ToArray();
 
 		}
 

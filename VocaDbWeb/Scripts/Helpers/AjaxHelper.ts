@@ -9,6 +9,13 @@ module vdb.helpers {
 
 		}
 
+		public static putJSON_Url = (url: string, dataParamName: string, data: any[], success?: any) => {
+
+			var dataParam = "?" + dataParamName + "=" + data.join("&" + dataParamName + "=");
+			$.ajax(url + dataParam, { type: 'PUT', success: success });
+
+		}
+
 	}
 
 } 
