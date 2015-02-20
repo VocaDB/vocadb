@@ -13,7 +13,7 @@ module vdb.tests.viewModels {
     var rep: sup.FakeSongRepository;
     var userRep = new sup.FakeUserRepository();
     var res: vm.SongDetailsResources = { createNewList: "Create new list" };
-    var data: vm.SongDetailsAjax = { id: 39, selectedLyricsId: 0, selectedPvId: 0, userRating: "Nothing" };
+    var data: vm.SongDetailsAjax = { id: 39, selectedLyricsId: 0, selectedPvId: 0, tagUsages: [], userRating: "Nothing" };
 
     var target: vm.SongDetailsViewModel;
 

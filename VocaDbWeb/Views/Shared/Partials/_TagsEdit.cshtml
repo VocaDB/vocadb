@@ -1,0 +1,30 @@
+﻿
+<!-- binding context: TagsEditViewModel -->
+
+<div data-bind="dialog: {autoOpen: false, modal: true, width: 500 }, dialogButtons: [{ text: 'Save', click: save }], dialogVisible: dialogVisible" style="display:none;" title="@ViewRes.SharedStrings.Tags">
+
+	<div class="trackProperties">
+
+		<p>@ViewRes.TagSelectionsStrings.Info</p>
+
+		<div data-bind="foreach: selections">
+			<span class="tag">
+				<input type="checkbox" data-bind="id: 'tagSelection' + tagName, jqButtonset: selected" class="jqButton" />
+				<label>
+					<span data-bind="text: tagName"></span>
+				</label>
+			</span>
+		</div>
+		<br />
+
+		<div class="form-inline">
+			@ViewRes.TagSelectionsStrings.AddTag:
+			<div class="input-append">
+				<input type="text" class="input-large" maxlength="30" data-bind="textInput: newTagName, tagAutoComplete: autoCompletedTag" />
+				<button type="button" class="btn" data-bind="click: addTag">@ViewRes.SharedStrings.Add</button>
+			</div>
+		</div>
+
+	</div>
+
+</div>

@@ -182,7 +182,7 @@ namespace VocaDb.Web.Models {
 
 		public EntryStatus Status { get; set; }
 
-		public TagUsageContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; set; }
 
 		public string ThumbUrl { get; set; }
 
@@ -204,6 +204,7 @@ namespace VocaDb.Web.Models {
 			var preferredLyrics = LocalizedStringHelper.GetBestMatch(model.Lyrics, Login.Manager.LanguagePreference, model.DefaultLanguageSelection);
 			SelectedLyricsId = preferredLyrics != null ? preferredLyrics.Id : 0;
 			SelectedPvId = model.PrimaryPV != null ? model.PrimaryPV.Id : 0;
+			TagUsages = model.Tags;
 
 		}
 
@@ -212,6 +213,8 @@ namespace VocaDb.Web.Models {
 		public int SelectedLyricsId { get; set; }
 
 		public int SelectedPvId { get; set; }
+
+		public TagUsageForApiContract[] TagUsages { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongVoteRating UserRating { get; set; }

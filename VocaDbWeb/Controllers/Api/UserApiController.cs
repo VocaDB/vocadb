@@ -409,12 +409,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
-		public void PutSongTags(int songId, [FromUri] string[] tags) {
+		public TagUsageForApiContract[] PutSongTags(int songId, [FromUri] string[] tags) {
 			
 			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			queries.SaveSongTags(songId, tags, false);
+			return queries.SaveSongTags(songId, tags, false)
+				.Select(t => new TagUsageForApiContract { Name = t.TagName, Count = t.Count}).ToArray();
 
 		}
 

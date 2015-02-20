@@ -40,6 +40,24 @@
 }
 
 
+.link-list {
+	
+	margin: 0;
+	display: inline-block;
+
+	.link-item {
+
+		display: inline-block;
+
+		&:not(:last-child) > ::after {
+			content: ", "
+		}
+
+	}
+
+}
+
+
 // Entries
 .entry-field-label-col {
 	min-width: 100px;
@@ -64,6 +82,11 @@
 		min-width: 400px;
 	}
 
+}
+
+.entry-tag-usages {
+	display: inline-block;
+	margin-right: 10px;
 }
 
 

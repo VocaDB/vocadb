@@ -41,7 +41,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			ListCount = song.ListLinks.Count;
 
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-			Tags = song.Tags.Usages.Select(u => new TagUsageContract(u)).OrderByDescending(t => t.Count).ToArray();
+			Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(song.TranslatedName);
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
@@ -125,7 +125,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongContract Song { get; set; }
 
 		[DataMember]
-		public TagUsageContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; set; }
 
 		[DataMember]
 		public TranslatedStringContract TranslatedName { get; set; }

@@ -441,26 +441,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public PartialViewResult TagSelections(int songId = invalidId) {
-
-			var contract = userQueries.GetSongTagSelections(songId, PermissionContext.LoggedUserId);
-
-			return PartialView(contract);
-
-		}
-
-		[HttpPost]
-		public PartialViewResult TagSelections(int songId, string tagNames) {
-
-			string[] tagNameParts = (tagNames != null ? tagNames.Split(',').Where(s => s != string.Empty).ToArray() : new string[] { });
-
-			var tagUsages = userQueries.SaveSongTags(songId, tagNameParts, false).OrderByDescending(u => u.Count).ToArray();
-
-			return PartialView("TagList", tagUsages);
-
-		}
-
-
 		public string ThumbUrl(int id) {
 
 			var songWithPVs = Service.GetSongWithPVAndVote(id);
