@@ -2386,9 +2386,6 @@
     <Content Include="Views\User\ForgotPassword.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\Shared\DuplicateEntryMessage.cshtml" />
-    <Content Include="Views\Shared\TagSelections.cshtml" />
-    <Content Include="Views\Shared\TagSelection.cshtml" />
-    <Content Include="Views\Shared\TagList.cshtml" />
     <Content Include="Views\Tag\Details.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Album\ViewVersion.cshtml" />

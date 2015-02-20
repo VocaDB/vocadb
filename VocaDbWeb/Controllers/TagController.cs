@@ -1,11 +1,8 @@
 ﻿using System.Web.Mvc;
+using VocaDb.Model.DataContracts;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
-using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.Tags;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Web.Models.Tag;
-using VocaDb.Web.Resources.Controllers;
 
 namespace VocaDb.Web.Controllers
 {
@@ -16,22 +13,6 @@ namespace VocaDb.Web.Controllers
 		public TagController(TagQueries queries) {
 
 			this.queries = queries;
-
-		}
-
-		public ActionResult Create(string name) {
-
-			if (string.IsNullOrWhiteSpace(name))
-				return Json(new GenericResponse<string>(false, TagControllerStrings.TagNameError));
-
-			name = name.Trim().Replace(' ', '_');
-
-			if (!Tag.IsValidTagName(name))
-				return Json(new GenericResponse<string>(false, TagControllerStrings.TagNameError));
-
-			var view = RenderPartialViewToString("TagSelection", new TagSelectionContract(name, true));
-
-			return Json(new GenericResponse<string>(view));
 
 		}
 
