@@ -162,7 +162,7 @@ namespace VocaDb.Model.Service {
 				return item;
 
 			item = GetRecentComments(session, 8, ssl);
-			cache.Add(cacheKey, item, DateTime.Now + TimeSpan.FromMinutes(30));
+			cache.Add(cacheKey, item, DateTime.Now + TimeSpan.FromMinutes(15));
 
 			return item;
 
