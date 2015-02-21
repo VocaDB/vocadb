@@ -3,7 +3,8 @@
 [VocaDB](http://vocadb.net) is a Vocaloid Database with translated artists, albums, music videos and more. Our goal is to be the most accurate and complete source of Vocaloid discography and artists.
 
 The software is based on Microsoft ASP.NET MVC 5 (.NET 4.5), jQuery, jQuery UI, Twitter Bootstrap, 
-Knockout, and it uses a SQL database through the NHibernate 4 ORM.
+Knockout, and it uses a SQL database through the NHibernate 4 ORM. 
+Server side code is written in C#, most of the client side is TypeScript.
 
 ## How to contribute
 
