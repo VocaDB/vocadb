@@ -50,14 +50,12 @@
 						@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
 					</span>					
 					@if (alwaysAllowDelete || (allowDelete && Login.CanDeleteComment(contract))) {
-						@Html.Raw("&nbsp;&nbsp;");
+						@:&nbsp;&nbsp;
 						<a href="#" id="deleteComment_@(contract.Id)" class="deleteComment textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
 					}
 				</small>
 			</h3>
-			<p>
-				@Helpers.ConvertNewlinesToBreaks(contract.Message)
-			</p>			
+			@HtmlHelpers.FormatMarkdown(contract.Message)
 		</div>
 	</div>		
 }
@@ -143,8 +141,6 @@
 				@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
 			</small>		
 		</h3>
-		<p>
-			@Helpers.ConvertNewlinesToBreaks(contract.Message)
-		</p>
+		@HtmlHelpers.FormatMarkdown(contract.Message)
 	</div>	
 }
