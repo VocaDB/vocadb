@@ -18,6 +18,8 @@ module vdb.viewModels.tags {
 				return;
 			}
 
+			this.newTagName("");
+
 			tagName = _.trim(tagName).replace(" ", "_");
 
 			// If tag is already added, select it
