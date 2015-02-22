@@ -6,7 +6,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 	$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
 	$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
 	$("#viewCommentsLink").click(function () {
-		var index = $('#tabs ul #discussionTabLink').index();
+		var index = $('#tabs ul [data-tab="Discussion"]').index();
 		$("#tabs").tabs("option", "active", index);
 		return false;
 	});
