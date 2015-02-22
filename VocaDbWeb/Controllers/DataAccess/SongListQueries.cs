@@ -53,7 +53,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.WhereSongHasPVService(queryParams.PVServices);
 
 			IQueryable<SongInList> resultQ = q.OrderBy(s => s.Order);
-			resultQ = resultQ.Skip(queryParams.Paging.Start).Take(queryParams.Paging.MaxEntries);
+			resultQ = resultQ.Paged(queryParams.Paging);
 
 			var contracts = resultQ.ToArray().Select(s => fac(s)).ToArray();
 			var totalCount = (queryParams.Paging.GetTotalCount ? q.Count() : 0);
