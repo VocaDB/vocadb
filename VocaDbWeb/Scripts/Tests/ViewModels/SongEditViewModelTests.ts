@@ -25,7 +25,7 @@ module vdb.tests.viewModels {
     QUnit.module("SongEditViewModelTests");
 
     function createViewModel() {
-		return new vm.SongEditViewModel(songRepo, artistRepo, pvRepo, new vdb.UrlMapper(''), [], categories, data, false);
+		return new vm.SongEditViewModel(songRepo, artistRepo, pvRepo, new vdb.UrlMapper(''), {}, categories, data, false);
     }
 
     QUnit.test("constructor", () => {

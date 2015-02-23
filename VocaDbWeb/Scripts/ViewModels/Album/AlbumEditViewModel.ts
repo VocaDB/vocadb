@@ -212,7 +212,8 @@ module vdb.viewModels {
 			private artistRepository: rep.ArtistRepository,
 			pvRepository: rep.PVRepository,
 			urlMapper: vdb.UrlMapper,
-			artistRoleNames, webLinkCategories: dc.TranslatedEnumField[],
+			artistRoleNames: { [key: string]: string; },
+			webLinkCategories: dc.TranslatedEnumField[],
 			data: dc.albums.AlbumForEditContract,
 			allowCustomTracks: boolean,
 			canBulkDeletePVs: boolean) {

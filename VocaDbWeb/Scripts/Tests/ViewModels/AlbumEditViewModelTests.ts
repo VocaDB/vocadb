@@ -29,7 +29,7 @@ module vdb.tests.viewModels {
 
 	var songInAlbum: dc.songs.SongInAlbumEditContract;
 	var customTrack: dc.songs.SongInAlbumEditContract;
-    var roles = { Default: "Default", VoiceManipulator: "Voice manipulator" };
+    var roles: { [key: string]: string; } = { Default: "Default", VoiceManipulator: "Voice manipulator" };
     var webLinkData = { category: "Official", description: "Youtube Channel", id: 123, url: "http://www.youtube.com/user/tripshots" };
     var data: dc.albums.AlbumForEditContract;
 	vdb.resources = { albumDetails: { download: "" }, albumEdit: { addExtraArtist: "" }, song: null };

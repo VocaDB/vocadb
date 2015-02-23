@@ -3,7 +3,7 @@ module vdb.viewModels.artists {
 	
 	export class ArtistRolesEditViewModel {
 		
-		constructor(roleNames: string[]) {
+		constructor(roleNames: { [key: string]: string; }) {
 			
 			this.roleSelections = [];
 
@@ -38,7 +38,7 @@ module vdb.viewModels.artists {
 
 		public selectedArtist = ko.observable<vdb.viewModels.IEditableArtistWithSupport>(null);
 
-		public show = (artist: ArtistForAlbumEditViewModel) => {
+		public show = (artist: IEditableArtistWithSupport) => {
 			
 			_.forEach(this.roleSelections, r => {
 				r.selected(artist && _.contains(artist.rolesArray(), r.id));
