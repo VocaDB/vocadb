@@ -38,7 +38,7 @@ module vdb.viewModels {
 
 		private tagsUpdated = (usages: dc.tags.TagUsageForApiContract[]) => {
 			
-			this.tagUsages.tagUsages(usages);
+			this.tagUsages.tagUsages(_.sortBy(usages, u => -u.count));
 
 		}
 
