@@ -1991,6 +1991,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\DeletedAlbumsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistMergeViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistRolesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicEntryLinkViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\CommentViewModel.ts" />
@@ -2485,7 +2486,6 @@
     <Content Include="Views\Stats\Index.cshtml" />
     <Content Include="Views\Event\EventsByDate.cshtml" />
     <Content Include="Views\Song\RelatedSongs.cshtml" />
-    <Content Include="Views\Shared\Partials\_EditArtistRolesPopup.cshtml" />
     <Content Include="Views\Help\External.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
@@ -2516,6 +2516,7 @@
     <Content Include="Views\Shared\Partials\_EditableComments.cshtml" />
     <Content Include="Views\Shared\Partials\_TagsEdit.cshtml" />
     <Content Include="Views\Shared\Partials\_TagList.cshtml" />
+    <Content Include="Views\Shared\Partials\_ArtistRolesEditViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -371,8 +371,10 @@
 	@Html.HiddenForKnockout(m => m.EditedAlbum, "value: submittedJson")
 
 </form>
-	
-@{ Html.RenderPartial("Partials/_EditArtistRolesPopup"); }
+
+<div data-bind="with: artistRolesEditViewModel">
+	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
+</div>	
 
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 550 }, dialogButtons: trackPropertiesDialogButtons, dialogVisible: trackPropertiesDialogVisible" style="display:none;" title="@R.EditStrings.TrackPropertiesTitle">
 

@@ -5,6 +5,7 @@ namespace VocaDb.Model.Domain.Artists {
 	/// <summary>
 	/// Possible artist roles for albums and songs.
 	/// Saved into database as a bitarray - do not change the number values.
+	/// Also remember to update the TypeScript file (ArtistRoles.ts).
 	/// </summary>
 	[Flags]
 	public enum ArtistRoles {

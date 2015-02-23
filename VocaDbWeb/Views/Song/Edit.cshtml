@@ -236,7 +236,9 @@
 
 </form>
 
-@{ Html.RenderPartial("Partials/_EditArtistRolesPopup"); }
+<div data-bind="with: artistRolesEditViewModel">
+	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
+</div>
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/Song/Edit")

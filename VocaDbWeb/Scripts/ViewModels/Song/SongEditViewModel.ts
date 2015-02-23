@@ -76,6 +76,12 @@ module vdb.viewModels {
 
 		};
 
+		public artistRolesEditViewModel: artists.ArtistRolesEditViewModel;
+
+		public editArtistRoles = (artist: ArtistForAlbumEditViewModel) => {
+			this.artistRolesEditViewModel.show(artist);
+		}
+
 		// Removes an artist from this album.
 		public removeArtist = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistLinks.remove(artist);
@@ -146,6 +152,8 @@ module vdb.viewModels {
 			this.tags = data.tags;
 			this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
 
+
+			this.artistRolesEditViewModel = new artists.ArtistRolesEditViewModel(artistRoleNames);
 
 			this.artistSearchParams = {
 				createNewItem: vdb.resources.song.addExtraArtist,

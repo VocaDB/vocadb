@@ -5,7 +5,7 @@ module vdb.viewModels {
     import rep = vdb.repositories;
 
     // View model for editing artist for album link.
-    export class ArtistForAlbumEditViewModel {
+    export class ArtistForAlbumEditViewModel implements IEditableArtistWithSupport {
         
         private static customizableArtistTypes = ['Animator', 'OtherGroup', 'OtherIndividual',
             'OtherVocalist', 'Producer', 'Illustrator', 'Lyricist', 'Unknown', 'Utaite', 'Band'];
@@ -65,5 +65,11 @@ module vdb.viewModels {
         }
     
     }
+
+	export interface IEditableArtistWithSupport {
+		
+		rolesArray: KnockoutObservableArray<string>;
+
+	}
 
 }
