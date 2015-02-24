@@ -13,14 +13,13 @@ module vdb.viewModels.tags {
 				return;
 
 			if (!this.isValidTagName(tagName)) {
-				// TODO: localize
-				alert("Tag name may contain only word characters and cannot be empty.");
+				this.invalidTagError();
 				return;
 			}
 
 			this.newTagName("");
 
-			tagName = _.trim(tagName).replace(" ", "_");
+			tagName = _.trim(tagName).replace(/ /g, "_"); // Simple text replace replaces only the first occurrence
 
 			// If tag is already added, select it
 			var selection = _.find(this.selections(), sel => sel.tagName === tagName);
@@ -42,6 +41,11 @@ module vdb.viewModels.tags {
 
         public dialogVisible = ko.observable(false);
 
+		public invalidTagError = () => {
+			// TODO: localize
+			alert("Tag name may contain only word characters and cannot be empty.");			
+		}
+
 		private isValidTagName = (tagName: string) => {
 			
 			var regex = /^[a-z0-9_\- ]+$/i;
@@ -51,7 +55,7 @@ module vdb.viewModels.tags {
 
 		public newTagName = ko.observable("");
 
-		private selections = ko.observableArray<TagSelectionViewModel>();
+		public selections = ko.observableArray<TagSelectionViewModel>();
 		
 		public save = () => {
 

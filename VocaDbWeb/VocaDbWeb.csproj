@@ -1975,6 +1975,7 @@
     <TypeScriptCompile Include="Scripts\Tests\Helpers\HtmlHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Artist\ArtistRolesEditViewModelTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Globalization\NamesEditViewModelTests.ts" />
+    <TypeScriptCompile Include="Scripts\Tests\ViewModels\Tag\TagsEditViewModelTests.ts" />
     <TypeScriptCompile Include="Scripts\typings\highcharts\highcharts.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jqueryui\jqueryui.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
