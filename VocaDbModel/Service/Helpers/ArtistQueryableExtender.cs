@@ -90,12 +90,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Filters an artist query by a name query.
 		/// </summary>
 		/// <param name="query">Artist query. Cannot be null.</param>
-		/// <param name="nameFilter">Name filter string. If null or empty, no filtering is done.</param>
-		/// <param name="matchMode">Desired mode for matching names.</param>
-		/// <param name="words">
-		/// List of words for the words search mode. 
-		/// Can be null, in which case the words list will be parsed from <paramref name="nameFilter"/>.
-		/// </param>
+		/// <param name="textQuery">Textual filter. Cannot be null.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Artist> WhereHasName(this IQueryable<Artist> query, ArtistSearchTextQuery textQuery) {
 
@@ -175,10 +170,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// This means that any P suffixes are ignored.
 		/// </summary>
 		/// <param name="query">Artist query. Cannot be null.</param>
-		/// <param name="originalQuery">Original title query. Can be null or empty.</param>
-		/// <param name="canonizedName">Canonized artist name if available. Can be null, in which case the canonized name will be parsed from originalQuery.</param>
-		/// <param name="matchMode">Name match mode.</param>
-		/// <param name="words">Words list if available. Can be null in which case words list is parsed.</param>
+		/// <param name="textQuery">Textual filter. Cannot be null.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Artist> WhereHasName_Canonized(this IQueryable<Artist> query, ArtistSearchTextQuery textQuery) {
 

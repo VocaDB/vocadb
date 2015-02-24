@@ -54,7 +54,9 @@ namespace VocaDb.Model.Service.Search {
 		/// <param name="query">Text query. Can be null or empty.</param>
 		/// <param name="matchMode">Name match mode. Cannot be 'Auto'. Use the factory method to determine the match mode.</param>
 		/// <param name="originalQuery">Original query without any processing. Can be null or empty.</param>
-		/// <param name="words">List of query words, if any. Can be null.</param>
+		/// <param name="words">
+		/// List of query words, if any. Can be null, in which case the words list will be parsed from <paramref name="query"/>.
+		/// </param>
 		public SearchTextQuery(string query, NameMatchMode matchMode, 
 			string originalQuery,
 			string[] words = null) {

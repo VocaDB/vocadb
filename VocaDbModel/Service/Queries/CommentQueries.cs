@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -30,7 +31,8 @@ namespace VocaDb.Model.Service.Queries {
 			this.userIconFactory = userIconFactory;
 		}
 
-		public CommentForApiContract Create<TEntry>(int entryId, CommentForApiContract contract, Func<TEntry, CommentForApiContract, AgentLoginData, T> fac) {
+		public CommentForApiContract Create<TEntry>(int entryId, CommentForApiContract contract, Func<TEntry, CommentForApiContract, AgentLoginData, T> fac)
+			where TEntry : IEntryBase {
 			
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 
@@ -45,7 +47,10 @@ namespace VocaDb.Model.Service.Queries {
 
 			ctx.Save(comment);
 
-			ctx.AuditLogger.AuditLog("created " + comment, agent);
+			ctx.AuditLogger.AuditLog(string.Format("creating comment for {0}: '{1}'", 
+				entryLinkFactory.CreateEntryLink(entry), 
+				HttpUtility.HtmlEncode(contract.Message)), 
+				agent);
 
 			new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx.OfType<User>());
 
