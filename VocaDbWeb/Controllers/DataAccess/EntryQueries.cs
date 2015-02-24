@@ -37,7 +37,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
-			var artistTextQuery = ArtistSearchTextQuery.Create(query, textQuery.MatchMode); // Can't use the existing words collection here as they are noncanonized
+			var artistTextQuery = ArtistSearchTextQuery.Create(query, nameMatchMode); // Can't use the existing words collection here as they are noncanonized
 
 			return repository.HandleQuery(ctx => {
 
