@@ -221,7 +221,7 @@ namespace VocaDb.Web.Controllers
 			var model = viewModel.EditedArtist;
 
 			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names.All(n => string.IsNullOrEmpty(n.Value))) {
+			if (model.Names.All(n => n == null || string.IsNullOrEmpty(n.Value))) {
 				ModelState.AddModelError("Names", Model.Resources.ArtistValidationErrors.UnspecifiedNames);
 			}
 
