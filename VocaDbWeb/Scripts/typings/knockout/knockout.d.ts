@@ -118,6 +118,7 @@ interface KnockoutBindingContext {
     $parents: any[];
     $root: any;
     $data: any;
+    $rawData: any | KnockoutObservable<any>;
     $index?: KnockoutObservable<number>;
     $parentContext?: KnockoutBindingContext;
 
@@ -343,6 +344,7 @@ interface KnockoutArrayChange<T> {
     status: string;
     value: T;
     index: number;
+    moved?: number;
 }
 
 //////////////////////////////////
