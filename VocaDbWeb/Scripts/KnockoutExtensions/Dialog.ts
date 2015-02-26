@@ -15,7 +15,8 @@ ko.bindingHandlers.dialog = {
                 allBindingsAccessor().dialogVisible(false);
             };
 
-            $(element).dialog(options);
+            var diag = $(element).dialog(options);
+			$(element).data("dialog", diag);
         }, 0);
 
         //handle disposal (not strictly necessary in this scenario)

@@ -13,7 +13,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/knockout-{version}.js",
 				"~/Scripts/knockout.punches.min.js",
 				"~/Scripts/lodash.js", 
-				"~/Scripts/jquery.qtip.js",
+				"~/Scripts/qTip/jquery.qtip.js",
 				"~/Scripts/marked.js"
 			));
 

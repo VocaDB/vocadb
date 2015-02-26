@@ -1599,14 +1599,11 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
-    <Content Include="Scripts\jquery.qtip.css" />
-    <Content Include="Scripts\jquery.qtip.js" />
-    <Content Include="Scripts\jquery.qtip.min.js" />
     <Content Include="Scripts\jquery.tools.min.js" />
     <Content Include="Scripts\jqwidgets27\globalization\globalize.js" />
     <Content Include="Scripts\jqwidgets27\globalization\jquery.glob.cs-CZ.js" />
@@ -2080,6 +2077,10 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\page.js" />
+    <Content Include="Scripts\qTip\jquery.qtip.css" />
+    <Content Include="Scripts\qTip\jquery.qtip.js" />
+    <Content Include="Scripts\qTip\jquery.qtip.min.css" />
+    <Content Include="Scripts\qTip\jquery.qtip.min.js" />
     <Content Include="Scripts\Shared\Messages.js" />
     <Content Include="Scripts\Shared\ReportEntryPopup.js" />
     <Content Include="Scripts\SongList\Edit.js" />
@@ -2449,6 +2450,7 @@
     <Content Include="Views\Discussion\Partials\_ViewTopic.cshtml" />
     <Content Include="Views\Discussion\Partials\_EditTopic.cshtml" />
     <Content Include="Views\Discussion\Partials\_ViewFolders.cshtml" />
+    <Content Include="Scripts\jquery-2.1.3.min.map" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\AliasForSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
