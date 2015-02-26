@@ -112,7 +112,10 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult SongListsForUser(int ignoreSongId) {
+		public ActionResult SongListsForUser(int ignoreSongId = invalidId) {
+
+			if (ignoreSongId == invalidId)
+				return NoId();
 
 			var result = Service.GetSongListsForCurrentUser(ignoreSongId);
 			return LowercaseJson(result);
