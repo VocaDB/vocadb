@@ -4,31 +4,13 @@
 @using VocaDb.Web.Code
 @inherits VocaDbPage
 
-@{
-	var searchObjectType = Html.GlobalSearchObjectType();
-	var searchTerm = Html.GlobalSearchTerm();
-}
-
-@functions {
-
-	string PageTitle {
-		get {
-			if (!string.IsNullOrEmpty(ViewBag.PageTitle))
-				return ViewBag.PageTitle;
-
-			return !string.IsNullOrEmpty(ViewBag.Title) ? ViewBag.Title : string.Empty;
-		}
-	}
-	
-}
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@(!string.IsNullOrEmpty(PageTitle) ? PageTitle + " - " : "")@BrandableStrings.Layout.SiteTitle</title>
+    <title>@(!string.IsNullOrEmpty(PageProperties.PageTitle) ? PageProperties.PageTitle + " - " : "")@BrandableStrings.Layout.SiteTitle</title>
 	<meta name="description" content="@PageProperties.SummarizedDescription" />	
 	<meta name="keywords" content="@BrandableStrings.Layout.Keywords" />
-	<meta name="og:image" content="@ViewContext.Controller.ViewBag.Banner"/>
+	<meta name="og:image" content="@PageProperties.OpenGraph.Image"/>
 
 	<link rel="shortcut icon" href="@Url.Content("~/Content/favicon.ico")" type="image/x-icon" />
 	@Styles.Render("~/Content/css")
@@ -49,7 +31,7 @@
 		    <div class="navbar-inner">
 			    <div id="topBar" class="container">
 				    <div class="brand">@Html.ActionLink(BrandableStrings.Layout.SiteName, "Index", "Home")</div>
-				    @{ Html.RenderPartial("GlobalSearchBox", new VocaDb.Web.Models.GlobalSearchBoxModel(searchObjectType, searchTerm)); }
+				    @{ Html.RenderPartial("GlobalSearchBox", new VocaDb.Web.Models.GlobalSearchBoxModel(PageProperties.GlobalSearchType, string.Empty)); }
 			    </div>
 		    </div>
 	    </div>
@@ -74,8 +56,8 @@
 								</ul>
 	   }
                                         
-							@if (!string.IsNullOrEmpty(ViewBag.Title)) {
-								<h2 class="pageTitle">@ViewBag.Title
+							@if (!string.IsNullOrEmpty(PageProperties.Title)) {
+								<h2 class="pageTitle">@PageProperties.Title
 								@if (!string.IsNullOrEmpty(ViewBag.Subtitle)) {
 									<small>&nbsp;@ViewBag.Subtitle</small>
 		}

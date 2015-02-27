@@ -2,8 +2,6 @@
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Domain.Images
-@using VocaDb.Model.Helpers
-@using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models;
 @using R = ViewRes.Album;
@@ -11,30 +9,16 @@
 @inherits VocaDb.Web.Code.VocaDbPage<AlbumDetails>
 		   
 @{
-	ViewBag.Title = Model.Name;
-
-	string titleAndArtist;
-	if (!string.IsNullOrEmpty(Model.ArtistString)) {
-		titleAndArtist = string.Format("{0} - {1}", Model.Name, Model.ArtistString);
-	} else {
-		titleAndArtist = Model.Name;
-	}
-	ViewBag.PageTitle = titleAndArtist;
-	
-	ViewBag.Subtitle = Model.ArtistString + " (" + Translate.DiscTypeName(Model.DiscType) + ")";
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Albums, "Index") };
-	ViewContext.Controller.ViewBag.Banner = VocaUriBuilder.CreateAbsolute(Url.Action("CoverPicture", new { id = Model.Id }));
-
-	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new {id = Model.Id})).ToString();
-	
+	var url = PageProperties.CanonicalUrl;
 }
 
 @section Head {
 	@HtmlHelpers.OpenGraphMetaTags(
 		url: url, 
-		title: titleAndArtist + " (" + Translate.DiscTypeName(Model.DiscType) + ")", 
-		description: Model.Description.Original, 
-		type: "music.album")
+		title: PageProperties.OpenGraph.Title,
+		description: PageProperties.OpenGraph.Description, 
+		type: PageProperties.OpenGraph.Type)
 	<link rel="canonical" href="@url" />	
 	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
 }

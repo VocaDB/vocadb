@@ -27,6 +27,15 @@ namespace VocaDb.Model.Domain.Globalization {
 			}
 		}
 
+		/// <summary>
+		/// Primarily gets English name, Original if English is not specified.
+		/// </summary>
+		public virtual string EnglishOrOriginal {
+			get {
+				return GetBestMatch(ContentLanguagePreference.English);
+			}
+		}
+
 		public virtual bool HasEnglish {
 			get {
 				return !string.IsNullOrEmpty(English);

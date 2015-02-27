@@ -3,8 +3,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
-	var searchObjectType = Html.GlobalSearchObjectType();
-	var searchTerm = Html.GlobalSearchTerm();	
+	var searchObjectType = PageProperties.GlobalSearchType;
 }
 
 <!-- Common scripts -->
@@ -39,14 +38,14 @@
     
     var entryTypeTranslations = @ResourceHelpers.ToJSON(Resources.EntryTypeNames.ResourceManager);
     var topBarData = @Html.Raw(JsonHelpers.Serialize(new {
-		searchObjectType = searchObjectType.ToString(), searchTerm
+		searchObjectType = searchObjectType.ToString()
 	}));
 	var hasUnreadMessages = @(Login.Manager.IsLoggedIn && Login.User.UnreadMessagesCount > 0 ? "true" : "false");
 	var unreadMessagesCount = @(Login.Manager.IsLoggedIn ? Login.User.UnreadMessagesCount : 0);
 	var getNewReportCount = @(Login.CanManageEntryReports ? "true" : "false");
 	
     var topBarViewModel = new vdb.viewModels.TopBarViewModel(
-        entryTypeTranslations, topBarData.searchObjectType, topBarData.searchTerm, unreadMessagesCount, 
+        entryTypeTranslations, topBarData.searchObjectType, "", unreadMessagesCount, 
 	    getNewReportCount, entryReportRepository, userRepository);
     
     var topBar = $("#topBar")[0];

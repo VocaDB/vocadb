@@ -643,6 +643,7 @@
     <Compile Include="Service\Exceptions\NoPasswordException.cs" />
     <Compile Include="Service\Exceptions\RequestNotValidException.cs" />
     <Compile Include="Service\Exceptions\TooFastRegistrationException.cs" />
+    <Compile Include="Service\ExtSites\AlbumDescriptionGenerator.cs" />
     <Compile Include="Service\Helpers\AlbumForUserQueryableExtender.cs" />
     <Compile Include="Service\Helpers\AlbumQueryableExtender.cs" />
     <Compile Include="Service\Helpers\ArtistForAlbumQueryableExtender.cs" />

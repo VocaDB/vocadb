@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Resources;
 using Newtonsoft.Json;
@@ -19,6 +20,10 @@ namespace VocaDb.Web.Helpers.Support {
 
 		private string GetName(TEnum val, ResourceManager res) {
 			return res.GetString(val.ToString());
+		}
+
+		private string GetName(TEnum val, ResourceManager res, CultureInfo cultureInfo) {
+			return res.GetString(val.ToString(), cultureInfo);
 		}
 
 		public TranslateableEnum(Func<ResourceManager> resourceManager) {
@@ -69,6 +74,10 @@ namespace VocaDb.Web.Helpers.Support {
 
 		public string GetName(TEnum val) {
 			return GetName(val, ResourceManager);
+		}
+
+		public string GetName(TEnum val, CultureInfo cultureInfo) {
+			return GetName(val, ResourceManager, cultureInfo);
 		}
 
 		public Dictionary<TEnum, string> GetValuesAndNames(TEnum[] values) {

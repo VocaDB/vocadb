@@ -14,9 +14,13 @@ using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 using System.Drawing;
+using System.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Web.Models.Album;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.Service.ExtSites;
+using VocaDb.Model.Utils;
+using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Controllers
 {
@@ -24,16 +28,18 @@ namespace VocaDb.Web.Controllers
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly AlbumDescriptionGenerator albumDescriptionGenerator;
 	    private readonly AlbumQueries queries;
 	    private readonly UserQueries userQueries;
 
 		private AlbumService Service { get; set; }
 
-		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries) {
+		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries, AlbumDescriptionGenerator albumDescriptionGenerator) {
 
 			Service = service;
 			this.queries = queries;
 			this.userQueries = userQueries;
+			this.albumDescriptionGenerator = albumDescriptionGenerator;
 
 		}
 
@@ -111,10 +117,31 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			WebHelper.VerifyUserAgent(Request);
-			SetSearchEntryType(EntryType.Album);
 
 			var model = Service.GetAlbumDetails(id, WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty);
-			PageProperties.Description = model.Description.Original;
+
+			var prop = PageProperties;
+			prop.Title = model.Name;
+			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			prop.GlobalSearchType = EntryType.Album;
+			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("CoverPicture", new { id })).ToString();
+			prop.OpenGraph.Type = OpenGraphTypes.Album;
+
+			string titleAndArtist;
+			if (!string.IsNullOrEmpty(model.ArtistString)) {
+				titleAndArtist = string.Format("{0} - {1}", model.Name, model.ArtistString);
+			} else {
+				titleAndArtist = model.Name;
+			}
+
+			PageProperties.OpenGraph.Title =  string.Format("{0} ({1})", titleAndArtist, Translate.DiscTypeName(model.DiscType));
+
+			PageProperties.PageTitle = titleAndArtist;
+			PageProperties.Subtitle = string.Format("{0} ({1})", model.ArtistString, Translate.DiscTypeName(model.DiscType));
+
+			prop.Description = !model.Description.IsEmpty ? 
+				MarkdownHelper.StripMarkdown(model.Description.EnglishOrOriginal) :
+				albumDescriptionGenerator.GenerateDescription(model, d => Translate.DiscTypeNames.GetName(d, CultureInfo.InvariantCulture));
 
             return View(new AlbumDetails(model));
 

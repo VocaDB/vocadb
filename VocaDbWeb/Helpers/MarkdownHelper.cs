@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using MarkdownSharp;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Helpers {
 
@@ -21,6 +22,16 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
+		// TODO (PERF): this should be cached or at least not repeated
+		public static string StripMarkdown(string text) {
+			
+			// Transform Markdown into HTML, then strip HTML
+			return HtmlHelperFunctions.StripHtml(TranformMarkdown(text));
+
+		}
+
 	}
+
+	
 
 }

@@ -13,6 +13,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
+using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Repositories.NHibernate;
@@ -63,6 +64,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<VdbConfigManager>().AsSelf().SingleInstance();
 			builder.RegisterType<GravatarUserIconFactory>().As<IUserIconFactory>();
 			builder.RegisterType<EntryUrlParser>().As<IEntryUrlParser>().SingleInstance();
+			builder.RegisterType<AlbumDescriptionGenerator>().AsSelf().SingleInstance();
 			builder.Register(x => new IPRuleManager(LoadBlockedIPs(x))).AsSelf().SingleInstance();
 			builder.Register(_ => MemoryCache.Default).As<ObjectCache>().ExternallyOwned(); // Disable dispose
 

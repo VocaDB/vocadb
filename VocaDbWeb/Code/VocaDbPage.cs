@@ -27,6 +27,12 @@ namespace VocaDb.Web.Code {
 			}
 		}
 
+		public PagePropertiesData PageProperties {
+			get {
+				return PagePropertiesData.Get(ViewBag);
+			}
+		}
+
 		/// <summary>
 		/// Relative path to application root.
 		/// 

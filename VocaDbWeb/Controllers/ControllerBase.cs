@@ -308,7 +308,7 @@ namespace VocaDb.Web.Controllers {
 
 		protected void SetSearchEntryType(EntryType entryType) {
 
-			ViewData["GlobalSearchObjectType"] = entryType;
+			PageProperties.GlobalSearchType = entryType;
 
 		}
 

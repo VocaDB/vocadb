@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Helpers;
+﻿using VocaDb.Model.Domain;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Code {
 
@@ -9,12 +10,17 @@ namespace VocaDb.Web.Code {
 
 		public static PagePropertiesData Get(dynamic viewBag) {
 
-			return viewBag.PageProperties ?? (viewBag.PageProperties = new PagePropertiesData());
+			return viewBag.PageProperties ?? (viewBag.PageProperties = new PagePropertiesData(viewBag));
 
 		}
 
-		public PagePropertiesData() {
+		private readonly dynamic viewBag;
+
+		public PagePropertiesData(dynamic viewBag) {
 			AddMainScripts = true;
+			GlobalSearchType = EntryType.Undefined;
+			this.viewBag = viewBag;
+			OpenGraph = new OpenGraphModel(this);
 		}
 
 		/// <summary>
@@ -22,16 +28,35 @@ namespace VocaDb.Web.Code {
 		/// </summary>
 		public bool AddMainScripts { get; set; }
 
+		public string CanonicalUrl { get; set; }
+
 		/// <summary>
-		/// Description appears in both the description meta field and og:description (for Facebook).
+		/// Description meta field, also the default value for og:description.
+		/// This should be plain text (no HTML or Markdown).
 		/// </summary>
 		public string Description { get; set; }
+
+		public EntryType GlobalSearchType { get; set; }
+
+		public OpenGraphModel OpenGraph { get; private set; }
 
 		/// <summary>
 		/// Page title is what appears in the browser title bar.
 		/// By default this is the same as Title.
 		/// </summary>
-		public string PageTitle { get; set; }
+		public string PageTitle {
+			get {
+				
+				if (!string.IsNullOrEmpty(ViewBag.PageTitle))
+					return ViewBag.PageTitle;
+
+				return (string)ViewBag.Title ?? string.Empty;
+
+			}
+			set {
+				ViewBag.PageTitle = value;
+			}
+		}
 
 		/// <summary>
 		/// Short page description 
@@ -42,6 +67,7 @@ namespace VocaDb.Web.Code {
 				if (string.IsNullOrEmpty(Description))
 					return string.Empty;
 
+				// TODO (PERF): this should be cached. Actually, the original description isn't even used.
 				return Description
 					.Trim()
 					.Summarize(30, 300);
@@ -52,12 +78,71 @@ namespace VocaDb.Web.Code {
 		/// <summary>
 		/// Subtitle appears next to the main Title.
 		/// </summary>
-		public string Subtitle { get; set; }
+		public string Subtitle {
+			get { return ViewBag.Subtitle; }
+			set { ViewBag.Subtitle = value; }
+		}
 
 		/// <summary>
 		/// Title is what appears at the top of the page.
 		/// </summary>
-		public string Title { get; set; }
+		public string Title {
+			get { return ViewBag.Title; }
+			set { ViewBag.Title = value; }
+		}
+
+		public dynamic ViewBag {
+			get { return viewBag; }
+		}
 
 	}
+
+	public class OpenGraphModel {
+
+		private string description;
+		private string image;
+		private readonly PagePropertiesData pageProperties;
+		private string title;
+
+		public OpenGraphModel(PagePropertiesData pageProperties) {
+			this.pageProperties = pageProperties;
+		}
+
+		public string Description {
+			get {
+				return !string.IsNullOrEmpty(description) ? description : pageProperties.Description;
+			}
+			set {
+				description = value;
+			}
+		}
+
+		public string Image {
+			get {
+				return !string.IsNullOrEmpty(image) ? image : pageProperties.ViewBag.Banner;
+			}
+			set {
+				image = value;
+			}
+		}
+
+		public string Title {
+			get {
+				return !string.IsNullOrEmpty(title) ? title : pageProperties.Title;
+			}
+			set {
+				title = value;
+			}
+		}
+
+		public string Type { get; set; }
+
+	}
+
+	public static class OpenGraphTypes {
+		
+		public const string Album = "music.album";
+
+	}
+
 }
