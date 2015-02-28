@@ -14,6 +14,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model;
+using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
@@ -28,6 +29,10 @@ namespace VocaDb.Web.Controllers {
 		protected static readonly TimeSpan pictureCacheDuration = TimeSpan.FromDays(30);
 		protected const int pictureCacheDurationSec = 30 * 24 * 60 * 60;
 		protected const int statsCacheDurationSec = 24 * 60 * 60;
+
+		protected ControllerBase() {
+			PageProperties.OpenGraph.Image = VocaUriBuilder.CreateAbsolute("/Content/vocaDB-title-large.png").ToString();			
+		}
 
 		protected string Hostname {
 			get {
@@ -310,6 +315,12 @@ namespace VocaDb.Web.Controllers {
 
 			PageProperties.GlobalSearchType = entryType;
 
+		}
+
+		protected VocaUrlMapper UrlMapper {
+			get {
+				return new VocaUrlMapper(WebHelper.IsSSL(Request));
+			}
 		}
 
 		protected ActionResult Xml<T>(T obj) where T : class {

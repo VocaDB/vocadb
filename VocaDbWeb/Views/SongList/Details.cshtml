@@ -11,9 +11,9 @@
 @{
 	
 	if (Model.FeaturedCategory == SongListFeaturedCategory.Nothing) {
-		ViewBag.PageTitle = string.Format("{0} - {1}", R.DetailsStrings.SongList, Model.Name);
-		ViewBag.Title = Model.Name;
-		ViewBag.SubTitle = R.DetailsStrings.SongList;
+		PageProperties.PageTitle = string.Format("{0} - {1}", R.DetailsStrings.SongList, Model.Name);
+		PageProperties.Title = Model.Name;
+		PageProperties.Subtitle = R.DetailsStrings.SongList;
 		ViewBag.Parents = new[] {
 			Html.ActionLink(Model.Author.Name, "Details", "User", new {id = Model.Author.Id}, null)
 		};
@@ -21,9 +21,9 @@
 
 		var categoryName = Translate.SongListFeaturedCategoryNames[Model.FeaturedCategory];
 
-		ViewBag.PageTitle = string.Format("{0} - {1}", categoryName, Model.Name);
-		ViewBag.Title = Model.Name;
-		ViewBag.SubTitle = categoryName;
+		PageProperties.PageTitle = string.Format("{0} - {1}", categoryName, Model.Name);
+		PageProperties.Title = Model.Name;
+		PageProperties.Subtitle = categoryName;
 		
 		ViewBag.Parents = new[] {
 			Html.ActionLink(categoryName, "Featured", "SongList")
@@ -33,18 +33,15 @@
 	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original) ?? Url.EntryImageOld(Model.Thumb, ImageSize.Thumb);
 	if (!string.IsNullOrEmpty(thumbUrl)) {
-		ViewContext.Controller.ViewBag.Banner = thumbUrl;
+		PageProperties.OpenGraph.Image = thumbUrl;
 	}
 	
-	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id = Model.Id })).ToString();
+	var url = PageProperties.CanonicalUrl;
 	
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(
-		url: url, 
-		description: Model.Description
-	)
+	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
 	<link rel="canonical" href="@url" />	
 }
 

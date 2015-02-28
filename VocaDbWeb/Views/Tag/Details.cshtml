@@ -8,21 +8,20 @@
 
 @{
 
-	ViewBag.PageTitle = R.TagDetails + " - " + Model.Name;
-	ViewBag.Title = Model.Name;
-	ViewBag.SubTitle = R.Tag;
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Tags, "Index") };
 
 	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original);
 	if (!string.IsNullOrEmpty(thumbUrl)) {
-		ViewContext.Controller.ViewBag.Banner = thumbUrl;
+		PageProperties.OpenGraph.Image = thumbUrl;
 	}
 
-	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id = Model.Name })).ToString();
+	var url = PageProperties.CanonicalUrl;
 	var descriptionHtml = MarkdownHelper.TranformMarkdown(Model.Description);
 	var descriptionStripped = HtmlHelperFunctions.StripHtml(descriptionHtml);
-	
+
+	PageProperties.Description = descriptionStripped;
+		
 	var related = new List<Tuple<string, string>>();
 
 	if (Model.Parent != null) {
@@ -35,10 +34,7 @@
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(
-		url: url,
-		description: descriptionStripped
-	)
+	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
 	<link rel="canonical" href="@url" />
 }
 

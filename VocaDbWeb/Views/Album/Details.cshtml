@@ -14,11 +14,7 @@
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(
-		url: url, 
-		title: PageProperties.OpenGraph.Title,
-		description: PageProperties.OpenGraph.Description, 
-		type: PageProperties.OpenGraph.Type)
+	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
 	<link rel="canonical" href="@url" />	
 	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
 }

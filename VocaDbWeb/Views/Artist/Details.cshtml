@@ -11,20 +11,12 @@
 @inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
 
 @{
-	ViewBag.Title = Model.Name;
-	ViewBag.Subtitle = "(" + Translate.ArtistTypeName(Model.ArtistType) + ")";
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Artists, "Index") };
-	ViewContext.Controller.ViewBag.Banner = VocaUriBuilder.CreateAbsolute(Url.Action("Picture", new { id = Model.Id }));
-
-	var url = UrlMapper.FullAbsolute(Url.Action("Details", new {id = Model.Id}));
-	
+	var url = PageProperties.CanonicalUrl;	
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(
-		url: url, 
-		title: Model.Name + " (" + Translate.ArtistTypeName(Model.ArtistType) + ")", 
-		description: Model.Description.Original)
+	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
 	<link rel="canonical" href="@url" />
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 }

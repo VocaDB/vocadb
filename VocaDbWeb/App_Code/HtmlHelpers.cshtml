@@ -1,6 +1,6 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
-@using MarkdownSharp
 @using VocaDb.Model.Helpers
+@using VocaDb.Web.Code
 @using VocaDb.Web.Helpers;
 
 @helper ConvertNewlinesToBreaks(string text) {
@@ -22,14 +22,14 @@
 }
 
 @helper MetaTag(string name, string content) {
-	if (content != null) {
+	if (!string.IsNullOrEmpty(content)) {
 		<meta name="@name" content="@content" />
 	}
 }
 
-@helper OpenGraphMetaTags(string url = null, string title = null, string description = null, string type = null) {
-	@MetaTag("og:url", url)
-	@MetaTag("og:title", title)
-	@MetaTag("og:description", description.Summarize(20, 400))
-	@MetaTag("og:type", type)
+@helper OpenGraphMetaTags(PagePropertiesData pageProperties) {
+	@MetaTag("og:url", pageProperties.CanonicalUrl)
+	@MetaTag("og:title", pageProperties.OpenGraph.Title)
+	@MetaTag("og:description", pageProperties.OpenGraph.Description)
+	@MetaTag("og:type", pageProperties.OpenGraph.Type)
 }

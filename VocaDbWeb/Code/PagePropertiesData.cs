@@ -108,15 +108,21 @@ namespace VocaDb.Web.Code {
 			this.pageProperties = pageProperties;
 		}
 
+		/// <summary>
+		/// og:description meta field value. Defaults to summarized description meta field.
+		/// </summary>
 		public string Description {
 			get {
-				return !string.IsNullOrEmpty(description) ? description : pageProperties.Description;
+				return !string.IsNullOrEmpty(description) ? description : pageProperties.SummarizedDescription;
 			}
 			set {
 				description = value;
 			}
 		}
 
+		/// <summary>
+		/// og:image meta field value. Defaults to main image set for the page.
+		/// </summary>
 		public string Image {
 			get {
 				return !string.IsNullOrEmpty(image) ? image : pageProperties.ViewBag.Banner;
@@ -126,6 +132,9 @@ namespace VocaDb.Web.Code {
 			}
 		}
 
+		/// <summary>
+		/// og:title meta field value. Defaults to page title.
+		/// </summary>
 		public string Title {
 			get {
 				return !string.IsNullOrEmpty(title) ? title : pageProperties.Title;
@@ -135,6 +144,9 @@ namespace VocaDb.Web.Code {
 			}
 		}
 
+		/// <summary>
+		/// og:type meta field value.
+		/// </summary>
 		public string Type { get; set; }
 
 	}
@@ -142,6 +154,7 @@ namespace VocaDb.Web.Code {
 	public static class OpenGraphTypes {
 		
 		public const string Album = "music.album";
+		public const string Song = "music.song";
 
 	}
 

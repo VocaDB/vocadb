@@ -8,30 +8,16 @@
 @using VocaDb.Model.Domain.Security;
 @using R = ViewRes.Song;
 @using Res = ViewRes.Song.DetailsStrings;
+
 @{	
 	
-	ViewBag.Title = Model.Name;
-
-	string titleAndArtist;
-	if (!string.IsNullOrEmpty(Model.ArtistString)) {
-		titleAndArtist = string.Format("{0} - {1}", Model.Name, Model.ArtistString);
-	} else {
-		titleAndArtist = Model.Name;
-	}
-	ViewBag.PageTitle = titleAndArtist;
-	
-	ViewBag.Subtitle = string.Format("{0} ({1})", Model.ArtistString, Translate.SongTypeNames[Model.SongType]);
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null) };
 
 	var showAlternateVersions = 3;
-
-	if (!string.IsNullOrEmpty(Model.ThumbUrlMaxSize)) {
-		ViewContext.Controller.ViewBag.Banner = Model.ThumbUrlMaxSize;
-	}
 	
 	var lyricsLanguages = string.Join(", ", Model.Lyrics.Select(l => l.Language).Distinct().Select(l => Translate.ContentLanguageSelectionName(l)));
 
-	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id = Model.Id})).ToString();
+	var url = PageProperties.CanonicalUrl;
 	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
 	var favoriteText = eeLoveIt ? "Love It!" : Res.AddToFavorites;
 	
@@ -57,11 +43,7 @@
 	<link rel="alternate" type="application/json+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "json" }))" title="@Model.Name" />	
 	<link rel="alternate" type="text/xml+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "xml" }))" title="@Model.Name" />
 	<link rel="canonical" href="@url" />
-	@HtmlHelpers.OpenGraphMetaTags(
-		url: url, 
-		title: string.Format("{0} ({1})", titleAndArtist, Translate.SongTypeNames[Model.SongType]), 
-		description: Model.Notes.Original, 
-		type: "music.song")
+	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
 }
 
 @section Toolbar {

@@ -15,9 +15,9 @@
 <html>
 <head>
 	<title>@BrandableStrings.Layout.SiteTitle</title>
-	<meta name="description" content="@PagePropertiesData.Get(ViewBag).SummarizedDescription" />
+	<meta name="description" content="@PageProperties.SummarizedDescription" />
 	<meta name="keywords" content="Vocaloid, VocaDB, Vocaloid database, Hatsune Miku" />
-	<meta name="og:image" content="@ViewContext.Controller.ViewBag.Banner" />
+	<meta name="og:image" content="@PageProperties.OpenGraph.Image" />
 	<link rel="shortcut icon" href="@Url.Content("~/Content/favicon.ico")" type="image/x-icon" />
 	@Styles.Render("~/Content/css")
 	<link href="@Url.Content("~/Content/Styles/Icons.css")" rel="stylesheet" type="text/css" />

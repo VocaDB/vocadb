@@ -22,6 +22,7 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
+using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers
@@ -131,10 +132,31 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			WebHelper.VerifyUserAgent(Request);
-			SetSearchEntryType(EntryType.Song);
 
 			var model = new SongDetails(Service.GetSongDetails(id, albumId, WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty));
-			PageProperties.Description = model.Notes.Original;
+
+			var prop = PageProperties;
+			prop.GlobalSearchType = EntryType.Song;
+			prop.Title = model.Name;
+			prop.Description = MarkdownHelper.StripMarkdown(model.Notes.Original);
+
+			string titleAndArtist;
+			if (!string.IsNullOrEmpty(model.ArtistString)) {
+				titleAndArtist = string.Format("{0} - {1}", model.Name, model.ArtistString);
+			} else {
+				titleAndArtist = model.Name;
+			}
+			prop.PageTitle = titleAndArtist;
+
+			prop.Subtitle = string.Format("{0} ({1})", model.ArtistString, Translate.SongTypeNames[model.SongType]);
+
+			if (!string.IsNullOrEmpty(model.ThumbUrlMaxSize)) {
+				prop.OpenGraph.Image = model.ThumbUrlMaxSize;
+			}
+
+			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			prop.OpenGraph.Title = string.Format("{0} ({1})", titleAndArtist, Translate.SongTypeNames[model.SongType]);
+			prop.OpenGraph.Type = OpenGraphTypes.Song;
 
             return View(model);
 

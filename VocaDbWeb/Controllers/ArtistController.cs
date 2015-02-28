@@ -12,6 +12,7 @@ using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Controllers.DataAccess;
 using System.Drawing;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Utils;
 using VocaDb.Web.Models.Artist;
 using VocaDb.Web.Helpers;
 
@@ -118,8 +119,18 @@ namespace VocaDb.Web.Controllers
 				return HttpNotFound();
 
 			WebHelper.VerifyUserAgent(Request);
+
 			var model = queries.GetDetails(id);
-			PageProperties.Description = model.Description.Original;
+
+			var prop = PageProperties;
+			prop.GlobalSearchType = EntryType.Artist;
+			prop.Title = model.Name;
+			prop.Subtitle = string.Format("({0})", Translate.ArtistTypeName(model.ArtistType));
+			prop.Description = MarkdownHelper.StripMarkdown(model.Description.Original);
+			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new {id }));
+			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("Picture", new { id })).ToString();
+			prop.OpenGraph.Title = string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType));
+
             return View(model);
 
         }

@@ -3,6 +3,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Rankings;
+using VocaDb.Model.Utils;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Models.SongLists;
 
@@ -71,6 +72,9 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var contract = queries.GetSongList(id);
+
+			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			PageProperties.Description = contract.Description;
 
 			return View(contract);
 

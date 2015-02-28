@@ -1,5 +1,8 @@
 ﻿using System.Web.Mvc;
+using ViewRes.Tag;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain;
+using VocaDb.Model.Utils;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Tag;
@@ -35,6 +38,12 @@ namespace VocaDb.Web.Controllers
 
 			if (contract == null)
 				return HttpNotFound();
+
+			PageProperties.GlobalSearchType = EntryType.Tag;
+			PageProperties.PageTitle = string.Format("{0} - {1}", DetailsStrings.TagDetails, contract.Name);
+			PageProperties.Title = contract.Name;
+			PageProperties.Subtitle = DetailsStrings.Tag;
+			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 
 			return View(contract);
 
