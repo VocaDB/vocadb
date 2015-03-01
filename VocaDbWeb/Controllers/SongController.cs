@@ -23,6 +23,7 @@ using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers
@@ -31,20 +32,20 @@ namespace VocaDb.Web.Controllers
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly MarkdownParser markdownParser;
 		private readonly SongQueries queries;
 	    private readonly SongService service;
 	    private readonly SongListQueries songListQueries;
-		private readonly UserQueries userQueries;
 
 		private SongService Service {
 			get { return service; }
 		}
 
-		public SongController(SongService service, SongQueries queries, SongListQueries songListQueries, UserQueries userQueries) {
+		public SongController(SongService service, SongQueries queries, SongListQueries songListQueries, MarkdownParser markdownParser) {
 			this.service = service;
 			this.queries = queries;
 			this.songListQueries = songListQueries;
-			this.userQueries = userQueries;
+			this.markdownParser = markdownParser;
 		}
 
 		// Used from the song page
@@ -138,7 +139,7 @@ namespace VocaDb.Web.Controllers
 			var prop = PageProperties;
 			prop.GlobalSearchType = EntryType.Song;
 			prop.Title = model.Name;
-			prop.Description = MarkdownHelper.StripMarkdown(model.Notes.Original);
+			prop.Description = markdownParser.GetPlainText(model.Notes.EnglishOrOriginal);
 
 			string titleAndArtist;
 			if (!string.IsNullOrEmpty(model.ArtistString)) {

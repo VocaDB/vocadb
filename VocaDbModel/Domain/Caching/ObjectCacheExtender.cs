@@ -26,6 +26,10 @@ namespace VocaDb.Model.Domain.Caching {
 			return new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now + TimeSpan.FromHours(hours) };
 		}
 
+		public static CacheItemPolicy Never() {
+			return new CacheItemPolicy();
+		}
+
 	}
 
 }

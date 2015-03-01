@@ -1,6 +1,7 @@
 ﻿using System.Web.WebPages;
 using System.Web.Mvc;
 using VocaDb.Model.Service;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code {
@@ -16,6 +17,10 @@ namespace VocaDb.Web.Code {
 		// Workaround - exposes the MVC HtmlHelper instead of the normal helper
 		public static new HtmlHelper Html {
 			get { return ((WebViewPage)WebPageContext.Current.Page).Html; }
+		}
+
+		public static MarkdownParser MarkdownParser {
+			get { return DependencyResolver.Current.GetService<MarkdownParser>(); }
 		}
 
 		public static string RequestUrlScheme {

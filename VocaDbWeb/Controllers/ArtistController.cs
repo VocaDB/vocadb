@@ -13,6 +13,7 @@ using VocaDb.Web.Controllers.DataAccess;
 using System.Drawing;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Models.Artist;
 using VocaDb.Web.Helpers;
 
@@ -25,12 +26,12 @@ namespace VocaDb.Web.Controllers
 
 		private readonly ArtistQueries queries;
 		private readonly ArtistService service;
-		private readonly UserQueries userQueries;
+		private readonly MarkdownParser markdownParser;
 
-		public ArtistController(ArtistService service, ArtistQueries queries, UserQueries userQueries) {
+		public ArtistController(ArtistService service, ArtistQueries queries, MarkdownParser markdownParser) {
 			this.service = service;
 			this.queries = queries;
-			this.userQueries = userQueries;
+			this.markdownParser = markdownParser;
 		}
 
     	private ArtistService Service {
@@ -126,7 +127,7 @@ namespace VocaDb.Web.Controllers
 			prop.GlobalSearchType = EntryType.Artist;
 			prop.Title = model.Name;
 			prop.Subtitle = string.Format("({0})", Translate.ArtistTypeName(model.ArtistType));
-			prop.Description = MarkdownHelper.StripMarkdown(model.Description.Original);
+			prop.Description = markdownParser.GetPlainText(model.Description.EnglishOrOriginal);
 			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new {id }));
 			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("Picture", new { id })).ToString();
 			prop.OpenGraph.Title = string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType));

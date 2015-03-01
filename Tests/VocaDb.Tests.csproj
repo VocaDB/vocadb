@@ -179,6 +179,7 @@
     <Compile Include="TestSupport\ResourceHelper.cs" />
     <Compile Include="Utils\UrlFriendlyNameFactoryTests.cs" />
     <Compile Include="Web\Code\EntryAnchorFactoryTests.cs" />
+    <Compile Include="Web\Code\MarkdownParserTests.cs" />
     <Compile Include="Web\Code\TimeAgoStringBuilderTests.cs" />
     <Compile Include="Web\Controllers\AlbumControllerTests.cs" />
     <Compile Include="Web\Controllers\ArtistControllerTests.cs" />

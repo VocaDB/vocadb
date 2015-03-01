@@ -1,5 +1,4 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
-@using VocaDb.Model.Helpers
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers;
 
@@ -18,7 +17,7 @@
 
 @* Transforms Markdown-formatted text into HTML. The input will be sanitized for any HTML tags first. *@
 @helper FormatMarkdown(string text) {
-	@Html.Raw(MarkdownHelper.TranformMarkdown(text))
+	@Html.Raw(MarkdownParser.GetHtml(text))
 }
 
 @helper MetaTag(string name, string content) {

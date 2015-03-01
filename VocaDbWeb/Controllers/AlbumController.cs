@@ -21,6 +21,7 @@ using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Markdown;
 
 namespace VocaDb.Web.Controllers
 {
@@ -29,17 +30,20 @@ namespace VocaDb.Web.Controllers
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly AlbumDescriptionGenerator albumDescriptionGenerator;
+		private readonly MarkdownParser markdownParser;
 	    private readonly AlbumQueries queries;
 	    private readonly UserQueries userQueries;
 
 		private AlbumService Service { get; set; }
 
-		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries, AlbumDescriptionGenerator albumDescriptionGenerator) {
+		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries, AlbumDescriptionGenerator albumDescriptionGenerator,
+			MarkdownParser markdownParser) {
 
 			Service = service;
 			this.queries = queries;
 			this.userQueries = userQueries;
 			this.albumDescriptionGenerator = albumDescriptionGenerator;
+			this.markdownParser = markdownParser;
 
 		}
 
@@ -140,7 +144,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Subtitle = string.Format("{0} ({1})", model.ArtistString, Translate.DiscTypeName(model.DiscType));
 
 			prop.Description = !model.Description.IsEmpty ? 
-				MarkdownHelper.StripMarkdown(model.Description.EnglishOrOriginal) :
+				markdownParser.GetPlainText(model.Description.EnglishOrOriginal) :
 				albumDescriptionGenerator.GenerateDescription(model, d => Translate.DiscTypeNames.GetName(d, CultureInfo.InvariantCulture));
 
             return View(new AlbumDetails(model));

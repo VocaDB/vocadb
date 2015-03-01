@@ -842,6 +842,7 @@
     <Compile Include="Code\IdNotNumberConstraint.cs" />
     <Compile Include="Code\IPropertyBinder.cs" />
     <Compile Include="Code\JsonNetResult.cs" />
+    <Compile Include="Code\Markdown\MarkdownParser.cs" />
     <Compile Include="Code\MenuPage.cs" />
     <Compile Include="Code\PagePropertiesData.cs" />
     <Compile Include="Code\PropertyModelBinder.cs" />

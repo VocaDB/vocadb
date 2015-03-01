@@ -22,6 +22,7 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Services;
@@ -65,6 +66,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<GravatarUserIconFactory>().As<IUserIconFactory>();
 			builder.RegisterType<EntryUrlParser>().As<IEntryUrlParser>().SingleInstance();
 			builder.RegisterType<AlbumDescriptionGenerator>().AsSelf().SingleInstance();
+			builder.RegisterType<MarkdownParser>().AsSelf();
 			builder.Register(x => new IPRuleManager(LoadBlockedIPs(x))).AsSelf().SingleInstance();
 			builder.Register(_ => MemoryCache.Default).As<ObjectCache>().ExternallyOwned(); // Disable dispose
 
