@@ -130,7 +130,7 @@
     <value>Default</value>
   </data>
   <data name="Distributor" xml:space="preserve">
-    <value>Distributor</value>
+    <value>配給</value>
   </data>
   <data name="Illustrator" xml:space="preserve">
     <value>イラスト</value>
@@ -148,12 +148,21 @@
     <value>その他</value>
   </data>
   <data name="Publisher" xml:space="preserve">
-    <value>Publisher</value>
+    <value>出版</value>
   </data>
   <data name="Vocalist" xml:space="preserve">
     <value>ボーカル</value>
   </data>
   <data name="VoiceManipulator" xml:space="preserve">
     <value>調声</value>
+  </data>
+  <data name="Chorus" xml:space="preserve">
+    <value>コーラス</value>
+  </data>
+  <data name="Encoder" xml:space="preserve">
+    <value>エンコード</value>
+  </data>
+  <data name="Mixer" xml:space="preserve">
+    <value>ミキシング</value>
   </data>
 </root>
