@@ -121,7 +121,7 @@
     <value>この曲に携わるプロデューサーとボーカル（VOCALOID等）を追加して下さい。</value>
   </data>
   <data name="ArtistHelp" xml:space="preserve">
-    <value>アーティストがデータベースに登録されているか予め検索し、されてない場合は曲登録の前に追加しておくことをお勧めします。</value>
+    <value>アーティストがデータベースに登録されているか予め検索し、登録されてない場合は曲登録の前にアーティストを登録しておくことをお勧めします。</value>
   </data>
   <data name="ArtistsInfo" xml:space="preserve">
     <value>アーティスト（１つは記入して下さい）</value>
