@@ -3137,6 +3137,7 @@
     <EmbeddedResource Include="Resources\Other\PagedListStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistForAlbumEditRowStrings.Designer.cs</LastGenOutput>
