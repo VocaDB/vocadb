@@ -97,6 +97,10 @@ namespace VocaDb.Model.DataContracts.Artists {
 		[DataMember]
 		public UserContract[] OwnerUsers { get; set; }
 
+		/// <summary>
+		/// Personal stats for the logged in user. 
+		/// Can be null if the user isn't logged in.
+		/// </summary>
 		[DataMember]
 		public PersonalArtistStatsContract PersonalStats { get; set; }
 

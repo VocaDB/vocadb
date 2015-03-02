@@ -6,6 +6,7 @@
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Models.Search
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
@@ -188,7 +189,8 @@
 						@:@string.Format(Res.AverageAlbumRating, Model.SharedStats.AlbumRatingAverage)
 					}
 					@if (Model.PersonalStats != null && Model.PersonalStats.SongRatingCount > 0) {
-						@:@string.Format(Res.YouHaveRatedSongs, Model.PersonalStats.SongRatingCount)
+						@Html.ActionLink(string.Format(Res.YouHaveRatedSongs, Model.PersonalStats.SongRatingCount), "Index", "Search",
+							new SearchIndexViewModel(EntryType.Song) { ArtistId = Model.Id, OnlyRatedSongs = true }, null);
 					}
 					@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 						<p>

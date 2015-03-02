@@ -22,6 +22,7 @@ module vdb.viewModels.search {
 			childVoicebanks: boolean,
 			songType: string,
 			onlyWithPVs: boolean,
+			onlyRatedSongs: boolean,
 			since: number,
 			minScore: number,
 			viewMode: string,
@@ -55,6 +56,9 @@ module vdb.viewModels.search {
 
 			if (onlyWithPVs)
 				this.pvsOnly(onlyWithPVs);
+
+			if (onlyRatedSongs)
+				this.onlyRatedSongs(onlyRatedSongs);
 
 			this.childVoicebanks = ko.observable(childVoicebanks || false);
 			this.minScore = ko.observable(minScore || undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });;

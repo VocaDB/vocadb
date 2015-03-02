@@ -4,7 +4,7 @@
 @using VocaDb.Web.Helpers
 @using Res = ViewRes.Search.IndexStrings;
 @using SharedRes = ViewRes.SharedStrings;
-@inherits VocaDbPage
+@inherits VocaDbPage<VocaDb.Web.Models.Search.SearchIndexViewModel>
 
 @{
     Layout = null;
@@ -22,7 +22,7 @@
 	@Styles.Render("~/Content/css")
 	<link href="@Url.Content("~/Content/Styles/Icons.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.10.1.custom.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Scripts/jquery.qtip.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Scripts/qTip/jquery.qtip.css")" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 
 	@{ Html.RenderPartial("Partials/_GoogleAnalytics"); }
@@ -350,21 +350,22 @@
 
 			var cultureCode = '@UICulture';
 			var languageSelection = '@UserContext.LanguagePreference';
-			var query = @Html.Raw(JsonHelpers.Serialize(ViewBag.Query));
-			var tag = @Html.Raw(JsonHelpers.Serialize(ViewBag.Tag));
-			var searchType = '@ViewBag.SearchType';
-			var sort = '@ViewBag.Sort';
-			var artistId = @ToJS((int?)ViewBag.ArtistId);
-			var childVoicebanks = @ToJS((bool?)ViewBag.ChildVoicebanks);
-			var artistType = '@ViewBag.ArtistType';
-			var discType = '@ViewBag.DiscType';
-			var songType ='@ViewBag.SongType';
-			var onlyWithPVs = @ToJS((bool?)ViewBag.OnlyWithPVs);
-			var since = @ToJS((int?)ViewBag.Since);
-			var minScore = @ToJS((int?)ViewBag.MinScore);
-			var viewMode = '@ViewBag.ViewMode';
-			var autoplay = @ToJS((bool?)ViewBag.Autoplay);
-			var shuffle = @ToJS((bool?)ViewBag.Shuffle);
+			var query = @Html.Raw(JsonHelpers.Serialize(Model.Filter));
+			var tag = @Html.Raw(JsonHelpers.Serialize(Model.Tag));
+			var searchType = '@Model.SearchTypeName';
+			var sort = '@Model.Sort';
+			var artistId = @ToJS((int?)Model.ArtistId);
+			var childVoicebanks = @ToJS((bool?)Model.ChildVoicebanks);
+			var artistType = '@Model.ArtistType';
+			var discType = '@Model.DiscType';
+			var songType ='@Model.SongType';
+			var onlyWithPVs = @ToJS((bool?)Model.OnlyWithPVs);
+			var onlyRatedSongs = @ToJS(Model.OnlyRatedSongs);
+			var since = @ToJS((int?)Model.Since);
+			var minScore = @ToJS((int?)Model.MinScore);
+			var viewMode = '@Model.ViewMode';
+			var autoplay = @ToJS((bool?)Model.Autoplay);
+			var shuffle = @ToJS((bool?)Model.Shuffle);
 			var loggedUserId = @ToJS(Login.Manager.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 
@@ -387,7 +388,9 @@
 				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort, 
 				artistId, 
 				childVoicebanks,
-				artistType, discType, songType, onlyWithPVs, 
+				artistType, discType, songType, 
+				onlyWithPVs, 
+				onlyRatedSongs,
 				since,
 				minScore,
 				viewMode, 

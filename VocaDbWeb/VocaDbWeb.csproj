@@ -946,6 +946,7 @@
     <Compile Include="Models\Home\SearchEntries.cs" />
     <Compile Include="Models\MikuDbAlbums\Index.cs" />
     <Compile Include="Models\MikuDbAlbums\PrepareAlbumsForImport.cs" />
+    <Compile Include="Models\Search\SearchIndexViewModel.cs" />
     <Compile Include="Models\SharedModels.cs" />
     <Compile Include="Models\Shared\ArchivedObjectVersion.cs" />
     <Compile Include="Models\Shared\PVEmbedParams.cs" />

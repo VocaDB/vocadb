@@ -1,13 +1,12 @@
 ﻿using System.Web.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Web.Models.Search;
 
 namespace VocaDb.Web.Controllers
 {
@@ -100,57 +99,34 @@ namespace VocaDb.Web.Controllers
 			this.songService = songService;
 		}
 
-		public ActionResult Index(string filter, EntryType searchType = EntryType.Undefined, bool allowRedirect = true,
-			string tag = null,
-			string sort = null, 
-			int? artistId = null,
-			bool? childVoicebanks = null,
-			ArtistType? artistType = null,
-			DiscType? discType = null,
-			SongType? songType = null,
-			bool? onlyWithPVs = null,
-			int? since = null,
-			int? minScore = null,
-			string viewMode = null,
-			bool? autoplay = null,
-			bool? shuffle = null
-			) {
+		public ActionResult Index(SearchIndexViewModel viewModel) {
 
+			if (viewModel == null)
+				viewModel = new SearchIndexViewModel();
+
+			var filter = viewModel.Filter;
 			filter = !string.IsNullOrEmpty(filter) ? filter.Trim() : string.Empty;
 
-			if (allowRedirect && !string.IsNullOrEmpty(filter)) {
+			if (viewModel.AllowRedirect && !string.IsNullOrEmpty(filter)) {
 
-				var redirectResult = TryRedirect(filter, searchType);
+				var redirectResult = TryRedirect(filter, viewModel.SearchType);
 
 				if (redirectResult != null)
 					return redirectResult;
 
 			}
 
-			ViewBag.Query = filter;
-			ViewBag.SearchType = searchType != EntryType.Undefined ? searchType.ToString() : "Anything";
-			ViewBag.Tag = tag;
-			ViewBag.Sort = sort;
-			ViewBag.ArtistId = artistId;
-			ViewBag.ChildVoicebanks = childVoicebanks;
-			ViewBag.ArtistType = artistType;
-			ViewBag.DiscType = discType;
-			ViewBag.SongType = songType;
-			ViewBag.OnlyWithPVs = onlyWithPVs;
-			ViewBag.Since = since;
-			ViewBag.MinScore = minScore;
-			ViewBag.ViewMode = viewMode;
-			ViewBag.Autoplay = autoplay;
-			ViewBag.Shuffle = shuffle;
+			viewModel.Filter = filter;
 
-			SetSearchEntryType(searchType);
-			return View("Index");
+			SetSearchEntryType(viewModel.SearchType);
+
+			return View("Index", viewModel);
 
 		}
 
 		public ActionResult Radio() {
 			
-			return Index(null, EntryType.Song, false, minScore: 1, sort: "AdditionDate", viewMode: "PlayList", autoplay: true, shuffle: true);
+			return Index(new SearchIndexViewModel(EntryType.Song) { MinScore = 1, Sort = "AdditionDate", ViewMode = "PlayList", Autoplay = true, Shuffle = true });
 
 		}
 
