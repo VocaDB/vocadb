@@ -117,52 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Animator" xml:space="preserve">
-    <value>動画</value>
+  <data name="Customize" xml:space="preserve">
+    <value>カスタマイズ</value>
   </data>
-  <data name="Arranger" xml:space="preserve">
-    <value>編曲</value>
-  </data>
-  <data name="Composer" xml:space="preserve">
-    <value>作曲</value>
-  </data>
-  <data name="Default" xml:space="preserve">
-    <value>Default</value>
-  </data>
-  <data name="Distributor" xml:space="preserve">
-    <value>配給</value>
-  </data>
-  <data name="Illustrator" xml:space="preserve">
-    <value>イラスト</value>
-  </data>
-  <data name="Instrumentalist" xml:space="preserve">
-    <value>演奏</value>
-  </data>
-  <data name="Lyricist" xml:space="preserve">
-    <value>作詞</value>
-  </data>
-  <data name="Mastering" xml:space="preserve">
-    <value>マスタリング</value>
-  </data>
-  <data name="Other" xml:space="preserve">
-    <value>その他</value>
-  </data>
-  <data name="Publisher" xml:space="preserve">
-    <value>出版</value>
-  </data>
-  <data name="Vocalist" xml:space="preserve">
-    <value>ボーカル</value>
-  </data>
-  <data name="VoiceManipulator" xml:space="preserve">
-    <value>調声</value>
-  </data>
-  <data name="Chorus" xml:space="preserve">
-    <value>コーラス</value>
-  </data>
-  <data name="Encoder" xml:space="preserve">
-    <value>エンコード</value>
-  </data>
-  <data name="Mixer" xml:space="preserve">
-    <value>ミキシング</value>
+  <data name="Support" xml:space="preserve">
+    <value>サポート</value>
   </data>
 </root>
