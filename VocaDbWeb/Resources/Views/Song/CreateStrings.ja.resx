@@ -121,7 +121,7 @@
     <value>この曲に携わるプロデューサーとボーカル（VOCALOID等）を追加して下さい。</value>
   </data>
   <data name="ArtistHelp" xml:space="preserve">
-    <value>アーティストがデータベースに登録されているか予め検索し、見付からなかった場合は曲登録の前に追加しておくことをお勧めします。</value>
+    <value>アーティストがデータベースに登録されているか予め検索し、されてない場合は曲登録の前に追加しておくことをお勧めします。</value>
   </data>
   <data name="ArtistsInfo" xml:space="preserve">
     <value>アーティスト（１つは記入して下さい）</value>
@@ -136,7 +136,7 @@
     <value>曲名が英語以外の言語（例えば日本語）もしくは使用言語が不明の場合は、"英語以外"(Non-English)の所に記入して下さい。もし判ればローマ字の項に読み方を書いて下さい。曲の正式名が英語の場合、または英訳が判る場合は"英語名"の所に記入して下さい。</value>
   </data>
   <data name="NoArtistsToName" xml:space="preserve">
-    <value>アーティストの名前は曲名の箇所には書かずに、下のアーティストリストで追加して下さい。</value>
+    <value>アーティスト名は曲名フィールドには記入せず、下のアーティストリストで追加して下さい。</value>
   </data>
   <data name="OriginalPV" xml:space="preserve">
     <value>オリジナル版の動画（ニコニコ動画またはYoutube）のURL</value>
@@ -149,5 +149,14 @@
   </data>
   <data name="SubmitSong" xml:space="preserve">
     <value>曲の登録</value>
+  </data>
+  <data name="DuplicatePV" xml:space="preserve">
+    <value>このPVはすでに登録されているようです。</value>
+  </data>
+  <data name="UnableToCreateSong" xml:space="preserve">
+    <value>曲の登録ができませんでした。エラーを解決したうえで、もう一度実行してください。</value>
+  </data>
+  <data name="NeedArtist" xml:space="preserve">
+    <value>少なくともアーティストが１名必要です。</value>
   </data>
 </root>
