@@ -19,7 +19,6 @@ module vdb.viewModels {
             this.userRepository.getMessageSummaries(3, true, 40, (messages: dc.UserMessagesContract) => {
 
                 this.unreadMessages(messages.receivedMessages);
-                this.unreadMessagesCount(this.unreadMessages().length);
                 this.isLoaded(true);
 
             });

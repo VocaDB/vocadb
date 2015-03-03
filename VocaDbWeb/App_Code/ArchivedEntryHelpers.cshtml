@@ -372,6 +372,6 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 	if (!string.IsNullOrEmpty(link.Description)) {
 		@link.Description<text>: </text>
 	}
-	@link.Url
+	<a href="@link.Url">@link.Url</a>
     @(" (")@link.Category@(")")
 }
