@@ -22,6 +22,7 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Models;
@@ -39,6 +40,7 @@ namespace VocaDb.Web.Controllers
 		private readonly VdbConfigManager config;
 		private UserQueries Data { get; set; }
 		private readonly IPRuleManager ipRuleManager;
+		private readonly MarkdownParser markdownParser;
 		private readonly UserMessageQueries messageQueries;
 		private readonly OtherService otherService;
 	    private UserService Service { get; set; }
@@ -62,7 +64,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		public UserController(UserService service, UserQueries data, ArtistService artistService, OtherService otherService, 
-			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config) {
+			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser) {
 
 			Service = service;
 			Data = data;
@@ -71,6 +73,7 @@ namespace VocaDb.Web.Controllers
 			this.messageQueries = messageQueries;
 			this.ipRuleManager = ipRuleManager;
 			this.config = config;
+			this.markdownParser = markdownParser;
 
 		}
 
@@ -608,7 +611,7 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var msg = messageQueries.Get(messageId, null);
-			var body = MarkdownHelper.TranformMarkdown(msg.Body);
+			var body = markdownParser.GetHtml(msg.Body);
 			return Content(body);
 
 		}

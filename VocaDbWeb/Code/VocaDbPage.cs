@@ -3,6 +3,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code {
@@ -23,6 +24,12 @@ namespace VocaDb.Web.Code {
 		public int LanguagePreferenceInt {
 			get {
 				return (int)UserContext.LanguagePreference;
+			}
+		}
+
+		public MarkdownParser MarkdownParser {
+			get {
+				return DependencyResolver.Current.GetService<MarkdownParser>();
 			}
 		}
 

@@ -1,7 +1,5 @@
 ﻿@using R = ViewRes.Tag.DetailsStrings;
 @using VocaDb.Model.Domain.Images
-@using VocaDb.Model.Utils
-@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagDetailsContract>
@@ -17,8 +15,8 @@
 	}
 
 	var url = PageProperties.CanonicalUrl;
-	var descriptionHtml = MarkdownHelper.TranformMarkdown(Model.Description);
-	var descriptionStripped = HtmlHelperFunctions.StripHtml(descriptionHtml);
+	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
+	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
 
 	PageProperties.Description = descriptionStripped;
 		
