@@ -134,20 +134,6 @@ namespace VocaDb.Model.Service {
 
 			cache.Add(cacheKey, newAlbums, DateTime.Now + TimeSpan.FromHours(1));
 
-			/*var newAlbums = session.Query<Album>().Where(a => !a.Deleted
-				&& a.OriginalRelease.ReleaseDate.Year != null
-				&& a.OriginalRelease.ReleaseDate.Month != null
-				&& a.OriginalRelease.ReleaseDate.Day != null
-				&& (a.OriginalRelease.ReleaseDate.Year < albumCutoffDate.Year
-				|| (a.OriginalRelease.ReleaseDate.Year == albumCutoffDate.Year && a.OriginalRelease.ReleaseDate.Month < albumCutoffDate.Month)
-				|| (a.OriginalRelease.ReleaseDate.Year == albumCutoffDate.Year
-					&& a.OriginalRelease.ReleaseDate.Month == albumCutoffDate.Month
-					&& a.OriginalRelease.ReleaseDate.Day < albumCutoffDate.Day)))
-				.OrderByDescending(a => a.OriginalRelease.ReleaseDate.Year)
-				.ThenByDescending(a => a.OriginalRelease.ReleaseDate.Month)
-				.ThenByDescending(a => a.OriginalRelease.ReleaseDate.Day)
-				.Take(7).ToArray();*/
-
 			return newAlbumContracts;
 
 		}
@@ -162,7 +148,7 @@ namespace VocaDb.Model.Service {
 				return item;
 
 			item = GetRecentComments(session, 8, ssl);
-			cache.Add(cacheKey, item, DateTime.Now + TimeSpan.FromMinutes(15));
+			cache.Add(cacheKey, item, DateTime.Now + TimeSpan.FromMinutes(10));
 
 			return item;
 
@@ -227,6 +213,7 @@ namespace VocaDb.Model.Service {
 			var songComments = session.Query<SongComment>().Where(c => !c.Song.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
 			var discussionComments = session.Query<DiscussionComment>().Where(c => !c.Topic.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
 
+			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway
 			var discussionTopics = session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
 			var discussionTopicsAsComments = discussionTopics.Select(t => new DiscussionComment(t, t.Content, new AgentLoginData(t.Author, t.AuthorName ?? t.Author.Name)) {
 				Created = t.Created
