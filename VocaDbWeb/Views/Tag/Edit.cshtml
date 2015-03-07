@@ -57,14 +57,16 @@
 		<label for="aliasedTo" class="helpTip" title="If specified, makes this tag an alias of another tag. Alias means an alternative name, for example 'dnb' and 'drumnbass'.">Aliased to</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxForKnockout(m => m.AliasedTo, "tagAutoComplete: aliasedToName, tagFilter: denySelf, clearValue: false, allowAliases: false", maxLength: 30, id: "parent")
+		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "aliasedToName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false")		
+		@Html.HiddenForKnockout(m => m.AliasedTo, "value: aliasedToName")
 	</div>	
 	
 	<div class="editor-label">
 		<label for="parent" class="helpTip" title="Parent tag groups related tags under one parent. Child tags are still considered separate, unlike aliases.">Parent</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxForKnockout(m => m.Parent, "tagAutoComplete: parentName, tagFilter: denySelf, clearValue: false", maxLength: 30, id: "parent")
+		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true")
+		@Html.HiddenForKnockout(m => m.Parent, "value: parentName")
 	</div>
 
 	<div class="editor-label">
