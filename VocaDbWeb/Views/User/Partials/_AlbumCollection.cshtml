@@ -39,10 +39,10 @@
 	<div class="control-group" data-bind="visible: publicCollection">
 		<div class="control-label">@Res.Status</div>
 		<div class="controls">
-			<button class="btn" data-bind="click: function() { collectionStatus(''); }, css { active: collectionStatus() == '' }">
+			<button class="btn" data-bind="click: function() { collectionStatus(''); }, css: { active: collectionStatus() == '' }">
 				@Res.CollectionStatusAnything
 			</button>
-			<button class="btn" data-bind="click: function() { collectionStatus('Owned'); }, css { active: collectionStatus() == 'Owned' }">
+			<button class="btn" data-bind="click: function() { collectionStatus('Owned'); }, css: { active: collectionStatus() == 'Owned' }">
 				@AlbumCollectionStatusNames.Owned
 			</button>
 			<button class="btn" data-bind="click: function() { collectionStatus('Wishlisted,Ordered'); }, css: { active: collectionStatus() == 'Wishlisted,Ordered' }">
