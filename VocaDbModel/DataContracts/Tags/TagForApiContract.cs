@@ -18,7 +18,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			bool ssl,			
 			TagOptionalFields optionalFields) {
 			
-			AlisedToName = tag.AliasedTo != null ? tag.AliasedTo.Name : null;
+			AliasedToName = tag.AliasedTo != null ? tag.AliasedTo.Name : null;
 			CategoryName = tag.CategoryName;
 			Id = tag.Id;
 			Name = tag.Name;
@@ -36,7 +36,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		}
 
 		[DataMember]
-		public string AlisedToName { get; set; }
+		public string AliasedToName { get; set; }
 
 		[DataMember]
 		public string CategoryName { get; set; }

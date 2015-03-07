@@ -41,30 +41,40 @@
 }
 
 <form action="@Url.Action("Edit", "Tag")" method="POST" enctype="multipart/form-data">
+
 	@Html.HiddenFor(m => m.Name)
 
+	<div class="alert" data-bind="visible: aliasedToName() && parentName()" style="display: none;">
+		<span class="icon-line errorIcon"></span>
+		Both "Aliased to" and "Parent" are specified.
+		Most of the time this doesn't make sense.
+		If you're unsure, check the documentation.
+	</div>
+
 	@Helpers.SaveBtn()
-	
+
 	<div class="editor-label">
 		@Html.LabelFor(m => m.CategoryName)
 	</div>
 	<div class="editor-field">
 		@Html.TextBoxForKnockout(m => m.CategoryName, "textInput: categoryName, tagCategoryAutoComplete: categoryName", maxLength: 30)
 		@Html.ValidationMessageFor(m => m.CategoryName)
-	</div>	
-	
+	</div>
+
 	<div class="editor-label">
 		<label for="aliasedTo" class="helpTip" title="If specified, makes this tag an alias of another tag. Alias means an alternative name, for example 'dnb' and 'drumnbass'.">Aliased to</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxForKnockout(m => m.AliasedTo, "tagAutoComplete: aliasedToName, tagFilter: denySelf, clearValue: false, allowAliases: false", maxLength: 30, id: "parent")
-	</div>	
-	
+		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "aliasedToName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false")
+		@Html.HiddenForKnockout(m => m.AliasedTo, "value: aliasedToName")
+	</div>
+
 	<div class="editor-label">
 		<label for="parent" class="helpTip" title="Parent tag groups related tags under one parent. Child tags are still considered separate, unlike aliases.">Parent</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxForKnockout(m => m.Parent, "tagAutoComplete: parentName, tagFilter: denySelf, clearValue: false", maxLength: 30, id: "parent")
+		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true")
+		@Html.HiddenForKnockout(m => m.Parent, "value: parentName")
 	</div>
 
 	<div class="editor-label">
@@ -74,12 +84,12 @@
 	<div class="editor-field">
 		@Html.TextAreaForKnockout(m => m.Description, binding: "textInput: description", cssClass: "span6", maxLength: 1000, rows: 8, cols: 50)
 		@Html.ValidationMessageFor(m => m.Description)
-		
+
 		Live preview
 		<div data-bind="markdown: description"></div>
 		<br />
 	</div>
-	
+
 	<div class="editor-label">
 		Thumbnail
 	</div>
@@ -94,7 +104,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="editor-label">
 		@Helpers.HelpLabel("Entry status", Resources.CommonMessages.EntryStatusExplanation)
 	</div>
@@ -104,5 +114,5 @@
 
 	<br />
 	@Helpers.SaveBtn()
-	
+
 </form>
