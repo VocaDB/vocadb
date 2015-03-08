@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NewSongInfo" xml:space="preserve">
-    <value>新たに登録する前に、その曲が既に登録されていないか確認して下さい。タイトルとアーティストの項目には、それぞれ少なくとも一つは名前を記入しなければなりません。オリジナル版の動画にリンクするのがとても望ましいです。</value>
+    <value>曲を登録する前に、既に登録済みでないかを確認して下さい。タイトルとアーティストの項目には、少なくとも各１つ名前記入が必要です。できる限り、オリジナル動画のリンクを提供してください。&lt;br /&gt;&lt;br /&gt;ボーカルがボーカロイドでない曲の登録は、収録されているアルバムに他にボーカロイド曲がある場合に限ります。UTAUなど音声合成ソフトも許可されていますが、人間カバー（歌ってみた）は許可されていません。</value>
   </data>
 </root>

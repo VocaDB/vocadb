@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Welcome" xml:space="preserve">
-    <value>ボカロデータベースへようこそ！</value>
+  <data name="NeedReferences" xml:space="preserve">
+    <value>アーティスト概要、又はすくなくとも１つ外部参照リンクが必要です。</value>
   </data>
-  <data name="WelcomeSubtitle" xml:space="preserve">
-    <value>ボカロアーティストやディスコグラフィーやPVの協調データベース</value>
+  <data name="NeedType" xml:space="preserve">
+    <value>アーティストタイプの選択が必要です。</value>
   </data>
-  <data name="SiteDescription" xml:space="preserve">
-    <value>VocaDBはボーカロイドアーティスト、アルバム、曲情報の複言語音楽データベースです。</value>
+  <data name="UnspecifiedNames" xml:space="preserve">
+    <value>主なアーティスト名が必要です。</value>
   </data>
 </root>

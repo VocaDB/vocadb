@@ -138,4 +138,7 @@
   <data name="Unknown" xml:space="preserve">
     <value>詳細は定められていない</value>
   </data>
+  <data name="Video" xml:space="preserve">
+    <value>ビデオ</value>
+  </data>
 </root>
