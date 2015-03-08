@@ -837,6 +837,7 @@
       <LastGenOutput>DiscTypeNames.ru.designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AlbumValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\AlbumValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumValidationErrors.Designer.cs</LastGenOutput>
@@ -852,12 +853,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ArtistTypeNames.ru.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\ArtistValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistValidationErrors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ArtistValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\ExtSites.de.resx" />
+    <EmbeddedResource Include="Resources\ExtSites.ja.resx" />
     <EmbeddedResource Include="Resources\ExtSites.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExtSites.Designer.cs</LastGenOutput>
@@ -881,6 +884,7 @@
       <LastGenOutput>SongTypeNames.ru.designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\SongValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\SongValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongValidationErrors.Designer.cs</LastGenOutput>
@@ -889,6 +893,7 @@
     <EmbeddedResource Include="Resources\SongValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.de.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\AlbumRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumRes.Designer.cs</LastGenOutput>
