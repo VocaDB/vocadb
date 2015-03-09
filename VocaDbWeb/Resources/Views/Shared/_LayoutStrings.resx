@@ -132,6 +132,9 @@
   <data name="Blog" xml:space="preserve">
     <value>Blog</value>
   </data>
+  <data name="Discussions" xml:space="preserve">
+    <value>Discussions</value>
+  </data>
   <data name="FollowUser" xml:space="preserve">
     <value>Follow user</value>
   </data>

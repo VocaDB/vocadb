@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers
+@using Res = ViewRes.Discussion.IndexStrings
 
 <div data-bind="visible: selectedFolder() !== null && selectedTopic() === null" class="discussion-folder">
 	
@@ -17,25 +18,25 @@
 	@if (Login.CanManageDb) {
 		<button data-bind="visible: !showCreateNewTopic(), click: function() { showCreateNewTopic(true); }" class="btn create-topic">
 			<i class="icon-comment"></i>
-			Write a new post
+			@Res.WriteNewPost
 		</button>
 
 		<form data-bind="visible: showCreateNewTopic, submit: createNewTopic" class="well well-transparent">
 			<div data-bind="with: newTopic">
 				@{ Html.RenderPartial("Partials/_EditTopic"); }
 			</div>
-			<button type="submit" class="btn btn-primary">Post</button>
+			<button type="submit" class="btn btn-primary">@Res.DoPost</button>
 		</form>
 	}
 
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Topic</th>
-				<th>Author</th>
-				<th>Comments</th>
-				<th>Created</th>
-				<th>Last comment</th>
+				<th>@Res.Topic</th>
+				<th>@Res.Author</th>
+				<th>@Res.Comments</th>
+				<th>@Res.Created</th>
+				<th>@Res.LastComment</th>
 			</tr>
 		</thead>
 		<tbody data-bind="foreach: topics" class="discussion-topics">

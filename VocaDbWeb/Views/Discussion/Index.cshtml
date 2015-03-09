@@ -14,7 +14,7 @@
 
 	<ul class="breadcrumb" data-bind="visible: selectedFolder()">
 		<li>
-			<a href="@Url.Action("Index", "Discussion", new { clientPath = "" })">Discussions</a>
+			<a href="@Url.Action("Index", "Discussion", new { clientPath = "" })">@ViewRes.Discussion.IndexStrings.Discussions</a>
 			<span data-bind="visible: selectedTopic()" class="divider">/</span>
 		</li>
 		<li>

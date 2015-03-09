@@ -1057,6 +1057,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IndexStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Discussion\IndexStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IndexStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Event\DetailsStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3218,6 +3223,11 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Discussion</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.resx">

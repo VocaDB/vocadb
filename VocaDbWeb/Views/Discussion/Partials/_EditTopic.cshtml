@@ -1,16 +1,17 @@
-﻿
-<label>Topic</label>
+﻿@using Res = ViewRes.Discussion.IndexStrings
+
+<label>@Res.Topic</label>
 <input data-bind="textInput: name" type="text" class="input-xlarge" maxlength="200" required />
 
 <div class="discussion-topic-edit-content">
 	
 	<div class="edit-text">
-		<label>Content</label>
+		<label>@Res.PostContent</label>
 		<textarea data-bind="textInput: content" cols="50" rows="6" required></textarea>		
 	</div>
 	
 	<div class="edit-preview">
-		<label>Preview</label>
+		<label>@Res.Preview</label>
 		<div data-bind="markdown: content"></div>
 	</div>
 

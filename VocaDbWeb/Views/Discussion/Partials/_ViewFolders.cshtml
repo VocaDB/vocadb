@@ -1,13 +1,14 @@
-﻿
+﻿@using Res = ViewRes.Discussion.IndexStrings
+
 <div data-bind="visible: selectedFolder() === null" class="row-fluid">
 	
 	<div class="span8">
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Folder</th>
-					<th>Topics</th>
-					<th>Last topic</th>
+					<th>@Res.Folder</th>
+					<th>@Res.Topics</th>
+					<th>@Res.LastTopic</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: folders" class="discussion-folders">
@@ -28,7 +29,7 @@
 	</div>
 
 	<div class="span4" data-bind="visible: recentTopics().length">
-		<h4>Recent topics</h4>		
+		<h4>@Res.RecentTopics</h4>		
 		<table class="table">
 			<tbody data-bind="foreach: recentTopics" class="discussion-folders">
 				<tr data-bind="click: function() { $parent.selectTopic($data); }">

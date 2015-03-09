@@ -63,7 +63,7 @@
 			<li>@Html.ActionLink(ViewRes.SharedStrings.FeaturedSongLists, "Featured", "SongList")</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.Tags, "Index", "Tag")</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.Help, "Index", "Help")</li>
-			<li>@Html.ActionLink("Discussions", "Index", "Discussion", new { clientPath = "" }, null)</li>
+			<li>@Html.ActionLink(ViewRes._LayoutStrings.Discussions, "Index", "Discussion", new { clientPath = "" }, null)</li>
 			<li><a href="http://wiki.vocadb.net/">@ViewRes._LayoutStrings.Wiki</a></li>
 			<li><a href="@BlogUrl">@ViewRes._LayoutStrings.Blog</a></li>
 			@if (Login.Manager.HasPermission(PermissionToken.MikuDbImport)) {
