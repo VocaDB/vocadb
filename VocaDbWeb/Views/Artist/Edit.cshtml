@@ -3,12 +3,14 @@
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
 @using ValidationErrors = VocaDb.Model.Resources.ArtistValidationErrors;
+@using Res = ViewRes.Artist.EditStrings;
+@using EditRes = ViewRes.EntryEditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.ArtistEditViewModel>
 
 @{
-	ViewBag.Title = "Edit artist - " + Model.Artist.Name;
+	ViewBag.Title = string.Format(Res.EditTitle, Model.Artist.Name);
 	ViewBag.Parents = new[] { 
-		Html.ActionLink("Artists", "Index"), 
+		Html.ActionLink(ViewRes.SharedStrings.Artists, "Index", "Search", UrlMapper.Search.Artists(), null), 
 		Html.ActionLink(Model.Artist.Name, "Details", new { id = Model.Artist.Id }) 
 	};
 
@@ -23,14 +25,14 @@
 @section Toolbar {
 @if (Login.CanDeleteEntries) {
 	if (!Model.Artist.Deleted) {
-		@Html.ActionLink("Delete", "Delete", new { id = Model.Artist.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this artist?\");" })
+		@Html.ActionLink(ViewRes.SharedStrings.Delete, "Delete", new { id = Model.Artist.Id }, new { id = "deleteLink", onclick = "return confirm(\"" + Res.ConfirmDelete + "\");" })
 	} else {
-		@Html.ActionLink("Restore", "Restore", new { id = Model.Artist.Id }, new { id = "restoreLink" })		
+		@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Artist.Id }, new { id = "restoreLink" })		
 	}
 }
 @if (Login.CanMergeEntries) {
 	@Html.Raw("&nbsp;")	
-	@Html.ActionLink("Merge", "Merge", new { id = Model.Artist.Id }, new { id = "mergeLink" })
+	@Html.ActionLink(EditRes.Merge, "Merge", new { id = Model.Artist.Id }, new { id = "mergeLink" })
 }
 }
 
@@ -46,21 +48,25 @@
 	<div id="tabs">
 
 		<ul>
-			<li><a href="#basicInfoTab">Basic info</a></li>
-			<li><a href="#picsTab">Additional pictures</a></li>
+			<li>
+				<a href="#basicInfoTab">@EditRes.BasicInfo</a>
+			</li>
+			<li>
+				<a href="#picsTab">@Res.TabAdditionalPictures</a>
+			</li>
 		</ul>
 
 		<div id="basicInfoTab">
 			<div>
 				<div class="editor-label">
-					<label>Original language</label>
+					<label>@EditRes.DefaultLanguageSelection</label>
 				</div>
 				<div class="editor-field">
 					@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
 				</div>
 
 				<div class="editor-label">
-					@Helpers.HelpLabel("Primary name (in one or more languages)", ViewRes.EntryEditStrings.NameHelp)
+					@Helpers.HelpLabel(Res.BaNames, ViewRes.EntryEditStrings.NameHelp)
 					@Helpers.RequiredField()
 					<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 				</div>
@@ -69,7 +75,7 @@
 				</div>
 
 				<div class="editor-label">
-					<label>Main picture</label>
+					<label>@Res.BaMainPicture</label>
 				</div>
 				<div class="editor-field">
 					<table>
@@ -77,7 +83,7 @@
 							<td>
 								<img src="@Url.Action("PictureThumb", new { id = Model.Artist.Id })" alt="Artist picture" class="coverPic" />					
 							</td><td>
-								<p>Allowed types: @string.Join(", ", ImageHelper.AllowedExtensions) . Maximum size is @ImageHelper.MaxImageSizeMB MB.</p>
+								<p>@string.Format(Res.BaPictureInfo, string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
 								<input type="file" id="pictureUpload" name="pictureUpload" />					
 							</td>
 						</tr>
@@ -85,7 +91,7 @@
 				</div>
 
 				<div class="editor-label">
-					<label class="inline-block">Description</label>
+					<label class="inline-block">@Res.BaDescription</label>
 					@Helpers.MarkdownNotice()
 					<span data-bind="visible: validationError_needReferences, qTip" class="icon errorIcon" title="@ValidationErrors.NeedReferences"></span>
 				</div>
@@ -94,7 +100,7 @@
 				</div>
 
 				<div class="editor-label">
-					<label>Artist type</label>
+					<label>@Res.BaArtistType</label>
 				</div>
 				<div class="editor-field">
 					@KnockoutHelpers.DropdownList(Model.AllArtistTypes, "artistTypeStr")
@@ -103,7 +109,7 @@
 
 				<!-- ko if: canHaveCircles -->
 					<div class="editor-label">
-						<label>Groups and circles</label>
+						<label>@Res.BaGroups</label>
 					</div>
 					<div class="editor-field">
 						@* TODO: extract template and viewmodel *@
@@ -127,7 +133,7 @@
 				<!-- ko if: allowBaseVoicebank -->			
 				<div class="editor-label">
 					<label>
-						Base voicebank
+						@Res.BaBaseVoicebank
 					</label>
 				</div>
 				<div class="editor-field">
@@ -138,14 +144,14 @@
 				<!-- /ko -->		
 
 				<div class="editor-label">
-					@Helpers.HelpLabel("Web links", ViewRes.EntryEditStrings.ExternalLinksQuickHelp)
+					@Helpers.HelpLabel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp)
 				</div>
 				<div class="editor-field" data-bind="with: webLinks">
 					@KnockoutHelpers.WebLinksEditViewKnockout(true)
 				</div>
 
 				<div class="editor-label">
-					@Helpers.HelpLabel("Entry status", Resources.CommonMessages.EntryStatusExplanation)
+					@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
 				</div>
 				<div class="editor-field">
 					@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
@@ -156,8 +162,8 @@
 		
 		<div id="picsTab" data-bind="with: pictures">
 			
-			<p>Please only upload pictures relevant to this artist, nothing else.</p>
-			<p>Allowed types: @string.Join(", ", ImageHelper.AllowedExtensions) . Maximum size is @ImageHelper.MaxImageSizeMB MB.</p>
+			<p>@Res.PiPicturesNote</p>
+			<p>@string.Format(Res.BaPictureInfo, string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
 
 			<table>
 				<tbody data-bind="foreach: pictures">
@@ -165,14 +171,14 @@
 				</tbody>
 			</table>
 			
-			<a data-bind="click: add" href="#" class="addLink textLink">Create new</a>
+			<a data-bind="click: add" href="#" class="addLink textLink">@Res.PiAdd</a>
 
 		</div>
 
 	</div>
 	<br />
 	
-	<p>Update notes (optional)</p>
+	<p>@EditRes.UpdateNotes</p>
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />	
