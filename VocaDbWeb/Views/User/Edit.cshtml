@@ -1,9 +1,9 @@
 ﻿@using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
-@model VocaDb.Web.Models.UserEdit
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.UserEdit>
 
 @{
-	ViewBag.Title = "Edit user - " + Model.Name;
+	PageProperties.Title = "Edit user - " + Model.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Users", "Index"), 
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 

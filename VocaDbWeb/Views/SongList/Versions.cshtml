@@ -1,10 +1,10 @@
 ﻿@using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared
-@model VocaDb.Model.DataContracts.Songs.SongListWithArchivedVersionsContract
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.SongListWithArchivedVersionsContract>
 
 @{
-	ViewBag.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
+	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
 	};

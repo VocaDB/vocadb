@@ -8,7 +8,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Album.AlbumEditViewModel>
 
 @{
-	ViewBag.Title = string.Format(R.EditStrings.EditTitle, Model.Name);
+	PageProperties.Title = string.Format(R.EditStrings.EditTitle, Model.Name);
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Albums, "Index"), 
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 

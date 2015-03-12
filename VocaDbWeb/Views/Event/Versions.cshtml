@@ -1,10 +1,10 @@
 ﻿@using VocaDb.Model.Domain.Albums
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared
-@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventWithArchivedVersionsContract
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventWithArchivedVersionsContract>
 
 @{
-	ViewBag.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
+	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index"), 
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 

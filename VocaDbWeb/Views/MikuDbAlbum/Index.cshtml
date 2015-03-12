@@ -1,7 +1,8 @@
 ﻿@using VocaDb.Web.Helpers
-@model VocaDb.Web.Models.MikuDbAlbums.Index
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.MikuDbAlbums.Index>
+
 @{
-	ViewBag.Title = "Imported albums";
+	PageProperties.Title = "Imported albums";
 }
 
 @section Toolbar {

@@ -4,7 +4,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.FavoriteSongs>
 
 @{
-    ViewBag.Title = "Songs rated by " + Model.User.Name;
+    PageProperties.Title = "Songs rated by " + Model.User.Name;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(Model.User.Name, "Details", "User", new {id = Model.User.Id}, null)
 	};	

@@ -1,4 +1,4 @@
-﻿@model EntryReportContract[]
+﻿@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
 @using VocaDb.Model.DataContracts
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
@@ -21,7 +21,7 @@
 }
 
 @{
-	ViewBag.Title = "View entry reports";
+	PageProperties.Title = "View entry reports";
 	ViewBag.Parents = new[] {
 		Html.ActionLink("Manage", "Index"),
 	};

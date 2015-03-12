@@ -8,8 +8,8 @@
 @inherits VocaDb.Web.Code.VocaDbPage<UserDetailsContract>
 
 @{
-	ViewBag.Title = Model.Name;
-	ViewBag.Subtitle = Translate.UserGroups[Model.GroupId];
+	PageProperties.Title = Model.Name;
+	PageProperties.Subtitle = Translate.UserGroups[Model.GroupId];
 
 	ViewBag.Parents = new[] {
 		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"),

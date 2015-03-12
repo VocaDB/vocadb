@@ -1,7 +1,7 @@
-﻿@model VocaDb.Model.DataContracts.Tags.TagCategoryContract[]
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagCategoryContract[]>
 
 @{
-    ViewBag.Title = ViewRes.SharedStrings.Tags;
+    PageProperties.Title = ViewRes.SharedStrings.Tags;
 }
 
 @foreach (var category in Model) {

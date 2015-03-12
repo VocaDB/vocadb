@@ -1,8 +1,8 @@
 ﻿@using VocaDb.Web.Helpers;
-@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesWithEventsContract[]
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesWithEventsContract[]>
 
 @{
-	ViewBag.Title = ViewRes.SharedStrings.ReleaseEvents;
+	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 }
 
 @section Toolbar {

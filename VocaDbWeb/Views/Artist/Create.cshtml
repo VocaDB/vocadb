@@ -5,7 +5,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.Create>
 
 @{
-	ViewBag.Title = R.CreateStrings.AddArtist;
+	PageProperties.Title = R.CreateStrings.AddArtist;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Artists, "Index")
 	};	

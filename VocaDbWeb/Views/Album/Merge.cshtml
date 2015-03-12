@@ -2,7 +2,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.AlbumContract>
 
 @{
-    ViewBag.Title = "Merge album - " + Model.Name;
+    PageProperties.Title = "Merge album - " + Model.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Albums", "Index"), 
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }),

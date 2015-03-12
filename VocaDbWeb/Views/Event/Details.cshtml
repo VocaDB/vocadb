@@ -1,9 +1,9 @@
 ﻿@using VocaDb.Web.Helpers;
-@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
 
 @{
 	
-	ViewBag.Title = ViewRes.Event.DetailsStrings.Event + " - " + Model.Name;
+	PageProperties.Title = ViewRes.Event.DetailsStrings.Event + " - " + Model.Name;
 
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries")

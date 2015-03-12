@@ -1,10 +1,10 @@
 ﻿@using VocaDb.Model.Domain.Tags
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared
-@model VocaDb.Model.DataContracts.Tags.TagWithArchivedVersionsContract
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagWithArchivedVersionsContract>
 
 @{
-	ViewBag.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
+	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Tags, "Index"), 
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Name }) 

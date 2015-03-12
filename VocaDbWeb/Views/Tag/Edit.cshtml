@@ -5,7 +5,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEdit>
 
 @{
-    ViewBag.Title = "Edit tag - " + Model.Name;
+    PageProperties.Title = "Edit tag - " + Model.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Tags", "Index"),
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Name }) 		

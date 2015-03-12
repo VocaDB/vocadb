@@ -1,8 +1,8 @@
 ﻿@using VocaDb.Web.Helpers;
-@model VocaDb.Model.DataContracts.Users.UserWithActivityEntriesContract
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserWithActivityEntriesContract>
 
 @{
-	ViewBag.Title = "Entry edits - " + Model.Name;
+	PageProperties.Title = "Entry edits - " + Model.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Users", "Index"), 
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 		

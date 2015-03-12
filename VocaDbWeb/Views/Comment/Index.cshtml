@@ -1,8 +1,7 @@
-﻿@model IEnumerable<VocaDb.Model.DataContracts.Comments.EntryWithCommentsContract>
+﻿@inherits VocaDb.Web.Code.VocaDbPage<IEnumerable<VocaDb.Model.DataContracts.Comments.EntryWithCommentsContract>>
 
 @{
-    ViewBag.Title = ViewRes.Comment.IndexStrings.RecentComments;
-    
+    PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;    
 }
 
 @foreach (var entry in Model) {

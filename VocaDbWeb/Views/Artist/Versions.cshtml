@@ -1,7 +1,7 @@
-﻿@model VocaDb.Web.Models.Artist.Versions
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.Versions>
 
 @{
-	ViewBag.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Artist.Name;
+	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Artist.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Artists, "Index"), 
 		LinkExtensions.ActionLink(Html, Model.Artist.Name, "Details", new { id = Model.Artist.Id }) 

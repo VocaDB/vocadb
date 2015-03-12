@@ -1,18 +1,18 @@
 ﻿@using VocaDb.Web.Helpers;
-@model VocaDb.Web.Models.Event.EventEdit
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.EventEdit>
 
 @{
 	
 	var isNew = (Model.Id == 0);
 
 	if (!isNew) {
-		ViewBag.Title = "Edit event - " + Model.OldName;
+		PageProperties.Title = "Edit event - " + Model.OldName;
 		ViewBag.Parents = new[] { 
 			Html.ActionLink("Events", "EventsBySeries"),
 			Html.ActionLink(Model.OldName, "Details", new { id = Model.Id })
 		};		
 	} else {
-		ViewBag.Title = "Create a new event";
+		PageProperties.Title = "Create a new event";
 		ViewBag.Parents = new[] { 
 			Html.ActionLink("Events", "EventsBySeries")
 		};

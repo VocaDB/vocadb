@@ -1,9 +1,9 @@
 ﻿@using VocaDb.Web.Helpers
 @using rule = VocaDb.Model.Service.QueryableExtenders.EventSortRule;
-@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventContract[]
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventContract[]>
 
 @{
-	ViewBag.Title = ViewRes.SharedStrings.ReleaseEvents;
+	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 }
 
 @helper SortDirection(rule rule) {

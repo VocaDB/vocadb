@@ -1,17 +1,17 @@
-﻿@model VocaDb.Web.Models.Event.SeriesEdit
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.SeriesEdit>
 
 @{
 	
 	var isNew = (Model.Id == 0);
 
 	if (!isNew) {
-		ViewBag.Title = "Edit series - " + Model.Name;
+		PageProperties.Title = "Edit series - " + Model.Name;
 		ViewBag.Parents = new[] { 
 			Html.ActionLink("Events", "EventsBySeries"),
 			Html.ActionLink(Model.Name, "SeriesDetails", new { id = Model.Id })
 		};
 	} else {
-		ViewBag.Title = "Create a new series";
+		PageProperties.Title = "Create a new series";
 		ViewBag.Parents = new[] { 
 			Html.ActionLink("Events", "EventsBySeries")
 		};

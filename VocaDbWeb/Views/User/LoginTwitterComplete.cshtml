@@ -1,7 +1,7 @@
-﻿@model VocaDb.Web.Models.User.RegisterOpenAuthModel
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.RegisterOpenAuthModel>
 
 @{
-    ViewBag.Title = ViewRes.User.LoginUsingAuthStrings.LoginUsingTwitter;
+    PageProperties.Title = ViewRes.User.LoginUsingAuthStrings.LoginUsingTwitter;
 }
 
 @Helpers.ValidationSymmaryPanel(ViewRes.User.LoginStrings.UnableToLogin)

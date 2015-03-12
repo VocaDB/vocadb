@@ -4,10 +4,10 @@
 @using VocaDb.Web.Helpers
 @using R = ViewRes.User;
 @using Res = ViewRes.User.MySettingsStrings
-@model MySettingsModel
+@inherits VocaDb.Web.Code.VocaDbPage<MySettingsModel>
 
 @{
-    ViewBag.Title = R.MySettingsStrings.MySettingsTitle;
+    PageProperties.Title = R.MySettingsStrings.MySettingsTitle;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"), 
 		Html.ActionLink(Model.Username, "Profile", new { id = Model.Username }) 

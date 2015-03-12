@@ -1,14 +1,9 @@
-﻿
+﻿@inherits VocaDb.Web.Code.VocaDbPage
+
 @{
-	ViewBag.Title = "Statistics / Reports";
+	PageProperties.Title = "Statistics / Reports";
 }
 
-@*
-	<ul class="nav nav-pills">
-		<li class="active"><a href="#" class="active">Songs per producer</a></li>
-		<li><a href="#">Albums per producer</a></li>
-		<li><a href="#">Followers per producer</a></li>
-	</ul>*@
 <select data-bind="foreach: categories, value: selectedUrl" class="input-large">
 	<optgroup label="NA" data-bind="attr: {label: name }, foreach: reports">
 		<option data-bind="text: name, value: url"></option>

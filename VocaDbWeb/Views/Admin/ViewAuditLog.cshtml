@@ -1,8 +1,8 @@
 ﻿@using VocaDb.Web.Helpers;
-@model VocaDb.Web.Models.Admin.ViewAuditLogModel
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Admin.ViewAuditLogModel>
 
 @{
-	ViewBag.Title = "View audit log";
+	PageProperties.Title = "View audit log";
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Manage", "Index"), 
 	};	

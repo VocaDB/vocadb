@@ -1,10 +1,10 @@
 ﻿@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Album;
-@model VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract>
 
 @{
 	
-    ViewBag.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+    PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
 	
 	if (Model.Album != null) {
 		ViewBag.Parents = new[] { 

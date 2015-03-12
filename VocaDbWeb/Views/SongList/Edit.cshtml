@@ -9,12 +9,12 @@
 	var isNew = (Model.Id == 0);
 	
 	if (!isNew) {
-		ViewBag.Title = "Edit list - " + Model.CurrentName;
+		PageProperties.Title = "Edit list - " + Model.CurrentName;
 		ViewBag.Parents = new[] { 
 			Html.ActionLink(Model.CurrentName, "Details", new { id = Model.Id }) 
 		};
 	} else {
-		ViewBag.Title = "Create a custom list";		
+		PageProperties.Title = "Create a custom list";		
 	}
 	
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);

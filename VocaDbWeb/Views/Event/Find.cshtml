@@ -1,8 +1,8 @@
 ﻿@using VocaDb.Web.Helpers;
-@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventFindResultContract
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventFindResultContract>
 
 @{
-    ViewBag.Title = ViewRes.Event.FindStrings.FindEvent + " - " + Model.EventName;
+    PageProperties.Title = ViewRes.Event.FindStrings.FindEvent + " - " + Model.EventName;
 }
 
 <div class="alert alert-danger">

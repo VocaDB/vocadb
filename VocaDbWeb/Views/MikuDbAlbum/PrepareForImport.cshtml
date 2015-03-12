@@ -1,7 +1,7 @@
-﻿@model VocaDb.Model.DataContracts.MikuDb.InspectedAlbum
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.MikuDb.InspectedAlbum>
 
 @{
-    ViewBag.Title = "Processing albums";
+    PageProperties.Title = "Processing albums";
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Imported albums", "Index"), 
 	};  	

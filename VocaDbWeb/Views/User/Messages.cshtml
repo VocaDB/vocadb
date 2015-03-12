@@ -4,7 +4,7 @@
 @using R = ViewRes.User;
 
 @{
-	ViewBag.Title = R.MessagesStrings.Messages;
+	PageProperties.Title = R.MessagesStrings.Messages;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"), 
 		Html.ActionLink(Model.User.Name, "Details", new { id = Model.User.Id }) 

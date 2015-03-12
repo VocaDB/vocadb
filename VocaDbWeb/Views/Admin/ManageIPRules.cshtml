@@ -1,8 +1,8 @@
 ﻿@using VocaDb.Web.Helpers
-@model VocaDb.Model.Domain.Security.IPRule[]
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.Domain.Security.IPRule[]>
 
 @{
-    ViewBag.Title = "Manage blocked IPs";
+    PageProperties.Title = "Manage blocked IPs";
     ViewBag.Parents = new[] { 
 		Html.ActionLink("Manage", "Index"), 
 	};    

@@ -1,9 +1,9 @@
 ﻿@using VocaDb.Model.Utils;
 @using Res = ViewRes.User.LoginStrings;
-@model VocaDb.Web.Models.LoginModel
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.LoginModel>
 
 @{
-	ViewBag.Title = Res.Login;
+	PageProperties.Title = Res.Login;
 }
 
 @Helpers.ValidationSymmaryDiv(Res.UnableToLogin)

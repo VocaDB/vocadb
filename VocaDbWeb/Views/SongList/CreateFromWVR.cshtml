@@ -1,7 +1,7 @@
-﻿@model VocaDb.Web.Models.SongLists.CreateFromWVR
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.CreateFromWVR>
 
 @{
-	ViewBag.Title = "Create song list from NicoNicoDouga MyList";
+	PageProperties.Title = "Create song list from NicoNicoDouga MyList";
 }
 
 @Helpers.ValidationSymmaryDiv("Unable to parse list")

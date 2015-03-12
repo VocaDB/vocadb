@@ -1,7 +1,7 @@
-﻿@model VocaDb.Web.Models.Admin.ViewSysLog
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Admin.ViewSysLog>
 
 @{
-    ViewBag.Title = "View system log";
+    PageProperties.Title = "View system log";
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Manage", "Index"), 
 	};	

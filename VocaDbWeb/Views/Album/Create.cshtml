@@ -4,7 +4,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Album.Create>
 
 @{
-    ViewBag.Title = R.CreateStrings.SubmitAlbum;
+	PageProperties.Title = R.CreateStrings.SubmitAlbum;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Albums, "Index")
 	};	

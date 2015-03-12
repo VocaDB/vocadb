@@ -4,7 +4,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.Create>
 
 @{
-    ViewBag.Title = R.CreateStrings.SubmitSong;
+	PageProperties.Title = R.CreateStrings.SubmitSong;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null)
 	};	
