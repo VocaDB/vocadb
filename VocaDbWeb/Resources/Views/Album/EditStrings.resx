@@ -126,9 +126,6 @@
   <data name="BaCatNum" xml:space="preserve">
     <value>Catalog number</value>
   </data>
-  <data name="BaDefaultLanguageSelection" xml:space="preserve">
-    <value>Original language</value>
-  </data>
   <data name="BaDescription" xml:space="preserve">
     <value>Album description</value>
   </data>
@@ -158,15 +155,6 @@
   </data>
   <data name="BaReleaseYear" xml:space="preserve">
     <value>Year</value>
-  </data>
-  <data name="BasicInfoTab" xml:space="preserve">
-    <value>Basic info</value>
-  </data>
-  <data name="BaStatus" xml:space="preserve">
-    <value>Entry status</value>
-  </data>
-  <data name="BaWebLinks" xml:space="preserve">
-    <value>External links</value>
   </data>
   <data name="ImagePreview" xml:space="preserve">
     <value>Image preview</value>

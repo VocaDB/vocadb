@@ -1,12 +1,14 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers
 @using ValidationErrors = VocaDb.Model.Resources.SongValidationErrors;
+@using Res = ViewRes.Song.EditStrings;
+@using EditRes = ViewRes.EntryEditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.SongEditViewModel>
 
 @{
-	ViewBag.Title = "Edit song - " + Model.Name;
+	ViewBag.Title = string.Format(Res.EditTitle, Model.Name);
 	ViewBag.Parents = new[] { 
-		Html.ActionLink("Songs", "Index", "Search", UrlMapper.Search.Songs(), null), 
+		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null), 
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 
 	};
 	
@@ -24,14 +26,14 @@
 @section Toolbar {
 @if (Login.CanDeleteEntries) {
 	if (!Model.Song.Deleted) {
-		@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this song?\");" })
+		@Html.ActionLink(ViewRes.SharedStrings.Delete, "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"" + Res.ConfirmDelete + "\");" })
 	} else {
-		@Html.ActionLink("Restore", "Restore", new { id = Model.Id }, new { id = "restoreLink" })		
+		@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })		
 	}
 	@Html.Raw("&nbsp")
 }
 @if (Login.CanMergeEntries) {
-	@Html.ActionLink("Merge", "Merge", new { id = Model.Id }, new { id = "mergeLink" })
+	@Html.ActionLink(EditRes.Merge, "Merge", new { id = Model.Id }, new { id = "mergeLink" })
 }
 }
 
@@ -47,24 +49,24 @@
 	<div id="tabs">
 
 		<ul>
-			<li><a href="#basicInfoTab">Basic info</a></li>
-			<li><a href="#artistsTab">Artists</a></li>
-			<li><a href="#pvsTab">Media</a></li>
-			<li><a href="#lyricsTab">Lyrics</a></li>
+			<li><a href="#basicInfoTab">@EditRes.BasicInfo</a></li>
+			<li><a href="#artistsTab">@Res.TabArtists</a></li>
+			<li><a href="#pvsTab">@Res.TabMedia</a></li>
+			<li><a href="#lyricsTab">@Res.TabLyrics</a></li>
 		</ul>
 
 		<div id="basicInfoTab">
 
 			<div class="editor-label">
-				<label>Original language</label>
+				<label>@EditRes.DefaultLanguageSelection</label>
 			</div>
 			<div class="editor-field">
 				@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
 			</div>
 
 			<div class="editor-label">
-				<label class="helpTip" data-bind="qTip: null" title="@ViewRes.EntryEditStrings.NameHelp">
-					Primary name (in one or more languages)
+				<label class="helpTip" data-bind="qTip: null" title="@EditRes.NameHelp">
+					@Res.BaNames
 				</label>
 				@Helpers.RequiredField()
 				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
@@ -74,7 +76,7 @@
 			</div>
 
 			<div class="editor-label">
-				<label>Notes</label>
+				<label>@Res.BaNotes</label>
 				@Helpers.MarkdownNotice()
 			</div>
 			<div class="editor-field entry-edit-description" data-bind="with: notes">
@@ -82,7 +84,7 @@
 			</div>
 
 			<div class="editor-label">
-				<label>Song type</label>
+				<label>@Res.BaSongType</label>
 			</div>
 			<div class="editor-field">
 				<div class="row-fluid">
@@ -95,8 +97,8 @@
 	
 			<!-- ko if: canHaveOriginalVersion -->
 			<div class="editor-label">
-				<label class="helpTip" data-bind="qTip: null" title="If the original version of this song exists on the site, use this field to link this derived version to the original. Choose the song by searching by song title.">
-					Original version
+				<label class="helpTip" data-bind="qTip: null" title="@Res.BaOriginalVersionHelp">
+					@Res.BaOriginalVersion
 				</label>
 			</div>
 			<div class="editor-field">
@@ -108,7 +110,7 @@
 			
 			<div class="editor-label">
 				<label>
-					Duration (minutes and seconds)
+					@Res.BaDuration
 				</label>
 			</div>
 			<div class="editor-field">
@@ -116,8 +118,8 @@
 			</div>
 			
 			<div class="editor-label">
-				<label class="helpTip" data-bind="qTip: null" title="@ViewRes.EntryEditStrings.ExternalLinksQuickHelp">
-				    Web links
+				<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
+				    @EditRes.WebLinks
                 </label>
 			</div>
 			<div class="editor-field" data-bind="with: webLinks">
@@ -126,7 +128,7 @@
 
 			<div class="editor-label">
 				<label class="helpTip" data-bind="qTip: null" title="@Resources.CommonMessages.EntryStatusExplanation">
-				    Status
+				    @EditRes.Status
                 </label>
 			</div>
 			<div class="editor-field">
@@ -140,11 +142,11 @@
 			<table>
 				<thead>
 					<tr>
-						<th>Service</th>
-						<th>Type</th>
-						<th>Name</th>
-						<th>Length</th>
-						<th>Author</th>
+						<th>@Res.PvService</th>
+						<th>@Res.PvType</th>
+						<th>@Res.PvName</th>
+						<th>@Res.PvLength</th>
+						<th>@Res.PvAuthor</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -154,15 +156,15 @@
 			</table>
 
 			<br />
-			<h4>Add media</h4>
+			<h4>@Res.PvAddMedia</h4>
 
-			<p>Supported services: Youtube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</p>
+			<p>@Res.PvSupportedServices</p>
 			<p>
-				URL:
+				@Res.PvUrl
 				<input type="text" data-bind="textInput: newPvUrl" maxlength="255" size="40" class="input-xlarge" />
 			</p>
 			<p>
-				Type:
+				@Res.PvNewType
 				<select class="input-xlarge" data-bind="value: newPvType">
 					@foreach (var pvType in Translate.PVTypeDescriptions.ValuesAndNamesStrings) {
 						<option value="@pvType.Key">@pvType.Value</option>
@@ -170,7 +172,7 @@
 				</select>
 			</p>
 
-			<a data-bind="click: add" href="#" class="textLink addLink">Add</a>
+			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
 			@Helpers.AjaxLoader("pvLoader")
 
 		</div>
@@ -181,7 +183,7 @@
 			@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }
 			<!-- /ko -->
 
-			<a data-bind="click: add" href="#" class="textLink addLink">Add row</a>
+			<a data-bind="click: add" href="#" class="textLink addLink">@Res.LyAddRow</a>
 
 		</div>
 
@@ -191,10 +193,10 @@
 					<table data-bind="visible: artistLinks().length">
 						<thead>
 							<tr>
-								<th>Artist</th>
-								<th>Support</th>
-								<th>Roles</th>
-								<th>Actions</th>
+								<th>@Res.ArArtist</th>
+								<th>@Res.ArSupport</th>
+								<th>@Res.ArRoles</th>
+								<th>@Res.ArActions</th>
 							</tr>
 						</thead>
 						<tbody data-bind="foreach: artistLinks">
@@ -203,12 +205,12 @@
 					</table>
 
 					<br />
-					<h4>Add artist</h4>
+					<h4>@Res.ArAddArtistTitle</h4>
 					<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
 				</div>
 				<div class="span4">
 					<div class="alert alert-info">
-						<span>Note that you can tag artists for a song much faster after tagging the album first.</span>
+						<span>@Res.ArArtistsNote</span>
 					</div>
 					<div class="alert" data-bind="visible: validationError_needArtist">
 						<span>@ValidationErrors.NeedArtist</span>
@@ -225,7 +227,7 @@
 	</div>
 	<br />	
 
-	<p>Update notes (optional)</p>
+	<p>@EditRes.UpdateNotes</p>
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />

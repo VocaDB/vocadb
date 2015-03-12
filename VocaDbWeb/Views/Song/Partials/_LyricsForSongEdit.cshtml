@@ -3,11 +3,11 @@
 
 	<p>			
 		<label>
-			Language:
+			@ViewRes.Song.EditStrings.LyLanguage
 			@KnockoutHelpers.LanguageSelectionDropDown("language")
 		</label>
 		<label>
-			Source:
+			@ViewRes.Song.EditStrings.LySource
 			<input type="text" data-bind="textInput: source" class="input-xlarge" size="45" maxlength="255" />
 		</label>
 	</p>
@@ -15,7 +15,7 @@
 	<textarea data-bind="value: value" cols="65" rows="30" class="input-xxlarge"></textarea>
 	<br />
 
-	<a data-bind="click: $parent.remove" href="#" class="textLink deleteLink">Delete</a>
+	<a data-bind="click: $parent.remove" href="#" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
 	<hr />
 
 </div>

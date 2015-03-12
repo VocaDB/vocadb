@@ -117,54 +117,94 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Aliases" xml:space="preserve">
-    <value>Aliases (optional)</value>
+  <data name="ArActions" xml:space="preserve">
+    <value>Actions</value>
   </data>
-  <data name="AliasesDesc" xml:space="preserve">
-    <value>Aliases are additional, commonly used names for an entry. Most of the time they are not translations of the primary name, although well-known translations can be added as aliases. Aliases can be in language.</value>
+  <data name="ArAddArtistTitle" xml:space="preserve">
+    <value>Add artist</value>
   </data>
-  <data name="BasicInfo" xml:space="preserve">
+  <data name="ArArtist" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="ArArtistsNote" xml:space="preserve">
+    <value>Note that you can tag artists for a song much faster after tagging the album first.</value>
+  </data>
+  <data name="ArRoles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="ArSupport" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="BaDuration" xml:space="preserve">
+    <value>Duration (minutes and seconds)</value>
+  </data>
+  <data name="BaNames" xml:space="preserve">
+    <value>Primary name (in one or more languages)</value>
+  </data>
+  <data name="BaNotes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="BaOriginalVersion" xml:space="preserve">
+    <value>Original version</value>
+  </data>
+  <data name="BaOriginalVersionHelp" xml:space="preserve">
+    <value>If the original version of this song exists on the site, use this field to link this derived version to the original. Choose the song by searching by song title.</value>
+  </data>
+  <data name="BaSongType" xml:space="preserve">
+    <value>Song type</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this song?</value>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>Edit song {0}</value>
+  </data>
+  <data name="LyAddRow" xml:space="preserve">
+    <value>Add row</value>
+  </data>
+  <data name="LyLanguage" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="LySource" xml:space="preserve">
+    <value>Source:</value>
+  </data>
+  <data name="PvAddMedia" xml:space="preserve">
+    <value>Add media</value>
+  </data>
+  <data name="PvAuthor" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="PvLength" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="PvName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PvNewType" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="PvService" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="PvSupportedServices" xml:space="preserve">
+    <value>Supported services: Youtube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>
+  </data>
+  <data name="PvType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="PvUrl" xml:space="preserve">
+    <value>URL:</value>
+  </data>
+  <data name="TabArtists" xml:space="preserve">
+    <value>Artists</value>
+  </data>
+  <data name="TabBasicInfo" xml:space="preserve">
     <value>Basic info</value>
   </data>
-  <data name="ConcurrentEditWarning" xml:space="preserve">
-    <value>{0} also edited this entry {1} minute(s) ago.</value>
+  <data name="TabLyrics" xml:space="preserve">
+    <value>Lyrics</value>
   </data>
-  <data name="ConcurrentEditWarningNow" xml:space="preserve">
-    <value>{0} is also editing this entry right now!</value>
-  </data>
-  <data name="DefaultLanguageSelection" xml:space="preserve">
-    <value>Original language</value>
-  </data>
-  <data name="ExternalLinksQuickHelp" xml:space="preserve">
-    <value>External links relevant to this entry. Keep in mind no illegal/direct download links will be allowed!&lt;br /&gt;
-&lt;br /&gt;
-Fill in the URL first, and description and category will be guessed automatically if the domain is known.&lt;br /&gt;
-&lt;br /&gt;
-Official: artist's official site (usually blogs, websites, Facebook etc.).&lt;br /&gt;
-Commercial: authorized sales such as Amazon and CDJapan.&lt;br /&gt;
-Reference: fansites with useful information such as wikis.&lt;br /&gt;
-Other: for those that don't fit into anything above.&lt;br /&gt;</value>
-  </data>
-  <data name="Merge" xml:space="preserve">
-    <value>Merge</value>
-  </data>
-  <data name="NameHelp" xml:space="preserve">
-    <value>If the original name is non-English (for example Japanese), or if the language of the name is unknown, input that into the Non-English name field. If known, input the romanized name as well. If the official name of the entry is in English, or there is a known English translation, input that into the English name field.&lt;br /&gt;
-&lt;br /&gt;
-Note that you do not need to copy the missing names from others. The system will substitute those when needed. For example, lacking a romanized name, the system will automatically use English.&lt;br /&gt;
-&lt;br /&gt;
-Additional names can be entered as aliases. See more in the guide.</value>
-  </data>
-  <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="UpdateNotes" xml:space="preserve">
-    <value>Update notes (optional)</value>
-  </data>
-  <data name="WebLinks" xml:space="preserve">
-    <value>External links</value>
+  <data name="TabMedia" xml:space="preserve">
+    <value>Media</value>
   </data>
 </root>
