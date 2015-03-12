@@ -59,7 +59,6 @@ module vdb.tests.viewModels {
         target.ensureMessagesLoaded();
 
         equal(target.isLoaded(), true, "isLoaded");
-        equal(target.unreadMessagesCount(), 2, "unreadMessagesCount");
         equal(target.unreadMessages().length, 2, "unreadMessages().length");
         equal(target.unreadMessages()[0].subject, "New message!");
 
