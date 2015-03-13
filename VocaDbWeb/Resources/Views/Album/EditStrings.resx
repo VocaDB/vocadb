@@ -202,7 +202,7 @@
     <value>Are you sure you want to move this album to trash?</value>
   </data>
   <data name="EditTitle" xml:space="preserve">
-    <value>Edit album {0}</value>
+    <value>Edit album - {0}</value>
   </data>
   <data name="MoveToTrash" xml:space="preserve">
     <value>Move to trash</value>

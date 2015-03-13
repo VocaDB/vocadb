@@ -241,7 +241,7 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit album {0}.
+        ///   Looks up a localized string similar to Edit album - {0}.
         /// </summary>
         public static string EditTitle {
             get {
