@@ -43,7 +43,6 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/shared/main").Include(
 				"~/Scripts/Helpers/HtmlHelper.js", 
 				"~/Scripts/Shared/EntryUrlMapper.js",
-				"~/Scripts/Shared/ReportEntryPopup.js",
 				"~/Scripts/Shared/EntryAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ConfirmClick.js",
 				"~/Scripts/KnockoutExtensions/Dialog.js",

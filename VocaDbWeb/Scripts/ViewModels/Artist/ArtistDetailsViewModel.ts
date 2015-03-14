@@ -41,6 +41,17 @@ module vdb.viewModels {
 
 			this.tagUsages = new tags.TagListViewModel(tagUsages);
 
+			this.reportViewModel = new ReportEntryViewModel((reportType, notes) => {
+
+				var createReportUrl = UrlMapper.mergeUrls(repo.baseUrl, "/Artist/CreateReport");
+				var queryParams = { reportType: reportType, notes: notes, artistId: this.artistId };
+
+				$.post(createReportUrl, queryParams);
+
+				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+
+			});
+
 		}
 
 		public comments: EditableCommentsViewModel;
@@ -52,6 +63,8 @@ module vdb.viewModels {
 		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
 		public collaborationAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
 		public mainAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
+
+		public reportViewModel: ReportEntryViewModel;
 
 		public tagsEditViewModel: tags.TagsEditViewModel;
 

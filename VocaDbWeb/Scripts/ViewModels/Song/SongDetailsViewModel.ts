@@ -20,6 +20,8 @@ module vdb.viewModels {
 
 		public id: number;
 
+		public reportViewModel: ReportEntryViewModel;
+
 		public selectedLyricsId: KnockoutObservable<number>;
 
 		public selectedPvId: KnockoutObservable<number>;
@@ -71,6 +73,17 @@ module vdb.viewModels {
                     this.usersPopupVisible(true);
                 });
             };
+
+			this.reportViewModel = new ReportEntryViewModel((reportType, notes) => {
+
+				var createReportUrl = UrlMapper.mergeUrls(repository.baseUrl, "/Song/CreateReport");
+				var queryParams = { reportType: reportType, notes: notes, songId: this.id };
+
+				$.post(createReportUrl, queryParams);
+
+				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+
+			});
 
             this.showAllVersions = () => {
                 this.allVersionsVisible(true);

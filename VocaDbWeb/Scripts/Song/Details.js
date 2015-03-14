@@ -26,8 +26,6 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 		.ajaxStart(function () { $(this).show(); })
 		.ajaxStop(function () { $(this).hide(); });
 
-	initReportEntryPopup(saveStr, urlMapper.mapRelative("/Song/CreateReport"), { songId: songId });
-
 	$(".pvLink").click(function () {
 
 		var id = getId(this);

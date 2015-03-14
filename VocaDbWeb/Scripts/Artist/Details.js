@@ -60,8 +60,6 @@ function initPage(artistId, saveStr, urlMapper, viewModel) {
 
 	});
 
-	initReportEntryPopup(saveStr, urlMapper.mapRelative("/Artist/CreateReport"), { artistId: artistId });
-
 	$("#newAlbums img").vdbAlbumToolTip();
 	$("#topAlbums img").vdbAlbumToolTip();
 	$("#baseVoicebank a").vdbArtistToolTip();
