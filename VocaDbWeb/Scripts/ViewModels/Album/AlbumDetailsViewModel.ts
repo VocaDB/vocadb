@@ -16,6 +16,8 @@ module vdb.viewModels {
 
 		private id: number;
 
+		public reportViewModel: ReportEntryViewModel;
+
 		public showTranslatedDescription: KnockoutObservable<boolean>;
 
 		public tagsEditViewModel: tags.TagsEditViewModel;
@@ -63,6 +65,17 @@ module vdb.viewModels {
 			});
 
 			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
+
+			this.reportViewModel = new ReportEntryViewModel((reportType, notes) => {
+
+				var createReportUrl = UrlMapper.mergeUrls(repo.baseUrl, "/Album/CreateReport");
+				var queryParams = { reportType: reportType, notes: notes, albumId: this.id };
+
+				$.post(createReportUrl, queryParams);
+
+				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+
+			});
 
         }
 

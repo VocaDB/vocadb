@@ -73,6 +73,36 @@
 
 }
 
+@helper ReportEntryPopupKnockout(Dictionary<string, string> reportTypes, string viewModelBindingName = "reportViewModel", string reportButtonId = "reportEntryLink") {
+
+	<div style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError"
+		 data-bind="
+			with: @viewModelBindingName,
+			dialog: {
+				autoOpen: false, width: 300,
+				position: { my: 'left top', at: 'left bottom', of: $('#@reportButtonId') }
+			},
+			dialogVisible: @(viewModelBindingName).dialogVisible,
+			dialogButtons: [{ text: '@ViewRes.SharedStrings.Save', click: @(viewModelBindingName).send }]">
+
+		<label>
+			@ViewRes.EntryDetailsStrings.ReportType
+		</label>
+		<select data-bind="value: reportType, initialValue">
+			@foreach (var reportType in reportTypes) {
+				<option value="@reportType.Key">@reportType.Value</option>
+			}
+		</select>
+
+		<label>
+			@ViewRes.EntryDetailsStrings.ReportNotes
+		</label>
+		<textarea data-bind="textInput: notes" class="input-xlarge" maxlength="400"></textarea>
+
+	</div>
+
+}
+
 @helper ShareLinks(string title, string url) {
 	@(ViewRes.EntryDetailsStrings.Share + ":")
 	@LinkShare.GetHtml(title, pageLinkBack: url, linkSites: new[] { LinkShareSite.Facebook, LinkShareSite.Reddit, LinkShareSite.Twitter })	

@@ -64,7 +64,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/SongRepository.js",
 				"~/Scripts/Repositories/ArtistRepository.js",
 				"~/Scripts/ViewModels/ServerSidePagingViewModel.js",
-				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js"
+				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
+				"~/Scripts/ViewModels/ReportEntryViewModel.js"
 			));
 
 			// Included on all entry edit and create pages (album, artist, my settings etc.)

@@ -33,7 +33,7 @@
 	<a data-bind="click: downloadTagsDialog.show" href="#" id="downloadTagsCustom">@R.DetailsStrings.Customize</a>
 </span>
 
-<a href="#" id="reportEntryLink">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 
 @Helpers.EntryStatusMessage(Model.Status)
 }
@@ -373,7 +373,7 @@
 
 @AlbumHelpers.EditCollectionDialog(Model.AlbumPurchaseStatus, Model.AlbumMediaType)
 
-@EntryDetailsHelpers.ReportEntryPopup(Html.EnumDropDownList("reportType", Translate.AlbumReportTypeNames, new { id = "reportType" }))
+@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.AlbumReportTypeNames.ValuesAndNamesStrings))
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Album/Details", "~/bundles/jqxRating")

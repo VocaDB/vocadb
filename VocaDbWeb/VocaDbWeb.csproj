@@ -2061,6 +2061,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerSoundCloud.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerYoutube.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\ReportEntryViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AlbumSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AnythingSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistSearchViewModel.ts" />

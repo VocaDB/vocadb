@@ -85,8 +85,6 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 
 	});
 
-	initReportEntryPopup(saveStr, urlMapper.mapRelative("/Album/CreateReport"), { albumId: albumId });
-
 	$("td.artistList a").vdbArtistToolTip();
 	
 	$("#userCollectionsPopup").dialog({ autoOpen: false, width: 400, position: { my: "left top", at: "left bottom", of: $("#statsLink") } });

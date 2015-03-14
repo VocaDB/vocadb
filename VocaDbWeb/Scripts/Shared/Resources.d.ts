@@ -2,6 +2,7 @@
 declare module vdb.resources {
 
 	var albumEdit: any;
+	var shared: any;
 	var song: any;
 
 }
