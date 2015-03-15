@@ -30,6 +30,10 @@ namespace VocaDb.Tests.TestSupport {
 					BEGIN
 					EXEC('CREATE SCHEMA [mikudb]');
 					END
+					IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'discussions')
+					BEGIN
+					EXEC('CREATE SCHEMA [discussions]');
+					END
 				").ExecuteUpdate();
 
 				tx.Commit();
