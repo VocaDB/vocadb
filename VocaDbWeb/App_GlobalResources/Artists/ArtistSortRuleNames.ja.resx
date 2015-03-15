@@ -124,7 +124,7 @@
     <value>追加された日時（昇順）</value>
   </data>
   <data name="FollowerCount" xml:space="preserve">
-    <value>フォロワーの数</value>
+    <value>フォロワー数</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>アーティスト名</value>

@@ -133,6 +133,6 @@
     <value>通常のユーザー</value>
   </data>
   <data name="Trusted" xml:space="preserve">
-    <value>信頼されるユーザー</value>
+    <value>信頼されたユーザー</value>
   </data>
 </root>

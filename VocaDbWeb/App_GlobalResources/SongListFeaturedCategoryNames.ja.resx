@@ -129,4 +129,7 @@
   <data name="VocaloidRanking" xml:space="preserve">
     <value>ボカロランキング</value>
   </data>
+  <data name="Pools" xml:space="preserve">
+    <value>プール</value>
+  </data>
 </root>

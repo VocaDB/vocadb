@@ -144,4 +144,16 @@
   <data name="UpdatedSong" xml:space="preserve">
     <value>曲が更新されました</value>
   </data>
+  <data name="EntryAlbum" xml:space="preserve">
+    <value>アルバム</value>
+  </data>
+  <data name="EntryArtist" xml:space="preserve">
+    <value>アーティスト</value>
+  </data>
+  <data name="EntrySong" xml:space="preserve">
+    <value>曲</value>
+  </data>
+  <data name="Someone" xml:space="preserve">
+    <value>投稿者</value>
+  </data>
 </root>
