@@ -27,7 +27,7 @@ namespace VocaDb.Web.Models.Artist {
 			ParamIs.NotNull(() => artist);
 
 			Artist = artist;
-			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext);
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext, artist);
 			EditedArtist = editedArtist;
 
 		}

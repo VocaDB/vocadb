@@ -147,7 +147,7 @@ namespace VocaDb.Web.Controllers
 				markdownParser.GetPlainText(model.Description.EnglishOrOriginal) :
 				albumDescriptionGenerator.GenerateDescription(model, d => Translate.DiscTypeNames.GetName(d, CultureInfo.InvariantCulture));
 
-            return View(new AlbumDetails(model));
+            return View(new AlbumDetails(model, PermissionContext));
 
         }
 

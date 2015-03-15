@@ -9,17 +9,40 @@ namespace VocaDb.Model.Domain.Security {
 	public static class EntryPermissionManager {
 
 		private static readonly EntryStatus[] allPermissions = EnumVal<EntryStatus>.Values;
-		private static readonly EntryStatus[] normalStatusPermissions = new[] { EntryStatus.Draft, EntryStatus.Finished };
-		private static readonly EntryStatus[] trustedStatusPermissions = new[] { EntryStatus.Draft, EntryStatus.Finished, EntryStatus.Approved };
+		private static readonly EntryStatus[] normalStatusPermissions = { EntryStatus.Draft, EntryStatus.Finished }; // Entry statuses allowed for normal users
+		private static readonly EntryStatus[] trustedStatusPermissions = { EntryStatus.Draft, EntryStatus.Finished, EntryStatus.Approved }; // Entry statuses allowed for trusted users
 
-		public static EntryStatus[] AllowedEntryStatuses(IUserPermissionContext permissionContext) {
+		private static bool IsVerifiedFor(IUserPermissionContext permissionContext, IEntryBase entry) {
+			
+			return permissionContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
 
+		}
+
+		public static EntryStatus[] AllowedEntryStatuses(IUserPermissionContext permissionContext, IEntryBase entry = null) {
+
+			// Check for basic edit permissions, without these the user is limited or disabled
+			if (!permissionContext.HasPermission(PermissionToken.ManageDatabase)) {
+				return new EntryStatus[0];
+			}
+
+			// Moderators with lock permissions can edit everything
 			if (permissionContext.HasPermission(PermissionToken.LockEntries))
 				return allPermissions;
 
+			// Trusted users can edit approved entries
 			if (permissionContext.HasPermission(PermissionToken.ApproveEntries))
 				return trustedStatusPermissions;
 
+			// Verified artists get trusted permissions for their own entry
+			if (entry != null && entry.EntryType == EntryType.Artist 
+				&& permissionContext.IsLoggedIn
+				&& IsVerifiedFor(permissionContext, entry)) {
+				
+				return trustedStatusPermissions;
+
+			}
+
+			// Normal user permissions
 			if (permissionContext.HasPermission(PermissionToken.ManageDatabase))
 				return normalStatusPermissions;
 
@@ -67,15 +90,28 @@ namespace VocaDb.Model.Domain.Security {
 
 			ParamIs.NotNull(() => entry);
 
+			// Check for basic edit permissions, without these the user is limited or disabled
 			if (!permissionContext.HasPermission(PermissionToken.ManageDatabase))
 				return false;
 
+			// Moderators with lock permissions can edit everything
 			if (permissionContext.HasPermission(PermissionToken.LockEntries))
 				return true;
 
+			// Trusted users can edit approved entries
 			if (permissionContext.HasPermission(PermissionToken.ApproveEntries))
 				return (trustedStatusPermissions.Contains(entry.Status));
 
+			// Verified artists get trusted permissions for their own entry
+			if (entry.EntryType == EntryType.Artist 
+				&& permissionContext.IsLoggedIn
+				&& IsVerifiedFor(permissionContext, entry)) {
+				
+				return (trustedStatusPermissions.Contains(entry.Status));
+
+			}
+
+			// Normal user permissions
 			return (normalStatusPermissions.Contains(entry.Status));
 
 		}
