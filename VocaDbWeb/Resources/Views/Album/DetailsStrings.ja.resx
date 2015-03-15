@@ -217,7 +217,7 @@
     <value>カスタマイズ</value>
   </data>
   <data name="NoTracklist" xml:space="preserve">
-    <value>トラックリストが存在しません。登録たユーザーの誰もが提供できます。</value>
+    <value>トラックリストが存在しません。登録したユーザーの誰もが提供できます。</value>
   </data>
   <data name="OwnedByTitle" xml:space="preserve">
     <value>所得ユーザー</value>
