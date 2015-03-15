@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
@@ -29,7 +30,7 @@ namespace VocaDb.Web.Models.Song {
 			ParamIs.NotNull(() => song);
 
 			Song = song;
-			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext);
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
 			EditedSong = editedSong;
 
 		}
