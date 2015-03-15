@@ -52,7 +52,7 @@ namespace VocaDb.Web.Controllers
         [Authorize]
         public ActionResult Edit(string id)
         {
-			var model = new TagEdit(queries.GetTagForEdit(id));
+			var model = new TagEdit(queries.GetTagForEdit(id), PermissionContext);
 			return View(model);
 		}
 

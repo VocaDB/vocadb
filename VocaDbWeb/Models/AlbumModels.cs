@@ -31,13 +31,13 @@ namespace VocaDb.Web.Models {
 
 		public AlbumDetails() { }
 
-		public AlbumDetails(AlbumDetailsContract contract) {
+		public AlbumDetails(AlbumDetailsContract contract, IUserPermissionContext permissionContext) {
 
 			ParamIs.NotNull(() => contract);
 
 			AdditionalNames = contract.AdditionalNames;
 			ArtistString = contract.ArtistString;
-			CanEdit = EntryPermissionManager.CanEdit(MvcApplication.LoginManager, contract);
+			CanEdit = EntryPermissionManager.CanEdit(permissionContext, contract);
 			CommentCount = contract.CommentCount;
 			CreateDate = contract.CreateDate;
 			Description = contract.Description;

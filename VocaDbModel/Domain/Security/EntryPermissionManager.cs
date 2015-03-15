@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Songs;
@@ -6,24 +7,69 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Security {
 
+	using StatusSet = ImmutableSortedSet<EntryStatus>;
+
 	public static class EntryPermissionManager {
 
-		private static readonly EntryStatus[] allPermissions = EnumVal<EntryStatus>.Values;
-		private static readonly EntryStatus[] normalStatusPermissions = new[] { EntryStatus.Draft, EntryStatus.Finished };
-		private static readonly EntryStatus[] trustedStatusPermissions = new[] { EntryStatus.Draft, EntryStatus.Finished, EntryStatus.Approved };
+		private static StatusSet Set(params EntryStatus[] vals) {
+			return ImmutableSortedSet.CreateRange(vals);
+		}
 
-		public static EntryStatus[] AllowedEntryStatuses(IUserPermissionContext permissionContext) {
+		private static readonly ImmutableSortedSet<EntryStatus> allPermissions = Set(EnumVal<EntryStatus>.Values);
 
+		// Entry statuses allowed for normal users
+		private static readonly ImmutableSortedSet<EntryStatus> normalStatusPermissions = Set(EntryStatus.Draft, EntryStatus.Finished);
+
+		// Entry statuses allowed for trusted users
+		private static readonly ImmutableSortedSet<EntryStatus> trustedStatusPermissions = Set(EntryStatus.Draft, EntryStatus.Finished, EntryStatus.Approved);
+
+		private static bool IsVerifiedFor(IUserPermissionContext permissionContext, IEntryBase entry) {
+			
+			return permissionContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
+
+		}
+
+		/// <summary>
+		/// Gets a list of entry statuses that the user can edit or set.
+		/// This means, the user is allowed to edit entries with any of these statuses, 
+		/// and the user is able to change the entry status to any of these.
+		/// </summary>
+		/// <remarks>
+		/// Most of the time the allowed entry statuses are global, but associating a user account with an artist entry
+		/// gives special entry-specific permissions for the user editing that entry.
+		/// </remarks>
+		/// <param name="permissionContext">User permission context identifying the user's global permissions.</param>
+		/// <param name="entry">Entry to be checked. Can be null. If null, only global permissions will be checked.</param>
+		/// <returns>A list of permissions that can be set by the user.</returns>
+		public static StatusSet AllowedEntryStatuses(IUserPermissionContext permissionContext, IEntryBase entry = null) {
+
+			// Check for basic edit permissions, without these the user is limited or disabled
+			if (!permissionContext.HasPermission(PermissionToken.ManageDatabase)) {
+				return StatusSet.Empty;
+			}
+
+			// Moderators with lock permissions can edit everything
 			if (permissionContext.HasPermission(PermissionToken.LockEntries))
 				return allPermissions;
 
+			// Trusted users can edit approved entries
 			if (permissionContext.HasPermission(PermissionToken.ApproveEntries))
 				return trustedStatusPermissions;
 
+			// Verified artists get trusted permissions for their own entry
+			if (entry != null && entry.EntryType == EntryType.Artist 
+				&& permissionContext.IsLoggedIn
+				&& IsVerifiedFor(permissionContext, entry)) {
+				
+				return trustedStatusPermissions;
+
+			}
+
+			// Normal user permissions
 			if (permissionContext.HasPermission(PermissionToken.ManageDatabase))
 				return normalStatusPermissions;
 
-			return new EntryStatus[] {};
+			return StatusSet.Empty;
 
 		}
 
@@ -63,20 +109,18 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		/// <summary>
+		/// Tests whether the user can edit a specific entry.
+		/// The permission depends on both the user's global permissions and entry status.
+		/// </summary>
+		/// <param name="permissionContext">User permission context. Cannot be null.</param>
+		/// <param name="entry">Entry to be checked. Cannot be null.</param>
+		/// <returns>True if the user can edit the entry, otherwise false.</returns>
 		public static bool CanEdit(IUserPermissionContext permissionContext, IEntryWithStatus entry) {
 
 			ParamIs.NotNull(() => entry);
 
-			if (!permissionContext.HasPermission(PermissionToken.ManageDatabase))
-				return false;
-
-			if (permissionContext.HasPermission(PermissionToken.LockEntries))
-				return true;
-
-			if (permissionContext.HasPermission(PermissionToken.ApproveEntries))
-				return (trustedStatusPermissions.Contains(entry.Status));
-
-			return (normalStatusPermissions.Contains(entry.Status));
+			return AllowedEntryStatuses(permissionContext, entry).Contains(entry.Status);
 
 		}
 

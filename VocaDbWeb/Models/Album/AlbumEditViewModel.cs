@@ -36,7 +36,7 @@ namespace VocaDb.Web.Models.Album {
 			Album = album;
 			EditedAlbum = editedAlbum;
 
-			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext);
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
 
 		}
 
