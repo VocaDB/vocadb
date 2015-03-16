@@ -7,6 +7,6 @@ interface KnockoutBindingHandlers {
 
 ko.bindingHandlers.show = {
     init: (element: HTMLElement) => {
-		$(element).show();
+		$(element).css('visibility', 'visible');
     }
 };
