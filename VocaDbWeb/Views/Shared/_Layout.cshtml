@@ -19,6 +19,16 @@
     <link href="@Url.Content("~/Scripts/qTip/jquery.qtip.css")" rel="stylesheet" type="text/css" />
 	<link rel="search" type="application/opensearchdescription+xml" title="@BrandableStrings.Layout.SiteName" href="@Config.SiteSettings.OpenSearchPath" />
 	
+	<!-- prevent flashing content while loading the page -->
+	<style type="text/css">
+		.js-cloak { display: none; }
+    </style>
+	<noscript>
+		<style type="text/css">
+			.js-cloak { display: block; }
+		</style>		
+	</noscript>
+
 	@RenderSection("Head", false)
 	
 	@{ Html.RenderPartial("Partials/_GoogleAnalytics"); }

@@ -46,7 +46,7 @@
 	@Helpers.DraftMessage("glproducers")
 }
 
-<div id="tabs">
+<div id="tabs" class="js-cloak" data-bind="show">
 
 	<ul>
 		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
@@ -360,7 +360,7 @@
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }
 </div>
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.ArtistReportTypeNames.ValuesAndNamesStrings))
+@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.ArtistReportTypeNames.ValuesAndNamesStrings)
 
 @if (Login.IsLoggedIn) {
 	Html.RenderPartial("Partials/_CustomizeArtistSubscriptionDialog");

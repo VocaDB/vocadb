@@ -1944,6 +1944,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\qTip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ReleaseEventNameAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ScrollEnd.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\Show.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\SlideVisible.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ArtistAutoComplete.ts" />
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
