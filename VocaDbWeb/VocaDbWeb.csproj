@@ -2027,8 +2027,6 @@
     <TypeScriptCompile Include="Scripts\Models\EntryType.ts" />
     <TypeScriptCompile Include="Scripts\Models\Tags\Tag.ts" />
     <TypeScriptCompile Include="Scripts\Models\WebLinkCategory.ts" />
-    <Content Include="Scripts\modernizr-1.7.js" />
-    <Content Include="Scripts\modernizr-1.7.min.js" />
     <TypeScriptCompile Include="Scripts\Repositories\EntryRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ResourceRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\TagRepository.ts" />
