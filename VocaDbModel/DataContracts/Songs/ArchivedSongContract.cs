@@ -42,7 +42,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			else {
 
 				// For backwards compatibility
-				var artistElems = doc.XPathSelectElements("//ArchivedAlbumContract/Artists/ObjectRefContract"); //.Elements("Artists").Elements("ObjectRefContract"));
+				var artistElems = doc.XPathSelectElements("//ArchivedSongContract/Artists/ObjectRefContract");
 
 				data.Artists = artistElems.Select(e => new ArchivedArtistForSongContract {
 					Id = int.Parse(e.Element("Id").Value), NameHint = e.Element("NameHint").Value
