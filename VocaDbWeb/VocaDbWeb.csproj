@@ -3353,6 +3353,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MiscStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.fi.resx" />
@@ -3410,6 +3411,7 @@
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
