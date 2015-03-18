@@ -39,22 +39,18 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public string CurrentName { get; set; }
 
-		[Display(Name = "Description")]
 		[StringLength(2000)]
 		public string Description { get; set; }
 
-		[Display(Name = "Featured category")]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongListFeaturedCategory FeaturedCategory { get; set; }
 
 		public int Id { get; set; }
 
-		[Display(Name = "Name")]
 		[Required]
 		[StringLength(200)]
 		public string Name { get; set; }
 
-		[Display(Name = "Songs")]
 		public IList<SongInListEditContract> SongLinks { get; set; }
 
 		public EntryThumbContract Thumb { get; set; }

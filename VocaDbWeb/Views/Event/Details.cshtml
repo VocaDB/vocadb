@@ -1,9 +1,10 @@
 ﻿@using VocaDb.Web.Helpers;
+@using Res = ViewRes.Event.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
 
 @{
 	
-	PageProperties.Title = ViewRes.Event.DetailsStrings.Event + " - " + Model.Name;
+	PageProperties.Title = string.Format("{0} - {1}", Res.Event, Model.Name);
 
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries")
@@ -17,11 +18,11 @@
 }
 
 @if (Model.Series != null) {
-	<p>@ViewRes.Event.DetailsStrings.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })</p>
+	<p>@Res.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })</p>
 }
 
 @if (Model.Date != null) {
-	<p>@ViewRes.Event.DetailsStrings.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
+	<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
 }
 
 @if (!string.IsNullOrEmpty(Model.Description)) {
@@ -36,7 +37,7 @@
 @section BodyScripts {
 <script type="text/javascript">
 
-	$(document).ready(function () {
+	$(function () {
 		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock'} });
 	});
