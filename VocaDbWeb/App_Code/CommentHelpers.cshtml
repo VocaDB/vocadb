@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Model.DataContracts
 @using VocaDb.Model.DataContracts.Api
 @using VocaDb.Model.DataContracts.Comments
+@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
 @inherits VocaDb.Web.Code.HelperPage
@@ -85,12 +86,12 @@
 		
 }
 
-@helper CommentWithEntryVertical(EntryWithCommentsContract entry) {
+@helper CommentWithEntryVertical(EntryWithCommentsContract entry, int maxLength = int.MaxValue) {
 
 	<div class="well well-transparent">
 		@CommentEntryItem(entry.Entry)
 		@foreach (var comment in entry.Comments) {
-			@PrintComment(comment, false)
+			@PrintComment(comment, false, maxLength: maxLength)
 			if (comment != entry.Comments.Last()) {
 				<hr />
 			}
@@ -129,7 +130,7 @@
 
 }
 
-@helper PrintComment(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false) {	
+@helper PrintComment(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false, int maxLength = int.MaxValue) {	
 	<div class="comment">
 		<h3>
 			@UserHelpers.UserIconLink(contract.Author, 25)
@@ -141,6 +142,6 @@
 				@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
 			</small>		
 		</h3>
-		@HtmlHelpers.FormatMarkdown(contract.Message)
+		@HtmlHelpers.FormatMarkdown(contract.Message.TruncateWithEllipsis(maxLength))
 	</div>	
 }

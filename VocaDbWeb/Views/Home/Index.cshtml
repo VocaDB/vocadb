@@ -69,7 +69,7 @@
         <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Comment"))</h3>
             
         @foreach (var comment in Model.RecentComments) {
-			@CommentHelpers.CommentWithEntryVertical(comment)
+			@CommentHelpers.CommentWithEntryVertical(comment, 400)
         }
     </div>
 </div>
