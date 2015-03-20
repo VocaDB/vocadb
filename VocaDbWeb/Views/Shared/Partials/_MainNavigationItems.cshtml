@@ -1,0 +1,56 @@
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Utils.Search
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.MenuPage
+
+<ul class="nav nav-list">
+	<li>@Html.ActionLink(ViewRes._LayoutStrings.Home, "Index", "Home")</li>
+	<li>
+		@Html.ActionLink(ViewRes.SharedStrings.Artists, "Index", "Search", new { searchType = EntryType.Artist }, null)
+		<ul>
+			@if (Login.CanManageDb) {
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.AddArtist, "Create", "Artist")</li>
+			}
+		</ul>
+	</li>
+	<li>
+		@Html.ActionLink(ViewRes.SharedStrings.Albums, "Index", "Search", new { searchType = EntryType.Album }, null)
+		<ul>
+			@if (Login.CanManageDb) {
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.AddAlbum, "Create", "Album")</li>
+			}
+			<li>@Html.ActionLink(ViewRes.SharedStrings.TopRatedAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingAverage }, null)</li>
+			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null)</li>
+			<li>@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries", "Event")</li>
+			<li>@Html.ActionLink(ViewRes._LayoutStrings.FreeAlbums, "Index", "Search", new { searchType = "Album", tag = "free" }, null)</li>
+		</ul>
+	</li>
+	<li>
+		@Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", new SearchRouteParams{ searchType = EntryType.Song }, null)
+		<ul>
+			@if (Login.CanManageDb) {
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.AddSong, "Create", "Song")</li>
+			}
+			<li>@Html.ActionLink(ViewRes.SharedStrings.TopFavoritedSongs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.RatingScore }, null)</li>
+			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewPVs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null)</li>
+		</ul>
+	</li>
+	<li>@Html.ActionLink(ViewRes.SharedStrings.FeaturedSongLists, "Featured", "SongList")</li>
+	<li>@Html.ActionLink(ViewRes._LayoutStrings.Tags, "Index", "Tag")</li>
+	<li>@Html.ActionLink(ViewRes._LayoutStrings.Help, "Index", "Help")</li>
+	<li>@Html.ActionLink(ViewRes._LayoutStrings.Discussions, "Index", "Discussion", new { clientPath = "" }, null)</li>
+	<li><a href="http://wiki.vocadb.net/">@ViewRes._LayoutStrings.Wiki</a></li>
+	<li><a href="@BlogUrl">@ViewRes._LayoutStrings.Blog</a></li>
+	@if (Login.Manager.HasPermission(PermissionToken.MikuDbImport)) {
+		<li>@Html.ActionLink(ViewRes._LayoutStrings.MikuDbAlbum, "Index", "MikuDbAlbum")</li>		 
+	}
+	@if (Login.CanAccessManageMenu) {
+		<li>@Html.ActionLink(ViewRes._LayoutStrings.Manage, "Index", "Admin")</li>
+	}
+	@if (!Login.Manager.IsLoggedIn) {
+		<li><a href="@Url.Action("Login", "User")" onclick="vdb.functions.showLoginPopup(); return false;">@ViewRes._LayoutStrings.LogIn</a></li>
+		<li>@Html.ActionLink(ViewRes._LayoutStrings.Register, "Create", "User")</li>
+	}
+</ul>
+

@@ -420,6 +420,7 @@ namespace VocaDb.Web.App_Start {
 			// Base CSS
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 				"~/Content/bootstrap.css", 
+				"~/Content/bootstrap-responsive.css", 
 				"~/Content/Site.css", 
 				"~/Content/Styles/base.css", 
 				//"~/Content/Styles/Snow2013.css",
