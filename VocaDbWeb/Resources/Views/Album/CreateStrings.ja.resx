@@ -120,4 +120,16 @@
   <data name="SubmitAlbum" xml:space="preserve">
     <value>アルバムの登録</value>
   </data>
+  <data name="ArtistsInfo" xml:space="preserve">
+    <value>アーティスト（少なくとも１名は必要）</value>
+  </data>
+  <data name="DiscType" xml:space="preserve">
+    <value>ディスクタイプ</value>
+  </data>
+  <data name="NeedArtist" xml:space="preserve">
+    <value>少なくとも１名のアーティストが必要です。</value>
+  </data>
+  <data name="UnableToCreateAlbum" xml:space="preserve">
+    <value>アルバム登録ができませんでした。エラーを修正し再実行してください。</value>
+  </data>
 </root>

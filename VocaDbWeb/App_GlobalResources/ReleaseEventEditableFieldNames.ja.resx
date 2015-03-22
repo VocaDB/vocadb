@@ -130,7 +130,6 @@
     <value>シリーズ番号</value>
   </data>
   <data name="SeriesSuffix" xml:space="preserve">
-    <value></value>
-    <comment>?</comment>
+    <value>接尾辞</value>
   </data>
 </root>

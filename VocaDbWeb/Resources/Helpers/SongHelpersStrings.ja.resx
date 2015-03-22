@@ -117,50 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Artists" xml:space="preserve">
-    <value>アーティスト</value>
-  </data>
-  <data name="Barcode" xml:space="preserve">
-    <value>バーコード</value>
-  </data>
-  <data name="Cover" xml:space="preserve">
-    <value>ジャケット</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>詳細</value>
-  </data>
-  <data name="DiscType" xml:space="preserve">
-    <value>ディスクタイプ</value>
-  </data>
-  <data name="Identifiers" xml:space="preserve">
-    <value>識別子</value>
-    
-  </data>
-  <data name="Names" xml:space="preserve">
-    <value>名前</value>
-  </data>
-  <data name="Nothing" xml:space="preserve">
-    <value>なし</value>
-  </data>
-  <data name="OriginalName" xml:space="preserve">
-    <value>オリジナル名</value>
-  </data>
-  <data name="OriginalRelease" xml:space="preserve">
-    <value>オリジナル・リリース</value>
-  </data>
-  <data name="Pictures" xml:space="preserve">
-    <value>画像</value>
-  </data>
-  <data name="PVs" xml:space="preserve">
-    <value>PV</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>ステータス</value>
-  </data>
-  <data name="Tracks" xml:space="preserve">
-    <value>トラック</value>
-  </data>
-  <data name="WebLinks" xml:space="preserve">
-    <value>外部リンク</value>
+  <data name="FromAlbum" xml:space="preserve">
+    <value>アルバムから</value>
   </data>
 </root>

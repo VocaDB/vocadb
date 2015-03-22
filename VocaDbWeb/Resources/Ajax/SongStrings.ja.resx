@@ -120,4 +120,22 @@
   <data name="CreateNewList" xml:space="preserve">
     <value>新しいリストを作成する</value>
   </data>
+  <data name="ThanksForRating" xml:space="preserve">
+    <value>評価ありがとうございます！</value>
+  </data>
+  <data name="SongTypeFilter" xml:space="preserve">
+    <value>曲タイプ 「{0}」</value>
+  </data>
+  <data name="SinceFilter" xml:space="preserve">
+    <value>{0}より新しい</value>
+  </data>
+  <data name="OnlyWithPVsFilter" xml:space="preserve">
+    <value>PVだけ</value>
+  </data>
+  <data name="ArtistFilter" xml:space="preserve">
+    <value>アーティスト「{0}」</value>
+  </data>
+  <data name="AddedToList" xml:space="preserve">
+    <value>リストに追加しました</value>
+  </data>
 </root>

@@ -232,7 +232,7 @@
     <value>ウィッシュリストしたユーザー</value>
   </data>
   <data name="AlbumInCollections" xml:space="preserve">
-    <value></value>
-    <comment>what is this?</comment>
+    <value>アルバムコレクション</value>
+    <comment>Popup title</comment>
   </data>
 </root>

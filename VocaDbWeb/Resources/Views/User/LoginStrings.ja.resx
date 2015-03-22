@@ -159,4 +159,7 @@
   <data name="WrongPassword" xml:space="preserve">
     <value>ユーザー名またはパスワードが間違っています</value>
   </data>
+  <data name="LoginUsingSSL" xml:space="preserve">
+    <value>SSLを使ってログインする</value>
+  </data>
 </root>

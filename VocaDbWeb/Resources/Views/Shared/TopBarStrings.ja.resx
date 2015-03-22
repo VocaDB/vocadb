@@ -129,4 +129,7 @@
   <data name="ViewAllMessages" xml:space="preserve">
     <value>全てのメッセージを表示</value>
   </data>
+  <data name="NoUnreadMessages" xml:space="preserve">
+    <value>未読メッセージなし</value>
+  </data>
 </root>

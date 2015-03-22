@@ -180,4 +180,64 @@
   <data name="TwitterAccount" xml:space="preserve">
     <value>ツイッター</value>
   </data>
+  <data name="AboutMe" xml:space="preserve">
+    <value>自分について</value>
+  </data>
+  <data name="AccountDisabled" xml:space="preserve">
+    <value>無効にされたアカウント</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>アクティブ</value>
+  </data>
+  <data name="AdditionalPermissions" xml:space="preserve">
+    <value>追加のアクセス許可</value>
+  </data>
+  <data name="ComposeMessage" xml:space="preserve">
+    <value>メッセージを作成</value>
+  </data>
+  <data name="ConfirmDisable" xml:space="preserve">
+    <value>本当にこのユーザーを無効にしますか？</value>
+  </data>
+  <data name="CreateNewList" xml:space="preserve">
+    <value>新しくリストを作る</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>無効にする</value>
+  </data>
+  <data name="EffectivePermissions" xml:space="preserve">
+    <value>アクセス許可</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>メール</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>最後のログイン</value>
+  </data>
+  <data name="SetAvatar" xml:space="preserve">
+    <value>アバターは gravatar.com で設定しましょう</value>
+  </data>
+  <data name="Staff" xml:space="preserve">
+    <value>スタッフ</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>合計{0}</value>
+  </data>
+  <data name="UserDetails" xml:space="preserve">
+    <value>ユーザー詳細</value>
+  </data>
+  <data name="UserGroup" xml:space="preserve">
+    <value>ユーザーグループ</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="VerifiedAccount" xml:space="preserve">
+    <value>証明されたアーティスト</value>
+  </data>
+  <data name="VerifiedOwner" xml:space="preserve">
+    <value>証明されたオーナー</value>
+  </data>
+  <data name="VisibleOnlyToMe" xml:space="preserve">
+    <value>自分とスタッフだけが見える</value>
+  </data>
 </root>

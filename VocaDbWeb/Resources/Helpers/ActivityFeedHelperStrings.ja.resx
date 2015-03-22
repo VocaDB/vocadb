@@ -119,7 +119,7 @@
   </resheader>
   <data name="At" xml:space="preserve">
     <value>-</value>
-  </data>
+  <comment>check usage all</comment></data>
   <data name="CreatedAlbum" xml:space="preserve">
     <value>新しいアルバムが登録されました</value>
   </data>
