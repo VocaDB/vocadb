@@ -1387,6 +1387,9 @@
     <Content Include="Content\Styles\songlist.css">
       <DependentUpon>songlist.less</DependentUpon>
     </Content>
+    <Content Include="Content\Styles\userpage.css">
+      <DependentUpon>userpage.less</DependentUpon>
+    </Content>
     <Content Include="Content\teto.jpg" />
     <Content Include="Content\tetoDB-title.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1620,6 +1623,7 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Styles\discussions.less" />
     <Content Include="Content\Styles\variables.less" />
+    <Content Include="Content\Styles\userpage.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

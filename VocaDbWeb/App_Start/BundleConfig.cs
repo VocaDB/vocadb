@@ -428,8 +428,9 @@ namespace VocaDb.Web.App_Start {
 				"~/Content/Styles/ExtLinks.css", 
 				"~/Content/Styles/Overrides.css",
 				"~/Content/Styles/StyleOverrides.css",
-				"~/Content/Styles/Search.css"
-				));
+				"~/Content/Styles/Search.css",
+				"~/Content/Styles/userpage.css"
+			));
 
 			bundles.Add(new StyleBundle("~/Content/embedSong").Include(
 				"~/Content/bootstrap.css", "~/Content/EmbedSong.css"));
