@@ -51,6 +51,9 @@
     width: 100%;
   }
 }
+.navbar .brand {
+  padding-top: 6px;
+}
 @media (max-width: 970px) {
   .vdb .menu {
     display: none;
