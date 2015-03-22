@@ -4,7 +4,6 @@
     position: relative;
     overflow: hidden;
     height: 461px;
-    min-width: 555px;
     max-width: 560px;
     padding: 10px;
     background-color: #333;
@@ -14,6 +13,24 @@
     a, a:visited, a:hover {
         color: white;
     }
+
+	.pv-embed-wrapper {
+
+		clear: both;
+		position: relative;
+		padding-bottom: 56.25%; /* 16:9 */
+		padding-top: 25px;
+		height: 0;
+		margin-bottom: 5px;
+
+		iframe {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0; bottom: 0; left: 0; right: 0;
+		}
+
+	}
 
 }
 

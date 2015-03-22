@@ -60,10 +60,8 @@
   max-width: 270px;
   width: calc(100% - 146px);
 }
-@media (max-width: 970px) {
-  .navbar-search {
-    width: 100%;
-  }
+.navbar-search {
+  width: 100%;
 }
 .vdb .navbar-inverse .btn-navbar {
   margin-top: 1px;
