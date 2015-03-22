@@ -3,17 +3,15 @@
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Images
-@using VocaDb.Model.Utils
-@using VocaDb.Model.Helpers
-@using R = ViewRes.SongList;
+@using Res = ViewRes.SongList.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<SongListContract>
 		   
 @{
 	
 	if (Model.FeaturedCategory == SongListFeaturedCategory.Nothing) {
-		PageProperties.PageTitle = string.Format("{0} - {1}", R.DetailsStrings.SongList, Model.Name);
+		PageProperties.PageTitle = string.Format("{0} - {1}", Res.SongList, Model.Name);
 		PageProperties.Title = Model.Name;
-		PageProperties.Subtitle = R.DetailsStrings.SongList;
+		PageProperties.Subtitle = Res.SongList;
 		ViewBag.Parents = new[] {
 			Html.ActionLink(Model.Author.Name, "Details", "User", new {id = Model.Author.Id}, null)
 		};
@@ -100,11 +98,11 @@
 <div class="btn-group songlist-mode-selection">
 	<a data-bind="click: function() { playlistMode(false); }, css: { active: playlistMode() == false }" class="btn" href="#">
 		<i class="icon-th-list noMargin"></i>
-		Details
+		@Res.Details
 	</a>
 	<a data-bind="click: function() { playlistMode(true); }, css: { active: playlistMode() == true }" class="btn" href="#">
 		<i class="icon-list noMargin"></i>
-		Playlist
+		@Res.Playlist
 	</a>
 </div>
 
@@ -131,7 +129,7 @@
 					<div class="pull-right" data-bind="visible: song.pvServices, with: song.previewViewModel">
 						<a data-bind="click: togglePreview, css: { active: preview }" class="btn previewSong" href="#">
 							<i class="icon-film"></i>
-							Preview
+							@Res.Preview
 						</a>
 					</div>
 					

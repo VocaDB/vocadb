@@ -46,7 +46,7 @@
 	@Helpers.DraftMessage("glalbums")
 }
 
-<div id="tabs" itemscope itemtype="http://schema.org/MusicAlbum">
+<div id="tabs" itemscope itemtype="http://schema.org/MusicAlbum" class="js-cloak" data-bind="show">
     
 	<ul>
 		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
@@ -373,7 +373,7 @@
 
 @AlbumHelpers.EditCollectionDialog(Model.AlbumPurchaseStatus, Model.AlbumMediaType)
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.AlbumReportTypeNames.ValuesAndNamesStrings))
+@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.AlbumReportTypeNames.ValuesAndNamesStrings)
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Album/Details", "~/bundles/jqxRating")

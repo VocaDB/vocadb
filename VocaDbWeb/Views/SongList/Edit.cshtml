@@ -3,18 +3,19 @@
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Models.SongLists;
 @using VocaDb.Web.Helpers;
+@using Res = ViewRes.SongList.EditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<SongListEditViewModel>
 @{
 	
 	var isNew = (Model.Id == 0);
 	
 	if (!isNew) {
-		PageProperties.Title = "Edit list - " + Model.CurrentName;
+		PageProperties.Title = string.Format(Res.EditTitle, Model.CurrentName);
 		ViewBag.Parents = new[] { 
 			Html.ActionLink(Model.CurrentName, "Details", new { id = Model.Id }) 
 		};
 	} else {
-		PageProperties.Title = "Create a custom list";		
+		PageProperties.Title = Res.CreateTitle;		
 	}
 	
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
@@ -23,7 +24,7 @@
 
 @section Toolbar {
 	@if (!isNew) {
-		@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this list?\");" })
+		@Html.ActionLink(ViewRes.SharedStrings.Delete, "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"" + Res.ConfirmDelete + "\");" })
 	}
 }
 
@@ -50,21 +51,21 @@
 	<div id="tabs">
 
 		<ul>
-			<li><a href="#propertiesTab">Properties</a></li>
-			<li><a href="#songsTab">Songs</a></li>
+			<li><a href="#propertiesTab">@Res.TabProperties</a></li>
+			<li><a href="#songsTab">@Res.TabSongs</a></li>
 		</ul>
 
 		<div id="propertiesTab">
 
 			<div class="editor-label">
-				@Html.LabelFor(m => m.Name)
+				@Res.Name
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="value: name" class="required input-xlarge" size="40" required />
 			</div>
 
 			<div class="editor-label">
-				@Html.LabelFor(m => m.Description)
+				@Res.Description
 			</div>
 			<div class="editor-field">
 				<textarea data-bind="value: description" rows="5" cols="60" class="input-xxlarge"></textarea>
@@ -72,7 +73,7 @@
 
 			@if (Model.CanCreateFeaturedLists) {
 				<div class="editor-label">
-					@Html.LabelFor(m => m.FeaturedCategory)
+					@Res.FeaturedCategory
 				</div>
 				<div class="editor-field">
 					@Html.EnumDropDownListForDic(m => m.FeaturedCategory, Translate.SongListFeaturedCategoryNames, new Dictionary<string, object> { { "data-bind", "value:featuredCategory" } })
@@ -80,7 +81,7 @@
 			}
 
 			<div class="editor-label">
-				Thumbnail
+				@Res.Thumbnail
 			</div>
 			<div class="editor-field">
 				<div class="media">
@@ -116,7 +117,7 @@
 							<input type="text" data-bind="value: notes" />
 						</td>
 						<td>
-							<a href="#" class="iconLink removeLink" title="Remove from list" data-bind="click: $parent.removeSong">Remove</a>
+							<a href="#" class="iconLink removeLink" title="Remove from list" data-bind="click: $parent.removeSong">@ViewRes.SharedStrings.Remove</a>
 						</td>
 					</tr>
 				</tbody>

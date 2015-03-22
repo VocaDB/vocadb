@@ -91,7 +91,7 @@
 	@Helpers.DraftMessage("glsongs")
 }
 
-<div id="tabs">
+<div id="tabs" class="js-cloak" data-bind="show">
 
 	<ul>
 		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
@@ -391,7 +391,7 @@
 	</div>
 </div>
 
-<div data-bind="dialog: {autoOpen: false, modal: true, width: 400, position: { my: 'left top', at: 'left bottom', of: $('#statsLink') } }, dialogVisible: $root.usersPopupVisible" title="@R.DetailsStrings.SongRatings">
+<div data-bind="dialog: {autoOpen: false, modal: true, width: 400, position: { my: 'left top', at: 'left bottom', of: $('#statsLink') } }, dialogVisible: $root.usersPopupVisible" title="@R.DetailsStrings.SongRatings" style="display:none;">
 	
 	<div data-bind="html: usersContent"></div>
 
@@ -399,7 +399,7 @@
 
 @{ Html.RenderPartial("Partials/_SongInListsDialog"); }
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.SongReportTypeNames.ValuesAndNamesStrings))
+@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.SongReportTypeNames.ValuesAndNamesStrings)
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Song/Details")

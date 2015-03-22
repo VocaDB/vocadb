@@ -1166,6 +1166,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DetailsStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\SongList\EditStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Song\CreateStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1944,6 +1949,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\qTip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ReleaseEventNameAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ScrollEnd.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\Show.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\SlideVisible.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ArtistAutoComplete.ts" />
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
@@ -2026,8 +2032,6 @@
     <TypeScriptCompile Include="Scripts\Models\EntryType.ts" />
     <TypeScriptCompile Include="Scripts\Models\Tags\Tag.ts" />
     <TypeScriptCompile Include="Scripts\Models\WebLinkCategory.ts" />
-    <Content Include="Scripts\modernizr-1.7.js" />
-    <Content Include="Scripts\modernizr-1.7.min.js" />
     <TypeScriptCompile Include="Scripts\Repositories\EntryRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ResourceRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\TagRepository.ts" />
@@ -3354,6 +3358,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MiscStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.fi.resx" />
@@ -3411,12 +3416,18 @@
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.ja.resx" />

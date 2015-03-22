@@ -22,14 +22,14 @@ namespace ViewRes.SongList {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class DetailsStrings {
+    public class EditStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DetailsStrings() {
+        internal EditStrings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace ViewRes.SongList {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VocaDb.Web.Resources.Views.SongList.DetailsStrings", typeof(DetailsStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VocaDb.Web.Resources.Views.SongList.EditStrings", typeof(EditStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,83 @@ namespace ViewRes.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Details.
+        ///   Looks up a localized string similar to Are you sure you want to delete this list?.
         /// </summary>
-        public static string Details {
+        public static string ConfirmDelete {
             get {
-                return ResourceManager.GetString("Details", resourceCulture);
+                return ResourceManager.GetString("ConfirmDelete", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Playlist.
+        ///   Looks up a localized string similar to Create a songlist.
         /// </summary>
-        public static string Playlist {
+        public static string CreateTitle {
             get {
-                return ResourceManager.GetString("Playlist", resourceCulture);
+                return ResourceManager.GetString("CreateTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preview.
+        ///   Looks up a localized string similar to Description.
         /// </summary>
-        public static string Preview {
+        public static string Description {
             get {
-                return ResourceManager.GetString("Preview", resourceCulture);
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Song list.
+        ///   Looks up a localized string similar to Edit list - {0}.
         /// </summary>
-        public static string SongList {
+        public static string EditTitle {
             get {
-                return ResourceManager.GetString("SongList", resourceCulture);
+                return ResourceManager.GetString("EditTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to song(s).
+        ///   Looks up a localized string similar to Featured category.
         /// </summary>
-        public static string Songs {
+        public static string FeaturedCategory {
             get {
-                return ResourceManager.GetString("Songs", resourceCulture);
+                return ResourceManager.GetString("FeaturedCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string TabProperties {
+            get {
+                return ResourceManager.GetString("TabProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs.
+        /// </summary>
+        public static string TabSongs {
+            get {
+                return ResourceManager.GetString("TabSongs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thumbnail.
+        /// </summary>
+        public static string Thumbnail {
+            get {
+                return ResourceManager.GetString("Thumbnail", resourceCulture);
             }
         }
     }
