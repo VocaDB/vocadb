@@ -59,6 +59,20 @@
 
 
 // Layout and Navigation
+body {
+	@media (max-width: @mobile-breakpoint) {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+body .container-fluid {
+	@media (min-width: @mobile-breakpoint) {
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+}
+
 .row-fluid .rightFrame {
 	@media (min-width: @left-menu-breakpoint) {
 		margin-left: 1%;

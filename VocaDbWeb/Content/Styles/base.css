@@ -38,6 +38,18 @@
 .link-list .link-item:not(:last-child) > ::after {
   content: ", ";
 }
+@media (max-width: 768px) {
+  body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media (min-width: 768px) {
+  body .container-fluid {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
 @media (min-width: 970px) {
   .row-fluid .rightFrame {
     margin-left: 1%;

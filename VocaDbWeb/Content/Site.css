@@ -181,11 +181,6 @@ table.properties tr, .rightFrame, .recentAlbums, .recentSongs, .alignTop {
 	vertical-align: top;
 }
 
-body .container-fluid {
-	padding-right: 10px;
-	padding-left: 10px;
-}
-
 .rightFrame {
 	/*background-color: #E8FAFF;
 	opacity: 0.95;*/
