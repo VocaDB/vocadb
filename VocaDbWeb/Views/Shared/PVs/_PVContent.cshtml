@@ -19,8 +19,8 @@
 	<a href="#" id="addFavoriteLink" class="btn btn-inverse @(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Song.DetailsStrings.AddToFavorites</a>
 </span>
 <a href="#" id="removeFavoriteLink" class="btn btn-inverse ratingButtons pull-right @(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@((Model.Vote != SongVoteRating.Nothing ? "" : "display: none;"))">@ViewRes.Song.DetailsStrings.RemoveFromFavorites</a>	
-<div>
-	@{ Html.RenderPartial("PVs/_PVEmbedDynamic", PVHelper.PrimaryPV(Model.PVs)); }
+<div class="pv-embed-wrapper">
+	@Helpers.EmbedPVDynamic(PVHelper.PrimaryPV(Model.PVs), 0, 0)
 </div>
 <a class="btn btn-info songInfoButton pull-right" href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(Model))">
 	<i class="icon icon-info-sign"></i>

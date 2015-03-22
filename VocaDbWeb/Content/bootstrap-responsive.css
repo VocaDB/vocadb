@@ -454,7 +454,7 @@
   .container,
   .navbar-fixed-top .container,
   .navbar-fixed-bottom .container {
-    width: 1170px;
+    width: 940px; /* Changed */
   }
   .span12 {
     width: 1170px;
@@ -684,7 +684,7 @@
     padding-top: 0;
   }
   .navbar-fixed-top {
-    position: static;
+    /*position: static; */
     margin-bottom: 18px;
   }
   .navbar-fixed-top .navbar-inner {

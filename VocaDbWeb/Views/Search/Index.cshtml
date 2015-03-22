@@ -6,341 +6,268 @@
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDbPage<VocaDb.Web.Models.Search.SearchIndexViewModel>
 
-@{
-    Layout = null;
-}
+				
+<ul class="nav nav-pills">
+	<li data-bind="css: { active: searchType() == 'Anything' }">
+		<a href="#" data-bind="click: function() { searchType('Anything'); }">@EntryTypeNames.Undefined</a>
+	</li>
+	<li data-bind="css: { active: searchType() == 'Artist' }">
+		<a href="#" data-bind="click: function() { searchType('Artist'); }">@ViewRes.SharedStrings.Artists</a>
+	</li>
+	<li data-bind="css: { active: searchType() == 'Album' }">
+		<a href="#" data-bind="click: function() { searchType('Album'); }">@ViewRes.SharedStrings.Albums</a>
+	</li>
+	<li data-bind="css: { active: searchType() == 'Song' }">
+		<a href="#" data-bind="click: function() { searchType('Song'); }">@ViewRes.SharedStrings.Songs</a>
+	</li>
+	<li data-bind="css: { active: searchType() == 'Tag' }">
+		<a href="#" data-bind="click: function() { searchType('Tag'); }">@ViewRes.SharedStrings.Tags</a>
+	</li>
+</ul>
 
-<!DOCTYPE html>
+<div id="anythingSearchTab" class="form-horizontal well well-transparent">
 
-<html>
-<head>
-	<title>@BrandableStrings.Layout.SiteTitle</title>
-	<meta name="description" content="@PageProperties.SummarizedDescription" />
-	<meta name="keywords" content="Vocaloid, VocaDB, Vocaloid database, Hatsune Miku" />
-	<meta name="og:image" content="@PageProperties.OpenGraph.Image" />
-	<link rel="shortcut icon" href="@Url.Content("~/Content/favicon.ico")" type="image/x-icon" />
-	@Styles.Render("~/Content/css")
-	<link href="@Url.Content("~/Content/Styles/Icons.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.10.1.custom.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Scripts/qTip/jquery.qtip.css")" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
-
-	@{ Html.RenderPartial("Partials/_GoogleAnalytics"); }
-</head>
-<body style="padding-top: 50px">
-
-	<div data-bind="stopBinding: true" class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div id="topBar" class="container">
-				<div class="brand">@Html.ActionLink(BrandableStrings.Layout.SiteName, "Index", "Home")</div>
-				@{ Html.RenderPartial("GlobalSearchBox", new VocaDb.Web.Models.GlobalSearchBoxModel()); }
+	<div class="pull-right">
+		@SearchDropDown("showArtistSearch", "artistSearchViewModel", Translate.ArtistSortRuleNames.ValuesAndNamesStrings)
+		@SearchDropDown("showAlbumSearch", "albumSearchViewModel", Translate.AlbumSortRuleNames.ValuesAndNamesStrings)
+		@SearchDropDown("showSongSearch", "songSearchViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)
+						
+		<div class="inline-block" data-bind="visible: showAlbumSearch(), with: albumSearchViewModel">
+			<div class="btn-group">
+				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumDetails">
+					<i class="icon-list"></i>
+				</a>
+				<a data-bind="css: { active: viewMode() == 'Tiles' }, click: function() { viewMode('Tiles'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumTiles">
+					<i class="icon-th"></i>
+				</a>
 			</div>
+		</div>
+						
+		<div class="inline-block" data-bind="visible: showSongSearch(), with: songSearchViewModel">
+			<div class="btn-group">
+				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumDetails">
+					<i class="icon-th-list"></i>
+				</a>
+				<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="@Res.Playlist">
+					<i class="icon-list"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="inline-block" data-bind="visible: showTagFilter()">
+			<a data-bind="css: { active: showTags() }, click: function() { showTags(!showTags()); }" class="btn btn-nomargin" href="#" title="@Res.ShowTags">
+				<i class="icon-tags"></i>
+			</a>
+		</div>
+
+	</div>
+	
+	<div class="control-label">
+		<i class="icon-search"></i>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<div class="input-append">
+				<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="@Res.TypeSomething" />
+				<button class="btn btn-danger" data-bind="click: function() { searchTerm(''); }, visible: searchTerm">@SharedRes.Clear</button>
+				&nbsp;
+			</div>
+			<button class="btn" data-bind="click: function() { showAdvancedFilters(!showAdvancedFilters()); }, css: { active: showAdvancedFilters }">
+				@Res.MoreFilters
+				<span class="caret"></span>
+			</button>
 		</div>
 	</div>
 
-	<div class="container-fluid">
-		<div class="row-fluid">
-			@{ Html.RenderPartial("Partials/_LeftMenu"); }
-			<div class="span10 rightFrame well" style="display: none; min-height: 1000px;" data-bind="visible: true">
-				
-				@if (!string.IsNullOrEmpty(Config.SiteSettings.SitewideAnnouncement)) {
-					<div class="alert">
-						@Html.Raw(Config.SiteSettings.SitewideAnnouncement)
-					</div>
-				}
-
-				<div id="messages">
-					<div class="wrapper">
-						<div id="ajaxLoadingMessage" style="display: none;">@ViewRes.SharedStrings.Loading</div>
-
-						<div id="errorMessage" class="alert alert-error" style="display: none;">
-							<a class="close" data-dismiss="alert" href="#">&times;</a>
-							<span id="errorMessageString">@TempData.ErrorMessage()</span>
-						</div>
-
-						<div id="successMessage" class="alert alert-success" style="display: none;">
-							<a class="close" data-dismiss="alert" href="#">&times;</a>
-							<span id="successMessageString">@TempData.SuccessMessage()</span>
-						</div>
-
-						<div id="warnMessage" class="alert" style="display: none;">
-							<a class="close" data-dismiss="alert" href="#">&times;</a>
-							<span id="warnMessageString">@TempData.WarnMessage()</span>
-						</div>
-					</div>
+	<div data-bind="visible: showAdvancedFilters" style="display: none;">
+		<!-- Tag filtering with top genres -->
+		<div class="control-group" data-bind="visible: showTagFilter">
+			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
+			<div class="controls">
+				<div class="input-append input-prepend">
+					<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: '/Tag/Details/' + tag() }" title="@Res.TagInformation">
+						<i class="icon icon-info-sign"></i>
+					</a>
+					@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "tag")
 				</div>
-				
-				<ul class="nav nav-pills">
-					<li data-bind="css: { active: searchType() == 'Anything' }">
-						<a href="#" data-bind="click: function() { searchType('Anything'); }">@EntryTypeNames.Undefined</a>
-					</li>
-					<li data-bind="css: { active: searchType() == 'Artist' }">
-						<a href="#" data-bind="click: function() { searchType('Artist'); }">@ViewRes.SharedStrings.Artists</a>
-					</li>
-					<li data-bind="css: { active: searchType() == 'Album' }">
-						<a href="#" data-bind="click: function() { searchType('Album'); }">@ViewRes.SharedStrings.Albums</a>
-					</li>
-					<li data-bind="css: { active: searchType() == 'Song' }">
-						<a href="#" data-bind="click: function() { searchType('Song'); }">@ViewRes.SharedStrings.Songs</a>
-					</li>
-					<li data-bind="css: { active: searchType() == 'Tag' }">
-						<a href="#" data-bind="click: function() { searchType('Tag'); }">@ViewRes.SharedStrings.Tags</a>
-					</li>
-				</ul>
-
-				<div id="anythingSearchTab" class="form-horizontal well well-transparent">
-
-					<div class="pull-right">
-						@SearchDropDown("showArtistSearch", "artistSearchViewModel", Translate.ArtistSortRuleNames.ValuesAndNamesStrings)
-						@SearchDropDown("showAlbumSearch", "albumSearchViewModel", Translate.AlbumSortRuleNames.ValuesAndNamesStrings)
-						@SearchDropDown("showSongSearch", "songSearchViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)
-						
-						<div class="inline-block" data-bind="visible: showAlbumSearch(), with: albumSearchViewModel">
-							<div class="btn-group">
-								<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumDetails">
-									<i class="icon-list"></i>
-								</a>
-								<a data-bind="css: { active: viewMode() == 'Tiles' }, click: function() { viewMode('Tiles'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumTiles">
-									<i class="icon-th"></i>
-								</a>
-							</div>
-						</div>
-						
-						<div class="inline-block" data-bind="visible: showSongSearch(), with: songSearchViewModel">
-							<div class="btn-group">
-								<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumDetails">
-									<i class="icon-th-list"></i>
-								</a>
-								<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="@Res.Playlist">
-									<i class="icon-list"></i>
-								</a>
-							</div>
-						</div>
-
-						<div class="inline-block" data-bind="visible: showTagFilter()">
-							<a data-bind="css: { active: showTags() }, click: function() { showTags(!showTags()); }" class="btn btn-nomargin" href="#" title="@Res.ShowTags">
-								<i class="icon-tags"></i>
-							</a>
-						</div>
-
-					</div>
-
-					<div class="control-label">
-						<i class="icon-search"></i>
-					</div>
-					<div class="control-group">
-						<div class="controls">
-							<div class="input-append">
-								<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="@Res.TypeSomething" />
-								<button class="btn btn-danger" data-bind="click: function() { searchTerm(''); }, visible: searchTerm">@SharedRes.Clear</button>
-								&nbsp;
-							</div>
-							<button class="btn" data-bind="click: function() { showAdvancedFilters(!showAdvancedFilters()); }, css: { active: showAdvancedFilters }">
-								@Res.MoreFilters
-								<span class="caret"></span>
-							</button>
-						</div>
-					</div>
-
-					<div data-bind="visible: showAdvancedFilters" style="display: none;">
-						<!-- Tag filtering with top genres -->
-						<div class="control-group" data-bind="visible: showTagFilter">
-							<div class="control-label">@ViewRes.SharedStrings.Tag</div>
-							<div class="controls">
-								<div class="input-append input-prepend">
-									<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: '/Tag/Details/' + tag() }" title="@Res.TagInformation">
-										<i class="icon icon-info-sign"></i>
-									</a>
-									@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "tag")
-								</div>
-								<div class="btn-group">
-									<button class="btn dropdown-toggle btn-nomargin" data-toggle="dropdown">
-										@Res.TopGenres
-										<span class="caret"></span>
-									</button>
-									<ul data-bind="foreach: genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-										<li>
-											<a href="#" data-bind="attr: { href: '/Tag/Details/' + $data }, text: $data, click: function(selectedTag) { $parent.tag(selectedTag); }"></a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Artist search options -->
-						<div data-bind="visible: showArtistSearch, with: artistSearchViewModel">
-							<div class="control-group">
-								<div class="control-label">@Res.ArtistType</div>
-								<div class="controls">
-									@ArtistHelpers.ArtistTypesDropdownKnockout("artistType")
-								</div>
-							</div>
-							<div class="control-group" data-bind="visible: loggedUserId">
-								<div class="controls">
-									<label class="checkbox">
-										<input type="checkbox" data-bind="checked: onlyFollowedByMe" />
-										@Res.OnlyMyFollowedArtists
-									</label>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Album search options -->
-						<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
-							<div class="control-group">
-								<div class="control-label">@Res.AlbumType</div>
-								<div class="controls">
-									@AlbumHelpers.DiscTypesDropdownKnockout("albumType")
-								</div>
-							</div>
-
-							<div class="control-group">
-								<div class="control-label">@EntryTypeNames.Artist</div>
-								<div class="controls">
-									<div style="display: inline-block;" class="input-append input-prepend">
-										<a href="#" class="btn btn-nomargin" data-bind="visible: artistId, attr: { href: '/Ar/' + artistId() }">
-											<i class="icon icon-info-sign"></i>
-										</a>										
-										@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId")
-									</div>
-									<!-- ko if: artistId -->
-									@AlbumHelpers.ArtistAlbumParticipationStatusOptionsKnockout("artistParticipationStatus")
-									<!-- /ko -->
-								</div>
-							</div>
-
-							<div class="control-group" data-bind="visible: showChildVoicebanks">
-								<div class="controls">
-									<label class="checkbox">
-										<input type="checkbox" data-bind="checked: childVoicebanks" />
-										@Res.IncludeDerivedVoicebanks
-									</label>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Song search options -->
-						<div data-bind="visible: showSongSearch, with: songSearchViewModel">
-							<div class="control-group">
-								<div class="control-label">@Res.SongType</div>
-								<div class="controls">
-									@SongHelpers.SongTypesDropdownKnockout("songType")
-								</div>
-							</div>
-
-							<div class="control-group">
-								<div class="control-label">@EntryTypeNames.Artist</div>
-								<div class="controls">
-									<div style="display: inline-block;" class="input-append input-prepend">
-										<a href="#" class="btn btn-nomargin" data-bind="visible: artistId, attr: { href: '/Ar/' + artistId() }">
-											<i class="icon icon-info-sign"></i>
-										</a>
-										@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId")
-									</div>
-									<!-- ko if: artistId -->
-									@SongHelpers.ArtistParticipationStatusOptionsKnockout("artistParticipationStatus")
-									<!-- /ko -->
-								</div>
-							</div>
-
-							<div class="control-group" data-bind="visible: showChildVoicebanks">
-								<div class="controls">
-									<label class="checkbox">
-										<input type="checkbox" data-bind="checked: childVoicebanks" />
-										@Res.IncludeDerivedVoicebanks
-									</label>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<div class="control-label">@Res.MoreRecentThan</div>
-								<div class="controls">
-									<select data-bind="value: since">
-										<option value="">(Show all)</option>
-										<option value="24">1 day</option>
-										<option value="48">2 days</option>
-										<option value="168">7 days</option>
-										<option value="336">2 weeks</option>
-										<option value="720">1 month</option>
-										<option value="4320">6 months</option>
-										<option value="8760">1 year</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<div class="control-label">@Res.MinScore</div>
-								<div class="controls">
-									<input type="number" data-bind="textInput: minScore" maxlength="10" min="0" class="input-small" />
-								</div>
-							</div>
-
-						</div>
-						
-						<!-- Tag search options -->
-						<div class="control-group" data-bind="visible: showTagSearch, with: tagSearchViewModel">
-							<div class="control-label">@Res.TagCategory</div>
-							<div class="controls">
-								<div class="input-append">
-									@KnockoutHelpers.LockingAutoComplete("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true")
-								</div>
-							</div>
-						</div>
-
-						<div class="control-group" data-bind="visible: showDraftsFilter">
-							<div class="controls">
-
-								<div data-bind="visible: showSongSearch, with: songSearchViewModel">
-									<label class="checkbox">
-										<input type="checkbox" data-bind="checked: pvsOnly" />
-										@Res.OnlyWithPVs
-									</label>
-
-									<label class="checkbox" data-bind="visible: loggedUserId">
-										<input type="checkbox" data-bind="checked: onlyRatedSongs" />
-										@Res.InMyCollection
-									</label>
-								</div>
-
-								<label class="checkbox">
-									<input type="checkbox" data-bind="checked: draftsOnly" />
-									@ViewRes.EntryIndexStrings.OnlyDrafts
-								</label>
-
-							</div>
-						</div>
-
-					</div>
-
+				<div class="btn-group">
+					<button class="btn dropdown-toggle btn-nomargin" data-toggle="dropdown">
+						@Res.TopGenres
+						<span class="caret"></span>
+					</button>
+					<ul data-bind="foreach: genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+						<li>
+							<a href="#" data-bind="attr: { href: '/Tag/Details/' + $data }, text: $data, click: function(selectedTag) { $parent.tag(selectedTag); }"></a>
+						</li>
+					</ul>
 				</div>
-
-				@{ Html.RenderPartial("Partials/_AnythingSearchList"); }
-
-				@{ Html.RenderPartial("Partials/_ArtistSearchList"); }
-				
-				<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
-					@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+			</div>
+		</div>
+						
+		<!-- Artist search options -->
+		<div data-bind="visible: showArtistSearch, with: artistSearchViewModel">
+			<div class="control-group">
+				<div class="control-label">@Res.ArtistType</div>
+				<div class="controls">
+					@ArtistHelpers.ArtistTypesDropdownKnockout("artistType")
 				</div>
-				
+			</div>
+			<div class="control-group" data-bind="visible: loggedUserId">
+				<div class="controls">
+					<label class="checkbox">
+						<input type="checkbox" data-bind="checked: onlyFollowedByMe" />
+						@Res.OnlyMyFollowedArtists
+					</label>
+				</div>
+			</div>
+		</div>
+						
+		<!-- Album search options -->
+		<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
+			<div class="control-group">
+				<div class="control-label">@Res.AlbumType</div>
+				<div class="controls">
+					@AlbumHelpers.DiscTypesDropdownKnockout("albumType")
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="control-label">@EntryTypeNames.Artist</div>
+				<div class="controls">
+					<div style="display: inline-block;" class="input-append input-prepend">
+						<a href="#" class="btn btn-nomargin" data-bind="visible: artistId, attr: { href: '/Ar/' + artistId() }">
+							<i class="icon icon-info-sign"></i>
+						</a>										
+						@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId")
+					</div>
+					<!-- ko if: artistId -->
+					@AlbumHelpers.ArtistAlbumParticipationStatusOptionsKnockout("artistParticipationStatus")
+					<!-- /ko -->
+				</div>
+			</div>
+
+			<div class="control-group" data-bind="visible: showChildVoicebanks">
+				<div class="controls">
+					<label class="checkbox">
+						<input type="checkbox" data-bind="checked: childVoicebanks" />
+						@Res.IncludeDerivedVoicebanks
+					</label>
+				</div>
+			</div>
+		</div>
+						
+		<!-- Song search options -->
+		<div data-bind="visible: showSongSearch, with: songSearchViewModel">
+			<div class="control-group">
+				<div class="control-label">@Res.SongType</div>
+				<div class="controls">
+					@SongHelpers.SongTypesDropdownKnockout("songType")
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="control-label">@EntryTypeNames.Artist</div>
+				<div class="controls">
+					<div style="display: inline-block;" class="input-append input-prepend">
+						<a href="#" class="btn btn-nomargin" data-bind="visible: artistId, attr: { href: '/Ar/' + artistId() }">
+							<i class="icon icon-info-sign"></i>
+						</a>
+						@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId")
+					</div>
+					<!-- ko if: artistId -->
+					@SongHelpers.ArtistParticipationStatusOptionsKnockout("artistParticipationStatus")
+					<!-- /ko -->
+				</div>
+			</div>
+
+			<div class="control-group" data-bind="visible: showChildVoicebanks">
+				<div class="controls">
+					<label class="checkbox">
+						<input type="checkbox" data-bind="checked: childVoicebanks" />
+						@Res.IncludeDerivedVoicebanks
+					</label>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="control-label">@Res.MoreRecentThan</div>
+				<div class="controls">
+					<select data-bind="value: since">
+						<option value="">(Show all)</option>
+						<option value="24">1 day</option>
+						<option value="48">2 days</option>
+						<option value="168">7 days</option>
+						<option value="336">2 weeks</option>
+						<option value="720">1 month</option>
+						<option value="4320">6 months</option>
+						<option value="8760">1 year</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="control-label">@Res.MinScore</div>
+				<div class="controls">
+					<input type="number" data-bind="textInput: minScore" maxlength="10" min="0" class="input-small" />
+				</div>
+			</div>
+
+		</div>
+						
+		<!-- Tag search options -->
+		<div class="control-group" data-bind="visible: showTagSearch, with: tagSearchViewModel">
+			<div class="control-label">@Res.TagCategory</div>
+			<div class="controls">
+				<div class="input-append">
+					@KnockoutHelpers.LockingAutoComplete("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true")
+				</div>
+			</div>
+		</div>
+
+		<div class="control-group" data-bind="visible: showDraftsFilter">
+			<div class="controls">
+
 				<div data-bind="visible: showSongSearch, with: songSearchViewModel">
-					@{ Html.RenderPartial("Partials/_SongSearchList"); }
+					<label class="checkbox">
+						<input type="checkbox" data-bind="checked: pvsOnly" />
+						@Res.OnlyWithPVs
+					</label>
+
+					<label class="checkbox" data-bind="visible: loggedUserId">
+						<input type="checkbox" data-bind="checked: onlyRatedSongs" />
+						@Res.InMyCollection
+					</label>
 				</div>
 
-				@{ Html.RenderPartial("Partials/_TagSearchList"); }
+				<label class="checkbox">
+					<input type="checkbox" data-bind="checked: draftsOnly" />
+					@ViewRes.EntryIndexStrings.OnlyDrafts
+				</label>
 
 			</div>
-
 		</div>
+
 	</div>
 
-	<div id="loginPopup" title="@ViewRes._LayoutStrings.LogIn" style="display: none;">
-	</div>
+</div>
 
-	<!-- Footer -->
-	<span class="about-disclaimer">Background illustration by <a href="http://www.pixiv.net/member_illust.php?mode=medium&illust_id=34786809">みゆ</a> | <a href="https://code.google.com/p/vocadb/">Other credits</a></span>
+@{ Html.RenderPartial("Partials/_AnythingSearchList"); }
 
-	<!-- Scripts -->
-	@{ Html.RenderPartial("Partials/_LayoutScripts"); }
+@{ Html.RenderPartial("Partials/_ArtistSearchList"); }
+				
+<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
+	@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+</div>
+				
+<div data-bind="visible: showSongSearch, with: songSearchViewModel">
+	@{ Html.RenderPartial("Partials/_SongSearchList"); }
+</div>
+
+@{ Html.RenderPartial("Partials/_TagSearchList"); }
+
+
+<!-- Scripts -->
+@section BodyScripts {
 	@Scripts.Render("~/bundles/Search/Index")
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 
@@ -354,18 +281,18 @@
 			var tag = @Html.Raw(JsonHelpers.Serialize(Model.Tag));
 			var searchType = '@Model.SearchTypeName';
 			var sort = '@Model.Sort';
-			var artistId = @ToJS((int?)Model.ArtistId);
-			var childVoicebanks = @ToJS((bool?)Model.ChildVoicebanks);
+			var artistId = @ToJS(Model.ArtistId);
+			var childVoicebanks = @ToJS(Model.ChildVoicebanks);
 			var artistType = '@Model.ArtistType';
 			var discType = '@Model.DiscType';
 			var songType ='@Model.SongType';
-			var onlyWithPVs = @ToJS((bool?)Model.OnlyWithPVs);
+			var onlyWithPVs = @ToJS(Model.OnlyWithPVs);
 			var onlyRatedSongs = @ToJS(Model.OnlyRatedSongs);
-			var since = @ToJS((int?)Model.Since);
-			var minScore = @ToJS((int?)Model.MinScore);
+			var since = @ToJS(Model.Since);
+			var minScore = @ToJS(Model.MinScore);
 			var viewMode = '@Model.ViewMode';
-			var autoplay = @ToJS((bool?)Model.Autoplay);
-			var shuffle = @ToJS((bool?)Model.Shuffle);
+			var autoplay = @ToJS(Model.Autoplay);
+			var shuffle = @ToJS(Model.Shuffle);
 			var loggedUserId = @ToJS(Login.Manager.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 
@@ -399,23 +326,12 @@
 				pvPlayersFactory);
 			ko.applyBindings(vm);
 
-			$("#loginPopup").dialog({ autoOpen: false, width: 400, modal: true });
-
 		});
 
-		vdb.functions.showLoginPopup = function() {
-
-			$.get("/User/LoginForm", { returnUrl: window.location.href }, function(result) {
-				$("#loginPopup").html(result);
-				$("#loginPopup").dialog("open");
-			});
-
-		};
 
 	</script>
-
-</body>
-</html>
+		
+}
 
 @helper SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
 	@:@KnockoutHelpers.SearchDropDown(visibleBinding, viewModel, sortRules)
