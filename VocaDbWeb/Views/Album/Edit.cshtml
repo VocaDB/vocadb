@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Helpers
+@using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.EditStrings;
@@ -76,7 +77,7 @@
 		var artistRepo = repoFactory.artistRepository();
 		var pvRepo = repoFactory.pvRepository();
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
-		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistRoleNames.ValuesAndNames, false));
+		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false));
 		var allowCustomTracks = @ToJS(VocaDb.Model.Utils.AppConfig.AllowCustomTracks);
 		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedAlbum));
 		var viewModel;
