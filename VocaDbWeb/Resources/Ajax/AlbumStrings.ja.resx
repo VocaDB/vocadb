@@ -120,4 +120,17 @@
   <data name="Download" xml:space="preserve">
     <value>ダウンロード</value>
   </data>
+  <data name="AddedToCollection" xml:space="preserve">
+    <value>コレクションに追加されました。</value>
+    
+  </data>
+  <data name="AddNewSong" xml:space="preserve">
+    <value>新曲'{0}'を追加</value>
+  </data>
+  <data name="AddToTracks" xml:space="preserve">
+    <value>トラックに追加</value>
+  </data>
+  <data name="RemoveFromTracks" xml:space="preserve">
+    <value>トラックから削除</value>
+  </data>
 </root>

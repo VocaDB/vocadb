@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -182,5 +182,11 @@
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>ようこそ</value>
+  </data>
+  <data name="FollowUser" xml:space="preserve">
+    <value>ユーザーをフォロー</value>
+  </data>
+  <data name="Discussions" xml:space="preserve">
+    <value>話し合い</value>
   </data>
 </root>

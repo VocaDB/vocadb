@@ -145,7 +145,7 @@
     <value>転載された動画（ニコニコ動画またはYoutube）のURL</value>
   </data>
   <data name="SongType" xml:space="preserve">
-    <value>曲の分類</value>
+    <value>曲タイプ</value>
   </data>
   <data name="SubmitSong" xml:space="preserve">
     <value>曲の登録</value>
@@ -158,5 +158,8 @@
   </data>
   <data name="NeedArtist" xml:space="preserve">
     <value>少なくともアーティストが１名必要です。</value>
+  </data>
+  <data name="SongInfo" xml:space="preserve">
+    <value>曲情報</value>
   </data>
 </root>

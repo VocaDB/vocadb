@@ -117,19 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionDate" xml:space="preserve">
-    <value>追加日時</value>
+  <data name="Album" xml:space="preserve">
+    <value>未発売曲がほとんどのアルバム</value>
+    <comment>発売instead of発表 to clear confusion with "upload'</comment>
   </data>
-  <data name="FavoritedTimes" xml:space="preserve">
-    <value>お気に入り登録された数</value>
+  <data name="Compilation" xml:space="preserve">
+    <value>もともと別のアルバムに入っていた曲を、一定の意図に基づいて集めて作るアルバム。"best of..."など。</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>名称</value>
+  <data name="EP" xml:space="preserve">
+    <value>Extended Playの略。主に３，４曲収録されているアルバム。バージョン違い（インストなど）はトラック数として数えないことが多いです。</value>
   </data>
-  <data name="RatingScore" xml:space="preserve">
-    <value>評価点数</value>
+  <data name="Other" xml:space="preserve">
+    <value>上記のタイプが適応しないアルバム。</value>
   </data>
-  <data name="None" xml:space="preserve">
-    <value>なし</value>
+  <data name="Single" xml:space="preserve">
+    <value>１、２曲収録されているアルバム。バージョン違い（インストやリミックスなど）はトラック数として数えないことが多いです。</value>
+  </data>
+  <data name="SplitAlbum" xml:space="preserve">
+    <value>アーティスト二名以上（ほとんどの場合は２名）のコラボレーション。</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>ミュージックビデオがメインなディスク。主にDVDまたはblu-ray。</value>
   </data>
 </root>

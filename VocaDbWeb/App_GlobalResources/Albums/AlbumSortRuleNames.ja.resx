@@ -121,7 +121,7 @@
     <value>追加日時</value>
   </data>
   <data name="CollectionCount" xml:space="preserve">
-    <value>アルバムをコレクションしているユーザーの数</value>
+    <value>ユーザーコレクション数</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>名称</value>

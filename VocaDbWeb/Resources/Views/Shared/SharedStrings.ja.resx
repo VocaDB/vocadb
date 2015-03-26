@@ -155,7 +155,7 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>タイトル</value>
-  </data>
+  <comment>Check usage</comment></data>
   <data name="ReleaseEvents" xml:space="preserve">
     <value>イベント</value>
   </data>
@@ -191,5 +191,36 @@
   </data>
   <data name="Username" xml:space="preserve">
     <value>ユーザー名</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>アクション</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>読み込み中…</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>メディア</value>
+  </data>
+  <data name="PVs" xml:space="preserve">
+    <value>PV</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>取り除く</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>合計</value>
+    <comment>check usage</comment>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>ユーザー</value>
   </data>
 </root>

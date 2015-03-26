@@ -139,13 +139,13 @@
     <value>埋め込む</value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value>{0}フェイバリット</value>
+    <value>お気に入り{0}</value>
   </data>
   <data name="Like" xml:space="preserve">
     <value>いいね</value>
   </data>
   <data name="Likes" xml:space="preserve">
-    <value>{0}ライク</value>
+    <value>いいね{0}</value>
   </data>
   <data name="Link" xml:space="preserve">
     <value>リンク</value>
@@ -187,7 +187,7 @@
     <value>関連楽曲</value>
   </data>
   <data name="Share" xml:space="preserve">
-    <value>シェア</value>
+    <value>共有</value>
   </data>
   <data name="Social" xml:space="preserve">
     <value>ソーシャルメディア</value>
@@ -200,5 +200,61 @@
   </data>
   <data name="Vocalists" xml:space="preserve">
     <value>ボーカリスト</value>
+  </data>
+  <data name="Band" xml:space="preserve">
+    <value>バンド・ユニット</value>
+  </data>
+  <data name="CustomLists" xml:space="preserve">
+    <value>カスタムリスト</value>
+  </data>
+  <data name="LikedByTitle" xml:space="preserve">
+    <value>「いいね」と思ったユーザー</value>
+  </data>
+  <data name="FavoritedByTitle" xml:space="preserve">
+    <value>お気に入りユーザー</value>
+  </data>
+  <data name="LyricsFrom" xml:space="preserve">
+    <value></value>
+    <comment>problematic word order</comment>
+  </data>
+  <data name="NicoMimiDownload" xml:space="preserve">
+    <value>ダウンロードリンクをNicoMimiでチェック</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>メモ</value>
+  </data>
+  <data name="OtherMedia" xml:space="preserve">
+    <value>他のメディア</value>
+  </data>
+  <data name="Pools" xml:space="preserve">
+    <value>プール</value>
+  </data>
+  <data name="PoolsAndLists" xml:space="preserve">
+    <value>プールとリスト</value>
+  </data>
+  <data name="PV" xml:space="preserve">
+    <value>PV</value>
+  </data>
+  <data name="PVDetails" xml:space="preserve">
+    <value>PV</value>
+  </data>
+  <data name="RemoveFromFavorites" xml:space="preserve">
+    <value>好評をクリア</value>
+  </data>
+  <data name="SearchYoutube" xml:space="preserve">
+    <value>Youtubeで検索</value>
+  </data>
+  <data name="ShowAllVersions" xml:space="preserve">
+    <value>すべて表示</value>
+  </data>
+  <data name="SongDetails" xml:space="preserve">
+    <value>曲</value>
+  </data>
+  <data name="SongInLists" xml:space="preserve">
+    <value>曲が入ってるリスト</value>
+    <comment>Popup title</comment>
+  </data>
+  <data name="SongRatings" xml:space="preserve">
+    <value>曲の評価</value>
   </data>
 </root>

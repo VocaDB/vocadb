@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddToCollection" xml:space="preserve">
-    <value>コレクションに追加する</value>
+    <value>コレクションに追加</value>
   </data>
   <data name="CatalogNumber" xml:space="preserve">
-    <value>カタログNo</value>
+    <value>カタログ番号</value>
   </data>
   <data name="Circle" xml:space="preserve">
     <value>サークル</value>
@@ -133,7 +133,7 @@
     <value>ディスク</value>
   </data>
   <data name="DownloadTrackList" xml:space="preserve">
-    <value>楽曲情報をCSV形式でダウンロードする</value>
+    <value>楽曲情報をCSV形式でダウンロード</value>
   </data>
   <data name="EditAlbumInCollection" xml:space="preserve">
     <value>コレクション内のアルバムを編集</value>
@@ -143,13 +143,13 @@
   </data>
   <data name="MatchingArtists" xml:space="preserve">
     <value>同じアーティスト</value>
-  </data>
+  <comment>needs impr</comment></data>
   <data name="MatchingLikes" xml:space="preserve">
     <value>好みごとのマッチング</value>
-  </data>
+  <comment>needs impr</comment></data>
   <data name="MatchingTags" xml:space="preserve">
     <value>同じタグ</value>
-  </data>
+  <comment>needs impr</comment></data>
   <data name="MediaType" xml:space="preserve">
     <value>メディアの種類</value>
   </data>
@@ -190,7 +190,7 @@
     <value>リセット</value>
   </data>
   <data name="Share" xml:space="preserve">
-    <value>シェア</value>
+    <value>共有</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>コレクション状態</value>
@@ -203,5 +203,36 @@
   </data>
   <data name="WishlistedBy" xml:space="preserve">
     <value>{0}人がウィッシュリストに追加</value>
+  </data>
+  <data name="AlbumDetails" xml:space="preserve">
+    <value>アルバム</value>
+  </data>
+  <data name="Band" xml:space="preserve">
+    <value>バンド・ユニット</value>
+  </data>
+  <data name="CoverPicture" xml:space="preserve">
+    <value>ジャケット</value>
+  </data>
+  <data name="Customize" xml:space="preserve">
+    <value>カスタマイズ</value>
+  </data>
+  <data name="NoTracklist" xml:space="preserve">
+    <value>トラックリストが存在しません。登録したユーザーの誰もが提供できます。</value>
+  </data>
+  <data name="OwnedByTitle" xml:space="preserve">
+    <value>所得ユーザー</value>
+  </data>
+  <data name="PVs" xml:space="preserve">
+    <value>広告・クロスフェード</value>
+  </data>
+  <data name="UpdateCollection" xml:space="preserve">
+    <value>コレクションを更新</value>
+  </data>
+  <data name="WishlistedByTitle" xml:space="preserve">
+    <value>ウィッシュリストしたユーザー</value>
+  </data>
+  <data name="AlbumInCollections" xml:space="preserve">
+    <value>アルバムコレクション</value>
+    <comment>Popup title</comment>
   </data>
 </root>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AllSongs" xml:space="preserve">
-    <value>すべての曲</value>
+    <value>曲全て</value>
   </data>
   <data name="AuthoredBy" xml:space="preserve">
     <value>VocaDBアカウント</value>
@@ -145,7 +145,7 @@
     <value>サークル／レコードレーベル</value>
   </data>
   <data name="MainAlbums" xml:space="preserve">
-    <value>オリジナルアルバム</value>
+    <value>主なアルバム</value>
   </data>
   <data name="MostlyUses" xml:space="preserve">
     <value>最も使用されたボイスバンク</value>
@@ -163,7 +163,7 @@
     <value>最近の曲／PV</value>
   </data>
   <data name="Share" xml:space="preserve">
-    <value>シェア</value>
+    <value>共有</value>
   </data>
   <data name="TopAlbums" xml:space="preserve">
     <value>人気のアルバム</value>
@@ -176,5 +176,23 @@
   </data>
   <data name="YouHaveRatedSongs" xml:space="preserve">
     <value>貴方は{0}件このアーティストの曲を評価しました</value>
+  </data>
+  <data name="AllAlbums" xml:space="preserve">
+    <value>アルバム全て</value>
+  </data>
+  <data name="ArtistDetails" xml:space="preserve">
+    <value>アーティスト</value>
+  </data>
+  <data name="ArtistPicture" xml:space="preserve">
+    <value>アーティスト画像</value>
+  </data>
+  <data name="Customize" xml:space="preserve">
+    <value>カスタマイズ</value>
+  </data>
+  <data name="GroupsHelp" xml:space="preserve">
+    <value>サークル・ラベル・その他のグループ</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>メンバー</value>
   </data>
 </root>

@@ -117,19 +117,42 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionDate" xml:space="preserve">
-    <value>追加日時</value>
+  <data name="Albums" xml:space="preserve">
+    <value>アルバム</value>
   </data>
-  <data name="FavoritedTimes" xml:space="preserve">
-    <value>お気に入り登録された数</value>
+  <data name="ArtistType" xml:space="preserve">
+    <value>アーティストタイプ</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>名称</value>
+  <data name="BaseVoicebank" xml:space="preserve">
+    <value>原ボイスバンク</value>
+    <comment>imp</comment>
   </data>
-  <data name="RatingScore" xml:space="preserve">
-    <value>評価点数</value>
+  <data name="Description" xml:space="preserve">
+    <value>説明</value>
   </data>
-  <data name="None" xml:space="preserve">
+  <data name="Groups" xml:space="preserve">
+    <value>グループ</value>
+  </data>
+  <data name="Names" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="Nothing" xml:space="preserve">
     <value>なし</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>主な画像</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>画像</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>外部リンク</value>
+  </data>
+  <data name="OriginalName" xml:space="preserve">
+    <value></value>
+    <comment>primary?</comment>
   </data>
 </root>

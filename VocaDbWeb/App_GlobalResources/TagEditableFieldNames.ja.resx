@@ -117,19 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionDate" xml:space="preserve">
-    <value>追加日時</value>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
   </data>
-  <data name="FavoritedTimes" xml:space="preserve">
-    <value>お気に入り登録された数</value>
+  <data name="Picture" xml:space="preserve">
+    <value>画像</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>名称</value>
+  <data name="CategoryName" xml:space="preserve">
+    <value>カテゴリー</value>
   </data>
-  <data name="RatingScore" xml:space="preserve">
-    <value>評価点数</value>
+  <data name="Parent" xml:space="preserve">
+    <value>親</value>
   </data>
-  <data name="None" xml:space="preserve">
-    <value>なし</value>
+  <data name="Description" xml:space="preserve">
+    <value>説明</value>
+  </data>
+  <data name="AliasedTo" xml:space="preserve">
+    <value>別名</value>
   </data>
 </root>

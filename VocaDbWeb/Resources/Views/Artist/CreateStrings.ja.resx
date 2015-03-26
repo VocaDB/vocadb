@@ -150,4 +150,13 @@
   <data name="WebLinkDescription" xml:space="preserve">
     <value>リンクの説明</value>
   </data>
+  <data name="UnableToCreateArtist" xml:space="preserve">
+    <value>アーティスト登録ができませんでした。エラーを修正し再実行してください。</value>
+  </data>
+  <data name="WebLinkCategory" xml:space="preserve">
+    <value>カテゴリー</value>
+  </data>
+  <data name="WebLinkURL" xml:space="preserve">
+    <value>URL</value>
+  </data>
 </root>

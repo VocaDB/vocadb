@@ -127,7 +127,7 @@
     <value>メールアドレス</value>
   </data>
   <data name="EmailIsRequired" xml:space="preserve">
-    <value>メールアドレスは入力必須です。</value>
+    <value>メールアドレスの入力は必須です。</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>パスワード</value>
@@ -136,7 +136,7 @@
     <value>パスワードは入力必須です。</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>登録する</value>
+    <value>登録</value>
   </data>
   <data name="RegistrationUnsuccessful" xml:space="preserve">
     <value>アカウント新規登録が失敗しました。</value>
@@ -149,5 +149,17 @@
   </data>
   <data name="UsernameTaken" xml:space="preserve">
     <value>ユーザー名が既に存在しています。</value>
+  </data>
+  <data name="EmailNote" xml:space="preserve">
+    <value>メールアドレスは他のユーザーには公開されません。有効なメールアドレスを記入してください。パスワードをリセットする際に使います。プロフィール画像（アバターアイコン）は、Gravatarと関連づいたアドレスにより表示されます。メールアドレスは登録後も変更可能です。</value>
+  </data>
+  <data name="EmailTaken" xml:space="preserve">
+    <value>このメールアドレスは既に使用されています。アドレスの登録者であれば、パスワードリセットを行ってください。リセットができない場合はサポートへお問い合わせください。</value>
+  </data>
+  <data name="TwitterNote" xml:space="preserve">
+    <value>あるいは、Twitter（ツイッター）アカウントでログインすることもできます。登録後にTwitterアカウントと連結することも可能です。</value>
+  </data>
+  <data name="UsernameNote" xml:space="preserve">
+    <value>ユーザー名は最低３文字必要です。英文字、数字とアンダースコア（_）が使えます。パスワードの文字数はは最低５文字です。</value>
   </data>
 </root>

@@ -129,4 +129,7 @@
   <data name="SongList" xml:space="preserve">
     <value>曲目リスト</value>
   </data>
+  <data name="Songs" xml:space="preserve">
+    <value>曲</value>
+  </data>
 </root>

@@ -117,19 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionDate" xml:space="preserve">
-    <value>追加日時</value>
+  <data name="EntryDeleted" xml:space="preserve">
+    <value>この項目は削除されました。一時的アクセスは可能ですが、検索などには表示されません。</value>
   </data>
-  <data name="FavoritedTimes" xml:space="preserve">
-    <value>お気に入り登録された数</value>
+  <data name="EntryMergedTo" xml:space="preserve">
+    <value>この項目はマージされました：</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>名称</value>
+  <data name="EntryStatusExplanation" xml:space="preserve">
+    <value>下書き：項目は必須情報が抜けています。&lt;br/&gt;
+完成した：項目は全て必須情報がありますが、信用されたユーザーに見直しされていません。&lt;br/&gt;
+承認された：項目は信用されたユーザーに見直され、承認されています。承認された項目は信用されたユーザーしか編集できません。</value>
   </data>
-  <data name="RatingScore" xml:space="preserve">
-    <value>評価点数</value>
+  <data name="Locked" xml:space="preserve">
+    <value>この項目はロックされています。モデレーターしか編集できません。</value>
   </data>
-  <data name="None" xml:space="preserve">
-    <value>なし</value>
+  <data name="NameLanguageHelp" xml:space="preserve">
+    <value></value>
+    <comment>Check where it's used</comment>
   </data>
 </root>
