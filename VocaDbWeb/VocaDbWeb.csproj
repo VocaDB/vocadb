@@ -3092,6 +3092,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Ajax\SharedStrings.de.resx" />
     <EmbeddedResource Include="Resources\Ajax\SharedStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Ajax\SharedStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Ajax\SharedStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SharedStrings.Designer.cs</LastGenOutput>
@@ -3109,6 +3110,7 @@
     <EmbeddedResource Include="Resources\Ajax\SongStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.de.resx" />
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TagControllerStrings.Designer.cs</LastGenOutput>
@@ -3148,6 +3150,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Helpers\SongHelpersStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Helpers\SongHelpersStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Helpers\SongHelpersStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongHelpersStrings.Designer.cs</LastGenOutput>
@@ -3206,6 +3209,7 @@
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TopRatedStrings.Designer.cs</LastGenOutput>
@@ -3258,6 +3262,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
@@ -3303,6 +3308,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArchivedObjectVersionsStrings.Designer.cs</LastGenOutput>
@@ -3464,6 +3470,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
