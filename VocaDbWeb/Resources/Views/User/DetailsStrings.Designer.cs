@@ -97,6 +97,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to artist verification page.
+        /// </summary>
+        public static string ArtistVerificationPage {
+            get {
+                return ResourceManager.GetString("ArtistVerificationPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collection.
         /// </summary>
         public static string CollectionTab {
@@ -264,6 +273,16 @@ namespace ViewRes.User {
         public static string Overview {
             get {
                 return ResourceManager.GetString("Overview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?
+        ///If so, please see the {0}..
+        /// </summary>
+        public static string PossibleProducerMessage {
+            get {
+                return ResourceManager.GetString("PossibleProducerMessage", resourceCulture);
             }
         }
         
