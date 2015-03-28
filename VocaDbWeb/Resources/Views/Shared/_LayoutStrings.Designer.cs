@@ -97,6 +97,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background illustration by {0}.
+        /// </summary>
+        public static string BackgroundCredit {
+            get {
+                return ResourceManager.GetString("BackgroundCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blog.
         /// </summary>
         public static string Blog {
@@ -210,6 +219,15 @@ namespace ViewRes {
         public static string NewPVs {
             get {
                 return ResourceManager.GetString("NewPVs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other credits and source code.
+        /// </summary>
+        public static string OtherCredit {
+            get {
+                return ResourceManager.GetString("OtherCredit", resourceCulture);
             }
         }
         
