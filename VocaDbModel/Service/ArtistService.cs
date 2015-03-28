@@ -196,7 +196,7 @@ namespace VocaDb.Model.Service {
 
 				var names = session.Query<ArtistName>()
 					.Where(a => !a.Artist.Deleted)
-					.FilterByArtistName(textQuery)
+					.WhereArtistNameIs(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()

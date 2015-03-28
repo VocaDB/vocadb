@@ -428,14 +428,14 @@ namespace VocaDb.Model.Service {
 
 			var artist = session.Query<ArtistName>()
 				.Where(m => !m.Artist.Deleted)
-				.FilterByArtistName(new ArtistSearchTextQuery(artistName, NameMatchMode.Exact, artistName))
+				.WhereArtistNameIs(new ArtistSearchTextQuery(artistName, NameMatchMode.Exact, artistName))
 				.Select(an => an.Artist)
 				.FirstOrDefault();
 
 			if (artist == null)
 				artist = session.Query<ArtistName>()
 					.Where(m => !m.Artist.Deleted)
-					.FilterByArtistName(new ArtistSearchTextQuery(artistName, NameMatchMode.Words, artistName))
+					.WhereArtistNameIs(new ArtistSearchTextQuery(artistName, NameMatchMode.Words, artistName))
 					.Select(an => an.Artist)
 					.FirstOrDefault();
 

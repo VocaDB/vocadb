@@ -9,7 +9,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class EntryWithNamesQueryableExtender {
 
-		public static IOrderedQueryable<T> AddNameOrder<T>(this IQueryable<T> criteria, ContentLanguagePreference languagePreference) 
+		public static IOrderedQueryable<T> OrderByEntryName<T>(this IQueryable<T> criteria, ContentLanguagePreference languagePreference) 
 			where T : IEntryWithNames {
 
 			return FindHelpers.AddNameOrder(criteria, languagePreference);

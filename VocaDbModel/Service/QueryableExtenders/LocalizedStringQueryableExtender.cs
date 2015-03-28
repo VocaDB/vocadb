@@ -7,7 +7,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class LocalizedStringQueryableExtender {
 
-		public static IQueryable<T> FilterByEntryName<T>(this IQueryable<T> query, SearchTextQuery textQuery)
+		public static IQueryable<T> WhereEntryNameIs<T>(this IQueryable<T> query, SearchTextQuery textQuery)
 			where T : LocalizedString {
 
 			return FindHelpers.AddEntryNameFilter(query, textQuery);

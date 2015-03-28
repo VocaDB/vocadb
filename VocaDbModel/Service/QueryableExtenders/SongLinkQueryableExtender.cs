@@ -10,35 +10,35 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 	/// </summary>
 	public static class SongLinkQueryableExtender {
 
-		public static IOrderedQueryable<T> AddSongNameOrder<T>(this IQueryable<T> criteria, ContentLanguagePreference languagePreference)
+		public static IOrderedQueryable<T> OrderBySongName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
 			where T : ISongLink {
 
 			switch (languagePreference) {
 				case ContentLanguagePreference.Japanese:
-					return criteria.OrderBy(e => e.Song.Names.SortNames.Japanese);
+					return query.OrderBy(e => e.Song.Names.SortNames.Japanese);
 				case ContentLanguagePreference.English:
-					return criteria.OrderBy(e => e.Song.Names.SortNames.English);
+					return query.OrderBy(e => e.Song.Names.SortNames.English);
 				default:
-					return criteria.OrderBy(e => e.Song.Names.SortNames.Romaji);
+					return query.OrderBy(e => e.Song.Names.SortNames.Romaji);
 			}
 
 		}
 
-		public static IQueryable<T> AddSongOrder<T>(this IQueryable<T> criteria, SongSortRule sortRule, ContentLanguagePreference languagePreference)
+		public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, SongSortRule sortRule, ContentLanguagePreference languagePreference)
 			where T : ISongLink {
 
 			switch (sortRule) {
 				case SongSortRule.Name:
-					return criteria.AddSongNameOrder(languagePreference);
+					return query.OrderBySongName(languagePreference);
 				case SongSortRule.AdditionDate:
-					return criteria.OrderByDescending(a => a.Song.CreateDate);
+					return query.OrderByDescending(a => a.Song.CreateDate);
 				case SongSortRule.FavoritedTimes:
-					return criteria.OrderByDescending(a => a.Song.FavoritedTimes);
+					return query.OrderByDescending(a => a.Song.FavoritedTimes);
 				case SongSortRule.RatingScore:
-					return criteria.OrderByDescending(a => a.Song.RatingScore);
+					return query.OrderByDescending(a => a.Song.RatingScore);
 			}
 
-			return criteria;
+			return query;
 
 		}
 

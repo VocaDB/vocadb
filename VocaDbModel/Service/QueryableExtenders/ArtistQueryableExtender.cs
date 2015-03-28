@@ -9,7 +9,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class ArtistQueryableExtender {
 
-		public static IQueryable<ArtistName> FilterByArtistName(this IQueryable<ArtistName> query, ArtistSearchTextQuery textQuery) {
+		public static IQueryable<ArtistName> WhereArtistNameIs(this IQueryable<ArtistName> query, ArtistSearchTextQuery textQuery) {
 
 			var canonizedName = textQuery.Query;
 
@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<ArtistName> FilterByArtistType(this IQueryable<ArtistName> queryable, ArtistType[] types) {
+		public static IQueryable<ArtistName> WhereArtistTypeIn(this IQueryable<ArtistName> queryable, ArtistType[] types) {
 
 			if (types == null || !types.Any())
 				return queryable;

@@ -754,7 +754,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					queryWithSort = queryWithSort.OrderByDescending(r => r.Rating);
 
 				// Add custom order
-				queryWithSort = queryWithSort.AddSongOrder(queryParams.SortRule, PermissionContext.LanguagePreference);
+				queryWithSort = queryWithSort.OrderBy(queryParams.SortRule, PermissionContext.LanguagePreference);
 
 				// Apply paging
 				var resultQ = queryWithSort

@@ -325,7 +325,7 @@ namespace VocaDb.Model.Service {
 
 				var names = session.Query<SongName>()
 					.Where(a => !a.Song.Deleted)
-					.FilterByEntryName(textQuery)
+					.WhereEntryNameIs(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()
@@ -785,7 +785,7 @@ namespace VocaDb.Model.Service {
 				if (!string.IsNullOrEmpty(artist)) {
 
 					artists = session.Query<ArtistName>()
-						.FilterByArtistName(ArtistSearchTextQuery.Create(artist))
+						.WhereArtistNameIs(ArtistSearchTextQuery.Create(artist))
 						.Select(n => n.Artist)
 						.Take(10)
 						.ToArray();
@@ -800,7 +800,7 @@ namespace VocaDb.Model.Service {
 				if (!string.IsNullOrEmpty(album)) {
 
 					albums = session.Query<AlbumName>()
-						.FilterByEntryName(SearchTextQuery.Create(album))
+						.WhereEntryNameIs(SearchTextQuery.Create(album))
 						.Select(n => n.Album)
 						.Take(10)
 						.ToArray();
@@ -817,7 +817,7 @@ namespace VocaDb.Model.Service {
 					return null;
 
 				matches = session.Query<SongName>()
-					.FilterByEntryName(SearchTextQuery.Create(name))
+					.WhereEntryNameIs(SearchTextQuery.Create(name))
 					.Select(n => n.Song)
 					.ToArray();
 

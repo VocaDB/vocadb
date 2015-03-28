@@ -242,7 +242,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			var query = CreateQuery(queryParams, parsedQuery);
 
 			var ids = query
-				.AddOrder(queryParams.SortRule, LanguagePreference)
+				.OrderBy(queryParams.SortRule, LanguagePreference)
 				.Select(s => s.Id)
 				.Paged(queryParams.Paging)
 				.ToArray();
