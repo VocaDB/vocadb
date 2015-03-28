@@ -123,11 +123,17 @@
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
   <data name="Merged" xml:space="preserve">
     <value>Merged from another entry</value>
   </data>
   <data name="PropertiesUpdated" xml:space="preserve">
     <value>Updated properties</value>
+  </data>
+  <data name="Restored" xml:space="preserve">
+    <value>Restored</value>
   </data>
   <data name="Reverted" xml:space="preserve">
     <value>Reverted</value>

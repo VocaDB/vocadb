@@ -128,7 +128,9 @@ namespace VocaDb.Model.Service {
 
 				NHibernateUtil.Initialize(a.Picture);
 				a.Delete();
-			                         
+			          
+				Archive(session, a, new ArtistDiff(false), ArtistArchiveReason.Deleted);
+               
 			}, PermissionToken.DeleteEntries, skipLog: true);
 
 		}
@@ -412,6 +414,8 @@ namespace VocaDb.Model.Service {
 				artist.Deleted = false;
 
 				session.Update(artist);
+
+				Archive(session, artist, new ArtistDiff(false), ArtistArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(artist), session);
 

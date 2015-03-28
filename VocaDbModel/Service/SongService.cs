@@ -189,11 +189,13 @@ namespace VocaDb.Model.Service {
 
 		public void Delete(int id) {
 
-			UpdateEntity<Song>(id, (session, a) => {
+			UpdateEntity<Song>(id, (session, song) => {
 
-				AuditLog(string.Format("deleting song {0}", EntryLinkFactory.CreateEntryLink(a)), session);
+				AuditLog(string.Format("deleting song {0}", EntryLinkFactory.CreateEntryLink(song)), session);
 
-				a.Delete();
+				song.Delete();
+
+				Archive(session, song, new SongDiff(false), SongArchiveReason.Deleted);
 
 			}, PermissionToken.DeleteEntries, skipLog: true);
 
@@ -671,6 +673,8 @@ namespace VocaDb.Model.Service {
 				var song = session.Load<Song>(songId);
 
 				song.Deleted = false;
+
+				Archive(session, song, new SongDiff(false), SongArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(song), session);
 
