@@ -1,23 +1,12 @@
 ﻿using System.Linq;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class TagQueryableExtender {
-
-		public static IQueryable<Tag> AddTagNameFilter(this IQueryable<Tag> query, TagSearchTextQuery textQuery) {
-
-			return WhereHasName(query, textQuery);
-
-		}
-
-		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, TagSearchTextQuery textQuery) {
-
-			return FindHelpers.AddTagNameFilter(query, textQuery);
-
-		}
 
 		public static IQueryable<Tag> WhereAllowAliases(this IQueryable<Tag> query, bool allowAliases = true) {
 
@@ -47,6 +36,12 @@ namespace VocaDb.Model.Service.Helpers {
 				default:
 					return query.Where(t => t.CategoryName.Contains(textQuery.Query));
 			}
+
+		}
+
+		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, TagSearchTextQuery textQuery) {
+
+			return FindHelpers.AddTagNameFilter(query, textQuery);
 
 		}
 

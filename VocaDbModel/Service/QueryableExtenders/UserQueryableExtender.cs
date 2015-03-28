@@ -4,7 +4,7 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
-	public static class QueryableForUserExtender {
+	public static class UserQueryableExtender {
 
 		public static IQueryable<User> WhereHasName(this IQueryable<User> query, SearchTextQuery textQuery) {
 

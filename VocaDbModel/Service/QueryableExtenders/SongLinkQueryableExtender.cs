@@ -2,14 +2,27 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
 	/// <summary>
 	/// Query extension methods for <see cref="ISongLink"/>.
 	/// </summary>
-	public static class QueryableForSongLinkExtender {
+	public static class SongLinkQueryableExtender {
+
+		public static IOrderedQueryable<T> AddSongNameOrder<T>(this IQueryable<T> criteria, ContentLanguagePreference languagePreference)
+			where T : ISongLink {
+
+			switch (languagePreference) {
+				case ContentLanguagePreference.Japanese:
+					return criteria.OrderBy(e => e.Song.Names.SortNames.Japanese);
+				case ContentLanguagePreference.English:
+					return criteria.OrderBy(e => e.Song.Names.SortNames.English);
+				default:
+					return criteria.OrderBy(e => e.Song.Names.SortNames.Romaji);
+			}
+
+		}
 
 		public static IQueryable<T> AddSongOrder<T>(this IQueryable<T> criteria, SongSortRule sortRule, ContentLanguagePreference languagePreference)
 			where T : ISongLink {

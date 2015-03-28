@@ -4,7 +4,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class ArtistForAlbumQueryableExtender {
 

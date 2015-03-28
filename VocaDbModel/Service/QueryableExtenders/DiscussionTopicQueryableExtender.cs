@@ -3,7 +3,7 @@ using VocaDb.Model.Domain.Discussions;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
-	public static class QueryableForDiscussionTopicExtender {
+	public static class DiscussionTopicQueryableExtender {
 
 		public static IQueryable<DiscussionTopic> OrderBy(this IQueryable<DiscussionTopic> query, DiscussionTopicSortRule sort) {
 

@@ -5,7 +5,7 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
-	public static class QueryableForReleaseEventExtender {
+	public static class ReleaseEventQueryableExtender {
 
 		public static IQueryable<ReleaseEvent> WhereHasName(this IQueryable<ReleaseEvent> query, SearchTextQuery textQuery) {
 

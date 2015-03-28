@@ -2,9 +2,10 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class ArtistQueryableExtender {
 

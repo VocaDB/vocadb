@@ -27,6 +27,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.TagFormatting;
 
 namespace VocaDb.Model.Service {
@@ -285,7 +286,7 @@ namespace VocaDb.Model.Service {
 
 				var names = session.Query<AlbumName>()
 					.Where(a => !a.Album.Deleted)
-					.AddEntryNameFilter(textQuery)
+					.FilterByEntryName(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()

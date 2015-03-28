@@ -24,6 +24,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
@@ -324,7 +325,7 @@ namespace VocaDb.Model.Service {
 
 				var names = session.Query<SongName>()
 					.Where(a => !a.Song.Deleted)
-					.AddEntryNameFilter(textQuery)
+					.FilterByEntryName(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()
@@ -799,7 +800,7 @@ namespace VocaDb.Model.Service {
 				if (!string.IsNullOrEmpty(album)) {
 
 					albums = session.Query<AlbumName>()
-						.AddEntryNameFilter(SearchTextQuery.Create(album))
+						.FilterByEntryName(SearchTextQuery.Create(album))
 						.Select(n => n.Album)
 						.Take(10)
 						.ToArray();
@@ -816,7 +817,7 @@ namespace VocaDb.Model.Service {
 					return null;
 
 				matches = session.Query<SongName>()
-					.AddEntryNameFilter(SearchTextQuery.Create(name))
+					.FilterByEntryName(SearchTextQuery.Create(name))
 					.Select(n => n.Song)
 					.ToArray();
 
