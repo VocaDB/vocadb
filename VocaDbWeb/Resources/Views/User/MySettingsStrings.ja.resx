@@ -136,7 +136,7 @@
     <value>アカウント設定</value>
   </data>
   <data name="AnonymousActivity" xml:space="preserve">
-    <value>ユーザー名を</value>
+    <value>「最近の活動」にユーザー名の表示を許可する</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>メール</value>
