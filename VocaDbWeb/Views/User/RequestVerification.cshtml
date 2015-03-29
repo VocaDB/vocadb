@@ -1,22 +1,25 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers
+@using Res = ViewRes.User.RequestVerificationStrings
 @inherits VocaDb.Web.Code.VocaDbPage<string>
 
 @{
-    PageProperties.Title = "Request account verification";
+    PageProperties.Title = Res.PageTitle;
 }
 
 <div class="row-fluid">
 
 	@if (!Login.Manager.IsLoggedIn) {
-		<div class="span6 alert">Sorry, you need to @Html.ActionLink("log in", "Login") or @Html.ActionLink("sign up", "Create") to use this feature.</div>
+		<div class="span6 alert">
+			@Html.Raw(string.Format(Res.NotLoggedInMessage, Html.ActionLink(Res.Login, "Login"), Html.ActionLink(Res.Signup, "Create")))
+		</div>
 	} else {
 	
 		<form action="@Url.Action("RequestVerification")" method="POST" class="span6 form">
 			<input type="hidden" name="selectedArtist" data-bind="value: ko.toJSON(selectedArtist)" />
 
 			<label>
-				Artist entry whom I represent (required)
+				@Res.ArtistTitle
 			</label>
 			<div data-bind="if: selectedArtist, visible: selectedArtist" style="display: none;">
 				<a data-bind="text: selectedArtist().name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selectedArtist().id) }" href="#"></a>
@@ -28,36 +31,19 @@
 	
 			<br />
 			<label>
-				Request message (required)
+				@Res.MessageTitle
 			</label>
 			<textarea name="message" class="span11" cols="50" rows="10">@Model</textarea>
 	
 			<br />
-			<button class="btn btn-primary">Send request</button>
+			<button class="btn btn-primary">@Res.Send</button>
 
 		</form>	
 	
 	}
 
 	<div class="span4 alert alert-info">
-		<p>
-			If you are a producer, illustrator, animator or any other content creator working with Vocaloid music or videos,
-			or a representative of a circle, you may use this form to request your account to be verified by the site staff.
-		</p>
-		<p>
-			After verification, your account name will be displayed on the artist entry page(s), and vice versa.
-			You need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.
-			For example, posting on your Twitter or blog and linking to your VocaDB account is an acceptable way of proving you are the one you say you are.
-			You should also have at least one or two accepted and finalized (Vocaloid or UTAU) song entries on the site - you can submit those yourself if others already haven't.
-		</p>
-		<p>
-			After verification you're able to approve your artist entry, limiting who can edit it.
-			At the moment only the artist entry itself can be "protected" in this way - songs and albums are not affected.
-		</p>
-		<p>
-			Please understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.
-			Unless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.
-		</p>
+		@Html.Raw(Res.Info)
 	</div>
 
 </div>

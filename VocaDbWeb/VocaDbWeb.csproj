@@ -670,7 +670,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongArchiveReasonNames.resx</DependentUpon>
-    </Compile>		
+    </Compile>
     <Compile Include="App_GlobalResources\SongArchiveReasonNames.ru.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1245,6 +1245,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RatedSongsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\User\RequestVerificationStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequestVerificationStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\QueryService.svc.cs">
       <DependentUpon>QueryService.svc</DependentUpon>
@@ -3622,6 +3627,11 @@
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RatedSongsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestVerificationStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
