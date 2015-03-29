@@ -29,6 +29,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			string tag,
 			EntryStatus? status,
 			int start, int maxResults, bool getTotalCount,
+			EntrySortRule sort,
 			NameMatchMode nameMatchMode,
 			EntryOptionalFields fields,
 			ContentLanguagePreference lang,
@@ -46,7 +47,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.WhereHasName_Canonized(artistTextQuery)
 					.WhereHasTag(tag)
 					.WhereStatusIs(status)
-					.OrderBy(ArtistSortRule.Name, lang)
+					.OrderBy(sort, lang)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.Artist)
 					.ToArray();
@@ -56,7 +57,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.WhereHasName(textQuery)
 					.WhereHasTag(tag)
 					.WhereStatusIs(status)
-					.OrderBy(AlbumSortRule.Name, lang)
+					.OrderBy(sort, lang)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.Album)
 					.ToArray();
@@ -66,7 +67,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.WhereHasName(textQuery)
 					.WhereHasTag(tag)
 					.WhereStatusIs(status)
-					.OrderBy(SongSortRule.Name, lang)
+					.OrderBy(sort, lang)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.Song)
 					.ToArray();
@@ -99,8 +100,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.Select(a => new EntryForApiContract(a, lang, fields)) : new EntryForApiContract[0];
 
 				// Merge and sort the final list
-				var entries = artists.Concat(albums).Concat(songs)
-					.OrderBy(a => a.Name);
+				var entries = artists.Concat(albums).Concat(songs);
+
+				if (sort == EntrySortRule.Name)
+					entries = entries.OrderBy(a => a.Name);
+
+				if (sort == EntrySortRule.AdditionDate)
+					entries = entries.OrderByDescending(a => a.CreateDate);
 
 				var count = 0;
 
@@ -136,4 +142,5 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 	}
+
 }

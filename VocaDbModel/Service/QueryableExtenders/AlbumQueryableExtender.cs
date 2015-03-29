@@ -53,6 +53,20 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Album> OrderBy(
+			this IQueryable<Album> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) {
+
+			switch (sortRule) {
+				case EntrySortRule.Name:
+					return FindHelpers.AddNameOrder(query, languagePreference);
+				case EntrySortRule.AdditionDate:
+					return query.OrderByDescending(a => a.CreateDate);
+			}
+
+			return query;
+
+		}
+
 		public static IQueryable<Album> WhereDraftsOnly(this IQueryable<Album> query, bool draftsOnly) {
 
 			if (!draftsOnly)

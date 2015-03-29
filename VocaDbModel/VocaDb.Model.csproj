@@ -639,6 +639,7 @@
     <Compile Include="Service\BrandableStrings\Collections\ResStringCollection.cs" />
     <Compile Include="Service\BrandableStrings\Collections\SongStrings.cs" />
     <Compile Include="Service\BrandableStrings\IBrandedStringsAssemblyHeader.cs" />
+    <Compile Include="Service\EntrySortRule.cs" />
     <Compile Include="Service\EntryUrlFriendlyNameFactory.cs" />
     <Compile Include="Service\EntryUrlParser.cs" />
     <Compile Include="Service\Exceptions\EntityNotFoundException.cs" />

@@ -40,6 +40,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 30).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
+		/// <param name="sort">Sort rule (optional, defaults to Name). Possible values are None, Name, AdditionDate.</param>
 		/// <param name="nameMatchMode">Match mode for entry name (optional, defaults to Exact).</param>
 		/// <param name="fields">List of optional fields (optional). Possible values are Description, MainPicture, Names, Tags, WebLinks.</param>
 		/// <param name="lang">Content language preference (optional).</param>
@@ -51,6 +52,7 @@ namespace VocaDb.Web.Controllers.Api {
 			string tag = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			EntrySortRule sort = EntrySortRule.Name,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			EntryOptionalFields fields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
@@ -59,7 +61,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var ssl = WebHelper.IsSSL(Request);
 			maxResults = GetMaxResults(maxResults);
 
-			return queries.GetList(query, tag, status, start, maxResults, getTotalCount, nameMatchMode, fields, lang, ssl);
+			return queries.GetList(query, tag, status, start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, ssl);
 
 		}
 

@@ -29,6 +29,20 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> OrderBy(
+			this IQueryable<Song> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) {
+
+			switch (sortRule) {
+				case EntrySortRule.Name:
+					return query.OrderByEntryName(languagePreference);
+				case EntrySortRule.AdditionDate:
+					return query.OrderByDescending(a => a.CreateDate);
+			}
+
+			return query;
+
+		}
+
 		public static IQueryable<Song> WhereArtistHasTag(this IQueryable<Song> query, string tagName) {
 
 			if (string.IsNullOrEmpty(tagName))
