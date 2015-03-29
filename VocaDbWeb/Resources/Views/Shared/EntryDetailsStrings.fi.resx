@@ -139,7 +139,7 @@
     <value>Ulkoiset linkit</value>
   </data>
   <data name="Hits" xml:space="preserve">
-    <value>osuma(a)</value>
+    <value>{0} osuma(a)</value>
   </data>
   <data name="LatestComments" xml:space="preserve">
     <value>Viimeisimmät kommentit</value>

@@ -139,7 +139,7 @@
     <value>External links</value>
   </data>
   <data name="Hits" xml:space="preserve">
-    <value>hit(s)</value>
+    <value>{0} hit(s)</value>
   </data>
   <data name="LatestComments" xml:space="preserve">
     <value>Latest comments</value>

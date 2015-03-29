@@ -277,7 +277,7 @@
 					<a href="#" id="statsLink" data-bind="click: getUsers">
 						@string.Format(Res.Favorites, Model.FavoritedTimes),
 						@string.Format(Res.Likes, Model.LikedTimes),
-						@(Model.Hits + " " + ViewRes.EntryDetailsStrings.Hits),
+						@string.Format(ViewRes.EntryDetailsStrings.Hits, Model.Hits),
 						@string.Format(Res.TotalScore, Model.RatingScore).
 					</a>
 				</td>
