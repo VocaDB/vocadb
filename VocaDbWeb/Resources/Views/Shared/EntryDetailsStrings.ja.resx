@@ -134,7 +134,7 @@
   </data>
   <data name="Hits" xml:space="preserve">
     <value>ヒット数</value>
-  </data>
+  <comment>maybe parametrize</comment></data>
   <data name="LatestComments" xml:space="preserve">
     <value>最近のコメント</value>
   </data>

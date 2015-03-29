@@ -120,4 +120,7 @@
   <data name="VerifiedArtists" xml:space="preserve">
     <value>アーティストのみ</value>
   </data>
+  <data name="ShowDisabledUsers" xml:space="preserve">
+    <value>無効にされたアカウントの表示</value>
+  </data>
 </root>

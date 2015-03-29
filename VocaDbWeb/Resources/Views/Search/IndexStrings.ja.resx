@@ -124,7 +124,7 @@
     <value>タイプ</value>
   </data>
   <data name="InMyCollection" xml:space="preserve">
-    <value>私の蒐集</value>
+    <value>コレクションに入っている</value>
   </data>
   <data name="MoreFilters" xml:space="preserve">
     <value>その外のフィルター</value>
@@ -194,5 +194,8 @@
   </data>
   <data name="Times" xml:space="preserve">
     <value>評価回数</value>
+  </data>
+  <data name="TagInformation" xml:space="preserve">
+    <value>タグ情報</value>
   </data>
 </root>

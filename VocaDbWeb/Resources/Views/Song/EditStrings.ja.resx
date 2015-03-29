@@ -117,55 +117,94 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Body" xml:space="preserve">
-    <value>内容</value>
+  <data name="ArActions" xml:space="preserve">
+    <value>動作</value>
   </data>
-  <data name="Compose" xml:space="preserve">
-    <value>メッセージを作成する</value>
+  <data name="ArAddArtistTitle" xml:space="preserve">
+    <value>アーティストを追加</value>
   </data>
-  <data name="From" xml:space="preserve">
-    <value>送信者</value>
+  <data name="ArArtist" xml:space="preserve">
+    <value>アーティスト</value>
   </data>
-  <data name="FromLC" xml:space="preserve">
-    <value>送信者</value>
+  <data name="ArSupport" xml:space="preserve">
+    <value>サポート</value>
   </data>
-  <data name="HighPriority" xml:space="preserve">
-    <value>重要なメッセージ</value>
+  <data name="BaNotes" xml:space="preserve">
+    <value>メモ</value>
   </data>
-  <data name="Messages" xml:space="preserve">
-    <value>メッセージ</value>
+  <data name="BaOriginalVersion" xml:space="preserve">
+    <value>原作（本家）</value>
   </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>お知らせ</value>
+  <data name="BaSongType" xml:space="preserve">
+    <value>曲タイプ</value>
   </data>
-  <data name="Received" xml:space="preserve">
-    <value>受信トレー</value>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>本当にこの曲項目を削除しますか？</value>
   </data>
-  <data name="Send" xml:space="preserve">
-    <value>送信</value>
+  <data name="EditTitle" xml:space="preserve">
+    <value>曲編集：</value>
   </data>
-  <data name="Sent" xml:space="preserve">
-    <value>送信トレー</value>
+  <data name="LyAddRow" xml:space="preserve">
+    <value>行挿入</value>
   </data>
-  <data name="Subject" xml:space="preserve">
-    <value>件名</value>
+  <data name="LyLanguage" xml:space="preserve">
+    <value>原語：</value>
   </data>
-  <data name="To" xml:space="preserve">
-    <value>宛先</value>
+  <data name="PvAddMedia" xml:space="preserve">
+    <value>メディアを追加</value>
   </data>
-  <data name="Reply" xml:space="preserve">
-    <value>返信</value>
+  <data name="PvAuthor" xml:space="preserve">
+    <value>投稿者</value>
   </data>
-  <data name="MessageSent" xml:space="preserve">
-    <value>メッセージが送信されました。</value>
+  <data name="PvName" xml:space="preserve">
+    <value>タイトル</value>
   </data>
-  <data name="MessageSendError" xml:space="preserve">
-    <value>送信エラーが発生しました。</value>
+  <data name="PvNewType" xml:space="preserve">
+    <value>タイプ：</value>
   </data>
-  <data name="Date" xml:space="preserve">
-    <value>日付</value>
+  <data name="PvService" xml:space="preserve">
+    <value>サービス</value>
   </data>
-  <data name="ClickSubjectToView" xml:space="preserve">
-    <value>件名をクリックしてメッセージを読む</value>
+  <data name="PvType" xml:space="preserve">
+    <value>タイプ</value>
+  </data>
+  <data name="PvUrl" xml:space="preserve">
+    <value>URL：</value>
+  </data>
+  <data name="TabArtists" xml:space="preserve">
+    <value>アーティスト</value>
+  </data>
+  <data name="TabBasicInfo" xml:space="preserve">
+    <value>基本情報</value>
+  </data>
+  <data name="TabLyrics" xml:space="preserve">
+    <value>歌詞</value>
+  </data>
+  <data name="TabMedia" xml:space="preserve">
+    <value>メディア</value>
+  </data>
+  <data name="ArArtistsNote" xml:space="preserve">
+    <value>備考として、先にアルバムにタグをつけると、アーティスト</value>
+  </data>
+  <data name="BaDuration" xml:space="preserve">
+    <value>タイム（分・秒）</value>
+  </data>
+  <data name="BaNames" xml:space="preserve">
+    <value>主なタイトル</value>
+  </data>
+  <data name="ArRoles" xml:space="preserve">
+    <value>役割</value>
+  </data>
+  <data name="PvLength" xml:space="preserve">
+    <value>タイム</value>
+  </data>
+  <data name="PvSupportedServices" xml:space="preserve">
+    <value>対応サービス：Youtube、ニコニコ動画、Vimeo、SoundCloud、ピアプロ、Bilibili</value>
+  </data>
+  <data name="LySource" xml:space="preserve">
+    <value>出典：</value>
+  </data>
+  <data name="BaOriginalVersionHelp" xml:space="preserve">
+    <value>このサイトに原作項目が存在する場合は、このフィールドを使ってリンクしてください。</value>
   </data>
 </root>

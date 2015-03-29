@@ -139,13 +139,13 @@
     <value>埋め込む</value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value>お気に入り{0}</value>
+    <value>{0}人がお気に入り</value>
   </data>
   <data name="Like" xml:space="preserve">
     <value>いいね</value>
   </data>
   <data name="Likes" xml:space="preserve">
-    <value>いいね{0}</value>
+    <value>{0}人が「いいね！」</value>
   </data>
   <data name="Link" xml:space="preserve">
     <value>リンク</value>
@@ -193,7 +193,7 @@
     <value>ソーシャルメディア</value>
   </data>
   <data name="TotalScore" xml:space="preserve">
-    <value>{0}トータルスコア</value>
+    <value>{0} トータルスコア</value>
   </data>
   <data name="ViewExternal" xml:space="preserve">
     <value>他のサイトで閲覧する</value>
@@ -214,8 +214,8 @@
     <value>お気に入りユーザー</value>
   </data>
   <data name="LyricsFrom" xml:space="preserve">
-    <value></value>
-    <comment>problematic word order</comment>
+    <value>出典：</value>
+    
   </data>
   <data name="NicoMimiDownload" xml:space="preserve">
     <value>ダウンロードリンクをNicoMimiでチェック</value>
