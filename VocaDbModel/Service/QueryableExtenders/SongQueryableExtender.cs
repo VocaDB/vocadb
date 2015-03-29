@@ -8,15 +8,15 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class SongQueryableExtender {
 
-		public static IQueryable<Song> AddOrder(this IQueryable<Song> criteria, SongSortRule sortRule, ContentLanguagePreference languagePreference) {
-
+		public static IQueryable<Song> OrderBy(this IQueryable<Song> criteria, SongSortRule sortRule, ContentLanguagePreference languagePreference) {
+			
 			switch (sortRule) {
 				case SongSortRule.Name:
-					return criteria.AddNameOrder(languagePreference);
+					return criteria.OrderByEntryName(languagePreference);
 				case SongSortRule.AdditionDate:
 					return criteria.OrderByDescending(a => a.CreateDate);
 				case SongSortRule.FavoritedTimes:
@@ -27,10 +27,6 @@ namespace VocaDb.Model.Service.Helpers {
 
 			return criteria;
 
-		}
-
-		public static IQueryable<Song> OrderBy(this IQueryable<Song> criteria, SongSortRule sortRule, ContentLanguagePreference languagePreference) {
-			return AddOrder(criteria, sortRule, languagePreference);
 		}
 
 		public static IQueryable<Song> WhereArtistHasTag(this IQueryable<Song> query, string tagName) {

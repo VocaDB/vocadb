@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Tests.Service {
@@ -20,7 +20,7 @@ namespace VocaDb.Tests.Service {
 		private List<ArtistName> artists;
 
 		private IQueryable<ArtistName> FilterByArtistName(string artistName) {
-			return artists.AsQueryable().FilterByArtistName(ArtistSearchTextQuery.Create(artistName));
+			return artists.AsQueryable().WhereArtistNameIs(ArtistSearchTextQuery.Create(artistName));
 		} 
 
 		private void SequenceEqual(IEnumerable<ArtistName> actual, string message, params string[] expected) {

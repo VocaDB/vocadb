@@ -4,10 +4,11 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class AlbumQueryableExtender {
 

@@ -3,11 +3,11 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class AlbumForUserQueryableExtender {
 
-		public static IOrderedQueryable<AlbumForUser> AddNameOrder(this IQueryable<AlbumForUser> criteria, ContentLanguagePreference languagePreference) {
+		public static IOrderedQueryable<AlbumForUser> OrderByAlbumName(this IQueryable<AlbumForUser> criteria, ContentLanguagePreference languagePreference) {
 
 			switch (languagePreference) {
 				case ContentLanguagePreference.Japanese:
@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 			switch (sortRule) {
 				case AlbumSortRule.Name:
-					return AddNameOrder(query, languagePreference);
+					return OrderByAlbumName(query, languagePreference);
 				case AlbumSortRule.CollectionCount:
 					return query.OrderByDescending(a => a.Album.UserCollections.Count);
 				case AlbumSortRule.ReleaseDate:
@@ -42,7 +42,7 @@ namespace VocaDb.Model.Service.Helpers {
 					return query.OrderByDescending(a => a.Album.RatingTotal)
 						.ThenByDescending(a => a.Album.RatingAverageInt);
 				case AlbumSortRule.NameThenReleaseDate:
-					return AddNameOrder(query, languagePreference)
+					return OrderByAlbumName(query, languagePreference)
 						.ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Year)
 						.ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Month)
 						.ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Day);

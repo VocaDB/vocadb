@@ -129,6 +129,9 @@
   <data name="AddSong" xml:space="preserve">
     <value>Submit a song</value>
   </data>
+  <data name="BackgroundCredit" xml:space="preserve">
+    <value>Background illustration by {0}</value>
+  </data>
   <data name="Blog" xml:space="preserve">
     <value>Blog</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="NewPVs" xml:space="preserve">
     <value>Recent PVs</value>
+  </data>
+  <data name="OtherCredit" xml:space="preserve">
+    <value>Other credits and source code</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>

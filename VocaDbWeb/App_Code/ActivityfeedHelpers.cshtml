@@ -14,11 +14,13 @@
        <span>@tr</span> 
         
     } else {
-     
+		
+		var entryTypeName = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entry.EntryRef.EntryType);
+		
 		if (entry.EditEvent == EntryEditEvent.Created) {
-			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.CreatedNew, HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entry.EntryRef.EntryType.ToString()))</span>
+			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.CreatedNew, entryTypeName)</span>
 		} else {
-			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.Updated, HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entry.EntryRef.EntryType.ToString()))</span>
+			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.Updated, entryTypeName)</span>
 		}
            
     }

@@ -27,6 +27,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.TagFormatting;
 
 namespace VocaDb.Model.Service {
@@ -146,6 +147,8 @@ namespace VocaDb.Model.Service {
 
 				NHibernateUtil.Initialize(a.CoverPictureData);
 				a.Delete();
+
+				Archive(session, a, new AlbumDiff(false), AlbumArchiveReason.Deleted);
 
 			}, PermissionToken.DeleteEntries, skipLog: true);
 
@@ -285,7 +288,7 @@ namespace VocaDb.Model.Service {
 
 				var names = session.Query<AlbumName>()
 					.Where(a => !a.Album.Deleted)
-					.AddEntryNameFilter(textQuery)
+					.WhereEntryNameIs(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()
@@ -566,6 +569,8 @@ namespace VocaDb.Model.Service {
 				var album = session.Load<Album>(albumId);
 
 				album.Deleted = false;
+
+				Archive(session, album, new AlbumDiff(false), AlbumArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(album), session);
 

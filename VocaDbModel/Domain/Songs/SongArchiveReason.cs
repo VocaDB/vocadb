@@ -12,7 +12,11 @@
 
 		PropertiesUpdated,
 
-		Reverted
+		Reverted,
+
+		Deleted,
+
+		Restored
 
 	}
 

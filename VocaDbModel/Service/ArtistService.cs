@@ -9,19 +9,17 @@ using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.DataContracts.Albums;
 using System.Drawing;
 using VocaDb.Model.Helpers;
 using System.Collections.Generic;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search.Artists;
 
@@ -130,7 +128,9 @@ namespace VocaDb.Model.Service {
 
 				NHibernateUtil.Initialize(a.Picture);
 				a.Delete();
-			                         
+			          
+				Archive(session, a, new ArtistDiff(false), ArtistArchiveReason.Deleted);
+               
 			}, PermissionToken.DeleteEntries, skipLog: true);
 
 		}
@@ -198,7 +198,7 @@ namespace VocaDb.Model.Service {
 
 				var names = session.Query<ArtistName>()
 					.Where(a => !a.Artist.Deleted)
-					.FilterByArtistName(textQuery)
+					.WhereArtistNameIs(textQuery)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
 					.Distinct()
@@ -414,6 +414,8 @@ namespace VocaDb.Model.Service {
 				artist.Deleted = false;
 
 				session.Update(artist);
+
+				Archive(session, artist, new ArtistDiff(false), ArtistArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(artist), session);
 

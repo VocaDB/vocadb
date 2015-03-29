@@ -6,7 +6,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search.AlbumSearch;
 

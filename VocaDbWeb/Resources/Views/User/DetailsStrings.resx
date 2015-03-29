@@ -129,6 +129,9 @@
   <data name="AdditionalPermissions" xml:space="preserve">
     <value>Additional permissions</value>
   </data>
+  <data name="ArtistVerificationPage" xml:space="preserve">
+    <value>artist verification page</value>
+  </data>
   <data name="CollectionTab" xml:space="preserve">
     <value>Collection</value>
   </data>
@@ -185,6 +188,10 @@
   </data>
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>
+  </data>
+  <data name="PossibleProducerMessage" xml:space="preserve">
+    <value>Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?
+If so, please see the {0}.</value>
   </data>
   <data name="Power" xml:space="preserve">
     <value>Power</value>

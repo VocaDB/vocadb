@@ -203,13 +203,20 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			details.Power = UserHelper.GetPower(details, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount);
 			details.Level = UserHelper.GetLevel(details.Power);
 
+			// If the user is viewing their own profile, check for possible producer account.
+			// Skip users who are not active, limited or are already verified artists.
 			if (user.Active && user.GroupId >= UserGroupId.Regular && user.Equals(PermissionContext.LoggedUser) && !user.AllOwnedArtists.Any()) {
 				
+				// Scan by Twitter account name and entry name.
+				var twitterUrl = !string.IsNullOrEmpty(user.Options.TwitterName) ? string.Format("https://twitter.com/{0}", user.Options.TwitterName) : null;
 				var producerTypes = new[] { ArtistType.Producer, ArtistType.Animator, ArtistType.Illustrator };
-				details.PossibleProducerAccount = session.Query<ArtistName>().Any(a => !a.Artist.Deleted 
-					&& producerTypes.Contains(a.Artist.ArtistType) 
-					&& a.Value == user.Name 
-					&& !a.Artist.OwnerUsers.Any());
+
+				details.PossibleProducerAccount = session.Query<Artist>().Any(a => 
+					!a.Deleted
+					&& producerTypes.Contains(a.ArtistType) 
+					&& (a.Names.Names.Any(n => n.Value == user.Name) 
+						|| (twitterUrl != null && a.WebLinks.Any(l => l.Url == twitterUrl)))
+					&& !a.OwnerUsers.Any());
 
 			}
 
@@ -754,7 +761,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					queryWithSort = queryWithSort.OrderByDescending(r => r.Rating);
 
 				// Add custom order
-				queryWithSort = queryWithSort.AddSongOrder(queryParams.SortRule, PermissionContext.LanguagePreference);
+				queryWithSort = queryWithSort.OrderBy(queryParams.SortRule, PermissionContext.LanguagePreference);
 
 				// Apply paging
 				var resultQ = queryWithSort

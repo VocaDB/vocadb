@@ -25,6 +25,7 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.Tags;
@@ -254,7 +255,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				var artistNames = session.Query<ArtistName>()
-					.FilterByArtistName(artistTextQuery)
+					.WhereArtistNameIs(artistTextQuery)
 					.Where(a => !a.Artist.Deleted)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
@@ -263,7 +264,7 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				var albumNames = session.Query<AlbumName>()
-					.AddEntryNameFilter(textQuery)
+					.WhereEntryNameIs(textQuery)
 					.Where(a => !a.Album.Deleted)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
@@ -272,7 +273,7 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				var songNames = session.Query<SongName>()
-					.AddEntryNameFilter(textQuery)
+					.WhereEntryNameIs(textQuery)
 					.Where(a => !a.Song.Deleted)
 					.Select(n => n.Value)
 					.OrderBy(n => n)
@@ -281,7 +282,7 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				var tagNames = session.Query<Tag>()
-					.AddTagNameFilter(tagTextQuery)
+					.WhereHasName(tagTextQuery)
 					.OrderBy(t => t.Name)
 					.Select(t => t.Name)
 					.Take(maxResults)
@@ -315,17 +316,17 @@ namespace VocaDb.Model.Service {
 
 				var artists = 
 					session.Query<ArtistName>()
-					.FilterByArtistName(artistTextQuery)
+					.WhereArtistNameIs(artistTextQuery)
 					.Where(a => !a.Artist.Deleted)
 					.Select(n => n.Artist)
-					.AddNameOrder(LanguagePreference)
+					.OrderByEntryName(LanguagePreference)
 					.Distinct()
 					.Take(maxResults)
 					.ToArray();
 
 				var artistCount = (getTotalCount ?
 					session.Query<ArtistName>()
-					.FilterByArtistName(artistTextQuery)
+					.WhereArtistNameIs(artistTextQuery)
 					.Where(a => !a.Artist.Deleted)
 					.Select(n => n.Artist)
 					.Distinct()
@@ -334,17 +335,17 @@ namespace VocaDb.Model.Service {
 
 				var albums = 
 					session.Query<AlbumName>()
-					.AddEntryNameFilter(textQuery)
+					.WhereEntryNameIs(textQuery)
 					.Where(a => !a.Album.Deleted)
 					.Select(n => n.Album)
-					.AddNameOrder(LanguagePreference)
+					.OrderByEntryName(LanguagePreference)
 					.Distinct()
 					.Take(maxResults)
 					.ToArray();
 
 				var albumCount = (getTotalCount ?
 					session.Query<AlbumName>()
-					.AddEntryNameFilter(textQuery)
+					.WhereEntryNameIs(textQuery)
 					.Where(a => !a.Album.Deleted)
 					.Select(n => n.Album)
 					.Distinct()
@@ -353,17 +354,17 @@ namespace VocaDb.Model.Service {
 
 				var songs = 
 					session.Query<SongName>()
-					.AddEntryNameFilter(textQuery)
+					.WhereEntryNameIs(textQuery)
 					.Where(a => !a.Song.Deleted)
 					.Select(n => n.Song)
-					.AddNameOrder(LanguagePreference)
+					.OrderByEntryName(LanguagePreference)
 					.Distinct()
 					.Take(maxResults)
 					.ToArray();
 
 				var songCount = (getTotalCount ?
 					session.Query<SongName>()
-					.AddEntryNameFilter(textQuery)
+					.WhereEntryNameIs(textQuery)
 					.Where(a => !a.Song.Deleted)
 					.Select(n => n.Song)
 					.Distinct()
@@ -371,13 +372,13 @@ namespace VocaDb.Model.Service {
 					: 0);
 
 				var tags = session.Query<Tag>()
-					.AddTagNameFilter(tagTextQuery)
+					.WhereHasName(tagTextQuery)
 					.OrderBy(t => t.Name)
 					.Take(maxResults)
 					.ToArray();
 
 				var tagCount = (getTotalCount ? session.Query<Tag>()
-					.AddTagNameFilter(tagTextQuery)
+					.WhereHasName(tagTextQuery)
 					.Distinct()
 					.Count()
 					: 0);

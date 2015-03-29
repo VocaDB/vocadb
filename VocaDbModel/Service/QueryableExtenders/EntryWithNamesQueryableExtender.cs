@@ -2,11 +2,19 @@
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class EntryWithNamesQueryableExtender {
+
+		public static IOrderedQueryable<T> OrderByEntryName<T>(this IQueryable<T> criteria, ContentLanguagePreference languagePreference) 
+			where T : IEntryWithNames {
+
+			return FindHelpers.AddNameOrder(criteria, languagePreference);
+
+		}
 
 		public static IQueryable<EntryIdAndName> SelectIdAndName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
 			where T: class, IEntryWithNames {
