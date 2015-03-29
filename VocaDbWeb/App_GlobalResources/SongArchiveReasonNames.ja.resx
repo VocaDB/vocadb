@@ -121,12 +121,18 @@
     <value>不明</value>
   </data>
   <data name="Reverted" xml:space="preserve">
-    <value>戻された</value>
+    <value>以前のバージョンに戻された</value>
   </data>
   <data name="AutoImportedFromMikuDb" xml:space="preserve">
     <value>自動インポート</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>作成</value>
+  </data>
+  <data name="Merged" xml:space="preserve">
+    <value>別項目とマージされた</value>
+  </data>
+  <data name="PropertiesUpdated" xml:space="preserve">
+    <value>プロパティー更新</value>
   </data>
 </root>

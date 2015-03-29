@@ -153,4 +153,19 @@
   <data name="To" xml:space="preserve">
     <value>宛先</value>
   </data>
+  <data name="Reply" xml:space="preserve">
+    <value>返信</value>
+  </data>
+  <data name="MessageSent" xml:space="preserve">
+    <value>メッセージが送信されました。</value>
+  </data>
+  <data name="MessageSendError" xml:space="preserve">
+    <value>送信エラーが発生しました。</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日付</value>
+  </data>
+  <data name="ClickSubjectToView" xml:space="preserve">
+    <value>件名をクリックしてメッセージを読む</value>
+  </data>
 </root>

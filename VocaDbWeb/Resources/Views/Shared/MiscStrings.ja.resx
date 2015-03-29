@@ -120,4 +120,7 @@
   <data name="HideChatbox" xml:space="preserve">
     <value>チャットボックスを隠す</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>検索</value>
+  </data>
 </root>

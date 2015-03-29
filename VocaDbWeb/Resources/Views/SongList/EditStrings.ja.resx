@@ -117,23 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoImportedFromMikuDb" xml:space="preserve">
-    <value>自動インポート</value>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>このリストを本当に削除しますか？</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>作成</value>
+  <data name="CreateTitle" xml:space="preserve">
+    <value>曲リストを作成</value>
   </data>
-  <data name="Merged" xml:space="preserve">
-    <value>別項目とマージされた</value>
+  <data name="Description" xml:space="preserve">
+    <value>説明</value>
   </data>
-  <data name="PropertiesUpdated" xml:space="preserve">
-    <value>プロパティー更新</value>
+  <data name="EditTitle" xml:space="preserve">
+    <value>リスト編集　-　{0}</value>
   </data>
-  <data name="Reverted" xml:space="preserve">
-    <value>以前のバージョンに戻された</value>
-    
+  <data name="Name" xml:space="preserve">
+    <value>名前</value>
   </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>不明</value>
+  <data name="TabProperties" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="TabSongs" xml:space="preserve">
+    <value>曲</value>
+  </data>
+  <data name="Thumbnail" xml:space="preserve">
+    <value>サムネール</value>
+  </data>
+  <data name="FeaturedCategory" xml:space="preserve">
+    <value>特集カテゴリー</value>
   </data>
 </root>

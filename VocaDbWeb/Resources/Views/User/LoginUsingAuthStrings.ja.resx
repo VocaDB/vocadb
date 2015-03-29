@@ -117,23 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoImportedFromMikuDb" xml:space="preserve">
-    <value>自動インポート</value>
+  <data name="AlmostDone" xml:space="preserve">
+    <value>もう少しで完成です！VocaDBのユーザー名を選んでください。</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>作成</value>
+  <data name="LoginUsingTwitter" xml:space="preserve">
+    <value>Twitter（ツイッター）でログイン</value>
   </data>
-  <data name="Merged" xml:space="preserve">
-    <value>別項目とマージされた</value>
+  <data name="SignInCancelled" xml:space="preserve">
+    <value>ログインがキャンセルされました。</value>
   </data>
-  <data name="PropertiesUpdated" xml:space="preserve">
-    <value>プロパティー更新</value>
-  </data>
-  <data name="Reverted" xml:space="preserve">
-    <value>以前のバージョンに戻された</value>
-    
-  </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>不明</value>
+  <data name="AuthError" xml:space="preserve">
+    <value>ユーザー認証ができませんでした。クッキーが許可されているか確認しもう一度試してください。</value>
   </data>
 </root>

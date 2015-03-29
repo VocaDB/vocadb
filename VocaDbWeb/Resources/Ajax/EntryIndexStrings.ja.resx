@@ -117,23 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoImportedFromMikuDb" xml:space="preserve">
-    <value>自動インポート</value>
+  <data name="DraftsOnlyFilter" xml:space="preserve">
+    <value>下書き</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>作成</value>
+  <data name="TitleFilter" xml:space="preserve">
+    <value>タイトル「{0}」</value>
   </data>
-  <data name="Merged" xml:space="preserve">
-    <value>別項目とマージされた</value>
+  <data name="StartsWithTitleFilter" xml:space="preserve">
+    <value>「{0}」で始まるタイトル</value>
   </data>
-  <data name="PropertiesUpdated" xml:space="preserve">
-    <value>プロパティー更新</value>
+  <data name="FilterPre" xml:space="preserve">
+    <value>フィルタ：</value>
   </data>
-  <data name="Reverted" xml:space="preserve">
-    <value>以前のバージョンに戻された</value>
-    
-  </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>不明</value>
+  <data name="ExactTitleFilter" xml:space="preserve">
+    <value>完全一致タイトル「{0}」</value>
   </data>
 </root>

@@ -126,4 +126,7 @@
   <data name="Shuffle" xml:space="preserve">
     <value>シャッフル</value>
   </data>
+  <data name="AutoplayNote" xml:space="preserve">
+    <value>自動再生はYoutubeとSoundcloudしか対応していません。</value>
+  </data>
 </root>

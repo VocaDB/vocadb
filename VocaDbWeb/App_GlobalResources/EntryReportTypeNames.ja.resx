@@ -132,4 +132,10 @@
   <data name="Other" xml:space="preserve">
     <value>その他（詳細を下記のノートに記載して下さい）</value>
   </data>
+  <data name="MaliciousIP" xml:space="preserve">
+    <value>悪意のあるIP</value>
+  </data>
+  <data name="OwnershipClaim" xml:space="preserve">
+    <value>所有権の主張</value>
+  </data>
 </root>

@@ -162,4 +162,7 @@
   <data name="LoginUsingSSL" xml:space="preserve">
     <value>SSLを使ってログインする</value>
   </data>
+  <data name="DoLogin" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
 </root>

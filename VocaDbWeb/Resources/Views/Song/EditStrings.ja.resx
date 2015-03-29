@@ -117,23 +117,94 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoImportedFromMikuDb" xml:space="preserve">
-    <value>自動インポート</value>
+  <data name="ArActions" xml:space="preserve">
+    <value>動作</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>作成</value>
+  <data name="ArAddArtistTitle" xml:space="preserve">
+    <value>アーティストを追加</value>
   </data>
-  <data name="Merged" xml:space="preserve">
-    <value>別項目とマージされた</value>
+  <data name="ArArtist" xml:space="preserve">
+    <value>アーティスト</value>
   </data>
-  <data name="PropertiesUpdated" xml:space="preserve">
-    <value>プロパティー更新</value>
+  <data name="ArSupport" xml:space="preserve">
+    <value>サポート</value>
   </data>
-  <data name="Reverted" xml:space="preserve">
-    <value>以前のバージョンに戻された</value>
-    
+  <data name="BaNotes" xml:space="preserve">
+    <value>メモ</value>
   </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>不明</value>
+  <data name="BaOriginalVersion" xml:space="preserve">
+    <value>原作（本家）</value>
+  </data>
+  <data name="BaSongType" xml:space="preserve">
+    <value>曲タイプ</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>本当にこの曲項目を削除しますか？</value>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>曲編集：</value>
+  </data>
+  <data name="LyAddRow" xml:space="preserve">
+    <value>行挿入</value>
+  </data>
+  <data name="LyLanguage" xml:space="preserve">
+    <value>原語：</value>
+  </data>
+  <data name="PvAddMedia" xml:space="preserve">
+    <value>メディアを追加</value>
+  </data>
+  <data name="PvAuthor" xml:space="preserve">
+    <value>投稿者</value>
+  </data>
+  <data name="PvName" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="PvNewType" xml:space="preserve">
+    <value>タイプ：</value>
+  </data>
+  <data name="PvService" xml:space="preserve">
+    <value>サービス</value>
+  </data>
+  <data name="PvType" xml:space="preserve">
+    <value>タイプ</value>
+  </data>
+  <data name="PvUrl" xml:space="preserve">
+    <value>URL：</value>
+  </data>
+  <data name="TabArtists" xml:space="preserve">
+    <value>アーティスト</value>
+  </data>
+  <data name="TabBasicInfo" xml:space="preserve">
+    <value>基本情報</value>
+  </data>
+  <data name="TabLyrics" xml:space="preserve">
+    <value>歌詞</value>
+  </data>
+  <data name="TabMedia" xml:space="preserve">
+    <value>メディア</value>
+  </data>
+  <data name="ArArtistsNote" xml:space="preserve">
+    <value>備考として、先にアルバムにタグをつけると、アーティスト</value>
+  </data>
+  <data name="BaDuration" xml:space="preserve">
+    <value>タイム（分・秒）</value>
+  </data>
+  <data name="BaNames" xml:space="preserve">
+    <value>主なタイトル</value>
+  </data>
+  <data name="ArRoles" xml:space="preserve">
+    <value>役割</value>
+  </data>
+  <data name="PvLength" xml:space="preserve">
+    <value>タイム</value>
+  </data>
+  <data name="PvSupportedServices" xml:space="preserve">
+    <value>対応サービス：Youtube、ニコニコ動画、Vimeo、SoundCloud、ピアプロ、Bilibili</value>
+  </data>
+  <data name="LySource" xml:space="preserve">
+    <value>出典：</value>
+  </data>
+  <data name="BaOriginalVersionHelp" xml:space="preserve">
+    <value>このサイトに原作項目が存在する場合は、このフィールドを使ってリンクしてください。</value>
   </data>
 </root>

@@ -129,4 +129,19 @@
   <data name="RomajiName" xml:space="preserve">
     <value>ローマ字表記</value>
   </data>
+  <data name="FoundPossibleDuplicates" xml:space="preserve">
+    <value>一致の可能性がある項目がありました。重複ではないか確認してください。</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名前（少なくとも１つは必要）</value>
+  </data>
+  <data name="NeedName" xml:space="preserve">
+    <value>少なくとも１つ名前が必要です。</value>
+  </data>
+  <data name="NameHelp" xml:space="preserve">
+    <value>名前の原語が非英語（例えば日本語）もしくは使用言語が不明の場合は、名前を非英語欄に記入してください。読み方がわかる場合はローマ字欄にも記入してください。英語の正式訳名、又は英訳名がわかるれば英語名欄に記入してください。</value>
+  </data>
+  <data name="NoArtistsToName" xml:space="preserve">
+    <value>名前欄にアーティスト名を記入せず、アーティストリストを使ってください。</value>
+  </data>
 </root>
