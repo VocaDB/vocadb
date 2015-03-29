@@ -42,7 +42,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			bool ssl = false) {
 			
-			return queries.GetList(query, tag, status, start, maxResults, getTotalCount, nameMatchMode, fields, lang, ssl);
+			return queries.GetList(query, tag, status, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang, ssl);
 
 		}
 

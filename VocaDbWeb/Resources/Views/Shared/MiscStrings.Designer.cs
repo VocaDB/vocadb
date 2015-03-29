@@ -61,24 +61,6 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to album(s).
-        /// </summary>
-        public static string AlbumCount {
-            get {
-                return ResourceManager.GetString("AlbumCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to artist(s).
-        /// </summary>
-        public static string ArtistCount {
-            get {
-                return ResourceManager.GetString("ArtistCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Event series.
         /// </summary>
         public static string EventSeries {
@@ -111,15 +93,6 @@ namespace ViewRes {
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to song(s).
-        /// </summary>
-        public static string SongCount {
-            get {
-                return ResourceManager.GetString("SongCount", resourceCulture);
             }
         }
     }

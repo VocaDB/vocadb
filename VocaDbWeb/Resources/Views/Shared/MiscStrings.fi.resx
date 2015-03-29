@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlbumCount" xml:space="preserve">
-    <value>albumi(a)</value>
-  </data>
-  <data name="ArtistCount" xml:space="preserve">
-    <value>artisti(a)</value>
-  </data>
   <data name="EventSeries" xml:space="preserve">
     <value>Tapahtumasarja</value>
   </data>
@@ -131,8 +125,5 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Haku</value>
-  </data>
-  <data name="SongCount" xml:space="preserve">
-    <value>kappale(tta)</value>
   </data>
 </root>
