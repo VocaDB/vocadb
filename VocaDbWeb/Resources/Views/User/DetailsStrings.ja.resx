@@ -240,4 +240,10 @@
   <data name="VisibleOnlyToMe" xml:space="preserve">
     <value>自分とスタッフだけが見える</value>
   </data>
+  <data name="ArtistVerificationPage" xml:space="preserve">
+    <value>アーティスト証明ページ</value>
+  </data>
+  <data name="PossibleProducerMessage" xml:space="preserve">
+    <value>あなたはボーカロイドやUTAUに関する方(プロデューサー、イラストレーターもしくはアニメーターなど)ですか？ もしそうあれば、{0}を見て下さい。</value>
+  </data>
 </root>
