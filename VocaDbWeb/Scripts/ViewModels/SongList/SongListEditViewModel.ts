@@ -75,7 +75,7 @@ module vdb.viewModels.songList {
 
 				this.name = ko.observable("");
 				this.description = ko.observable("");
-				this.featuredCategory = ko.observable("");
+				this.featuredCategory = ko.observable("Nothing");
 				loaded();
 
 			}
