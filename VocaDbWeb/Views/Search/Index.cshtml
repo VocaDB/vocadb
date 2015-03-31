@@ -6,6 +6,9 @@
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDbPage<VocaDb.Web.Models.Search.SearchIndexViewModel>
 
+@section Head {
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
+}
 				
 <ul class="nav nav-pills">
 	<li data-bind="css: { active: searchType() == 'Anything' }">
