@@ -42,31 +42,37 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return repository.HandleQuery(ctx => {
 
 				// Get all applicable names per entry type
-				var artistNames = ctx.OfType<Artist>().Query()
+				var artistQuery = ctx.OfType<Artist>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName_Canonized(artistTextQuery)
 					.WhereHasTag(tag)
-					.WhereStatusIs(status)
+					.WhereStatusIs(status);
+
+				var artistNames = artistQuery
 					.OrderBy(sort, lang)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.Artist)
 					.ToArray();
 
-				var albumNames = ctx.OfType<Album>().Query()
+				var albumQuery = ctx.OfType<Album>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName(textQuery)
 					.WhereHasTag(tag)
-					.WhereStatusIs(status)
+					.WhereStatusIs(status);
+
+				var albumNames = albumQuery
 					.OrderBy(sort, lang)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.Album)
 					.ToArray();
 
-				var songNames = ctx.OfType<Song>().Query()
+				var songQuery = ctx.OfType<Song>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName(textQuery)
 					.WhereHasTag(tag)
-					.WhereStatusIs(status)
+					.WhereStatusIs(status);
+
+				var songNames = songQuery
 					.OrderBy(sort, lang)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.Song)
@@ -112,26 +118,16 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				if (getTotalCount) {
 					
-					count = 
-						ctx.OfType<Artist>().Query()
-							.Where(a => !a.Deleted)
-							.WhereHasName_Canonized(artistTextQuery)
-							.WhereHasTag(tag)
-							.WhereStatusIs(status)
-							.Count() + 
-						ctx.OfType<Album>().Query()
-							.Where(a => !a.Deleted)
-							.WhereHasName(textQuery)
-							.WhereHasTag(tag)
-							.WhereStatusIs(status)
-							.Count() +
-						ctx.OfType<Song>().Query()
-							.Where(a => !a.Deleted)
-							.WhereHasName(textQuery)
-							.WhereHasTag(tag)
-							.WhereStatusIs(status)
-							.Count();
+					var artistCount = 
+						(artistNames.Length >= maxResults ? artistQuery.Count() : artistNames.Length);
+ 
+					var albumCount =
+						(albumNames.Length >= maxResults ? albumQuery.Count() : albumNames.Length);
 
+					var songCount =
+						(songNames.Length >= maxResults ? songQuery.Count() : songNames.Length);
+
+					count = artistCount + albumCount + songCount;
 
 				}
 
