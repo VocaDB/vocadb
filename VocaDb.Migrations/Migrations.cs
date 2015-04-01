@@ -3,6 +3,20 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201504012300)]
+	public class ArtistBaseVoicebankIndex : AutoReversingMigration {
+
+		public override void Up() {
+
+			if (Schema.Table(TableNames.Artists).Index("IX_Artists_BaseVoicebank").Exists())
+				return;
+
+			Create.Index("IX_Artists_BaseVoicebank").OnTable(TableNames.Artists).OnColumn("BaseVoicebank").Ascending();
+
+		}
+
+	}
+
 	[Migration(201502131812)]
 	public class ExtendCommentTextLength : Migration {
 
