@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Http;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
@@ -43,7 +44,7 @@ namespace VocaDb.Web.Controllers.Api {
 			return repository.HandleQuery(ctx => {
 				
 				var ev = ctx.Load(eventId);
-				return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, thumbPersister, WebHelper.IsSSL(Request), fields)).ToArray();
+				return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, thumbPersister, WebHelper.IsSSL(Request), fields, SongOptionalFields.None)).ToArray();
 
 			});
 

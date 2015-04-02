@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -22,7 +23,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 			ContentLanguagePreference languagePreference, 
 			IEntryThumbPersister thumbPersister,
 			bool ssl,
-			AlbumOptionalFields fields) : this(album, mergeRecord, languagePreference, 
+			AlbumOptionalFields fields,
+			SongOptionalFields songFields) 
+			: this(album, mergeRecord, languagePreference, 
 				fields.HasFlag(AlbumOptionalFields.Artists), 
 				fields.HasFlag(AlbumOptionalFields.Names), 
 				fields.HasFlag(AlbumOptionalFields.PVs), 
@@ -41,6 +44,10 @@ namespace VocaDb.Model.DataContracts.Albums {
 				
 				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister, ssl);
 
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.Tracks)) {
+				Tracks = album.Songs.Select(s => new SongInAlbumForApiContract(s, languagePreference, songFields)).ToArray();
 			}
 
 		}
@@ -157,6 +164,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 		[DataMember(EmitDefaultValue = false)]
 		public TagUsageForApiContract[] Tags { get; set; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public SongInAlbumForApiContract[] Tracks { get; set; }
+
 		[DataMember]
 		public int Version { get; set; }
 
@@ -176,7 +186,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 		Names = 16,
 		PVs = 32,
 		Tags = 64,
-		WebLinks = 128
+		Tracks = 128,
+		WebLinks = 256
 
 	}
 

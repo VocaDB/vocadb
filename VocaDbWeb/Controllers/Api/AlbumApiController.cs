@@ -77,16 +77,23 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="id">Album Id (required).</param>
 		/// <param name="fields">
-		/// Optional fields (optional). Possible values are artists, names, pvs, tags, webLinks.
+		/// Optional fields (optional). Possible values are artists, names, pvs, tags, tracks, webLinks.
+		/// </param>
+		/// <param name="songFields">
+		/// Optional fields for tracks, if included (optional).
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <example>http://vocadb.net/api/albums/1</example>
 		/// <returns>Album data.</returns>
 		[Route("{id:int}")]
-		public AlbumForApiContract GetOne(int id, AlbumOptionalFields fields = AlbumOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public AlbumForApiContract GetOne(
+			int id, 
+			AlbumOptionalFields fields = AlbumOptionalFields.None, 
+			SongOptionalFields songFields = SongOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			var ssl = WebHelper.IsSSL(Request);
-			var album = service.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, thumbPersister, ssl, fields));
+			var album = service.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, thumbPersister, ssl, fields, songFields));
 
 			return album;
 
@@ -126,7 +133,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="deleted">Whether to search for deleted entries. If this is true, only deleted entries will be returned.</param>
 		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Exact).</param>
 		/// <param name="fields">
-		/// Optional fields (optional). Possible values are artists, names, pvs, tags, webLinks.
+		/// Optional fields (optional). Possible values are artists, names, pvs, tags, tracks, webLinks.
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of albums.</returns>
@@ -165,7 +172,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var ssl = WebHelper.IsSSL(Request);
 
-			var entries = service.Find(a => new AlbumForApiContract(a, null, lang, thumbPersister, ssl, fields), queryParams);
+			var entries = service.Find(a => new AlbumForApiContract(a, null, lang, thumbPersister, ssl, fields, SongOptionalFields.None), queryParams);
 			
 			return entries;
 
@@ -189,13 +196,19 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets tracks for an album.
 		/// </summary>
 		/// <param name="id">Album ID (required).</param>
+		/// <param name="fields">
+		/// List of optional fields (optional). Possible values are Albums, Artists, Names, PVs, Tags, ThumbUrl, WebLinks.
+		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of tracks for the album.</returns>
 		/// <example>http://vocadb.net/api/albums/1/tracks</example>
 		[Route("{id:int}/tracks")]
-		public SongInAlbumContract[] GetTracks(int id, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public SongInAlbumForApiContract[] GetTracks(
+			int id, 
+			SongOptionalFields fields = SongOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
-			var tracks = service.GetAlbum(id, a => a.Songs.Select(s => new SongInAlbumContract(s, lang, false)).ToArray());
+			var tracks = service.GetAlbum(id, a => a.Songs.Select(s => new SongInAlbumForApiContract(s, lang, fields)).ToArray());
 
 			return tracks;
 

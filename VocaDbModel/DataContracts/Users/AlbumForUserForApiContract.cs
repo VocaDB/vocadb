@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
@@ -19,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			AlbumOptionalFields fields,
 			bool shouldShowCollectionStatus) {
 
-			Album = new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, ssl, fields);
+			Album = new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, ssl, fields, SongOptionalFields.None);
 			Rating = albumForUser.Rating;
 
 			if (shouldShowCollectionStatus) {
