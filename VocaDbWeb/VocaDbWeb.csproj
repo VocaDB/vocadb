@@ -1970,7 +1970,6 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Dialog.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\jqButtonset.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\jqButton.ts" />
-    <TypeScriptCompile Include="Scripts\KnockoutExtensions\Song\PVPreviewStatus.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\SongAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Song\SongTypeLabel.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Sortable.ts" />
