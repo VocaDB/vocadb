@@ -2001,6 +2001,7 @@
     <TypeScriptCompile Include="Scripts\Repositories\SongListRepository.ts" />
     <TypeScriptCompile Include="Scripts\Models\EntryOptionalFields.ts" />
     <TypeScriptCompile Include="Scripts\Shared\EntryAutoComplete.ts" />
+    <TypeScriptCompile Include="Scripts\Shared\MessagesTyped.ts" />
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\HtmlHelperTests.ts" />
@@ -2062,7 +2063,6 @@
     <TypeScriptCompile Include="Scripts\Shared\GlobalFunctions.ts" />
     <TypeScriptCompile Include="Scripts\Shared\EntryUrlMapper.ts" />
     <TypeScriptCompile Include="Scripts\Shared\WebLinkMatcher.ts" />
-    <TypeScriptCompile Include="Scripts\Shared\Messages.d.ts" />
     <TypeScriptCompile Include="Scripts\Shared\UrlMapper.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Shared\WebLinkMatcherTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Shared\GlobalFunctionsTests.ts" />
@@ -2114,7 +2114,6 @@
     <Content Include="Scripts\qTip\jquery.qtip.js" />
     <Content Include="Scripts\qTip\jquery.qtip.min.css" />
     <Content Include="Scripts\qTip\jquery.qtip.min.js" />
-    <Content Include="Scripts\Shared\Messages.js" />
     <Content Include="Scripts\SongList\Edit.js" />
     <Content Include="Scripts\Song\Details.js" />
     <Content Include="Scripts\Song\Edit.js" />

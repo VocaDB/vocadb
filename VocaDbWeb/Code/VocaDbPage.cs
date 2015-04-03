@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils;
@@ -104,12 +105,22 @@ namespace VocaDb.Web.Code {
 			get { return Url.Content("~/"); }
 		}
 
+		public string ToJS(bool val) {
+			return val ? "true" : "false";
+		}
+
 		public string ToJS(bool? val) {
-			return val.HasValue ? (val.Value ? "true" : "false") : "null";
+			return val.HasValue ? ToJS(val.Value) : "null";
 		}
 
 		public string ToJS(int? val) {
 			return val.HasValue ? val.ToString() : "null";
+		}
+
+		public IHtmlString ToJS(string str) {
+
+			return new HtmlString(JsonHelpers.Serialize(str));
+
 		}
 
 		public VocaUrlMapper UrlMapper {

@@ -29,7 +29,7 @@ namespace VocaDb.Web.App_Start {
 			// Generally the references go from viewmodels -> repositories -> models -> support classes
 			bundles.Add(new ScriptBundle("~/bundles/shared/common").Include(
 				"~/Scripts/Shared/TopBar.js", 
-				"~/Scripts/Shared/Messages.js",
+				"~/Scripts/Shared/MessagesTyped.js",
 				"~/Scripts/Shared/GlobalFunctions.js",
 				"~/Scripts/Shared/UrlMapper.js",
 				"~/Scripts/Helpers/AjaxHelper.js", 

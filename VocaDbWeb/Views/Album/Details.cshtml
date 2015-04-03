@@ -386,6 +386,9 @@
 			var albumRepo = repoFactory.albumRepository();
 			var userRepo = repoFactory.userRepository();
 
+			vdb.resources.album = {
+				addedToCollection: '@Html.Raw(AjaxRes.AlbumStrings.AddedToCollection)'
+			};
 			vdb.resources.albumDetails = @Html.Raw(JsonHelpers.Serialize(new { download = AjaxRes.AlbumStrings.Download }));
 
 			var jsonModel = @Html.Raw(Model.Json);

@@ -26,12 +26,9 @@
     vdb.resources = vdb.resources || {};
     var urlMapper = new vdb.UrlMapper(baseAddress);
 
-    vdb.resources.album = {
-        addedToCollection: '@Html.Raw(AjaxRes.AlbumStrings.AddedToCollection)'
-    };
     vdb.resources.shared = @ResourceHelpers.ToJSON(AjaxRes.SharedStrings.ResourceManager, true);
 
-    vdb.ui.initAll();
+    vdb.ui.initAll(@ToJS(AjaxRes.SharedStrings.ThanksForRating));
 
     var entryReportRepository = new vdb.repositories.EntryReportRepository(urlMapper);
     var userRepository = new vdb.repositories.UserRepository(urlMapper, @UserContext.LoggedUserId);
@@ -40,9 +37,9 @@
     var topBarData = @Html.Raw(JsonHelpers.Serialize(new {
 		searchObjectType = searchObjectType.ToString()
 	}));
-	var hasUnreadMessages = @(Login.Manager.IsLoggedIn && Login.User.UnreadMessagesCount > 0 ? "true" : "false");
+	var hasUnreadMessages = @ToJS(Login.Manager.IsLoggedIn && Login.User.UnreadMessagesCount > 0);
 	var unreadMessagesCount = @(Login.Manager.IsLoggedIn ? Login.User.UnreadMessagesCount : 0);
-	var getNewReportCount = @(Login.CanManageEntryReports ? "true" : "false");
+	var getNewReportCount = @ToJS(Login.CanManageEntryReports);
 	
     var topBarViewModel = new vdb.viewModels.TopBarViewModel(
         entryTypeTranslations, topBarData.searchObjectType, "", unreadMessagesCount, 
