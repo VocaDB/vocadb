@@ -16,6 +16,21 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers {
 
+	internal static class StatsExtensions {
+			
+		public static IEnumerable<TResult> CumulativeSelect<TSource, TResult>(this IEnumerable<TSource> sequence, Func<TSource, TResult, TResult> func)
+		{
+			var previous = default(TResult);
+			foreach(var item in sequence)
+			{
+				var res = func(item, previous);
+				previous = res;
+				yield return res;
+			}        
+		}
+
+	}
+
 	public class StatsController : ControllerBase {
 
 		private const int clientCacheDurationSec = 86400;
@@ -53,13 +68,20 @@ namespace VocaDb.Web.Controllers {
 			return (date - new DateTime(1970, 1, 1)).TotalMilliseconds;
 		}
 
-		private ActionResult DateLineChartWithAverage(string title, string pointsTitle, string yAxisTitle, ICollection<Tuple<DateTime, int>> points) {
+		private ActionResult DateLineChartWithAverage(string title, string pointsTitle, string yAxisTitle, ICollection<Tuple<DateTime, int>> points,
+			bool average = true) {
 			
-			var averages = points.Select(p => Tuple.Create(p.Item1, Math.Floor(points.Where(p2 => p2.Item1 >= p.Item1 - TimeSpan.FromDays(182) && p2.Item1 <= p.Item1 + TimeSpan.FromDays(182)).Average(p3 => p3.Item2)))).ToArray();
+			var averages = (average ? points.Select(p => Tuple.Create(p.Item1, Math.Floor(points.Where(p2 => p2.Item1 >= p.Item1 - TimeSpan.FromDays(182) && p2.Item1 <= p.Item1 + TimeSpan.FromDays(182)).Average(p3 => p3.Item2)))).ToArray() : new Tuple<DateTime, double>[0]);
 
 			Response.Cache.SetCacheability(HttpCacheability.Public);
 			Response.Cache.SetMaxAge(TimeSpan.FromDays(1));
 			Response.Cache.SetSlidingExpiration(true);
+
+			var dataSeries = new {
+				type = "area",
+				name = pointsTitle,
+				data = points.Select(p => new object[] { ToEpochTime(p.Item1), p.Item2 }).ToArray()
+			};
 
 			return Json(new {
 				chart = new {
@@ -100,12 +122,8 @@ namespace VocaDb.Web.Controllers {
 						floating = true,
 						backgroundColor = "#FFFFFF"
 				},
-				series = new Object[] {
-					new {
-						type = "area",
-						name = pointsTitle,
-						data = points.Select(p => new object[] { ToEpochTime(p.Item1), p.Item2 }).ToArray()
-					},
+				series = (average ? new Object[] {
+					dataSeries,
 					new {
 						type = "spline",
 						name = "Average",
@@ -116,7 +134,7 @@ namespace VocaDb.Web.Controllers {
 						lineWidth = 4
 					}
 				}
-				
+				: new Object[] { dataSeries })				
 			});
 
 
@@ -324,11 +342,48 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
+		class DateWithCount {
+			public int Year { get; set; }
+			public int Month { get; set; }
+			public int Day { get; set; }
+			public int Count { get; set; }
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult CumulativeAlbums() {
+			
+			var values = userRepository.HandleQuery(ctx => {
+
+				return ctx.OfType<Album>().Query()
+					.OrderBy(a => a.CreateDate.Year)
+					.ThenBy(a => a.CreateDate.Month)
+					.ThenBy(a => a.CreateDate.Day)
+					.GroupBy(a => new {
+						Year = a.CreateDate.Year, 
+						Month = a.CreateDate.Month,
+						Day = a.CreateDate.Day
+					})
+					.Select(a => new DateWithCount {
+						Year = a.Key.Year,
+						Month = a.Key.Month,
+						Day = a.Key.Day,
+						Count = a.Count()
+					})
+					.ToArray();
+
+			});
+
+			var points = values.CumulativeSelect<DateWithCount, Tuple<DateTime, int>>((v, previous) => {
+				return Tuple.Create(new DateTime(v.Year, v.Month, v.Day), (previous != null ? previous.Item2 : 0) + v.Count);
+			}).ToArray();
+
+			return DateLineChartWithAverage("Cumulative albums per day", "Albums", "Number of albums", points, false);
+
+		}
+
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult EditsPerDay() {
 			
-			var now = DateTime.Now;
-
 			var values = userRepository.HandleQuery(ctx => {
 
 				return ctx.OfType<ActivityEntry>().Query()
