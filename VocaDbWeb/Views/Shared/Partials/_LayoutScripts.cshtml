@@ -17,7 +17,6 @@
             
     var baseAddress = '@Url.Content("~/")';
 
-    // TODO: move to a controller.
     vdb = vdb || {};
     vdb.values = vdb.values || {};
     vdb.values.hostAddress = '@VocaDb.Model.Utils.AppConfig.HostAddress';
@@ -26,7 +25,9 @@
     vdb.resources = vdb.resources || {};
     var urlMapper = new vdb.UrlMapper(baseAddress);
 
-    vdb.resources.shared = @ResourceHelpers.ToJSON(AjaxRes.SharedStrings.ResourceManager, true);
+    vdb.resources.shared = {
+    	reportSent: @ToJS(AjaxRes.SharedStrings.ReportSent)
+	};
 
     vdb.ui.initAll(@ToJS(AjaxRes.SharedStrings.ThanksForRating));
 

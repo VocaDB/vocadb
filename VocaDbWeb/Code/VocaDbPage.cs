@@ -67,6 +67,10 @@ namespace VocaDb.Web.Code {
 			return val.HasValue ? val.ToString() : "null";
 		}
 
+		public IHtmlString ToJS(string str) {
+			return new HtmlString(JsonHelpers.Serialize(str));
+		}
+
 		public VocaUrlMapper UrlMapper {
 			get {
 				return new VocaUrlMapper(WebHelper.IsSSL(Request));
@@ -118,9 +122,7 @@ namespace VocaDb.Web.Code {
 		}
 
 		public IHtmlString ToJS(string str) {
-
 			return new HtmlString(JsonHelpers.Serialize(str));
-
 		}
 
 		public VocaUrlMapper UrlMapper {
