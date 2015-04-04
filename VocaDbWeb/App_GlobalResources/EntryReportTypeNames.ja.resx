@@ -121,7 +121,7 @@
     <value>削除されたPV等</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
-    <value>エントリーを複製する</value>
+    <value>重複項目</value>
   </data>
   <data name="Inappropriate" xml:space="preserve">
     <value>不適切なコンテンツ</value>
