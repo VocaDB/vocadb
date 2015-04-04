@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
+@using VocaDb.Model.Domain.Albums
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models;
@@ -373,7 +374,7 @@
 
 @AlbumHelpers.EditCollectionDialog(Model.AlbumPurchaseStatus, Model.AlbumMediaType)
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.AlbumReportTypeNames.ValuesAndNamesStrings)
+@EntryDetailsHelpers.ReportEntryPopupKnockout()
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Album/Details", "~/bundles/jqxRating")
@@ -391,10 +392,18 @@
 			};
 			vdb.resources.albumDetails = @Html.Raw(JsonHelpers.Serialize(new { download = AjaxRes.AlbumStrings.Download }));
 
+			var reportTypes = @ToJS(Translate.AlbumReportTypeNames.ValuesAndNames.Select(r => new {
+				Id = r.Key,
+				Name = r.Value,
+				NotesRequired = AlbumReport.ReportTypesWithRequiredNotes.Contains(r.Key)
+			}));
+
 			var jsonModel = @Html.Raw(Model.Json);
 			var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var viewModel = new vdb.viewModels.AlbumDetailsViewModel(albumRepo, userRepo, jsonModel, @UserContext.LoggedUserId, 
+			var viewModel = new vdb.viewModels.AlbumDetailsViewModel(albumRepo, userRepo, jsonModel, 
+				reportTypes,
+				@UserContext.LoggedUserId, 
 				canDeleteAllComments, formatString, @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
 			ko.applyBindings(viewModel);
 

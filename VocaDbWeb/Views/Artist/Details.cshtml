@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Artists;
 @using VocaDb.Model.Domain
+@using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Service
 @using VocaDb.Model.Utils
@@ -390,13 +391,21 @@
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 			var tagUsages = @Html.Raw(JsonHelpers.Serialize(Model.Tags));
 
+			var reportTypes = @ToJS(Translate.ArtistReportTypeNames.ValuesAndNames.Select(r => new {
+				Id = r.Key,
+				Name = r.Value,
+				NotesRequired = ArtistReport.ReportTypesWithRequiredNotes.Contains(r.Key)
+			}));
+
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(artistRepo, @Model.Id, 
 				tagUsages,
 				@ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
 				@ToJS(Model.Description.HasEnglish),
 				unknownPictureUrl,
 				@LanguagePreferenceInt,
-				urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, loggedUserId, 
+				urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, 
+				reportTypes,
+				loggedUserId, 
 				canDeleteAllComments,
 				pvPlayersFactory);
 			ko.applyBindings(viewModel);

@@ -3,16 +3,25 @@ module vdb.viewModels {
 	
 	export class ReportEntryViewModel {
 		
-		constructor(private sendFunc: (reportType: string, notes: string) => void) {}
+		constructor(
+			public reportTypes: IEntryReportType[],
+			private sendFunc: (reportType: string, notes: string) => void) { 
+		
+			this.isValid = ko.computed(() => !this.reportType() || !this.reportType().notesRequired || this.notes() !== "");
+		
+		}
 
 		public dialogVisible = ko.observable(false);
 
+		// Report is valid to be sent (either notes are specified or not required)
+		public isValid: KnockoutComputed<boolean>;
+
 		public notes = ko.observable("");
 
-		public reportType = ko.observable<string>();
+		public reportType = ko.observable<IEntryReportType>();
 
 		public send = () => {			
-			this.sendFunc(this.reportType(), this.notes());
+			this.sendFunc(this.reportType().id, this.notes());
 			this.notes("");
 			this.dialogVisible(false);
 		}
@@ -20,6 +29,19 @@ module vdb.viewModels {
 		public show = () => {
 			this.dialogVisible(true);
 		}
+
+	}
+
+	export interface IEntryReportType {
+
+		// Report type ID
+		id: string;
+
+		// Localized name
+		name: string;
+
+		// Notes field is required for this report type
+		notesRequired: boolean;
 
 	}
 

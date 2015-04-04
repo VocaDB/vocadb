@@ -1,8 +1,12 @@
-﻿using VocaDb.Model.Domain.Users;
+﻿using System.Collections.Generic;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Artists {
 
 	public class ArtistReport : EntryReport {
+
+        public static readonly HashSet<ArtistReportType> ReportTypesWithRequiredNotes = 
+            new HashSet<ArtistReportType>{ ArtistReportType.InvalidInfo, ArtistReportType.Other };
 
 		private Artist artist;
 
