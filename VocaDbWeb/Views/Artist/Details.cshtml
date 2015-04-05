@@ -361,7 +361,7 @@
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }
 </div>
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.ArtistReportTypeNames.ValuesAndNamesStrings)
+@EntryDetailsHelpers.ReportEntryPopupKnockout()
 
 @if (Login.IsLoggedIn) {
 	Html.RenderPartial("Partials/_CustomizeArtistSubscriptionDialog");
