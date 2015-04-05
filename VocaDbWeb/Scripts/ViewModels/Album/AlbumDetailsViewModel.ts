@@ -49,6 +49,7 @@ module vdb.viewModels {
 			repo: rep.AlbumRepository,
 			userRepo: rep.UserRepository,
 			data: AlbumDetailsAjax,
+			reportTypes: IEntryReportType[],
 			loggedUserId: number,
 			canDeleteAllComments: boolean,
 			formatString: string,
@@ -66,7 +67,7 @@ module vdb.viewModels {
 
 			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
 
-			this.reportViewModel = new ReportEntryViewModel((reportType, notes) => {
+			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 
 				var createReportUrl = UrlMapper.mergeUrls(repo.baseUrl, "/Album/CreateReport");
 				var queryParams = { reportType: reportType, notes: notes, albumId: this.id };

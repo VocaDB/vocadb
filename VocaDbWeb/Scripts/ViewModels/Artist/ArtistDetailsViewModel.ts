@@ -23,6 +23,7 @@ module vdb.viewModels {
 			private resourceRepo: rep.ResourceRepository,
 			private userRepository: rep.UserRepository,
 			private cultureCode: string,
+			reportTypes: IEntryReportType[],
 			private loggedUserId: number,
 			canDeleteAllComments: boolean,
 			private pvPlayersFactory: pvs.PVPlayersFactory) {
@@ -41,7 +42,7 @@ module vdb.viewModels {
 
 			this.tagUsages = new tags.TagListViewModel(tagUsages);
 
-			this.reportViewModel = new ReportEntryViewModel((reportType, notes) => {
+			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 
 				var createReportUrl = UrlMapper.mergeUrls(repo.baseUrl, "/Artist/CreateReport");
 				var queryParams = { reportType: reportType, notes: notes, artistId: this.artistId };

@@ -56,6 +56,7 @@ module vdb.viewModels {
             resources: SongDetailsResources,
 			showTranslatedDescription: boolean,
 			data: SongDetailsAjax,
+			reportTypes: IEntryReportType[],
 			loggedUserId: number,
 			canDeleteAllComments: boolean,
             ratingCallback: () => void ) {
@@ -74,7 +75,7 @@ module vdb.viewModels {
                 });
             };
 
-			this.reportViewModel = new ReportEntryViewModel((reportType, notes) => {
+			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 
 				var createReportUrl = UrlMapper.mergeUrls(repository.baseUrl, "/Song/CreateReport");
 				var queryParams = { reportType: reportType, notes: notes, songId: this.id };

@@ -171,6 +171,9 @@
   <data name="ReportNotes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="ReportNotesRequired" xml:space="preserve">
+    <value>(required)</value>
+  </data>
   <data name="ReportType" xml:space="preserve">
     <value>Report type</value>
   </data>

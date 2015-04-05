@@ -399,7 +399,7 @@
 
 @{ Html.RenderPartial("Partials/_SongInListsDialog"); }
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout(Translate.SongReportTypeNames.ValuesAndNamesStrings)
+@EntryDetailsHelpers.ReportEntryPopupKnockout()
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Song/Details")
@@ -417,9 +417,17 @@
 		var userRepo = new vdb.repositories.UserRepository(urlMapper);
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
+		var reportTypes = @ToJS(Translate.SongReportTypeNames.ValuesAndNames.Select(r => new {
+			Id = r.Key,
+			Name = r.Value,
+			NotesRequired = SongReport.ReportTypesWithRequiredNotes.Contains(r.Key)
+		}));
+
 		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources, 
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)), 
-			jsonModel, @UserContext.LoggedUserId, canDeleteAllComments, vdb.ui.showThankYouForRatingMessage);
+			jsonModel, 
+			reportTypes,
+			@UserContext.LoggedUserId, canDeleteAllComments, vdb.ui.showThankYouForRatingMessage);
 		ko.applyBindings(viewModel);
 
 		viewModel.songListDialog.addedToList = function() { vdb.ui.showSuccessMessage(resources.addedToList); };

@@ -62,7 +62,7 @@ module vdb {
 
 		}
 
-		public initAll = (thanksForRatingMessage: string) => {
+		public static initAll = (thanksForRatingMessage: string) => {
 			ui.thanksForRatingMessage = thanksForRatingMessage;
 			ui.initMessages();
 		}

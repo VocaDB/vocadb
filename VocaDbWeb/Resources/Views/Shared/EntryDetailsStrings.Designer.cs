@@ -223,6 +223,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (required).
+        /// </summary>
+        public static string ReportNotesRequired {
+            get {
+                return ResourceManager.GetString("ReportNotesRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report type.
         /// </summary>
         public static string ReportType {

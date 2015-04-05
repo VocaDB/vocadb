@@ -71,6 +71,10 @@ namespace VocaDb.Web.Code {
 			return new HtmlString(JsonHelpers.Serialize(str));
 		}
 
+		public IHtmlString ToJS(object obj) {
+			return new HtmlString(JsonHelpers.Serialize(obj));
+		}
+
 		public VocaUrlMapper UrlMapper {
 			get {
 				return new VocaUrlMapper(WebHelper.IsSSL(Request));
