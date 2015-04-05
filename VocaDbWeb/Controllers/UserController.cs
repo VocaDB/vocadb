@@ -339,7 +339,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult LoginTwitter() {
+		public ActionResult LoginTwitter(string returnUrl) {
 			
 			// Make sure session ID is initialized
 // ReSharper disable UnusedVariable
@@ -348,7 +348,8 @@ namespace VocaDb.Web.Controllers
 
 			var twitterSignIn = new TwitterConsumer().TwitterSignIn;
 
-			var uri = new Uri(new Uri(AppConfig.HostAddress), Url.Action("LoginTwitterComplete"));
+			var targetUrl = Url.Action("LoginTwitterComplete", new { returnUrl });
+			var uri = new Uri(new Uri(AppConfig.HostAddress), targetUrl);
 
 			UserAuthorizationRequest request;
 
@@ -372,7 +373,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult LoginTwitterComplete() {
+		public ActionResult LoginTwitterComplete(string returnUrl) {
 
 			// Denied authorization
 			var param = Request.QueryString["denied"];
@@ -400,7 +401,14 @@ namespace VocaDb.Web.Controllers
 
 			HandleCreate(user);
 
-			return RedirectToAction("Index", "Home");
+			string targetUrl;
+
+			if (!string.IsNullOrEmpty(returnUrl))
+				targetUrl = VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true, ssl: false);
+			else
+				targetUrl = Url.Action("Index", "Home");
+
+			return Redirect(targetUrl);
 
 		}
 

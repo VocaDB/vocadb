@@ -57,6 +57,6 @@
 
 <br />
 <hr />
-<a href="@Url.Action("LoginTwitter")">
+<a href="@Url.Action("LoginTwitter", new { returnUrl = Model.ReturnUrl })">
 	<img src="@Url.Content("~/Content/Sign-in-with-Twitter-darker.png")" alt="Sign in with Twitter" />
 </a>
