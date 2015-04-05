@@ -126,6 +126,9 @@
   <data name="Preview" xml:space="preserve">
     <value>プレビュ</value>
   </data>
+  <data name="ShowTags" xml:space="preserve">
+    <value>タグを表示する</value>
+  </data>
   <data name="SongList" xml:space="preserve">
     <value>曲目リスト</value>
   </data>

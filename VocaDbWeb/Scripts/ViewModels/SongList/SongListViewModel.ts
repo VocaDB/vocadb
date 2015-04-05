@@ -22,6 +22,7 @@ module vdb.viewModels.songList {
 			this.playlistViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, playListRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel, languageSelection);
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
+			this.showTags.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 
@@ -35,6 +36,11 @@ module vdb.viewModels.songList {
 		}
 
 		public loading = ko.observable(true); // Currently loading for data
+
+		public mapTagUrl = (tagName: string) => {
+			return utils.EntryUrlMapper.details_tag_byName(tagName);
+		}
+
 		public page = ko.observableArray<dc.songs.SongInListContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
@@ -42,6 +48,7 @@ module vdb.viewModels.songList {
 		public playlistViewModel: vdb.viewModels.songs.PlayListViewModel;
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
+		public showTags = ko.observable(false);
 
 		public updateResultsWithTotalCount = () => this.updateResults(true);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);
@@ -60,8 +67,13 @@ module vdb.viewModels.songList {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
+			var fields = [cls.SongOptionalField.AdditionalNames, cls.SongOptionalField.ThumbUrl];
+
+			if (this.showTags())
+				fields.push(cls.SongOptionalField.Tags);
+
 			this.songListRepo.getSongs(this.listId, null, pagingProperties,
-				new cls.SongOptionalFields(cls.SongOptionalField.AdditionalNames, cls.SongOptionalField.ThumbUrl),
+				new cls.SongOptionalFields(fields),
 				this.languageSelection,
 				(result) => {
 

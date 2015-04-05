@@ -126,6 +126,9 @@
   <data name="Preview" xml:space="preserve">
     <value>Preview</value>
   </data>
+  <data name="ShowTags" xml:space="preserve">
+    <value>Show tags</value>
+  </data>
   <data name="SongList" xml:space="preserve">
     <value>Song list</value>
   </data>

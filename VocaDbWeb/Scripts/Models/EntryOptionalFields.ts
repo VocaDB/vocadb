@@ -15,7 +15,11 @@ module vdb.models {
 
 	export class SongOptionalFields extends EntryOptionalFields<SongOptionalField> {
 
-		constructor(...fields: SongOptionalField[]) {
+		public static create(...fields: SongOptionalField[]) {
+			return new SongOptionalFields(fields);
+		}
+
+		constructor(fields: SongOptionalField[]) {
 			super(f => SongOptionalField[f], fields);
 		}
 

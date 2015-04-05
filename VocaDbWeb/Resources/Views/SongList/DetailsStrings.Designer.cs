@@ -88,6 +88,15 @@ namespace ViewRes.SongList {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show tags.
+        /// </summary>
+        public static string ShowTags {
+            get {
+                return ResourceManager.GetString("ShowTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Song list.
         /// </summary>
         public static string SongList {

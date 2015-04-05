@@ -105,6 +105,9 @@
 		@Res.Playlist
 	</a>
 </div>
+<a data-bind="css: { active: showTags() }, click: function() { showTags(!showTags()); }, visible: playlistMode() == false" class="btn" href="#" title="@Res.ShowTags">
+	<i class="icon-tags"></i>
+</a>
 
 <div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">
 
@@ -154,6 +157,16 @@
 						@SongHelpers.PVPreviewKnockout("$parents[2].pvServiceIcons.getIconUrls")
 					</div>
 				</td>
+				<!-- ko if: $parent.showTags -->
+				<td style="width: 33%">
+					<div data-bind="visible: song.tags && song.tags.length">
+						<i class="icon icon-tags"></i>
+						<!-- ko foreach: song.tags -->
+						<a href="#" data-bind="text: name, attr: { href: $parents[1].mapTagUrl(name) }"></a><span data-bind="visible: $data != _.last($parent.song.tags)">,</span>
+						<!-- /ko -->
+					</div>					
+				</td>
+				<!-- /ko -->
 			</tr>
 		</tbody>
 	</table>

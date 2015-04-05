@@ -172,7 +172,7 @@ module vdb.viewModels.songs {
 			var services = this.pvPlayerViewModel.autoplay() ? vdb.viewModels.pvs.PVPlayerViewModel.autoplayPVServicesString : "Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File";
 
 			this.songListRepo.getSongs(services, pagingProperties,
-				new cls.SongOptionalFields(cls.SongOptionalField.AdditionalNames, cls.SongOptionalField.ThumbUrl),
+				cls.SongOptionalFields.create(cls.SongOptionalField.AdditionalNames, cls.SongOptionalField.ThumbUrl),
 				this.languageSelection,
 				(result: dc.PartialFindResultContract<ISongForPlayList>) => {
 
