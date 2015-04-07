@@ -382,6 +382,8 @@
 		
 		$(document).ready(function() {
 
+			moment.locale('@Culture');
+
 			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
 			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
 			var albumRepo = repoFactory.albumRepository();

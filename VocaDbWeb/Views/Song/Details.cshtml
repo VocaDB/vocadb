@@ -407,6 +407,8 @@
 
 	$(document).ready(function() {
 
+		moment.locale('@Culture');
+
 		var resources = @ResourceHelpers.ToJSON(AjaxRes.SongStrings.ResourceManager, true);
 		vdb.resources.song = resources;
 
@@ -423,9 +425,9 @@
 			NotesRequired = SongReport.ReportTypesWithRequiredNotes.Contains(r.Key)
 		}));
 
-		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources, 
-			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)), 
-			jsonModel, 
+		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources,
+			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
+			jsonModel,
 			reportTypes,
 			@UserContext.LoggedUserId, canDeleteAllComments, vdb.ui.showThankYouForRatingMessage);
 		ko.applyBindings(viewModel);

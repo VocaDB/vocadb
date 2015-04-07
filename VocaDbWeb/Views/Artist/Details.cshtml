@@ -374,6 +374,8 @@
 
 		$(function() {
 
+			moment.locale('@Culture');
+
 			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
 
 			var cultureCode = '@UICulture';
