@@ -15,6 +15,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Web.Code;
 using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -148,7 +149,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] PVServices? pvServices = null,
 			int? since = null,
 			int? minScore = null,
-			[FromUri] ContentLanguageSelections? lyrics = null,
+			[EnumArrayBinder] ContentLanguageSelection[] lyrics = null,
 			int? userCollectionId = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -168,7 +169,7 @@ namespace VocaDb.Web.Controllers.Api {
 				ArtistParticipationStatus = artistParticipationStatus,
 				ChildVoicebanks = childVoicebanks,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,
-				LyricsLanguages = lyrics != null ? lyrics.Value.ToIndividualSelections().ToArray() : null,
+				LyricsLanguages = lyrics,
 				MinScore = minScore ?? 0,
 				PVServices = pvServices,
 				UserCollectionId = userCollectionId ?? 0

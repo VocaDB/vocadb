@@ -836,6 +836,7 @@
     <Compile Include="Code\BBCode\EntryPropertyHtmlCache.cs" />
     <Compile Include="Code\CultureInvariantDateTimeModelBinder.cs" />
     <Compile Include="Code\EntryAnchorFactory.cs" />
+    <Compile Include="Code\EnumArrayModelBinder.cs" />
     <Compile Include="Code\ErrorLogger.cs" />
     <Compile Include="Code\Exceptions\InvalidFormException.cs" />
     <Compile Include="Code\Feeds\FeedResult.cs" />
