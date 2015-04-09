@@ -49,6 +49,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 			if (fields.HasFlag(SongOptionalFields.Artists))
 				Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).ToArray();
 
+			if (fields.HasFlag(SongOptionalFields.Lyrics))
+				Lyrics = song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray();
+
 			if (fields.HasFlag(SongOptionalFields.Names))
 				Names = song.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 
@@ -153,6 +156,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public string LocalizedName { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
+		public LyricsForSongContract[] Lyrics { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
 		public int MergedTo { get; set; }
 
 		[DataMember]
@@ -200,11 +206,12 @@ namespace VocaDb.Model.DataContracts.Songs {
 		AdditionalNames = 1,
 		Albums = 2,
 		Artists = 4,
-		Names = 8,
-		PVs = 16,
-		Tags = 32,
-		ThumbUrl = 64,
-		WebLinks = 128
+		Lyrics = 8,
+		Names = 16,
+		PVs = 32,
+		Tags = 64,
+		ThumbUrl = 128,
+		WebLinks = 256
 
 	}
 
