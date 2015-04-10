@@ -34,6 +34,7 @@ module vdb.viewModels.songs {
 				this.songListId(),
 				this.groupByRating(),
 				pvServices,
+				"ThumbUrl",
 				this.sort(),
 				(result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => {
 

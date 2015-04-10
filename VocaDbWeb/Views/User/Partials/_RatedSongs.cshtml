@@ -16,7 +16,7 @@
 		</div>
 
 		<button class="btn" data-bind="click: function() { groupByRating(!groupByRating()); }, css: { active: groupByRating }">
-			Group by rating
+			@Res.GroupByRating
 		</button>
 		
 		<div class="inline-block">
@@ -29,6 +29,10 @@
 				</a>
 			</div>
 		</div>
+		
+		<a data-bind="css: { active: showTags() }, toggleClick: showTags" class="btn btn-nomargin" href="#" title="@Res.ShowTags">
+			<i class="icon-tags"></i>
+		</a>
 
 	</div>
 

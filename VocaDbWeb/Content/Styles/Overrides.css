@@ -51,6 +51,10 @@ body .ui-widget button {
   font-family: arial, sans-serif;
   font-size: 14px;
 }
+/* jQx */
+.icon.fix-icon-margin {
+  margin-top: 0;
+}
 /* Bootstrap overrides and additions */
 .withMargin {
   margin-top: 20px;

@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="GroupByRating" xml:space="preserve">
+    <value>Group by rating</value>
+  </data>
   <data name="NoSongListSelection" xml:space="preserve">
     <value>Nothing</value>
   </data>
   <data name="RatingAnything" xml:space="preserve">
     <value>Anything</value>
+  </data>
+  <data name="ShowTags" xml:space="preserve">
+    <value>Show tags</value>
   </data>
   <data name="SongList" xml:space="preserve">
     <value>Song list</value>

@@ -38,6 +38,7 @@ module vdb.viewModels.user {
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 			this.rating.subscribe(this.updateResultsWithTotalCount);
 			this.searchTerm.subscribe(this.updateResultsWithTotalCount);
+			this.showTags.subscribe(this.updateResultsWithoutTotalCount);
 			this.songListId.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithoutTotalCount);
 			this.tag.subscribe(this.updateResultsWithTotalCount);
@@ -82,6 +83,10 @@ module vdb.viewModels.user {
 		public sortName = ko.computed(() => this.resources() != null ? this.resources().songSortRuleNames[this.sort()] : "");
 		public tag = ko.observable("");
 		public viewMode = ko.observable("Details");
+
+		public fields = ko.computed(() => {
+			return "AdditionalNames,ThumbUrl" + (this.showTags() ? ",Tags" : "");
+		});
 
 		public getPVServiceIcons = (services: string) => {
 			return this.pvServiceIcons.getIconUrls(services);
@@ -140,8 +145,10 @@ module vdb.viewModels.user {
 				this.tag(),
 				this.artistId(),
 				this.childVoicebanks(),
-				this.rating(), this.songListId(), this.groupByRating(),
+				this.rating(), this.songListId(),
+				this.groupByRating(),
 				null,
+				this.fields(),
 				this.sort(),
 				(result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => {
 

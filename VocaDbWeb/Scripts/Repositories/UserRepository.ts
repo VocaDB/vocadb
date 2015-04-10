@@ -128,6 +128,7 @@ module vdb.repositories {
 			songListId: number,
 			groupByRating: boolean,
 			pvServices: string,
+			fields: string,
 			sort: string,
 			callback: (result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => void) => {
 
@@ -140,7 +141,7 @@ module vdb.repositories {
 				rating: rating, songListId: songListId,
 				groupByRating: groupByRating,
 				pvServices: pvServices,
-				fields: "ThumbUrl", lang: lang, nameMatchMode: 'Auto', sort: sort
+				fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort
 			};
 
 			$.getJSON(url, data, callback);

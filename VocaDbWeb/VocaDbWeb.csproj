@@ -1983,6 +1983,7 @@
     <Content Include="Scripts\MikuDbAlbums\PrepareForImport.js" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\TagAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Tag\TagCategoryAutoComplete.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\ToggleClick.ts" />
     <TypeScriptCompile Include="Scripts\Models\Albums\AlbumType.ts" />
     <TypeScriptCompile Include="Scripts\Models\Artists\ArtistRoles.ts" />
     <TypeScriptCompile Include="Scripts\Models\Artists\ArtistType.ts" />

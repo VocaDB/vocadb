@@ -67,7 +67,7 @@
 			</td>
 			<td data-bind="visible: $parent.showTags()" class="search-tags-column">
 				<div data-bind="if: $data.tags && tags.length">
-					<i class="icon icon-tags"></i>
+					<i class="icon icon-tags fix-icon-margin"></i>
 					<!-- ko foreach: tags -->
 					<a href="#" data-bind="text: name, click: function() { $parents[1].tag(name); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
 					<!-- /ko -->

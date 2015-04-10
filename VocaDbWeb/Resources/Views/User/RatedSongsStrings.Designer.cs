@@ -61,6 +61,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group by rating.
+        /// </summary>
+        public static string GroupByRating {
+            get {
+                return ResourceManager.GetString("GroupByRating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing.
         /// </summary>
         public static string NoSongListSelection {
@@ -75,6 +84,15 @@ namespace ViewRes.User {
         public static string RatingAnything {
             get {
                 return ResourceManager.GetString("RatingAnything", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show tags.
+        /// </summary>
+        public static string ShowTags {
+            get {
+                return ResourceManager.GetString("ShowTags", resourceCulture);
             }
         }
         
