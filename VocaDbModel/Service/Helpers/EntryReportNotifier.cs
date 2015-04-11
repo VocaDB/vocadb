@@ -10,7 +10,7 @@ namespace VocaDb.Model.Service.Helpers {
 		public void SendReportNotification(IRepositoryContext<UserMessage> ctx, 
 			ArchivedObjectVersion reportedVersion, 
 			string notes, AgentLoginData reporter, 
-			IUserMessageMailer mailer, IEntryLinkFactory entryLinkFactory) {
+			IEntryLinkFactory entryLinkFactory) {
 			
 			if (reportedVersion == null)
 				return;

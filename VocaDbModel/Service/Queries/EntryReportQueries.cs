@@ -15,7 +15,6 @@ namespace VocaDb.Model.Service.Queries {
 
 		public bool CreateReport<TEntry, TReport, TReportType>(IRepositoryContext<TEntry> ctx, 
 			IUserPermissionContext permissionContext,
-			IUserMessageMailer userMessageMailer,
 			IEntryLinkFactory entryLinkFactory,
 			Expression<Func<TReport, bool>> addExistingEntryFunc, 
 			Func<TEntry, User, string, TReport> reportFunc, 
@@ -40,7 +39,7 @@ namespace VocaDb.Model.Service.Queries {
 			var report = reportFunc(entry, reporter, notes.Truncate(EntryReport.MaxNotesLength));
 			var agent = new AgentLoginData(reporter, hostname);
 
-			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), report.VersionBase, notes, agent, userMessageMailer, entryLinkFactory);
+			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), report.VersionBase, notes, agent, entryLinkFactory);
 
 			if (existing != null)
 				return false;

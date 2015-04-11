@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
@@ -220,6 +221,65 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(1, song.Tags.Tags.Count(), "Tags.Count");
 			Assert.IsTrue(song.Tags.HasTag("vocarock"), "Has vocarock tag");
+
+		}
+
+		[TestMethod]
+		public void CreateReport() {
+			
+			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+
+			var report = repository.List<SongReport>().FirstOrDefault();
+
+			Assert.IsNotNull(report, "Report was saved");
+			Assert.AreEqual(song.Id, report.EntryBase.Id, "entry Id");
+			Assert.AreEqual(user, report.User, "report author");
+
+		}
+
+		[TestMethod]
+		public void CreateReport_Version() {
+			
+			var version = ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user), SongArchiveReason.PropertiesUpdated, String.Empty);
+			repository.Save(version);
+			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", version.Version);
+
+			var report = repository.List<SongReport>().First();
+
+			Assert.AreEqual(version.Version, report.VersionNumber, "Version number");
+			Assert.IsNotNull(report.VersionBase, "VersionBase");
+
+			var notification = repository.List<UserMessage>().FirstOrDefault();
+
+			Assert.IsNotNull(notification, "Notification was created");
+			Assert.AreEqual(user, notification.Receiver, "Notification receiver");
+
+		}
+
+		[TestMethod]
+		public void CreateReport_Duplicate() {
+			
+			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
+
+			var reports = repository.List<SongReport>();
+
+			Assert.AreEqual(1, reports.Count, "Number of reports");
+			Assert.AreEqual(SongReportType.InvalidInfo, reports.First().ReportType, "Report type");
+
+		}
+
+		[TestMethod]
+		public void CreateReport_NotLoggedIn() {
+			
+			permissionContext.LoggedUser = null;
+			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+
+			var report = repository.List<SongReport>().FirstOrDefault();
+
+			Assert.IsNotNull(report, "Report was created");
+			Assert.IsNull(report.User, "User is null");
+			Assert.AreEqual("39.39.39.39", report.Hostname, "Hostname");
 
 		}
 
