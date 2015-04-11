@@ -35,16 +35,13 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
-		public virtual ArchivedSongVersion Version
-		{
-			get
-			{
+		public virtual ArchivedSongVersion Version {
+			get {
 				return VersionNumber.HasValue ? Song.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 			}
 		}
 
-		public override ArchivedObjectVersion VersionBase
-		{
+		public override ArchivedObjectVersion VersionBase {
 			get { return Version; }
 		}
 

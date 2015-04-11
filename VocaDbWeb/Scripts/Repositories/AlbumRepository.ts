@@ -33,6 +33,13 @@ module vdb.repositories {
 
 		}
 
+		public createReport = (albumId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
+
+			$.post(this.urlMapper.mapRelative("/Album/CreateReport"),
+				{ reportType: reportType, notes: notes, albumId: albumId, versionNumber: versionNumber }, callback, 'json');
+
+		}
+
 		public deleteComment = (commentId: number, callback?: () => void) => {
 
 			$.ajax(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), { type: 'DELETE', success: callback });

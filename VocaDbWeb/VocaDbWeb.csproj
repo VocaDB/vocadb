@@ -2025,7 +2025,9 @@
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
     <TypeScriptCompile Include="Scripts\User\Details.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Album\ArchivedAlbumViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\DeletedAlbumsViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArchivedArtistViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistRolesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicEntryLinkViewModel.ts" />

@@ -44,10 +44,7 @@ module vdb.viewModels {
 
 			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 
-				var createReportUrl = UrlMapper.mergeUrls(repo.baseUrl, "/Artist/CreateReport");
-				var queryParams = { reportType: reportType, notes: notes, artistId: this.artistId };
-
-				$.post(createReportUrl, queryParams);
+				repo.createReport(this.artistId, reportType, notes, null);
 
 				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
 

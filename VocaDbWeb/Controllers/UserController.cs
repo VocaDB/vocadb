@@ -36,6 +36,7 @@ namespace VocaDb.Web.Controllers
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+		private readonly ArtistQueries artistQueries;
 		private readonly ArtistService artistService;
 		private readonly VdbConfigManager config;
 		private UserQueries Data { get; set; }
@@ -63,11 +64,12 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public UserController(UserService service, UserQueries data, ArtistService artistService, OtherService otherService, 
+		public UserController(UserService service, UserQueries data, ArtistService artistService, ArtistQueries artistQueries, OtherService otherService, 
 			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser) {
 
 			Service = service;
 			Data = data;
+			this.artistQueries = artistQueries;
 			this.artistService = artistService;
 			this.otherService = otherService;
 			this.messageQueries = messageQueries;
@@ -743,7 +745,7 @@ namespace VocaDb.Web.Controllers
 				return View();
 			}
 
-			artistService.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", message), null);
+			artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", message), null);
 
 			TempData.SetSuccessMessage("Request sent");
 			return View();

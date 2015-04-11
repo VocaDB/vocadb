@@ -61,7 +61,7 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public void CreateReport(int artistId, ArtistReportType reportType, string notes, int? versionNumber) {
 
-			Service.CreateReport(artistId, reportType, CfHelper.GetRealIp(Request), notes ?? string.Empty, versionNumber);
+			queries.CreateReport(artistId, reportType, CfHelper.GetRealIp(Request), notes ?? string.Empty, versionNumber);
 
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Albums {
 
@@ -32,6 +33,16 @@ namespace VocaDb.Model.Domain.Albums {
 				ParamIs.NotNull(() => value);
 				album = value;
 			}
+		}
+
+		public virtual ArchivedAlbumVersion Version {
+			get {
+				return VersionNumber.HasValue ? Album.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
+			}
+		}
+
+		public override ArchivedObjectVersion VersionBase {
+			get { return Version; }
 		}
 
 		public override string ToString() {

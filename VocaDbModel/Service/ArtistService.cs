@@ -92,34 +92,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public bool CreateReport(int artistId, ArtistReportType reportType, string hostname, string notes, int? versionNumber) {
-
-			ParamIs.NotNull(() => hostname);
-			ParamIs.NotNull(() => notes);
-
-			return HandleTransaction(session => {
-
-				var loggedUserId = PermissionContext.LoggedUserId;
-				var existing = session.Query<ArtistReport>()
-					.FirstOrDefault(r => r.Artist.Id == artistId
-						&& ((loggedUserId != 0 && r.User.Id == loggedUserId) || r.Hostname == hostname));
-
-				if (existing != null)
-					return false;
-
-				var artist = session.Load<Artist>(artistId);
-				var report = new ArtistReport(artist, reportType, GetLoggedUserOrDefault(session), hostname, notes.Truncate(EntryReport.MaxNotesLength), versionNumber);
-
-				var msg = string.Format("reported {0} as {1} ({2})", EntryLinkFactory.CreateEntryLink(artist), reportType, HttpUtility.HtmlEncode(notes));
-				AuditLog(msg.Truncate(200), session, new AgentLoginData(GetLoggedUserOrDefault(session), hostname));
-
-				session.Save(report);
-				return true;
-
-			}, IsolationLevel.ReadUncommitted);
-
-		}
-
 		public void Delete(int id) {
 
 			UpdateEntity<Artist>(id, (session, a) => {

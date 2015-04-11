@@ -243,6 +243,20 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public bool CreateReport(int artistId, ArtistReportType reportType, string hostname, string notes, int? versionNumber) {
+
+			ParamIs.NotNull(() => hostname);
+			ParamIs.NotNull(() => notes);
+
+			return HandleTransaction(ctx => {
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+					entryLinkFactory, report => report.Artist.Id == artistId, 
+					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
+					artistId, reportType, hostname, notes, versionNumber);
+			});
+
+		}
+
 		public CommentForApiContract[] GetComments(int artistId) {
 			
 			return HandleQuery(ctx => ctx.Load(artistId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
