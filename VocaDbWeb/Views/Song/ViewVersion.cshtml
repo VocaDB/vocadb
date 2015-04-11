@@ -26,6 +26,7 @@
 }
 &nbsp;
 <a href="@Url.Action("ArchivedVersionXml", new { id = Model.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
+<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 }
 
 @if (Model.ComparableVersions.Any()) {
@@ -40,12 +41,23 @@
 
 @SongHelpers.PrintArchivedSongData(Model.Versions)
 
+@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+
 @section BodyScripts {
+	<script src="@Url.Content("~/Scripts/ViewModels/Song/ArchivedSongViewModel.js")"></script>
     <script type="text/javascript">
 
-        $(document).ready(function () {
+		$(function () {
+
             $("#revertLink").button({ icons: { primary: 'ui-icon-arrowrefresh-1-w'} });
             $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+            $("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
+
+            var rep = new vdb.repositories.SongRepository('@RootPath', @LanguagePreferenceInt);
+
+			var viewModel = new vdb.viewModels.songs.ArchivedSongViewModel(@Model.Song.Id, @Model.ArchivedVersion.Version, rep);
+			ko.applyBindings(viewModel);
+
         });
 
     </script>

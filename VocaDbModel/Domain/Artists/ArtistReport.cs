@@ -12,8 +12,8 @@ namespace VocaDb.Model.Domain.Artists {
 
 		public ArtistReport() { }
 
-		public ArtistReport(Artist artist, ArtistReportType reportType, User user, string hostname, string notes)
-			: base(user, hostname, notes) {
+		public ArtistReport(Artist artist, ArtistReportType reportType, User user, string hostname, string notes, int? versionNumber)
+			: base(user, hostname, notes, versionNumber) {
 
 			Artist = artist;
 			ReportType = reportType;

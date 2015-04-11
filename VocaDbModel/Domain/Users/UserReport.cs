@@ -7,7 +7,7 @@
 		public UserReport() { }
 
 		public UserReport(User reportedUser, UserReportType reportType, User user, string hostname, string notes)
-			: base(user, hostname, notes) {
+			: base(user, hostname, notes, null) {
 
 			ReportedUser = reportedUser;
 			ReportType = reportType;

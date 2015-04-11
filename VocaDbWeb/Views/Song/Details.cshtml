@@ -419,11 +419,7 @@
 		var userRepo = new vdb.repositories.UserRepository(urlMapper);
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
-		var reportTypes = @ToJS(Translate.SongReportTypeNames.ValuesAndNames.Select(r => new {
-			Id = r.Key,
-			Name = r.Value,
-			NotesRequired = SongReport.ReportTypesWithRequiredNotes.Contains(r.Key)
-		}));
+		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.SongReportTypeNames, SongReport.ReportTypesWithRequiredNotes));
 
 		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources,
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),

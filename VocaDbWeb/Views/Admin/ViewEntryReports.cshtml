@@ -46,11 +46,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var r in Model) {
+		@foreach (var r in Model) {			
 			<tr>
 				<td>@r.Created</td>
 				<td>@UserHelpers.UserIconLink(r.User, r.Hostname)</td>
-				<td>@Helpers.EntryLink(r.Entry)</td>
+				<td>
+					@Helpers.EntryLink(r.Entry)
+					
+					@if (r.Version != null) {
+						var versionUrl = Url.Action("ViewVersion", r.Entry.EntryType.ToString(), new { id = r.Version.Id });
+						@:(<a href="@versionUrl">Version @r.Version.Version</a>)
+					}
+				</td>
 				<td>@TypeName(r)</td>
 				<td>@r.Notes</td>
 				<td><a href="@Url.Action("DeleteEntryReport", new { id = r.Id })" class="textLink deleteLink">Delete</a></td>

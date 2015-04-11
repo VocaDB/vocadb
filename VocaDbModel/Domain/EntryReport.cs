@@ -1,5 +1,6 @@
 ﻿using System;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain {
 
@@ -15,12 +16,13 @@ namespace VocaDb.Model.Domain {
 			Notes = string.Empty;
 		}
 
-		protected EntryReport(User user, string hostname, string notes)
+		protected EntryReport(User user, string hostname, string notes, int? versionNumber)
 			: this() {
 
 			User = user;
 			Hostname = hostname;
 			Notes = notes;
+			VersionNumber = versionNumber;
 
 		}
 
@@ -48,6 +50,13 @@ namespace VocaDb.Model.Domain {
 		}
 
 		public virtual User User { get; set; }
+
+		public virtual ArchivedObjectVersion VersionBase
+		{
+			get { return null; }
+		}
+
+		public virtual int? VersionNumber { get; set; }
 
 	}
 }

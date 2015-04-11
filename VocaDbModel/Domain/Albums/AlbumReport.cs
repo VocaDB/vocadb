@@ -12,8 +12,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public AlbumReport() { }
 
-		public AlbumReport(Album album, AlbumReportType reportType, User user, string hostname, string notes)
-			: base(user, hostname, notes) {
+		public AlbumReport(Album album, AlbumReportType reportType, User user, string hostname, string notes, int? versionNumber)
+			: base(user, hostname, notes, versionNumber) {
 
 			Album = album;
 			ReportType = reportType;

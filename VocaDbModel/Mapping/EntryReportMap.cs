@@ -17,6 +17,7 @@ namespace VocaDb.Model.Mapping {
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Hostname).Length(50).Not.Nullable();
 			Map(m => m.Notes).Length(EntryReport.MaxNotesLength).Not.Nullable();
+			Map(m => m.VersionNumber).Nullable();
 
 			References(m => m.User).Nullable();
 

@@ -922,6 +922,7 @@
     <Compile Include="Helpers\Login.cs" />
     <Compile Include="Helpers\NumberFormatHelper.cs" />
     <Compile Include="Helpers\PVHelper.cs" />
+    <Compile Include="Helpers\ReportUtils.cs" />
     <Compile Include="Helpers\ResourceHelpers.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\Support\TranslateableEnum.cs" />
@@ -2310,6 +2311,7 @@
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
     <Content Include="Scripts\User\Edit.js" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Song\ArchivedSongViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForRatedSongsAdapter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForSongListAdapter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForSongsAdapter.ts" />

@@ -3,6 +3,20 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201504111700)]
+	public class EntryReportVersionNumber : AutoReversingMigration {
+
+		public override void Up() {
+		
+			if (Schema.Table(TableNames.EntryReports).Column("VersionNumber").Exists())
+				return;
+
+			Create.Column("VersionNumber").OnTable(TableNames.EntryReports).AsInt32().Nullable();
+
+		}
+
+	}
+
 	[Migration(201504012300)]
 	public class ArtistBaseVoicebankIndex : AutoReversingMigration {
 

@@ -92,7 +92,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public bool CreateReport(int artistId, ArtistReportType reportType, string hostname, string notes) {
+		public bool CreateReport(int artistId, ArtistReportType reportType, string hostname, string notes, int? versionNumber) {
 
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
@@ -108,7 +108,7 @@ namespace VocaDb.Model.Service {
 					return false;
 
 				var artist = session.Load<Artist>(artistId);
-				var report = new ArtistReport(artist, reportType, GetLoggedUserOrDefault(session), hostname, notes.Truncate(EntryReport.MaxNotesLength));
+				var report = new ArtistReport(artist, reportType, GetLoggedUserOrDefault(session), hostname, notes.Truncate(EntryReport.MaxNotesLength), versionNumber);
 
 				var msg = string.Format("reported {0} as {1} ({2})", EntryLinkFactory.CreateEntryLink(artist), reportType, HttpUtility.HtmlEncode(notes));
 				AuditLog(msg.Truncate(200), session, new AgentLoginData(GetLoggedUserOrDefault(session), hostname));

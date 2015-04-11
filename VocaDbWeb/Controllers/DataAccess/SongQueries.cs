@@ -47,6 +47,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly IUserMessageMailer mailer;
 		private readonly IPVParser pvParser;
 		private readonly IUserIconFactory userIconFactory;
+		private readonly IUserMessageMailer userMessageMailer;
 
 		private void AddTagsFromPV(VideoUrlParseResult pvResult, Song song, IRepositoryContext<Song> ctx) {
 			
@@ -154,7 +155,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
-			ILanguageDetector languageDetector, IUserIconFactory userIconFactory)
+			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IUserMessageMailer userMessageMailer)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -162,6 +163,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.mailer = mailer;
 			this.languageDetector = languageDetector;
 			this.userIconFactory = userIconFactory;
+			this.userMessageMailer = userMessageMailer;
 
 		}
 
@@ -246,6 +248,20 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			ParamIs.NotNull(() => contract);
 
 			return HandleTransaction(ctx => Comments(ctx).Create<Song>(songId, contract, (song, con, agent) => song.CreateComment(con.Message, agent)));
+
+		}
+
+		public bool CreateReport(int songId, SongReportType reportType, string hostname, string notes, int? versionNumber) {
+
+			ParamIs.NotNull(() => hostname);
+			ParamIs.NotNull(() => notes);
+
+			return HandleTransaction(ctx => {
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+					userMessageMailer, entryLinkFactory, report => report.Song.Id == songId, 
+					(song, reporter, notesTruncated) => new SongReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
+					songId, reportType, hostname, notes, versionNumber);
+			});
 
 		}
 

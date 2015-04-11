@@ -5,9 +5,11 @@ module vdb.viewModels {
 		
 		constructor(
 			public reportTypes: IEntryReportType[],
-			private sendFunc: (reportType: string, notes: string) => void) { 
+			private sendFunc: (reportType: string, notes: string) => void,
+			reportType?: IEntryReportType) { 
 		
 			this.isValid = ko.computed(() => !this.reportType() || !this.reportType().notesRequired || this.notes() !== "");
+			this.reportType(reportType);
 		
 		}
 

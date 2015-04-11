@@ -21,6 +21,7 @@ namespace VocaDb.Model.DataContracts {
 			Id = report.Id;
 			Notes = report.Notes;
 			User = (report.User != null ? new UserWithEmailContract(report.User) : null);
+			Version = (report.VersionBase != null ? new ArchivedObjectVersionContract(report.VersionBase) : null);
 
 		}
 
@@ -71,6 +72,8 @@ namespace VocaDb.Model.DataContracts {
 		public UserWithEmailContract User { get; set; }
 
 		public UserReportType UserReportType { get; set; }
+
+		public ArchivedObjectVersionContract Version { get; set; }
 
 	}
 

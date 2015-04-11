@@ -41,6 +41,12 @@ namespace VocaDb.Model.Service.Repositories {
 
 		}
 
+		public static User GetLoggedUserOrNull(this IRepositoryContext<User> ctx, IUserPermissionContext permissionContext) {
+
+			return (permissionContext.LoggedUser != null ? ctx.Load(permissionContext.LoggedUser.Id) : null);
+
+		}
+
 		public static T2 Load<T, T2>(this IRepositoryContext<T> ctx, object id) {
 			return ctx.OfType<T2>().Load(id);
 		}
