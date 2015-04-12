@@ -14,11 +14,14 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Resources.Messages;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Web.Controllers.DataAccess;
+using VocaDb.Model.Service;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
@@ -28,6 +31,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 	[TestClass]
 	public class SongQueriesTests {
 
+		private EntryAnchorFactory entryLinkFactory;
 		private FakeUserMessageMailer mailer;
 		private CreateSongContract newSongContract;
 		private FakePermissionContext permissionContext;
@@ -94,7 +98,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Add(new Tag("vocarock"), new Tag("vocaloud"));
 
 			permissionContext = new FakePermissionContext(user);
-			var entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
+			entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
 
 			newSongContract = new CreateSongContract {
 				SongType = SongType.Original,
@@ -232,8 +236,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var report = repository.List<SongReport>().FirstOrDefault();
 
 			Assert.IsNotNull(report, "Report was saved");
-			Assert.AreEqual(song.Id, report.EntryBase.Id, "entry Id");
-			Assert.AreEqual(user, report.User, "report author");
+			Assert.AreEqual(song.Id, report.EntryBase.Id, "Entry Id");
+			Assert.AreEqual(user, report.User, "Report author");
+			Assert.AreEqual(SongReportType.InvalidInfo, report.ReportType, "Report type");
 
 		}
 
@@ -253,6 +258,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.AreEqual(user, notification.Receiver, "Notification receiver");
+			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportTitle, song.DefaultName), notification.Subject, "Notification subject");
+			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportBody, 
+				MarkdownHelper.CreateMarkdownLink(entryLinkFactory.GetFullEntryUrl(song), song.DefaultName), "It's Miku, not Rin"), 
+				notification.Message, "Notification message");
 
 		}
 
