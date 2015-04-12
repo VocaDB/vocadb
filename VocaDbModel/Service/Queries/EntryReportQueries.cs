@@ -37,9 +37,8 @@ namespace VocaDb.Model.Service.Queries {
 			var entry = ctx.Load(entryId);
 			var reporter = ctx.OfType<User>().GetLoggedUserOrNull(permissionContext);
 			var report = reportFunc(entry, reporter, notes.Truncate(EntryReport.MaxNotesLength));
-			var agent = new AgentLoginData(reporter, hostname);
 
-			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), report.VersionBase, notes, agent, entryLinkFactory);
+			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), report.VersionBase, notes, entryLinkFactory);
 
 			if (existing != null)
 				return false;

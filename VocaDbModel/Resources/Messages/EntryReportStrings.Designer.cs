@@ -61,7 +61,7 @@ namespace VocaDb.Model.Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your edit for &apos;{0}&apos; was reported by {1} with the following message &apos;{2}&apos;..
+        ///   Looks up a localized string similar to Entry &apos;{0}&apos;, which you have edited, was reported with the following message: &apos;{1}&apos;. Assuming the report is valid, please make the necessary changes to the entry..
         /// </summary>
         public static string EntryVersionReportBody {
             get {

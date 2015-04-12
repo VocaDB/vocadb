@@ -879,6 +879,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExtSites.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\EntryReportStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Messages\EntryReportStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryReportStrings.Designer.cs</LastGenOutput>

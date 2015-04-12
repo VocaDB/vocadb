@@ -1,5 +1,4 @@
-﻿using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Users;
+﻿using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources.Messages;
@@ -11,7 +10,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 		public void SendReportNotification(IRepositoryContext<UserMessage> ctx, 
 			ArchivedObjectVersion reportedVersion, 
-			string notes, AgentLoginData reporter, 
+			string notes, 
 			IEntryLinkFactory entryLinkFactory) {
 			
 			if (reportedVersion == null)
@@ -28,12 +27,12 @@ namespace VocaDb.Model.Service.Helpers {
 
 			using (new ImpersonateUICulture(CultureHelper.GetCultureOrDefault(receiver.Language))) {
 				body = EntryReportStrings.EntryVersionReportBody;
-				title = EntryReportStrings.EntryVersionReportTitle;			
+				title = EntryReportStrings.EntryVersionReportTitle;		
 			}
 
 			var message = string.Format(body, 
 				MarkdownHelper.CreateMarkdownLink(entryLinkFactory.GetFullEntryUrl(entry), entry.DefaultName), 
-				reporter.UserNameOrFallback, notes);
+				notes);
 
 			var notification = new UserMessage(receiver, string.Format(title, entry.DefaultName), message, false);
 			ctx.Save(notification);

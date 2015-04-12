@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EntryVersionReportBody" xml:space="preserve">
-    <value>Entry '{0}', which you have edited, was reported with the following message: '{1}'. Assuming the report is valid, please make the necessary changes to the entry.</value>
-  </data>
-  <data name="EntryVersionReportTitle" xml:space="preserve">
-    <value>Entry report for {0}</value>
+    <value>貴方が編集してた項目「{0}」に関する間違い報告を頂きました。もし正しい報告だと確認したら「{1}」の項目を直接にご修正ください。頂いた報告は以下の通りです。</value>
   </data>
 </root>
