@@ -214,6 +214,24 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report a mistake in this edit. The user will be notified as well..
+        /// </summary>
+        public static string ReportArchivedVersionExplanation {
+            get {
+                return ResourceManager.GetString("ReportArchivedVersionExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Explain what&apos;s wrong.
+        /// </summary>
+        public static string ReportArchivedVersionMessage {
+            get {
+                return ResourceManager.GetString("ReportArchivedVersionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notes.
         /// </summary>
         public static string ReportNotes {

@@ -168,6 +168,12 @@
   <data name="ReportAnError" xml:space="preserve">
     <value>Report an error</value>
   </data>
+  <data name="ReportArchivedVersionExplanation" xml:space="preserve">
+    <value>Report a mistake in this edit. The user will be notified as well.</value>
+  </data>
+  <data name="ReportArchivedVersionMessage" xml:space="preserve">
+    <value>Explain what's wrong</value>
+  </data>
   <data name="ReportNotes" xml:space="preserve">
     <value>Notes</value>
   </data>
