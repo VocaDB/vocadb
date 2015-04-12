@@ -469,10 +469,12 @@
     <Compile Include="Helpers\ArtistHelper.cs" />
     <Compile Include="Helpers\CollectionAddResult.cs" />
     <Compile Include="Helpers\CollectionHelper.cs" />
+    <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\EnumerableExtender.cs" />
     <Compile Include="Helpers\HtmlHelperFunctions.cs" />
     <Compile Include="Helpers\HtmlRequestHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Helpers\ImpersonateUICulture.cs" />
     <Compile Include="Helpers\LambdaComparer.cs" />
     <Compile Include="Helpers\LocalizedStringHelper.cs" />
     <Compile Include="Helpers\NameHelper.cs" />
@@ -574,6 +576,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ExtSites.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Messages\EntryReportStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryReportStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Songs\SongTypeNames.Designer.cs">
       <DependentUpon>SongTypeNames.resx</DependentUpon>
@@ -871,6 +878,10 @@
     <EmbeddedResource Include="Resources\ExtSites.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExtSites.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\EntryReportStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryReportStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.de.resx" />
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.fi.resx">

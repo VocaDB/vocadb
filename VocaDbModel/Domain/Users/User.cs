@@ -167,6 +167,13 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual DateTime CreateDate { get; set; }
 
+		/// <summary>
+		/// User's culture setting (date/time and number formatting).
+		/// This is an ISO culture code, for example "en-US".
+		/// Cannot be null.
+		/// Can be empty, in which case the culture is set automatically.
+		/// Also see <see cref="Language"/>.
+		/// </summary>
 		public virtual string Culture {
 			get { return culture; }
 			set { 
@@ -244,6 +251,12 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// User's language setting. This is an ISO culture code, for example "en-US".
+		/// Determine's user interface language.
+		/// Cannot be null.
+		/// Can be empty, in which case the language is determined automatically.
+		/// </summary>
 		public virtual string Language {
 			get { return language; }
 			set {
