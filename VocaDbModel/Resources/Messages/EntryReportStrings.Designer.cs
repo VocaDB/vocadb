@@ -61,7 +61,7 @@ namespace VocaDb.Model.Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entry &apos;{0}&apos;, which you have edited, was reported with the following message: &apos;{1}&apos;. Assuming the report is valid, please make the necessary changes to the entry..
+        ///   Looks up a localized string similar to Entry &apos;{0}&apos;, which you have edited, was reported with the following message: &apos;{1}&apos;. Don&apos;t worry, most likely it&apos;s nothing serious. Please check the entry, and if there is something to be corrected, please make the necessary changes, unless someone else already took care of it..
         /// </summary>
         public static string EntryVersionReportBody {
             get {

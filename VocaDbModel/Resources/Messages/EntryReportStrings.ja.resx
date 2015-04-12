@@ -120,4 +120,7 @@
   <data name="EntryVersionReportBody" xml:space="preserve">
     <value>貴方が編集してた項目「{0}」に関する間違い報告を頂きました。もし正しい報告だと確認したら「{1}」の項目を直接にご修正ください。頂いた報告は以下の通りです。</value>
   </data>
+  <data name="EntryVersionReportTitle" xml:space="preserve">
+    <value>{0}のエントリーレポート</value>
+  </data>
 </root>

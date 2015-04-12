@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EntryVersionReportBody" xml:space="preserve">
-    <value>Merkintä '{0}', jota olet muokannut, raportoitiin seuraavalla viestillä: '{1}'. Olettaen että raportti pitää paikkansa, ole hyvä ja tee tarvittavat muutokset merkintään.</value>
+    <value>Merkintä '{0}', jota olet muokannut, raportoitiin seuraavalla viestillä: '{1}'. Ole hyva ja tarkista merkintä ja tee tarvittavat muutokset mikäli tarpeellista, ellei joku muu ole jo hoitanut asiaa kuntoon.</value>
   </data>
   <data name="EntryVersionReportTitle" xml:space="preserve">
     <value>Raportti merkinnästä {0}</value>

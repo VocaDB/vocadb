@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EntryVersionReportBody" xml:space="preserve">
-    <value>Entry '{0}', which you have edited, was reported with the following message: '{1}'. Assuming the report is valid, please make the necessary changes to the entry.</value>
+    <value>Entry '{0}', which you have edited, was reported with the following message: '{1}'. Don't worry, most likely it's nothing serious. Please check the entry, and if there is something to be corrected, please make the necessary changes, unless someone else already took care of it.</value>
   </data>
   <data name="EntryVersionReportTitle" xml:space="preserve">
     <value>Entry report for {0}</value>
