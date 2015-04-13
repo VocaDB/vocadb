@@ -61,197 +61,199 @@
 
 	<div id="basicInfoTab">
 		
-		<div class="pull-left">
-			<div id="picCarousel" class="carousel slide">
-				<div class="carousel-inner">
-					<div class="active item thumbItem">
-						@AlbumHelpers.CoverLink(Model)
-					</div>
-					@foreach (var pic in Model.Pictures) {
-						<div class="item thumbItem" itemprop="image">
-							@Helpers.EntryPictureFileLink(pic)
-							@if (!string.IsNullOrEmpty(pic.Name)) {
-								<div class="carousel-caption">
-									<h4>@pic.Name</h4>
-								</div>
-							}
+		<div class="clearfix">
+			<div class="pull-left">
+				<div id="picCarousel" class="carousel slide">
+					<div class="carousel-inner">
+						<div class="active item thumbItem">
+							@AlbumHelpers.CoverLink(Model)
 						</div>
+						@foreach (var pic in Model.Pictures) {
+							<div class="item thumbItem" itemprop="image">
+								@Helpers.EntryPictureFileLink(pic)
+								@if (!string.IsNullOrEmpty(pic.Name)) {
+									<div class="carousel-caption">
+										<h4>@pic.Name</h4>
+									</div>
+								}
+							</div>
+						}
+					</div>
+					@if (Model.Pictures.Any()) {
+						<a class="carousel-control left" href="#picCarousel" data-slide="prev">&lsaquo;</a>
+						<a class="carousel-control right" href="#picCarousel" data-slide="next">&rsaquo;</a>
 					}
 				</div>
-				@if (Model.Pictures.Any()) {
-					<a class="carousel-control left" href="#picCarousel" data-slide="prev">&lsaquo;</a>
-					<a class="carousel-control right" href="#picCarousel" data-slide="next">&rsaquo;</a>
-				}
+
+				@if (Model.RatingCount > 0) {
+					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+						<meta itemprop="ratingValue" content="@DecimalDot(Model.RatingAverage)" />
+						@Helpers.StarsMeta(Model.RatingAverage, 5)<br />
+						(<span itemprop="ratingCount">@Model.RatingCount</span> @ViewRes.Album.DetailsStrings.Ratings)
+					</div>
+				}			
 			</div>
 
-			@if (Model.RatingCount > 0) {
-				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-					<meta itemprop="ratingValue" content="@DecimalDot(Model.RatingAverage)" />
-					@Helpers.StarsMeta(Model.RatingAverage, 5)<br />
-					(<span itemprop="ratingCount">@Model.RatingCount</span> @ViewRes.Album.DetailsStrings.Ratings)
-				</div>
-			}			
+			<table class="properties">
+				<tr>
+					<td class="entry-field-label-col">@ViewRes.SharedStrings.Name</td>
+					<td itemprop="name">
+						@Model.Name<br />
+						<span class="extraInfo">@Model.AdditionalNames</span>
+					</td>
+				</tr>
+
+				@if (Model.Vocalists.Any()) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.Vocalists</td>
+						<td class="artistList">
+							@ArtistHelpers.ArtistList(Model.Vocalists, showType: true)
+						</td>
+					</tr>
+				}
+
+				@if (Model.Producers.Any()) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.Producers</td>
+						<td class="artistList">
+							@ArtistHelpers.ArtistList(Model.Producers, showRoles: Model.ShowProducerRoles)
+						</td>
+					</tr>
+				}
+
+				@if (Model.Bands.Any()) {
+					<tr>
+						<td>@Res.Band</td>
+						<td class="artistList">
+							@ArtistHelpers.ArtistList(Model.Bands)
+						</td>
+					</tr>
+				}
+
+				@if (Model.Circles.Any()) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.Circle</td>
+						<td class="artistList">
+							@ArtistHelpers.ArtistList(Model.Circles)
+						</td>
+					</tr>
+				}
+
+				@if (Model.Labels.Any()) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.Labels</td>
+						<td class="artistList">
+							@ArtistHelpers.ArtistList(Model.Labels)
+						</td>
+					</tr>
+				}
+
+				@if (Model.OtherArtists.Any()) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.OtherArtists</td>
+						<td class="artistList">
+							@ArtistHelpers.ArtistList(Model.OtherArtists, true)
+						</td>
+					</tr>
+				}
+
+				@if (!Model.Description.IsEmpty) {
+					<tr>
+						<td>@ViewRes.SharedStrings.Description</td>
+						<td class="entry-description">
+							@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
+						</td>
+					</tr>
+				}
+
+				<tr>
+					<td>@ViewRes.SharedStrings.Type</td>
+					<td>
+						@Html.ActionLink(Translate.DiscTypeName(Model.DiscType), "Index", new { discType = Model.DiscType })<br />
+					</td>
+				</tr>
+
+				<tr>
+					<td>@ViewRes.SharedStrings.Tags</td>
+					<td>
+						<div data-bind="with: tagUsages" class="entry-tag-usages">
+							@{ Html.RenderPartial("Partials/_TagList"); }
+						</div>
+						<a data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+						@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {
+							@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
+						}
+					</td>
+				</tr>
+
+				@if (Model.ReleaseDate != null && !Model.ReleaseDate.IsEmpty) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.ReleaseDate</td>
+						<td>
+							@Model.ReleaseDate.Formatted
+							@if (Model.ReleaseDateIsInThePast) {
+								<small class="muted">@Res.ReleaseDateIsInThePast</small>
+							}
+							@if (Model.ReleaseDateIsInTheNearFuture) {
+								<small class="muted">@Res.ReleaseDateIsInTheNearFuture</small>
+							}
+							@if (Model.ReleaseDateIsInTheFarFuture) {
+								<small class="muted">@Res.ReleaseDateIsInTheFarFuture</small>
+							}
+							<br />
+						</td>
+					</tr>
+				}
+
+				@if (!string.IsNullOrEmpty(Model.CatNum)) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.CatalogNumber</td>
+						<td>
+							@Model.CatNum<br />
+						</td>
+					</tr>
+				}
+
+				@if (!string.IsNullOrEmpty(Model.ReleaseEvent)) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.ReleaseEvent</td>
+						<td>
+							@Html.ActionLink(Model.ReleaseEvent, "Find", "Event", new { query = Model.ReleaseEvent }, null)<br />
+						</td>
+					</tr>
+				}
+
+				@if (Model.PVs.Any()) {
+					<tr>
+						<td>@ViewRes.Album.DetailsStrings.PVs</td>
+						<td>
+							@foreach (var pv in Model.PVs) {
+								@Helpers.FormatPVLink(pv, false)<br />
+							}
+						</td>
+					</tr>
+				}
+
+				@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
+
+				<tr>
+					<td>@ViewRes.EntryDetailsStrings.Stats</td>
+					<td>
+						<a href="#" id="statsLink" data-bind="click: getUsers">
+							@string.Format(ViewRes.EntryDetailsStrings.Hits, Model.Hits)
+							@string.Format(R.DetailsStrings.OwnedBy, Model.OwnedBy). @string.Format(R.DetailsStrings.WishlistedBy, Model.WishlistedBy).
+						</a>
+					</td>
+				</tr>
+
+				<tr>
+					<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
+					<td>
+						@Helpers.UniversalTimeLabel(Model.CreateDate)
+					</td>
+				</tr>
+			</table>
 		</div>
-
-		<table class="properties">
-			<tr>
-				<td class="entry-field-label-col">@ViewRes.SharedStrings.Name</td>
-				<td itemprop="name">
-					@Model.Name<br />
-					<span class="extraInfo">@Model.AdditionalNames</span>
-				</td>
-			</tr>
-
-			@if (Model.Vocalists.Any()) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.Vocalists</td>
-					<td class="artistList">
-						@ArtistHelpers.ArtistList(Model.Vocalists, showType: true)
-					</td>
-				</tr>
-			}
-
-			@if (Model.Producers.Any()) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.Producers</td>
-					<td class="artistList">
-						@ArtistHelpers.ArtistList(Model.Producers, showRoles: Model.ShowProducerRoles)
-					</td>
-				</tr>
-			}
-
-			@if (Model.Bands.Any()) {
-				<tr>
-					<td>@Res.Band</td>
-					<td class="artistList">
-						@ArtistHelpers.ArtistList(Model.Bands)
-					</td>
-				</tr>
-			}
-
-			@if (Model.Circles.Any()) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.Circle</td>
-					<td class="artistList">
-						@ArtistHelpers.ArtistList(Model.Circles)
-					</td>
-				</tr>
-			}
-
-			@if (Model.Labels.Any()) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.Labels</td>
-					<td class="artistList">
-						@ArtistHelpers.ArtistList(Model.Labels)
-					</td>
-				</tr>
-			}
-
-			@if (Model.OtherArtists.Any()) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.OtherArtists</td>
-					<td class="artistList">
-						@ArtistHelpers.ArtistList(Model.OtherArtists, true)
-					</td>
-				</tr>
-			}
-
-			@if (!Model.Description.IsEmpty) {
-				<tr>
-					<td>@ViewRes.SharedStrings.Description</td>
-					<td class="entry-description">
-						@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
-					</td>
-				</tr>
-			}
-
-			<tr>
-				<td>@ViewRes.SharedStrings.Type</td>
-				<td>
-					@Html.ActionLink(Translate.DiscTypeName(Model.DiscType), "Index", new { discType = Model.DiscType })<br />
-				</td>
-			</tr>
-
-			<tr>
-				<td>@ViewRes.SharedStrings.Tags</td>
-				<td>
-					<div data-bind="with: tagUsages" class="entry-tag-usages">
-						@{ Html.RenderPartial("Partials/_TagList"); }
-					</div>
-					<a data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
-					@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {
-						@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
-					}
-				</td>
-			</tr>
-
-			@if (Model.ReleaseDate != null && !Model.ReleaseDate.IsEmpty) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.ReleaseDate</td>
-					<td>
-						@Model.ReleaseDate.Formatted
-						@if (Model.ReleaseDateIsInThePast) {
-							<small class="muted">@Res.ReleaseDateIsInThePast</small>
-						}
-						@if (Model.ReleaseDateIsInTheNearFuture) {
-							<small class="muted">@Res.ReleaseDateIsInTheNearFuture</small>
-						}
-						@if (Model.ReleaseDateIsInTheFarFuture) {
-							<small class="muted">@Res.ReleaseDateIsInTheFarFuture</small>
-						}
-						<br />
-					</td>
-				</tr>
-			}
-
-			@if (!string.IsNullOrEmpty(Model.CatNum)) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.CatalogNumber</td>
-					<td>
-						@Model.CatNum<br />
-					</td>
-				</tr>
-			}
-
-			@if (!string.IsNullOrEmpty(Model.ReleaseEvent)) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.ReleaseEvent</td>
-					<td>
-						@Html.ActionLink(Model.ReleaseEvent, "Find", "Event", new { query = Model.ReleaseEvent }, null)<br />
-					</td>
-				</tr>
-			}
-
-			@if (Model.PVs.Any()) {
-				<tr>
-					<td>@ViewRes.Album.DetailsStrings.PVs</td>
-					<td>
-						@foreach (var pv in Model.PVs) {
-							@Helpers.FormatPVLink(pv, false)<br />
-						}
-					</td>
-				</tr>
-			}
-
-			@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
-
-			<tr>
-				<td>@ViewRes.EntryDetailsStrings.Stats</td>
-				<td>
-					<a href="#" id="statsLink" data-bind="click: getUsers">
-						@string.Format(ViewRes.EntryDetailsStrings.Hits, Model.Hits)
-						@string.Format(R.DetailsStrings.OwnedBy, Model.OwnedBy). @string.Format(R.DetailsStrings.WishlistedBy, Model.WishlistedBy).
-					</a>
-				</td>
-			</tr>
-
-			<tr>
-				<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
-				<td>
-					@Helpers.UniversalTimeLabel(Model.CreateDate)
-				</td>
-			</tr>
-		</table>
 
 		<h3>@ViewRes.Album.DetailsStrings.Tracklist</h3>
 		<div class="tracklist">
