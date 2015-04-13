@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Net;
+using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Service;
@@ -97,6 +98,10 @@ namespace VocaDb.Web.Controllers
         [Authorize]
 		public ActionResult Edit(SongListEditViewModel model)
         {
+
+			if (model == null) {
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "View model was null - probably JavaScript is disabled");				
+			}
 
 			var coverPicUpload = Request.Files["thumbPicUpload"];
 			UploadedFileContract uploadedPicture = null;
