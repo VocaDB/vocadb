@@ -129,6 +129,7 @@ ul.thumbs, ul.smallThumbs {
 	overflow: hidden;
 	font-size: 11px;
 	line-height: 1.181818em;
+	margin-left: 0;
 }
 
 ul.thumbs li {
@@ -163,6 +164,12 @@ ul.smallThumbs li {
 	height: 190px;
 	margin: 0 9px 0 0;
 	overflow: hidden;	
+}
+
+@media (max-width: 768px) {
+	ul.smallThumbs li {
+		margin-right: 5px;
+	}
 }
 
 ul.smallThumbs div.pictureFrame {

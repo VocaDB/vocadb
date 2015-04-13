@@ -105,6 +105,11 @@ body .ui-widget button {
 .well {
   padding: 13px !important;
 }
+@media (max-width: 768px) {
+  .well {
+    padding: 6px !important;
+  }
+}
 div.comment p {
   padding-top: 5px;
 }
