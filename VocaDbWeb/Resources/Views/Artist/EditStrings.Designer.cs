@@ -124,15 +124,6 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this artist?.
-        /// </summary>
-        public static string ConfirmDelete {
-            get {
-                return ResourceManager.GetString("ConfirmDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit artist - {0}.
         /// </summary>
         public static string EditTitle {

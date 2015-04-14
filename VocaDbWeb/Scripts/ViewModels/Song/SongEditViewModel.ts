@@ -78,6 +78,12 @@ module vdb.viewModels {
 
 		public artistRolesEditViewModel: artists.ArtistRolesEditViewModel;
 
+		public deleteViewModel = new DeleteEntryViewModel(notes => {
+			$.ajax(this.urlMapper.mapRelative("api/songs/" + this.id + "?notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: () => {
+				window.location.href = this.urlMapper.mapRelative("/Song/Details/" + this.id);
+			}});
+		});
+
 		public editArtistRoles = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistRolesEditViewModel.show(artist);
 		}
@@ -130,7 +136,7 @@ module vdb.viewModels {
 			songRepository: rep.SongRepository,
 			private artistRepository: rep.ArtistRepository,
 			pvRepository: rep.PVRepository,
-			urlMapper: vdb.UrlMapper,
+			private urlMapper: vdb.UrlMapper,
 			private artistRoleNames: { [key: string]: string; },
 			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
 			data: dc.songs.SongForEditContract,

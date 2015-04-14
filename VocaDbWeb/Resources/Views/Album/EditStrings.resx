@@ -195,9 +195,6 @@
   <data name="ChangesAreSavedImmediately" xml:space="preserve">
     <value>Changes on this tab are saved immediately.</value>
   </data>
-  <data name="ConfirmDeleteAlbum" xml:space="preserve">
-    <value>Are you sure you want to delete this album?</value>
-  </data>
   <data name="ConfirmMoveToTrash" xml:space="preserve">
     <value>Are you sure you want to move this album to trash?</value>
   </data>

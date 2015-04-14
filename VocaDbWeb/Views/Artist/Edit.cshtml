@@ -25,7 +25,7 @@
 @section Toolbar {
 @if (Login.CanDeleteEntries) {
 	if (!Model.Artist.Deleted) {
-		@Html.ActionLink(ViewRes.SharedStrings.Delete, "Delete", new { id = Model.Artist.Id }, new { id = "deleteLink", onclick = "return confirm(\"" + Res.ConfirmDelete + "\");" })
+		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
 	} else {
 		@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Artist.Id }, new { id = "restoreLink" })		
 	}
@@ -189,6 +189,8 @@
 
 </form>
 
+@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Edit")
 
@@ -196,17 +198,18 @@
 
 	$(document).ready(function() {
 
-		var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var artistRepo = repoFactory.artistRepository();
 		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedArtist));
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
 
 		if (editedModel) {
-			ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, webLinkCategoryJson, editedModel));
+			ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, urlMapper, webLinkCategoryJson, editedModel));
 		} else {
 
 			artistRepo.getForEdit(@Model.Artist.Id, function (model) {
-				ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, webLinkCategoryJson, model));
+				ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, urlMapper, webLinkCategoryJson, model));
 			});
 
 		}

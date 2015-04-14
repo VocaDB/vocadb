@@ -78,6 +78,14 @@ module vdb.viewModels {
 
 		public defaultNameLanguage: KnockoutObservable<string>;
 
+		public deleteViewModel = new DeleteEntryViewModel(notes => {
+			$.ajax(this.urlMapper.mapRelative("api/albums/" + this.id + "?notes=" + encodeURIComponent(notes)), {
+				type: 'DELETE', success: () => {
+					window.location.href = this.urlMapper.mapRelative("/Album/Details/" + this.id);
+				}
+			});
+		});
+
 		public description: globalization.EnglishTranslatedStringEditViewModel;
 
         // Album disc type.
@@ -211,7 +219,7 @@ module vdb.viewModels {
 			songRepository: rep.SongRepository,
 			private artistRepository: rep.ArtistRepository,
 			pvRepository: rep.PVRepository,
-			urlMapper: vdb.UrlMapper,
+			private urlMapper: vdb.UrlMapper,
 			artistRoleNames: { [key: string]: string; },
 			webLinkCategories: dc.TranslatedEnumField[],
 			data: dc.albums.AlbumForEditContract,

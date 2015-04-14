@@ -27,7 +27,7 @@
 @section Toolbar {
 @if (Login.CanDeleteEntries) {
 	if (!Model.Song.Deleted) {
-		@Html.ActionLink(ViewRes.SharedStrings.Delete, "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"" + Res.ConfirmDelete + "\");" })
+		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
 	} else {
 		@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })		
 	}
@@ -242,6 +242,8 @@
 <div data-bind="with: artistRolesEditViewModel">
 	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
 </div>
+
+@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/Song/Edit")

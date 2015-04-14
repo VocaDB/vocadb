@@ -55,6 +55,14 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("{songId:int}")]
+		[Authorize]
+		public void Delete(int songId, string notes = "") {
+			
+			service.Delete(songId, notes ?? string.Empty);
+
+		}
+
 		/// <summary>
 		/// Gets a list of comments for a song.
 		/// Note: pagination and sorting might be added later.

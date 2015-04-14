@@ -324,17 +324,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-        //
-        // GET: /Album/Delete/5
- 
-        public ActionResult Delete(int id, string notes)
-        
-		{
-			Service.Delete(id, notes ?? string.Empty);
-			return RedirectToAction("Details", new { id });
-
-		}
-
 		[Authorize]
 		public ActionResult Deleted() {
 

@@ -2033,6 +2033,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\BasicEntryLinkViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\CommentViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\DeleteEntryViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionIndexViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionTopicViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\EditableCommentsViewModel.ts" />

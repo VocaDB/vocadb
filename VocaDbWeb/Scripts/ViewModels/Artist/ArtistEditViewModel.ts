@@ -27,6 +27,15 @@ module vdb.viewModels {
 		public baseVoicebankSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public canHaveCircles: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
+
+		public deleteViewModel = new DeleteEntryViewModel(notes => {
+			$.ajax(this.urlMapper.mapRelative("api/artists/" + this.id + "?notes=" + encodeURIComponent(notes)), {
+				type: 'DELETE', success: () => {
+					window.location.href = this.urlMapper.mapRelative("/Artist/Details/" + this.id);
+				}
+			});
+		});
+
 		public description: globalization.EnglishTranslatedStringEditViewModel;
 		public groups: KnockoutObservableArray<dc.artists.GroupForArtistContract>;
 
@@ -85,7 +94,11 @@ module vdb.viewModels {
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
         public webLinks: WebLinksEditViewModel;
 
-        constructor(private artistRepo: rep.ArtistRepository, webLinkCategories: vdb.dataContracts.TranslatedEnumField[], data: dc.artists.ArtistForEditContract) {
+        constructor(
+			private artistRepo: rep.ArtistRepository,
+			private urlMapper: vdb.UrlMapper,
+			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
+			data: dc.artists.ArtistForEditContract) {
 
 			this.artistTypeStr = ko.observable(data.artistType);
 			this.artistType = ko.computed(() => cls.artists.ArtistType[this.artistTypeStr()]);

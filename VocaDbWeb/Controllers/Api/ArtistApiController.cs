@@ -54,6 +54,14 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("{artistId:int}")]
+		[Authorize]
+		public void Delete(int artistId, string notes = "") {
+			
+			service.Delete(artistId, notes ?? string.Empty);
+
+		}
+
 		/// <summary>
 		/// Deletes a comment.
 		/// Normal users can delete their own comments, moderators can delete all comments.

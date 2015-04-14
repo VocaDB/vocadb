@@ -37,6 +37,14 @@ namespace VocaDb.Web.Controllers.Api {
 			this.thumbPersister = thumbPersister;
 		}
 
+		[Route("{albumId:int}")]
+		[Authorize]
+		public void Delete(int albumId, string notes = "") {
+			
+			service.Delete(albumId, notes ?? string.Empty);
+
+		}
+
 		/// <summary>
 		/// Deletes a comment.
 		/// Normal users can delete their own comments, moderators can delete all comments.

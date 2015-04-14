@@ -18,6 +18,31 @@
 	</div>
 }
 
+@helper EntryDeletePopup(string confirmText, string viewModelBindingName = "deleteViewModel",  string deleteButtonId = "deleteLink") {
+
+	<div style="display:none;" title="@ViewRes.SharedStrings.Delete"
+		data-bind="
+		dialog: {
+			autoOpen: false, width: 310, modal: true,
+			position: { my: 'left top', at: 'left bottom', of: $('#@deleteButtonId') }
+		},
+		dialogVisible: @(viewModelBindingName).dialogVisible,
+		dialogButtons: [
+			{ text: '@ViewRes.SharedStrings.Delete', click: @(viewModelBindingName).deleteEntry }, 
+			{ text: '@ViewRes.SharedStrings.Cancel', click: function() { @(viewModelBindingName).dialogVisible(false); } }
+		]
+		">
+
+		<p>
+			@confirmText
+		</p>
+
+		<textarea data-bind="textInput: @(viewModelBindingName).notes" class="input-xlarge" maxlength="400"></textarea>
+
+	</div>
+
+}
+
 @helper ExternalLinksList(IEnumerable<WebLinkContract> webLinks, bool showCategory = false) {
     
     foreach (var link in webLinks) {

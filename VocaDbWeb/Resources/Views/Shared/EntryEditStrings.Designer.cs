@@ -106,6 +106,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please confirm that you wish to delete this entry. You may provide additional explanation below (optional)..
+        /// </summary>
+        public static string ConfirmDelete {
+            get {
+                return ResourceManager.GetString("ConfirmDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Original language.
         /// </summary>
         public static string DefaultLanguageSelection {

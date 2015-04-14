@@ -74,6 +74,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/knockout-sortable.js",
 				"~/Scripts/Models/WebLinkCategory.js",
 				"~/Scripts/Shared/WebLinkMatcher.js",
+				"~/Scripts/ViewModels/DeleteEntryViewModel.js",
 				"~/Scripts/ViewModels/WebLinkEditViewModel.js",
 				"~/Scripts/ViewModels/WebLinksEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/EnglishTranslatedStringEditViewModel.js",

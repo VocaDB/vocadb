@@ -132,6 +132,9 @@
   <data name="ConcurrentEditWarningNow" xml:space="preserve">
     <value>{0} is also editing this entry right now!</value>
   </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Please confirm that you wish to delete this entry. You may provide additional explanation below (optional).</value>
+  </data>
   <data name="DefaultLanguageSelection" xml:space="preserve">
     <value>Original language</value>
   </data>

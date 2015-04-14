@@ -29,8 +29,8 @@
 @section Toolbar {
 @if (Login.CanDeleteEntries) {
 	if (!Model.Album.Deleted) {
-		@Html.ActionLink(ViewRes.SharedStrings.Delete, "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = string.Format("return confirm(\"{0}\");", R.EditStrings.ConfirmDeleteAlbum) })
-    } else {
+		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
+	} else {
 		@Html.ActionLink(ViewRes.EntryEditStrings.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })
         if (Login.CanMoveToTrash) {
 			@Html.Raw("&nbsp;")
@@ -383,3 +383,5 @@
 	@{ Html.RenderPartial("Partials/_TrackProperties"); }
 
 </div>
+
+@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)

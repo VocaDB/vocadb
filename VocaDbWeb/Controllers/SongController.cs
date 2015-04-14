@@ -247,17 +247,6 @@ namespace VocaDb.Web.Controllers
 
         }
 
-        //
-        // GET: /Song/Delete/5
-
-        public ActionResult Delete(int id, string notes)
-        {
-            
-			Service.Delete(id, notes ?? string.Empty);
-			return RedirectToAction("Details", new { id });
-
-        }
-
 		public FeedResult Feed(IndexRouteParams indexParams) {
 
 			WebHelper.VerifyUserAgent(Request);

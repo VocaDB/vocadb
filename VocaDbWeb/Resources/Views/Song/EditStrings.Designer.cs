@@ -169,15 +169,6 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this song?.
-        /// </summary>
-        public static string ConfirmDelete {
-            get {
-                return ResourceManager.GetString("ConfirmDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit song {0}.
         /// </summary>
         public static string EditTitle {

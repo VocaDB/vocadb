@@ -223,15 +223,6 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this album?.
-        /// </summary>
-        public static string ConfirmDeleteAlbum {
-            get {
-                return ResourceManager.GetString("ConfirmDeleteAlbum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to move this album to trash?.
         /// </summary>
         public static string ConfirmMoveToTrash {
