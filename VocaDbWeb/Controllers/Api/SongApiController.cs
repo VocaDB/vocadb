@@ -55,6 +55,11 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Deletes a song.
+		/// </summary>
+		/// <param name="songId">ID of the song to be deleted.</param>
+		/// <param name="notes">Notes.</param>
 		[Route("{songId:int}")]
 		[Authorize]
 		public void Delete(int songId, string notes = "") {

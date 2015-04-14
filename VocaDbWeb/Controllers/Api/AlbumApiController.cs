@@ -37,6 +37,11 @@ namespace VocaDb.Web.Controllers.Api {
 			this.thumbPersister = thumbPersister;
 		}
 
+		/// <summary>
+		/// Deletes an album.
+		/// </summary>
+		/// <param name="albumId">ID of the album to be deleted.</param>
+		/// <param name="notes">Notes.</param>
 		[Route("{albumId:int}")]
 		[Authorize]
 		public void Delete(int albumId, string notes = "") {
