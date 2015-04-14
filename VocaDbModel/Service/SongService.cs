@@ -160,7 +160,7 @@ namespace VocaDb.Model.Service {
 
 		}*/
 
-		public void Delete(int id) {
+		public void Delete(int id, string notes) {
 
 			UpdateEntity<Song>(id, (session, song) => {
 
@@ -168,7 +168,7 @@ namespace VocaDb.Model.Service {
 
 				song.Delete();
 
-				Archive(session, song, new SongDiff(false), SongArchiveReason.Deleted);
+				Archive(session, song, new SongDiff(false), SongArchiveReason.Deleted, notes);
 
 			}, PermissionToken.DeleteEntries, skipLog: true);
 

@@ -250,10 +250,10 @@ namespace VocaDb.Web.Controllers
         //
         // GET: /Song/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, string notes)
         {
             
-			Service.Delete(id);
+			Service.Delete(id, notes ?? string.Empty);
 			return RedirectToAction("Details", new { id });
 
         }

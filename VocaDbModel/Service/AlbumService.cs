@@ -111,7 +111,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void Delete(int id) {
+		public void Delete(int id, string notes) {
 
 			UpdateEntity<Album>(id, (session, a) => {
 
@@ -120,33 +120,11 @@ namespace VocaDb.Model.Service {
 				NHibernateUtil.Initialize(a.CoverPictureData);
 				a.Delete();
 
-				Archive(session, a, new AlbumDiff(false), AlbumArchiveReason.Deleted);
+				Archive(session, a, new AlbumDiff(false), AlbumArchiveReason.Deleted, notes);
 
 			}, PermissionToken.DeleteEntries, skipLog: true);
 
 		}
-
-		/*
-		// TODO: should be moved to update
-		public void DeleteArtistForAlbum(int artistForAlbumId) {
-
-			VerifyManageDatabase();
-
-			HandleTransaction(session => {
-
-				var artistForAlbum = session.Load<ArtistForAlbum>(artistForAlbumId);
-
-				AuditLog(string.Format("deleting {0}", artistForAlbum), session);
-
-				artistForAlbum.Album.DeleteArtistForAlbum(artistForAlbum);
-				session.Delete(artistForAlbum);
-				session.Update(artistForAlbum.Album);
-
-				SysLog(string.Format("deleted {0} successfully", artistForAlbum));
-
-			});
-
-		}*/
 
 		public PartialFindResult<T> Find<T>(Func<Album, T> fac, AlbumQueryParams queryParams)
 			where T : class {

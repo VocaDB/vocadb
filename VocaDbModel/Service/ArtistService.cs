@@ -92,7 +92,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void Delete(int id) {
+		public void Delete(int id, string notes) {
 
 			UpdateEntity<Artist>(id, (session, a) => {
 
@@ -101,7 +101,7 @@ namespace VocaDb.Model.Service {
 				NHibernateUtil.Initialize(a.Picture);
 				a.Delete();
 			          
-				Archive(session, a, new ArtistDiff(false), ArtistArchiveReason.Deleted);
+				Archive(session, a, new ArtistDiff(false), ArtistArchiveReason.Deleted, notes);
                
 			}, PermissionToken.DeleteEntries, skipLog: true);
 
