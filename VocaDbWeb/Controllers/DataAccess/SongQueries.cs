@@ -260,7 +260,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory, report => report.Song.Id == songId, 
 					(song, reporter, notesTruncated) => new SongReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
-					songId, reportType, hostname, notes, versionNumber);
+					songId, reportType, hostname, notes);
 			});
 
 		}

@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.Queries {
 			IEntryLinkFactory entryLinkFactory,
 			Expression<Func<TReport, bool>> addExistingEntryFunc, 
 			Func<TEntry, User, string, TReport> reportFunc, 
-			int entryId, TReportType reportType, string hostname, string notes, int? versionNumber)
+			int entryId, TReportType reportType, string hostname, string notes)
 			where TEntry : IEntryBase
 			where TReport : EntryReport {
 

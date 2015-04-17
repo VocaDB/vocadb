@@ -252,7 +252,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory, report => report.Artist.Id == artistId, 
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
-					artistId, reportType, hostname, notes, versionNumber);
+					artistId, reportType, hostname, notes);
 			});
 
 		}
