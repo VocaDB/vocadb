@@ -42,6 +42,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private Song song;
 		private User user;
 		private User user2;
+		private User user3;
 		private Artist vocalist;
 		private Artist vocalist2;
 
@@ -92,6 +93,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user = CreateEntry.User(id: 1, name: "Miku");
 			user.GroupId = UserGroupId.Trusted;
 			user2 = CreateEntry.User(id: 2, name: "Rin", email: "rin@vocadb.net");
+			user3 = CreateEntry.User(id: 3, name: "Luka", email: "luka@vocadb.net");
 			repository.Add(user, user2);
 			repository.Add(producer, vocalist);
 
@@ -295,8 +297,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		// Create report, notify the user who created the entry if they're the only editor.
 		[TestMethod]
 		public void CreateReport_NotifyIfUnambiguous() {
-			
-			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user), SongArchiveReason.PropertiesUpdated, String.Empty));
+
+			var editor = user2;
+			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(editor), SongArchiveReason.PropertiesUpdated, String.Empty));
 			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = repository.List<SongReport>().First();
@@ -305,6 +308,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var notification = repository.List<UserMessage>().FirstOrDefault();
 			Assert.IsNotNull(notification, "notification was created");
+			Assert.AreEqual(editor, notification.Receiver, "notification was receiver is editor");
 			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportTitle, song.DefaultName), notification.Subject, "Notification subject");
 
 		}
@@ -312,8 +316,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateReport_DoNotNotifyIfAmbiguous() {
 			
-			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user), SongArchiveReason.PropertiesUpdated, String.Empty));
 			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user2), SongArchiveReason.PropertiesUpdated, String.Empty));
+			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user3), SongArchiveReason.PropertiesUpdated, String.Empty));
 			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = repository.List<SongReport>().First();

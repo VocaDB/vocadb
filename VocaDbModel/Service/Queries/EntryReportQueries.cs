@@ -42,10 +42,14 @@ namespace VocaDb.Model.Service.Queries {
 
 			if (versionForReport == null) {
 
-				var firstVersion = entry.ArchivedVersionsManager.VersionsBase.FirstOrDefault();
+				// Get first version, check if all following edits were made by the same user OR the reporter
+				var firstVersion = entry.ArchivedVersionsManager.VersionsBase.FirstOrDefault(
+					ver => ver.Author != null && !ver.Author.Equals(reporter));
 
 				var oneEditor = firstVersion != null && firstVersion.Author != null &&
-					entry.ArchivedVersionsManager.VersionsBase.All(v => Equals(v.Author, firstVersion.Author));
+					entry.ArchivedVersionsManager.VersionsBase.All(ver =>
+						Equals(ver.Author, reporter) ||  // Editor is reporter
+						firstVersion.Author.Equals(ver.Author)); // Editor is the creator
 
 				if (oneEditor)
 					versionForReport = firstVersion;
