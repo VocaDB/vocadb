@@ -14,7 +14,11 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Artists {
 
-	public class Artist : IEntryBase, IEntryWithNames, IEntryWithStatus, IDeletableEntry, IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink> {
+	public class Artist : IEntryBase, IEntryWithNames, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink> {
+
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
+			get { return ArchivedVersionsManager; }
+		}
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 

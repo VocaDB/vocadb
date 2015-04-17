@@ -17,7 +17,11 @@ using VocaDb.Model.DataContracts.PVs;
 
 namespace VocaDb.Model.Domain.Albums {
 
-	public class Album : IEntryBase, IEntryWithNames, IEntryWithStatus, IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink> {
+	public class Album : IEntryBase, IEntryWithNames, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink> {
+
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
+			get { return ArchivedVersionsManager; }
+		}
 
 		public static string ParseBarcode(string barcode) {
 			return !string.IsNullOrEmpty(barcode) ? barcode.Replace(" ", string.Empty).Replace("-", string.Empty) : barcode;

@@ -19,7 +19,7 @@ namespace VocaDb.Model.Service.Queries {
 			Expression<Func<TReport, bool>> addExistingEntryFunc, 
 			Func<TEntry, User, string, TReport> reportFunc, 
 			int entryId, TReportType reportType, string hostname, string notes)
-			where TEntry : IEntryBase
+			where TEntry : IEntryWithVersions
 			where TReport : EntryReport {
 
 			ParamIs.NotNull(() => hostname);
@@ -38,7 +38,21 @@ namespace VocaDb.Model.Service.Queries {
 			var reporter = ctx.OfType<User>().GetLoggedUserOrNull(permissionContext);
 			var report = reportFunc(entry, reporter, notes.Truncate(EntryReport.MaxNotesLength));
 
-			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), report.VersionBase, notes, entryLinkFactory);
+			var versionForReport = report.VersionBase;
+
+			if (versionForReport == null) {
+
+				var firstVersion = entry.ArchivedVersionsManager.VersionsBase.FirstOrDefault();
+
+				var oneEditor = firstVersion != null && firstVersion.Author != null &&
+					entry.ArchivedVersionsManager.VersionsBase.All(v => Equals(v.Author, firstVersion.Author));
+
+				if (oneEditor)
+					versionForReport = firstVersion;
+
+			}
+
+			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory);
 
 			if (existing != null)
 				return false;

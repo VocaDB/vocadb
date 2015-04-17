@@ -330,6 +330,7 @@
     <Compile Include="Domain\IDeletableEntry.cs" />
     <Compile Include="Domain\IEntryWithIntId.cs" />
     <Compile Include="Domain\IEntryWithStatus.cs" />
+    <Compile Include="Domain\IEntryWithVersions.cs" />
     <Compile Include="Domain\Images\IEntryImagePersisterOld.cs" />
     <Compile Include="Domain\Images\IEntryPictureFilePersister.cs" />
     <Compile Include="Domain\Images\IEntryThumbPersister.cs" />

@@ -5,7 +5,13 @@ using System.Text;
 
 namespace VocaDb.Model.Domain.Versioning {
 
-	public class ArchivedVersionManager<TVersion, TField> 
+	public interface IArchivedVersionsManager {
+
+		IEnumerable<ArchivedObjectVersion> VersionsBase { get; } 
+
+	}
+
+	public class ArchivedVersionManager<TVersion, TField> : IArchivedVersionsManager
 		where TVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<TField> 
 		where TField : struct, IConvertible {
 
@@ -17,6 +23,10 @@ namespace VocaDb.Model.Domain.Versioning {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
 			}
+		}
+
+		public IEnumerable<ArchivedObjectVersion> VersionsBase {
+			get { return Versions; }
 		}
 
 		public virtual TVersion Add(TVersion newVersion) {

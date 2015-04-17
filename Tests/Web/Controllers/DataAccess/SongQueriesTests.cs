@@ -292,6 +292,39 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		// Create report, notify the user who created the entry if they're the only editor.
+		[TestMethod]
+		public void CreateReport_NotifyIfUnambiguous() {
+			
+			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user), SongArchiveReason.PropertiesUpdated, String.Empty));
+			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+
+			var report = repository.List<SongReport>().First();
+			Assert.AreEqual(song, report.Song, "Report was created for song");
+			Assert.IsNull(report.Version, "Version");
+
+			var notification = repository.List<UserMessage>().FirstOrDefault();
+			Assert.IsNotNull(notification, "notification was created");
+			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportTitle, song.DefaultName), notification.Subject, "Notification subject");
+
+		}
+
+		[TestMethod]
+		public void CreateReport_DoNotNotifyIfAmbiguous() {
+			
+			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user), SongArchiveReason.PropertiesUpdated, String.Empty));
+			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user2), SongArchiveReason.PropertiesUpdated, String.Empty));
+			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+
+			var report = repository.List<SongReport>().First();
+			Assert.AreEqual(song, report.Song, "Report was created for song");
+			Assert.IsNull(report.Version, "Version");
+
+			var notification = repository.List<UserMessage>().FirstOrDefault();
+			Assert.IsNull(notification, "notification was not created");
+
+		}
+
 		// Two PVs, no matches, parse song info from the NND PV.
 		[TestMethod]
 		public void FindDuplicates_NoMatches_ParsePVInfo() {
