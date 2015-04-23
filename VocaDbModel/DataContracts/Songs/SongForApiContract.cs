@@ -66,6 +66,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			if (fields.HasFlag(SongOptionalFields.WebLinks))
 				WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
+				
+			if (fields.HasFlag(SongOptionalFields.OriginalVersion))
+				OriginalVersion = song.OriginalVersion;
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
@@ -74,7 +77,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		}
 
 		public SongForApiContract(Song song, SongMergeRecord mergeRecord, ContentLanguagePreference languagePreference, 
-			bool albums = true, bool artists = true, bool names = true, bool pvs = false, bool tags = true, bool thumbUrl = true, bool webLinks = false) {
+			bool albums = true, bool artists = true, bool names = true, bool pvs = false, bool tags = true, bool thumbUrl = true, bool webLinks = false, bool origVer = false) {
 
 			ArtistString = song.ArtistString[languagePreference];
 			CreateDate = song.CreateDate;
@@ -115,6 +118,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			if (webLinks)
 				WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
+				
+			if (origVer)
+				OriginalVersion = song.OriginalVersion;
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
@@ -196,6 +202,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkContract[] WebLinks { get; set; }
+		
+		[DataMember]
+		public int OriginalVersion { get; set; }
 
 	}
 
@@ -211,7 +220,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 		PVs = 32,
 		Tags = 64,
 		ThumbUrl = 128,
-		WebLinks = 256
+		WebLinks = 256,
+		OriginalVersion = 512
 
 	}
 
