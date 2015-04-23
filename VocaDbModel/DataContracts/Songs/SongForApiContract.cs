@@ -68,7 +68,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
 				
 			if (fields.HasFlag(SongOptionalFields.OriginalVersion))
-				OriginalVersion = song.OriginalVersion;
+				OriginalVersion = song.OriginalVersion.id;
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
@@ -120,7 +120,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
 				
 			if (origVer)
-				OriginalVersion = song.OriginalVersion;
+				OriginalVersion = song.OriginalVersion.id;
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
