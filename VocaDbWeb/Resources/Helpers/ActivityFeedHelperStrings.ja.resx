@@ -121,10 +121,10 @@
     <value>-</value>
   <comment>check usage all</comment></data>
   <data name="CreatedAlbum" xml:space="preserve">
-    <value>新しいアルバムが登録されました</value>
+    <value>さんが新しくアルバムを登録しました</value>
   </data>
   <data name="CreatedArtist" xml:space="preserve">
-    <value>新しいアーティストが追加されました</value>
+    <value>さんが新しくアーティストを登録しました</value>
   </data>
   <data name="CreatedNew" xml:space="preserve">
     <value>{0}を樹立された</value>
@@ -136,10 +136,10 @@
     <value>{0}を更新した</value>
   </data>
   <data name="UpdatedAlbum" xml:space="preserve">
-    <value>アルバムが更新されました</value>
+    <value>さんがアルバムを更新しました</value>
   </data>
   <data name="UpdatedArtist" xml:space="preserve">
-    <value>アーティストが更新されました</value>
+    <value>さんがアーティストを更新しました</value>
   </data>
   <data name="UpdatedSong" xml:space="preserve">
     <value>曲が更新されました</value>
