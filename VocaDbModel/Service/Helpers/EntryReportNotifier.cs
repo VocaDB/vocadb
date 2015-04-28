@@ -11,7 +11,8 @@ namespace VocaDb.Model.Service.Helpers {
 		public void SendReportNotification(IRepositoryContext<UserMessage> ctx, 
 			ArchivedObjectVersion reportedVersion, 
 			string notes, 
-			IEntryLinkFactory entryLinkFactory) {
+			IEntryLinkFactory entryLinkFactory,
+			string reportName) {
 			
 			if (reportedVersion == null)
 				return;
@@ -30,9 +31,18 @@ namespace VocaDb.Model.Service.Helpers {
 				title = EntryReportStrings.EntryVersionReportTitle;		
 			}
 
+			// Report type name + notes
+			string notesAndName = notes;
+
+			if (!string.IsNullOrEmpty(reportName) && !string.IsNullOrEmpty(notes)) {
+				notesAndName = string.Format("{0} ({1})", reportName, notes);
+			} else if (string.IsNullOrEmpty(notes)) {
+				notesAndName = reportName;
+			}
+
 			var message = string.Format(body, 
 				MarkdownHelper.CreateMarkdownLink(entryLinkFactory.GetFullEntryUrl(entry), entry.DefaultName), 
-				notes);
+				notesAndName);
 
 			var notification = new UserMessage(receiver, string.Format(title, entry.DefaultName), message, false);
 			ctx.Save(notification);

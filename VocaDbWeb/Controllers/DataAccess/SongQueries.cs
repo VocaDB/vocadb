@@ -24,6 +24,7 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -260,6 +261,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory, report => report.Song.Id == songId, 
 					(song, reporter, notesTruncated) => new SongReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
+					() => reportType != SongReportType.Other ? Translate.SongReportTypeNames[reportType] : null,
 					songId, reportType, hostname, notes);
 			});
 

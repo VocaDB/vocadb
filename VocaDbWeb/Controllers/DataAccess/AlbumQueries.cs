@@ -25,6 +25,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -167,6 +168,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory, report => report.Album.Id == albumId, 
 					(album, reporter, notesTruncated) => new AlbumReport(album, reportType, reporter, hostname, notesTruncated, versionNumber),
+					() => reportType != AlbumReportType.Other ? Translate.AlbumReportTypeNames[reportType] : null,
 					albumId, reportType, hostname, notes);
 			});
 

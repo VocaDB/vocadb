@@ -249,7 +249,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			var version = ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user), SongArchiveReason.PropertiesUpdated, String.Empty);
 			repository.Save(version);
-			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", version.Version);
+			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", version.Version);
 
 			var report = repository.List<SongReport>().First();
 
@@ -284,7 +284,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void CreateReport_NotLoggedIn() {
 			
 			permissionContext.LoggedUser = null;
-			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = repository.List<SongReport>().FirstOrDefault();
 
@@ -300,7 +300,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var editor = user2;
 			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(editor), SongArchiveReason.PropertiesUpdated, String.Empty));
-			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = repository.List<SongReport>().First();
 			Assert.AreEqual(song, report.Song, "Report was created for song");
@@ -318,7 +318,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user2), SongArchiveReason.PropertiesUpdated, String.Empty));
 			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user3), SongArchiveReason.PropertiesUpdated, String.Empty));
-			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = repository.List<SongReport>().First();
 			Assert.AreEqual(song, report.Song, "Report was created for song");
@@ -328,6 +328,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNull(notification, "notification was not created");
 
 		}
+
+		// Create report, with both report type name and notes
+		[TestMethod]
+		[Ignore]
+		public void CreateReport_Notify_ReportTypeNameAndNotes() {
+
+			// TODO: fix test, won't run
+			var editor = user2;
+			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(editor), SongArchiveReason.PropertiesUpdated, String.Empty));
+			queries.CreateReport(song.Id, SongReportType.BrokenPV, "39.39.39.39", "It's Miku, not Rin", null);
+
+			var notification = repository.List<UserMessage>().FirstOrDefault();
+			Assert.IsNotNull(notification, "notification was created");
+			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportTitle, song.DefaultName), notification.Subject, "Notification subject");
+
+		}
+
 
 		// Two PVs, no matches, parse song info from the NND PV.
 		[TestMethod]

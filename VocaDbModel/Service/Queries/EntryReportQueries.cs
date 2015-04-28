@@ -18,6 +18,7 @@ namespace VocaDb.Model.Service.Queries {
 			IEntryLinkFactory entryLinkFactory,
 			Expression<Func<TReport, bool>> addExistingEntryFunc, 
 			Func<TEntry, User, string, TReport> reportFunc, 
+			Func<string> reportNameFunc, 
 			int entryId, TReportType reportType, string hostname, string notes)
 			where TEntry : IEntryWithVersions
 			where TReport : EntryReport {
@@ -38,6 +39,7 @@ namespace VocaDb.Model.Service.Queries {
 			var reporter = ctx.OfType<User>().GetLoggedUserOrNull(permissionContext);
 			var report = reportFunc(entry, reporter, notes.Truncate(EntryReport.MaxNotesLength));
 
+			// Reported version. If a specific version was reported the author is already defined.
 			var versionForReport = report.VersionBase;
 
 			if (versionForReport == null) {
@@ -52,11 +54,19 @@ namespace VocaDb.Model.Service.Queries {
 						firstVersion.Author.Equals(ver.Author)); // Editor is the creator
 
 				if (oneEditor)
-					versionForReport = firstVersion;
+					versionForReport = firstVersion; // TODO: need to include report type in notification
 
 			}
 
-			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory);
+			// Get translated report type name
+			string reportName = null;
+			if (versionForReport != null && versionForReport.Author != null) {
+				using (new ImpersonateUICulture(CultureHelper.GetCultureOrDefault(versionForReport.Author.Language))) {
+					reportName = reportNameFunc();
+				}				
+			}
+
+			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory, reportName);
 
 			if (existing != null)
 				return false;
