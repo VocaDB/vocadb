@@ -55,6 +55,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 			if (fields.HasFlag(SongOptionalFields.Names))
 				Names = song.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 
+			if (song.HasOriginalVersion)
+				OriginalVersionId = song.OriginalVersion.Id;
+
 			if (fields.HasFlag(SongOptionalFields.PVs))
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 
@@ -103,6 +106,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			if (names)
 				Names = song.Names.Select(n => new LocalizedStringContract(n)).ToArray();
+
+			if (song.HasOriginalVersion)
+				OriginalVersionId = song.OriginalVersion.Id;
 
 			if (pvs)
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
@@ -166,6 +172,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember(EmitDefaultValue = false)]
 		public LocalizedStringContract[] Names { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public int OriginalVersionId { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public PVContract[] PVs { get; set; }

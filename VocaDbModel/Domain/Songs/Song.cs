@@ -188,6 +188,10 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual int FavoritedTimes { get; set; }
 
+		/// <summary>
+		/// Tests whether this song has an original version specified.
+		/// This method also tests that the song type isn't "Original", because original songs aren't supposed to have parent songs.
+		/// </summary>
 		public virtual bool HasOriginalVersion {
 			get {
 				return SongType != SongType.Original && OriginalVersion != null;
@@ -266,6 +270,11 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		/// <summary>
+		/// Id of the original (parent) version of this song.
+		/// Can be null.
+		/// Use <see cref="HasOriginalVersion"/> as a shortcut to check both song type and existence of original version.
+		/// </summary>
 		public virtual Song OriginalVersion { get; set; }
 
 		public virtual PVManager<PVForSong> PVs {
