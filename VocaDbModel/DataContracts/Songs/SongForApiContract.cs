@@ -35,6 +35,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Status = song.Status;
 			Version = song.Version;
 
+			if (song.OriginalVersion.Id != null)
+				OriginalVersionId = song.OriginalVersion.Id;
+
 			if (languagePreference != ContentLanguagePreference.Default || fields.HasFlag(SongOptionalFields.AdditionalNames)) {
 				AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
@@ -92,6 +95,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 			SongType = song.SongType;
 			Status = song.Status;
 			Version = song.Version;
+			
+			if (song.OriginalVersion.Id != null)
+				OriginalVersionId = song.OriginalVersion.Id;
 
 			if (languagePreference != ContentLanguagePreference.Default) {
 				AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
@@ -205,6 +211,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkContract[] WebLinks { get; set; }
+		
+		[DataMember]
+		public int OriginalVersionId { get; set; }
 
 	}
 
