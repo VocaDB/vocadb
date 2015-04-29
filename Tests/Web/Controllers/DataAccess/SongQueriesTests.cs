@@ -331,17 +331,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		// Create report, with both report type name and notes
 		[TestMethod]
-		[Ignore]
 		public void CreateReport_Notify_ReportTypeNameAndNotes() {
 
-			// TODO: fix test, won't run
 			var editor = user2;
 			repository.Save(ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(editor), SongArchiveReason.PropertiesUpdated, String.Empty));
 			queries.CreateReport(song.Id, SongReportType.BrokenPV, "39.39.39.39", "It's Miku, not Rin", null);
 
+			var entryLink = MarkdownHelper.CreateMarkdownLink(entryLinkFactory.GetFullEntryUrl(song), song.DefaultName);
+
 			var notification = repository.List<UserMessage>().FirstOrDefault();
 			Assert.IsNotNull(notification, "notification was created");
 			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportTitle, song.DefaultName), notification.Subject, "Notification subject");
+			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportBody, entryLink, "Broken PV (It's Miku, not Rin)"), notification.Message, "Notification body");
 
 		}
 

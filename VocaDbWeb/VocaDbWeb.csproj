@@ -281,16 +281,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryEditEventNames.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryReportTypeNames.de.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntryReportTypeNames.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\EntryReportTypeNames.ja.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntryReportTypeNames.ja.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\EntryStatusNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -556,11 +546,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryEditEventNames.ru.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryReportTypeNames.ru.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntryReportTypeNames.ru.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\EntryStatusNames.fi.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -706,15 +691,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongListFeaturedCategoryNames.ru.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryReportTypeNames.designer.cs">
+    <Compile Include="Resources\Domain\EntryReportTypeNames.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryReportTypeNames.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\EntryReportTypeNames.fi.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntryReportTypeNames.fi.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Songs\SongSortRuleNames.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -2801,15 +2781,12 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ArtistEditableFieldNames.ru.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\EntryReportTypeNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+    <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryReportTypeNames.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_GlobalResources\EntryReportTypeNames.fi.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>EntryReportTypeNames.fi.designer.cs</LastGenOutput>
-    </Content>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.fi.resx" />
     <Content Include="App_GlobalResources\ContentLanguageSelectionNames.fi.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ContentLanguageSelectionNames.fi.designer.cs</LastGenOutput>
@@ -2860,10 +2837,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryEditEventNames.ru.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\EntryReportTypeNames.ru.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>EntryReportTypeNames.ru.designer.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.ru.resx" />
     <Content Include="App_GlobalResources\ReleaseEventEditableFieldNames.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ReleaseEventEditableFieldNames.ru.designer.cs</LastGenOutput>
@@ -3008,10 +2982,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryEditEventNames.de.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\EntryReportTypeNames.de.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>EntryReportTypeNames.de.designer.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.de.resx" />
     <Content Include="App_GlobalResources\EntryStatusNames.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.de.designer.cs</LastGenOutput>
@@ -3076,10 +3047,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ArtistSortRuleNames.ja.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\EntryReportTypeNames.ja.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>EntryReportTypeNames.ja.designer.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.ja.resx" />
     <Content Include="App_GlobalResources\WebLinkCategoryNames.ja.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>WebLinkCategoryNames.ja.designer.cs</LastGenOutput>

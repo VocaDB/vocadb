@@ -26,7 +26,7 @@ namespace VocaDb.Web.Helpers {
 			new TranslateableEnum<MediaType>(() => global::Resources.AlbumMediaTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<AlbumReportType> AlbumReportTypeNames =
-			new TranslateableEnum<AlbumReportType>(() => global::Resources.EntryReportTypeNames.ResourceManager);
+			new TranslateableEnum<AlbumReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<AlbumSortRule> AlbumSortRuleNames =
 			new TranslateableEnum<AlbumSortRule>(() => global::Resources.AlbumSortRuleNames.ResourceManager, new[] {
@@ -35,7 +35,7 @@ namespace VocaDb.Web.Helpers {
 			});
 
 		public static readonly TranslateableEnum<ArtistReportType> ArtistReportTypeNames =
-			new TranslateableEnum<ArtistReportType>(() => global::Resources.EntryReportTypeNames.ResourceManager);
+			new TranslateableEnum<ArtistReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ArtistRoles> ArtistRoleNames =
 			new TranslateableEnum<ArtistRoles>(() => global::Resources.ArtistRoleNames.ResourceManager);
@@ -89,7 +89,7 @@ namespace VocaDb.Web.Helpers {
 			new TranslateableEnum<SongListFeaturedCategory>(() => global::Resources.SongListFeaturedCategoryNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongReportType> SongReportTypeNames =
-			new TranslateableEnum<SongReportType>(() => global::Resources.EntryReportTypeNames.ResourceManager);
+			new TranslateableEnum<SongReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongSortRule> SongSortRuleNames =
 			new TranslateableEnum<SongSortRule>(() => global::Resources.SongSortRuleNames.ResourceManager, new[] { SongSortRule.Name, SongSortRule.AdditionDate, SongSortRule.RatingScore, SongSortRule.FavoritedTimes,  });
@@ -107,7 +107,7 @@ namespace VocaDb.Web.Helpers {
 			new TranslateableEnum<UserGroupId>(() => UserGroupNames.ResourceManager);
 
 		public static readonly TranslateableEnum<UserReportType> UserReportTypeNames =
-			new TranslateableEnum<UserReportType>(() => global::Resources.EntryReportTypeNames.ResourceManager);
+			new TranslateableEnum<UserReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<WebLinkCategory> WebLinkCategoryNames =
 			new TranslateableEnum<WebLinkCategory>(() => global::Resources.WebLinkCategoryNames.ResourceManager);
