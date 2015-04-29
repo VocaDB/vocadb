@@ -3408,6 +3408,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryEditStrings.Designer.cs</LastGenOutput>
@@ -3496,6 +3497,7 @@
       <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\EditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\EditStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
@@ -3525,6 +3527,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\EditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Song\EditStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
@@ -3602,6 +3605,7 @@
     <EmbeddedResource Include="Resources\Views\User\LoginStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LoginUsingAuthStrings.Designer.cs</LastGenOutput>
@@ -3634,6 +3638,7 @@
       <LastGenOutput>RatedSongsStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RequestVerificationStrings.Designer.cs</LastGenOutput>
