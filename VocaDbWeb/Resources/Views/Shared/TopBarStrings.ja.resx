@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EntryReports" xml:space="preserve">
-    <value>リポートを記入</value>
+    <value>レポート調査</value>
   </data>
   <data name="MyAlbums" xml:space="preserve">
-    <value>マイアルバム</value>
+    <value>好きなアルバム</value>
   </data>
   <data name="MySongs" xml:space="preserve">
-    <value>マイソング</value>
+    <value>好きな曲</value>
   </data>
   <data name="ViewAllMessages" xml:space="preserve">
     <value>全てのメッセージを表示</value>

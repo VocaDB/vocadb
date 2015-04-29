@@ -134,7 +134,7 @@
   </data>
   <data name="Hits" xml:space="preserve">
     <value>{0}ヒット数</value>
-    <comment>maybe parametrize</comment>
+    
   </data>
   <data name="LatestComments" xml:space="preserve">
     <value>最近のコメント</value>
@@ -158,7 +158,7 @@
     <value>誤りを報告する</value>
   </data>
   <data name="ReportNotes" xml:space="preserve">
-    <value>ノート</value>
+    <value>メモ</value>
   </data>
   <data name="ReportType" xml:space="preserve">
     <value>報告の種類</value>
@@ -192,5 +192,14 @@
   </data>
   <data name="NoMatches" xml:space="preserve">
     <value>何もないです(´･д･｀)…</value>
+  </data>
+  <data name="ReportNotesRequired" xml:space="preserve">
+    <value>（必須）</value>
+  </data>
+  <data name="ReportArchivedVersionExplanation" xml:space="preserve">
+    <value>この改訂で生じた誤りを報告する。編集したユーザーにも通知が届きます。</value>
+  </data>
+  <data name="ReportArchivedVersionMessage" xml:space="preserve">
+    <value>間違えを説明してください。</value>
   </data>
 </root>

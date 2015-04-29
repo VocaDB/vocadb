@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -148,6 +148,6 @@
     <value>ボカロデータベースへようこそ！</value>
   </data>
   <data name="WelcomeSubtitle" xml:space="preserve">
-    <value>ボカロアーティストやディスコグラフィーやPVの協調データベース</value>
+    <value>ボカロアーティスト、ディスコグラフィー、PV情報などの協同データベース</value>
   </data>
 </root>

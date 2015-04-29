@@ -145,8 +145,8 @@
     <value>リミックス</value>
   </data>
   <data name="Unspecified" xml:space="preserve">
-    <value>条件を指定しない</value>
-  </data>
+    <value>全て</value>
+  <comment>All</comment></data>
   <data name="Live" xml:space="preserve">
     <value>ライブ収録</value>
   </data>
