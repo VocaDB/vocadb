@@ -76,6 +76,7 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.AlbumFormatString).Length(200).Not.Nullable();
 			Map(m => m.EmailVerified).Not.Nullable();
 			Map(m => m.LastLoginAddress).Length(20).Not.Nullable();
+			Map(m => m.LastLoginCulture).Length(20).Not.Nullable();
 			Map(m => m.Location).Length(50).Not.Nullable();
 			Map(m => m.Poisoned).Not.Nullable();
 			Map(m => m.PublicAlbumCollection).Not.Nullable();

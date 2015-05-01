@@ -25,6 +25,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 	[TestClass]
 	public class UserQueriesTests {
 
+		private const string defaultCulture = "ja-JP";
 		private const string defaultHostname = "crypton.jp";
 		private UserQueries data;
 		private FakeUserMessageMailer mailer;
@@ -44,8 +45,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private UserContract CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, TimeSpan? timeSpan = null) {
-			return data.Create(name, pass, email, hostname, timeSpan ?? TimeSpan.FromMinutes(39), softBannedIPs, string.Empty);
+		private UserContract CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, 
+			string culture = defaultCulture, TimeSpan? timeSpan = null) {
+
+			return data.Create(name, pass, email, hostname, 
+				culture,
+				timeSpan ?? TimeSpan.FromMinutes(39), softBannedIPs, string.Empty);
+
 		}
 
 		private PartialFindResult<UserContract> CallGetUsers(UserGroupId groupId = UserGroupId.Nothing, string name = null, bool disabled = false, bool verifiedArtists = false, UserSortRule sortRule = UserSortRule.Name, PagingProperties paging = null) {
@@ -82,7 +88,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CheckAuthentication() {
 
-			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", false);
+			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", defaultCulture, false);
 
 			Assert.AreEqual(true, result.IsOk, "IsOk");
 			AssertEqual(userWithEmail, result.User);
@@ -93,7 +99,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void CheckAuthentication_DifferentCase() {
 
 			userWithEmail.Name = "Already_Exists";
-			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", false);
+			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", defaultCulture, false);
 
 			Assert.AreEqual(true, result.IsOk, "IsOk");
 			AssertEqual(userWithEmail, result.User);
@@ -103,7 +109,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CheckAuthentication_WrongPassword() {
 
-			var result = data.CheckAuthentication("already_exists", "3939", "miku@crypton.jp", false);
+			var result = data.CheckAuthentication("already_exists", "3939", "miku@crypton.jp", defaultCulture, false);
 
 			Assert.AreEqual(false, result.IsOk, "IsOk");
 			Assert.AreEqual(LoginError.InvalidPassword, result.Error, "Error");
@@ -113,7 +119,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CheckAuthentication_NotFound() {
 
-			var result = data.CheckAuthentication("does_not_exist", "3939", "miku@crypton.jp", false);
+			var result = data.CheckAuthentication("does_not_exist", "3939", "miku@crypton.jp", defaultCulture, false);
 
 			Assert.AreEqual(false, result.IsOk, "IsOk");
 			Assert.AreEqual(LoginError.NotFound, result.Error, "Error");
@@ -124,7 +130,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void CheckAuthentication_Poisoned() {
 
 			userWithEmail.Options.Poisoned = true;
-			var result = data.CheckAuthentication(userWithEmail.Name, userWithEmail.Password, "miku@crypton.jp", false);
+			var result = data.CheckAuthentication(userWithEmail.Name, userWithEmail.Password, "miku@crypton.jp", defaultCulture, false);
 
 			Assert.AreEqual(false, result.IsOk, "IsOk");
 			Assert.AreEqual(LoginError.AccountPoisoned, result.Error, "Error");
@@ -135,7 +141,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void CheckAuthentication_LoginWithEmail() {
 
 			userWithEmail.Options.EmailVerified = true; // For now, logging in with email is allowed only if the email is verified
-			var result = data.CheckAuthentication(userWithEmail.Email, "123", "miku@crypton.jp", false);
+			var result = data.CheckAuthentication(userWithEmail.Email, "123", "miku@crypton.jp", defaultCulture, false);
 
 			Assert.AreEqual(true, result.IsOk, "IsOk");
 			AssertEqual(userWithEmail, result.User);
@@ -300,7 +306,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void CreateTwitter() {
 
 			var name = "hatsune_miku";
-			var result = data.CreateTwitter("auth_token", name, "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp");
+			var result = data.CreateTwitter("auth_token", name, "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
 			Assert.IsNotNull(result, "Result is not null");
 			Assert.AreEqual(name, result.Name, "Name");
@@ -310,6 +316,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(name, user.Name, "Name");
 			Assert.AreEqual("mikumiku@crypton.jp", user.Email, "Email");
 			Assert.AreEqual(UserGroupId.Regular, user.GroupId, "GroupId");
+			Assert.AreEqual("ja-JP", user.Options.LastLoginCulture, "LastLoginCulture");
 
 			Assert.AreEqual("auth_token", user.Options.TwitterOAuthToken, "TwitterOAuthToken");
 			Assert.AreEqual(39, user.Options.TwitterId, "TwitterId");
@@ -321,7 +328,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
 		public void CreateTwitter_NameAlreadyExists() {
 
-			data.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp");
+			data.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
 		}
 
@@ -329,7 +336,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
 		public void CreateTwitter_EmailAlreadyExists() {
 
-			data.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp");
+			data.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
 		}
 
@@ -337,7 +344,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(InvalidEmailFormatException))]
 		public void CreateTwitter_InvalidEmailFormat() {
 
-			data.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp");
+			data.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
 		}
 

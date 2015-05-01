@@ -554,9 +554,10 @@ namespace VocaDb.Model.Domain.Users {
 			return string.Format("user '{0}' [{1}]", Name, Id);
 		}
 
-		public virtual void UpdateLastLogin(string host) {
+		public virtual void UpdateLastLogin(string host, string culture) {
 			LastLogin = DateTime.Now;
 			Options.LastLoginAddress = host;
+			Options.LastLoginCulture = culture;
 		}
 
 	}

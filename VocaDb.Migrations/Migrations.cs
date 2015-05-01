@@ -3,6 +3,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201504302045)]
+	public class UserLastLoginCulture : AutoReversingMigration {
+
+		public override void Up() {
+		
+			Create.Column("LastLoginCulture").OnTable(TableNames.UserOptions).AsString(20).NotNullable().WithDefaultValue(string.Empty);
+
+		}
+
+	}
+
 	[Migration(201504111700)]
 	public class EntryReportVersionNumber : AutoReversingMigration {
 

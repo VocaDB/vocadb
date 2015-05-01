@@ -67,6 +67,7 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -199,6 +200,7 @@
     <Compile Include="Web\Controllers\SongListControllerTests.cs" />
     <Compile Include="Web\Controllers\TagControllerTests.cs" />
     <Compile Include="Web\Controllers\UserControllerTests.cs" />
+    <Compile Include="Web\Helpers\WebHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
@@ -223,7 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mocks\" />
-    <Folder Include="Web\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestData\yokohma_bay_concert.jpg" />

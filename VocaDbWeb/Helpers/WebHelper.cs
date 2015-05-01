@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
 using NLog;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Helpers {
@@ -17,6 +19,35 @@ namespace VocaDb.Web.Helpers {
 		private static readonly string[] forbiddenUserAgents = {
 			"Googlebot", "bingbot"
 		};
+
+		/// <summary>
+		/// Gets the user interface culture name from the current request, as specified by the client.
+		/// The first culture, if any, that matches one of the available user interface languages is returned.
+		/// </summary>
+		/// <param name="request">HTTP request.</param>
+		/// <returns>Culture name. Empty if not matched.</returns>
+		public static string GetInterfaceCultureName(HttpRequestBase request) {
+
+			if (request.UserLanguages == null || !request.UserLanguages.Any())
+				return string.Empty;
+
+			var allowedCultures = InterfaceLanguage.Cultures.ToArray();
+
+			foreach (var lang in request.UserLanguages) {
+
+				var parsed = lang.Split(';')[0]; // en-US;q=0.8 -> en-US
+
+				try {
+					var cultureInfo = CultureInfo.GetCultureInfo(parsed);
+					if (allowedCultures.Any(c => c.TwoLetterISOLanguageName == cultureInfo.TwoLetterISOLanguageName))
+						return cultureInfo.Name;
+				} catch (CultureNotFoundException) {}
+
+			}
+
+			return string.Empty;
+
+		}
 
 		public static string GetRealHost(HttpRequestBase request) {
 

@@ -15,10 +15,12 @@
 		private string realname;
 		private string twitterName;
 		private User user;
+		private string lastLoginCulture;
 
 		public UserOptions() {		
 	 
 			LastLoginAddress 
+				= LastLoginCulture
 				= AboutMe
 				= AlbumFormatString
 				= Location
@@ -59,6 +61,14 @@
 		public virtual bool EmailVerified { get; set; }
 
 		public virtual int Id { get; set; }
+
+		public virtual string LastLoginCulture {
+			get { return lastLoginCulture; }
+			set {
+				ParamIs.NotNull(() => value);
+				lastLoginCulture = value;
+			}
+		}
 
 		public virtual string LastLoginAddress {
 			get { return lastLoginAddress; }

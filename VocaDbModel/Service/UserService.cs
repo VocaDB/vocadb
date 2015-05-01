@@ -161,7 +161,7 @@ namespace VocaDb.Model.Service {
 
 		}*/
 
-		public UserContract CheckTwitterAuthentication(string accessToken, string hostname) {
+		public UserContract CheckTwitterAuthentication(string accessToken, string hostname, string culture) {
 
 			return HandleTransaction(session => {
 
@@ -173,7 +173,7 @@ namespace VocaDb.Model.Service {
 
 				AuditLog(string.Format("logged in from {0} with twitter.", MakeGeoIpToolLink(hostname)), session, user);
 
-				user.UpdateLastLogin(hostname);
+				user.UpdateLastLogin(hostname, culture);
 				session.Update(user);
 
 				return new UserContract(user);

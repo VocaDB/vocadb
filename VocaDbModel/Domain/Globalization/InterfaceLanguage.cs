@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		public static IEnumerable<CultureInfo> Cultures {
 			get {
-				return LanguageCodes.Select(l => new CultureInfo(l));
+				return LanguageCodes.Select(CultureInfo.GetCultureInfo);
 			}
 		}
 

@@ -285,9 +285,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		/// <param name="name">Username. Cannot be null.</param>
 		/// <param name="pass">Password. Cannot be null.</param>
 		/// <param name="hostname">Host name where the user is logging in from. Cannot be null.</param>
+		/// <param name="culture">User culture name. Can be empty.</param>
 		/// <param name="delayFailedLogin">Whether failed login should cause artificial delay.</param>
 		/// <returns>Login attempt result. Cannot be null.</returns>
-		public LoginResult CheckAuthentication(string name, string pass, string hostname, bool delayFailedLogin) {
+		public LoginResult CheckAuthentication(string name, string pass, string hostname, string culture, bool delayFailedLogin) {
 
 			if (string.IsNullOrWhiteSpace(name) || string.IsNullOrEmpty(pass))
 				return LoginResult.CreateError(LoginError.InvalidPassword);
@@ -324,7 +325,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				// Login attempt successful.
 				ctx.AuditLogger.AuditLog(string.Format("logged in from {0} with '{1}'.", MakeGeoIpToolLink(hostname), name), user);
 
-				user.UpdateLastLogin(hostname);
+				user.UpdateLastLogin(hostname, culture);
 				ctx.Update(user);
 
 				return LoginResult.CreateSuccess(new UserContract(user));
@@ -459,6 +460,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		/// <param name="pass">Password. Cannot be null or empty.</param>
 		/// <param name="email">Email address. Must be unique if specified. Cannot be null.</param>
 		/// <param name="hostname">Host name where the registration is from.</param>
+		/// <param name="culture">User culture name. Can be empty.</param>
 		/// <param name="timeSpan">Time in which the user filled the registration form.</param>
 		/// <param name="softbannedIPs">List of application's soft-banned IPs. Soft-banned IPs are cleared when the application restarts.</param>
 		/// <param name="verifyEmailUrl">Email verification URL. Cannot be null.</param>
@@ -467,7 +469,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		/// <exception cref="UserNameAlreadyExistsException">If the user name was already taken.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
 		/// <exception cref="TooFastRegistrationException">If the user registered too fast.</exception>
-		public UserContract Create(string name, string pass, string email, string hostname, TimeSpan timeSpan,
+		public UserContract Create(string name, string pass, string email, string hostname, 
+			string culture,
+			TimeSpan timeSpan,
 			HostCollection softbannedIPs, string verifyEmailUrl) {
 
 			ParamIs.NotNullOrEmpty(() => name);
@@ -513,7 +517,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var salt = new Random().Next();
 				var hashed = LoginManager.GetHashedPass(lc, pass, salt);
 				var user = new User(name, hashed, email, salt);
-				user.UpdateLastLogin(hostname);
+				user.UpdateLastLogin(hostname, culture);
 				ctx.Save(user);
 
 				if (sfsCheckResult != null && sfsCheckResult.Conclusion == SFSCheckResultType.Malicious) {
@@ -551,11 +555,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		/// <param name="twitterId">Twitter user Id. Cannot be null or empty.</param>
 		/// <param name="twitterName">Twitter user name. Cannot be null.</param>
 		/// <param name="hostname">Host name where the registration is from.</param>
+		/// <param name="culture">User culture name. Can be empty.</param>
 		/// <returns>Data contract for the created user. Cannot be null.</returns>
 		/// <exception cref="InvalidEmailFormatException">If the email format was invalid.</exception>
 		/// <exception cref="UserNameAlreadyExistsException">If the user name was already taken.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
-		public UserContract CreateTwitter(string authToken, string name, string email, int twitterId, string twitterName, string hostname) {
+		public UserContract CreateTwitter(string authToken, string name, string email, int twitterId, string twitterName, string hostname, string culture) {
 
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNull(() => email);
@@ -584,7 +589,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				user.Options.TwitterId = twitterId;
 				user.Options.TwitterName = twitterName;
 				user.Options.TwitterOAuthToken = authToken;
-				user.UpdateLastLogin(hostname);
+				user.UpdateLastLogin(hostname, culture);
 				ctx.Save(user);
 
 				ctx.AuditLogger.AuditLog(string.Format("registered from {0} using Twitter name '{1}'.", MakeGeoIpToolLink(hostname), twitterName), user);

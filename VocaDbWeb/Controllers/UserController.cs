@@ -296,7 +296,8 @@ namespace VocaDb.Web.Controllers
 			if (ModelState.IsValid) {
 
 				var host = WebHelper.GetRealHost(Request);
-				var result = Data.CheckAuthentication(model.UserName, model.Password, host, true);
+				var culture = WebHelper.GetInterfaceCultureName(Request);
+				var result = Data.CheckAuthentication(model.UserName, model.Password, host, culture, true);
 
 				if (!result.IsOk) {
 
@@ -392,7 +393,8 @@ namespace VocaDb.Web.Controllers
 				return View("Login", new LoginModel(string.Empty, !WebHelper.IsSSL(Request), true));
 			}
 
-			var user = Service.CheckTwitterAuthentication(response.AccessToken, Hostname);
+			var culture = WebHelper.GetInterfaceCultureName(Request);
+			var user = Service.CheckTwitterAuthentication(response.AccessToken, Hostname, culture);
 
 			if (user == null) {
 				int twitterId;
@@ -424,7 +426,7 @@ namespace VocaDb.Web.Controllers
 			try {
 
 				var user = Data.CreateTwitter(model.AccessToken, model.UserName, model.Email ?? string.Empty,
-					model.TwitterId, model.TwitterName, Hostname);
+					model.TwitterId, model.TwitterName, Hostname, WebHelper.GetInterfaceCultureName(Request));
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 
 				return RedirectToAction("Index", "Home");
@@ -540,7 +542,9 @@ namespace VocaDb.Web.Controllers
 	        try {
 
 				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
-				var user = Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname, time, ipRuleManager.TempBannedIPs, url);
+				var user = Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname, 
+					WebHelper.GetInterfaceCultureName(Request),
+					time, ipRuleManager.TempBannedIPs, url);
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 		        return RedirectToAction("Index", "Home");
 
