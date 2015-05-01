@@ -70,146 +70,149 @@
 	</ul>
 
 	<div id="basicInfoTab">
+		
+		<div class="clearfix">
+			<!-- Artist picture -->
+			<div class="pull-left">
+				<a href="@Url.Action("Picture", new { id = Model.Id, v = Model.Version })">
+					<img src="@Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Thumb)" alt="@ViewRes.Artist.DetailsStrings.ArtistPicture" class="coverPic" />
+				</a>				
+			</div>
 
-		<table class="properties">
-			<tr>
-				<td rowspan="12">
-					<a href="@Url.Action("Picture", new { id = Model.Id, v = Model.Version })">
-						<img src="@Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Thumb)" alt="@ViewRes.Artist.DetailsStrings.ArtistPicture" class="coverPic" />
-					</a>
-				</td>
-				<td class="entry-field-label-col">@ViewRes.SharedStrings.ArtistName</td>
-				<td>
-					@Model.Name<br />
-					<span class="extraInfo">@Model.AdditionalNames</span>
-				</td>
-			</tr>
-		@if (!Model.Description.IsEmpty) {
-			<tr>
-				<td>@ViewRes.SharedStrings.Description</td>
-				<td class="entry-description">
-					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
-				</td>	
-			</tr>
-		}
-			<tr>
-				<td>@ViewRes.SharedStrings.Type</td>
-				<td>
-					@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
-					@Html.ActionLink(Translate.ArtistTypeName(Model.ArtistType), "Index", new { artistType = Model.ArtistType })<br />
-				</td>	
-			</tr>
-
-			<tr>
-				<td>@ViewRes.SharedStrings.Tags</td>
-				<td>
-					<div data-bind="with: tagUsages" class="entry-tag-usages">
-						@{ Html.RenderPartial("Partials/_TagList"); }
-					</div>
-					<a data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
-					@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {
-						@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
-					}
-				</td>
-			</tr>
-
-			@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
-			
-			@if (Model.OwnerUsers.Any()) {
+			<table class="properties">
 				<tr>
+					<td class="entry-field-label-col">@ViewRes.SharedStrings.ArtistName</td>
 					<td>
-						@R.DetailsStrings.AuthoredBy						
-					</td>
-					<td>
-						@foreach (var user in Model.OwnerUsers) {
-							@UserHelpers.UserIconLink(user)
-							<br />
-						}						
+						@Model.Name<br />
+						<span class="extraInfo">@Model.AdditionalNames</span>
 					</td>
 				</tr>
-			}
-			
-			@if (Model.BaseVoicebank != null) {
-			<tr>
-				<td>
-					<span>
-						@ViewRes.Artist.DetailsStrings.BaseVoicebank
-					</span>
-				</td>
-				<td id="baseVoicebank">
-					@ArtistHelpers.ArtistLink(Model.BaseVoicebank)
-				</td>
-			</tr>				
-			}
+				@if (!Model.Description.IsEmpty) {
+				<tr>
+					<td>@ViewRes.SharedStrings.Description</td>
+					<td class="entry-description">
+						@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
+					</td>	
+				</tr>
+				}
+				<tr>
+					<td>@ViewRes.SharedStrings.Type</td>
+					<td>
+						@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
+						@Html.ActionLink(Translate.ArtistTypeName(Model.ArtistType), "Index", new { artistType = Model.ArtistType })<br />
+					</td>	
+				</tr>
 
-			@if (Model.ChildVoicebanks.Any()) {
+				<tr>
+					<td>@ViewRes.SharedStrings.Tags</td>
+					<td>
+						<div data-bind="with: tagUsages" class="entry-tag-usages">
+							@{ Html.RenderPartial("Partials/_TagList"); }
+						</div>
+						<a data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+						@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {
+							@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
+						}
+					</td>
+				</tr>
+
+				@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
+			
+				@if (Model.OwnerUsers.Any()) {
+					<tr>
+						<td>
+							@R.DetailsStrings.AuthoredBy						
+						</td>
+						<td>
+							@foreach (var user in Model.OwnerUsers) {
+								@UserHelpers.UserIconLink(user)
+								<br />
+							}						
+						</td>
+					</tr>
+				}
+			
+				@if (Model.BaseVoicebank != null) {
 				<tr>
 					<td>
 						<span>
-							@ViewRes.Artist.DetailsStrings.ChildVoicebanks
+							@ViewRes.Artist.DetailsStrings.BaseVoicebank
 						</span>
 					</td>
-					<td id="childVoicebanks">
-						@foreach (var a in Model.ChildVoicebanks) {
-							@ArtistHelpers.ArtistLink(a)
-							if (a != Model.ChildVoicebanks.Last()) {
+					<td id="baseVoicebank">
+						@ArtistHelpers.ArtistLink(Model.BaseVoicebank)
+					</td>
+				</tr>				
+				}
+
+				@if (Model.ChildVoicebanks.Any()) {
+					<tr>
+						<td>
+							<span>
+								@ViewRes.Artist.DetailsStrings.ChildVoicebanks
+							</span>
+						</td>
+						<td id="childVoicebanks">
+							@foreach (var a in Model.ChildVoicebanks) {
+								@ArtistHelpers.ArtistLink(a)
+								if (a != Model.ChildVoicebanks.Last()) {
+									@(", ")
+								}
+							}
+						</td>
+					</tr>
+				}
+
+				@if (Model.Groups.Any()) {
+				<tr>
+					<td>
+						<span title="@ViewRes.Artist.DetailsStrings.GroupsHelp">
+							@ViewRes.Artist.DetailsStrings.Groups
+						</span>
+					</td>
+					<td id="groups">
+						@foreach (var grp in Model.Groups) {
+							@ArtistHelpers.ArtistLink(grp.Group)
+							if (grp != Model.Groups.Last()) {
 								@(", ")
 							}
 						}
 					</td>
 				</tr>
-			}
-
-			@if (Model.Groups.Any()) {
-			<tr>
-				<td>
-					<span title="@ViewRes.Artist.DetailsStrings.GroupsHelp">
-						@ViewRes.Artist.DetailsStrings.Groups
-					</span>
-				</td>
-				<td id="groups">
-					@foreach (var grp in Model.Groups) {
-						@ArtistHelpers.ArtistLink(grp.Group)
-						if (grp != Model.Groups.Last()) {
-							@(", ")
-						}
-					}
-				</td>
-			</tr>
-			}
+				}
   
-			<tr>
-				<td>@ViewRes.EntryDetailsStrings.Stats</td>
-				<td>
-					@string.Format(Res.FollowCount, Model.SharedStats.FollowerCount)
-					@if (Model.SharedStats.RatedSongCount > 0) {
-						@:@string.Format(Res.RatedSongs, Model.SharedStats.RatedSongCount)
-					}
-					@if (Model.SharedStats.RatedAlbumCount > 0) {
-						@:@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount)
-						@:@string.Format(Res.AverageAlbumRating, Model.SharedStats.AlbumRatingAverage)
-					}
-					@if (Model.PersonalStats != null && Model.PersonalStats.SongRatingCount > 0) {
-						@Html.ActionLink(string.Format(Res.YouHaveRatedSongs, Model.PersonalStats.SongRatingCount), "Index", "Search",
-							new SearchIndexViewModel(EntryType.Song) { ArtistId = Model.Id, OnlyRatedSongs = true }, null);
-					}
-					@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
-						<p>
-							@Res.MostlyUses @Html.LinkList(Model.AdvancedStats.TopVocaloids, a => new MvcHtmlString(ArtistHelpers.ArtistLink(a.Data, typeLabel: true).ToString())).
-						</p>
-					}
-				</td>
-			</tr>
+				<tr>
+					<td>@ViewRes.EntryDetailsStrings.Stats</td>
+					<td>
+						@string.Format(Res.FollowCount, Model.SharedStats.FollowerCount)
+						@if (Model.SharedStats.RatedSongCount > 0) {
+							@:@string.Format(Res.RatedSongs, Model.SharedStats.RatedSongCount)
+						}
+						@if (Model.SharedStats.RatedAlbumCount > 0) {
+							@:@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount)
+							@:@string.Format(Res.AverageAlbumRating, Model.SharedStats.AlbumRatingAverage)
+						}
+						@if (Model.PersonalStats != null && Model.PersonalStats.SongRatingCount > 0) {
+							@Html.ActionLink(string.Format(Res.YouHaveRatedSongs, Model.PersonalStats.SongRatingCount), "Index", "Search",
+								new SearchIndexViewModel(EntryType.Song) { ArtistId = Model.Id, OnlyRatedSongs = true }, null);
+						}
+						@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
+							<p>
+								@Res.MostlyUses @Html.LinkList(Model.AdvancedStats.TopVocaloids, a => new MvcHtmlString(ArtistHelpers.ArtistLink(a.Data, typeLabel: true).ToString())).
+							</p>
+						}
+					</td>
+				</tr>
 
-			<tr>
-				<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
-				<td>
-					@Helpers.UniversalTimeLabel(Model.CreateDate)
-				</td>	
-			</tr>	   
+				<tr>
+					<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
+					<td>
+						@Helpers.UniversalTimeLabel(Model.CreateDate)
+					</td>	
+				</tr>	   
 			
-		</table>
-	
+			</table>
+		</div>	
 
 		@if (Model.Members.Any()) {
 			<h3>@ViewRes.Artist.DetailsStrings.Members</h3>
