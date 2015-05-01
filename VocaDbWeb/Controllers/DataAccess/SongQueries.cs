@@ -493,6 +493,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				target.UpdateArtistString();
 				target.UpdateNicoId();
 
+				Archive(ctx, source, SongArchiveReason.Deleted, string.Format("Merged to {0}", target));
 				Archive(ctx, target, SongArchiveReason.Merged, string.Format("Merged from {0}", source));
 
 				ctx.Update(source);

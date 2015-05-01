@@ -356,6 +356,7 @@ namespace VocaDb.Model.Service {
 
 				source.Deleted = true;
 
+				Archive(session, source, ArtistArchiveReason.Deleted, string.Format("Merged to {0}", target));
 				Archive(session, target, ArtistArchiveReason.Merged, string.Format("Merged from '{0}'", source));
 
 				NHibernateUtil.Initialize(source.Picture);

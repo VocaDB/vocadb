@@ -323,6 +323,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				target.UpdateArtistString();
 				target.Names.UpdateSortNames();
 
+				Archive(session, source, AlbumArchiveReason.Deleted, string.Format("Merged to {0}", target));
 				Archive(session, target, AlbumArchiveReason.Merged, string.Format("Merged from {0}", source));
 
 				session.Update(source);
