@@ -1,11 +1,14 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Models.Search;
 
 namespace VocaDb.Web.Controllers
@@ -17,6 +20,7 @@ namespace VocaDb.Web.Controllers
 		private readonly ArtistService artistService;
         private readonly OtherService services;
 		private readonly SongService songService;
+		private readonly TagQueries tagQueries;
 
 		private ActionResult RedirectToAlbum(int id) {
 			return RedirectToAction("Details", "Album", new { id });			
@@ -28,6 +32,10 @@ namespace VocaDb.Web.Controllers
 
 		private ActionResult RedirectToSong(int id) {
 			return RedirectToAction("Details", "Song", new { id });			
+		}
+
+		private ActionResult RedirectToTag(string name) {
+			return RedirectToAction("Details", "Tag", new { name });			
 		}
 
 		private ActionResult TryRedirect(string filter, EntryType searchType) {
@@ -80,6 +88,13 @@ namespace VocaDb.Web.Controllers
 					}
 					break;
 
+				case EntryType.Tag:
+					var tags = tagQueries.Find(t => t.Name, new CommonSearchParams(textQuery, false, true, true), PagingProperties.FirstPage(2), true);
+					if (tags.Items.Length == 1) {
+						return RedirectToTag(tags.Items.First());
+					}
+					break;
+
 				default: {
 					var action = "Index";
 					var controller = searchType.ToString();
@@ -92,11 +107,12 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService) {
+		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService, TagQueries tagQueries) {
 			this.services = services;
 			this.artistService = artistService;
 			this.albumService = albumService;
 			this.songService = songService;
+			this.tagQueries = tagQueries;
 		}
 
 		public ActionResult Index(SearchIndexViewModel viewModel) {

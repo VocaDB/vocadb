@@ -10,9 +10,10 @@ namespace VocaDb.Web.Models.Search {
 		public SearchIndexViewModel()
 			: this(EntryType.Undefined) {}
 
-		public SearchIndexViewModel(EntryType searchType) {
+		public SearchIndexViewModel(EntryType searchType, string filter = null) {
 			AllowRedirect = true;
 			SearchType = searchType;
+			Filter = filter;
 		}
 
 		public bool AllowRedirect { get; set; }

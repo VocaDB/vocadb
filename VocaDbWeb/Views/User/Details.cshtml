@@ -219,7 +219,7 @@
 				@Helpers.UniversalTimeLabel(Model.LastLogin)
 				if (Login.CanManageUsers)
 				{
-					@(" (")<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>@Model.LastLoginAddress</a>@(")")
+					@:(<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>@Model.LastLoginAddress</a>)
 					<a data-bind="click: function() { checkSFS('@Model.LastLoginAddress'); }" href='#'>StopForumSpam</a>
 				}
 

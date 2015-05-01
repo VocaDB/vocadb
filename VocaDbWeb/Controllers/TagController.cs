@@ -5,6 +5,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Models.Search;
 using VocaDb.Web.Models.Tag;
 
 namespace VocaDb.Web.Controllers
@@ -91,6 +92,8 @@ namespace VocaDb.Web.Controllers
 				if (tagName != null) {
 					return RedirectToAction("Details", new { id = tagName });
 				}
+
+				return RedirectToAction("Index", "Search", new SearchIndexViewModel(EntryType.Tag, filter));
 
 			}
 
