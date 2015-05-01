@@ -22,7 +22,11 @@ namespace VocaDb.Model.Helpers {
 			if (string.IsNullOrEmpty(cultureName))
 				return Default;
 
-			return CultureInfo.GetCultureInfo(cultureName);
+			try {
+				return CultureInfo.GetCultureInfo(cultureName);
+			} catch (CultureNotFoundException) {
+				return Default;
+			}
 
 		}
 

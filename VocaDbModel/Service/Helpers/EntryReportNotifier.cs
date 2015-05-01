@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 			string body, title;
 
-			using (new ImpersonateUICulture(CultureHelper.GetCultureOrDefault(receiver.Language))) {
+			using (new ImpersonateUICulture(CultureHelper.GetCultureOrDefault(receiver.LanguageOrLastLoginCulture))) {
 				body = EntryReportStrings.EntryVersionReportBody;
 				title = EntryReportStrings.EntryVersionReportTitle;		
 			}

@@ -265,6 +265,18 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// User's language setting or last login culture if language is not set (automatic).
+		/// Can be empty if neither is set.
+		/// </summary>
+		public virtual string LanguageOrLastLoginCulture {
+			get {
+				
+				return !string.IsNullOrEmpty(Language) ? Language : Options.LastLoginCulture;
+
+			}
+		}
+
 		public virtual DateTime LastLogin { get; set; }
 
 		/// <summary>

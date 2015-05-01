@@ -61,7 +61,7 @@ namespace VocaDb.Model.Service.Queries {
 			// Get translated report type name
 			string reportName = null;
 			if (versionForReport != null && versionForReport.Author != null) {
-				using (new ImpersonateUICulture(CultureHelper.GetCultureOrDefault(versionForReport.Author.Language))) {
+				using (new ImpersonateUICulture(CultureHelper.GetCultureOrDefault(versionForReport.Author.LanguageOrLastLoginCulture))) {
 					reportName = reportNameFunc();
 				}				
 			}
