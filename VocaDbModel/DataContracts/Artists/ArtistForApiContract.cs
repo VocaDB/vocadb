@@ -97,6 +97,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		[DataMember]
 		public int Id { get; set; }
 
+		[Obsolete("Use Name")]
 		[DataMember(EmitDefaultValue = false)]
 		public string LocalizedName { get; set; }
 

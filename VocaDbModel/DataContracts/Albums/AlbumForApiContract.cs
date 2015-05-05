@@ -128,6 +128,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		[DataMember(EmitDefaultValue = false)]
 		public AlbumIdentifierContract[] Identifiers { get; set; }
 
+		[Obsolete("Use Name")]
 		[DataMember(EmitDefaultValue = false)]
 		public string LocalizedName { get; set; }
 

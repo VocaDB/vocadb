@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Description;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
@@ -326,24 +327,42 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets tags for a specific album and information whether the logged in user has voted on those tags.
+		/// </summary>
+		/// <param name="albumId">Album Id.</param>
+		/// <returns>List of tags with selections by the current user.</returns>
 		[Route("current/albumTags/{albumId:int}")]
 		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagSelectionContract[] GetAlbumTags(int albumId) {
 			
 			return queries.GetAlbumTagSelections(albumId, permissionContext.LoggedUserId);
 
 		}
 
+		/// <summary>
+		/// Gets tags for a specific artist and information whether the logged in user has voted on those tags.
+		/// </summary>
+		/// <param name="artistId">Artist Id.</param>
+		/// <returns>List of tags with selections by the current user.</returns>
 		[Route("current/artistTags/{artistId:int}")]
 		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagSelectionContract[] GetArtistTags(int artistId) {
 			
 			return queries.GetArtistTagSelections(artistId, permissionContext.LoggedUserId);
 
 		}
 
+		/// <summary>
+		/// Gets tags for a specific song and information whether the logged in user has voted on those tags.
+		/// </summary>
+		/// <param name="songId">Song Id.</param>
+		/// <returns>List of tags with selections by the current user.</returns>
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagSelectionContract[] GetSongTags(int songId) {
 			
 			return queries.GetSongTagSelections(songId, permissionContext.LoggedUserId);
@@ -403,8 +422,15 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Updates tag selections for an album by the logged in user.
+		/// </summary>
+		/// <param name="albumId">Album Id.</param>
+		/// <param name="tags">List of names of tags that the user has selected.</param>
+		/// <returns>List of tag usages with information on how many times a particular tag has been added.</returns>
 		[Route("current/albumTags/{albumId:int}")]
 		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagUsageForApiContract[] PutAlbumTags(int albumId, [FromUri] string[] tags) {
 			
 			if (tags == null)
@@ -417,6 +443,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("current/artistTags/{artistId:int}")]
 		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagUsageForApiContract[] PutArtistTags(int artistId, [FromUri] string[] tags) {
 			
 			if (tags == null)
@@ -449,6 +476,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagUsageForApiContract[] PutSongTags(int songId, [FromUri] string[] tags) {
 			
 			if (tags == null)

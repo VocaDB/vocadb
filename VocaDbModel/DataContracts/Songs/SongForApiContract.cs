@@ -127,28 +127,52 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		}
 
+		/// <summary>
+		/// Comma-separated list of all other names that aren't the display name.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set;}
 
+		/// <summary>
+		/// List of albums this song appears on. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public AlbumContract[] Albums { get; set; }
 
+		/// <summary>
+		/// List of artists for this song. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public ArtistForSongContract[] Artists { get; set; }
 
+		/// <summary>
+		/// Artist string, for example "Tripshots feat. Hatsune Miku".
+		/// </summary>
 		[DataMember]
 		public string ArtistString { get; set; }
 
+		/// <summary>
+		/// Date this entry was created.
+		/// </summary>
 		[DataMember]
 		public DateTime CreateDate { get; set; }
 
+		/// <summary>
+		/// Name in default language.
+		/// </summary>
 		[DataMember]
 		public string DefaultName { get; set; }
 
+		/// <summary>
+		/// Language selection of the original name.
+		/// </summary>
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
+		/// <summary>
+		/// Number of times this song has been favorited.
+		/// </summary>
 		[DataMember]
 		public int FavoritedTimes { get; set; }
 
@@ -158,31 +182,56 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember]
 		public int LengthSeconds { get; set; }
 
+		[Obsolete("Use Name")]
 		[DataMember(EmitDefaultValue = false)]
 		public string LocalizedName { get; set; }
 
+		/// <summary>
+		/// List of lyrics. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public LyricsForSongContract[] Lyrics { get; set; }
 
+		/// <summary>
+		/// Id of the song this song was merged to, if any.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public int MergedTo { get; set; }
 
+		/// <summary>
+		/// Display name (primary name in selected language, or default language).
+		/// </summary>
 		[DataMember]
 		public string Name { get; set; }
 
+		/// <summary>
+		/// List of all names for this entry. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public LocalizedStringContract[] Names { get; set; }
 
+		/// <summary>
+		/// Id of the original (parent) song, if any.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public int OriginalVersionId { get; set; }
 
+		/// <summary>
+		/// List of PVs. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public PVContract[] PVs { get; set; }
 
+		/// <summary>
+		/// List of streaming services this song has PVs for.
+		/// </summary>
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PVServices PVServices { get; set; }
 
+		/// <summary>
+		/// Total sum of ratings.
+		/// </summary>
 		[DataMember]
 		public int RatingScore { get; set; }
 
@@ -194,15 +243,24 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
 
+		/// <summary>
+		/// List of tags. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public TagUsageForApiContract[] Tags { get; set; }
 
+		/// <summary>
+		/// URL to the thumbnail. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public string ThumbUrl { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }
 
+		/// <summary>
+		/// List of external links. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkContract[] WebLinks { get; set; }
 
