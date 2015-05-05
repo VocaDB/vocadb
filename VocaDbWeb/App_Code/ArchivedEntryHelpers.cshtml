@@ -254,7 +254,8 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 		<td colspan="@(compareRows != null ? 1 : 2)">
 			<ul>
 			@foreach (var row in rows) {
-				<li>@row</li>
+				var isNew = (compareRows != null && !compareRows.Any(r => row.ToString().Equals(r.ToString())));
+				<li class="@(isNew ? "archived-entry-compare-modified" : "")">@row</li>
 			}			
 			</ul>
 		</td>
@@ -262,7 +263,8 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 		<td>
 				<ul>
 				@foreach (var row in compareRows) {
-					<li>@row</li>
+					var isRemoved = !rows.Any(r => row.ToString().Equals(r.ToString()));
+					<li class="@(isRemoved ? "archived-entry-compare-modified" : "")">@row</li>
 				}			
 				</ul>	
 		</td>
