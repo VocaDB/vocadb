@@ -22,6 +22,12 @@ namespace VocaDb.Model.Helpers {
 		public const int DefaultTinyThumbSize = 70;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+		/// <summary>
+		/// Opens image and logs an exception if the image cannot be opened.
+		/// </summary>
+		/// <param name="stream">File stream. Cannot be null.</param>
+		/// <returns>Opened image which must be disposed after using. Cannot be null.</returns>
+		/// <exception cref="InvalidPictureException">If the image could not be opened. Most likely the file is broken.</exception>
 		public static Image OpenImage(Stream stream) {
 			try {
 				return Image.FromStream(stream);
@@ -122,6 +128,9 @@ namespace VocaDb.Model.Helpers {
 		}
 	}
 
+	/// <summary>
+	/// Exception thrown if there was an error while opening a picture file.
+	/// </summary>
 	public class InvalidPictureException : Exception {
 		public InvalidPictureException() {}
 		public InvalidPictureException(string message) : base(message) {}

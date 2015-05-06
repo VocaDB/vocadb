@@ -65,6 +65,7 @@ namespace VocaDb.Model.Domain {
 		/// <summary>
 		/// Generates thumbnails and writes the original file into external image files.
 		/// </summary>
+		/// <exception cref="InvalidPictureException">If the image could not be opened. Most likely the file is broken.</exception>
 		public void GenerateThumbsAndMoveImage(ImageThumbGenerator thumbGenerator, IEnumerable<EntryPictureFile> pictureFiles, ImageSizes imageSizes) {
 
 			foreach (var pictureFile in pictureFiles) {

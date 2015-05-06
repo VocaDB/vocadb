@@ -283,7 +283,12 @@ namespace VocaDb.Web.Controllers
 				return View(new AlbumEditViewModel(Service.GetAlbum(model.Id), PermissionContext, model));
 			}
 
-			queries.UpdateBasicProperties(model, pictureData);
+			try {
+				queries.UpdateBasicProperties(model, pictureData);				
+			} catch (InvalidPictureException) {
+				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
+				return View(new AlbumEditViewModel(Service.GetAlbum(model.Id), PermissionContext, model));				
+			}
 
         	return RedirectToAction("Details", new { id = model.Id });
 
