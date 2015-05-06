@@ -69,6 +69,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		}
 
+		/// <summary>
+		/// Comma-separated list of all other names that aren't the display name.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set;}
 
@@ -76,21 +79,39 @@ namespace VocaDb.Model.DataContracts.Artists {
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ArtistType ArtistType { get; set; }
 
+		/// <summary>
+		/// Base voicebank, if applicable and specified.
+		/// </summary>
 		[DataMember]
 		public ArtistContract BaseVoicebank { get; set; }
 
+		/// <summary>
+		/// Date this entry was created.
+		/// </summary>
 		[DataMember]
 		public DateTime CreateDate { get; set; }
 
+		/// <summary>
+		/// Name in default language.
+		/// </summary>
 		[DataMember]
 		public string DefaultName { get; set; }
 
+		/// <summary>
+		/// Language selection of the original name.
+		/// </summary>
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
+		/// <summary>
+		/// Description. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }
 
+		/// <summary>
+		/// List of groups this artist belongs in. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public ArtistContract[] Groups { get; set; }
 
@@ -104,21 +125,39 @@ namespace VocaDb.Model.DataContracts.Artists {
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }
 
+		/// <summary>
+		/// If this artist is a group, list of members in this group.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public ArtistContract[] Members { get; set; }
 
+		/// <summary>
+		/// Id of the entry this entry was merged to, if any.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public int MergedTo { get; set; }
 
+		/// <summary>
+		/// Display name (primary name in selected language, or default language).
+		/// </summary>
 		[DataMember]
 		public string Name { get; set; }
 
+		/// <summary>
+		/// List of all names for this entry. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public LocalizedStringContract[] Names { get; set; }
 
+		/// <summary>
+		/// MIME type for the main picture.
+		/// </summary>
 		[DataMember]
 		public string PictureMime { get; set;}
 
+		/// <summary>
+		/// Artist relations. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public ArtistRelationsForApi Relations { get; set; }
 
@@ -126,12 +165,18 @@ namespace VocaDb.Model.DataContracts.Artists {
 		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
 
+		/// <summary>
+		/// List of tags. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public TagUsageForApiContract[] Tags { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }
 
+		/// <summary>
+		/// List of external links. Optional field.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
 

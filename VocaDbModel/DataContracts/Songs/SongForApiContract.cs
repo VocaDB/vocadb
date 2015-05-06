@@ -193,7 +193,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public LyricsForSongContract[] Lyrics { get; set; }
 
 		/// <summary>
-		/// Id of the song this song was merged to, if any.
+		/// Id of the entry this entry was merged to, if any.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public int MergedTo { get; set; }
