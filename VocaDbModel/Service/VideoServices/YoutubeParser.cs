@@ -1,5 +1,9 @@
 ﻿using System;
-using Google.YouTube;
+using System.Linq;
+using Google.Apis.Services;
+using Google.Apis.YouTube.v3;
+using Google.Apis.YouTube.v3.Data;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -7,30 +11,47 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		private int? GetLength(Video video) {
 
-			if (video.Media == null || video.Media.Duration == null || string.IsNullOrEmpty(video.Media.Duration.Seconds))
+			if (video.ContentDetails == null || string.IsNullOrEmpty(video.ContentDetails.Duration))
 				return null;
 
-			int sec;
-			if (int.TryParse(video.Media.Duration.Seconds, out sec))
-				return sec;
-			else
+			TimeSpan timespan;
+
+			try {
+				timespan = System.Xml.XmlConvert.ToTimeSpan(video.ContentDetails.Duration);			
+			} catch (FormatException) {
 				return null;
+			}
+
+			return (int?)timespan.TotalSeconds;
 
 		}
 
 		public VideoTitleParseResult GetTitle(string id) {
 
-			var settings = new YouTubeRequestSettings("VocaDB", null);
-			var request = new YouTubeRequest(settings);
-			var videoEntryUrl = new Uri(string.Format("https://gdata.youtube.com/feeds/api/videos/{0}", id)); // Loading by HTTPS gives us HTTPS thumbnails as well
+			var apiKey = AppConfig.YoutubeApiKey;
+
+			var youtubeService = new YouTubeService(new BaseClientService.Initializer {
+				ApiKey = apiKey,
+				ApplicationName = "VocaDB"
+			});			
+
+			var request = youtubeService.Videos.List("snippet,contentDetails");
+			request.Id = id;
 
 			try {
 
-				var video = request.Retrieve<Video>(videoEntryUrl);
-				var thumbUrl = video.Thumbnails.Count > 0 ? video.Thumbnails[0].Url : string.Empty;
-				var length = GetLength(video);
+				var result = request.Execute();
+				
+				if (!result.Items.Any()) {
+					return VideoTitleParseResult.Empty;
+				}
 
-				return VideoTitleParseResult.CreateSuccess(video.Title, video.Author, thumbUrl, length);
+				var video = result.Items.First();
+				var thumbUrl = video.Snippet.Thumbnails.Default != null ? video.Snippet.Thumbnails.Default.Url : string.Empty;
+				var length = GetLength(video);
+				var author = video.Snippet.ChannelTitle;
+			
+				return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, thumbUrl, length);
 
 			} catch (Exception x) {
 				return VideoTitleParseResult.CreateError(x.Message);

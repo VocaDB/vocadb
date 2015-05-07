@@ -222,5 +222,11 @@ namespace VocaDb.Model.Utils {
 			}
 		}
 
+		public static string YoutubeApiKey {
+			get {
+				return Val("YoutubeApiKey");
+			}
+		}
+
 	}
 }
