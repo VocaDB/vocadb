@@ -1971,6 +1971,7 @@
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\marked.js" />
+    <Content Include="Scripts\marked.min.js" />
     <Content Include="Scripts\MikuDbAlbums\PrepareForImport.js" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\TagAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Tag\TagCategoryAutoComplete.ts" />
