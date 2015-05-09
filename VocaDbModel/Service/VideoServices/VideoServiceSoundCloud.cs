@@ -14,6 +14,8 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			public string Artwork_url { get; set; }
 
+			public DateTime Created_at { get; set; }
+
 			public int Duration { get; set; }
 
 			public string Id { get; set; }
@@ -83,9 +85,11 @@ namespace VocaDb.Model.Service.VideoServices {
 				thumbUrl = result.User.Avatar_url;
 			}
 
+			var uploadDate = result.Created_at;
+
 			var id = new SoundCloudId(trackId, url);
 
-			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length));
+			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: uploadDate));
 
 		}
 
