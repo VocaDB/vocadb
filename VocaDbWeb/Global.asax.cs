@@ -141,8 +141,9 @@ namespace VocaDb.Web {
 
 			log.Info("Web application starting.");
 
-			AreaRegistration.RegisterAllAreas();
+			MvcHandler.DisableMvcResponseHeader = true;
 
+			AreaRegistration.RegisterAllAreas();
 			GlobalConfiguration.Configure(WebApiConfig.Configure);
 			ComponentConfig.RegisterComponent();
 			RegisterGlobalFilters(GlobalFilters.Filters);
