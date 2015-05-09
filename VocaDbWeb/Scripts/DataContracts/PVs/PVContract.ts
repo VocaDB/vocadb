@@ -15,6 +15,8 @@ module vdb.dataContracts.pvs {
 
 		service: string;
 
+		publishDate: string;
+
 		pvType: string;
 
 		thumbUrl: string;

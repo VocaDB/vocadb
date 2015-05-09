@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -8,13 +7,11 @@ using System.Runtime.Caching;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
-using System.Xml.Linq;
-using System.Xml.XPath;
+using System.Xml.Serialization;
 using HtmlAgilityPack;
 using NLog;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -81,6 +78,41 @@ namespace VocaDb.Model.Service.VideoServices {
 			return string.Format("http://www.nicovideo.jp/user/{0}", userId);
 		}
 
+		public static NicoResponse GetResponse(Stream stream) {
+			var serializer = new XmlSerializer(typeof(NicoResponse));
+			return (NicoResponse)serializer.Deserialize(stream);
+		}
+
+		public static VideoTitleParseResult ParseResponse(NicoResponse nicoResponse) {
+			
+			if (nicoResponse.Status == "fail") {
+				var err = (nicoResponse.Error != null ? nicoResponse.Error.Description : "empty response");
+				return VideoTitleParseResult.CreateError("NicoVideo (error): " + err);
+			}
+
+			var title = HtmlEntity.DeEntitize(nicoResponse.Thumb.Title);
+			var thumbUrl = nicoResponse.Thumb.Thumbnail_Url ?? string.Empty;
+			var userId = nicoResponse.Thumb.User_Id ?? string.Empty;
+			var length = ParseLength(nicoResponse.Thumb.Length);
+			var author = nicoResponse.Thumb.User_Nickname;
+
+			if (string.IsNullOrEmpty(author))
+				author = GetUserName(userId);
+
+			var tagMapping = nicoTagMappingFactory.GetMappings();
+			var matchedTags = nicoResponse.Thumb.Tags
+				.Where(e => tagMapping.ContainsKey(e))
+				.Select(e => tagMapping[e])
+				.ToArray();
+
+			var result = VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: nicoResponse.Thumb.First_Retrieve);
+			result.AuthorId = userId;
+			result.Tags = matchedTags;
+
+			return result;
+
+		}
+
 		public static VideoTitleParseResult GetTitleAPI(string id) {
 
 			var url = string.Format("http://ext.nicovideo.jp/api/getthumbinfo/{0}", id);
@@ -88,12 +120,12 @@ namespace VocaDb.Model.Service.VideoServices {
 			var request = WebRequest.Create(url);
 			request.Timeout = 10000;
 
-			XDocument doc;
+			NicoResponse nicoResponse;
 
 			try {
 				using (var response = request.GetResponse())
 				using (var stream = response.GetResponseStream()) {
-					doc = XDocument.Load(stream);
+					nicoResponse = GetResponse(stream);
 				}
 			} catch (WebException x) {
 				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);
@@ -103,40 +135,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);				
 			}
 
-			var res = doc.Element("nicovideo_thumb_response");
-
-			if (res == null || res.Attribute("status") == null || res.Attribute("status").Value == "fail") {
-				var err = (res != null ? res.XPathSelectElement("//nicovideo_thumb_response/error/description").Value : "empty response");
-				return VideoTitleParseResult.CreateError("NicoVideo (error): " + err);
-			}
-
-			var titleElem = doc.XPathSelectElement("//nicovideo_thumb_response/thumb/title");
-
-			if (titleElem == null) {
-				return VideoTitleParseResult.CreateError("NicoVideo (error): title element not found");
-			}
-
-			var title = HtmlEntity.DeEntitize(titleElem.Value);
-			var thumbUrl = XmlHelper.GetNodeTextOrEmpty(doc, "//nicovideo_thumb_response/thumb/thumbnail_url");
-			var userId = XmlHelper.GetNodeTextOrEmpty(doc, "//nicovideo_thumb_response/thumb/user_id");
-			var length = ParseLength(XmlHelper.GetNodeTextOrEmpty(doc, "//nicovideo_thumb_response/thumb/length"));
-			var author = XmlHelper.GetNodeTextOrEmpty(doc, "//nicovideo_thumb_response/thumb/user_nickname");
-
-			if (string.IsNullOrEmpty(author))
-				author = GetUserName(userId);
-
-			var tagMapping = nicoTagMappingFactory.GetMappings();
-			var nodeElements = doc.XPathSelectElements("//nicovideo_thumb_response/thumb/tags/tag");
-			var matchedTags = nodeElements
-				.Where(e => tagMapping.ContainsKey(e.Value))
-				.Select(e => tagMapping[e.Value])
-				.ToArray();
-
-			var result = VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length);
-			result.AuthorId = userId;
-			result.Tags = matchedTags;
-
-			return result;
+			return ParseResponse(nicoResponse);
 
 		}
 
@@ -245,6 +244,59 @@ namespace VocaDb.Model.Service.VideoServices {
 			return new NicoTitleParseResult(title.Trim(), artists, songType);
 
 		}
+
+	}
+
+	[XmlRoot(ElementName = "nicovideo_thumb_response", Namespace = "")]
+	public class NicoResponse {
+		
+		[XmlElement("error")]
+		public NicoResponseError Error { get; set; }
+
+		[XmlAttribute("status")]
+		public string Status { get; set; }
+
+		[XmlElement("thumb")]
+		public NicoResponseThumb Thumb { get; set; }
+
+	}
+
+	public class NicoResponseError {
+		
+		[XmlElement("code")]
+		public string Code { get; set; }
+
+		[XmlElement("description")]
+		public string Description { get; set; }
+
+	}
+
+	public class NicoResponseThumb {
+		
+		[XmlElement("first_retrieve")]
+		public DateTime First_Retrieve { get; set; }
+
+		[XmlElement("length")]
+		public string Length { get; set; }
+
+		[XmlArray("tags")]
+		[XmlArrayItem("tag")]
+		public string[] Tags { get; set; }
+
+		[XmlElement("thumbnail_url")]
+		public string Thumbnail_Url { get; set; }
+
+		[XmlElement("title")]
+		public string Title { get; set; }
+
+		[XmlElement("user_id")]
+		public string User_Id { get; set; }
+
+		[XmlElement("user_niconame")]
+		public string User_Nickname { get; set; }
+
+		[XmlElement("video_id")]
+		public string Video_Id { get; set; }
 
 	}
 

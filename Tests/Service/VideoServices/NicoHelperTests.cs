@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.VideoServices {
 
@@ -57,6 +59,44 @@ namespace VocaDb.Tests.Service.VideoServices {
 		[TestInitialize]
 		public void SetUp() {
 			
+		}
+
+		[TestMethod]
+		public void GetResponse_Ok() {
+			
+			NicoResponse response;
+			using (var stream = ResourceHelper.GetFileStream("NicoResponse_Ok.xml")) {
+				response = NicoHelper.GetResponse(stream);
+			}
+
+			var result = NicoHelper.ParseResponse(response);
+
+			Assert.IsTrue(result.Success, "Success");
+			Assert.AreEqual("【初音ミク】１７：００【オリジナル曲】", result.Title, "Title");
+			Assert.AreEqual("http://tn-skr1.smilevideo.jp/smile?i=12464004", result.ThumbUrl, "ThumbUrl");
+			Assert.IsNotNull(result.UploadDate, "UploadDate");
+			Assert.AreEqual(new DateTime(2010, 10, 17).Date, result.UploadDate.Value.Date, "UploadDate");
+			Assert.AreEqual(178, result.LengthSeconds, "LengthSeconds");
+			Assert.AreEqual("14270239", result.AuthorId, "AuthorId");
+			Assert.AreEqual("ProjectDIVAチャンネル", result.Author, "Author");
+			Assert.AreEqual(1, result.Tags.Length, "Tags.Length");
+			Assert.AreEqual("Vocarock", result.Tags.First(), "Tag name");
+
+		}
+
+		[TestMethod]
+		public void GetResponse_Error() {
+			
+			NicoResponse response;
+			using (var stream = ResourceHelper.GetFileStream("NicoResponse_Error.xml")) {
+				response = NicoHelper.GetResponse(stream);
+			}
+
+			var result = NicoHelper.ParseResponse(response);
+
+			Assert.IsFalse(result.Success, "Success");
+			Assert.AreEqual("NicoVideo (error): not found or invalid", result.Error, "Error");
+
 		}
 
 		[TestMethod]
@@ -166,6 +206,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 			Assert.AreEqual(SongType.Original, result.SongType, "song type");
 
 		}
+
 	}
 
 }

@@ -170,6 +170,9 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		/// <summary>
+		/// Date when this entry was created.
+		/// </summary>
 		public virtual DateTime CreateDate { get; set; }
 
 		public virtual string DefaultName {

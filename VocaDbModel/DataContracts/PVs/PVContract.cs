@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.PVs;
@@ -44,6 +45,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 
 			Length = pv.Length;
 			ThumbUrl = pv.ThumbUrl;
+			PublishDate = pv.PublishDate;
 
 		}
 
@@ -55,6 +57,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			Length = parseResult.LengthSeconds ?? 0;
 			Name = parseResult.Title;
 			PVId = parseResult.Id;
+			PublishDate = parseResult.UploadDate;
 			Service = parseResult.Service;
 			ThumbUrl = parseResult.ThumbUrl;
 			PVType = type;
@@ -77,6 +80,9 @@ namespace VocaDb.Model.DataContracts.PVs {
 
 		[DataMember]
 		public string Name { get; set; }
+
+		[DataMember]
+		public DateTime? PublishDate { get; set; }
 
 		[DataMember]
 		public string PVId { get; set; }

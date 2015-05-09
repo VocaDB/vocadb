@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Service.VideoServices {
+﻿using System;
+
+namespace VocaDb.Model.Service.VideoServices {
 
 	public interface IVideoServiceParser {
 
@@ -18,17 +20,18 @@
 			return new VideoTitleParseResult(false, error, null, null, null);
 		}
 
-		public static VideoTitleParseResult CreateSuccess(string title, string author, string thumbUrl, int? length = null, string[] tags = null) {
-			return new VideoTitleParseResult(true, null, title, author, thumbUrl, length, tags);
+		public static VideoTitleParseResult CreateSuccess(string title, string author, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null) {
+			return new VideoTitleParseResult(true, null, title, author, thumbUrl, length, tags, uploadDate);
 		}
 
-		public VideoTitleParseResult(bool success, string error, string title, string author, string thumbUrl, int? length = null, string[] tags = null) {
+		public VideoTitleParseResult(bool success, string error, string title, string author, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null) {
 			Error = error;
 			Success = success;
 			Title = title ?? string.Empty;
 			Author = author ?? string.Empty;
 			ThumbUrl = thumbUrl ?? string.Empty;
 			LengthSeconds = length;
+			UploadDate = uploadDate;
 			Tags = tags ?? new string[0];
 		}
 
@@ -74,6 +77,8 @@
 		public string Title { get; set; }
 
 		public string ThumbUrl { get; set; }
+
+		public DateTime? UploadDate { get; set; }
 
 	}
 

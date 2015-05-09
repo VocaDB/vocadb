@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.PVs;
+﻿using System;
+using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -44,6 +45,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			ThumbUrl = meta.ThumbUrl ?? string.Empty;
 			LengthSeconds = meta.LengthSeconds;
 			Tags = meta.Tags;
+			UploadDate = meta.UploadDate;
 
 			ResultType = VideoUrlParseResultType.Ok;
 
@@ -95,6 +97,8 @@ namespace VocaDb.Model.Service.VideoServices {
 		public string ThumbUrl { get; set; }
 
 		public string Url { get; set; }
+
+		public DateTime? UploadDate { get; set; }
 
 	}
 

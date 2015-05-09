@@ -50,8 +50,9 @@ namespace VocaDb.Model.Service.VideoServices {
 				var thumbUrl = video.Snippet.Thumbnails.Default != null ? video.Snippet.Thumbnails.Default.Url : string.Empty;
 				var length = GetLength(video);
 				var author = video.Snippet.ChannelTitle;
+				var publishDate = video.Snippet.PublishedAt;
 			
-				return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, thumbUrl, length);
+				return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, thumbUrl, length, uploadDate: publishDate);
 
 			} catch (Exception x) {
 				return VideoTitleParseResult.CreateError(x.Message);

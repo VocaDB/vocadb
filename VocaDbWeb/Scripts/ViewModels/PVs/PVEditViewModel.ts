@@ -12,6 +12,7 @@ module vdb.viewModels.pvs {
 			this.length = contract.length;
 			this.pvId = contract.pvId;
 			this.service = contract.service;
+			this.publishDate = contract.publishDate;
 			this.pvType = pvType || contract.pvType;
 			this.thumbUrl = contract.thumbUrl;
 			this.url = contract.url;
@@ -34,6 +35,8 @@ module vdb.viewModels.pvs {
 		pvId: string;
 
 		service: string;
+
+		publishDate: string;
 
 		pvType: string;
 

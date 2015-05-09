@@ -3,6 +3,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201505092300)]
+	public class SongPVPublishDate : AutoReversingMigration {
+
+		public override void Up() {
+		
+			Create.Column("PublishDate").OnTable(TableNames.PVsForSongs).AsDate().Nullable();
+				
+		}
+
+	}
+
 	[Migration(201504302045)]
 	public class UserLastLoginCulture : AutoReversingMigration {
 
