@@ -11,6 +11,11 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public PVServices? PVServices { get; set; }
 
+		/// <summary>
+		/// Song sort rule. If null, Order field will be used.
+		/// </summary>
+		public SongSortRule? SortRule { get; set; }
+
 	}
 
 }

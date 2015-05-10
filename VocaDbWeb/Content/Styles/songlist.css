@@ -5,6 +5,12 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.songlist-sort {
+  margin-left: 15px;
+}
+.songlist-sort .btn {
+  margin-bottom: 5px;
+}
 .songlist-playlist-player {
   max-width: 560px;
   margin-bottom: 20px;

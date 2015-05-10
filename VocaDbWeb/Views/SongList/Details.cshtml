@@ -35,6 +35,8 @@
 	}
 	
 	var url = PageProperties.CanonicalUrl;
+	var sortRules = new[] { new KeyValuePair<string, string>(string.Empty, Res.DefaultSortRule) }
+		.Concat(Translate.SongSortRuleNames.ValuesAndNamesStrings).ToDictionary(s => s.Key, s => s.Value);
 	
 }
 
@@ -71,10 +73,14 @@
 		var userRepo = repoFactory.userRepository();
 		var songRepo = repoFactory.songRepository();
 		var songListRepo = repoFactory.songListRepository();
+		var resourceRepo = repoFactory.resourceRepository();
+		var defaultSortRuleName = @ToJS(Res.DefaultSortRule);
+		var cultureCode = '@UICulture';
 		var pvPlayerElem = $("#pv-player-wrapper")[0];
 		var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 
-		var vm = new vdb.viewModels.songList.SongListViewModel(urlMapper, songListRepo, songRepo, userRepo, languageSelection, listId, pvPlayersFactory);
+		var vm = new vdb.viewModels.songList.SongListViewModel(urlMapper, songListRepo, songRepo, userRepo, 
+			resourceRepo, defaultSortRuleName, languageSelection, cultureCode, listId, pvPlayersFactory);
 		ko.applyBindings(vm);
 
 	});
@@ -108,6 +114,11 @@
 <a data-bind="css: { active: showTags() }, click: function() { showTags(!showTags()); }, visible: playlistMode() == false" class="btn" href="#" title="@Res.ShowTags">
 	<i class="icon-tags"></i>
 </a>
+
+<div class="inline-block songlist-sort">
+	@ViewRes.EntryIndexStrings.SortBy
+	@KnockoutHelpers.Dropdown(sortRules, "sort", "sortName")
+</div>
 
 <div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">
 

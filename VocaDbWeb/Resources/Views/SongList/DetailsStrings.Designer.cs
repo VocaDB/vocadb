@@ -61,6 +61,15 @@ namespace ViewRes.SongList {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string DefaultSortRule {
+            get {
+                return ResourceManager.GetString("DefaultSortRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string Details {

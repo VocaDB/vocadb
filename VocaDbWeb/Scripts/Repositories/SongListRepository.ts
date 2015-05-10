@@ -20,6 +20,7 @@ module vdb.repositories {
 			pvServices: string,
 			paging: dc.PagingProperties,
 			fields: cls.SongOptionalFields,
+			sort: string,
 			lang: cls.globalization.ContentLanguagePreference,
 			callback: (result: dc.PartialFindResultContract<dc.songs.SongInListContract>) => void) => {
 
@@ -27,7 +28,9 @@ module vdb.repositories {
 			var data = {
 				pvServices: pvServices,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				fields: fields.fields, lang: cls.globalization.ContentLanguagePreference[lang]
+				fields: fields.fields, 
+				lang: cls.globalization.ContentLanguagePreference[lang],
+				sort: sort
 			};
 
 			$.getJSON(url, data, callback);

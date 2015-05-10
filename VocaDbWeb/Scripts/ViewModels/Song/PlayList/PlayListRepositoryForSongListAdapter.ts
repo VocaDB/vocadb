@@ -6,7 +6,7 @@ module vdb.viewModels.songs {
 
 	export class PlayListRepositoryForSongListAdapter implements IPlayListRepository {
 
-		constructor(private songListRepo: rep.SongListRepository, private songListId: number) { }
+		constructor(private songListRepo: rep.SongListRepository, private songListId: number, private sort: KnockoutObservable<string>) { }
 
 		public getSongs = (
 			pvServices: string,
@@ -15,7 +15,7 @@ module vdb.viewModels.songs {
 			lang: cls.globalization.ContentLanguagePreference,
 			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void) => {
 
-			this.songListRepo.getSongs(this.songListId, pvServices, paging, fields, lang, result => {
+			this.songListRepo.getSongs(this.songListId, pvServices, paging, fields, this.sort(), lang, result => {
 
 				var mapped = _.map(result.items, (song, idx) => {
 					return {

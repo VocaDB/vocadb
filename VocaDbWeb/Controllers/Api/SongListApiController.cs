@@ -41,6 +41,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
+		/// <param name="sort">Song sort rule (optional, by default songs are sorted by song list order).</param>
 		/// <param name="fields">
 		/// List of optional fields (optional). Possible values are Albums, Artists, Names, PVs, Tags, ThumbUrl, WebLinks.
 		/// </param>
@@ -50,6 +51,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongInListForApiContract> GetSongs(int listId, 
 			[FromUri] PVServices? pvServices = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			SongSortRule? sort = null,
 			SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default
 			) {
 			
@@ -59,7 +61,8 @@ namespace VocaDb.Web.Controllers.Api {
 				new SongListQueryParams {
 					ListId = listId, 
 					Paging = new PagingProperties(start, maxResults, getTotalCount),
-					PVServices = pvServices
+					PVServices = pvServices,
+					SortRule = sort
 				}, 
 				songInList => new SongInListForApiContract(songInList, lang, fields));
 

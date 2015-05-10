@@ -12,17 +12,32 @@ module vdb.viewModels.songList {
 			private songListRepo: rep.SongListRepository,
 			private songRepo: rep.SongRepository,
 			private userRepo: rep.UserRepository, 
+			resourceRepo: rep.ResourceRepository,
+			defaultSortRuleName: string,
 			private languageSelection: cls.globalization.ContentLanguagePreference,
+			cultureCode: string,
 			private listId: number,
 			pvPlayersFactory: pvs.PVPlayersFactory) {
 
+			this.resourceManager = new cls.ResourcesManager(resourceRepo, cultureCode);
+			this.resourceManager.loadResources(null, "songSortRuleNames");
+			this.sortName = ko.computed(() => {
+
+				if (this.sort() === "")
+					return defaultSortRuleName;
+
+				return this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "";
+
+			});
+
 			// TODO
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
-			var playListRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongListAdapter(songListRepo, listId);
+			var playListRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongListAdapter(songListRepo, listId, this.sort);
 			this.playlistViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, playListRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel, languageSelection);
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
 			this.showTags.subscribe(this.updateResultsWithoutTotalCount);
+			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 
@@ -48,7 +63,10 @@ module vdb.viewModels.songList {
 		public playlistViewModel: vdb.viewModels.songs.PlayListViewModel;
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
+		private resourceManager: cls.ResourcesManager;
 		public showTags = ko.observable(false);
+		public sort = ko.observable("");
+		public sortName: KnockoutComputed<string>;
 
 		public updateResultsWithTotalCount = () => this.updateResults(true);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);
@@ -74,6 +92,7 @@ module vdb.viewModels.songList {
 
 			this.songListRepo.getSongs(this.listId, null, pagingProperties,
 				new cls.SongOptionalFields(fields),
+				this.sort(),
 				this.languageSelection,
 				(result) => {
 

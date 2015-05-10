@@ -52,7 +52,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.Where(a => !a.Song.Deleted && a.List.Id == queryParams.ListId)
 				.WhereSongHasPVService(queryParams.PVServices);
 
-			IQueryable<SongInList> resultQ = q.OrderBy(s => s.Order);
+			IQueryable<SongInList> resultQ = q.OrderBy(queryParams.SortRule, PermissionContext.LanguagePreference);
 			resultQ = resultQ.Paged(queryParams.Paging);
 
 			var contracts = resultQ.ToArray().Select(s => fac(s)).ToArray();
