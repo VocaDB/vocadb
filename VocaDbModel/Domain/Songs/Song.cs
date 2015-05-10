@@ -280,6 +280,8 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual Song OriginalVersion { get; set; }
 
+		public virtual DateTime? PublishDate { get; set; }
+
 		public virtual PVManager<PVForSong> PVs {
 			get { return pvs; }
 			set {
@@ -454,6 +456,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 			UpdateNicoId();
 			UpdatePVServices();
+			UpdatePublishDateFromPVs();
 
 			if (LengthSeconds <= 0)
 				LengthSeconds = GetLengthFromPV();
@@ -736,6 +739,19 @@ namespace VocaDb.Model.Domain.Songs {
 			var originalPv = PVs.FirstOrDefault(p => p.Service == PVService.NicoNicoDouga && p.PVType == PVType.Original);
 
 			NicoId = (originalPv != null ? originalPv.PVId : null);
+
+		}
+
+		public virtual void UpdatePublishDateFromPVs() {
+
+			// Sanity check
+			var minDate = new DateTime(2000, 1, 1); 
+
+			// Original PVs that have a publish date
+			var pvsWithDate = PVs.Where(p => p.PVType == PVType.Original && p.PublishDate.HasValue && p.PublishDate > minDate).ToArray();
+
+			// Lowest published (original) PV
+			PublishDate = pvsWithDate.Any() ? pvsWithDate.Min(p => p.PublishDate) : null;
 
 		}
 
