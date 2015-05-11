@@ -171,6 +171,9 @@
   <data name="PvAuthor" xml:space="preserve">
     <value>Author</value>
   </data>
+  <data name="PvDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
   <data name="PvLength" xml:space="preserve">
     <value>Length</value>
   </data>

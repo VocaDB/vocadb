@@ -10,7 +10,8 @@ module vdb.viewModels.pvs {
 			private repo: rep.PVRepository,
 			public urlMapper: UrlMapper, // Used from the view to map to PV listing
 			pvs: dc.pvs.PVContract[],
-			public canBulkDeletePVs: boolean) {
+			public canBulkDeletePVs: boolean,
+			public showPublishDates: boolean) {
 
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 			this.pvs = ko.observableArray(_.map(pvs, pv => new PVEditViewModel(pv)));

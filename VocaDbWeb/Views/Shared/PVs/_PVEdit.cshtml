@@ -1,4 +1,5 @@
-﻿
+﻿@* Binding context: PVEditViewModel, parent context: PVListEditViewModel *@
+
 <tr>
 	<td>
 		<a href="{{url}}">
@@ -14,7 +15,12 @@
 	</td>
 	<td>
 		{{ length | formatLengthSeconds }}
-	</td>
+	</td>	
+	<td visible="{{ $parent.showPublishDates }}">
+		{{#if $parent.showPublishDates }}
+		{{ publishDate | formatDate:'l' }}
+		{{/if}}
+	</td>	
 	<td>
 		{{#if author && $parent.canBulkDeletePVs}}
 			<a href="{{ $parent.urlMapper.mapRelative('/Admin/PVsByAuthor?author=' + author) }}">{{author}}</a>

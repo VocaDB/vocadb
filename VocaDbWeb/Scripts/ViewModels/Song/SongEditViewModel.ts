@@ -151,7 +151,7 @@ module vdb.viewModels {
 			this.names = globalization.NamesEditViewModel.fromContracts(data.names);
 			this.notes = new globalization.EnglishTranslatedStringEditViewModel(data.notes);
 			this.originalVersion = new BasicEntryLinkViewModel<dc.SongContract>(data.originalVersion, songRepository.getOne);
-			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs);
+			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, true);
 			this.songTypeStr = ko.observable(data.songType);
 			this.songType = ko.computed(() => cls.songs.SongType[this.songTypeStr()]);
 			this.status = ko.observable(data.status);

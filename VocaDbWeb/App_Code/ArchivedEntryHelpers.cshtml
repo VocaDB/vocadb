@@ -309,7 +309,11 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 @helper PVInfo(ArchivedPVContract pv) {
 	@:@pv.Service (@pv.PVType):
 	<a href="@VocaDb.Model.Domain.PVs.PV.GetUrl(pv.Service, pv.PVId)">@pv.PVId</a> 
-	@:by @pv.Author (@DateTimeUtils.FormatFromSeconds(pv.Length))
+	@:by @pv.Author
+	@:(@DateTimeUtils.FormatFromSeconds(pv.Length))
+	if (pv.PublishDate != null) {
+		@:at @pv.PublishDate.Value.ToShortDateString()
+	}
 }
 
 @helper TranslatedNameRow(TranslatedStringContract name, TranslatedStringContract compareToName = null) {

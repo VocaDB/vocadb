@@ -147,6 +147,7 @@
 						<th>@Res.PvType</th>
 						<th>@Res.PvName</th>
 						<th>@Res.PvLength</th>
+						<th>@Res.PvDate</th>
 						<th>@Res.PvAuthor</th>
 						<th></th>
 					</tr>
@@ -252,6 +253,7 @@
 
 	$(document).ready(function () {
 
+		moment.locale('@Culture');
 		ko.punches.enableAll();
 
 		vdb.resources.song = {
