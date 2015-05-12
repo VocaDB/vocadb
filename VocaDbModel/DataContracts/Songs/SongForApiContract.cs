@@ -220,6 +220,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		/// <summary>
 		/// Date this song was first published.
+		/// Only includes the date component, no time for now.
+		/// Should always be in UTC.
 		/// </summary>
 		[DataMember]
 		public DateTime? PublishDate { get; set; }

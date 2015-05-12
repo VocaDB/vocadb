@@ -55,6 +55,7 @@ namespace VocaDb.Web.Models {
 			Notes = contract.Notes;
 			OriginalVersion = (contract.Song.SongType != SongType.Original ? contract.OriginalVersion : null);
 			Pools = contract.Pools;
+			PublishDate = contract.Song.PublishDate;
 			RatingScore = contract.Song.RatingScore;
 			SongType = contract.Song.SongType;
 			Status = contract.Song.Status;
@@ -175,6 +176,8 @@ namespace VocaDb.Web.Models {
 		public PVContract PrimaryPV { get; set; }
 
 		public ArtistForSongContract[] Producers { get; set; }
+
+		public DateTime? PublishDate { get; set; }
 
 		public int RatingScore { get; set; }
 

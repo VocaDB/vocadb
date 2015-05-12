@@ -165,6 +165,9 @@
   <data name="PicturesTab" xml:space="preserve">
     <value>Pictures</value>
   </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Published</value>
+  </data>
   <data name="ReportAnError" xml:space="preserve">
     <value>Report an error</value>
   </data>

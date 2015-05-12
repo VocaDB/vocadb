@@ -283,6 +283,15 @@
 				</td>
 			</tr>
 
+			@if (Model.PublishDate.HasValue) {
+			<tr>
+				<td>@ViewRes.EntryDetailsStrings.PublishDate</td>
+				<td>
+					@Model.PublishDate.Value.ToShortDateString()
+				</td>
+			</tr>				
+			}
+
 			<tr>
 				<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
 				<td>

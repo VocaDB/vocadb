@@ -13,6 +13,7 @@ module vdb.dataContracts {
 
 		name: string;
 
+		// Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
 		publishDate?: string;
 
 		pvServices: string;

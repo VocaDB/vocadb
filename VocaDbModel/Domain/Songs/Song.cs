@@ -280,6 +280,11 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual Song OriginalVersion { get; set; }
 
+		/// <summary>
+		/// Date this song was first published.
+		/// Only includes the date component, no time for now.
+		/// Should always be in UTC.
+		/// </summary>
 		public virtual DateTime? PublishDate { get; set; }
 
 		public virtual PVManager<PVForSong> PVs {
