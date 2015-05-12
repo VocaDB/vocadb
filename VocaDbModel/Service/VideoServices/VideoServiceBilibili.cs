@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Xml;
@@ -60,6 +61,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var titleElem = doc.XPathSelectElement("/info/title");
 			var thumbElem = doc.XPathSelectElement("/info/pic");
 			var authorElem = doc.XPathSelectElement("/info/author");
+			var createdElem = doc.XPathSelectElement("/info/created_at");
 
 			if (titleElem == null)
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "No title element");
@@ -67,9 +69,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			var title = HtmlEntity.DeEntitize(titleElem.Value);
 			var thumb = thumbElem != null ? thumbElem.Value : string.Empty;
 			var author = authorElem != null ? authorElem.Value : string.Empty;
+			var created = createdElem != null ? (DateTime?)DateTime.Parse(createdElem.Value) : null;
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, 
-				VideoTitleParseResult.CreateSuccess(title, author, thumb));
+				VideoTitleParseResult.CreateSuccess(title, author, thumb, uploadDate: created));
 
 		}
 

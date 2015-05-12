@@ -64,6 +64,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			data.Notes = thisVersion.Notes;
 			data.NotesEng = thisVersion.NotesEng;
 			data.OriginalVersion = thisVersion.OriginalVersion;
+			data.PublishDate = thisVersion.PublishDate;
 			data.SongType = thisVersion.SongType;
 			data.TranslatedName = thisVersion.TranslatedName;
 
@@ -93,6 +94,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Notes = song.Notes.Original;
 			NotesEng = song.Notes.English;
 			OriginalVersion = (song.OriginalVersion != null ? new ObjectRefContract(song.OriginalVersion) : null);
+			PublishDate = song.PublishDate;
 			PVs = (diff.IncludePVs ? song.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null);
 			SongType = song.SongType;
 			TranslatedName = new ArchivedTranslatedStringContract(song.TranslatedName);
@@ -126,6 +128,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public ObjectRefContract OriginalVersion { get; set; }
+
+		[DataMember]
+		public DateTime? PublishDate { get; set; }
 
 		[DataMember]
 		public ArchivedPVContract[] PVs { get; set; }

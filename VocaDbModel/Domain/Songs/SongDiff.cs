@@ -148,6 +148,15 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual bool PublishDate {
+			get {
+				return IsChanged(SongEditableFields.PublishDate);
+			}
+			set {
+				Set(SongEditableFields.PublishDate, value);
+			}
+		}
+
 		public virtual bool PVs {
 			get {
 				return IsChanged(SongEditableFields.PVs);

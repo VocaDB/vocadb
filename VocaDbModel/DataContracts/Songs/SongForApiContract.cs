@@ -29,6 +29,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Id = song.Id;
 			LengthSeconds = song.LengthSeconds;
 			Name = song.Names.SortNames[languagePreference];
+			PublishDate = song.PublishDate;
 			PVServices = song.PVServices;
 			RatingScore = song.RatingScore;
 			SongType = song.SongType;
@@ -87,6 +88,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Id = song.Id;
 			LengthSeconds = song.LengthSeconds;
 			Name = song.Names.SortNames[languagePreference];
+			PublishDate = song.PublishDate;
 			PVServices = song.PVServices;
 			RatingScore = song.RatingScore;
 			SongType = song.SongType;
@@ -215,6 +217,12 @@ namespace VocaDb.Model.DataContracts.Songs {
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public int OriginalVersionId { get; set; }
+
+		/// <summary>
+		/// Date this song was first published.
+		/// </summary>
+		[DataMember]
+		public DateTime? PublishDate { get; set; }
 
 		/// <summary>
 		/// List of PVs. Optional field.

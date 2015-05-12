@@ -456,7 +456,6 @@ namespace VocaDb.Model.Domain.Songs {
 
 			UpdateNicoId();
 			UpdatePVServices();
-			UpdatePublishDateFromPVs();
 
 			if (LengthSeconds <= 0)
 				LengthSeconds = GetLengthFromPV();
@@ -714,7 +713,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual CollectionDiffWithValue<PVForSong, PVForSong> SyncPVs(IList<PVContract> newPVs) {
 
-			return PVs.Sync(newPVs, CreatePV);
+			var result = PVs.Sync(newPVs, CreatePV);
+			return result;
 
 		}
 
@@ -743,6 +743,9 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual void UpdatePublishDateFromPVs() {
+
+			if (!PVs.Any())
+				return;
 
 			// Sanity check
 			var minDate = new DateTime(2000, 1, 1); 

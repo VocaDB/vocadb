@@ -230,6 +230,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				}
 
 				song.UpdateArtistString();
+				song.UpdatePublishDateFromPVs();
+
 				Archive(ctx, song, SongArchiveReason.Created);
 				ctx.Update(song);
 
@@ -608,6 +610,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				if (pvDiff.Changed)
 					diff.PVs = true;
+
+				if (!song.PublishDate.HasValue && pvDiff.Changed) {
+					song.UpdatePublishDateFromPVs();
+					if (song.PublishDate.HasValue)
+						diff.PublishDate = true;
+				}
 
 				var lyricsDiff = song.SyncLyrics(properties.Lyrics);
 				ctx.OfType<LyricsForSong>().Sync(lyricsDiff);

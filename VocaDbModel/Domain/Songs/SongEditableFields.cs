@@ -21,13 +21,15 @@ namespace VocaDb.Model.Domain.Songs {
 
 		OriginalVersion	= 64,
 
-		PVs				= 128,
+		PublishDate		= 128,
 
-		SongType		= 256,
+		PVs				= 256,
 
-		Status			= 512,
+		SongType		= 512,
 
-		WebLinks		= 1024
+		Status			= 1024,
+
+		WebLinks		= 2048
 
 	}
 
