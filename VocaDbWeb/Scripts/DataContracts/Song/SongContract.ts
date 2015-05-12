@@ -13,6 +13,8 @@ module vdb.dataContracts {
 
 		name: string;
 
+		publishDate?: string;
+
 		pvServices: string;
 
 		ratingScore: number;

@@ -21,6 +21,8 @@ module vdb.dataContracts.songs {
 
 		originalVersion: SongContract;
 
+		publishDate?: string;
+
 		pvs: pvs.PVContract[];
 
 		songType: string;

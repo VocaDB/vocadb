@@ -28,6 +28,7 @@
     <IISExpressUseClassicPipelineMode />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <NuGetPackageImportStamp>18d8fbcf</NuGetPackageImportStamp>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1939,6 +1940,7 @@
     <TypeScriptCompile Include="Scripts\Helpers\SongHelper.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\AlbumAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Artist\ArtistTypeLabel.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\Datepicker.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ConfirmClick.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatDateFilter.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatLengthSecondsFilter.ts" />
@@ -3512,6 +3514,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.fi.resx" />

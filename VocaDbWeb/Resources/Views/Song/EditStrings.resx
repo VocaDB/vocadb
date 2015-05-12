@@ -150,6 +150,12 @@
   <data name="BaOriginalVersionHelp" xml:space="preserve">
     <value>If the original version of this song exists on the site, use this field to link this derived version to the original. Choose the song by searching by song title.</value>
   </data>
+  <data name="BaPublishDate" xml:space="preserve">
+    <value>Publish date</value>
+  </data>
+  <data name="BaPublishDateHelp" xml:space="preserve">
+    <value>Date when this song was first published (either on an album or online)</value>
+  </data>
   <data name="BaSongType" xml:space="preserve">
     <value>Song type</value>
   </data>

@@ -605,6 +605,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				if (artistsDiff.Changed)
 					diff.Artists = true;
 
+				if (song.PublishDate != properties.PublishDate) {
+					song.PublishDate = properties.PublishDate;
+					diff.PublishDate = true;
+				}
+
 				var pvDiff = song.SyncPVs(properties.PVs);
 				ctx.OfType<PVForSong>().Sync(pvDiff);
 

@@ -119,6 +119,15 @@
 			</div>
 			
 			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip: null" title="@Res.BaPublishDateHelp">
+					@Res.BaPublishDate
+				</label>
+			</div>
+			<div class="editor-field">
+				<input type="text" data-bind="datepicker: { value: publishDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
+			</div>
+
+			<div class="editor-label">
 				<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
 				    @EditRes.WebLinks
                 </label>

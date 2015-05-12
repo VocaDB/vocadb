@@ -160,6 +160,24 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publish date.
+        /// </summary>
+        public static string BaPublishDate {
+            get {
+                return ResourceManager.GetString("BaPublishDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date when this song was first published (either on an album or online).
+        /// </summary>
+        public static string BaPublishDateHelp {
+            get {
+                return ResourceManager.GetString("BaPublishDateHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Song type.
         /// </summary>
         public static string BaSongType {
