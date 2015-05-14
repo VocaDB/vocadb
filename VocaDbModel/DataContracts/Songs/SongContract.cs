@@ -28,7 +28,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			if (getThumbUrl) {
 				// TODO: Used on the front page. Should be moved elsewhere.
-				ThumbUrl = VideoServiceHelper.GetThumbUrl(song.PVs.PVs);				
+				ThumbUrl = !string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
 			}
 
 		}

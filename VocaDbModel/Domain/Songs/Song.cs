@@ -15,6 +15,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -313,6 +314,8 @@ namespace VocaDb.Model.Domain.Songs {
 				tags = value;
 			}
 		}
+
+		public virtual string ThumbUrl { get; set; }
 
 		public virtual TranslatedString TranslatedName {
 			get { return Names.SortNames; }
@@ -716,9 +719,23 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
+		/// <summary>
+		/// Adds new PVs and removes deleted PVs.
+		/// </summary>
+		/// <param name="newPVs">Updated list of PVs. Cannot be null.</param>
+		/// <returns>PVs list diff. Cannot be null.</returns>
 		public virtual CollectionDiffWithValue<PVForSong, PVForSong> SyncPVs(IList<PVContract> newPVs) {
 
 			var result = PVs.Sync(newPVs, CreatePV);
+
+			if (result.Changed || string.IsNullOrEmpty(ThumbUrl)) {
+				UpdateThumbUrl();				
+			}
+
+			if (result.Changed && !PublishDate.HasValue) {
+				UpdatePublishDateFromPVs();
+			}
+
 			return result;
 
 		}
@@ -774,6 +791,10 @@ namespace VocaDb.Model.Domain.Songs {
 
 			PVServices = services;
 
+		}
+
+		public virtual void UpdateThumbUrl() {
+			ThumbUrl = VideoServiceHelper.GetThumbUrl(PVs.PVs);			
 		}
 
 	}

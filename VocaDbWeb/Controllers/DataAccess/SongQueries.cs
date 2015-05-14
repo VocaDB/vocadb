@@ -217,20 +217,24 @@ namespace VocaDb.Web.Controllers.DataAccess {
 						ctx.OfType<ArtistForSong>().Save(song.AddArtist(artist));
 				}
 
+				var pvs = new List<PVContract>();
+
 				if (pvResult != null) {
 
-					ctx.OfType<PVForSong>().Save(song.CreatePV(new PVContract(pvResult, PVType.Original)));
+					pvs.Add(new PVContract(pvResult, PVType.Original));
 
 					AddTagsFromPV(pvResult, song, ctx);
 
 				}
 
 				if (reprintPvResult != null) {
-					ctx.OfType<PVForSong>().Save(song.CreatePV(new PVContract(reprintPvResult, PVType.Reprint)));
+					pvs.Add(new PVContract(reprintPvResult, PVType.Reprint));
 				}
 
+				var pvDiff = song.SyncPVs(pvs);
+				ctx.OfType<PVForSong>().Sync(pvDiff);
+
 				song.UpdateArtistString();
-				song.UpdatePublishDateFromPVs();
 
 				Archive(ctx, song, SongArchiveReason.Created);
 				ctx.Update(song);
@@ -610,16 +614,15 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					diff.PublishDate = true;
 				}
 
+				var oldPublishDate = song.PublishDate;
 				var pvDiff = song.SyncPVs(properties.PVs);
 				ctx.OfType<PVForSong>().Sync(pvDiff);
 
 				if (pvDiff.Changed)
 					diff.PVs = true;
 
-				if (!song.PublishDate.HasValue && pvDiff.Changed) {
-					song.UpdatePublishDateFromPVs();
-					if (song.PublishDate.HasValue)
-						diff.PublishDate = true;
+				if (pvDiff.Changed && oldPublishDate != song.PublishDate) {
+					diff.PublishDate = true;
 				}
 
 				var lyricsDiff = song.SyncLyrics(properties.Lyrics);

@@ -3,6 +3,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201505142300)]
+	public class SongThumbUrl : AutoReversingMigration {
+
+		public override void Up() {
+		
+			Create.Column("ThumbUrl").OnTable(TableNames.Songs).AsString(255).Nullable();
+				
+		}
+
+	}
+
 	[Migration(201505101800)]
 	public class SongPublishDate : AutoReversingMigration {
 
