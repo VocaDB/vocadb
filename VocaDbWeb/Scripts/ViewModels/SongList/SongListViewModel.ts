@@ -37,9 +37,14 @@ module vdb.viewModels.songList {
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
 			this.showTags.subscribe(this.updateResultsWithoutTotalCount);
-			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
+
+			this.sort.subscribe(() => {
+				this.updateResultsWithTotalCount();
+				if (this.playlistMode)
+					this.playlistViewModel.updateResultsWithTotalCount();
+			});
 
 			this.playlistMode.subscribe(mode => {
 				if (mode)
