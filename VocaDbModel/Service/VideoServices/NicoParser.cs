@@ -12,6 +12,7 @@ using HtmlAgilityPack;
 using NLog;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -95,6 +96,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var userId = nicoResponse.Thumb.User_Id ?? string.Empty;
 			var length = ParseLength(nicoResponse.Thumb.Length);
 			var author = nicoResponse.Thumb.User_Nickname;
+			var publishDate = DateTimeHelper.ParseDateTimeOffsetAsDate(nicoResponse.Thumb.First_Retrieve);
 
 			if (string.IsNullOrEmpty(author))
 				author = GetUserName(userId);
@@ -105,7 +107,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				.Select(e => tagMapping[e])
 				.ToArray();
 
-			var result = VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: nicoResponse.Thumb.First_Retrieve);
+			var result = VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: publishDate);
 			result.AuthorId = userId;
 			result.Tags = matchedTags;
 
@@ -274,7 +276,7 @@ namespace VocaDb.Model.Service.VideoServices {
 	public class NicoResponseThumb {
 		
 		[XmlElement("first_retrieve")]
-		public DateTime First_Retrieve { get; set; }
+		public string First_Retrieve { get; set; }
 
 		[XmlElement("length")]
 		public string Length { get; set; }

@@ -3,6 +3,7 @@ using System.Linq;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -24,6 +25,10 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			return (int?)timespan.TotalSeconds;
 
+		}
+
+		private DateTime? GetPublishDate(Video video) {
+			return DateTimeHelper.ParseDateTimeOffsetAsDate(video.Snippet.PublishedAtRaw);
 		}
 
 		public VideoTitleParseResult GetTitle(string id) {
@@ -50,7 +55,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				var thumbUrl = video.Snippet.Thumbnails.Default != null ? video.Snippet.Thumbnails.Default.Url : string.Empty;
 				var length = GetLength(video);
 				var author = video.Snippet.ChannelTitle;
-				var publishDate = video.Snippet.PublishedAt;
+				var publishDate = GetPublishDate(video);
 			
 				return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, thumbUrl, length, uploadDate: publishDate);
 
