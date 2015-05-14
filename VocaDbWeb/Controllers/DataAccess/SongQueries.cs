@@ -609,7 +609,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				if (artistsDiff.Changed)
 					diff.Artists = true;
 
-				if (song.PublishDate != properties.PublishDate) {
+				if (!DateTimeHelper.DateEquals(song.PublishDate, properties.PublishDate)) {
 					song.PublishDate = properties.PublishDate;
 					diff.PublishDate = true;
 				}
@@ -621,7 +621,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				if (pvDiff.Changed)
 					diff.PVs = true;
 
-				if (pvDiff.Changed && oldPublishDate != song.PublishDate) {
+				if (pvDiff.Changed && !DateTimeHelper.DateEquals(oldPublishDate, song.PublishDate)) {
 					diff.PublishDate = true;
 				}
 
