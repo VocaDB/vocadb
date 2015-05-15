@@ -250,6 +250,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note that instrumental versions are to be added in external links instead of media..
+        /// </summary>
+        public static string PvInstrumentalNote {
+            get {
+                return ResourceManager.GetString("PvInstrumentalNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Length.
         /// </summary>
         public static string PvLength {

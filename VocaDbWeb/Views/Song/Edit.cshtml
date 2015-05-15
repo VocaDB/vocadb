@@ -150,6 +150,10 @@
 
 		<div id="pvsTab" data-bind="with: pvs">
 
+			<div class="alert alert-info" data-bind="visible: $parent.showInstrumentalNote" style="display: none;">
+				@Res.PvInstrumentalNote
+			</div>
+
 			<table>
 				<thead>
 					<tr>

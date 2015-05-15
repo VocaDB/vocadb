@@ -30,6 +30,7 @@ module vdb.viewModels.pvs {
 			this.repo.getPVByUrl(newPvUrl, this.newPvType(), pv => {
 			
 				this.newPvUrl("");
+				this.isPossibleInstrumental(this.isPossibleInstrumentalPv(pv));
 				this.pvs.push(new PVEditViewModel(pv, pvType));
 					
 			}).fail((jqXHR: JQueryXHR) => {
@@ -47,6 +48,20 @@ module vdb.viewModels.pvs {
 
 		public getPvServiceIcon = (service: string) => {
 			return this.pvServiceIcons.getIconUrl(service);
+		}
+
+		public isPossibleInstrumental = ko.observable(false);
+
+		// Attempts to identify whether the PV could be instrumental
+		private isPossibleInstrumentalPv = (pv: dc.pvs.PVContract) => {
+
+			return (pv && pv.name && (
+				pv.name.toLowerCase().indexOf("inst.") >= 0
+				|| pv.name.toLowerCase().indexOf("instrumental") >= 0
+				|| pv.name.indexOf("カラオケ") >= 0
+				|| pv.name.indexOf("オフボーカル") >= 0
+			));
+
 		}
 
 		public newPvType = ko.observable("Original");

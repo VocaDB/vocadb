@@ -180,6 +180,9 @@
   <data name="PvDate" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="PvInstrumentalNote" xml:space="preserve">
+    <value>Note that instrumental versions are to be added in external links instead of media.</value>
+  </data>
   <data name="PvLength" xml:space="preserve">
     <value>Length</value>
   </data>

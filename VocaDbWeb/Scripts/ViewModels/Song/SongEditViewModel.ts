@@ -135,6 +135,7 @@ module vdb.viewModels {
 		};
 
 		public hasValidationErrors: KnockoutComputed<boolean>;
+		public showInstrumentalNote: KnockoutComputed<boolean>;
 		public validationError_needArtist: KnockoutComputed<boolean>;
 		public validationError_needOriginal: KnockoutComputed<boolean>;
 		public validationError_needProducer: KnockoutComputed<boolean>;
@@ -206,6 +207,12 @@ module vdb.viewModels {
                         this.length(0);
                     }
                 }
+			});
+
+			this.showInstrumentalNote = ko.computed(() => {
+				return this.pvs.isPossibleInstrumental()
+					&& this.songType() !== models.songs.SongType.Instrumental
+					&& !_.some(this.tags, t => t === cls.tags.Tag.commonTag_instrumental);
 			});
 
 			this.validationError_needArtist = ko.computed(() => !_.some(this.artistLinks(), a => a.artist != null));
