@@ -85,7 +85,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository = new FakeSongRepository(song);
 			Save(song.AddArtist(producer));
 			Save(song.AddArtist(vocalist));
-			Save(song.CreatePV(new PVContract { Service = PVService.Youtube, PVId = "hoLu7c2XZYU", Name = "Nebula", PVType = PVType.Original }));
+			Save(song.CreatePV(new PVContract { Id = 1, Service = PVService.Youtube, PVId = "hoLu7c2XZYU", Name = "Nebula", PVType = PVType.Original }));
 
 			foreach (var name in song.Names)
 				repository.Save(name);
@@ -551,6 +551,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.AreEqual(user2, notification.Receiver, "Receiver");
+
+		}
+
+		[TestMethod]
+		public void Update_PublishDate_From_PVs() {
+			
+			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
+			contract.PVs = new[] {
+				CreateEntry.PVContract(id: 1, pvId: "hoLu7c2XZYU", pvType: PVType.Reprint, publishDate: new DateTime(2015, 3, 9, 10, 0, 0)),
+				CreateEntry.PVContract(id: 2, pvId: "mikumikumiku", pvType: PVType.Original, publishDate: new DateTime(2015, 4, 9, 16, 0, 0))
+			};
+
+			contract = queries.UpdateBasicProperties(contract);
+
+			var songFromRepo = repository.Load(contract.Id);
+			Assert.AreEqual(2, songFromRepo.PVs.PVs.Count, "Number of PVs");
+			Assert.AreEqual(new DateTime(2015, 4, 9), songFromRepo.PublishDate.DateTime, "Song publish date was updated");
 
 		}
 

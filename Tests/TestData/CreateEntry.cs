@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Albums;
+﻿using System;
+using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -25,6 +27,10 @@ namespace VocaDb.Tests.TestData {
 
 		public static Artist Producer(int id = 0, string name = "Tripshots") {
 			return new Artist(TranslatedString.Create(name ?? "Tripshots")) { Id = id, ArtistType = ArtistType.Producer };
+		}
+
+		public static PVContract PVContract(int id = 0, string pvId = null, PVType pvType = PVType.Original, DateTime? publishDate = null) {
+			return new PVContract { Id = id, Service = PVService.Youtube, PVId = pvId, Name = "Nebula", PVType = pvType, PublishDate = publishDate };
 		}
 
 		public static ReleaseEvent ReleaseEvent(string name) {
