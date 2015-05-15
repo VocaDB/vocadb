@@ -286,7 +286,7 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Only includes the date component, no time for now.
 		/// Should always be in UTC.
 		/// </summary>
-		public virtual DateTime? PublishDate { get; set; }
+		public virtual Date PublishDate { get; set; }
 
 		public virtual PVManager<PVForSong> PVs {
 			get { return pvs; }
@@ -732,7 +732,7 @@ namespace VocaDb.Model.Domain.Songs {
 				UpdateThumbUrl();				
 			}
 
-			if (result.Changed && !PublishDate.HasValue) {
+			if (result.Changed && !PublishDate.DateTime.HasValue) {
 				UpdatePublishDateFromPVs();
 			}
 

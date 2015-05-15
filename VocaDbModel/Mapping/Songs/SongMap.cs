@@ -18,7 +18,6 @@ namespace VocaDb.Model.Mapping.Songs {
 			Map(m => m.FavoritedTimes).Not.Nullable();
 			Map(m => m.LengthSeconds).Not.Nullable();
 			Map(m => m.NicoId).Nullable();
-			Map(m => m.PublishDate).Nullable();
 			Map(m => m.PVServices).CustomType(typeof(PVServices)).Not.Nullable();
 			Map(m => m.RatingScore).Not.Nullable();
 			Map(m => m.SongType).Not.Nullable();
@@ -46,6 +45,8 @@ namespace VocaDb.Model.Mapping.Songs {
 				c.Map(m => m.Original).Column("Notes").Not.Nullable().Length(int.MaxValue);
 				c.Map(m => m.English).Column("NotesEng").Not.Nullable().Length(int.MaxValue);
 			});
+
+			Component(m => m.PublishDate, c => c.Map(m => m.DateTime).Column("PublishDate").Nullable());
 
 			Component(m => m.PVs, c => {
 				c.HasMany(m => m.PVs).KeyColumn("[Song]").Inverse().Cascade.All().Cache.ReadWrite();

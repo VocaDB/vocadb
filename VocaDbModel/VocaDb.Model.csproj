@@ -353,6 +353,7 @@
     <Compile Include="Domain\Artists\IArtistLink.cs" />
     <Compile Include="Domain\Artists\IArtistWithSupport.cs" />
     <Compile Include="Domain\Caching\ObjectCacheExtender.cs" />
+    <Compile Include="Domain\Date.cs" />
     <Compile Include="Domain\Discussions\DiscussionComment.cs" />
     <Compile Include="Domain\Discussions\DiscussionFolder.cs" />
     <Compile Include="Domain\Discussions\DiscussionTopic.cs" />
