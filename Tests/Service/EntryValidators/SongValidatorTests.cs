@@ -1,8 +1,14 @@
 ﻿
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Resources;
+using VocaDb.Model.Service.EntryValidators;
+
 namespace VocaDb.Tests.Service.EntryValidators {
 
-	/*
 	/// <summary>
 	/// Tests for <see cref="SongValidator"/>.
 	/// </summary>
@@ -13,16 +19,8 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		private Song song;
 		private Artist vocalist;
 
-		private void AssertContains(ValidationResult validationResult, string errorMsg) {
-			Assert.IsTrue(validationResult.Errors.Contains(errorMsg), string.Format("Validation result contains error '{0}'", errorMsg));
-		}
-
-		private void AssertDoesNotContain(ValidationResult validationResult, string errorMsg) {
-			Assert.IsFalse(validationResult.Errors.Contains(errorMsg), string.Format("Validation result contains error '{0}'", errorMsg));
-		}
-
-		private ValidationResult Validate(Song song) {
-			return SongValidator.Validate(song);
+		private void TestValidate(bool expectedResult, Song song) {
+			Assert.AreEqual(expectedResult, new SongValidator().IsValid(song));
 		}
 
 		[TestInitialize]
@@ -34,7 +32,7 @@ namespace VocaDb.Tests.Service.EntryValidators {
 			producer = new Artist(TranslatedString.Create("devilishP"));
 			producer.ArtistType = ArtistType.Producer;
 
-			song = new Song(new LocalizedString("5150", ContentLanguageSelection.English));
+			song = new Song(new LocalizedString("5150", ContentLanguageSelection.English)) { SongType = SongType.Original };
 			song.AddArtist(vocalist);
 
 		}
@@ -42,10 +40,7 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		[TestMethod]
 		public void MissingProducer() {
 
-			var result = Validate(song);
-
-			AssertContains(result, SongValidationErrors.NeedProducer);
-			AssertDoesNotContain(result, SongValidationErrors.NonInstrumentalSongNeedsVocalists);
+			TestValidate(false, song);
 
 		}
 
@@ -56,9 +51,8 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		public void MissingRealProducer() {
 
 			song.AddArtist("devilishP", false, ArtistRoles.Composer);
-			var result = Validate(song);
 
-			AssertContains(result, SongValidationErrors.NeedProducer);
+			TestValidate(false, song);
 
 		}
 
@@ -66,10 +60,8 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		public void HasProducer() {
 
 			song.AddArtist(producer);
-			var result = Validate(song);
 
-			AssertDoesNotContain(result, SongValidationErrors.NeedProducer);
-			AssertDoesNotContain(result, SongValidationErrors.NonInstrumentalSongNeedsVocalists);
+			TestValidate(true, song);
 
 		}
 
@@ -77,22 +69,22 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		public void MissingVocalist() {
 
 			song.RemoveArtist(vocalist);
-			var result = Validate(song);
 
-			AssertContains(result, SongValidationErrors.NonInstrumentalSongNeedsVocalists);
+			TestValidate(false, song);
 
 		}
 
 		[TestMethod]
 		public void InstrumentalDoesNotNeedVocalist() {
 
+			song.AddArtist(producer);
 			song.RemoveArtist(vocalist);
 			song.SongType = SongType.Instrumental;
-			var result = Validate(song);
+			song.Notes.Original = "Instrumental song";
 
-			AssertDoesNotContain(result, SongValidationErrors.NonInstrumentalSongNeedsVocalists);
+			TestValidate(true, song);
 
 		}
 
-	}*/
+	}
 }

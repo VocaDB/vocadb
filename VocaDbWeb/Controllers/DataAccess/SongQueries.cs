@@ -19,6 +19,7 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
@@ -202,10 +203,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
 
-				var song = new Song {
-					SongType = contract.SongType,
-					Status = contract.Draft ? EntryStatus.Draft : EntryStatus.Finished
-				};
+				var song = new Song { SongType = contract.SongType };
 
 				song.Names.Init(contract.Names, song);
 
@@ -233,6 +231,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var pvDiff = song.SyncPVs(pvs);
 				ctx.OfType<PVForSong>().Sync(pvDiff);
+
+				song.Status = (contract.Draft || !(new SongValidator().IsValid(song))) ? EntryStatus.Draft : EntryStatus.Finished;
 
 				song.UpdateArtistString();
 

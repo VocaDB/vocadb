@@ -19,6 +19,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
@@ -195,8 +196,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var artist = new Artist { 
 					ArtistType = contract.ArtistType, 
-					Description = new EnglishTranslatedString(contract.Description.Trim()), 
-					Status = contract.Draft ? EntryStatus.Draft : EntryStatus.Finished 
+					Description = new EnglishTranslatedString(contract.Description.Trim())
 				};
 
 				artist.Names.Init(contract.Names, artist);
@@ -205,6 +205,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					artist.CreateWebLink(contract.WebLink.Description, contract.WebLink.Url, contract.WebLink.Category);
 					diff.WebLinks = true;
 				}
+
+				artist.Status = (contract.Draft || !(new ArtistValidator().IsValid(artist))) ? EntryStatus.Draft : EntryStatus.Finished;
 
 				ctx.Save(artist);
 
