@@ -120,6 +120,9 @@
   <data name="NeedArtist" xml:space="preserve">
     <value>Song needs at least one artist.</value>
   </data>
+  <data name="NeedOriginal" xml:space="preserve">
+    <value>Derived songs need to have an original version specified, if it's in the database, or the original needs to be mentioned in notes.</value>
+  </data>
   <data name="NeedProducer" xml:space="preserve">
     <value>Song should have at least one producer (composer, arranger or animator) role.</value>
   </data>

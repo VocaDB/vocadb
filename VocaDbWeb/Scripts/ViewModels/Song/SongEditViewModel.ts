@@ -129,6 +129,7 @@ module vdb.viewModels {
 
 		public hasValidationErrors: KnockoutComputed<boolean>;
 		public validationError_needArtist: KnockoutComputed<boolean>;
+		public validationError_needOriginal: KnockoutComputed<boolean>;
 		public validationError_needProducer: KnockoutComputed<boolean>;
 		public validationError_needType: KnockoutComputed<boolean>;
 		public validationError_nonInstrumentalSongNeedsVocalists: KnockoutComputed<boolean>;
@@ -200,6 +201,17 @@ module vdb.viewModels {
 			});
 
 			this.validationError_needArtist = ko.computed(() => !_.some(this.artistLinks(), a => a.artist != null));
+
+			this.validationError_needOriginal = ko.computed(() => {
+				
+				var songType = models.songs.SongType;
+				var derivedTypes = [ songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix ];
+				return (this.notes.original() === null || this.notes.original() === "")
+					&& this.originalVersion.entry() === null
+					&& _.contains(derivedTypes, this.songType());
+
+			});
+
 			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArray(), hel.SongHelper.isAnimation(this.songType()))));
 			this.validationError_needType = ko.computed(() => this.songType() == SongType.Unspecified);
 
@@ -216,6 +228,7 @@ module vdb.viewModels {
 
 			this.hasValidationErrors = ko.computed(() =>
 				this.validationError_needArtist() ||
+				this.validationError_needOriginal() ||
 				this.validationError_needProducer() ||
 				this.validationError_needType() ||
 				this.validationError_nonInstrumentalSongNeedsVocalists() ||
