@@ -46,7 +46,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			LengthSeconds = song.LengthSeconds;
 			Name = song.TranslatedName[languagePreference];
 			NicoId = song.NicoId;
-			PublishDate = song.PublishDate != null ? (DateTime?)song.PublishDate.Value.Date : null;
+			PublishDate = song.PublishDate != null ? (DateTime?)(DateTime.SpecifyKind(song.PublishDate.Value, DateTimeKind.Utc).Date) : null;
 			PVServices = song.PVServices;
 			RatingScore = song.RatingScore;
 			SongType = song.SongType;
