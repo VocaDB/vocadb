@@ -161,6 +161,9 @@ Additional names can be entered as aliases. See more in the guide.</value>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
   </data>
+  <data name="SaveWarning" xml:space="preserve">
+    <value>This entry has validation warnings. Are you sure you want to save it as finished?</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>

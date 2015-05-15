@@ -146,6 +146,13 @@ module vdb.viewModels {
 
 		public submit = () => {
 
+			if (this.hasValidationErrors() && this.status() !== "Draft"
+				&& this.dialogService.confirm(vdb.resources.entryEdit.saveWarning) === false) {
+
+				return false;
+
+			}
+
 			this.submitting(true);
 
 			var submittedModel: dc.albums.AlbumForEditContract = {
@@ -224,7 +231,8 @@ module vdb.viewModels {
 			webLinkCategories: dc.TranslatedEnumField[],
 			data: dc.albums.AlbumForEditContract,
 			allowCustomTracks: boolean,
-			canBulkDeletePVs: boolean) {
+			canBulkDeletePVs: boolean,
+			private dialogService: ui_dialog.IDialogService) {
 
 			this.catalogNumber = ko.observable(data.originalRelease.catNum);
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);

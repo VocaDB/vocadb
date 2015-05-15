@@ -96,6 +96,13 @@ module vdb.viewModels {
 
 		public submit = () => {
 
+			if (this.hasValidationErrors() && this.status() !== "Draft"
+				&& this.dialogService.confirm(vdb.resources.entryEdit.saveWarning) === false) {
+				
+				return false;
+
+			}
+
 			this.submitting(true);
 
 			var submittedModel: dc.songs.SongForEditContract = {
@@ -143,7 +150,8 @@ module vdb.viewModels {
 			private artistRoleNames: { [key: string]: string; },
 			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
 			data: dc.songs.SongForEditContract,
-			canBulkDeletePVs: boolean) {
+			canBulkDeletePVs: boolean,
+			private dialogService: ui_dialog.IDialogService) {
 
 			this.artistLinks = ko.observableArray(_.map(data.artists, artist => new ArtistForAlbumEditViewModel(null, artist)));
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
@@ -207,7 +215,7 @@ module vdb.viewModels {
 				var songType = models.songs.SongType;
 				var derivedTypes = [ songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix ];
 				return (this.notes.original() === null || this.notes.original() === "")
-					&& this.originalVersion.entry() === null
+					&& this.originalVersion.entry() == null
 					&& _.contains(derivedTypes, this.songType());
 
 			});

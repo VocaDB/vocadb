@@ -1995,6 +1995,7 @@
     <TypeScriptCompile Include="Scripts\Repositories\RepositoryFactory.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\SongListRepository.ts" />
     <TypeScriptCompile Include="Scripts\Models\EntryOptionalFields.ts" />
+    <TypeScriptCompile Include="Scripts\Shared\DialogService.ts" />
     <TypeScriptCompile Include="Scripts\Shared\EntryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\Shared\MessagesTyped.ts" />
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />

@@ -266,6 +266,10 @@
 		moment.locale('@Culture');
 		ko.punches.enableAll();
 
+		vdb.resources.entryEdit = {
+			saveWarning: @ToJS(EditRes.SaveWarning)
+		};
+
 		vdb.resources.song = {
 			addExtraArtist: "@Html.Raw(AjaxRes.SharedStrings.AddExtraArtist)"
 		};
@@ -283,11 +287,13 @@
 		var vm;
 
 		if (editedModel) {
-			vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, urlMapper, artistRoleJson, webLinkCategoryJson, editedModel, canBulkDeletePVs);
+			vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, urlMapper, artistRoleJson, webLinkCategoryJson, 
+				editedModel, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
 			ko.applyBindings(vm);
 		} else {
 			songRepo.getForEdit(@Model.Id, function (model) {
-				vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, urlMapper, artistRoleJson, webLinkCategoryJson, model, canBulkDeletePVs);
+				vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, urlMapper, artistRoleJson, 
+					webLinkCategoryJson, model, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
 				ko.applyBindings(vm);
 			});
 		}

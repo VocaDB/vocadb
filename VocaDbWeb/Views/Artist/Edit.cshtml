@@ -198,6 +198,10 @@
 
 	$(document).ready(function() {
 
+		vdb.resources.entryEdit = {
+			saveWarning: @ToJS(EditRes.SaveWarning)
+		};
+
 		var urlMapper = new vdb.UrlMapper('@RootPath');
 		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var artistRepo = repoFactory.artistRepository();
@@ -205,11 +209,11 @@
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
 
 		if (editedModel) {
-			ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, urlMapper, webLinkCategoryJson, editedModel));
+			ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, urlMapper, webLinkCategoryJson, editedModel, new vdb.ui_dialog.DialogService()));
 		} else {
 
 			artistRepo.getForEdit(@Model.Artist.Id, function (model) {
-				ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, urlMapper, webLinkCategoryJson, model));
+				ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, urlMapper, webLinkCategoryJson, model, new vdb.ui_dialog.DialogService()));
 			});
 
 		}

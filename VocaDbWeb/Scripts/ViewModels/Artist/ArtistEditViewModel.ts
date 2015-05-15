@@ -60,6 +60,13 @@ module vdb.viewModels {
 
 		public submit = () => {
 
+			if (this.hasValidationErrors() && this.status() !== "Draft"
+				&& this.dialogService.confirm(vdb.resources.entryEdit.saveWarning) === false) {
+
+				return false;
+
+			}
+
 			this.submitting(true);
 
 			var submittedModel: dc.artists.ArtistForEditContract = {
@@ -98,7 +105,8 @@ module vdb.viewModels {
 			private artistRepo: rep.ArtistRepository,
 			private urlMapper: vdb.UrlMapper,
 			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
-			data: dc.artists.ArtistForEditContract) {
+			data: dc.artists.ArtistForEditContract,
+			private dialogService: vdb.ui_dialog.IDialogService) {
 
 			this.artistTypeStr = ko.observable(data.artistType);
 			this.artistType = ko.computed(() => cls.artists.ArtistType[this.artistTypeStr()]);
