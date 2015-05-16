@@ -126,6 +126,12 @@
   <data name="DraftMessage" xml:space="preserve">
     <value>This entry is a draft. You can help by editing the entry and adding the missing information.</value>
   </data>
+  <data name="EntryIsMissingInformation" xml:space="preserve">
+    <value>This entry is missing the following information:</value>
+  </data>
+  <data name="EntryValidationWarningDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="GitHubMarkdown" xml:space="preserve">
     <value>GitHub-flavored Markdown</value>
   </data>
