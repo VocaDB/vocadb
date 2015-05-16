@@ -132,4 +132,7 @@
   <data name="UnspecifiedNames" xml:space="preserve">
     <value>曲は主なタイトルが必要です。</value>
   </data>
+  <data name="NeedOriginal" xml:space="preserve">
+    <value>二次創作の原作がサイトに載っている場合は原作記入で選んでください。ない場合はメモに原作を記してください。</value>
+  </data>
 </root>

@@ -167,4 +167,7 @@
   <data name="ConfirmDelete" xml:space="preserve">
     <value>この項目の削除を確認してください。説明を下記に記入することもできます。（任意）</value>
   </data>
+  <data name="SaveWarning" xml:space="preserve">
+    <value>この項目にはエラーが残っています。本当に完成版として保存してもよろしいですか？</value>
+  </data>
 </root>
