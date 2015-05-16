@@ -33,7 +33,11 @@ namespace VocaDb.Model.Domain {
 
 		public DateTime? DateTime {
 			get { return dateTime; }
-			set { dateTime = value != null ? (DateTime?)System.DateTime.SpecifyKind(value.Value, DateTimeKind.Utc).Date : null; }
+			set {
+				// Change Kind to UTC and remove time portion. 
+				// It's important to do the SpecifyKind *before* extracting date as we don't want any timezone conversions.
+				dateTime = value != null ? (DateTime?)System.DateTime.SpecifyKind(value.Value, DateTimeKind.Utc).Date : null;
+			}
 		}
 
 		public bool Equals(DateTime? anotherDateTime) {
