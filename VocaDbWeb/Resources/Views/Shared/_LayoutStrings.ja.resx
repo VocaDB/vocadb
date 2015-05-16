@@ -189,4 +189,7 @@
   <data name="Discussions" xml:space="preserve">
     <value>話し合い</value>
   </data>
+  <data name="OtherCredit" xml:space="preserve">
+    <value>ソースコードとその他の貢献者</value>
+  </data>
 </root>

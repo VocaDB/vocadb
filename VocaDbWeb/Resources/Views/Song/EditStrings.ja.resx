@@ -207,4 +207,16 @@
   <data name="BaOriginalVersionHelp" xml:space="preserve">
     <value>このサイトに原作項目が存在する場合は、このフィールドを使ってリンクしてください。</value>
   </data>
+  <data name="PvInstrumentalNote" xml:space="preserve">
+    <value>インストゥルメンタルバージョンはメディアではなく外部リンクの部分に貼ってください。</value>
+  </data>
+  <data name="BaPublishDate" xml:space="preserve">
+    <value>公開日</value>
+  </data>
+  <data name="BaPublishDateHelp" xml:space="preserve">
+    <value>曲が最初に出版・投稿された日付（アルバム又はウェブ上）</value>
+  </data>
+  <data name="PvDate" xml:space="preserve">
+    <value>日付</value>
+  </data>
 </root>
