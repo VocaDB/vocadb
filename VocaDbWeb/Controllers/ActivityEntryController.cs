@@ -36,7 +36,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult DetailedPage(DateTime since) {
 			
 			var entries = entryQueries.GetRecentVersions(100, since);
-			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate : null);
+			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate.ToUniversalTime() : null);
 			var view = RenderPartialViewToString("_DetailedPage", entries);
 			return LowercaseJson(new DetailedPageResult { ViewHtml = view, LastEntryDate = lastEntryDate });
 

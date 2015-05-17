@@ -2,6 +2,8 @@
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Versioning.ArchivedVersionForReviewContract[]>
 
+@* Note: Probably the most hasty code I've written for a while, please refactor *@
+
 @foreach (var entry in Model) {
 	var thumbUrl = Url.EntryThumbUrl(entry.Entry, entry.Entry.SongThumbUrl);
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">

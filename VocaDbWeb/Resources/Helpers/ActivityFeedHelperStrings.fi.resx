@@ -121,7 +121,7 @@
     <value>-</value>
   </data>
   <data name="CreatedNew" xml:space="preserve">
-    <value>loi uuden {0}:</value>
+    <value>loi uuden {0}</value>
   </data>
   <data name="EntryAlbum" xml:space="preserve">
     <value>albumin</value>
@@ -136,6 +136,6 @@
     <value>Käyttäjä</value>
   </data>
   <data name="Updated" xml:space="preserve">
-    <value>päivitti {0}:</value>
+    <value>päivitti {0}</value>
   </data>
 </root>

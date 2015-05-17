@@ -121,7 +121,7 @@
     <value>at</value>
   </data>
   <data name="CreatedNew" xml:space="preserve">
-    <value>created a new {0}:</value>
+    <value>created a new {0}</value>
   </data>
   <data name="EntryAlbum" xml:space="preserve">
     <value>album</value>
@@ -136,6 +136,6 @@
     <value>A contributor</value>
   </data>
   <data name="Updated" xml:space="preserve">
-    <value>updated {0}:</value>
+    <value>updated {0}</value>
   </data>
 </root>
