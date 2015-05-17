@@ -3,7 +3,9 @@
 @using Autofac.Integration.Mvc
 @using Microsoft.Web.Helpers
 @using Resources
+@using VocaDb.Model.DataContracts.Users
 @using VocaDb.Model.Domain.Users
+@using VocaDb.Web.Helpers
 
 @helper IconAndName(IUserWithEmail user, int size = 20) {
 	@ProfileIcon(user, size)
@@ -78,6 +80,10 @@
 
 @helper UserIconLink(IUserWithEmail user, int size = 20) {	
 	<a href="@Url.Action("Profile", "User", new { id = user.Name })">@ProfileIcon(user, size)<span>@user.Name</span></a>
+}
+
+@helper UserIconLink(UserContract user, int size = 20, bool userInfo = false) {	
+	<a href="@Url.Action("Profile", "User", new { id = user.Name })" title='@(userInfo ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.CreateDate.ToShortDateString()) : "")'>@ProfileIcon(user, size)<span>@user.Name</span></a>
 }
 
 @helper UserIconLink(IUserWithEmail user, string name, int size = 20) {

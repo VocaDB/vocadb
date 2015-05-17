@@ -2,6 +2,9 @@
 
 namespace VocaDb.Model.Domain.Albums {
 
+	/// <summary>
+	/// Saved in the database as strings - numbers can be changed, but not the names.
+	/// </summary>
 	[Flags]
 	public enum AlbumEditableFields {
 

@@ -31,7 +31,7 @@
 	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.EntryRef.SongThumbUrl);
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
-			@UserHelpers.UserIconLink(entry.Author)
+			@UserHelpers.UserIconLink(entry.Author, userInfo: true)
 		} else {
 			@HelperRes.ActivityFeedHelperStrings.Someone
 		}
