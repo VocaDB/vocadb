@@ -319,6 +319,7 @@
     <Compile Include="DataContracts\Users\UserWithPermissionsContract.cs" />
     <Compile Include="DataContracts\VersioningInfoContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionWithFieldsContract.cs" />
+    <Compile Include="DataContracts\Versioning\ArchivedVersionForReviewContract.cs" />
     <Compile Include="DataContracts\Versioning\ComparedVersionsContract.cs" />
     <Compile Include="Domain\Activityfeed\ActivityEntry.cs" />
     <Content Include="Domain\Activityfeed\EntryEditedEntry.cs" />
@@ -517,6 +518,7 @@
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\EntryBaseHelper.cs" />
     <Compile Include="Helpers\EnumerableExtender.cs" />
     <Compile Include="Helpers\HtmlHelperFunctions.cs" />
     <Compile Include="Helpers\HtmlRequestHelper.cs" />

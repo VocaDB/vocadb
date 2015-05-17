@@ -10,6 +10,9 @@
 	<li class="active">
 		@Html.ActionLink("All activity", "Index")
 	</li>
+	<li>
+		@Html.ActionLink("Detailed", "Detailed")
+	</li>
 	@if (Login.IsLoggedIn) {
 	<li>
 		@Html.ActionLink("Only followed artists", "FollowedArtistActivity")

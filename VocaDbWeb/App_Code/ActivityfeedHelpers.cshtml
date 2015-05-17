@@ -3,21 +3,26 @@
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.DataContracts.Activityfeed;
+@using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Activityfeed;
 
 @helper EntryType(ActivityEntryContract entry) {
+    @EntryType(entry.EditEvent, entry.EntryRef.EntryType)    
+}
+
+@helper EntryType(EntryEditEvent editEvent, EntryType entryType) {
     
-    var tr = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString(entry.EditEvent.ToString() + entry.EntryRef.EntryType);
+	var tr = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString(editEvent.ToString() + entryType);
     
     if (!string.IsNullOrEmpty(tr)) {
         
        <span>@tr</span> 
         
     } else {
+
+		var entryTypeName = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entryType);
 		
-		var entryTypeName = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entry.EntryRef.EntryType);
-		
-		if (entry.EditEvent == EntryEditEvent.Created) {
+		if (editEvent == EntryEditEvent.Created) {
 			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.CreatedNew, entryTypeName)</span>
 		} else {
 			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.Updated, entryTypeName)</span>
@@ -26,7 +31,6 @@
     }
     
 }
-
 @helper ActivityEntry(ActivityEntryContract entry) {
 	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.EntryRef.SongThumbUrl);
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -38,7 +42,7 @@
 
 		@EntryType(entry)
 
-		<small class="pull-right extraInfo">
+		<small class="pull-right extraInfo" title="@entry.CreateDate.ToUniversalTime().ToString("g")">
 			@TimeAgoStringBuilder.FormatTimeAgo(entry.CreateDate)
 		</small>
 

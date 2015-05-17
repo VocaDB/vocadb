@@ -1,5 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Api;
+using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -12,6 +19,8 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Web.Helpers;
+using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -136,6 +145,91 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			});
 
 		}
+
+		// TODO: refactor this
+		private ArchivedVersionForReviewContract CreateViewModel(Model.Domain.Versioning.ArchivedObjectVersion archivedObjectVersion) {
+
+			string changeMessage = string.Empty, entryTypeName = string.Empty;
+
+			if (archivedObjectVersion is ArchivedAlbumVersion) {
+				var entry = (ArchivedAlbumVersion)archivedObjectVersion;
+				changeMessage = Models.Album.Versions.GetChangeString(entry.Diff.ChangedFields);
+				entryTypeName = Translate.DiscTypeName(entry.Album.DiscType);
+			}
+
+			if (archivedObjectVersion is ArchivedArtistVersion) {
+				var entry = (ArchivedArtistVersion)archivedObjectVersion;
+				changeMessage = Models.Artist.Versions.GetChangeString(entry.Diff.ChangedFields);
+				entryTypeName = Translate.ArtistTypeName(entry.Artist.ArtistType);
+			}
+
+			if (archivedObjectVersion is ArchivedSongVersion) {
+				var entry = (ArchivedSongVersion)archivedObjectVersion;
+				changeMessage = Models.Song.Versions.GetChangeString(entry.Diff.ChangedFields);
+				entryTypeName = Translate.SongTypeNames[entry.Song.SongType];
+			}
+
+			return new ArchivedVersionForReviewContract(archivedObjectVersion, changeMessage, entryTypeName, LanguagePreference);
+
+		}
+
+		private ArchivedObjectForSorting[] GetArchivedObjectsForSort<T>(IRepositoryContext<Album> ctx, EntryType entryType, int maxResults, DateTime? before)
+			where T : Model.Domain.Versioning.ArchivedObjectVersion {
+			
+			var query = ctx.OfType<T>().Query();
+
+			if (before.HasValue) {
+				query = query.Where(a => a.Created < before);
+			}
+
+			var results = query.OrderByDescending(e => e.Created).Take(maxResults).Select(a => new ArchivedObjectForSorting {
+				Created = a.Created,
+				Id = a.Id,
+				EntryType = entryType
+			}).ToArray();
+
+			return results;
+
+		}
+
+		private Model.Domain.Versioning.ArchivedObjectVersion[] GetArchivedObjects<T>(IRepositoryContext<Album> ctx, int[] ids) where T : Model.Domain.Versioning.ArchivedObjectVersion {
+			return ctx.OfType<T>().Query().Where(v => ids.Contains(v.Id)).ToArray();
+		}
+
+		public ArchivedVersionForReviewContract[] GetRecentVersions(int maxResults, DateTime? before) {
+			
+			return repository.HandleQuery(ctx => {
+
+				var albums = GetArchivedObjectsForSort<ArchivedAlbumVersion>(ctx, EntryType.Album, maxResults, before);
+				var artists = GetArchivedObjectsForSort<ArchivedArtistVersion>(ctx, EntryType.Artist, maxResults, before);
+				var songs = GetArchivedObjectsForSort<ArchivedSongVersion>(ctx, EntryType.Song, maxResults, before);
+
+				var entries = albums.Concat(artists).Concat(songs).OrderByDescending(e => e.Created).Take(maxResults).ToArray();
+				var albumVersionIds = entries.Where(e => e.EntryType == EntryType.Album).Select(e => e.Id).ToArray();
+				var artistVersionIds = entries.Where(e => e.EntryType == EntryType.Artist).Select(e => e.Id).ToArray();
+				var songVersionIds = entries.Where(e => e.EntryType == EntryType.Song).Select(e => e.Id).ToArray();
+
+				var results = GetArchivedObjects<ArchivedAlbumVersion>(ctx, albumVersionIds)
+					.Concat(GetArchivedObjects<ArchivedArtistVersion>(ctx, artistVersionIds))
+					.Concat(GetArchivedObjects<ArchivedSongVersion>(ctx, songVersionIds))
+					.OrderByDescending(e => e.Created)
+					.Select(CreateViewModel);
+
+				return results.ToArray();
+
+			});
+
+		}
+
+	}
+
+	public class ArchivedObjectForSorting {
+
+		public DateTime Created { get; set; }
+
+		public EntryType EntryType { get; set; }
+
+		public int Id { get; set; }
 
 	}
 
