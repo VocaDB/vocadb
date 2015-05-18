@@ -237,11 +237,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				song.UpdateArtistString();
 
-				Archive(ctx, song, SongArchiveReason.Created);
+				var archived = Archive(ctx, song, SongArchiveReason.Created);
 				ctx.Update(song);
 
 				ctx.AuditLogger.AuditLog(string.Format("created song {0} ({1})", entryLinkFactory.CreateEntryLink(song), song.SongType));
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Created);
+				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
 				new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer);
 
@@ -636,12 +636,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 
-				ctx.AuditLogger.AuditLog(logStr);
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated);
-
-				Archive(ctx, song, diff, SongArchiveReason.PropertiesUpdated, properties.UpdateNotes);
-
+				var archived = Archive(ctx, song, diff, SongArchiveReason.PropertiesUpdated, properties.UpdateNotes);
 				ctx.Update(song);
+
+				ctx.AuditLogger.AuditLog(logStr);
+				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
 
 				var newSongCutoff = TimeSpan.FromHours(1);
 				if (artistsDiff.Added.Any() && song.CreateDate >= DateTime.Now - newSongCutoff) {

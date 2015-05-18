@@ -1,5 +1,6 @@
 ﻿using System;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Activityfeed {
 
@@ -18,6 +19,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 			EditEvent = editEvent;
 
 		}
+
+		public abstract ArchivedObjectVersion ArchivedVersionBase { get; }
 
 		public virtual User Author {
 			get { return author; }

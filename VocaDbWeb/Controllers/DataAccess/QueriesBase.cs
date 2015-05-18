@@ -42,26 +42,26 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Album entry, EntryEditEvent editEvent) {
+		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion) {
 
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
-			var activityEntry = new AlbumActivityEntry(entry, editEvent, user);
+			var activityEntry = new AlbumActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
 
 		}
 
-		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Artist entry, EntryEditEvent editEvent) {
+		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion) {
 
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
-			var activityEntry = new ArtistActivityEntry(entry, editEvent, user);
+			var activityEntry = new ArtistActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
 
 		}
 
-		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Song entry, EntryEditEvent editEvent) {
+		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Song entry, EntryEditEvent editEvent, ArchivedSongVersion archivedVersion) {
 
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
-			var activityEntry = new SongActivityEntry(entry, editEvent, user);
+			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
 
 		}

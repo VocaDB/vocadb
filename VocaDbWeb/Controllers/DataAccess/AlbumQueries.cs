@@ -44,11 +44,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			get { return entryLinkFactory; }
 		}
 
-		private void ArchiveSong(IRepositoryContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
+		private ArchivedSongVersion ArchiveSong(IRepositoryContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
 			var archived = ArchivedSongVersion.Create(song, diff, agentLoginData, reason, notes);
 			ctx.OfType<ArchivedSongVersion>().Save(archived);
+			return archived;
 
 		}
 
@@ -69,11 +70,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var diff = new SongDiff(DoSnapshot(song.GetLatestVersion(), ctx.OfType<User>().GetLoggedUser(PermissionContext))) { Artists = true };
 
 				song.UpdateArtistString();
-				ArchiveSong(ctx.OfType<Song>(), song, diff, SongArchiveReason.PropertiesUpdated);
+				var archived = ArchiveSong(ctx.OfType<Song>(), song, diff, SongArchiveReason.PropertiesUpdated);
 				ctx.Update(song);
 
 				ctx.AuditLogger.AuditLog("updated artists for " + entryLinkFactory.CreateEntryLink(song));
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated);
+				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
 
 			}
 			
@@ -137,11 +138,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				}
 
 				album.UpdateArtistString();
-				Archive(ctx, album, AlbumArchiveReason.Created);
+				var archived = Archive(ctx, album, AlbumArchiveReason.Created);
 				ctx.Update(album);
 
 				ctx.AuditLogger.AuditLog(string.Format("created album {0} ({1})", entryLinkFactory.CreateEntryLink(album), album.DiscType));
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created);
+				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
 				new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), album, album.ArtistList, PermissionContext.LoggedUser, 
 					entryLinkFactory, mailer);
@@ -448,12 +449,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 						session.OfType<ArtistForSong>().Sync(songArtistDiff);
 
-						ArchiveSong(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
+						var archived = ArchiveSong(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
 							string.Format("Created for album '{0}'", album.DefaultName));
 
 						session.AuditLogger.AuditLog(string.Format("created {0} for {1}",
 							entryLinkFactory.CreateEntryLink(song), entryLinkFactory.CreateEntryLink(album)));
-						AddEntryEditedEntry(session.OfType<ActivityEntry>(), song, EntryEditEvent.Created);
+						AddEntryEditedEntry(session.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
 						return song;
 
@@ -502,10 +503,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				session.AuditLogger.AuditLog(logStr);
 
-				AddEntryEditedEntry(session.OfType<ActivityEntry>(), album, EntryEditEvent.Updated);
-
-				Archive(session, album, diff, AlbumArchiveReason.PropertiesUpdated, properties.UpdateNotes);
+				var archivedAlbum = Archive(session, album, diff, AlbumArchiveReason.PropertiesUpdated, properties.UpdateNotes);
 				session.Update(album);
+
+				AddEntryEditedEntry(session.OfType<ActivityEntry>(), album, EntryEditEvent.Updated, archivedAlbum);
 
 				var newSongCutoff = TimeSpan.FromHours(1);
 				if (artistsDiff.Added.Any() && album.CreateDate >= DateTime.Now - newSongCutoff) {

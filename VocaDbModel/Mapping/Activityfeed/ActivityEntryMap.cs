@@ -27,6 +27,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 			DiscriminatorValue("Album");
 
+			References(m => m.ArchivedVersion).Column("[ArchivedAlbumVersion]").Nullable();
 			References(m => m.Entry).Column("[Album]").Not.Nullable();
 
 		}
@@ -39,6 +40,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 			DiscriminatorValue("Artist");
 
+			References(m => m.ArchivedVersion).Column("[ArchivedArtistVersion]").Nullable();
 			References(m => m.Entry).Column("[Artist]").Not.Nullable();
 
 		}
@@ -51,6 +53,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 			DiscriminatorValue("Song");
 
+			References(m => m.ArchivedVersion).Column("[ArchivedSongVersion]").Nullable();
 			References(m => m.Entry).Column("[Song]").Not.Nullable();
 
 		}

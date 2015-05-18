@@ -3,6 +3,7 @@ using System.Linq;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -168,49 +169,26 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		private ArchivedObjectForSorting[] GetArchivedObjectsForSort<T>(IRepositoryContext<Album> ctx, EntryType entryType, int maxResults, DateTime? before)
-			where T : ArchivedObjectVersion {
-			
-			var query = ctx.OfType<T>().Query();
-
-			if (before.HasValue) {
-				query = query.Where(a => a.Created < before);
-			}
-
-			var results = query.OrderByDescending(e => e.Created).Take(maxResults).Select(a => new ArchivedObjectForSorting {
-				Created = a.Created,
-				Id = a.Id,
-				EntryType = entryType
-			}).ToArray();
-
-			return results;
-
-		}
-
-		private ArchivedObjectVersion[] GetArchivedObjects<T>(IRepositoryContext<Album> ctx, int[] ids) where T : ArchivedObjectVersion {
-			return ctx.OfType<T>().Query().Where(v => ids.Contains(v.Id)).ToArray();
-		}
-
 		public ArchivedVersionForReviewContract[] GetRecentVersions(int maxResults, DateTime? before) {
 			
 			return repository.HandleQuery(ctx => {
 
-				var albums = GetArchivedObjectsForSort<ArchivedAlbumVersion>(ctx, EntryType.Album, maxResults, before);
-				var artists = GetArchivedObjectsForSort<ArchivedArtistVersion>(ctx, EntryType.Artist, maxResults, before);
-				var songs = GetArchivedObjectsForSort<ArchivedSongVersion>(ctx, EntryType.Song, maxResults, before);
+				var query = ctx.Query<ActivityEntry>();
 
-				var entries = albums.Concat(artists).Concat(songs).OrderByDescending(e => e.Created).Take(maxResults).ToArray();
-				var albumVersionIds = entries.Where(e => e.EntryType == EntryType.Album).Select(e => e.Id).ToArray();
-				var artistVersionIds = entries.Where(e => e.EntryType == EntryType.Artist).Select(e => e.Id).ToArray();
-				var songVersionIds = entries.Where(e => e.EntryType == EntryType.Song).Select(e => e.Id).ToArray();
+				if (before.HasValue) {
+					query = query.Where(a => a.CreateDate < before);
+				}
 
-				var results = GetArchivedObjects<ArchivedAlbumVersion>(ctx, albumVersionIds)
-					.Concat(GetArchivedObjects<ArchivedArtistVersion>(ctx, artistVersionIds))
-					.Concat(GetArchivedObjects<ArchivedSongVersion>(ctx, songVersionIds))
-					.OrderByDescending(e => e.Created)
-					.Select(CreateViewModel);
+				var activityEntries = query
+					.OrderByDescending(a => a.CreateDate)
+					.Take(maxResults)
+					.ToArray()
+					.Select(a => a.ArchivedVersionBase)
+					.Where(a => a != null)
+					.Select(CreateViewModel)
+					.ToArray();
 
-				return results.ToArray();
+				return activityEntries.ToArray();
 
 			});
 

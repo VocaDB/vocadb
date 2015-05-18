@@ -97,11 +97,12 @@ namespace VocaDb.Model.Service {
 		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
 			: base(sessionFactory, permissionContext,entryLinkFactory) {}
 
-		public void Archive(ISession session, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
+		public ArchivedAlbumVersion Archive(ISession session, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
 
 			var agentLoginData = SessionHelper.CreateAgentLoginData(session, PermissionContext);
 			var archived = ArchivedAlbumVersion.Create(album, diff, agentLoginData, reason, notes);
 			session.Save(archived);
+			return archived;
 
 		}
 

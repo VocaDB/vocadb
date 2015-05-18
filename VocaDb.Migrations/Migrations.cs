@@ -3,6 +3,24 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201505182200)]
+	public class ActivityEntryArchivedEntryIds : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("ArchivedAlbumVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey("FK_ActivityEntries_ArchivedAlbumVersions", TableNames.ArchivedAlbumVersions, "Id").OnDelete(Rule.None);
+
+			Create.Column("ArchivedArtistVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey("FK_ActivityEntries_ArchivedArtistVersions", TableNames.ArchivedArtistVersions, "Id").OnDelete(Rule.None);
+		
+			Create.Column("ArchivedSongVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey("FK_ActivityEntries_ArchivedSongVersions", TableNames.ArchivedSongVersions, "Id").OnDelete(Rule.None);
+			
+		}
+
+	}
+
 	[Migration(201505142300)]
 	public class SongThumbUrl : AutoReversingMigration {
 

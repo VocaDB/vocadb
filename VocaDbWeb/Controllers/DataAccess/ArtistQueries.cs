@@ -227,11 +227,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				}
 
-				Archive(ctx, artist, diff, ArtistArchiveReason.Created);
+				var archived = Archive(ctx, artist, diff, ArtistArchiveReason.Created);
 				ctx.Update(artist);
 
 				ctx.AuditLogger.AuditLog(string.Format("created artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), artist.ArtistType));
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Created);
+				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Created, archived);
 
 				return new ArtistContract(artist, PermissionContext.LanguagePreference);
 
@@ -477,11 +477,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 
-				ctx.AuditLogger.AuditLog(logStr);
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Updated);
-
-				Archive(ctx, artist, diff, ArtistArchiveReason.PropertiesUpdated, properties.UpdateNotes);
+				var archived = Archive(ctx, artist, diff, ArtistArchiveReason.PropertiesUpdated, properties.UpdateNotes);
 				ctx.Update(artist);
+
+				ctx.AuditLogger.AuditLog(logStr);
+				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Updated, archived);
 
 				return artist.Id;
 

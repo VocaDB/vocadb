@@ -85,26 +85,26 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		protected void AddEntryEditedEntry(ISession session, Album entry, EntryEditEvent editEvent) {
+		protected void AddEntryEditedEntry(ISession session, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion) {
 
 			var user = GetLoggedUser(session);
-			var activityEntry = new AlbumActivityEntry(entry, editEvent, user);
+			var activityEntry = new AlbumActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(session, activityEntry);
 
 		}
 
-		protected void AddEntryEditedEntry(ISession session, Artist entry, EntryEditEvent editEvent) {
+		protected void AddEntryEditedEntry(ISession session, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion) {
 
 			var user = GetLoggedUser(session);
-			var activityEntry = new ArtistActivityEntry(entry, editEvent, user);
+			var activityEntry = new ArtistActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(session, activityEntry);
 
 		}
 
-		protected void AddEntryEditedEntry(ISession session, Song entry, EntryEditEvent editEvent) {
+		protected void AddEntryEditedEntry(ISession session, Song entry, EntryEditEvent editEvent, ArchivedSongVersion archivedVersion) {
 
 			var user = GetLoggedUser(session);
-			var activityEntry = new SongActivityEntry(entry, editEvent, user);
+			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(session, activityEntry);
 
 		}
