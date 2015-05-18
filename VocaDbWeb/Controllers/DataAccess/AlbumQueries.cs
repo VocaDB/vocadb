@@ -92,17 +92,18 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public void Archive(IRepositoryContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
+		public ArchivedAlbumVersion Archive(IRepositoryContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
 			var archived = ArchivedAlbumVersion.Create(album, diff, agentLoginData, reason, notes);
 			ctx.OfType<ArchivedAlbumVersion>().Save(archived);
+			return archived;
 
 		}
 
-		public void Archive(IRepositoryContext<Album> ctx, Album album, AlbumArchiveReason reason, string notes = "") {
+		public ArchivedAlbumVersion Archive(IRepositoryContext<Album> ctx, Album album, AlbumArchiveReason reason, string notes = "") {
 
-			Archive(ctx, album, new AlbumDiff(), reason, notes);
+			return Archive(ctx, album, new AlbumDiff(), reason, notes);
 
 		}
 

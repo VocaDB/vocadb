@@ -22,6 +22,9 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<PurchaseStatus> AlbumCollectionStatusNames =
 			new TranslateableEnum<PurchaseStatus>(() => global::Resources.AlbumCollectionStatusNames.ResourceManager);
 
+		public static readonly TranslateableEnum<AlbumEditableFields> AlbumEditableFieldNames =
+			new TranslateableEnum<AlbumEditableFields>(() => global::Resources.AlbumEditableFieldNames.ResourceManager);
+
 		public static readonly TranslateableEnum<MediaType> AlbumMediaTypeNames =
 			new TranslateableEnum<MediaType>(() => global::Resources.AlbumMediaTypeNames.ResourceManager);
 
@@ -33,6 +36,9 @@ namespace VocaDb.Web.Helpers {
 				AlbumSortRule.Name, AlbumSortRule.AdditionDate, AlbumSortRule.ReleaseDate, AlbumSortRule.RatingAverage, AlbumSortRule.RatingTotal,
 				AlbumSortRule.CollectionCount
 			});
+
+		public static readonly TranslateableEnum<ArtistEditableFields> ArtistEditableFieldNames =
+			new TranslateableEnum<ArtistEditableFields>(() => global::Resources.ArtistEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ArtistReportType> ArtistReportTypeNames =
 			new TranslateableEnum<ArtistReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
@@ -114,7 +120,7 @@ namespace VocaDb.Web.Helpers {
 
 		public static string AlbumEditableField(AlbumEditableFields field) {
 
-			return AlbumEditableFieldNames.ResourceManager.GetString(field.ToString());
+			return AlbumEditableFieldNames.GetName(field);
 
 		}
 
@@ -132,7 +138,7 @@ namespace VocaDb.Web.Helpers {
 
 		public static string ArtistEditableField(ArtistEditableFields field) {
 
-			return ArtistEditableFieldNames.ResourceManager.GetString(field.ToString());
+			return ArtistEditableFieldNames.GetName(field);
 
 		}
 

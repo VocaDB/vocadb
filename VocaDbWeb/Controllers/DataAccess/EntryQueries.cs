@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Api;
-using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -14,13 +9,13 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Helpers;
-using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -147,25 +142,25 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		// TODO: refactor this
-		private ArchivedVersionForReviewContract CreateViewModel(Model.Domain.Versioning.ArchivedObjectVersion archivedObjectVersion) {
+		private ArchivedVersionForReviewContract CreateViewModel(ArchivedObjectVersion archivedObjectVersion) {
 
 			string changeMessage = string.Empty, entryTypeName = string.Empty;
 
-			if (archivedObjectVersion is ArchivedAlbumVersion) {
+			if (archivedObjectVersion.EntryBase.EntryType == EntryType.Album) {
 				var entry = (ArchivedAlbumVersion)archivedObjectVersion;
-				changeMessage = Models.Album.Versions.GetChangeString(entry.Diff.ChangedFields);
-				entryTypeName = Translate.DiscTypeName(entry.Album.DiscType);
+				changeMessage = Translate.AlbumEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, AlbumEditableFields.Nothing);
+				entryTypeName = Translate.DiscTypeNames[entry.Album.DiscType];
 			}
 
-			if (archivedObjectVersion is ArchivedArtistVersion) {
+			if (archivedObjectVersion.EntryBase.EntryType == EntryType.Artist) {
 				var entry = (ArchivedArtistVersion)archivedObjectVersion;
-				changeMessage = Models.Artist.Versions.GetChangeString(entry.Diff.ChangedFields);
-				entryTypeName = Translate.ArtistTypeName(entry.Artist.ArtistType);
+				changeMessage = Translate.ArtistEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, ArtistEditableFields.Nothing);
+				entryTypeName = Translate.ArtistTypeNames[entry.Artist.ArtistType];
 			}
 
-			if (archivedObjectVersion is ArchivedSongVersion) {
+			if (archivedObjectVersion.EntryBase.EntryType == EntryType.Song) {
 				var entry = (ArchivedSongVersion)archivedObjectVersion;
-				changeMessage = Models.Song.Versions.GetChangeString(entry.Diff.ChangedFields);
+				changeMessage = Translate.SongEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, SongEditableFields.Nothing);
 				entryTypeName = Translate.SongTypeNames[entry.Song.SongType];
 			}
 
@@ -174,7 +169,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		private ArchivedObjectForSorting[] GetArchivedObjectsForSort<T>(IRepositoryContext<Album> ctx, EntryType entryType, int maxResults, DateTime? before)
-			where T : Model.Domain.Versioning.ArchivedObjectVersion {
+			where T : ArchivedObjectVersion {
 			
 			var query = ctx.OfType<T>().Query();
 
@@ -192,7 +187,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		private Model.Domain.Versioning.ArchivedObjectVersion[] GetArchivedObjects<T>(IRepositoryContext<Album> ctx, int[] ids) where T : Model.Domain.Versioning.ArchivedObjectVersion {
+		private ArchivedObjectVersion[] GetArchivedObjects<T>(IRepositoryContext<Album> ctx, int[] ids) where T : ArchivedObjectVersion {
 			return ctx.OfType<T>().Query().Where(v => ids.Contains(v.Id)).ToArray();
 		}
 

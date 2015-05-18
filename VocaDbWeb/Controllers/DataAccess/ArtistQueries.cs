@@ -163,19 +163,20 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return CommentQueries.Create(ctx.OfType<ArtistComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
-		public void Archive(IRepositoryContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
+		public ArchivedArtistVersion Archive(IRepositoryContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
 
 			ctx.AuditLogger.SysLog("Archiving " + artist);
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
 			var archived = ArchivedArtistVersion.Create(artist, diff, agentLoginData, reason, notes);
 			ctx.Save(archived);
+			return archived;
 
 		}
 
-		public void Archive(IRepositoryContext<Artist> ctx, Artist artist, ArtistArchiveReason reason, string notes = "") {
+		public ArchivedArtistVersion Archive(IRepositoryContext<Artist> ctx, Artist artist, ArtistArchiveReason reason, string notes = "") {
 
-			Archive(ctx, artist, new ArtistDiff(), reason, notes);
+			return Archive(ctx, artist, new ArtistDiff(), reason, notes);
 
 		}
 

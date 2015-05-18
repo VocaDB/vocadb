@@ -173,17 +173,18 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return CommentQueries.Create(ctx.OfType<SongComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
-		public void Archive(IRepositoryContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
+		public ArchivedSongVersion Archive(IRepositoryContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
 			var archived = ArchivedSongVersion.Create(song, diff, agentLoginData, reason, notes);
 			ctx.OfType<ArchivedSongVersion>().Save(archived);
+			return archived;
 
 		}
 
-		public void Archive(IRepositoryContext<Song> ctx, Song song, SongArchiveReason reason, string notes = "") {
+		public ArchivedSongVersion Archive(IRepositoryContext<Song> ctx, Song song, SongArchiveReason reason, string notes = "") {
 
-			Archive(ctx, song, new SongDiff(), reason, notes);
+			return Archive(ctx, song, new SongDiff(), reason, notes);
 
 		}
 
