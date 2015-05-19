@@ -4,7 +4,6 @@ using NHibernate.Linq;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service {
 
@@ -12,31 +11,6 @@ namespace VocaDb.Model.Service {
 
 		public ActivityFeedService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {}
-
-		public PartialFindResult<ActivityEntryContract> GetActivityEntries(PagingProperties paging) {
-
-			ParamIs.NotNull(() => paging);
-
-			return HandleQuery(session => {
-
-				var entries = session.Query<ActivityEntry>()
-					.OrderByDescending(a => a.CreateDate)
-					.Skip(paging.Start)
-					.Take(paging.MaxEntries)
-					.ToArray();
-
-				var contracts = entries
-					.Where(e => !e.EntryBase.Deleted)
-					.Select(e => new ActivityEntryContract(e, PermissionContext.LanguagePreference))
-					.ToArray();
-
-				var count = (paging.GetTotalCount ? session.Query<ActivityEntry>().Count() : 0);
-
-				return new PartialFindResult<ActivityEntryContract>(contracts, count);
-
-			});
-
-		}
 
 		public PartialFindResult<ActivityEntryContract> GetFollowedArtistActivity(int maxEntries) {
 

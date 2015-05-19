@@ -2,7 +2,6 @@
 using System.Linq;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
-using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -11,7 +10,6 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
