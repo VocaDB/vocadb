@@ -20,7 +20,7 @@
 	</li>	
 </ul>
 
-<input type="hidden" id="lastEntryDate" value='@(lastEntryDate != null ? lastEntryDate.Value.ToString("u") : "null")' />
+<input type="hidden" id="lastEntryDate" value='@(lastEntryDate != null ? lastEntryDate.Value.ToString("o") : "null")' />
 
 <div id="entries">
 	@{ Html.RenderPartial("_DetailedPage", Model); }
