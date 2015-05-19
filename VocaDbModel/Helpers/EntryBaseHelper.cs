@@ -47,8 +47,13 @@ namespace VocaDb.Model.Helpers {
 		}
 
 		public static string GetSongThumbUrl(IEntryBase entry) {
-			var song = entry as Song;
-			return (song != null ? (!string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs)) : string.Empty);
+
+			if (entry == null || entry.EntryType != EntryType.Song)
+				return string.Empty;
+
+			var song = (Song)entry;
+			return !string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
+
 		}
 
 	}

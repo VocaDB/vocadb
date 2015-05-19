@@ -25,7 +25,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult DetailedPage(DateTime before) {
 			
-			var entries = entryQueries.GetRecentVersions(100, before);
+			var entries = entryQueries.GetRecentVersions(entriesPerPage, before);
 			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate.ToUniversalTime() : null);
 			var view = RenderPartialViewToString("_DetailedPage", entries);
 			return LowercaseJson(new DetailedPageResult { ViewHtml = view, LastEntryDate = lastEntryDate });
@@ -45,7 +45,7 @@ namespace VocaDb.Web.Controllers
         public ActionResult Index(DateTime? before)
         {
 
-			var entries = entryQueries.GetRecentVersions(100, before);
+			var entries = entryQueries.GetRecentVersions(entriesPerPage, before);
 			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate.ToUniversalTime() : null);
 			ViewBag.LastEntryDate = lastEntryDate;
 

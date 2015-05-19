@@ -143,7 +143,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		// TODO: refactor this
 		private ActivityEntryContract CreateViewModel(ActivityEntry activityEntry) {
 
 			string changeMessage = string.Empty, entryTypeName = string.Empty;
@@ -191,7 +190,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.Select(CreateViewModel)
 					.ToArray();
 
-				return activityEntries.ToArray();
+				return activityEntries;
 
 			});
 
