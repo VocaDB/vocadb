@@ -1,48 +1,47 @@
-﻿@using Login = VocaDb.Web.Helpers.Login
-@inherits VocaDb.Web.Code.VocaDbPage
+﻿@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Activityfeed.ActivityEntryContract[]>
 
 @{
-    PageProperties.Title = "Activity entries";
-	var page = (int)ViewBag.Page;
+	PageProperties.Title = "Recent activity";
+	var lastEntryDate = (DateTime?)ViewBag.LastEntryDate;
 }
 
 <ul class="nav nav-pills">
 	<li class="active">
 		@Html.ActionLink("All activity", "Index")
 	</li>
-	<li>
-		@Html.ActionLink("Detailed", "Detailed")
-	</li>
 	@if (Login.IsLoggedIn) {
-	<li>
-		@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
-	</li>	
-	}	
+		<li>
+			@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
+		</li>
+	}
 </ul>
 
-<input type="hidden" id="page" value="@page"/>
+<input type="hidden" id="lastEntryDate" value='@(lastEntryDate != null ? lastEntryDate.Value.ToString("u") : "null")' />
 
-<div id="activityEntriesPaged">
-	@{ Html.RenderAction("Entries", page); }
+<div id="entries">
+	@{ Html.RenderPartial("_DetailedPage", Model); }
 </div>
 
 <hr />
 <h3>
-<a href="@Url.Action("Index", new { page = page + 1 })" id="loadMoreLink">View more</a>
+	<a href="#" id="loadMoreLink">View more</a>
 </h3>
 
 @section BodyScripts {
-<script type="text/javascript">
+	<script type="text/javascript">
 
-	$(document).ready(function () {
-		$("#loadMoreLink").click(function () {
-			$.get("ActivityEntry/Entries", { page: parseInt($("#page").val()) + 1 }, function (result) {
-				$("#activityEntriesPaged").append(result);
-				$("#page").val(parseInt($("#page").val()) + 1);
+		$(function () {
+			$("#loadMoreLink").click(function () {
+				var date = new Date($("#lastEntryDate").val());
+				var before = $("#lastEntryDate").val() ? date.toISOString() : null;
+				$.get("ActivityEntry/DetailedPage", { before: before }, function (result) {
+					$("#entries").append(result.viewHtml);
+					$("#lastEntryDate").val(result.lastEntryDate);
+				});
+				return false;
 			});
-			return false;
 		});
-	});
 
-</script>
+	</script>
 }

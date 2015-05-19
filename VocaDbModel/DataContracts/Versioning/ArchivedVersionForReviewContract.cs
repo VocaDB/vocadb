@@ -10,7 +10,6 @@ namespace VocaDb.Model.DataContracts.Versioning {
 	public class ArchivedVersionForReviewContract {
 
 		public ArchivedVersionForReviewContract(ArchivedObjectVersion archivedVersion, string changeMessage, 
-			string entryTypeName,
 			ContentLanguagePreference languagePreference) {
 			
 			EditEvent = archivedVersion.EditEvent;
@@ -21,7 +20,6 @@ namespace VocaDb.Model.DataContracts.Versioning {
 			ChangeMessage = changeMessage;
 			ArtistString = EntryBaseHelper.GetArtistString(archivedVersion.EntryBase, languagePreference);
 			VersionId = archivedVersion.Id;
-			EntryTypeName = entryTypeName;
 
 		}
 
@@ -36,8 +34,6 @@ namespace VocaDb.Model.DataContracts.Versioning {
 		public EntryEditEvent EditEvent { get; set; }
 
 		public EntryWithImageContract Entry { get; set; }
-
-		public string EntryTypeName { get; set; }
 
 		public string Notes { get; set; }
 

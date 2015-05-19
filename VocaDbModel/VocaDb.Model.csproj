@@ -322,7 +322,6 @@
     <Compile Include="DataContracts\Versioning\ArchivedVersionForReviewContract.cs" />
     <Compile Include="DataContracts\Versioning\ComparedVersionsContract.cs" />
     <Compile Include="Domain\Activityfeed\ActivityEntry.cs" />
-    <Content Include="Domain\Activityfeed\EntryEditedEntry.cs" />
     <Compile Include="Domain\Activityfeed\GenericActivityEntry.cs" />
     <Compile Include="Domain\Albums\AlbumArchiveReason.cs" />
     <Compile Include="Domain\Albums\AlbumDiff.cs" />
@@ -388,7 +387,6 @@
     <Compile Include="Domain\Images\ServerEntryThumbPersister.cs" />
     <Compile Include="Domain\IOptionalDateTime.cs" />
     <Compile Include="Domain\LinkAlreadyExistsException.cs" />
-    <Compile Include="Domain\Activityfeed\ActivityEntryType.cs" />
     <Compile Include="Domain\MergeRecord.cs" />
     <Compile Include="Domain\PVs\IEditablePV.cs" />
     <Compile Include="Domain\PVs\IPV.cs" />

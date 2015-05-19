@@ -1,52 +1,5 @@
-﻿@using VocaDb.Web.Code
-@using VocaDb.Web.Helpers
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Versioning.ArchivedVersionForReviewContract[]>
-
-@* Note: Probably the most hasty code I've written for a while, please refactor *@
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Activityfeed.ActivityEntryContract[]>
 
 @foreach (var entry in Model) {
-	var thumbUrl = Url.EntryThumbUrl(entry.Entry, entry.Entry.SongThumbUrl);
-	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
-		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
-			@UserHelpers.UserIconLink(entry.Author, userInfo: true)
-		} else {
-			@HelperRes.ActivityFeedHelperStrings.Someone
-		}
-
-		@ActivityfeedHelpers.EntryType(entry.EditEvent, entry.Entry.EntryType)
-		
-		@if (!string.IsNullOrEmpty(entry.ChangeMessage)) {
-			@:(@entry.ChangeMessage)
-		}
-		
-		@if (!string.IsNullOrEmpty(entry.Notes)) {
-			@:"@entry.Notes"
-		}
-		
-		(<a href="@Url.Action("ViewVersion", entry.Entry.EntryType.ToString(), new { id = entry.VersionId })">@ViewRes.MiscStrings.Details</a>)
-
-		<small class="pull-right extraInfo" title="@entry.CreateDate.ToUniversalTime().ToString("g")">
-			@TimeAgoStringBuilder.FormatTimeAgo(entry.CreateDate)
-		</small>
-
-		<div class="media">
-			@if (!string.IsNullOrEmpty(thumbUrl)) {
-				<a class="pull-left" href="@Url.Action("Details", entry.Entry.EntryType.ToString(), new { id = entry.Entry.Id })" title="@entry.Entry.Name.AdditionalNames">
-					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
-				</a>
-			}
-			<div class="media-body">
-				<h4 class="media-heading">
-					<a href="@Url.Action("Details", entry.Entry.EntryType.ToString(), new { id = entry.Entry.Id })" title="@entry.Entry.Name.AdditionalNames">
-						<strong>@entry.Entry.Name.DisplayName</strong>
-					</a>
-					(@entry.EntryTypeName)
-				</h4>
-				@if (!string.IsNullOrEmpty(entry.ArtistString)) {
-					@entry.ArtistString
-				}
-			</div>
-		</div>
-	</div>
+	@ActivityfeedHelpers.ActivityEntry(entry, true);
 }
-

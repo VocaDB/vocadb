@@ -7,31 +7,31 @@
 @using VocaDb.Model.Domain.Activityfeed;
 
 @helper EntryType(ActivityEntryContract entry) {
-    @EntryType(entry.EditEvent, entry.EntryRef.EntryType)    
+	@EntryType(entry.EditEvent, entry.EntryRef.EntryType)
 }
 
 @helper EntryType(EntryEditEvent editEvent, EntryType entryType) {
-    
+
 	var tr = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString(editEvent.ToString() + entryType);
-    
-    if (!string.IsNullOrEmpty(tr)) {
-        
-       <span>@tr</span> 
-        
-    } else {
+
+	if (!string.IsNullOrEmpty(tr)) {
+
+		<span>@tr</span>
+
+	} else {
 
 		var entryTypeName = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entryType);
-		
+
 		if (editEvent == EntryEditEvent.Created) {
 			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.CreatedNew, entryTypeName)</span>
 		} else {
 			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.Updated, entryTypeName)</span>
 		}
-           
-    }
-    
+
+	}
+
 }
-@helper ActivityEntry(ActivityEntryContract entry) {
+@helper ActivityEntry(ActivityEntryContract entry, bool showDetails = false) {
 	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.EntryRef.SongThumbUrl);
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
@@ -42,21 +42,39 @@
 
 		@EntryType(entry)
 
+		@if (showDetails && entry.ArchivedVersion != null) {
+
+			if (!string.IsNullOrEmpty(entry.ArchivedVersion.ChangeMessage)) {
+				@:(@entry.ArchivedVersion.ChangeMessage)
+			}
+
+			if (!string.IsNullOrEmpty(entry.ArchivedVersion.Notes)) {
+				@:"@entry.ArchivedVersion.Notes"
+			}
+
+			@:(<a href="@Url.Action("ViewVersion", entry.EntryRef.EntryType.ToString(), new { id = entry.ArchivedVersion.VersionId })">@ViewRes.MiscStrings.Details</a>)
+
+		}
+
+
 		<small class="pull-right extraInfo" title="@entry.CreateDate.ToUniversalTime().ToString("g")">
 			@TimeAgoStringBuilder.FormatTimeAgo(entry.CreateDate)
 		</small>
 
 		<div class="media">
 			@if (!string.IsNullOrEmpty(thumbUrl)) {
-			<a class="pull-left" href="@Url.Action("Details", entry.EntryRef.EntryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
-				<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
-			</a>
+				<a class="pull-left" href="@Url.Action("Details", entry.EntryRef.EntryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
+					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
+				</a>
 			}
 			<div class="media-body">
 				<h4 class="media-heading">
 					<a href="@Url.Action("Details", entry.EntryRef.EntryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
 						<strong>@entry.EntryRef.Name.DisplayName</strong>
 					</a>
+					@if (!string.IsNullOrEmpty(entry.EntryTypeName)) {
+						@:(@entry.EntryTypeName)
+					}
 				</h4>
 				@if (!string.IsNullOrEmpty(entry.ArtistString)) {
 					@entry.ArtistString

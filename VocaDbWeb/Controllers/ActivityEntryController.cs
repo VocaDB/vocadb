@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Paging;
 using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.Controllers
@@ -24,36 +23,12 @@ namespace VocaDb.Web.Controllers
 			this.entryQueries = entryQueries;
 		}
 
-		public ActionResult Detailed(DateTime? since) {
+		public ActionResult DetailedPage(DateTime before) {
 			
-			var entries = entryQueries.GetRecentVersions(100, since);
-			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate.ToUniversalTime() : null);
-			ViewBag.LastEntryDate = lastEntryDate;
-			return View("Detailed", entries);
-
-		}
-
-		public ActionResult DetailedPage(DateTime since) {
-			
-			var entries = entryQueries.GetRecentVersions(100, since);
+			var entries = entryQueries.GetRecentVersions(100, before);
 			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate.ToUniversalTime() : null);
 			var view = RenderPartialViewToString("_DetailedPage", entries);
 			return LowercaseJson(new DetailedPageResult { ViewHtml = view, LastEntryDate = lastEntryDate });
-
-		}
-
-		public ActionResult Entries(int page = 1) {
-
-			var pageIndex = page - 1;
-			var result = Service.GetActivityEntries(PagingProperties.CreateFromPage(pageIndex, entriesPerPage, false));
-
-			return PartialView("ActivityEntryContracts", result.Items);
-
-		}
-
-		public ActionResult EntriesPaged(int? page) {
-
-			return RedirectToActionPermanent("Index", new { page = page ?? 1 });
 
 		}
 
@@ -67,15 +42,14 @@ namespace VocaDb.Web.Controllers
         //
         // GET: /ActivityEntry/
 
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(DateTime? before)
         {
 
-			if (Request.IsAjaxRequest())
-				return Entries(page);
-			else {
-				ViewBag.Page = page;
-				return View();
-			}
+			var entries = entryQueries.GetRecentVersions(100, before);
+			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate.ToUniversalTime() : null);
+			ViewBag.LastEntryDate = lastEntryDate;
+
+			return View("Index", entries);
 
         }
 

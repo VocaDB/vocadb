@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
@@ -143,33 +144,37 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		// TODO: refactor this
-		private ArchivedVersionForReviewContract CreateViewModel(ArchivedObjectVersion archivedObjectVersion) {
+		private ActivityEntryContract CreateViewModel(ActivityEntry activityEntry) {
 
 			string changeMessage = string.Empty, entryTypeName = string.Empty;
 
-			if (archivedObjectVersion.EntryBase.EntryType == EntryType.Album) {
-				var entry = (ArchivedAlbumVersion)archivedObjectVersion;
-				changeMessage = Translate.AlbumEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, AlbumEditableFields.Nothing);
-				entryTypeName = Translate.DiscTypeNames[entry.Album.DiscType];
+			if (activityEntry.ArchivedVersionBase != null) {
+
+				if (activityEntry.EntryBase.EntryType == EntryType.Album) {
+					var entry = (ArchivedAlbumVersion)activityEntry.ArchivedVersionBase;
+					changeMessage = Translate.AlbumEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, AlbumEditableFields.Nothing);
+					entryTypeName = Translate.DiscTypeNames[entry.Album.DiscType];
+				}
+
+				if (activityEntry.EntryBase.EntryType == EntryType.Artist) {
+					var entry = (ArchivedArtistVersion)activityEntry.ArchivedVersionBase;
+					changeMessage = Translate.ArtistEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, ArtistEditableFields.Nothing);
+					entryTypeName = Translate.ArtistTypeNames[entry.Artist.ArtistType];
+				}
+
+				if (activityEntry.EntryBase.EntryType == EntryType.Song) {
+					var entry = (ArchivedSongVersion)activityEntry.ArchivedVersionBase;
+					changeMessage = Translate.SongEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, SongEditableFields.Nothing);
+					entryTypeName = Translate.SongTypeNames[entry.Song.SongType];
+				}
+				
 			}
 
-			if (archivedObjectVersion.EntryBase.EntryType == EntryType.Artist) {
-				var entry = (ArchivedArtistVersion)archivedObjectVersion;
-				changeMessage = Translate.ArtistEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, ArtistEditableFields.Nothing);
-				entryTypeName = Translate.ArtistTypeNames[entry.Artist.ArtistType];
-			}
-
-			if (archivedObjectVersion.EntryBase.EntryType == EntryType.Song) {
-				var entry = (ArchivedSongVersion)archivedObjectVersion;
-				changeMessage = Translate.SongEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, SongEditableFields.Nothing);
-				entryTypeName = Translate.SongTypeNames[entry.Song.SongType];
-			}
-
-			return new ArchivedVersionForReviewContract(archivedObjectVersion, changeMessage, entryTypeName, LanguagePreference);
+			return new ActivityEntryContract(activityEntry, LanguagePreference, changeMessage, entryTypeName, true);
 
 		}
 
-		public ArchivedVersionForReviewContract[] GetRecentVersions(int maxResults, DateTime? before) {
+		public ActivityEntryContract[] GetRecentVersions(int maxResults, DateTime? before) {
 			
 			return repository.HandleQuery(ctx => {
 
@@ -183,8 +188,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxResults)
 					.ToArray()
-					.Select(a => a.ArchivedVersionBase)
-					.Where(a => a != null)
 					.Select(CreateViewModel)
 					.ToArray();
 

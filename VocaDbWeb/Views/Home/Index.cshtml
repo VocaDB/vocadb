@@ -62,7 +62,7 @@
         <h3 class="withMargin">@ViewRes.Home.IndexStrings.RecentActivity (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "ActivityEntry"))</h3>
 
         @foreach (var entry in Model.ActivityEntries) {
-	        @ActivityfeedHelpers.ActivityEntry(entry);
+	        @ActivityfeedHelpers.ActivityEntry(entry, false)
         }            
     </div>
     <div class="span5">
