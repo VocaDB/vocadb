@@ -1,8 +1,23 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<IEnumerable<VocaDb.Model.DataContracts.Comments.EntryWithCommentsContract>>
+﻿@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage<IEnumerable<VocaDb.Model.DataContracts.Comments.EntryWithCommentsContract>>
 
 @{
     PageProperties.Title = ViewRes.Comment.IndexStrings.RecentComments;    
 }
+
+<ul class="nav nav-pills">
+	<li>
+		@Html.ActionLink("All activity", "Index", "ActivityEntry")
+	</li>
+	@if (Login.IsLoggedIn) {
+		<li>
+			@Html.ActionLink("Only followed artists", "FollowedArtistActivity", "ActivityEntry")
+		</li>
+	}
+	<li class="active">
+		@Html.ActionLink("Comments", "Index", "Comment")
+	</li>	
+</ul>
 
 @foreach (var entry in Model) {
     

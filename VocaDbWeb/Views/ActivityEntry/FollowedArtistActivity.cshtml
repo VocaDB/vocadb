@@ -1,7 +1,7 @@
-﻿@model VocaDb.Model.DataContracts.Activityfeed.ActivityEntryContract[]
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Activityfeed.ActivityEntryContract[]>
 
 @{
-    ViewBag.Title = "New activity by followed artists";
+	PageProperties.Title = "New activity by followed artists";
 }
 
 <ul class="nav nav-pills">
@@ -10,6 +10,9 @@
 	</li>
 	<li class="active">
 		@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
+	</li>
+	<li>
+		@Html.ActionLink("Comments", "Index", "Comment")
 	</li>
 </ul>
 

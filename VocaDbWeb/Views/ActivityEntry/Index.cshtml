@@ -15,6 +15,9 @@
 			@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
 		</li>
 	}
+	<li>
+		@Html.ActionLink("Comments", "Index", "Comment")
+	</li>	
 </ul>
 
 <input type="hidden" id="lastEntryDate" value='@(lastEntryDate != null ? lastEntryDate.Value.ToString("u") : "null")' />
