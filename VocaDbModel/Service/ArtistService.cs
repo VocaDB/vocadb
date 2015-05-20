@@ -20,7 +20,7 @@ using System.Drawing;
 using VocaDb.Model.Helpers;
 using System.Collections.Generic;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories;
+using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service {

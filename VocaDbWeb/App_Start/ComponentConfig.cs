@@ -83,6 +83,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<UserService>().AsSelf();
 
 			// Repositories
+			builder.RegisterType<NHibernateRepository>().As<IRepository>();
 			builder.RegisterType<AlbumNHibernateRepository>().As<IAlbumRepository>();
 			builder.RegisterType<ArtistNHibernateRepository>().As<IArtistRepository>();
 			builder.RegisterType<DiscussionFolderNHibernateRepository>().As<IDiscussionFolderRepository>();

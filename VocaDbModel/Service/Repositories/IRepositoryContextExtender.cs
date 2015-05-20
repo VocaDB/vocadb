@@ -47,6 +47,10 @@ namespace VocaDb.Model.Service.Repositories {
 
 		}
 
+		public static T2 Load<T2>(this IRepositoryContext ctx, object id) {
+			return ctx.OfType<T2>().Load(id);
+		}
+
 		public static T2 Load<T, T2>(this IRepositoryContext<T> ctx, object id) {
 			return ctx.OfType<T2>().Load(id);
 		}

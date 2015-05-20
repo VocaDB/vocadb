@@ -2,11 +2,10 @@
 using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Service.Repositories.NHibernate;
 
-namespace VocaDb.Model.Service.Repositories {
+namespace VocaDb.Model.Service.Repositories.NHibernate {
 
-	public class NHibernateRepositoryContext<T> : IRepositoryContext<T> {
+	public class NHibernateRepositoryContext : IRepositoryContext {
 
 		public IUserPermissionContext PermissionContext { get; private set; }
 		public ISession Session { get; private set; }
@@ -20,12 +19,29 @@ namespace VocaDb.Model.Service.Repositories {
 			get { return new NHibernateAuditLogger(OfType<AuditLogEntry>(), PermissionContext); }
 		}
 
-		public void Delete(T entity) {
-			Session.Delete(entity);
-		}
-
 		public void Dispose() {
 			Session.Dispose();
+		}
+
+		public IRepositoryContext<T2> OfType<T2>() {
+			return new NHibernateRepositoryContext<T2>(Session, PermissionContext);
+		}
+
+		public IQueryable<T2> Query<T2>() {
+			return OfType<T2>().Query();
+		}
+
+	}
+
+	public class NHibernateRepositoryContext<T> : NHibernateRepositoryContext, IRepositoryContext<T> {
+
+		public NHibernateRepositoryContext(ISession session, IUserPermissionContext permissionContext)
+			: base(session, permissionContext) {
+
+		}
+
+		public void Delete(T entity) {
+			Session.Delete(entity);
 		}
 
 		public T Get(object id) {
@@ -36,16 +52,8 @@ namespace VocaDb.Model.Service.Repositories {
 			return Session.Load<T>(id);
 		}
 
-		public IRepositoryContext<T2> OfType<T2>() {
-			return new NHibernateRepositoryContext<T2>(Session, PermissionContext);
-		}
-
 		public IQueryable<T> Query() {
 			return Session.Query<T>();
-		}
-
-		public IQueryable<T2> Query<T2>() {
-			return OfType<T2>().Query();
 		}
 
 		public void Save(T obj) {

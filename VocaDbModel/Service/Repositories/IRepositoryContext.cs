@@ -18,6 +18,12 @@ namespace VocaDb.Model.Service.Repositories {
 		/// <returns>Child context for that entity type. Cannot be null.</returns>
 		IRepositoryContext<T2> OfType<T2>();
 
+		/// <summary>
+		/// LINQ query against the repository.
+		/// </summary>
+		/// <returns>Queryable interface. Cannot be null.</returns>
+		IQueryable<T2> Query<T2>();
+
 	}
 
 	/// <summary>
@@ -59,12 +65,6 @@ namespace VocaDb.Model.Service.Repositories {
 		/// </summary>
 		/// <returns>Queryable interface. Cannot be null.</returns>
 		IQueryable<T> Query();
-
-		/// <summary>
-		/// LINQ query against the repository.
-		/// </summary>
-		/// <returns>Queryable interface. Cannot be null.</returns>
-		IQueryable<T2> Query<T2>();
 
 		/// <summary>
 		/// Persists a new entity in the repository.

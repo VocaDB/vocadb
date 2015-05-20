@@ -702,6 +702,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongListFeaturedCategoryNames.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
     <Compile Include="Resources\Domain\EntryReportTypeNames.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
