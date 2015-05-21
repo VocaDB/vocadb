@@ -7,6 +7,10 @@ module vdb.dataContracts {
 
 		additionalNames: string;
 
+		artistType?: string;
+
+		discType?: string;
+
 		entryType: string;
 
 		id: number;
@@ -14,6 +18,8 @@ module vdb.dataContracts {
 		mainPicture: EntryThumbContract;
 
 		name: string;
+
+		songType?: string;
 
 	}
 

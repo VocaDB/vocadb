@@ -27,4 +27,11 @@ module vdb.models {
 
 	}
 
+	export class ResourceSetNames {
+		public static artistTypeNames = "artistTypeNames";
+		public static discTypeNames = "discTypeNames";
+		public static songTypeNames = "songTypeNames";
+		public static userGroupNames = "userGroupNames";
+	}
+
 }

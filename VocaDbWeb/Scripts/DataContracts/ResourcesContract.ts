@@ -12,6 +12,8 @@ module vdb.dataContracts {
 
 		artistSortRuleNames?: { [key: string]: string; }
 
+		artistTypeNames?: { [key: string]: string; }
+
 		discTypeNames?: { [key: string]: string; }
 
 		entryTypeNames?: { [key: string]: string; }

@@ -1,10 +1,12 @@
-﻿@using VocaDb.Web.Helpers
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Activityfeed.ActivityEntryContract[]>
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage
 
 @{
 	PageProperties.Title = "Recent activity";
-	var lastEntryDate = (DateTime?)ViewBag.LastEntryDate;
 }
+
+<!-- Binding context: ActivityEntryListViewModel -->
 
 <ul class="nav nav-pills">
 	<li class="active">
@@ -20,31 +22,31 @@
 	</li>	
 </ul>
 
-<input type="hidden" id="lastEntryDate" value='@(lastEntryDate != null ? lastEntryDate.Value.ToString("o") : "null")' />
-
-<div id="entries">
-	@{ Html.RenderPartial("_DetailedPage", Model); }
+<div data-bind="foreach: entries">
+	@ActivityfeedHelpers.ActivityEntryKnockout("$parent.getEntryTypeName", true)
 </div>
 
 <hr />
 <h3>
-	<a href="#" id="loadMoreLink">View more</a>
+	<a href="#" data-bind="click: loadMore">View more</a>
 </h3>
 
 @section BodyScripts {
+	@Scripts.Render("~/bundles/ActivityEntry/Index")
 	<script type="text/javascript">
-
 		$(function () {
-			$("#loadMoreLink").click(function () {
-				var date = new Date($("#lastEntryDate").val());
-				var before = $("#lastEntryDate").val() ? date.toISOString() : null;
-				$.get("ActivityEntry/DetailedPage", { before: before }, function (result) {
-					$("#entries").append(result.viewHtml);
-					$("#lastEntryDate").val(result.lastEntryDate);
-				});
-				return false;
-			});
-		});
 
+			moment.locale('@Culture');
+			ko.punches.enableAll();
+
+			var urlMapper = new vdb.UrlMapper("@RootPath");
+			var resourceRepo = new vdb.repositories.ResourceRepository('@RootPath');
+			var languageSelection = '@UserContext.LanguagePreference';
+			var cultureCode = '@UICulture';
+
+			var vm = new vdb.viewModels.activityEntry.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode);
+			ko.applyBindings(vm);
+
+		});
 	</script>
 }

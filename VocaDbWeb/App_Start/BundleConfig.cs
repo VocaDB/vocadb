@@ -97,6 +97,16 @@ namespace VocaDb.Web.App_Start {
 
 
 			// VIEW-SPECIFIC BUNDLES
+			bundles.Add(new ScriptBundle("~/bundles/ActivityEntry/Index").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
+				"~/Scripts/Models/EntryType.js",
+				"~/Scripts/Models/ResourcesManager.js",
+				"~/Scripts/Repositories/ResourceRepository.js",
+				"~/Scripts/ViewModels/ActivityEntry/ActivityEntryListViewModel.js"
+			));
+
+
 			bundles.Add(new ScriptBundle("~/bundles/Album/Create").Include(
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/ViewModels/Album/AlbumCreateViewModel.js"

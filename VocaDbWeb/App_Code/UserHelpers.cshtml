@@ -25,6 +25,11 @@
 	<span data-bind="text: @nameBinding"></span>
 }
 
+@helper IconNameAndTypeKnockout(string userBinding, string groupResources, int iconSize = 20) {
+	@ProfileIconKnockout(userBinding + ".mainPicture.urlThumb", iconSize)
+	<span data-bind="text: @(userBinding + ".name"), title: @(groupResources + "[" + userBinding + ".groupId] + '\\nJoined: ' + " + userBinding + ".memberSince")"></span>
+}
+
 @helper ProfileIcon(IUserWithEmail user, int size = 80) {
 	if (user != null && !string.IsNullOrEmpty(user.Email)) {
 		<div style="width: @(size)px; height: @(size)px; display: inline-block">

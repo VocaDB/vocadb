@@ -31,6 +31,7 @@
 	}
 
 }
+
 @helper ActivityEntry(ActivityEntryContract entry, bool showDetails = false) {
 	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.EntryRef.SongThumbUrl);
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -79,6 +80,43 @@
 				@if (!string.IsNullOrEmpty(entry.ArtistString)) {
 					@entry.ArtistString
 				}
+			</div>
+		</div>
+	</div>
+}
+
+
+@helper ActivityEntryKnockout(string entryTypeNamesBinding, bool showDetails = false) {
+	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
+		@* TODO: should handle anonymous activity *@
+		@UserHelpers.IconNameAndTypeKnockout("author", "resources.userGroupNames")
+
+		@*@EntryType(entry)*@
+
+		@if (showDetails) {
+			<span data-bind="with: $data.archivedVersion">
+				<span visible="{{ $data.changedFields }}">({{ changedFields }})</span>
+				<span visible="{{ $data.notes }}">{{ '\"' + notes + '\"' }}</span>
+
+				<a href="#" data-bind="attr: { href: '/' + $parent.entry.entryType + '/ViewVersion/' + id }">@ViewRes.MiscStrings.Details</a>
+			</span>
+		}
+
+		<small class="pull-right extraInfo" data-bind="attr: { title: createDate }, timeAgo: createDate"></small>
+
+		<div class="media">
+			<a class="pull-left" visible="{{ entry.mainPicture && entry.mainPicture.urlTinyThumb }}" href="{{ vdb.utils.EntryUrlMapper.details_entry(entry) }}" title="{{ entry.additionalNames }}">
+				<img attr.src="{{ entry.mainPicture ? entry.mainPicture.urlTinyThumb : '' }}" alt="thumb" class="media-object coverPicThumb" />
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading">
+					<a href="{{ vdb.utils.EntryUrlMapper.details_entry(entry) }}" title="{{ entry.additionalNames }}">
+						<strong>{{ entry.name }}</strong>
+					</a>
+					<span>({{ @(entryTypeNamesBinding)(entry) }})</span>
+				</h4>
+
+				<span visible="{{ entry.artistString }}">{{ entry.artistString }}</span>
 			</div>
 		</div>
 	</div>
