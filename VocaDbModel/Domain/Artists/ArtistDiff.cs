@@ -53,6 +53,17 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
+		public virtual string[] ChangedFieldNames {
+			get {
+
+				var fieldNames = EnumVal<ArtistEditableFields>.Values
+					.Where(f => f != ArtistEditableFields.Nothing && IsChanged(f)).Select(f => f.ToString());
+
+				return fieldNames.ToArray();
+
+			}
+		}
+
 		public virtual ArtistEditableFields ChangedFields { get; set; }
 
 		public virtual string ChangedFieldsString {

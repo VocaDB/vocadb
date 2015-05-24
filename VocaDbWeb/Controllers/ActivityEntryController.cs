@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
 using VocaDb.Model.Service;
-using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.Controllers
 {
@@ -11,25 +9,14 @@ namespace VocaDb.Web.Controllers
 
 		private new const int entriesPerPage = 50;
 
-		private readonly EntryQueries entryQueries;
 		private readonly ActivityFeedService service;
 
 		private ActivityFeedService Service {
 			get { return service; }
 		}
 
-		public ActivityEntryController(ActivityFeedService service, EntryQueries entryQueries) {
+		public ActivityEntryController(ActivityFeedService service) {
 			this.service = service;
-			this.entryQueries = entryQueries;
-		}
-
-		public ActionResult DetailedPage(DateTime before) {
-			
-			var entries = entryQueries.GetRecentVersions(entriesPerPage, before);
-			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate.ToUniversalTime() : null);
-			var view = RenderPartialViewToString("_DetailedPage", entries);
-			return LowercaseJson(new DetailedPageResult { ViewHtml = view, LastEntryDate = lastEntryDate });
-
 		}
 
 		public ActionResult FollowedArtistActivity() {
@@ -45,11 +32,9 @@ namespace VocaDb.Web.Controllers
         public ActionResult Index(DateTime? before)
         {
 
-			var entries = entryQueries.GetRecentVersions(entriesPerPage, before);
-			var lastEntryDate = (entries.Any() ? (DateTime?)entries.Last().CreateDate.ToUniversalTime() : null);
-			ViewBag.LastEntryDate = lastEntryDate;
+			ViewBag.Before = before;
 
-			return View("Index", entries);
+			return View("Index");
 
         }
 

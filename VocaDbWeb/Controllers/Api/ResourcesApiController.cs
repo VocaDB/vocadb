@@ -34,6 +34,10 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int cacheDuration = 86400; // 24h
 
 		private readonly Dictionary<string, ResourceManager> allSets = new Dictionary<string, ResourceManager> {
+			{ "activityEntry_activityFeedEventNames", HelperRes.ActivityFeedHelperStrings.ResourceManager },
+			{ "album_albumEditableFieldNames", global::Resources.AlbumEditableFieldNames.ResourceManager },
+			{ "artist_artistEditableFieldNames", global::Resources.ArtistEditableFieldNames.ResourceManager },
+			{ "song_songEditableFieldNames", global::Resources.SongEditableFieldNames.ResourceManager },
 			{ "albumCollectionStatusNames", global::Resources.AlbumCollectionStatusNames.ResourceManager },
 			{ "albumMediaTypeNames", global::Resources.AlbumMediaTypeNames.ResourceManager },
 			{ "albumSortRuleNames", global::Resources.AlbumSortRuleNames.ResourceManager },

@@ -35,6 +35,17 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual string[] ChangedFieldNames {
+			get {
+
+				var fieldNames = EnumVal<SongEditableFields>.Values
+					.Where(f => f != SongEditableFields.Nothing && IsChanged(f)).Select(f => f.ToString());
+
+				return fieldNames.ToArray();
+
+			}
+		}
+
 		public virtual SongEditableFields ChangedFields { get; set; }
 
 		public virtual string ChangedFieldsString {

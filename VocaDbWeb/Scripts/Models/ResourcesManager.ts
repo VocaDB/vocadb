@@ -27,7 +27,37 @@ module vdb.models {
 
 	}
 
+	export class ResourceSetFolderActivityEntry {
+
+		public activityFeedEventNames = "activityEntry_activityFeedEventNames";
+
+	}
+
+	export class ResourceSetFolderAlbum {
+		
+		public albumEditableFieldNames = "album_albumEditableFieldNames";
+
+	}
+
+	export class ResourceSetFolderArtist {
+
+		public artistEditableFieldNames = "artist_artistEditableFieldNames";
+
+	}
+
+	export class ResourceSetFolderSong {
+
+		public songEditableFieldNames = "song_songEditableFieldNames";
+
+	}
+
 	export class ResourceSetNames {
+
+		public static activityEntry: ResourceSetFolderActivityEntry = new ResourceSetFolderActivityEntry();
+		public static album: ResourceSetFolderAlbum = new ResourceSetFolderAlbum();
+		public static artist: ResourceSetFolderArtist = new ResourceSetFolderArtist();
+		public static song: ResourceSetFolderSong = new ResourceSetFolderSong();
+
 		public static artistTypeNames = "artistTypeNames";
 		public static discTypeNames = "discTypeNames";
 		public static songTypeNames = "songTypeNames";

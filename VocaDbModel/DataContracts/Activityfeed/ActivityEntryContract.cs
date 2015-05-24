@@ -39,6 +39,7 @@ namespace VocaDb.Model.DataContracts.Activityfeed {
 
 		}
 
+		// Note: not in use currently
 		public ActivityEntryContract(ActivityEntry entry, ContentLanguagePreference languagePreference, string changeMessage, string entryTypeName,
 			bool getArchivedVersion) {
 
@@ -68,6 +69,7 @@ namespace VocaDb.Model.DataContracts.Activityfeed {
 
 		}
 
+		// Note: not in use currently
 		public ArchivedVersionForReviewContract ArchivedVersion { get; set; }
 
 		public string ArtistString { get; set; }

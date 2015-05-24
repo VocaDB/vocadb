@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using VocaDb.Model.DataContracts.Activityfeed;
+﻿using System.Linq;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -15,7 +12,6 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -140,69 +136,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			});
 
 		}
-
-		private ActivityEntryContract CreateViewModel(ActivityEntry activityEntry) {
-
-			string changeMessage = string.Empty, entryTypeName = string.Empty;
-
-			if (activityEntry.ArchivedVersionBase != null) {
-
-				if (activityEntry.EntryBase.EntryType == EntryType.Album) {
-					var entry = (ArchivedAlbumVersion)activityEntry.ArchivedVersionBase;
-					changeMessage = Translate.AlbumEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, AlbumEditableFields.Nothing);
-					entryTypeName = Translate.DiscTypeNames[entry.Album.DiscType];
-				}
-
-				if (activityEntry.EntryBase.EntryType == EntryType.Artist) {
-					var entry = (ArchivedArtistVersion)activityEntry.ArchivedVersionBase;
-					changeMessage = Translate.ArtistEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, ArtistEditableFields.Nothing);
-					entryTypeName = Translate.ArtistTypeNames[entry.Artist.ArtistType];
-				}
-
-				if (activityEntry.EntryBase.EntryType == EntryType.Song) {
-					var entry = (ArchivedSongVersion)activityEntry.ArchivedVersionBase;
-					changeMessage = Translate.SongEditableFieldNames.GetAllNameNames(entry.Diff.ChangedFields, SongEditableFields.Nothing);
-					entryTypeName = Translate.SongTypeNames[entry.Song.SongType];
-				}
-				
-			}
-
-			return new ActivityEntryContract(activityEntry, LanguagePreference, changeMessage, entryTypeName, true);
-
-		}
-
-		public ActivityEntryContract[] GetRecentVersions(int maxResults, DateTime? before) {
-			
-			return repository.HandleQuery(ctx => {
-
-				var query = ctx.Query<ActivityEntry>();
-
-				if (before.HasValue) {
-					query = query.Where(a => a.CreateDate < before);
-				}
-
-				var activityEntries = query
-					.OrderByDescending(a => a.CreateDate)
-					.Take(maxResults)
-					.ToArray()
-					.Select(CreateViewModel)
-					.ToArray();
-
-				return activityEntries;
-
-			});
-
-		}
-
-	}
-
-	public class ArchivedObjectForSorting {
-
-		public DateTime Created { get; set; }
-
-		public EntryType EntryType { get; set; }
-
-		public int Id { get; set; }
 
 	}
 

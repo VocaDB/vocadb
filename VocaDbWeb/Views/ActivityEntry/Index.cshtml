@@ -22,8 +22,8 @@
 	</li>	
 </ul>
 
-<div data-bind="foreach: entries">
-	@ActivityfeedHelpers.ActivityEntryKnockout("$parent.getEntryTypeName", true)
+<div data-bind="foreach: entries, show" class="js-cloak">
+	@ActivityfeedHelpers.ActivityEntryKnockout("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true)
 </div>
 
 <hr />

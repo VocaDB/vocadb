@@ -1,5 +1,6 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
+@using HelperRes
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.DataContracts.Activityfeed;
@@ -85,20 +86,21 @@
 	</div>
 }
 
-
-@helper ActivityEntryKnockout(string entryTypeNamesBinding, bool showDetails = false) {
+@helper ActivityEntryKnockout(string entryTypeNamesBinding, string activityFeedEventNamesBinding, string changedFieldNamesBinding, bool showDetails = false) {
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
-		@* TODO: should handle anonymous activity *@
-		@UserHelpers.IconNameAndTypeKnockout("author", "resources.userGroupNames")
+		<span data-bind="with: $data.author">
+			@UserHelpers.IconNameAndTypeLinkKnockout("resources.userGroupNames")
+		</span>
+		<span data-bind="visible: !$data.author">@ActivityFeedHelperStrings.Someone</span>
 
-		@*@EntryType(entry)*@
+		<span data-bind="text: @(activityFeedEventNamesBinding)($data)"></span>
 
 		@if (showDetails) {
 			<span data-bind="with: $data.archivedVersion">
-				<span visible="{{ $data.changedFields }}">({{ changedFields }})</span>
+				<span visible="{{ $data.changedFields && $data.changedFields.length }}">({{ @(changedFieldNamesBinding)($parent.entry, $data) }})</span>
 				<span visible="{{ $data.notes }}">{{ '\"' + notes + '\"' }}</span>
 
-				<a href="#" data-bind="attr: { href: '/' + $parent.entry.entryType + '/ViewVersion/' + id }">@ViewRes.MiscStrings.Details</a>
+				(<a href="#" data-bind="attr: { href: '/' + $parent.entry.entryType + '/ViewVersion/' + id }">@ViewRes.MiscStrings.Details</a>)
 			</span>
 		}
 

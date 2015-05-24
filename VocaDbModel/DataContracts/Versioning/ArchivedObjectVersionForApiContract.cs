@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.Versioning {
 			
 			ParamIs.NotNull(() => archivedObjectVersion);
 
-			ChangedFields = archivedObjectVersion.DiffBase.ChangedFieldsString;
+			ChangedFields = archivedObjectVersion.DiffBase.ChangedFieldNames;
 			Id = archivedObjectVersion.Id;
 			Notes = archivedObjectVersion.Notes;
 			Version = archivedObjectVersion.Version;
@@ -20,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Versioning {
 		}
 
 		[DataMember]
-		public string ChangedFields { get; set; }
+		public string[] ChangedFields { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

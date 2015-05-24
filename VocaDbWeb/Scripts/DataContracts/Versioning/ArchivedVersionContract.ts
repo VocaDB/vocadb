@@ -1,9 +1,10 @@
 ﻿
 module vdb.dataContracts.versioning {
 	
+	// C# class: ArchivedObjectVersionForApiContract
 	export interface ArchivedVersionContract {
 		
-		changedFields: string;
+		changedFields: string[];
 
 		id: number;
 

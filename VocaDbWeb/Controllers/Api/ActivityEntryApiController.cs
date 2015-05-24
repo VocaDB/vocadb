@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Web.Helpers;
 
@@ -25,14 +26,17 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly IEntryImagePersisterOld entryImagePersisterOld;
 		private readonly IRepository repository;
 		private readonly IUserIconFactory userIconFactory;
+		private readonly IUserPermissionContext permissionContext;
 
 		public ActivityEntryApiController(IRepository repository, IUserIconFactory userIconFactory, 
-			IEntryThumbPersister entryThumbPersister, IEntryImagePersisterOld entryImagePersisterOld) {
+			IEntryThumbPersister entryThumbPersister, IEntryImagePersisterOld entryImagePersisterOld,
+			IUserPermissionContext permissionContext) {
 
 			this.repository = repository;
 			this.userIconFactory = userIconFactory;
 			this.entryThumbPersister = entryThumbPersister;
 			this.entryImagePersisterOld = entryImagePersisterOld;
+			this.permissionContext = permissionContext;
 
 		}
 
@@ -70,7 +74,7 @@ namespace VocaDb.Web.Controllers.Api {
 					.ToArray()
 					.Select(a => new ActivityEntryForApiContract(a, 
 						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? EntryForApiContract.Create(a.EntryBase, lang, entryThumbPersister, entryImagePersisterOld, ssl, entryFields) : null, 
-						userIconFactory, fields))
+						userIconFactory, permissionContext, fields))
 					.ToArray();
 
 				return activityEntries;

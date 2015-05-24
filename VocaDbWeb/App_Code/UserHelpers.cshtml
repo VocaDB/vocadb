@@ -25,9 +25,11 @@
 	<span data-bind="text: @nameBinding"></span>
 }
 
-@helper IconNameAndTypeKnockout(string userBinding, string groupResources, int iconSize = 20) {
-	@ProfileIconKnockout(userBinding + ".mainPicture.urlThumb", iconSize)
-	<span data-bind="text: @(userBinding + ".name"), title: @(groupResources + "[" + userBinding + ".groupId] + '\\nJoined: ' + " + userBinding + ".memberSince")"></span>
+@helper IconNameAndTypeLinkKnockout(string groupResources, int iconSize = 20) {
+	<a href="#" data-bind="attr: { href: '/User/Profile/' + name }" title='@(groupResources + "[groupId] + '\\nJoined: ' + memberSince")'>
+		@ProfileIconKnockout("mainPicture.urlThumb", iconSize)
+		<span data-bind="text: name"></span>
+	</a>
 }
 
 @helper ProfileIcon(IUserWithEmail user, int size = 80) {

@@ -2,7 +2,7 @@
 
 	public interface IEntryDiff {
 
-		//string[] ChangedFieldNames { get; }
+		string[] ChangedFieldNames { get; }
 
 		/// <summary>
 		/// Comma-separated list of the names of the changed fields.

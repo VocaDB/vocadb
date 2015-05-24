@@ -14,13 +14,51 @@ module vdb.viewModels.activityEntry {
 			cultureCode: string) {
 			
 			this.resources = new models.ResourcesManager(resourceRepo, cultureCode);
-			this.resources.loadResources(null, resSets.artistTypeNames, resSets.discTypeNames, resSets.songTypeNames, resSets.userGroupNames);
-
-			this.loadMore();
+			this.resources.loadResources(this.loadMore, resSets.artistTypeNames, resSets.discTypeNames, resSets.songTypeNames,
+				resSets.userGroupNames, resSets.activityEntry.activityFeedEventNames, resSets.album.albumEditableFieldNames, resSets.artist.artistEditableFieldNames,
+				resSets.song.songEditableFieldNames);
 
 		}
 
 		public entries = ko.observableArray<dc.activityEntry.ActivityEntryContract>([]);
+
+		public getActivityFeedEventName = (activityEntry: dc.activityEntry.ActivityEntryContract) => {
+			
+			var activityFeedEventNames = this.resources.resources().activityEntry_activityFeedEventNames;
+
+			if (activityFeedEventNames[activityEntry.editEvent + activityEntry.entry.entryType]) {
+				return activityFeedEventNames[activityEntry.editEvent + activityEntry.entry.entryType];
+			} else if (activityEntry.editEvent === "Created") {
+				return activityFeedEventNames["CreatedNew"].replace("{0}", activityFeedEventNames["Entry" + activityEntry.entry.entryType]);
+			} else {
+				return activityFeedEventNames["Updated"].replace("{0}", activityFeedEventNames["Entry" + activityEntry.entry.entryType]);				
+			}
+
+		}
+
+		public getChangedFieldNames = (entry: dc.EntryContract, archivedVersion: dc.versioning.ArchivedVersionContract) => {
+			
+			if (archivedVersion == null || archivedVersion.changedFields == null)
+				return null;
+
+			var r = this.resources.resources();
+
+			switch (EntryType[entry.entryType]) {
+				case EntryType.Album:
+					return _.map(archivedVersion.changedFields, f => r.album_albumEditableFieldNames[f]);
+
+				case EntryType.Artist:
+					return _.map(archivedVersion.changedFields, f => r.artist_artistEditableFieldNames[f]);
+
+				case EntryType.Song:
+					return _.map(archivedVersion.changedFields, f => r.song_songEditableFieldNames[f]);
+
+				default:
+					return archivedVersion.changedFields;			
+			}
+
+
+		}
 
 		public getEntryTypeName = (entry: dc.EntryContract) => {
 			

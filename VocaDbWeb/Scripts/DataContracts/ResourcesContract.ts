@@ -4,6 +4,14 @@ module vdb.dataContracts {
 	// From ResourcesApiController
 	export interface ResourcesContract {
 
+		activityEntry_activityFeedEventNames?: { [key: string]: string; }
+
+		album_albumEditableFieldNames?: { [key: string]: string; }
+
+		artist_artistEditableFieldNames?: { [key: string]: string; }
+
+		song_songEditableFieldNames?: { [key: string]: string; }
+
 		albumCollectionStatusNames?: { [key: string]: string; }
 
 		albumMediaTypeNames?: { [key: string]: string; }
