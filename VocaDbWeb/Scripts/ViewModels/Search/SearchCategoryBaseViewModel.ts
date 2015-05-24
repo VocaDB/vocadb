@@ -32,6 +32,7 @@ module vdb.viewModels.search {
 				this.searchTerm.subscribe(this.updateResultsWithTotalCount);
 				this.showTags.subscribe(this.updateResultsWithoutTotalCount);
 				this.tag.subscribe(this.updateResultsWithTotalCount);
+				this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 			}
 
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
