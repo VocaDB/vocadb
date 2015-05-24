@@ -169,7 +169,7 @@
     <value>タイプ</value>
   </data>
   <data name="PvUrl" xml:space="preserve">
-    <value>URL：</value>
+    <value>リンク (URL): </value>
   </data>
   <data name="TabArtists" xml:space="preserve">
     <value>アーティスト</value>

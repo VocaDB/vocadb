@@ -136,4 +136,10 @@
   <data name="Unknown" xml:space="preserve">
     <value>不明</value>
   </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="Restored" xml:space="preserve">
+    <value>リストア</value>
+  </data>
 </root>
