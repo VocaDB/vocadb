@@ -153,7 +153,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			SongListFeaturedCategory = songList.FeaturedCategory;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null) {
-				MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, ssl, ImageSizes.Thumb | ImageSizes.SmallThumb);					
+				MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, ssl, SongList.ImageSizes);					
 			}
 
 		}
@@ -165,7 +165,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			TagCategoryName = tag.CategoryName;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null) {
-				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl, ImageSizes.Thumb | ImageSizes.SmallThumb);					
+				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl, Tag.ImageSizes);					
 			}
 
 		}

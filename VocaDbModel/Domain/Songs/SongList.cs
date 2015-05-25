@@ -4,6 +4,7 @@ using System.Linq;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
@@ -20,6 +21,11 @@ namespace VocaDb.Model.Domain.Songs {
 		int IEntryBase.Version {
 			get { return 0; }
 		}
+
+		/// <summary>
+		/// Generated image sizes for song list images
+		/// </summary>
+		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb;
 
 		private ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> archivedVersions
 			= new ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields>();		

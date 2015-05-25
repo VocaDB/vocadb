@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Versioning;
@@ -31,6 +32,11 @@ namespace VocaDb.Model.Domain.Tags {
 		int IEntryBase.Version {
 			get { return 0; }
 		}
+
+		/// <summary>
+		/// Generated image sizes for tag images
+		/// </summary>
+		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb;
 
 		public const int MaxDisplayedTags = 4;
 		private static readonly Regex TagNameRegex = new Regex(@"^[a-zA-Z0-9_-]+$");

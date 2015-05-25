@@ -16,18 +16,17 @@ namespace VocaDb.Model.DataContracts {
 		public EntryThumbForApiContract(IEntryImageInformation image, IEntryImagePersister thumbPersister, bool ssl,
 			ImageSizes sizes = ImageSizes.All) {
 
-			if (!string.IsNullOrEmpty(image.Mime)) {
+			if (string.IsNullOrEmpty(image.Mime) && sizes != ImageSizes.Nothing)
+				return;
 
-				if (sizes.HasFlag(ImageSizes.SmallThumb))
-					UrlSmallThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.SmallThumb, ssl);
+			if (sizes.HasFlag(ImageSizes.SmallThumb))
+				UrlSmallThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.SmallThumb, ssl);
 
-				if (sizes.HasFlag(ImageSizes.Thumb))
-					UrlThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.Thumb, ssl);
+			if (sizes.HasFlag(ImageSizes.Thumb))
+				UrlThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.Thumb, ssl);
 
-				if (sizes.HasFlag(ImageSizes.TinyThumb))
-					UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb, ssl);				
-
-			}
+			if (sizes.HasFlag(ImageSizes.TinyThumb))
+				UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb, ssl);				
 
 		}
 
