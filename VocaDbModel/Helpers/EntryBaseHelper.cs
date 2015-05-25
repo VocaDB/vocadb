@@ -4,6 +4,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Helpers {
@@ -30,16 +31,36 @@ namespace VocaDb.Model.Helpers {
 
 		public static string GetMime(IEntryBase entry) {
 
-			if (entry.EntryType == EntryType.Album) {
-				var album = entry as Album;
-				if (album != null && album.CoverPictureData != null)
-					return album.CoverPictureMime;			
-			}
+			switch (entry.EntryType) {
+				case EntryType.Album: {
+					var album = entry as Album;
+					if (album != null && album.CoverPictureData != null)
+						return album.CoverPictureMime;								
+				}
+				break;
 
-			if (entry.EntryType == EntryType.Artist) {
-				var artist = entry as Artist;
-				if (artist != null && artist.Picture != null)
-					return artist.PictureMime;				
+				case EntryType.Artist: {
+					var artist = entry as Artist;
+					if (artist != null && artist.Picture != null)
+						return artist.PictureMime;				
+					
+				}
+				break;
+
+				case EntryType.SongList: {
+					var songList = entry as SongList;
+					if (songList != null && songList.Thumb != null)
+						return songList.Thumb.Mime;									
+				}
+				break;
+
+				case EntryType.Tag: {
+					var tag = entry as Tag;
+					if (tag != null && tag.Thumb != null)
+						return tag.Thumb.Mime;									
+				}
+				break;
+
 			}
 
 			return string.Empty;

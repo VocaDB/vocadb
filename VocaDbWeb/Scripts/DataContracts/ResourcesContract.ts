@@ -12,6 +12,12 @@ module vdb.dataContracts {
 
 		song_songEditableFieldNames?: { [key: string]: string; }
 
+		songList_songListEditableFieldNames?: { [key: string]: string; }
+
+		songList_songListFeaturedCategoryNames?: { [key: string]: string; }
+
+		tag_tagEditableFieldNames?: { [key: string]: string; }
+
 		albumCollectionStatusNames?: { [key: string]: string; }
 
 		albumMediaTypeNames?: { [key: string]: string; }

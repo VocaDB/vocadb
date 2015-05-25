@@ -132,6 +132,12 @@
   <data name="EntrySong" xml:space="preserve">
     <value>song</value>
   </data>
+  <data name="EntrySongList" xml:space="preserve">
+    <value>song list</value>
+  </data>
+  <data name="EntryTag" xml:space="preserve">
+    <value>tag</value>
+  </data>
   <data name="Someone" xml:space="preserve">
     <value>A contributor</value>
   </data>

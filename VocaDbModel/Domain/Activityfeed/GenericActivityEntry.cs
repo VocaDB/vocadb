@@ -2,6 +2,7 @@
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Activityfeed {
@@ -71,6 +72,24 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 		public SongActivityEntry(Song song, EntryEditEvent editEvent, User author, ArchivedSongVersion archivedVersion)
 			: base(song, editEvent, author, archivedVersion) { }
+
+	}
+
+	public class SongListActivityEntry : GenericActivityEntry<SongList, ArchivedSongListVersion> {
+
+		public SongListActivityEntry() { }
+
+		public SongListActivityEntry(SongList songlist, EntryEditEvent editEvent, User author, ArchivedSongListVersion archivedVersion)
+			: base(songlist, editEvent, author, archivedVersion) { }
+
+	}
+
+	public class TagActivityEntry : GenericActivityEntry<Tag, ArchivedTagVersion> {
+
+		public TagActivityEntry() { }
+
+		public TagActivityEntry(Tag tag, EntryEditEvent editEvent, User author, ArchivedTagVersion archivedVersion)
+			: base(tag, editEvent, author, archivedVersion) { }
 
 	}
 

@@ -3,6 +3,28 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201505252132)]
+	public class ActivityEntryTagsAndSongLists : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("SongList").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey("FK_ActivityEntries_SongLists", TableNames.SongLists, "Id").OnDelete(Rule.Cascade);
+
+			Create.Column("Tag").OnTable(TableNames.ActivityEntries).AsString(30).Nullable()
+				.ForeignKey("FK_ActivityEntries_Tags", TableNames.Tags, "Name").OnDelete(Rule.Cascade);
+
+			Create.Column("ArchivedSongListVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey("FK_ActivityEntries_ArchivedSongListVersions", TableNames.ArchivedSongListVersions, "Id").OnDelete(Rule.None);
+		
+			Create.Column("ArchivedTagVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey("FK_ActivityEntries_ArchivedTagVersions", TableNames.ArchivedTagVersions, "Id").OnDelete(Rule.None);
+			
+		}
+
+	}
+
+
 	[Migration(201505182200)]
 	public class ActivityEntryArchivedEntryIds : AutoReversingMigration {
 

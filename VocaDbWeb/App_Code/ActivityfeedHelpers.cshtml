@@ -35,6 +35,7 @@
 
 @helper ActivityEntry(ActivityEntryContract entry, bool showDetails = false) {
 	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.EntryRef.SongThumbUrl);
+	var entryType = entry.EntryRef.EntryType;
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
 			@UserHelpers.UserIconLink(entry.Author, userInfo: true)
@@ -65,13 +66,13 @@
 
 		<div class="media">
 			@if (!string.IsNullOrEmpty(thumbUrl)) {
-				<a class="pull-left" href="@Url.Action("Details", entry.EntryRef.EntryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
+				<a class="pull-left" href="@Url.Action(entryType != VocaDb.Model.Domain.EntryType.Tag ? "Details" : "DetailsById", entryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
 					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
 				</a>
 			}
 			<div class="media-body">
 				<h4 class="media-heading">
-					<a href="@Url.Action("Details", entry.EntryRef.EntryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
+					<a href="@Url.Action(entryType != VocaDb.Model.Domain.EntryType.Tag ? "Details" : "DetailsById", entryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
 						<strong>@entry.EntryRef.Name.DisplayName</strong>
 					</a>
 					@if (!string.IsNullOrEmpty(entry.EntryTypeName)) {
@@ -98,24 +99,26 @@
 		@if (showDetails) {
 			<span data-bind="with: $data.archivedVersion">
 				<span visible="{{ $data.changedFields && $data.changedFields.length }}">({{ @(changedFieldNamesBinding)($parent.entry, $data) }})</span>
-				<span visible="{{ $data.notes }}">{{ '\"' + notes + '\"' }}</span>
-
-				(<a href="#" data-bind="attr: { href: '/' + $parent.entry.entryType + '/ViewVersion/' + id }">@ViewRes.MiscStrings.Details</a>)
+				<span visible="{{ $data.notes }}">{{ '\"' + $data.notes + '\"' }}</span>
+				
+				<span visible="{{ $parent.entry.entryType !== 'Tag' && $parent.entry.entryType !== 'SongList' }}">
+					(<a href="#" data-bind="attr: { href: '/' + $parent.entry.entryType + '/ViewVersion/' + id }">@ViewRes.MiscStrings.Details</a>)
+				</span>
 			</span>
 		}
 
 		<small class="pull-right extraInfo" data-bind="attr: { title: createDate }, timeAgo: createDate"></small>
 
 		<div class="media">
-			<a class="pull-left" visible="{{ entry.mainPicture && entry.mainPicture.urlTinyThumb }}" href="{{ vdb.utils.EntryUrlMapper.details_entry(entry) }}" title="{{ entry.additionalNames }}">
-				<img attr.src="{{ entry.mainPicture ? entry.mainPicture.urlTinyThumb : '' }}" alt="thumb" class="media-object coverPicThumb" />
+			<a class="pull-left" visible="{{ entry.mainPicture && (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) }}" href="{{ vdb.utils.EntryUrlMapper.details_entry(entry) }}" title="{{ entry.additionalNames }}">
+				<img attr.src="{{ entry.mainPicture ? (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) : '' }}" alt="thumb" class="media-object coverPicThumb" />
 			</a>
 			<div class="media-body">
 				<h4 class="media-heading">
 					<a href="{{ vdb.utils.EntryUrlMapper.details_entry(entry) }}" title="{{ entry.additionalNames }}">
 						<strong>{{ entry.name }}</strong>
 					</a>
-					<span>({{ @(entryTypeNamesBinding)(entry) }})</span>
+					<span visible="{{ @(entryTypeNamesBinding)(entry) }}">({{ @(entryTypeNamesBinding)(entry) }})</span>
 				</h4>
 
 				<span visible="{{ entry.artistString }}">{{ entry.artistString }}</span>

@@ -169,6 +169,10 @@ namespace VocaDb.Web.Helpers {
 					return url.ImageThumb(imageInfo, ImageSize.TinyThumb);
 				case EntryType.Song:
 					return songThumbUrl;
+				case EntryType.SongList:
+					return url.EntryImageOld(imageInfo, ImageSize.SmallThumb);
+				case EntryType.Tag:
+					return url.EntryImageOld(imageInfo, ImageSize.SmallThumb);
 				default:
 					return string.Empty;
 			}

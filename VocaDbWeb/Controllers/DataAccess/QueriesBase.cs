@@ -9,8 +9,10 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Web.Controllers.DataAccess {
@@ -30,15 +32,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		protected void AddActivityfeedEntry(IRepositoryContext<ActivityEntry> ctx, ActivityEntry entry) {
 
-			var latestEntries = ctx.Query()
-				.OrderByDescending(a => a.CreateDate)
-				.Take(10)	// time cutoff would be better instead of an arbitrary number of activity entries
-				.ToArray();
-
-			if (latestEntries.Any(e => e.IsDuplicate(entry)))
-				return;
-
-			ctx.Save(entry);
+			new ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntry(entry);
 
 		}
 
@@ -63,6 +57,20 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
+
+		}
+
+		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, SongList entry, EntryEditEvent editEvent, ArchivedSongListVersion archivedVersion) {
+
+			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+			var activityEntry = new SongListActivityEntry(entry, editEvent, user, archivedVersion);
+			AddActivityfeedEntry(ctx, activityEntry);
+
+		}
+
+		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Tag entry, EntryEditEvent editEvent, ArchivedTagVersion archivedVersion) {
+
+			new ActivityEntryQueries(ctx, PermissionContext).AddEntryEditedEntry(entry, editEvent, archivedVersion);
 
 		}
 

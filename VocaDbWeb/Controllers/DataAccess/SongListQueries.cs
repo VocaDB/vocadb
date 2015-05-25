@@ -17,23 +17,18 @@ using VocaDb.Model.Service.Search.SongSearch;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
-	public class SongListQueries {
+	public class SongListQueries : QueriesBase<ISongListRepository, SongList> {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryImagePersisterOld imagePersister;
-		private readonly IUserPermissionContext permissionContext;
-		private readonly ISongListRepository repository;
 
-		private IUserPermissionContext PermissionContext {
-			get { return permissionContext; }
-		}
-
-		public void Archive(IRepositoryContext<SongList> ctx, SongList songList, SongListDiff diff, EntryEditEvent reason) {
+		public ArchivedSongListVersion Archive(IRepositoryContext<SongList> ctx, SongList songList, SongListDiff diff, EntryEditEvent reason) {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
 			var archived = songList.CreateArchivedVersion(diff, agentLoginData, reason);
 			ctx.OfType<ArchivedSongListVersion>().Save(archived);
+			return archived;
 
 		}
 
@@ -81,7 +76,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			ctx.Update(newList);
 
 			ctx.AuditLogger.AuditLog(string.Format("created song list {0}", entryLinkFactory.CreateEntryLink(newList)), user);
-			Archive(ctx, newList, new SongListDiff(), EntryEditEvent.Created);
+			var archived = Archive(ctx, newList, new SongListDiff(), EntryEditEvent.Created);
+
+			if (newList.FeaturedList) {
+				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), newList, EntryEditEvent.Created, archived);						
+			}
 
 			return newList;
 
@@ -100,11 +99,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister) {
-			this.repository = repository;
-			this.permissionContext = permissionContext;
+		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister)
+			: base(repository, permissionContext) {
+
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+
 		}
 
 		public PartialFindResult<SongInListContract> GetSongsInList(SongListQueryParams queryParams) {
@@ -190,7 +190,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					ctx.Update(list);
 
 					ctx.AuditLogger.AuditLog(string.Format("updated song list {0}", entryLinkFactory.CreateEntryLink(list)), user);
-					Archive(ctx, list, diff, EntryEditEvent.Updated);
+
+					var archived = Archive(ctx, list, diff, EntryEditEvent.Updated);
+
+					if (list.FeaturedList) {
+						AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), list, EntryEditEvent.Updated, archived);						
+					}
 
 				}
 

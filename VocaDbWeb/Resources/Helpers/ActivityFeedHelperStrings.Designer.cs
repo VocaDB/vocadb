@@ -106,6 +106,24 @@ namespace HelperRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to song list.
+        /// </summary>
+        public static string EntrySongList {
+            get {
+                return ResourceManager.GetString("EntrySongList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tag.
+        /// </summary>
+        public static string EntryTag {
+            get {
+                return ResourceManager.GetString("EntryTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A contributor.
         /// </summary>
         public static string Someone {

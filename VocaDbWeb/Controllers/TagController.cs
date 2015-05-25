@@ -50,6 +50,20 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult DetailsById(int id = invalidId) {
+
+			if (id == invalidId)
+				return NoId();
+
+			var tagName = queries.GetTagNameById(id);
+
+			if (tagName == null)
+				return HttpNotFound();
+
+			return RedirectToActionPermanent("Details", new { id = tagName });
+
+		}
+
         [Authorize]
         public ActionResult Edit(string id)
         {

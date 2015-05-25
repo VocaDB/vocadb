@@ -19,7 +19,11 @@ module vdb.dataContracts {
 
 		name: string;
 
+		songListFeaturedCategory?: string;
+
 		songType?: string;
+
+		tagCategoryName?: string;
 
 	}
 

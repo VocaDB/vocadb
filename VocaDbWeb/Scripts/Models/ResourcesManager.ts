@@ -51,12 +51,27 @@ module vdb.models {
 
 	}
 
+	export class ResourceSetFolderSongList {
+
+		public songListEditableFieldNames = "songList_songListEditableFieldNames";
+		public songListFeaturedCategoryNames = "songList_songListFeaturedCategoryNames";
+
+	}
+
+	export class ResourceSetFolderTag {
+
+		public tagEditableFieldNames = "tag_tagEditableFieldNames";
+
+	}
+
 	export class ResourceSetNames {
 
 		public static activityEntry: ResourceSetFolderActivityEntry = new ResourceSetFolderActivityEntry();
 		public static album: ResourceSetFolderAlbum = new ResourceSetFolderAlbum();
 		public static artist: ResourceSetFolderArtist = new ResourceSetFolderArtist();
 		public static song: ResourceSetFolderSong = new ResourceSetFolderSong();
+		public static songList: ResourceSetFolderSongList = new ResourceSetFolderSongList();
+		public static tag: ResourceSetFolderTag = new ResourceSetFolderTag();
 
 		public static artistTypeNames = "artistTypeNames";
 		public static discTypeNames = "discTypeNames";

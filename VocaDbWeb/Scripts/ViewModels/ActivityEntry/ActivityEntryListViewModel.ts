@@ -16,7 +16,8 @@ module vdb.viewModels.activityEntry {
 			this.resources = new models.ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(this.loadMore, resSets.artistTypeNames, resSets.discTypeNames, resSets.songTypeNames,
 				resSets.userGroupNames, resSets.activityEntry.activityFeedEventNames, resSets.album.albumEditableFieldNames, resSets.artist.artistEditableFieldNames,
-				resSets.song.songEditableFieldNames);
+				resSets.song.songEditableFieldNames, resSets.songList.songListEditableFieldNames, resSets.songList.songListFeaturedCategoryNames,
+				resSets.tag.tagEditableFieldNames);
 
 		}
 
@@ -53,6 +54,12 @@ module vdb.viewModels.activityEntry {
 				case EntryType.Song:
 					return _.map(archivedVersion.changedFields, f => r.song_songEditableFieldNames[f]);
 
+				case EntryType.SongList:
+					return _.map(archivedVersion.changedFields, f => r.songList_songListEditableFieldNames[f]);
+
+				case EntryType.Tag:
+					return _.map(archivedVersion.changedFields, f => r.tag_tagEditableFieldNames[f]);
+
 				default:
 					return archivedVersion.changedFields;			
 			}
@@ -62,15 +69,21 @@ module vdb.viewModels.activityEntry {
 
 		public getEntryTypeName = (entry: dc.EntryContract) => {
 			
-			switch (entry.entryType) {
-				case EntryType[EntryType.Album]:
+			switch (EntryType[entry.entryType]) {
+				case EntryType.Album:
 					return this.resources.resources().discTypeNames[entry.discType];
 				
-				case EntryType[EntryType.Artist]:
+				case EntryType.Artist:
 					return this.resources.resources().artistTypeNames[entry.artistType];
 
-				case EntryType[EntryType.Song]:
+				case EntryType.Song:
 					return this.resources.resources().songTypeNames[entry.songType];
+
+				case EntryType.SongList:
+					return this.resources.resources().songList_songListFeaturedCategoryNames[entry.songListFeaturedCategory];
+
+				case EntryType.Tag:
+					return entry.tagCategoryName;
 
 				default:
 					return null;

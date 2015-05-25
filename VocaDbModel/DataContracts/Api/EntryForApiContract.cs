@@ -31,6 +31,8 @@ namespace VocaDb.Model.DataContracts.Api {
 				return new EntryForApiContract((DiscussionTopic)entry, languagePreference);
 			else if (entry is Song)
 				return new EntryForApiContract((Song)entry, languagePreference, includedFields);
+			else if (entry is SongList)
+				return new EntryForApiContract((SongList)entry, imagePersisterOld, ssl, includedFields);
 			else if (entry is Tag)
 				return new EntryForApiContract((Tag)entry, imagePersisterOld, ssl, includedFields);
 
@@ -144,12 +146,26 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
+		public EntryForApiContract(SongList songList, IEntryImagePersisterOld thumbPersister, bool ssl, 
+			EntryOptionalFields includedFields)
+			: this(songList, ContentLanguagePreference.Default) {
+
+			SongListFeaturedCategory = songList.FeaturedCategory;
+
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null) {
+				MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, ssl, ImageSizes.Thumb | ImageSizes.SmallThumb);					
+			}
+
+		}
+
 		public EntryForApiContract(Tag tag, IEntryImagePersisterOld thumbPersister, bool ssl, 
 			EntryOptionalFields includedFields)
 			: this(tag, ContentLanguagePreference.Default) {
 
+			TagCategoryName = tag.CategoryName;
+
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null) {
-				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl);					
+				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl, ImageSizes.Thumb | ImageSizes.SmallThumb);					
 			}
 
 		}
@@ -197,10 +213,16 @@ namespace VocaDb.Model.DataContracts.Api {
 		public LocalizedStringContract[] Names { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
+		public SongListFeaturedCategory? SongListFeaturedCategory { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
 		public SongType? SongType { get; set; }
 
 		[DataMember]
 		public EntryStatus Status { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public string TagCategoryName { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public TagUsageForApiContract[] Tags { get; set; }

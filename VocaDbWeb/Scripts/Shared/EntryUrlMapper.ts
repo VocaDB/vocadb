@@ -25,6 +25,9 @@ module vdb.utils {
 				case "song":
 					prefix = vdb.functions.mapAbsoluteUrl("/S/" + id);
 					break;
+				case "tag":
+					prefix = vdb.functions.mapAbsoluteUrl("/Tag/DetailsById/" + id);
+					break;
 				default:
 					prefix = vdb.functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
 					break;
@@ -36,7 +39,7 @@ module vdb.utils {
 
         }
 
-        public static details_entry(entry: dc.EntryRefContract) {            
+        public static details_entry(entry: dc.EntryRefContract) {       		
             return EntryUrlMapper.details(entry.entryType, entry.id);        
 		}
 

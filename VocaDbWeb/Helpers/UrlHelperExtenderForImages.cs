@@ -12,7 +12,7 @@ namespace VocaDb.Web.Helpers {
 	/// </summary>
 	public static class UrlHelperExtenderForImages {
 
-		private static readonly ServerEntryThumbPersister imagePersister = new ServerEntryThumbPersister();
+		private static readonly IEntryThumbPersister imagePersister = new ServerEntryThumbPersister();
 
 		private static ServerEntryImagePersisterOld EntryImagePersisterOld {
 			get {

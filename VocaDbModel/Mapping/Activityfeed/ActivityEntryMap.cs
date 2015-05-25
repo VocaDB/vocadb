@@ -60,4 +60,30 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 	}
 
+	public class SongListActivityEntryMap : SubclassMap<SongListActivityEntry> {
+
+		public SongListActivityEntryMap() {
+
+			DiscriminatorValue("SongList");
+
+			References(m => m.ArchivedVersion).Column("[ArchivedSongListVersion]").Nullable();
+			References(m => m.Entry).Column("[SongList]").Not.Nullable();
+
+		}
+
+	}
+
+	public class TagActivityEntryMap : SubclassMap<TagActivityEntry> {
+
+		public TagActivityEntryMap() {
+
+			DiscriminatorValue("Tag");
+
+			References(m => m.ArchivedVersion).Column("[ArchivedTagVersion]").Nullable();
+			References(m => m.Entry).Column("[Tag]").Not.Nullable();
+
+		}
+
+	}
+
 }
