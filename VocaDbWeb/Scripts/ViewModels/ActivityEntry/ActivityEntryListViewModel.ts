@@ -39,31 +39,39 @@ module vdb.viewModels.activityEntry {
 
 		public getChangedFieldNames = (entry: dc.EntryContract, archivedVersion: dc.versioning.ArchivedVersionContract) => {
 			
-			if (archivedVersion == null || archivedVersion.changedFields == null)
+			if (archivedVersion == null || archivedVersion.changedFields == null || archivedVersion.changedFields.length === 0)
 				return null;
 
-			var r = this.resources.resources();
+			var sets = this.resources.resources();
+			var namesSet: { [key: string]: string; };
 
 			switch (EntryType[entry.entryType]) {
 				case EntryType.Album:
-					return _.map(archivedVersion.changedFields, f => r.album_albumEditableFieldNames[f]);
+					namesSet = sets.album_albumEditableFieldNames;
+					break;
 
 				case EntryType.Artist:
-					return _.map(archivedVersion.changedFields, f => r.artist_artistEditableFieldNames[f]);
+					namesSet = sets.artist_artistEditableFieldNames;
+					break;
 
 				case EntryType.Song:
-					return _.map(archivedVersion.changedFields, f => r.song_songEditableFieldNames[f]);
+					namesSet = sets.song_songEditableFieldNames;
+					break;
 
 				case EntryType.SongList:
-					return _.map(archivedVersion.changedFields, f => r.songList_songListEditableFieldNames[f]);
+					namesSet = sets.songList_songListEditableFieldNames;
+					break;
 
 				case EntryType.Tag:
-					return _.map(archivedVersion.changedFields, f => r.tag_tagEditableFieldNames[f]);
+					namesSet = sets.tag_tagEditableFieldNames;
+					break;
 
 				default:
-					return archivedVersion.changedFields;			
+					return archivedVersion.changedFields.join(", ");
 			}
 
+			var names = _.map(archivedVersion.changedFields, f => namesSet[f]);
+			return names.join(", ");
 
 		}
 

@@ -45,21 +45,6 @@
 
 		@EntryType(entry)
 
-		@if (showDetails && entry.ArchivedVersion != null) {
-
-			if (!string.IsNullOrEmpty(entry.ArchivedVersion.ChangeMessage)) {
-				@:(@entry.ArchivedVersion.ChangeMessage)
-			}
-
-			if (!string.IsNullOrEmpty(entry.ArchivedVersion.Notes)) {
-				@:"@entry.ArchivedVersion.Notes"
-			}
-
-			@:(<a href="@Url.Action("ViewVersion", entry.EntryRef.EntryType.ToString(), new { id = entry.ArchivedVersion.VersionId })">@ViewRes.MiscStrings.Details</a>)
-
-		}
-
-
 		<small class="pull-right extraInfo" title="@entry.CreateDate.ToUniversalTime().ToString("g")">
 			@TimeAgoStringBuilder.FormatTimeAgo(entry.CreateDate)
 		</small>
