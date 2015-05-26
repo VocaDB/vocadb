@@ -258,7 +258,6 @@
     <Compile Include="DataContracts\Artists\CreateArtistContract.cs" />
     <Compile Include="DataContracts\Artists\GroupForArtistContract.cs" />
     <Compile Include="DataContracts\CommentContract.cs" />
-    <Compile Include="DataContracts\GenericResponse.cs" />
     <Compile Include="DataContracts\LocalizedStringContract.cs" />
     <Compile Include="DataContracts\LocalizedStringWithIdContract.cs" />
     <Compile Include="DataContracts\MikuDb\ImportedAlbumDataContract.cs" />
@@ -318,10 +317,8 @@
     <Compile Include="DataContracts\Users\UserWithIconContract.cs" />
     <Compile Include="DataContracts\Users\UserWithMessagesContract.cs" />
     <Compile Include="DataContracts\Users\UserWithPermissionsContract.cs" />
-    <Compile Include="DataContracts\VersioningInfoContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionForApiContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionWithFieldsContract.cs" />
-    <Compile Include="DataContracts\Versioning\ArchivedVersionForReviewContract.cs" />
     <Compile Include="DataContracts\Versioning\ComparedVersionsContract.cs" />
     <Compile Include="Domain\Activityfeed\ActivityEntry.cs" />
     <Compile Include="Domain\Activityfeed\GenericActivityEntry.cs" />
