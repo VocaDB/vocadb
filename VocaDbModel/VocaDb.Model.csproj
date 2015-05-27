@@ -312,7 +312,6 @@
     <Compile Include="DataContracts\Users\UserForApiContract.cs" />
     <Compile Include="DataContracts\Users\UserForMySettingsContract.cs" />
     <Compile Include="DataContracts\Users\UserMessageContract.cs" />
-    <Compile Include="DataContracts\Users\UserWithActivityEntriesContract.cs" />
     <Compile Include="DataContracts\Users\UserWithEmailContract.cs" />
     <Compile Include="DataContracts\Users\UserWithIconContract.cs" />
     <Compile Include="DataContracts\Users\UserWithMessagesContract.cs" />

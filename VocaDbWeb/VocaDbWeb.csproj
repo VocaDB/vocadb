@@ -2518,7 +2518,6 @@
     <Content Include="Views\Shared\Partials\_LayoutScripts.cshtml" />
     <Content Include="Views\User\Partials\_UserMessageKnockout.cshtml" />
     <Content Include="Views\Home\Partials\_NewsItems.cshtml" />
-    <Content Include="Views\User\Partials\_EntryEditsPage.cshtml" />
     <Content Include="Views\Stats\Index.cshtml" />
     <Content Include="Views\Event\EventsByDate.cshtml" />
     <Content Include="Views\Song\RelatedSongs.cshtml" />

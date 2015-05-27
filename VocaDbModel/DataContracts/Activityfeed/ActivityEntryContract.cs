@@ -1,10 +1,8 @@
 ﻿using System;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.Activityfeed {
@@ -34,18 +32,6 @@ namespace VocaDb.Model.DataContracts.Activityfeed {
 			ArtistString = GetArtistString(entry.EntryBase, languagePreference);
 			Author = new UserContract(entry.Author);
 			CreateDate = entry.CreateDate;
-			EditEvent = entry.EditEvent;
-			EntryRef = new EntryWithImageContract(entry.EntryBase, GetMime(entry.EntryBase), GetSongThumbUrl(entry.EntryBase), languagePreference);
-
-		}
-
-		public ActivityEntryContract(ArchivedObjectVersion entry, ContentLanguagePreference languagePreference) {
-
-			ParamIs.NotNull(() => entry);
-
-			ArtistString = GetArtistString(entry.EntryBase, languagePreference);
-			Author = new UserContract(entry.Author);
-			CreateDate = entry.Created;
 			EditEvent = entry.EditEvent;
 			EntryRef = new EntryWithImageContract(entry.EntryBase, GetMime(entry.EntryBase), GetSongThumbUrl(entry.EntryBase), languagePreference);
 

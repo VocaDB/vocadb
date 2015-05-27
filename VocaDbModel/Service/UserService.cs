@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Threading;
-using NLog;
-using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Service.Exceptions;
-using VocaDb.Model.Service.Paging;
 using NHibernate;
 using NHibernate.Linq;
+using NLog;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Security;
-using VocaDb.Model.Domain.Versioning;
-using VocaDb.Model.DataContracts.Activityfeed;
 
 namespace VocaDb.Model.Service {
 
@@ -284,22 +281,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private IQueryable<T> AddFilter<T>(IQueryable<T> query, int userId, PagingProperties paging, bool onlySubmissions, Expression<Func<T, bool>> deletedFilter) where T : ArchivedObjectVersion {
-
-			query = query.Where(q => q.Author.Id == userId);
-			query = query.Where(deletedFilter);
-
-			if (onlySubmissions)
-				query = query.Where(q => q.Version == 0);
-
-			query = query.OrderByDescending(q => q.Created);
-
-			query = query.Skip(paging.Start).Take(paging.MaxEntries);
-
-			return query;
-
-		}
-
 		public PartialFindResult<UserMessageContract> GetReceivedMessages(int userId, PagingProperties paging) {
 
 			return HandleQuery(session => {
@@ -335,28 +316,6 @@ namespace VocaDb.Model.Service {
 				var count = (paging.GetTotalCount ? query.Count() : 0);
 
 				return new PartialFindResult<UserMessageContract>(messages.Select(m => new UserMessageContract(m, null)).ToArray(), count);
-
-			});
-
-		}
-
-		public UserWithActivityEntriesContract GetUserWithActivityEntries(int id, PagingProperties paging, bool onlySubmissions) {
-
-			return HandleQuery(session => {
-
-				var user = session.Load<User>(id);
-				var activity = 
-					AddFilter(session.Query<ArchivedAlbumVersion>(), id, paging, onlySubmissions, a => !a.Album.Deleted).ToArray().Cast<ArchivedObjectVersion>().Concat(
-					AddFilter(session.Query<ArchivedArtistVersion>(), id, paging, onlySubmissions, a => !a.Artist.Deleted).ToArray()).Concat(
-					AddFilter(session.Query<ArchivedSongVersion>(), id, paging, onlySubmissions, a => !a.Song.Deleted).ToArray());
-
-				var activityContracts = activity
-					.OrderByDescending(a => a.Created)
-					.Take(paging.MaxEntries)
-					.Select(a => new ActivityEntryContract(a, PermissionContext.LanguagePreference))
-					.ToArray();
-
-				return new UserWithActivityEntriesContract(user, activityContracts, PermissionContext.LanguagePreference);
 
 			});
 

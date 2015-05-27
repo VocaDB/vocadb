@@ -45,7 +45,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Entries are always returned sorted from newest to oldest.
 		/// </summary>
 		/// <param name="before">Filter to return activity entries only before this date. Optional, by default no filter.</param>
-		/// <param name="maxResults">Maximum number of results to return. Maximum value 500.</param>
+		/// <param name="userId">Filter by user Id. Optional, by default no filter.</param>
+		/// <param name="editEvent">Filter by entry edit event (either Created or Updated). Optional, by default no filter.</param>
+		/// <param name="maxResults">Maximum number of results to return. Default 50. Maximum value 500.</param>
 		/// <param name="fields">Optional fields.</param>
 		/// <param name="entryFields">Optional fields for entries.</param>
 		/// <param name="lang">Content language preference.</param>
