@@ -1,5 +1,6 @@
-﻿@using VocaDb.Web.Helpers;
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserWithActivityEntriesContract>
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserBaseContract>
 
 @{
 	PageProperties.Title = "Entry edits - " + Model.Name;
@@ -7,35 +8,46 @@
 		Html.ActionLink("Users", "Index"), 
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 		
 	};
-
 }
 
-<div id="entryEdits">
-	@{ Html.RenderPartial("Partials/_EntryEditsPage", Model); }
+<!-- Binding context: ActivityEntryListViewModel -->
+
+<ul class="nav nav-pills">
+	<li data-bind="css: { active: editEventFilter_all }">
+		<a href="#" click="{{ function() { editEventFilter_all(true); } }}">All edits</a>
+	</li>
+	<li data-bind="css: { active: !editEventFilter_all() }">
+		<a href="#" click="{{ function() { editEventFilter_all(false); } }}">Only additions</a>
+	</li>
+</ul>
+
+<div data-bind="foreach: entries, show" class="js-cloak">
+	@ActivityfeedHelpers.ActivityEntryKnockout("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true)
 </div>
 
 <hr />
-<h3><a href="#" id="loadMoreLink">View more</a></h3>
-@Html.Hidden("start", 100)
+<h3>
+	<a href="#" data-bind="click: loadMore">View more</a>
+</h3>
 
 @section BodyScripts {
+	@Scripts.Render("~/bundles/ActivityEntry/Index")
 	<script type="text/javascript">
+		$(function () {
 
-	$(document).ready(function () {
+			moment.locale('@Culture');
+			ko.punches.enableAll();
 
-		$("#loadMoreLink").click(function () {
+			var urlMapper = new vdb.UrlMapper("@RootPath");
+			var resourceRepo = new vdb.repositories.ResourceRepository('@RootPath');
+			var languageSelection = '@UserContext.LanguagePreference';
+			var cultureCode = '@UICulture';
+			var userId = @Model.Id;
+			var editEvent = @ToJS((int?)ViewBag.EditEvent);
 
-			var id = @Model.Id;
-			var params = { id: id, start: $("#start").val() };
-			var url = vdb.functions.mapAbsoluteUrl("User/EntryEditsPage");
+			var vm = new vdb.viewModels.activityEntry.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode, userId, editEvent);
+			ko.applyBindings(vm);
 
-			$.post(url, params, function (result) {
-				$("#entryEdits").append(result);
-				$("#start").val(parseInt($("#start").val()) + 100);
-			});
-			return false;
 		});
-	});
-
 	</script>
 }

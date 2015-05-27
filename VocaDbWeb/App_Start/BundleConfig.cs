@@ -101,6 +101,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/Models/EntryType.js",
+				"~/Scripts/Models/ActivityEntries/EntryEditEvent.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/ViewModels/ActivityEntry/ActivityEntryListViewModel.js"

@@ -51,7 +51,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of activity entries.</returns>
 		[Route("")]
-		public IEnumerable<ActivityEntryForApiContract> GetList(DateTime? before = null, 
+		public IEnumerable<ActivityEntryForApiContract> GetList(DateTime? before = null,
+ 			int? userId = null,
+			EntryEditEvent? editEvent = null, 
 			int maxResults = defaultMax, 
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
@@ -65,7 +67,15 @@ namespace VocaDb.Web.Controllers.Api {
 				var query = ctx.Query<ActivityEntry>();
 
 				if (before.HasValue) {
-					query = query.Where(a => a.CreateDate < before);
+					query = query.Where(a => a.CreateDate < before.Value);
+				}
+
+				if (userId.HasValue) {
+					query = query.Where(a => a.Author.Id == userId.Value);
+				}
+
+				if (editEvent.HasValue) {
+					query = query.Where(a => a.EditEvent == editEvent.Value);
 				}
 
 				var activityEntries = query

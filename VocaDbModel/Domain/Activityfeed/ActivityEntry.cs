@@ -48,9 +48,9 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 	public enum EntryEditEvent {
 
-		Created,
+		Created = 1,
 
-		Updated
+		Updated = 2
 
 	}
 

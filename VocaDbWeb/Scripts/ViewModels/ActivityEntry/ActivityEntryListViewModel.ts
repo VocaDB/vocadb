@@ -1,6 +1,7 @@
 ﻿
 module vdb.viewModels.activityEntry {
 	
+	import cls = models;
 	import dc = dataContracts;
 	import EntryType = models.EntryType;
 	import rep = repositories;
@@ -11,17 +12,38 @@ module vdb.viewModels.activityEntry {
 		constructor(private urlMapper: UrlMapper,
 			resourceRepo: rep.ResourceRepository,
 			private languageSelection: string,
-			cultureCode: string) {
+			cultureCode: string,
+			private userId?: number,
+			editEvent?: cls.activityEntries.EntryEditEvent) {
 			
+			this.editEvent = ko.observable(editEvent);
+			this.editEvent.subscribe(this.clear);
+
+			this.editEventFilter_all = ko.computed({
+				read: () => this.editEvent() == null,
+				write: (val: boolean) => this.editEvent(val ? null : cls.activityEntries.EntryEditEvent.Created)
+			});
+
 			this.resources = new models.ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(this.loadMore, resSets.artistTypeNames, resSets.discTypeNames, resSets.songTypeNames,
 				resSets.userGroupNames, resSets.activityEntry.activityFeedEventNames, resSets.album.albumEditableFieldNames, resSets.artist.artistEditableFieldNames,
 				resSets.song.songEditableFieldNames, resSets.songList.songListEditableFieldNames, resSets.songList.songListFeaturedCategoryNames,
 				resSets.tag.tagEditableFieldNames);
 
+
+		}
+
+		private clear = () => {
+			this.lastEntryDate = null;
+			this.entries([]);
+			this.loadMore();
 		}
 
 		public entries = ko.observableArray<dc.activityEntry.ActivityEntryContract>([]);
+
+		public editEvent: KnockoutObservable<cls.activityEntries.EntryEditEvent>;
+
+		public editEventFilter_all: KnockoutComputed<boolean>;
 
 		public getActivityFeedEventName = (activityEntry: dc.activityEntry.ActivityEntryContract) => {
 			
@@ -29,7 +51,7 @@ module vdb.viewModels.activityEntry {
 
 			if (activityFeedEventNames[activityEntry.editEvent + activityEntry.entry.entryType]) {
 				return activityFeedEventNames[activityEntry.editEvent + activityEntry.entry.entryType];
-			} else if (activityEntry.editEvent === "Created") {
+			} else if (activityEntry.editEvent === cls.activityEntries.EntryEditEvent[cls.activityEntries.EntryEditEvent.Created]) {
 				return activityFeedEventNames["CreatedNew"].replace("{0}", activityFeedEventNames["Entry" + activityEntry.entry.entryType]);
 			} else {
 				return activityFeedEventNames["Updated"].replace("{0}", activityFeedEventNames["Entry" + activityEntry.entry.entryType]);				
@@ -108,7 +130,9 @@ module vdb.viewModels.activityEntry {
 				fields: 'Entry,ArchivedVersion',
 				entryFields: 'MainPicture',
 				lang: this.languageSelection,
-				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null
+				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
+				userId: this.userId,
+				editEvent: this.editEvent() ? cls.activityEntries.EntryEditEvent[this.editEvent()] : null
 			}, (entries: dc.activityEntry.ActivityEntryContract[]) => {
 
 				if (!entries && entries.length > 0)
