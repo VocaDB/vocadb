@@ -75,6 +75,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Models/WebLinkCategory.js",
 				"~/Scripts/Shared/WebLinkMatcher.js",
 				"~/Scripts/Shared/DialogService.js",
+				"~/Scripts/Helpers/SearchTextQueryHelper.js",
 				"~/Scripts/ViewModels/DeleteEntryViewModel.js",
 				"~/Scripts/ViewModels/WebLinkEditViewModel.js",
 				"~/Scripts/ViewModels/WebLinksEditViewModel.js",

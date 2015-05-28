@@ -1940,6 +1940,7 @@
     <TypeScriptCompile Include="Scripts\Helpers\HtmlHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\KnockoutHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\PVHelper.ts" />
+    <TypeScriptCompile Include="Scripts\Helpers\SearchTextQueryHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\SongHelper.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\AlbumAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Artist\ArtistTypeLabel.ts" />

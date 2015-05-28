@@ -98,8 +98,8 @@ module vdb.viewModels.songList {
 
 		public songLinks: KnockoutObservableArray<SongInListEditViewModel>;
 
-		public songSearchParams = {
-			acceptSelection: this.acceptSongSelection,
+		public songSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams = {
+			acceptSelection: this.acceptSongSelection
 		};
 
 	};

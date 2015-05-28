@@ -20,6 +20,11 @@
 
 		filter?: (entry: TContract) => boolean;
 
+		// Callback for manipulating the query params based on the actual query
+		// queryParams: search query params (parameters to the query)
+		// term: query term
+		onQuery?: (queryParams: any, term: string) => void;
+
 		termParamName?: string;
 
 	}
@@ -88,6 +93,9 @@
 
 			var queryParams = {};
 			queryParams[termParamName] = par.term;
+
+			if (params.onQuery)
+				params.onQuery(queryParams, par.term);
 
 			if (extraQueryParams != null)
 				jQuery.extend(queryParams, extraQueryParams);

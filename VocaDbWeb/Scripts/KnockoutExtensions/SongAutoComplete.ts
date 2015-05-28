@@ -36,8 +36,7 @@ module vdb.knockoutExtensions {
 		var queryParams = {
 			nameMatchMode: cls.NameMatchMode[cls.NameMatchMode.Auto],
 			lang: cls.globalization.ContentLanguagePreference[vdb.values.languagePreference],
-			preferAccurateMatches: true,
-			maxResults: 15
+			preferAccurateMatches: true
 		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
@@ -53,7 +52,11 @@ module vdb.knockoutExtensions {
 				filter: filter,
 				height: properties.height,
 				termParamName: 'query',
-				method: 'GET'
+				method: 'GET',
+				onQuery: (searchQueryParams: rep.SongQueryParams, term: string) => {
+					// Increase the number of results for wildcard queries
+					searchQueryParams.maxResults = helpers.SearchTextQueryHelper.isWildcardQuery(term) ? 30 : 15;
+				}
 			});
 
 	}

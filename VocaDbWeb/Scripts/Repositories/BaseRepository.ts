@@ -23,6 +23,9 @@ module vdb.repositories {
 		// Content language preference
 		lang?: string;
 
+		// Maxiumum number of search results.
+		maxResults?: number;
+
 		nameMatchMode?: string;
 
 	}
