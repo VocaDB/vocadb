@@ -827,6 +827,8 @@ namespace VocaDb.Model.Service {
 
 		AdditionDate,
 
+		PublishDate,
+
 		FavoritedTimes,
 
 		RatingScore

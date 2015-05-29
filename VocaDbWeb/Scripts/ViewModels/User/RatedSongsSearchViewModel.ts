@@ -15,7 +15,16 @@ module vdb.viewModels.user {
 			private languageSelection: string, private loggedUserId: number, private cultureCode: string,
 			sort: string, groupByRating: boolean,
 			pvPlayersFactory: pvs.PVPlayersFactory,
-			initialize = true) {
+			initialize = true,
+			artistId?: number,
+			childVoicebanks?: boolean) {	
+
+			this.artistId = ko.observable(artistId);
+
+			if (artistId)
+				this.selectArtist(artistId);
+
+			this.childVoicebanks = ko.observable(childVoicebanks || false);
 
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
@@ -58,11 +67,11 @@ module vdb.viewModels.user {
 
 		}
 
-		public artistId = ko.observable<number>(null);
+		public artistId: KnockoutObservable<number>;
 		public artistName = ko.observable("");
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public artistType = ko.observable<cls.artists.ArtistType>(null);
-		public childVoicebanks = ko.observable(false);
+		public childVoicebanks: KnockoutObservable<boolean>;
 		public groupByRating = ko.observable(true);
 		public isInit = false;
 		public loading = ko.observable(true); // Currently loading for data

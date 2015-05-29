@@ -249,12 +249,15 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public new ActionResult Profile(string id) {
+		public new ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null) {
 
 			var model = Data.GetUserByNameNonSensitive(id);
 
 			if (model == null)
 				return HttpNotFound();
+
+			ViewBag.ArtistId = artistId;
+			ViewBag.ChildVoicebanks = childVoicebanks;
 
 			return View("Details", model);
 

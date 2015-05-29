@@ -98,7 +98,9 @@ namespace VocaDb.Web.Helpers {
 			new TranslateableEnum<SongReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongSortRule> SongSortRuleNames =
-			new TranslateableEnum<SongSortRule>(() => global::Resources.SongSortRuleNames.ResourceManager, new[] { SongSortRule.Name, SongSortRule.AdditionDate, SongSortRule.RatingScore, SongSortRule.FavoritedTimes,  });
+			new TranslateableEnum<SongSortRule>(() => global::Resources.SongSortRuleNames.ResourceManager, new[] {
+				SongSortRule.Name, SongSortRule.AdditionDate, SongSortRule.PublishDate, SongSortRule.RatingScore, SongSortRule.FavoritedTimes,
+			});
 
 		public static readonly TranslateableEnum<SongType> SongTypeNames =
 			new TranslateableEnum<SongType>(() => Model.Resources.Songs.SongTypeNames.ResourceManager);

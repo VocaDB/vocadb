@@ -129,6 +129,9 @@
   <data name="None" xml:space="preserve">
     <value>Nothing</value>
   </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Publish date</value>
+  </data>
   <data name="RatingScore" xml:space="preserve">
     <value>Rating score</value>
   </data>

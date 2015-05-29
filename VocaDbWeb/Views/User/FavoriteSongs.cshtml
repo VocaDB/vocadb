@@ -37,7 +37,7 @@
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory($("#pv-player-wrapper"));
 
 			var vm = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
-				sort, groupByRating, pvPlayersFactory);
+				sort, groupByRating, pvPlayersFactory, true);
 			ko.applyBindings(vm);
 
 		});
