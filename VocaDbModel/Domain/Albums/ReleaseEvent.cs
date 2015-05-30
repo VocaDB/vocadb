@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Albums {
@@ -22,10 +21,6 @@ namespace VocaDb.Model.Domain.Albums {
 			get { 
 				return new SingleNameManager(Name); 
 			}
-		}
-
-		int IEntryBase.Version {
-			get { return 0; }
 		}
 
 		private IList<Album> albums = new List<Album>();
@@ -121,10 +116,13 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
+		public virtual int Version { get; set; }
+
 		public virtual ArchivedReleaseEventVersion CreateArchivedVersion(ReleaseEventDiff diff, AgentLoginData author, EntryEditEvent reason) {
 
 			var archived = new ArchivedReleaseEventVersion(this, diff, author, reason);
 			ArchivedVersionsManager.Add(archived);
+			Version++;
 
 			return archived;
 

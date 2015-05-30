@@ -16,6 +16,7 @@ namespace VocaDb.Model.Mapping.Tags {
 			Map(m => m.Description).Length(1000).Not.Nullable();
 			Map(m => m.Status).CustomType(typeof(EntryStatus)).Not.Nullable();
 			Map(m => m.TagName).Column("[Name]").ReadOnly().Not.Insert();
+			Map(m => m.Version).Not.Nullable();
 
 			References(m => m.AliasedTo).Nullable();
 			References(m => m.Parent).Nullable();
@@ -49,6 +50,7 @@ namespace VocaDb.Model.Mapping.Tags {
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Description).Length(1000).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();
+			Map(m => m.Version).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();
 			References(m => m.Tag).Not.Nullable();

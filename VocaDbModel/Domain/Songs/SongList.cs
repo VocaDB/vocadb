@@ -18,10 +18,6 @@ namespace VocaDb.Model.Domain.Songs {
 			get { return new SingleNameManager(Name); }
 		}
 
-		int IEntryBase.Version {
-			get { return 0; }
-		}
-
 		/// <summary>
 		/// Generated image sizes for song list images
 		/// </summary>
@@ -121,6 +117,8 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual EntryThumb Thumb { get; set; }
 
+		public virtual int Version { get; set; }
+
 		public virtual SongInList AddSong(Song song) {
 
 			var order = (SongLinks.Any() ? SongLinks.Max(s => s.Order) + 1 : 1);
@@ -142,6 +140,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 			var archived = new ArchivedSongListVersion(this, diff, author, reason);
 			ArchivedVersionsManager.Add(archived);
+			Version++;
 
 			return archived;
 

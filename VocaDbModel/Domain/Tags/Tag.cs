@@ -29,10 +29,6 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
-		int IEntryBase.Version {
-			get { return 0; }
-		}
-
 		/// <summary>
 		/// Generated image sizes for tag images
 		/// </summary>
@@ -225,6 +221,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 			var archived = new ArchivedTagVersion(this, diff, author, reason);
 			ArchivedVersionsManager.Add(archived);
+			Version++;
 
 			return archived;
 
@@ -301,6 +298,8 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public virtual EntryStatus Status { get; set; }
+
+		public virtual int Version { get; set; }
 
 		public override string ToString() {
 			return string.Format("tag '{0}'", Name);

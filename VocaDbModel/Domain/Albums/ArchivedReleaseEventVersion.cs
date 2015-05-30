@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public ArchivedReleaseEventVersion(ReleaseEvent releaseEvent, ReleaseEventDiff diff, AgentLoginData author,
 			EntryEditEvent commonEditEvent)
-			: base(null, author, 0, EntryStatus.Finished, string.Empty) {
+			: base(null, author, releaseEvent.Version, EntryStatus.Finished, string.Empty) {
 
 			ParamIs.NotNull(() => diff);
 

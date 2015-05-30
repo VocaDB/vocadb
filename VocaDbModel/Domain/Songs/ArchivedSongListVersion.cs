@@ -15,7 +15,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public ArchivedSongListVersion(SongList songList, SongListDiff diff, AgentLoginData author,
 			EntryEditEvent commonEditEvent)
-			: base(null, author, 0, EntryStatus.Finished, string.Empty) {
+			: base(null, author, songList.Version, EntryStatus.Finished, string.Empty) {
 
 			ParamIs.NotNull(() => diff);
 
