@@ -3,6 +3,21 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201505301600)]
+	public class ActivityEntryReleaseEvent : AutoReversingMigration {
+
+		public override void Up() {
+			
+			Create.Column("ReleaseEvent").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey("FK_ActivityEntries_AlbumReleaseEvents", TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade);
+
+			Create.Column("ArchivedReleaseEventVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey("FK_ActivityEntries_ArchivedEventVersions", TableNames.ArchivedEventVersions, "Id").OnDelete(Rule.None);
+
+		}
+
+	}
+
 	[Migration(201505252132)]
 	public class ActivityEntryTagsAndSongLists : AutoReversingMigration {
 

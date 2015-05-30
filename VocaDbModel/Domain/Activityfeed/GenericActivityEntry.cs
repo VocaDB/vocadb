@@ -66,6 +66,15 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 	}
 
+	public class ReleaseEventActivityEntry : GenericActivityEntry<ReleaseEvent, ArchivedReleaseEventVersion> {
+
+		public ReleaseEventActivityEntry() { }
+
+		public ReleaseEventActivityEntry(ReleaseEvent releaseEvent, EntryEditEvent editEvent, User author, ArchivedReleaseEventVersion archivedVersion)
+			: base(releaseEvent, editEvent, author, archivedVersion) { }
+
+	}
+
 	public class SongActivityEntry : GenericActivityEntry<Song, ArchivedSongVersion> {
 
 		public SongActivityEntry() { }

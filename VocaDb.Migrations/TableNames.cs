@@ -3,8 +3,10 @@
 	public static class TableNames {
 
 		public const string ActivityEntries = "ActivityEntries";
+		public const string AlbumReleaseEvents = "AlbumReleaseEvents";
 		public const string ArchivedAlbumVersions = "ArchivedAlbumVersions";
 		public const string ArchivedArtistVersions = "ArchivedArtistVersions";
+		public const string ArchivedEventVersions = "ArchivedEventVersions";
 		public const string ArchivedSongVersions = "ArchivedSongVersions";
 		public const string ArchivedSongListVersions = "ArchivedSongListVersions";
 		public const string ArchivedTagVersions = "ArchivedTagVersions";

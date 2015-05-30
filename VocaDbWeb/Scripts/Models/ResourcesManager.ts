@@ -45,6 +45,12 @@ module vdb.models {
 
 	}
 
+	export class ResourceSetFolderReleaseEvent {
+
+		public releaseEventEditableFieldNames = "releaseEvent_releaseEventEditableFieldNames";
+
+	}
+
 	export class ResourceSetFolderSong {
 
 		public songEditableFieldNames = "song_songEditableFieldNames";
@@ -66,17 +72,19 @@ module vdb.models {
 
 	export class ResourceSetNames {
 
-		public static activityEntry: ResourceSetFolderActivityEntry = new ResourceSetFolderActivityEntry();
-		public static album: ResourceSetFolderAlbum = new ResourceSetFolderAlbum();
-		public static artist: ResourceSetFolderArtist = new ResourceSetFolderArtist();
-		public static song: ResourceSetFolderSong = new ResourceSetFolderSong();
-		public static songList: ResourceSetFolderSongList = new ResourceSetFolderSongList();
-		public static tag: ResourceSetFolderTag = new ResourceSetFolderTag();
+		public static activityEntry = new ResourceSetFolderActivityEntry();
+		public static album = new ResourceSetFolderAlbum();
+		public static artist = new ResourceSetFolderArtist();
+		public static releaseEvent = new ResourceSetFolderReleaseEvent();
+		public static song = new ResourceSetFolderSong();
+		public static songList = new ResourceSetFolderSongList();
+		public static tag = new ResourceSetFolderTag();
 
 		public static artistTypeNames = "artistTypeNames";
 		public static discTypeNames = "discTypeNames";
 		public static songTypeNames = "songTypeNames";
 		public static userGroupNames = "userGroupNames";
+
 	}
 
 }

@@ -97,6 +97,15 @@ namespace HelperRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to event.
+        /// </summary>
+        public static string EntryReleaseEvent {
+            get {
+                return ResourceManager.GetString("EntryReleaseEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to song.
         /// </summary>
         public static string EntrySong {

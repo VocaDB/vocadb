@@ -42,6 +42,7 @@ namespace VocaDb.Web.App_Start {
 			// Included on all pages except the front page (to optimize front page load time).
 			bundles.Add(new ScriptBundle("~/bundles/shared/main").Include(
 				"~/Scripts/Helpers/HtmlHelper.js", 
+				"~/Scripts/Models/EntryType.js",
 				"~/Scripts/Shared/EntryUrlMapper.js",
 				"~/Scripts/Shared/EntryAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ConfirmClick.js",
@@ -101,7 +102,6 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/ActivityEntry/Index").Include(
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-				"~/Scripts/Models/EntryType.js",
 				"~/Scripts/Models/ActivityEntries/EntryEditEvent.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Repositories/ResourceRepository.js",

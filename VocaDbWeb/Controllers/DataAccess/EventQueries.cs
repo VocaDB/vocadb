@@ -16,11 +16,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
 
-		private void Archive(IRepositoryContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason) {
+		private ArchivedReleaseEventVersion Archive(IRepositoryContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason) {
 
 			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(permissionContext);
 			var archived = releaseEvent.CreateArchivedVersion(diff, agentLoginData, reason);
 			ctx.Save(archived);
+			return archived;
 
 		}
 
@@ -98,7 +99,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 					session.Save(ev);
 
-					Archive(session, ev, new ReleaseEventDiff(), EntryEditEvent.Created);
+					var archived = Archive(session, ev, new ReleaseEventDiff(), EntryEditEvent.Created);
+					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
 
 					session.AuditLogger.AuditLog("created " + ev);
 
@@ -135,7 +137,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 					session.Update(ev);
 
-					Archive(session, ev, diff, EntryEditEvent.Updated);
+					var archived = Archive(session, ev, diff, EntryEditEvent.Updated);
+					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
 
 					var logStr = string.Format("updated properties for {0} ({1})", entryLinkFactory.CreateEntryLink(ev), diff.ChangedFieldsString);
 					session.AuditLogger.AuditLog(logStr);

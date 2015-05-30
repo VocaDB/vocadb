@@ -3,6 +3,7 @@
 
 module vdb.utils {
 
+	import cls = models;
 	import dc = vdb.dataContracts;
 
     // Maps view URLs for common entry types.
@@ -15,17 +16,20 @@ module vdb.utils {
 
 			var prefix;
 
-			switch (typeName.toLowerCase()) {
-				case "album":
+			switch (cls.EntryType[typeName]) {
+				case cls.EntryType.Album:
 					prefix = vdb.functions.mapAbsoluteUrl("/Al/" + id);
 					break;
-				case "artist":
+				case cls.EntryType.Artist:
 					prefix = vdb.functions.mapAbsoluteUrl("/Ar/" + id);
 					break;
-				case "song":
+				case cls.EntryType.ReleaseEvent:
+					prefix = vdb.functions.mapAbsoluteUrl("/Event/Details/" + id);
+					break;
+				case cls.EntryType.Song:
 					prefix = vdb.functions.mapAbsoluteUrl("/S/" + id);
 					break;
-				case "tag":
+				case cls.EntryType.Tag:
 					prefix = vdb.functions.mapAbsoluteUrl("/Tag/DetailsById/" + id);
 					break;
 				default:

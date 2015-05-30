@@ -57,7 +57,7 @@
 			}
 			<div class="media-body">
 				<h4 class="media-heading">
-					<a href="@Url.Action(entryType != VocaDb.Model.Domain.EntryType.Tag ? "Details" : "DetailsById", entryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
+					<a href="@Url.EntryDetails(entry.EntryRef)" title="@entry.EntryRef.Name.AdditionalNames">
 						<strong>@entry.EntryRef.Name.DisplayName</strong>
 					</a>
 					@if (!string.IsNullOrEmpty(entry.EntryTypeName)) {
@@ -86,7 +86,7 @@
 				<span visible="{{ $data.changedFields && $data.changedFields.length }}">({{ @(changedFieldNamesBinding)($parent.entry, $data) }})</span>
 				<span visible="{{ $data.notes }}">{{ '\"' + $data.notes + '\"' }}</span>
 				
-				<span visible="{{ $parent.entry.entryType !== 'Tag' && $parent.entry.entryType !== 'SongList' }}">
+				<span visible="{{ $parent.entry.entryType !== 'Tag' && $parent.entry.entryType !== 'SongList' && $parent.entry.entryType !== 'ReleaseEvent' }}">
 					(<a href="#" data-bind="attr: { href: '/' + $parent.entry.entryType + '/ViewVersion/' + id }">@ViewRes.MiscStrings.Details</a>)
 				</span>
 			</span>

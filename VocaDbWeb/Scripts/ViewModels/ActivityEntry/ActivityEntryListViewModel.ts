@@ -27,6 +27,7 @@ module vdb.viewModels.activityEntry {
 			this.resources = new models.ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(this.loadMore, resSets.artistTypeNames, resSets.discTypeNames, resSets.songTypeNames,
 				resSets.userGroupNames, resSets.activityEntry.activityFeedEventNames, resSets.album.albumEditableFieldNames, resSets.artist.artistEditableFieldNames,
+				resSets.releaseEvent.releaseEventEditableFieldNames,
 				resSets.song.songEditableFieldNames, resSets.songList.songListEditableFieldNames, resSets.songList.songListFeaturedCategoryNames,
 				resSets.tag.tagEditableFieldNames);
 
@@ -74,6 +75,10 @@ module vdb.viewModels.activityEntry {
 
 				case EntryType.Artist:
 					namesSet = sets.artist_artistEditableFieldNames;
+					break;
+
+				case EntryType.ReleaseEvent:
+					namesSet = sets.releaseEvent_releaseEventEditableFieldNames;
 					break;
 
 				case EntryType.Song:

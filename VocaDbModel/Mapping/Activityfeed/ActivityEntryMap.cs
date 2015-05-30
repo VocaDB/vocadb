@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 
 namespace VocaDb.Model.Mapping.Activityfeed {
@@ -42,6 +43,19 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 			References(m => m.ArchivedVersion).Column("[ArchivedArtistVersion]").Nullable();
 			References(m => m.Entry).Column("[Artist]").Not.Nullable();
+
+		}
+
+	}
+
+	public class ReleaseEventActivityEntryMap : SubclassMap<ReleaseEventActivityEntry> {
+
+		public ReleaseEventActivityEntryMap() {
+
+			DiscriminatorValue(EntryType.ReleaseEvent.ToString());
+
+			References(m => m.ArchivedVersion).Column("[ArchivedReleaseEventVersion]").Nullable();
+			References(m => m.Entry).Column("[ReleaseEvent]").Not.Nullable();
 
 		}
 

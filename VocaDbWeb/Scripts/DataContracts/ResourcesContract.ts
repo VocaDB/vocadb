@@ -10,6 +10,8 @@ module vdb.dataContracts {
 
 		artist_artistEditableFieldNames?: { [key: string]: string; }
 
+		releaseEvent_releaseEventEditableFieldNames?: { [key: string]: string; }
+
 		song_songEditableFieldNames?: { [key: string]: string; }
 
 		songList_songListEditableFieldNames?: { [key: string]: string; }

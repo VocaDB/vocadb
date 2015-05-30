@@ -23,20 +23,24 @@ namespace VocaDb.Model.DataContracts.Api {
 			
 			ParamIs.NotNull(() => entry);
 
-			if (entry is Album)
-				return new EntryForApiContract((Album)entry, languagePreference, thumbPersister, ssl, includedFields);
-			else if (entry is Artist)
-				return new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, ssl, includedFields);
-			else if (entry is DiscussionTopic)
-				return new EntryForApiContract((DiscussionTopic)entry, languagePreference);
-			else if (entry is Song)
-				return new EntryForApiContract((Song)entry, languagePreference, includedFields);
-			else if (entry is SongList)
-				return new EntryForApiContract((SongList)entry, imagePersisterOld, ssl, includedFields);
-			else if (entry is Tag)
-				return new EntryForApiContract((Tag)entry, imagePersisterOld, ssl, includedFields);
+			switch (entry.EntryType) {
+				case EntryType.Album:
+					return new EntryForApiContract((Album)entry, languagePreference, thumbPersister, ssl, includedFields);
+				case EntryType.Artist:
+					return new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, ssl, includedFields);
+				case EntryType.DiscussionTopic:
+					return new EntryForApiContract((DiscussionTopic)entry, languagePreference);
+				case EntryType.ReleaseEvent:
+					return new EntryForApiContract((ReleaseEvent)entry);
+				case EntryType.Song:
+					return new EntryForApiContract((Song)entry, languagePreference, includedFields);
+				case EntryType.SongList:
+					return new EntryForApiContract((SongList)entry, imagePersisterOld, ssl, includedFields);
+				case EntryType.Tag:
+					return new EntryForApiContract((Tag)entry, imagePersisterOld, ssl, includedFields);
+			}
 
-			throw new ArgumentException("Unsupported entry type: " + entry, "entry");
+			return new EntryForApiContract(entry, languagePreference);
 
 		}
 
@@ -107,6 +111,13 @@ namespace VocaDb.Model.DataContracts.Api {
 			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
 				WebLinks = album.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();				
 			}
+
+		}
+
+		public EntryForApiContract(ReleaseEvent releaseEvent)
+			: this(releaseEvent, ContentLanguagePreference.Default) {
+
+			ReleaseEventSeriesName = releaseEvent.Series != null ? releaseEvent.Series.Name : null;
 
 		}
 
@@ -220,6 +231,9 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		[DataMember]
 		public EntryStatus Status { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public string ReleaseEventSeriesName { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public string TagCategoryName { get; set; }

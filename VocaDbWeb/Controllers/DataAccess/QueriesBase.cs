@@ -36,6 +36,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		protected void AddActivityfeedEntry(IRepositoryContext<ActivityEntry> ctx, Func<User, ActivityEntry> entryFunc) {
+
+			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+			AddActivityfeedEntry(ctx, entryFunc(user));
+
+		}
+
 		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion) {
 
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
@@ -49,6 +56,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var activityEntry = new ArtistActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
+
+		}
+
+		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, ArchivedReleaseEventVersion archivedVersion) {
+
+			AddActivityfeedEntry(ctx, user => new ReleaseEventActivityEntry(archivedVersion.ReleaseEvent, archivedVersion.EditEvent, user, archivedVersion));
 
 		}
 

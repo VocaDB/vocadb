@@ -19,6 +19,8 @@ module vdb.dataContracts {
 
 		name: string;
 
+		releaseEventSeriesName?: string;
+
 		songListFeaturedCategory?: string;
 
 		songType?: string;

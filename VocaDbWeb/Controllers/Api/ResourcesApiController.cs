@@ -37,6 +37,7 @@ namespace VocaDb.Web.Controllers.Api {
 			{ "activityEntry_activityFeedEventNames", HelperRes.ActivityFeedHelperStrings.ResourceManager },
 			{ "album_albumEditableFieldNames", global::Resources.AlbumEditableFieldNames.ResourceManager },
 			{ "artist_artistEditableFieldNames", global::Resources.ArtistEditableFieldNames.ResourceManager },
+			{ "releaseEvent_releaseEventEditableFieldNames", global::Resources.ReleaseEventEditableFieldNames.ResourceManager },
 			{ "song_songEditableFieldNames", global::Resources.SongEditableFieldNames.ResourceManager },
 			{ "songList_songListEditableFieldNames", global::Resources.SongListEditableFieldNames.ResourceManager },
 			{ "songList_songListFeaturedCategoryNames", global::Resources.SongListFeaturedCategoryNames.ResourceManager },
