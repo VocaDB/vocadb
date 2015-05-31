@@ -218,7 +218,7 @@ namespace VocaDb.Model.Service.VideoServices {
 						artists.Add(a);
 					else {
 						
-						var parts = content.Split('･', '・');
+						var parts = content.Split('･', '・', '×');
 
 						foreach (var part in parts) {
 							
