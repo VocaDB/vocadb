@@ -1,17 +1,18 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
 
 namespace VocaDb.Web.Controllers.Api {
 
-	[RoutePrefix("api")]
+	[System.Web.Http.RoutePrefix("api")]
 	public class ApiRootController : ApiController {
 
-		[Route("")]
+		[System.Web.Http.Route("")]
 		[ApiExplorerSettings(IgnoreApi=true)]
-		public RedirectToRouteResult Get() {
+		public RedirectResult Get() {
 			
-			return RedirectToRoute("HelpPage_Default", new {});
+			return Redirect(new Uri("/swagger", UriKind.Relative));
 
 		}
 

@@ -108,6 +108,10 @@
       <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.1.5\lib\net40\Swashbuckle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.0.34.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Immutable.1.0.34\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
@@ -194,6 +198,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebApi.OutputCache.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Strathweb.CacheOutput.WebApi2.0.6\lib\net45\WebApi.OutputCache.Core.dll</HintPath>
@@ -392,6 +400,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WebLinkCategoryNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="Areas\API\v1\ApiV1Registration.cs" />
     <Compile Include="Areas\API\v1\Controllers\AlbumApiController.cs" />
     <Compile Include="Areas\API\v1\Controllers\ArtistApiController.cs" />
@@ -1508,6 +1517,8 @@
     <Content Include="albumsearch.xml">
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Resources\Swagger\index.html" />
+    <EmbeddedResource Include="Resources\Swagger\styles.css" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\Album\Edit.js" />
     <Content Include="Scripts\Album\Details.js" />
