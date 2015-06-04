@@ -620,7 +620,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult Stats_EditsPerDay(int id) {
 			
-			var points = new ActivityEntryQueries(repository).GetEditsPerDay(null);
+			var points = new ActivityEntryQueries(repository).GetEditsPerDay(id);
 
 			return Json(HighchartsHelper.DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points));
 

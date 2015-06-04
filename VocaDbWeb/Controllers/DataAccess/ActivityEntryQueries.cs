@@ -25,7 +25,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			
 			var values = repository.HandleQuery(ctx => {
 
-				return ctx.Query<ActivityEntry>()
+				var query = ctx.Query<ActivityEntry>();
+
+				if (userId.HasValue) {
+					query = query.Where(a => a.Author.Id == userId.Value);
+				}
+
+				return query
 					.OrderBy(a => a.CreateDate.Year)
 					.ThenBy(a => a.CreateDate.Month)
 					.ThenBy(a => a.CreateDate.Day)
