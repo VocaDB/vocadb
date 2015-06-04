@@ -32,7 +32,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		protected void AddActivityfeedEntry(IRepositoryContext<ActivityEntry> ctx, ActivityEntry entry) {
 
-			new ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntry(entry);
+			new Model.Service.Queries.ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntry(entry);
 
 		}
 
@@ -83,7 +83,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Tag entry, EntryEditEvent editEvent, ArchivedTagVersion archivedVersion) {
 
-			new ActivityEntryQueries(ctx, PermissionContext).AddEntryEditedEntry(entry, editEvent, archivedVersion);
+			new Model.Service.Queries.ActivityEntryQueries(ctx, PermissionContext).AddEntryEditedEntry(entry, editEvent, archivedVersion);
 
 		}
 

@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
@@ -36,6 +37,7 @@ namespace VocaDb.Web.Controllers
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private const int clientCacheDurationSec = 86400;
 
 		private readonly ArtistQueries artistQueries;
 		private readonly ArtistService artistService;
@@ -45,6 +47,7 @@ namespace VocaDb.Web.Controllers
 		private readonly MarkdownParser markdownParser;
 		private readonly UserMessageQueries messageQueries;
 		private readonly OtherService otherService;
+		private readonly IRepository repository;
 	    private UserService Service { get; set; }
 
 		private UserForMySettingsContract GetUserForMySettings() {
@@ -66,12 +69,14 @@ namespace VocaDb.Web.Controllers
 		}
 
 		public UserController(UserService service, UserQueries data, ArtistService artistService, ArtistQueries artistQueries, OtherService otherService, 
+			IRepository repository,
 			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser) {
 
 			Service = service;
 			Data = data;
 			this.artistQueries = artistQueries;
 			this.artistService = artistService;
+			this.repository = repository;
 			this.otherService = otherService;
 			this.messageQueries = messageQueries;
 			this.ipRuleManager = ipRuleManager;
@@ -609,6 +614,22 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			return LowercaseJson(Data.GetRatingsByGenre(id));
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult Stats_EditsPerDay(int id) {
+			
+			var points = new ActivityEntryQueries(repository).GetEditsPerDay(null);
+
+			return Json(HighchartsHelper.DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points));
+
+		}
+
+		public ActionResult Stats(int id, string type) {
+
+			ViewBag.StatType = type;
+			return View(Service.GetUser(id));
 
 		}
 

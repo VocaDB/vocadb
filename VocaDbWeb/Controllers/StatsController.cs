@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Web.Helpers;
 
@@ -64,79 +65,14 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private double ToEpochTime(DateTime date) {
-			return (date - new DateTime(1970, 1, 1)).TotalMilliseconds;
-		}
-
 		private ActionResult DateLineChartWithAverage(string title, string pointsTitle, string yAxisTitle, ICollection<Tuple<DateTime, int>> points,
 			bool average = true) {
 			
-			var averages = (average ? points.Select(p => Tuple.Create(p.Item1, Math.Floor(points.Where(p2 => p2.Item1 >= p.Item1 - TimeSpan.FromDays(182) && p2.Item1 <= p.Item1 + TimeSpan.FromDays(182)).Average(p3 => p3.Item2)))).ToArray() : new Tuple<DateTime, double>[0]);
-
 			Response.Cache.SetCacheability(HttpCacheability.Public);
 			Response.Cache.SetMaxAge(TimeSpan.FromDays(1));
 			Response.Cache.SetSlidingExpiration(true);
 
-			var dataSeries = new {
-				type = "area",
-				name = pointsTitle,
-				data = points.Select(p => new object[] { ToEpochTime(p.Item1), p.Item2 }).ToArray()
-			};
-
-			return Json(new {
-				chart = new {
-					height = 600
-				},
-				title = new {
-					text = title
-				},
-				xAxis = new {
-					type = "datetime",
-					title = new {
-						text = (string)null
-					},
-				},
-				yAxis = new {
-					title = new {
-						text = yAxisTitle
-					},
-					min = 0,
-				},
-				tooltip = new {
-					shared = true,
-					crosshairs = true
-				},
-				plotOptions = new {
-					bar = new {
-						dataLabels = new {
-							enabled = true
-						}
-					}
-				},
-				legend = new {
-						layout = "vertical",
-						align = "left",
-						x = 120,
-						verticalAlign = "top",
-						y = 100,
-						floating = true,
-						backgroundColor = "#FFFFFF"
-				},
-				series = (average ? new Object[] {
-					dataSeries,
-					new {
-						type = "spline",
-						name = "Average",
-						data = averages.Select(p => new object[] { ToEpochTime(p.Item1), p.Item2 }).ToArray(),
-						marker = new {
-							enabled = false
-						},
-						lineWidth = 4
-					}
-				}
-				: new Object[] { dataSeries })				
-			});
-
+			return Json(HighchartsHelper.DateLineChartWithAverage(title, pointsTitle, yAxisTitle, points, average));
 
 		}
 
@@ -259,10 +195,12 @@ namespace VocaDb.Web.Controllers {
 
 		private readonly HttpContextBase context;
 		private readonly IUserPermissionContext permissionContext;
+		private readonly IRepository repository;
 		private readonly IUserRepository userRepository;
 
-		public StatsController(IUserRepository userRepository, IUserPermissionContext permissionContext, HttpContextBase context) {
+		public StatsController(IUserRepository userRepository, IRepository repository, ActivityEntryQueries activityEntryQueries, IUserPermissionContext permissionContext, HttpContextBase context) {
 			this.userRepository = userRepository;
+			this.repository = repository;
 			this.permissionContext = permissionContext;
 			this.context = context;
 		}
@@ -384,31 +322,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult EditsPerDay() {
 			
-			var values = userRepository.HandleQuery(ctx => {
-
-				return ctx.OfType<ActivityEntry>().Query()
-					.OrderBy(a => a.CreateDate.Year)
-					.ThenBy(a => a.CreateDate.Month)
-					.ThenBy(a => a.CreateDate.Day)
-					.GroupBy(a => new {
-						Year = a.CreateDate.Year, 
-						Month = a.CreateDate.Month,
-						Day = a.CreateDate.Day
-					})
-					/*.OrderBy(a => a.Key.Year)
-					.ThenBy(a => a.Key.Month)
-					.ThenBy(a => a.Key.Day)*/
-					.Select(a => new {
-						a.Key.Year,
-						a.Key.Month,
-						a.Key.Day,
-						Count = a.Count()
-					})
-					.ToArray();
-
-			});
-
-			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
+			var points = new DataAccess.ActivityEntryQueries(repository).GetEditsPerDay(null);
 
 			return DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points);
 
