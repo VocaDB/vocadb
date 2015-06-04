@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
 
-	public class QuerySourceList : IQuerySource {
+	public class QuerySourceList : IRepositoryContext {
 
 		private readonly Dictionary<Type, IList> entities;
 
@@ -21,6 +21,21 @@ namespace VocaDb.Tests.TestSupport {
 
 		public void AddRange<TEntity>(params TEntity[] entities) {
 			List<TEntity>().AddRange(entities);
+		}
+
+
+		public void Dispose() {
+			
+		}
+
+		public IAuditLogger AuditLogger {
+			get {
+				return new FakeAuditLogger();
+			}
+		}
+
+		public IRepositoryContext<T2> OfType<T2>() {
+			return new ListRepositoryContext<T2>(this);
 		}
 
 		public List<TEntity> List<TEntity>() {

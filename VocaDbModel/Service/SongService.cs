@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Xml.Linq;
 using NHibernate;
 using NHibernate.Linq;
 using NLog;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -18,14 +17,12 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.DataContracts;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories;
+using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
@@ -42,7 +39,7 @@ namespace VocaDb.Model.Service {
 		private readonly IEntryUrlParser entryUrlParser;
 
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams) {
-			return new SongSearch(new QuerySourceSession(session), LanguagePreference, entryUrlParser).Find(queryParams);
+			return new SongSearch(new NHibernateRepositoryContext(session, PermissionContext), LanguagePreference, entryUrlParser).Find(queryParams);
 		}
 
 		private SongMergeRecord GetMergeRecord(ISession session, int sourceId) {

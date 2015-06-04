@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NHibernate;
-using NHibernate.Linq;
+﻿using System.Linq;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
 
@@ -21,13 +16,13 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			get { return QueryCost.Medium; }
 		}
 
-		public IQueryable<Album> Filter(IQueryable<Album> query, IQuerySource session) {
+		public IQueryable<Album> Filter(IQueryable<Album> query, IRepositoryContext session) {
 
 			return query.Where(a => a.AllArtists.Any(u => u.Artist.Id == artistId));
 			
 		}
 
-		public IQueryable<Album> Query(IQuerySource session) {
+		public IQueryable<Album> Query(IRepositoryContext session) {
 
 			return session.Query<ArtistForAlbum>()
 				.Where(a => a.Artist.Id == artistId)

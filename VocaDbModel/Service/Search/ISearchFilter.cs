@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
+using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search {
 
@@ -12,9 +13,9 @@ namespace VocaDb.Model.Service.Search {
 
 		//List<TEntry> GetResults(ISession session);
 
-		IQueryable<TEntry> Filter(IQueryable<TEntry> query, IQuerySource session);
+		IQueryable<TEntry> Filter(IQueryable<TEntry> query, IRepositoryContext session);
 
-		IQueryable<TEntry> Query(IQuerySource session);
+		IQueryable<TEntry> Query(IRepositoryContext session);
 
 	}
 

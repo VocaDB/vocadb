@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Tests.TestSupport;
@@ -14,7 +15,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 	[TestClass]
 	public class SongSearchDatabaseTests {
 
-		private DatabaseTestContext<IQuerySource> context;
+		private DatabaseTestContext<IRepositoryContext> context;
 		private EntryUrlParser entryUrlParser;
 		private SongQueryParams queryParams;
 
@@ -33,7 +34,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 			
 			queryParams = new SongQueryParams { SortRule = SongSortRule.Name };
 			entryUrlParser = new EntryUrlParser();
-			context = new DatabaseTestContext<IQuerySource>();
+			context = new DatabaseTestContext<IRepositoryContext>();
 
 		}
 

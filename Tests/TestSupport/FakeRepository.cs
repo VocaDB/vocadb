@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentNHibernate.Conventions.AcceptanceCriteria;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Repositories;

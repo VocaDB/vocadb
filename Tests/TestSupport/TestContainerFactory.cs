@@ -104,7 +104,6 @@ namespace VocaDb.Tests.TestSupport {
 			builder.Register(x => BuildTestSessionFactory()).SingleInstance();
 			builder.Register(x => x.Resolve<ISessionFactory>().OpenSession()).InstancePerLifetimeScope();
 			builder.RegisterType<TestDatabase>().AsSelf();
-			builder.RegisterType<QuerySourceSession>().As<IQuerySource>();
 			builder.RegisterType<FakePermissionContext>().As<IUserPermissionContext>();
 			builder.RegisterType<EntryUrlParser>().As<IEntryUrlParser>().SingleInstance();
 

@@ -150,6 +150,7 @@
     <Compile Include="TestSupport\FakeUserIconFactory.cs" />
     <Compile Include="TestSupport\FakeUserMessageMailer.cs" />
     <Compile Include="TestSupport\InMemoryImagePersister.cs" />
+    <Compile Include="TestSupport\QuerySourceList.cs" />
     <Compile Include="TestSupport\TestCategories.cs" />
     <Compile Include="TestSupport\TestContainerFactory.cs" />
     <Compile Include="TestSupport\VocaDbAssert.cs" />
@@ -162,7 +163,6 @@
     <Compile Include="TestSupport\FakeTagRepository.cs" />
     <Compile Include="TestSupport\FakeUserMessageRepository.cs" />
     <Compile Include="TestSupport\FakeUserRepository.cs" />
-    <Compile Include="TestSupport\QuerySourceList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AlbumImport\KarenTAlbumImporterTests.cs" />
     <Compile Include="Service\ArtistQueryableExtenderTests.cs" />

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using NHibernate.Linq.Functions;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search {
 
@@ -12,13 +12,13 @@ namespace VocaDb.Model.Service.Search {
 		private static readonly Regex eventNameRegex = new Regex(@"([^\d]+)(\d+)(?:\s(\w+))?");
 		private static readonly Regex eventNumberRegex = new Regex(@"^(\d+)(?:\s(\w+))?");
 
-		private readonly IQuerySource querySource;
+		private readonly IRepositoryContext querySource;
 
 		private IQueryable<T> Query<T>() {
 			return querySource.Query<T>();
 		}
 
-		public ReleaseEventSearch(IQuerySource querySource) {
+		public ReleaseEventSearch(IRepositoryContext querySource) {
 			this.querySource = querySource;
 		}
 

@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service {
@@ -43,7 +44,7 @@ namespace VocaDb.Model.Service {
 
 			return HandleQuery(session => {
 
-				return new ReleaseEventSearch(new QuerySourceSession(session)).Find(query);
+				return new ReleaseEventSearch(new NHibernateRepositoryContext(session, PermissionContext)).Find(query);
 
 			});
 

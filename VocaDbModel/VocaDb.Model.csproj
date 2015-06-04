@@ -816,7 +816,6 @@
     <Compile Include="Service\Search\AlbumSearch\AlbumUniversalFilter.cs" />
     <Compile Include="Service\Search\Artists\ArtistQueryParams.cs" />
     <Compile Include="Service\Search\Artists\ArtistSearch.cs" />
-    <Compile Include="Service\Search\IQuerySource.cs" />
     <Compile Include="Service\Search\ISearchFilter.cs" />
     <Compile Include="Service\Search\AlbumSearch\AlbumSearchProperty.cs" />
     <Compile Include="Service\Search\CommonSearchParams.cs" />
