@@ -96,7 +96,7 @@ namespace VocaDb.Model.Service {
 
 			UpdateEntity<Artist>(id, (session, a) => {
 
-				AuditLog(string.Format("deleting artist {0}", EntryLinkFactory.CreateEntryLink(a)), session);
+				AuditLog(string.Format("deleting artist {0}{1}", EntryLinkFactory.CreateEntryLink(a), !string.IsNullOrEmpty(notes) ? " " + notes : string.Empty), session);
 
 				NHibernateUtil.Initialize(a.Picture);
 				a.Delete();

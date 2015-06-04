@@ -136,6 +136,9 @@
   width: calc(100% - 20px);
   display: block;
 }
+.comment-date {
+  font-size: small;
+}
 .archived-entry-compare-modified {
   font-weight: bold;
 }
