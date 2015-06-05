@@ -4,6 +4,13 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Activityfeed {
 
+	/// <summary>
+	/// Activity entries are primarily shown in the activity feed on the front page, 
+	/// but they are also used for statistics such as the number of edits per user.
+	/// They can be divided into two main operations: create and update.
+	/// Entry-specific subclasses contain more detailed information about the activity.
+	/// Consecutive activity entries by the same user for the same entry are merged.
+	/// </summary>
 	public abstract class ActivityEntry {
 
 		private User author;
@@ -20,6 +27,9 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 		}
 
+		/// <summary>
+		/// Archived entry version. Can be null.
+		/// </summary>
 		public abstract ArchivedObjectVersion ArchivedVersionBase { get; }
 
 		public virtual User Author {
@@ -34,6 +44,9 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 		public virtual EntryEditEvent EditEvent { get; set; }
 
+		/// <summary>
+		/// Entry. Cannot be null.
+		/// </summary>
 		public abstract IEntryWithNames EntryBase { get; }
 
 		public abstract EntryType EntryType { get; }

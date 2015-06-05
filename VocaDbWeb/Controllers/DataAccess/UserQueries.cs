@@ -15,6 +15,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
@@ -119,15 +120,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					+ ctx.Query<ArtistComment>().Count(c => c.Author.Id == user.Id)
 					+ ctx.Query<SongComment>().Count(c => c.Author.Id == user.Id);
 
-				stats.EditCount
-					= ctx.Query<ArchivedAlbumVersion>().Count(c => c.Author.Id == user.Id)
-					+ ctx.Query<ArchivedArtistVersion>().Count(c => c.Author.Id == user.Id)
-					+ ctx.Query<ArchivedSongVersion>().Count(c => c.Author.Id == user.Id);
+				stats.EditCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id);
 
-				stats.SubmitCount
-					= ctx.Query<ArchivedAlbumVersion>().Count(c => c.Author.Id == user.Id && c.Version == 0)
-					+ ctx.Query<ArchivedArtistVersion>().Count(c => c.Author.Id == user.Id && c.Version == 0)
-					+ ctx.Query<ArchivedSongVersion>().Count(c => c.Author.Id == user.Id && c.Version == 0);
+				stats.SubmitCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id && c.EditEvent == EntryEditEvent.Created);					
 
 				stats.TagVotes
 					= ctx.Query<SongTagVote>().Count(t => t.User.Id == user.Id)
