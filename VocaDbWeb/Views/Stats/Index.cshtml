@@ -49,10 +49,16 @@
 					]
 				},
 				{
+					name: 'User', reports: [
+					  { name: 'Edits per user total', url: 'editsPerUser' },
+					  { name: 'Edits per user last year', url: 'editsPerUserLastYear' }
+					]
+				},
+				{
 					name: 'General', reports: [
 					  { name: 'Edits per day', url: 'editsPerDay' }
 					]
-				},
+				}
 			];
 			var vm = new vdb.viewModels.StatsViewModel(categories);
 

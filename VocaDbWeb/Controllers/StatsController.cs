@@ -198,7 +198,7 @@ namespace VocaDb.Web.Controllers {
 		private readonly IRepository repository;
 		private readonly IUserRepository userRepository;
 
-		public StatsController(IUserRepository userRepository, IRepository repository, ActivityEntryQueries activityEntryQueries, IUserPermissionContext permissionContext, HttpContextBase context) {
+		public StatsController(IUserRepository userRepository, IRepository repository, IUserPermissionContext permissionContext, HttpContextBase context) {
 			this.userRepository = userRepository;
 			this.repository = repository;
 			this.permissionContext = permissionContext;
@@ -325,6 +325,37 @@ namespace VocaDb.Web.Controllers {
 			var points = new DataAccess.ActivityEntryQueries(repository).GetEditsPerDay(null);
 
 			return DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points);
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult EditsPerUser(DateTime? cutoff) {
+			
+			return SimpleBarChart<ActivityEntry>(q => { 
+			
+				if (cutoff.HasValue)
+					q = q.Where(a => a.CreateDate >= cutoff);
+	
+				return q
+					.GroupBy(a => a.Author.Name)
+					.Select(a => new LocalizedValue {
+						Name = new TranslatedString {			
+							DefaultLanguage = ContentLanguageSelection.Japanese,
+ 							Japanese = a.Key
+						},
+						Value = a.Count(),
+					});
+
+			}, "Edits per user", "User");
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult EditsPerUserLastYear() {
+			
+			var cutoff = DateTime.Now - TimeSpan.FromDays(365);
+
+			return EditsPerUser(cutoff);
 
 		}
 
