@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using VocaDb.Model.DataContracts.Activityfeed;
@@ -9,6 +8,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Web.Helpers;
 
@@ -43,20 +43,26 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of recent activity entries.
 		/// Entries are always returned sorted from newest to oldest.
+		/// Activity for deleted entries is not returned.
 		/// </summary>
 		/// <param name="before">Filter to return activity entries only before this date. Optional, by default no filter.</param>
+		/// <param name="since">Filter to return activity entries only after this date. Optional, by default no filter.</param>
 		/// <param name="userId">Filter by user Id. Optional, by default no filter.</param>
 		/// <param name="editEvent">Filter by entry edit event (either Created or Updated). Optional, by default no filter.</param>
 		/// <param name="maxResults">Maximum number of results to return. Default 50. Maximum value 500.</param>
+		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="fields">Optional fields.</param>
 		/// <param name="entryFields">Optional fields for entries.</param>
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of activity entries.</returns>
 		[Route("")]
-		public IEnumerable<ActivityEntryForApiContract> GetList(DateTime? before = null,
+		public PartialFindResult<ActivityEntryForApiContract> GetList(
+			DateTime? before = null,
+			DateTime? since = null,
  			int? userId = null,
 			EntryEditEvent? editEvent = null, 
 			int maxResults = defaultMax, 
+			bool getTotalCount = false,
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
@@ -68,8 +74,16 @@ namespace VocaDb.Web.Controllers.Api {
 				
 				var query = ctx.Query<ActivityEntry>();
 
-				if (before.HasValue) {
+				if (before.HasValue && !since.HasValue) {
 					query = query.Where(a => a.CreateDate < before.Value);
+				}
+
+				if (!before.HasValue && since.HasValue) {
+					query = query.Where(a => a.CreateDate > since.Value);
+				}
+
+				if (before.HasValue && since.HasValue) {
+					query = query.Where(a => a.CreateDate > since.Value && a.CreateDate < before.Value);
 				}
 
 				if (userId.HasValue) {
@@ -90,7 +104,9 @@ namespace VocaDb.Web.Controllers.Api {
 						userIconFactory, permissionContext, fields))
 					.ToArray();
 
-				return activityEntries;
+				var count = getTotalCount ? query.Count() : 0;
+
+				return PartialFindResult.Create(activityEntries, count);
 
 			});
 

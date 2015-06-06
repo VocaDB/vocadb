@@ -138,7 +138,9 @@ module vdb.viewModels.activityEntry {
 				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
 				userId: this.userId,
 				editEvent: this.editEvent() ? cls.activityEntries.EntryEditEvent[this.editEvent()] : null
-			}, (entries: dc.activityEntry.ActivityEntryContract[]) => {
+			}, (result: dc.PartialFindResultContract<dc.activityEntry.ActivityEntryContract>) => {
+
+				var entries = result.items;
 
 				if (!entries && entries.length > 0)
 					return;
