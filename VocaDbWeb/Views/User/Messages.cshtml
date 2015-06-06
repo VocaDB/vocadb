@@ -108,16 +108,9 @@
 		
             var urlMapper = new vdb.UrlMapper('@Url.Content("~/")');
             var repository = new vdb.repositories.UserRepository(urlMapper);		
-            repository.getMessageSummaries(200, false, 20, function (json) {
+            repository.getMessageSummaries({ maxEntries: 200 }, false, 20, function (json) {
                 var viewModel = new vdb.viewModels.UserMessagesViewModel(urlMapper, repository, json, @ToJS(Model.SelectedMessageId));
                 ko.applyBindings(viewModel);
-            });
-
-            $("#receiverName").autocomplete({
-                source: function (ui, callback) {
-                	var url = vdb.functions.mapAbsoluteUrl("/api/users/names");  
-                	$.getJSON(url, { query: ui.term }, callback);
-                } 
             });
 		
         });

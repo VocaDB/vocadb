@@ -111,10 +111,10 @@ module vdb.repositories {
 
         };
 
-        public getMessageSummaries = (maxCount: number = 200, unread: boolean = false, iconSize: number = 40, callback?: (result: dc.UserMessagesContract) => void ) => {
+        public getMessageSummaries = (paging: dc.PagingProperties, unread: boolean = false, iconSize: number = 40, callback?: (result: dc.UserMessagesContract) => void ) => {
 
             var url = this.mapUrl("/MessagesJson");
-            $.getJSON(url, { maxCount: maxCount, unread: unread, iconSize: iconSize }, callback);
+            $.getJSON(url, { start: paging.start, maxCount: paging.maxEntries, unread: unread, iconSize: iconSize }, callback);
 
 		};
 

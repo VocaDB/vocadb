@@ -16,7 +16,7 @@ module vdb.viewModels {
             if (this.isLoaded())
                 return;
 
-            this.userRepository.getMessageSummaries(3, true, 40, (messages: dc.UserMessagesContract) => {
+            this.userRepository.getMessageSummaries({ maxEntries: 3, start: 0, getTotalCount: false }, true, 40, (messages: dc.UserMessagesContract) => {
 
                 this.unreadMessages(messages.receivedMessages);
                 this.isLoaded(true);
