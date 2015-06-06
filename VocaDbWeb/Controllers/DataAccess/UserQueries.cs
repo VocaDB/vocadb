@@ -659,8 +659,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var albums = query
 					.OrderBy(queryParams.Sort, PermissionContext.LanguagePreference)
-					.Skip(paging.Start)
-					.Take(paging.MaxEntries)
+					.Paged(paging)
 					.ToArray()
 					.Select(afu => fac(afu, shouldShowCollectionStatus))
 					.ToArray();
