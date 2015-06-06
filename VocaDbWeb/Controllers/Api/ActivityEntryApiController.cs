@@ -84,6 +84,7 @@ namespace VocaDb.Web.Controllers.Api {
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxResults)
 					.ToArray()
+					.Where(a => !a.EntryBase.Deleted)
 					.Select(a => new ActivityEntryForApiContract(a, 
 						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? EntryForApiContract.Create(a.EntryBase, lang, entryThumbPersister, entryImagePersisterOld, ssl, entryFields) : null, 
 						userIconFactory, permissionContext, fields))
