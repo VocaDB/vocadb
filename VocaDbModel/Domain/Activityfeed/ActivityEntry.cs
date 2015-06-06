@@ -57,6 +57,9 @@ namespace VocaDb.Model.Domain.Activityfeed {
 			return (Author.Equals(entry.Author) && EntryBase.Equals(entry.EntryBase));
 		}
 
+		public override string ToString() {
+			return string.Format("activity entry ({0}) for {1}", EditEvent, EntryBase);
+		}
 	}
 
 	public enum EntryEditEvent {

@@ -154,6 +154,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				tag.Delete();
 
+				var ctxActivity = ctx.OfType<TagActivityEntry>();
+				var activityEntries = ctxActivity.Query().Where(t => t.Entry.Name == name).ToArray();
+
+				foreach (var activityEntry in activityEntries)
+					ctxActivity.Delete(activityEntry);
+
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", tag));
 
 				ctx.Delete(tag);
