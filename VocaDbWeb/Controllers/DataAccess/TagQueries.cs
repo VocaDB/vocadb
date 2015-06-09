@@ -289,15 +289,19 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var tags = ctx.Query()
 					.Where(t => t.AliasedTo == null)
-					.OrderBy(t => t.Name)
+					.OrderBy(t => t.CategoryName)
+					.ThenBy(t => t.Name)
 					.ToArray()					
 					.GroupBy(t => t.CategoryName)
 					.ToArray();
 
-				var empty = tags.Where(c => c.Key == string.Empty).ToArray();
+				var genres = tags.FirstOrDefault(c => c.Key == Tag.CommonCategory_Genres);
+				var empty = tags.FirstOrDefault(c => c.Key == string.Empty);
 
-				var tagsByCategories = tags
-					.Except(empty).Concat(empty)
+				var tagsByCategories = 
+					new[] { genres }
+					.Concat(tags.Except(new[] { genres, empty }))
+					.Concat(new[] { empty })
 					.Select(t => new TagCategoryContract(t.Key, t))
 					.ToArray();
 
