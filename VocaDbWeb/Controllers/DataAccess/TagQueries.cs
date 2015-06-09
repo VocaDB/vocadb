@@ -291,7 +291,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.Where(t => t.AliasedTo == null)
 					.OrderBy(t => t.CategoryName)
 					.ThenBy(t => t.Name)
-					.ToArray()					
 					.GroupBy(t => t.CategoryName)
 					.ToArray();
 
