@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.Helpers {
 			try {
 				to = new MailAddress(toEmail);
 			} catch (FormatException x) {
-				log.Warn("Unable to validate receiver email", x);
+				log.Warn(x, "Unable to validate receiver email");
 				return false;
 			}
 
@@ -44,10 +44,10 @@ namespace VocaDb.Model.Service.Helpers {
 			try {
 				client.Send(mailMessage);
 			} catch (SmtpException x) {
-				log.Error("Unable to send mail", x);
+				log.Error(x, "Unable to send mail");
 				return false;
 			} catch (InvalidOperationException x) {
-				log.Error("Unable to send mail", x);
+				log.Error(x, "Unable to send mail");
 				return false;				
 			}
 

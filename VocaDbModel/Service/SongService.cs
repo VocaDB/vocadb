@@ -452,7 +452,7 @@ namespace VocaDb.Model.Service {
 						try {					
 							tx.Commit();
 						} catch (TransactionException x) {
-							log.Error("Unable to save song hit", x);
+							log.Error(x, "Unable to save song hit");
 						}
 
 					}

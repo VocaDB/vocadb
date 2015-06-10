@@ -360,7 +360,7 @@ namespace VocaDb.Model.Service {
 							try {
 								tx.Commit();
 							} catch (SqlException x) {
-								log.Warn("Error while committing hit", x);
+								log.Warn(x, "Error while committing hit");
 							}
 
 						}

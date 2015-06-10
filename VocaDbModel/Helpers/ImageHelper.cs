@@ -32,7 +32,7 @@ namespace VocaDb.Model.Helpers {
 			try {
 				return Image.FromStream(stream);
 			} catch (ArgumentException x) {
-				log.Error("Unable to open image", x);
+				log.Error(x, "Unable to open image");
 				throw new InvalidPictureException("Unable to open image", x);
 			}
 		}

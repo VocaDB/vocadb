@@ -24,7 +24,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb {
 					response = await client.GetAsync(uri);
 					response.EnsureSuccessStatusCode();
 				} catch (HttpRequestException x) {
-					log.Fatal("Unable to get entries from VocaDB API", x);
+					log.Fatal(x, "Unable to get entries from VocaDB API");
 					throw;
 				}
 
@@ -32,7 +32,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb {
 					var entries = await response.Content.ReadAsAsync<T>();
 					return entries;
 				} catch (UnsupportedMediaTypeException x) {
-					log.Fatal("Unable to get entries from VocaDB API", x);
+					log.Fatal(x, "Unable to get entries from VocaDB API");
 					throw;			
 				}
 

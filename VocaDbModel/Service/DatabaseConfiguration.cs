@@ -60,10 +60,10 @@ namespace VocaDb.Model.Service {
 			try {
 				return config.BuildSessionFactory();
 			} catch (ArgumentException x) {
-				log.Fatal("Error while building session factory", x);
+				log.Fatal(x, "Error while building session factory");
 				throw;
 			} catch (FluentConfigurationException x) {
-				log.Fatal("Error while building session factory", x);
+				log.Fatal(x, "Error while building session factory");
 				throw;
 			}
 

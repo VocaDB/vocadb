@@ -37,7 +37,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			try {
 				doc.Load(htmlStream, encoding);
 			} catch (IOException x) {
-				log.Warn("Unable to load document for user name", x);
+				log.Warn(x, "Unable to load document for user name");
 			}
 
 			var titleElem = doc.DocumentNode.SelectSingleNode("//html/body/div/p[2]/a/strong");
@@ -59,7 +59,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			try {
 				response = request.GetResponse();	// Closed below
 			} catch (WebException x) {
-				log.Warn("Unable to get response for user name", x);
+				log.Warn(x, "Unable to get response for user name");
 				return null;
 			}
 

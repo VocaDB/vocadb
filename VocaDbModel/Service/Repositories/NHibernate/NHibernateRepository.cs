@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.Repositories.NHibernate {
 				log.Error(x.Message);
 				throw;
 			} catch (HibernateException x) {
-				log.Error(failMsg, x);
+				log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -46,7 +46,7 @@ namespace VocaDb.Model.Service.Repositories.NHibernate {
 
 				}
 			} catch (HibernateException x) {
-				log.Error(failMsg, x);
+				log.Error(x, failMsg);
 				throw;
 			}
 
@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.Repositories.NHibernate {
 
 				}
 			} catch (HibernateException x) {
-				log.Error(failMsg, x);
+				log.Error(x, failMsg);
 				throw;
 			}
 
@@ -95,7 +95,7 @@ namespace VocaDb.Model.Service.Repositories.NHibernate {
 				log.Error(x.Message);
 				throw;
 			} catch (HibernateException x) {
-				log.Error(failMsg, x);
+				log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -112,7 +112,7 @@ namespace VocaDb.Model.Service.Repositories.NHibernate {
 
 				}
 			} catch (HibernateException x) {
-				log.Error(failMsg, x);
+				log.Error(x, failMsg);
 				throw;
 			}
 
@@ -129,7 +129,7 @@ namespace VocaDb.Model.Service.Repositories.NHibernate {
 
 				}
 			} catch (HibernateException x) {
-				log.Error(failMsg, x);
+				log.Error(x, failMsg);
 				throw;
 			}
 

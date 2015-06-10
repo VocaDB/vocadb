@@ -118,7 +118,7 @@ namespace VocaDb.Web.Controllers
 			try {
 				request = twitterSignIn.PrepareRequestUserAuthorization(uri, null, null);
 			} catch (ProtocolException x) {
-				log.Fatal("Exception while attempting to sent Twitter request", x);	
+				log.Fatal(x, "Exception while attempting to sent Twitter request");	
 				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
 				return RedirectToAction("MySettings", "User");
 			}
@@ -359,7 +359,7 @@ namespace VocaDb.Web.Controllers
 				request = twitterSignIn.PrepareRequestUserAuthorization(uri, null, null);
 			} catch (ProtocolException x) {
 				
-				log.Error("Exception while attempting to send Twitter request", x);	
+				log.Error(x, "Exception while attempting to send Twitter request");
 				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
 
 				return RedirectToAction("Login");

@@ -65,7 +65,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				}
 			} catch (WebException x) {
 				var msg = string.Format("Unable to load SoundCloud URL {0}", url);
-				log.Warn(msg, x);
+				log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 

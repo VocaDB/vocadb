@@ -42,7 +42,7 @@ namespace VocaDb.Web.Code.Security {
 					data = reader.ReadToEnd();
 				}
 			} catch (WebException x) {
-				log.Warn("Unable to get response", x);
+				log.Warn(x, "Unable to get response");
 				return null;
 			}
 
