@@ -22,6 +22,7 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
@@ -204,7 +205,9 @@ namespace VocaDb.Web.Controllers
 
 			CheckConcurrentEdit(EntryType.Song, id);
 
-			var model = new SongEditViewModel(Service.GetSong(id), PermissionContext);
+			var model = Service.GetSong(id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
+				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song)));
+
 			return View(model);
 
 		}
@@ -238,7 +241,8 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-				return View(new SongEditViewModel(Service.GetSong(model.Id), PermissionContext, model));				
+				return View(Service.GetSong(model.Id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
+					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), model)));
 			}
 
 			queries.UpdateBasicProperties(model);

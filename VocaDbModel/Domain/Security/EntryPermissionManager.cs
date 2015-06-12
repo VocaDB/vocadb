@@ -73,6 +73,18 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		public static bool CanDelete(IUserPermissionContext permissionContext, IEntryWithVersions entry) {
+			
+			if (!permissionContext.IsLoggedIn)
+				return false;
+
+			if (permissionContext.HasPermission(PermissionToken.DeleteEntries))
+				return true;
+
+			return entry.ArchivedVersionsManager.VersionsBase.All(v => v.Author != null && v.Author.Id == permissionContext.LoggedUserId);
+
+		}
+
 		public static bool CanEdit(IUserPermissionContext permissionContext, SongList songList) {
 
 			if (songList.FeaturedList && CanManageFeaturedLists(permissionContext))
@@ -159,6 +171,12 @@ namespace VocaDb.Model.Domain.Security {
 
 			if (!accessCheck(permissionContext, entry))
 				throw new NotAllowedException();
+
+		}
+
+		public static void VerifyDelete(IUserPermissionContext permissionContext, IEntryWithVersions entry) {
+
+			VerifyAccess(permissionContext, entry, CanDelete);
 
 		}
 

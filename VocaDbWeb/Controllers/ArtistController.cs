@@ -16,6 +16,7 @@ using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Models.Artist;
 using VocaDb.Web.Helpers;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Web.Controllers
 {
@@ -27,6 +28,11 @@ namespace VocaDb.Web.Controllers
 		private readonly ArtistQueries queries;
 		private readonly ArtistService service;
 		private readonly MarkdownParser markdownParser;
+
+		private ArtistEditViewModel CreateArtistEditViewModel(int id, ArtistForEditContract editedArtist) {
+			return queries.Get(id, album => new ArtistEditViewModel(new ArtistForEditContract(album, PermissionContext.LanguagePreference), PermissionContext,
+				EntryPermissionManager.CanDelete(PermissionContext, album), editedArtist));
+		}
 
 		public ArtistController(ArtistService service, ArtistQueries queries, MarkdownParser markdownParser) {
 			this.service = service;
@@ -208,7 +214,7 @@ namespace VocaDb.Web.Controllers
 
 			CheckConcurrentEdit(EntryType.Artist, id);
 
-        	var model = new ArtistEditViewModel(Service.GetArtist(id), PermissionContext);
+        	var model = CreateArtistEditViewModel(id, null);
             return View(model);
 
         }
@@ -243,14 +249,14 @@ namespace VocaDb.Web.Controllers
 			ParseAdditionalPictures(coverPicUpload, model.Pictures);
 
 			if (!ModelState.IsValid) {
-				return View("Edit", new ArtistEditViewModel(Service.GetArtist(model.Id), PermissionContext, model));
+				return View("Edit", CreateArtistEditViewModel(model.Id, model));
 			}
 
 			try {
 				queries.Update(model, pictureData, PermissionContext);	
 			} catch (InvalidPictureException) {
 				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");				
-				return View("Edit", new ArtistEditViewModel(Service.GetArtist(model.Id), PermissionContext, model));
+				return View("Edit", CreateArtistEditViewModel(model.Id, model));
 			}	
 
 			return RedirectToAction("Details", new { id = model.Id });

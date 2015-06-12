@@ -18,6 +18,7 @@ using System.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Web.Models.Album;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
@@ -35,6 +36,11 @@ namespace VocaDb.Web.Controllers
 	    private readonly UserQueries userQueries;
 
 		private AlbumService Service { get; set; }
+
+		private AlbumEditViewModel CreateAlbumEditViewModel(int id, AlbumForEditContract editedAlbum) {
+			return Service.GetAlbum(id, album => new AlbumEditViewModel(new AlbumForEditContract(album, PermissionContext.LanguagePreference), PermissionContext,
+				EntryPermissionManager.CanDelete(PermissionContext, album), editedAlbum));
+		}
 
 		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries, AlbumDescriptionGenerator albumDescriptionGenerator,
 			MarkdownParser markdownParser) {
@@ -231,8 +237,7 @@ namespace VocaDb.Web.Controllers
 
 			CheckConcurrentEdit(EntryType.Album, id);
 
-        	var album = Service.GetAlbum(id);
-			return View(new AlbumEditViewModel(album, PermissionContext));
+			return View(CreateAlbumEditViewModel(id, null));
 
         }
 
@@ -280,14 +285,14 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-				return View(new AlbumEditViewModel(Service.GetAlbum(model.Id), PermissionContext, model));
+				return View(CreateAlbumEditViewModel(model.Id, model));
 			}
 
 			try {
 				queries.UpdateBasicProperties(model, pictureData);				
 			} catch (InvalidPictureException) {
 				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
-				return View(new AlbumEditViewModel(Service.GetAlbum(model.Id), PermissionContext, model));				
+				return View(CreateAlbumEditViewModel(model.Id, model));
 			}
 
         	return RedirectToAction("Details", new { id = model.Id });

@@ -105,61 +105,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		/*public SongContract Create(CreateSongContract contract) {
-
-			ParamIs.NotNull(() => contract);
-
-			if (contract.Names == null || !contract.Names.Any())
-				throw new ArgumentException("Song needs at least one name", "contract");
-
-			VerifyManageDatabase();
-
-			return HandleTransaction(session => {
-
-				var pvResult = ParsePV(session, contract.PVUrl);
-				var reprintPvResult = ParsePV(session, contract.ReprintPVUrl);
-
-				SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
-
-				var song = new Song { 
-					SongType = contract.SongType, 
-					Status = contract.Draft ? EntryStatus.Draft : EntryStatus.Finished 
-				};
-
-				song.Names.Init(contract.Names, song);
-
-				session.Save(song);
-
-				foreach (var artistContract in contract.Artists) {
-					var artist = session.Load<Artist>(artistContract.Id);
-					if (!song.HasArtist(artist))
-						session.Save(song.AddArtist(artist));
-				}
-
-				if (pvResult != null) {
-					session.Save(song.CreatePV(new PVContract(pvResult, PVType.Original)));
-				}
-
-				if (reprintPvResult != null) {
-					session.Save(song.CreatePV(new PVContract(reprintPvResult, PVType.Reprint)));
-				}
-
-				song.UpdateArtistString();
-				Archive(session, song, SongArchiveReason.Created);
-				session.Update(song);
-
-				AuditLog(string.Format("created song {0} ({1})", EntryLinkFactory.CreateEntryLink(song), song.SongType), session);
-				AddEntryEditedEntry(session, song, EntryEditEvent.Created);
-
-				return new SongContract(song, PermissionContext.LanguagePreference);
-
-			});
-
-		}*/
-
 		public void Delete(int id, string notes) {
 
 			UpdateEntity<Song>(id, (session, song) => {
+
+				EntryPermissionManager.VerifyDelete(PermissionContext, song);
 
 				AuditLog(string.Format("deleting song {0}", EntryLinkFactory.CreateEntryLink(song)), session);
 
@@ -167,7 +117,7 @@ namespace VocaDb.Model.Service {
 
 				Archive(session, song, new SongDiff(false), SongArchiveReason.Deleted, notes);
 
-			}, PermissionToken.DeleteEntries, skipLog: true);
+			}, PermissionToken.Nothing, skipLog: true);
 
 		}
 

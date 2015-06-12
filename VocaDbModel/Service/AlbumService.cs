@@ -117,6 +117,8 @@ namespace VocaDb.Model.Service {
 
 			UpdateEntity<Album>(id, (session, a) => {
 
+				EntryPermissionManager.VerifyDelete(PermissionContext, a);
+
 				AuditLog(string.Format("deleting album {0}", EntryLinkFactory.CreateEntryLink(a)), session);
 
 				NHibernateUtil.Initialize(a.CoverPictureData);
@@ -124,7 +126,7 @@ namespace VocaDb.Model.Service {
 
 				Archive(session, a, new AlbumDiff(false), AlbumArchiveReason.Deleted, notes);
 
-			}, PermissionToken.DeleteEntries, skipLog: true);
+			}, PermissionToken.Nothing, skipLog: true);
 
 		}
 

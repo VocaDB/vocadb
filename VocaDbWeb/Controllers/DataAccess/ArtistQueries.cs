@@ -262,6 +262,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public T Get<T>(int id, Func<Artist, T> fac) {
+
+			return HandleQuery(ctx => fac(ctx.Load(id)));
+
+		}
+
 		public CommentForApiContract[] GetComments(int artistId) {
 			
 			return HandleQuery(ctx => ctx.Load(artistId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());

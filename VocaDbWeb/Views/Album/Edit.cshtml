@@ -27,10 +27,10 @@
 }
 
 @section Toolbar {
-@if (Login.CanDeleteEntries) {
+@if (Model.CanDelete) {
 	if (!Model.Album.Deleted) {
 		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
-	} else {
+	} else if (Login.CanDeleteEntries) {
 		@Html.ActionLink(ViewRes.EntryEditStrings.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })
         if (Login.CanMoveToTrash) {
 			@Html.Raw("&nbsp;")

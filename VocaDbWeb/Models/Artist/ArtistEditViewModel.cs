@@ -22,12 +22,14 @@ namespace VocaDb.Web.Models.Artist {
 		}
 
 		public ArtistEditViewModel(ArtistContract artist, IUserPermissionContext permissionContext,
+			bool canDelete,
 			ArtistForEditContract editedArtist = null)
 			: this() {
 
 			ParamIs.NotNull(() => artist);
 
 			Artist = artist;
+			CanDelete = canDelete;
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext, artist).ToArray();
 			EditedArtist = editedArtist;
 
@@ -38,6 +40,8 @@ namespace VocaDb.Web.Models.Artist {
 		public ArtistContract Artist { get; set; }
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
+
+		public bool CanDelete { get; set; }
 
 		[FromJson]
 		public ArtistForEditContract EditedArtist { get; set; }

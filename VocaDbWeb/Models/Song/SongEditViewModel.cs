@@ -24,6 +24,7 @@ namespace VocaDb.Web.Models.Song {
 		}
 
 		public SongEditViewModel(SongContract song, IUserPermissionContext permissionContext,
+			bool canDelete,
 			SongForEditContract editedSong = null)
 			: this() {
 
@@ -31,6 +32,7 @@ namespace VocaDb.Web.Models.Song {
 
 			Song = song;
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
+			CanDelete = canDelete;
 			EditedSong = editedSong;
 
 		}
@@ -46,6 +48,8 @@ namespace VocaDb.Web.Models.Song {
 		} 
 
 		public PVService[] AllVideoServices { get; set; }
+
+		public bool CanDelete { get; set; }
 
 		public bool Draft {
 			get { return Song != null && Song.Status == EntryStatus.Draft; }

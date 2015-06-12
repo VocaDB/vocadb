@@ -28,12 +28,14 @@ namespace VocaDb.Web.Models.Album {
 		}
 
 		public AlbumEditViewModel(AlbumContract album, IUserPermissionContext permissionContext,
+			bool canDelete,
 			AlbumForEditContract editedAlbum = null)
 			: this() {
 
 			ParamIs.NotNull(() => album);
 
 			Album = album;
+			CanDelete = canDelete;
 			EditedAlbum = editedAlbum;
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
@@ -45,6 +47,8 @@ namespace VocaDb.Web.Models.Album {
 		public Dictionary<string, string> AllDiscTypes { get; set; }
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
+
+		public bool CanDelete { get; set; }
 
 		public string DiscTypeDescriptions { get; set; }
 
