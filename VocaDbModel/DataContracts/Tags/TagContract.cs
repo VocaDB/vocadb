@@ -22,6 +22,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Name = tag.TagName;
 			Parent = (tag.Parent != null ? tag.Parent.Name : null);
 			Status = tag.Status;
+			Version = tag.Version;
 
 		}
 
@@ -45,6 +46,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public EntryStatus Status { get; set; }
+
+		[DataMember]
+		public int Version { get; set; }
 
 	}
 }

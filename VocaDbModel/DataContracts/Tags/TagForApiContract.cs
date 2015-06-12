@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Name = tag.Name;
 			ParentName = tag.Parent != null ? tag.Parent.Name : null;
 			Status = tag.Status;
+			Version = tag.Version;
 
 			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
 				Description = tag.Description;
@@ -59,6 +60,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
+
+		[DataMember]
+		public int Version { get; set; }
 
 	}
 

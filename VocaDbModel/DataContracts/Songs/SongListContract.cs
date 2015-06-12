@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Description = list.Description;
 			FeaturedCategory = list.FeaturedCategory;
 			Thumb = (list.Thumb != null ? new EntryThumbContract(list.Thumb) : null);
+			Version = list.Version;
 
 		}
 
@@ -42,6 +43,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public EntryThumbContract Thumb { get; set; }
+
+		[DataMember]
+		public int Version { get; set; }
 
 	}
 }

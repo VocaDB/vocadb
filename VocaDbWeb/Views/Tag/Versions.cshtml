@@ -11,5 +11,7 @@
 	};
 }
 
+@ArchivedEntryHelpers.CurrentVersionMessage(Model.Version, Model.Status)
+
 @ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions.Select(
 	a => new ArchivedObjectVersion(a, Translate.TagEditableFieldNames.GetAllNameNames(a.ChangedFields, TagEditableFields.Nothing))))
