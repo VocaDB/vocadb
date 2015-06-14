@@ -146,7 +146,7 @@ namespace VocaDb.Web.Models {
 			}
 		}
 
-		public CommentContract[] LatestComments { get; set; }
+		public CommentForApiContract[] LatestComments { get; set; }
 
 		public int LikedTimes { get; set; }
 
@@ -203,6 +203,7 @@ namespace VocaDb.Web.Models {
 
 			Id = model.Id;
 			UserRating = model.UserRating;
+			LatestComments = model.LatestComments;
 
 			var preferredLyrics = LocalizedStringHelper.GetBestMatch(model.Lyrics, Login.Manager.LanguagePreference, model.DefaultLanguageSelection);
 			SelectedLyricsId = preferredLyrics != null ? preferredLyrics.Id : 0;
@@ -212,6 +213,8 @@ namespace VocaDb.Web.Models {
 		}
 
 		public int Id { get; set; }
+
+		public CommentForApiContract[] LatestComments { get; set; }
 
 		public int SelectedLyricsId { get; set; }
 

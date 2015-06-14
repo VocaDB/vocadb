@@ -14,10 +14,12 @@ module vdb.viewModels {
 			private canDeleteAllComments: boolean,
 			private canEditAllComments: boolean,
 			private ascending: boolean,
-			commentContracts?: dc.CommentContract[]) {
+			commentContracts?: dc.CommentContract[],
+			hasMoreComments: boolean = false) {
 			
 			this.comments = ko.observableArray<CommentViewModel>(null);
-			this.commentsLoaded = commentContracts != null;
+			this.commentsLoaded = commentContracts != null && !hasMoreComments;
+			this.topComments = ko.computed(() => _.take(this.comments(), 3));
 
 			if (commentContracts) {
 				this.setComments(commentContracts);				
@@ -72,6 +74,9 @@ module vdb.viewModels {
 				else
 					this.comments.unshift(processed);
 
+				if (this.onCommentCreated)
+					this.onCommentCreated(_.clone(processed));
+
 			});
 
 		}
@@ -100,6 +105,8 @@ module vdb.viewModels {
 		}
 
 		public newComment = ko.observable("");
+
+		public onCommentCreated: (comment: CommentViewModel) => void;
 
 		private processComment = (contract: dc.CommentContract) => {
 
@@ -131,6 +138,8 @@ module vdb.viewModels {
 			this.comments(commentViewModels);
 
 		}
+
+		public topComments: KnockoutComputed<CommentViewModel[]>;
 
 	}
 

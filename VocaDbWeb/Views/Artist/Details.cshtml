@@ -263,17 +263,12 @@
 		<br />
 		<h3>@ViewRes.EntryDetailsStrings.LatestComments</h3>
 		
-		@if (Model.LatestComments.Any()) {
-
-		  foreach (var comment in Model.LatestComments) {
-					@CommentHelpers.CommentBodyLarge(comment, false);
-		  }
-
-		} else {
-	  
+		<div data-bind="with: comments">
+			@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+			<!-- ko ifnot: comments().length -->
 			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
-	  
-		}
+			<!-- /ko -->
+		</div>
 		
 		<p>
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
@@ -395,6 +390,7 @@
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 			var tagUsages = @Html.Raw(JsonHelpers.Serialize(Model.Tags));
+			var latestComments = @ToJS(Model.LatestComments);
 
 			var reportTypes = @ToJS(Translate.ArtistReportTypeNames.ValuesAndNames.Select(r => new {
 				Id = r.Key,
@@ -412,7 +408,8 @@
 				reportTypes,
 				loggedUserId, 
 				canDeleteAllComments,
-				pvPlayersFactory);
+				pvPlayersFactory,
+				latestComments);
 			ko.applyBindings(viewModel);
 
 			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);

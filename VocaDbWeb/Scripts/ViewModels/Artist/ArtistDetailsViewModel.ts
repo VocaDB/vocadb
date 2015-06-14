@@ -26,14 +26,15 @@ module vdb.viewModels {
 			reportTypes: IEntryReportType[],
 			private loggedUserId: number,
 			canDeleteAllComments: boolean,
-			private pvPlayersFactory: pvs.PVPlayersFactory) {
+			private pvPlayersFactory: pvs.PVPlayersFactory,
+			latestComments: dc.CommentContract[]) {
 
 			this.lang = cls.globalization.ContentLanguagePreference[languagePreference];
 			this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(artistId, emailNotifications, siteNotifications, userRepository);
 			this.showTranslatedDescription = ko.observable((hasEnglishDescription
 				&& (languagePreference === cls.globalization.ContentLanguagePreference.English || languagePreference === cls.globalization.ContentLanguagePreference.Romaji)));
 
-			this.comments = new EditableCommentsViewModel(repo, artistId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
+			this.comments = new EditableCommentsViewModel(repo, artistId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepository.getArtistTagSelections(artistId, callback),

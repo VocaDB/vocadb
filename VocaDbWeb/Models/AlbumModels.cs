@@ -133,7 +133,7 @@ namespace VocaDb.Web.Models {
 
 		public ArtistForAlbumContract[] Labels { get; set; }
 
-		public CommentContract[] LatestComments { get; set; }
+		public CommentForApiContract[] LatestComments { get; set; }
 
 		public AlbumContract MergedTo { get; set; }
 
@@ -213,6 +213,8 @@ namespace VocaDb.Web.Models {
 		}
 
 		public int Id { get; set; }
+
+		public CommentForApiContract[] LatestComments { get; set; }
 
 		public TagUsageForApiContract[] TagUsages { get; set; }
 

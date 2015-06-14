@@ -58,7 +58,7 @@ module vdb.viewModels {
 			this.id = data.id;
             this.downloadTagsDialog = new DownloadTagsViewModel(this.id, formatString);
 			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
-			this.comments = new EditableCommentsViewModel(repo, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
+			this.comments = new EditableCommentsViewModel(repo, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, data.latestComments, true);
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepo.getAlbumTagSelections(this.id, callback),
@@ -82,6 +82,8 @@ module vdb.viewModels {
     export interface AlbumDetailsAjax {
 
         id: number;
+
+		latestComments: dc.CommentContract[];
 
 		tagUsages: dc.tags.TagUsageForApiContract[];
 

@@ -80,7 +80,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public bool IsAdded { get; set; }
 
 		[DataMember]
-		public CommentContract[] LatestComments { get; set; }
+		public CommentForApiContract[] LatestComments { get; set; }
 
 		[DataMember]
 		public GroupForArtistContract[] Members { get; set; }

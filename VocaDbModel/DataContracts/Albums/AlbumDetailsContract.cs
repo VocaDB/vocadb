@@ -46,7 +46,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public int Hits { get; set; }
 
 		[DataMember]
-		public CommentContract[] LatestComments { get; set; }
+		public CommentForApiContract[] LatestComments { get; set; }
 
 		[DataMember]
 		public AlbumContract MergedTo { get; set; }

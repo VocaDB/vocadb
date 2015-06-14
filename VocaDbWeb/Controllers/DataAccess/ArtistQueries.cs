@@ -326,7 +326,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.OrderByDescending(c => c.Created)
 					.Take(3)
 					.ToArray()
-					.Select(c => new CommentContract(c)).ToArray();
+					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
 
 				if (artist.Deleted) {
 					var mergeEntry = GetMergeRecord(session, id);

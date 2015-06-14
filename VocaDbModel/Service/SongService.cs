@@ -37,6 +37,7 @@ namespace VocaDb.Model.Service {
 #pragma warning restore 169
 
 		private readonly IEntryUrlParser entryUrlParser;
+		private readonly IUserIconFactory userIconFactory;
 
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams) {
 			return new SongSearch(new NHibernateRepositoryContext(session, PermissionContext), LanguagePreference, entryUrlParser).Find(queryParams);
@@ -60,10 +61,12 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser)
+		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser,
+			IUserIconFactory userIconFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 
 			this.entryUrlParser = entryUrlParser;
+			this.userIconFactory = userIconFactory;
 
 		}
 
@@ -359,7 +362,7 @@ namespace VocaDb.Model.Service {
 				contract.LatestComments = session.Query<SongComment>()
 					.Where(c => c.Song.Id == songId)
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
-					.Select(c => new CommentContract(c)).ToArray();
+					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
 				contract.Hits = session.Query<SongHit>().Count(h => h.Song.Id == songId);
 
 				if (albumId != 0) {

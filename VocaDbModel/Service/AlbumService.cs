@@ -95,8 +95,15 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
-			: base(sessionFactory, permissionContext,entryLinkFactory) {}
+		private readonly IUserIconFactory userIconFactory;
+
+		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
+			IUserIconFactory userIconFactory) 
+			: base(sessionFactory, permissionContext,entryLinkFactory) {
+			
+			this.userIconFactory = userIconFactory;
+
+		}
 
 		public ArchivedAlbumVersion Archive(ISession session, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
 
@@ -338,7 +345,7 @@ namespace VocaDb.Model.Service {
 					.OrderByDescending(c => c.Created)
 					.Take(3)
 					.ToArray()
-					.Select(c => new CommentContract(c))
+					.Select(c => new CommentForApiContract(c, userIconFactory))
 					.ToArray();
 
 				if (album.Deleted) {

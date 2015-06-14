@@ -59,14 +59,14 @@ module vdb.viewModels {
 			reportTypes: IEntryReportType[],
 			loggedUserId: number,
 			canDeleteAllComments: boolean,
-            ratingCallback: () => void ) {
+            ratingCallback: () => void) {
             
             this.id = data.id;
             this.userRating = new PVRatingButtonsViewModel(userRepository, { id: data.id, vote: data.userRating }, ratingCallback);
 
             this.allVersionsVisible = ko.observable(false);
 
-			this.comments = new EditableCommentsViewModel(repository, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false);
+			this.comments = new EditableCommentsViewModel(repository, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, data.latestComments, true);
 
             this.getUsers = () => {
                 repository.usersWithSongRating(this.id, result => {
@@ -211,6 +211,8 @@ module vdb.viewModels {
     export interface SongDetailsAjax {
         
         id: number;
+
+		latestComments: dc.CommentContract[];
 
 		selectedLyricsId: number;
 

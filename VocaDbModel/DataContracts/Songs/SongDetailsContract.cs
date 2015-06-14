@@ -81,7 +81,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public int Hits { get; set; }
 
 		[DataMember]
-		public CommentContract[] LatestComments { get; set; }
+		public CommentForApiContract[] LatestComments { get; set; }
 
 		[DataMember]
 		public int LikeCount { get; set; }
