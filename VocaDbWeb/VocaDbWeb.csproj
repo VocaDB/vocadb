@@ -1176,6 +1176,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EditStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\SongList\ImportNicoMylistStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImportNicoMylistStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Song\CreateStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3502,6 +3507,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\SongList\ImportNicoMylistStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImportNicoMylistStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.fi.resx" />

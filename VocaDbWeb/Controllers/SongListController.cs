@@ -47,13 +47,13 @@ namespace VocaDb.Web.Controllers
 			try {
 				parseResult = rankingService.ParseWVRList(model.Url, model.ParseAll);
 			} catch (InvalidFeedException) {
-				ModelState.AddModelError("Url", "Check that the URL is valid and points to a NicoNico MyList or RSS feed.");
+				ModelState.AddModelError("Url", Resources.Views.SongList.ImportNicoMylistStrings.InvalidUrlError);
 				return View(model);
 			}
 			model.ListResult = parseResult;
 
 			if (parseResult.IsIncomplete)
-				ModelState.AddModelError("ListResult", "Some of the songs are missing from VocaDB. You need to add all songs to the database before creating the list.");
+				ModelState.AddModelError("ListResult", Resources.Views.SongList.ImportNicoMylistStrings.SongsMissingError);
 
 			return View(model);
 

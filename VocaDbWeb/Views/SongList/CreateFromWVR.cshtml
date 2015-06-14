@@ -1,19 +1,20 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.CreateFromWVR>
+@using Res = VocaDb.Web.Resources.Views.SongList.ImportNicoMylistStrings;
 
 @{
-	PageProperties.Title = "Create song list from NicoNicoDouga MyList";
+	PageProperties.Title = Res.Title;
 }
 
-@Helpers.ValidationSymmaryDiv("Unable to parse list")
+@Helpers.ValidationSymmaryDiv(Res.UnableToParse)
 
 @using (Html.BeginForm("CreateFromWVR", "SongList", new { commit = false }, FormMethod.Post, new { @class = "form-horizontal" })) {
 
 	<div class="control-group">
-		<div class="control-label">NicoNico mylist or RSS feed</div>
+		<div class="control-label">@Res.UrlLabel</div>
 		<div class="controls">
 			@Html.TextBoxFor(m => m.Url, new { size = 60, @class = "input-xlarge" })
 			<br />
-			<small>Can be any NicoNicoDouga MyList, for example http://www.nicovideo.jp/mylist/1234567 </small>
+			<small>@Res.UrlDescription</small>
 		</div>
 	</div>
 	<div class="control-group">
@@ -27,7 +28,7 @@
 
 	<div class="control-group">
 		<div class="controls">
-			<button class="btn btn-primary">Process</button>
+			<button class="btn btn-primary">@Res.Process</button>
 			@Html.ValidationMessageFor(m => m.Url)
 		</div>
 	</div>
@@ -40,16 +41,16 @@
 
 	if (Model.ListResult != null) {
 
-		<h4>MyList description</h4>
+		<h4>@Res.MylistDescription</h4>
 		<p>@Model.ListResult.WVRNumber - @Model.ListResult.Name</p>
 
-		<h4 class="withMargin">Songs in the list</h4>
+		<h4 class="withMargin">@Res.SongsInList</h4>
 		<table class="table table-condensed">
 			<thead>
 				<tr>
-					<th>Order</th>
-					<th>NicoNico PV</th>
-					<th>VocaDB song entry</th>
+					<th>@Res.Order</th>
+					<th>@Res.NicoPV</th>
+					<th>@Res.VocaDbEntry</th>
 				</tr>
 			</thead>
 			@foreach (var row in Model.ListResult.Entries) {
@@ -60,9 +61,9 @@
 						@if (row.Song != null) {
 							@SongHelpers.SongLink(row.Song)
 						} else {
-							<span>MISSING</span>
+							<span>@Res.SongMissing</span>
 							@("(")
-							@Html.ActionLink("Submit", "Create", "Song", new { PVUrl = row.Url }, null)
+							@Html.ActionLink(Res.Submit, "Create", "Song", new { PVUrl = row.Url }, null)
 							@(")")
 						}
 					</td>
@@ -73,7 +74,7 @@
 
 		if (!Model.ListResult.IsIncomplete) {
 			<p>
-				<input type="submit" value="Accept" class="btn btn-primary" />
+				<button type="submit" class="btn btn-primary">@Res.Accept</button>
 			</p>
 		}
 
