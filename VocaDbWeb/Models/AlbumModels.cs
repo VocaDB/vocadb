@@ -207,7 +207,7 @@ namespace VocaDb.Web.Models {
 		public AlbumDetailsAjax(AlbumDetails model) {
 
 			Id = model.Id;
-
+			LatestComments = model.LatestComments;
 			TagUsages = model.Tags;
 
 		}
