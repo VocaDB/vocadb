@@ -88,11 +88,12 @@ module vdb.viewModels.user {
 			private adminRepo: rep.AdminRepository,
 			public followedArtistsViewModel: FollowedArtistsViewModel,
 			public albumCollectionViewModel: AlbumCollectionViewModel,
-			public ratedSongsViewModel: RatedSongsSearchViewModel) {
+			public ratedSongsViewModel: RatedSongsSearchViewModel,
+			latestComments: dc.CommentContract[]) {
 
 			var canDeleteAllComments = (userId === loggedUserId);
 
-			this.comments = new EditableCommentsViewModel(userRepo, userId, loggedUserId, canDeleteAllComments, canEditAllComments, false);
+			this.comments = new EditableCommentsViewModel(userRepo, userId, loggedUserId, canDeleteAllComments, canEditAllComments, false, latestComments, true);
 
 			window.onhashchange = () => {
 				if (window.location.hash && window.location.hash.length >= 1)

@@ -313,16 +313,13 @@
 				@ViewRes.EntryDetailsStrings.LatestComments
 			</a>
 		</h3>
-		<div>
-			@if (Model.LatestComments.Any()) {
-				foreach (var comment in Model.LatestComments)
-				{
-					@CommentHelpers.CommentBodyLarge(comment, true, ownProfile)
-				}
-			} else {
-				<p>@ViewRes.EntryDetailsStrings.NoComments</p>
-			}
-		</div>		
+		<div data-bind="with: comments">
+			@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+			<!-- ko ifnot: comments().length -->
+			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
+			<!-- /ko -->
+		</div>
+
 	</div>
 </div>
 
@@ -389,6 +386,7 @@
 			var resourceRepo = repoFactory.resourceRepository();
 			var songRepo = repoFactory.songRepository();
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory($("#pv-player-wrapper"));
+			var latestComments = @ToJS(Model.LatestComments);
 
 			var artistId = @ToJS((int?)ViewBag.ArtistId);
 			var childVoicebanks = @ToJS((bool?)ViewBag.ChildVoicebanks);
@@ -403,7 +401,8 @@
 			var ratedSongsViewModel = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, userId, cultureCode,
 				sort, groupByRating, pvPlayersFactory, false, artistId, childVoicebanks);
 
-			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, canDeleteComments, urlMapper, userRepo, adminRepo, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel);
+			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, canDeleteComments, urlMapper, 
+				userRepo, adminRepo, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
 			ko.applyBindings(viewModel);
 
 			if (window.location.hash && window.location.hash.length >= 1) {

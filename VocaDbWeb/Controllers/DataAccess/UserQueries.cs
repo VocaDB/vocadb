@@ -179,7 +179,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			details.LatestComments = session.Query<UserComment>()
 				.Where(c => c.User == user).OrderByDescending(c => c.Created).Take(3)
 				.ToArray()
-				.Select(c => new CommentContract(c)).ToArray();
+				.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
 
 			details.LatestRatedSongs = session.Query<FavoriteSongForUser>()
 				.Where(c => c.User.Id == user.Id && !c.Song.Deleted)
