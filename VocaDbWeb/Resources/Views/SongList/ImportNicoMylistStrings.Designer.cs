@@ -106,6 +106,15 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include all songs in the list (not just ranked).
+        /// </summary>
+        public static string ParseAll {
+            get {
+                return ResourceManager.GetString("ParseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Process.
         /// </summary>
         public static string Process {

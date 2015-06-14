@@ -132,6 +132,9 @@
   <data name="Order" xml:space="preserve">
     <value>Order</value>
   </data>
+  <data name="ParseAll" xml:space="preserve">
+    <value>Include all songs in the list (not just ranked)</value>
+  </data>
   <data name="Process" xml:space="preserve">
     <value>Process</value>
   </data>
