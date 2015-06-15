@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -202,10 +203,6 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// Can be null, in which case the words list will be parsed from <paramref name="nameFilter"/>.
 		/// </param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		/// <remarks>
-		/// Note: this code should be optimized after switching to EF.
-		/// Cannot be optimized as is for NH.
-		/// </remarks>
 		public static IQueryable<T> WhereChildHasName<T>(this IQueryable<T> query, SearchTextQuery textQuery) where T : ISongLink {
 
 			if (textQuery.IsEmpty)
@@ -226,52 +223,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case NameMatchMode.Words:
 					var words = textQuery.Words;
 
-					switch (words.Length) {
-						case 1:
-							query = query.Where(q => q.Song.Names.Names.Any(n => n.Value.Contains(words[0])));
-							break;
-						case 2:
-							query = query.Where(q => 
-								q.Song.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[1]))
-							);
-							break;
-						case 3:
-							query = query.Where(q => 
-								q.Song.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[2]))
-							);
-							break;
-						case 4:
-							query = query.Where(q => 
-								q.Song.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[3]))
-							);
-							break;
-						case 5:
-							query = query.Where(q => 
-								q.Song.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[3]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[4]))
-							);
-							break;
-						case 6:
-							query = query.Where(q => 
-								q.Song.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[3]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[4]))
-								&& q.Song.Names.Names.Any(n => n.Value.Contains(words[5]))
-							);
-							break;
+					Expression<Func<T, bool>> exp = (q => q.Song.Names.Names.Any(n => n.Value.Contains(words[0])));
+
+					foreach (var word in words.Skip(1).Take(10)) {
+						var temp = word;
+						exp = exp.And((q => q.Song.Names.Names.Any(n => n.Value.Contains(temp))));
 					}
-					return query;
+
+					return query.Where(exp);
 
 			}
 

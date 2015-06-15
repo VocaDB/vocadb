@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -81,52 +83,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case NameMatchMode.Words:
 					var words = textQuery.Words;
 
-					switch (words.Length) {
-						case 1:
-							query = query.Where(q => q.Names.Names.Any(n => n.Value.Contains(words[0])));
-							break;
-						case 2:
-							query = query.Where(q => 
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-							);
-							break;
-						case 3:
-							query = query.Where(q => 
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[2]))
-							);
-							break;
-						case 4:
-							query = query.Where(q => 
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[3]))
-							);
-							break;
-						case 5:
-							query = query.Where(q => 
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[3]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[4]))
-							);
-							break;
-						case 6:
-							query = query.Where(q => 
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[3]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[4]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[5]))
-							);
-							break;
+					Expression<Func<TEntry, bool>> exp = (q => q.Names.Names.Any(n => n.Value.Contains(words[0])));
+
+					foreach (var word in words.Skip(1).Take(10)) {
+						var temp = word;
+						exp = exp.And((q => q.Names.Names.Any(n => n.Value.Contains(temp))));
 					}
-					return query;
+
+					return query.Where(exp);
 
 			}
 
