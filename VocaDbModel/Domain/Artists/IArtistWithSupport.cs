@@ -1,8 +1,6 @@
 ﻿namespace VocaDb.Model.Domain.Artists {
 
-	public interface IArtistWithSupport {
-
-		Artist Artist { get; }
+	public interface IArtistWithSupport : IArtistLink {
 
 		bool IsSupport { get; }
 

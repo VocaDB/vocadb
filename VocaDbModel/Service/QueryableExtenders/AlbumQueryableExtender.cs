@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -81,59 +82,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			bool childVoicebanks,
 			Func<int, Artist> artistGetter) {
 
-			if (artistId == 0)
-				return query;
+			var various = Model.Helpers.ArtistHelper.VariousArtists;
+			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 
-			if (participation == ArtistAlbumParticipationStatus.Everything)
-				return query.WhereHasArtist(artistId, childVoicebanks);
-
-			var artist = artistGetter(artistId);
-			var musicProducerTypes = new[] {ArtistType.Producer, ArtistType.Circle, ArtistType.OtherGroup};
-
-			if (musicProducerTypes.Contains(artist.ArtistType)) {
-
-				var various = Model.Helpers.ArtistHelper.VariousArtists;
-				var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
-
-				switch (participation) {
-					case ArtistAlbumParticipationStatus.OnlyMainAlbums:
-						return query.Where(al => al.AllArtists.Any(a => a.Artist.Id == artistId && !a.IsSupport && ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) && a.Album.ArtistString.Default != various));
-					case ArtistAlbumParticipationStatus.OnlyCollaborations:
-						return query.Where(al => al.AllArtists.Any(a => a.Artist.Id == artistId && (a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Album.ArtistString.Default == various)));
-					default:
-						return query;
-				}
-
-			} else {
-
-				switch (participation) {
-					case ArtistAlbumParticipationStatus.OnlyMainAlbums:
-						return query.Where(al => al.AllArtists.Any(a => (a.Artist.Id == artistId || (childVoicebanks && a.Artist.BaseVoicebank.Id == artistId)) && !a.IsSupport));
-					case ArtistAlbumParticipationStatus.OnlyCollaborations:
-						return query.Where(al => al.AllArtists.Any(a => (a.Artist.Id == artistId || (childVoicebanks && a.Artist.BaseVoicebank.Id == artistId)) && a.IsSupport));
-					default:
-						return query;
-				}
-				
-			}
-
-		}
-
-		/// <summary>
-		/// Filters a album query by a single artist Id.
-		/// </summary>
-		/// <param name="query">Album query. Cannot be null.</param>
-		/// <param name="artistId">ID of the artist being filtered. If 0, no filtering is done.</param>
-		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<Album> WhereHasArtist(this IQueryable<Album> query, int artistId, bool childVoicebanks) {
-
-			if (artistId == 0)
-				return query;
-
-			if (!childVoicebanks)
-				return query.Where(s => s.AllArtists.Any(a => a.Artist.Id == artistId));
-			else
-				return query.Where(s => s.AllArtists.Any(a => a.Artist.Id == artistId || a.Artist.BaseVoicebank.Id == artistId));
+			return EntryWithArtistsQueryableExtender.WhereHasArtistParticipationStatus<Album, ArtistForAlbum>(query, artistId, participation,
+				childVoicebanks, artistGetter,
+				al => al.AllArtists.Any(a => a.Artist.Id == artistId && !a.IsSupport && ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) && a.Album.ArtistString.Default != various),
+				al => al.AllArtists.Any(a => a.Artist.Id == artistId && (a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Album.ArtistString.Default == various))
+			);
 
 		}
 
@@ -182,59 +138,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case NameMatchMode.Words:
 					var words = textQuery.Words;
 
-					switch (words.Length) {
-						case 1:
-							query = query.Where(q => 
-								(allowCatNum && q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter)) ||
-								q.Names.Names.Any(n => n.Value.Contains(words[0])));
-							break;
-						case 2:
-							query = query.Where(q => 
-								(allowCatNum && q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter)) ||
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-							);
-							break;
-						case 3:
-							query = query.Where(q => 
-								(allowCatNum && q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter)) ||
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[2]))
-							);
-							break;
-						case 4:
-							query = query.Where(q => 
-								(allowCatNum && q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter)) ||
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[3]))
-							);
-							break;
-						case 5:
-							query = query.Where(q => 
-								(allowCatNum && q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter)) ||
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[3]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[4]))
-							);
-							break;
-						case 6:
-							query = query.Where(q => 
-								(allowCatNum && q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter)) ||
-								q.Names.Names.Any(n => n.Value.Contains(words[0]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[1]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[2]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[3]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[4]))
-								&& q.Names.Names.Any(n => n.Value.Contains(words[5]))
-							);
-							break;
+					Expression<Func<Album, bool>> catNumExp = (q => allowCatNum && q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter));
+
+					Expression<Func<Album, bool>> nameExp = (q => q.Names.Names.Any(n => n.Value.Contains(words[0])));
+
+					foreach (var word in words.Skip(1).Take(10)) {
+						var temp = word;
+						nameExp = nameExp.And((q => q.Names.Names.Any(n => n.Value.Contains(temp))));
 					}
-					return query;
+
+					return query.Where(catNumExp.Or(nameExp));
 
 			}
 
