@@ -10,10 +10,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 	public static class EntryWithArtistsQueryableExtender {
 
 		/// <summary>
-		/// Filters a album query by a single artist Id.
+		/// Filters an entry query by a single artist Id.
 		/// </summary>
-		/// <param name="query">Album query. Cannot be null.</param>
+		/// <param name="query">Entry query. Cannot be null.</param>
 		/// <param name="artistId">ID of the artist being filtered. If 0, no filtering is done.</param>
+		/// <param name="childVoicebanks">Whether child voicebanks of possible voice synthesizer are included.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<TEntry> WhereHasArtist<TEntry, TArtistLink>(this IQueryable<TEntry> query, int artistId, bool childVoicebanks)
 			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistLink {
@@ -25,6 +26,23 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query.Where(s => s.AllArtists.Any(a => a.Artist.Id == artistId));
 			else
 				return query.Where(s => s.AllArtists.Any(a => a.Artist.Id == artistId || a.Artist.BaseVoicebank.Id == artistId));
+
+		}
+
+		/// <summary>
+		/// Filters an entry query by a list of artist Ids.
+		/// </summary>
+		/// <param name="query">Entry query. Cannot be null.</param>
+		/// <param name="artistIds">IDs of the artists being filtered. If null or empty, no filtering is done.</param>
+		/// <param name="childVoicebanks">Whether child voicebanks of possible voice synthesizer are included.</param>
+		/// <returns>Filtered query. Cannot be null.</returns>
+		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, int[] artistIds, bool childVoicebanks)
+			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistLink {
+
+			if (artistIds == null || !artistIds.Any())
+				return query;
+
+			return artistIds.Aggregate(query, (current, artistId) => current.WhereHasArtist<TEntry, TArtistLink>(artistId, childVoicebanks));
 
 		}
 

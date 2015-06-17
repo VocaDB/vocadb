@@ -225,7 +225,11 @@ namespace VocaDb.Web.Controllers {
 						&& a.OriginalRelease.ReleaseDate.Year != null 
 						&& a.OriginalRelease.ReleaseDate.Month != null 
 						&& (a.OriginalRelease.ReleaseDate.Year < now.Year || (a.OriginalRelease.ReleaseDate.Year == now.Year && a.OriginalRelease.ReleaseDate.Month <= now.Month))
-						&& a.AllArtists.Any(r => r.Artist.ArtistType == ArtistType.Vocaloid || r.Artist.ArtistType == ArtistType.UTAU || r.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer))
+						&& a.AllArtists.Any(r => 
+							r.Artist.ArtistType == ArtistType.Vocaloid 
+							|| r.Artist.ArtistType == ArtistType.UTAU 
+							|| r.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer
+							|| r.Artist.ArtistType == ArtistType.Utaite))
 					.OrderBy(a => a.OriginalRelease.ReleaseDate.Year)
 					.ThenBy(a => a.OriginalRelease.ReleaseDate.Month)
 					.GroupBy(a => new {
@@ -267,7 +271,7 @@ namespace VocaDb.Web.Controllers {
 		public ActionResult AlbumsPerVocaloid() {
 			
 			return SimpleBarChart<Artist>(q => q
-					.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU)
+					.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU || a.ArtistType == ArtistType.Utaite)
 					.Select(a => new LocalizedValue {
 						Name = new TranslatedString {			
 							DefaultLanguage = a.Names.SortNames.DefaultLanguage,
@@ -386,7 +390,7 @@ namespace VocaDb.Web.Controllers {
 		public ActionResult SongsPerVocaloid() {
 			
 			return SimpleBarChart<Artist>(q => q
-					.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU)
+					.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU || a.ArtistType == ArtistType.Utaite)
 					.Select(a => new LocalizedValue {
 						Name = new TranslatedString {			
 							DefaultLanguage = a.Names.SortNames.DefaultLanguage,

@@ -390,7 +390,7 @@
 
 			var artistId = @ToJS((int?)ViewBag.ArtistId);
 			var childVoicebanks = @ToJS((bool?)ViewBag.ChildVoicebanks);
-			var sort = 'Name';
+			var sort = 'AdditionDate';
 			var groupByRating = true;
 
 			var followedArtistsViewModel = new vdb.viewModels.user.FollowedArtistsViewModel(userRepo, resourceRepo, languageSelection, userId, cultureCode);
