@@ -83,14 +83,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case NameMatchMode.Words:
 					var words = textQuery.Words;
 
-					Expression<Func<TEntry, bool>> exp = (q => q.Names.Names.Any(n => n.Value.Contains(words[0])));
-
-					foreach (var word in words.Skip(1).Take(10)) {
-						var temp = word;
-						exp = exp.And((q => q.Names.Names.Any(n => n.Value.Contains(temp))));
+					foreach (var word in words.Take(FindHelpers.MaxSearchWords)) {
+						query = query.Where(q => q.Names.Names.Any(n => n.Value.Contains(word)));
 					}
 
-					return query.Where(exp);
+					return query;
 
 			}
 

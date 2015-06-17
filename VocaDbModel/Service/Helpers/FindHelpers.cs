@@ -11,7 +11,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 	public static class FindHelpers {
 
-		private const int MaxSearchWords = 6;
+		public const int MaxSearchWords = 10;
 
 		/// <summary>
 		/// Adds a filter for a list of names.
@@ -41,26 +41,11 @@ namespace VocaDb.Model.Service.Helpers {
 				case NameMatchMode.Words:
 					var words = textQuery.Words;
 
-					switch (words.Length) {
-						case 1:
-							query = query.Where(q => q.Value.Contains(words[0]));
-							break;
-						case 2:
-							query = query.Where(q => q.Value.Contains(words[0]) && q.Value.Contains(words[1]));
-							break;
-						case 3:
-							query = query.Where(q => q.Value.Contains(words[0]) && q.Value.Contains(words[1]) && q.Value.Contains(words[2]));
-							break;
-						case 4:
-							query = query.Where(q => q.Value.Contains(words[0]) && q.Value.Contains(words[1]) && q.Value.Contains(words[2]) && q.Value.Contains(words[3]));
-							break;
-						case 5:
-							query = query.Where(q => q.Value.Contains(words[0]) && q.Value.Contains(words[1]) && q.Value.Contains(words[2]) && q.Value.Contains(words[3]) && q.Value.Contains(words[4]));
-							break;
-						case 6:
-							query = query.Where(q => q.Value.Contains(words[0]) && q.Value.Contains(words[1]) && q.Value.Contains(words[2]) && q.Value.Contains(words[3]) && q.Value.Contains(words[4]) && q.Value.Contains(words[5]));
-							break;
+					foreach (var word in words.Take(MaxSearchWords)) {
+						var temp = word;
+						query = query.Where(q => q.Value.Contains(temp));
 					}
+
 					return query;
 
 			}

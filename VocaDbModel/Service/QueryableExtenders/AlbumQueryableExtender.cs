@@ -142,7 +142,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 					Expression<Func<Album, bool>> nameExp = (q => q.Names.Names.Any(n => n.Value.Contains(words[0])));
 
-					foreach (var word in words.Skip(1).Take(10)) {
+					foreach (var word in words.Skip(1).Take(FindHelpers.MaxSearchWords)) {
 						var temp = word;
 						nameExp = nameExp.And((q => q.Names.Names.Any(n => n.Value.Contains(temp))));
 					}
