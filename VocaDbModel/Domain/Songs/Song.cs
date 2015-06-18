@@ -344,14 +344,6 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
-		/*public virtual SongInAlbum AddAlbum(Album album, int trackNumber) {
-
-			var link = new SongInAlbum(this, album, trackNumber);
-			AllAlbums.Add(link);
-			return link;
-
-		}*/
-
 		public virtual ArtistForSong AddArtist(Artist artist) {
 
 			ParamIs.NotNull(() => artist);
@@ -635,7 +627,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 			ParamIs.NotNull(() => newArtists);
 
-			var diff = CollectionHelper.Diff(Artists, newArtists, (n1, n2) => n1.Id == n2.Id);
+			var diff = CollectionHelper.Diff(AllArtists, newArtists, (n1, n2) => n1.Id == n2.Id); // Crawl AllArtists to remove deleted artists
 			var created = new List<ArtistForSong>();
 			var edited = new List<ArtistForSong>();
 
