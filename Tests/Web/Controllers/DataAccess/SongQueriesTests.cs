@@ -555,6 +555,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Update_Artists_RemoveDeleted() {
+			
+			repository.Save(vocalist2);
+			repository.Save(song.AddArtist(vocalist2));
+			vocalist2.Deleted = true;
+
+			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
+
+			queries.UpdateBasicProperties(contract);
+
+			Assert.IsFalse(song.AllArtists.Any(a => Equals(vocalist2, a.Artist)), "vocalist2 was removed from song");
+
+		}
+
+		[TestMethod]
 		public void Update_PublishDate_From_PVs() {
 			
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
