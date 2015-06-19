@@ -134,7 +134,7 @@ namespace VocaDb.Web.Helpers {
 
 		public static string AllPermissionTokenNames(IEnumerable<PermissionToken> tokens) {
 
-			return string.Join(", ", tokens.Select(PermissionTokenName));
+			return string.Join(", ", tokens.Select(t => PermissionTokenName(t)));
 
 		}
 
@@ -192,18 +192,15 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static string PermissionTokenName(PermissionToken token) {
+		public static string PermissionTokenName(IPermissionToken token) {
 
-			var t = PermissionToken.GetById(token.Id);
-			return PermissionTokenNames.ResourceManager.GetString(t.Name) ?? t.Name;
+			PermissionToken t;
+			if (PermissionToken.TryGetById(token.Id, out t)) {
+				return PermissionTokenNames.ResourceManager.GetString(t.Name) ?? t.Name;
+			} else {
+				return (token.Name != null ? PermissionTokenNames.ResourceManager.GetString(token.Name) : null) ?? token.Name ?? token.Id.ToString();
+			}
 
-		}
-
-		public static string PermissionTokenName(PermissionTokenContract token) {
-
-			var t = PermissionToken.GetById(token.Id);
-			return PermissionTokenNames.ResourceManager.GetString(t.Name) ?? t.Name;
-			 
 		}
 
 	}

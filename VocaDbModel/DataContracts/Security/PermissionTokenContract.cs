@@ -5,7 +5,7 @@ using VocaDb.Model.Domain.Security;
 namespace VocaDb.Model.DataContracts.Security {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class PermissionTokenContract {
+	public class PermissionTokenContract : IPermissionToken {
 
 		public PermissionTokenContract() { }
 

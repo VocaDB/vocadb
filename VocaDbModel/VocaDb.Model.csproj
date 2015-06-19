@@ -741,6 +741,7 @@
     <Compile Include="Service\Repositories\IDiscussionFolderRepository.cs" />
     <Compile Include="Service\Repositories\IEntryReportRepository.cs" />
     <Compile Include="Service\Repositories\IEventRepository.cs" />
+    <Compile Include="Service\Repositories\IRepositoryBaseExtender.cs" />
     <Compile Include="Service\Repositories\ISongRepository.cs" />
     <Compile Include="Service\Repositories\IUserMessageRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\AlbumNHibernateRepository.cs" />

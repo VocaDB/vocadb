@@ -445,39 +445,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void UpdateUser(UserWithPermissionsContract contract) {
-
-			ParamIs.NotNull(() => contract);
-
-			UpdateEntity<User>(contract.Id, (session, user) => {
-
-				if (!EntryPermissionManager.CanEditUser(PermissionContext, user.GroupId)) {
-					var loggedUser = GetLoggedUser(session);
-					var msg = string.Format("{0} (level {1}) not allowed to edit {2}", loggedUser, loggedUser.GroupId, user);
-					log.Error(msg);
-					throw new NotAllowedException(msg);
-				}
-
-				if (EntryPermissionManager.CanEditGroupTo(PermissionContext, contract.GroupId)) {
-					user.GroupId = contract.GroupId;
-				}
-
-				if (EntryPermissionManager.CanEditAdditionalPermissions(PermissionContext)) {
-					user.AdditionalPermissions = new PermissionCollection(contract.AdditionalPermissions.Select(p => PermissionToken.GetById(p.Id)));
-				}
-
-				var diff = OwnedArtistForUser.Sync(user.AllOwnedArtists, contract.OwnedArtistEntries, a => user.AddOwnedArtist(session.Load<Artist>(a.Artist.Id)));
-				SessionHelper.Sync(session, diff);
-
-				user.Active = contract.Active;
-				user.Options.Poisoned = contract.Poisoned;
-
-				AuditLog(string.Format("updated user {0}", EntryLinkFactory.CreateEntryLink(user)), session);
-
-			}, PermissionToken.ManageUserPermissions, skipLog: true);
-
-		}
-
 	}
 
 	public class InvalidPasswordException : Exception {

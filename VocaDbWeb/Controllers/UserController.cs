@@ -601,7 +601,7 @@ namespace VocaDb.Web.Controllers
 			if (permissions != null)
 				model.Permissions = permissions.ToArray();
 
-			Service.UpdateUser(model.ToContract());
+			Data.UpdateUser(model.ToContract());
 
         	return RedirectToAction("Details", new {id = model.Id});
 

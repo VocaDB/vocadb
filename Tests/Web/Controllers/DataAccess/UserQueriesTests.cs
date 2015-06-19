@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Users;
@@ -36,6 +37,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private FakeStopForumSpamClient stopForumSpamClient;
 		private User userWithEmail;
 		private User userWithoutEmail;
+
+		private User LoggedUser {
+			get { return userWithEmail; }
+		}
 
 		private void AssertEqual(User expected, UserContract actual) {
 			
@@ -495,6 +500,30 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(hashed, userWithEmail.Password, "Hashed password");
 			Assert.AreEqual(0, repository.List<PasswordResetRequest>().Count, "Number of requests");
+
+		}
+
+		[TestMethod]
+		public void UpdateUser_SetPermissions() {
+			
+			LoggedUser.GroupId = UserGroupId.Admin;
+			permissionContext.RefreshLoggedUser(repository);
+
+			var contract = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
+			contract.AdditionalPermissions = new HashSet<PermissionToken>(new[] { PermissionToken.DesignatedStaff });
+			data.UpdateUser(contract);
+
+			var user = repository.Load(contract.Id);
+			Assert.IsTrue(user.AdditionalPermissions.Has(PermissionToken.DesignatedStaff), "User has the given permission");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotAllowedException))]
+		public void UpdateUser_NotAllowed() {
+			
+			var contract = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
+			data.UpdateUser(contract);
 
 		}
 

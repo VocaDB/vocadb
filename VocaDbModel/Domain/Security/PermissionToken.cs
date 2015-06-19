@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Model.Domain.Security {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public struct PermissionToken : IEquatable<PermissionToken> {
+	public struct PermissionToken : IEquatable<PermissionToken>, IPermissionToken {
 
 		private Guid id;
 		private string name;
@@ -67,23 +66,9 @@ namespace VocaDb.Model.Domain.Security {
 		public static readonly PermissionToken ViewAuditLog	=			New("8d3d5395-12c9-440a-8120-4911034b9a7e", "ViewAuditLog");
 
 		/// <summary>
-		/// Not in use, news are managed from the blog
-		/// </summary>
-		public static readonly PermissionToken EditNews =				New("c7f03d3f-7b4b-4149-b390-a0cafb7f284f", "EditNews");
-
-		/// <summary>
-		/// Not in use, comments are public for everyone
-		/// </summary>
-		public static readonly PermissionToken ReadRecentComments =		New("325697d5-0c04-46e9-b614-eadec420a86d", "ReadRecentComments");
-
-		/// <summary>
 		/// All tokens except Nothing
 		/// </summary>
 		public static readonly IEnumerable<PermissionToken> All = all.Values;
-
-		public static string GetNameById(Guid id) {
-			return GetById(id).Name;
-		}
 
 		public static PermissionToken GetById(Guid id) {
 
@@ -92,6 +77,19 @@ namespace VocaDb.Model.Domain.Security {
 				return token;
 
 			throw new ArgumentException(string.Format("Invalid permission token: {0}.", id), "id");
+
+		}
+
+		public static bool IsValid(PermissionToken token) {
+			return all.ContainsKey(token.Id);
+		}
+
+		public static bool TryGetById(Guid id, out PermissionToken token) {
+
+			if (all.TryGetValue(id, out token))
+				return true;
+
+			return false;
 
 		}
 
@@ -140,6 +138,14 @@ namespace VocaDb.Model.Domain.Security {
 		public override string ToString() {
 			return Name;
 		}
+
+	}
+
+	public interface IPermissionToken {
+
+		Guid Id { get; }
+
+		string Name { get; }
 
 	}
 

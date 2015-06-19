@@ -51,7 +51,11 @@ namespace VocaDb.Tests.TestSupport {
 			get { throw new System.NotImplementedException(); }
 		}
 
-		public UserGroupId UserGroupId { get; private set; }
+		public UserGroupId UserGroupId {
+			get {
+				return LoggedUser != null ? LoggedUser.GroupId : UserGroupId.Nothing;
+			}
+		}
 
 		/// <summary>
 		/// Updates status, including permissions, of the currently logged in user.
