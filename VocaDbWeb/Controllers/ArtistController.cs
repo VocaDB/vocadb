@@ -137,6 +137,7 @@ namespace VocaDb.Web.Controllers
 			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new {id }));
 			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("Picture", new { id })).ToString();
 			prop.OpenGraph.Title = string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType));
+			prop.OpenGraph.ShowTwitterCard = true;
 
             return View(model);
 

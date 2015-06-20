@@ -8,10 +8,12 @@ namespace VocaDb.Model.Service.ExtSites {
 
 		public string GenerateDescription(AlbumContract album, Func<DiscType, string> albumTypeNames) {
 					
+			var typeName = albumTypeNames(album.DiscType);
+
 			if (album.ReleaseDate.IsEmpty)
-				return albumTypeNames(album.DiscType);
+				return typeName;
 			else
-				return string.Format("{0}, released {1}", albumTypeNames(album.DiscType), album.ReleaseDate.Formatted);
+				return string.Format("{0}, released {1}", typeName, album.ReleaseDate.Formatted);
 
 		}
 

@@ -49,5 +49,10 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["spotImAccId"] = value; }			
 		}
 
+		[ConfigurationProperty("twitterAccountName", DefaultValue = "")]
+		public string TwitterAccountName {
+			get { return (string)this["twitterAccountName"]; }
+			set { this["twitterAccountName"] = value; }			
+		}
 	}
 }

@@ -22,7 +22,9 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
+using System.Globalization;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
@@ -135,12 +137,16 @@ namespace VocaDb.Web.Controllers
 
 			WebHelper.VerifyUserAgent(Request);
 
-			var model = new SongDetails(Service.GetSongDetails(id, albumId, WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty));
+			var contract = Service.GetSongDetails(id, albumId, WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty);
+			var model = new SongDetails(contract);
 
 			var prop = PageProperties;
 			prop.GlobalSearchType = EntryType.Song;
 			prop.Title = model.Name;
-			prop.Description = markdownParser.GetPlainText(model.Notes.EnglishOrOriginal);
+			prop.Description = !model.Notes.IsEmpty ? 
+				markdownParser.GetPlainText(model.Notes.EnglishOrOriginal) :
+				new SongDescriptionGenerator().GenerateDescription(contract.Song, d => Translate.SongTypeNames.GetName(d, CultureInfo.InvariantCulture));
+			prop.OpenGraph.ShowTwitterCard = true;
 
 			string titleAndArtist;
 			if (!string.IsNullOrEmpty(model.ArtistString)) {

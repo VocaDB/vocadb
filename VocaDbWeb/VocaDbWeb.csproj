@@ -2575,6 +2575,7 @@
     <Content Include="Views\Shared\Partials\_ArtistRolesEditViewModel.cshtml" />
     <Content Include="Views\Shared\Partials\_MainNavigationItems.cshtml" />
     <Content Include="Views\User\Stats.cshtml" />
+    <Content Include="Views\Shared\LayoutPartials\_TwitterCard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

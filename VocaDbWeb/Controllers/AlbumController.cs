@@ -136,6 +136,7 @@ namespace VocaDb.Web.Controllers
 			prop.GlobalSearchType = EntryType.Album;
 			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("CoverPicture", new { id })).ToString();
 			prop.OpenGraph.Type = OpenGraphTypes.Album;
+			prop.OpenGraph.ShowTwitterCard = true;
 
 			string titleAndArtist;
 			if (!string.IsNullOrEmpty(model.ArtistString)) {

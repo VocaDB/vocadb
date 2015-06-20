@@ -132,6 +132,8 @@ namespace VocaDb.Web.Code {
 			}
 		}
 
+		public bool ShowTwitterCard { get; set; }
+
 		/// <summary>
 		/// og:title meta field value. Defaults to page title.
 		/// </summary>
