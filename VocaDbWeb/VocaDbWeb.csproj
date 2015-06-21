@@ -1027,6 +1027,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PagedListStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\ActivityEntry\IndexStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IndexStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3234,6 +3239,10 @@
       <LastGenOutput>PagedListStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Other\PagedListStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.ja.resx" />

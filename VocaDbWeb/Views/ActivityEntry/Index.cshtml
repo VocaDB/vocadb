@@ -1,24 +1,25 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers
+@using Res = VocaDb.Web.Resources.Views.ActivityEntry.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
-	PageProperties.Title = "Recent activity";
+	PageProperties.Title = Res.RecentActivity;
 }
 
 <!-- Binding context: ActivityEntryListViewModel -->
 
 <ul class="nav nav-pills">
 	<li class="active">
-		@Html.ActionLink("All activity", "Index")
+		@Html.ActionLink(Res.AllActivity, "Index")
 	</li>
 	@if (Login.IsLoggedIn) {
 		<li>
-			@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
+			@Html.ActionLink(Res.FollowedArtists, "FollowedArtistActivity")
 		</li>
 	}
 	<li>
-		@Html.ActionLink("Comments", "Index", "Comment")
+		@Html.ActionLink(Res.Comments, "Index", "Comment")
 	</li>	
 </ul>
 
@@ -28,7 +29,7 @@
 
 <hr />
 <h3>
-	<a href="#" data-bind="click: loadMore">View more</a>
+	<a href="#" data-bind="click: loadMore">@Res.ViewMore</a>
 </h3>
 
 @section BodyScripts {
