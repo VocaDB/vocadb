@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
@@ -27,6 +28,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 				.Select(s => new SongInAlbumContract(s, languagePreference, false)).ToArray();
 			Tags = album.Tags.Usages.Select(u => new TagUsageForApiContract(u)).OrderByDescending(t => t.Count).ToArray();
 			WebLinks = album.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
+
+			TotalLength = Songs.All(s => s.Song.LengthSeconds > 0) ? TimeSpan.FromSeconds(Songs.Sum(s => s.Song.LengthSeconds)) : TimeSpan.Zero;
 
 		}
 
@@ -68,6 +71,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public TagUsageForApiContract[] Tags { get; set; }
+
+		[DataMember]
+		public TimeSpan TotalLength { get; set; }
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
