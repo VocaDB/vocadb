@@ -1,42 +1,23 @@
 ﻿@using System.Web.Optimization
-@using VocaDb.Model.DataContracts.Songs;
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers;
-@using VocaDb.Model.Domain.Images
 @using Res = ViewRes.SongList.DetailsStrings;
-@inherits VocaDb.Web.Code.VocaDbPage<SongListContract>
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
 		   
 @{
 	
-	if (Model.FeaturedCategory == SongListFeaturedCategory.Nothing) {
-		PageProperties.PageTitle = string.Format("{0} - {1}", Res.SongList, Model.Name);
-		PageProperties.Title = Model.Name;
-		PageProperties.Subtitle = Res.SongList;
+	if (Model.SongList.FeaturedCategory == SongListFeaturedCategory.Nothing) {
 		ViewBag.Parents = new[] {
-			Html.ActionLink(Model.Author.Name, "Details", "User", new {id = Model.Author.Id}, null)
+			Html.ActionLink(Model.SongList.Author.Name, "Details", "User", new {id = Model.SongList.Author.Id}, null)
 		};
 	} else {
-
-		var categoryName = Translate.SongListFeaturedCategoryNames[Model.FeaturedCategory];
-
-		PageProperties.PageTitle = string.Format("{0} - {1}", categoryName, Model.Name);
-		PageProperties.Title = Model.Name;
-		PageProperties.Subtitle = categoryName;
-		
+		var categoryName = Translate.SongListFeaturedCategoryNames[Model.SongList.FeaturedCategory];
 		ViewBag.Parents = new[] {
 			Html.ActionLink(categoryName, "Featured", "SongList")
 		};		
 	}
 
-	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
-	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original) ?? Url.EntryImageOld(Model.Thumb, ImageSize.Thumb);
-	if (!string.IsNullOrEmpty(thumbUrl)) {
-		PageProperties.OpenGraph.Image = thumbUrl;
-	}
-	
 	var url = PageProperties.CanonicalUrl;
-	var sortRules = new[] { new KeyValuePair<string, string>(string.Empty, Res.DefaultSortRule) }
-		.Concat(Translate.SongSortRuleNames.ValuesAndNamesStrings).ToDictionary(s => s.Key, s => s.Value);
 	
 }
 
@@ -46,10 +27,10 @@
 }
 
 @section Toolbar {	
-@if (Model.CanEdit) {
-	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editListLink" })
+@if (Model.SongList.CanEdit) {
+	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
 	@:
-	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
 }
 }
 
@@ -65,7 +46,7 @@
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
 
 		var languageSelection = '@LanguagePreferenceInt';
-		var listId = @Model.Id;
+		var listId = @Model.SongList.Id;
 
 		var rootPath = '@RootPath';
 		var urlMapper = new vdb.UrlMapper(rootPath);
@@ -89,14 +70,14 @@
 }
 
 <div class="media">
-	@if (!string.IsNullOrEmpty(smallThumbUrl)) {
-		<a class="pull-left" href="@thumbUrl">
-			<img class="media-object" src="@smallThumbUrl" alt="Thumb" />				
+	@if (!string.IsNullOrEmpty(Model.SmallThumbUrl)) {
+		<a class="pull-left" href="@Model.ThumbUrl">
+			<img class="media-object" src="@Model.SmallThumbUrl" alt="Thumb" />				
 		</a>		
 	}
 	<div class="media-body">
-		@if (!string.IsNullOrWhiteSpace(Model.Description)) {
-			<p>@HtmlHelpers.FormatText(Model.Description)</p>
+		@if (!string.IsNullOrWhiteSpace(Model.SongList.Description)) {
+			<p>@HtmlHelpers.FormatText(Model.SongList.Description)</p>
 		}
 	</div>
 </div>
@@ -117,7 +98,7 @@
 
 <div class="inline-block songlist-sort">
 	@ViewRes.EntryIndexStrings.SortBy
-	@KnockoutHelpers.Dropdown(sortRules, "sort", "sortName")
+	@KnockoutHelpers.Dropdown(Model.SortRules, "sort", "sortName")
 </div>
 
 <div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">

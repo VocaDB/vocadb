@@ -45,6 +45,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = contract.Name;
 			PageProperties.Subtitle = DetailsStrings.Tag;
 			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			PageProperties.OpenGraph.ShowTwitterCard = true;
 
 			return View(contract);
 

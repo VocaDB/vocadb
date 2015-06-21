@@ -714,6 +714,7 @@
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
     <Compile Include="Controllers\DataAccess\ActivityEntryQueries.cs" />
     <Compile Include="Helpers\UrlHelperExtender.cs" />
+    <Compile Include="Models\SongLists\SongListDetailsViewModel.cs" />
     <Compile Include="Resources\Domain\EntryReportTypeNames.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

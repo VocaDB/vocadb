@@ -2,10 +2,13 @@
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Rankings;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Controllers.DataAccess;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.SongLists;
 
 namespace VocaDb.Web.Controllers
@@ -77,7 +80,31 @@ namespace VocaDb.Web.Controllers
 			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			PageProperties.Description = contract.Description;
 
-			return View(contract);
+			if (contract.FeaturedCategory == SongListFeaturedCategory.Nothing) {
+				PageProperties.PageTitle = string.Format("{0} - {1}", ViewRes.SongList.DetailsStrings.SongList, contract.Name);
+				PageProperties.Title = contract.Name;
+				PageProperties.Subtitle = ViewRes.SongList.DetailsStrings.SongList;
+			} else {
+
+				var categoryName = Translate.SongListFeaturedCategoryNames[contract.FeaturedCategory];
+
+				PageProperties.PageTitle = string.Format("{0} - {1}", categoryName, contract.Name);
+				PageProperties.Title = contract.Name;
+				PageProperties.Subtitle = categoryName;
+
+			}
+
+			var viewModel = new SongListDetailsViewModel(contract);
+
+			viewModel.SmallThumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.SmallThumb);
+			var thumbUrl = viewModel.ThumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.Original) ?? Url.EntryImageOld(contract.Thumb, ImageSize.Thumb);
+			if (!string.IsNullOrEmpty(thumbUrl)) {
+				PageProperties.OpenGraph.Image = thumbUrl;
+			}
+
+			PageProperties.OpenGraph.ShowTwitterCard = true;
+
+			return View(viewModel);
 
 		}
 
