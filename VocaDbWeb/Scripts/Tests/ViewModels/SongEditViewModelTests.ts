@@ -72,7 +72,7 @@ module vdb.tests.viewModels {
 	QUnit.test("validationError_duplicateArtist", () => {
 
         var target = createViewModel();
-		var artist = new vm.ArtistForAlbumEditViewModel(null, { artist: { id: 1 }, roles: '' });
+		var artist = new vm.ArtistForAlbumEditViewModel(null, { artist: { id: 1, name: '164' }, roles: '' });
 
 		target.artistLinks.push(artist);
 		target.artistLinks.push(artist);
