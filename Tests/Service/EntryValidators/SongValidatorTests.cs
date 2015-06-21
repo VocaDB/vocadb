@@ -1,11 +1,9 @@
-﻿
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Resources;
 using VocaDb.Model.Service.EntryValidators;
+using VocaDb.Tests.TestData;
 
 namespace VocaDb.Tests.Service.EntryValidators {
 
@@ -26,10 +24,10 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		[TestInitialize]
 		public void SetUp() {
 
-			vocalist = new Artist(TranslatedString.Create("GUMI"));
+			vocalist = CreateEntry.Artist(ArtistType.Vocaloid, id: 1, name: "GUMI");
 			vocalist.ArtistType = ArtistType.Vocaloid;
 
-			producer = new Artist(TranslatedString.Create("devilishP"));
+			producer = CreateEntry.Artist(ArtistType.Producer, id: 2, name: "devilishP");
 			producer.ArtistType = ArtistType.Producer;
 
 			song = new Song(new LocalizedString("5150", ContentLanguageSelection.English)) { SongType = SongType.Original };
@@ -83,6 +81,16 @@ namespace VocaDb.Tests.Service.EntryValidators {
 			song.Notes.Original = "Instrumental song";
 
 			TestValidate(true, song);
+
+		}
+
+		[TestMethod]
+		public void DuplicateArtist() {
+	
+			song.AddArtist(producer);
+			song.AddArtist(producer);
+
+			TestValidate(false, song);
 
 		}
 

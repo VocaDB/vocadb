@@ -4,13 +4,13 @@ module vdb.dataContracts {
 
     export interface ArtistContract {
 
-        additionalNames: string;
+        additionalNames?: string;
 
-        artistType: string;
+        artistType?: string;
 
         id: number;
 
-        name: string;
+        name?: string;
 
     }
 

@@ -6,11 +6,11 @@ module vdb.dataContracts {
 
         artist: ArtistContract;
 
-        id: number;
+        id?: number;
 
-        isSupport: boolean;
+        isSupport?: boolean;
 
-        name: string;
+        name?: string;
 
         roles: string;
 

@@ -214,6 +214,7 @@ module vdb.viewModels {
         
 		public hasValidationErrors: KnockoutComputed<boolean>;
 		public validationExpanded = ko.observable(false);
+		public validationError_duplicateArtist: KnockoutComputed<boolean>;
 		public validationError_needArtist: KnockoutComputed<boolean>;
 		public validationError_needCover: KnockoutComputed<boolean>;
 		public validationError_needReleaseYear: KnockoutComputed<boolean>;
@@ -430,6 +431,10 @@ module vdb.viewModels {
 
             this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
             
+			this.validationError_duplicateArtist = ko.computed(() => {
+				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport()), a => a.length > 1);
+			});
+
 			this.validationError_needArtist = ko.computed(() => _.isEmpty(this.artistLinks()));
 			this.validationError_needCover = ko.computed(() => !this.hasCover);
 			//this.validationError_needReleaseYear = ko.computed(() => !_.isNumber(this.releaseYear()) || this.releaseYear() == null);
@@ -442,6 +447,7 @@ module vdb.viewModels {
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 
 			this.hasValidationErrors = ko.computed(() =>
+				this.validationError_duplicateArtist() ||
 				this.validationError_needArtist() ||
 				this.validationError_needCover() ||
 				this.validationError_needReleaseYear() ||

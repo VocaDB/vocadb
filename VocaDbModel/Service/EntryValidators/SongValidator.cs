@@ -40,6 +40,9 @@ namespace VocaDb.Model.Service.EntryValidators {
 			if (!song.Artists.Any(a => a.Artist != null && ArtistHelper.IsProducerRole(a, SongHelper.IsAnimation(song.SongType))))
 				errors.Add(SongValidationErrors.NeedProducer);
 
+			if (song.Artists.GroupBy(a => (a.Artist != null ? a.Artist.Id.ToString() : a.Name) + a.IsSupport).Any(a => a.Count() > 1))
+				errors.Add(SongValidationErrors.DuplicateArtist);
+
 			return !errors.Any();
 
 		}

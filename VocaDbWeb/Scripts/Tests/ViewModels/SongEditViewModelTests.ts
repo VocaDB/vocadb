@@ -35,6 +35,7 @@ module vdb.tests.viewModels {
         equal(target.length(), 39, "length");
         equal(target.lengthFormatted(), "0:39", "lengthFormatted");
         equal(target.webLinks.webLinks().length, 1, "webLinks.length");
+		equal(target.validationError_duplicateArtist(), false, "validationError_duplicateArtist");
 
     });
 
@@ -65,6 +66,18 @@ module vdb.tests.viewModels {
         target.lengthFormatted("3:39");
 
         equal(target.length(), 219, "length");
+
+    });
+
+	QUnit.test("validationError_duplicateArtist", () => {
+
+        var target = createViewModel();
+		var artist = new vm.ArtistForAlbumEditViewModel(null, { artist: { id: 1 }, roles: '' });
+
+		target.artistLinks.push(artist);
+		target.artistLinks.push(artist);
+
+		equal(target.validationError_duplicateArtist(), true, "validationError_duplicateArtist");
 
     });
 

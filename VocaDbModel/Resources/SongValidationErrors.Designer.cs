@@ -61,6 +61,15 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The same artist cannot be added twice. Please remove the duplicate and edit the roles accordingly..
+        /// </summary>
+        public static string DuplicateArtist {
+            get {
+                return ResourceManager.GetString("DuplicateArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Song needs at least one artist..
         /// </summary>
         public static string NeedArtist {

@@ -136,6 +136,7 @@ module vdb.viewModels {
 
 		public hasValidationErrors: KnockoutComputed<boolean>;
 		public showInstrumentalNote: KnockoutComputed<boolean>;
+		public validationError_duplicateArtist: KnockoutComputed<boolean>;
 		public validationError_needArtist: KnockoutComputed<boolean>;
 		public validationError_needOriginal: KnockoutComputed<boolean>;
 		public validationError_needProducer: KnockoutComputed<boolean>;
@@ -215,6 +216,10 @@ module vdb.viewModels {
 					&& !_.some(this.tags, t => t === cls.tags.Tag.commonTag_instrumental);
 			});
 
+			this.validationError_duplicateArtist = ko.computed(() => {
+				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport()), a => a.length > 1);
+			});
+
 			this.validationError_needArtist = ko.computed(() => !_.some(this.artistLinks(), a => a.artist != null));
 
 			this.validationError_needOriginal = ko.computed(() => {
@@ -242,6 +247,7 @@ module vdb.viewModels {
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 
 			this.hasValidationErrors = ko.computed(() =>
+				this.validationError_duplicateArtist() ||
 				this.validationError_needArtist() ||
 				this.validationError_needOriginal() ||
 				this.validationError_needProducer() ||
