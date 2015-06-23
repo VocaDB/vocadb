@@ -69,8 +69,8 @@ namespace VocaDb.Web.Controllers.Api {
 					.Where(f => !f.Deleted);
 
 				var topics = query
-					.Paged(new PagingProperties(start, maxResults, getTotalCount))
 					.OrderBy(sort)
+					.Paged(new PagingProperties(start, maxResults, getTotalCount))
 					.ToArray()
 					.Select(f => new DiscussionTopicContract(f, userIconFactory, fields))
 					.ToArray();
