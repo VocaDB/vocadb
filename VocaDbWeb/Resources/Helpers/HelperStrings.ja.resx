@@ -120,6 +120,12 @@
   <data name="DraftMessage" xml:space="preserve">
     <value>これは書きかけの項目です。あなたは不足する情報を書き足して記事を完成させることが出来ます。</value>
   </data>
+  <data name="EntryIsMissingInformation" xml:space="preserve">
+    <value>この項目は下記の情報が不足しています。</value>
+  </data>
+  <data name="EntryValidationWarningDetails" xml:space="preserve">
+    <value>詳細</value>
+  </data>
   <data name="SeeGuide" xml:space="preserve">
     <value>ガイドライン</value>
   </data>
