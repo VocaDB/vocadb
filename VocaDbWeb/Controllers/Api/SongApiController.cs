@@ -155,7 +155,7 @@ namespace VocaDb.Web.Controllers.Api {
 			string query = "", 
 			string songTypes = null,
 			[FromUri] string[] tag = null,
-			int? artistId = null,
+			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
 			bool onlyWithPvs = false,
@@ -178,7 +178,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, preferAccurateMatches, null) {
 				Tags = tag, 
 				OnlyWithPVs = onlyWithPvs,
-				ArtistId = artistId ?? 0,		
+				ArtistIds = artistId,		
 				ArtistParticipationStatus = artistParticipationStatus,
 				ChildVoicebanks = childVoicebanks,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,

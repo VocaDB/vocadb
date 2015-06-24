@@ -34,7 +34,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 		/// </summary>
 		public DiscType AlbumType { get; set; }
 
-		public int ArtistId { get; set; }
+		public int[] ArtistIds { get; set; }
 
 		public ArtistAlbumParticipationStatus ArtistParticipationStatus { get; set; }
 

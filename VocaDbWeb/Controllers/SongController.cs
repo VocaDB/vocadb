@@ -278,7 +278,7 @@ namespace VocaDb.Web.Controllers
 
 					TimeFilter = timeFilter,
 					OnlyWithPVs = onlyWithPVs,
-					ArtistId = indexParams.artistId ?? 0,
+					ArtistIds = !indexParams.artistId.HasValue || indexParams.artistId.Value == 0 ? null : new [] { indexParams.artistId.Value },
 					MinScore = minScore,
 				};
 

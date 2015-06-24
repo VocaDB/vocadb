@@ -62,7 +62,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			var query = Query<Song>()
 				.Where(s => !s.Deleted)
 				.WhereHasName(textQuery)
-				.WhereHasArtistParticipationStatus(queryParams.ArtistId, queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
+				.WhereHasArtistParticipationStatus(new EntryIdsCollection(queryParams.ArtistIds), queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
 				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasType(queryParams.SongTypes)
@@ -167,7 +167,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			var isMoveToTopQuery = 	(queryParams.Common.MoveExactToTop 
 				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith 
 				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact 
-				&& queryParams.ArtistId == 0
+				&& (queryParams.ArtistIds == null || !queryParams.ArtistIds.Any())
 				&& queryParams.Paging.Start == 0
 				&& parsedQuery.HasNameQuery);
 

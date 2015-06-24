@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			ParsedAlbumQuery parsedQuery, 
 			NameMatchMode? nameMatchMode = null) {
 			
-			var artistId = queryParams.ArtistId != 0 ? queryParams.ArtistId : parsedQuery.ArtistId;
+			var artistIds = EntryIdsCollection.CreateWithFallback(queryParams.ArtistIds, parsedQuery.ArtistId);
 			var textQuery = SearchTextQuery.Create(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode);
 
 			var query = Query<Album>()
@@ -32,7 +32,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 				.WhereHasName(textQuery, allowCatNum: true)
 				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
-				.WhereHasArtistParticipationStatus(artistId, queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
+				.WhereHasArtistParticipationStatus(artistIds, queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
 				.WhereHasBarcode(queryParams.Barcode)
 				.WhereHasType(queryParams.AlbumType)
 				.WhereHasTags<Album, AlbumTagUsage>(queryParams.Tags != null && queryParams.Tags.Any() ? queryParams.Tags : new[] {  parsedQuery.TagName });
@@ -178,7 +178,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			var isMoveToTopQuery = 	(queryParams.Common.MoveExactToTop 
 				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith 
 				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact 
-				&& queryParams.ArtistId == 0
+				&& (queryParams.ArtistIds == null || !queryParams.ArtistIds.Any())
 				&& queryParams.Paging.Start == 0
 				&& parsedQuery.HasNameQuery);
 

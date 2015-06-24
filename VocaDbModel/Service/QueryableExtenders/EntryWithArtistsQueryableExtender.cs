@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
@@ -36,26 +37,34 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <param name="artistIds">IDs of the artists being filtered. If null or empty, no filtering is done.</param>
 		/// <param name="childVoicebanks">Whether child voicebanks of possible voice synthesizer are included.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, int[] artistIds, bool childVoicebanks)
+		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, EntryIdsCollection artistIds, bool childVoicebanks)
 			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistLink {
 
-			if (artistIds == null || !artistIds.Any())
+			if (!artistIds.HasAny)
 				return query;
 
-			return artistIds.Aggregate(query, (current, artistId) => current.WhereHasArtist<TEntry, TArtistLink>(artistId, childVoicebanks));
+			return artistIds.Ids.Aggregate(query, (current, artistId) => current.WhereHasArtist<TEntry, TArtistLink>(artistId, childVoicebanks));
 
 		}
 
 		public static IQueryable<TEntry> WhereHasArtistParticipationStatus<TEntry, TArtistLink>(
-			IQueryable<TEntry> query, int artistId, ArtistAlbumParticipationStatus participation, 
-			bool childVoicebanks,
-			Func<int, Artist> artistGetter,
-			Expression<Func<TEntry, bool>> mainEntriesExpression,
-			Expression<Func<TEntry, bool>> collaborationsExpression)
+			ArtistParticipationQueryParams<TEntry, TArtistLink> queryParams)
 			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistWithSupport {
 
-			if (artistId == 0)
+			var query = queryParams.Query;
+			var childVoicebanks = queryParams.ChildVoicebanks;
+
+			if (!queryParams.ArtistIds.HasAny)
 				return query;
+
+			if (queryParams.ArtistIds.HasMultiple)
+				return WhereHasArtists<TEntry, TArtistLink>(query, queryParams.ArtistIds, childVoicebanks);
+
+			var participation = queryParams.Participation;
+			var artistGetter = queryParams.ArtistGetter;
+			var artistId = queryParams.ArtistIds.Primary;
+			var mainEntriesExpression = queryParams.MainEntriesExpression;
+			var collaborationsExpression = queryParams.CollaborationsExpression;
 
 			if (participation == ArtistAlbumParticipationStatus.Everything)
 				return WhereHasArtist<TEntry, TArtistLink>(query, artistId, childVoicebanks);
@@ -88,6 +97,36 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			}
 
 		}
+
+	}
+
+	public struct ArtistParticipationQueryParams<TEntry, TArtistLink> 
+		where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistWithSupport {
+		
+		public ArtistParticipationQueryParams(IQueryable<TEntry> query, EntryIdsCollection artistIds, ArtistAlbumParticipationStatus participation, 
+			bool childVoicebanks,
+			Func<int, Artist> artistGetter,
+			Expression<Func<TEntry, bool>> mainEntriesExpression,
+			Expression<Func<TEntry, bool>> collaborationsExpression)
+			: this() {
+			
+			Query = query;
+			ArtistIds = artistIds;
+			Participation = participation;
+			ChildVoicebanks = childVoicebanks;
+			ArtistGetter = artistGetter;
+			MainEntriesExpression = mainEntriesExpression;
+			CollaborationsExpression = collaborationsExpression;
+
+		}
+
+		public IQueryable<TEntry> Query { get; private set; } 
+		public EntryIdsCollection ArtistIds { get; private set; } 
+		public ArtistAlbumParticipationStatus Participation { get; private set; }
+		public bool ChildVoicebanks { get; private set; }
+		public Func<int, Artist> ArtistGetter { get; private set; }
+		public Expression<Func<TEntry, bool>> MainEntriesExpression { get; private set; }
+		public Expression<Func<TEntry, bool>> CollaborationsExpression { get; private set; }
 
 	}
 

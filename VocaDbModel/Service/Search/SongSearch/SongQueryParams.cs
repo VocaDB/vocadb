@@ -52,7 +52,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		public int ArtistId { get; set; }
+		public int[] ArtistIds { get; set; }
 
 		public ArtistAlbumParticipationStatus ArtistParticipationStatus { get; set; }
 

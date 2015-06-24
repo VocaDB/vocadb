@@ -78,18 +78,19 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 		public static IQueryable<Album> WhereHasArtistParticipationStatus(
-			this IQueryable<Album> query, int artistId, ArtistAlbumParticipationStatus participation, 
+			this IQueryable<Album> query, EntryIdsCollection artistIds, ArtistAlbumParticipationStatus participation, 
 			bool childVoicebanks,
 			Func<int, Artist> artistGetter) {
 
 			var various = Model.Helpers.ArtistHelper.VariousArtists;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
+			var artistId = artistIds.Primary;
 
-			return EntryWithArtistsQueryableExtender.WhereHasArtistParticipationStatus<Album, ArtistForAlbum>(query, artistId, participation,
+			return EntryWithArtistsQueryableExtender.WhereHasArtistParticipationStatus(new ArtistParticipationQueryParams<Album, ArtistForAlbum>(query, artistIds, participation,
 				childVoicebanks, artistGetter,
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && !a.IsSupport && ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) && a.Album.ArtistString.Default != various),
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && (a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Album.ArtistString.Default == various))
-			);
+			));
 
 		}
 
