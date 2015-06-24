@@ -95,7 +95,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public SongSortRule SortRule { get; set; }
 
-		public string Tag { get; set; }
+		public string[] Tags { get; set; }
 
 		public TimeSpan TimeFilter { get; set; }
 

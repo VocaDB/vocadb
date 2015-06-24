@@ -19,7 +19,9 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtists<ArtistForSong>, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song> {
+	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtists<ArtistForSong>, 
+		IEntryWithTags<SongTagUsage>,
+		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song> {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
 			get { return ArchivedVersionsManager; }

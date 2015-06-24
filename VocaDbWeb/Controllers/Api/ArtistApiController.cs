@@ -150,7 +150,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<ArtistForApiContract> GetList(
 			string query = "", 
 			string artistTypes = null,
-			string tag = null,
+			[FromUri] string[] tag = null,
 			int? followedByUserId = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -164,7 +164,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var types = EnumVal<ArtistType>.ParseMultiple(artistTypes);
 
 			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, preferAccurateMatches) {
-				Tag = tag,
+				Tags = tag,
 				UserFollowerId = followedByUserId ?? 0
 			};
 			param.Common.EntryStatus = status;

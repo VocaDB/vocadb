@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		public AlbumSortRule SortRule { get; set; }
 
-		public string Tag { get; set; }
+		public string[] Tags { get; set; }
 
 	}
 

@@ -155,7 +155,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<AlbumForApiContract> GetList(
 			string query = "", 
 			DiscType discTypes = DiscType.Unknown,
-			string tag = null,
+			[FromUri] string[] tag = null,
 			int? artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
@@ -174,7 +174,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches) {
-				Tag = tag,
+				Tags = tag,
 				ArtistId = artistId ?? 0,
 				ArtistParticipationStatus = artistParticipationStatus,
 				ChildVoicebanks = childVoicebanks,

@@ -219,10 +219,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		public static IQueryable<Song> WhereHasTag(this IQueryable<Song> query, string tagName) {
 
-			if (string.IsNullOrEmpty(tagName))
-				return query;
-
-			return query.Where(s => s.Tags.Usages.Any(a => a.Tag.Name == tagName));
+			return query.WhereHasTag<Song, SongTagUsage>(tagName);
 
 		}
 

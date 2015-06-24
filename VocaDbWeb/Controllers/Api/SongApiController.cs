@@ -154,7 +154,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongForApiContract> GetList(
 			string query = "", 
 			string songTypes = null,
-			string tag = null,
+			[FromUri] string[] tag = null,
 			int? artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
@@ -176,7 +176,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, preferAccurateMatches, null) {
-				Tag = tag, 
+				Tags = tag, 
 				OnlyWithPVs = onlyWithPvs,
 				ArtistId = artistId ?? 0,		
 				ArtistParticipationStatus = artistParticipationStatus,
