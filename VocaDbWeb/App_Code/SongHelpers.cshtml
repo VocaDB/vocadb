@@ -34,6 +34,7 @@
 			@ArchivedEntryHelpers.TranslatedNameRow(comparedSongs, d => d.TranslatedName)
 			@ArchivedEntryHelpers.DataRowList("Names", comparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
 			@ArchivedEntryHelpers.DataRow("Notes", comparedSongs, d => d.Notes)
+			@ArchivedEntryHelpers.DataRow("Notes (en)", comparedSongs, d => d.NotesEng)
 			@ArchivedEntryHelpers.DataRow("Song type", comparedSongs, d => d.SongType)
 			@ArchivedEntryHelpers.DataRow("Original version", comparedSongs, d => ArchivedEntryHelpers.ObjectRefInfo(d.OriginalVersion))
 			@ArchivedEntryHelpers.DataRow("Duration", comparedSongs, d => DateTimeUtils.FormatFromSeconds(d.LengthSeconds))
