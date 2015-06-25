@@ -1,9 +1,13 @@
 ﻿
 module vdb.viewModels.search {
 	
-	export interface IArtistFilter extends vdb.models.IEntryWithIdAndName {
+	export class ArtistFilter {
 		
-		artistType: vdb.models.artists.ArtistType;
+		constructor(public id: number) {}
+
+		artistType = ko.observable<vdb.models.artists.ArtistType>(null);
+
+		name = ko.observable<string>(null);
 
 	}
 
