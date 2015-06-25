@@ -627,6 +627,7 @@ namespace VocaDb.Model.Service {
 				song.NicoId = fullProperties.NicoId;
 				song.Notes.Original = fullProperties.Notes;
 				song.Notes.English = fullProperties.NotesEng ?? string.Empty;
+				song.PublishDate = fullProperties.PublishDate;
 				song.SongType = fullProperties.SongType;
 				song.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 

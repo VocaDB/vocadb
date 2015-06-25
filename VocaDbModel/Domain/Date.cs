@@ -23,6 +23,11 @@ namespace VocaDb.Model.Domain {
 
 		private DateTime? dateTime;
 
+		/// <summary>
+		/// Initializes Date object based on <see cref="DateTime"/>.
+		/// Only the date portion will be included.
+		/// </summary>
+		/// <param name="dateTime">DateTime instance. Can be null.</param>
 		public Date(DateTime? dateTime) : this() {
 			DateTime = dateTime;
 		}
