@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Songs;
 
@@ -6,14 +7,27 @@ namespace VocaDb.Model.Service.ExtSites {
 
 	public class SongDescriptionGenerator {
 
-		public string GenerateDescription(SongContract song, Func<SongType, string> songTypeNames) {
-					
+		private void AddBasicDescription(StringBuilder sb, SongContract song, Func<SongType, string> songTypeNames) {
+			
 			var typeName = songTypeNames(song.SongType);
 
-			if (!song.PublishDate.HasValue)
-				return typeName;
-			else
-				return string.Format("{0}, published {1}", typeName, song.PublishDate.Value.ToShortDateString());
+			sb.Append(typeName);
+
+			if (!string.IsNullOrEmpty(song.ArtistString))
+				sb.AppendFormat(" by {0}", song.ArtistString);
+
+			if (song.PublishDate.HasValue)
+				sb.AppendFormat(", published {0}", song.PublishDate.Value.ToShortDateString());
+
+		}
+
+		public string GenerateDescription(SongContract song, Func<SongType, string> songTypeNames) {
+
+			var sb = new StringBuilder();
+		
+			AddBasicDescription(sb, song, songTypeNames);
+
+			return sb.ToString();
 
 		}
 
