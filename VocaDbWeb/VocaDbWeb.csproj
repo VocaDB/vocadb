@@ -2113,6 +2113,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\ReportEntryViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AlbumSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AnythingSearchViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistFilter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchCategoryBaseViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchViewModel.ts" />

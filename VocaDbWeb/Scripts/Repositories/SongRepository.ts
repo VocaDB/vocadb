@@ -67,7 +67,7 @@ module vdb.repositories {
 
 		public getList = (paging: dc.PagingProperties, lang: string, query: string,
 			sort: string, songTypes: string, tag: string,
-			artistId: number,
+			artistIds: number[],
 			artistParticipationStatus: string,
 			childVoicebanks: boolean,
 			onlyWithPvs: boolean,
@@ -85,7 +85,7 @@ module vdb.repositories {
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
 				songTypes: songTypes,
 				tag: tag,
-				artistId: artistId,
+				artistId: artistIds,
 				artistParticipationStatus: artistParticipationStatus,
 				childVoicebanks: childVoicebanks,
 				onlyWithPvs: onlyWithPvs,

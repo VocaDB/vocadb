@@ -9,7 +9,7 @@
 @section Head {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 }
-				
+
 <ul class="nav nav-pills">
 	<li data-bind="css: { active: searchType() == 'Anything' }">
 		<a href="#" data-bind="click: function() { searchType('Anything'); }">@EntryTypeNames.Undefined</a>
@@ -34,7 +34,7 @@
 		@SearchDropDown("showArtistSearch", "artistSearchViewModel", Translate.ArtistSortRuleNames.ValuesAndNamesStrings)
 		@SearchDropDown("showAlbumSearch", "albumSearchViewModel", Translate.AlbumSortRuleNames.ValuesAndNamesStrings)
 		@SearchDropDown("showSongSearch", "songSearchViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)
-						
+
 		<div class="inline-block" data-bind="visible: showAlbumSearch(), with: albumSearchViewModel">
 			<div class="btn-group">
 				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumDetails">
@@ -45,7 +45,7 @@
 				</a>
 			</div>
 		</div>
-						
+
 		<div class="inline-block" data-bind="visible: showSongSearch(), with: songSearchViewModel">
 			<div class="btn-group">
 				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.AlbumDetails">
@@ -64,7 +64,7 @@
 		</div>
 
 	</div>
-	
+
 	<div class="control-label">
 		<i class="icon-search"></i>
 	</div>
@@ -106,7 +106,7 @@
 				</div>
 			</div>
 		</div>
-						
+
 		<!-- Artist search options -->
 		<div data-bind="visible: showArtistSearch, with: artistSearchViewModel">
 			<div class="control-group">
@@ -124,7 +124,7 @@
 				</div>
 			</div>
 		</div>
-						
+
 		<!-- Album search options -->
 		<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
 			<div class="control-group">
@@ -137,28 +137,38 @@
 			<div class="control-group">
 				<div class="control-label">@EntryTypeNames.Artist</div>
 				<div class="controls">
-					<div style="display: inline-block;" class="input-append input-prepend">
-						<a href="#" class="btn btn-nomargin" data-bind="visible: artistId, attr: { href: '/Ar/' + artistId() }">
-							<i class="icon icon-info-sign"></i>
-						</a>										
-						@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId")
+					<!-- ko foreach: artists -->
+					<div class="control-group">
+						<div style="display: inline-block;" class="input-append input-prepend">
+							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: '/Ar/' + id }">
+								<i class="icon icon-info-sign"></i>
+							</a>
+							<div class="input-append">
+								<input type="text" class="input-large" readonly data-bind="value: name" />
+								<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.artists.remove($data); }">Clear</button>
+							</div>
+						</div>
+						<!-- ko if: $parent.hasSingleArtist -->
+						@SongHelpers.ArtistParticipationStatusOptionsKnockout("$parent.artistParticipationStatus")
+						<!-- /ko -->
 					</div>
-					<!-- ko if: artistId -->
-					@AlbumHelpers.ArtistAlbumParticipationStatusOptionsKnockout("artistParticipationStatus")
 					<!-- /ko -->
-				</div>
-			</div>
 
-			<div class="control-group" data-bind="visible: showChildVoicebanks">
-				<div class="controls">
-					<label class="checkbox">
-						<input type="checkbox" data-bind="checked: childVoicebanks" />
-						@Res.IncludeDerivedVoicebanks
-					</label>
+					<div class="control-group" data-bind="visible: showChildVoicebanks">
+						<label class="checkbox">
+							<input type="checkbox" data-bind="checked: childVoicebanks" />
+							@Res.IncludeDerivedVoicebanks
+						</label>
+					</div>
+
+					<div>
+						<input type="text" class="input-large" data-bind="artistAutoComplete: artistSearchParams" placeholder="@ViewRes.SharedStrings.Search" />
+					</div>
+
 				</div>
 			</div>
 		</div>
-						
+
 		<!-- Song search options -->
 		<div data-bind="visible: showSongSearch, with: songSearchViewModel">
 			<div class="control-group">
@@ -170,25 +180,35 @@
 
 			<div class="control-group">
 				<div class="control-label">@EntryTypeNames.Artist</div>
-				<div class="controls">
-					<div style="display: inline-block;" class="input-append input-prepend">
-						<a href="#" class="btn btn-nomargin" data-bind="visible: artistId, attr: { href: '/Ar/' + artistId() }">
-							<i class="icon icon-info-sign"></i>
-						</a>
-						@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId")
+				<div class="controls">					
+					<!-- ko foreach: artists -->
+					<div class="control-group">
+						<div style="display: inline-block;" class="input-append input-prepend">
+							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: '/Ar/' + id }">
+								<i class="icon icon-info-sign"></i>
+							</a>
+							<div class="input-append">
+								<input type="text" class="input-large" readonly data-bind="value: name" />
+								<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.artists.remove($data); }">Clear</button>
+							</div>
+						</div>
+						<!-- ko if: $parent.hasSingleArtist -->
+						@SongHelpers.ArtistParticipationStatusOptionsKnockout("$parent.artistParticipationStatus")						
+						<!-- /ko -->
 					</div>
-					<!-- ko if: artistId -->
-					@SongHelpers.ArtistParticipationStatusOptionsKnockout("artistParticipationStatus")
 					<!-- /ko -->
-				</div>
-			</div>
+					
+					<div class="control-group" data-bind="visible: showChildVoicebanks">
+						<label class="checkbox">
+							<input type="checkbox" data-bind="checked: childVoicebanks" />
+							@Res.IncludeDerivedVoicebanks
+						</label>						
+					</div>
 
-			<div class="control-group" data-bind="visible: showChildVoicebanks">
-				<div class="controls">
-					<label class="checkbox">
-						<input type="checkbox" data-bind="checked: childVoicebanks" />
-						@Res.IncludeDerivedVoicebanks
-					</label>
+					<div>
+						<input type="text" class="input-large" data-bind="artistAutoComplete: artistSearchParams" placeholder="@ViewRes.SharedStrings.Search" />											
+					</div>
+
 				</div>
 			</div>
 
@@ -216,7 +236,7 @@
 			</div>
 
 		</div>
-						
+
 		<!-- Tag search options -->
 		<div class="control-group" data-bind="visible: showTagSearch, with: tagSearchViewModel">
 			<div class="control-label">@Res.TagCategory</div>
@@ -257,11 +277,11 @@
 @{ Html.RenderPartial("Partials/_AnythingSearchList"); }
 
 @{ Html.RenderPartial("Partials/_ArtistSearchList"); }
-				
+
 <div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
 	@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
 </div>
-				
+
 <div data-bind="visible: showSongSearch, with: songSearchViewModel">
 	@{ Html.RenderPartial("Partials/_SongSearchList"); }
 </div>
@@ -316,16 +336,16 @@
 			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo, tagRepo, resourceRepo,
 				userRepo,
 				unknownPictureUrl,
-				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort, 
-				artistId, 
+				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort,
+				artistId,
 				childVoicebanks,
-				artistType, discType, songType, 
-				onlyWithPVs, 
+				artistType, discType, songType,
+				onlyWithPVs,
 				onlyRatedSongs,
 				since,
 				minScore,
-				viewMode, 
-				autoplay, 
+				viewMode,
+				autoplay,
 				shuffle,
 				pageSize,
 				pvPlayersFactory);
@@ -335,7 +355,7 @@
 
 
 	</script>
-		
+
 }
 
 @helper SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {

@@ -32,7 +32,7 @@ module vdb.viewModels.songs {
 			this.songRepo.getList(paging, cls.globalization.ContentLanguagePreference[lang], this.query(), this.sort(),
 				this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
 				this.tag(),
-				this.artistId(),
+				[this.artistId()],
 				this.artistParticipationStatus(),
 				this.childVoicebanks(),
 				this.onlyWithPvs(),
