@@ -29,6 +29,7 @@ module vdb.viewModels.search {
 			viewMode: string,
 			autoplay: boolean,
 			shuffle: boolean,
+			pageSize: number,
 			pvPlayersFactory: pvs.PVPlayersFactory) {
 
 			this.resourcesManager = new vdb.models.ResourcesManager(resourceRepo, cultureCode);
@@ -78,6 +79,9 @@ module vdb.viewModels.search {
 
 			if (tag)
 				this.tag(tag);
+
+			if (pageSize)
+				this.pageSize(pageSize);
 
 			this.pageSize.subscribe(this.updateResults);
 			this.searchTerm.subscribe(this.updateResults);

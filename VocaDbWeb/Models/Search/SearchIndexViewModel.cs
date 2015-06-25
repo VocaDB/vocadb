@@ -36,6 +36,8 @@ namespace VocaDb.Web.Models.Search {
 
 		public bool? OnlyWithPVs { get; set; }
 
+		public int? PageSize { get; set; }
+
 		public EntryType SearchType { get; set; }
 
 		public string SearchTypeName {

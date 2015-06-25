@@ -296,6 +296,7 @@
 			var viewMode = '@Model.ViewMode';
 			var autoplay = @ToJS(Model.Autoplay);
 			var shuffle = @ToJS(Model.Shuffle);
+			var pageSize = @ToJS(Model.PageSize);
 			var loggedUserId = @ToJS(Login.Manager.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 
@@ -326,6 +327,7 @@
 				viewMode, 
 				autoplay, 
 				shuffle,
+				pageSize,
 				pvPlayersFactory);
 			ko.applyBindings(vm);
 
