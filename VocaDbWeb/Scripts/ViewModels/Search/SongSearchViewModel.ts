@@ -81,7 +81,7 @@ module vdb.viewModels.search {
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
-				this.tag, this.primaryArtistId, this.artistParticipationStatus, this.childVoicebanks, this.pvsOnly, this.since,
+				this.tag, this.artistIds, this.artistParticipationStatus, this.childVoicebanks, this.pvsOnly, this.since,
 				this.minScore,
 				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly);
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
@@ -94,11 +94,10 @@ module vdb.viewModels.search {
 					callback({ items: [], totalCount: 0 });			
 				} else {
 
-					var artistIds = _.map(this.artists(), a => a.id);
-					
 					this.songRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
 						this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
-						tag, artistIds,
+						tag,
+						this.artistIds(),
 						this.artistParticipationStatus(),
 						this.childVoicebanks(),
 						this.pvsOnly(),
@@ -148,6 +147,8 @@ module vdb.viewModels.search {
 		public sortName: KnockoutComputed<string>;
 		public viewMode: KnockoutObservable<string>;
 
+		public artistIds = ko.computed(() => _.map(this.artists(), a => a.id));
+
 		public fields = ko.computed(() => this.showTags() ? "ThumbUrl,Tags" : "ThumbUrl");
 
 		public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
@@ -157,8 +158,6 @@ module vdb.viewModels.search {
 		public getPVServiceIcons = (services: string) => {
 			return this.pvServiceIcons.getIconUrls(services);
 		}
-
-		public primaryArtistId = ko.computed(() => this.hasSingleArtist() ? this.artists()[0].id : null);
 
 		public selectArtist = (selectedArtistId: number) => {
 			
