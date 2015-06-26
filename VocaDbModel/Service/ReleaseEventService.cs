@@ -2,11 +2,9 @@
 using System.Text;
 using NHibernate;
 using NHibernate.Linq;
-using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Search;
 
@@ -16,18 +14,6 @@ namespace VocaDb.Model.Service {
 
 		public ReleaseEventService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
 			: base(sessionFactory, permissionContext,entryLinkFactory) {}
-
-		/*public ReleaseEventDetailsContract GetReleaseEventDetailsByName(string name) {
-
-			return HandleQuery(session => new ReleaseEventDetailsContract(session.Query<ReleaseEvent>().F(r => r.Name == name)));
-
-		}*/
-
-		public void DeleteEvent(int id) {
-
-			DeleteEntity<ReleaseEvent>(id, PermissionToken.DeleteEntries);
-
-		}
 
 		public void DeleteSeries(int id) {
 

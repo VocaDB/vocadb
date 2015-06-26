@@ -58,6 +58,28 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public void Delete(int eventId) {
+			
+			repository.HandleTransaction(ctx => {
+				
+				var entry = ctx.Load(eventId);
+
+				ctx.AuditLogger.SysLog(string.Format("deleting {0}", entry));
+
+				var ctxActivity = ctx.OfType<ReleaseEventActivityEntry>();
+				var activityEntries = ctxActivity.Query().Where(a => a.Entry.Id == eventId).ToArray();
+
+				foreach (var activityEntry in activityEntries)
+					ctxActivity.Delete(activityEntry);
+
+				ctx.Delete(entry);
+
+				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+
+			});
+
+		}
+
 		public ReleaseEventContract[] List(EventSortRule sortRule, bool includeSeries = false) {
 			
 			return repository.HandleQuery(ctx => ctx

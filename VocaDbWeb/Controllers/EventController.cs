@@ -34,7 +34,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Delete(int id) {
 
-			Service.DeleteEvent(id);
+			queries.Delete(id);
 
 			return RedirectToAction("EventsBySeries");
 
