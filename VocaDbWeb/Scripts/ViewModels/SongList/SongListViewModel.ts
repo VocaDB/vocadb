@@ -42,7 +42,7 @@ module vdb.viewModels.songList {
 
 			this.sort.subscribe(() => {
 				this.updateResultsWithTotalCount();
-				if (this.playlistMode)
+				if (this.playlistMode())
 					this.playlistViewModel.updateResultsWithTotalCount();
 			});
 
