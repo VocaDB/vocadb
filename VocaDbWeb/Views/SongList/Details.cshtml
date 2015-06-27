@@ -17,6 +17,11 @@
 		};		
 	}
 
+	var descriptionHtml = MarkdownParser.GetHtml(Model.SongList.Description);
+	var descriptionStripped = MarkdownParser.GetPlainText(Model.SongList.Description);
+
+	PageProperties.Description = descriptionStripped;
+	
 	var url = PageProperties.CanonicalUrl;
 	
 }
@@ -77,7 +82,7 @@
 	}
 	<div class="media-body">
 		@if (!string.IsNullOrWhiteSpace(Model.SongList.Description)) {
-			<p>@HtmlHelpers.FormatText(Model.SongList.Description)</p>
+			<p>@Html.Raw(descriptionHtml)</p>
 		}
 	</div>
 </div>
