@@ -87,23 +87,38 @@
 		<div class="control-group" data-bind="visible: showTagFilter">
 			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 			<div class="controls">
-				<div class="input-append input-prepend">
-					<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: '/Tag/Details/' + tag() }" title="@Res.TagInformation">
-						<i class="icon icon-info-sign"></i>
-					</a>
-					@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "tag")
+				<!-- ko foreach: tags -->
+					<div class="control-group">
+						<div style="display: inline-block;" class="input-append input-prepend">
+							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: '/Tag/Details/' + $data }">
+								<i class="icon icon-info-sign"></i>
+							</a>
+							<div class="input-append">
+								<input type="text" class="input-large" readonly data-bind="value: $data" />
+								<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.tags.remove($data); }">Clear</button>
+							</div>
+						</div>
+					</div>				
+				<!-- /ko -->
+				
+				<div>
+					
+					<input type="text" class="input-large" data-bind="tagAutoComplete: addTag" placeholder="@ViewRes.SharedStrings.Search" />
+					
+					<div class="btn-group">
+						<button class="btn dropdown-toggle btn-nomargin" data-toggle="dropdown">
+							@Res.TopGenres
+							<span class="caret"></span>
+						</button>
+						<ul data-bind="foreach: genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+							<li>
+								<a href="#" data-bind="attr: { href: '/Tag/Details/' + $data }, text: $data, click: function(selectedTag) { $parent.addTag(selectedTag); }"></a>
+							</li>
+						</ul>
+					</div>
+
 				</div>
-				<div class="btn-group">
-					<button class="btn dropdown-toggle btn-nomargin" data-toggle="dropdown">
-						@Res.TopGenres
-						<span class="caret"></span>
-					</button>
-					<ul data-bind="foreach: genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-						<li>
-							<a href="#" data-bind="attr: { href: '/Tag/Details/' + $data }, text: $data, click: function(selectedTag) { $parent.tag(selectedTag); }"></a>
-						</li>
-					</ul>
-				</div>
+
 			</div>
 		</div>
 

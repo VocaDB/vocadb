@@ -78,14 +78,14 @@ module vdb.viewModels.search {
 				this.searchType(searchType);
 
 			if (tag)
-				this.tag(tag);
+				this.addTag(tag);
 
 			if (pageSize)
 				this.pageSize(pageSize);
 
 			this.pageSize.subscribe(this.updateResults);
 			this.searchTerm.subscribe(this.updateResults);
-			this.tag.subscribe(this.updateResults);
+			this.tags.subscribe(this.updateResults);
 			this.draftsOnly.subscribe(this.updateResults);
 			this.showTags.subscribe(this.updateResults);
 
@@ -128,7 +128,7 @@ module vdb.viewModels.search {
 		public showAdvancedFilters = ko.observable(false);
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public searchType = ko.observable("Anything");
-		public tag = ko.observable("");
+		public tags = ko.observableArray([]);
 
 		public showAnythingSearch: KnockoutComputed<boolean>;
 		public showArtistSearch: KnockoutComputed<boolean>;
@@ -140,6 +140,8 @@ module vdb.viewModels.search {
 		public showDraftsFilter = ko.computed(() => this.searchType() != 'Tag');
 
 		public isUniversalSearch = ko.computed(() => this.searchType() == 'Anything');
+
+		public addTag = (tag: string) => this.tags.push(tag);
 
 		public currentCategoryViewModel = (): ISearchCategoryBaseViewModel => {
 			

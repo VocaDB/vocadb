@@ -49,7 +49,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("")]
 		public PartialFindResult<EntryForApiContract> GetList(
 			string query, 
-			string tag = null,
+			[FromUri] string[] tag = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			EntrySortRule sort = EntrySortRule.Name,

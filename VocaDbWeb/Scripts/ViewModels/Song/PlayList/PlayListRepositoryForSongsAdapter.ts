@@ -10,7 +10,7 @@ module vdb.viewModels.songs {
 			private query: KnockoutObservable<string>,
 			private sort: KnockoutObservable<string>,
 			private songType: KnockoutObservable<string>,
-			private tag: KnockoutObservable<string>,
+			private tags: KnockoutObservableArray<string>,
 			private artistIds: KnockoutComputed<number[]>,
 			private artistParticipationStatus: KnockoutObservable<string>,
 			private childVoicebanks: KnockoutObservable<boolean>,
@@ -31,7 +31,7 @@ module vdb.viewModels.songs {
 
 			this.songRepo.getList(paging, cls.globalization.ContentLanguagePreference[lang], this.query(), this.sort(),
 				this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
-				this.tag(),
+				this.tags(),
 				this.artistIds(),
 				this.artistParticipationStatus(),
 				this.childVoicebanks(),

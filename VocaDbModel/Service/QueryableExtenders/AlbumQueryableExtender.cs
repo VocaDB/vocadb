@@ -170,6 +170,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, string[] tagName) {
+
+			return query.WhereHasTags<Album, AlbumTagUsage>(tagName);
+
+		}
+
 		public static IQueryable<Album> WhereHasType(this IQueryable<Album> query, DiscType albumType) {
 
 			if (albumType == DiscType.Unknown)

@@ -26,7 +26,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public PartialFindResult<EntryForApiContract> GetList(
 			string query, 
-			string tag,
+			string[] tags,
 			EntryStatus? status,
 			int start, int maxResults, bool getTotalCount,
 			EntrySortRule sort,
@@ -45,7 +45,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var artistQuery = ctx.OfType<Artist>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName_Canonized(artistTextQuery)
-					.WhereHasTag(tag)
+					.WhereHasTags(tags)
 					.WhereStatusIs(status);
 
 				var artistNames = artistQuery
@@ -57,7 +57,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var albumQuery = ctx.OfType<Album>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName(textQuery)
-					.WhereHasTag(tag)
+					.WhereHasTags(tags)
 					.WhereStatusIs(status);
 
 				var albumNames = albumQuery
@@ -69,7 +69,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var songQuery = ctx.OfType<Song>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName(textQuery)
-					.WhereHasTag(tag)
+					.WhereHasTags(tags)
 					.WhereStatusIs(status);
 
 				var songNames = songQuery

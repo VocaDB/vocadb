@@ -34,7 +34,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private PartialFindResult<EntryForApiContract> CallGetList(
 			string query = null, 
-			string tag = null,
+			string[] tag = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = 10, bool getTotalCount = true,
 			NameMatchMode nameMatchMode = NameMatchMode.Words,
@@ -113,7 +113,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void List_FilterByTag() {
 			
-			var result = CallGetList(tag: "pop_rock");
+			var result = CallGetList(tag: new [] { "pop_rock" });
 
 			Assert.AreEqual(1, result.TotalCount, "TotalCount");
 			AssertHasEntry(result, "40mP", EntryType.Artist);

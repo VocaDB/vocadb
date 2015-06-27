@@ -21,11 +21,11 @@ module vdb.viewModels.search {
 			this.artistType.subscribe(this.updateResultsWithTotalCount);
 			this.onlyFollowedByMe.subscribe(this.updateResultsWithTotalCount);
 
-			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
+			this.loadResults = (pagingProperties, searchTerm, tags, status, callback) => {
 
 				this.artistRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
 					this.artistType() != cls.artists.ArtistType[cls.artists.ArtistType.Unknown] ? this.artistType() : null,
-					tag,
+					tags,
 					this.onlyFollowedByMe() ? this.loggedUserId : null,
 					this.fields(), status, callback);
 

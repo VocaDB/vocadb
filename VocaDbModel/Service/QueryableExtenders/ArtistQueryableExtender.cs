@@ -215,6 +215,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Artist> WhereHasTags(this IQueryable<Artist> query, string[] tagName) {
+
+			return query.WhereHasTags<Artist, ArtistTagUsage>(tagName);
+
+		}
+
 		public static IQueryable<Artist> WhereHasType(this IQueryable<Artist> query, ArtistType[] artistTypes) {
 
 			if (!artistTypes.Any())
