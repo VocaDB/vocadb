@@ -189,7 +189,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 					ctx.Update(list);
 
-					ctx.AuditLogger.AuditLog(string.Format("updated song list {0}", entryLinkFactory.CreateEntryLink(list)), user);
+					ctx.AuditLogger.AuditLog(
+						string.Format("updated song list {0} ({1})", entryLinkFactory.CreateEntryLink(list), diff.ChangedFieldsString), user);
 
 					var archived = Archive(ctx, list, diff, EntryEditEvent.Updated);
 
