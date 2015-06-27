@@ -15,7 +15,9 @@ namespace VocaDb.Model.Domain.Songs {
 
 		Songs				= 8,
 
-		Thumbnail			= 16
+		Status				= 16,
+
+		Thumbnail			= 32
 
 	}
 

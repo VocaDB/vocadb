@@ -11,6 +11,8 @@ module vdb.dataContracts {
 
         featuredCategory: string;
     
+		status: string;
+
     }
 
 }

@@ -23,10 +23,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryImagePersisterOld imagePersister;
 
-		public ArchivedSongListVersion Archive(IRepositoryContext<SongList> ctx, SongList songList, SongListDiff diff, EntryEditEvent reason) {
+		public ArchivedSongListVersion Archive(IRepositoryContext<SongList> ctx, SongList songList, SongListDiff diff, EntryEditEvent reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
-			var archived = songList.CreateArchivedVersion(diff, agentLoginData, reason);
+			var archived = songList.CreateArchivedVersion(diff, agentLoginData, reason, notes);
 			ctx.OfType<ArchivedSongListVersion>().Save(archived);
 			return archived;
 
@@ -76,7 +76,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			ctx.Update(newList);
 
 			ctx.AuditLogger.AuditLog(string.Format("created song list {0}", entryLinkFactory.CreateEntryLink(newList)), user);
-			var archived = Archive(ctx, newList, new SongListDiff(), EntryEditEvent.Created);
+			var archived = Archive(ctx, newList, new SongListDiff(), EntryEditEvent.Created, contract.UpdateNotes);
 
 			if (newList.FeaturedList) {
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), newList, EntryEditEvent.Created, archived);						
@@ -174,6 +174,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 						list.FeaturedCategory = contract.FeaturedCategory;						
 					}
 
+					if (list.Status != contract.Status) {
+						diff.Status.Set();
+						list.Status = contract.Status;
+					}
+
 					var songDiff = list.SyncSongs(contract.SongLinks, c => ctx.OfType<Song>().Load(c.Song.Id));
 
 					if (songDiff.Changed) {
@@ -192,7 +197,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					ctx.AuditLogger.AuditLog(
 						string.Format("updated song list {0} ({1})", entryLinkFactory.CreateEntryLink(list), diff.ChangedFieldsString), user);
 
-					var archived = Archive(ctx, list, diff, EntryEditEvent.Updated);
+					var archived = Archive(ctx, list, diff, EntryEditEvent.Updated, contract.UpdateNotes);
 
 					if (list.FeaturedList) {
 						AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), list, EntryEditEvent.Updated, archived);						

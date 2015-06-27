@@ -64,6 +64,7 @@ module vdb.viewModels.songList {
 					this.name = ko.observable(data.name);
 					this.description = ko.observable(data.description);
 					this.featuredCategory = ko.observable(data.featuredCategory);
+					this.status = ko.observable(data.status);
 
 					var mappedSongs = $.map(data.songLinks, (item) => new SongInListEditViewModel(item));
 					this.songLinks(mappedSongs);
@@ -76,6 +77,7 @@ module vdb.viewModels.songList {
 				this.name = ko.observable("");
 				this.description = ko.observable("");
 				this.featuredCategory = ko.observable("Nothing");
+				this.status = ko.observable("Draft");
 				loaded();
 
 			}
@@ -101,6 +103,17 @@ module vdb.viewModels.songList {
 		public songSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams = {
 			acceptSelection: this.acceptSongSelection
 		};
+
+		public status: KnockoutObservable<string>;
+
+		public submit = () => {
+			this.submitting(true);
+			return true;
+		}
+
+		public submitting = ko.observable(false);
+
+		public updateNotes = ko.observable("");
 
 	};
 

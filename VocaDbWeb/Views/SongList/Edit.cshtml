@@ -43,10 +43,10 @@
 
 @Helpers.ValidationSymmaryPanel("Unable to save properties.")
 
-<form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="visible: true" style="display: none;">
+<form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
 
-	@Helpers.SaveBtn()
+	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id }))
 
 	<div id="tabs">
 
@@ -94,6 +94,13 @@
 					</div>
 				</div>
 			</div>
+			
+			<div class="editor-label">
+				@Helpers.HelpLabel("Entry status", Resources.CommonMessages.EntryStatusExplanation)
+			</div>
+			<div class="editor-field">
+				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses)), "value: status")
+			</div>
 
 		</div>
 
@@ -131,9 +138,13 @@
 		</div>
 
 	</div>
+	
+	<br />	
+	<p>@ViewRes.EntryEditStrings.UpdateNotes</p>
+	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 
 	<input type="hidden" name="model" data-bind="value: ko.toJSON($root)" />
 	<br />
-	@Helpers.SaveBtn()
+	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id }))
 
 </form>

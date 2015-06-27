@@ -6,6 +6,7 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Web.Code;
@@ -17,6 +18,7 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public SongListEditViewModel() {
 			SongLinks = new List<SongInListEditContract>();
+			UpdateNotes = string.Empty;
 		}
 
 		public SongListEditViewModel(SongListContract contract, IUserPermissionContext permissionContext)
@@ -29,11 +31,15 @@ namespace VocaDb.Web.Models.SongLists {
 			FeaturedCategory = contract.FeaturedCategory;
 			Id = contract.Id;
 			Name = contract.Name;
+			Status = contract.Status;
 			Thumb = contract.Thumb;
 
+			AllowedEntryStatuses = new [] { EntryStatus.Draft, EntryStatus.Finished };
 			CanCreateFeaturedLists = EntryPermissionManager.CanManageFeaturedLists(permissionContext);
 
 		}
+
+		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
 		public bool CanCreateFeaturedLists { get; set; }
 
@@ -53,7 +59,11 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public IList<SongInListEditContract> SongLinks { get; set; }
 
+		public EntryStatus Status { get; set; }
+
 		public EntryThumbContract Thumb { get; set; }
+
+		public string UpdateNotes { get; set; }
 
 		public SongListForEditContract ToContract() {
 
@@ -62,7 +72,9 @@ namespace VocaDb.Web.Models.SongLists {
 				FeaturedCategory = this.FeaturedCategory,
 				Id = this.Id,
 				Name = this.Name,
-				SongLinks = this.SongLinks.ToArray()
+				SongLinks = this.SongLinks.ToArray(),
+				Status = this.Status,
+				UpdateNotes = this.UpdateNotes ?? string.Empty
 			};
 
 		}

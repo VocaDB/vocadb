@@ -36,6 +36,12 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		} 
 
+		public EnumFieldAccessor<SongListEditableFields> Status {
+			get {
+				return Field(SongListEditableFields.Status);
+			}
+		} 
+
 		public EnumFieldAccessor<SongListEditableFields> Thumbnail {
 			get {
 				return Field(SongListEditableFields.Thumbnail);

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
@@ -23,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			CanEdit = EntryPermissionManager.CanEdit(permissionContext, list);
 			Description = list.Description;
 			FeaturedCategory = list.FeaturedCategory;
+			Status = list.Status;
 			Thumb = (list.Thumb != null ? new EntryThumbContract(list.Thumb) : null);
 			Version = list.Version;
 
@@ -40,6 +42,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongListFeaturedCategory FeaturedCategory { get; set; }
+
+		[DataMember]
+		public EntryStatus Status { get; set; }
 
 		[DataMember]
 		public EntryThumbContract Thumb { get; set; }

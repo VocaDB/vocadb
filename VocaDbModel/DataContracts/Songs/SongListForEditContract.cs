@@ -10,6 +10,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		public SongListForEditContract() {
 			SongLinks = new SongInListEditContract[] {};
+			UpdateNotes = string.Empty;
 		}
 
 		public SongListForEditContract(SongList songList, IUserPermissionContext permissionContext)
@@ -24,6 +25,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public SongInListEditContract[] SongLinks { get; set; }
+
+		[DataMember]
+		public string UpdateNotes { get; set; }
 
 	}
 

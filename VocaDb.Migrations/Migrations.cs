@@ -3,6 +3,18 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201506272320)]
+	public class ArchivedSongListVersionNotes : AutoReversingMigration {
+
+		public override void Up() {
+			
+			Create.Column("[Status]").OnTable(TableNames.SongLists).AsString(10).NotNullable().WithDefaultValue("Finished");
+			Create.Column("[Notes]").OnTable(TableNames.ArchivedSongListVersions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
+
+		}
+
+	}
+
 	[Migration(201505301700)]
 	public class VersionNumbers : AutoReversingMigration {
 

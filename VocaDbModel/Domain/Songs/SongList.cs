@@ -112,6 +112,8 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual EntryStatus Status { get; set; }
+
 		/// <summary>
 		/// Entry thumbnail picture. Can be null.
 		/// </summary>
@@ -136,9 +138,9 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual ArchivedSongListVersion CreateArchivedVersion(SongListDiff diff, AgentLoginData author, EntryEditEvent reason) {
+		public virtual ArchivedSongListVersion CreateArchivedVersion(SongListDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
 
-			var archived = new ArchivedSongListVersion(this, diff, author, reason);
+			var archived = new ArchivedSongListVersion(this, diff, author, Status, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 

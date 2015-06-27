@@ -129,6 +129,9 @@
   <data name="Songs" xml:space="preserve">
     <value>Songs</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Thumbnail" xml:space="preserve">
     <value>Thumbnail</value>
   </data>

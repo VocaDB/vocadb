@@ -14,16 +14,15 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public ArchivedSongListVersion(SongList songList, SongListDiff diff, AgentLoginData author,
-			EntryEditEvent commonEditEvent)
-			: base(null, author, songList.Version, EntryStatus.Finished, string.Empty) {
+			EntryStatus status,
+			EntryEditEvent commonEditEvent, string notes)
+			: base(null, author, songList.Version, status, notes) {
 
 			ParamIs.NotNull(() => diff);
 
 			SongList = songList;
 			Diff = diff;
 			CommonEditEvent = commonEditEvent;
-
-			Status = EntryStatus.Finished;
 
 		}
 
