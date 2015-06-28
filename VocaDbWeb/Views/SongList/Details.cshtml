@@ -1,12 +1,12 @@
 ﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Songs
+@using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.SongList.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
 		   
 @{
 	
-	if (Model.SongList.FeaturedCategory == SongListFeaturedCategory.Nothing) {
+	if (!Model.IsFeatured) {
 		ViewBag.Parents = new[] {
 			Html.ActionLink(Model.SongList.Author.Name, "Details", "User", new {id = Model.SongList.Author.Id}, null)
 		};
@@ -36,6 +36,9 @@
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
 	@:
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
+}
+@if (Model.IsFeatured) {
+	@Helpers.EntryStatusMessage(Model.SongList.Status)
 }
 }
 
@@ -72,6 +75,10 @@
 	});
 
 </script>
+}
+
+@if (Model.IsFeatured && Model.SongList.Status == EntryStatus.Draft) {
+	@Helpers.DraftMessage(string.Empty)
 }
 
 <div class="media">

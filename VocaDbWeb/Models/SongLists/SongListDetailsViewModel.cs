@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.SongLists {
@@ -11,6 +12,12 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public SongListDetailsViewModel(SongListContract songList) {
 			SongList = songList;
+		}
+
+		public bool IsFeatured {
+			get {
+				return SongList.FeaturedCategory != SongListFeaturedCategory.Nothing;
+			}
 		}
 
 		public string SmallThumbUrl { get; set; }
