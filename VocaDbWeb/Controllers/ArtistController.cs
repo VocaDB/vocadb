@@ -11,12 +11,14 @@ using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Controllers.DataAccess;
 using System.Drawing;
+using System.Globalization;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Models.Artist;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Service.ExtSites;
 
 namespace VocaDb.Web.Controllers
 {
@@ -133,7 +135,9 @@ namespace VocaDb.Web.Controllers
 			prop.GlobalSearchType = EntryType.Artist;
 			prop.Title = model.Name;
 			prop.Subtitle = string.Format("({0})", Translate.ArtistTypeName(model.ArtistType));
-			prop.Description = markdownParser.GetPlainText(model.Description.EnglishOrOriginal);
+			prop.Description = !model.Description.IsEmpty 
+				? markdownParser.GetPlainText(model.Description.EnglishOrOriginal)
+				: new ArtistDescriptionGenerator().GenerateDescription(model, a => Translate.ArtistTypeNames.GetName(a, CultureInfo.InvariantCulture));
 			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new {id }));
 			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("Picture", new { id })).ToString();
 			prop.OpenGraph.Title = string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType));
