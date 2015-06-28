@@ -8,14 +8,17 @@
 @{
 	
 	var isNew = (Model.Id == 0);
+	string parentUrl;
 	
 	if (!isNew) {
 		PageProperties.Title = string.Format(Res.EditTitle, Model.CurrentName);
+		parentUrl = Url.Action("Details", new { id = Model.Id });
 		ViewBag.Parents = new[] { 
 			Html.ActionLink(Model.CurrentName, "Details", new { id = Model.Id }) 
 		};
 	} else {
-		PageProperties.Title = Res.CreateTitle;		
+		PageProperties.Title = Res.CreateTitle;	
+		parentUrl = Url.Action("Featured");
 	}
 	
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
@@ -46,7 +49,7 @@
 <form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
 
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id }))
+	@Helpers.SaveAndBackBtn(parentUrl)
 
 	<div id="tabs">
 
@@ -145,6 +148,6 @@
 
 	<input type="hidden" name="model" data-bind="value: ko.toJSON($root)" />
 	<br />
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id }))
+	@Helpers.SaveAndBackBtn(parentUrl)
 
 </form>
