@@ -56,6 +56,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void GetTagsByCategories() {
+			
+			tag.CategoryName = "Animation";
+
+			var result = queries.GetTagsByCategories();
+
+			Assert.AreEqual(2, result.Length, "Number of categories");
+			var firstCategory = result[0];
+			Assert.AreEqual("Animation", firstCategory.Name, "First category name");
+			Assert.AreEqual(1, firstCategory.Tags.Length, "Number of tags in the Animation category");
+			Assert.AreEqual("Appearance_Miku", firstCategory.Tags[0].Name, "First tag in the Animation category");
+
+		}
+
+		[TestMethod]
 		public void Update_Description() {
 
 			var updated = new TagContract(tag);
