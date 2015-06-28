@@ -301,6 +301,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					new[] { genres }
 					.Concat(tags.Except(new[] { genres, empty }))
 					.Concat(new[] { empty })
+					.Where(t => t != null)
 					.Select(t => new TagCategoryContract(t.Key, t))
 					.ToArray();
 
