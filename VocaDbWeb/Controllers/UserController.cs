@@ -341,6 +341,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[RestrictBannedIP]
 		public ActionResult LoginTwitter(string returnUrl) {
 			
 			// Make sure session ID is initialized
@@ -375,6 +376,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[RestrictBannedIP]
 		public ActionResult LoginTwitterComplete(string returnUrl) {
 
 			// Denied authorization
@@ -417,6 +419,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[RestrictBannedIP]
 		public ActionResult LoginTwitterComplete(RegisterOpenAuthModel model) {
 
 			if (!ModelState.IsValid)
@@ -509,7 +512,7 @@ namespace VocaDb.Web.Controllers
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
 			if (!ModelState.IsValidField("Extra")) {
-				log.Warn(string.Format("An attempt was made to fill the bot decoy field from {0}.", Hostname));
+				log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
 				ipRuleManager.TempBannedIPs.Add(Hostname);
 				return View(model);				
 			}
