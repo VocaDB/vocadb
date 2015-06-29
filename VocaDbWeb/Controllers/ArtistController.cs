@@ -131,16 +131,17 @@ namespace VocaDb.Web.Controllers
 
 			var model = queries.GetDetails(id);
 
+			var hasDescription = !model.Description.IsEmpty;
 			var prop = PageProperties;
 			prop.GlobalSearchType = EntryType.Artist;
 			prop.Title = model.Name;
 			prop.Subtitle = string.Format("({0})", Translate.ArtistTypeName(model.ArtistType));
-			prop.Description = !model.Description.IsEmpty 
+			prop.Description = hasDescription 
 				? markdownParser.GetPlainText(model.Description.EnglishOrOriginal)
 				: new ArtistDescriptionGenerator().GenerateDescription(model, a => Translate.ArtistTypeNames.GetName(a, CultureInfo.InvariantCulture));
 			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new {id }));
 			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("Picture", new { id })).ToString();
-			prop.OpenGraph.Title = string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType));
+			prop.OpenGraph.Title = hasDescription ? string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType)) : model.Name;
 			prop.OpenGraph.ShowTwitterCard = true;
 
             return View(model);
