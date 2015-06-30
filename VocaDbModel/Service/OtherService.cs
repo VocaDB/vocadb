@@ -50,6 +50,8 @@ namespace VocaDb.Model.Service {
 
 		private AlbumContract[] GetTopAlbums(ISession session, AlbumContract[] recentAlbums) {
 
+			var minRatings = 2;
+			var sampleSize = 300;
 			var cacheKey = "OtherService.PopularAlbums";
 			var cache = MemoryCache.Default;
 			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
@@ -59,16 +61,23 @@ namespace VocaDb.Model.Service {
 
 			var recentIds = recentAlbums.Select(a => a.Id).ToArray();
 
-			var popular = session.Query<Album>()
+			// Find Ids of albums that match the popularity filters, take maximum of sampleSize albums
+			var popularIds = session.Query<Album>()
 				.Where(a => !a.Deleted 
-					&& a.RatingCount >= 2 && a.RatingAverageInt >= 300	// Filter by number of ratings and average rating
+					&& a.RatingCount >= minRatings && a.RatingAverageInt >= 300	// Filter by number of ratings and average rating
 					&& !recentIds.Contains(a.Id))						// Filter out recent albums (that are already shown)
 				.OrderByDescending(a => a.RatingTotal)
-				.Take(100)
+				.Select(a => a.Id)
+				.Take(sampleSize)
 				.ToArray();
 
-			var random = CollectionHelper
-				.GetRandomItems(popular, 7)
+			// Pick random albums to be displayed from the group of popular albums
+			var randomIds = CollectionHelper
+				.GetRandomItems(popularIds, 7)
+				.ToArray();
+
+			var random = session.Query<Album>()
+				.Where(a => randomIds.Contains(a.Id))
 				.OrderByDescending(a => a.RatingAverageInt)
 				.ToArray();
 

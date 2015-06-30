@@ -8,7 +8,7 @@ namespace VocaDb.Model.Service.ExtSites {
 
 		public string GenerateDescription(ArtistContract artist, Func<ArtistType, string> artistTypeNames) {
 
-			return artistTypeNames(artist.ArtistType);
+			return string.Format("{0}.", artistTypeNames(artist.ArtistType));
 
 		}
 

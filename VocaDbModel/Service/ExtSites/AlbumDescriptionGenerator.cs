@@ -23,6 +23,7 @@ namespace VocaDb.Model.Service.ExtSites {
 					
 			var sb = new StringBuilder();
 			AddBasicDescription(sb, album, albumTypeNames);
+			sb.Append(".");
 			return sb.ToString();
 
 		}
@@ -42,6 +43,8 @@ namespace VocaDb.Model.Service.ExtSites {
 				}
 
 			}
+
+			sb.Append(".");
 
 			return sb.ToString();
 
