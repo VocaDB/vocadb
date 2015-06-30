@@ -69,9 +69,15 @@
 
 			<div class="editor-label">
 				@Res.Description
+				@Helpers.MarkdownNotice()
 			</div>
 			<div class="editor-field">
-				<textarea data-bind="value: description" rows="5" cols="60" class="input-xxlarge"></textarea>
+				<textarea data-bind="textInput: description" rows="5" cols="60" class="input-xxlarge"></textarea>
+				
+				<div>
+					Live preview
+					<div data-bind="markdown: description"></div>
+				</div>
 			</div>
 
 			@if (Model.CanCreateFeaturedLists) {
