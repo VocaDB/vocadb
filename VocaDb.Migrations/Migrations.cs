@@ -3,6 +3,23 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	/// <summary>
+	/// Add Index to 'Deleted' column on 'Albums' table.
+	/// There's lots of count lookups to albums table that filter by deletion.
+	/// For example from user stats.
+	/// </summary>
+	[Migration(201507040000)]
+	public class IndexDeletedToAlbums : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Index("IX_Albums_Deleted").OnTable(TableNames.Albums)
+				.OnColumn("[Deleted]").Ascending().OnColumn("[Id]").Ascending();
+
+		}
+
+	}
+
 	[Migration(201506272320)]
 	public class ArchivedSongListVersionNotes : AutoReversingMigration {
 
