@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using VocaDb.Model.DataContracts;
 namespace VocaDb.Model.Domain {
 
@@ -163,11 +164,15 @@ namespace VocaDb.Model.Domain {
 		/// If full date is specified, a localized short date string (formatted according to current culture) will be returned.
 		/// </remarks>
 		public override string ToString() {
-			if (Year != null) {
-				if (Month != null && Day != null)
-					return new DateTime(Year.Value, Month.Value, Day.Value).ToShortDateString();
+			return ToString(CultureInfo.CurrentCulture);
+		}
+
+		public string ToString(IFormatProvider formatProvider) {
+			if (Year.HasValue) {
+				if (Month.HasValue && Day.HasValue)
+					return new DateTime(Year.Value, Month.Value, Day.Value).ToString("d", formatProvider);
 				else
-					return Year.Value.ToString();
+					return Year.Value.ToString(formatProvider);
 			}
 			return string.Empty;
 		}

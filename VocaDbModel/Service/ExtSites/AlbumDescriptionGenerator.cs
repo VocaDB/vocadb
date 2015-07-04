@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Service.ExtSites {
@@ -14,8 +16,10 @@ namespace VocaDb.Model.Service.ExtSites {
 
 			sb.Append(typeName);
 
-			if (!album.ReleaseDate.IsEmpty)
-				sb.AppendFormat(", released {0}", album.ReleaseDate.Formatted);
+			if (!album.ReleaseDate.IsEmpty) {
+				var date = OptionalDateTime.Create(album.ReleaseDate).ToString(CultureInfo.InvariantCulture);
+				sb.AppendFormat(", released {0}", date);				
+			}
 
 		}
 
