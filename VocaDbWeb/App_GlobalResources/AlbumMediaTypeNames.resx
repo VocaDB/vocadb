@@ -121,7 +121,7 @@
     <value>Digital download</value>
   </data>
   <data name="Other" xml:space="preserve">
-    <value>Other</value>
+    <value>Unspecified</value>
   </data>
   <data name="PhysicalDisc" xml:space="preserve">
     <value>Physical disc</value>

@@ -127,7 +127,8 @@
 	<br />
 
 	@ViewRes.Album.DetailsStrings.MediaType:
-	@Html.EnumDropDownList("collectionMediaSelect", Translate.AlbumMediaTypeNames, new { id = "collectionMediaSelect", @class = "input-medium" }, mediaType)
+	@{ var fields = Translate.AlbumMediaTypeNames.GetTranslatedFields(MediaType.Other, MediaType.PhysicalDisc, MediaType.DigitalDownload); }
+	@Html.EnumDropDownList("collectionMediaSelect", fields, new { id = "collectionMediaSelect", @class = "input-medium" }, mediaType)
 
 	<div>
 		@ViewRes.Album.DetailsStrings.MyRating: 

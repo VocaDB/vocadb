@@ -85,6 +85,10 @@ namespace VocaDb.Web.Helpers {
 			return new SelectList(vals, "Key", "Value", selectedValue);
 		}
 
+		public static SelectList CreateEnumList<T>(object selectedValue, IEnumerable<TranslateableEnumField<T>> vals) where T : struct, IConvertible {
+			return new SelectList(vals, "Id", "Name", selectedValue);
+		}
+
 		public static SelectList CreateLanguageSelectionList(object selectedValue) {
 			return new SelectList(LanguageSelections, "Key", "Value", selectedValue);
 		}
@@ -127,6 +131,14 @@ namespace VocaDb.Web.Helpers {
 
 		public static MvcHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
 			TranslateableEnum<TEnum> enumType, object htmlAttributes = null, object selectedValue = null)
+			where TEnum : struct, IConvertible {
+
+			return htmlHelper.DropDownList(name, CreateEnumList(selectedValue, enumType), htmlAttributes);
+
+		}
+
+		public static MvcHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
+			IEnumerable<TranslateableEnumField<TEnum>> enumType, object htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, IConvertible {
 
 			return htmlHelper.DropDownList(name, CreateEnumList(selectedValue, enumType), htmlAttributes);

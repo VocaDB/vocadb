@@ -42,9 +42,9 @@ namespace VocaDb.Web.Helpers.Support {
 			}
 		}
 
-		public TranslateableEnumField<TEnum>[] AllFields {
+		public IEnumerable<TranslateableEnumField<TEnum>> AllFields {
 			get {
-				return values.Select(v => new TranslateableEnumField<TEnum>(v, GetName(v))).ToArray();
+				return values.Select(v => new TranslateableEnumField<TEnum>(v, GetName(v)));
 			}
 		}
 
@@ -70,6 +70,11 @@ namespace VocaDb.Web.Helpers.Support {
 				.Where(f => !except.Contains(f) && EnumVal<TEnum>.FlagIsSet(flags, f))
 				.Select(GetName));
 
+		}
+
+		public IEnumerable<TranslateableEnumField<TEnum>> GetTranslatedFields(params TEnum[] values) {
+			var res = ResourceManager;
+			return values.Select(t => new TranslateableEnumField<TEnum>(t, GetName(t, res)));
 		}
 
 		public string GetName(TEnum val) {
@@ -103,6 +108,10 @@ namespace VocaDb.Web.Helpers.Support {
 		public T Id { get; set; }
 
 		public string Name { get; set; }
+
+		public KeyValuePair<T, string> ToKeyValuePair() {
+			return new KeyValuePair<T, string>(Id, Name);
+		}
 
 	}
 

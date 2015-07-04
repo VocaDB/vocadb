@@ -6,6 +6,10 @@ namespace VocaDb.Model.Helpers {
 
 	public static class EnumerableExtender {
 
+		public static IEnumerable<T> Insert<T>(this IEnumerable<T> source, T element) {
+			return Enumerable.Repeat(element, 1).Concat(source);
+		}
+
 		/// <summary>
 		/// Returns the item with the highest value specified by a selector.
 		/// </summary>
