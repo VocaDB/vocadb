@@ -456,7 +456,7 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new StyleBundle("~/Content/embedSong").Include(
-				"~/Content/bootstrap.css", "~/Content/EmbedSong.css"));
+				"~/Content/bootstrap.css", "~/Content/Styles/embedSong.css"));
 
 			// CSS for jqxRating
 			bundles.Add(new StyleBundle("~/Scripts/jqwidgets27/styles/css").Include(

@@ -1296,7 +1296,6 @@
     <Content Include="Content\barcode.png" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\EmbedSong.css" />
     <Content Include="Content\ExtIcons\aboutme.png" />
     <Content Include="Content\ExtIcons\alicebooks.png" />
     <Content Include="Content\ExtIcons\amazon.png" />
@@ -1383,6 +1382,9 @@
     </Content>
     <Content Include="Content\Styles\discussions.css">
       <DependentUpon>discussions.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\embedSong.css">
+      <DependentUpon>embedSong.less</DependentUpon>
     </Content>
     <Content Include="Content\Styles\ExtLinks.css">
       <DependentUpon>ExtLinks.less</DependentUpon>
@@ -1650,6 +1652,7 @@
     <Content Include="Content\Styles\discussions.less" />
     <Content Include="Content\Styles\variables.less" />
     <Content Include="Content\Styles\userpage.less" />
+    <Content Include="Content\Styles\embedSong.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
