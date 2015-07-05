@@ -8,6 +8,9 @@ div.pvViewerContent {
 }
 div.pvViewerContent .songPreviewTitle {
   color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 div.pvViewerContent .ratingButtons {
   float: right;

@@ -15,7 +15,7 @@
     self.parent = undefined;
 </script>
 
-<div class="pvViewerContent" style="width: @(Model.Width)px; height: @(Model.Height + 55)px">
+<div class="pvViewerContent" style="width: @(Model.PlayerWidth)px; height: @(Model.ContainerHeight)px">
 	
     <input type="hidden" class="songId" value="@Model.Song.Id" />
 	<h4 class="songPreviewTitle">
@@ -28,15 +28,15 @@
 			(@Translate.SongTypeNames[Model.Song.SongType])
 		</small>
 	</h4>
-	<div style="height: @(Model.Height)px" class="@("embed-pv" + (current != null ? " embed-pv-" + serviceName : string.Empty))">		
+	<div style="height: @(Model.PlayerHeight)px" class="@("embed-pv" + (current != null ? " embed-pv-" + serviceName : string.Empty))">		
 		@if (current != null) {
-			@Helpers.EmbedPVDynamic(current, Model.Width, Model.Height)
+			@Helpers.EmbedPVDynamic(current, Model.PlayerWidth, Model.PlayerHeight)
 		}
 	</div>
   
     <div class="pvLinks">
-    @foreach (var pv in Model.GetMainPVs()) {
-	    <a href="@Url.Action("EmbedSong", new { songId = Model.Song.Id, pvId = pv.Id, lang = Request.Params[LoginManager.LangParamName] })">			
+    @foreach (var pv in Model.MainPVs) {
+	    <a href="@Url.Action("EmbedSong", new { songId = Model.Song.Id, pvId = pv.Id, w = Model.Width, h = Model.Height, lang = Request.Params[LoginManager.LangParamName] })">			
     	    <div class="item@(current != null && pv.Id == current.Id ? " active" : string.Empty)">
 		        <img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" /> 
                 @pv.Service

@@ -34,7 +34,9 @@ namespace VocaDb.Web.Controllers
 			this.songService = songService;
 		}
 
+#if !DEBUG
 		[OutputCache(Duration = 600, VaryByParam = "songId;pvId;lang;w;h")]
+#endif
         public ActionResult EmbedSong(int songId = invalidId, int pvId = invalidId, int? w = null, int? h = null) {
 
 			if (songId == invalidId)
@@ -58,8 +60,8 @@ namespace VocaDb.Web.Controllers
 			var viewModel = new EmbedSongViewModel {
 				Song = song,
 				CurrentPV = current,
-				Width = w ?? 560,
-				Height = h ?? 315
+				Width = w,
+				Height = h
 			};
 
 			return PartialView(viewModel);
