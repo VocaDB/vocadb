@@ -1,12 +1,15 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using System.Web.SessionState;
 using NLog;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Ext;
 
 namespace VocaDb.Web.Controllers
@@ -29,8 +32,8 @@ namespace VocaDb.Web.Controllers
 			this.songService = songService;
 		}
 
-		[OutputCache(Duration = 600, VaryByParam = "songId;pvId;lang")]
-        public ActionResult EmbedSong(int songId = invalidId, int pvId = invalidId) {
+		[OutputCache(Duration = 600, VaryByParam = "songId;pvId;lang;w;h")]
+        public ActionResult EmbedSong(int songId = invalidId, int pvId = invalidId, int? w = null, int? h = null) {
 
 			if (songId == invalidId)
 				return NoId();
@@ -40,7 +43,24 @@ namespace VocaDb.Web.Controllers
 
 			var song = songService.GetSongWithPVAndVote(songId);
 
-			return PartialView(song);
+			PVContract current = null;
+    
+			if (pvId != invalidId) {
+				current = song.PVs.FirstOrDefault(p => p.Id == pvId);
+			}
+        
+			if (current == null) {
+				current = PVHelper.PrimaryPV(song.PVs);
+			}
+
+			var viewModel = new EmbedSongViewModel {
+				Song = song,
+				CurrentPV = current,
+				Width = w ?? 560,
+				Height = h ?? 315
+			};
+
+			return PartialView(viewModel);
 
 		}
 
