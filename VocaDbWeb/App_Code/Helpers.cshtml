@@ -244,6 +244,10 @@
     
 }
 
+@helper ReCaptcha2() {
+	<div class="g-recaptcha" data-sitekey="@AppConfig.ReCAPTCHAPublicKey"></div>
+}
+
 @helper RequiredField() {
 	<span class="required-field">*</span>	
 }

@@ -1,11 +1,13 @@
-﻿@using VocaDb.Model.Utils
-@using Microsoft.Web.Helpers;
-@using R = ViewRes.User.CreateStrings;
+﻿@using R = ViewRes.User.CreateStrings;
 
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.RegisterModel>
 
 @{
 	PageProperties.Title = ViewRes.User.CreateStrings.Register;
+}
+
+@section Head {
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>	
 }
 
 @Helpers.ValidationSymmaryDiv(ViewRes.User.CreateStrings.RegistrationUnsuccessful)
@@ -47,7 +49,7 @@
 					CAPTCHA
 				</div>
 				<div class="editor-field">
-					@ReCaptcha.GetHtml(publicKey: AppConfig.ReCAPTCHAPublicKey)
+					@Helpers.ReCaptcha2()
 
 					@Html.ValidationMessage("CAPTCHA")
 				</div>

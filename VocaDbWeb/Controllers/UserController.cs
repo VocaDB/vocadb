@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth.Messages;
-using Microsoft.Web.Helpers;
 using NLog;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Users;
@@ -15,6 +13,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
@@ -192,7 +191,7 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public ActionResult ForgotPassword(ForgotPassword model) {
 
-			if (!ReCaptcha.Validate(ConfigurationManager.AppSettings["ReCAPTCHAKey"]))
+			if (!ReCaptcha2.Validate(Request, AppConfig.ReCAPTCHAKey).Success)
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
 
 			if (!ModelState.IsValid) {
@@ -521,10 +520,10 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			if (!ReCaptcha.Validate(ConfigurationManager.AppSettings["ReCAPTCHAKey"])) {
+			var recaptchaResult = ReCaptcha2.Validate(Request, AppConfig.ReCAPTCHAKey);
+			if (!recaptchaResult.Success) {
 
-				var captchaResponse = Request.Params["recaptcha_response_field"] ?? string.Empty;
-				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (response was {0})", captchaResponse), LogLevel.Warn);
+				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (error {0})", recaptchaResult.Error), LogLevel.Warn);
 				otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
 
