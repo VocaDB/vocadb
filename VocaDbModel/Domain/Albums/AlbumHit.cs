@@ -1,23 +1,16 @@
-﻿namespace VocaDb.Model.Domain.Albums {
+﻿
+namespace VocaDb.Model.Domain.Albums {
 
-	public class AlbumHit {
+	public class AlbumHit : EntryHit {
 
-		private int agent;
 		private Album album;
 
 		public AlbumHit() { }
 
-		public AlbumHit(Album album, int agent) {
-			Agent = agent;
+		public AlbumHit(Album album, int agent) 
+			: base(agent) {
 			Album = album;
 		}
-
-		public virtual int Agent {
-			get { return agent; }
-			set { agent = value; }
-		}
-
-		public virtual long Id { get; set; }
 
 		public virtual Album Album {
 			get { return album; }

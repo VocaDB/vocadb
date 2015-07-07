@@ -1,23 +1,16 @@
-﻿namespace VocaDb.Model.Domain.Songs {
+﻿
+namespace VocaDb.Model.Domain.Songs {
 
-	public class SongHit {
+	public class SongHit : EntryHit {
 
-		private int agent;
 		private Song song;
 
 		public SongHit() { }
 
-		public SongHit(Song song, int agent) {
-			Agent = agent;
+		public SongHit(Song song, int agent) 
+			: base(agent) {
 			Song = song;
 		}
-
-		public virtual int Agent {
-			get { return agent; }
-			set { agent = value; }
-		}
-
-		public virtual long Id { get; set; }
 
 		public virtual Song Song {
 			get { return song; }

@@ -355,6 +355,7 @@
     <Compile Include="Domain\Discussions\DiscussionComment.cs" />
     <Compile Include="Domain\Discussions\DiscussionFolder.cs" />
     <Compile Include="Domain\Discussions\DiscussionTopic.cs" />
+    <Compile Include="Domain\EntryHit.cs" />
     <Compile Include="Domain\GlobalEntryId.cs" />
     <Compile Include="Domain\EntryIdAndName.cs" />
     <Compile Include="Domain\EntryPictureFile.cs" />
