@@ -304,6 +304,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Social.
+        /// </summary>
+        public static string Social {
+            get {
+                return ResourceManager.GetString("Social", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Statistics.
         /// </summary>
         public static string Stats {

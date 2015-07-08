@@ -189,9 +189,6 @@
   <data name="Share" xml:space="preserve">
     <value>共有</value>
   </data>
-  <data name="Social" xml:space="preserve">
-    <value>ソーシャルメディア</value>
-  </data>
   <data name="TotalScore" xml:space="preserve">
     <value>{0} トータルスコア</value>
   </data>
@@ -215,7 +212,6 @@
   </data>
   <data name="LyricsFrom" xml:space="preserve">
     <value>出典：</value>
-    
   </data>
   <data name="NicoMimiDownload" xml:space="preserve">
     <value>ダウンロードリンクをNicoMimiでチェック</value>

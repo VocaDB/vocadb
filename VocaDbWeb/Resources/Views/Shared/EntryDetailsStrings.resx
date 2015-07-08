@@ -198,6 +198,9 @@
   <data name="ShowAllTags" xml:space="preserve">
     <value>Show all</value>
   </data>
+  <data name="Social" xml:space="preserve">
+    <value>Social</value>
+  </data>
   <data name="Stats" xml:space="preserve">
     <value>Statistics</value>
   </data>

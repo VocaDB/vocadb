@@ -316,9 +316,6 @@
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
 		</p>
 
-		<br />
-		@EntryDetailsHelpers.ShareLinks(ViewBag.PageTitle, url)
-
 	</div>
 
 	<div id="discussionTab" data-bind="with: comments">
@@ -339,6 +336,13 @@
 	</div>
 
 	<div id="shareTab">
+		<div>
+			<label>
+				@ViewRes.EntryDetailsStrings.Social<br />
+				@EntryDetailsHelpers.LargeShareLinks(PageProperties.Title, url)
+				<br /><br />
+			</label>
+		</div>		
 		<div>
 			@ViewRes.EntryDetailsStrings.Link<br />
 			<input type="text" value="@url" class="input-large" onclick="this.select();" />

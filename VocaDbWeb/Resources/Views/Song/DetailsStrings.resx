@@ -225,9 +225,6 @@
   <data name="Share" xml:space="preserve">
     <value>Share</value>
   </data>
-  <data name="Social" xml:space="preserve">
-    <value>Social</value>
-  </data>
   <data name="RelatedSongs" xml:space="preserve">
     <value>Related songs</value>
   </data>
