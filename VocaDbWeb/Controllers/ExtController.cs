@@ -45,7 +45,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(Request.Params[LoginManager.LangParamName]))
 				PermissionContext.LanguagePreferenceSetting.OverrideRequestValue(ContentLanguagePreference.Default);
 
-			var song = songService.GetSongWithPVAndVote(songId);
+			var song = songService.GetSongWithPVAndVote(songId, false);
 
 			PVContract current = null;
     
@@ -90,7 +90,7 @@ namespace VocaDb.Web.Controllers
 					data = RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id));
 					break;
 				case EntryType.Song:
-					data = RenderPartialViewToString("SongPopupContent", songService.GetSongWithPVAndVote(id));
+					data = RenderPartialViewToString("SongPopupContent", songService.GetSongWithPVAndVote(id, false));
 					break;
 			}
 

@@ -23,6 +23,7 @@ using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
 using System.Globalization;
+using System.Web;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code;
@@ -137,7 +138,7 @@ namespace VocaDb.Web.Controllers
 
 			WebHelper.VerifyUserAgent(Request);
 
-			var contract = Service.GetSongDetails(id, albumId, WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty);
+			var contract = Service.GetSongDetails(id, albumId, GetHostnameForValidHit());
 			var model = new SongDetails(contract);
 
 			var prop = PageProperties;
@@ -399,7 +400,7 @@ namespace VocaDb.Web.Controllers
 			if (songId == invalidId)
 				return NoId();
 
-			var song = Service.GetSongWithPVAndVote(songId);
+			var song = Service.GetSongWithPVAndVote(songId, true, GetHostnameForValidHit());
 			var pv = PVHelper.PrimaryPV(song.PVs);
 
 			if (pv == null)
@@ -468,7 +469,7 @@ namespace VocaDb.Web.Controllers
 
 		public string ThumbUrl(int id) {
 
-			var songWithPVs = Service.GetSongWithPVAndVote(id);
+			var songWithPVs = Service.GetSongWithPVAndVote(id, false);
 			return (songWithPVs.ThumbUrl);
 
 		}

@@ -39,6 +39,36 @@ namespace VocaDb.Model.Service {
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly IUserIconFactory userIconFactory;
 
+		private void AddSongHit(ISession session, Song song, string hostname) {
+			
+			if (!PermissionContext.IsLoggedIn && string.IsNullOrEmpty(hostname))
+				return;
+
+			var agentNum = PermissionContext.IsLoggedIn ? PermissionContext.LoggedUserId : hostname.GetHashCode();
+
+			if (agentNum == 0)
+				return;
+
+			using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted)) {
+
+				var songId = song.Id;
+				var isHit = session.Query<SongHit>().Any(h => h.Song.Id == songId && h.Agent == agentNum);
+
+				if (!isHit) {
+					var hit = new SongHit(song, agentNum);
+					session.Save(hit);
+				}
+
+				try {					
+					tx.Commit();
+				} catch (TransactionException x) {
+					log.Error(x, "Unable to save song hit");
+				}
+
+			}
+
+		}
+
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams) {
 			return new SongSearch(new NHibernateRepositoryContext(session, PermissionContext), LanguagePreference, entryUrlParser).Find(queryParams);
 		}
@@ -342,7 +372,6 @@ namespace VocaDb.Model.Service {
 
 				var song = session.Load<Song>(songId);
 				var contract = new SongDetailsContract(song, PermissionContext.LanguagePreference);
-				int agentNum = 0;
 				var user = PermissionContext.LoggedUser;
 
 				if (user != null) {
@@ -352,10 +381,6 @@ namespace VocaDb.Model.Service {
 
 					contract.UserRating = (rating != null ? rating.Rating : SongVoteRating.Nothing);
 
-					agentNum = user.Id;
-
-				} else if (!string.IsNullOrEmpty(hostname)) {
-					agentNum = hostname.GetHashCode();
 				}
 
 				contract.CommentCount = session.Query<SongComment>().Count(c => c.Song.Id == songId);
@@ -392,24 +417,7 @@ namespace VocaDb.Model.Service {
 					contract.MergedTo = (mergeEntry != null ? new SongContract(mergeEntry.Target, LanguagePreference) : null);
 				}
 
-				if (agentNum != 0) {
-					using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted)) {
-
-						var isHit = session.Query<SongHit>().Any(h => h.Song.Id == songId && h.Agent == agentNum);
-
-						if (!isHit) {
-							var hit = new SongHit(song, agentNum);
-							session.Save(hit);
-						}
-
-						try {					
-							tx.Commit();
-						} catch (TransactionException x) {
-							log.Error(x, "Unable to save song hit");
-						}
-
-					}
-				}
+				AddSongHit(session, song, hostname);
 
 				return contract;
 
@@ -531,13 +539,16 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId) {
+		public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "") {
 
 			return HandleQuery(session => {
 
 				var song = session.Load<Song>(songId);
 				var userId = PermissionContext.LoggedUserId;
 				var vote = session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == songId && s.User.Id == userId);
+
+				if (addHit)
+					AddSongHit(session, song, hostname);
 
 				return new SongWithPVAndVoteContract(song, vote != null ? vote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference);
 

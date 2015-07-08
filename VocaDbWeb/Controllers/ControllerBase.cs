@@ -60,6 +60,10 @@ namespace VocaDb.Web.Controllers {
 			get { return MvcApplication.LoginManager; }
 		}
 
+		protected string GetHostnameForValidHit() {
+			return WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty;
+		}
+
 		protected ActionResult NoId() {
 			return HttpNotFound("No ID specified");
 		}

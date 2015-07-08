@@ -89,7 +89,7 @@ namespace VocaDb.Web.Controllers
 			if (songId == invalidId)
 				return NoId();
 
-			var song = songService.GetSongWithPVAndVote(songId);
+			var song = songService.GetSongWithPVAndVote(songId, false);
 
 			return PartialView("PVs/_PVContent", song);
 
