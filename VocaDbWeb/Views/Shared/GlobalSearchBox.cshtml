@@ -5,7 +5,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.GlobalSearchBoxModel>
 
 @using (Html.BeginForm("GlobalSearch", "Home", FormMethod.Post, new { @class = "navbar-form form-inline pull-left navbar-search", id = "globalSearchBox" })) {
-	
+
 	<input type="hidden" id="globalSearchObjectType" name="objectType" data-bind="value: entryType" />
 
 	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -14,7 +14,9 @@
 		<span class="icon-bar"></span>
 	</a>
 
-	<div class="brand">@Html.ActionLink(BrandableStrings.Layout.SiteName, "Index", "Home")</div>
+	<div class="brand hidden-phone">
+		@Html.ActionLink(BrandableStrings.Layout.SiteName, "Index", "Home")
+	</div>
 
 	<div class="input-prepend input-append navbar-searchBox">
 		<div class="btn-group">
@@ -30,22 +32,22 @@
 				}
 			</ul>
 		</div>
-		<input type="text" name="globalSearchTerm" id="globalSearchTerm" class="globalSearchBox search-query" size="50" placeholder="@ViewRes.SharedStrings.Search" maxlength="255" />	
+		<input type="text" name="globalSearchTerm" id="globalSearchTerm" class="globalSearchBox search-query" size="50" placeholder="@ViewRes.SharedStrings.Search" maxlength="255" />
 		<button type="submit" class="btn btn-info" title="@ViewRes.SharedStrings.Search">
 			<i class="icon-search"></i>
 		</button>
 	</div>
-	
+
 	<div class="btn-group navbar-languageBar">
 		<a class="btn btn-info navbar-languageBtn dropdown-toggle" data-toggle="dropdown" href="#">
 			<i class="icon-user"></i>
 			<span class="visible-desktop">
 				@ViewRes._LayoutStrings.Account
-			</span>			
+			</span>
 			<span data-bind="visible: hasNotifications" class="badge badge-small badge-important" style="display: none;">!</span>
-			<span class="caret"></span>		
+			<span class="caret"></span>
 		</a>
-	
+
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 			@if (!Login.Manager.IsLoggedIn) {
 				<li><a href="@Url.Action("Login", "User")" onclick=" vdb.functions.showLoginPopup(); return false; ">@ViewRes._LayoutStrings.LogIn</a></li>
@@ -65,9 +67,9 @@
 							@Res.EntryReports
 							<span data-bind="visible: reportCount() > 0, text: reportCount" class="badge badge-small badge-important" style="display: none"></span>
 						</a>
-					</li>	 
+					</li>
 				}
-				<li>@Html.ActionLink(ViewRes._LayoutStrings.LogOut, "Logout", "User")</li>				
+				<li>@Html.ActionLink(ViewRes._LayoutStrings.LogOut, "Logout", "User")</li>
 			}
 			<li class="divider"></li>
 			<li><h6>@ViewRes.User.MySettingsStrings.DefaultLanguageSelection</h6></li>
@@ -78,57 +80,57 @@
 						<i class="menuIcon icon-" style="@(lp == Login.Manager.LanguagePreference ? "display: none;" : "")"></i>
 						@Translate.ContentLanguagePreferenceName(lp)
 					</a>
-				</li>				
+				</li>
 			}
 		</ul>
 	</div>
-	
+
 	if (Login.Manager.IsLoggedIn) {
-	<div class="btn-group navbar-languageBar">
-		<a class="btn btn-info navbar-languageBtn dropdown-toggle" data-bind="click: ensureMessagesLoaded" data-toggle="dropdown" href="#">
-			<i class="icon-envelope"></i>
-			<span data-bind="visible: unreadMessagesCount, text: unreadMessagesCount" class="badge badge-small badge-important" style="display: none;"></span>
-			<span class="caret"></span>		
-		</a>
-	
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-			<li data-bind="visible: unreadMessagesCount() > 0 && !isLoaded()">
-				<p>
-					@ViewRes.SharedStrings.Loading				
-				</p>
-			</li>
-			<!-- ko foreach: unreadMessages -->
-			<li>
-				<a href="#" data-bind="attr: { href: '@Url.Action("Messages", "User")' + '?messageId=' + id }">
-					<div class="media">
-					    <div class="pull-left media-image-usermessage" style="width: 40px; height: 40px;">
-					        <!-- ko if: sender -->
-					        @UserHelpers.ProfileIconKnockout("sender.iconUrl", 40)
-					        <!-- /ko -->
-                            <!-- ko ifnot: sender -->
-                            <img src="@Url.Content("~/Content/vocadb_40.png")" alt="Notification" />
-                            <!-- /ko -->
-					    </div>
-						<div class="media-body media-body-usermessage">
-							<span data-bind="text: sender ? sender.name + ' -' : ''"></span>
-							<small data-bind="text: createdFormatted"></small><br />
-							<span data-bind="text: subject"></span>							
+		<div class="btn-group navbar-languageBar">
+			<a class="btn btn-info navbar-languageBtn dropdown-toggle" data-bind="click: ensureMessagesLoaded" data-toggle="dropdown" href="#">
+				<i class="icon-envelope"></i>
+				<span data-bind="visible: unreadMessagesCount, text: unreadMessagesCount" class="badge badge-small badge-important" style="display: none;"></span>
+				<span class="caret"></span>
+			</a>
+
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+				<li data-bind="visible: unreadMessagesCount() > 0 && !isLoaded()">
+					<p>
+						@ViewRes.SharedStrings.Loading
+					</p>
+				</li>
+				<!-- ko foreach: unreadMessages -->
+				<li>
+					<a href="#" data-bind="attr: { href: '@Url.Action("Messages", "User")' + '?messageId=' + id }">
+						<div class="media">
+							<div class="pull-left media-image-usermessage" style="width: 40px; height: 40px;">
+								<!-- ko if: sender -->
+								@UserHelpers.ProfileIconKnockout("sender.iconUrl", 40)
+								<!-- /ko -->
+								<!-- ko ifnot: sender -->
+								<img src="@Url.Content("~/Content/vocadb_40.png")" alt="Notification" />
+								<!-- /ko -->
+							</div>
+							<div class="media-body media-body-usermessage">
+								<span data-bind="text: sender ? sender.name + ' -' : ''"></span>
+								<small data-bind="text: createdFormatted"></small><br />
+								<span data-bind="text: subject"></span>
+							</div>
 						</div>
-					</div>
-				</a>				
-			</li>
-			<!-- /ko -->
-			<li data-bind="visible: isLoaded() && unreadMessages().length == 0">
-				<p>
-					@ViewRes.TopBarStrings.NoUnreadMessages				
-				</p>
-			</li>
-			<li class="divider"></li>
-			<li>
-				<a href="@Url.Action("Messages", "User")">@ViewRes.TopBarStrings.ViewAllMessages</a>								
-			</li>
-		</ul>
-	</div>
+					</a>
+				</li>
+				<!-- /ko -->
+				<li data-bind="visible: isLoaded() && unreadMessages().length == 0">
+					<p>
+						@ViewRes.TopBarStrings.NoUnreadMessages
+					</p>
+				</li>
+				<li class="divider"></li>
+				<li>
+					<a href="@Url.Action("Messages", "User")">@ViewRes.TopBarStrings.ViewAllMessages</a>
+				</li>
+			</ul>
+		</div>
 	}
 
 	<div class="nav-collapse collapse">

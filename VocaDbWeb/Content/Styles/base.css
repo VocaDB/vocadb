@@ -38,10 +38,18 @@
 .link-list .link-item:not(:last-child) > ::after {
   content: ", ";
 }
+body {
+  padding-top: 50px;
+}
 @media (max-width: 768px) {
   body {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+@media (max-width: 610px) {
+  body {
+    padding-top: 80px;
   }
 }
 @media (min-width: 768px) {
@@ -71,12 +79,28 @@
     display: none;
   }
 }
+.vdb .navbar-searchBox {
+  max-width: 402px;
+  width: calc(100% - 60px);
+}
+@media (max-width: 970px) {
+  .vdb .navbar-searchBox {
+    margin-bottom: 5px;
+  }
+}
 .vdb .globalSearchBox {
   max-width: 270px;
-  width: calc(100% - 146px);
+  width: calc(100% - 140px);
 }
 .navbar-search {
   width: 100%;
+}
+@media (max-width: 970px) {
+  .navbar-fixed-top,
+  .navbar-fixed-bottom {
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
 .vdb .navbar-inverse .btn-navbar {
   margin-top: 1px;

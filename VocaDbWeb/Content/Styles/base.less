@@ -60,10 +60,18 @@
 
 // Layout and Navigation
 body {
+
+	padding-top: 50px;
+
 	@media (max-width: @mobile-breakpoint) {
 		padding-left: 0;
 		padding-right: 0;
 	}
+
+	@media (max-width: @topbar-two-rows-breakpoint) {
+		padding-top: 80px;
+	}
+
 }
 
 body .container-fluid {
@@ -95,13 +103,31 @@ body .container-fluid {
 	}		
 }
 
+.vdb .navbar-searchBox {
+
+	max-width: 402px;
+	width: calc(100% - 60px);
+
+	@media (max-width: @left-menu-breakpoint) {
+		margin-bottom: 5px;
+	}
+
+}
+
 .vdb .globalSearchBox {
 	max-width: 270px;
-	width: calc(100% - 146px);
+	width: calc(100% - 140px);
 }
 
 .navbar-search {
 	width: 100%;
+}
+
+.navbar-fixed-top, .navbar-fixed-bottom {
+	@media (max-width: @left-menu-breakpoint) {
+		margin-right: 0;
+		margin-left: 0;
+	}
 }
 
 @navbar-collapse-light: lighten(@navbar-color-light, 25%);
