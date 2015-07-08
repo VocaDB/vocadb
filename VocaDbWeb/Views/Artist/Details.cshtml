@@ -215,7 +215,10 @@
 		</div>
 
 		@if (Model.Members.Any()) {
-			<h3>@ViewRes.Artist.DetailsStrings.Members</h3>
+			<h3>
+				@ViewRes.Artist.DetailsStrings.Members
+				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.Members.Length))</small>
+			</h3>
 			<div data-bind="visible: !showAllMembers()">
 				@ArtistHelpers.ArtistGrid(Model.Members.Take(6).Select(g => g.Member), 3, true)
 			</div>
@@ -230,7 +233,7 @@
 		@if (Model.LatestAlbums.Any()) {
 			<h3 class="withMargin">
 				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.AdditionDate }, null)
-				<small>(@string.Format("{0} total", Model.SharedStats.AlbumCount))</small>
+				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.AlbumCount))</small>
 			</h3>
 			<div id="newAlbums">
 				@AlbumHelpers.AlbumThumbs(Model.LatestAlbums)
@@ -252,7 +255,7 @@
 			<br />
 			<h3>
 				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.AdditionDate), null)
-				<small>(@string.Format("{0} total", Model.SharedStats.SongCount))</small>
+				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.SongCount))</small>
 			</h3>
 			@SongHelpers.SongGrid(Model.LatestSongs, 2, true)
 		}

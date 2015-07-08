@@ -156,6 +156,9 @@
   <data name="NoMatches" xml:space="preserve">
     <value>Sorry, no matches :(</value>
   </data>
+  <data name="NumTotal" xml:space="preserve">
+    <value>{0} total</value>
+  </data>
   <data name="OfficialLinks" xml:space="preserve">
     <value>Official links</value>
   </data>
