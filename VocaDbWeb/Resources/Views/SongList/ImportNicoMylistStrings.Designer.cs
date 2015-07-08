@@ -97,6 +97,15 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include only ranked songs (from NicoNicoDouga rankings).
+        /// </summary>
+        public static string OnlyRanked {
+            get {
+                return ResourceManager.GetString("OnlyRanked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order.
         /// </summary>
         public static string Order {

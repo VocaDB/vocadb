@@ -7,7 +7,7 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public WVRListResult ListResult { get; set; }
 
-		public bool ParseAll { get; set; }
+		public bool OnlyRanked { get; set; }
 
 		[Required]
 		public string Url { get; set; }

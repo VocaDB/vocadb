@@ -129,6 +129,9 @@
   <data name="NicoPV" xml:space="preserve">
     <value>NicoNico PV</value>
   </data>
+  <data name="OnlyRanked" xml:space="preserve">
+    <value>Include only ranked songs (from NicoNicoDouga rankings)</value>
+  </data>
   <data name="Order" xml:space="preserve">
     <value>Order</value>
   </data>

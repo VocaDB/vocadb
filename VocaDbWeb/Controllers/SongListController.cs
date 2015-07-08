@@ -42,13 +42,13 @@ namespace VocaDb.Web.Controllers
 		public ActionResult CreateFromWVR(CreateFromWVR model, bool commit) {
 
 			if (commit) {
-				var listId = rankingService.CreateSongListFromWVR(model.Url, model.ParseAll);
+				var listId = rankingService.CreateSongListFromWVR(model.Url, !model.OnlyRanked);
 				return RedirectToAction("Details", "SongList", new { id = listId });
 			}
 
 			WVRListResult parseResult;
 			try {
-				parseResult = rankingService.ParseWVRList(model.Url, model.ParseAll);
+				parseResult = rankingService.ParseWVRList(model.Url, !model.OnlyRanked);
 			} catch (InvalidFeedException) {
 				ModelState.AddModelError("Url", Resources.Views.SongList.ImportNicoMylistStrings.InvalidUrlError);
 				return View(model);
