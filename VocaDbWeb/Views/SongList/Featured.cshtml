@@ -9,6 +9,8 @@
 @section Toolbar {
 	@if (Login.Manager.HasPermission(PermissionToken.EditFeaturedLists)) {
 		@Html.ActionLink(ViewRes.User.DetailsStrings.CreateNewList, "Edit", null, new { id = "createLink" })
+		@:
+		@Html.ActionLink("Import NicoNicoDouga MyList", "CreateFromWVR", null, new { id = "importLink" })
 	}
 }
 
@@ -33,6 +35,7 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		$("#createLink").button({ icons: { primary: 'ui-icon-plusthick' } });
+		$("#importLink").button({ icons: { primary: 'ui-icon-plusthick' } });
 		$("#tabs").tabs();
 	});
 </script>
