@@ -14,7 +14,7 @@
 
 @{
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Artists, "Index") };
-	var url = PageProperties.CanonicalUrl;	
+	var url = PageProperties.CanonicalUrl;
 }
 
 @section Head {
@@ -24,19 +24,19 @@
 }
 
 @section Toolbar {
-<a href="#" id="addToUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@(Model.IsAdded ? "display: none;" : "")">@ViewRes.Artist.DetailsStrings.Follow</a>
-<span id="removeFromUserSplitBtn" style="@(Model.IsAdded ? "" : "display: none;")">
-	<a href="#" id="removeFromUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Artist.DetailsStrings.Unfollow</a>
-	<a data-bind="click: customizeSubscriptionDialog.show" href="#" id="customizeSubscription">@R.DetailsStrings.Customize</a>
-</span>
+	<a href="#" id="addToUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@(Model.IsAdded ? "display: none;" : "")">@ViewRes.Artist.DetailsStrings.Follow</a>
+	<span id="removeFromUserSplitBtn" style="@(Model.IsAdded ? "" : "display: none;")">
+		<a href="#" id="removeFromUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Artist.DetailsStrings.Unfollow</a>
+		<a data-bind="click: customizeSubscriptionDialog.show" href="#" id="customizeSubscription">@R.DetailsStrings.Customize</a>
+	</span>
 
-@Html.ActionLink(@ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editArtistLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
+	@Html.ActionLink(@ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editArtistLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 
-@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 
-<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 
-@Helpers.EntryStatusMessage(Model.Status)
+	@Helpers.EntryStatusMessage(Model.Status)
 }
 
 @if (Model.Deleted) {
@@ -70,13 +70,13 @@
 	</ul>
 
 	<div id="basicInfoTab">
-		
+
 		<div class="clearfix">
 			<!-- Artist picture -->
 			<div class="pull-left">
 				<a href="@Url.Action("Picture", new { id = Model.Id, v = Model.Version })">
 					<img src="@Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Thumb)" alt="@ViewRes.Artist.DetailsStrings.ArtistPicture" class="coverPic" />
-				</a>				
+				</a>
 			</div>
 
 			<table class="properties">
@@ -88,19 +88,19 @@
 					</td>
 				</tr>
 				@if (!Model.Description.IsEmpty) {
-				<tr>
-					<td>@ViewRes.SharedStrings.Description</td>
-					<td class="entry-description">
-						@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
-					</td>	
-				</tr>
+					<tr>
+						<td>@ViewRes.SharedStrings.Description</td>
+						<td class="entry-description">
+							@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
+						</td>
+					</tr>
 				}
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
 						@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
 						@Html.ActionLink(Translate.ArtistTypeName(Model.ArtistType), "Index", new { artistType = Model.ArtistType })<br />
-					</td>	
+					</td>
 				</tr>
 
 				<tr>
@@ -117,32 +117,32 @@
 				</tr>
 
 				@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
-			
+
 				@if (Model.OwnerUsers.Any()) {
 					<tr>
 						<td>
-							@R.DetailsStrings.AuthoredBy						
+							@R.DetailsStrings.AuthoredBy
 						</td>
 						<td>
 							@foreach (var user in Model.OwnerUsers) {
 								@UserHelpers.UserIconLink(user)
 								<br />
-							}						
+							}
 						</td>
 					</tr>
 				}
-			
+
 				@if (Model.BaseVoicebank != null) {
-				<tr>
-					<td>
-						<span>
-							@ViewRes.Artist.DetailsStrings.BaseVoicebank
-						</span>
-					</td>
-					<td id="baseVoicebank">
-						@ArtistHelpers.ArtistLink(Model.BaseVoicebank)
-					</td>
-				</tr>				
+					<tr>
+						<td>
+							<span>
+								@ViewRes.Artist.DetailsStrings.BaseVoicebank
+							</span>
+						</td>
+						<td id="baseVoicebank">
+							@ArtistHelpers.ArtistLink(Model.BaseVoicebank)
+						</td>
+					</tr>
 				}
 
 				@if (Model.ChildVoicebanks.Any()) {
@@ -164,23 +164,23 @@
 				}
 
 				@if (Model.Groups.Any()) {
-				<tr>
-					<td>
-						<span title="@ViewRes.Artist.DetailsStrings.GroupsHelp">
-							@ViewRes.Artist.DetailsStrings.Groups
-						</span>
-					</td>
-					<td id="groups">
-						@foreach (var grp in Model.Groups) {
-							@ArtistHelpers.ArtistLink(grp.Group)
-							if (grp != Model.Groups.Last()) {
-								@(", ")
+					<tr>
+						<td>
+							<span title="@ViewRes.Artist.DetailsStrings.GroupsHelp">
+								@ViewRes.Artist.DetailsStrings.Groups
+							</span>
+						</td>
+						<td id="groups">
+							@foreach (var grp in Model.Groups) {
+								@ArtistHelpers.ArtistLink(grp.Group)
+								if (grp != Model.Groups.Last()) {
+									@(", ")
+								}
 							}
-						}
-					</td>
-				</tr>
+						</td>
+					</tr>
 				}
-  
+
 				<tr>
 					<td>@ViewRes.EntryDetailsStrings.Stats</td>
 					<td>
@@ -208,39 +208,45 @@
 					<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
 					<td>
 						@Helpers.UniversalTimeLabel(Model.CreateDate)
-					</td>	
-				</tr>	   
-			
+					</td>
+				</tr>
+
 			</table>
-		</div>	
+		</div>
 
 		@if (Model.Members.Any()) {
 			<h3>@ViewRes.Artist.DetailsStrings.Members</h3>
-			@ArtistHelpers.ArtistGrid(Model.Members.Select(g => g.Member), 3, true)
+			<div data-bind="visible: !showAllMembers()">
+				@ArtistHelpers.ArtistGrid(Model.Members.Take(6).Select(g => g.Member), 3, true)
+			</div>
+			if (Model.Members.Length > 6) {
+				<div data-bind="visible: showAllMembers">
+					@ArtistHelpers.ArtistGrid(Model.Members.Select(g => g.Member), 3, true)
+				</div>
+				<a href="#" data-bind="click: function() { showAllMembers(true); }, visible: !showAllMembers()">@ViewRes.SharedStrings.ShowMore</a>
+			}
 		}
 
 		@if (Model.LatestAlbums.Any()) {
-			<br />
-			<h3>
+			<h3 class="withMargin">
 				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.AdditionDate }, null)
 				<small>(@string.Format("{0} total", Model.SharedStats.AlbumCount))</small>
 			</h3>
-            <div id="newAlbums">                
-    			@AlbumHelpers.AlbumThumbs(Model.LatestAlbums)
-            </div>
-        }
-        
+			<div id="newAlbums">
+				@AlbumHelpers.AlbumThumbs(Model.LatestAlbums)
+			</div>
+		}
+
 		@if (Model.TopAlbums.Any()) {
-			<br />
-			<h3>
+			<h3 class="withMargin">
 				@Html.ActionLink(ViewRes.Artist.DetailsStrings.TopAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.RatingTotal }, null)
 				<small>(@string.Format("{0} rated albums total", Model.SharedStats.RatedAlbumCount))</small>
 			</h3>
-            <div id="topAlbums">
-			    @AlbumHelpers.AlbumThumbs(Model.TopAlbums)                
-            </div>
-	    }
-        
+			<div id="topAlbums">
+				@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
+			</div>
+		}
+
 
 		@if (Model.LatestSongs.Any()) {
 			<br />
@@ -249,8 +255,8 @@
 				<small>(@string.Format("{0} total", Model.SharedStats.SongCount))</small>
 			</h3>
 			@SongHelpers.SongGrid(Model.LatestSongs, 2, true)
-	    }
-        
+		}
+
 		@if (Model.TopSongs.Any()) {
 			<br />
 			<h3>
@@ -258,18 +264,18 @@
 				<small>(@string.Format("{0} rated songs total", Model.SharedStats.RatedSongCount))</small>
 			</h3>
 			@SongHelpers.SongGrid(Model.TopSongs, 2, true)
-	    }
-		
+		}
+
 		<br />
 		<h3>@ViewRes.EntryDetailsStrings.LatestComments</h3>
-		
+
 		<div data-bind="with: comments">
 			@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
 			<!-- ko ifnot: comments().length -->
 			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 			<!-- /ko -->
 		</div>
-		
+
 		<p>
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
 		</p>
@@ -279,20 +285,20 @@
 	<div id="discussionTab" data-bind="with: comments">
 		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)
 	</div>
-	
+
 	<div id="picturesTab">
-		
+
 		<ul class="thumbs">
 			@Helpers.ThumbItem(Url.Action("Picture", "Artist", new { id = Model.Id }),
-				Url.Action("PictureThumb", "Artist", new { id = Model.Id }), 
+				Url.Action("PictureThumb", "Artist", new { id = Model.Id }),
 				ViewRes.Album.DetailsStrings.CoverPicture)
 			@foreach (var pic in Model.Pictures) {
 				@Helpers.ThumbItem(Url.EntryPictureFile(pic, ImageSize.Original), Url.EntryPictureFile(pic, ImageSize.Thumb), pic.Name)
 			}
 		</ul>
-		
+
 	</div>
-	
+
 	@helper AlbumOptions(string viewModel) {
 		<div class="clearfix">
 			<div class="pull-right">
@@ -307,7 +313,7 @@
 				</div>
 			</div>
 		</div>
-	}
+}
 
 	<div id="mainAlbumsTab">
 		@AlbumOptions("mainAlbumsViewModel")
@@ -315,7 +321,7 @@
 			@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
 		</div>
 	</div>
-	
+
 	<div id="collaborationAlbumsTab">
 		@AlbumOptions("collaborationAlbumsViewModel")
 		<div data-bind="with: collaborationAlbumsViewModel">
@@ -336,12 +342,12 @@
 					</a>
 				</div>
 			</div>
-		</div>		
+		</div>
 		<div data-bind="with: songsViewModel">
 			@{ Html.RenderPartial("Partials/_SongSearchList"); }
-		</div>		
+		</div>
 	</div>
-	
+
 	<div id="shareTab">
 		<div>
 			@ViewRes.EntryDetailsStrings.Link<br />
@@ -398,15 +404,15 @@
 				NotesRequired = ArtistReport.ReportTypesWithRequiredNotes.Contains(r.Key)
 			}));
 
-			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(artistRepo, @Model.Id, 
+			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(artistRepo, @Model.Id,
 				tagUsages,
 				@ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
 				@ToJS(Model.Description.HasEnglish),
 				unknownPictureUrl,
 				@LanguagePreferenceInt,
-				urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode, 
+				urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode,
 				reportTypes,
-				loggedUserId, 
+				loggedUserId,
 				canDeleteAllComments,
 				pvPlayersFactory,
 				latestComments);

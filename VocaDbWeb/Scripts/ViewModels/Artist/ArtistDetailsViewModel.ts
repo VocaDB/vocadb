@@ -58,6 +58,7 @@ module vdb.viewModels {
 		customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
 
 		private lang: string;
+		public showAllMembers = ko.observable(false);
 		public showTranslatedDescription: KnockoutObservable<boolean>;
 		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
 		public collaborationAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
