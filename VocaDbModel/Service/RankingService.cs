@@ -23,12 +23,19 @@ namespace VocaDb.Model.Service {
 
 			var parsed = new NNDWVRParser().GetSongs(url, parseAll);
 
+			var isRanking = parsed.WVRId > 0;
+			var listName = isRanking ? string.Format("Weekly Vocaloid ranking #{0}", parsed.WVRId) : parsed.Name ?? "New list";
+			var category = isRanking && PermissionContext.HasPermission(PermissionToken.EditFeaturedLists) ? 
+				SongListFeaturedCategory.VocaloidRanking : SongListFeaturedCategory.Nothing;
+			var description = isRanking ? parsed.Name : parsed.Description ?? string.Empty;
+
 			return HandleTransaction(session => {
 
 				var user = GetLoggedUser(session);
-				var list = new SongList("Weekly Vocaloid ranking #" + parsed.WVRId, user) { 
-					Description = parsed.Name, 
-					FeaturedCategory = SongListFeaturedCategory.VocaloidRanking 
+
+				var list = new SongList(listName, user) { 
+					Description = description, 
+					FeaturedCategory = category 
 				};
 				session.Save(list);
 
