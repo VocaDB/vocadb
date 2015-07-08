@@ -364,6 +364,72 @@ namespace VocaDb.Web.Controllers {
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult SongsAddedPerDay() {
+			
+			var values = repository.HandleQuery(ctx => {
+
+				var query = ctx.Query<Song>();
+
+				return query
+					.OrderBy(a => a.CreateDate.Year)
+					.ThenBy(a => a.CreateDate.Month)
+					.ThenBy(a => a.CreateDate.Day)
+					.GroupBy(a => new {
+						Year = a.CreateDate.Year, 
+						Month = a.CreateDate.Month,
+						Day = a.CreateDate.Day
+					})
+					.Select(a => new {
+						a.Key.Year,
+						a.Key.Month,
+						a.Key.Day,
+						Count = a.Count()
+					})
+					.Where(a => a.Count < 1000)
+					.ToArray();
+
+			});
+
+			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
+
+			return DateLineChartWithAverage("Songs added per day", "Songs", "Number of songs", points);
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult SongsPublishedPerDay() {
+			
+			var values = repository.HandleQuery(ctx => {
+
+				var query = ctx.Query<Song>();
+
+				return query
+					.Where(a => a.PublishDate.DateTime != null)
+					.OrderBy(a => a.PublishDate.DateTime.Value.Year)
+					.ThenBy(a => a.PublishDate.DateTime.Value.Month)
+					.ThenBy(a => a.PublishDate.DateTime.Value.Day)
+					.GroupBy(a => new {
+						Year = a.PublishDate.DateTime.Value.Year, 
+						Month = a.PublishDate.DateTime.Value.Month,
+						Day = a.PublishDate.DateTime.Value.Day
+					})
+					.Select(a => new {
+						a.Key.Year,
+						a.Key.Month,
+						a.Key.Day,
+						Count = a.Count()
+					})
+					.ToArray();
+
+			});
+
+			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
+
+			return DateLineChartWithAverage("Songs published per day", "Songs", "Number of songs", points);
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult SongsPerGenre() {
 			
 			var result = GetGenreTagUsages<SongTagUsage>();
