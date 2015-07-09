@@ -819,7 +819,7 @@
     <Compile Include="Service\AlbumImport\AlbumImportResult.cs" />
     <Compile Include="Service\Paging\PagingProperties.cs" />
     <Compile Include="Service\SongImport\InvalidFeedException.cs" />
-    <Compile Include="Service\SongImport\NNDWVRParser.cs" />
+    <Compile Include="Service\SongImport\NicoNicoMyListParser.cs" />
     <Compile Include="Service\ReleaseEventService.cs" />
     <Compile Include="Service\Search\AlbumSearch\AlbumArtistFilter.cs" />
     <Compile Include="Service\Search\AlbumSearch\AlbumArtistNameFilter.cs" />

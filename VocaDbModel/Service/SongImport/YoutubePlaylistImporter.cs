@@ -73,14 +73,14 @@ namespace VocaDb.Model.Service.SongImport {
 
 		}
 
-		public PartialImportedSongs GetSongs(string url, string pageToken, bool parseAll) {
+		public PartialImportedSongs GetSongs(string url, string pageToken, int maxResults, bool parseAll) {
 			
 			var youtubeService = new YouTubeService(new BaseClientService.Initializer {
 				ApiKey = YoutubeApiKey,
 				ApplicationName = "VocaDB"
 			});			
 
-			return GetSongs(youtubeService, GetId(url), pageToken, 20, parseAll);
+			return GetSongs(youtubeService, GetId(url), pageToken, maxResults, parseAll);
 
 		}
 

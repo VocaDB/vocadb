@@ -12,11 +12,11 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.SongImport {
 
-	public class NNDWVRParser : ISongListImporter {
+	public class NicoNicoMyListParser : ISongListImporter {
 
 		private static readonly Regex wvrIdRegex = new Regex(@"#(\d{3})");
 
-		public PartialImportedSongs GetSongs(string url, string nextPageToken, bool parseAll) {
+		public PartialImportedSongs GetSongs(string url, string nextPageToken, int maxResults, bool parseAll) {
 			throw new NotSupportedException();
 		}
 

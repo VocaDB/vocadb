@@ -6,7 +6,7 @@ namespace VocaDb.Model.Service.SongImport {
 
 	public interface ISongListImporter {
 
-		PartialImportedSongs GetSongs(string url, string nextPageToken, bool parseAll);
+		PartialImportedSongs GetSongs(string url, string nextPageToken, int maxResults, bool parseAll);
 			
 		ImportedSongListContract Parse(string url, bool parseAll);
 
@@ -17,7 +17,7 @@ namespace VocaDb.Model.Service.SongImport {
 	public class SongListImporters {
 
 		private readonly ISongListImporter[] importers = {
-			new NNDWVRParser(),
+			new NicoNicoMyListParser(),
 			new YoutubePlaylistImporter()
 		};
 
@@ -32,9 +32,9 @@ namespace VocaDb.Model.Service.SongImport {
 
 		}
 
-		public PartialImportedSongs GetSongs(string url, string pageToken, bool parseAll) {
+		public PartialImportedSongs GetSongs(string url, string pageToken, int maxResults, bool parseAll) {
 			
-			return GetImporter(url).GetSongs(url, pageToken, parseAll);
+			return GetImporter(url).GetSongs(url, pageToken, maxResults, parseAll);
 
 		}
 

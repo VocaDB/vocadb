@@ -71,17 +71,17 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import")]
-		public ImportedSongListContract Import(string url, bool parseAll) {
+		public ImportedSongListContract Import(string url, bool parseAll = true) {
 			
 			return queries.Import(url, parseAll);
 
 		}
 
 		[ApiExplorerSettings(IgnoreApi=true)]
-		[Route("import")]
-		public PartialImportedSongs ImportSongs(string url, string pageToken, bool parseAll) {
+		[Route("import-songs")]
+		public PartialImportedSongs ImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true) {
 			
-			return queries.ImportSongs(url, pageToken, parseAll);
+			return queries.ImportSongs(url, pageToken, maxResults, parseAll);
 
 		}
 

@@ -170,9 +170,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public PartialImportedSongs ImportSongs(string url, string pageToken, bool parseAll) {
+		public PartialImportedSongs ImportSongs(string url, string pageToken, int maxResults, bool parseAll) {
 
-			var songs = new SongListImporters().GetSongs(url, pageToken, parseAll);
+			var songs = new SongListImporters().GetSongs(url, pageToken, maxResults, parseAll);
 			return FindSongs(songs);
 
 		}
