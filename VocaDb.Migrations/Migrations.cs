@@ -3,6 +3,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201507091400)]
+	public class DateToRatedSongs : AutoReversingMigration {
+
+		public override void Up() {
+		
+			Create.Column("[Date]").OnTable(TableNames.FavoriteSongsForUsers).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+
+		}
+
+	}
+
 	/// <summary>
 	/// Add Index to 'Deleted' column on 'Albums' table.
 	/// There's lots of count lookups to albums table that filter by deletion.

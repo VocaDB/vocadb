@@ -1,7 +1,11 @@
-﻿using VocaDb.Model.Domain.Songs;
+﻿using System;
+using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Domain.Users {
 
+	/// <summary>
+	/// Song rated by a user.
+	/// </summary>
 	public class FavoriteSongForUser : ISongLink {
 
 		public static int GetRatingScore(SongVoteRating rating) {
@@ -22,15 +26,20 @@ namespace VocaDb.Model.Domain.Users {
 		private Song song;
 		private User user;
 
-		public FavoriteSongForUser() {}
+		public FavoriteSongForUser() {
+			Date = DateTime.Now;
+		}
 
-		public FavoriteSongForUser(User user, Song song, SongVoteRating rating) {
+		public FavoriteSongForUser(User user, Song song, SongVoteRating rating)
+			: this() {
 
 			User = user;
 			Song = song;
 			Rating = rating;
 
 		}
+
+		public virtual DateTime Date { get; set; }
 
 		public virtual int Id { get; set; }
 

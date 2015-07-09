@@ -13,6 +13,7 @@
 		public const string ArchivedTagVersions = "ArchivedTagVersions";
 		public const string Artists = "Artists";
 		public const string EntryReports = "EntryReports";
+		public const string FavoriteSongsForUsers = "FavoriteSongsForUsers";
 		public const string PVsForSongs = "PVsForSongs";
 		public const string SongLists = "SongLists";
 		public const string Songs = "Songs";

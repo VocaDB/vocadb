@@ -136,6 +136,7 @@ namespace VocaDb.Model.Mapping.Users {
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
+			Map(m => m.Date).Not.Nullable();
 			Map(m => m.Rating).CustomType<SongVoteRating>().Not.Nullable();
 
 			References(m => m.Song).Not.Nullable();
