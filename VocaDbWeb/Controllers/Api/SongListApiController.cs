@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -65,6 +66,22 @@ namespace VocaDb.Web.Controllers.Api {
 					SortRule = sort
 				}, 
 				songInList => new SongInListForApiContract(songInList, lang, fields));
+
+		}
+
+		[ApiExplorerSettings(IgnoreApi=true)]
+		[Route("import")]
+		public ImportedSongListContract Import(string url, bool parseAll) {
+			
+			return queries.Import(url, parseAll);
+
+		}
+
+		[ApiExplorerSettings(IgnoreApi=true)]
+		[Route("import")]
+		public PartialImportedSongs ImportSongs(string url, string pageToken, bool parseAll) {
+			
+			return queries.ImportSongs(url, pageToken, parseAll);
 
 		}
 

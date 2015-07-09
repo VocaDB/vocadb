@@ -21,14 +21,26 @@ namespace VocaDb.Model.Service.SongImport {
 			new YoutubePlaylistImporter()
 		};
 
-		public ImportedSongListContract GetSongs(string url, bool parseAll) {
+		private ISongListImporter GetImporter(string url) {
 			
 			var importer = importers.FirstOrDefault(i => i.MatchUrl(url));
 
 			if (importer == null)
 				throw new InvalidFeedException(string.Format("URL {0} is not recognized. Check the URL and try again", url));
 
-			return importer.Parse(url, parseAll);
+			return importer;
+
+		}
+
+		public PartialImportedSongs GetSongs(string url, string pageToken, bool parseAll) {
+			
+			return GetImporter(url).GetSongs(url, pageToken, parseAll);
+
+		}
+
+		public ImportedSongListContract Parse(string url, bool parseAll) {
+			
+			return GetImporter(url).Parse(url, parseAll);
 
 		}
 

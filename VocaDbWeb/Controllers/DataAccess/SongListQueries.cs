@@ -34,6 +34,27 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		private PartialImportedSongs FindSongs(PartialImportedSongs songs) {
+			
+			return HandleQuery(session => {
+
+				foreach (var entry in songs.Items) {
+
+					var pv = session.Query<PVForSong>()
+						.FirstOrDefault(p => p.Service == entry.PVService && p.PVId == entry.PVId && !p.Song.Deleted);
+
+					var song = pv != null ? new SongContract(pv.Song, LanguagePreference) : null;
+
+					entry.MatchedSong = song;
+
+				}
+
+				return songs;
+
+			});
+
+		}
+
 		private User GetLoggedUser(IRepositoryContext<SongList> ctx) {
 
 			permissionContext.VerifyLogin();
@@ -141,24 +162,18 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public ImportedSongListContract Import(string url, bool parseAll) {
 
-			var parsed = new SongListImporters().GetSongs(url, parseAll);
+			var parsed = new SongListImporters().Parse(url, parseAll);
 
-			return HandleQuery(session => {
+			FindSongs(parsed.Songs);
 
-				foreach (var entry in parsed.Songs.Items) {
+			return parsed;
 
-					var pv = session.Query<PVForSong>()
-						.FirstOrDefault(p => p.Service == entry.PVService && p.PVId == entry.PVId && !p.Song.Deleted);
+		}
 
-					var song = pv != null ? new SongContract(pv.Song, LanguagePreference) : null;
+		public PartialImportedSongs ImportSongs(string url, string pageToken, bool parseAll) {
 
-					entry.MatchedSong = song;
-
-				}
-
-				return parsed;
-
-			});
+			var songs = new SongListImporters().GetSongs(url, pageToken, parseAll);
+			return FindSongs(songs);
 
 		}
 

@@ -19,7 +19,7 @@ namespace VocaDb.Model.Service {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			var parsed = new SongListImporters().GetSongs(url, parseAll);
+			var parsed = new SongListImporters().Parse(url, parseAll);
 
 			var isRanking = parsed.WVRNumber > 0;
 			var listName = isRanking ? string.Format("Weekly Vocaloid ranking #{0}", parsed.WVRNumber) : parsed.Name ?? "New list";
