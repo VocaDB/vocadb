@@ -3,6 +3,7 @@ using System.Linq;
 using NLog;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -14,6 +15,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Model.Service.SongImport;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -134,6 +136,29 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		public SongListWithArchivedVersionsContract GetSongListWithArchivedVersions(int id) {
 
 			return repository.HandleQuery(session => new SongListWithArchivedVersionsContract(session.Load(id), PermissionContext));
+
+		}
+
+		public ImportedSongListContract Import(string url, bool parseAll) {
+
+			var parsed = new SongListImporters().GetSongs(url, parseAll);
+
+			return HandleQuery(session => {
+
+				foreach (var entry in parsed.Songs.Items) {
+
+					var pv = session.Query<PVForSong>()
+						.FirstOrDefault(p => p.Service == entry.PVService && p.PVId == entry.PVId && !p.Song.Deleted);
+
+					var song = pv != null ? new SongContract(pv.Song, LanguagePreference) : null;
+
+					entry.MatchedSong = song;
+
+				}
+
+				return parsed;
+
+			});
 
 		}
 

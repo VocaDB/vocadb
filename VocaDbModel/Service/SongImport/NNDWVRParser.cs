@@ -5,7 +5,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Rss;
-using VocaDb.Model.DataContracts.Ranking;
+using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service.Rankings;
 using VocaDb.Model.Service.VideoServices;
@@ -16,7 +16,11 @@ namespace VocaDb.Model.Service.SongImport {
 
 		private static readonly Regex wvrIdRegex = new Regex(@"#(\d{3})");
 
-		public RankingContract GetSongs(string url, bool parseAll) {
+		public PartialImportedSongs GetSongs(string url, string nextPageToken, bool parseAll) {
+			throw new NotSupportedException();
+		}
+
+		public ImportedSongListContract Parse(string url, bool parseAll) {
 
 			if (string.IsNullOrEmpty(url))
 				throw new InvalidFeedException("Feed URL cannot be empty");
@@ -38,15 +42,15 @@ namespace VocaDb.Model.Service.SongImport {
 				throw new InvalidFeedException("Unable to parse feed", feed.Exceptions.LastException);
 			}
 
-			var result = new RankingContract();
+			var result = new ImportedSongListContract();
 			var channel = feed.Channels[0];
 			result.Name = channel.Title;
 			var wvrIdMatch = wvrIdRegex.Match(result.Name);
 
 			if (wvrIdMatch.Success)
-				result.WVRId = int.Parse(wvrIdMatch.Groups[1].Value);
+				result.WVRNumber = int.Parse(wvrIdMatch.Groups[1].Value);
 
-			var songs = new List<SongInRankingContract>();
+			var songs = new List<ImportedSongInListContract>();
 			var order = 1;
 
 			foreach (var item in channel.Items.Cast<RssItem>()) {
@@ -56,7 +60,7 @@ namespace VocaDb.Model.Service.SongImport {
 				if (parseAll || (node.InnerText.Any() && char.IsDigit(node.InnerText, 0))) {
 
 					var nicoId = VideoService.NicoNicoDouga.GetIdByUrl(item.Link.ToString());
-					songs.Add(new SongInRankingContract(PVService.NicoNicoDouga, nicoId) {
+					songs.Add(new ImportedSongInListContract(PVService.NicoNicoDouga, nicoId) {
 						SortIndex = order, Name = item.Title, Url = item.Link.ToString()
 					});
 					++order;
@@ -65,7 +69,7 @@ namespace VocaDb.Model.Service.SongImport {
 
 			}
 
-			result.Songs = songs.ToArray();
+			result.Songs = new PartialImportedSongs(songs.ToArray(), songs.Count, null);
 			return result;
 
 		}

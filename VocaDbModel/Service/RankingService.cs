@@ -21,8 +21,8 @@ namespace VocaDb.Model.Service {
 
 			var parsed = new SongListImporters().GetSongs(url, parseAll);
 
-			var isRanking = parsed.WVRId > 0;
-			var listName = isRanking ? string.Format("Weekly Vocaloid ranking #{0}", parsed.WVRId) : parsed.Name ?? "New list";
+			var isRanking = parsed.WVRNumber > 0;
+			var listName = isRanking ? string.Format("Weekly Vocaloid ranking #{0}", parsed.WVRNumber) : parsed.Name ?? "New list";
 			var category = isRanking && PermissionContext.HasPermission(PermissionToken.EditFeaturedLists) ? 
 				SongListFeaturedCategory.VocaloidRanking : SongListFeaturedCategory.Nothing;
 			var description = isRanking ? parsed.Name : parsed.Description ?? string.Empty;
@@ -37,7 +37,7 @@ namespace VocaDb.Model.Service {
 				};
 				session.Save(list);
 
-				foreach (var entry in parsed.Songs) {
+				foreach (var entry in parsed.Songs.Items) {
 
 					var song = session.Query<PVForSong>()
 						.Where(p => p.Service == entry.PVService && p.PVId == entry.PVId)
@@ -49,31 +49,6 @@ namespace VocaDb.Model.Service {
 
 				AuditLog(string.Format("created {0}", EntryLinkFactory.CreateEntryLink(list)), session, user);
 				return list.Id;
-
-			});
-
-		}
-
-		public WVRListResult ParseWVRList(string url, bool parseAll) {
-
-			var parsed = new SongListImporters().GetSongs(url, parseAll);
-
-			return HandleQuery(session => {
-
-				var songs = new List<WVRListEntryResult>();
-
-				foreach (var entry in parsed.Songs) {
-
-					var pv = session.Query<PVForSong>()
-						.FirstOrDefault(p => p.Service == entry.PVService && p.PVId == entry.PVId && !p.Song.Deleted);
-
-					var song = pv != null ? new SongContract(pv.Song, LanguagePreference) : null;
-
-					songs.Add(new WVRListEntryResult(entry.PVId, entry.SortIndex, entry.Name, entry.Url, song));
-
-				}
-
-				return new WVRListResult(parsed.Name, parsed.Description, parsed.WVRId, songs);
 
 			});
 

@@ -58,13 +58,13 @@
 					<th>@Res.VocaDbEntry</th>
 				</tr>
 			</thead>
-			@foreach (var row in Model.ListResult.Entries) {
+			@foreach (var row in Model.ListResult.Songs.Items) {
 				<tr>
-					<td>@row.Order</td>
+					<td>@row.SortIndex</td>
 					<td><a href="@row.Url">@row.Name</a></td>
 					<td>
-						@if (row.Song != null) {
-							@SongHelpers.SongLink(row.Song)
+						@if (row.MatchedSong != null) {
+							@SongHelpers.SongLink(row.MatchedSong)
 						} else {
 							<span>@Res.SongMissing</span>
 							@("(")
@@ -77,7 +77,7 @@
 
 		</table>
 
-		if (!Model.ListResult.IsIncomplete) {
+		if (Model.ListResult.Songs.Items.All(s => s.MatchedSong != null)) {
 			<p>
 				<button type="submit" class="btn btn-primary">@Res.Accept</button>
 			</p>

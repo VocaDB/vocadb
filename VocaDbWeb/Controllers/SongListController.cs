@@ -1,6 +1,8 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
@@ -46,16 +48,16 @@ namespace VocaDb.Web.Controllers
 				return RedirectToAction("Details", "SongList", new { id = listId });
 			}
 
-			WVRListResult parseResult;
+			ImportedSongListContract parseResult;
 			try {
-				parseResult = rankingService.ParseWVRList(model.Url, !model.OnlyRanked);
+				parseResult = queries.Import(model.Url, !model.OnlyRanked);
 			} catch (InvalidFeedException) {
 				ModelState.AddModelError("Url", Resources.Views.SongList.ImportNicoMylistStrings.InvalidUrlError);
 				return View(model);
 			}
 			model.ListResult = parseResult;
 
-			if (parseResult.IsIncomplete)
+			if (parseResult.Songs.Items.Any(s => s.MatchedSong == null))
 				ModelState.AddModelError("ListResult", Resources.Views.SongList.ImportNicoMylistStrings.SongsMissingError);
 
 			return View(model);

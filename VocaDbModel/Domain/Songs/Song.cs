@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.DataContracts.Ranking;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -15,6 +14,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.Songs {
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public Song(SongInRankingContract contract)
+		public Song(ImportedSongInListContract contract)
 			: this() {
 			
 			ParamIs.NotNull(() => contract);
