@@ -70,7 +70,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check that the URL is valid and points to a NicoNico MyList or RSS feed..
+        ///   Looks up a localized string similar to Check that the URL is valid and points to a NicoNico MyList, RSS feed or Youtube playlist..
         /// </summary>
         public static string InvalidUrlError {
             get {
@@ -79,7 +79,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mylist description.
+        ///   Looks up a localized string similar to List properties.
         /// </summary>
         public static string MylistDescription {
             get {
@@ -151,7 +151,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Some of the songs are missing from VocaDB. You need to add all songs to the database before creating the list..
+        ///   Looks up a localized string similar to Some of the songs are missing from VocaDB. You need to add all songs to the database before including them in the list..
         /// </summary>
         public static string SongsMissingError {
             get {
@@ -169,7 +169,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create song list from NicoNicoDouga MyList.
+        ///   Looks up a localized string similar to Create song list from NicoNicoDouga MyList or Youtube playlist.
         /// </summary>
         public static string Title {
             get {
@@ -187,7 +187,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can be any NicoNicoDouga MyList, for example http://www.nicovideo.jp/mylist/1234567.
+        ///   Looks up a localized string similar to Can be any NicoNicoDouga MyList, for example http://www.nicovideo.jp/mylist/1234567, or Youtube playlist, for example https://www.youtube.com/playlist?list=MIKUMIKU3939.
         /// </summary>
         public static string UrlDescription {
             get {
@@ -196,7 +196,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NicoNico mylist or RSS feed.
+        ///   Looks up a localized string similar to Playlist/Mylist URL.
         /// </summary>
         public static string UrlLabel {
             get {

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NHibernate.Linq;
 using NHibernate;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Service.Rankings;
+using VocaDb.Model.Service.SongImport;
 
 namespace VocaDb.Model.Service {
 
@@ -21,7 +19,7 @@ namespace VocaDb.Model.Service {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			var parsed = new NNDWVRParser().GetSongs(url, parseAll);
+			var parsed = new SongListImporters().GetSongs(url, parseAll);
 
 			var isRanking = parsed.WVRId > 0;
 			var listName = isRanking ? string.Format("Weekly Vocaloid ranking #{0}", parsed.WVRId) : parsed.Name ?? "New list";
@@ -42,7 +40,7 @@ namespace VocaDb.Model.Service {
 				foreach (var entry in parsed.Songs) {
 
 					var song = session.Query<PVForSong>()
-						.Where(p => p.Service == PVService.NicoNicoDouga && p.PVId == entry.NicoId)
+						.Where(p => p.Service == entry.PVService && p.PVId == entry.PVId)
 						.First().Song;
 
 					session.Save(list.AddSong(song));
@@ -58,7 +56,7 @@ namespace VocaDb.Model.Service {
 
 		public WVRListResult ParseWVRList(string url, bool parseAll) {
 
-			var parsed = new NNDWVRParser().GetSongs(url, parseAll);
+			var parsed = new SongListImporters().GetSongs(url, parseAll);
 
 			return HandleQuery(session => {
 
@@ -67,15 +65,15 @@ namespace VocaDb.Model.Service {
 				foreach (var entry in parsed.Songs) {
 
 					var pv = session.Query<PVForSong>()
-						.FirstOrDefault(p => p.Service == PVService.NicoNicoDouga && p.PVId == entry.NicoId && !p.Song.Deleted);
+						.FirstOrDefault(p => p.Service == entry.PVService && p.PVId == entry.PVId && !p.Song.Deleted);
 
 					var song = pv != null ? new SongContract(pv.Song, LanguagePreference) : null;
 
-					songs.Add(new WVRListEntryResult(entry.NicoId, entry.SortIndex, entry.Name, entry.Url, song));
+					songs.Add(new WVRListEntryResult(entry.PVId, entry.SortIndex, entry.Name, entry.Url, song));
 
 				}
 
-				return new WVRListResult(parsed.Name, parsed.WVRId, songs);
+				return new WVRListResult(parsed.Name, parsed.Description, parsed.WVRId, songs);
 
 			});
 
@@ -85,13 +83,16 @@ namespace VocaDb.Model.Service {
 
 	public class WVRListResult {
 
-		public WVRListResult(string name, int wvrNumber, IEnumerable<WVRListEntryResult> entries) {
+		public WVRListResult(string name, string description, int wvrNumber, IEnumerable<WVRListEntryResult> entries) {
 
 			Name = name;
+			Description = description;
 			WVRNumber = wvrNumber;
 			Entries = entries.ToArray();
 
 		}
+
+		public string Description { get; set; }
 
 		public WVRListEntryResult[] Entries { get; set; }
 

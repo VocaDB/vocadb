@@ -42,7 +42,12 @@
 	if (Model.ListResult != null) {
 
 		<h4>@Res.MylistDescription</h4>
-		<p>@Model.ListResult.WVRNumber - @Model.ListResult.Name</p>
+		<p>Name: @Model.ListResult.Name</p>
+		<p>Description: @Model.ListResult.Description</p>
+
+		if (Model.ListResult.WVRNumber > 0) {
+			<p>Rankings number: @Model.ListResult.WVRNumber</p>	 
+		}
 
 		<h4 class="withMargin">@Res.SongsInList</h4>
 		<table class="table table-condensed">

@@ -121,10 +121,10 @@
     <value>Accept</value>
   </data>
   <data name="InvalidUrlError" xml:space="preserve">
-    <value>Check that the URL is valid and points to a NicoNico MyList or RSS feed.</value>
+    <value>Check that the URL is valid and points to a NicoNico MyList, RSS feed or Youtube playlist.</value>
   </data>
   <data name="MylistDescription" xml:space="preserve">
-    <value>Mylist description</value>
+    <value>List properties</value>
   </data>
   <data name="NicoPV" xml:space="preserve">
     <value>NicoNico PV</value>
@@ -148,22 +148,22 @@
     <value>Songs in the list</value>
   </data>
   <data name="SongsMissingError" xml:space="preserve">
-    <value>Some of the songs are missing from VocaDB. You need to add all songs to the database before creating the list.</value>
+    <value>Some of the songs are missing from VocaDB. You need to add all songs to the database before including them in the list.</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Create song list from NicoNicoDouga MyList</value>
+    <value>Create song list from NicoNicoDouga MyList or Youtube playlist</value>
   </data>
   <data name="UnableToParse" xml:space="preserve">
     <value>Unable to parse list</value>
   </data>
   <data name="UrlDescription" xml:space="preserve">
-    <value>Can be any NicoNicoDouga MyList, for example http://www.nicovideo.jp/mylist/1234567</value>
+    <value>Can be any NicoNicoDouga MyList, for example http://www.nicovideo.jp/mylist/1234567, or Youtube playlist, for example https://www.youtube.com/playlist?list=MIKUMIKU3939</value>
   </data>
   <data name="UrlLabel" xml:space="preserve">
-    <value>NicoNico mylist or RSS feed</value>
+    <value>Playlist/Mylist URL</value>
   </data>
   <data name="VocaDbEntry" xml:space="preserve">
     <value>VocaDB song entry</value>

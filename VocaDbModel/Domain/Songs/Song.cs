@@ -85,7 +85,9 @@ namespace VocaDb.Model.Domain.Songs {
 			ParamIs.NotNull(() => contract);
 
 			Names.Add(new SongName(this, new LocalizedString(contract.Name, ContentLanguageSelection.Unspecified)));
-			NicoId = contract.NicoId;
+
+			if (contract.PVService == PVService.NicoNicoDouga)
+				NicoId = contract.PVId;
 
 		}
 

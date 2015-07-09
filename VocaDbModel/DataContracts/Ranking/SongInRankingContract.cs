@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.DataContracts.Ranking {
 
@@ -7,6 +8,11 @@ namespace VocaDb.Model.DataContracts.Ranking {
 
 		public SongInRankingContract() {}
 
+		public SongInRankingContract(PVService service, string pvId) {
+			PVService = service;
+			PVId = pvId;
+		}
+
 		[DataMember]
 		public int Id { get; set; }
 
@@ -14,7 +20,10 @@ namespace VocaDb.Model.DataContracts.Ranking {
 		public string Name { get; set; }
 
 		[DataMember]
-		public string NicoId { get; set; }
+		public string PVId { get; set; }
+
+		[DataMember]
+		public PVService PVService { get; set; }
 
 		[DataMember]
 		public int SongId { get; set; }
