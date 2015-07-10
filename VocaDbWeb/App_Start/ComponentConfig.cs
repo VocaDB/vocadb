@@ -77,7 +77,6 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<ArtistService>().AsSelf();
 			builder.RegisterType<MikuDbAlbumService>().AsSelf();
 			builder.RegisterType<OtherService>().AsSelf();
-			builder.RegisterType<RankingService>().AsSelf();
 			builder.RegisterType<ReleaseEventService>().AsSelf();
 			builder.RegisterType<SongService>().AsSelf();
 			builder.RegisterType<UserService>().AsSelf();

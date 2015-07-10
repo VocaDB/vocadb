@@ -1556,6 +1556,9 @@
     <TypeScriptCompile Include="Scripts\DataContracts\PartialFindResultContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PVs\PVContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ResourcesContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\SongList\ImportedSongInListContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\SongList\ImportedSongListContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\SongList\PartialImportedSongs.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\LyricsForSongContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongInAlbumEditContract.ts" />
@@ -2341,6 +2344,7 @@
     <Content Include="Scripts\ui\minified\jquery.ui.tabs.min.js" />
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
     <Content Include="Scripts\User\Edit.js" />
+    <TypeScriptCompile Include="Scripts\ViewModels\SongList\ImportSongListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\ArchivedSongViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForRatedSongsAdapter.ts" />
@@ -2468,7 +2472,7 @@
     <Content Include="Views\SongList\Details.cshtml" />
     <Content Include="App_Code\ActivityfeedHelpers.cshtml" />
     <Content Include="Views\ActivityEntry\Index.cshtml" />
-    <Content Include="Views\SongList\CreateFromWVR.cshtml" />
+    <Content Include="Views\SongList\Import.cshtml" />
     <Content Include="Views\Tag\Edit.cshtml" />
     <Content Include="Views\User\EntryEdits.cshtml" />
     <Content Include="Views\SongList\Featured.cshtml" />

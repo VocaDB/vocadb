@@ -15,7 +15,7 @@ namespace VocaDb.Model.DataContracts.SongImport {
 		}
 
 		[DataMember]
-		public SongContract MatchedSong { get; set; }
+		public SongForApiContract MatchedSong { get; set; }
 
 		[DataMember]
 		public string Name { get; set; }

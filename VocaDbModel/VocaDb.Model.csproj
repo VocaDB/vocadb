@@ -858,7 +858,6 @@
     <Compile Include="Service\VideoServices\VideoServiceBilibili.cs" />
     <Compile Include="Service\VideoServices\VideoServiceHelper.cs" />
     <Compile Include="Service\OtherService.cs" />
-    <Compile Include="Service\RankingService.cs" />
     <Compile Include="Domain\Security\IUserPermissionContext.cs" />
     <Compile Include="Service\Security\LoginManager.cs" />
     <Compile Include="Service\Security\VocaDbPrincipal.cs" />

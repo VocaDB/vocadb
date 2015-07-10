@@ -1,0 +1,112 @@
+﻿@inherits VocaDb.Web.Code.VocaDbPage
+@using System.Web.Optimization
+@using Res = VocaDb.Web.Resources.Views.SongList.ImportNicoMylistStrings;
+
+@{
+	PageProperties.Title = Res.Title;
+}
+
+<form class="form-horizontal">
+	<div class="control-group">
+		<div class="control-label">@Res.UrlLabel</div>
+		<div class="controls">
+			<input type="text" textInput="{{ url }}" size="60" class="input-xlarge" required />
+			<br />
+			<small>@Res.UrlDescription</small>
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox inline">
+				<label>
+					<input type="checkbox" checked="{{ onlyRanked }}" />
+					@Res.OnlyRanked
+				</label>
+			</label>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<button class="btn btn-primary" data-bind="click: parse, enable: url">@Res.Process</button>
+		</div>
+	</div>
+</form>
+
+<div visible="{{ parsed }}" style="display: none;">
+	
+	<form class="form-horizontal">
+		<h4>@Res.MylistDescription</h4>
+		<div class="control-group">
+			<div class="control-label">Name</div>
+			<div class="controls">
+				<input type="text" textInput="{{ name }}" class="input-xlarge" required />
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="control-label">Description</div>
+			<div class="controls">
+				<textarea value="{{ description }}" cols="40" rows="3" class="input-xlarge"></textarea>
+			</div>
+		</div>
+		<div class="control-group" visible="{{ wvrNumber > 0 }}">
+			<div class="control-label">Rankings number</div>
+			<div class="controls">{{ wvrNumber }}</div>
+		</div>
+	</form>
+	
+	<div class="alert" visible="{{ missingSongs }}">
+		@Res.SongsMissingError
+	</div>
+
+	<h4 class="withMargin">@Res.SongsInList</h4>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th>@Res.Order</th>
+				<th>@Res.NicoPV</th>
+				<th>@Res.VocaDbEntry</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: items">
+			<tr>
+				<td>{{ sortIndex }}</td>
+				<td>
+					<a href="{{ url }}">{{ name }}</a>
+				</td>
+				<td>
+					{{#if: $data.matchedSong}}
+						<a href="{{ vdb.utils.EntryUrlMapper.details('Song', matchedSong.id) }}">{{ matchedSong.name }}</a>
+					{{/if}}
+					{{#ifnot: $data.matchedSong}}
+						<span>@Res.SongMissing</span>
+						(<a href="{{ '/Song/Create?pvUrl=' + url }}">@Res.Submit</a>)
+					{{/ifnot}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<p visible="{{ hasMore }}">
+		<a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a>
+	</p>
+	
+	<br />
+	<button class="btn btn-primary" data-bind="click: submit, enable: name">@Res.Accept</button>	
+
+</div>
+
+@section BodyScripts {
+@Scripts.Render("~/bundles/shared/edit", "~/bundles/SongList/Import")
+<script type="text/javascript">
+
+	ko.punches.enableAll();
+
+	$(function () {
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var viewModel = new vdb.viewModels.songList.ImportSongListViewModel(urlMapper);
+		ko.applyBindings(viewModel);
+	});
+
+</script>	
+}

@@ -71,7 +71,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import")]
-		public ImportedSongListContract Import(string url, bool parseAll = true) {
+		public ImportedSongListContract GetImport(string url, bool parseAll = true) {
 			
 			return queries.Import(url, parseAll);
 
@@ -79,9 +79,16 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import-songs")]
-		public PartialImportedSongs ImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true) {
+		public PartialImportedSongs GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true) {
 			
 			return queries.ImportSongs(url, pageToken, maxResults, parseAll);
+
+		}
+
+		[Route("")]
+		public int Post(SongListForEditContract list) {
+			
+			return queries.UpdateSongList(list, null);
 
 		}
 

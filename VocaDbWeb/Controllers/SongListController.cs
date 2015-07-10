@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Rankings;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
@@ -20,48 +17,15 @@ namespace VocaDb.Web.Controllers
 
 		public const int SongsPerPage = 50;
 		private readonly SongListQueries queries;
-		private readonly RankingService rankingService;
 	    private readonly SongService service;
 
 		private SongService Service {
 			get { return service; }
 		}
 
-		public SongListController(SongService service, RankingService rankingService, SongListQueries queries) {
+		public SongListController(SongService service, SongListQueries queries) {
 			this.service = service;
-			this.rankingService = rankingService;
 			this.queries = queries;
-		}
-
-		public ActionResult CreateFromWVR() {
-
-			var model = new CreateFromWVR();
-			return View(model);
-
-		}
-
-		[HttpPost]
-		public ActionResult CreateFromWVR(CreateFromWVR model, bool commit) {
-
-			if (commit) {
-				var listId = rankingService.CreateSongListFromWVR(model.Url, !model.OnlyRanked);
-				return RedirectToAction("Details", "SongList", new { id = listId });
-			}
-
-			ImportedSongListContract parseResult;
-			try {
-				parseResult = queries.Import(model.Url, !model.OnlyRanked);
-			} catch (InvalidFeedException) {
-				ModelState.AddModelError("Url", Resources.Views.SongList.ImportNicoMylistStrings.InvalidUrlError);
-				return View(model);
-			}
-			model.ListResult = parseResult;
-
-			if (parseResult.Songs.Items.Any(s => s.MatchedSong == null))
-				ModelState.AddModelError("ListResult", Resources.Views.SongList.ImportNicoMylistStrings.SongsMissingError);
-
-			return View(model);
-
 		}
 
 		public ActionResult Delete(int id) {
@@ -156,6 +120,12 @@ namespace VocaDb.Web.Controllers
 			var lists = Service.GetSongListsByCategory();
 
 			return View(lists);
+
+		}
+
+		public ActionResult Import() {
+
+			return View();
 
 		}
 

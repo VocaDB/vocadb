@@ -43,7 +43,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					var pv = session.Query<PVForSong>()
 						.FirstOrDefault(p => p.Service == entry.PVService && p.PVId == entry.PVId && !p.Song.Deleted);
 
-					var song = pv != null ? new SongContract(pv.Song, LanguagePreference) : null;
+					var song = pv != null ? new SongForApiContract(pv.Song, null, LanguagePreference) : null;
 
 					entry.MatchedSong = song;
 
@@ -84,7 +84,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			var user = GetLoggedUser(ctx);
 			var newList = new SongList(contract.Name, user);
-			newList.Description = contract.Description;
+			newList.Description = contract.Description ?? string.Empty;
 
 			if (EntryPermissionManager.CanManageFeaturedLists(permissionContext))
 				newList.FeaturedCategory = contract.FeaturedCategory;
@@ -201,7 +201,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 					if (list.Description != contract.Description) {
 						diff.Description.Set();
-						list.Description = contract.Description;						
+						list.Description = contract.Description ?? string.Empty;						
 					}
 
 					if (list.Name != contract.Name) {

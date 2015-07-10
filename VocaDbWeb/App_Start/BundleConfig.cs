@@ -339,6 +339,10 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/SongList/Edit.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/SongList/Import").Include(
+				"~/Scripts/ViewModels/SongList/ImportSongListViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Edit").Include(
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",

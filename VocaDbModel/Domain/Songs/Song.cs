@@ -79,18 +79,6 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public Song(ImportedSongInListContract contract)
-			: this() {
-			
-			ParamIs.NotNull(() => contract);
-
-			Names.Add(new SongName(this, new LocalizedString(contract.Name, ContentLanguageSelection.Unspecified)));
-
-			if (contract.PVService == PVService.NicoNicoDouga)
-				NicoId = contract.PVId;
-
-		}
-
 		/// <summary>
 		/// List of album links for this song. 
 		/// The same album may appear multiple times, if the song was added more than once. 
