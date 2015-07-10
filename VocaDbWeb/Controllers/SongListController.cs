@@ -123,6 +123,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[Authorize]
 		public ActionResult Import() {
 
 			return View();

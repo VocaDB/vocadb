@@ -8,11 +8,11 @@
 
 <form class="form-horizontal">
 	<div class="control-group">
-		<div class="control-label">@Res.UrlLabel</div>
+		<div class="control-label">
+			@Helpers.HelpLabel(Res.UrlLabel, Res.UrlDescription)
+		</div>
 		<div class="controls">
 			<input type="text" textInput="{{ url }}" size="60" class="input-xlarge" required />
-			<br />
-			<small>@Res.UrlDescription</small>
 		</div>
 	</div>
 	<div class="control-group">
@@ -47,6 +47,13 @@
 			<div class="control-label">Description</div>
 			<div class="controls">
 				<textarea value="{{ description }}" cols="40" rows="3" class="input-xlarge"></textarea>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="control-label">Total songs</div>
+			<div class="controls">
+				{{ totalSongs }}
+				<small visible="{{ hasMore }}">(Click "Show more" to load more songs from the list.)</small>
 			</div>
 		</div>
 		<div class="control-group" visible="{{ wvrNumber > 0 }}">
@@ -87,9 +94,13 @@
 		</tbody>
 	</table>
 	
-	<p visible="{{ hasMore }}">
-		<a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a>
-	</p>
+	<h4 visible="{{ hasMore }}">
+		<a href="#" data-bind="click: loadMore">
+			@ViewRes.SharedStrings.ShowMore			
+		</a>
+		&nbsp;
+		<small>({{ items().length }} / {{ totalSongs }} loaded)</small>
+	</h4>
 	
 	<br />
 	<button class="btn btn-primary" data-bind="click: submit, enable: name">@Res.Accept</button>	

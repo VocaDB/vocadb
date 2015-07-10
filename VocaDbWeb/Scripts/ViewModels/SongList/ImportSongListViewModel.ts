@@ -42,6 +42,7 @@ module vdb.viewModels.songList {
 				this.description(songList.description);
 				this.nextPageToken(songList.songs.nextPageToken);
 				this.items(songList.songs.items);
+				this.totalSongs(songList.songs.totalCount);
 				this.parsed(true);
 
 			});
@@ -77,6 +78,8 @@ module vdb.viewModels.songList {
 			}, 'json');
 
 		}
+
+		public totalSongs = ko.observable(null);
 
 		public url = ko.observable("");
 

@@ -88,7 +88,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NicoNico PV.
+        ///   Looks up a localized string similar to Imported PV.
         /// </summary>
         public static string NicoPV {
             get {
