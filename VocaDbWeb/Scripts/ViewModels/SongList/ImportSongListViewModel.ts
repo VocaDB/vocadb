@@ -20,6 +20,11 @@ module vdb.viewModels.songList {
 				this.nextPageToken(result.nextPageToken);
 				ko.utils.arrayPushAll(this.items, result.items);
 
+			}).fail((jqXHR: JQueryXHR) => {
+
+				if (jqXHR.statusText)
+					alert(jqXHR.statusText);
+
 			});
 
 		}
@@ -44,6 +49,11 @@ module vdb.viewModels.songList {
 				this.items(songList.songs.items);
 				this.totalSongs(songList.songs.totalCount);
 				this.parsed(true);
+
+			}).fail((jqXHR: JQueryXHR) => {
+
+				if (jqXHR.statusText)
+					alert(jqXHR.statusText);
 
 			});
 

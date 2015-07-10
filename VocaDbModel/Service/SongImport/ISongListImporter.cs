@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using VocaDb.Model.DataContracts.SongImport;
-using VocaDb.Model.Service.Rankings;
 
 namespace VocaDb.Model.Service.SongImport {
 
@@ -26,7 +25,7 @@ namespace VocaDb.Model.Service.SongImport {
 			var importer = importers.FirstOrDefault(i => i.MatchUrl(url));
 
 			if (importer == null)
-				throw new InvalidFeedException(string.Format("URL {0} is not recognized. Check the URL and try again", url));
+				throw new UnableToImportException(string.Format("URL {0} is not recognized. Check the URL and try again", url));
 
 			return importer;
 

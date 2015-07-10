@@ -7,7 +7,6 @@ using HtmlAgilityPack;
 using Rss;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.Domain.PVs;
-using VocaDb.Model.Service.Rankings;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.SongImport {
@@ -23,7 +22,7 @@ namespace VocaDb.Model.Service.SongImport {
 		public ImportedSongListContract Parse(string url, bool parseAll) {
 
 			if (string.IsNullOrEmpty(url))
-				throw new InvalidFeedException("Feed URL cannot be empty");
+				throw new UnableToImportException("Feed URL cannot be empty");
 
 			if (!url.Contains("rss="))
 				url += "?rss=2.0";
@@ -33,13 +32,13 @@ namespace VocaDb.Model.Service.SongImport {
 			try {
 				feed = RssFeed.Read(url);
 			} catch (UriFormatException x) {
-				throw new InvalidFeedException("Unable to parse URL", x);
+				throw new UnableToImportException("Unable to parse URL", x);
 			} catch (WebException x) {
-				throw new InvalidFeedException("Unable to parse feed", x);				
+				throw new UnableToImportException("Unable to parse feed", x);				
 			}
 
 			if (feed.Exceptions.LastException != null) {
-				throw new InvalidFeedException("Unable to parse feed", feed.Exceptions.LastException);
+				throw new UnableToImportException("Unable to parse feed", feed.Exceptions.LastException);
 			}
 
 			var result = new ImportedSongListContract();

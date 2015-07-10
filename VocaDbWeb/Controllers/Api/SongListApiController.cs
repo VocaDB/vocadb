@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.DataContracts.SongImport;
@@ -8,6 +10,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Model.Service.SongImport;
 using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -72,16 +75,24 @@ namespace VocaDb.Web.Controllers.Api {
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import")]
 		public ImportedSongListContract GetImport(string url, bool parseAll = true) {
-			
-			return queries.Import(url, parseAll);
+
+			try {
+				return queries.Import(url, parseAll);
+			} catch (UnableToImportException x) {
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });				
+			}
 
 		}
 
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import-songs")]
 		public PartialImportedSongs GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true) {
-			
-			return queries.ImportSongs(url, pageToken, maxResults, parseAll);
+
+			try {
+				return queries.ImportSongs(url, pageToken, maxResults, parseAll);
+			} catch (UnableToImportException x) {
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });
+			}
 
 		}
 

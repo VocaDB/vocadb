@@ -28,7 +28,7 @@ namespace VocaDb.Model.Service.SongImport {
 
 			if (!match.Success) {
 				log.Warn("Youtube URL not regonized: {0}", url);
-				return null;				
+				throw new UnableToImportException(string.Format("Youtube URL not regonized: {0}", url));
 			}
 
 			var id = match.Groups[1].Value;
@@ -49,11 +49,6 @@ namespace VocaDb.Model.Service.SongImport {
 
 				var result = request.Execute();
 				
-				if (!result.Items.Any()) {
-					log.Info("Youtube playlist contained no songs");
-					return null;
-				}
-
 				foreach (var item in result.Items) {
 					var song = new ImportedSongInListContract(PVService.Youtube, item.Snippet.ResourceId.VideoId) {
 						Name = item.Snippet.Title,
@@ -67,9 +62,8 @@ namespace VocaDb.Model.Service.SongImport {
 
 			} catch (Exception x) {
 				log.Warn(x, "Unable to read Youtube playlist");
-				return null;
+				throw new UnableToImportException("Unable to read Youtube playlist");
 			}
-
 
 		}
 
@@ -86,14 +80,7 @@ namespace VocaDb.Model.Service.SongImport {
 
 		public ImportedSongListContract Parse(string url, bool parseAll) {
 			
-			var match = regex.Match(url);
-
-			if (!match.Success) {
-				log.Warn("Youtube URL not regonized: {0}", url);
-				return null;				
-			}
-
-			var id = match.Groups[1].Value;
+			var id = GetId(url);
 
 			var youtubeService = new YouTubeService(new BaseClientService.Initializer {
 				ApiKey = YoutubeApiKey,
@@ -111,8 +98,8 @@ namespace VocaDb.Model.Service.SongImport {
 				var result = request.Execute();
 				
 				if (!result.Items.Any()) {
-					log.Info("Youtube playlist contained no songs");
-					return null;
+					log.Info("Youtube playlist not found");
+					throw new UnableToImportException(string.Format("Youtube playlist not found: {0}", url));
 				}
 
 				name = result.Items[0].Snippet.Title;
@@ -121,7 +108,7 @@ namespace VocaDb.Model.Service.SongImport {
 
 			} catch (Exception x) {
 				log.Warn(x, "Unable to read Youtube playlist");
-				return null;
+				throw new UnableToImportException("Unable to read Youtube playlist");
 			}
 
 			var songs = GetSongs(youtubeService, id, null, 10, parseAll);
