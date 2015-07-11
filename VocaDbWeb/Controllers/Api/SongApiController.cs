@@ -267,7 +267,7 @@ namespace VocaDb.Web.Controllers.Api {
 			return queries.HandleQuery(ctx => {			
 
 				var songs = ctx.Query()
-					.Where(s => s.CreateDate >= endDate)
+					.Where(s => !s.Deleted && s.CreateDate >= endDate && s.RatingScore > 0)
 					.OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30))
 					.Take(25)
 					.ToArray();

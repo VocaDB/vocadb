@@ -69,7 +69,7 @@
 				</div>
 			</td>
 			<td>
-				{{ publishDate | formatDate:'l' }}
+				{{ $data.publishDate | formatDate:'l' }}
 			</td>
 			<td class="search-tags-column">
 				<div data-bind="if: $data.tags && tags.length">
