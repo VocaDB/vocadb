@@ -5,17 +5,19 @@
 
 @{
 	PageProperties.Title = "VocaDB song rankings";
+	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null) };
 }
 
 <div class="btn-group">
 	<a href="#" data-bind="click: function() { durationHours(24); }, css: { active: durationHours() == 24 }" class="btn">Daily</a>
 	<a href="#" data-bind="click: function() { durationHours(168); }, css: { active: durationHours() == 168 }" class="btn">Weekly</a>
 	<a href="#" data-bind="click: function() { durationHours(720); }, css: { active: durationHours() == 720 }" class="btn">Monthly</a>
+	<a href="#" data-bind="click: function() { durationHours(null); }, css: { active: durationHours() == null }" class="btn">Overall</a>
 </div>
 
 <h3>New songs</h3>
 
-<table class="table table-striped">
+<table class="table table-striped js-cloak" data-bind="show">
 	<thead>
 		<tr>
 			<th></th>

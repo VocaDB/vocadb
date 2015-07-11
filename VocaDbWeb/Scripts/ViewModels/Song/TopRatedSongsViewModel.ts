@@ -15,7 +15,7 @@ module vdb.viewModels.songs {
 
 		}
 
-		public durationHours = ko.observable(720);
+		public durationHours = ko.observable(168);
 
 		public getPVServiceIcons = (services: string) => {
 			return this.pvServiceIcons.getIconUrls(services);

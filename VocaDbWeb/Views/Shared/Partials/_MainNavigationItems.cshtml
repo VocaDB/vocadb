@@ -32,7 +32,7 @@
 			@if (Login.CanManageDb) {
 				<li>@Html.ActionLink(ViewRes._LayoutStrings.AddSong, "Create", "Song")</li>
 			}
-			<li>@Html.ActionLink(ViewRes.SharedStrings.TopFavoritedSongs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.RatingScore }, null)</li>
+			<li>@Html.ActionLink(ViewRes.SharedStrings.TopFavoritedSongs, "TopRated", "Song")</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewPVs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null)</li>
 		</ul>
 	</li>
