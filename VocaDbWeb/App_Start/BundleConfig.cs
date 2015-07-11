@@ -312,6 +312,14 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Song/SongMergeViewModel.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/Song/TopRated").Include(				
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
+				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
+				"~/Scripts/ViewModels/Song/TopRatedSongsViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Details").Include(
 				"~/Scripts/soundcloud-api.js",				
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				

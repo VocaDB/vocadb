@@ -1,0 +1,107 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage
+
+@{
+	PageProperties.Title = "VocaDB song rankings";
+}
+
+<div class="btn-group">
+	<a href="#" data-bind="click: function() { durationHours(24); }, css: { active: durationHours() == 24 }" class="btn">Daily</a>
+	<a href="#" data-bind="click: function() { durationHours(168); }, css: { active: durationHours() == 168 }" class="btn">Weekly</a>
+	<a href="#" data-bind="click: function() { durationHours(720); }, css: { active: durationHours() == 720 }" class="btn">Monthly</a>
+</div>
+
+<h3>New songs</h3>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th colspan="2">
+				Name
+			</th>
+			<th>
+				Published
+			</th>
+			<th>
+				Tags
+			</th>
+			<th>
+				Rating
+			</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: songs">
+		<tr>
+			<td style="width: 30px">
+				<h1>{{ $index() + 1 }}</h1>				
+			</td>
+			<td style="width: 80px">
+				<a data-bind="visible: $data.thumbUrl, attr: { href: vdb.utils.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#">
+					<img data-bind="attr: { src: $data.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" />
+				</a>
+			</td>
+			<td>
+
+				<div class="pull-right" data-bind="visible: pvServices, with: previewViewModel">
+					<a data-bind="click: togglePreview, css: { active: preview }" class="btn previewSong" href="#">
+						<i class="icon-film"></i>
+						Preview
+					</a>
+				</div>
+
+				<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#"></a>
+				<span data-bind="songTypeLabel: $data.songType"></span>
+				<!-- ko foreach: $parent.getPVServiceIcons($data.pvServices) -->
+				<img data-bind="attr: { src: url, title: service }" />
+				<!-- /ko -->
+				
+				<span data-bind="visible: $data.rating === 'Favorite'" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
+				<span data-bind="visible: $data.rating === 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
+				
+				<br />
+				<small class="extraInfo" data-bind="text: artistString"></small>
+
+				<div data-bind="visible: pvServices, with: previewViewModel">
+					@SongHelpers.PVPreviewKnockout("$parents[2].getPVServiceIcons")
+				</div>
+			</td>
+			<td>
+				{{ publishDate | formatDate:'l' }}
+			</td>
+			<td class="search-tags-column">
+				<div data-bind="if: $data.tags && tags.length">
+					<i class="icon icon-tags fix-icon-margin"></i>
+					<!-- ko foreach: tags -->
+					<a data-bind="text: name" href="{{ vdb.utils.EntryUrlMapper.details_tag_byName(name) }}"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+					<!-- /ko -->
+				</div>
+			</td>
+			<td>
+				<span data-bind="text: ratingScore"></span>
+				total score
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+@section BodyScripts {	
+@Scripts.Render("~/bundles/Song/TopRated")
+<script type="text/javascript">
+
+	moment.locale('@Culture');
+	ko.punches.enableAll();
+
+	$(function () {
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
+		var songRepo = repoFactory.songRepository();
+		var userRepo = repoFactory.userRepository();
+		var viewModel = new vdb.viewModels.songs.TopRatedSongsViewModel(urlMapper, songRepo, userRepo, @LanguagePreferenceInt);
+		ko.applyBindings(viewModel);
+	});
+
+</script>		
+}

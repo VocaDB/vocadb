@@ -258,6 +258,27 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("top-rated")]
+		[ApiExplorerSettings(IgnoreApi=true)]
+		public IEnumerable<SongForApiContract> GetTopSongs(int durationHours, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+			
+			var endDate = DateTime.Now - TimeSpan.FromHours(durationHours);
+
+			return queries.HandleQuery(ctx => {			
+
+				var songs = ctx.Query()
+					.Where(s => s.CreateDate >= endDate)
+					.OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30))
+					.Take(25)
+					.ToArray();
+
+				var contracts = songs.Select(s => new SongForApiContract(s, null, languagePreference, SongOptionalFields.ThumbUrl | SongOptionalFields.Tags)).ToArray();
+				return contracts;
+
+			});
+
+		}
+
 		/// <summary>
 		/// Updates a comment.
 		/// Normal users can edit their own comments, moderators can edit all comments.

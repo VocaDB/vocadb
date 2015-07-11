@@ -474,6 +474,10 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult TopRated() {
+			return View();
+		}
+
 		public ActionResult UsersWithSongRating(int songId = invalidId) {
 
 			if (songId == invalidId)

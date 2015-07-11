@@ -34,6 +34,7 @@ namespace VocaDb.Model.Domain.Songs {
 		private TranslatedStringWithDefault artistString;
 		private IList<ArtistForSong> artists = new List<ArtistForSong>();
 		private IList<SongComment> comments = new List<SongComment>();
+		private IList<SongHit> hits = new List<SongHit>();
 		private IList<SongInList> lists = new List<SongInList>();
 		private IList<LyricsForSong> lyrics = new List<LyricsForSong>();
 		private NameManager<SongName> names = new NameManager<SongName>();
@@ -192,6 +193,11 @@ namespace VocaDb.Model.Domain.Songs {
 			get {
 				return SongType != SongType.Original && OriginalVersion != null;
 			}
+		}
+
+		public virtual IList<SongHit> Hits {
+			get { return hits; }
+			set { hits = value; }
 		}
 
 		public virtual int Id { get; set; }
