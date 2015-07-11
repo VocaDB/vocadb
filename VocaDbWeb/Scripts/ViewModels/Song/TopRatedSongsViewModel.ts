@@ -8,6 +8,7 @@ module vdb.viewModels.songs {
 		
 		constructor(private urlMapper: vdb.UrlMapper, private songRepo: rep.SongRepository, private userRepo: rep.UserRepository, private languagePreference: number) {
 
+			this.dateFilterType.subscribe(this.getSongs);
 			this.durationHours.subscribe(this.getSongs);
 			this.vocalistSelection.subscribe(this.getSongs);
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
@@ -15,6 +16,8 @@ module vdb.viewModels.songs {
 			this.getSongs();
 
 		}
+
+		public dateFilterType = ko.observable("CreateDate");
 
 		public durationHours = ko.observable(168);
 
@@ -25,7 +28,12 @@ module vdb.viewModels.songs {
 		private getSongs = () => {
 		
 			$.getJSON(this.urlMapper.mapRelative('/api/songs/top-rated'),
-				{ durationHours: this.durationHours(), vocalist: this.vocalistSelection(), languagePreference: this.languagePreference },
+				{
+					durationHours: this.durationHours(),
+					vocalist: this.vocalistSelection(),
+					filterBy: this.dateFilterType(),
+					languagePreference: this.languagePreference
+				},
 				(songs: dc.SongApiContract[]) => {
 
 				_.each(songs, (song: any) => {

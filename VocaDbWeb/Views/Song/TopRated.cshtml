@@ -15,17 +15,14 @@
 	<a href="#" data-bind="click: function() { durationHours(null); }, css: { active: durationHours() == null }" class="btn">Overall</a>
 </div>
 
-@*<div class="btn-group">
-	<a href="#" data-bind="click: function() { durationHours(24); }, css: { active: durationHours() == 24 }" class="btn" title="Songs that were added to VocaDB recently">
+<div class="btn-group">
+	<a href="#" data-bind="click: function() { dateFilterType('CreateDate'); }, css: { active: dateFilterType() == 'CreateDate' }" class="btn" title="Songs that were added to VocaDB recently">
 		Newly added songs
 	</a>
-	<a href="#" data-bind="click: function() { durationHours(168); }, css: { active: durationHours() == 168 }" class="btn" title="Songs that were published recently">
+	<a href="#" data-bind="click: function() { dateFilterType('PublishDate'); }, css: { active: dateFilterType() == 'PublishDate' }" class="btn" title="Songs that were published recently">
 		Newly published songs
 	</a>
-	<a href="#" data-bind="click: function() { durationHours(720); }, css: { active: durationHours() == 720 }" class="btn" title="Songs that have received the most ratings recently">
-		Newly rated songs
-	</a>
-</div>*@
+</div>
 
 <div class="btn-group">
 	<a href="#" data-bind="click: function() { vocalistSelection(null); }, css: { active: vocalistSelection() == null }" class="btn">All vocalists</a>
@@ -34,7 +31,11 @@
 	<a href="#" data-bind="click: function() { vocalistSelection('CeVIO'); }, css: { active: vocalistSelection() == 'CeVIO' }" class="btn">Other vocalists</a>
 </div>
 
-<table class="table table-striped js-cloak" data-bind="show">
+<div class="alert js-cloak withMargin" data-bind="show" visible="{{ songs().length == 0 }}">
+	No songs found :(
+</div>
+
+<table class="table table-striped js-cloak" data-bind="show" visible="{{ songs().length }}">
 	<thead>
 		<tr>
 			<th></th>

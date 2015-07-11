@@ -265,6 +265,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
 		public IEnumerable<SongForApiContract> GetTopSongs(int? durationHours = null, 
+			TopSongsDateFilterType? filterBy = null,
 			SongVocalistSelection? vocalist = null,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
 			
@@ -275,8 +276,17 @@ namespace VocaDb.Web.Controllers.Api {
 					.WhereHasVocalist(vocalist ?? SongVocalistSelection.Nothing);
 
 				if (durationHours.HasValue) {
+
 					var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);					
-					query = query.Where(s => s.CreateDate >= endDate).OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30));
+
+					if (filterBy == TopSongsDateFilterType.PublishDate) {
+						query = query.Where(s => s.PublishDate.DateTime != null && s.PublishDate.DateTime.Value >= endDate);
+					} else {
+						query = query.Where(s => s.CreateDate >= endDate);						
+					}
+						
+					query = query.OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30));
+
 				} else {
 					query = query.OrderByDescending(s => s.RatingScore);			
 				}
@@ -322,5 +332,9 @@ namespace VocaDb.Web.Controllers.Api {
 
 	}
 
+	public enum TopSongsDateFilterType {
+		CreateDate,
+		PublishDate
+	}
 
 }

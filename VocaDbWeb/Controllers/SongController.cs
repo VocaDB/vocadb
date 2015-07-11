@@ -429,6 +429,10 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult Rankings() {
+			return View("TopRated");
+		}
+
 		public ActionResult Related(int id = invalidId) {
 
 			if (id == invalidId)
@@ -475,7 +479,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		public ActionResult TopRated() {
-			return View();
+			return RedirectToActionPermanent("Rankings");
 		}
 
 		public ActionResult UsersWithSongRating(int songId = invalidId) {
