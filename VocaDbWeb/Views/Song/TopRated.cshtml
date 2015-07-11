@@ -15,7 +15,24 @@
 	<a href="#" data-bind="click: function() { durationHours(null); }, css: { active: durationHours() == null }" class="btn">Overall</a>
 </div>
 
-<h3>New songs</h3>
+@*<div class="btn-group">
+	<a href="#" data-bind="click: function() { durationHours(24); }, css: { active: durationHours() == 24 }" class="btn" title="Songs that were added to VocaDB recently">
+		Newly added songs
+	</a>
+	<a href="#" data-bind="click: function() { durationHours(168); }, css: { active: durationHours() == 168 }" class="btn" title="Songs that were published recently">
+		Newly published songs
+	</a>
+	<a href="#" data-bind="click: function() { durationHours(720); }, css: { active: durationHours() == 720 }" class="btn" title="Songs that have received the most ratings recently">
+		Newly rated songs
+	</a>
+</div>*@
+
+<div class="btn-group">
+	<a href="#" data-bind="click: function() { vocalistSelection(null); }, css: { active: vocalistSelection() == null }" class="btn">All vocalists</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('Vocaloid'); }, css: { active: vocalistSelection() == 'Vocaloid' }" class="btn">Only Vocaloid</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('UTAU'); }, css: { active: vocalistSelection() == 'UTAU' }" class="btn">Only UTAU</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('CeVIO'); }, css: { active: vocalistSelection() == 'CeVIO' }" class="btn">Other vocalists</a>
+</div>
 
 <table class="table table-striped js-cloak" data-bind="show">
 	<thead>

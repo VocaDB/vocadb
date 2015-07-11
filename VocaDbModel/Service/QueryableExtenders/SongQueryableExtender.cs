@@ -239,6 +239,21 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> WhereHasVocalist(this IQueryable<Song> query, SongVocalistSelection vocalist) {
+
+			switch (vocalist) {
+				case SongVocalistSelection.Vocaloid:
+					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.Vocaloid));
+				case SongVocalistSelection.UTAU:
+					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.UTAU));
+				case SongVocalistSelection.CeVIO:
+					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer));
+			}
+
+			return query;
+
+		}
+
 		public static IQueryable<Song> WhereIdIs(this IQueryable<Song> query, int id) {
 			
 			if (id == 0)
@@ -269,4 +284,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 	}
+
+	public enum SongVocalistSelection {
+		Nothing,
+		Vocaloid,
+		UTAU,
+		CeVIO
+	}
+
 }

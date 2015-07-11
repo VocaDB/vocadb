@@ -13,6 +13,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
@@ -263,12 +264,15 @@ namespace VocaDb.Web.Controllers.Api {
 		[System.Web.Http.Route("top-rated")]
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
-		public IEnumerable<SongForApiContract> GetTopSongs(int? durationHours = null, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+		public IEnumerable<SongForApiContract> GetTopSongs(int? durationHours = null, 
+			SongVocalistSelection? vocalist = null,
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
 			
 			return queries.HandleQuery(ctx => {			
 
 				var query = ctx.Query()
-					.Where(s => !s.Deleted && s.RatingScore > 0);
+					.Where(s => !s.Deleted && s.RatingScore > 0)
+					.WhereHasVocalist(vocalist ?? SongVocalistSelection.Nothing);
 
 				if (durationHours.HasValue) {
 					var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);					
@@ -317,5 +321,6 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 	}
+
 
 }
