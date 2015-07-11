@@ -1203,6 +1203,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EditStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Song\RankingsStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RankingsStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Tag\DetailsStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2592,7 +2597,7 @@
     <Content Include="Views\Shared\Partials\_MainNavigationItems.cshtml" />
     <Content Include="Views\User\Stats.cshtml" />
     <Content Include="Views\Shared\LayoutPartials\_TwitterCard.cshtml" />
-    <Content Include="Views\Song\TopRated.cshtml" />
+    <Content Include="Views\Song\Rankings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3564,6 +3569,11 @@
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RankingsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.fi.resx" />

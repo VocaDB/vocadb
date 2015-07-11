@@ -2,37 +2,40 @@
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage
+@using Res = ViewRes.Song.RankingsStrings;
+@using SharedRes = ViewRes.SharedStrings;
+@using EntryRes = ViewRes.EntryDetailsStrings;
 
 @{
-	PageProperties.Title = "VocaDB song rankings";
+	PageProperties.Title = Res.PageTitle;
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null) };
 }
 
 <div class="btn-group">
-	<a href="#" data-bind="click: function() { durationHours(24); }, css: { active: durationHours() == 24 }" class="btn">Daily</a>
-	<a href="#" data-bind="click: function() { durationHours(168); }, css: { active: durationHours() == 168 }" class="btn">Weekly</a>
-	<a href="#" data-bind="click: function() { durationHours(720); }, css: { active: durationHours() == 720 }" class="btn">Monthly</a>
-	<a href="#" data-bind="click: function() { durationHours(null); }, css: { active: durationHours() == null }" class="btn">Overall</a>
+	<a href="#" data-bind="click: function() { durationHours(24); }, css: { active: durationHours() == 24 }" class="btn">@Res.DurationDaily</a>
+	<a href="#" data-bind="click: function() { durationHours(168); }, css: { active: durationHours() == 168 }" class="btn">@Res.DurationWeekly</a>
+	<a href="#" data-bind="click: function() { durationHours(720); }, css: { active: durationHours() == 720 }" class="btn">@Res.DurationMonthly</a>
+	<a href="#" data-bind="click: function() { durationHours(null); }, css: { active: durationHours() == null }" class="btn">@Res.DurationOverall</a>
 </div>
 
 <div class="btn-group">
 	<a href="#" data-bind="click: function() { dateFilterType('CreateDate'); }, css: { active: dateFilterType() == 'CreateDate' }" class="btn" title="Songs that were added to VocaDB recently">
-		Newly added songs
+		@Res.FilterCreateDate
 	</a>
 	<a href="#" data-bind="click: function() { dateFilterType('PublishDate'); }, css: { active: dateFilterType() == 'PublishDate' }" class="btn" title="Songs that were published recently">
-		Newly published songs
+		@Res.FilterPublishDate
 	</a>
 </div>
 
 <div class="btn-group">
-	<a href="#" data-bind="click: function() { vocalistSelection(null); }, css: { active: vocalistSelection() == null }" class="btn">All vocalists</a>
-	<a href="#" data-bind="click: function() { vocalistSelection('Vocaloid'); }, css: { active: vocalistSelection() == 'Vocaloid' }" class="btn">Only Vocaloid</a>
-	<a href="#" data-bind="click: function() { vocalistSelection('UTAU'); }, css: { active: vocalistSelection() == 'UTAU' }" class="btn">Only UTAU</a>
-	<a href="#" data-bind="click: function() { vocalistSelection('CeVIO'); }, css: { active: vocalistSelection() == 'CeVIO' }" class="btn">Other vocalists</a>
+	<a href="#" data-bind="click: function() { vocalistSelection(null); }, css: { active: vocalistSelection() == null }" class="btn">@Res.VocalistAll</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('Vocaloid'); }, css: { active: vocalistSelection() == 'Vocaloid' }" class="btn">@Res.VocalistVocaloid</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('UTAU'); }, css: { active: vocalistSelection() == 'UTAU' }" class="btn">@Res.VocalistUTAU</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('CeVIO'); }, css: { active: vocalistSelection() == 'CeVIO' }" class="btn">@Res.VocalistOther</a>
 </div>
 
 <div class="alert js-cloak withMargin" data-bind="show" visible="{{ songs().length == 0 }}">
-	No songs found :(
+	@Res.NoSongs
 </div>
 
 <table class="table table-striped js-cloak" data-bind="show" visible="{{ songs().length }}">
@@ -40,16 +43,16 @@
 		<tr>
 			<th></th>
 			<th colspan="2">
-				Name
+				@Res.ColName
 			</th>
 			<th>
-				Published
+				@Res.ColPublished
 			</th>
 			<th>
-				Tags
+				@Res.ColTags
 			</th>
 			<th>
-				Rating
+				@Res.ColRating
 			</th>
 		</tr>
 	</thead>
@@ -68,7 +71,7 @@
 				<div class="pull-right" data-bind="visible: pvServices, with: previewViewModel">
 					<a data-bind="click: togglePreview, css: { active: preview }" class="btn previewSong" href="#">
 						<i class="icon-film"></i>
-						Preview
+						@Res.Preview
 					</a>
 				</div>
 
@@ -101,7 +104,7 @@
 			</td>
 			<td>
 				<span data-bind="text: ratingScore"></span>
-				total score
+				@Res.TotalScore
 			</td>
 		</tr>
 	</tbody>

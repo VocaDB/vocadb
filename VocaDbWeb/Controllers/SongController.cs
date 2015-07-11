@@ -430,7 +430,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		public ActionResult Rankings() {
-			return View("TopRated");
+			return View();
 		}
 
 		public ActionResult Related(int id = invalidId) {
