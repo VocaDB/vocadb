@@ -88,9 +88,19 @@ body {
     margin-bottom: 5px;
   }
 }
+@media (min-width: 970px) {
+  .vdb .navbar-searchBox {
+    margin-right: 30px;
+  }
+}
 .vdb .globalSearchBox {
   max-width: 270px;
-  width: calc(100% - 140px);
+  width: auto;
+}
+@media (max-width: 970px) {
+  .vdb .globalSearchBox {
+    width: calc(100% - 160px);
+  }
 }
 .navbar-search {
   width: 100%;

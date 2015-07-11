@@ -112,11 +112,18 @@ body .container-fluid {
 		margin-bottom: 5px;
 	}
 
+	@media (min-width: @left-menu-breakpoint) {
+		margin-right: 30px;
+	}
 }
 
 .vdb .globalSearchBox {
 	max-width: 270px;
-	width: calc(100% - 140px);
+	width: auto;
+
+	@media (max-width: @left-menu-breakpoint) {
+		width: calc(100% - 160px);
+	}
 }
 
 .navbar-search {
