@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
@@ -28,6 +29,7 @@ namespace VocaDb.Web.Models.SongLists {
 
 			CurrentName = contract.Name;
 			Description = contract.Description;
+			EventDate = contract.EventDate;
 			FeaturedCategory = contract.FeaturedCategory;
 			Id = contract.Id;
 			Name = contract.Name;
@@ -47,6 +49,8 @@ namespace VocaDb.Web.Models.SongLists {
 
 		[StringLength(2000)]
 		public string Description { get; set; }
+
+		public DateTime? EventDate { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongListFeaturedCategory FeaturedCategory { get; set; }
@@ -69,6 +73,7 @@ namespace VocaDb.Web.Models.SongLists {
 
 			return new SongListForEditContract {
 				Description = this.Description ?? string.Empty,
+				EventDate = this.EventDate,
 				FeaturedCategory = this.FeaturedCategory,
 				Id = this.Id,
 				Name = this.Name,

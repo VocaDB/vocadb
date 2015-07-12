@@ -9,6 +9,8 @@ module vdb.dataContracts {
 
         description: string;
 
+		eventDate?: string;
+
         featuredCategory: string;
     
 		status: string;

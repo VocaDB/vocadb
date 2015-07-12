@@ -85,6 +85,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			var user = GetLoggedUser(ctx);
 			var newList = new SongList(contract.Name, user);
 			newList.Description = contract.Description ?? string.Empty;
+			newList.EventDate = contract.EventDate;
 
 			if (EntryPermissionManager.CanManageFeaturedLists(permissionContext))
 				newList.FeaturedCategory = contract.FeaturedCategory;
@@ -212,6 +213,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					if (EntryPermissionManager.CanManageFeaturedLists(PermissionContext) && list.FeaturedCategory != contract.FeaturedCategory) {
 						diff.FeaturedCategory.Set();
 						list.FeaturedCategory = contract.FeaturedCategory;						
+					}
+
+					if (list.EventDate != contract.EventDate) {
+						diff.SetChanged(SongListEditableFields.EventDate);
+						list.EventDate = contract.EventDate;
 					}
 
 					if (list.Status != contract.Status) {

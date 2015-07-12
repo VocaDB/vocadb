@@ -88,6 +88,15 @@
 					@Html.EnumDropDownListForDic(m => m.FeaturedCategory, Translate.SongListFeaturedCategoryNames, new Dictionary<string, object> { { "data-bind", "value:featuredCategory" } })
 				</div>
 			}
+			
+			<div class="editor-label">
+				<label>
+					Event date
+				</label>
+			</div>
+			<div class="editor-field">
+				<input type="text" data-bind="datepicker: { value: eventDateDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
+			</div>
 
 			<div class="editor-label">
 				@Res.Thumbnail

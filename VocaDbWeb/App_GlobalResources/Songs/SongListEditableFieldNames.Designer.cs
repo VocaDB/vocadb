@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event date.
+        /// </summary>
+        internal static string EventDate {
+            get {
+                return ResourceManager.GetString("EventDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Featured category.
         /// </summary>
         internal static string FeaturedCategory {

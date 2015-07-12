@@ -88,6 +88,8 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual Date EventDate { get; set; }
+
 		public virtual SongListFeaturedCategory FeaturedCategory { get; set; }
 
 		public virtual bool FeaturedList {

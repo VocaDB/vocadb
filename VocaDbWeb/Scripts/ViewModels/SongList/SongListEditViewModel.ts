@@ -50,6 +50,10 @@ module vdb.viewModels.songList {
 
 		public description: KnockoutObservable<string>;
 
+		public eventDateDate = ko.observable<Date>();
+
+		public eventDate = ko.computed(() => (this.eventDateDate() ? this.eventDateDate().toISOString() : null));
+
 		public featuredCategory: KnockoutObservable<string>;
 
 		public id: number;
@@ -63,6 +67,7 @@ module vdb.viewModels.songList {
 					this.currentName = data.name;
 					this.name = ko.observable(data.name);
 					this.description = ko.observable(data.description);
+					this.eventDateDate(data.eventDate ? moment(data.eventDate).toDate() : null); // Assume server date is UTC
 					this.featuredCategory = ko.observable(data.featuredCategory);
 					this.status = ko.observable(data.status);
 

@@ -9,15 +9,17 @@ namespace VocaDb.Model.Domain.Songs {
 
 		Description			= 1,
 
-		FeaturedCategory	= 2,
+		EventDate			= 2,
 
-		Name				= 4,
+		FeaturedCategory	= 4,
 
-		Songs				= 8,
+		Name				= 8,
 
-		Status				= 16,
+		Songs				= 16,
 
-		Thumbnail			= 32
+		Status				= 32,
+
+		Thumbnail			= 64
 
 	}
 

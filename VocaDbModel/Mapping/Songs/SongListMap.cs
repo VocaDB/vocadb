@@ -19,6 +19,8 @@ namespace VocaDb.Model.Mapping.Songs {
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[SongList]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
+			Component(m => m.EventDate, c => c.Map(m => m.DateTime).Column("EventDate").Nullable());
+
 			Component(m => m.Thumb, c => {
 				c.Map(m => m.Mime).Column("ThumbMime").Length(30);
 				c.ParentReference(m => m.Entry);

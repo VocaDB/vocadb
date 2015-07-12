@@ -45,7 +45,7 @@ namespace VocaDb.Model.Domain.Versioning {
 				foreach (var name in fieldNames) {
 					T field;
 					if (Enum.TryParse(name, out field))
-						ChangedFields.SetFlag(field, true);
+						SetChanged(field);
 				}
 
 			}
@@ -62,11 +62,15 @@ namespace VocaDb.Model.Domain.Versioning {
 			return ChangedFields.FlagIsSet(field);
 		}
 
+		public void SetChanged(T field) {
+			ChangedFields.SetFlag(field, true);			
+		}
+
 	}
 
 	public struct EnumFieldAccessor<T> where T : struct, IConvertible {
 		
-		private EnumVal<T> val; 
+		private readonly EnumVal<T> val; 
 		private readonly T field;
 
 		public EnumFieldAccessor(EnumVal<T> val, T field)
