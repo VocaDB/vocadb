@@ -89,10 +89,10 @@
 	}
 	<div class="media-body">
 		@if (Model.SongList.EventDate.HasValue) {
-			<p>Date: @Model.SongList.EventDate.Value.ToShortDateString()</p>
+			<p>@string.Format(Res.Date, Model.SongList.EventDate.Value.ToShortDateString())</p>
 		}
 		@if (!string.IsNullOrWhiteSpace(Model.SongList.Description)) {
-			<p>@Html.Raw(descriptionHtml)</p>
+			@Html.Raw(descriptionHtml)
 		}
 	</div>
 </div>

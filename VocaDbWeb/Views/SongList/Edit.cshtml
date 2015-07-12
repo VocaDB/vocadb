@@ -90,9 +90,7 @@
 			}
 			
 			<div class="editor-label">
-				<label>
-					Event date
-				</label>
+				@Helpers.HelpLabel(Res.EventDate, Res.EventDateHelp)
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: eventDateDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
@@ -114,7 +112,7 @@
 			</div>
 			
 			<div class="editor-label">
-				@Helpers.HelpLabel("Entry status", Resources.CommonMessages.EntryStatusExplanation)
+				@Helpers.HelpLabel(Res.Status, Resources.CommonMessages.EntryStatusExplanation)
 			</div>
 			<div class="editor-field">
 				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses)), "value: status")

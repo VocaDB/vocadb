@@ -129,11 +129,20 @@
   <data name="EditTitle" xml:space="preserve">
     <value>Edit list - {0}</value>
   </data>
+  <data name="EventDate" xml:space="preserve">
+    <value>Event date</value>
+  </data>
+  <data name="EventDateHelp" xml:space="preserve">
+    <value>If this list is related to an event such as a concert or rankings, the date of that event can be entered here.</value>
+  </data>
   <data name="FeaturedCategory" xml:space="preserve">
     <value>Featured category</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Entry status</value>
   </data>
   <data name="TabProperties" xml:space="preserve">
     <value>Properties</value>
