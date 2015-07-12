@@ -183,7 +183,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			details.LatestRatedSongs = session.Query<FavoriteSongForUser>()
 				.Where(c => c.User.Id == user.Id && !c.Song.Deleted)
-				.OrderByDescending(c => c.Id)
+				.OrderByDescending(c => c.Date)
 				.Select(c => c.Song)
 				.Take(6)
 				.ToArray()
