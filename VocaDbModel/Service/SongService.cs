@@ -100,7 +100,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void AddSongToList(int listId, int songId) {
+		public void AddSongToList(int listId, int songId, string notes) {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
@@ -117,7 +117,7 @@ namespace VocaDb.Model.Service {
 
 				var song = session.Load<Song>(songId);
 
-				var link = list.AddSong(song, order, string.Empty);
+				var link = list.AddSong(song, order, notes);
 				session.Save(link);
 
 			});

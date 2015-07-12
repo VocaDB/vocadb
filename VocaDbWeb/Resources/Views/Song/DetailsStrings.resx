@@ -246,4 +246,7 @@
   <data name="Navigation" xml:space="preserve">
     <value>Navigation</value>
   </data>
+  <data name="AddToListNotes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
 </root>

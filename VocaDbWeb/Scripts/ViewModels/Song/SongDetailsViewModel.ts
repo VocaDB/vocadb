@@ -167,9 +167,11 @@ module vdb.viewModels {
 
         public addSongToList: () => void;
 
-        public dialogVisible: KnockoutObservable<boolean> = ko.observable(false);
+        public dialogVisible = ko.observable(false);
 
-        public newListName: KnockoutObservable<string> = ko.observable("");
+        public newListName = ko.observable("");
+
+		public notes = ko.observable("");
 
         public selectedListId: KnockoutObservable<number> = ko.observable(null);
 
@@ -184,12 +186,17 @@ module vdb.viewModels {
             };
 
             this.addSongToList = () => {
-                if (isValid())
-                    repository.addSongToList(this.selectedListId(), songId, this.newListName(), () => {
+                if (isValid()) {
+                    repository.addSongToList(this.selectedListId(), songId, this.notes(), this.newListName(),() => {
+
+						this.notes("");
                         this.dialogVisible(false);
+
                         if (this.addedToList)
                             this.addedToList();
+
                     });
+				}
             }
 
             this.showSongLists = () => {

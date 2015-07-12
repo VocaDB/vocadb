@@ -88,6 +88,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string AddToListNotes {
+            get {
+                return ResourceManager.GetString("AddToListNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alternate versions.
         /// </summary>
         public static string AlternateVersions {

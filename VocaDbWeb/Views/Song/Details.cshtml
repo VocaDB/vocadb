@@ -388,11 +388,17 @@
 </div>
 
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 300, position: { my: 'left top', at: 'left bottom', of: $('#addToListLink') } }, dialogButtons: [{ text: @("'" + ViewRes.SharedStrings.Save + "'"), click: songListDialog.addSongToList }], dialogVisible: $root.songListDialog.dialogVisible, with: songListDialog" style="display:none" title="@ViewRes.Song.DetailsStrings.AddToList">
+	
 	<select data-bind="options: songLists, optionsText: 'name', optionsValue: 'id', value: selectedListId" size="6"></select>
+
+	<label>@R.DetailsStrings.Notes</label>
+	<input type="text" data-bind="textInput: notes" maxlength="200" />
+
 	<div data-bind="visible: selectedListId() == 0">
 		<label>@R.DetailsStrings.NewListName</label>
-		<input type="text" data-bind="value: newListName" maxlength="200" />
+		<input type="text" data-bind="textInput: newListName" maxlength="200" />
 	</div>
+
 </div>
 
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 400, position: { my: 'left top', at: 'left bottom', of: $('#statsLink') } }, dialogVisible: $root.usersPopupVisible" title="@R.DetailsStrings.SongRatings" style="display:none;">

@@ -15,7 +15,9 @@ module vdb.repositories {
     // Corresponds to the SongController class.
     export class SongRepository extends BaseRepository implements ICommentRepository {
 
-        public addSongToList: (listId: number, songId: number, newListName: string, callback?: Function) => void;
+        public addSongToList = (listId: number, songId: number, notes: string, newListName: string, callback?: Function) => {
+			this.post("/AddSongToList", { listId: listId, songId: songId, notes: notes, newListName: newListName }, callback);	        
+        }
 
 		public createComment = (songId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
 
@@ -150,10 +152,6 @@ module vdb.repositories {
 
             this.post = (relative, params, callback) => {
                 $.post(this.mapUrl(relative), params, callback);
-            }
-
-            this.addSongToList = (listId, songId, newListName, callback?) => {
-                this.post("/AddSongToList", { listId: listId, songId: songId, newListName: newListName }, callback);
             }
 
             this.findDuplicate = (params, callback: (result: dc.NewSongCheckResultContract) => void) => {

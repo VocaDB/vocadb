@@ -54,17 +54,21 @@ namespace VocaDb.Web.Controllers
 
 		// Used from the song page
 		[HttpPost]
-		public void AddSongToList(int listId, int songId, string newListName = null) {
+		public void AddSongToList(int listId, int songId, string notes = null, string newListName = null) {
 
 			if (listId != 0) {
 
-				Service.AddSongToList(listId, songId);
+				Service.AddSongToList(listId, songId, notes ?? string.Empty);
 
 			} else if (!string.IsNullOrWhiteSpace(newListName)) {
 
 				var contract = new SongListForEditContract {
 					Name = newListName,
-					SongLinks = new[] {new SongInListEditContract { Song = new SongForApiContract { Id  = songId }, Order = 1 }}
+					SongLinks = new[] {new SongInListEditContract {
+						Song = new SongForApiContract { Id  = songId }, 
+						Order = 1,
+						Notes = notes ?? string.Empty
+					}}
 				};
 
 				songListQueries.UpdateSongList(contract, null);

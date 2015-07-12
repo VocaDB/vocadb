@@ -16,7 +16,7 @@ module vdb.tests.testSupport {
             
             super("");
 
-            this.addSongToList = (listId, songId, newListName, callback?) => {
+            this.addSongToList = (listId, songId, notes, newListName, callback?) => {
 
                 this.addedSongId = songId;
 
