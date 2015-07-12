@@ -128,7 +128,12 @@
 						</a>
 					}
 				</td>
-				<td>@Html.ActionLink(list.Name, "Details", "SongList", new { id = list.Id }, new { title = list.Description })</td>
+				<td>
+					@Html.ActionLink(list.Name, "Details", "SongList", new { id = list.Id }, new { title = list.Description })
+					@if (list.EventDate.HasValue) {
+						<br/><small>@list.EventDate.Value.ToShortDateString()</small>
+					}
+				</td>
 				<td>
 					@if (list.CanEdit) {
 						<a href="@Url.Action("Edit", "SongList", new { id = list.Id })" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
