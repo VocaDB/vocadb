@@ -133,7 +133,7 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Newly created.
+        ///   Looks up a localized string similar to Newly added.
         /// </summary>
         public static string FilterCreateDate {
             get {

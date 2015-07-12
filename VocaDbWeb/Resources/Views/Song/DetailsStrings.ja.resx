@@ -253,4 +253,7 @@
   <data name="SongRatings" xml:space="preserve">
     <value>曲の評価</value>
   </data>
+  <data name="AddToListNotes" xml:space="preserve">
+    <value>メモ</value>
+  </data>
 </root>

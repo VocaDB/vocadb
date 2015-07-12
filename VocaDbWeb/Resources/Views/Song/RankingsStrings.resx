@@ -142,7 +142,7 @@
     <value>Weekly</value>
   </data>
   <data name="FilterCreateDate" xml:space="preserve">
-    <value>Newly created</value>
+    <value>Newly added</value>
   </data>
   <data name="FilterPublishDate" xml:space="preserve">
     <value>Newly published</value>
