@@ -1,9 +1,12 @@
-﻿@using VocaDb.Model.Domain.Security
+﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers;
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.SongListsByCategoryContract[]>
+@inherits VocaDb.Web.Code.VocaDbPage
 
 @{
-    PageProperties.Title = ViewRes.SharedStrings.FeaturedSongLists;
+    PageProperties.Title = ViewRes.SharedStrings.FeaturedSongLists;	
+	var categories = Translate.SongListFeaturedCategoryNames.AllFields.Where(f => f.Id != SongListFeaturedCategory.Nothing).ToArray();
 }
 
 @section Toolbar {
@@ -16,28 +19,43 @@
 
 <div id="tabs">
 	<ul>
-@foreach (var cat in Model) {
-		<li><a href="@("#" + cat.Category + "Tab")">@Translate.SongListFeaturedCategoryNames[cat.Category]</a></li>
-}
+		@foreach (var cat in categories) {
+			<li><a href="@("#" + cat.Id + "Tab")" data-bind="click: function() { initCategory('@cat.Id'); }">@cat.Name</a></li>
+		}
 	</ul>	
 
-@foreach (var cat in Model) {
-	<div id="@(cat.Category + "Tab")" style="padding:10px;">
+	@foreach (var cat in categories) {
+	<div id="@(cat.Id + "Tab")" style="padding:10px;" data-bind="with: categories['@cat.Id']">
+		
+		@SongHelpers.SongListsKnockout("lists")
 
-		@SongHelpers.SongLists(cat.Lists)
+		<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 
 	</div>
-}
+	}
 
 </div>
 
 @section BodyScripts {
+@Scripts.Render("~/bundles/SongList/Featured")
 <script type="text/javascript">
-	$(document).ready(function () {
+	
+	moment.locale('@Culture');
+	ko.punches.enableAll();
+
+	$(function () {
+
 		$("#createLink").button({ icons: { primary: 'ui-icon-plusthick' } });
 		$("#importLink").button({ icons: { primary: 'ui-icon-plusthick' } });
 		$("#tabs").tabs();
+
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var categories = @ToJS(categories.Select(c => c.Id.ToString()));
+		var viewModel = new vdb.viewModels.songList.FeaturedSongListsViewModel(new vdb.repositories.SongListRepository(urlMapper), categories);
+		ko.applyBindings(viewModel);
+
 	});
+
 </script>
 }
 

@@ -8,6 +8,17 @@ module vdb.repositories {
 
 		constructor(private urlMapper: vdb.UrlMapper) {}
 
+		public getFeatured = (category: string, paging: dc.PagingProperties, sort: string, callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
+			
+			var url = this.urlMapper.mapRelative("/api/songLists/featured");
+			$.getJSON(url, {
+				featuredCategory: category,
+				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
+				sort: sort
+			}, callback);
+
+		}
+
 		public getForEdit = (id: number, callback: (result: dc.songs.SongListForEditContract) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songLists/" + id + "/for-edit");

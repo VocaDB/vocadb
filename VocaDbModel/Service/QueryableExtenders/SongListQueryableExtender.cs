@@ -9,7 +9,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			switch (sortRule) {
 				case SongListSortRule.Date:
-					return query.OrderByDescending(r => r.EventDate);
+					return query
+						.OrderByDescending(r => r.EventDate)
+						.ThenBy(r => r.Name);
 				case SongListSortRule.Name:
 					return query.OrderBy(r => r.Name);
 			}

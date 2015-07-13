@@ -349,6 +349,13 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/SongList/Edit.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/SongList/Featured").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
+				"~/Scripts/Repositories/SongListRepository.js",
+				"~/Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Import").Include(
 				"~/Scripts/ViewModels/SongList/ImportSongListViewModel.js"
 			));

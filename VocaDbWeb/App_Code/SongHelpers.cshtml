@@ -146,6 +146,28 @@
 
 }
 
+@helper SongListsKnockout(string binding) {
+	
+	<table class="table table-striped">
+		<tbody data-bind="foreach: @Html.Raw(binding)">
+			<tr>
+				<td style="width: 75px">
+					<a href="#" data-bind="visible: $data.mainPicture && mainPicture.urlSmallThumb, attr: { href: vdb.utils.EntryUrlMapper.details('SongList', id) }">
+						<img class="coverPicThumb" alt="Picture" data-bind="attr: { src: $data.mainPicture ? mainPicture.urlSmallThumb : '' }" />
+					</a>
+				</td>
+				<td>
+					<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('SongList', id) }">{{ name }}</a>
+					<div visible="{{ $data.eventDate }}">
+						<small>{{ $data.eventDate | formatDate: 'l' }}</small>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+}
+
 @helper SongsList(IList<SongContract> songs, bool showType = false) {
 
 	foreach (var song in songs) {
