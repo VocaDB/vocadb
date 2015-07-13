@@ -27,6 +27,18 @@
 	@foreach (var cat in categories) {
 	<div id="@(cat.Id + "Tab")" style="padding:10px;" data-bind="with: categories['@cat.Id']">
 		
+		<div visible="{{ showSort }}">
+			<span>Sort by</span>
+			<div class="btn-group">
+				<a data-bind="click: function() { sort('Date'); }, css: { active: sort() == 'Date' }" class="btn" href="#">
+					Date
+				</a>
+				<a data-bind="click: function() { sort('Name'); }, css: { active: sort() == 'Name' }" class="btn" href="#">
+					Name
+				</a>
+			</div>		
+		</div>
+
 		@SongHelpers.SongListsKnockout("lists")
 
 		<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
