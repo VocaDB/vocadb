@@ -260,7 +260,7 @@
 		<h3>
 			@ViewRes.Album.DetailsStrings.Tracklist
 			@if (Model.TotalLength != TimeSpan.Zero) {
-				<small>(total length @DateTimeHelper.FormatMinSec(Model.TotalLength))</small>
+				<small>(@string.Format(Res.TotalLength, DateTimeHelper.FormatMinSec(Model.TotalLength)))</small>
 			}
 		</h3>
 		<div class="tracklist">

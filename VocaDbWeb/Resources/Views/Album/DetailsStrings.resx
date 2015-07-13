@@ -234,4 +234,7 @@
   <data name="ReleaseDateIsInThePast" xml:space="preserve">
     <value>(Released)</value>
   </data>
+  <data name="TotalLength" xml:space="preserve">
+    <value>total length {0}</value>
+  </data>
 </root>
