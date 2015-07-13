@@ -110,10 +110,6 @@ module vdb.viewModels {
 
     export class SongInListsViewModel {
         
-        //public categories: KnockoutObservableArray<SongListsInCategory> = ko.observableArray();
-
-        //public customLists: KnockoutObservableArray<dc.SongListContract> = ko.observableArray();
-
         public contentHtml = ko.observable<string>();
 
         public dialogVisible = ko.observable(false);
@@ -133,32 +129,6 @@ module vdb.viewModels {
         
         }
 
-        /*constructor(repository: rep.SongRepository, featuredCategoryTranslations, songId: number) {
-            
-            this.show = () => {
-
-                repository.songListsForSong(songId, lists => {
-
-                    var byCategory: _.Dictionary<_.List<dc.SongListContract>> = _.groupBy(_.filter(lists, l => l.featuredCategory != "Nothing"), l => l.featuredCategory);
-                    var categories = _.sortBy(_.map(byCategory, c => new SongListsInCategory(featuredCategoryTranslations[c[0].featuredCategory], c)), c => c.categoryName);
-                    this.categories(categories);
-
-                    this.customLists(_.filter(lists, l => l.featuredCategory == "Nothing"));
-
-                    this.dialogVisible(true);
-
-                });
-
-            }
-        
-        }*/
-
-    }
-
-    export class SongListsInCategory {
-        
-        constructor(public categoryName: string, public songLists: dc.SongListContract[]) { }
-    
     }
 
     export class SongListsViewModel {

@@ -1,17 +1,24 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.DataContracts.SongImport;
+using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
 using VocaDb.Web.Controllers.DataAccess;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -24,9 +31,13 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly SongListQueries queries;
+		private readonly IUserIconFactory userIconFactory;
+		private readonly IEntryImagePersisterOld entryImagePersister;
 
-		public SongListApiController(SongListQueries queries) {
+		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister) {
 			this.queries = queries;
+			this.userIconFactory = userIconFactory;
+			this.entryImagePersister = entryImagePersister;
 		}
 
 		[Route("{id:int}/for-edit")]
@@ -34,6 +45,40 @@ namespace VocaDb.Web.Controllers.Api {
 		public SongListForEditContract GetForEdit(int id) {
 			
 			return queries.GetSongListForEdit(id);
+
+		}
+
+		/// <summary>
+		/// Gets a list of featured song lists.
+		/// </summary>
+		/// <param name="featuredCategory">Filter by a specific featured category. If empty, all categories are returned.</param>
+		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
+		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
+		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
+		/// <param name="sort">List sort rule. Possible values are Nothing, Date, Name.</param>
+		/// <returns>List of song lists.</returns>
+		[Route("featured")]
+		public PartialFindResult<SongListForApiContract> GetFeaturedLists(SongListFeaturedCategory? featuredCategory = null,
+			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			SongListSortRule sort = SongListSortRule.Name) {
+			
+			var ssl = WebHelper.IsSSL(Request);
+
+			return queries.HandleQuery(ctx => {
+				
+				var query = ctx.Query()
+					.WhereHasFeaturedCategory(featuredCategory, false);
+
+				var count = getTotalCount ? query.Count() : 0;
+
+				return new PartialFindResult<SongListForApiContract>(query
+					.OrderBy(sort)
+					.Paged(new PagingProperties(start, maxResults, getTotalCount))
+					.ToArray()
+					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl))
+					.ToArray(), count);
+
+			});
 
 		}
 

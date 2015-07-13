@@ -181,6 +181,7 @@
     <Compile Include="DataContracts\Globalization\EnglishTranslatedStringContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />
     <Compile Include="DataContracts\SongImport\PartialImportedSongs.cs" />
+    <Compile Include="DataContracts\SongLists\SongListForApiContract.cs" />
     <Compile Include="DataContracts\Songs\ArchivedSongListVersionContract.cs" />
     <Compile Include="DataContracts\Songs\RelatedSongsContract.cs" />
     <Compile Include="DataContracts\Songs\SongInAlbumForApiContract.cs" />
@@ -729,6 +730,7 @@
     <Compile Include="Service\Helpers\IUserMessageMailer.cs" />
     <Compile Include="Service\Helpers\MarkdownHelper.cs" />
     <Compile Include="Service\QueryableExtenders\SongInListQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\SongListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\TagQueryableExtender.cs" />
     <Compile Include="Service\Helpers\UserCommentNotifier.cs" />
     <Compile Include="Service\Queries\ArtistRelationsQuery.cs" />
