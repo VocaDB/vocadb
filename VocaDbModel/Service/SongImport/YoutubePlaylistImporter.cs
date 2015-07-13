@@ -14,7 +14,7 @@ namespace VocaDb.Model.Service.SongImport {
 	public class YoutubePlaylistImporter : ISongListImporter {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly Regex regex = new Regex(@"www\.youtube\.com/playlist\?list=(\w+)");
+		private static readonly Regex regex = new Regex(@"www\.youtube\.com/playlist\?list=([\w\-_]+)");
 
 		private string YoutubeApiKey {
 			get {
@@ -52,7 +52,7 @@ namespace VocaDb.Model.Service.SongImport {
 				foreach (var item in result.Items) {
 					var song = new ImportedSongInListContract(PVService.Youtube, item.Snippet.ResourceId.VideoId) {
 						Name = item.Snippet.Title,
-						SortIndex = (int?)item.Snippet.Position ?? 0,
+						SortIndex = ((int?)item.Snippet.Position ?? 0) + 1,
 						Url = string.Format("https://www.youtube.com/watch?v={0}", item.Snippet.ResourceId.VideoId)
 					};
 					songs.Add(song);

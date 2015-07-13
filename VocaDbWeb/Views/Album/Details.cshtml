@@ -3,6 +3,7 @@
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Domain.Albums
 @using VocaDb.Model.Domain.Images
+@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models;
 @using R = ViewRes.Album;
@@ -256,7 +257,12 @@
 			</table>
 		</div>
 
-		<h3>@ViewRes.Album.DetailsStrings.Tracklist</h3>
+		<h3>
+			@ViewRes.Album.DetailsStrings.Tracklist
+			@if (Model.TotalLength != TimeSpan.Zero) {
+				<small>(total length @DateTimeHelper.FormatMinSec(Model.TotalLength))</small>
+			}
+		</h3>
 		<div class="tracklist">
 			@foreach (var disc in Model.Songs) {
 				if (Model.Songs.Count() > 1) {
@@ -290,7 +296,6 @@
 					}
 				</ul>
 			}
-
 		</div>
 
 		@if (!Model.Songs.Any()) {
@@ -303,7 +308,7 @@
 			</div>
 		}
 
-		<h3>@ViewRes.EntryDetailsStrings.LatestComments</h3>
+		<h3 class="withMargin">@ViewRes.EntryDetailsStrings.LatestComments</h3>
 
 		<div data-bind="with: comments">
 			@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)

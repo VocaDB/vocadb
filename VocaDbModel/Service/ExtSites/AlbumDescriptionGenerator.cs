@@ -5,6 +5,7 @@ using System.Text;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.ExtSites {
 
@@ -43,7 +44,7 @@ namespace VocaDb.Model.Service.ExtSites {
 				sb.AppendFormat(", {0} track(s)", album.Songs.Length);
 
 				if (album.TotalLength != TimeSpan.Zero) {
-					sb.AppendFormat(" ({0}:{1})", (int)album.TotalLength.TotalMinutes, album.TotalLength.Seconds);
+					sb.AppendFormat(" ({0})", DateTimeHelper.FormatMinSec(album.TotalLength));
 				}
 
 			}

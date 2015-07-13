@@ -57,6 +57,7 @@ namespace VocaDb.Web.Models {
 			Songs = contract.Songs.GroupBy(s => s.DiscNumber).ToArray();
 			Status = contract.Status;
 			Tags = contract.Tags;
+			TotalLength = contract.TotalLength;
 			UserHasAlbum = contract.AlbumForUser != null;
 			Version = contract.Version;
 			WebLinks = contract.WebLinks;
@@ -189,6 +190,8 @@ namespace VocaDb.Web.Models {
 		public EntryStatus Status { get; set; }
 
 		public TagUsageForApiContract[] Tags { get; set; }
+
+		public TimeSpan TotalLength { get; set; }
 
 		public bool UserHasAlbum { get; set; }
 

@@ -15,6 +15,10 @@ namespace VocaDb.Model.Helpers {
 			return first.Value.Date == second.Value.Date;
 
 		}
+
+		public static string FormatMinSec(TimeSpan timeSpan) {
+			return string.Format("{0}:{1}{2}", (int)timeSpan.TotalMinutes, timeSpan.Seconds < 10 ? "0" : "", timeSpan.Seconds);
+		}
 			 
 		public static DateTime? ParseDateTimeOffsetAsDate(string str) {
 			

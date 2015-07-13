@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Helpers {
 
@@ -12,7 +13,7 @@ namespace VocaDb.Web.Helpers {
 			if (seconds <= 0)
 				return string.Empty;
 
-			return TimeSpan.FromSeconds(seconds).ToString(@"m\:ss");
+			return DateTimeHelper.FormatMinSec(TimeSpan.FromSeconds(seconds));
 
 		}
 
