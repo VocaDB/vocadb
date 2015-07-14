@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
@@ -22,6 +23,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Web.Code;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
@@ -291,11 +293,20 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a list of song lists for a user.
 		/// </summary>
 		/// <param name="userId">User whose song lists are to be loaded.</param>
+		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
+		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
+		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
+		/// <param name="fields">List of optional fields.</param>
 		/// <returns>List of song lists.</returns>
 		[Route("{userId:int}/songLists")]
-		public SongListBaseContract[] GetSongLists(int userId) {
+		public SongListForApiContract[] GetSongLists(
+			int userId, 
+			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			SongListSortRule sort = SongListSortRule.Name,
+			SongListOptionalFields? fields = null) {
 			
-			return queries.GetCustomSongLists(userId);
+			return queries.GetCustomSongLists(userId, WebHelper.IsSSL(Request), sort, 
+				new PagingProperties(start, maxResults, getTotalCount), fields ?? SongListOptionalFields.None);
 
 		}
 

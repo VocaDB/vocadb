@@ -148,10 +148,14 @@ module vdb.repositories {
 
 		}
 
-		public getSongLists = (userId: number, callback) => {
+		public getSongLists = (userId: number, paging: dc.PagingProperties, sort: string, fields: string, callback) => {
 	    
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/songLists");
-			$.getJSON(url, callback);
+			$.getJSON(url, {
+				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
+				sort: sort,
+				fields: fields
+			}, callback);
 
 		}
 

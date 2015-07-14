@@ -11,6 +11,7 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
@@ -19,6 +20,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -77,6 +79,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryImagePersisterOld entryImagePersister;
 		private readonly IUserMessageMailer mailer;
 		private readonly IStopForumSpamClient sfsClient;
 		private readonly IUserIconFactory userIconFactory;
@@ -253,7 +256,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public UserQueries(IUserRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IStopForumSpamClient sfsClient,
-			IUserMessageMailer mailer, IUserIconFactory userIconFactory, ObjectCache cache)
+			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister, ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			ParamIs.NotNull(() => repository);
@@ -266,6 +269,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.sfsClient = sfsClient;
 			this.mailer = mailer;
 			this.userIconFactory = userIconFactory;
+			this.entryImagePersister = entryImagePersister;
 			this.cache = cache;
 
 		}
@@ -844,13 +848,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public SongListBaseContract[] GetCustomSongLists(int userId) {
+		public SongListForApiContract[] GetCustomSongLists(int userId, bool ssl, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
 			
-			return HandleQuery(ctx => ctx
-				.Load(userId)
-				.SongLists
-				.Where(s => s.FeaturedCategory == SongListFeaturedCategory.Nothing)
-				.Select(s => new SongListBaseContract(s))
+			return HandleQuery(ctx => ctx.Query<SongList>()
+				.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing)
+				.OrderBy(sort)
+				.Paged(paging)
+				.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, fields))
 				.ToArray());
 
 		}

@@ -75,7 +75,7 @@ namespace VocaDb.Web.Controllers.Api {
 					.OrderBy(sort)
 					.Paged(new PagingProperties(start, maxResults, getTotalCount))
 					.ToArray()
-					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl))
+					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, SongListOptionalFields.MainPicture))
 					.ToArray(), count);
 
 			});

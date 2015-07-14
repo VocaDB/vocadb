@@ -13,14 +13,17 @@ namespace VocaDb.Model.DataContracts.SongLists {
 		public SongListForApiContract() {}
 
 		public SongListForApiContract(SongList list, IUserIconFactory userIconFactory, IEntryImagePersister imagePersister,
-			bool ssl) : base(list) {
+			bool ssl, SongListOptionalFields fields) : base(list) {
 			
 			ParamIs.NotNull(() => list);
 
 			Author = new UserForApiContract(list.Author, userIconFactory, UserOptionalFields.None);
 			EventDate = list.EventDate;
 			FeaturedCategory = list.FeaturedCategory;
-			MainPicture = (list.Thumb != null ? new EntryThumbForApiContract(list.Thumb, imagePersister, ssl) : null);
+
+			if (fields.HasFlag(SongListOptionalFields.MainPicture)) {
+				MainPicture = (list.Thumb != null ? new EntryThumbForApiContract(list.Thumb, imagePersister, ssl) : null);				
+			}
 
 		}
 
@@ -35,6 +38,15 @@ namespace VocaDb.Model.DataContracts.SongLists {
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }
+
+	}
+
+	[Flags]
+	public enum SongListOptionalFields {
+
+		None		= 0,
+		Description = 1,
+		MainPicture = 2,
 
 	}
 
