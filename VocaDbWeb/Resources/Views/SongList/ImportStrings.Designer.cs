@@ -22,14 +22,14 @@ namespace VocaDb.Web.Resources.Views.SongList {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ImportNicoMylistStrings {
+    public class ImportStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ImportNicoMylistStrings() {
+        internal ImportStrings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VocaDb.Web.Resources.Views.SongList.ImportNicoMylistStrings", typeof(ImportNicoMylistStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VocaDb.Web.Resources.Views.SongList.ImportStrings", typeof(ImportStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
