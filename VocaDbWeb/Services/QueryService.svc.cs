@@ -36,11 +36,12 @@ namespace VocaDb.Web.Services {
 		private readonly TagQueries tagQueries;
 		private readonly IUserPermissionContext userPermissionContext;
 		private readonly SongService songService;
+		private readonly SongListQueries songListQueries;
 		private readonly UserQueries userQueries;
 		private readonly UserService userService;
 
 		public QueryService(ArtistQueries artistQueries, TagQueries tagQueries, UserQueries userQueries, 
-			AlbumService albumService, ArtistService artistService, SongService songService, UserService userService, OtherService otherService,
+			AlbumService albumService, ArtistService artistService, SongService songService, SongListQueries songListQueries, UserService userService, OtherService otherService,
 			IUserPermissionContext userPermissionContext) {
 
 			this.artistQueries = artistQueries;
@@ -49,6 +50,7 @@ namespace VocaDb.Web.Services {
 			this.albumService = albumService;
 			this.artistService = artistService;
 			this.songService = songService;
+			this.songListQueries = songListQueries;
 			this.userService = userService;
 			this.otherService = otherService;
 			this.userPermissionContext = userPermissionContext;
@@ -177,7 +179,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public SongListContract GetSongListById(int id) {
 
-			var list = songService.GetSongList(id);
+			var list = songListQueries.GetSongList(id);
 			return list;
 
 		}

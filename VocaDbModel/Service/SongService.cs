@@ -431,12 +431,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongListContract GetSongList(int listId) {
-
-			return HandleQuery(session => new SongListContract(session.Load<SongList>(listId), PermissionContext));
-
-		}
-
 		public SongListBaseContract[] GetSongListsForCurrentUser(int ignoreSongId) {
 
 			PermissionContext.VerifyLogin();

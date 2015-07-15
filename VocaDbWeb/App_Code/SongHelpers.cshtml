@@ -114,38 +114,6 @@
 			
 }
 
-@helper SongLists(IEnumerable<SongListContract> songLists) {
-	
-	<table class="table table-striped">
-		<tbody>
-		@foreach (var list in songLists) {
-			var thumbUrl = Url.EntryImageOld(list.Thumb, ImageSize.SmallThumb, checkExists: true);
-			<tr>
-				<td style="width: 75px">
-					@if (!string.IsNullOrEmpty(thumbUrl)) {
-						<a href="@Url.Action("Details", "SongList", new { id = list.Id })">
-							<img class="coverPicThumb" src="@thumbUrl" alt="Picture" />
-						</a>
-					}
-				</td>
-				<td>
-					@Html.ActionLink(list.Name, "Details", "SongList", new { id = list.Id }, new { title = list.Description })
-					@if (list.EventDate.HasValue) {
-						<br/><small>@list.EventDate.Value.ToShortDateString()</small>
-					}
-				</td>
-				<td>
-					@if (list.CanEdit) {
-						<a href="@Url.Action("Edit", "SongList", new { id = list.Id })" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
-					}
-				</td>
-			</tr>
-		}
-		</tbody>
-	</table>
-
-}
-
 @helper SongListsKnockout(string binding) {
 	
 	<table class="table table-striped">
