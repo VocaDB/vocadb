@@ -38,22 +38,22 @@
 	<form class="form-horizontal">
 		<h4>@Res.MylistDescription</h4>
 		<div class="control-group">
-			<div class="control-label">Name</div>
+			<div class="control-label">@Res.ListName</div>
 			<div class="controls">
 				<input type="text" textInput="{{ name }}" class="input-xlarge" required />
 			</div>
 		</div>
 		<div class="control-group">
-			<div class="control-label">Description</div>
+			<div class="control-label">@Res.ListDescription</div>
 			<div class="controls">
 				<textarea value="{{ description }}" cols="40" rows="3" class="input-xlarge"></textarea>
 			</div>
 		</div>
 		<div class="control-group">
-			<div class="control-label">Total songs</div>
+			<div class="control-label">@Res.TotalSongs</div>
 			<div class="controls">
 				{{ totalSongs }}
-				<small visible="{{ hasMore }}">(Click "Show more" to load more songs from the list.)</small>
+				<small visible="{{ hasMore }}">@Res.LoadMoreHelp</small>
 			</div>
 		</div>
 		<div class="control-group" visible="{{ wvrNumber > 0 }}">
@@ -99,7 +99,7 @@
 			@ViewRes.SharedStrings.ShowMore			
 		</a>
 		&nbsp;
-		<small>({{ items().length }} / {{ totalSongs }} loaded)</small>
+		<small>({{ items().length }} / {{ totalSongs }} @Res.ItemsLoaded)</small>
 	</h4>
 	
 	<br />

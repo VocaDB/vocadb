@@ -117,16 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>作る</value>
+  </data>
+  <data name="ItemsLoaded" xml:space="preserve">
+    <value>ロードされています</value>
+  </data>
+  <data name="ListDescription" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="ListName" xml:space="preserve">
+    <value>名</value>
+  </data>
+  <data name="LoadMoreHelp" xml:space="preserve">
+    <value>(リストの残りをロードには、「もっと見る」をクリック。)</value>
+  </data>
+  <data name="MylistDescription" xml:space="preserve">
+    <value>リストのプロパティ</value>
+  </data>
+  <data name="NicoPV" xml:space="preserve">
+    <value>インポートしたPV</value>
+  </data>
   <data name="OnlyRanked" xml:space="preserve">
     <value>ランク付けされた曲だけ含む</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>順序</value>
   </data>
   <data name="Process" xml:space="preserve">
     <value>処理</value>
   </data>
+  <data name="SongsInList" xml:space="preserve">
+    <value>リストの曲</value>
+  </data>
+  <data name="SongsMissingError" xml:space="preserve">
+    <value>曲の一部はVocaDBに登録ありません。リストに含める前に、すべての曲を登録してください。</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>ニコニコ動画のマイリストかYouTubeのプレイリストから曲のリストを作る</value>
   </data>
+  <data name="TotalSongs" xml:space="preserve">
+    <value>曲の合計</value>
+  </data>
   <data name="UrlLabel" xml:space="preserve">
     <value>プレイリスト/マイリストURL</value>
+  </data>
+  <data name="VocaDbEntry" xml:space="preserve">
+    <value>VocaDBのページ</value>
   </data>
 </root>

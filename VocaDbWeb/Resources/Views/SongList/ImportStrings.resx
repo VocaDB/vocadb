@@ -123,6 +123,18 @@
   <data name="InvalidUrlError" xml:space="preserve">
     <value>Check that the URL is valid and points to a NicoNico MyList, RSS feed or Youtube playlist.</value>
   </data>
+  <data name="ItemsLoaded" xml:space="preserve">
+    <value>loaded</value>
+  </data>
+  <data name="ListDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ListName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="LoadMoreHelp" xml:space="preserve">
+    <value>(Click "Show more" to load more songs from the list.)</value>
+  </data>
   <data name="MylistDescription" xml:space="preserve">
     <value>List properties</value>
   </data>
@@ -155,6 +167,9 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Create song list from NicoNicoDouga MyList or Youtube playlist</value>
+  </data>
+  <data name="TotalSongs" xml:space="preserve">
+    <value>Total songs</value>
   </data>
   <data name="UnableToParse" xml:space="preserve">
     <value>Unable to parse list</value>

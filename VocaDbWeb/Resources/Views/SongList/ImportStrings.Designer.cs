@@ -79,6 +79,42 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to loaded.
+        /// </summary>
+        public static string ItemsLoaded {
+            get {
+                return ResourceManager.GetString("ItemsLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string ListDescription {
+            get {
+                return ResourceManager.GetString("ListDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string ListName {
+            get {
+                return ResourceManager.GetString("ListName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Click &quot;Show more&quot; to load more songs from the list.).
+        /// </summary>
+        public static string LoadMoreHelp {
+            get {
+                return ResourceManager.GetString("LoadMoreHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List properties.
         /// </summary>
         public static string MylistDescription {
@@ -174,6 +210,15 @@ namespace VocaDb.Web.Resources.Views.SongList {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total songs.
+        /// </summary>
+        public static string TotalSongs {
+            get {
+                return ResourceManager.GetString("TotalSongs", resourceCulture);
             }
         }
         
