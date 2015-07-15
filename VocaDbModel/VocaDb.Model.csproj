@@ -227,7 +227,6 @@
     <Compile Include="DataContracts\Songs\SongListBaseContract.cs" />
     <Compile Include="DataContracts\Songs\SongListContract.cs" />
     <Compile Include="DataContracts\Songs\SongListForEditContract.cs" />
-    <Compile Include="DataContracts\Songs\SongListsByCategoryContract.cs" />
     <Compile Include="DataContracts\Songs\SongMatchProperty.cs" />
     <Compile Include="DataContracts\Songs\ArchivedSongVersionContract.cs" />
     <Compile Include="DataContracts\Songs\ArchivedSongVersionDetailsContract.cs" />

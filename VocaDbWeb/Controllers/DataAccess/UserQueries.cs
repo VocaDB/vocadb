@@ -197,8 +197,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			details.AlbumCollectionCount = Math.Max(details.AlbumCollectionCount, details.FavoriteAlbums.Length);
 			details.ArtistCount = Math.Max(details.ArtistCount, details.FollowedArtists.Length);
 			details.FavoriteSongCount = Math.Max(details.FavoriteSongCount, details.LatestRatedSongs.Length);
+			var songListCount = session.Query<SongList>().Count(l => l.Author.Id == user.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing);
 
-			details.Power = UserHelper.GetPower(details, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount);
+			details.Power = UserHelper.GetPower(details, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount, songListCount);
 			details.Level = UserHelper.GetLevel(details.Power);
 
 			// If the user is viewing their own profile, check for possible producer account.

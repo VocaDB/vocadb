@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using VocaDb.Model.DataContracts.Users;
 
 namespace VocaDb.Model.Helpers {
@@ -15,10 +14,9 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static int GetPower(UserDetailsContract detailsContract, int ownedAlbumCount, int albumRatingCount) {
+		public static int GetPower(UserDetailsContract detailsContract, int ownedAlbumCount, int albumRatingCount, int songListCount) {
 
 			ParamIs.NotNull(() => detailsContract);
-			var songListCount = detailsContract.SongLists.Count();
 
 			var power =
 				detailsContract.EditCount / 4

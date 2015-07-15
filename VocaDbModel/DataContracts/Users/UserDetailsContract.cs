@@ -4,9 +4,7 @@ using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users {
@@ -27,9 +25,6 @@ namespace VocaDb.Model.DataContracts.Users {
 			LastLogin = user.LastLogin;
 			LastLoginAddress = user.Options.LastLoginAddress;
 			Location = user.Options.Location;
-			SongLists = user.SongLists
-				.Where(l => l.FeaturedCategory == SongListFeaturedCategory.Nothing)
-				.Select(l => new SongListContract(l, permissionContext)).ToArray();
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 
