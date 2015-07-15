@@ -335,8 +335,23 @@
 	@{ Html.RenderPartial("Partials/_RatedSongs"); }
 </div>
 
-<div data-bind="visible: view() == 'CustomLists'">
-	@SongHelpers.SongLists(Model.SongLists)
+<div data-bind="visible: view() == 'CustomLists', with: songLists">
+	
+	<div>
+		<span>Sort by</span>
+		<div class="btn-group">
+			<a data-bind="click: function() { sort('Date'); }, css: { active: sort() == 'Date' }" class="btn" href="#">
+				Date
+			</a>
+			<a data-bind="click: function() { sort('Name'); }, css: { active: sort() == 'Name' }" class="btn" href="#">
+				Name
+			</a>
+		</div>		
+	</div>
+
+	@SongHelpers.SongListsKnockout("lists")
+	
+	<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 
 	@if (ownProfile)
 	{
@@ -366,7 +381,9 @@
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 
-		$(document).ready(function() {
+		ko.punches.enableAll();
+
+		$(function() {
 
 			var cultureCode = '@UICulture';
 

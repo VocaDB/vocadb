@@ -848,14 +848,23 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public SongListForApiContract[] GetCustomSongLists(int userId, bool ssl, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
+		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, bool ssl, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
 			
-			return HandleQuery(ctx => ctx.Query<SongList>()
-				.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing)
-				.OrderBy(sort)
-				.Paged(paging)
-				.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, fields))
-				.ToArray());
+			return HandleQuery(ctx => { 
+				
+				var query = ctx.Query<SongList>()
+					.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing);
+
+				var items = query.OrderBy(sort)
+					.Paged(paging)
+					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, fields))
+					.ToArray();
+
+				var count = paging.GetTotalCount ? query.Count() : 0;
+
+				return new PartialFindResult<SongListForApiContract>(items, count);
+
+			});
 
 		}
 

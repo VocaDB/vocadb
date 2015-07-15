@@ -299,7 +299,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="fields">List of optional fields.</param>
 		/// <returns>List of song lists.</returns>
 		[Route("{userId:int}/songLists")]
-		public SongListForApiContract[] GetSongLists(
+		public PartialFindResult<SongListForApiContract> GetSongLists(
 			int userId, 
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,

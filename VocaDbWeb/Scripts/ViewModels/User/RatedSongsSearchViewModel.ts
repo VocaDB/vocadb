@@ -106,7 +106,7 @@ module vdb.viewModels.user {
 			if (this.isInit)
 				return;
 
-			this.userRepo.getSongLists(this.loggedUserId, { start: 0, maxEntries: 50, getTotalCount: false }, "Name", null, songLists => this.songLists(songLists));
+			this.userRepo.getSongLists(this.loggedUserId, { start: 0, maxEntries: 50, getTotalCount: false }, "Name", null, songLists => this.songLists(songLists.items));
 
 			this.resourceRepo.getList(this.cultureCode, ['songSortRuleNames', 'songTypeNames'], resources => {
 				this.resources(resources);

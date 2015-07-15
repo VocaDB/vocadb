@@ -52,6 +52,9 @@ module vdb.viewModels.user {
 				case "Comments":
 					this.initComments();
 					break;
+				case "CustomLists":
+					this.songLists.init();
+					break;
 				case "Songs":
 					this.ratedSongsViewModel.init();
 					break;
@@ -79,6 +82,8 @@ module vdb.viewModels.user {
 		public setCustomLists = () => this.setView("CustomLists");
 		public setViewSongs = () => this.setView("Songs");
 
+		public songLists: UserSongListsViewModel;
+
 		constructor(
 			private userId: number,
 			private loggedUserId: number,
@@ -94,6 +99,7 @@ module vdb.viewModels.user {
 			var canDeleteAllComments = (userId === loggedUserId);
 
 			this.comments = new EditableCommentsViewModel(userRepo, userId, loggedUserId, canDeleteAllComments, canEditAllComments, false, latestComments, true);
+			this.songLists = new UserSongListsViewModel(userId, userRepo);
 
 			window.onhashchange = () => {
 				if (window.location.hash && window.location.hash.length >= 1)
@@ -103,5 +109,52 @@ module vdb.viewModels.user {
         }
 
     }
+
+	export class UserSongListsViewModel {
+		
+		constructor(private userId, private userRepo: rep.UserRepository) {
+			
+			this.sort.subscribe(this.reset);
+
+		}
+
+		public hasMore = ko.observable(false);
+
+		public reset = () => {
+			this.start = 0;
+			this.lists([]);
+			this.loadMore();
+		}
+
+		public init = () => {
+			
+			if (this.isInit)
+				return;
+
+			this.loadMore();
+
+			this.isInit = true;
+
+		}
+
+		private isInit = false;
+
+		public lists = ko.observableArray<dc.SongListContract>([]);
+
+		public loadMore = () => {
+			
+			this.userRepo.getSongLists(this.userId, { start: this.start, maxEntries: 50, getTotalCount: true }, this.sort(), 'MainPicture', result => {
+				ko.utils.arrayPushAll(this.lists, result.items);
+				this.start += result.items.length;
+				this.hasMore(this.start < result.totalCount);
+			});
+
+		}
+
+		private start = 0;
+
+		public sort = ko.observable("Name");
+
+	}
 
 }

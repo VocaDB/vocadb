@@ -387,6 +387,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Helpers/HighchartsHelper.js",				
 				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
