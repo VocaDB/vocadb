@@ -156,4 +156,13 @@
   <data name="Someone" xml:space="preserve">
     <value>投稿者</value>
   </data>
+  <data name="EntryReleaseEvent" xml:space="preserve">
+    <value>イベント</value>
+  </data>
+  <data name="EntrySongList" xml:space="preserve">
+    <value>曲リスト</value>
+  </data>
+  <data name="EntryTag" xml:space="preserve">
+    <value>タグ</value>
+  </data>
 </root>

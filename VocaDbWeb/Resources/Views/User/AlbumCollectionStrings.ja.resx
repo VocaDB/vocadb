@@ -124,16 +124,16 @@
     <value>すべて</value>
   </data>
   <data name="MediaType" xml:space="preserve">
-    <value>メディアの種類</value>
+    <value>メディアタイプ</value>
   </data>
   <data name="Rating" xml:space="preserve">
     <value>評価</value>
   </data>
   <data name="ReleaseDate" xml:space="preserve">
-    <value>発売日時</value>
+    <value>公開日時</value>
   </data>
   <data name="ReleaseEvent" xml:space="preserve">
-    <value>発売イベント</value>
+    <value>公開イベント</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>コレクション状態</value>

@@ -148,7 +148,7 @@
     <value>曲タイプ</value>
   </data>
   <data name="SubmitSong" xml:space="preserve">
-    <value>曲の登録</value>
+    <value>曲を登録</value>
   </data>
   <data name="DuplicatePV" xml:space="preserve">
     <value>このPVはすでに登録されているようです。</value>

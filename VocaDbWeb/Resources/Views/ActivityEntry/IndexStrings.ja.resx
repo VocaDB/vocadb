@@ -117,4 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllActivity" xml:space="preserve">
+    <value>全ての活動</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>コメント</value>
+  </data>
+  <data name="FollowedArtists" xml:space="preserve">
+    <value>フォローしているアーティストのみ</value>
+  </data>
+  <data name="RecentActivity" xml:space="preserve">
+    <value>最近の活動</value>
+  </data>
+  <data name="ViewMore" xml:space="preserve">
+    <value>もっと見る</value>
+  </data>
 </root>

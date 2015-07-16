@@ -125,7 +125,7 @@
     
   </data>
   <data name="AddNewSong" xml:space="preserve">
-    <value>新曲'{0}'を追加</value>
+    <value>新曲「{0}」を追加</value>
   </data>
   <data name="AddToTracks" xml:space="preserve">
     <value>トラックに追加</value>

@@ -138,4 +138,10 @@
   <data name="ManageIPRules" xml:space="preserve">
     <value>IPルールの管理</value>
   </data>
+  <data name="ReadRecentComments" xml:space="preserve">
+    <value>最近のコメントを読む</value>
+  </data>
+  <data name="RemoveTagUsages" xml:space="preserve">
+    <value>タグ使用を削除</value>
+  </data>
 </root>

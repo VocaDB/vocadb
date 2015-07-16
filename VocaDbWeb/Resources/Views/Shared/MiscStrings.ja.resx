@@ -123,4 +123,13 @@
   <data name="Search" xml:space="preserve">
     <value>検索</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>詳細</value>
+  </data>
+  <data name="EventSeries" xml:space="preserve">
+    <value>イベントシリーズ</value>
+  </data>
+  <data name="FavoritedTimes" xml:space="preserve">
+    <value>回</value>
+  </data>
 </root>
