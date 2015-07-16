@@ -3256,6 +3256,7 @@
       <LastGenOutput>PagedListStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Other\PagedListStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
@@ -3294,6 +3295,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Album\DetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\EditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
@@ -3366,6 +3368,7 @@
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EventsBySeriesStrings.Designer.cs</LastGenOutput>
@@ -3374,6 +3377,7 @@
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\Event\FindStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FindStrings.Designer.cs</LastGenOutput>
@@ -3572,6 +3576,7 @@
       <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RankingsStrings.Designer.cs</LastGenOutput>
@@ -3616,6 +3621,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\User\FavoriteSongsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\FavoriteSongsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FavoriteSongsStrings.Designer.cs</LastGenOutput>
@@ -3623,6 +3629,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.fi.resx" />
+    <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ForgotPasswordStrings.Designer.cs</LastGenOutput>
