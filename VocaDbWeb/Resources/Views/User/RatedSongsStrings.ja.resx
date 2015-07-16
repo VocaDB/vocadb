@@ -126,4 +126,10 @@
   <data name="SongList" xml:space="preserve">
     <value>曲目リスト</value>
   </data>
+  <data name="ShowTags" xml:space="preserve">
+    <value>タグを表示</value>
+  </data>
+  <data name="GroupByRating" xml:space="preserve">
+    <value>評価数で分類</value>
+  </data>
 </root>
