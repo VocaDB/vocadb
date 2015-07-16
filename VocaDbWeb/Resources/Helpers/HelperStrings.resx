@@ -129,6 +129,12 @@
   <data name="EntryIsMissingInformation" xml:space="preserve">
     <value>This entry is missing the following information:</value>
   </data>
+  <data name="EntryValidationNoErrors" xml:space="preserve">
+    <value>This entry contains all the required information.</value>
+  </data>
+  <data name="EntryValidationNoErrorsDraft" xml:space="preserve">
+    <value>This entry contains all the required information to be marked as finalized (not draft).</value>
+  </data>
   <data name="EntryValidationWarningDetails" xml:space="preserve">
     <value>Details</value>
   </data>

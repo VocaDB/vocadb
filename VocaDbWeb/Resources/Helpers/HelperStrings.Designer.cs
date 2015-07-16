@@ -97,6 +97,24 @@ namespace HelperRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This entry contains all the required information..
+        /// </summary>
+        public static string EntryValidationNoErrors {
+            get {
+                return ResourceManager.GetString("EntryValidationNoErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This entry contains all the required information to be marked as finalized (not draft)..
+        /// </summary>
+        public static string EntryValidationNoErrorsDraft {
+            get {
+                return ResourceManager.GetString("EntryValidationNoErrorsDraft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string EntryValidationWarningDetails {

@@ -51,12 +51,12 @@
 	if (draft) {
 		<div class="alert alert-success alert-no-bottom-margin" data-bind="visible: !hasValidationErrors()" style="display: none;">
 			<span class="icon-line tickIcon"></span>
-			This entry contains all the required information to be marked as finalized (not draft).
+			@HelperRes.HelperStrings.EntryValidationNoErrorsDraft
 		</div>
 	} else {
 		<div class="alert alert-success alert-no-bottom-margin" data-bind="visible: !hasValidationErrors()" style="display: none;">
 			<span class="icon-line tickIcon"></span>
-			This entry contains all the required information.
+			@HelperRes.HelperStrings.EntryValidationNoErrors
 		</div>
 	}
 
