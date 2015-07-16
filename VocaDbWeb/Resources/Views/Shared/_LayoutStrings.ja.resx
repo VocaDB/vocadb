@@ -121,13 +121,13 @@
     <value>アカウント</value>
   </data>
   <data name="AddAlbum" xml:space="preserve">
-    <value>アルバムの登録</value>
+    <value>アルバムを登録</value>
   </data>
   <data name="AddArtist" xml:space="preserve">
-    <value>アーティストの追加</value>
+    <value>アーティストを追加</value>
   </data>
   <data name="AddSong" xml:space="preserve">
-    <value>曲の登録</value>
+    <value>曲を登録</value>
   </data>
   <data name="Blog" xml:space="preserve">
     <value>ブログ</value>
@@ -191,5 +191,8 @@
   </data>
   <data name="OtherCredit" xml:space="preserve">
     <value>ソースコードとその他の貢献者</value>
+  </data>
+  <data name="BackgroundCredit" xml:space="preserve">
+    <value>背景イラスト: {0}様</value>
   </data>
 </root>

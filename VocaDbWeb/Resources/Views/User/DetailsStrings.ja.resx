@@ -244,6 +244,6 @@
     <value>アーティスト証明ページ</value>
   </data>
   <data name="PossibleProducerMessage" xml:space="preserve">
-    <value>あなたはボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、{0}をご覧下さい。</value>
+    <value>ボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、{0}をご覧下さい。</value>
   </data>
 </root>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddToCustomList" xml:space="preserve">
-    <value>リストに追加</value>
+    <value>カスタムリストに追加</value>
   </data>
   <data name="AddToFavorites" xml:space="preserve">
     <value>お気に入りに追加</value>

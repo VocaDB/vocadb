@@ -130,7 +130,7 @@
     <value>名</value>
   </data>
   <data name="LoadMoreHelp" xml:space="preserve">
-    <value>(リストの残りをロードには、「もっと見る」をクリック。)</value>
+    <value>(リストの残りを読み込むには、「もっと見る」をクリック。)</value>
   </data>
   <data name="MylistDescription" xml:space="preserve">
     <value>リストのプロパティ</value>
@@ -151,7 +151,7 @@
     <value>リストの曲</value>
   </data>
   <data name="SongsMissingError" xml:space="preserve">
-    <value>曲の一部はVocaDBに登録ありません。リストに含める前に、すべての曲を登録してください。</value>
+    <value>曲の一部はVocaDBに登録されていません。リストに追加する前に、すべての曲を登録してください。</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>ニコニコ動画のマイリストかYouTubeのプレイリストから曲のリストを作る</value>
@@ -164,5 +164,11 @@
   </data>
   <data name="VocaDbEntry" xml:space="preserve">
     <value>VocaDBのページ</value>
+  </data>
+  <data name="SongMissing" xml:space="preserve">
+    <value>未登録</value>
+  </data>
+  <data name="UnableToParse" xml:space="preserve">
+    <value>リンクが処理できませんでした。</value>
   </data>
 </root>

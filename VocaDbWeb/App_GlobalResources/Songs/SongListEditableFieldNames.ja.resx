@@ -133,4 +133,10 @@
   <data name="Description" xml:space="preserve">
     <value>説明</value>
   </data>
+  <data name="EventDate" xml:space="preserve">
+    <value>イベント日</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
 </root>

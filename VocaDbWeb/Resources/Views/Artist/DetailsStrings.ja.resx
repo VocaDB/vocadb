@@ -172,10 +172,10 @@
     <value>人気の曲</value>
   </data>
   <data name="Unfollow" xml:space="preserve">
-    <value>フォローを解除</value>
+    <value>フォローを取り消す</value>
   </data>
   <data name="YouHaveRatedSongs" xml:space="preserve">
-    <value>貴方は{0}件このアーティストの曲を評価しました</value>
+    <value>このアーティストの作品を{0}作評価しています。</value>
   </data>
   <data name="AllAlbums" xml:space="preserve">
     <value>アルバム全て</value>

@@ -121,12 +121,12 @@
     <value>なし</value>
   </data>
   <data name="Ordered" xml:space="preserve">
-    <value>注文された</value>
+    <value>注文した</value>
   </data>
   <data name="Owned" xml:space="preserve">
-    <value>所有された</value>
+    <value>所有した</value>
   </data>
   <data name="Wishlisted" xml:space="preserve">
-    <value>欲しいものリストされた</value>
+    <value>ウィッシュリストに入れた</value>
   </data>
 </root>

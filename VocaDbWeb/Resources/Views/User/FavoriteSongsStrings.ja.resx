@@ -117,25 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Details" xml:space="preserve">
-    <value>詳細</value>
-  </data>
-  <data name="Playlist" xml:space="preserve">
-    <value>プレイリスト</value>
-  </data>
-  <data name="Preview" xml:space="preserve">
-    <value>プレビュ</value>
-  </data>
-  <data name="ShowTags" xml:space="preserve">
-    <value>タグを表示する</value>
-  </data>
-  <data name="SongList" xml:space="preserve">
-    <value>曲目リスト</value>
-  </data>
-  <data name="Songs" xml:space="preserve">
-    <value>曲</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>日付：{0}</value>
+  <data name="GroupByRating" xml:space="preserve">
+    <value>評価点数で仕分け</value>
   </data>
 </root>

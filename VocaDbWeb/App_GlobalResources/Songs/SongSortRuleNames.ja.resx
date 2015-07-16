@@ -132,4 +132,7 @@
   <data name="None" xml:space="preserve">
     <value>なし</value>
   </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>公開日</value>
+  </data>
 </root>

@@ -117,25 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Details" xml:space="preserve">
-    <value>詳細</value>
+  <data name="ColName" xml:space="preserve">
+    <value>タイトル</value>
   </data>
-  <data name="Playlist" xml:space="preserve">
-    <value>プレイリスト</value>
+  <data name="ColPublished" xml:space="preserve">
+    <value>公開日</value>
+  </data>
+  <data name="ColTags" xml:space="preserve">
+    <value>タグ</value>
+  </data>
+  <data name="DurationDaily" xml:space="preserve">
+    <value>24時間</value>
+  </data>
+  <data name="DurationMonthly" xml:space="preserve">
+    <value>月間</value>
+  </data>
+  <data name="DurationOverall" xml:space="preserve">
+    <value>合計</value>
+  </data>
+  <data name="DurationWeekly" xml:space="preserve">
+    <value>週間</value>
+  </data>
+  <data name="FilterCreateDate" xml:space="preserve">
+    <value>新しく追加</value>
+  </data>
+  <data name="FilterPublishDate" xml:space="preserve">
+    <value>新しく公開</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>VocaDB 曲ランキング</value>
   </data>
   <data name="Preview" xml:space="preserve">
-    <value>プレビュ</value>
+    <value>プレビュー</value>
   </data>
-  <data name="ShowTags" xml:space="preserve">
-    <value>タグを表示する</value>
+  <data name="TotalScore" xml:space="preserve">
+    <value>総合</value>
   </data>
-  <data name="SongList" xml:space="preserve">
-    <value>曲目リスト</value>
+  <data name="VocalistAll" xml:space="preserve">
+    <value>全ボーカリスト</value>
   </data>
-  <data name="Songs" xml:space="preserve">
-    <value>曲</value>
+  <data name="VocalistOther" xml:space="preserve">
+    <value>その他のボーカリスト</value>
   </data>
-  <data name="Date" xml:space="preserve">
-    <value>日付：{0}</value>
+  <data name="VocalistUTAU" xml:space="preserve">
+    <value>UTAUのみ</value>
+  </data>
+  <data name="VocalistVocaloid" xml:space="preserve">
+    <value>Vocaloidのみ</value>
+  </data>
+  <data name="ColRating" xml:space="preserve">
+    <value>評価点数</value>
+  </data>
+  <data name="NoSongs" xml:space="preserve">
+    <value>何もないです(´･д･｀)…</value>
   </data>
 </root>

@@ -158,4 +158,7 @@
     <value>オリジナルバージョン</value>
     <comment>of what?</comment>
   </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>公開日</value>
+  </data>
 </root>
