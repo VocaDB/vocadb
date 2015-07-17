@@ -387,7 +387,7 @@
 
 			var cultureCode = '@UICulture';
 
-			moment.locale(cultureCode);
+			moment.locale(@ToJS(Culture));
 
 			var languageSelection = '@UserContext.LanguagePreference';
 			var userId = @Model.Id;
