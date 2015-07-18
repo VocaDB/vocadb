@@ -277,11 +277,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 				if (durationHours.HasValue) {
 
-					var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);					
 
 					if (filterBy == TopSongsDateFilterType.PublishDate) {
+						var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value + 12);
 						query = query.Where(s => s.PublishDate.DateTime != null && s.PublishDate.DateTime.Value >= endDate);
 					} else {
+						var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);					
 						query = query.Where(s => s.CreateDate >= endDate);						
 					}
 						
