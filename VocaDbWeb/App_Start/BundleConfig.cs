@@ -65,6 +65,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/AdminRepository.js",
 				"~/Scripts/Repositories/SongRepository.js",
 				"~/Scripts/Repositories/ArtistRepository.js",
+				"~/Scripts/ViewModels/PagedItemsViewModel.js",
 				"~/Scripts/ViewModels/ServerSidePagingViewModel.js",
 				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
 				"~/Scripts/ViewModels/ReportEntryViewModel.js"

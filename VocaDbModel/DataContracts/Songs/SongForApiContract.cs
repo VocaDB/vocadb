@@ -69,7 +69,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				ThumbUrl = !string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
 
 			if (fields.HasFlag(SongOptionalFields.WebLinks))
-				WebLinks = song.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
+				WebLinks = song.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
@@ -122,7 +122,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				ThumbUrl = !string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
 
 			if (webLinks)
-				WebLinks = song.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
+				WebLinks = song.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
@@ -272,7 +272,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		/// List of external links. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public WebLinkForApiContract[] WebLinks { get; set; }
 
 	}
 

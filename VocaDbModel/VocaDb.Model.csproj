@@ -320,6 +320,7 @@
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionForApiContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionWithFieldsContract.cs" />
     <Compile Include="DataContracts\Versioning\ComparedVersionsContract.cs" />
+    <Compile Include="DataContracts\WebLinkForApiContract.cs" />
     <Compile Include="Domain\Activityfeed\ActivityEntry.cs" />
     <Compile Include="Domain\Activityfeed\GenericActivityEntry.cs" />
     <Compile Include="Domain\Albums\AlbumArchiveReason.cs" />

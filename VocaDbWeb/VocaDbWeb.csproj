@@ -2093,6 +2093,7 @@
     <TypeScriptCompile Include="Scripts\typings\qTip2\qtip.d.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Globalization\NamesEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\PagedItemsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVRatingButtonsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\UserRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\SongRepository.ts" />

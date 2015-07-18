@@ -65,7 +65,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			}
 
 			if (includedFields.HasFlag(ArtistOptionalFields.WebLinks))
-				WebLinks = artist.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
+				WebLinks = artist.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 
 		}
 
@@ -178,7 +178,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		/// List of external links. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public WebLinkForApiContract[] WebLinks { get; set; }
 
 	}
 

@@ -56,7 +56,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start {
 				new TagUsageForApiContract { Name = "electronic" }
 			},
 			WebLinks = new[] {
-				new ArchivedWebLinkContract(new WebLink("KarenT", "http://karent.jp/album/29", WebLinkCategory.Official))
+				new WebLinkForApiContract(new WebLink("KarenT", "http://karent.jp/album/29", WebLinkCategory.Official)), 
 			}
 	    };
 
@@ -79,7 +79,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start {
 				new TagUsageForApiContract { Name = "electronic", Count = 39 }
 			},
 			WebLinks = new[] {
-				new ArchivedWebLinkContract { Category = WebLinkCategory.Official, Url = "http://tripshots.net/", Description = "Official website" },
+				new WebLinkForApiContract { Category = WebLinkCategory.Official, Url = "http://tripshots.net/", Description = "Official website" },
 			}
 		};
 
