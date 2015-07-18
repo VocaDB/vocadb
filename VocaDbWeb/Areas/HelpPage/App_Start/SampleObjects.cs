@@ -56,7 +56,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start {
 				new TagUsageForApiContract { Name = "electronic" }
 			},
 			WebLinks = new[] {
-				new WebLinkContract("http://karent.jp/album/29", "KarenT", WebLinkCategory.Official)
+				new ArchivedWebLinkContract(new WebLink("KarenT", "http://karent.jp/album/29", WebLinkCategory.Official))
 			}
 	    };
 

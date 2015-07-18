@@ -87,7 +87,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 				Tags = album.Tags.Usages.Select(u => new TagUsageForApiContract(u)).ToArray();
 
 			if (webLinks)
-				WebLinks = album.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
+				WebLinks = album.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
@@ -226,7 +226,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// List of external links. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public WebLinkContract[] WebLinks { get; set; }
+		public ArchivedWebLinkContract[] WebLinks { get; set; }
 
 	}
 
