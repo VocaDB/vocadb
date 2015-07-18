@@ -37,7 +37,30 @@ module vdb.viewModels.songList {
 
 		}
 
-		public loadMore = (callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
+		public isFirstForYear = (current: dc.SongListContract, index: number) => {
+
+			if (this.sort() !== "Date")
+				return false;
+
+			if (!current.eventDate)
+				return false;
+
+			if (index === 0)
+				return true;
+
+			var prev = this.items()[index - 1];
+
+			if (!prev.eventDate)
+				return false;
+
+			var currentYear = moment(current.eventDate).year();
+			var prevYear = moment(prev.eventDate).year();
+
+			return currentYear !== prevYear;
+				
+		}
+
+		public loadMoreItems = (callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
 			this.listRepo.getFeatured(this.category, { start: this.start, maxEntries: 50, getTotalCount: true }, this.sort(), callback);
 		};
 

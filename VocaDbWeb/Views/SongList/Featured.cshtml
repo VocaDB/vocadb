@@ -39,7 +39,7 @@
 			</div>		
 		</div>
 
-		@SongHelpers.SongListsKnockout("items")
+		@SongHelpers.SongListsKnockout("items", groupByYear: true)
 
 		<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 

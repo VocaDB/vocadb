@@ -114,10 +114,17 @@
 			
 }
 
-@helper SongListsKnockout(string binding) {
+@helper SongListsKnockout(string binding, bool groupByYear = false) {
 	
 	<table class="table table-striped">
 		<tbody data-bind="foreach: @Html.Raw(binding)">
+			<!-- ko if: @(groupByYear ? "true" : "false") && $parent.isFirstForYear($data, $index()) -->
+			<tr>
+				<td colspan="2">
+					<h3 class="song-list-year">{{ $data.eventDate | formatDate: 'YYYY' }}</h3>
+				</td>
+			</tr>
+			<!-- /ko -->
 			<tr>
 				<td style="width: 75px">
 					<a href="#" data-bind="visible: $data.mainPicture && mainPicture.urlSmallThumb, attr: { href: vdb.utils.EntryUrlMapper.details('SongList', id) }">

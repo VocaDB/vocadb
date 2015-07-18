@@ -6,14 +6,10 @@ module vdb.viewModels {
 	// Generic viewmodel that supports simple paging by loading more items
 	export class PagedItemsViewModel<TModel> {
 		
-		private callLoadMore = () => {
-			this.loadMore(this.itemsLoaded);			
-		}
-
 		public clear = () => {
 			this.items([]);
 			this.start = 0;
-			this.callLoadMore();
+			this.loadMore();
 		}
 
 		public hasMore = ko.observable(false);
@@ -25,14 +21,18 @@ module vdb.viewModels {
 			if (this.isInit)
 				return;
 
-			this.callLoadMore();
+			this.loadMore();
 			this.isInit = true;
 
 		}
 
 		public items = ko.observableArray<TModel>([]);
 
-		public loadMore = (callback: (result: dc.PartialFindResultContract<TModel>) => void) => { };
+		public loadMore = () => {
+			this.loadMoreItems(this.itemsLoaded);
+		}
+
+		public loadMoreItems = (callback: (result: dc.PartialFindResultContract<TModel>) => void) => { };
 
 		public itemsLoaded = (result: dc.PartialFindResultContract<TModel>) => {
 			ko.utils.arrayPushAll(this.items, result.items);

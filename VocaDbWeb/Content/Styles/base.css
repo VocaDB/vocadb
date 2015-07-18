@@ -153,6 +153,9 @@ body {
 .song-pv-player {
   margin: 24px;
 }
+.song-list-year {
+  margin: 0;
+}
 .comment-with-entry {
   width: auto;
 }

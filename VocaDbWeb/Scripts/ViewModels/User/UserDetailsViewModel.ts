@@ -110,48 +110,46 @@ module vdb.viewModels.user {
 
     }
 
-	export class UserSongListsViewModel {
+	export class UserSongListsViewModel extends PagedItemsViewModel<dc.SongListContract> {
 		
 		constructor(private userId, private userRepo: rep.UserRepository) {
 			
-			this.sort.subscribe(this.reset);
+			super();
+
+			this.sort.subscribe(this.clear);
 
 		}
 
 		public hasMore = ko.observable(false);
 
-		public reset = () => {
-			this.start = 0;
-			this.lists([]);
-			this.loadMore();
+		public isFirstForYear = (current: dc.SongListContract, index: number) => {
+
+			if (this.sort() !== "Date")
+				return false;
+
+			if (!current.eventDate)
+				return false;
+
+			if (index === 0)
+				return true;
+
+			var prev = this.items()[index - 1];
+
+			if (!prev.eventDate)
+				return false;
+
+			var currentYear = moment(current.eventDate).year();
+			var prevYear = moment(prev.eventDate).year();
+
+			return currentYear !== prevYear;
+
 		}
 
-		public init = () => {
+		public loadMoreItems = (callback) => {
 			
-			if (this.isInit)
-				return;
-
-			this.loadMore();
-
-			this.isInit = true;
+			this.userRepo.getSongLists(this.userId, { start: this.start, maxEntries: 50, getTotalCount: true }, this.sort(), 'MainPicture', callback);
 
 		}
-
-		private isInit = false;
-
-		public lists = ko.observableArray<dc.SongListContract>([]);
-
-		public loadMore = () => {
-			
-			this.userRepo.getSongLists(this.userId, { start: this.start, maxEntries: 50, getTotalCount: true }, this.sort(), 'MainPicture', result => {
-				ko.utils.arrayPushAll(this.lists, result.items);
-				this.start += result.items.length;
-				this.hasMore(this.start < result.totalCount);
-			});
-
-		}
-
-		private start = 0;
 
 		public sort = ko.observable("Name");
 
