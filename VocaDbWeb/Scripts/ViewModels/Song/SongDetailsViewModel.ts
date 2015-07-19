@@ -16,9 +16,36 @@ module vdb.viewModels {
 
 		public comments: EditableCommentsViewModel;
 
+		private getOriginal = (linkedPages: string[]) => {
+			
+			if (linkedPages == null || !linkedPages.length)
+				return;
+
+			// http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
+			var regex = /(http:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
+			var page = linkedPages[0];
+
+			var match = regex.exec(page);
+
+			if (!match || match.length < 3)
+				return;
+
+			var siteUrl = match[1]; // either http://utaitedb.net/ or http://vocadb.net/
+			var id = parseInt(match[2]);
+
+			var repo = new rep.SongRepository(siteUrl, this.languagePreference);
+			repo.getOneWithComponents(id, 'Nothing', null, song => {
+				if (song.songType === "Original")
+					this.originalVersion({ entry: song, url: page });
+			});
+
+		}
+
         public getUsers: () => void;
 
 		public id: number;
+
+		public originalVersion: KnockoutObservable<SongLinkWithUrl>;
 
 		public reportViewModel: ReportEntryViewModel;
 
@@ -58,6 +85,7 @@ module vdb.viewModels {
 			data: SongDetailsAjax,
 			reportTypes: IEntryReportType[],
 			loggedUserId: number,
+			private languagePreference: models.globalization.ContentLanguagePreference,
 			canDeleteAllComments: boolean,
             ratingCallback: () => void) {
             
@@ -74,6 +102,8 @@ module vdb.viewModels {
                     this.usersPopupVisible(true);
                 });
             };
+
+			this.originalVersion = ko.observable({ entry: data.originalVersion });
 
 			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 
@@ -103,6 +133,10 @@ module vdb.viewModels {
             this.usersContent = ko.observable<string>();
 
             this.usersPopupVisible = ko.observable(false);
+
+			if (data.songType !== 'Original' && this.originalVersion().entry == null) {
+				this.getOriginal(data.linkedPages);
+			}
         
         }
     
@@ -191,9 +225,15 @@ module vdb.viewModels {
 
 		latestComments: dc.CommentContract[];
 
+		linkedPages?: string[];
+
+		originalVersion?: dc.SongApiContract;
+
 		selectedLyricsId: number;
 
 		selectedPvId: number;
+
+		songType: string;
 
 		tagUsages: dc.tags.TagUsageForApiContract[];
 
@@ -206,5 +246,13 @@ module vdb.viewModels {
         createNewList: string;
 
     }
+
+	export interface SongLinkWithUrl {
+		
+		entry: dc.SongApiContract;
+
+		url?: string;
+
+	}
 
 }

@@ -235,17 +235,14 @@
 			
 			@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
 			
-			@if (Model.OriginalVersion != null) {
-			<tr>
+			<tr data-bind="if: originalVersion().entry">
 				<td>@ViewRes.Song.DetailsStrings.OriginalVersion</td>
 				<td>
-					@SongHelpers.SongLink(Model.OriginalVersion)
-					@SongHelpers.SongTypeLabel(Model.OriginalVersion.SongType)
+					@SongHelpers.SongLinkKnockout("originalVersion().entry", "originalVersion().url")
 					<br />
-					@Model.OriginalVersion.ArtistString
+					<span data-bind="text: originalVersion().entry.artistString"></span>
 				</td>
 			</tr>
-   }
 
 			@if (Model.AlternateVersions.Any()) {
 			<tr>
@@ -435,7 +432,9 @@
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
 			jsonModel,
 			reportTypes,
-			@UserContext.LoggedUserId, canDeleteAllComments, vdb.ui.showThankYouForRatingMessage);
+			@UserContext.LoggedUserId, 
+			@LanguagePreferenceInt, 
+			canDeleteAllComments, vdb.ui.showThankYouForRatingMessage);
 		ko.applyBindings(viewModel);
 
 		viewModel.songListDialog.addedToList = function() { vdb.ui.showSuccessMessage(resources.addedToList); };

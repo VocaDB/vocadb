@@ -28,7 +28,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 			LyricsFromParents = song.LyricsFromParents.Select(l => new LyricsForSongContract(l)).ToArray();
 			Notes = song.Notes;
-			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? new SongContract(song.OriginalVersion, languagePreference) : null);
+			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.ThumbUrl) : null);
 
 			// TODO (PERF): this might be handled through a special query if the list is long
 			Pools =
@@ -106,7 +106,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public EnglishTranslatedString Notes { get; set; }
 
 		[DataMember]
-		public SongContract OriginalVersion { get; set; }
+		public SongForApiContract OriginalVersion { get; set; }
 
 		[DataMember]
 		public SongListBaseContract[] Pools { get; set; }

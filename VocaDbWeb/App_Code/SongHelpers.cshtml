@@ -79,6 +79,10 @@
 	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song, albumId), new { title = song.AdditionalNames })
 }
 
+@helper SongLinkKnockout(string binding, string extUrlBinding = null) {
+	<a href="#" data-bind="attr: { href: @extUrlBinding || vdb.utils.EntryUrlMapper.details_song(@binding) }, text: @(binding).name, css: { extLink: @extUrlBinding }"></a>
+}
+
 @helper SongGrid(IEnumerable<SongContract> songs, int columns,
 	bool displayType = false) {
 	

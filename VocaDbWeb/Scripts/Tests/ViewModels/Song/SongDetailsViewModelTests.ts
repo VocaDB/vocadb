@@ -13,7 +13,7 @@ module vdb.tests.viewModels {
     var rep: sup.FakeSongRepository;
     var userRep = new sup.FakeUserRepository();
     var res: vm.SongDetailsResources = { createNewList: "Create new list" };
-    var data: vm.SongDetailsAjax = { id: 39, selectedLyricsId: 0, selectedPvId: 0, tagUsages: [], userRating: "Nothing", latestComments: [] };
+    var data: vm.SongDetailsAjax = { id: 39, selectedLyricsId: 0, selectedPvId: 0, songType: 'Original', tagUsages: [], userRating: "Nothing", latestComments: [] };
 
     var target: vm.SongDetailsViewModel;
 
@@ -21,7 +21,7 @@ module vdb.tests.viewModels {
         setup: () => {
 			rep = new sup.FakeSongRepository();
             rep.songLists = [{ id: 1, name: "Favorite Mikus" }];
-            target = new vm.SongDetailsViewModel(rep, userRep, res, false, data, [], 0, false, null);
+            target = new vm.SongDetailsViewModel(rep, userRep, res, false, data, [], 0, vdb.models.globalization.ContentLanguagePreference.Default, false, null);
         }
     });
 

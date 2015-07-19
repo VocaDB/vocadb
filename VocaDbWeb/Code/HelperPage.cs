@@ -1,4 +1,5 @@
-﻿using System.Web.WebPages;
+﻿using System.Web;
+using System.Web.WebPages;
 using System.Web.Mvc;
 using VocaDb.Model.Service;
 using VocaDb.Web.Code.Markdown;
@@ -27,6 +28,10 @@ namespace VocaDb.Web.Code {
 			get {
 				return WebHelper.IsSSL(Request) ? "https" : "http";
 			}
+		}
+
+		public static IHtmlString ToJS(string str) {
+			return new HtmlString(JsonHelpers.Serialize(str));
 		}
 
 		public static UrlHelper Url {

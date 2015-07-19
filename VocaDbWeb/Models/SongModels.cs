@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -165,7 +166,7 @@ namespace VocaDb.Web.Models {
 		public PVContract[] OriginalPVs { get; set; }
 
 		[Display(Name = "Original version")]
-		public SongContract OriginalVersion { get; set; }
+		public SongForApiContract OriginalVersion { get; set; }
 
 		public PVContract[] OtherPVs { get; set; }
 
@@ -204,11 +205,16 @@ namespace VocaDb.Web.Models {
 			Id = model.Id;
 			UserRating = model.UserRating;
 			LatestComments = model.LatestComments;
+			OriginalVersion = model.OriginalVersion;
 
 			var preferredLyrics = LocalizedStringHelper.GetBestMatch(model.Lyrics, Login.Manager.LanguagePreference, model.DefaultLanguageSelection);
 			SelectedLyricsId = preferredLyrics != null ? preferredLyrics.Id : 0;
 			SelectedPvId = model.PrimaryPV != null ? model.PrimaryPV.Id : 0;
+			SongType = model.SongType;
 			TagUsages = model.Tags;
+
+			var domains = new[] { "http://vocadb.net/", "http://utaitedb.net/" };
+			LinkedPages = model.WebLinks.Where(w => domains.Any(d => w.Url.StartsWith(d, StringComparison.InvariantCultureIgnoreCase))).Select(w => w.Url).ToArray();
 
 		}
 
@@ -216,9 +222,16 @@ namespace VocaDb.Web.Models {
 
 		public CommentForApiContract[] LatestComments { get; set; }
 
+		public string[] LinkedPages { get; set; }
+
+		public SongForApiContract OriginalVersion { get; set; }
+
 		public int SelectedLyricsId { get; set; }
 
 		public int SelectedPvId { get; set; }
+
+		[JsonConverter(typeof(StringEnumConverter))]
+		public SongType SongType { get; set; }
 
 		public TagUsageForApiContract[] TagUsages { get; set; }
 
