@@ -84,6 +84,26 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets derived (alternate versions) of a song.
+		/// </summary>
+		/// <param name="id">Song Id (required).</param>
+		/// <param name="fields">
+		/// List of optional fields (optional). 
+		/// Possible values are Albums, Artists, Names, PVs, Tags, ThumbUrl, WebLinks.
+		/// </param>
+		/// <param name="lang">Content language preference (optional).</param>
+		/// <example>http://vocadb.net/api/songs/121/derived</example>
+		/// <returns>List of derived songs.</returns>
+		[System.Web.Http.Route("{id:int}/derived")]
+		public IEnumerable<SongForApiContract> GetDerived(int id, SongOptionalFields fields = SongOptionalFields.None, 
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+			
+			var songs = queries.HandleQuery(s => s.Load(id).AlternateVersions.Select(child => new SongForApiContract(child, null, lang, fields)).ToArray());
+			return songs;
+
+		}
+
 		[System.Web.Http.Route("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi=true)]
 		public SongForEditContract GetForEdit(int id) {
