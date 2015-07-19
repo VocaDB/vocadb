@@ -86,6 +86,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Gets derived (alternate versions) of a song.
+		/// Note: pagination and sorting might be added later.
 		/// </summary>
 		/// <param name="id">Song Id (required).</param>
 		/// <param name="fields">
