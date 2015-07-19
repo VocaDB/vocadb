@@ -80,7 +80,7 @@
 }
 
 @helper SongLinkKnockout(string binding, string extUrlBinding = null) {
-	<a href="#" data-bind="attr: { href: @extUrlBinding || vdb.utils.EntryUrlMapper.details_song(@binding) }, text: @(binding).name, css: { extLink: @extUrlBinding }"></a>
+	<a href="#" data-bind="attr: { href: @extUrlBinding || vdb.utils.EntryUrlMapper.details_song(@binding), title: @(binding).additionalNames }, text: @(binding).name, css: { extLink: @extUrlBinding }"></a>
 }
 
 @helper SongGrid(IEnumerable<SongContract> songs, int columns,
