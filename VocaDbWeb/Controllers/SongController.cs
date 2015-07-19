@@ -145,10 +145,11 @@ namespace VocaDb.Web.Controllers
 			var contract = Service.GetSongDetails(id, albumId, GetHostnameForValidHit());
 			var model = new SongDetails(contract);
 
+			var hasDescription = !model.Notes.IsEmpty;
 			var prop = PageProperties;
 			prop.GlobalSearchType = EntryType.Song;
 			prop.Title = model.Name;
-			prop.Description = !model.Notes.IsEmpty ? 
+			prop.Description = hasDescription ? 
 				markdownParser.GetPlainText(model.Notes.EnglishOrOriginal) :
 				new SongDescriptionGenerator().GenerateDescription(contract.Song, d => Translate.SongTypeNames.GetName(d, CultureInfo.InvariantCulture));
 			prop.OpenGraph.ShowTwitterCard = true;
@@ -168,7 +169,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
-			prop.OpenGraph.Title = string.Format("{0} ({1})", titleAndArtist, Translate.SongTypeNames[model.SongType]);
+			prop.OpenGraph.Title = hasDescription ? string.Format("{0} ({1})", titleAndArtist, Translate.SongTypeNames[model.SongType]) : model.Name;
 			prop.OpenGraph.Type = OpenGraphTypes.Song;
 
             return View(model);

@@ -296,6 +296,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
+		/// <param name="sort">Sort option for the song lists. Possible values are None, Name, Date. Default is Name.</param>
 		/// <param name="fields">List of optional fields.</param>
 		/// <returns>List of song lists.</returns>
 		[Route("{userId:int}/songLists")]
