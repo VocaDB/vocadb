@@ -128,7 +128,7 @@ module vdb.viewModels {
 			};
 
 			this.canHaveCircles = ko.computed(() => {
-				return this.artistType() != cls.artists.ArtistType.Label && this.artistType() != cls.artists.ArtistType.Circle;
+				return this.artistType() !== cls.artists.ArtistType.Label;
 			});
 
 			this.validationError_needReferences = ko.computed(() => (this.description.original() == null || this.description.original().length) == 0 && this.webLinks.webLinks().length == 0);
