@@ -21,3 +21,4 @@ VocaDbWeb/machinekey.config
 VocaDbWeb/smtp.config
 VocaDb.Migrations/obj/
 VocaDb.Migrations/bin/
+*.vspx

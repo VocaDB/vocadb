@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VocaDb.Web</RootNamespace>
     <AssemblyName>VocaDb.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <FileUpgradeFlags>
@@ -225,6 +225,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumArchiveReasonNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\AlbumArchiveReasonNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumArchiveReasonNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\AlbumCollectionStatusNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -234,6 +239,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumEditableFieldNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\AlbumEditableFieldNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumEditableFieldNames.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\AlbumMediaTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
@@ -255,15 +265,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DiscTypeDescriptions.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Albums\DiscTypeDescriptions.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DiscTypeDescriptions.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ArtistArchiveReasonNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistArchiveReasonNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ArtistArchiveReasonNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistArchiveReasonNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ArtistEditableFieldNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistEditableFieldNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ArtistEditableFieldNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistEditableFieldNames.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ArtistRoleNames.de.designer.cs">
       <AutoGen>True</AutoGen>
@@ -284,6 +309,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonMessages.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\CommonMessages.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonMessages.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ContentLanguageSelectionNames.de.designer.cs">
       <AutoGen>True</AutoGen>
@@ -325,6 +355,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PVTypeDescriptions.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\PVTypeDescriptions.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PVTypeDescriptions.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\PVTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -335,15 +370,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReleaseEventEditableFieldNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ReleaseEventEditableFieldNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReleaseEventEditableFieldNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\SongArchiveReasonNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongArchiveReasonNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SongArchiveReasonNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongArchiveReasonNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\SongEditableFieldNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongEditableFieldNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SongEditableFieldNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongEditableFieldNames.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\SongListFeaturedCategoryNames.de.designer.cs">
       <AutoGen>True</AutoGen>
@@ -354,6 +404,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongListEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Songs\SongListEditableFieldNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongListEditableFieldNames.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Songs\SongSortRuleNames.de.designer.cs">
       <AutoGen>True</AutoGen>
@@ -380,10 +435,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TagEditableFieldNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\TagEditableFieldNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TagEditableFieldNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\UserEmailOptionsNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UserEmailOptionsNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserEmailOptionsNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserEmailOptionsNames.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\UserGroupNames.de.designer.cs">
       <AutoGen>True</AutoGen>
