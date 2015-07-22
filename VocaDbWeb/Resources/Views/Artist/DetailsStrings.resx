@@ -129,9 +129,6 @@
   <data name="ArtistPicture" xml:space="preserve">
     <value>Artist picture</value>
   </data>
-  <data name="AuthoredBy" xml:space="preserve">
-    <value>VocaDB account</value>
-  </data>
   <data name="AverageAlbumRating" xml:space="preserve">
     <value>(average album rating is {0}).</value>
   </data>

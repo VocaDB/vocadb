@@ -129,9 +129,6 @@
   <data name="ArtistPicture" xml:space="preserve">
     <value>Artistin kuva</value>
   </data>
-  <data name="AuthoredBy" xml:space="preserve">
-    <value>VocaDB-käyttäjä</value>
-  </data>
   <data name="BaseVoicebank" xml:space="preserve">
     <value>Perustuu</value>
   </data>

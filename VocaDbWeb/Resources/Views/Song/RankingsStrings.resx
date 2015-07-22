@@ -150,9 +150,6 @@
   <data name="NoSongs" xml:space="preserve">
     <value>No songs found :(</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>VocaDB song rankings</value>
-  </data>
   <data name="Preview" xml:space="preserve">
     <value>Preview</value>
   </data>

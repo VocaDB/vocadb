@@ -120,4 +120,7 @@
   <data name="NewSongInfo" xml:space="preserve">
     <value>Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.</value>
   </data>
+  <data name="RankingsTitle" xml:space="preserve">
+    <value>UtaiteDB song rankings</value>
+  </data>
 </root>

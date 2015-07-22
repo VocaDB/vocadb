@@ -97,15 +97,6 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VocaDB account.
-        /// </summary>
-        public static string AuthoredBy {
-            get {
-                return ResourceManager.GetString("AuthoredBy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to (average album rating is {0})..
         /// </summary>
         public static string AverageAlbumRating {

@@ -120,9 +120,6 @@
   <data name="AllSongs" xml:space="preserve">
     <value>曲全て</value>
   </data>
-  <data name="AuthoredBy" xml:space="preserve">
-    <value>VocaDBアカウント</value>
-  </data>
   <data name="AverageAlbumRating" xml:space="preserve">
     <value>(平均アルバム評価{0}).</value>
   </data>

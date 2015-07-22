@@ -8,12 +8,11 @@ namespace VocaDb.Model.Service.BrandableStrings.Collections {
 			ResourceManager = resourceMan;
 		}
 
-		public ResourceManager ResourceManager { get; private set; }
+		public ResourceManager ResourceManager { get; }
 
-		public string NewArtistExternalLink {
-			get { return ResourceManager.GetString("NewArtistExternalLink"); }
-		}
+		public string AuthoredBy => ResourceManager.GetString("AuthoredBy");
 
+		public string NewArtistExternalLink => ResourceManager.GetString("NewArtistExternalLink");
 	}
 
 }

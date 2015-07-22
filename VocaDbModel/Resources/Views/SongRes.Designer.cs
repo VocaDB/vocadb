@@ -69,5 +69,14 @@ namespace VocaDb.Model.Resources.Views {
                 return ResourceManager.GetString("NewSongInfo", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VocaDB song rankings.
+        /// </summary>
+        internal static string RankingsTitle {
+            get {
+                return ResourceManager.GetString("RankingsTitle", resourceCulture);
+            }
+        }
     }
 }

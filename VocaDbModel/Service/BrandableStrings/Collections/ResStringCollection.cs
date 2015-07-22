@@ -8,7 +8,7 @@ namespace VocaDb.Model.Service.BrandableStrings.Collections {
 			ResourceManager = resourceManager;
 		}
 
-		public ResourceManager ResourceManager { get; private set; }
+		public ResourceManager ResourceManager { get; }
 
 		protected string GetString(string name) {
 			return ResourceManager.GetString(name);

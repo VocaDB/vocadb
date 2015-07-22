@@ -68,5 +68,14 @@ namespace VocaDb.UtaiteDb.Resources.ViewRes {
                 return ResourceManager.GetString("NewSongInfo", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UtaiteDB song rankings.
+        /// </summary>
+        internal static string RankingsTitle {
+            get {
+                return ResourceManager.GetString("RankingsTitle", resourceCulture);
+            }
+        }
     }
 }

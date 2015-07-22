@@ -61,6 +61,15 @@ namespace VocaDb.UtaiteDb.Resources.ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UtaiteDB account.
+        /// </summary>
+        internal static string AuthoredBy {
+            get {
+                return ResourceManager.GetString("AuthoredBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External link (to artist&apos;s website, Utaite wiki, NND MyList etc.).
         /// </summary>
         internal static string NewArtistExternalLink {

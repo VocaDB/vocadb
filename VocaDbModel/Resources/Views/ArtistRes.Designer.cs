@@ -61,6 +61,15 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VocaDB account.
+        /// </summary>
+        internal static string AuthoredBy {
+            get {
+                return ResourceManager.GetString("AuthoredBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External link (to artist&apos;s website, Hatsune Miku wiki, NND MyList etc.).
         /// </summary>
         internal static string NewArtistExternalLink {

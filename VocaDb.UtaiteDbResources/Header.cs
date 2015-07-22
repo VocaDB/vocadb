@@ -6,35 +6,15 @@ namespace VocaDb.UtaiteDb.Resources {
 
 	public class Header : IBrandedStringsAssemblyHeader {
 
-		public AlbumStrings Album {
-			get {
-				return new AlbumStrings(AlbumRes.ResourceManager);
-			}
-		}
+		public AlbumStrings Album => new AlbumStrings(AlbumRes.ResourceManager);
 
-		public ArtistStrings Artist {
-			get {
-				return new ArtistStrings(ArtistRes.ResourceManager);
-			}
-		}
+		public ArtistStrings Artist => new ArtistStrings(ArtistRes.ResourceManager);
 
-		public HomeStrings Home {
-			get {
-				return new HomeStrings(HomeRes.ResourceManager);
-			}
-		}
+		public HomeStrings Home => new HomeStrings(HomeRes.ResourceManager);
 
-		public LayoutStrings Layout {
-			get {
-				return new LayoutStrings(LayoutRes.ResourceManager);
-			}
-		}
+		public LayoutStrings Layout => new LayoutStrings(LayoutRes.ResourceManager);
 
-		public SongStrings Song {
-			get {
-				return new SongStrings(SongRes.ResourceManager);
-			}
-		}
+		public SongStrings Song => new SongStrings(SongRes.ResourceManager);
 
 	}
 }
