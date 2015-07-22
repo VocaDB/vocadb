@@ -3,7 +3,18 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
-	[Migration(201507121800)]
+    [Migration(201507221700)]
+    public class AllowCustomTracks : AutoReversingMigration {
+
+        public override void Up() {
+
+			Alter.Column("[Song]").OnTable(TableNames.SongsInAlbums).AsInt32().Nullable();
+
+        }
+
+    }
+
+    [Migration(201507121800)]
 	public class EventDateToSongLists : AutoReversingMigration {
 
 		public override void Up() {

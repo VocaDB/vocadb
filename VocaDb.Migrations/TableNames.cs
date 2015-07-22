@@ -15,7 +15,8 @@
 		public const string EntryReports = "EntryReports";
 		public const string FavoriteSongsForUsers = "FavoriteSongsForUsers";
 		public const string PVsForSongs = "PVsForSongs";
-		public const string SongLists = "SongLists";
+		public const string SongsInAlbums = "SongsInAlbums";
+        public const string SongLists = "SongLists";
 		public const string Songs = "Songs";
 		public const string Tags = "Tags";
 		public const string UserOptions = "UserOptions";
