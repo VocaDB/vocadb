@@ -1,13 +1,14 @@
 ﻿/* Validation
 -----------------------------------------------------------*/
+
 .field-validation-error {
-  color: #ff0000;
+  color: red;
 }
 .field-validation-valid {
   display: none;
 }
 .input-validation-error {
-  border: 1px solid #ff0000;
+  border: 1px solid red;
   background-color: #ffeeee;
 }
 .validation-summary-errors {
@@ -116,10 +117,10 @@ body {
   margin-top: 1px;
   margin-left: 10px;
   background-color: #081a21;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2c8fb2), to(#216b88));
-  background-image: -webkit-linear-gradient(top, #2c8fb2, #216b88);
-  background-image: -o-linear-gradient(top, #2c8fb2, #216b88);
-  background-image: -moz-linear-gradient(center top, #2c8fb2, #216b88);
+  background-image: - webkit-gradient(linear, 0 0, 0 100%, from(#2c8fb2), to(#216b88));
+  background-image: - webkit-linear-gradient(top, #2c8fb2, #216b88);
+  background-image: - o-linear-gradient(top, #2c8fb2, #216b88);
+  background-image: - moz-linear-gradient(center top, #2c8fb2, #216b88);
   background-image: linear-gradient(top, #2c8fb2, #216b88);
 }
 .vdb .navbar-inverse .btn-navbar:hover {
@@ -129,6 +130,10 @@ body {
   .nav-collapse {
     display: none;
   }
+}
+.vdb .page-title {
+  margin-bottom: 10px;
+  font-size: 24px;
 }
 .entry-field-label-col {
   min-width: 100px;

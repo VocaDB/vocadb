@@ -528,10 +528,6 @@ input + .textLink {
 	cursor: help;
 }
 
-.pageTitle {
-	margin-bottom: 10px;
-}
-
 div.activityEntry p {
 	margin: 4px;	
 }

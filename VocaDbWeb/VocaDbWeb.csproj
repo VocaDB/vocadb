@@ -1726,6 +1726,7 @@
     <Content Include="Content\Styles\variables.less" />
     <Content Include="Content\Styles\userpage.less" />
     <Content Include="Content\Styles\embedSong.less" />
+    <None Include="compilerconfig.json" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

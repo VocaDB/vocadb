@@ -69,11 +69,11 @@
 	   }
                                         
 							@if (!string.IsNullOrEmpty(PageProperties.Title)) {
-								<h2 class="pageTitle">@PageProperties.Title
+								<h1 class="page-title">@PageProperties.Title
 								@if (!string.IsNullOrEmpty(ViewBag.Subtitle)) {
 									<small>&nbsp;@ViewBag.Subtitle</small>
 		}
-								</h2>
+								</h1>
 	   }
                     
                             @if (Login.Manager.LockdownEnabled) {

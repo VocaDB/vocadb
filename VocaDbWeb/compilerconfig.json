@@ -1,0 +1,12 @@
+﻿[
+  {
+    "outputFile": "Content/Styles/base.css",
+    "inputFile": "Content/Styles/base.less",
+    "minify": {
+      "enabled": false
+    },
+    "includeInProject": true,
+    "sourceMap": false,
+    "options": { "strictMath": true }
+  }
+]
