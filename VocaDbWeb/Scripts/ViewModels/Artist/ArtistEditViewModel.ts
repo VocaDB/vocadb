@@ -123,7 +123,7 @@ module vdb.viewModels {
     
 			this.baseVoicebankSearchParams = {
 				acceptSelection: this.baseVoicebank.id,
-				extraQueryParams: { artistTypes: "Vocaloid,UTAU,OtherVocalist,OtherVoiceSynthesizer,Unknown" },
+				extraQueryParams: { artistTypes: "Vocaloid,UTAU,CeVIO,OtherVocalist,OtherVoiceSynthesizer,Unknown" },
 				ignoreId: this.id,
 			};
 

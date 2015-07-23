@@ -95,6 +95,7 @@ namespace VocaDb.Model.Helpers {
 			{ ArtistType.Unknown, ArtistCategories.Other },
 			{ ArtistType.Utaite, ArtistCategories.Vocalist },
 			{ ArtistType.UTAU, ArtistCategories.Vocalist },
+			{ ArtistType.CeVIO, ArtistCategories.Vocalist },
 			{ ArtistType.Vocaloid, ArtistCategories.Vocalist },
 		};
 
@@ -112,11 +113,7 @@ namespace VocaDb.Model.Helpers {
 		/// The list should be in the correct order.
 		/// The Default role is excluded because it's not a valid selection.
 		/// </summary>
-		public static ArtistRoles[] ValidRoles {
-			get {
-				return AppConfig.ArtistRoles;
-			}
-		}
+		public static ArtistRoles[] ValidRoles => AppConfig.ArtistRoles;
 
 		//public static readonly ArtistType[] ProducerTypes = new[] {
 		//	ArtistType.Producer, ArtistType.Circle, ArtistType.OtherGroup, ArtistType.Animator
@@ -125,13 +122,14 @@ namespace VocaDb.Model.Helpers {
 		/// <summary>
 		/// Artists allowed for a song.
 		/// </summary>
-		public static readonly ArtistType[] SongArtistTypes = new[] {
+		public static readonly ArtistType[] SongArtistTypes = {
 			ArtistType.Unknown, ArtistType.OtherGroup, ArtistType.OtherVocalist,
-			ArtistType.Producer, ArtistType.UTAU, ArtistType.Vocaloid, ArtistType.Animator, ArtistType.Illustrator, ArtistType.Lyricist, ArtistType.OtherIndividual
+			ArtistType.Producer, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.Vocaloid, ArtistType.Animator, ArtistType.Illustrator,
+			ArtistType.Lyricist, ArtistType.OtherIndividual
 		};
 
-		public static readonly ArtistType[] VocalistTypes = new[] {
-			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite
+		public static readonly ArtistType[] VocalistTypes = {
+			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite
 		};
 
 		public static string[] GetArtistNames(IEnumerable<IArtistWithSupport> artists, ContentLanguagePreference languagePreference) {

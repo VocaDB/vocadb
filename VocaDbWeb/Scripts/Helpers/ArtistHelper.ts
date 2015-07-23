@@ -17,6 +17,11 @@ module vdb.helpers {
 			ArtistType.Utaite, ArtistType.Band, ArtistType.Unknown
 		];
 
+		private static vocalistTypes = [
+			ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite,
+			ArtistType.UTAU, ArtistType.Vocaloid, ArtistType.CeVIO
+		];
+
 		public static canHaveChildVoicebanks(at: cls.artists.ArtistType) {
 
 			if (at === null)
@@ -90,11 +95,7 @@ module vdb.helpers {
 
 		static isVocalistType(artistType: cls.artists.ArtistType) {
 
-			return artistType == ArtistType.OtherVocalist ||
-				artistType == ArtistType.OtherVoiceSynthesizer ||
-				artistType == ArtistType.Utaite ||
-				artistType == ArtistType.UTAU ||
-				artistType == ArtistType.Vocaloid;
+			return _.contains(ArtistHelper.vocalistTypes, artistType);
 
 		}
 

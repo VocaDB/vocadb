@@ -30,6 +30,8 @@ module vdb.models.artists {
 
 		UTAU,
 
+		CeVIO,
+
 		OtherVoiceSynthesizer,
 
 		OtherVocalist,

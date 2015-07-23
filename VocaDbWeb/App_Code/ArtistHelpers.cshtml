@@ -11,25 +11,30 @@
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper ArtistTypeLabel(ArtistType artistType) {
-	switch (artistType) {
-		case ArtistType.Vocaloid:
-			<span class="label label-info" title="@Translate.ArtistTypeName(artistType)">V</span>
+	var title = Translate.ArtistTypeName(artistType);
+    switch (artistType) {
+	case ArtistType.Vocaloid:
+            <span class="label label-info" title="@title">V</span>
 			break;
 
 		case ArtistType.UTAU:
-			<span class="label label-important" title="@Translate.ArtistTypeName(artistType)">U</span>
+			<span class="label label-important" title="@title">U</span>
+			break;		
+
+		case ArtistType.CeVIO:
+			<span class="label label-important" title="@title">C</span>
 			break;		
 				
 		case ArtistType.OtherVoiceSynthesizer:
-			<span class="label label-inverse" title="@Translate.ArtistTypeName(artistType)">O</span>
+			<span class="label label-inverse" title="@title">O</span>
 			break;		
 					
 		case ArtistType.Utaite:
-			<span class="label label-info" title="@Translate.ArtistTypeName(artistType)">U</span>
+			<span class="label label-info" title="@title">U</span>
 			break;
 			
 		case ArtistType.OtherVocalist:
-			<span class="label" title="@Translate.ArtistTypeName(artistType)">O</span>
+			<span class="label" title="@title">O</span>
 			break;		
 	}
 }

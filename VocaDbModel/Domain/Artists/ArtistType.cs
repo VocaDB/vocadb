@@ -38,6 +38,8 @@ namespace VocaDb.Model.Domain.Artists {
 
 		UTAU,
 
+		CeVIO,
+
 		OtherVoiceSynthesizer,
 
 		OtherVocalist,
@@ -77,17 +79,19 @@ namespace VocaDb.Model.Domain.Artists {
 
 		UTAU = 128,
 
-		OtherVoiceSynthesizer = 256,
+		CeVIO = 256,
 
-		OtherVocalist = 512,
+		OtherVoiceSynthesizer = 512,
 
-		OtherGroup = 1024,
+		OtherVocalist = 1024,
 
-		OtherIndividual = 2048,
+		OtherGroup = 2048,
 
-		Utaite = 4096,
+		OtherIndividual = 4096,
 
-		Band = 8192
+		Utaite = 8192,
+
+		Band = 16384
 
 	}
 

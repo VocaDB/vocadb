@@ -79,6 +79,15 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CeVIO.
+        /// </summary>
+        public static string CeVIO {
+            get {
+                return ResourceManager.GetString("CeVIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Circle.
         /// </summary>
         public static string Circle {
