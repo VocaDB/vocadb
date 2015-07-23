@@ -52,7 +52,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				}
 
 				var video = result.Items.First();
-				var thumbUrl = video.Snippet.Thumbnails.Default != null ? video.Snippet.Thumbnails.Default.Url : string.Empty;
+				var thumbUrl = video.Snippet.Thumbnails.Default__ != null ? video.Snippet.Thumbnails.Default__.Url : string.Empty;
 				var length = GetLength(video);
 				var author = video.Snippet.ChannelTitle;
 				var publishDate = GetPublishDate(video);
