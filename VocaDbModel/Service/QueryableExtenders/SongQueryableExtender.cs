@@ -247,7 +247,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case SongVocalistSelection.UTAU:
 					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.UTAU));
 				case SongVocalistSelection.CeVIO:
-					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer));
+					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer)));
 			}
 
 			return query;
