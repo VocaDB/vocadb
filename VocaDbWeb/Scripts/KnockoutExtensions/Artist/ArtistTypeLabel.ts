@@ -20,6 +20,11 @@ var artistTypeInfos = {
 		removeClasses: "label-info label-inverse",
 		content: "U"
 	},
+	CeVIO: {
+		addClass: "label-success",
+		removeClasses: "label-info label-inverse label-important",
+		content: "C"
+	},
 	OtherVoiceSynthesizer: {
 		addClass: "label-inverse",
 		removeClasses: "label-info label-important",
