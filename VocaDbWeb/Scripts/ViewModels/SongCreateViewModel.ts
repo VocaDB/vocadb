@@ -108,7 +108,6 @@ module vdb.viewModels {
             this.artistSearchParams = {
                 allowCreateNew: false,
                 acceptSelection: this.addArtist,
-                extraQueryParams: { artistTypes: "Vocaloid,UTAU,OtherVocalist,OtherVoiceSynthesizer,Producer,Circle,OtherGroup,Unknown,Animator,Illustrator,Lyricist,OtherIndividual,Utaite,Band" },
                 height: 300
             };
 
