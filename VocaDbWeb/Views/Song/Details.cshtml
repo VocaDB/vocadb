@@ -239,6 +239,7 @@
 				<td>@ViewRes.Song.DetailsStrings.OriginalVersion</td>
 				<td>
 					@SongHelpers.SongLinkKnockout("originalVersion().entry", "originalVersion().url")
+					<span data-bind="songTypeLabel: originalVersion().entry.songType"></span>
 					<br />
 					<span data-bind="text: originalVersion().entry.artistString"></span>
 				</td>
