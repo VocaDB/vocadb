@@ -20,11 +20,7 @@ namespace VocaDb.Model.Utils {
 			return VocaUriBuilder.Absolute(relative, ssl);
 		}
 
-		public SearchRouteParamsFactory Search {
-			get {
-				return new SearchRouteParamsFactory();
-			}
-		}
+		public SearchRouteParamsFactory Search => new SearchRouteParamsFactory();
 
 	}
 

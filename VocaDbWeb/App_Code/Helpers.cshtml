@@ -13,7 +13,7 @@
 @functions {
 
 	static string GetAbsoluteUrl(string relative) {
-		return AppConfig.HostAddress + relative;
+		return UrlMapper.FullAbsolute(relative);
 	}
 
 }
