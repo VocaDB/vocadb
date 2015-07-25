@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -34,6 +35,10 @@ namespace VocaDb.Tests.Helpers {
 
 		private TranslatedStringWithDefault CreateString(string uniform) {
 			return CreateString(TranslatedString.Create(uniform));
+		}
+
+		private string GetNames(params IArtistWithSupport[] artists) {
+			return string.Join(", ", artists.Select(a => a.Artist.DefaultName));
 		}
 
 		[TestInitialize]
@@ -102,7 +107,7 @@ namespace VocaDb.Tests.Helpers {
 
 			var result = ArtistHelper.GetArtistString(new[] { producer, producer2 }, false);
 
-			Assert.AreEqual(CreateString(TranslatedString.Create(producer.Artist.DefaultName + ", " + producer2.Artist.DefaultName)), result, "artist string has both producers");
+			Assert.AreEqual(CreateString(GetNames(producer, producer2)), result, "artist string has both producers");
 
 		}
 
@@ -112,6 +117,16 @@ namespace VocaDb.Tests.Helpers {
 			var result = ArtistHelper.GetArtistString(new[] { producer, vocalist }, false);
 
 			Assert.AreEqual(CreateString(TranslatedString.Create(string.Format("{0} feat. {1}", producer.Artist.DefaultName, vocalist.Artist.DefaultName))), result, "artist string has producer and vocalist name");
+
+		}
+
+		[TestMethod]
+		public void GetArtistString_MultipleProducersAndTwoVocalists() {
+
+			// 3 producers and 2 vocalists
+			var result = ArtistHelper.GetArtistString(new[] { producer, producer2, producer3, vocalist, vocalist2 }, false);
+
+			Assert.AreEqual(string.Format("{0} feat. {1}", GetNames(producer, producer2, producer3), GetNames(vocalist, vocalist2)), result.Default, "artist string has multiple producers and vocalists");
 
 		}
 
@@ -127,7 +142,7 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void GetArtistString_VariousArtists() {
 
-			// 3 producers and 3 vocalists
+			// 4 producers and 2 vocalists, various artists because of >= 4 producers
 			var result = ArtistHelper.GetArtistString(new[] { producer, producer2, producer3, producer4, vocalist, vocalist2 }, false);
 
 			Assert.AreEqual(CreateString(ArtistHelper.VariousArtists), result, "artist string is various artists");

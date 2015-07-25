@@ -151,7 +151,7 @@ namespace VocaDb.Model.Helpers {
 			var performerNames = performers.Select(GetTranslatedName);
 			var producerNames =	producers.Select(GetTranslatedName);
 
-			if (producers.Any() && performers.Any() && producers.Length + performers.Length >= 5) {
+			if (producers.Any() && performers.Length > 2 && producers.Length + performers.Length >= 5) {
 
 				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. various",
 					string.Join(", ", producerNames.Select(p => p[lang]))));
