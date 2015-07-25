@@ -73,13 +73,6 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		/// <summary>
-		/// Artist types able to work as groups/circles for an artist.
-		/// </summary>
-		public static readonly ArtistType[] ArtistGroupTypes = new[] {
-			ArtistType.Circle, ArtistType.Label, ArtistType.OtherGroup
-		};
-
 		public static readonly Dictionary<ArtistType, ArtistCategories> CategoriesForTypes = new Dictionary<ArtistType, ArtistCategories> {
 			{ ArtistType.Animator, ArtistCategories.Animator },
 			{ ArtistType.Circle, ArtistCategories.Circle },
@@ -152,13 +145,13 @@ namespace VocaDb.Model.Helpers {
 
 			const string various = VariousArtists;
 
-			if (producers.Count() >= 4 || (!producers.Any() && performers.Count() >= 4))
+			if (producers.Length >= 4 || (!producers.Any() && performers.Length >= 4))
 				return new TranslatedStringWithDefault(various, various, various, various);
 
 			var performerNames = performers.Select(GetTranslatedName);
 			var producerNames =	producers.Select(GetTranslatedName);
 
-			if (producers.Any() && performers.Any() && producers.Count() + performers.Count() >= 5) {
+			if (producers.Any() && performers.Any() && producers.Length + performers.Length >= 5) {
 
 				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. various",
 					string.Join(", ", producerNames.Select(p => p[lang]))));
