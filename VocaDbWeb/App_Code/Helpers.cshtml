@@ -94,11 +94,11 @@
 			var apParam = (autoplay ? 1 : 0);
 			var apiParam = (enableApi ? 1 : 0);
 			var originParam = (enableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress() : string.Empty);
-			<iframe id="@id" width="@widthStr" height="@heightStr" src="http://www.youtube.com/embed/@(pv.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
+			<iframe id="@id" width="@widthStr" height="@heightStr" src="https://www.youtube.com/embed/@(pv.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
 			break;
 
 		case VocaDb.Model.Domain.PVs.PVService.Vimeo:
-            <iframe src="http://player.vimeo.com/video/@pv.PVId" width="@width" height="@height" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+            <iframe src="https://player.vimeo.com/video/@pv.PVId" width="@width" height="@height" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
             break;
     }
 	
@@ -178,7 +178,7 @@
 @helper GoogleSiteSearch() {
 	
 <div id="cse" style="width: 100%;">Loading</div>
-<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script src="https://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript">
 	google.load('search', '1', { language: 'en' });
 	google.setOnLoadCallback(function () {
@@ -187,7 +187,7 @@
 		customSearchControl.draw('cse');
 	}, true);
 </script>
-<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />	
+<link rel="stylesheet" href="https://www.google.com/cse/style/look/default.css" type="text/css" />	
 	
 }
 
