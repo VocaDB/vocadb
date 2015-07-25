@@ -11,34 +11,18 @@ namespace VocaDb.Web.Code {
 
 	public abstract class VocaDbPage<TModel> : WebViewPage<TModel> {
 
-		public BrandableStringsManager BrandableStrings {
-			get { return DependencyResolver.Current.GetService<BrandableStringsManager>(); }
-		}
+		public BrandableStringsManager BrandableStrings => DependencyResolver.Current.GetService<BrandableStringsManager>();
 
-		public VdbConfigManager Config {
-			get { return DependencyResolver.Current.GetService<VdbConfigManager>(); }
-		}
+		public VdbConfigManager Config => DependencyResolver.Current.GetService<VdbConfigManager>();
 
 		/// <summary>
 		/// Current language preference as integer.
 		/// </summary>
-		public int LanguagePreferenceInt {
-			get {
-				return (int)UserContext.LanguagePreference;
-			}
-		}
+		public int LanguagePreferenceInt => (int)UserContext.LanguagePreference;
 
-		public MarkdownParser MarkdownParser {
-			get {
-				return DependencyResolver.Current.GetService<MarkdownParser>();
-			}
-		}
+		public MarkdownParser MarkdownParser => DependencyResolver.Current.GetService<MarkdownParser>();
 
-		public PagePropertiesData PageProperties {
-			get {
-				return PagePropertiesData.Get(ViewBag);
-			}
-		}
+		public PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
 
 		/// <summary>
 		/// Relative path to application root.
@@ -47,9 +31,7 @@ namespace VocaDb.Web.Code {
 		/// If the application is installed in the root folder, for example http://vocadb.net/, this will be just "/".
 		/// For http://server.com/vocadb/ this would be "/vocadb/".
 		/// </summary>
-		public string RootPath {
-			get { return Url.Content("~/"); }
-		}
+		public string RootPath => Url.Content("~/");
 
 		public string DecimalDot(double val) {
 			return NumberFormatHelper.DecimalDot(val);
@@ -75,43 +57,23 @@ namespace VocaDb.Web.Code {
 			return new HtmlString(JsonHelpers.Serialize(obj));
 		}
 
-		public VocaUrlMapper UrlMapper {
-			get {
-				return new VocaUrlMapper(WebHelper.IsSSL(Request));
-			}
-		}
+		public VocaUrlMapper UrlMapper => new VocaUrlMapper(WebHelper.IsSSL(Request));
 
-		public IUserPermissionContext UserContext {
-			get { return DependencyResolver.Current.GetService<IUserPermissionContext>(); }
-		}
+		public IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
 
 	}
 
 	public abstract class VocaDbPage : WebViewPage {
 		
-		public BrandableStringsManager BrandableStrings {
-			get { return DependencyResolver.Current.GetService<BrandableStringsManager>(); }
-		}
+		public BrandableStringsManager BrandableStrings => DependencyResolver.Current.GetService<BrandableStringsManager>();
 
-		public VdbConfigManager Config {
-			get { return DependencyResolver.Current.GetService<VdbConfigManager>(); }
-		}
+		public VdbConfigManager Config => DependencyResolver.Current.GetService<VdbConfigManager>();
 
-		public int LanguagePreferenceInt {
-			get {
-				return (int)UserContext.LanguagePreference;
-			}
-		}
+		public int LanguagePreferenceInt => (int)UserContext.LanguagePreference;
 
-		public PagePropertiesData PageProperties {
-			get {
-				return PagePropertiesData.Get(ViewBag);
-			}
-		}
+		public PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
 
-		public string RootPath {
-			get { return Url.Content("~/"); }
-		}
+		public string RootPath => Url.Content("~/");
 
 		public string ToJS(bool val) {
 			return val ? "true" : "false";
@@ -133,15 +95,9 @@ namespace VocaDb.Web.Code {
 			return new HtmlString(JsonHelpers.Serialize(obj));
 		}
 
-		public VocaUrlMapper UrlMapper {
-			get {
-				return new VocaUrlMapper(WebHelper.IsSSL(Request));
-			}
-		}
+		public VocaUrlMapper UrlMapper => new VocaUrlMapper(WebHelper.IsSSL(Request));
 
-		public IUserPermissionContext UserContext {
-			get { return DependencyResolver.Current.GetService<IUserPermissionContext>(); }
-		}
+		public IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
 
 	}
 

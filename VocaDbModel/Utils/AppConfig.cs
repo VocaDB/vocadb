@@ -60,9 +60,7 @@ namespace VocaDb.Model.Utils {
 			
 		}
 
-		public static bool AllowCustomTracks {
-			get { return Val("AllowCustomTracks", false); }
-		}
+		public static bool AllowCustomTracks => Val("AllowCustomTracks", false);
 
 		public static ArtistType[] ArtistTypes {
 			get {
@@ -90,33 +88,19 @@ namespace VocaDb.Model.Utils {
 			}
 		}
 
-		public static string BilibiliAppKey {
-			get { return Val("BilibiliAppKey"); }
-		}
+		public static string BilibiliAppKey => Val("BilibiliAppKey");
 
-		public static string BilibiliSecretKey {
-			get { return Val("BilibiliSecretKey"); }
-		}
+		public static string BilibiliSecretKey => Val("BilibiliSecretKey");
 
-		public static string BrandedStringsAssembly {
-			get { return Val("BrandedStringsAssembly"); }
-		}
+		public static string BrandedStringsAssembly => Val("BrandedStringsAssembly");
 
-		public static string DbDumpFolder {
-			get { return Val("DbDumpFolder"); }
-		}
+		public static string DbDumpFolder => Val("DbDumpFolder");
 
-		public static string ExternalHelpPath {
-			get { return Val("ExternalHelpPath"); }
-		}
+		public static string ExternalHelpPath => Val("ExternalHelpPath");
 
-		public static string GAAccountId {
-			get { return Val("GAAccountId"); }
-		}
+		public static string GAAccountId => Val("GAAccountId");
 
-		public static string GADomain {
-			get { return Val("GADomain"); }
-		}
+		public static string GADomain => Val("GADomain");
 
 		public static GlobalLinksSection GetGlobalLinksSection() {
 		
@@ -134,27 +118,15 @@ namespace VocaDb.Model.Utils {
 		/// Could be either HTTP or HTTPS.
 		/// For example http://vocadb.net
 		/// </summary>
-		public static string HostAddress {
-			get {
-				return Val("HostAddress");
-			}
-		}
+		public static string HostAddress => Val("HostAddress");
 
 		/// <summary>
 		/// Host address of the SSL site, used for sensitive actions such as logging in.
 		/// For example https://vocadb.net
 		/// </summary>
-		public static string HostAddressSecure {
-			get {
-				return Val("HostAddressSecure");
-			}
-		}
+		public static string HostAddressSecure => Val("HostAddressSecure");
 
-		public static string LockdownMessage {
-			get {
-				return Val("LockdownMessage");
-			}
-		}
+		public static string LockdownMessage => Val("LockdownMessage");
 
 		/// <summary>
 		/// Preferred artist types when parsing Nico PVs.
@@ -167,17 +139,9 @@ namespace VocaDb.Model.Utils {
 			}
 		}
 
-		public static string ReCAPTCHAKey {
-			get {
-				return Val("ReCAPTCHAKey");
-			}
-		}
+		public static string ReCAPTCHAKey => Val("ReCAPTCHAKey");
 
-		public static string ReCAPTCHAPublicKey {
-			get {
-				return Val("ReCAPTCHAPublicKey");
-			}
-		}
+		public static string ReCAPTCHAPublicKey => Val("ReCAPTCHAPublicKey");
 
 		public static SongType[] SongTypes {
 			get {
@@ -192,41 +156,17 @@ namespace VocaDb.Model.Utils {
 			}
 		}
 
-		public static string StaticContentPath {
-			get {
-				return Val("StaticContentPath");
-			}
-		}
+		public static string StaticContentPath => Val("StaticContentPath");
 
-		public static string StaticContentHost {
-			get {
-				return Val("StaticContentHost");
-			}
-		}
+		public static string StaticContentHost => Val("StaticContentHost");
 
-		public static string StaticContentHostSSL {
-			get {
-				return Val("StaticContentHostSSL");
-			}
-		}
+		public static string StaticContentHostSSL => Val("StaticContentHostSSL");
 
-		public static string TwitterConsumerKey {
-			get {
-				return Val("TwitterConsumerKey");
-			}
-		}
+		public static string TwitterConsumerKey => Val("TwitterConsumerKey");
 
-		public static string TwitterConsumerSecret {
-			get {
-				return Val("TwitterConsumerSecret");
-			}
-		}
+		public static string TwitterConsumerSecret => Val("TwitterConsumerSecret");
 
-		public static string YoutubeApiKey {
-			get {
-				return Val("YoutubeApiKey");
-			}
-		}
+		public static string YoutubeApiKey => Val("YoutubeApiKey");
 
 	}
 }

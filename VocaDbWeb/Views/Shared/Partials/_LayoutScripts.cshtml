@@ -14,12 +14,12 @@
 }
 
 <script type="text/javascript">
-            
-    var baseAddress = '@Url.Content("~/")';
+
+    var baseAddress = '@RootPath';
 
     vdb = vdb || {};
     vdb.values = vdb.values || {};
-    vdb.values.hostAddress = '@VocaDb.Model.Utils.AppConfig.HostAddress';
+    vdb.values.hostAddress = '@UrlMapper.HostAddress';
 	vdb.values.baseAddress = baseAddress;
 	vdb.values.languagePreference = @((int)Login.Manager.LanguagePreference);
     vdb.resources = vdb.resources || {};
@@ -33,7 +33,7 @@
 
     var entryReportRepository = new vdb.repositories.EntryReportRepository(urlMapper);
     var userRepository = new vdb.repositories.UserRepository(urlMapper, @UserContext.LoggedUserId);
-    
+
     var entryTypeTranslations = @ResourceHelpers.ToJSON(Resources.EntryTypeNames.ResourceManager);
     var topBarData = @Html.Raw(JsonHelpers.Serialize(new {
 		searchObjectType = searchObjectType.ToString()
@@ -41,14 +41,14 @@
 	var hasUnreadMessages = @ToJS(Login.Manager.IsLoggedIn && Login.User.UnreadMessagesCount > 0);
 	var unreadMessagesCount = @(Login.Manager.IsLoggedIn ? Login.User.UnreadMessagesCount : 0);
 	var getNewReportCount = @ToJS(Login.CanManageEntryReports);
-	
+
     var topBarViewModel = new vdb.viewModels.TopBarViewModel(
-        entryTypeTranslations, topBarData.searchObjectType, "", unreadMessagesCount, 
+        entryTypeTranslations, topBarData.searchObjectType, "", unreadMessagesCount,
 	    getNewReportCount, entryReportRepository, userRepository);
-    
+
     var topBar = $("#topBar")[0];
 	if (topBar) {
-		ko.applyBindings(topBarViewModel, $("#topBar")[0]);		
+		ko.applyBindings(topBarViewModel, $("#topBar")[0]);
 	}
 
 </script>

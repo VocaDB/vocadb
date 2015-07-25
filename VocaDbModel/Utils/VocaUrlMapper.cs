@@ -14,11 +14,7 @@ namespace VocaDb.Model.Utils {
 		/// Host address including scheme, for example http://vocadb.net.
 		/// Does not include the trailing slash.
 		/// </summary>
-		public string HostAddress {
-			get {
-				return VocaUriBuilder.HostAddress(ssl);
-			}
-		}
+		public string HostAddress => VocaUriBuilder.HostAddress(ssl);
 
 		public string FullAbsolute(string relative) {
 			return VocaUriBuilder.Absolute(relative, ssl);
