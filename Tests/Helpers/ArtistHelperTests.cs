@@ -21,6 +21,9 @@ namespace VocaDb.Tests.Helpers {
 		private IArtistWithSupport vocalist3;
 		private IArtistWithSupport vocalist4;
 
+		private IArtistWithSupport[] producers;
+		private IArtistWithSupport[] vocalists;
+
 		private IArtistWithSupport CreateArtist(ArtistType artistType, string name) {
 
 			var p = new Artist { ArtistType = artistType };
@@ -29,16 +32,16 @@ namespace VocaDb.Tests.Helpers {
 
 		}
 
-		private TranslatedStringWithDefault CreateString(TranslatedString translatedString) {
-			return new TranslatedStringWithDefault(translatedString.Japanese, translatedString.Romaji, translatedString.English, translatedString.Default ?? string.Empty);
-		}
-
-		private TranslatedStringWithDefault CreateString(string uniform) {
-			return CreateString(TranslatedString.Create(uniform));
-		}
-
 		private string GetNames(params IArtistWithSupport[] artists) {
 			return string.Join(", ", artists.Select(a => a.Artist.DefaultName));
+		}
+
+		private void TestGetArtistString(int producerCount, int vocalistCount, string expected, string message = "artist string as expected") {
+
+			var result = ArtistHelper.GetArtistString(producers.Take(producerCount).Concat(vocalists.Take(vocalistCount)), false);
+
+			Assert.AreEqual(expected, result.Default, message);
+
 		}
 
 		[TestInitialize]
@@ -46,14 +49,18 @@ namespace VocaDb.Tests.Helpers {
 
 			animator = CreateArtist(ArtistType.Animator, "wakamuraP");
 			circle = CreateArtist(ArtistType.Circle, "S.C.X.");
+
 			producer = CreateArtist(ArtistType.Producer, "devilishP");
 			producer2 = CreateArtist(ArtistType.Producer, "40mP");
 			producer3 = CreateArtist(ArtistType.Producer, "Clean Tears");
 			producer4 = CreateArtist(ArtistType.Producer, "Tripshots");
+			producers = new[] { producer, producer2, producer3, producer4 };
+
 			vocalist = CreateArtist(ArtistType.Vocaloid, "Hatsune Miku");
 			vocalist2 = CreateArtist(ArtistType.Vocaloid, "Kagamine Rin");
 			vocalist3 = CreateArtist(ArtistType.Vocaloid, "Kagamine Len");
 			vocalist4 = CreateArtist(ArtistType.Vocaloid, "Megurine Luka");
+			vocalists = new[] { vocalist, vocalist2, vocalist3, vocalist4 };
 
 		}
 
@@ -87,36 +94,28 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void GetArtistString_Empty() {
 
-			var result = ArtistHelper.GetArtistString(new IArtistWithSupport[] { }, false);
-
-			Assert.AreEqual(CreateString(TranslatedString.Create(string.Empty)), result, "result is empty");
+			TestGetArtistString(0, 0, string.Empty, "result is empty");
 
 		}
 
 		[TestMethod]
 		public void GetArtistString_OneProducer() {
 
-			var result = ArtistHelper.GetArtistString(new[] { producer }, false);
-
-			Assert.AreEqual(CreateString(producer.Artist.Names.SortNames), result, "producer's name");
+			TestGetArtistString(1, 0, producer.Artist.DefaultName, "producer's name");
 
 		}
 
 		[TestMethod]
 		public void GetArtistString_TwoProducers() {
 
-			var result = ArtistHelper.GetArtistString(new[] { producer, producer2 }, false);
-
-			Assert.AreEqual(CreateString(GetNames(producer, producer2)), result, "artist string has both producers");
+			TestGetArtistString(2, 0, GetNames(producer, producer2), "artist string has both producers");
 
 		}
 
 		[TestMethod]
 		public void GetArtistString_OneProducerAndVocalist() {
 
-			var result = ArtistHelper.GetArtistString(new[] { producer, vocalist }, false);
-
-			Assert.AreEqual(CreateString(TranslatedString.Create(string.Format("{0} feat. {1}", producer.Artist.DefaultName, vocalist.Artist.DefaultName))), result, "artist string has producer and vocalist name");
+			TestGetArtistString(1, 1, string.Format("{0} feat. {1}", producer.Artist.DefaultName, vocalist.Artist.DefaultName), "artist string has producer and vocalist name");
 
 		}
 
@@ -124,18 +123,14 @@ namespace VocaDb.Tests.Helpers {
 		public void GetArtistString_MultipleProducersAndTwoVocalists() {
 
 			// 3 producers and 2 vocalists
-			var result = ArtistHelper.GetArtistString(new[] { producer, producer2, producer3, vocalist, vocalist2 }, false);
-
-			Assert.AreEqual(string.Format("{0} feat. {1}", GetNames(producer, producer2, producer3), GetNames(vocalist, vocalist2)), result.Default, "artist string has multiple producers and vocalists");
+			TestGetArtistString(3, 2, string.Format("{0} feat. {1}", GetNames(producer, producer2, producer3), GetNames(vocalist, vocalist2)), "artist string has multiple producers and vocalists");
 
 		}
 
 		[TestMethod]
 		public void GetArtistString_OneProducerAndVariousVocalists() {
 
-			var result = ArtistHelper.GetArtistString(new[] { producer, vocalist, vocalist2, vocalist3, vocalist4 }, false);
-
-			Assert.AreEqual(CreateString(TranslatedString.Create(string.Format("{0} feat. various", producer.Artist.DefaultName))), result, "artist string has producer and various");
+			TestGetArtistString(1, 4, string.Format("{0} feat. various", producer.Artist.DefaultName), "artist string has producer and various");
 
 		}
 
@@ -143,9 +138,7 @@ namespace VocaDb.Tests.Helpers {
 		public void GetArtistString_VariousArtists() {
 
 			// 4 producers and 2 vocalists, various artists because of >= 4 producers
-			var result = ArtistHelper.GetArtistString(new[] { producer, producer2, producer3, producer4, vocalist, vocalist2 }, false);
-
-			Assert.AreEqual(CreateString(ArtistHelper.VariousArtists), result, "artist string is various artists");
+			TestGetArtistString(4, 2, ArtistHelper.VariousArtists);
 
 		}
 
@@ -157,16 +150,14 @@ namespace VocaDb.Tests.Helpers {
 
 			var result = ArtistHelper.GetArtistString(new[] {circle, producer}, false);
 
-			Assert.AreEqual(CreateString(TranslatedString.Create(producer.Artist.DefaultName + ", " + circle.Artist.DefaultName)), result, "Producer is shown first");
+			Assert.AreEqual(GetNames(producer, circle), result.Default, "Producer is shown first");
 
 		}
 
 		[TestMethod]
 		public void GetArtistString_OnlyVocalist() {
 
-			var result = ArtistHelper.GetArtistString(new[] { vocalist }, false);
-
-			Assert.AreEqual(CreateString(vocalist.Artist.Names.SortNames), result, "artist string has vocalist name");
+			TestGetArtistString(0, 1, vocalist.Artist.DefaultName, "artist string has vocalist name");
 
 		}
 
@@ -175,7 +166,7 @@ namespace VocaDb.Tests.Helpers {
 
 			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, false);
 
-			Assert.AreEqual(CreateString(producer.Artist.Names.SortNames), result, "artist string has one producer");
+			Assert.AreEqual(producer.Artist.DefaultName, result.Default, "artist string has one producer");
 
 		}
 
@@ -187,7 +178,7 @@ namespace VocaDb.Tests.Helpers {
 
 			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, true);
 
-			Assert.AreEqual(CreateString(TranslatedString.Create(animator.Artist.DefaultName + ", " + producer.Artist.DefaultName)), result, "artist string has one producer and animator");
+			Assert.AreEqual(GetNames(animator, producer), result.Default, "artist string has one producer and animator");
 
 		}
 
