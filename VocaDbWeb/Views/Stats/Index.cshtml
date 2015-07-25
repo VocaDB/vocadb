@@ -4,9 +4,9 @@
 	PageProperties.Title = "Statistics / Reports";
 }
 
-<select data-bind="foreach: categories, value: selectedUrl" class="input-large">
-	<optgroup label="NA" data-bind="attr: {label: name }, foreach: reports">
-		<option data-bind="text: name, value: url"></option>
+<select data-bind="foreach: categories, value: selectedReport" class="input-large">
+	<optgroup label="NA" data-bind="attr: { label: name }, foreach: reports">
+		<option data-bind="text: name, value: $data"></option>
 	</optgroup>
 </select>
 
@@ -20,67 +20,13 @@
 
 		$(function () {
 
-			var categories = [
-				{
-					name: 'Producers', reports: [
-					  { name: 'Songs by producer', url: 'songsPerProducer' },
-					  { name: 'Albums by producer', url: 'albumsPerProducer' },
-					  { name: 'Followers by producer', url: 'followersPerProducer' }
-					]
-				},
-				{
-					name: 'Vocaloids', reports: [
-					  { name: 'Songs by Vocaloid', url: 'songsPerVocaloid' },
-					  { name: 'Albums by Vocaloid', url: 'albumsPerVocaloid' }
-					]
-				},
-				{
-					name: 'Albums', reports: [
-						{ name: 'Releases by month', url: 'albumsPerMonth' },
-						{ name: 'Cumulative albums per day', url: 'cumulativeAlbums' },
-						{ name: 'Hits per album', url: 'hitsPerAlbum' },
-						{ name: 'Albums per genre', url: 'albumsPerGenre' }
-					]
-				},
-				{
-					name: 'Songs', reports: [
-					  { name: 'Songs added per day', url: 'songsAddedPerDay' },
-					  { name: 'Songs published per day', url: 'songsPublishedPerDay' },
-					  { name: 'Hits per song', url: 'hitsPerSong' },
-					  { name: 'Songs per genre', url: 'songsPerGenre' }
-					]
-				},
-				{
-					name: 'User', reports: [
-					  { name: 'Edits per user total', url: 'editsPerUser' },
-					  { name: 'Edits per user last year', url: 'editsPerUserLastYear' }
-					]
-				},
-				{
-					name: 'General', reports: [
-					  { name: 'Edits per day', url: 'editsPerDay' }
-					]
-				}
-			];
-			var vm = new vdb.viewModels.StatsViewModel(categories);
+			var vm = new vdb.viewModels.StatsViewModel();
 
-			vm.selectedUrl.subscribe(function (url) {
-
-				$.getJSON("/stats/" + url, function (data) {
-
-					$('#chartContainer').highcharts(data);
-
-				});
-
+			vm.chartData.subscribe(function(data) {
+				$('#chartContainer').highcharts(data);
 			});
 
 			ko.applyBindings(vm);
-
-			$.getJSON("/stats/" + vm.selectedUrl(), function (data) {
-
-				$('#chartContainer').highcharts(data);
-
-			});
 
 		});
 
