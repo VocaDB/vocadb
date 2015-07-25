@@ -6,14 +6,17 @@ module vdb.viewModels {
 		public categories: IReportCategory[];
 		public chartData = ko.observable<any>(null);
 		private selectedReport = ko.observable<IReport>(null);
+		public timespan = ko.observable<string>(null);
 
 		public showTimespanFilter = ko.computed(() => {
 			return this.selectedReport && this.selectedReport() && this.selectedReport().allowTimespan;
 		});
 
-		private updateReport = (report: IReport) => {
+		private updateReport = () => {
 			
-			$.getJSON("/stats/" + report.url, data => {
+			var cutoff = this.showTimespanFilter() && this.timespan() ? moment().subtract(parseInt(this.timespan()), "hours").toISOString() : null;
+
+			$.getJSON("/stats/" + this.selectedReport().url, { cutoff: cutoff }, data => {
 				this.chartData(data);
 			});
 
@@ -53,18 +56,18 @@ module vdb.viewModels {
 				},
 				{
 					name: 'User', reports: [
-						{ name: 'Edits per user total', url: 'editsPerUser' },
-						{ name: 'Edits per user last year', url: 'editsPerUserLastYear' }
+						{ name: 'Edits per user', url: 'editsPerUser', allowTimespan: true }
 					]
 				},
 				{
 					name: 'General', reports: [
-						{ name: 'Edits per day', url: 'editsPerDay' }
+						{ name: 'Edits per day', url: 'editsPerDay', allowTimespan: true }
 					]
 				}
 			];
 
 			this.selectedReport.subscribe(this.updateReport);
+			this.timespan.subscribe(this.updateReport);
 			this.selectedReport(this.categories[0].reports[0]);
 
 		}

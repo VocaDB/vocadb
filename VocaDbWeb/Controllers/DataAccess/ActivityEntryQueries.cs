@@ -21,7 +21,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.repository = repository;
 		}
 
-		public ICollection<Tuple<DateTime, int>> GetEditsPerDay(int? userId) {
+		public ICollection<Tuple<DateTime, int>> GetEditsPerDay(int? userId, DateTime? cutoff) {
 			
 			var values = repository.HandleQuery(ctx => {
 
@@ -30,6 +30,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				if (userId.HasValue) {
 					query = query.Where(a => a.Author.Id == userId.Value);
 				}
+
+				if (cutoff.HasValue)
+					query = query.Where(a => a.CreateDate >= cutoff);
 
 				return query
 					.OrderBy(a => a.CreateDate.Year)

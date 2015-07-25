@@ -38,7 +38,7 @@ namespace VocaDb.Web.Controllers {
 
 		private T GetCachedReport<T>() where T : class {
 
-			var name = ControllerContext.RouteData.Values["action"];
+			var name = ControllerContext.RouteData.Values["action"] + "_" + ControllerContext.RouteData.Values["cutoff"];
 			var item = context.Cache["report_" + name];
 
 			if (item == null)
@@ -328,16 +328,16 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		[OutputCache(Duration = clientCacheDurationSec)]
-		public ActionResult EditsPerDay() {
+		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "cutoff")]
+		public ActionResult EditsPerDay(DateTime? cutoff) {
 			
-			var points = new DataAccess.ActivityEntryQueries(repository).GetEditsPerDay(null);
+			var points = new DataAccess.ActivityEntryQueries(repository).GetEditsPerDay(null, cutoff);
 
 			return DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points);
 
 		}
 
-		[OutputCache(Duration = clientCacheDurationSec)]
+		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "cutoff")]
 		public ActionResult EditsPerUser(DateTime? cutoff) {
 			
 			return SimpleBarChart<ActivityEntry>(q => { 
@@ -359,21 +359,15 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		[OutputCache(Duration = clientCacheDurationSec)]
-		public ActionResult EditsPerUserLastYear() {
-			
-			var cutoff = DateTime.Now - TimeSpan.FromDays(365);
-
-			return EditsPerUser(cutoff);
-
-		}
-
-		[OutputCache(Duration = clientCacheDurationSec)]
-		public ActionResult SongsAddedPerDay() {
+		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "cutoff")]
+		public ActionResult SongsAddedPerDay(DateTime? cutoff) {
 			
 			var values = repository.HandleQuery(ctx => {
 
 				var query = ctx.Query<Song>();
+
+				if (cutoff.HasValue)
+					query = query.Where(a => a.CreateDate >= cutoff);
 
 				return query
 					.OrderBy(a => a.CreateDate.Year)
