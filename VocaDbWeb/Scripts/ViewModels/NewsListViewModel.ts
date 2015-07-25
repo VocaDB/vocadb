@@ -12,9 +12,9 @@ module vdb.viewModels {
 				return;
 			}
 
-			var url = UrlMapper.buildUrl("https://public-api.wordpress.com/rest/v1/sites/", blogUrl, "/posts/");
+			var url = UrlMapper.buildUrl("https://public-api.wordpress.com/rest/v1.1/sites/", blogUrl, "/posts/");
 
-            $.ajax({ dataType: 'jsonp', url: url, data: { number: 3 } }).done((response: WordpressResponse) => {
+            $.ajax({ dataType: 'json', url: url, data: { number: 3 } }).done((response: WordpressResponse) => {
 
                 _.forEach(response.posts, post => {
 
