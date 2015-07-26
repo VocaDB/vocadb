@@ -521,8 +521,12 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				var song = session.Load<Song>(songId);
-				var userId = PermissionContext.LoggedUserId;
-				var vote = session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == songId && s.User.Id == userId);
+				FavoriteSongForUser vote = null;
+
+				if (PermissionContext.IsLoggedIn) {
+					var userId = PermissionContext.LoggedUserId;
+					vote = session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == songId && s.User.Id == userId);
+				}
 
 				if (addHit)
 					AddSongHit(session, song, hostname);
