@@ -10,6 +10,7 @@ namespace VocaDb.Model.Mapping.Songs {
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
+			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Description).Length(2000).Not.Nullable();
 			Map(m => m.FeaturedCategory).Length(20).Not.Nullable();
 			Map(m => m.Name).Length(200).Not.Nullable();

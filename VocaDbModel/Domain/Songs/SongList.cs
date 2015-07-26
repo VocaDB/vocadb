@@ -31,6 +31,7 @@ namespace VocaDb.Model.Domain.Songs {
 		private IList<SongInList> songs = new List<SongInList>();
 
 		public SongList() {
+			CreateDate = DateTime.Now;
 			Description = string.Empty;
 		}
 
@@ -65,6 +66,11 @@ namespace VocaDb.Model.Domain.Songs {
 				author = value;
 			}
 		}
+
+		/// <summary>
+		/// Date when this entry was created.
+		/// </summary>
+		public virtual DateTime CreateDate { get; set; }
 
 		string IEntryBase.DefaultName {
 			get { return Name; }
