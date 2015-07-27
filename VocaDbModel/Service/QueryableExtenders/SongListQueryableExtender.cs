@@ -12,6 +12,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query
 						.OrderByDescending(r => r.EventDate)
 						.ThenBy(r => r.Name);
+				case SongListSortRule.CreateDate:
+					return query.OrderByDescending(r => r.CreateDate);
 				case SongListSortRule.Name:
 					return query.OrderBy(r => r.Name);
 			}
@@ -37,7 +39,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		Name,
 
-		Date
+		Date,
+
+		CreateDate
 
 	}
 

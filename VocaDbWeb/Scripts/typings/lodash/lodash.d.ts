@@ -177,15 +177,25 @@ declare module _ {
         toString(): string;
 
         /**
-        * Extracts the wrapped value.
-        * @return The wrapped value.
-        **/
-        valueOf(): T;
-
-        /**
-        * @see valueOf
+        * Executes the chained sequence to extract the unwrapped value.
+        * @return Returns the resolved unwrapped value.
         **/
         value(): T;
+
+        /**
+        * @see _.value
+        **/
+        run(): T;
+
+        /**
+        * @see _.value
+        **/
+        toJSON(): T;
+
+        /**
+        * @see _.value
+        **/
+        valueOf(): T;
     }
 
     interface LoDashWrapper<T> extends LoDashWrapperBase<T, LoDashWrapper<T>> { }
@@ -279,7 +289,7 @@ declare module _ {
         /**
         * @see _.chunk
         **/
-        chunk(size?: number): LoDashArrayWrapper<T>;
+        chunk(size?: number): LoDashArrayWrapper<T[]>;
     }
 
     //_.compact
@@ -3544,6 +3554,24 @@ declare module _ {
             thisArg?: any): LoDashArrayWrapper<TResult>;
     }
 
+    //_.ceil
+    interface LoDashStatic {
+        /**
+         * Calculates n rounded up to precision.
+         * @param n The number to round up.
+         * @param precision The precision to round up to.
+         * @return Returns the rounded up number.
+         */
+        ceil(n: number, precision?: number): number;
+    }
+
+    interface LoDashWrapper<T> {
+        /**
+         * @see _.ceil
+         */
+        ceil(precision?: number): number;
+    }
+
     //_.max
     interface LoDashStatic {
         /**
@@ -4524,6 +4552,20 @@ declare module _ {
         * @return The length of aString
         **/
         size(aString: string): number;
+    }
+
+    interface LoDashArrayWrapper<T> {
+        /**
+         * @see _.size
+         **/
+        size(): number;
+    }
+
+    interface LoDashObjectWrapper<T> {
+        /**
+         * @see _.size
+         **/
+        size(): number;
     }
 
     //_.some
@@ -5756,10 +5798,19 @@ declare module _ {
          * @param defaultValue The value returned if the resolved value is undefined.
          * @return Returns the resolved value.
          **/
-        get<T>(object : Object,
-               path:string|string[],
+        get<T>(object: Object,
+               path: string|string[],
                defaultValue?:T
         ): T;
+    }
+
+    interface LoDashObjectWrapper<T> {
+        /**
+         * @see _.get
+         **/
+        get<TResult>(path: string|string[],
+                     defaultValue?: TResult
+        ): TResult;
     }
 
     //_.has
@@ -6235,6 +6286,20 @@ declare module _ {
             thisArg?: any): Picked;
     }
 
+    //_.set
+    interface LoDashStatic {
+        /**
+         * Sets the property value of path on object. If a portion of path does not exist it is created.
+         * @param object The object to augment.
+         * @param path The path of the property to set.
+         * @param value The value to set.
+         * @return Returns object.
+         **/
+        set<T>(object: T,
+            path: string|string[],
+            value: any): T;
+    }
+
     //_.transform
     interface LoDashStatic {
         /**
@@ -6301,11 +6366,35 @@ declare module _ {
     //_.values
     interface LoDashStatic {
         /**
-        * Creates an array composed of the own enumerable property values of object.
-        * @param object The object to inspect.
+        * Creates an array of the own enumerable property values of object.
+        * @param object The object to query.
         * @return Returns an array of property values.
         **/
-        values(object?: any): any[];
+        values<T>(object?: any): T[];
+    }
+
+    interface LoDashObjectWrapper<T> {
+        /**
+        * @see _.values
+        **/
+        values<TResult>(): LoDashObjectWrapper<TResult[]>;
+    }
+
+    //_.valuesIn
+    interface LoDashStatic {
+        /**
+        * Creates an array of the own and inherited enumerable property values of object.
+        * @param object The object to query.
+        * @return Returns the array of property values.
+        **/
+        valuesIn<T>(object?: any): T[];
+    }
+
+    interface LoDashObjectWrapper<T> {
+        /**
+        * @see _.valuesIn
+        **/
+        valuesIn<TResult>(): LoDashObjectWrapper<TResult[]>;
     }
 
     /**********
