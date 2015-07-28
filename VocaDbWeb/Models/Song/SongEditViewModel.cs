@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
@@ -56,6 +57,7 @@ namespace VocaDb.Web.Models.Song {
 		}
 
 		[FromJson]
+		[AllowHtml]
 		public SongForEditContract EditedSong { get; set; }
 
 		public int Id {

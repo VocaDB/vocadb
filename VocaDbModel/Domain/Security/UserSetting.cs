@@ -128,8 +128,22 @@ namespace VocaDb.Model.Domain.Security {
 		}
 
 		private T RequestValue {
-			get { return (T)HttpContext.Current.Items[RequestItemName]; }
-			set { HttpContext.Current.Items[RequestItemName] = value; }			
+			get {
+
+				if (HttpContext.Current == null)
+					throw new InvalidOperationException("HttpContext is not initialized");
+
+				return (T)HttpContext.Current.Items[RequestItemName];
+
+			}
+			set {
+
+				if (HttpContext.Current == null)
+					throw new InvalidOperationException("HttpContext is not initialized");
+
+				HttpContext.Current.Items[RequestItemName] = value;
+
+			}			
 		}
 
 		protected abstract string SettingName { get; }

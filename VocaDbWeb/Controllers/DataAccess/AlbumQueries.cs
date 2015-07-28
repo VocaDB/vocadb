@@ -469,9 +469,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				if (tracksDiff.Changed) {
 
-					var add = string.Join(", ", tracksDiff.Added.Select(i => i.SongToStringOrName));
-					var rem = string.Join(", ", tracksDiff.Removed.Select(i => i.SongToStringOrName));
-					var edit = string.Join(", ", tracksDiff.Edited.Select(i => i.SongToStringOrName));
+					var add = string.Join(", ", tracksDiff.Added.Select(i => HttpUtility.HtmlEncode(i.SongToStringOrName)));
+					var rem = string.Join(", ", tracksDiff.Removed.Select(i => HttpUtility.HtmlEncode(i.SongToStringOrName)));
+					var edit = string.Join(", ", tracksDiff.Edited.Select(i => HttpUtility.HtmlEncode(i.SongToStringOrName)));
 
 					var str = string.Format("edited tracks (added: {0}, removed: {1}, reordered: {2})", add, rem, edit)
 						.Truncate(300);

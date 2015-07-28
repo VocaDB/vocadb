@@ -633,7 +633,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					diff.Lyrics = true;
 
 				var logStr = string.Format("updated properties for song {0} ({1})", entryLinkFactory.CreateEntryLink(song), diff.ChangedFieldsString)
-					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
+					+ (properties.UpdateNotes != string.Empty ? " " + HttpUtility.HtmlEncode(properties.UpdateNotes) : string.Empty)
 					.Truncate(400);
 
 				var archived = Archive(ctx, song, diff, SongArchiveReason.PropertiesUpdated, properties.UpdateNotes);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 
@@ -32,8 +33,10 @@ namespace VocaDb.Web.Code {
 
 	public class JsonModelBinder : IModelBinder, IPropertyBinder {
 
-		private object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext, string propertyName, Type type) {
-			var stringified = controllerContext.HttpContext.Request[propertyName];
+		private static readonly Attribute allowHtmlAttribute = new AllowHtmlAttribute();
+
+		private object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext, string propertyName, Type type, bool allowHtml) {
+			var stringified = (!allowHtml ? controllerContext.HttpContext.Request[propertyName] : controllerContext.HttpContext.Request.Unvalidated[propertyName]);
 			if (string.IsNullOrEmpty(stringified))
 				return null;
 			var obj = JsonConvert.DeserializeObject(stringified, type, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
@@ -41,11 +44,11 @@ namespace VocaDb.Web.Code {
 		}
 
 		public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext) {
-			return BindModel(controllerContext, bindingContext, bindingContext.ModelName, bindingContext.ModelType);
+			return BindModel(controllerContext, bindingContext, bindingContext.ModelName, bindingContext.ModelType, false);
 		}
 
 		public object BindProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor) {
-			return BindModel(controllerContext, bindingContext, propertyDescriptor.Name, propertyDescriptor.PropertyType);
+			return BindModel(controllerContext, bindingContext, propertyDescriptor.Name, propertyDescriptor.PropertyType, propertyDescriptor.Attributes.Contains(allowHtmlAttribute));
 		}
 
 	}
