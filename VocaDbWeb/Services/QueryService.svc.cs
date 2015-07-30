@@ -153,10 +153,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public SongDetailsContract GetSongById(int id, ContentLanguagePreference? language) {
 
-			if (language.HasValue)
-				userPermissionContext.LanguagePreferenceSetting.OverrideRequestValue(language.Value);
-
-			var song = songService.GetSongDetails(id, 0, null);
+			var song = songService.GetSongDetails(id, 0, null, language);
 			return song;
 
 		}

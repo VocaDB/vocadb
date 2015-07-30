@@ -142,7 +142,7 @@ namespace VocaDb.Web.Controllers
 
 			WebHelper.VerifyUserAgent(Request);
 
-			var contract = Service.GetSongDetails(id, albumId, GetHostnameForValidHit());
+			var contract = Service.GetSongDetails(id, albumId, GetHostnameForValidHit(), null);
 			var model = new SongDetails(contract);
 
 			var hasDescription = !model.Notes.IsEmpty;
