@@ -340,13 +340,16 @@
 	<div>
 		<span>Sort by</span>
 		<div class="btn-group">
-			<a data-bind="click: function() { sort('Date'); }, css: { active: sort() == 'Date' }" class="btn" href="#">
-				Date
+			<a data-bind="click: function() { sort('Date'); }, css: { active: sort() == 'Date' }" visible="{{ showEventDateSort }}" class="btn" href="#">
+				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Date
+			</a>
+			<a data-bind="click: function() { sort('CreateDate'); }, css: { active: sort() == 'CreateDate' }" class="btn" href="#">
+				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.CreateDate
 			</a>
 			<a data-bind="click: function() { sort('Name'); }, css: { active: sort() == 'Name' }" class="btn" href="#">
-				Name
+				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Name
 			</a>
-		</div>		
+		</div>
 	</div>
 
 	@SongHelpers.SongListsKnockout("items", true)

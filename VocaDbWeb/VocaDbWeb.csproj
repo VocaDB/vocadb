@@ -1248,10 +1248,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EditStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\SongList\FeaturedStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FeaturedStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\SongList\ImportStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ImportStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\SongList\SongListSortRuleNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongListSortRuleNames.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Views\Song\CreateStrings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -2419,6 +2429,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\FeaturedSongListsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\ImportSongListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListsBaseViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\ArchivedSongViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForRatedSongsAdapter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\PlayList\PlayListRepositoryForSongListAdapter.ts" />
@@ -3607,10 +3618,22 @@
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\SongList\FeaturedStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FeaturedStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\SongList\ImportStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\ImportStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ImportStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\SongList\SongListSortRuleNames.ja.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\SongList\SongListSortRuleNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SongListSortRuleNames.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.fi.resx" />
@@ -3643,7 +3666,9 @@
       <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.ja.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RankingsStrings.Designer.cs</LastGenOutput>

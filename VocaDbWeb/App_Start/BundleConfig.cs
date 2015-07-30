@@ -352,7 +352,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Repositories/SongListRepository.js",
-				"~/Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
+				"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
+                "~/Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Import").Include(
@@ -401,6 +402,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
 				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
+				"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
 				"~/Scripts/ViewModels/User/FollowedArtistsViewModel.js",
 				"~/Scripts/ViewModels/User/RatedSongsSearchViewModel.js",
 				"~/Scripts/ViewModels/User/AlbumCollectionViewModel.js",

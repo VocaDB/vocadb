@@ -110,48 +110,15 @@ module vdb.viewModels.user {
 
     }
 
-	export class UserSongListsViewModel extends PagedItemsViewModel<dc.SongListContract> {
+	export class UserSongListsViewModel extends songList.SongListsBaseViewModel {
 		
-		constructor(private userId, private userRepo: rep.UserRepository) {
-			
-			super();
-
-			this.sort.subscribe(this.clear);
-
+		constructor(private userId, private userRepo: rep.UserRepository) {			
+			super(true);
 		}
 
-		public hasMore = ko.observable(false);
-
-		public isFirstForYear = (current: dc.SongListContract, index: number) => {
-
-			if (this.sort() !== "Date")
-				return false;
-
-			if (!current.eventDate)
-				return false;
-
-			if (index === 0)
-				return true;
-
-			var prev = this.items()[index - 1];
-
-			if (!prev.eventDate)
-				return false;
-
-			var currentYear = moment(current.eventDate).year();
-			var prevYear = moment(prev.eventDate).year();
-
-			return currentYear !== prevYear;
-
-		}
-
-		public loadMoreItems = (callback) => {
-			
+		public loadMoreItems = (callback) => {			
 			this.userRepo.getSongLists(this.userId, { start: this.start, maxEntries: 50, getTotalCount: true }, this.sort(), 'MainPicture', callback);
-
 		}
-
-		public sort = ko.observable("Name");
 
 	}
 
