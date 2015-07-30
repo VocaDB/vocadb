@@ -184,3 +184,12 @@ body {
 .archived-entry-compare-modified {
   font-weight: bold;
 }
+.song-lists-filters {
+  margin-bottom: 20px;
+}
+.song-lists-text-query {
+  margin-left: 20px;
+}
+.song-lists-text-query input {
+  margin-bottom: 0;
+}

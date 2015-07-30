@@ -12,6 +12,7 @@ module vdb.viewModels.songList {
 			if (!this.showEventDateSort)
 				this.sort(SongListSortRule[SongListSortRule.Name]);
 
+			this.query.subscribe(this.clear);
 			this.sort.subscribe(this.clear);
 
 		}
@@ -38,6 +39,8 @@ module vdb.viewModels.songList {
 			return currentYear !== prevYear;
 
 		}
+
+		public query = ko.observable("");
 
 		public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
 

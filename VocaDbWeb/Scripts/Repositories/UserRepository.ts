@@ -148,11 +148,12 @@ module vdb.repositories {
 
 		}
 
-		public getSongLists = (userId: number, paging: dc.PagingProperties, sort: string, fields: string,
+		public getSongLists = (userId: number, query: string, paging: dc.PagingProperties, sort: string, fields: string,
 			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
 	    
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/songLists");
 			$.getJSON(url, {
+				query: query,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				sort: sort,
 				fields: fields

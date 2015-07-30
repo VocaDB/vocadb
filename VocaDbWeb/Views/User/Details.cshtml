@@ -337,27 +337,13 @@
 
 <div data-bind="visible: view() == 'CustomLists', with: songLists">
 	
-	<div>
-		<span>Sort by</span>
-		<div class="btn-group">
-			<a data-bind="click: function() { sort('Date'); }, css: { active: sort() == 'Date' }" visible="{{ showEventDateSort }}" class="btn" href="#">
-				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Date
-			</a>
-			<a data-bind="click: function() { sort('CreateDate'); }, css: { active: sort() == 'CreateDate' }" class="btn" href="#">
-				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.CreateDate
-			</a>
-			<a data-bind="click: function() { sort('Name'); }, css: { active: sort() == 'Name' }" class="btn" href="#">
-				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Name
-			</a>
-		</div>
-	</div>
+	@{ Html.RenderPartial("Partials/_SongListsFilters"); }
 
 	@SongHelpers.SongListsKnockout("items", true)
 	
 	<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 
-	@if (ownProfile)
-	{
+	@if (ownProfile) {
 		<a href="@Url.Action("Edit", "SongList")" class="textLink addLink">@R.CreateNewList</a>
 	}
 </div>

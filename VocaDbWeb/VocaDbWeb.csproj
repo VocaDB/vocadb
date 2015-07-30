@@ -2484,7 +2484,6 @@
     <Folder Include="Views\Integration\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
     <Folder Include="Views\Shared\KnockoutTemplates\" />
-    <Folder Include="Views\SongList\Partials\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -2677,6 +2676,7 @@
     <Content Include="Views\User\Stats.cshtml" />
     <Content Include="Views\Shared\LayoutPartials\_TwitterCard.cshtml" />
     <Content Include="Views\Song\Rankings.cshtml" />
+    <Content Include="Views\Shared\Partials\_SongListsFilters.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

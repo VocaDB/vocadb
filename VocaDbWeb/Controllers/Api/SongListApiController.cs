@@ -77,7 +77,7 @@ namespace VocaDb.Web.Controllers.Api {
 					.WhereHasFeaturedCategory(featuredCategory, false)
 					.WhereHasName(textQuery);
 
-				var count = getTotalCount ? query.Count() : 0;
+				var count = getTotalCount ? listQuery.Count() : 0;
 
 				return new PartialFindResult<SongListForApiContract>(listQuery
 					.OrderBy(sort)

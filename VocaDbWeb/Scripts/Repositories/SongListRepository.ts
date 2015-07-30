@@ -8,11 +8,12 @@ module vdb.repositories {
 
 		constructor(private urlMapper: vdb.UrlMapper) {}
 
-		public getFeatured = (category: string, paging: dc.PagingProperties, sort: string,
+		public getFeatured = (query: string, category: string, paging: dc.PagingProperties, sort: string,
 			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
 			
 			var url = this.urlMapper.mapRelative("/api/songLists/featured");
 			$.getJSON(url, {
+				query: query,
 				featuredCategory: category,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				sort: sort

@@ -28,20 +28,7 @@
 	@foreach (var cat in categories) {
 	<div id="@(cat.Id + "Tab")" style="padding:10px;" data-bind="with: categories['@cat.Id']">
 		
-		<div>
-			<span>@Res.SortBy</span>
-			<div class="btn-group">
-				<a data-bind="click: function() { sort('Date'); }, css: { active: sort() == 'Date' }" visible="{{ showEventDateSort }}" class="btn" href="#">
-					@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Date
-				</a>
-				<a data-bind="click: function() { sort('CreateDate'); }, css: { active: sort() == 'CreateDate' }" class="btn" href="#">
-					@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.CreateDate
-				</a>
-				<a data-bind="click: function() { sort('Name'); }, css: { active: sort() == 'Name' }" class="btn" href="#">
-					@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Name
-				</a>
-			</div>		
-		</div>
+		@{ Html.RenderPartial("Partials/_SongListsFilters"); }
 
 		@SongHelpers.SongListsKnockout("items", groupByYear: true)
 

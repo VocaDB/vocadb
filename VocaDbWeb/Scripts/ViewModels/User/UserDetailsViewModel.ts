@@ -117,7 +117,7 @@ module vdb.viewModels.user {
 		}
 
 		public loadMoreItems = (callback) => {			
-			this.userRepo.getSongLists(this.userId, { start: this.start, maxEntries: 50, getTotalCount: true }, this.sort(), 'MainPicture', callback);
+			this.userRepo.getSongLists(this.userId, this.query(), { start: this.start, maxEntries: 50, getTotalCount: true }, this.sort(), 'MainPicture', callback);
 		}
 
 	}
