@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
@@ -11,7 +12,6 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Web.Helpers;
 
@@ -269,8 +269,10 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult AlbumsPerVocaloid() {
-			
+		public ActionResult AlbumsPerVocaloid(DateTime? cutoff) {
+
+			Expression<Func<ArtistForAlbum, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Album.CreateDate >= cutoff : true);
+
 			return SimpleBarChart<Artist>(q => q
 					.Where(a => 
 						a.ArtistType == ArtistType.Vocaloid || 
@@ -284,7 +286,9 @@ namespace VocaDb.Web.Controllers {
 							Romaji = a.Names.SortNames.Romaji, 
 							Japanese = a.Names.SortNames.Japanese, 
 						},
-						Value = a.AllAlbums.Count(s => !s.IsSupport && !s.Album.Deleted)
+						Value = a.AllAlbums
+							.AsQueryable().Where(dateFilter)
+							.Count(s => !s.IsSupport && !s.Album.Deleted)
 					}), "Albums by Vocaloid/UTAU", "Songs");
 
 		}
@@ -341,11 +345,9 @@ namespace VocaDb.Web.Controllers {
 		public ActionResult EditsPerUser(DateTime? cutoff) {
 			
 			return SimpleBarChart<ActivityEntry>(q => { 
-			
-				if (cutoff.HasValue)
-					q = q.Where(a => a.CreateDate >= cutoff);
-	
+				
 				return q
+					.FilterIfNotNull(cutoff, a => a.CreateDate >= cutoff.Value)
 					.GroupBy(a => a.Author.Name)
 					.Select(a => new LocalizedValue {
 						Name = new TranslatedString {			
@@ -452,8 +454,10 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult SongsPerVocaloid() {
-			
+		public ActionResult SongsPerVocaloid(DateTime? cutoff) {
+
+			Expression<Func<ArtistForSong, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Song.CreateDate >= cutoff : true);
+
 			return SimpleBarChart<Artist>(q => q
 					.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU || a.ArtistType == ArtistType.Utaite)
 					.Select(a => new LocalizedValue {
@@ -463,7 +467,8 @@ namespace VocaDb.Web.Controllers {
 							Romaji = a.Names.SortNames.Romaji, 
 							Japanese = a.Names.SortNames.Japanese, 
 						},
-						Value = a.AllSongs.Count(s => !s.IsSupport && !s.Song.Deleted)
+						Value = a.AllSongs.AsQueryable().Where(dateFilter)
+							.Count(s => !s.IsSupport && !s.Song.Deleted)
 					}), "Songs by Vocaloid/UTAU", "Songs");
 
 		}
@@ -571,6 +576,19 @@ namespace VocaDb.Web.Controllers {
 		public ActionResult Index() {
 			
 			return View();
+
+		}
+
+	}
+
+	public static class IQueryableExtensionsForStats {
+
+		public static IQueryable<T> FilterIfNotNull<T>(this IQueryable<T> query, DateTime? since, Expression<Func<T, bool>> predicate) {
+
+			if (!since.HasValue)
+				return query;
+
+			return query.Where(predicate);
 
 		}
 
