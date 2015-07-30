@@ -293,6 +293,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a list of song lists for a user.
 		/// </summary>
 		/// <param name="userId">User whose song lists are to be loaded.</param>
+		/// <param name="query">Song list name query (optional).</param>
+		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Auto).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -301,12 +303,16 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>List of song lists.</returns>
 		[Route("{userId:int}/songLists")]
 		public PartialFindResult<SongListForApiContract> GetSongLists(
-			int userId, 
+			int userId,
+			string query = "",
+			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,
 			SongListOptionalFields? fields = null) {
-			
-			return queries.GetCustomSongLists(userId, WebHelper.IsSSL(Request), sort, 
+
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+
+			return queries.GetCustomSongLists(userId, textQuery, WebHelper.IsSSL(Request), sort, 
 				new PagingProperties(start, maxResults, getTotalCount), fields ?? SongListOptionalFields.None);
 
 		}

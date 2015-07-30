@@ -15,6 +15,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
 using VocaDb.Web.Controllers.DataAccess;
@@ -51,6 +52,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of featured song lists.
 		/// </summary>
+		/// <param name="query">Song list name query (optional).</param>
+		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Auto).</param>
 		/// <param name="featuredCategory">Filter by a specific featured category. If empty, all categories are returned.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
@@ -58,20 +61,25 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="sort">List sort rule. Possible values are Nothing, Date, CreateDate, Name.</param>
 		/// <returns>List of song lists.</returns>
 		[Route("featured")]
-		public PartialFindResult<SongListForApiContract> GetFeaturedLists(SongListFeaturedCategory? featuredCategory = null,
+		public PartialFindResult<SongListForApiContract> GetFeaturedLists(
+			string query = "",
+			NameMatchMode nameMatchMode = NameMatchMode.Auto,
+			SongListFeaturedCategory? featuredCategory = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name) {
 			
 			var ssl = WebHelper.IsSSL(Request);
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			return queries.HandleQuery(ctx => {
 				
-				var query = ctx.Query()
-					.WhereHasFeaturedCategory(featuredCategory, false);
+				var listQuery = ctx.Query()
+					.WhereHasFeaturedCategory(featuredCategory, false)
+					.WhereHasName(textQuery);
 
 				var count = getTotalCount ? query.Count() : 0;
 
-				return new PartialFindResult<SongListForApiContract>(query
+				return new PartialFindResult<SongListForApiContract>(listQuery
 					.OrderBy(sort)
 					.Paged(new PagingProperties(start, maxResults, getTotalCount))
 					.ToArray()

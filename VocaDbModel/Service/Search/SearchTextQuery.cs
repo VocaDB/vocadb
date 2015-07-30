@@ -18,11 +18,7 @@ namespace VocaDb.Model.Service.Search {
 		private readonly string originalQuery;
 		private readonly string query;
 
-		public static SearchTextQuery Empty {
-			get {
-				return new SearchTextQuery();
-			}
-		}
+		public static SearchTextQuery Empty => new SearchTextQuery();
 
 		/// <summary>
 		/// Creates search text query.
@@ -75,33 +71,23 @@ namespace VocaDb.Model.Service.Search {
 		/// Whether no name filter is specified.
 		/// Usually this means no filtering is done.
 		/// </summary>
-		public bool IsEmpty {
-			get {
-				return string.IsNullOrEmpty(Query);
-			}
-		}
+		public bool IsEmpty => string.IsNullOrEmpty(Query);
 
 		/// <summary>
 		/// Whether the query represents exact match.
 		/// </summary>
-		public bool IsExact {
-			get { return MatchMode == NameMatchMode.Exact; }
-		}
+		public bool IsExact => MatchMode == NameMatchMode.Exact;
 
 		/// <summary>
 		/// Selected name match mode. This cannot be Auto.
 		/// </summary>
-		public NameMatchMode MatchMode {
-			get { return matchMode; }
-		}
+		public NameMatchMode MatchMode => matchMode;
 
 		/// <summary>
 		/// Original query without any processing.
 		/// Can be null or empty.
 		/// </summary>
-		public string OriginalQuery {
-			get { return originalQuery; }
-		}
+		public string OriginalQuery => originalQuery;
 
 		/// <summary>
 		/// Textual filter for entry name.
@@ -111,19 +97,13 @@ namespace VocaDb.Model.Service.Search {
 		/// Usually this field is processed by trimming any whitespace, 
 		/// and by removing any SQL or query wildcards (such as asterisks and quotes).
 		/// </remarks>
-		public string Query {
-			get { return query; }
-		}
+		public string Query => query;
 
 		/// <summary>
 		/// List of search query words.
 		/// This list will be cached.
 		/// </summary>
-		public string[] Words {
-			get {
-				return words ?? (words = FindHelpers.GetQueryWords(Query));
-			}
-		}
+		public string[] Words => words ?? (words = FindHelpers.GetQueryWords(Query));
 
 		public override string ToString() {
 			return string.Format("Text filter by '{0}' ({1})", Query, MatchMode);

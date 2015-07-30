@@ -849,12 +849,13 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, bool ssl, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
+		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SearchTextQuery textQuery, bool ssl, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
 			
 			return HandleQuery(ctx => { 
 				
 				var query = ctx.Query<SongList>()
-					.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing);
+					.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing)
+					.WhereHasName(textQuery);
 
 				var items = query.OrderBy(sort)
 					.Paged(paging)
