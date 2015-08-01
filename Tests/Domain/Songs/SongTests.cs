@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
@@ -7,6 +8,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Tests.TestData;
 
 namespace VocaDb.Tests.Domain.Songs {
 
@@ -20,8 +22,16 @@ namespace VocaDb.Tests.Domain.Songs {
 		private LyricsForSong lyrics;
 		private Song song;
 
-		private void CreatePV(PVService service) {
-			song.CreatePV(new PVContract { Service = service, PVId = "test", Name = "test" });
+		private PVForSong CreatePV(PVService service = PVService.Youtube, PVType pvType = PVType.Original, DateTime? publishDate = null) {
+			return song.CreatePV(new PVContract { Service = service, PVId = "test", Name = "test", PublishDate = publishDate, PVType = pvType });
+		}
+
+		private void TestUpdatePublishDateFromPVs(DateTime? expected, params PVForSong[] pvs) {
+
+			song.UpdatePublishDateFromPVs();
+
+			Assert.AreEqual(expected, song.PublishDate.DateTime, "PublishDate");
+
 		}
 
 		[TestInitialize]
@@ -137,6 +147,53 @@ namespace VocaDb.Tests.Domain.Songs {
 			song.UpdatePVServices();
 
 			Assert.AreEqual(PVServices.NicoNicoDouga | PVServices.SoundCloud | PVServices.Youtube, song.PVServices);
+
+		}
+
+		[TestMethod]
+		public void UpdatePublishDateFromPVs_NoPVs_NotUpdated() {
+			
+			TestUpdatePublishDateFromPVs(null);
+
+		}
+
+		[TestMethod]
+		public void UpdatePublishDateFromPVs_HasPV_Updated() {
+
+			TestUpdatePublishDateFromPVs(new DateTime(2010, 1, 1), CreatePV(publishDate: new DateTime(2010, 1, 1)));
+
+		}
+
+		[TestMethod]
+		public void UpdatePublishDateFromPVs_HasPV_NotOriginal_NotUpdated() {
+
+			TestUpdatePublishDateFromPVs(null, CreatePV(publishDate: new DateTime(2010, 1, 1), pvType: PVType.Reprint));
+
+		}
+
+		[TestMethod]
+		public void UpdatePublishDateFromPVs_MultiplePVs() {
+
+			TestUpdatePublishDateFromPVs(new DateTime(2008, 6, 12), 
+				CreatePV(publishDate: new DateTime(2010, 1, 1)),
+				CreatePV(publishDate: new DateTime(2008, 6, 12))
+			);
+
+		}
+
+		[TestMethod]
+		public void UpdatePublishDateFromPVs_AlbumReleaseDate() {
+
+			var album = CreateEntry.Album();
+			album.OriginalReleaseDate.Year = 2007;
+			album.OriginalReleaseDate.Month = 6;
+			album.OriginalReleaseDate.Day = 1;
+
+			album.AddSong(song, 1, 1);
+
+			TestUpdatePublishDateFromPVs(new DateTime(2007, 6, 1),
+				CreatePV(publishDate: new DateTime(2010, 1, 1))
+			);
 
 		}
 

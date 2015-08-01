@@ -760,13 +760,23 @@ namespace VocaDb.Model.Domain.Songs {
 				return;
 
 			// Sanity check
-			var minDate = new DateTime(2000, 1, 1); 
+			var minDateLimit = new DateTime(2000, 1, 1); 
 
 			// Original PVs that have a publish date
-			var pvsWithDate = PVs.Where(p => p.PVType == PVType.Original && p.PublishDate.HasValue && p.PublishDate > minDate).ToArray();
+			var pvsWithDate = PVs.Where(p => p.PVType == PVType.Original && p.PublishDate.HasValue && p.PublishDate > minDateLimit).ToArray();
 
 			// Lowest published (original) PV
-			PublishDate = pvsWithDate.Any() ? pvsWithDate.Min(p => p.PublishDate) : null;
+			var minPvDate = pvsWithDate.Any() ? pvsWithDate.Min(p => p.PublishDate) : null;
+
+			var minAlbumDate = Albums
+				.Where(a => a.Album != null && a.Album.OriginalReleaseDate.IsFullDate)
+				.Select(a => a.Album.OriginalReleaseDate.ToDateTime())
+				.Where(d => d > minDateLimit)
+				.MinOrDefault();
+
+			var minDate = minAlbumDate > minDateLimit && minAlbumDate < minPvDate ? minAlbumDate : minPvDate;
+
+			PublishDate = minDate;
 
 		}
 

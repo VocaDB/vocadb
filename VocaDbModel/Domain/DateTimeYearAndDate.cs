@@ -92,9 +92,9 @@ namespace VocaDb.Model.Domain {
 		/// The date is empty when the year is not specified. 
 		/// Other components do not matter.
 		/// </summary>
-		public virtual bool IsEmpty {
-			get { return (Year == null); }
-		}
+		public virtual bool IsEmpty => (Year == null);
+
+		public virtual bool IsFullDate => (Year.HasValue && Month.HasValue && Day.HasValue);
 
 		public virtual int? Month { get; set; }
 
