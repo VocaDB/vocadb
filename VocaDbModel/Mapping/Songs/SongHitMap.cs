@@ -12,6 +12,8 @@ namespace VocaDb.Model.Mapping.Songs {
 			ReadOnly();
 
 			Map(m => m.Agent).Not.Nullable();
+			Map(m => m.Date).Not.Nullable().Generated.Always();
+
 			References(m => m.Song).Not.Nullable();
 
 		}

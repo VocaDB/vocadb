@@ -42,7 +42,7 @@ module vdb.viewModels {
 					name: 'Albums', reports: [
 						{ name: 'Releases by month', url: 'albumsPerMonth' },
 						{ name: 'Cumulative albums per day', url: 'cumulativeAlbums' },
-						{ name: 'Hits per album', url: 'hitsPerAlbum' },
+						{ name: 'Hits per album', url: 'hitsPerAlbum', allowTimespan: true },
 						{ name: 'Albums per genre', url: 'albumsPerGenre' }
 					]
 				},
@@ -50,7 +50,7 @@ module vdb.viewModels {
 					name: 'Songs', reports: [
 						{ name: 'Songs added per day', url: 'songsAddedPerDay', allowTimespan: true },
 						{ name: 'Songs published per day', url: 'songsPublishedPerDay' },
-						{ name: 'Hits per song', url: 'hitsPerSong' },
+						{ name: 'Hits per song', url: 'hitsPerSong', allowTimespan: true },
 						{ name: 'Songs per genre', url: 'songsPerGenre' }
 					]
 				},

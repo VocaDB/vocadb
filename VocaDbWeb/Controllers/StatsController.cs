@@ -489,11 +489,12 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult HitsPerAlbum() {
+		public ActionResult HitsPerAlbum(DateTime? cutoff) {
 			
 			var values = userRepository.HandleQuery(ctx => {
 				
 				var idsAndHits = ctx.OfType<AlbumHit>().Query()
+					.FilterIfNotNull(cutoff, s => s.Date > cutoff)
 					.GroupBy(h => h.Album.Id)
 					.Select(h => new {
 						Id = h.Key,
@@ -531,11 +532,12 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult HitsPerSong() {
+		public ActionResult HitsPerSong(DateTime? cutoff) {
 			
 			var values = userRepository.HandleQuery(ctx => {
 				
 				var idsAndHits = ctx.OfType<SongHit>().Query()
+					.FilterIfNotNull(cutoff, s => s.Date > cutoff)
 					.GroupBy(h => h.Song.Id)
 					.Select(h => new {
 						Id = h.Key,

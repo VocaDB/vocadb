@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace VocaDb.Model.Domain {
 
 	public abstract class EntryHit {
@@ -15,6 +17,11 @@ namespace VocaDb.Model.Domain {
 			get { return agent; }
 			set { agent = value; }
 		}
+
+		/// <summary>
+		/// Database-generated
+		/// </summary>
+		public virtual DateTime Date { get; set; }
 
 		public virtual long Id { get; set; }
 
