@@ -298,16 +298,31 @@ namespace VocaDb.Web.Controllers.Api {
 
 				if (durationHours.HasValue) {
 
-
-					if (filterBy == TopSongsDateFilterType.PublishDate) {
-						var endDate = (DateTime.Now - TimeSpan.FromHours(durationHours.Value)).Date;
-						query = query.Where(s => s.PublishDate.DateTime != null && s.PublishDate.DateTime.Value >= endDate);
-					} else {
-						var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);					
-						query = query.Where(s => s.CreateDate >= endDate);						
+					switch (filterBy) {
+						case TopSongsDateFilterType.PublishDate: {
+							var endDate = (DateTime.Now - TimeSpan.FromHours(durationHours.Value)).Date;
+							query = query.Where(s => s.PublishDate.DateTime != null && s.PublishDate.DateTime.Value >= endDate);
+							break;
+						}
+						case TopSongsDateFilterType.CreateDate: {
+							var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);
+							query = query.Where(s => s.CreateDate >= endDate);
+							break;		
+						}
+						case TopSongsDateFilterType.Popularity: {
+							// Sort by number of ratings and hits during that time
+							// Older songs get more hits so value them even less
+							var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);
+							query = query.OrderByDescending(s => s.UserFavorites
+								.Where(f => f.Date >= endDate)
+								.Sum(f => (int)f.Rating) + (s.Hits.Count(h => h.Date >= endDate) / 100));
+							break;
+						}
 					}
 						
-					query = query.OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30));
+					if (filterBy != TopSongsDateFilterType.Popularity) {
+						query = query.OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30));
+					}
 
 				} else {
 					query = query.OrderByDescending(s => s.RatingScore);			
@@ -356,7 +371,8 @@ namespace VocaDb.Web.Controllers.Api {
 
 	public enum TopSongsDateFilterType {
 		CreateDate,
-		PublishDate
+		PublishDate,
+		Popularity
 	}
 
 }

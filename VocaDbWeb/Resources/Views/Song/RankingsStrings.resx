@@ -144,8 +144,20 @@
   <data name="FilterCreateDate" xml:space="preserve">
     <value>Newly added</value>
   </data>
+  <data name="FilterCreateDateDescription" xml:space="preserve">
+    <value>Songs that were added to VocaDB recently</value>
+  </data>
+  <data name="FilterPopularity" xml:space="preserve">
+    <value>Popularity</value>
+  </data>
+  <data name="FilterPopularityDescription" xml:space="preserve">
+    <value>Songs that have been popular recently</value>
+  </data>
   <data name="FilterPublishDate" xml:space="preserve">
     <value>Newly published</value>
+  </data>
+  <data name="FilterPublishDateDescription" xml:space="preserve">
+    <value>Songs that were published recently</value>
   </data>
   <data name="NoSongs" xml:space="preserve">
     <value>No songs found :(</value>

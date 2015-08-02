@@ -19,11 +19,14 @@
 </div>
 
 <div class="btn-group">
-	<a href="#" data-bind="click: function() { dateFilterType('CreateDate'); }, css: { active: dateFilterType() == 'CreateDate' }" class="btn" title="Songs that were added to VocaDB recently">
+	<a href="#" data-bind="click: function() { dateFilterType('CreateDate'); }, css: { active: dateFilterType() == 'CreateDate', disabled: !durationHours() }" class="btn" title="@Res.FilterCreateDateDescription">
 		@Res.FilterCreateDate
 	</a>
-	<a href="#" data-bind="click: function() { dateFilterType('PublishDate'); }, css: { active: dateFilterType() == 'PublishDate' }" class="btn" title="Songs that were published recently">
+	<a href="#" data-bind="click: function() { dateFilterType('PublishDate'); }, css: { active: dateFilterType() == 'PublishDate', disabled: !durationHours() }" class="btn" title="@Res.FilterPublishDateDescription">
 		@Res.FilterPublishDate
+	</a>
+	<a href="#" data-bind="click: function() { dateFilterType('Popularity'); }, css: { active: dateFilterType() == 'Popularity', disabled: !durationHours() }" class="btn" title="@Res.FilterPopularityDescription">
+		@Res.FilterPopularity
 	</a>
 </div>
 

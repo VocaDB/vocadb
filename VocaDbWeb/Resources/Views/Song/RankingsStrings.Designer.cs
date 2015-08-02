@@ -142,11 +142,47 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Songs that were added to VocaDB recently.
+        /// </summary>
+        public static string FilterCreateDateDescription {
+            get {
+                return ResourceManager.GetString("FilterCreateDateDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popularity.
+        /// </summary>
+        public static string FilterPopularity {
+            get {
+                return ResourceManager.GetString("FilterPopularity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs that have been popular recently.
+        /// </summary>
+        public static string FilterPopularityDescription {
+            get {
+                return ResourceManager.GetString("FilterPopularityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Newly published.
         /// </summary>
         public static string FilterPublishDate {
             get {
                 return ResourceManager.GetString("FilterPublishDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs that were published recently.
+        /// </summary>
+        public static string FilterPublishDateDescription {
+            get {
+                return ResourceManager.GetString("FilterPublishDateDescription", resourceCulture);
             }
         }
         
