@@ -89,7 +89,8 @@ module vdb.viewModels.user {
 		public songListId = ko.observable<number>(undefined);
 		public songLists = ko.observableArray<dc.SongListBaseContract>([]);
 		public sort = ko.observable("Name");
-		public sortName = ko.computed(() => this.resources() != null ? this.resources().songSortRuleNames[this.sort()] : "");
+		public sortName = ko.computed(() => this.resources() != null ? (this.resources().user_ratedSongForUserSortRuleNames[this.sort()]
+			|| this.resources().songSortRuleNames[this.sort()]) : "");
 		public tag = ko.observable("");
 		public viewMode = ko.observable("Details");
 
@@ -108,7 +109,7 @@ module vdb.viewModels.user {
 
 			this.userRepo.getSongLists(this.loggedUserId, null, { start: 0, maxEntries: 50, getTotalCount: false }, "Name", null, songLists => this.songLists(songLists.items));
 
-			this.resourceRepo.getList(this.cultureCode, ['songSortRuleNames', 'songTypeNames'], resources => {
+			this.resourceRepo.getList(this.cultureCode, ['songSortRuleNames', 'user_ratedSongForUserSortRuleNames', 'songTypeNames'], resources => {
 				this.resources(resources);
 				this.updateResultsWithTotalCount();
 				this.isInit = true;

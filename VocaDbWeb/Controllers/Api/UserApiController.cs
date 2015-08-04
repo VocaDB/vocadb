@@ -264,7 +264,7 @@ namespace VocaDb.Web.Controllers.Api {
 			bool groupByRating = true,
 			[FromUri] PVServices? pvServices = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
-			SongSortRule? sort = null,
+			RatedSongForUserSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto, 
 			SongOptionalFields fields = SongOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
@@ -274,7 +274,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var queryParams = new RatedSongQueryParams(userId, new PagingProperties(start, maxResults, getTotalCount)) {
 				TextQuery = textQuery,
-				SortRule = sort ?? SongSortRule.Name,
+				SortRule = sort ?? RatedSongForUserSortRule.Name,
 				ArtistId = artistId ?? 0,
 				ChildVoicebanks = childVoicebanks,
 				FilterByRating = rating ?? SongVoteRating.Nothing,

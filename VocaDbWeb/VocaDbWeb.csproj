@@ -455,6 +455,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UserGroupNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Users\RatedSongForUserSortRuleNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RatedSongForUserSortRuleNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\WebLinkCategoryNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -778,6 +783,7 @@
     </Compile>
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
     <Compile Include="Controllers\DataAccess\ActivityEntryQueries.cs" />
+    <Compile Include="Helpers\Support\DerivedTranslateableEnum.cs" />
     <Compile Include="Helpers\UrlHelperExtender.cs" />
     <Compile Include="Models\Ext\EmbedSongViewModel.cs" />
     <Compile Include="Models\SongLists\SongListDetailsViewModel.cs" />
@@ -1611,6 +1617,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="albumsearch.xml">
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_GlobalResources\Users\RatedSongForUserSortRuleNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RatedSongForUserSortRuleNames.Designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Resources\Swagger\index.html" />
     <EmbeddedResource Include="Resources\Swagger\styles.css" />

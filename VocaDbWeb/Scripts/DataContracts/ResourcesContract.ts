@@ -20,6 +20,8 @@ module vdb.dataContracts {
 
 		tag_tagEditableFieldNames?: { [key: string]: string; }
 
+		user_ratedSongForUserSortRuleNames?: { [key: string]: string; }
+
 		albumCollectionStatusNames?: { [key: string]: string; }
 
 		albumMediaTypeNames?: { [key: string]: string; }

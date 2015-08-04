@@ -1,6 +1,7 @@
 ﻿using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.User {
 
@@ -18,7 +19,7 @@ namespace VocaDb.Model.Service.Search.User {
 
 			FilterByRating = SongVoteRating.Nothing;
 			GroupByRating = true;
-			SortRule = SongSortRule.Name;
+			SortRule = RatedSongForUserSortRule.Name;
 			TextQuery = new SearchTextQuery();
 
 		}
@@ -46,7 +47,7 @@ namespace VocaDb.Model.Service.Search.User {
 		/// <summary>
 		/// Song sort rule.
 		/// </summary>
-		public SongSortRule SortRule { get; set; }
+		public RatedSongForUserSortRule SortRule { get; set; }
 
 		public string Tag { get; set; }
 

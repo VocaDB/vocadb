@@ -14,16 +14,22 @@ namespace VocaDb.Web.Helpers.Support {
 		private readonly Func<ResourceManager> resourceManager;
 		private readonly TEnum[] values;
 
-		private ResourceManager ResourceManager {
-			get { return resourceManager(); }
+		internal ResourceManager ResourceManager => resourceManager();
+
+		internal virtual string GetName(string val, ResourceManager res) {
+			return res.GetString(val);
+		}
+
+		internal virtual string GetName(string val, ResourceManager res, CultureInfo cultureInfo) {
+			return res.GetString(val, cultureInfo);
 		}
 
 		private string GetName(TEnum val, ResourceManager res) {
-			return res.GetString(val.ToString());
+			return GetName(val.ToString(), res);
 		}
 
 		private string GetName(TEnum val, ResourceManager res, CultureInfo cultureInfo) {
-			return res.GetString(val.ToString(), cultureInfo);
+			return GetName(val.ToString(), res, cultureInfo);
 		}
 
 		public TranslateableEnum(Func<ResourceManager> resourceManager) {

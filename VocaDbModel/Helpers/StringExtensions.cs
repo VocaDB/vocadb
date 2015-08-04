@@ -12,6 +12,10 @@
 
 		}*/
 
+		public static string EmptyToNull(this string str) {
+			return str == string.Empty ? null : str;
+		}
+
 		/// <summary>
 		/// Returns a string that's optimally between minimum and maximum length.
 		/// Picks the first line, and if that's suitable, returns only that first line.

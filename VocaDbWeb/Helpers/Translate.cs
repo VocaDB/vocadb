@@ -14,6 +14,7 @@ using VocaDb.Model.Service;
 using VocaDb.Web.Helpers.Support;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Web.Helpers {
 
@@ -100,6 +101,12 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<SongSortRule> SongSortRuleNames =
 			new TranslateableEnum<SongSortRule>(() => global::Resources.SongSortRuleNames.ResourceManager, new[] {
 				SongSortRule.Name, SongSortRule.AdditionDate, SongSortRule.PublishDate, SongSortRule.RatingScore, SongSortRule.FavoritedTimes,
+			});
+
+		public static readonly DerivedTranslateableEnum<RatedSongForUserSortRule, SongSortRule> RatedSongForUserSortRuleNames =
+			new DerivedTranslateableEnum<RatedSongForUserSortRule, SongSortRule>(SongSortRuleNames, () => global::Resources.RatedSongForUserSortRuleNames.ResourceManager, new[] {
+				RatedSongForUserSortRule.Name, RatedSongForUserSortRule.AdditionDate, RatedSongForUserSortRule.PublishDate,
+				RatedSongForUserSortRule.RatingScore, RatedSongForUserSortRule.FavoritedTimes, RatedSongForUserSortRule.RatingDate
 			});
 
 		public static readonly TranslateableEnum<SongType> SongTypeNames =

@@ -12,7 +12,7 @@
 		
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
-			@KnockoutHelpers.Dropdown(Translate.SongSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")
+			@KnockoutHelpers.Dropdown(Translate.RatedSongForUserSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")
 		</div>
 
 		<button class="btn" data-bind="click: function() { groupByRating(!groupByRating()); }, css: { active: groupByRating }">

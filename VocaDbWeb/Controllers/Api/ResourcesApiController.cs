@@ -42,6 +42,7 @@ namespace VocaDb.Web.Controllers.Api {
 			{ "songList_songListEditableFieldNames", global::Resources.SongListEditableFieldNames.ResourceManager },
 			{ "songList_songListFeaturedCategoryNames", global::Resources.SongListFeaturedCategoryNames.ResourceManager },
 			{ "tag_tagEditableFieldNames", global::Resources.TagEditableFieldNames.ResourceManager },
+			{ "user_ratedSongForUserSortRuleNames", global::Resources.RatedSongForUserSortRuleNames.ResourceManager },
 			{ "albumCollectionStatusNames", global::Resources.AlbumCollectionStatusNames.ResourceManager },
 			{ "albumMediaTypeNames", global::Resources.AlbumMediaTypeNames.ResourceManager },
 			{ "albumSortRuleNames", global::Resources.AlbumSortRuleNames.ResourceManager },
