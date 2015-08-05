@@ -12,6 +12,7 @@ using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
@@ -23,6 +24,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Web.Code;
 using VocaDb.Web.Controllers.DataAccess;
@@ -418,6 +420,14 @@ namespace VocaDb.Web.Controllers.Api {
 		public void PostEditComment(int commentId, CommentForApiContract contract) {
 			
 			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
+
+		}
+
+		[Route("current/refreshEntryEdit")]
+		[Authorize]
+		public void PostRefreshEntryEdit(EntryType entryType, int entryId) {
+
+			ConcurrentEntryEditManager.CheckConcurrentEdits(new EntryRef(entryType, entryId), permissionContext.LoggedUser);
 
 		}
 

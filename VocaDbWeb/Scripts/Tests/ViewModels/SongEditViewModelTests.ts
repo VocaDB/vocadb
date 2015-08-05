@@ -20,12 +20,13 @@ module vdb.tests.viewModels {
 	var songRepo = new sup.FakeSongRepository();
 	var artistRepo = new sup.FakeArtistRepository();
 	var pvRepo = null;
+	var userRepo = new sup.FakeUserRepository();
 	resources.song = { addExtraArtist: 'Add extra artist' };
 
     QUnit.module("SongEditViewModelTests");
 
     function createViewModel() {
-		return new vm.SongEditViewModel(songRepo, artistRepo, pvRepo, new vdb.UrlMapper(''), {}, categories, data, false, null);
+		return new vm.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, new vdb.UrlMapper(''), {}, categories, data, false, null);
     }
 
     QUnit.test("constructor", () => {

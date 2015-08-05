@@ -205,15 +205,16 @@
 		var urlMapper = new vdb.UrlMapper('@RootPath');
 		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var artistRepo = repoFactory.artistRepository();
+		var userRepo = repoFactory.userRepository();
 		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedArtist));
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
 
 		if (editedModel) {
-			ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, urlMapper, webLinkCategoryJson, editedModel, new vdb.ui_dialog.DialogService()));
+			ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, editedModel, new vdb.ui_dialog.DialogService()));
 		} else {
 
 			artistRepo.getForEdit(@Model.Artist.Id, function (model) {
-				ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, urlMapper, webLinkCategoryJson, model, new vdb.ui_dialog.DialogService()));
+				ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, model, new vdb.ui_dialog.DialogService()));
 			});
 
 		}

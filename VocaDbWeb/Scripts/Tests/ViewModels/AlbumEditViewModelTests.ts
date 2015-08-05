@@ -8,10 +8,12 @@ module vdb.tests.viewModels {
 
     import vm = vdb.viewModels;
     import dc = vdb.dataContracts;
+	import sup = vdb.tests.testSupport;
 
     var rep = new vdb.tests.testSupport.FakeAlbumRepository();
 	var songRep: vdb.tests.testSupport.FakeSongRepository;
 	var artistRep: vdb.tests.testSupport.FakeArtistRepository;
+	var userRepo = new sup.FakeUserRepository();
 	var pvRep = null;
 	var urlMapper = new UrlMapper("");
 
@@ -85,7 +87,7 @@ module vdb.tests.viewModels {
     });
 
     function createViewModel() {
-        return new vm.AlbumEditViewModel(rep, songRep, artistRep, pvRep, urlMapper, roles, categories, data, true, false, null);
+        return new vm.AlbumEditViewModel(rep, songRep, artistRep, pvRep, userRepo, urlMapper, roles, categories, data, true, false, null);
     }
 
     function createTrackPropertiesViewModel() {

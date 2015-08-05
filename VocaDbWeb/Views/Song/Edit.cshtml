@@ -287,17 +287,18 @@
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var pvRepo = repoFactory.pvRepository();
+		var userRepo = repoFactory.userRepository();
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
 		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false));
 		var vm;
 
 		if (editedModel) {
-			vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, urlMapper, artistRoleJson, webLinkCategoryJson, 
+			vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, webLinkCategoryJson, 
 				editedModel, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
 			ko.applyBindings(vm);
 		} else {
 			songRepo.getForEdit(@Model.Id, function (model) {
-				vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, urlMapper, artistRoleJson, 
+				vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, 
 					webLinkCategoryJson, model, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
 				ko.applyBindings(vm);
 			});

@@ -103,6 +103,7 @@ module vdb.viewModels {
 
         constructor(
 			private artistRepo: rep.ArtistRepository,
+			userRepository: rep.UserRepository,
 			private urlMapper: vdb.UrlMapper,
 			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
 			data: dc.artists.ArtistForEditContract,
@@ -141,6 +142,8 @@ module vdb.viewModels {
 				this.validationError_unspecifiedNames()
 			);
 			    
+			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Artist, data.id), 10000);			
+
         }
 
     }

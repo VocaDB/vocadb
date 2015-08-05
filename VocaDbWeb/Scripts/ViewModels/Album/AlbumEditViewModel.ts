@@ -227,6 +227,7 @@ module vdb.viewModels {
 			songRepository: rep.SongRepository,
 			private artistRepository: rep.ArtistRepository,
 			pvRepository: rep.PVRepository,
+			userRepository: rep.UserRepository,
 			private urlMapper: vdb.UrlMapper,
 			artistRoleNames: { [key: string]: string; },
 			webLinkCategories: dc.TranslatedEnumField[],
@@ -455,6 +456,8 @@ module vdb.viewModels {
 				this.validationError_needType() ||
 				this.validationError_unspecifiedNames()
 			);
+
+			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Album, data.id), 10000);			
 
         }
 

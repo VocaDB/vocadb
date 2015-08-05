@@ -148,6 +148,7 @@ module vdb.viewModels {
 			songRepository: rep.SongRepository,
 			private artistRepository: rep.ArtistRepository,
 			pvRepository: rep.PVRepository,
+			userRepository: rep.UserRepository,
 			private urlMapper: vdb.UrlMapper,
 			private artistRoleNames: { [key: string]: string; },
 			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
@@ -255,6 +256,8 @@ module vdb.viewModels {
 				this.validationError_nonInstrumentalSongNeedsVocalists() ||
 				this.validationError_unspecifiedNames()
 			);
+
+			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Song, data.id), 10000);
 
         }
 

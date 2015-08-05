@@ -197,6 +197,10 @@ module vdb.repositories {
 
         }
 
+		public refreshEntryEdit = (entryType: models.EntryType, entryId: number) => {
+			$.post(this.urlMapper.mapRelative("/api/users/current/refreshEntryEdit/?entryType=" + models.EntryType[entryType] + "&entryId=" + entryId));
+		}
+
 		public requestEmailVerification = (callback?: () => void) => {
 
 			var url = this.mapUrl("/RequestEmailVerification");
