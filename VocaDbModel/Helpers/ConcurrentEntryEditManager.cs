@@ -51,7 +51,7 @@ namespace VocaDb.Model.Helpers {
 
 		private void ClearExpiredUsages() {
 
-			var cutoffDate = DateTime.Now - TimeSpan.FromMinutes(5);
+			var cutoffDate = DateTime.Now - TimeSpan.FromMinutes(3);
 
 			lock (editors) {
 
