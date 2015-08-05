@@ -24,7 +24,7 @@
 			var cultureCode = '@UICulture';
 			var languageSelection = '@UserContext.LanguagePreference';
 			var loggedUserId = @Model.User.Id;
-			var sort = @Html.Raw(Model.Sort != null ? string.Format("'{0}'", Model.Sort) : "null");
+			var sort = @ToJS(Model.Sort.HasValue ? Model.Sort.ToString() : null);
 			var groupByRating = @ToJS(Model.GroupByRating);
 
 			var rootPath = '@RootPath';

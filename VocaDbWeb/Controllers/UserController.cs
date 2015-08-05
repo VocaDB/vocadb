@@ -17,6 +17,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Security;
@@ -173,7 +174,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult FavoriteSongs(int id = invalidId, int? page = null, SongVoteRating? rating = null, SongSortRule? sort = null, bool? groupByRating = null) {
+		public ActionResult FavoriteSongs(int id = invalidId, int? page = null, SongVoteRating? rating = null, RatedSongForUserSortRule? sort = null, bool? groupByRating = null) {
 
 			if (id == invalidId)
 				return NoId();

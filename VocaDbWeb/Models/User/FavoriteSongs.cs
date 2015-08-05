@@ -1,6 +1,6 @@
 ﻿using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Service;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Web.Models.User {
 
@@ -9,10 +9,10 @@ namespace VocaDb.Web.Models.User {
 		public FavoriteSongs() {
 			GroupByRating = true;
 			Rating = SongVoteRating.Nothing;
-			Sort = SongSortRule.Name;
+			Sort = RatedSongForUserSortRule.Name;
 		}
 
-		public FavoriteSongs(UserContract user, SongVoteRating rating, SongSortRule? sort, bool? groupByRating)
+		public FavoriteSongs(UserContract user, SongVoteRating rating, RatedSongForUserSortRule? sort, bool? groupByRating)
 			: this() {
 
 			GroupByRating = groupByRating;
@@ -26,7 +26,7 @@ namespace VocaDb.Web.Models.User {
 
 		public SongVoteRating Rating { get; set; }
 
-		public SongSortRule? Sort { get; set; }
+		public RatedSongForUserSortRule? Sort { get; set; }
 
 		public UserContract User { get; set; }
 
