@@ -449,7 +449,8 @@
 @helper PVList(IEnumerable<VocaDb.Model.DataContracts.PVs.PVContract> pvs, bool showPVType) {
 
 	foreach (var pv in pvs) {
-		<a href="#" class="pvLink btn" id="pv_@(pv.Id)" data-bind="css: { active: selectedPvId() == @pv.Id }, click: function () { selectedPvId(@pv.Id); }">
+		<a href="#" class="pvLink btn" id="pv_@(pv.Id)" data-bind="css: { active: selectedPvId() == @pv.Id }, click: function () { selectedPvId(@pv.Id); }"
+		   title="@(pv.PublishDate.HasValue && !string.IsNullOrEmpty(pv.Author) ? string.Format(Res.PVDescription, pv.PublishDate.Value.ToShortDateString(), pv.Author) : "")">
 			<img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" />
 			@(!string.IsNullOrEmpty(pv.Name) ? pv.Name : pv.Service.ToString())
 			@if (showPVType) {

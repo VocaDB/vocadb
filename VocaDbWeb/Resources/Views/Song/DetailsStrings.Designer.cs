@@ -349,6 +349,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Published at {0} by {1}..
+        /// </summary>
+        public static string PVDescription {
+            get {
+                return ResourceManager.GetString("PVDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PV.
         /// </summary>
         public static string PVDetails {

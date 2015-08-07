@@ -249,4 +249,7 @@
   <data name="AddToListNotes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="PVDescription" xml:space="preserve">
+    <value>Published at {0} by {1}.</value>
+  </data>
 </root>
