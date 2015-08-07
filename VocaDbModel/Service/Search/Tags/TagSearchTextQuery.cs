@@ -4,6 +4,8 @@ namespace VocaDb.Model.Service.Search.Tags {
 
 	public class TagSearchTextQuery : SearchTextQuery {
 
+		public static new TagSearchTextQuery Empty => new TagSearchTextQuery();
+
 		public static new TagSearchTextQuery Create(string query, 
 			NameMatchMode selectedMode = NameMatchMode.Auto,
 			NameMatchMode defaultMode = NameMatchMode.Words) {
@@ -20,6 +22,8 @@ namespace VocaDb.Model.Service.Search.Tags {
 			return new TagSearchTextQuery(tagNameQuery, textQuery.MatchMode, textQuery.OriginalQuery);
 
 		}
+
+		public TagSearchTextQuery() { }
 
 		public TagSearchTextQuery(string query, NameMatchMode matchMode, string originalQuery, string[] words = null) 
 			: base(query, matchMode, originalQuery, words) {}

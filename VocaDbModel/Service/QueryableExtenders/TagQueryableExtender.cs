@@ -8,6 +8,21 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class TagQueryableExtender {
 
+		public static IQueryable<Tag> OrderBy(this IQueryable<Tag> query, TagSortRule sortRule) {
+
+			switch (sortRule) {
+				case TagSortRule.Name:
+					return query.OrderBy(t => t.Name);
+				case TagSortRule.UsageCount:
+					return query
+						.OrderByDescending(t => t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count + t.AllSongTagUsages.Count)
+						.ThenBy(t => t.Name);
+			}
+
+			return query;
+
+		}
+
 		public static IQueryable<Tag> WhereAllowAliases(this IQueryable<Tag> query, bool allowAliases = true) {
 
 			if (allowAliases)
@@ -46,4 +61,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 	}
+
+	public enum TagSortRule {
+		Nothing,
+		Name,
+		UsageCount
+	}
+
 }

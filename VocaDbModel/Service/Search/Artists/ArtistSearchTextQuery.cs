@@ -5,11 +5,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 	public class ArtistSearchTextQuery : SearchTextQuery {
 
-		public static new ArtistSearchTextQuery Empty {
-			get {
-				return new ArtistSearchTextQuery();
-			}
-		}
+		public static new ArtistSearchTextQuery Empty => new ArtistSearchTextQuery();
 
 		public static new ArtistSearchTextQuery Create(string query, 
 			NameMatchMode selectedMode = NameMatchMode.Auto, 

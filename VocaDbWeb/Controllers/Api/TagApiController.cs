@@ -5,6 +5,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Web.Controllers.DataAccess;
@@ -67,6 +68,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 30).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Exact).</param>
+		/// <param name="sort">Sort rule (optional, by default tags are sorted by name).Possible values are Name and UsageCount.</param>
 		/// <param name="fields">
 		/// List of optional fields (optional). Possible values are Description, MainPicture.
 		/// </param>
@@ -79,6 +81,7 @@ namespace VocaDb.Web.Controllers.Api {
 			string categoryName = "",
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
+			TagSortRule? sort = null,
 			TagOptionalFields fields = TagOptionalFields.None) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
@@ -88,7 +91,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var tags = queries.Find(t => new TagForApiContract(t, thumbPersister, ssl, fields), 
 				queryParams, paging, 
-				allowAliases, categoryName);
+				allowAliases, categoryName, sort ?? TagSortRule.Name);
 
 			return tags;
 
@@ -114,28 +117,21 @@ namespace VocaDb.Web.Controllers.Api {
 			string query = "", bool allowAliases = true,
 			int maxResults = 10) {
 			
-			return queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, true, maxResults);
+			return queries.FindNames(TagSearchTextQuery.Create(query), null, TagSortRule.Name, allowAliases, true, maxResults);
 
 		}
 
+		/// <summary>
+		/// Gets the most common tags in a category.
+		/// </summary>
+		/// <param name="categoryName">Tag category, for example "Genres". Optional - if not specified, no filtering is done.</param>
+		/// <returns>List of names of the most commonly used tags in that category.</returns>
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public string[] GetTopTags(string categoryName) {
-			
-			return queries.HandleQuery(ctx => {
-				
-				var tags = ctx.Query()
-					.Where(t => categoryName == null || t.CategoryName == categoryName)
-					.OrderByDescending(t => t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count + t.AllSongTagUsages.Count)
-					.Select(t => t.Name)
-					.Take(15)
-					.ToArray()
-					.OrderBy(t => t)
-					.ToArray();
+		public string[] GetTopTags(string categoryName = null) {
 
-				return tags;
-
-			});
+			return queries.FindNames(TagSearchTextQuery.Empty, null, TagSortRule.UsageCount, false, true, 15)
+				.OrderBy(t => t).ToArray();
 
 		}
 

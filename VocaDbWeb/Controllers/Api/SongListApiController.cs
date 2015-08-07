@@ -149,6 +149,11 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Creates a song list.
+		/// </summary>
+		/// <param name="list">Song list properties.</param>
+		/// <returns>ID of the created list.</returns>
 		[Route("")]
 		public int Post(SongListForEditContract list) {
 			

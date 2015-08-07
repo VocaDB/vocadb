@@ -169,7 +169,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public PartialFindResult<T> Find<T>(Func<Tag, T> fac, CommonSearchParams queryParams, PagingProperties paging, 
-			bool allowAliases = false, string categoryName = "")
+			bool allowAliases = false, string categoryName = "", TagSortRule sortRule = TagSortRule.Name)
 			where T : class {
 
 			var textQuery = TagSearchTextQuery.Create(queryParams.Query, queryParams.NameMatchMode);
@@ -182,9 +182,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.WhereHasCategoryName(categoryName);
 
 				var tags = query
-					.OrderBy(t => t.Name)
-					.Skip(paging.Start)
-					.Take(paging.MaxEntries)
+					.OrderBy(sortRule)
+					.Paged(paging)
 					.ToArray();
 
 				var count = 0;
@@ -220,7 +219,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public string[] FindNames(TagSearchTextQuery textQuery, bool allowAliases, bool allowEmptyName, int maxEntries) {
+		public string[] FindNames(TagSearchTextQuery textQuery, string categoryName, TagSortRule sortRule, bool allowAliases, bool allowEmptyName, int maxEntries) {
 
 			if (!allowEmptyName && textQuery.IsEmpty)
 				return new string[] { };
@@ -228,13 +227,14 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return HandleQuery(session => {
 
 				var q = session.Query()
-					.WhereHasName(textQuery);
+					.WhereHasName(textQuery)
+					.WhereHasCategoryName(categoryName);
 
 				if (!allowAliases)
 					q = q.Where(t => t.AliasedTo == null);
 
 				var tags = q
-					.OrderBy(t => t.Name)
+					.OrderBy(sortRule)
 					.Take(maxEntries)
 					.Select(t => t.Name)
 					.ToArray();
