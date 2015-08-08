@@ -66,8 +66,8 @@ module vdb.utils {
             { url: "vocaloid.wikia.com/wiki/", desc: "Vocaloid Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "www.vocallective.net/", desc: "Vocallective", cat: c.WebLinkCategory.Official },
             { url: "www.yesasia.com/", desc: "YesAsia", cat: c.WebLinkCategory.Commercial },
-            { url: "youtube.com/channel/", desc: "Youtube Channel", cat: c.WebLinkCategory.Official },
-            { url: "youtube.com/user/", desc: "Youtube Channel", cat: c.WebLinkCategory.Official }
+            { url: "youtube.com/channel/", desc: "YouTube Channel", cat: c.WebLinkCategory.Official },
+            { url: "youtube.com/user/", desc: "YouTube Channel", cat: c.WebLinkCategory.Official }
         ];
 
         public static matchWebLink(url: string): WebLinkMatcher {
