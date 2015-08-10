@@ -4,9 +4,10 @@ module vdb.viewModels.songs {
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
 
-	export class TopRatedSongsViewModel {
+	export class RankingsViewModel {
 		
-		constructor(private urlMapper: vdb.UrlMapper, private songRepo: rep.SongRepository, private userRepo: rep.UserRepository, private languagePreference: number) {
+		constructor(private urlMapper: vdb.UrlMapper, private songRepo: rep.SongRepository,
+			private userRepo: rep.UserRepository, private languagePreference: number) {
 
 			this.dateFilterType.subscribe(this.getSongs);
 			this.durationHours.subscribe(this.getSongs);

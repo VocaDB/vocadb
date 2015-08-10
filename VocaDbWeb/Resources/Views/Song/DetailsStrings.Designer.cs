@@ -385,7 +385,7 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Youtube.
+        ///   Looks up a localized string similar to Search YouTube.
         /// </summary>
         public static string SearchYoutube {
             get {

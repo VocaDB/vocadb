@@ -2448,7 +2448,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\LyricsForSongEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\SongMergeViewModel.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\Song\TopRatedSongsViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Song\RankingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\StatsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\TagEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagListViewModel.ts" />
