@@ -196,7 +196,7 @@
     <value>Service</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>Supported services: Youtube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>
+    <value>Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>
   </data>
   <data name="PvType" xml:space="preserve">
     <value>Type</value>

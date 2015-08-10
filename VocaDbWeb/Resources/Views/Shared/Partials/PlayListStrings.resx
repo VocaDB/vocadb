@@ -121,7 +121,7 @@
     <value>Autoplay</value>
   </data>
   <data name="AutoplayNote" xml:space="preserve">
-    <value>Autoplay is supported only for Youtube and SoundCloud</value>
+    <value>Autoplay is supported only for YouTube and SoundCloud</value>
   </data>
   <data name="NextSong" xml:space="preserve">
     <value>Next song</value>
