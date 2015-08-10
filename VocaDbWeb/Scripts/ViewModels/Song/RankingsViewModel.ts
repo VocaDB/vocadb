@@ -9,6 +9,12 @@ module vdb.viewModels.songs {
 		constructor(private urlMapper: vdb.UrlMapper, private songRepo: rep.SongRepository,
 			private userRepo: rep.UserRepository, private languagePreference: number) {
 
+			this.router = new vdb.routing.ObservableUrlParamRouter({
+				dateFilterType: this.dateFilterType,
+				durationHours: this.durationHours,
+				vocalistSelection: this.vocalistSelection
+			});
+
 			this.dateFilterType.subscribe(this.getSongs);
 			this.durationHours.subscribe(this.getSongs);
 			this.vocalistSelection.subscribe(this.getSongs);
@@ -55,6 +61,8 @@ module vdb.viewModels.songs {
 		}
 
 		private pvServiceIcons: vdb.models.PVServiceIcons;
+
+		private router: vdb.routing.ObservableUrlParamRouter;
 
 		public songs = ko.observableArray<dc.SongApiContract>(null);
 

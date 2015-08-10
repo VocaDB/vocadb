@@ -2126,6 +2126,7 @@
     <TypeScriptCompile Include="Scripts\Shared\DialogService.ts" />
     <TypeScriptCompile Include="Scripts\Shared\EntryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\Shared\MessagesTyped.ts" />
+    <TypeScriptCompile Include="Scripts\Shared\Routing\ObservableUrlParamRouter.ts" />
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\HtmlHelperTests.ts" />
