@@ -10,7 +10,7 @@ VocaDbModel/bin/
 VocaDb.SiteMapGenerator/bin/
 VocaDb.SiteMapGenerator/obj/
 VocaDbWeb/App_Data/XmlDocument.xml
-*.js
+#*.js
 *.suo
 VocaDbWeb/EntryImg/
 *.user
