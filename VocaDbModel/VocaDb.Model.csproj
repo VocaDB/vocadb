@@ -810,6 +810,8 @@
     <Compile Include="Service\Search\User\FollowedArtistQueryParams.cs" />
     <Compile Include="Service\SongImport\ISongListImporter.cs" />
     <Compile Include="Service\SongImport\YoutubePlaylistImporter.cs" />
+    <Compile Include="Service\TagFormatting\SongCsvFileFormatter.cs" />
+    <Compile Include="Service\TagFormatting\SongListFormatter.cs" />
     <Compile Include="Service\VideoServices\HtmlParsingHelper.cs" />
     <Compile Include="Service\IEntryLinkFactory.cs" />
     <Compile Include="Service\MikuDbAlbumService.cs" />

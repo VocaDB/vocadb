@@ -1,10 +1,13 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
+using System.Text;
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
@@ -16,6 +19,7 @@ namespace VocaDb.Web.Controllers
     {
 
 		public const int SongsPerPage = 50;
+		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly SongListQueries queries;
 	    private readonly SongService service;
 
@@ -23,9 +27,10 @@ namespace VocaDb.Web.Controllers
 			get { return service; }
 		}
 
-		public SongListController(SongService service, SongListQueries queries) {
+		public SongListController(SongService service, SongListQueries queries, IEntryLinkFactory entryLinkFactory) {
 			this.service = service;
 			this.queries = queries;
+			this.entryLinkFactory = entryLinkFactory;
 		}
 
 		public ActionResult Delete(int id) {
@@ -112,6 +117,19 @@ namespace VocaDb.Web.Controllers
 			var listId = queries.UpdateSongList(model.ToContract(), uploadedPicture);
 
 			return RedirectToAction("Details", new { id = listId });
+
+		}
+
+		public ActionResult Export(int id) {
+
+			var songList = queries.GetSongList(id);
+			var formatString = "%notes%;%title%;%url%;%pv.original.niconicodouga%;%pv.original.!niconicodouga%;%pv.reprint%";
+			var tagString = queries.HandleQuery(ctx => new SongListFormatter(entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
+
+			var enc = new UTF8Encoding(true);
+			var data = enc.GetPreamble().Concat(enc.GetBytes(tagString)).ToArray();
+
+			return File(data, "text/csv", songList.Name + ".csv");
 
 		}
 

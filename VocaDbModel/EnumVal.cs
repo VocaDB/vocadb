@@ -19,6 +19,13 @@ namespace VocaDb.Model {
 			}
 		}
 
+		public static T All {
+			get {
+				var intVal = Values.Select(v => Convert.ToInt32(v)).Aggregate(0, (current, val) => current | val);
+				return (T)Enum.ToObject(typeof(T), intVal);
+			}
+		}
+
 		/// <summary>
 		/// Checks whether a flag has been set.
 		/// </summary>

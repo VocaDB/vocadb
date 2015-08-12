@@ -36,6 +36,8 @@
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
 	@:
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
+	@:
+	@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
 }
 @if (Model.IsFeatured) {
 	@Helpers.EntryStatusMessage(Model.SongList.Status)
@@ -52,6 +54,7 @@
 
 		$("#editListLink").button({ icons: { primary: 'ui-icon-wrench' } });
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+		$("#export").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
 
 		var languageSelection = '@LanguagePreferenceInt';
 		var listId = @Model.SongList.Id;

@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
@@ -8,7 +6,7 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.TagFormatting {
 
-	public class TagFormatter {
+	public class TagFormatter : SongCsvFileFormatter<SongInAlbum> {
 
 		public static readonly string[] TagFormatStrings = new[] {
 			"%title%;%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%",
@@ -40,11 +38,11 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 		}
 
-		private string GetFieldValue(string fieldName, SongInAlbum track, ContentLanguagePreference languagePreference) {
+		protected override string GetFieldValue(string fieldName, SongInAlbum track, ContentLanguagePreference languagePreference) {
 
 			var album = track.Album;
 
-			switch (fieldName.ToLowerInvariant()) {
+			switch (fieldName) {
 				// Album title
 				case "album":			
 					return album.Names.SortNames[languagePreference];
@@ -120,53 +118,9 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 		}
 
-		private void ReplaceField(
-			string tokenName, string tokenStr, StringBuilder sb, SongInAlbum track, ContentLanguagePreference languagePreference) {
-
-			var val = GetField(GetFieldValue(tokenName, track, languagePreference));
-			sb.Replace(tokenStr, val);
-
-		}
-
-		private string ApplyFormat(SongInAlbum track, string format, ContentLanguagePreference languagePreference, MatchCollection fieldMatches) {
-
-			var sb = new StringBuilder(format);
-
-			foreach (Match match in fieldMatches) {
-				ReplaceField(match.Groups[1].Value, match.Value, sb, track, languagePreference);
-			}
-
-			return sb.ToString();
-
-		}
-
-		private static string GetField(string val) {
-
-			if (string.IsNullOrEmpty(val))
-				return string.Empty;
-
-			if (!val.Contains(";"))
-				return val;
-			else
-				return string.Format("\"{0}\"", val);
-
-		}
-
 		public string ApplyFormat(Album album, string format, ContentLanguagePreference languagePreference, bool includeHeader) {
 
-			var sb = new StringBuilder();
-
-			var fieldRegex = new Regex(@"%(\w+)%");
-			var formatFields = fieldRegex.Matches(format);
-
-			if (includeHeader) {
-				sb.AppendLine(string.Join(";", formatFields.Cast<Match>().Select(f => GetField(f.Groups[1].Value))));
-			}
-
-			foreach (var song in album.Songs)
-				sb.AppendLine(ApplyFormat(song, format, languagePreference, formatFields));
-
-			return sb.ToString();
+			return ApplyFormat(album.Songs, format, languagePreference, includeHeader);
 
 		}
 
