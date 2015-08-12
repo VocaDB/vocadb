@@ -231,7 +231,9 @@ namespace VocaDb.Web.Controllers
         public ActionResult Edit(SongEditViewModel viewModel)
         {
 
-			if (viewModel == null) {
+			// Unable to continue if viewmodel is null because we need the ID at least
+			if (viewModel == null || viewModel.EditedSong == null) {
+				log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");				
 			}
 
