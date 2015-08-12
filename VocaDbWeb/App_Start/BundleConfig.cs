@@ -315,7 +315,7 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/Song/TopRated").Include(
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/url.js",
-				"~/Scripts/Shared/Routing/UrlParamRouter.js",
+				"~/Scripts/Shared/Routing/ObservableUrlParamRouter.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
