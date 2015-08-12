@@ -2436,6 +2436,8 @@
     <Content Include="Scripts\ui\minified\jquery.ui.sortable.min.js" />
     <Content Include="Scripts\ui\minified\jquery.ui.tabs.min.js" />
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
+    <Content Include="Scripts\url.js" />
+    <Content Include="Scripts\url.min.js" />
     <Content Include="Scripts\User\Edit.js" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\FeaturedSongListsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\ImportSongListViewModel.ts" />
