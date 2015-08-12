@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers;
 using VocaDb.Web.Controllers.DataAccess;
 
@@ -15,7 +16,7 @@ namespace VocaDb.Tests.Web.Controllers {
 
 		[TestInitialize]
 		public void SetUp() {
-			controller = new SongListController(null, null);
+			controller = new SongListController(null, null, new FakeEntryLinkFactory());
 		}
 
 		[TestMethod]
