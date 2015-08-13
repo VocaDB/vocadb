@@ -138,4 +138,7 @@
   <data name="Date" xml:space="preserve">
     <value>日付：{0}</value>
   </data>
+  <data name="Export" xml:space="preserve">
+    <value>エクスポート</value>
+  </data>
 </root>
