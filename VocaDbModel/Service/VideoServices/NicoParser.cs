@@ -294,7 +294,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		[XmlElement("user_id")]
 		public string User_Id { get; set; }
 
-		[XmlElement("user_niconame")]
+		[XmlElement("user_nickname")]
 		public string User_Nickname { get; set; }
 
 		[XmlElement("video_id")]
