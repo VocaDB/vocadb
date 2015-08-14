@@ -5,11 +5,11 @@ module vdb.viewModels {
 
 	export class UserMessagesViewModel {
 
-        constructor(private urlMapper: vdb.UrlMapper, private userRepository: vdb.repositories.UserRepository, data: dc.UserMessagesContract, selectedMessageId?: number) {
+        constructor(private userRepository: vdb.repositories.UserRepository, data: dc.UserMessagesContract, userId: number, selectedMessageId?: number) {
 
-            this.notifications = new UserMessageFolderViewModel(urlMapper, _.filter(data.receivedMessages, m => m.sender == null));
-            this.receivedMessages = new UserMessageFolderViewModel(urlMapper, _.filter(data.receivedMessages, m => m.sender != null));
-            this.sentMessages = new UserMessageFolderViewModel(urlMapper, data.sentMessages);
+            this.notifications = new UserMessageFolderViewModel(userRepository, _.filter(data.receivedMessages, m => m.sender == null), userId);
+            this.receivedMessages = new UserMessageFolderViewModel(userRepository, _.filter(data.receivedMessages, m => m.sender != null), userId);
+            this.sentMessages = new UserMessageFolderViewModel(userRepository, data.sentMessages, userId);
 
             if (selectedMessageId != null) {
                 this.selectMessageById(selectedMessageId);
@@ -95,23 +95,37 @@ module vdb.viewModels {
 
     export class UserMessageFolderViewModel {
 
-        constructor(private urlMapper: vdb.UrlMapper, messages: dc.UserMessageSummaryContract[]) {
+        constructor(private userRepo: rep.UserRepository, messages: dc.UserMessageSummaryContract[], private userId) {
 
             var messageViewModels = _.map(messages, msg => new UserMessageViewModel(msg));
             this.messages(messageViewModels);
             this.unread = ko.computed(() => _.size(_.filter(messageViewModels, msg => !msg.read())));
 
+			this.selectAll.subscribe(selected => {
+				_.forEach(this.messages(), m => m.checked(selected));
+			});
+
         }
 
         private deleteMessage = (message: UserMessageViewModel) => {
 
-            var url = this.urlMapper.mapRelative("/User/DeleteMessage");
-            $.post(url, { messageId: message.id });
+			this.userRepo.deleteMessage(message.id);
             this.messages.remove(message);
 
         };
 
+		public deleteSelected = () => {
+
+			var selected = _.chain(this.messages()).filter(m => m.checked());
+			var selectedIds = selected.map(m => m.id).value();
+			this.userRepo.deleteMessages(this.userId, selectedIds);
+            this.messages.removeAll(selected.value());
+
+		}
+
         messages = ko.observableArray<UserMessageViewModel>([]);
+
+		selectAll = ko.observable(false);
 
         selectMessage = (message: UserMessageViewModel) => {
 
@@ -137,6 +151,8 @@ module vdb.viewModels {
 			this.sender = data.sender;
 			this.subject = data.subject;
 		}
+
+		checked = ko.observable(false);
 
 		created: string;
 

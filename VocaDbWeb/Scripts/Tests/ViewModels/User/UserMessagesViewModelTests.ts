@@ -7,7 +7,6 @@ module vdb.tests.viewModels {
     import vm = vdb.viewModels;
     import sup = vdb.tests.testSupport;
 
-    var urlMapper = new vdb.UrlMapper("");
     var receiver: dc.UserWithIconContract;
     var data: dc.UserMessagesContract;
     var sender: dc.UserWithIconContract;
@@ -18,7 +17,7 @@ module vdb.tests.viewModels {
     };
 
     var createViewModel = () => {
-        return new vm.UserMessagesViewModel(urlMapper, repository, data);
+        return new vm.UserMessagesViewModel(repository, data, null);
     };
 
     QUnit.module("UserMessagesViewModel", {

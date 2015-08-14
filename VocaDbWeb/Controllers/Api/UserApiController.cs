@@ -40,13 +40,15 @@ namespace VocaDb.Web.Controllers.Api {
 
 		private const int absoluteMax = 50;
 		private const int defaultMax = 10;
+		private readonly UserMessageQueries messageQueries;
 		private readonly IUserPermissionContext permissionContext;
 		private readonly UserQueries queries;
 		private readonly UserService service;
 		private readonly IEntryThumbPersister thumbPersister;
 
-		public UserApiController(UserQueries queries, UserService service, IUserPermissionContext permissionContext, IEntryThumbPersister thumbPersister) {
+		public UserApiController(UserQueries queries, UserMessageQueries messageQueries, UserService service, IUserPermissionContext permissionContext, IEntryThumbPersister thumbPersister) {
 			this.queries = queries;
+			this.messageQueries = messageQueries;
 			this.service = service;
 			this.permissionContext = permissionContext;
 			this.thumbPersister = thumbPersister;
@@ -195,6 +197,20 @@ namespace VocaDb.Web.Controllers.Api {
 			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, sort ?? UserSortRule.Name, 
 				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, iconFactory, fields));
 			
+		}
+
+		/// <summary>
+		/// Deletes a list of user messages.
+		/// </summary>
+		/// <param name="userId">ID of the user whose messages to delete.</param>
+		/// <param name="messageId">IDs of messages.</param>
+		[Route("{userId:int}/messages")]
+		[Authorize]
+		public void DeleteMessages(int userId, [FromUri] int[] messageId) {
+
+			foreach (var id in messageId)
+				messageQueries.Delete(id);
+
 		}
 
 		/// <summary>

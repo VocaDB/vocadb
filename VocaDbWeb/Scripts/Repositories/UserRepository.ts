@@ -24,6 +24,20 @@ module vdb.repositories {
 
 		}
 
+		public deleteMessage = (messageId: number) => {
+
+            var url = this.urlMapper.mapRelative("/User/DeleteMessage");
+            $.post(url, { messageId: messageId });
+
+		}
+
+		public deleteMessages = (userId: number, messageIds: number[]) => {
+			
+            var url = this.urlMapper.mapRelative("/api/users/" + userId + "/messages");
+			helpers.AjaxHelper.deleteJSON_Url(url, "messageId", messageIds);
+
+		}
+
 		public getAlbumCollectionList = (
 			userId: number,
 			paging: dc.PagingProperties, lang: string, query: string,

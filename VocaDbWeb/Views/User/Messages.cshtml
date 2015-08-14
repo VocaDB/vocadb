@@ -13,9 +13,18 @@
 
 @helper MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
 	<div id="@id" data-bind="with: @binding">
+		@if (allowDelete) {
+			<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">Delete selected</button>
+		}
+
 		<table class="table messages">
 			<thead>
 				<tr>
+					@if (allowDelete) {
+						<th>
+							<input type="checkbox" data-bind="checked: selectAll" />
+						</th>
+					}
 					<th>@R.MessagesStrings.Date</th>
 					@if (colFrom) {
 						<th>@R.MessagesStrings.From</th>						
@@ -31,6 +40,11 @@
 			</thead>
 			<tbody data-bind="foreach: messages">
 				<tr data-bind="css: { info: selected }">
+					@if (allowDelete) {
+						<td>
+							<input type="checkbox" data-bind="checked: checked" />
+						</td>
+					}
 					<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
 					@if (colFrom) {
 						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("sender.iconUrl", "sender.name")</td>						
@@ -109,7 +123,7 @@
             var urlMapper = new vdb.UrlMapper('@Url.Content("~/")');
             var repository = new vdb.repositories.UserRepository(urlMapper);		
             repository.getMessageSummaries({ maxEntries: 200 }, false, 20, function (json) {
-                var viewModel = new vdb.viewModels.UserMessagesViewModel(urlMapper, repository, json, @ToJS(Model.SelectedMessageId));
+                var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, json, @UserContext.LoggedUserId, @ToJS(Model.SelectedMessageId));
                 ko.applyBindings(viewModel);
             });
 		
