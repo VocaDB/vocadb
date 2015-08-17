@@ -120,6 +120,10 @@ module vdb.viewModels {
 
 			var selected = _.chain(this.items()).filter(m => m.checked());
 			var selectedIds = selected.map(m => m.id).value();
+
+			if (selectedIds.length === 0)
+				return;
+
 			this.userRepo.deleteMessages(this.userId, selectedIds);
             this.items.removeAll(selected.value());
 

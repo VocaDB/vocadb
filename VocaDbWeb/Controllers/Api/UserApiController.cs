@@ -220,7 +220,7 @@ namespace VocaDb.Web.Controllers.Api {
 			bool getTotalCount = false) {
 
 			if (userId != permissionContext.LoggedUserId) {
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+				throw new HttpResponseException(HttpStatusCode.Forbidden);
 			}
 
 			return messageQueries.GetList(permissionContext.LoggedUserId, new PagingProperties(start, maxResults, getTotalCount), 
@@ -238,7 +238,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public void DeleteMessages(int userId, [FromUri] int[] messageId) {
 
 			if (userId != permissionContext.LoggedUserId) {
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+				throw new HttpResponseException(HttpStatusCode.Forbidden);
 			}
 
 			foreach (var id in messageId)
