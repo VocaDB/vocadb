@@ -1,5 +1,4 @@
 /// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../DataContracts/User/UserMessagesContract.ts" />
 /// <reference path="../../ViewModels/TopBarViewModel.ts" />
 /// <reference path="../TestSupport/FakeEntryReportRepository.ts" />
 /// <reference path="../TestSupport/FakeUserRepository.ts" />
@@ -20,13 +19,10 @@ module vdb.tests.viewModels {
             entryReportRepo = new sup.FakeEntryReportRepository();
             entryReportRepo.entryReportCount = 39;
             userRepo = new sup.FakeUserRepository();
-            userRepo.messageSummaries = {
-                receivedMessages: [
-                    { createdFormatted: "2039.3.9", highPriority: false, id: 39, read: false, receiver: null, subject: "New message!" },
-                    { createdFormatted: "2039.3.9", highPriority: false, id: 40, read: false, receiver: null, subject: "Another message" }
-                ],
-                sentMessages: []
-            }
+            userRepo.messages = [
+				{ createdFormatted: "2039.3.9", highPriority: false, id: 39, read: false, receiver: null, subject: "New message!" },
+				{ createdFormatted: "2039.3.9", highPriority: false, id: 40, read: false, receiver: null, subject: "Another message" }
+			];
 
         }
     });

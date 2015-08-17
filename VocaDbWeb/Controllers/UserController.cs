@@ -660,14 +660,6 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult MessagesJson(int maxCount = 100, int start = 0, bool unread = false, int iconSize = 20) {
-
-			var messages = messageQueries.GetList(LoggedUserId, new PagingProperties(start, maxCount, false), unread, new GravatarUserIconFactory(iconSize));
-			return LowercaseJson(messages);
-
-		}
-
-		[Authorize]
 		public ActionResult MySettings() {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);			

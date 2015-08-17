@@ -4,7 +4,9 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers.DataAccess;
@@ -29,8 +31,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			return queries.Get(id, null);
 		}
 
-		private UserMessagesContract CallGetList(bool unread = false) {
-			return queries.GetList(receiver.Id, new PagingProperties(0, 10, false), unread, new FakeUserIconFactory());
+		private PartialFindResult<UserMessageContract> CallGetList(UserInboxType inboxType, bool unread = false) {
+			return queries.GetList(receiver.Id, new PagingProperties(0, 10, true), inboxType, unread, new FakeUserIconFactory());
 		}
 
 		[TestInitialize]
@@ -71,28 +73,47 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetList() { 
+		public void GetList_All() {
 
-			var result = CallGetList();
+			var result = CallGetList(UserInboxType.Nothing);
 
-			Assert.AreEqual(1, result.ReceivedMessages.Length, "Number of received messages");
-			Assert.AreEqual("Hello world", result.ReceivedMessages.First().Subject, "Received message subject");
-			Assert.AreEqual(1, result.SentMessages.Length, "Number of sent messages");
-			Assert.AreEqual("Hello to you too", result.SentMessages.First().Subject, "Sent message subject");
+			Assert.AreEqual(2, result.Items.Length, "Number of messages returned");
+			Assert.AreEqual(2, result.TotalCount, "Total number of messages");
+			Assert.AreEqual("Hello to you too", result.Items[0].Subject, "Sent message subject");
+			Assert.AreEqual("Hello world", result.Items[1].Subject, "Received message subject");
+
+		}
+
+		[TestMethod]
+		public void GetList_Received() {
+
+			var result = CallGetList(UserInboxType.Received).Items;
+
+			Assert.AreEqual(1, result.Length, "Number of received messages");
+			Assert.AreEqual("Hello world", result.First().Subject, "Received message subject");
+
+		}
+
+		[TestMethod]
+		public void GetList_Sent() {
+
+			var result = CallGetList(UserInboxType.Sent).Items;
+
+			Assert.AreEqual(1, result.Length, "Number of sent messages");
+			Assert.AreEqual("Hello to you too", result.First().Subject, "Sent message subject");
 
 		}
 
 		[TestMethod]
 		public void GetList_Unread() {
-			
+
 			var anotherMsg = CreateEntry.UserMessage(3, sender, receiver, "Unread message", "Unread message body", read: false);
 			repository.Save(anotherMsg);
 
-			var result = CallGetList(unread: true);
+			var result = CallGetList(UserInboxType.Nothing, unread: true);
 
-			Assert.AreEqual(1, result.ReceivedMessages.Length, "Number of received messages");
-			Assert.AreEqual("Unread message", result.ReceivedMessages.First().Subject, "Received message subject");
-			Assert.AreEqual(0, result.SentMessages.Length, "Number of sent messages");
+			Assert.AreEqual(1, result.Items.Length, "Number of received messages");
+			Assert.AreEqual("Unread message", result.Items.First().Subject, "Received message subject");
 
 		}
 

@@ -8,7 +8,7 @@ module vdb.tests.testSupport {
     export class FakeUserRepository extends vdb.repositories.UserRepository {
 
         public messageBody: string;
-        public messageSummaries: dc.UserMessagesContract;
+        public messages: dc.UserMessageSummaryContract[];
         public songId: number;
         public rating: cls.SongVoteRating;
 
@@ -23,10 +23,10 @@ module vdb.tests.testSupport {
 
             };
 
-            this.getMessageSummaries = (maxCount?, unread?, iconSize?, callback?) => {
+            this.getMessageSummaries = (userId: number, inbox: string, maxCount?, unread?, iconSize?, callback?) => {
 
                 if (callback)
-                    callback(this.messageSummaries);
+                    callback(this.messages);
 
             };
 

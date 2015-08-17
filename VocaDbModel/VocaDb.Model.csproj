@@ -742,6 +742,7 @@
     <Compile Include="Service\QueryableExtenders\LocalizedStringQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\ReleaseEventQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongLinkQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\UserMessageQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\UserQueryableExtender.cs" />
     <Compile Include="Service\Repositories\IArtistRepository.cs" />
     <Compile Include="Service\Repositories\IDiscussionFolderRepository.cs" />

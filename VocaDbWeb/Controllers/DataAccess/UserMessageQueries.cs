@@ -2,7 +2,9 @@
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Web.Controllers.DataAccess {
@@ -67,48 +69,27 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		private UserMessageContract[] GetReceivedMessages(IRepositoryContext<UserMessage> ctx, int id, PagingProperties paging, bool unread, IUserIconFactory iconFactory) {
-
-			var receivedQuery = ctx.Query()
-				.Where(m => m.Receiver.Id == id);
-
-			if (unread)
-				receivedQuery = receivedQuery.Where(q => !q.Read);
-
-			return receivedQuery
-				.OrderByDescending(m => m.Created)
-				.Skip(paging.Start)
-				.Take(paging.MaxEntries)
-				.ToArray()
-				.Select(m => new UserMessageContract(m, iconFactory))
-				.ToArray();
-
-		}
-
-		private UserMessageContract[] GetSentMessages(IRepositoryContext<UserMessage> ctx, int id, PagingProperties paging, IUserIconFactory iconFactory) {
-
-			return ctx.Query()
-				.Where(m => m.Sender.Id == id)
-				.OrderByDescending(m => m.Created)
-				.Skip(paging.Start)
-				.Take(paging.MaxEntries)
-				.ToArray()
-				.Select(m => new UserMessageContract(m, iconFactory))
-				.ToArray();
-
-		}
-
-		public UserMessagesContract GetList(int id, PagingProperties paging, bool unread, IUserIconFactory iconFactory) {
+		public PartialFindResult<UserMessageContract> GetList(int id, PagingProperties paging, UserInboxType inboxType, bool unread, IUserIconFactory iconFactory) {
 
 			PermissionContext.VerifyResourceAccess(new[] { id });
 
-			return HandleQuery(ctx => { 
+			return HandleQuery(ctx => {
 
-				var received = GetReceivedMessages(ctx, id, paging, unread, iconFactory);
-				var sent = (!unread ? GetSentMessages(ctx, id, paging, iconFactory) : new UserMessageContract[0]);
+				var query = ctx.Query()
+					.WhereInboxIs(id, unread, inboxType)
+					.WhereIsUnread(unread);
 
-				return new UserMessagesContract { ReceivedMessages = received, SentMessages = sent };
-				
+				var messages = query
+					.OrderByDescending(m => m.Created)
+					.Paged(paging)
+					.ToArray()
+					.Select(m => new UserMessageContract(m, iconFactory))
+					.ToArray();
+
+				var count = paging.GetTotalCount ? query.Count() : 0;
+
+				return new PartialFindResult<UserMessageContract>(messages, count);
+
 			});
 
 		}

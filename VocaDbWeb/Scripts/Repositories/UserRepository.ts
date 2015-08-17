@@ -1,6 +1,5 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../DataContracts/User/UserMessageSummaryContract.ts" />
-/// <reference path="../DataContracts/User/UserMessagesContract.ts" />
 /// <reference path="../Models/SongVoteRating.ts" />
 
 module vdb.repositories {
@@ -125,10 +124,11 @@ module vdb.repositories {
 
         };
 
-        public getMessageSummaries = (paging: dc.PagingProperties, unread: boolean = false, iconSize: number = 40, callback?: (result: dc.UserMessagesContract) => void ) => {
+        public getMessageSummaries = (userId: number, inbox: string, paging: dc.PagingProperties, unread: boolean = false, iconSize: number = 40,
+			callback?: (result: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => void) => {
 
-            var url = this.mapUrl("/MessagesJson");
-            $.getJSON(url, { start: paging.start, maxCount: paging.maxEntries, unread: unread, iconSize: iconSize }, callback);
+            var url = this.urlMapper.mapRelative("/api/users/" + (userId || this.loggedUserId) + "/messages");
+            $.getJSON(url, { inbox: inbox, start: paging.start, maxResults: paging.maxEntries, unread: unread }, callback);
 
 		};
 

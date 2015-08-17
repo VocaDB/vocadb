@@ -45,13 +45,16 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly UserQueries queries;
 		private readonly UserService service;
 		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IUserIconFactory userIconFactory;
 
-		public UserApiController(UserQueries queries, UserMessageQueries messageQueries, UserService service, IUserPermissionContext permissionContext, IEntryThumbPersister thumbPersister) {
+		public UserApiController(UserQueries queries, UserMessageQueries messageQueries, UserService service, IUserPermissionContext permissionContext, IEntryThumbPersister thumbPersister,
+			IUserIconFactory userIconFactory) {
 			this.queries = queries;
 			this.messageQueries = messageQueries;
 			this.service = service;
 			this.permissionContext = permissionContext;
 			this.thumbPersister = thumbPersister;
+			this.userIconFactory = userIconFactory;
 		}
 
 		/// <summary>
@@ -192,11 +195,37 @@ namespace VocaDb.Web.Controllers.Api {
 			bool onlyVerified = false,
 			UserOptionalFields fields = UserOptionalFields.None) {
 
-			var iconFactory = new GravatarUserIconFactory(ssl: WebHelper.IsSSL(Request));
-
 			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, sort ?? UserSortRule.Name, 
-				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, iconFactory, fields));
+				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, userIconFactory, fields));
 			
+		}
+
+		/// <summary>
+		/// Gets a list of messages.
+		/// </summary>
+		/// <param name="userId">User ID. Must be the currently logged in user (loading messages for another user is not allowed).</param>
+		/// <param name="inbox">Type of inbox. Possible values are Nothing (load all, default), Received, Sent, Notifications.</param>
+		/// <param name="unread">Whether to only load unread messages. Loading unread messages is only possible for received messages and notifications (not sent messages).</param>
+		/// <param name="start">Index of the first entry to be loaded.</param>
+		/// <param name="maxResults">Maximum number of results to be loaded.</param>
+		/// <param name="getTotalCount">Whether to get total number of results.</param>
+		/// <returns>List of messages.</returns>
+		[Route("{userId:int}/messages")]
+		[Authorize]
+		public PartialFindResult<UserMessageContract> GetMessages(int userId, 
+			UserInboxType? inbox = null, 
+			bool unread = false,
+			int start = 0,
+			int maxResults = 10,
+			bool getTotalCount = false) {
+
+			if (userId != permissionContext.LoggedUserId) {
+				throw new HttpResponseException(HttpStatusCode.BadRequest);
+			}
+
+			return messageQueries.GetList(permissionContext.LoggedUserId, new PagingProperties(start, maxResults, getTotalCount), 
+				inbox ?? UserInboxType.Nothing, unread, userIconFactory);
+
 		}
 
 		/// <summary>
@@ -207,6 +236,10 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{userId:int}/messages")]
 		[Authorize]
 		public void DeleteMessages(int userId, [FromUri] int[] messageId) {
+
+			if (userId != permissionContext.LoggedUserId) {
+				throw new HttpResponseException(HttpStatusCode.BadRequest);
+			}
 
 			foreach (var id in messageId)
 				messageQueries.Delete(id);

@@ -1689,7 +1689,6 @@
     </Content>
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserWithIconContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserMessageSummaryContract.ts" />
-    <TypeScriptCompile Include="Scripts\DataContracts\User\UserMessagesContract.ts" />
     <Content Include="Scripts\Event\Edit.js" />
     <Content Include="Scripts\Event\SeriesEdit.js" />
     <Content Include="Scripts\Home\Index.js" />

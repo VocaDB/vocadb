@@ -1,6 +1,5 @@
 /// <reference path="../typings/knockout/knockout.d.ts" />
 /// <reference path="../DataContracts/User/UserMessageSummaryContract.ts" />
-/// <reference path="../DataContracts/User/UserMessagesContract.ts" />
 /// <reference path="../Repositories/EntryReportRepository.ts" />
 /// <reference path="../Repositories/UserRepository.ts" />
 
@@ -16,9 +15,10 @@ module vdb.viewModels {
             if (this.isLoaded())
                 return;
 
-            this.userRepository.getMessageSummaries({ maxEntries: 3, start: 0, getTotalCount: false }, true, 40, (messages: dc.UserMessagesContract) => {
+            this.userRepository.getMessageSummaries(null, null, { maxEntries: 3, start: 0, getTotalCount: false }, true, 40,
+				(messages: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => {
 
-                this.unreadMessages(messages.receivedMessages);
+                this.unreadMessages(messages.items);
                 this.isLoaded(true);
 
             });

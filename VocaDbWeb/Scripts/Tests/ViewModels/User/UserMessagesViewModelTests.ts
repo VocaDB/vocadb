@@ -8,7 +8,7 @@ module vdb.tests.viewModels {
     import sup = vdb.tests.testSupport;
 
     var receiver: dc.UserWithIconContract;
-    var data: dc.UserMessagesContract;
+    var data: dc.PartialFindResultContract<dc.UserMessageSummaryContract>;
     var sender: dc.UserWithIconContract;
     var repository: sup.FakeUserRepository;
 
@@ -26,13 +26,12 @@ module vdb.tests.viewModels {
             receiver = { id: 39, name: "Rin" };
             sender = { id: 39, name: "Miku" };
             data = {
-                receivedMessages: [
+                items: [
                     createMessage(39, "New message!", sender),
-                    createMessage(40, "Notification")
+                    createMessage(40, "Notification"),
+                    createMessage(41, "Sent message", receiver)
                 ],
-                sentMessages: [
-                    createMessage(41, "Sent message")
-                ]
+				totalCount: 0
             };
 
             repository = new sup.FakeUserRepository();

@@ -5,11 +5,12 @@ module vdb.viewModels {
 
 	export class UserMessagesViewModel {
 
-        constructor(private userRepository: vdb.repositories.UserRepository, data: dc.UserMessagesContract, userId: number, selectedMessageId?: number) {
+        constructor(private userRepository: vdb.repositories.UserRepository, messages: vdb.dataContracts.PartialFindResultContract<dc.UserMessageSummaryContract>,
+			userId: number, selectedMessageId?: number) {
 
-            this.notifications = new UserMessageFolderViewModel(userRepository, _.filter(data.receivedMessages, m => m.sender == null), userId);
-            this.receivedMessages = new UserMessageFolderViewModel(userRepository, _.filter(data.receivedMessages, m => m.sender != null), userId);
-            this.sentMessages = new UserMessageFolderViewModel(userRepository, data.sentMessages, userId);
+            this.notifications = new UserMessageFolderViewModel(userRepository, _.filter(messages.items, m => m.receiver && m.receiver.id === userId && m.sender == null), userId);
+            this.receivedMessages = new UserMessageFolderViewModel(userRepository, _.filter(messages.items, m => m.receiver && m.receiver.id === userId && m.sender != null), userId);
+            this.sentMessages = new UserMessageFolderViewModel(userRepository, _.filter(messages.items, m => m.sender && m.sender.id === userId), userId);
 
             if (selectedMessageId != null) {
                 this.selectMessageById(selectedMessageId);

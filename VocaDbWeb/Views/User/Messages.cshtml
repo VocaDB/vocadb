@@ -122,7 +122,7 @@
 		
             var urlMapper = new vdb.UrlMapper('@Url.Content("~/")');
             var repository = new vdb.repositories.UserRepository(urlMapper);		
-            repository.getMessageSummaries({ maxEntries: 200 }, false, 20, function (json) {
+            repository.getMessageSummaries(@UserContext.LoggedUserId, null, { maxEntries: 200 }, false, 20, function (json) {
                 var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, json, @UserContext.LoggedUserId, @ToJS(Model.SelectedMessageId));
                 ko.applyBindings(viewModel);
             });
