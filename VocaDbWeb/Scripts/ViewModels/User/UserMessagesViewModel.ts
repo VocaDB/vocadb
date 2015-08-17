@@ -5,16 +5,17 @@ module vdb.viewModels {
 
 	export class UserMessagesViewModel {
 
-        constructor(private userRepository: vdb.repositories.UserRepository, messages: vdb.dataContracts.PartialFindResultContract<dc.UserMessageSummaryContract>,
-			userId: number, selectedMessageId?: number) {
+        constructor(private userRepository: vdb.repositories.UserRepository, userId: number, selectedMessageId?: number) {
 
-            this.notifications = new UserMessageFolderViewModel(userRepository, _.filter(messages.items, m => m.receiver && m.receiver.id === userId && m.sender == null), userId);
-            this.receivedMessages = new UserMessageFolderViewModel(userRepository, _.filter(messages.items, m => m.receiver && m.receiver.id === userId && m.sender != null), userId);
-            this.sentMessages = new UserMessageFolderViewModel(userRepository, _.filter(messages.items, m => m.sender && m.sender.id === userId), userId);
+            this.notifications = new UserMessageFolderViewModel(userRepository, "Notifications", userId);
+            this.receivedMessages = new UserMessageFolderViewModel(userRepository, "Received", userId);
+            this.sentMessages = new UserMessageFolderViewModel(userRepository, "Sent", userId);
 
-            if (selectedMessageId != null) {
-                this.selectMessageById(selectedMessageId);
-            }
+			this.receivedMessages.init(() => {
+				if (selectedMessageId != null) {
+					this.selectMessageById(selectedMessageId);
+				}
+			});
 
         }
 
@@ -46,7 +47,7 @@ module vdb.viewModels {
 
         selectMessageById = (messageId: number) => {
 
-            var message = _.find(this.notifications.messages(), msg => msg.id == messageId);
+            var message = _.find(this.notifications.items(), msg => msg.id === messageId);
 
             if (message) {
                 this.selectTab("#notificationsTab");
@@ -54,7 +55,7 @@ module vdb.viewModels {
                 return;
             }
 
-            message = _.find(this.receivedMessages.messages(), msg => msg.id == messageId);
+            message = _.find(this.receivedMessages.items(), msg => msg.id === messageId);
 
             if (message) {
                 this.selectTab("#receivedTab");
@@ -62,7 +63,7 @@ module vdb.viewModels {
                 return;
             }
 
-            message = _.find(this.sentMessages.messages(), msg => msg.id == messageId);
+            message = _.find(this.sentMessages.items(), msg => msg.id === messageId);
 
             if (message) {
                 this.selectTab("#sentTab");
@@ -94,16 +95,16 @@ module vdb.viewModels {
 
     }
 
-    export class UserMessageFolderViewModel {
+    export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageViewModel> {
 
-        constructor(private userRepo: rep.UserRepository, messages: dc.UserMessageSummaryContract[], private userId) {
+        constructor(private userRepo: rep.UserRepository, private inbox: string, private userId) {
 
-            var messageViewModels = _.map(messages, msg => new UserMessageViewModel(msg));
-            this.messages(messageViewModels);
-            this.unread = ko.computed(() => _.size(_.filter(messageViewModels, msg => !msg.read())));
+			super();
+            
+            this.unread = ko.computed(() => _.size(_.filter(this.items(), msg => !msg.read())));
 
 			this.selectAll.subscribe(selected => {
-				_.forEach(this.messages(), m => m.checked(selected));
+				_.forEach(this.items(), m => m.checked(selected));
 			});
 
         }
@@ -111,26 +112,31 @@ module vdb.viewModels {
         private deleteMessage = (message: UserMessageViewModel) => {
 
 			this.userRepo.deleteMessage(message.id);
-            this.messages.remove(message);
+            this.items.remove(message);
 
         };
 
 		public deleteSelected = () => {
 
-			var selected = _.chain(this.messages()).filter(m => m.checked());
+			var selected = _.chain(this.items()).filter(m => m.checked());
 			var selectedIds = selected.map(m => m.id).value();
 			this.userRepo.deleteMessages(this.userId, selectedIds);
-            this.messages.removeAll(selected.value());
+            this.items.removeAll(selected.value());
 
 		}
 
-        messages = ko.observableArray<UserMessageViewModel>([]);
+		public loadMoreItems = (callback) => {
+			this.userRepo.getMessageSummaries(this.userId, this.inbox, { start: this.start, maxEntries: 100, getTotalCount: true }, false, 40, (result) => {
+				var messageViewModels = _.map(result.items, msg => new UserMessageViewModel(msg));
+				callback({ items: messageViewModels, totalCount: result.totalCount });
+			});
+		}
 
 		selectAll = ko.observable(false);
 
         selectMessage = (message: UserMessageViewModel) => {
 
-            _.each(this.messages(), msg => {
+            _.each(this.items(), msg => {
                 if (msg != message)
                     msg.selected(false);
             });

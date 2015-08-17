@@ -5,10 +5,10 @@
 
 @{
 	PageProperties.Title = R.MessagesStrings.Messages;
-	ViewBag.Parents = new[] { 
-		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"), 
-		Html.ActionLink(Model.User.Name, "Details", new { id = Model.User.Id }) 
-	};		
+	ViewBag.Parents = new[] {
+		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"),
+		Html.ActionLink(Model.User.Name, "Details", new { id = Model.User.Id })
+	};
 }
 
 @helper MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
@@ -17,7 +17,7 @@
 			<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">Delete selected</button>
 		}
 
-		<table class="table messages">
+		<table class="table messages" data-bind="if: items().length">
 			<thead>
 				<tr>
 					@if (allowDelete) {
@@ -27,10 +27,10 @@
 					}
 					<th>@R.MessagesStrings.Date</th>
 					@if (colFrom) {
-						<th>@R.MessagesStrings.From</th>						
+						<th>@R.MessagesStrings.From</th>
 					}
 					@if (colTo) {
-						<th>@R.MessagesStrings.To</th>						
+						<th>@R.MessagesStrings.To</th>
 					}
 					<th>@R.MessagesStrings.Subject</th>
 					@if (allowDelete) {
@@ -38,7 +38,7 @@
 					}
 				</tr>
 			</thead>
-			<tbody data-bind="foreach: messages">
+			<tbody data-bind="foreach: items">
 				<tr data-bind="css: { info: selected }">
 					@if (allowDelete) {
 						<td>
@@ -47,10 +47,10 @@
 					}
 					<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
 					@if (colFrom) {
-						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("sender.iconUrl", "sender.name")</td>						
+						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("sender.iconUrl", "sender.name")</td>
 					}
 					@if (colTo) {
-						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("receiver.iconUrl", "receiver.name")</td>						
+						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("receiver.iconUrl", "receiver.name")</td>
 					}
 					<td data-bind="click: $root.selectMessage">
 						<span data-bind="visible: highPriority" style="display: none;">
@@ -58,18 +58,20 @@
 							&nbsp;
 						</span>
 						@if (showUnread) {
-						<span data-bind="visible: !read()" style="display: none;">
-							<img src="@Url.Content("~/Content/star5.png")" alt="unread" />
-						</span>
+							<span data-bind="visible: !read()" style="display: none;">
+								<img src="@Url.Content("~/Content/star5.png")" alt="unread" />
+							</span>
 						}
 						<span data-bind="text: subject"></span>
 					</td>
 					@if (allowDelete) {
-						<td><a data-bind="click: $parent.deleteMessage" href="#" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Delete</a></td>						
+						<td><a data-bind="click: $parent.deleteMessage" href="#" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Delete</a></td>
 					}
 				</tr>
 			</tbody>
-		</table>		
+		</table>
+	
+		<h3 data-bind="visible: hasMore"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 	</div>
 }
 
@@ -83,25 +85,25 @@
 
 	<ul>
 		<li>
-			<a href="#receivedTabContent" id="receivedTab">
-				@R.MessagesStrings.Received 
+			<a href="#receivedTabContent" id="receivedTab" data-bind="click: function () { receivedMessages.init(); }">
+				@R.MessagesStrings.Received
 				<span data-bind="visible: receivedMessages.unread() > 0, text: receivedMessages.unread" class="badge badge-small badge-important" style="display: none;">!</span>
 			</a>
 		</li>
 		<li>
-			<a href="#sentTabContent" id="sentTab">
+			<a href="#sentTabContent" id="sentTab" data-bind="click: function () { sentMessages.init(); }">
 				@R.MessagesStrings.Sent
 			</a>
 		</li>
 		<li>
-			<a href="#notificationsTabContent" id="notificationsTab">
+			<a href="#notificationsTabContent" id="notificationsTab" data-bind="click: function () { notifications.init(); }">
 				@R.MessagesStrings.Notifications
 				<span data-bind="visible: notifications.unread() > 0, text: notifications.unread" class="badge badge-small badge-important" style="display: none;">!</span>
 			</a>
 		</li>
 		<li><a href="#composeTab">@R.MessagesStrings.Compose</a></li>
 	</ul>
-	
+
 	@MessageFolderTab("receivedTabContent", "receivedMessages", true, false, true, false)
 	@MessageFolderTab("sentTabContent", "sentMessages", false, true, false, false)
 	@MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true)
@@ -113,21 +115,19 @@
 </div>
 
 @section BodyScripts {
-    @Scripts.Render("~/bundles/shared/edit", "~/bundles/User/Messages")
-    <script type="text/javascript">
+	@Scripts.Render("~/bundles/shared/edit", "~/bundles/User/Messages")
+	<script type="text/javascript">
 
-        $(document).ready(function () {
+		$(function () {
 
-            $("#tabs").tabs();
-		
-            var urlMapper = new vdb.UrlMapper('@Url.Content("~/")');
-            var repository = new vdb.repositories.UserRepository(urlMapper);		
-            repository.getMessageSummaries(@UserContext.LoggedUserId, null, { maxEntries: 200 }, false, 20, function (json) {
-                var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, json, @UserContext.LoggedUserId, @ToJS(Model.SelectedMessageId));
-                ko.applyBindings(viewModel);
-            });
-		
-        });
+			$("#tabs").tabs();
 
-    </script>
+			var urlMapper = new vdb.UrlMapper('@RootPath');
+			var repository = new vdb.repositories.UserRepository(urlMapper);
+			var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @ToJS(Model.SelectedMessageId));
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
 }

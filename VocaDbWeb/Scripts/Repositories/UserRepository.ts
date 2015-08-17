@@ -128,7 +128,7 @@ module vdb.repositories {
 			callback?: (result: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => void) => {
 
             var url = this.urlMapper.mapRelative("/api/users/" + (userId || this.loggedUserId) + "/messages");
-            $.getJSON(url, { inbox: inbox, start: paging.start, maxResults: paging.maxEntries, unread: unread }, callback);
+            $.getJSON(url, { inbox: inbox, start: paging.start, maxResults: paging.maxEntries, getTotalCount: paging.getTotalCount, unread: unread }, callback);
 
 		};
 

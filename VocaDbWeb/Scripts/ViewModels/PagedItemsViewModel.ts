@@ -16,20 +16,24 @@ module vdb.viewModels {
 
 		private isInit = false;
 
-		public init = () => {
+		public init = (callback?: Function) => {
 
 			if (this.isInit)
 				return;
 
-			this.loadMore();
+			this.loadMore(callback);
 			this.isInit = true;
 
 		}
 
 		public items = ko.observableArray<TModel>([]);
 
-		public loadMore = () => {
-			this.loadMoreItems(this.itemsLoaded);
+		public loadMore = (callback?: Function) => {
+			this.loadMoreItems(result => {
+				this.itemsLoaded(result);
+				if (callback)
+					callback();
+			});
 		}
 
 		public loadMoreItems = (callback: (result: dc.PartialFindResultContract<TModel>) => void) => { };
