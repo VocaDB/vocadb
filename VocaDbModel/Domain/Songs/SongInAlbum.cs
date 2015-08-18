@@ -3,7 +3,7 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class SongInAlbum {
+	public class SongInAlbum : ISongLink {
 
 		private Album album;
 		private Song song;

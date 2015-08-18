@@ -4,6 +4,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.TagFormatting;
+using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.TagFormatting {
 	
@@ -38,7 +39,7 @@ namespace VocaDb.Tests.Service.TagFormatting {
 			album = new Album(new LocalizedString("Synthesis", ContentLanguageSelection.English));
 			album.AddSong(song, trackNum: 5, discNum: 1);
 
-			target = new TagFormatter();
+			target = new TagFormatter(new FakeEntryLinkFactory());
 
 		}
 

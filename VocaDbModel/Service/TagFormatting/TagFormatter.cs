@@ -8,7 +8,7 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 	public class TagFormatter : SongCsvFileFormatter<SongInAlbum> {
 
-		public static readonly string[] TagFormatStrings = new[] {
+		public static readonly string[] TagFormatStrings = {
 			"%title%;%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%",
 			"%title% feat. %vocalists%;%producers%;%album%;%discnumber%;%track%",
 			"%title%;%producers%;%vocalists%;%album%;%discnumber%;%track%",
@@ -18,24 +18,6 @@ namespace VocaDb.Model.Service.TagFormatting {
 		private string GetAlbumMainProducersStr(Album album, ContentLanguagePreference languagePreference) {
 			bool isAnimation = AlbumHelper.IsAnimation(album.DiscType);
 			return ArtistHelper.GetArtistString(ArtistHelper.GetProducers(album.Artists.Where(a => !a.IsSupport), isAnimation), isAnimation)[languagePreference];
-		}
-
-		private string GetProducerStr(SongInAlbum track, ContentLanguagePreference languagePreference) {
-
-			if (track.Song == null)
-				return string.Empty;
-
-			return string.Join(", ", ArtistHelper.GetProducerNames(track.Song.Artists, SongHelper.IsAnimation(track.Song.SongType), languagePreference));
-
-		}
-
-		private string GetVocalistStr(SongInAlbum track, ContentLanguagePreference languagePreference) {
-
-			if (track.Song == null)
-				return string.Empty;
-
-			return string.Join(", ", ArtistHelper.GetVocalistNames(track.Song.Artists, languagePreference));
-
 		}
 
 		protected override string GetFieldValue(string fieldName, SongInAlbum track, ContentLanguagePreference languagePreference) {
@@ -57,12 +39,6 @@ namespace VocaDb.Model.Service.TagFormatting {
 					var circle = ArtistHelper.GetMainCircle(album.Artists.ToArray(), AlbumHelper.IsAnimation(album.DiscType));
 					return (circle != null ? circle.TranslatedName[languagePreference] : GetAlbumMainProducersStr(album, languagePreference));
 
-				// Artists for song, both producers and vocalists
-				case "artist":			
-					return track.Song != null ? track.Song.ArtistString[languagePreference] : string.Empty;
-				case "track artist": // foobar style
-					return track.Song != null ? track.Song.ArtistString[languagePreference] : string.Empty;
-
 				case "catalognum":
 					return (album.OriginalRelease != null ? album.OriginalRelease.CatNum : string.Empty);
 
@@ -73,17 +49,8 @@ namespace VocaDb.Model.Service.TagFormatting {
 				case "discnumber":		
 					return track.DiscNumber.ToString();
 
-				// List of vocalists, separated by comma, with "feat." in the beginning if there are any vocalists, otherwise empty.
-				case "featvocalists":	
-					var vocalistStr = GetVocalistStr(track, languagePreference);
-					return (vocalistStr.Any() ? " feat. " + vocalistStr : string.Empty);
-
 				case "genres":
 					return string.Join(", ", SongHelper.GetGenreTags(track).Select(t => t.NameWithSpaces));
-
-				// List of producers
-				case "producers":		
-					return GetProducerStr(track, languagePreference);
 
 				// Album release date
 				case "releasedate":		
@@ -108,15 +75,14 @@ namespace VocaDb.Model.Service.TagFormatting {
 				case "tracknumber": // foobar style
 					return track.TrackNumber.ToString();
 
-				// List of vocalists, separated by comma.
-				case "vocalists":		
-					return GetVocalistStr(track, languagePreference);
-
 				default:
-					return string.Empty;
+					return GetFieldValue(fieldName, (ISongLink)track, languagePreference);
 			}
 
 		}
+
+		public TagFormatter(IEntryLinkFactory entryLinkFactory) 
+			: base(entryLinkFactory) {}
 
 		public string ApplyFormat(Album album, string format, ContentLanguagePreference languagePreference, bool includeHeader) {
 

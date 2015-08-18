@@ -2,13 +2,88 @@
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.TagFormatting {
 
-	public abstract class SongCsvFileFormatter<T> {
+	public abstract class SongCsvFileFormatter<T> where T : ISongLink {
 
-		protected abstract string GetFieldValue(string fieldName, T track, ContentLanguagePreference languagePreference);
+		private readonly IEntryLinkFactory entryLinkFactory;
+
+		protected SongCsvFileFormatter(IEntryLinkFactory entryLinkFactory) {
+			this.entryLinkFactory = entryLinkFactory;
+		}
+
+		protected string GetPvUrl(Song song, PVType? type, PVServices services) {
+			var pv = song.PVs.FirstOrDefault(p => (type == null || p.PVType == type) && services.HasFlag((PVServices)p.Service));
+			return pv != null ? pv.Url : string.Empty;
+		}
+
+		private string GetProducerStr(Song song, ContentLanguagePreference languagePreference) {
+
+			return string.Join(", ", ArtistHelper.GetProducerNames(song.Artists, SongHelper.IsAnimation(song.SongType), languagePreference));
+
+		}
+
+		private string GetVocalistStr(Song song, ContentLanguagePreference languagePreference) {
+
+			return string.Join(", ", ArtistHelper.GetVocalistNames(song.Artists, languagePreference));
+
+		}
+
+		protected string GetFieldValue(string fieldName, ISongLink songLink, ContentLanguagePreference languagePreference) {
+
+			var song = songLink.Song;
+
+			if (song == null)
+				return string.Empty;
+
+			switch (fieldName) {
+				// Artists for song, both producers and vocalists
+				case "artist":
+					return song.ArtistString[languagePreference];
+				case "track artist": // foobar style
+					return song.ArtistString[languagePreference];
+
+				// List of vocalists, separated by comma, with "feat." in the beginning if there are any vocalists, otherwise empty.
+				case "featvocalists":
+					var vocalistStr = GetVocalistStr(song, languagePreference);
+					return (vocalistStr.Any() ? " feat. " + vocalistStr : string.Empty);
+
+				// List of producers
+				case "producers":
+					return GetProducerStr(song, languagePreference);
+
+				case "publishdate":
+					return song.PublishDate.DateTime.HasValue ? song.PublishDate.ToString() : string.Empty;
+				case "pv.original.niconicodouga":
+					return GetPvUrl(song, PVType.Original, PVServices.NicoNicoDouga);
+				case "pv.original.!niconicodouga":
+					return GetPvUrl(song, PVType.Original, (PVServices)(EnumVal<PVServices>.All - PVServices.NicoNicoDouga));
+				case "pv.reprint":
+					return GetPvUrl(song, PVType.Reprint, EnumVal<PVServices>.All);
+				case "title":
+					return song.Names.SortNames[languagePreference];
+				case "url":
+					return entryLinkFactory.GetFullEntryUrl(EntryType.Song, song.Id);
+
+				// List of vocalists, separated by comma.
+				case "vocalists":
+					return GetVocalistStr(song, languagePreference);
+
+				default:
+					return string.Empty;
+			}
+
+		}
+
+		protected virtual string GetFieldValue(string fieldName, T track, ContentLanguagePreference languagePreference) {
+			return GetFieldValue(fieldName, (ISongLink)track, languagePreference);
+		}
 
 		private void ReplaceField(
 			string tokenName, string tokenStr, StringBuilder sb, T track, ContentLanguagePreference languagePreference) {
