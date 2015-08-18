@@ -37,8 +37,8 @@
 	@:
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
 	@:
-	@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
 }
+@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
 @if (Model.IsFeatured) {
 	@Helpers.EntryStatusMessage(Model.SongList.Status)
 }

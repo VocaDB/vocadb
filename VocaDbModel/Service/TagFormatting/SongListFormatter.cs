@@ -26,6 +26,8 @@ namespace VocaDb.Model.Service.TagFormatting {
 			switch (fieldName) {
 				case "notes":
 					return songInList.Notes;
+				case "publishdate":
+					return song.PublishDate.DateTime.HasValue ? song.PublishDate.ToString() : string.Empty;
 				case "pv.original.niconicodouga":
 					return GetPvUrl(song, PVType.Original, PVServices.NicoNicoDouga);
 				case "pv.original.!niconicodouga":

@@ -123,7 +123,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Export(int id) {
 
 			var songList = queries.GetSongList(id);
-			var formatString = "%notes%;%title%;%url%;%pv.original.niconicodouga%;%pv.original.!niconicodouga%;%pv.reprint%";
+			var formatString = "%notes%;%publishdate%;%title%;%url%;%pv.original.niconicodouga%;%pv.original.!niconicodouga%;%pv.reprint%";
 			var tagString = queries.HandleQuery(ctx => new SongListFormatter(entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
 
 			var enc = new UTF8Encoding(true);
