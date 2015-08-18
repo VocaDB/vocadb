@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Xml;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.VideoServices.Youtube;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -29,7 +30,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		private DateTime? GetPublishDate(YoutubeVideoItem video) {
-			return video.Snippet.PublishedAt.Date;
+			return (video.Snippet.PublishedAt.HasValue ? (DateTime?)video.Snippet.PublishedAt.Value.Date : null);
 		}
 
 		public VideoTitleParseResult GetTitle(string id) {
@@ -38,9 +39,9 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var url = string.Format(videoQueryFormat, apiKey, id);
 
-			YoutubeResponse result;
+			YoutubeVideoResponse result;
 			try {
-				result = JsonRequest.ReadObject<YoutubeResponse>(url);
+				result = JsonRequest.ReadObject<YoutubeVideoResponse>(url);
 			} catch (Exception x) {
 				return VideoTitleParseResult.CreateError(x.Message);
 			}
@@ -59,29 +60,19 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public class YoutubeResponse {
+		public class YoutubeVideoResponse : YoutubeResponse<YoutubeVideoItem> {}
+
+		public class YoutubeVideoItem : YoutubeItem<YoutubeVideoSnippet> {
 			
-			public YoutubeVideoItem[] Items { get; set; }
-
-		}
-
-		public class YoutubeVideoItem {
-			
-			public YoutubeVideoSnippet Snippet { get; set; }
-
 			public YoutubeVideoContentDetails ContentDetails { get; set; }
 
 		}
 
-		public class YoutubeVideoSnippet {
+		public class YoutubeVideoSnippet : Snippet {
 			
 			public string ChannelTitle { get; set; }
 
-			public DateTimeOffset PublishedAt { get; set; }
-
 			public YoutubeVideoThumbnails Thumbnails { get; set; }
-
-			public string Title { get; set; }
 
 		}
 
