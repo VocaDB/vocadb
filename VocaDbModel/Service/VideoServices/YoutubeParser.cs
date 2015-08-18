@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Google.Apis.Services;
-using Google.Apis.YouTube.v3;
-using Google.Apis.YouTube.v3.Data;
+using System.Xml;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 
@@ -10,7 +8,10 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	public class YoutubeParser : IVideoServiceParser {
 
-		private int? GetLength(Video video) {
+		private const string videoQueryFormat =
+			"https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&key={0}&id={1}";
+
+		private int? GetLength(YoutubeVideoItem video) {
 
 			if (video.ContentDetails == null || string.IsNullOrEmpty(video.ContentDetails.Duration))
 				return null;
@@ -18,7 +19,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			TimeSpan timespan;
 
 			try {
-				timespan = System.Xml.XmlConvert.ToTimeSpan(video.ContentDetails.Duration);			
+				timespan = XmlConvert.ToTimeSpan(video.ContentDetails.Duration);			
 			} catch (FormatException) {
 				return null;
 			}
@@ -27,41 +28,78 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		private DateTime? GetPublishDate(Video video) {
-			return DateTimeHelper.ParseDateTimeOffsetAsDate(video.Snippet.PublishedAtRaw);
+		private DateTime? GetPublishDate(YoutubeVideoItem video) {
+			return video.Snippet.PublishedAt.Date;
 		}
 
 		public VideoTitleParseResult GetTitle(string id) {
 
 			var apiKey = AppConfig.YoutubeApiKey;
 
-			var youtubeService = new YouTubeService(new BaseClientService.Initializer {
-				ApiKey = apiKey,
-				ApplicationName = "VocaDB"
-			});			
+			var url = string.Format(videoQueryFormat, apiKey, id);
 
-			var request = youtubeService.Videos.List("snippet,contentDetails");
-			request.Id = id;
-
+			YoutubeResponse result;
 			try {
-
-				var result = request.Execute();
-				
-				if (!result.Items.Any()) {
-					return VideoTitleParseResult.Empty;
-				}
-
-				var video = result.Items.First();
-				var thumbUrl = video.Snippet.Thumbnails.Default__ != null ? video.Snippet.Thumbnails.Default__.Url : string.Empty;
-				var length = GetLength(video);
-				var author = video.Snippet.ChannelTitle;
-				var publishDate = GetPublishDate(video);
-			
-				return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, thumbUrl, length, uploadDate: publishDate);
-
+				result = JsonRequest.ReadObject<YoutubeResponse>(url);
 			} catch (Exception x) {
 				return VideoTitleParseResult.CreateError(x.Message);
 			}
+
+			if (!result.Items.Any()) {
+				return VideoTitleParseResult.Empty;
+			}
+
+			var video = result.Items.First();
+			var thumbUrl = video.Snippet.Thumbnails.Default != null ? video.Snippet.Thumbnails.Default.Url : string.Empty;
+			var length = GetLength(video);
+			var author = video.Snippet.ChannelTitle;
+			var publishDate = GetPublishDate(video);
+
+			return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, thumbUrl, length, uploadDate: publishDate);
+
+		}
+
+		public class YoutubeResponse {
+			
+			public YoutubeVideoItem[] Items { get; set; }
+
+		}
+
+		public class YoutubeVideoItem {
+			
+			public YoutubeVideoSnippet Snippet { get; set; }
+
+			public YoutubeVideoContentDetails ContentDetails { get; set; }
+
+		}
+
+		public class YoutubeVideoSnippet {
+			
+			public string ChannelTitle { get; set; }
+
+			public DateTimeOffset PublishedAt { get; set; }
+
+			public YoutubeVideoThumbnails Thumbnails { get; set; }
+
+			public string Title { get; set; }
+
+		}
+
+		public class YoutubeVideoThumbnails {
+			
+			public YoutubeVideoThumbnail Default { get; set; }
+
+		}
+
+		public class YoutubeVideoThumbnail {
+			
+			public string Url { get; set;  }
+
+		}
+
+		public class YoutubeVideoContentDetails {
+			
+			public string Duration { get; set; }
 
 		}
 

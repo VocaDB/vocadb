@@ -9,7 +9,8 @@ namespace VocaDb.Model.Helpers {
 		/// <exception cref="WebException">If an error occurred.</exception>
 		public static T ReadObject<T>(string url) {
 			
-			var request = WebRequest.Create(url);
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.UserAgent = "VocaDB";
 
 			using (var response = request.GetResponse())
 			using (var stream = response.GetResponseStream())
