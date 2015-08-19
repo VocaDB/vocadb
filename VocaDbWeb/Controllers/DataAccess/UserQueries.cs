@@ -695,13 +695,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return HandleQuery(ctx => {
 				
 				var query = ctx.OfType<ArtistForUser>().Query()
-					.Where(a => !a.Artist.Deleted && a.User.Id == queryParams.UserId);
-
-				if (queryParams.ArtistType != ArtistType.Unknown)
-					query = query.Where(a => a.Artist.ArtistType == queryParams.ArtistType);
+					.Where(a => !a.Artist.Deleted && a.User.Id == queryParams.UserId)
+					.WhereArtistHasName(queryParams.TextQuery)
+					.WhereArtistHasType(queryParams.ArtistType);
 
 				var artists = query
-					.OrderByName(PermissionContext.LanguagePreference)
+					.OrderBy(queryParams.SortRule, LanguagePreference)
 					.Paged(paging)
 					.ToArray()
 					.Select(fac)

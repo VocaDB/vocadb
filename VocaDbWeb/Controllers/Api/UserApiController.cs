@@ -26,7 +26,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Web.Code;
+using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 
@@ -133,31 +133,40 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of artists followed by a user.
 		/// </summary>
+		/// <param name="query">Artist name query (optional).</param>
 		/// <param name="userId">ID of the user whose followed artists are to be browsed.</param>
 		/// <param name="artistType">Filter by artist type.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
+		/// <param name="sort">Sort rule (optional, defaults to Name). Possible values are None, Name, AdditionDate, AdditionDateAsc.</param>
+		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Exact).</param>
 		/// <param name="fields">List of optional fields (optional). Possible values are Description, Groups, Members, Names, Tags, WebLinks.</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of artists.</returns>
 		[Route("{userId:int}/followedArtists")]
 		public PartialFindResult<ArtistForUserForApiContract> GetFollowedArtists(
 			int userId,
+			string query = "",
 			ArtistType artistType = ArtistType.Unknown,
 			int start = 0, 
 			int maxResults = defaultMax,
-			bool getTotalCount = false, 
+			bool getTotalCount = false,
+			ArtistSortRule sort = ArtistSortRule.Name,
+			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var ssl = WebHelper.IsSSL(Request);
+			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new FollowedArtistQueryParams {
 				UserId = userId,
 				ArtistType = artistType,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				SortRule = sort,
+				TextQuery = textQuery
 			};
 
 			var artists = queries.GetArtists(queryParams, afu => 
@@ -212,7 +221,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>List of messages.</returns>
 		[Route("{userId:int}/messages")]
 		[Authorize]
-		public PartialFindResult<UserMessageContract> GetMessages(int userId, 
+		public PartialFindResult<UserMessageContract> GetMessages(
+			int userId, 
 			UserInboxType? inbox = null, 
 			bool unread = false,
 			int start = 0,

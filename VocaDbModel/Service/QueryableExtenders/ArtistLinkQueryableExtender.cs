@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
@@ -22,6 +24,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return criteria.OrderByDescending(a => a.Artist.AllSongs
 						.Where(s => !s.Song.Deleted)
 						.Sum(s => s.Song.RatingScore));
+				case ArtistSortRule.FollowerCount:
+					return criteria.OrderByDescending(a => a.Artist.Users.Count);
 			}
 
 			return criteria;
@@ -38,6 +42,52 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				default:
 					return criteria.OrderBy(e => e.Artist.Names.SortNames.Romaji);
 			}
+
+		}
+
+		public static IQueryable<T> WhereArtistHasName<T>(this IQueryable<T> query, ArtistSearchTextQuery textQuery) where T : IArtistLink {
+
+			if (textQuery == null || textQuery.IsEmpty)
+				return query;
+
+			var nameFilter = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
+				case NameMatchMode.Exact:
+					return query.Where(m => m.Artist.Names.Names.Any(n => n.Value == nameFilter));
+
+				case NameMatchMode.Partial:
+					return query.Where(m => m.Artist.Names.Names.Any(n => n.Value.Contains(nameFilter)));
+
+				case NameMatchMode.StartsWith:
+					return query.Where(m => m.Artist.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
+
+				case NameMatchMode.Words:
+					return textQuery.Words
+						.Take(FindHelpers.MaxSearchWords)
+						.Aggregate(query, (q, word) => q.Where(link => link.Artist.Names.Names.Any(n => n.Value.Contains(word))));
+
+			}
+
+			return query;
+
+		}
+
+		public static IQueryable<T> WhereArtistHasType<T>(this IQueryable<T> query, ArtistType artistType) where T : IArtistLink {
+
+			if (artistType == ArtistType.Unknown)
+				return query;
+
+			return query.Where(m => m.Artist.ArtistType == artistType);
+
+		}
+
+		public static IQueryable<T> WhereArtistHasType<T>(this IQueryable<T> query, ArtistType[] artistTypes) where T : IArtistLink {
+
+			if (!artistTypes.Any())
+				return query;
+
+			return query.Where(m => artistTypes.Contains(m.Artist.ArtistType));
 
 		}
 
