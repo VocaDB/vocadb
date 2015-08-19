@@ -447,6 +447,7 @@ namespace VocaDb.Model.Service {
 
 		/// <summary>
 		/// Automatically choose match mode based on query term length.
+		/// For longer queries this is generally Words, for shorter StartsWith.
 		/// </summary>
 		Auto,
 
@@ -457,18 +458,19 @@ namespace VocaDb.Model.Service {
 		Partial,
 
 		/// <summary>
-		/// Starts with.
+		/// Prefix search.
 		/// </summary>
 		StartsWith,
 
 		/// <summary>
-		/// Always exact matching (usually still case-insensitive).
+		/// Exact (strict) match (usually still case-insensitive).
 		/// Wildcards are not allowed.
 		/// </summary>
 		Exact,
 
 		/// <summary>
 		/// Allow breaking the search string into words separated by whitespace.
+		/// The order of words does not matter.
 		/// </summary>
 		Words
 

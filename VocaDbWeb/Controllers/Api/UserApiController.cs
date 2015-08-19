@@ -140,7 +140,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="sort">Sort rule (optional, defaults to Name). Possible values are None, Name, AdditionDate, AdditionDateAsc.</param>
-		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Exact).</param>
+		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Auto).</param>
 		/// <param name="fields">List of optional fields (optional). Possible values are Description, Groups, Members, Names, Tags, WebLinks.</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of artists.</returns>
@@ -153,7 +153,7 @@ namespace VocaDb.Web.Controllers.Api {
 			int maxResults = defaultMax,
 			bool getTotalCount = false,
 			ArtistSortRule sort = ArtistSortRule.Name,
-			NameMatchMode nameMatchMode = NameMatchMode.Exact,
+			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
