@@ -242,6 +242,10 @@ namespace VocaDb.Model.Domain.Tags {
 				child.Parent = null;
 			}
 
+			foreach (var alias in Aliases) {
+				alias.AliasedTo = null;
+			}
+
 		}
 
 		public virtual bool Equals(Tag tag) {
