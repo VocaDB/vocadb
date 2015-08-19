@@ -830,6 +830,8 @@
     <Compile Include="Service\VideoServices\Youtube\YoutubeItem.cs" />
     <Compile Include="Service\VideoServices\Youtube\YoutubePageInfo.cs" />
     <Compile Include="Service\VideoServices\Youtube\YoutubeResponse.cs" />
+    <Compile Include="Service\VideoServices\Youtube\YoutubeService.cs" />
+    <Compile Include="Service\VideoServices\Youtube\YoutubeVideoResponse.cs" />
     <Compile Include="Utils\AppConfig.cs" />
     <Compile Include="Utils\Config\AffiliatesSection.cs" />
     <Compile Include="Utils\Config\GlobalLinksSection.cs" />
