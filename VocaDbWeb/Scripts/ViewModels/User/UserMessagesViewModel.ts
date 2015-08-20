@@ -2,22 +2,44 @@
 module vdb.viewModels {
 
 	import dc = vdb.dataContracts;
+	import rep = vdb.repositories;
 
 	export class UserMessagesViewModel {
 
-        constructor(private userRepository: vdb.repositories.UserRepository, userId: number, selectedMessageId?: number) {
+        constructor(private userRepository: vdb.repositories.UserRepository, userId: number, inboxType: rep.UserInboxType, selectedMessageId?: number) {
 
-            this.notifications = new UserMessageFolderViewModel(userRepository, "Notifications", userId);
-            this.receivedMessages = new UserMessageFolderViewModel(userRepository, "Received", userId);
-            this.sentMessages = new UserMessageFolderViewModel(userRepository, "Sent", userId);
+            this.notifications = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Notifications, userId, inboxType !== rep.UserInboxType.Notifications);
+            this.receivedMessages = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Received, userId, inboxType !== rep.UserInboxType.Received);
+            this.sentMessages = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Sent, userId, false);
 
-			this.receivedMessages.init(() => {
+			this.inboxes = [this.receivedMessages, this.notifications, this.sentMessages];
+
+			var inbox = _.find(this.inboxes, i => i.inbox === inboxType);
+
+			inbox.init(() => {
 				if (selectedMessageId != null) {
-					this.selectMessageById(selectedMessageId);
+					this.selectMessageById(selectedMessageId, inbox);
 				}
 			});
 
         }
+
+		private getInboxTabName = (inbox: rep.UserInboxType) => {
+			
+			switch (inbox) {
+				case rep.UserInboxType.Received:
+					return "#receivedTab";
+				case rep.UserInboxType.Notifications:
+					return "#notificationsTab";
+				case rep.UserInboxType.Sent:
+					return "#sentTab";
+			}
+
+			return null;
+
+		}
+
+		private inboxes: UserMessageFolderViewModel[];
 
 		newMessageViewModel = new NewMessageViewModel();
 
@@ -45,28 +67,12 @@ module vdb.viewModels {
 
         selectedMessageBody: KnockoutObservable<string> = ko.observable("");
 
-        selectMessageById = (messageId: number) => {
+        selectMessageById = (messageId: number, inbox: UserMessageFolderViewModel) => {
 
-            var message = _.find(this.notifications.items(), msg => msg.id === messageId);
-
-            if (message) {
-                this.selectTab("#notificationsTab");
-                this.selectMessage(message);
-                return;
-            }
-
-            message = _.find(this.receivedMessages.items(), msg => msg.id === messageId);
+            var message = _.find(inbox.items(), msg => msg.id === messageId);
 
             if (message) {
-                this.selectTab("#receivedTab");
-                this.selectMessage(message);
-                return;
-            }
-
-            message = _.find(this.sentMessages.items(), msg => msg.id === messageId);
-
-            if (message) {
-                this.selectTab("#sentTab");
+                this.selectInbox(inbox.inbox);
                 this.selectMessage(message);
             }
 
@@ -88,6 +94,10 @@ module vdb.viewModels {
 
         };
 
+		private selectInbox = (inbox: rep.UserInboxType) => {
+			this.selectTab(this.getInboxTabName(inbox));
+		}
+
         selectTab = (tabName: string) => {
             var index = $('#tabs > ul > li > a').index($(tabName));
             $("#tabs").tabs("option", "active", index);
@@ -97,7 +107,8 @@ module vdb.viewModels {
 
     export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageViewModel> {
 
-        constructor(private userRepo: rep.UserRepository, private inbox: string, private userId) {
+        constructor(private userRepo: rep.UserRepository, public inbox: rep.UserInboxType, private userId,
+			getMessageCount: boolean) {
 
 			super();
             
@@ -105,7 +116,7 @@ module vdb.viewModels {
 				return this.items().length ? _.size(_.filter(this.items(), msg => !msg.read())) : this.unreadOnServer();
             });
 
-			if (inbox === "Notifications") {
+			if (getMessageCount) {
 				this.userRepo.getMessageSummaries(userId, inbox, { start: 0, maxEntries: 0, getTotalCount: true }, true, null,
 					result => this.unreadOnServer(result.totalCount));
 			}

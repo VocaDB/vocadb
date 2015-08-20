@@ -124,7 +124,7 @@
 
 			var urlMapper = new vdb.UrlMapper('@RootPath');
 			var repository = new vdb.repositories.UserRepository(urlMapper);
-			var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @ToJS(Model.SelectedMessageId));
+			var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @((int)Model.Inbox), @ToJS(Model.SelectedMessageId));
 			ko.applyBindings(viewModel);
 
 		});

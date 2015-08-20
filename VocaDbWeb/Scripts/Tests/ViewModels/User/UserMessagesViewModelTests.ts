@@ -17,7 +17,7 @@ module vdb.tests.viewModels {
     };
 
     var createViewModel = () => {
-        return new vm.UserMessagesViewModel(repository, null);
+        return new vm.UserMessagesViewModel(repository, null, repositories.UserInboxType.Received);
     };
 
     QUnit.module("UserMessagesViewModel", {

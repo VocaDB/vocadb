@@ -124,11 +124,11 @@ module vdb.repositories {
 
         };
 
-        public getMessageSummaries = (userId: number, inbox: string, paging: dc.PagingProperties, unread: boolean = false, iconSize: number = 40,
+        public getMessageSummaries = (userId: number, inbox: UserInboxType, paging: dc.PagingProperties, unread: boolean = false, iconSize: number = 40,
 			callback?: (result: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => void) => {
 
             var url = this.urlMapper.mapRelative("/api/users/" + (userId || this.loggedUserId) + "/messages");
-            $.getJSON(url, { inbox: inbox, start: paging.start, maxResults: paging.maxEntries, getTotalCount: paging.getTotalCount, unread: unread }, callback);
+            $.getJSON(url, { inbox: UserInboxType[inbox], start: paging.start, maxResults: paging.maxEntries, getTotalCount: paging.getTotalCount, unread: unread }, callback);
 
 		};
 
@@ -290,5 +290,12 @@ module vdb.repositories {
         }
 
     }
+	
+	export enum UserInboxType {
+		Nothing,
+		Received,
+		Sent,
+		Notifications			
+	}
 
 }

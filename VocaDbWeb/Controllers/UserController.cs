@@ -653,7 +653,17 @@ namespace VocaDb.Web.Controllers
 
 			var user = PermissionContext.LoggedUser;
 			RestoreErrorsFromTempData();
-			var model = new Messages(user, messageId, receiverName);
+
+			UserInboxType inbox = UserInboxType.Received;
+
+			if (messageId.HasValue) {
+				var isNotification = Data.HandleQuery(ctx => ctx.Query<UserMessage>().Any(m => m.Id == messageId && m.Receiver.Id == user.Id && m.Sender == null));
+				if (isNotification)
+					inbox = UserInboxType.Notifications;
+            }
+				
+
+			var model = new Messages(user, messageId, receiverName, inbox);
 
 			return View(model);
 

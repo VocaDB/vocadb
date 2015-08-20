@@ -23,7 +23,7 @@ module vdb.tests.testSupport {
 
             };
 
-            this.getMessageSummaries = (userId: number, inbox: string, maxCount?, unread?, iconSize?, callback?) => {
+            this.getMessageSummaries = (userId: number, inbox: repositories.UserInboxType, maxCount?, unread?, iconSize?, callback?) => {
 
                 if (callback)
                     callback(this.messages);
