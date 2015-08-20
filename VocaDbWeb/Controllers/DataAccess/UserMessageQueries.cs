@@ -79,12 +79,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.WhereInboxIs(id, unread, inboxType)
 					.WhereIsUnread(unread);
 
-				var messages = query
+				var messages = paging.MaxEntries > 0 ? query
 					.OrderByDescending(m => m.Created)
 					.Paged(paging)
 					.ToArray()
 					.Select(m => new UserMessageContract(m, iconFactory))
-					.ToArray();
+					.ToArray() : new UserMessageContract[0];
 
 				var count = paging.GetTotalCount ? query.Count() : 0;
 

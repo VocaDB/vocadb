@@ -101,7 +101,14 @@ module vdb.viewModels {
 
 			super();
             
-            this.unread = ko.computed(() => _.size(_.filter(this.items(), msg => !msg.read())));
+            this.unread = ko.computed(() => {
+				return this.items().length ? _.size(_.filter(this.items(), msg => !msg.read())) : this.unreadOnServer();
+            });
+
+			if (inbox === "Notifications") {
+				this.userRepo.getMessageSummaries(userId, inbox, { start: 0, maxEntries: 0, getTotalCount: true }, true, null,
+					result => this.unreadOnServer(result.totalCount));
+			}
 
 			this.selectAll.subscribe(selected => {
 				_.forEach(this.items(), m => m.checked(selected));
@@ -148,6 +155,8 @@ module vdb.viewModels {
         };
 
         unread: KnockoutComputed<number>;
+
+		private unreadOnServer = ko.observable(null);
 
     }
 
