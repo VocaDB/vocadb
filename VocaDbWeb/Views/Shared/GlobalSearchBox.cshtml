@@ -104,15 +104,15 @@
 					<a href="#" data-bind="attr: { href: '@Url.Action("Messages", "User")' + '?messageId=' + id }">
 						<div class="media">
 							<div class="pull-left media-image-usermessage" style="width: 40px; height: 40px;">
-								<!-- ko if: sender -->
+								<!-- ko if: $data.sender -->
 								@UserHelpers.ProfileIconKnockout("sender.iconUrl", 40)
 								<!-- /ko -->
-								<!-- ko ifnot: sender -->
+								<!-- ko ifnot: $data.sender -->
 								<img src="@Url.Content("~/Content/vocadb_40.png")" alt="Notification" />
 								<!-- /ko -->
 							</div>
 							<div class="media-body media-body-usermessage">
-								<span data-bind="text: sender ? sender.name + ' -' : ''"></span>
+								<span data-bind="text: $data.sender ? sender.name + ' -' : ''"></span>
 								<small data-bind="text: createdFormatted"></small><br />
 								<span data-bind="text: subject"></span>
 							</div>
