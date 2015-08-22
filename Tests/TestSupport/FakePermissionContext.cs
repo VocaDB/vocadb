@@ -66,6 +66,10 @@ namespace VocaDb.Tests.TestSupport {
 			LoggedUser = repository.HandleQuery(ctx => new UserWithPermissionsContract(ctx.OfType<User>().Load(LoggedUserId), ContentLanguagePreference.Default));
 		}
 
+		public void SetLoggedUser(User user) {
+			LoggedUser = new UserWithPermissionsContract(user, ContentLanguagePreference.Default);
+		}
+
 		public void VerifyLogin() {
 
 			if (!IsLoggedIn)

@@ -43,22 +43,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private void SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
-
-			ParamIs.NotNull(() => message);
-
-			var subject = string.Format("New private message from {0}", message.Sender.Name);
-			var body = string.Format(
-				"You have received a message from {0}. " +
-				"You can view your messages at {1}." +
-				"\n\n" +
-				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.", 
-				message.Sender.Name, messagesUrl, mySettingsUrl);
-
-			userMessageMailer.SendEmail(message.Receiver.Email, message.Receiver.Name, subject, body);
-
-		}
-
 		public UserService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
 			IUserMessageMailer userMessageMailer)
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
@@ -358,42 +342,6 @@ namespace VocaDb.Model.Service {
 				session.Update(user);
 
 				AuditLog("reset access key", session);
-
-			});
-
-		}
-
-		public void SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
-
-			ParamIs.NotNull(() => contract);
-
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
-
-			HandleTransaction(session => {
-
-				var receiver = session.Query<User>().FirstOrDefault(u => u.Name.Equals(contract.Receiver.Name));
-
-				if (receiver == null)
-					throw new UserNotFoundException();
-
-				var sender = session.Load<User>(contract.Sender.Id);
-
-				VerifyResourceAccess(sender);
-
-				SysLog("sending message from " + sender + " to " + receiver);
-
-				var messages = sender.SendMessage(receiver, contract.Subject, contract.Body, contract.HighPriority);
-
-				if (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAll 
-					|| (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAdmins 
-						&& sender.EffectivePermissions.Has(PermissionToken.DesignatedStaff))) {
-
-					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Item1);
-
-				}
-
-				session.Save(messages.Item1);
-				session.Save(messages.Item2);
 
 			});
 

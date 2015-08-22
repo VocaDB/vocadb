@@ -82,7 +82,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithEmail, ContentLanguagePreference.Default));
 			stopForumSpamClient = new FakeStopForumSpamClient();
 			mailer = new FakeUserMessageMailer();
-			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer, new FakeUserIconFactory(), null, new FakeObjectCache());
+			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer, 
+				new FakeUserIconFactory(), null, new FakeObjectCache());
 			softBannedIPs = new HostCollection();
 
 			request = new PasswordResetRequest(userWithEmail) { Id = Guid.NewGuid() };
@@ -500,6 +501,36 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(hashed, userWithEmail.Password, "Hashed password");
 			Assert.AreEqual(0, repository.List<PasswordResetRequest>().Count, "Number of requests");
+
+		}
+
+		[TestMethod]
+		public void SendMessage() {
+
+			var sender = CreateEntry.User(name: "sender");
+			var receiver = CreateEntry.User(name: "receiver");
+			repository.Save(sender, receiver);
+			permissionContext.SetLoggedUser(sender);
+			var contract = new UserMessageContract { Sender = new UserWithIconContract(sender), Receiver = new UserWithIconContract(receiver), Subject = "Subject", Body = "Body" };
+
+			data.SendMessage(contract, string.Empty, string.Empty);
+
+			var messagesInRepo = repository.List<UserMessage>();
+			Assert.AreEqual(2, messagesInRepo.Count, "Number of messages created");
+
+			var sentMessage = messagesInRepo.FirstOrDefault(m => m.Inbox == UserInboxType.Sent);
+			Assert.IsNotNull(sentMessage, "Sent message");
+			Assert.AreEqual("Subject", sentMessage.Subject, "sentMessage.Subject");
+			Assert.AreEqual(sender, sentMessage.User, "Sent message user is the sender");
+			Assert.AreEqual(receiver, sentMessage.Receiver, "sentMessage.Receiver");
+			Assert.AreEqual(sender, sentMessage.Sender, "sentMessage.Sender");
+
+			var receivedMessage = messagesInRepo.FirstOrDefault(m => m.Inbox == UserInboxType.Received);
+			Assert.IsNotNull(receivedMessage, "Received message");
+			Assert.AreEqual("Subject", receivedMessage.Subject, "receivedMessage.Subject");
+			Assert.AreEqual(receiver, receivedMessage.User, "Received message user is the receiver");
+			Assert.AreEqual(receiver, receivedMessage.Receiver, "receivedMessage.Receiver");
+			Assert.AreEqual(sender, receivedMessage.Sender, "receivedMessage.Sender");
 
 		}
 

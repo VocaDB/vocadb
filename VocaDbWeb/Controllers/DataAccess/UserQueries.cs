@@ -146,6 +146,22 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		private void SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
+
+			ParamIs.NotNull(() => message);
+
+			var subject = string.Format("New private message from {0}", message.Sender.Name);
+			var body = string.Format(
+				"You have received a message from {0}. " +
+				"You can view your messages at {1}." +
+				"\n\n" +
+				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.",
+				message.Sender.Name, messagesUrl, mySettingsUrl);
+
+			mailer.SendEmail(message.Receiver.Email, message.Receiver.Name, subject, body);
+
+		}
+
 		private UserDetailsContract GetUserDetails(IRepositoryContext<User> session, User user) {
 
 			var details = new UserDetailsContract(user, PermissionContext);
@@ -1072,6 +1088,42 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				songId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
 				song => song.Tags, 
 				(song, ctx) => new SongTagUsageFactory(ctx, song));
+
+		}
+
+		public void SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
+
+			ParamIs.NotNull(() => contract);
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			HandleTransaction(session => {
+
+				var receiver = session.Query().FirstOrDefault(u => u.Name.Equals(contract.Receiver.Name));
+
+				if (receiver == null)
+					throw new UserNotFoundException();
+
+				var sender = session.Load(contract.Sender.Id);
+
+				VerifyResourceAccess(sender);
+
+				session.AuditLogger.SysLog("sending message from " + sender + " to " + receiver);
+
+				var messages = sender.SendMessage(receiver, contract.Subject, contract.Body, contract.HighPriority);
+
+				if (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAll
+					|| (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAdmins
+						&& sender.EffectivePermissions.Has(PermissionToken.DesignatedStaff))) {
+
+					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Item1);
+
+				}
+
+				session.Save(messages.Item1);
+				session.Save(messages.Item2);
+
+			});
 
 		}
 
