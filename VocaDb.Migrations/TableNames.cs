@@ -20,6 +20,7 @@
 		public const string Songs = "Songs";
 		public const string Tags = "Tags";
 		public const string UserOptions = "UserOptions";
+		public const string UserMessages = "UserMessages";
 		public const string Users = "Users";
 
 	}

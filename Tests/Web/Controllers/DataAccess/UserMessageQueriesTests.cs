@@ -6,7 +6,6 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers.DataAccess;
@@ -42,9 +41,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			receiver = new User { Name = "Receiver user", Id = 2 };
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(receiver, ContentLanguagePreference.Default));
 
-			receivedMessage = CreateEntry.UserMessage(id: 1, sender: sender, receiver: receiver, subject: "Hello world", body: "Message body", read: true);
-			sentMessage = CreateEntry.UserMessage(id: 2, sender: receiver, receiver: sender, subject: "Hello to you too", body: "Message body");
-			var noPermissionMessage = CreateEntry.UserMessage(id: 39, sender: sender, receiver: sender, subject: "Hello world", body: "Message body");
+			receivedMessage = CreateEntry.UserMessageReceived(id: 1, sender: sender, receiver: receiver, subject: "Hello world", body: "Message body", read: true);
+			sentMessage = CreateEntry.UserMessageSent(id: 2, sender: receiver, receiver: sender, subject: "Hello to you too", body: "Message body");
+			var noPermissionMessage = CreateEntry.UserMessageReceived(id: 39, sender: sender, receiver: sender, subject: "Hello world", body: "Message body");
 
 			repository = new FakeUserMessageRepository(sentMessage, receivedMessage, noPermissionMessage);
 
@@ -107,7 +106,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void GetList_Unread() {
 
-			var anotherMsg = CreateEntry.UserMessage(3, sender, receiver, "Unread message", "Unread message body", read: false);
+			var anotherMsg = CreateEntry.UserMessageReceived(3, sender, receiver, "Unread message", "Unread message body", read: false);
 			repository.Save(anotherMsg);
 
 			var result = CallGetList(UserInboxType.Nothing, unread: true);

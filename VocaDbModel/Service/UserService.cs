@@ -17,6 +17,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.Service {
@@ -273,7 +274,11 @@ namespace VocaDb.Model.Service {
 				var contract = new UserWithPermissionsContract(user, LanguagePreference);
 
 				if (!skipMessages)
-					contract.UnreadMessagesCount = session.Query<UserMessage>().Count(m => !m.Read && m.Receiver.Id == user.Id);
+					contract.UnreadMessagesCount = session.Query<UserMessage>()
+						.Where(m => m.User.Id == user.Id)
+						.WhereIsUnread(true)
+						.WhereInboxIs(user.Id, true, UserInboxType.Nothing)
+						.Count();
 
 				return contract;
 
@@ -377,17 +382,18 @@ namespace VocaDb.Model.Service {
 
 				SysLog("sending message from " + sender + " to " + receiver);
 
-				var message = sender.SendMessage(receiver, contract.Subject, contract.Body, contract.HighPriority);
+				var messages = sender.SendMessage(receiver, contract.Subject, contract.Body, contract.HighPriority);
 
 				if (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAll 
 					|| (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAdmins 
 						&& sender.EffectivePermissions.Has(PermissionToken.DesignatedStaff))) {
 
-					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, message);
+					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Item1);
 
 				}
 
-				session.Save(message);
+				session.Save(messages.Item1);
+				session.Save(messages.Item2);
 
 			});
 

@@ -8,6 +8,18 @@ namespace VocaDb.Model.Domain.Users {
 	/// </summary>
 	public class UserMessage : IEntryWithIntId {
 
+		public static UserMessage CreateReceived(User from, User to, string subject, string body, bool highPriority) {
+			
+			return new UserMessage(to, UserInboxType.Received, from, to, subject, body, highPriority);
+
+		}
+
+		public static UserMessage CreateSent(User from, User to, string subject, string body, bool highPriority) {
+
+			return new UserMessage(from, UserInboxType.Sent, from, to, subject, body, highPriority);
+
+		}
+
 		private string message;
 		private User receiver;
 		private User sender;
@@ -17,19 +29,31 @@ namespace VocaDb.Model.Domain.Users {
 			Created = DateTime.Now;
 		}
 
+		/// <summary>
+		/// Creates a new notification message (no sender).
+		/// </summary>
 		public UserMessage(User to, string subject, string body, bool highPriority)
 			: this() {
 
+			ParamIs.NotNull(() => to);
+
+			User = to;
 			Receiver = to;
 			Subject = subject;
 			Message = body;
 			HighPriority = highPriority;
 
+			Inbox = UserInboxType.Notifications;
+
 		}
 
-		public UserMessage(User from, User to, string subject, string body, bool highPriority)
+		public UserMessage(User user, UserInboxType inbox, User from, User to, string subject, string body, bool highPriority)
 			: this() {
 
+			ParamIs.NotNull(() => user);
+
+			User = user;
+			Inbox = inbox;
 			Sender = from;
 			Receiver = to;
 			Subject = subject;
@@ -43,6 +67,8 @@ namespace VocaDb.Model.Domain.Users {
 		public virtual bool HighPriority { get; set; }
 
 		public virtual int Id { get; set; }
+
+		public virtual UserInboxType Inbox { get; set; }
 
 		public virtual string Message {
 			get { return message; }
@@ -81,10 +107,23 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// User in whose inbox this message is.
+		/// Cannot be null.
+		/// </summary>
+		public virtual User User { get; set; }
+
 		public override string ToString() {
 			return string.Format("User message '{0}' [{1}]", Subject, Id);
 		}
 
+	}
+
+	public enum UserInboxType {
+		Nothing,
+		Received,
+		Sent,
+		Notifications
 	}
 
 }

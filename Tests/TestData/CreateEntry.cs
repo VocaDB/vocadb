@@ -58,11 +58,19 @@ namespace VocaDb.Tests.TestData {
 			return new User(name, "123", email, 0) { GroupId = group, Id = id };
 		}
 
-		public static UserMessage UserMessage(int id = 0, User sender = null, User receiver = null, 
+		public static UserMessage UserMessageReceived(int id = 0, User sender = null, User receiver = null, 
 			string subject = "Hello world", string body = "Message body", bool highPriority = false, 
 			bool read = false) {
 
-			return new UserMessage(sender, receiver, subject, body, highPriority) { Id = id, Read = read };
+			return new UserMessage(receiver, UserInboxType.Received, sender, receiver, subject, body, highPriority) { Id = id, Read = read };
+
+		}
+
+		public static UserMessage UserMessageSent(int id = 0, User sender = null, User receiver = null,
+			string subject = "Hello world", string body = "Message body", bool highPriority = false,
+			bool read = false) {
+
+			return new UserMessage(sender, UserInboxType.Sent, sender, receiver, subject, body, highPriority) { Id = id, Read = read };
 
 		}
 

@@ -1,5 +1,5 @@
 ﻿using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Web.Models.User {
 

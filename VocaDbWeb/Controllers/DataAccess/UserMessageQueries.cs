@@ -76,6 +76,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return HandleQuery(ctx => {
 
 				var query = ctx.Query()
+					.Where(u => u.User.Id == id)
 					.WhereInboxIs(id, unread, inboxType)
 					.WhereIsUnread(unread);
 

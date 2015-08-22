@@ -10,12 +10,14 @@ namespace VocaDb.Model.Mapping.Users {
 			Id(m => m.Id);
 
 			Map(m => m.Created).Not.Nullable();
+			Map(m => m.Inbox).Not.Nullable();
 			Map(m => m.Subject).Length(200).Not.Nullable();
 			Map(m => m.Message).Length(10000).Not.Nullable();
 			Map(m => m.Read).Not.Nullable();
 
 			References(m => m.Sender).Nullable();
 			References(m => m.Receiver).Not.Nullable();
+			References(m => m.User).Not.Nullable();
 
 		}
 

@@ -3,6 +3,20 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201508222100)]
+	public class CreateInboxesForUserMessages : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("[User]").OnTable(TableNames.UserMessages).AsInt32().Nullable()
+				.ForeignKey("FK_UserMessages_Users2", TableNames.Users, "Id").OnDelete(Rule.Cascade);
+
+			Create.Column("Inbox").OnTable(TableNames.UserMessages).AsString(16).Nullable();
+
+		}
+
+	}
+
 	[Migration(201507261300)]
 	public class CreateDateToSongLists : AutoReversingMigration {
 

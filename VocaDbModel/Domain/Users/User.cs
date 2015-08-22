@@ -536,15 +536,17 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public virtual UserMessage SendMessage(User to, string subject, string body, bool highPriority) {
+		public virtual Tuple<UserMessage, UserMessage> SendMessage(User to, string subject, string body, bool highPriority) {
 
 			ParamIs.NotNull(() => to);
 
-			var msg = new UserMessage(this, to, subject, body, highPriority);
-			SentMessages.Add(msg);
-			to.ReceivedMessages.Add(msg);
+			var received = UserMessage.CreateReceived(this, to, subject, body, highPriority);
+			to.ReceivedMessages.Add(received);
 
-			return msg;
+			var sent = UserMessage.CreateSent(this, to, subject, body, highPriority);
+			SentMessages.Add(sent);
+
+			return Tuple.Create(received, sent);
 
 		}
 
