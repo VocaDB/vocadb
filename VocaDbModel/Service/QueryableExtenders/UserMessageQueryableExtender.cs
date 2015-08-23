@@ -18,8 +18,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<UserMessage> WhereInboxIs(this IQueryable<UserMessage> query, int userId, bool onlyReceived, UserInboxType inboxType) {
 
-			if (onlyReceived)
-				query = query.Where(m => m.Sender.Id != userId);
+			if (onlyReceived) {
+
+				if (inboxType == UserInboxType.Nothing)
+					return query.Where(m => m.Inbox == UserInboxType.Notifications || m.Inbox == UserInboxType.Received);
+				else if (inboxType == UserInboxType.Sent)
+					return query.Where(m => false);
+
+			}
 
 			return inboxType == UserInboxType.Nothing ? query : query.Where(m => m.Inbox == inboxType);
 

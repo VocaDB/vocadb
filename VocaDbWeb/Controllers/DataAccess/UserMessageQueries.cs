@@ -19,8 +19,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		/// <summary>
 		/// Permanently deletes a message by Id.
-		/// Currently only the receiver can delete the message. 
-		/// This is meant for notifications. Personal messages need different handling.
 		/// </summary>
 		/// <param name="messageId">Id of the message to be deleted.</param>
 		public void Delete(int messageId) {
@@ -31,7 +29,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var msg = ctx.Load(messageId);
 
-				VerifyResourceAccess(msg.Receiver);
+				VerifyResourceAccess(msg.User);
 
 				if (msg.Sender != null)
 					msg.Sender.SentMessages.Remove(msg);

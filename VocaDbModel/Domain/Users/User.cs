@@ -36,6 +36,7 @@ namespace VocaDb.Model.Domain.Users {
 		private string email;
 		private IList<FavoriteSongForUser> favoriteSongs = new List<FavoriteSongForUser>();
 		private string language;
+		private IList<UserMessage> messages = new List<UserMessage>();
 		private string name;
 		private string nameLc;
 		private UserOptions options;
@@ -278,6 +279,14 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		public virtual DateTime LastLogin { get; set; }
+
+		public virtual IList<UserMessage> Messages {
+			get { return messages; }
+			set {
+				ParamIs.NotNull(() => value);
+				messages = value;
+			}
+		}
 
 		/// <summary>
 		/// Username.
@@ -542,9 +551,11 @@ namespace VocaDb.Model.Domain.Users {
 
 			var received = UserMessage.CreateReceived(this, to, subject, body, highPriority);
 			to.ReceivedMessages.Add(received);
+			to.Messages.Add(received);
 
 			var sent = UserMessage.CreateSent(this, to, subject, body, highPriority);
 			SentMessages.Add(sent);
+			Messages.Add(sent);
 
 			return Tuple.Create(received, sent);
 

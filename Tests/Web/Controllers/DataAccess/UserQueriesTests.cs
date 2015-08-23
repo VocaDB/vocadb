@@ -515,11 +515,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			data.SendMessage(contract, string.Empty, string.Empty);
 
+			Assert.AreEqual(1, sender.Messages.Count, "Number of messages for sender");
+			Assert.AreEqual(1, receiver.Messages.Count, "Number of messages for receiver");
+
 			var messagesInRepo = repository.List<UserMessage>();
 			Assert.AreEqual(2, messagesInRepo.Count, "Number of messages created");
 
 			var sentMessage = messagesInRepo.FirstOrDefault(m => m.Inbox == UserInboxType.Sent);
 			Assert.IsNotNull(sentMessage, "Sent message");
+			Assert.AreEqual(sender.Messages[0], sentMessage, "Sent message is the same in user collection and repository");
 			Assert.AreEqual("Subject", sentMessage.Subject, "sentMessage.Subject");
 			Assert.AreEqual(sender, sentMessage.User, "Sent message user is the sender");
 			Assert.AreEqual(receiver, sentMessage.Receiver, "sentMessage.Receiver");
@@ -527,6 +531,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var receivedMessage = messagesInRepo.FirstOrDefault(m => m.Inbox == UserInboxType.Received);
 			Assert.IsNotNull(receivedMessage, "Received message");
+			Assert.AreEqual(receiver.Messages[0], receivedMessage, "Received message is the same in user collection and repository");
 			Assert.AreEqual("Subject", receivedMessage.Subject, "receivedMessage.Subject");
 			Assert.AreEqual(receiver, receivedMessage.User, "Received message user is the receiver");
 			Assert.AreEqual(receiver, receivedMessage.Receiver, "receivedMessage.Receiver");
