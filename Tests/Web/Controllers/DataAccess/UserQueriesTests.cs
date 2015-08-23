@@ -508,7 +508,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void SendMessage() {
 
 			var sender = CreateEntry.User(name: "sender");
-			var receiver = CreateEntry.User(name: "receiver");
+			var receiver = CreateEntry.User(name: "receiver", email: "test@vocadb.net");
 			repository.Save(sender, receiver);
 			permissionContext.SetLoggedUser(sender);
 			var contract = new UserMessageContract { Sender = new UserWithIconContract(sender), Receiver = new UserWithIconContract(receiver), Subject = "Subject", Body = "Body" };
@@ -531,6 +531,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(receiver, receivedMessage.User, "Received message user is the receiver");
 			Assert.AreEqual(receiver, receivedMessage.Receiver, "receivedMessage.Receiver");
 			Assert.AreEqual(sender, receivedMessage.Sender, "receivedMessage.Sender");
+
+			Assert.IsNotNull(mailer.Subject, "mailer.Subject");
+			Assert.AreEqual("test@vocadb.net", mailer.ToEmail, "mailer.ToEmail");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotAllowedException))]
+		public void SendMessage_NoPermission() {
+
+			var sender = CreateEntry.User(name: "sender");
+			var receiver = CreateEntry.User(name: "receiver");
+			repository.Save(sender, receiver);
+
+			var contract = new UserMessageContract { Sender = new UserWithIconContract(sender), Receiver = new UserWithIconContract(receiver), Subject = "Subject", Body = "Body" };
+			data.SendMessage(contract, string.Empty, string.Empty);
 
 		}
 
