@@ -115,6 +115,7 @@ namespace VocaDb.Tests.Service.Helpers {
 
 		}
 
+		// User has too many unread notifications
 		[TestMethod]	
 		public void TooManyUnreadMessages() {
 
@@ -126,6 +127,29 @@ namespace VocaDb.Tests.Service.Helpers {
 
 			Assert.AreEqual(10, repository.List<UserMessage>().Count, "No notification created");
 			Assert.IsTrue(repository.List<UserMessage>().All(m => m.Subject == "New message!"), "No notification created");
+
+		}
+
+		// Too many messages limit only counts notifications
+		[TestMethod]
+		public void OnlyCountNotifications() {
+
+			// Not counted since the messages are not notifications
+			for (int i = 0; i < 5; ++i) {
+				user.ReceivedMessages.Add(repository.Save(UserMessage.CreateReceived(creator, user, "New message!", i.ToString(), false)));
+				user.ReceivedMessages.Add(repository.Save(UserMessage.CreateSent(creator, user, "New message!", i.ToString(), false)));
+			}
+
+			Assert.AreEqual(10, repository.List<UserMessage>().Count, "Number of messages before sending");
+
+			CallSendNotifications(creator);
+
+			Assert.AreEqual(11, repository.List<UserMessage>().Count, "Number of messages after sending");
+
+			var notification = repository.List<UserMessage>().FirstOrDefault(m => m.Subject != "New message!");
+
+			Assert.IsNotNull(notification, "Notification was created");
+			Assert.AreEqual(user, notification.Receiver, "Receiver");
 
 		}
 

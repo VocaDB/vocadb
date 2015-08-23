@@ -68,6 +68,13 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual int Id { get; set; }
 
+		/// <summary>
+		/// Inbox in which the message was sent.
+		/// </summary>
+		/// <remarks>
+		/// When a message is sent from one user to another, it is saved in sender's <see cref="UserInboxType.Sent"/> inbox 
+		/// and receivers <see cref="UserInboxType.Received"/> inbox.
+		/// </remarks>
 		public virtual UserInboxType Inbox { get; set; }
 
 		public virtual string Message {
