@@ -60,7 +60,8 @@ namespace VocaDb.Web.Code {
 
 				SmallBanners = new[] {
 					new Link("VocaloidOtaku", "http://vocaloidotaku.net", "vo_small.png"),
-					new Link("r/vocaloid", "http://www.reddit.com/r/vocaloid", "rvocaloid_small2.png")				
+					new Link("r/vocaloid", "http://www.reddit.com/r/vocaloid", "rvocaloid_small2.png"),
+					new Link("Vocaloid News Network", "https://www.vocaloidnews.net/", "vnn.png"),
 				};
 
 			} else {
