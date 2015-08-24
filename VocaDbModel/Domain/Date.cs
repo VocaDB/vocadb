@@ -83,7 +83,7 @@ namespace VocaDb.Model.Domain {
 		}
 
 		public override string ToString() {
-			return DateTime.HasValue ? DateTime.Value.ToString() : base.ToString();
+			return DateTime.HasValue ? DateTime.Value.ToShortDateString() : base.ToString();
 		}
 
 	}
