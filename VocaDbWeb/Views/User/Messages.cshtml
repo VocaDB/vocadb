@@ -13,18 +13,16 @@
 
 @helper MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
 	<div id="@id" data-bind="with: @binding">
-		@if (allowDelete) {
-			<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">Delete selected</button>
-		}
+		<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">Delete selected</button>
 
 		<table class="table messages" data-bind="if: items().length">
 			<thead>
 				<tr>
-					@if (allowDelete) {
-						<th>
+					<th>
+						@if (allowDelete) {
 							<input type="checkbox" data-bind="checked: selectAll" />
-						</th>
-					}
+						}
+					</th>
 					<th>@R.MessagesStrings.Date</th>
 					@if (colFrom) {
 						<th>@R.MessagesStrings.From</th>
@@ -33,18 +31,14 @@
 						<th>@R.MessagesStrings.To</th>
 					}
 					<th>@R.MessagesStrings.Subject</th>
-					@if (allowDelete) {
-						<th></th>
-					}
+					<th></th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: items">
 				<tr data-bind="css: { info: selected }">
-					@if (allowDelete) {
-						<td>
-							<input type="checkbox" data-bind="checked: checked" />
-						</td>
-					}
+					<td>
+						<input type="checkbox" data-bind="checked: checked" />
+					</td>
 					<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
 					@if (colFrom) {
 						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("sender.iconUrl", "sender.name")</td>
@@ -64,9 +58,7 @@
 						}
 						<span data-bind="text: subject"></span>
 					</td>
-					@if (allowDelete) {
-						<td><a data-bind="click: $parent.deleteMessage" href="#" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Delete</a></td>
-					}
+					<td><a data-bind="click: $parent.deleteMessage" href="#" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Delete</a></td>
 				</tr>
 			</tbody>
 		</table>
