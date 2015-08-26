@@ -1,0 +1,81 @@
+<html>
+<head>
+	<title>VocaDB Album API demo</title>
+	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+			
+				<h1>VocaDB Album API demo</h1>
+				
+				<div class="alert alert-info">
+					Minimal demo to showcase <a href="http://vocadb.net/api">VocaDB album API</a>, using jQuery, Knockout and Bootstrap.
+				</div>
+				
+				<input type="text" placeholder="Type something..." data-bind="value: searchTerm, valueUpdate: 'afterkeydown'" class="input-xlarge" />
+			
+				<hr />
+			
+				<div data-bind="foreach: items">
+					<div class="media">
+						<a class="pull-left" href="#" data-bind="if: $data.mainPicture, attr: { href: 'http://vocadb.net/Al/' + id }">
+							<img class="media-object" data-bind="attr: { src: mainPicture.urlTinyThumb }">
+						</a>
+						<div class="media-body">
+							<a data-bind="attr: { href: 'http://vocadb.net/Al/' + id }">
+								<h4 class="media-heading" data-bind="text: localizedName"></h4>
+							</a>
+							<small data-bind="text: artistString"></small>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		
+		function ViewModel() {
+		
+			var self = this;
+			this.items = ko.observableArray([]); // Current page of items
+			this.searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } }); // Delay updates by 300ms
+			
+			this.updateData = function() {
+			
+				// Call the VocaDB API to get a page of albums
+				$.getJSON("http://vocadb.net/api/albums", 
+					{
+						query: self.searchTerm(), 
+						fields: 'MainPicture', // Getting the main picture optional field
+						nameMatchMode: 'Auto', // 'Auto' selects the optimal name match mode based on query
+						lang: 'English'        // For this demo we want names localized in English when possible
+					},
+					function(result) {					
+						self.items(result.items);					
+					}
+				);
+			
+			};
+			
+			// Update results when search term changes.
+			this.searchTerm.subscribe(this.updateData);
+			
+			// Immediately populate initial contents on page load
+			this.updateData();
+			
+		}
+			
+		ko.applyBindings(new ViewModel());
+		
+	</script>		
+</body>
+</html>
