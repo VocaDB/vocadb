@@ -51,12 +51,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var msg = ctx.Load(messageId);
 
-				if (msg.Sender != null)
-					VerifyResourceAccess(msg.Sender, msg.Receiver);
-				else
-					VerifyResourceAccess(msg.Receiver);
+				VerifyResourceAccess(msg.User);
 
-				if (!msg.Read && PermissionContext.LoggedUser.Id == msg.Receiver.Id) {
+				if (!msg.Read && PermissionContext.LoggedUserId == msg.Receiver.Id) {
 					msg.Read = true;
 					ctx.Update(msg);
 				}

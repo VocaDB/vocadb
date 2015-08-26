@@ -1,7 +1,6 @@
 <html>
 <head>
 	<title>VocaDB Album API demo</title>
-	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -13,7 +12,7 @@
 				<h1>VocaDB Album API demo</h1>
 				
 				<div class="alert alert-info">
-					Minimal demo to showcase <a href="http://vocadb.net/api">VocaDB album API</a>, using jQuery, Knockout and Bootstrap.
+					Minimal demo to showcase <a href="http://vocadb.net/apiHelp">VocaDB album API</a>, using jQuery, Knockout and Bootstrap.
 				</div>
 				
 				<input type="text" placeholder="Type something..." data-bind="value: searchTerm, valueUpdate: 'afterkeydown'" class="input-xlarge" />
@@ -34,12 +33,30 @@
 					</div>
 				</div>
 			
+				<hr />
+				<h2>JavaScript code for calling the API</h2>
+				<pre>
+// Call the VocaDB API to get a page of albums
+$.getJSON("http://vocadb.net/api/albums", 
+	{
+		query: self.searchTerm(), 
+		fields: 'MainPicture', // Getting the main picture optional field
+		nameMatchMode: 'Auto', // 'Auto' selects the optimal name match mode based on query
+		lang: 'English'        // For this demo we want names localized in English when possible
+	},
+	function(result) {					
+		self.items(result.items);					
+	}
+);				
+				</pre>
+			
 			</div>
 		</div>
 	</div>
 
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
 	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		

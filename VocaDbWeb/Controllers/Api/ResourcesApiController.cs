@@ -8,6 +8,7 @@ using System.Resources;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using Newtonsoft.Json.Serialization;
+using VocaDb.Model.Domain;
 using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -31,7 +32,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
-		private const int cacheDuration = 86400; // 24h
+		private const int cacheDuration = Constants.SecondsInADay;
 
 		private readonly Dictionary<string, ResourceManager> allSets = new Dictionary<string, ResourceManager> {
 			{ "activityEntry_activityFeedEventNames", HelperRes.ActivityFeedHelperStrings.ResourceManager },

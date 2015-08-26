@@ -7,7 +7,7 @@ module vdb.tests.testSupport {
 
     export class FakeUserRepository extends vdb.repositories.UserRepository {
 
-        public messageBody: string;
+        public message: dc.UserMessageSummaryContract;
         public messages: dc.UserMessageSummaryContract[];
         public songId: number;
         public rating: cls.SongVoteRating;
@@ -16,10 +16,10 @@ module vdb.tests.testSupport {
 
             super(new vdb.UrlMapper(""));        
 
-            this.getMessageBody = (messageId, callback?) => {
+            this.getMessage = (messageId, callback?) => {
 
                 if (callback)
-                    callback(this.messageBody);
+                    callback(this.message);
 
             };
 

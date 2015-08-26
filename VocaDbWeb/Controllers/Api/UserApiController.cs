@@ -29,6 +29,7 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
+using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -207,6 +208,22 @@ namespace VocaDb.Web.Controllers.Api {
 			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, sort ?? UserSortRule.Name, 
 				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, userIconFactory, fields));
 			
+		}
+
+		/// <summary>
+		/// Gets a user message.
+		/// The message will be marked as read.
+		/// User can only load messages from their own inbox.
+		/// </summary>
+		/// <param name="messageId">ID of the message.</param>
+		/// <returns>Message details.</returns>
+		[Route("messages/{messageId:int}")]
+		[Authorize]
+		[CacheOutput(ClientTimeSpan = Constants.SecondsInADay)]
+		public UserMessageContract GetMessage(int messageId) {
+
+			return messageQueries.Get(messageId, userIconFactory);
+
 		}
 
 		/// <summary>

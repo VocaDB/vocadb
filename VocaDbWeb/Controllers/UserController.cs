@@ -637,24 +637,12 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult MessageBody(int messageId = invalidId) {
-
-			if (messageId == invalidId)
-				return NoId();
-
-			var msg = messageQueries.Get(messageId, null);
-			var body = markdownParser.GetHtml(msg.Body);
-			return Content(body);
-
-		}
-
-		[Authorize]
 		public ActionResult Messages(int? messageId, string receiverName) {
 
 			var user = PermissionContext.LoggedUser;
 			RestoreErrorsFromTempData();
 
-			UserInboxType inbox = UserInboxType.Received;
+			var inbox = UserInboxType.Received;
 
 			if (messageId.HasValue) {
 				var isNotification = Data.HandleQuery(ctx => ctx.Query<UserMessage>().Any(m => m.Id == messageId && m.Receiver.Id == user.Id && m.Sender == null));

@@ -35,7 +35,7 @@ module vdb.tests.viewModels {
             };
 
             repository = new sup.FakeUserRepository();
-            repository.messageBody = "Message body";
+            repository.message = { body: "Message body", createdFormatted: null, highPriority: false, id: 39, read: false, receiver: null, sender: null, subject: 'New message' };
 
         }
     });

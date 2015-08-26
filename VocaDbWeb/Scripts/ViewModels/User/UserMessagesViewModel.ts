@@ -80,8 +80,8 @@ module vdb.viewModels {
 
 		selectMessage = (message: UserMessageViewModel) => {
 
-            this.userRepository.getMessageBody(message.id, body => {
-                this.selectedMessageBody(body);
+            this.userRepository.getMessage(message.id, message => {
+                this.selectedMessageBody(message.body);
             });
 
             this.receivedMessages.selectMessage(message);
