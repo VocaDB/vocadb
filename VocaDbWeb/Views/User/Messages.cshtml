@@ -1,10 +1,10 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
 @using VocaDb.Web.Helpers
 @using System.Web.Optimization
-@using R = ViewRes.User;
+@using Res = ViewRes.User.MessagesStrings;
 
 @{
-	PageProperties.Title = R.MessagesStrings.Messages;
+	PageProperties.Title = Res.Messages;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"),
 		Html.ActionLink(Model.User.Name, "Details", new { id = Model.User.Id })
@@ -13,7 +13,7 @@
 
 @helper MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
 	<div id="@id" data-bind="with: @binding">
-		<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">Delete selected</button>
+		<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">@Res.DeleteSelected</button>
 
 		<table class="table messages" data-bind="if: items().length">
 			<thead>
@@ -23,14 +23,14 @@
 							<input type="checkbox" data-bind="checked: selectAll" />
 						}
 					</th>
-					<th>@R.MessagesStrings.Date</th>
+					<th>@Res.Date</th>
 					@if (colFrom) {
-						<th>@R.MessagesStrings.From</th>
+						<th>@Res.From</th>
 					}
 					@if (colTo) {
-						<th>@R.MessagesStrings.To</th>
+						<th>@Res.To</th>
 					}
-					<th>@R.MessagesStrings.Subject</th>
+					<th>@Res.Subject</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -67,7 +67,7 @@
 	</div>
 }
 
-@Helpers.ValidationSymmaryPanel(R.MessagesStrings.MessageSendError)
+@Helpers.ValidationSymmaryPanel(Res.MessageSendError)
 
 <div data-bind="with: selectedMessage, visible: selectedMessage" id="viewMessage" style="display: none;">
 	@{ Html.RenderPartial("Partials/_UserMessageKnockout"); }
@@ -78,22 +78,22 @@
 	<ul>
 		<li>
 			<a href="#receivedTabContent" id="receivedTab" data-bind="click: function () { receivedMessages.init(); }">
-				@R.MessagesStrings.Received
+				@Res.Received
 				<span data-bind="visible: receivedMessages.unread() > 0, text: receivedMessages.unread" class="badge badge-small badge-important" style="display: none;">!</span>
 			</a>
 		</li>
 		<li>
 			<a href="#sentTabContent" id="sentTab" data-bind="click: function () { sentMessages.init(); }">
-				@R.MessagesStrings.Sent
+				@Res.Sent
 			</a>
 		</li>
 		<li>
 			<a href="#notificationsTabContent" id="notificationsTab" data-bind="click: function () { notifications.init(); }">
-				@R.MessagesStrings.Notifications
+				@Res.Notifications
 				<span data-bind="visible: notifications.unread() > 0, text: notifications.unread" class="badge badge-small badge-important" style="display: none;">!</span>
 			</a>
 		</li>
-		<li><a href="#composeTab">@R.MessagesStrings.Compose</a></li>
+		<li><a href="#composeTab">@Res.Compose</a></li>
 	</ul>
 
 	@MessageFolderTab("receivedTabContent", "receivedMessages", true, false, true, false)
