@@ -1,0 +1,5 @@
+root = true
+
+[*.{cs,cshtml,js,ts}]
+end_of_line = crlf
+indent_style = tab
