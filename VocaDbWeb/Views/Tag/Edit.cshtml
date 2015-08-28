@@ -73,7 +73,7 @@
 		<label for="parent" class="helpTip" title="Parent tag groups related tags under one parent. Child tags are still considered separate, unlike aliases.">Parent</label>
 	</div>
 	<div class="editor-field">
-		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true")
+		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false")
 		@Html.HiddenForKnockout(m => m.Parent, "value: parentName")
 	</div>
 

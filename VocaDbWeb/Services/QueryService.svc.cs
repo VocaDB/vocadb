@@ -36,13 +36,15 @@ namespace VocaDb.Web.Services {
 		private readonly OtherService otherService;
 		private readonly TagQueries tagQueries;
 		private readonly IUserPermissionContext userPermissionContext;
+		private readonly SongQueries songQueries;
 		private readonly SongService songService;
 		private readonly SongListQueries songListQueries;
 		private readonly UserQueries userQueries;
 		private readonly UserService userService;
 
 		public QueryService(ArtistQueries artistQueries, TagQueries tagQueries, UserQueries userQueries, 
-			AlbumService albumService, ArtistService artistService, SongService songService, SongListQueries songListQueries, UserService userService, OtherService otherService,
+			AlbumService albumService, ArtistService artistService, SongQueries songQueries, SongService songService, SongListQueries songListQueries, UserService userService, 
+			OtherService otherService,
 			IUserPermissionContext userPermissionContext) {
 
 			this.artistQueries = artistQueries;
@@ -50,6 +52,7 @@ namespace VocaDb.Web.Services {
 			this.userQueries = userQueries;
 			this.albumService = albumService;
 			this.artistService = artistService;
+			this.songQueries = songQueries;
 			this.songService = songService;
 			this.songListQueries = songListQueries;
 			this.userService = userService;
@@ -85,6 +88,13 @@ namespace VocaDb.Web.Services {
 		public PartialFindResult<ArtistContract> FindArtists(string term, int maxResults, NameMatchMode nameMatchMode = NameMatchMode.Auto) {
 
 			return artistService.FindArtists(new ArtistQueryParams(ArtistSearchTextQuery.Create(term, nameMatchMode), new ArtistType[] {}, 0, maxResults, false, true, ArtistSortRule.Name, true));
+
+		}
+
+		[OperationContract]
+		public NewSongCheckResultContract FindDuplicate(string[] names, string[] pvs, int[] artistIds, bool getPVInfo = false) {
+
+			return songQueries.FindDuplicates(names, pvs, artistIds, getPVInfo);
 
 		}
 
