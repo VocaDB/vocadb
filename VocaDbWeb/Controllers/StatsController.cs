@@ -9,6 +9,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -358,6 +359,31 @@ namespace VocaDb.Web.Controllers {
 					});
 
 			}, "Edits per user", "User");
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "cutoff,onlyOriginal")]
+		public ActionResult PVsPerService(DateTime? cutoff, bool onlyOriginal = false) {
+
+			var result = userRepository.HandleQuery(ctx => {
+
+				var pvs = ctx.Query<PVForSong>()
+					.FilterIfNotNull(cutoff, pv => pv.PublishDate >= cutoff)
+					.Where(pv => !onlyOriginal || pv.PVType == PVType.Original)
+					.GroupBy(s => s.Service)
+					.Select(g => new {
+						Service = g.Key,
+						Count = g.Count()
+					})
+					.OrderByDescending(g => g.Count)
+					.ToArray()
+					.Select(g => Tuple.Create(g.Service.ToString(), g.Count)).ToArray();
+
+				return pvs;
+
+			});
+
+			return SimplePieChart("PVs per service", "PVs", result);
 
 		}
 
