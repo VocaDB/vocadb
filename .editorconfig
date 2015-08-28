@@ -1,5 +1,7 @@
 root = true
 
-[*.{cs,cshtml,js,ts}]
+[*]
 end_of_line = crlf
+
+[*.{cs,cshtml,js,ts,json}]
 indent_style = tab
