@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using NLog;
 
 namespace VocaDb.Web.Code {
 
@@ -34,13 +35,26 @@ namespace VocaDb.Web.Code {
 	public class JsonModelBinder : IModelBinder, IPropertyBinder {
 
 		private static readonly Attribute allowHtmlAttribute = new AllowHtmlAttribute();
+		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
 		private object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext, string propertyName, Type type, bool allowHtml) {
+
 			var stringified = (!allowHtml ? controllerContext.HttpContext.Request[propertyName] : controllerContext.HttpContext.Request.Unvalidated[propertyName]);
+
 			if (string.IsNullOrEmpty(stringified))
 				return null;
-			var obj = JsonConvert.DeserializeObject(stringified, type, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
+			object obj;
+
+			try {
+				obj = JsonConvert.DeserializeObject(stringified, type, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+			} catch (JsonReaderException x) {
+				log.Error(x, "Unable to process JSON, content is " + stringified);
+				throw;
+			}
+
 			return obj;
+
 		}
 
 		public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext) {
