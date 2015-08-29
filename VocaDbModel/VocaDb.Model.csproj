@@ -416,7 +416,7 @@
     <Compile Include="Domain\Albums\MediaTypes.cs" />
     <Compile Include="Domain\Artists\ArtistDiff.cs" />
     <Compile Include="Domain\Comment.cs" />
-    <Compile Include="Domain\DateTimeYearAndDate.cs" />
+    <Compile Include="Domain\OptionalDateTime.cs" />
     <Compile Include="Domain\EntryStatus.cs" />
     <Compile Include="Domain\Globalization\ContentLanguagePreference.cs" />
     <Compile Include="Domain\Globalization\INameFactory.cs" />

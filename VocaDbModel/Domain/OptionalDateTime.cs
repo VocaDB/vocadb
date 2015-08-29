@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using VocaDb.Model.DataContracts;
 namespace VocaDb.Model.Domain {
 
 	public class OptionalDateTime : IOptionalDateTime {
@@ -171,8 +170,11 @@ namespace VocaDb.Model.Domain {
 			if (Year.HasValue) {
 				if (Month.HasValue && Day.HasValue)
 					return new DateTime(Year.Value, Month.Value, Day.Value).ToString("d", formatProvider);
-				else
+				else if (Month.HasValue) {
+					return new DateTime(Year.Value, Month.Value, 1).ToString("yyyy/M", formatProvider);
+				} else {
 					return Year.Value.ToString(formatProvider);
+				}
 			}
 			return string.Empty;
 		}
