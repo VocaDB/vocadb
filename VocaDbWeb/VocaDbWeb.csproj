@@ -776,6 +776,8 @@
     </Compile>
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
     <Compile Include="Controllers\DataAccess\ActivityEntryQueries.cs" />
+    <Compile Include="Helpers\ApiHelper.cs" />
+    <Compile Include="Helpers\RazorHelper.cs" />
     <Compile Include="Helpers\Support\DerivedTranslateableEnum.cs" />
     <Compile Include="Helpers\UrlHelperExtender.cs" />
     <Compile Include="Models\Ext\EmbedSongViewModel.cs" />
