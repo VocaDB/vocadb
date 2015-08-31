@@ -26,6 +26,8 @@ module vdb.viewModels.pvs {
 			}
 
 			this.player = new YT.Player(this.playerElementId, {
+				width: 560,
+				height: 315,
 				events: {
 					'onStateChange': (event: YT.EventArgs) => {
 

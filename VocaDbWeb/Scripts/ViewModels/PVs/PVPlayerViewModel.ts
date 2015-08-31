@@ -104,6 +104,7 @@ module vdb.viewModels.pvs {
 						this.currentPlayer.attach(true, () => {
 							this.loadPVId(this.currentPlayer.service, this.selectedSong().song.id, this.currentPlayer.play);
 						});
+						return;
 						
 					}
 

@@ -1,11 +1,12 @@
 ﻿@using Res = VocaDb.Web.Resources.Views.Shared.Partials.PlayListStrings
 
-<!-- binding context: SongListPlayListViewModel -->
+<!-- binding context: PlayListViewModel -->
 
 <div data-bind="with: pvPlayerViewModel" class="songlist-playlist-player">
 	<div>		
-		<div data-bind="if: selectedSong() && selectedSong().song">
-			<h4 class="pull-left">
+		@* Note: using visible here to avoid regenerating the pv player wrapper element *@
+		<div data-bind="visible: selectedSong() && selectedSong().song">
+			<h4 class="pull-left" data-bind="if: selectedSong() && selectedSong().song">
 				<a data-bind="text: selectedSong().song.name, attr: { href: vdb.utils.EntryUrlMapper.details_song(selectedSong().song) }" href="#"></a>
 				<span class="songlist-playlist-player-artists" data-bind="text: selectedSong().song.artistString"></span>
 			</h4>
