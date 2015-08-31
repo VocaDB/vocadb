@@ -23,8 +23,8 @@ module vdb.routing {
 					.chain(this.paramDatas)
 					.filter(p => p.hasValue())
 					.map(p => encodeURIComponent(p.name) + "=" + encodeURIComponent(p.observable()))
-					.join("&")
-					.value();
+					.value()
+					.join("&");
 
 			});
 
