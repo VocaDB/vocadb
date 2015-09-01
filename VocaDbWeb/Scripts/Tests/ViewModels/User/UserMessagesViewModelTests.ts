@@ -28,14 +28,14 @@ module vdb.tests.viewModels {
             data = {
                 items: [
                     createMessage(39, "New message!", sender),
-                    createMessage(40, "Notification"),
-                    createMessage(41, "Sent message", receiver)
+                    createMessage(40, "Another message!", sender)
                 ],
 				totalCount: 0
             };
 
             repository = new sup.FakeUserRepository();
             repository.message = { body: "Message body", createdFormatted: null, highPriority: false, id: 39, read: false, receiver: null, sender: null, subject: 'New message' };
+			repository.messages = data.items;
 
         }
     });
@@ -44,12 +44,8 @@ module vdb.tests.viewModels {
 
         var viewModel = createViewModel();
 
-        equal(viewModel.notifications.items().length, 1, "viewModel.notifications.messages().length");
-        equal(viewModel.notifications.items()[0].subject, "Notification", "viewModel.notifications.messages()[0].subject");
-        equal(viewModel.receivedMessages.items().length, 1, "viewModel.receivedMessages.messages().length");
+        equal(viewModel.receivedMessages.items().length, 2, "viewModel.receivedMessages.messages().length");
         equal(viewModel.receivedMessages.items()[0].subject, "New message!", "viewModel.receivedMessages.messages()[0].subject");
-        equal(viewModel.sentMessages.items().length, 1, "viewModel.sentMessages.messages().length");
-        equal(viewModel.sentMessages.items()[0].subject, "Sent message", "viewModel.sentMessages.messages()[0].subject");
         equal(viewModel.selectedMessage(), null, "viewModel.selectedMessage()");
         equal(viewModel.selectedMessageBody(), "", "viewModel.selectedMessageBody()");
 
@@ -58,12 +54,14 @@ module vdb.tests.viewModels {
     test("selectMessage", () => {
 
         var viewModel = createViewModel();
-        var message = viewModel.notifications.items()[0];
+        var message = viewModel.receivedMessages.items()[0];
+
+		ok(message, "message");
 
         viewModel.selectMessage(message);
 
         ok(viewModel.selectedMessage(), "viewModel.selectedMessage()");
-        equal(viewModel.selectedMessage().subject, "Notification", "viewModel.selectedMessage().subject");
+        equal(viewModel.selectedMessage().subject, "New message!", "viewModel.selectedMessage().subject");
         equal(viewModel.selectedMessageBody(), "Message body", "viewModel.selectedMessageBody()");
         equal(message.selected(), true, "message.selected()");
 
@@ -72,14 +70,17 @@ module vdb.tests.viewModels {
     test("selectMessage deselectes others", () => {
 
         var viewModel = createViewModel();
-        var message1 = viewModel.notifications.items()[0];
-        var message2 = viewModel.receivedMessages.items()[0];
+        var message1 = viewModel.receivedMessages.items()[0];
+        var message2 = viewModel.receivedMessages.items()[1];
+
+		ok(message1, "message1");
+		ok(message2, "message2");
 
         viewModel.selectMessage(message1);
         viewModel.selectMessage(message2);
 
         ok(viewModel.selectedMessage(), "viewModel.selectedMessage()");
-        equal(viewModel.selectedMessage().subject, "New message!", "viewModel.selectedMessage().subject");
+        equal(viewModel.selectedMessage().subject, "Another message!", "viewModel.selectedMessage().subject");
         equal(message1.selected(), false, "message1.selected()");
         equal(message2.selected(), true, "message2.selected()");
 

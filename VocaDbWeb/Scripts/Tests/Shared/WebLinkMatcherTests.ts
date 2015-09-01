@@ -13,7 +13,7 @@ module vdb.tests.utils {
         var result = uti.WebLinkMatcher.matchWebLink("http://www.youtube.com/user/tripshots");
 
         ok(result, "result");
-        equal(result.desc, "Youtube Channel", "desc");
+        equal(result.desc, "YouTube Channel", "desc");
         equal(result.cat, vdb.models.WebLinkCategory.Official, "cat");
 
     });
