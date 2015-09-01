@@ -15,7 +15,7 @@ module vdb.tests.shared.routing {
 
 			testObject = {
 				vocaloid: ko.observable("Luka"),
-				song: ko.observable("Just-Be-Friends")
+				song: ko.observable("magnet")
 			};
 
 			history = new Array<HistoryEntry>();
@@ -25,7 +25,8 @@ module vdb.tests.shared.routing {
 					pushState: (statedata, title: string, url?: string) => history.push({ data: statedata, url: url }),
 					go: (steps: number) => {
 						for (var i = 0; i < -steps; i++) {
-							var latest = history.pop();
+							history.pop();
+							var latest = history.length ? history[history.length-1] : null;
 							if (win.onpopstate)
 								win.onpopstate(<any>{ state: latest.data });							
 						}
@@ -38,9 +39,13 @@ module vdb.tests.shared.routing {
         }
     });
 
+	var initRouter = () => {
+		new vdb.routing.ObservableUrlParamRouter(testObject, win);
+	}
+
 	QUnit.test("changing observable adds history entry", () => {
 
-		new vdb.routing.ObservableUrlParamRouter(testObject, win);
+		initRouter();
 
 		testObject.vocaloid("Miku");
 
@@ -51,7 +56,7 @@ module vdb.tests.shared.routing {
 
 	QUnit.test("changing two observables adds history entry for both", () => {
 
-		new vdb.routing.ObservableUrlParamRouter(testObject, win);
+		initRouter();
 
 		testObject.vocaloid("Miku");
 		testObject.song("Nebula");
@@ -61,17 +66,40 @@ module vdb.tests.shared.routing {
 
 	});
 
+	QUnit.test("query parameters get URL encoded", () => {
+
+		initRouter();
+
+		testObject.vocaloid("Hatsune Miku");
+
+		QUnit.equal(history.length, 1, "Added history entry");
+		QUnit.equal(history[0].url, "?vocaloid=Hatsune%20Miku", "history entry URL");
+
+	});
+
 	QUnit.test("going back changes observables", () => {
 
-		new vdb.routing.ObservableUrlParamRouter(testObject, win);
+		initRouter();
 
 		testObject.vocaloid("Miku");
-		testObject.song("Nebula");
+		testObject.song("SPIKE");
 		win.history.go(-1);
 
 		QUnit.equal(history.length, 1, "Removed history entry");
 		QUnit.equal(history[0].url, "?vocaloid=Miku", "history entry URL");
+		QUnit.equal(testObject.song(), "magnet", "testObject.song");
 
 	});
 
+	QUnit.test("going back handles URL-encoding", () => {
+
+		initRouter();
+
+		testObject.song("Becoming Round");
+		testObject.song("Nebula");
+		win.history.go(-1);
+
+		QUnit.equal(testObject.song(), "Becoming Round", "testObject.song");
+
+	});
 }
