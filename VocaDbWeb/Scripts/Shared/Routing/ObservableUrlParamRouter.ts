@@ -8,7 +8,7 @@ module vdb.routing {
 	// Uses HTML5 history API to update URL query string from a set of observables
 	export class ObservableUrlParamRouter {
 		
-		constructor(routes: { [key: string]: KnockoutObservable<string | number>; }) {
+		constructor(routes: { [key: string]: KnockoutObservable<string | number>; }, private win: Window = window) {
 			
 			for (var route in routes) {
 				if (routes.hasOwnProperty(route)) {
@@ -29,10 +29,37 @@ module vdb.routing {
 			});
 
 			this.queryString.subscribe(val => {
-				window.history.pushState(null, null, "?" + val);
+				if (!this.popState)
+					win.history.pushState(val, null, "?" + val);
 			});
 
+			win.onpopstate = (event) => {
+				
+				if (!event)
+					return;
+
+				// History state includes the query string as key/value pairs separated by "&"
+				var datas: string = event.state || "";
+				var params = _.map(datas.split("&"), z => z.split("="));
+				var dict = _.zipObject(params);
+				
+				_.each(this.paramDatas, paramData => {
+
+					this.popState = true;
+
+					// Set observable value to either value from the route or initial value if the value is not present
+					paramData.observable(dict[paramData.name] || paramData.initialValue);
+
+					this.popState = false;
+
+				});
+
+			}
+
 		}
+
+		// Whether currently processing popstate. This is to prevent adding the previous state to history.
+		private popState = false;
 
 		private paramDatas: ParamData[] = [];
 
@@ -43,12 +70,17 @@ module vdb.routing {
 	class ParamData {
 
 		constructor(public name: string, public observable: KnockoutObservable<any>, queryValue: string) {
-			observable.subscribe(() => this.hasValue(true));
+			this.initialValue = this.observable();
+			observable.subscribe(val => this.hasValue(val !== this.initialValue));
 			if (queryValue)
 				this.observable(queryValue !== "null" ? queryValue : null);
 		}
 
+		// Whether the value has changed from the initial value.
 		public hasValue = ko.observable(false);
+
+		// Initial (default) value.
+		public initialValue: any;
 
 	}
 

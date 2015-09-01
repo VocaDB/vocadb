@@ -455,9 +455,13 @@ namespace VocaDb.Web.App_Start {
 				.IncludeDirectory("~/Scripts/Models", "*.js", true)
 				.IncludeDirectory("~/Scripts/Helpers", "*.js")
 				.IncludeDirectory("~/Scripts/Repositories", "*.js", true)
-				.Include("~/Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js")
+				.Include(
+					"~/Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js",
+					"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js"
+				)
 				.IncludeDirectory("~/Scripts/ViewModels", "*.js", true)
 				.Include("~/Scripts/Shared/WebLinkMatcher.js")
+				.Include("~/Scripts/Shared/Routing/ObservableUrlParamRouter.js")
 				.IncludeDirectory("~/Scripts/Tests", "*.js", true)
 			);
 #endif

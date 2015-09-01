@@ -2125,6 +2125,7 @@
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\HtmlHelperTests.ts" />
+    <TypeScriptCompile Include="Scripts\Tests\Shared\Routing\ObservableUrlParamRouterTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Artist\ArtistRolesEditViewModelTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Globalization\NamesEditViewModelTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Tag\TagsEditViewModelTests.ts" />
