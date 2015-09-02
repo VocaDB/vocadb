@@ -25,6 +25,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Web;
+using Id3;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
@@ -271,14 +272,32 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult PostMedia(HttpPostedFileBase file) {
 
-			// TODO: check type and size
+			PermissionContext.VerifyPermission(PermissionToken.UploadMedia);
 
-			//var tempFile = System.IO.Path.ChangeExtension(Path.GetTempFileName(), Mime;
-			var tempFile = Path.GetTempFileName();
+			var mimeTypes = new[] { "audio/mp3", "audio/mpeg" };
+
+			if (!mimeTypes.Contains(file.ContentType)) {
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Unsupported file type");
+			}
+
+			if (file.ContentLength > ImageHelper.MaxImageSizeBytes) {
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "File too large");
+			}
+
+			var tempFile = Path.ChangeExtension(Path.GetTempFileName(), ImageHelper.GetExtensionFromMime(file.ContentType));
 			file.SaveAs(tempFile);
-			var filename = Path.GetFileName(tempFile);
 
-			return LowercaseJson(new PVContract { Service = PVService.File, PVId = filename });
+			var filename = Path.GetFileName(tempFile);
+			var pv = new PVContract { Service = PVService.LocalFile, PVId = filename };
+
+			using (var mp3 = new Mp3File(tempFile)) {
+				var tag = mp3.GetTag(Id3TagFamily.Version2x);
+				pv.Name = tag.Title;
+				pv.Author = User.Identity.Name;
+				pv.Length = (int)tag.Length.Value.TotalSeconds;
+			}
+
+			return LowercaseJson(pv);
 
 		}
 

@@ -63,6 +63,7 @@ namespace VocaDb.Model.Domain.Security {
 		public static readonly PermissionToken MoveToTrash =			New("99c333a2-ea0a-4a7b-91cb-ceef6f667389", "MoveToTrash");
 		public static readonly PermissionToken RemoveTagUsages =		New("135aaf49-08d5-42bb-b8ed-ef1ceb910a69", "RemoveTagUsages");
 		public static readonly PermissionToken RestoreRevisions =		New("e99a1e1c-1742-48c1-877b-17cb2964e8bc", "RestoreRevisions");
+		public static readonly PermissionToken UploadMedia =			New("be1a2f04-6dc2-4d63-b34e-4499f6389231", "UploadMedia");
 		public static readonly PermissionToken ViewAuditLog	=			New("8d3d5395-12c9-440a-8120-4911034b9a7e", "ViewAuditLog");
 
 		/// <summary>

@@ -15,7 +15,8 @@ namespace VocaDb.Model.Service.VideoServices {
 			VideoService.SoundCloud,
 			VideoService.Youtube,
 			VideoService.Vimeo,
-			VideoService.File
+			VideoService.File,
+			VideoService.LocalFile
 		};
 
 		public static readonly Dictionary<PVService, VideoService> Services = services.ToDictionary(s => s.Service);

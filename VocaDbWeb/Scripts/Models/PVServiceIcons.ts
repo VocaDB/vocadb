@@ -10,6 +10,7 @@ module vdb.models {
 			
 			this.icons = {
 				File: urlMapper.mapRelative("/Content/Icons/music.png"),
+				LocalFile: urlMapper.mapRelative("/Content/Icons/music.png"),
 				NicoNicoDouga: urlMapper.mapRelative("/Content/nico.png"),
 				Youtube: urlMapper.mapRelative("/Content/youtube.png"),
 				SoundCloud: urlMapper.mapRelative("/Content/Icons/soundcloud.png"),

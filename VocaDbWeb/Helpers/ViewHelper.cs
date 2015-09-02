@@ -294,6 +294,7 @@ namespace VocaDb.Web.Helpers {
 				case PVService.Bilibili:
 					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bilibili.png", new HttpContextWrapper(HttpContext.Current));
 				case PVService.File:
+				case PVService.LocalFile:
 					return UrlHelper.GenerateContentUrl("~/Content/Icons/music.png", new HttpContextWrapper(HttpContext.Current));
 				case PVService.NicoNicoDouga:
 					return UrlHelper.GenerateContentUrl("~/Content/nico.png", new HttpContextWrapper(HttpContext.Current));

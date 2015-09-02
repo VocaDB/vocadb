@@ -64,7 +64,10 @@ namespace VocaDb.Model.Helpers {
 					return ".bmp";
 				case "image/x-ms-bmp":
 					return ".bmp";
-				default:
+				case "audio/mp3":
+				case "audio/mpeg":
+                    return ".mp3";
+                default:
 					return string.Empty;
 			}
 

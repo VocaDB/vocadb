@@ -45,7 +45,8 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.MikuDbImport, 
 			PermissionToken.MoveToTrash, 
 			PermissionToken.RestoreRevisions, 
-			PermissionToken.ViewAuditLog
+			PermissionToken.ViewAuditLog,
+			PermissionToken.UploadMedia
 		);
 
 		private static readonly UserGroup admin = new UserGroup(UserGroupId.Admin,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Albums;
@@ -16,6 +17,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -724,6 +726,31 @@ namespace VocaDb.Model.Domain.Songs {
 
 			if (result.Changed && !PublishDate.DateTime.HasValue) {
 				UpdatePublishDateFromPVs();
+			}
+
+			var addedLocalMedia = result.Added.Where(m => m.Service == PVService.LocalFile);
+			foreach (var pv in addedLocalMedia) {
+
+				var oldFull = Path.Combine(Path.GetTempPath(), pv.PVId);
+
+				if (Path.GetDirectoryName(oldFull) != Path.GetTempPath())
+					throw new InvalidOperationException("File folder doesn't match with temporary folder");
+
+				if (Path.GetExtension(oldFull) != ".mp3")
+					throw new InvalidOperationException("Invalid extension");
+
+				var newId = string.Format("{0}-{1}-{2}", pv.Author, Id, pv.PVId);
+				var newFull = Path.Combine(AppConfig.StaticContentPath + "\\media\\", newId);
+				pv.PVId = newId;
+
+				File.Move(oldFull, newFull);
+
+			}
+
+			foreach (var pv in result.Removed.Where(m => m.Service == PVService.LocalFile)) {
+				var fullPath = Path.Combine(AppConfig.StaticContentPath + "\\media\\", pv.PVId);
+				if (File.Exists(fullPath))
+					File.Delete(fullPath);
 			}
 
 			return result;

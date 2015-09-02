@@ -24,7 +24,9 @@ namespace VocaDb.Model.Domain.PVs {
 
 		Bilibili		= 32,
 
-		File			= 64
+		File			= 64,
+
+		LocalFile		= 128
 
 	}
 
@@ -51,7 +53,9 @@ namespace VocaDb.Model.Domain.PVs {
 
 		Bilibili		= PVService.Bilibili,
 
-		File			= PVService.File
+		File			= PVService.File,
+
+		LocalFile		= PVService.LocalFile
 
 	}
 

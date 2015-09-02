@@ -41,6 +41,9 @@ namespace VocaDb.Model.Service.VideoServices {
 		public static readonly VideoServiceFile File =
 			new VideoServiceFile();
 
+		public static readonly VideoServiceLocalFile LocalFile =
+			new VideoServiceLocalFile();
+
 		protected readonly RegexLinkMatcher[] linkMatchers;
 		private readonly IVideoServiceParser parser;
 

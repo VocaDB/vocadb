@@ -820,6 +820,7 @@
     <Compile Include="Service\SongService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Service\VideoServices\VideoServiceFile.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceLocalFile.cs" />
     <Compile Include="Service\VideoServices\VideoServiceNND.cs" />
     <Compile Include="Service\VideoServices\VideoServicePiapro.cs" />
     <Compile Include="Service\VideoServices\VideoServiceSoundCloud.cs" />
