@@ -190,6 +190,12 @@
 			</p>
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
+
+			<h4>Upload file</h4>
+			<p>Supported formats: .mp3. PV type will automatically be "original"</p>
+			<input type="file" id="uploadMedia" />
+			<a data-bind="click: uploadMedia" href="#" class="textLink addLink">Upload</a>
+
 			@Helpers.AjaxLoader("pvLoader")
 
 		</div>

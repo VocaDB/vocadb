@@ -80,6 +80,32 @@ module vdb.viewModels.pvs {
 			return ko.toJS(this.pvs());
 		}
 
+		public uploadMedia = () => {
+
+			var input: any = $("#uploadMedia")[0];
+			var fd = new FormData();
+
+			fd.append('file', input.files[0]);
+			$.ajax({
+				url: "/Song/PostMedia/",
+				data: fd,
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				success: (result) => {
+					this.pvs.push(new PVEditViewModel(result, 'Original'));
+				}
+			});
+			/*
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', "../UploadMedia", true);
+			xhr.onloadend = result => {
+				this.pvs.pvs.push(new vdb.viewModels.pvs.PVEditViewModel(result., 'Original'));
+			}
+			xhr.send(fd);*/
+
+		}
+
 	}
 
 }

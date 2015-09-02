@@ -23,7 +23,9 @@ using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Web;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code;
@@ -264,6 +266,21 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", new { id = model.Id });
 
         }
+
+		[HttpPost]
+		[Authorize]
+		public ActionResult PostMedia(HttpPostedFileBase file) {
+
+			// TODO: check type and size
+
+			//var tempFile = System.IO.Path.ChangeExtension(Path.GetTempFileName(), Mime;
+			var tempFile = Path.GetTempFileName();
+			file.SaveAs(tempFile);
+			var filename = Path.GetFileName(tempFile);
+
+			return LowercaseJson(new PVContract { Service = PVService.File, PVId = filename });
+
+		}
 
 		public FeedResult Feed(IndexRouteParams indexParams) {
 
