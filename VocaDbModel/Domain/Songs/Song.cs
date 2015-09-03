@@ -728,30 +728,7 @@ namespace VocaDb.Model.Domain.Songs {
 				UpdatePublishDateFromPVs();
 			}
 
-			var addedLocalMedia = result.Added.Where(m => m.Service == PVService.LocalFile);
-			foreach (var pv in addedLocalMedia) {
-
-				var oldFull = Path.Combine(Path.GetTempPath(), pv.PVId);
-
-				if (Path.GetDirectoryName(oldFull) != Path.GetTempPath())
-					throw new InvalidOperationException("File folder doesn't match with temporary folder");
-
-				if (Path.GetExtension(oldFull) != ".mp3")
-					throw new InvalidOperationException("Invalid extension");
-
-				var newId = string.Format("{0}-{1}-{2}", pv.Author, Id, pv.PVId);
-				var newFull = Path.Combine(AppConfig.StaticContentPath + "\\media\\", newId);
-				pv.PVId = newId;
-
-				File.Move(oldFull, newFull);
-
-			}
-
-			foreach (var pv in result.Removed.Where(m => m.Service == PVService.LocalFile)) {
-				var fullPath = Path.Combine(AppConfig.StaticContentPath + "\\media\\", pv.PVId);
-				if (File.Exists(fullPath))
-					File.Delete(fullPath);
-			}
+			new LocalFileManager().SyncLocalFilePVs(result, Id);
 
 			return result;
 
