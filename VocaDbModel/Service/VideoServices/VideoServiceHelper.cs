@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
@@ -20,6 +21,13 @@ namespace VocaDb.Model.Service.VideoServices {
 		};
 
 		public static readonly Dictionary<PVService, VideoService> Services = services.ToDictionary(s => s.Service);
+
+		private static readonly ImmutableHashSet<PVService> servicesWithoutExternalSiteLink = 
+			ImmutableHashSet.Create(PVService.File, PVService.LocalFile);
+
+		public static bool ShowExternalSiteLink(PVService service) {
+			return !servicesWithoutExternalSiteLink.Contains(service);
+		}
 
 		public static T GetPV<T>(T[] allPvs, PVService service) 
 			where T : class, IPV {

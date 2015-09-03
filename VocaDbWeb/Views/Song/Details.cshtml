@@ -6,6 +6,7 @@
 @using VocaDb.Web.Models;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
+@using VocaDb.Model.Service.VideoServices
 @using R = ViewRes.Song;
 @using Res = ViewRes.Song.DetailsStrings;
 
@@ -457,8 +458,10 @@
 				@("(" + Translate.PVTypeNames[pv.PVType] + ")")
 			}
 		</a>
-		@Html.Raw("&nbsp;")
-		@("(")<a href="@pv.Url">@ViewRes.Song.DetailsStrings.ViewExternal</a>@(")")
+		if (VideoServiceHelper.ShowExternalSiteLink(pv.Service)) {
+			@Html.Raw("&nbsp;")
+			@("(")<a href="@pv.Url">@ViewRes.Song.DetailsStrings.ViewExternal</a>@(")")			 
+		}
 		<br />
 	}
 
