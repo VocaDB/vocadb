@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Service.VideoServices
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers
 @using ValidationErrors = VocaDb.Model.Resources.SongValidationErrors;
@@ -193,8 +194,11 @@
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
 
 			@if (Login.Manager.HasPermission(PermissionToken.UploadMedia)) {
-				<h4>Upload file</h4>
-				<p>Supported formats: .mp3. Maximum file size is 20MB. PV type will automatically be "original".</p>
+				<h4 class="withMargin">Upload file</h4>
+				<p>
+					You can use VocaDB for hosting songs you have made (you must be the content creator). Choose the file and click "Upload".<br />
+					Supported formats: .mp3. Maximum file size is @(LocalFileManager.MaxMediaSizeMB)MB. PV type will automatically be "original".
+				</p>
 				<input type="file" id="uploadMedia" />
 				<a data-bind="click: uploadMedia" href="#" class="textLink addLink">Upload</a>
 			}
