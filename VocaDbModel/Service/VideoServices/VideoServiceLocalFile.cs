@@ -23,17 +23,11 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		public override string GetUrlById(string id) {
-			// TODO
 			return VocaUriBuilder.StaticResource("/media/" + id);
 		}
 
 		public override VideoTitleParseResult GetVideoTitle(string id) {
 			throw new NotSupportedException();
-		}
-
-		public override bool IsAuthorized(IUserPermissionContext permissionContext) {
-			// TODO
-			return true;
 		}
 
 		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {

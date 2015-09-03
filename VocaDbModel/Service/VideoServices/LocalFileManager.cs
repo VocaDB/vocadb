@@ -61,7 +61,14 @@ namespace VocaDb.Model.Service.VideoServices {
 				pv.PVId = newId;
 
 				try {
+
 					File.Move(oldFull, newFull);
+
+					// Remove copied permissions, reset to inherited http://stackoverflow.com/a/2930969
+					var fs = File.GetAccessControl(newFull);
+					fs.SetAccessRuleProtection(false, false);
+					File.SetAccessControl(newFull, fs);
+
 				} catch (IOException x) {
 					log.Error(x, "Unable to move local media file: " + oldFull);
 					throw;
