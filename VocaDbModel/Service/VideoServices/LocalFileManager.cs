@@ -35,6 +35,9 @@ namespace VocaDb.Model.Service.VideoServices {
 				pv.Length = (int)mp3.Properties.Duration.TotalSeconds;
 			}
 
+			if (string.IsNullOrEmpty(pv.Name))
+				pv.Name = Path.GetFileNameWithoutExtension(file.FileName);
+
 			return pv;
 
 		}

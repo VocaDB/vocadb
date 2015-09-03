@@ -194,7 +194,7 @@
 
 			@if (Login.Manager.HasPermission(PermissionToken.UploadMedia)) {
 				<h4>Upload file</h4>
-				<p>Supported formats: .mp3. PV type will automatically be "original"</p>
+				<p>Supported formats: .mp3. Maximum file size is 20MB. PV type will automatically be "original".</p>
 				<input type="file" id="uploadMedia" />
 				<a data-bind="click: uploadMedia" href="#" class="textLink addLink">Upload</a>
 			}

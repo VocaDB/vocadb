@@ -30,7 +30,7 @@ namespace VocaDb.Model.Domain.PVs {
 			Service = contract.Service;
 			PVId = contract.PVId;
 			PVType = contract.PVType;
-			Name = contract.Name;
+			Name = contract.Name ?? string.Empty;
 			Author = contract.Author ?? string.Empty;
 
 		}
