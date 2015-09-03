@@ -15,7 +15,9 @@ module vdb.models.pvs {
 
 		Bilibili		= 32,
 
-		File			= 64
+		File			= 64,
+
+		LocalFile		= 128
 
 	}
 
