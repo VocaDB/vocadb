@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			Active = user.Active;
 			GroupId = user.GroupId;
 			MemberSince = user.CreateDate;
+			VerifiedArtist = user.VerifiedArtist;
 
 			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && !string.IsNullOrEmpty(user.Email)) {
 
@@ -36,6 +37,9 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public DateTime MemberSince { get; set; }
+
+		[DataMember]
+		public bool VerifiedArtist { get; set; }
 
 	}
 
