@@ -8,7 +8,10 @@ module vdb.viewModels.pvs {
 		constructor(
 			private playerElementId: string,
 			private wrapperElement: HTMLElement,
-			public songFinishedCallback: () => void = null) {
+			public songFinishedCallback: () => void = null,
+			service: cls.pvs.PVService = cls.pvs.PVService.File) {
+
+			this.service = service;
 
 		}
 
@@ -63,7 +66,7 @@ module vdb.viewModels.pvs {
 
 		}
 
-		public service = cls.pvs.PVService.File;
+		public service: cls.pvs.PVService;
 
 	}
 

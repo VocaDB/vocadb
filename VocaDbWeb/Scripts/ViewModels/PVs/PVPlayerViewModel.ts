@@ -8,7 +8,7 @@ module vdb.viewModels.pvs {
 
 	export class PVPlayerViewModel {
 		
-		public static autoplayPVServicesString = "File, SoundCloud, Youtube";
+		public static autoplayPVServicesString = "File, LocalFile, SoundCloud, Youtube";
 
 		constructor(
 			private urlMapper: UrlMapper,

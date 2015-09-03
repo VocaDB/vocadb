@@ -169,7 +169,7 @@ module vdb.viewModels.songs {
 				pagingProperties.maxEntries = 1;
 			}
 
-			var services = this.pvPlayerViewModel.autoplay() ? vdb.viewModels.pvs.PVPlayerViewModel.autoplayPVServicesString : "Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File";
+			var services = this.pvPlayerViewModel.autoplay() ? vdb.viewModels.pvs.PVPlayerViewModel.autoplayPVServicesString : "Youtube,SoundCloud,NicoNicoDouga,Bilibili,Vimeo,Piapro,File,LocalFile";
 
 			this.songListRepo.getSongs(services, pagingProperties,
 				cls.SongOptionalFields.create(cls.SongOptionalField.AdditionalNames, cls.SongOptionalField.ThumbUrl),
