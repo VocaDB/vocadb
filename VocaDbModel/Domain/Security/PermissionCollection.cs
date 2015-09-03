@@ -4,11 +4,17 @@ using System.Collections;
 
 namespace VocaDb.Model.Domain.Security {
 
-	public class PermissionCollection : IEnumerable<PermissionToken> {
+	public interface IPermissionCollection : IEnumerable<PermissionToken> {
+		bool Has(PermissionToken flag);
+    }
+
+	public class PermissionCollection : IPermissionCollection {
 
 		public static PermissionCollection operator +(PermissionCollection left, PermissionCollection right) {
 			return left.Merge(right);
 		}
+
+		public static readonly PermissionCollection Empty = new PermissionCollection();
 
 		private ISet<PermissionToken> permissions;
 
@@ -71,6 +77,11 @@ namespace VocaDb.Model.Domain.Security {
 
 			return new PermissionCollection(Permissions.Concat(collection.Permissions));
 
+		}
+
+		public PermissionCollection Merge(IPermissionCollection collection) {
+			ParamIs.NotNull(() => collection);
+			return new PermissionCollection(this.Concat(collection));
 		}
 
 	}

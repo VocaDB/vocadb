@@ -47,6 +47,17 @@ namespace VocaDb.Model.Domain.Users {
 		private IList<SongList> songLists = new List<SongList>();
 		private IList<UserWebLink> webLinks = new List<UserWebLink>();
 
+		private PermissionCollection StatusPermissions {
+			get {
+
+				if (VerifiedArtist)
+					return new PermissionCollection(new[] { PermissionToken.UploadMedia });
+
+				return PermissionCollection.Empty;
+
+			}
+		}
+
 		public User() {
 
 			Active = true;
@@ -199,7 +210,9 @@ namespace VocaDb.Model.Domain.Users {
 				if (!Active)
 					return new PermissionCollection();
 
-				return UserGroup.GetPermissions(GroupId).Merge(AdditionalPermissions);
+				return UserGroup.GetPermissions(GroupId)
+					.Merge(AdditionalPermissions)
+					.Merge(StatusPermissions);
 
 			}
 		}
