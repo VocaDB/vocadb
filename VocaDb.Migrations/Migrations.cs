@@ -3,6 +3,25 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201509032103)]
+	public class VerifiedArtistForUsers : Migration {
+
+		private const string col = "VerifiedArtist";
+
+		public override void Up() {
+
+			Create.Column(col).OnTable(TableNames.Users).AsBoolean().NotNullable().WithDefaultValue(false);
+
+			Execute.Sql("UPDATE usr SET usr.VerifiedArtist = 1 FROM [Users] usr WHERE usr.Id IN (SELECT DISTINCT [User] FROM OwnedArtistsForUsers)");
+				
+		}
+
+		public override void Down() {
+			Delete.Column(col).FromTable(TableNames.Users);
+		}
+
+	}
+
 	[Migration(201508222100)]
 	public class CreateInboxesForUserMessages : AutoReversingMigration {
 

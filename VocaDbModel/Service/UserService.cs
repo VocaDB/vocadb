@@ -261,7 +261,7 @@ namespace VocaDb.Model.Service {
 					contract.UnreadMessagesCount = session.Query<UserMessage>()
 						.Where(m => m.User.Id == user.Id)
 						.WhereIsUnread(true)
-						.WhereInboxIs(user.Id, true, UserInboxType.Nothing)
+						.WhereInboxIs(UserInboxType.Nothing, true)
 						.Count();
 
 				return contract;

@@ -27,6 +27,7 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.Password).Not.Nullable();
 			Map(m => m.PreferredVideoService).Not.Nullable();
 			Map(m => m.Salt).Not.Nullable();
+			Map(m => m.VerifiedArtist).Not.Nullable();
 
 			Component(m => m.AdditionalPermissions, c => {
 				c.HasMany(m => m.Permissions)

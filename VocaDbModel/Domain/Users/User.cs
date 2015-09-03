@@ -400,6 +400,8 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		public virtual bool VerifiedArtist { get; set; }
+
 		public virtual IList<UserWebLink> WebLinks {
 			get { return webLinks; }
 			set { 

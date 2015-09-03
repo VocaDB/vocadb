@@ -976,7 +976,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				}
 
 				if (verifiedArtists) {
-					usersQuery = usersQuery.Where(u => u.AllOwnedArtists.Any());
+					usersQuery = usersQuery.Where(u => u.VerifiedArtist);
 				}
 
 				var users = AddOrder(usersQuery, sortRule)
@@ -1165,7 +1165,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				}
 
 				var diff = OwnedArtistForUser.Sync(user.AllOwnedArtists, contract.OwnedArtistEntries, a => user.AddOwnedArtist(session.Load<Artist>(a.Artist.Id)));
-				session.OfType<OwnedArtistForUser>().Sync<OwnedArtistForUser>(diff);
+				session.OfType<OwnedArtistForUser>().Sync(diff);
+				user.VerifiedArtist = user.OwnedArtists.Any();
 
 				user.Active = contract.Active;
 				user.Options.Poisoned = contract.Poisoned;

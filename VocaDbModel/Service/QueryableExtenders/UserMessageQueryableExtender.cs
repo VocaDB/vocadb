@@ -9,14 +9,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// Filter messages by inbox.
 		/// </summary>
 		/// <param name="query">Query to be filtered. Cannot be null.</param>
-		/// <param name="userId">ID of the user whose messages are to be included.</param>
 		/// <param name="onlyReceived">
 		/// Whether to only allow received messages (in the received and notifications categories).
 		/// This affects the <see cref="UserInboxType.Nothing"/> and <see cref="UserInboxType.Sent"/> inboxes.
 		/// </param>
 		/// <param name="inboxType">Type of inbox to filter by. If <see cref="UserInboxType.Nothing"/>, all messages concerning this user will be included.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<UserMessage> WhereInboxIs(this IQueryable<UserMessage> query, int userId, bool onlyReceived, UserInboxType inboxType) {
+		public static IQueryable<UserMessage> WhereInboxIs(this IQueryable<UserMessage> query, UserInboxType inboxType, bool onlyReceived) {
 
 			if (onlyReceived) {
 
