@@ -77,6 +77,10 @@
       <HintPath>..\packages\PiaproClient.1.0.5.0\lib\net45\PiaproClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RSS.NET">
       <HintPath>..\Libs\RSS.NET.dll</HintPath>
     </Reference>
@@ -99,6 +103,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
