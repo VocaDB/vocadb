@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -85,6 +86,36 @@ namespace VocaDb.Web.Controllers.Api {
 					.ToArray()
 					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, SongListOptionalFields.MainPicture))
 					.ToArray(), count);
+
+			});
+
+		}
+
+		/// <summary>
+		/// Gets a list of featuedd list names. Ideal for autocomplete boxes.
+		/// </summary>
+		/// <param name="query">Text query.</param>
+		/// <param name="nameMatchMode">Name match mode. Words is treated the same as Partial.</param>
+		/// <param name="featuredCategory">Filter by a specific featured category. If empty, all categories are returned.</param>
+		/// <param name="maxResults">Maximum number of results.</param>
+		/// <returns>List of list names.</returns>
+		[Route("featured/names")]
+		public IEnumerable<string> GetFeatuedListNames(string query = "", 
+			NameMatchMode nameMatchMode = NameMatchMode.Auto,
+			SongListFeaturedCategory? featuredCategory = null,
+			int maxResults = 10) {
+
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+
+			return queries.HandleQuery(ctx => {
+
+				return ctx.Query()
+					.WhereHasFeaturedCategory(featuredCategory, false)
+					.WhereHasName(textQuery)
+					.Select(l => l.Name)
+					.OrderBy(n => n)
+					.Take(maxResults)
+					.ToArray();
 
 			});
 
