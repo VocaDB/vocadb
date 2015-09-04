@@ -123,6 +123,9 @@
   <data name="Artist" xml:space="preserve">
     <value>Artisti</value>
   </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Tapahtuma</value>
+  </data>
   <data name="Song" xml:space="preserve">
     <value>Kappale</value>
   </data>

@@ -54,7 +54,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a list of featured song lists.
 		/// </summary>
 		/// <param name="query">Song list name query (optional).</param>
-		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Auto).</param>
+		/// <param name="nameMatchMode">Match mode for list name (optional, defaults to Auto).</param>
 		/// <param name="featuredCategory">Filter by a specific featured category. If empty, all categories are returned.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
@@ -72,22 +72,8 @@ namespace VocaDb.Web.Controllers.Api {
 			var ssl = WebHelper.IsSSL(Request);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			return queries.HandleQuery(ctx => {
-				
-				var listQuery = ctx.Query()
-					.WhereHasFeaturedCategory(featuredCategory, false)
-					.WhereHasName(textQuery);
-
-				var count = getTotalCount ? listQuery.Count() : 0;
-
-				return new PartialFindResult<SongListForApiContract>(listQuery
-					.OrderBy(sort)
-					.Paged(new PagingProperties(start, maxResults, getTotalCount))
-					.ToArray()
-					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, SongListOptionalFields.MainPicture))
-					.ToArray(), count);
-
-			});
+			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, SongListOptionalFields.MainPicture),
+				textQuery, featuredCategory, start, maxResults, getTotalCount, sort);
 
 		}
 

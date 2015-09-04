@@ -11,6 +11,7 @@ using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -21,10 +22,12 @@ namespace VocaDb.Web.Controllers.Api {
 	public class ReleaseEventApiController : ApiController {
 
 		private const int defaultMax = 10;
+		private readonly EventQueries queries;
 		private readonly IEventRepository repository;
 		private readonly IEntryThumbPersister thumbPersister;
 
-		public ReleaseEventApiController(IEventRepository repository, IEntryThumbPersister thumbPersister) {
+		public ReleaseEventApiController(EventQueries queries, IEventRepository repository, IEntryThumbPersister thumbPersister) {
+			this.queries = queries;
 			this.repository = repository;
 			this.thumbPersister = thumbPersister;
 		}
@@ -54,6 +57,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a page of release events.
 		/// </summary>
 		/// <param name="query">Event name query (optional).</param>
+		/// <param name="nameMatchMode">Match mode for event name (optional, defaults to Auto).</param>
 		/// <param name="seriesId">Filter by series Id.</param>
 		/// <param name="afterDate">Filter by events after this date (inclusive).</param>
 		/// <param name="beforeDate">Filter by events before this date (exclusive).</param>
@@ -71,7 +75,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <example>http://vocadb.net/api/releaseEvents?query=Voc@loid</example>
 		[Route("")]
 		public PartialFindResult<ReleaseEventForApiContract> GetList(
-			string query = "", 
+			string query = "",
+			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			int seriesId = 0,
 			DateTime? afterDate = null,
 			DateTime? beforeDate = null,
@@ -82,34 +87,10 @@ namespace VocaDb.Web.Controllers.Api {
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None
 			) {
 			
-			var textQuery = SearchTextQuery.Create(query);
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			return repository.HandleQuery(ctx => {
-				
-				var q = ctx.Query()
-					.WhereHasName(textQuery)
-					.WhereHasSeries(seriesId)
-					.WhereDateIsBetween(afterDate, beforeDate);
-
-				var entries = q
-					.OrderBy(sort)
-					.Skip(start)
-					.Take(maxResults)
-					.ToArray()
-					.Select(e => new ReleaseEventForApiContract(e, fields))
-					.ToArray();
-
-				var count = 0;
-
-				if (getTotalCount) {
-					
-					count = q.Count();
-
-				}
-
-				return new PartialFindResult<ReleaseEventForApiContract>(entries, count);
-
-			});
+			return queries.Find(e => new ReleaseEventForApiContract(e, fields), textQuery, seriesId, afterDate, beforeDate, 
+				start, maxResults, getTotalCount, sort);
 
 		}
 

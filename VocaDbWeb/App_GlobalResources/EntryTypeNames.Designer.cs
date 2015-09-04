@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event.
+        /// </summary>
+        internal static string ReleaseEvent {
+            get {
+                return ResourceManager.GetString("ReleaseEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Song.
         /// </summary>
         internal static string Song {

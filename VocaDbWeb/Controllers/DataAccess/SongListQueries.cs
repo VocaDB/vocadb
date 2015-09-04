@@ -4,6 +4,7 @@ using NLog;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
+using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -12,8 +13,10 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
 
@@ -128,6 +131,28 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+
+		}
+
+		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SearchTextQuery textQuery, SongListFeaturedCategory? featuredCategory,
+			int start, int maxResults, bool getTotalCount, SongListSortRule sort) {
+
+			return HandleQuery(ctx => {
+
+				var listQuery = ctx.Query()
+					.WhereHasFeaturedCategory(featuredCategory, false)
+					.WhereHasName(textQuery);
+
+				var count = getTotalCount ? listQuery.Count() : 0;
+
+				return new PartialFindResult<TResult>(listQuery
+					.OrderBy(sort)
+					.Paged(new PagingProperties(start, maxResults, getTotalCount))
+					.ToArray()
+					.Select(s => fac(s))
+					.ToArray(), count);
+
+			});
 
 		}
 

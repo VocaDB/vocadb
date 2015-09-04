@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NHibernate;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -9,6 +10,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
+using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Web.Controllers.DataAccess {
 
@@ -75,6 +77,44 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				ctx.Delete(entry);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+
+			});
+
+		}
+
+		public PartialFindResult<TResult> Find<TResult>(Func<ReleaseEvent, TResult> fac, SearchTextQuery textQuery,
+			int seriesId,
+			DateTime? afterDate,
+			DateTime? beforeDate,
+			int start,
+			int maxResults,
+			bool getTotalCount,
+			EventSortRule sort) {
+
+			return HandleQuery(ctx => {
+
+				var q = ctx.Query()
+					.WhereHasName(textQuery)
+					.WhereHasSeries(seriesId)
+					.WhereDateIsBetween(afterDate, beforeDate);
+
+				var entries = q
+					.OrderBy(sort)
+					.Skip(start)
+					.Take(maxResults)
+					.ToArray()
+					.Select(fac)
+					.ToArray();
+
+				var count = 0;
+
+				if (getTotalCount) {
+
+					count = q.Count();
+
+				}
+
+				return new PartialFindResult<TResult>(entries, count);
 
 			});
 

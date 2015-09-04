@@ -7,38 +7,38 @@ $(() => {
 			var urlMapper = new vdb.UrlMapper(vdb.values.hostAddress);
 			var term: string = request.term;
 			var entryType = $("#globalSearchObjectType").val();
+			var endpoint: string = null;
 
 			switch (entryType) {
 				case "Undefined":
-					$.getJSON(urlMapper.mapRelative("/api/entries/names"), { query: term }, (results) => {
-						entryFindCallback(response, results);
-					});
+					endpoint = "/api/entries/names";
 					break;
 				case "Album":
-					$.getJSON(urlMapper.mapRelative("/api/albums/names"), { query: term }, (results) => {
-						entryFindCallback(response, results);
-					});
+					endpoint = "/api/albums/names";
 					break;
 				case "Artist":
-					$.getJSON(urlMapper.mapRelative("/api/artists/names"), { query: term }, (results) => {
-						entryFindCallback(response, results);
-					});
+					endpoint = "/api/artists/names";
+					break;
+				case "ReleaseEvent":
+					endpoint = "/api/releaseEvents/names";
 					break;
 				case "Song":
-					$.getJSON(urlMapper.mapRelative("/api/songs/names"), { query: term }, (results) => {
-						entryFindCallback(response, results);
-					});
+					endpoint = "/api/songs/names";
+					break;
+				case "SongList":
+					endpoint = "/api/songLists/featured/names";
 					break;
 				case "Tag":
-					$.getJSON(urlMapper.mapRelative("/api/tags/names"), { query: term, maxResults: 15 }, (results) => {
-						entryFindCallback(response, results);
-					});
+					endpoint = "/api/tags/names";
 					break;
 				case "User":
-					$.getJSON(urlMapper.mapRelative("api/users/names"), { query: term }, (results) => {
-						entryFindCallback(response, results);
-					});
+					endpoint = "/api/users/names";
 			}
+
+			if (!endpoint)
+				return;
+
+			$.getJSON(urlMapper.mapRelative(endpoint), { query: term }, response);
 
 		},
 		select: (event: Event, ui) => {
@@ -49,12 +49,6 @@ $(() => {
 
 
 });
-
-function entryFindCallback(response: (items: string[]) => void, results: string[]) {
-
-	response(results);
-
-}
 
 function setLanguagePreferenceCookie(languagePreference: string) {
 
