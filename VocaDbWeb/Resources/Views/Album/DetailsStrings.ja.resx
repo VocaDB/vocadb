@@ -235,4 +235,7 @@
     <value>アルバムコレクション</value>
     <comment>Popup title</comment>
   </data>
+  <data name="TotalLength" xml:space="preserve">
+    <value>トラック数:{0}</value>
+  </data>
 </root>
