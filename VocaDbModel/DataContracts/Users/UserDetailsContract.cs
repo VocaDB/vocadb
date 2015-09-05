@@ -26,6 +26,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			LastLoginAddress = user.Options.LastLoginAddress;
 			Location = user.Options.Location;
 			TwitterName = user.Options.TwitterName;
+			VerifiedArtist = user.VerifiedArtist;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 
 		}
@@ -78,6 +79,9 @@ namespace VocaDb.Model.DataContracts.Users {
 		public int TagVotes { get; set; }
 
 		public string TwitterName { get; set; }
+
+		[DataMember]
+		public bool VerifiedArtist { get; set; }
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }

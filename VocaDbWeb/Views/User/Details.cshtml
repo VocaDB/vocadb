@@ -18,7 +18,6 @@
 
 	var ownProfile = (Login.Manager.IsLoggedIn && Login.User.Id == Model.Id && Login.User.Active);
 	var canSeeDetailedStats = (ownProfile || !Model.AnonymousActivity || Login.CanModerateUsers);
-	var verifiedAccount = (Model.OwnedArtistEntries.Any());
 
 	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = Model.Name })).ToString();
 
@@ -114,7 +113,7 @@
 				{
 					<span class="label label-important">@R.Staff</span>
 				}
-				@if (verifiedAccount)
+				@if (Model.VerifiedArtist)
 				{
 					<span class="label label-success">@R.VerifiedAccount</span>
 				}
@@ -168,7 +167,7 @@
 				<br />
 			}
 
-			@if (verifiedAccount)
+			@if (Model.VerifiedArtist)
 			{
 				<h4>@R.VerifiedOwner</h4>
 				@ArtistHelpers.ArtistGrid(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true)
