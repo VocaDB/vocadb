@@ -16,13 +16,11 @@
 
 		}
 
-		public EntryType EntryType { get; private set; }
+		public EntryType EntryType { get; }
 
-		public int Id { get; private set; }
+		public int Id { get; }
 
-		public bool IsEmpty {
-			get { return Id == 0; }
-		}
+		public bool IsEmpty => Id == 0;
 
 		public override string ToString() {
 			return string.Format("{0}.{1}", EntryType, Id);
