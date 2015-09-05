@@ -465,6 +465,7 @@ namespace VocaDb.Model.Domain.Users {
 			var link = new OwnedArtistForUser(this, artist);
 			AllOwnedArtists.Add(link);
 			artist.OwnerUsers.Add(link);
+			VerifiedArtist = true;
 
 			return link;
 
