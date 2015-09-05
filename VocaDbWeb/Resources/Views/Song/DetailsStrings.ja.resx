@@ -256,4 +256,7 @@
   <data name="AddToListNotes" xml:space="preserve">
     <value>メモ</value>
   </data>
+  <data name="PVDescription" xml:space="preserve">
+    <value>{1} が {0} に公開。</value>
+  </data>
 </root>

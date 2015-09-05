@@ -168,4 +168,16 @@
   <data name="NoSongs" xml:space="preserve">
     <value>何もないです(´･д･｀)…</value>
   </data>
+  <data name="FilterCreateDateDescription" xml:space="preserve">
+    <value>最近VocaDBに追加された曲</value>
+  </data>
+  <data name="FilterPopularity" xml:space="preserve">
+    <value>人気度</value>
+  </data>
+  <data name="FilterPopularityDescription" xml:space="preserve">
+    <value>最近人気な曲</value>
+  </data>
+  <data name="FilterPublishDateDescription" xml:space="preserve">
+    <value>最近公開された曲</value>
+  </data>
 </root>
