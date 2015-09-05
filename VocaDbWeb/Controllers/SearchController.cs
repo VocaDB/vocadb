@@ -97,7 +97,7 @@ namespace VocaDb.Web.Controllers
 					if (ev.Items.Length == 1) {
 						return RedirectToReleaseEvent(ev.Items[0]);
 					}
-					break;
+					return RedirectToAction("EventsBySeries", "Event");
 
 				case EntryType.Song:
 					var song = songService.Find(new SongQueryParams(textQuery, null, 0, 2, false, false, SongSortRule.None, false, false, null));
@@ -111,7 +111,7 @@ namespace VocaDb.Web.Controllers
 					if (list.Items.Length == 1) {
 						return RedirectToSongList(list.Items[0]);
 					}
-					break;
+					return RedirectToAction("Featured", "SongList");
 
 				case EntryType.Tag:
 					var tags = tagQueries.Find(t => t.Name, new CommonSearchParams(textQuery, false, true, true), PagingProperties.FirstPage(2), true);
