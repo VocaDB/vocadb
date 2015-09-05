@@ -31,6 +31,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			GroupId = user.GroupId;
 			Language = user.Language;
 			PreferredVideoService = user.PreferredVideoService;
+			VerifiedArtist = user.VerifiedArtist;
 
 			if (getPublicCollection)
 				PublicAlbumCollection = user.Options.PublicAlbumCollection;
@@ -66,6 +67,9 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public bool PublicAlbumCollection { get; set; }
+
+		[DataMember]
+		public bool VerifiedArtist { get; set; }
 
 	}
 

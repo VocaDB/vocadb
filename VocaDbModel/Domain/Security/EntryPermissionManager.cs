@@ -25,7 +25,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		private static bool IsVerifiedFor(IUserPermissionContext permissionContext, IEntryBase entry) {
 			
-			return permissionContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
+			return permissionContext.LoggedUser.VerifiedArtist && permissionContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
 
 		}
 
