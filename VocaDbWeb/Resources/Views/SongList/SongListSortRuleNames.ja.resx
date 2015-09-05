@@ -123,4 +123,7 @@
   <data name="Name" xml:space="preserve">
     <value>名前</value>
   </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>作成日</value>
+  </data>
 </root>

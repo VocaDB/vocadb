@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Accept" xml:space="preserve">
-    <value>作る</value>
+    <value>リスト作成</value>
   </data>
   <data name="ItemsLoaded" xml:space="preserve">
     <value>ロードされています</value>
@@ -157,7 +157,7 @@
     <value>ニコニコ動画のマイリストかYouTubeのプレイリストから曲のリストを作る</value>
   </data>
   <data name="TotalSongs" xml:space="preserve">
-    <value>曲の合計</value>
+    <value>曲数</value>
   </data>
   <data name="UrlLabel" xml:space="preserve">
     <value>プレイリスト/マイリストURL</value>
@@ -170,5 +170,8 @@
   </data>
   <data name="UnableToParse" xml:space="preserve">
     <value>リンクが処理できませんでした。</value>
+  </data>
+  <data name="InvalidUrlError" xml:space="preserve">
+    <value>ニコニコマイリス、RSS フィード、Youtube プレイリストのURLを指定してください。</value>
   </data>
 </root>
