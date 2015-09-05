@@ -46,7 +46,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		private ActionResult RedirectToTag(string name) {
-			return RedirectToAction("Details", "Tag", new { name });			
+			return RedirectToAction("Details", "Tag", new { id = name });			
 		}
 
 		private ActionResult TryRedirect(string filter, EntryType searchType) {
