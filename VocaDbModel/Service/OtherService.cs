@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;

@@ -2,7 +2,7 @@
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain.Comments {
 
 	/// <summary>
 	/// Base class for comments.

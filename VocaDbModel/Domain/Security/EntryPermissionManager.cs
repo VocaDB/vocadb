@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Linq;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;

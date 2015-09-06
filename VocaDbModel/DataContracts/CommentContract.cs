@@ -2,6 +2,7 @@
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using System.Runtime.Serialization;
+using VocaDb.Model.Domain.Comments;
 
 namespace VocaDb.Model.DataContracts {
 

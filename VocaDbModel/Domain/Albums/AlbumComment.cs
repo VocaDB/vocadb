@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.Security;
+﻿using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Albums {
 

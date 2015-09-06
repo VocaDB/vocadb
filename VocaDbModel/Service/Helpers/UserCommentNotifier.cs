@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Repositories;

@@ -2,6 +2,7 @@
 using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
