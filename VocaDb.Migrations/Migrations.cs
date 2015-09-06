@@ -3,6 +3,22 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201509062115)]
+	public class SongListComments : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table("SongListComments")
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+				.WithColumn("Author").AsInt32().NotNullable().ForeignKey("FK_SongListComments_Users", TableNames.Users, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Created").AsDateTime().NotNullable()
+				.WithColumn("Message").AsString(4000).NotNullable()
+				.WithColumn("SongList").AsInt32().NotNullable().ForeignKey("FK_SongListComments_SongLists", TableNames.SongLists, "Id").OnDelete(Rule.Cascade);
+				
+		}
+
+	}
+
 	[Migration(201509032103)]
 	public class VerifiedArtistForUsers : Migration {
 

@@ -26,6 +26,7 @@ namespace VocaDb.Model.Domain.Songs {
 		private ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> archivedVersions
 			= new ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields>();		
 		private User author;
+		private IList<SongListComment> comments = new List<SongListComment>();
 		private string description;
 		private string name;
 		private IList<SongInList> songs = new List<SongInList>();
@@ -64,6 +65,14 @@ namespace VocaDb.Model.Domain.Songs {
 			set {
 				ParamIs.NotNull(() => value);
 				author = value;
+			}
+		}
+
+		public virtual IList<SongListComment> Comments {
+			get { return comments; }
+			set {
+				ParamIs.NotNull(() => value);
+				comments = value;
 			}
 		}
 
