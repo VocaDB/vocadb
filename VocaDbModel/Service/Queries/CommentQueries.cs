@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
@@ -74,6 +75,15 @@ namespace VocaDb.Model.Service.Queries {
 			ctx.Delete(comment);
 
 		}
+
+		public CommentForApiContract[] GetList<TComment, TEntry>(int entryId, int count) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames {
+
+			return ctx.Query<TComment>().Where(c => c.EntryForComment.Id == entryId)
+				.OrderByDescending(c => c.Created).Take(count).ToArray()
+				.Select(c => new CommentForApiContract(c, userIconFactory))
+				.ToArray();
+
+        }
 
 		public void Update(int commentId, IComment contract) {
 			

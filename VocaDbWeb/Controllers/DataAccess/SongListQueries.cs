@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Images;
@@ -14,6 +15,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
@@ -27,6 +29,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryImagePersisterOld imagePersister;
+		private readonly IUserIconFactory userIconFactory;
 
 		public ArchivedSongListVersion Archive(IRepositoryContext<SongList> ctx, SongList songList, SongListDiff diff, EntryEditEvent reason, string notes = "") {
 
@@ -126,11 +129,25 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister)
+		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
+			IEntryImagePersisterOld imagePersister, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+			this.userIconFactory = userIconFactory;
+
+		}
+
+		public CommentQueries<SongListComment> Comments(IRepositoryContext<SongList> ctx) {
+			return CommentQueries.Create(ctx.OfType<SongListComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		}
+
+		public CommentForApiContract CreateComment(int songId, CommentForApiContract contract) {
+
+			ParamIs.NotNull(() => contract);
+
+			return HandleTransaction(ctx => Comments(ctx).Create<SongList>(songId, contract, (song, con, agent) => song.CreateComment(con.Message, agent)));
 
 		}
 
@@ -153,6 +170,22 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.ToArray(), count);
 
 			});
+
+		}
+
+		public CommentForApiContract[] GetComments(int listId) {
+
+			return HandleQuery(ctx => ctx.Load(listId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
+
+		}
+
+		public SongListDetailsContract GetDetails(int listId) {
+
+			return repository.HandleQuery(ctx => {
+				return new SongListDetailsContract(ctx.Load(listId), PermissionContext) {
+					LatestComments = Comments(ctx).GetList<SongListComment, SongList>(listId, 3)
+				};
+            });
 
 		}
 

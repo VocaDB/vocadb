@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Model.DataContracts
 @using VocaDb.Model.DataContracts.Api
 @using VocaDb.Model.DataContracts.Comments
+@using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
@@ -128,6 +129,16 @@
 		</div>
 	</div>
 
+}
+
+@helper LatestCommentsKnockout() {	
+	<h3 class="withMargin">@ViewRes.EntryDetailsStrings.LatestComments</h3>
+	<div data-bind="with: comments">
+		@EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+		<!-- ko ifnot: comments().length -->
+		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
+		<!-- /ko -->
+	</div>
 }
 
 @helper PrintComment(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false, int maxLength = int.MaxValue) {	

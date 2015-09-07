@@ -76,6 +76,18 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual SongListComment CreateComment(string message, AgentLoginData loginData) {
+
+			ParamIs.NotNullOrEmpty(() => message);
+			ParamIs.NotNull(() => loginData);
+
+			var comment = new SongListComment(this, message, loginData);
+			Comments.Add(comment);
+
+			return comment;
+
+		}
+
 		/// <summary>
 		/// Date when this entry was created.
 		/// </summary>

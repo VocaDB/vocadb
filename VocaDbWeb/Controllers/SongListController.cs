@@ -46,7 +46,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var contract = queries.GetSongList(id);
+			var contract = queries.GetDetails(id);
 
 			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			PageProperties.Description = contract.Description;

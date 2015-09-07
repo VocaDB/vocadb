@@ -2112,6 +2112,7 @@
     <TypeScriptCompile Include="Scripts\Models\ResourcesManager.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\BaseRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\DiscussionRepository.ts" />
+    <TypeScriptCompile Include="Scripts\Repositories\EntryCommentRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ICommentRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\PVRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ReleaseEventRepository.ts" />

@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Web.WebPages;
 using System.Web.Mvc;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Markdown;
@@ -26,6 +27,8 @@ namespace VocaDb.Web.Code {
 		public static UrlHelper Url => ((WebViewPage)WebPageContext.Current.Page).Url;
 
 		public static VocaUrlMapper UrlMapper => new VocaUrlMapper(WebHelper.IsSSL(Request));
+
+		public static IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
 
 		public static ViewDataDictionary ViewData => ((WebViewPage)WebPageContext.Current.Page).ViewData;
 

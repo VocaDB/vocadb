@@ -14,10 +14,15 @@ module vdb.viewModels.songList {
 			private userRepo: rep.UserRepository, 
 			resourceRepo: rep.ResourceRepository,
 			defaultSortRuleName: string,
+			latestComments: dc.CommentContract[],
+			loggedUserId: number,
 			private languageSelection: cls.globalization.ContentLanguagePreference,
 			cultureCode: string,
 			private listId: number,
-			pvPlayersFactory: pvs.PVPlayersFactory) {
+			pvPlayersFactory: pvs.PVPlayersFactory,
+			canDeleteAllComments: boolean) {
+
+			this.comments = new EditableCommentsViewModel(songListRepo.getComments(), listId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
 
 			this.resourceManager = new cls.ResourcesManager(resourceRepo, cultureCode);
 			this.resourceManager.loadResources(null, "songSortRuleNames");
@@ -54,6 +59,8 @@ module vdb.viewModels.songList {
 			this.updateResultsWithTotalCount();
 
 		}
+
+		public comments: EditableCommentsViewModel;
 
 		public loading = ko.observable(true); // Currently loading for data
 

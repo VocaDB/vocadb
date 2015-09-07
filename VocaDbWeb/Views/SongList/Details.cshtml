@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain
+@using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.SongList.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
@@ -70,9 +71,12 @@
 		var cultureCode = '@UICulture';
 		var pvPlayerElem = $("#pv-player-wrapper")[0];
 		var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
+		var latestComments = @ToJS(Model.SongList.LatestComments);
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
 		var vm = new vdb.viewModels.songList.SongListViewModel(urlMapper, songListRepo, songRepo, userRepo, 
-			resourceRepo, defaultSortRuleName, languageSelection, cultureCode, listId, pvPlayersFactory);
+			resourceRepo, defaultSortRuleName, latestComments, @UserContext.LoggedUserId, languageSelection, cultureCode, listId, pvPlayersFactory,
+			canDeleteAllComments);
 		ko.applyBindings(vm);
 
 	});
@@ -192,3 +196,5 @@
 		@{ Html.RenderPartial("Partials/_PlayList"); }
 	</div>
 </div>
+
+@CommentHelpers.LatestCommentsKnockout()

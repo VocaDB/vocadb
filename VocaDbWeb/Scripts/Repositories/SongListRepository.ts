@@ -8,6 +8,8 @@ module vdb.repositories {
 
 		constructor(private urlMapper: vdb.UrlMapper) {}
 
+		public getComments = () => new EntryCommentRepository(this.urlMapper, "/songLists/");
+
 		public getFeatured = (query: string, category: string, paging: dc.PagingProperties, sort: string,
 			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
 			

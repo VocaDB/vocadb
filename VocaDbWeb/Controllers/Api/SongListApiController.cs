@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
@@ -40,6 +41,32 @@ namespace VocaDb.Web.Controllers.Api {
 			this.queries = queries;
 			this.userIconFactory = userIconFactory;
 			this.entryImagePersister = entryImagePersister;
+		}
+
+		/// <summary>
+		/// Deletes a comment.
+		/// Normal users can delete their own comments, moderators can delete all comments.
+		/// Requires login.
+		/// </summary>
+		/// <param name="commentId">ID of the comment to be deleted.</param>
+		[Route("comments/{commentId:int}")]
+		[Authorize]
+		public void DeleteComment(int commentId) {
+
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
+
+		}
+
+		/// <summary>
+		/// Gets a list of comments for a song list.
+		/// </summary>
+		/// <param name="listId">ID of the list whose comments to load.</param>
+		/// <returns>List of comments in no particular order.</returns>
+		[Route("{listId:int}/comments")]
+		public PartialFindResult<CommentForApiContract> GetComments(int listId) {
+
+			return new PartialFindResult<CommentForApiContract>(queries.GetComments(listId), 0);
+
 		}
 
 		[Route("{id:int}/for-edit")]
@@ -175,6 +202,35 @@ namespace VocaDb.Web.Controllers.Api {
 		public int Post(SongListForEditContract list) {
 			
 			return queries.UpdateSongList(list, null);
+
+		}
+
+		/// <summary>
+		/// Updates a comment.
+		/// Normal users can edit their own comments, moderators can edit all comments.
+		/// Requires login.
+		/// </summary>
+		/// <param name="commentId">ID of the comment to be edited.</param>
+		/// <param name="contract">New comment data. Only message can be edited.</param>
+		[System.Web.Http.Route("comments/{commentId:int}")]
+		[System.Web.Http.Authorize]
+		public void PostEditComment(int commentId, CommentForApiContract contract) {
+
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
+
+		}
+
+		/// <summary>
+		/// Posts a new comment.
+		/// </summary>
+		/// <param name="songId">ID of the song for which to create the comment.</param>
+		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
+		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
+		[System.Web.Http.Route("{songId:int}/comments")]
+		[System.Web.Http.Authorize]
+		public CommentForApiContract PostNewComment(int songId, CommentForApiContract contract) {
+
+			return queries.CreateComment(songId, contract);
 
 		}
 
