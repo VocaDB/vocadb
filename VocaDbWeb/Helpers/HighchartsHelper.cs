@@ -6,7 +6,7 @@ namespace VocaDb.Web.Helpers {
 
 	public static class HighchartsHelper {
 
-		private static double ToEpochTime(DateTime date) {
+		public static double ToEpochTime(DateTime date) {
 			return (date - new DateTime(1970, 1, 1)).TotalMilliseconds;
 		}
 

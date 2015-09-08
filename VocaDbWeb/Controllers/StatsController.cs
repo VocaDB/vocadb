@@ -387,35 +387,99 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		//[OutputCache(Duration = clientCacheDurationSec)]
-		/*public ActionResult PVsPerServiceOverTime() {
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult PVsPerServiceOverTime() {
 
 			var data = userRepository.HandleQuery(ctx => {
 
 				return ctx.Query<PVForSong>()
+					.Where(a => a.PublishDate != null)
 					.Where(pv => pv.PVType == PVType.Original)
-					.OrderBy(a => a.Song.CreateDate.Year)
-					.ThenBy(a => a.Song.CreateDate.Month)
-					.ThenBy(a => a.Song.CreateDate.Day)
+					.OrderBy(a => a.PublishDate.Value.Year)
+					.ThenBy(a => a.PublishDate.Value.Month)
 					.GroupBy(a => new {
 						Service = a.Service,
-						Year = a.Song.CreateDate.Year,
-						Month = a.Song.CreateDate.Month,
-						Day = a.Song.CreateDate.Day
+						Year = a.PublishDate.Value.Year,
+						Month = a.PublishDate.Value.Month
 					})
 					.Select(a => new {
 						a.Key.Service,
 						a.Key.Year,
 						a.Key.Month,
-						a.Key.Day,
 						Count = a.Count()
 					})
-					.Where(a => a.Count < 1000)
 					.ToArray();
 
 			});
 
-		}*/
+			var dataWithDateTime = data.Select(d => new { d.Service, Date = new DateTime(d.Year, d.Month, 1), d.Count }).ToArray();
+
+			var byService = dataWithDateTime.GroupBy(d => d.Service);
+
+			var dataSeries = byService.Select(ser => new {
+				//type = "line",
+				name = ser.Key.ToString(),
+				data = ser.Select(p => new object[] { HighchartsHelper.ToEpochTime(p.Date), p.Count }).ToArray(),
+			});
+
+			var json = new {
+				chart = new {
+					height = 600,
+					type = "area"
+				},
+				title = new {
+					text = "Original PVs per service over time"
+				},
+				xAxis = new {
+					type = "datetime",
+					title = new {
+						text = (string)null
+					},
+				},
+				yAxis = new {
+					title = new {
+						text = "Percentage"
+					},
+					min = 0,
+				},
+				tooltip = new {
+					shared = true,
+					crosshairs = true
+				},
+				plotOptions = new {
+					bar = new {
+						dataLabels = new {
+							enabled = true
+						}
+					},
+					area = new {
+						stacking = "percent",
+						lineColor = "#ffffff",
+						lineWidth = 1,
+						marker = new
+						{
+							lineWidth = 1,
+							lineColor = "#ffffff"
+						}
+					}
+				},
+				legend = new {
+					layout = "vertical",
+					align = "left",
+					x = 120,
+					verticalAlign = "top",
+					y = 100,
+					floating = true,
+					backgroundColor = "#FFFFFF"
+				},
+				series = (
+					dataSeries
+				)
+			};
+
+			return Json(json);
+
+		}
 
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "cutoff")]
 		public ActionResult SongsAddedPerDay(DateTime? cutoff) {
