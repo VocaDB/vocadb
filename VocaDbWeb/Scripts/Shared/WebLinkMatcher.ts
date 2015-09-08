@@ -22,6 +22,7 @@ module vdb.utils {
             { url: "www.cdjapan.co.jp/detailview.html", desc: "CDJapan", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.cdjapan.co.jp/product/", desc: "CDJapan", cat: c.WebLinkCategory.Commercial },
 			{ url: "d-stage.com/shop/", desc: "D-Stage", cat: c.WebLinkCategory.Commercial },
+            { url: "deviantart.com/", desc: "DeviantArt", cat: c.WebLinkCategory.Official },
             { url: "www.discogs.com/", desc: "Discogs", cat: c.WebLinkCategory.Reference },
             { url: "exittunes.com/", desc: "Exit Tunes", cat: c.WebLinkCategory.Official },
             { url: "www.facebook.com/", desc: "Facebook", cat: c.WebLinkCategory.Official },
