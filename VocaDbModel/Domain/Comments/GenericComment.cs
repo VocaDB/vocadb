@@ -15,9 +15,7 @@ namespace VocaDb.Model.Domain.Comments {
 
 		}
 
-		public override IEntryWithNames Entry {
-			get { return EntryForComment; }
-		}
+		public override IEntryWithNames Entry => EntryForComment;
 
 		public virtual T EntryForComment {
 			get { return entry; }

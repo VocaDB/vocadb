@@ -387,6 +387,36 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
+		//[OutputCache(Duration = clientCacheDurationSec)]
+		/*public ActionResult PVsPerServiceOverTime() {
+
+			var data = userRepository.HandleQuery(ctx => {
+
+				return ctx.Query<PVForSong>()
+					.Where(pv => pv.PVType == PVType.Original)
+					.OrderBy(a => a.Song.CreateDate.Year)
+					.ThenBy(a => a.Song.CreateDate.Month)
+					.ThenBy(a => a.Song.CreateDate.Day)
+					.GroupBy(a => new {
+						Service = a.Service,
+						Year = a.Song.CreateDate.Year,
+						Month = a.Song.CreateDate.Month,
+						Day = a.Song.CreateDate.Day
+					})
+					.Select(a => new {
+						a.Key.Service,
+						a.Key.Year,
+						a.Key.Month,
+						a.Key.Day,
+						Count = a.Count()
+					})
+					.Where(a => a.Count < 1000)
+					.ToArray();
+
+			});
+
+		}*/
+
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "cutoff")]
 		public ActionResult SongsAddedPerDay(DateTime? cutoff) {
 			
