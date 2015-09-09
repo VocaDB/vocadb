@@ -44,9 +44,9 @@
 		</tbody>
 	</table>
 	<table>
-		<tr data-bind="with: newRule">
-			<td><input type="text" maxlength="40" data-bind="value: address" /></td>
-			<td><a href="#" class="textLink addLink" data-bind="click: $parent.add">@ViewRes.SharedStrings.Add</a></td>
+		<tr>
+			<td><input type="text" maxlength="40" data-bind="textInput: newAddress" /></td>
+			<td><a href="#" class="textLink addLink" data-bind="click: add">@ViewRes.SharedStrings.Add</a></td>
 		</tr>
 	</table>
     

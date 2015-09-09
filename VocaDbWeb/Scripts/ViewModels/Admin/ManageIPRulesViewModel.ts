@@ -6,12 +6,18 @@ module vdb.viewModels {
     export class ManageIPRulesViewModel {
 
         public add = () => {
-            this.rules.push(new IPRule({ address: this.newRule.address(), notes: "", created: new Date() }));
+
+			if (!this.newAddress())
+				return;
+
+            this.rules.push(new IPRule({ address: this.newAddress(), notes: "", created: new Date() }));
+			this.newAddress("");
+
         }
 
         public bannedIPs = ko.observableArray<string>();
 
-        public newRule = new IPRule({});
+        public newAddress = ko.observable("");
 
         public remove = (rule: IPRule) => {
             this.rules.remove(rule);
