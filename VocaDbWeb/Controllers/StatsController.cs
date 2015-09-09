@@ -14,6 +14,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Repositories;
+using VocaDb.Web.Code.Highcharts;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers {
@@ -416,68 +417,62 @@ namespace VocaDb.Web.Controllers {
 
 			var byService = dataWithDateTime.GroupBy(d => d.Service);
 
-			var dataSeries = byService.Select(ser => new {
+			var dataSeries = byService.Select(ser => new Series {
 				//type = "line",
-				name = ser.Key.ToString(),
-				data = ser.Select(p => new object[] { HighchartsHelper.ToEpochTime(p.Date), p.Count }).ToArray(),
+				Name = ser.Key.ToString(),
+				Data = ser.Select(p => new object[] { HighchartsHelper.ToEpochTime(p.Date), p.Count }).ToArray(),
 			});
 
-			var json = new {
-				chart = new {
-					height = 600,
-					type = "area"
+			var json = new Highchart {
+				Chart = new Chart {
+					Height = 600,
+					Type = ChartType.Area
 				},
-				title = new {
-					text = "Original PVs per service over time"
+				Title = "Original PVs per service over time",
+				XAxis = new Axis {
+					Type = AxisType.Datetime,
+					Title = new Title()
 				},
-				xAxis = new {
-					type = "datetime",
-					title = new {
-						text = (string)null
-					},
+				YAxis = new Axis {
+					Title = "Percentage",
+					Min = 0,
 				},
-				yAxis = new {
-					title = new {
-						text = "Percentage"
-					},
-					min = 0,
+				Tooltip = new {
+					Shared = true,
+					Crosshairs = true
 				},
-				tooltip = new {
-					shared = true,
-					crosshairs = true
-				},
-				plotOptions = new {
-					bar = new {
-						dataLabels = new {
-							enabled = true
+				PlotOptions = new PlotOptions {
+					Bar = new {
+						DataLabels = new {
+							Enabled = true
 						}
 					},
-					area = new {
-						stacking = "percent",
-						lineColor = "#ffffff",
-						lineWidth = 1,
-						marker = new
+					Area = new PlotOptionsArea {
+						Stacking = PlotOptionsAreaStacking.Percent,
+						LineColor = "#ffffff",
+						LineWidth = 1,
+						Marker = new
 						{
-							lineWidth = 1,
-							lineColor = "#ffffff"
+							LineWidth = 1,
+							LineColor = "#ffffff"
 						}
 					}
 				},
-				legend = new {
-					layout = "vertical",
-					align = "left",
-					x = 120,
-					verticalAlign = "top",
-					y = 100,
-					floating = true,
-					backgroundColor = "#FFFFFF"
+				Legend = new {
+					Layout = "vertical",
+					Align = "left",
+					X = 120,
+					VerticalAlign = "top",
+					Y = 100,
+					Floating = true,
+					BackgroundColor = "#FFFFFF"
 				},
-				series = (
+				Series = (
 					dataSeries
 				)
 			};
 
-			return Json(json);
+			return LowercaseJson(json);
 
 		}
 
