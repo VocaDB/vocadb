@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace VocaDb.Web.Code.Highcharts {
 
@@ -14,6 +15,7 @@ namespace VocaDb.Web.Code.Highcharts {
 
 		public Title Title { get; set; }
 
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public dynamic Tooltip { get; set; }
 
 		public Axis XAxis { get; set; }

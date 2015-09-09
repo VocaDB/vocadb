@@ -74,7 +74,7 @@ namespace VocaDb.Web.Controllers {
 			Response.Cache.SetMaxAge(TimeSpan.FromDays(1));
 			Response.Cache.SetSlidingExpiration(true);
 
-			return Json(HighchartsHelper.DateLineChartWithAverage(title, pointsTitle, yAxisTitle, points, average));
+			return LowercaseJson(HighchartsHelper.DateLineChartWithAverage(title, pointsTitle, yAxisTitle, points, average));
 
 		}
 
@@ -141,7 +141,7 @@ namespace VocaDb.Web.Controllers {
 			Response.Cache.SetMaxAge(TimeSpan.FromDays(1));
 			Response.Cache.SetSlidingExpiration(true);
 
-			return Json(HighchartsHelper.SimplePieChart(title, seriesName, points, false));
+			return LowercaseJson(HighchartsHelper.SimplePieChart(title, seriesName, points, false));
 
 		}
 
@@ -429,13 +429,10 @@ namespace VocaDb.Web.Controllers {
 					Type = ChartType.Area
 				},
 				Title = "Original PVs per service over time",
-				XAxis = new Axis {
-					Type = AxisType.Datetime,
-					Title = new Title()
-				},
+				XAxis = new Axis(AxisType.Datetime, new Title()),
 				YAxis = new Axis {
 					Title = "Percentage",
-					Min = 0,
+					Min = 0
 				},
 				Tooltip = new {
 					Shared = true,
@@ -451,8 +448,7 @@ namespace VocaDb.Web.Controllers {
 						Stacking = PlotOptionsAreaStacking.Percent,
 						LineColor = "#ffffff",
 						LineWidth = 1,
-						Marker = new
-						{
+						Marker = new {
 							LineWidth = 1,
 							LineColor = "#ffffff"
 						}

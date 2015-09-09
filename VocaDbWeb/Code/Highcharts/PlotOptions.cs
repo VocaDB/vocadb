@@ -4,9 +4,14 @@ namespace VocaDb.Web.Code.Highcharts {
 
 	public class PlotOptions {
 
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public PlotOptionsArea Area { get; set; }
 
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public dynamic Bar { get; set; }
+
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public dynamic Pie { get; set; }
 
 	}
 

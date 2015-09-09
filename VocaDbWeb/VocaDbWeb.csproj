@@ -781,6 +781,7 @@
     <Compile Include="Code\Highcharts\Highchart.cs" />
     <Compile Include="Code\Highcharts\PlotOptions.cs" />
     <Compile Include="Code\Highcharts\Series.cs" />
+    <Compile Include="Code\Highcharts\SeriesType.cs" />
     <Compile Include="Code\Highcharts\Title.cs" />
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
     <Compile Include="Controllers\DataAccess\ActivityEntryQueries.cs" />

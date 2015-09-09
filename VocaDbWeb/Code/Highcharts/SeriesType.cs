@@ -1,10 +1,10 @@
 ﻿namespace VocaDb.Web.Code.Highcharts {
 
-	public enum ChartType {
+	public enum SeriesType {
 
 		Area,
 
-		Pie
+		Spline
 
 	}
 
