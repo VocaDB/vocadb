@@ -14,7 +14,7 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.Message).Length(4000).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();
-			References(m => m.User).Not.Nullable();
+			References(m => m.EntryForComment).Column("[User]").Not.Nullable();
 
 		}
 

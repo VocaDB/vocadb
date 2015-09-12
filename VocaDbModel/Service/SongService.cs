@@ -384,9 +384,9 @@ namespace VocaDb.Model.Service {
 
 				}
 
-				contract.CommentCount = session.Query<SongComment>().Count(c => c.Song.Id == songId);
+				contract.CommentCount = session.Query<SongComment>().Count(c => c.EntryForComment.Id == songId);
 				contract.LatestComments = session.Query<SongComment>()
-					.Where(c => c.Song.Id == songId)
+					.Where(c => c.EntryForComment.Id == songId)
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
 					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
 				contract.Hits = session.Query<SongHit>().Count(h => h.Song.Id == songId);

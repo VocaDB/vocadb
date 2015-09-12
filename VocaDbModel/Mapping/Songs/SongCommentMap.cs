@@ -13,7 +13,7 @@ namespace VocaDb.Model.Mapping.Songs {
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Message).Length(4000).Not.Nullable();
 
-			References(m => m.Song).Not.Nullable();
+			References(m => m.EntryForComment).Column("[Song]").Not.Nullable();
 			References(m => m.Author).Not.Nullable();
 
 		}

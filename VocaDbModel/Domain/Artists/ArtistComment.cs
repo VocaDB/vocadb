@@ -4,60 +4,15 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Artists {
 
-	public class ArtistComment : Comment {
-
-		private Artist artist;
+	public class ArtistComment : GenericComment<Artist> {
 
 		public ArtistComment() { }
 
 		public ArtistComment(Artist artist, string message, User user)
-			: base(message, new AgentLoginData(user)) {
-
-			Artist = artist;
-
-		}
-
-		public virtual Artist Artist {
-			get { return artist; }
-			set {
-				ParamIs.NotNull(() => value);
-				artist = value;
-			}
-		}
-
-		public override IEntryWithNames Entry {
-			get { return Artist; }
-		}
-
-		public virtual bool Equals(ArtistComment another) {
-
-			if (another == null)
-				return false;
-
-			if (ReferenceEquals(this, another))
-				return true;
-
-			if (Id == 0)
-				return false;
-
-			return this.Id == another.Id;
-
-		}
-
-		public override bool Equals(object obj) {
-			return Equals(obj as ArtistComment);
-		}
-
-		public override int GetHashCode() {
-			return Id.GetHashCode();
-		}
+			: base(artist, message, new AgentLoginData(user)) {}
 
 		public override void OnDelete() {
-			Artist.Comments.Remove(this);
-		}
-
-		public override string ToString() {
-			return string.Format("comment [{0}] for {1}", Id, Artist);
+			EntryForComment.Comments.Remove(this);
 		}
 
 	}

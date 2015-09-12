@@ -196,7 +196,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.ToArray();
 
 			details.LatestComments = session.Query<UserComment>()
-				.Where(c => c.User == user).OrderByDescending(c => c.Created).Take(3)
+				.Where(c => c.EntryForComment == user).OrderByDescending(c => c.Created).Take(3)
 				.ToArray()
 				.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
 
@@ -735,7 +735,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return HandleQuery(ctx => {
 				
 				var query = ctx.OfType<UserComment>().Query()
-					.Where(c => c.User.Id == userId);
+					.Where(c => c.EntryForComment.Id == userId);
 
 				var comments = query
 					.OrderByDescending(c => c.Created)

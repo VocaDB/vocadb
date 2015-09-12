@@ -230,10 +230,10 @@ namespace VocaDb.Model.Service {
 
 		private EntryWithCommentsContract[] GetRecentComments(ISession session, int maxComments, bool ssl) {
 
-			var albumComments = session.Query<AlbumComment>().Where(c => !c.Album.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
-			var artistComments = session.Query<ArtistComment>().Where(c => !c.Artist.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
-			var songComments = session.Query<SongComment>().Where(c => !c.Song.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
-			var discussionComments = session.Query<DiscussionComment>().Where(c => !c.Topic.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
+			var albumComments = session.Query<AlbumComment>().Where(c => !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
+			var artistComments = session.Query<ArtistComment>().Where(c => !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
+			var songComments = session.Query<SongComment>().Where(c => !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
+			var discussionComments = session.Query<DiscussionComment>().Where(c => !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
 			var songListComments = GetComments<SongList, SongListComment>(session, maxComments, false);
 
 			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway

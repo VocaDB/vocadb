@@ -322,7 +322,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				contract.SharedStats.SongCount = Math.Max(contract.SharedStats.SongCount, contract.LatestSongs.Length + contract.TopSongs.Length);
 
 				contract.LatestComments = session.OfType<ArtistComment>().Query()
-					.Where(c => c.Artist.Id == id)
+					.Where(c => c.EntryForComment.Id == id)
 					.OrderByDescending(c => c.Created)
 					.Take(3)
 					.ToArray()

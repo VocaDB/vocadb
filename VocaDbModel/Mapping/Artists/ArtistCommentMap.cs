@@ -13,7 +13,7 @@ namespace VocaDb.Model.Mapping.Artists {
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Message).Length(4000).Not.Nullable();
 
-			References(m => m.Artist).Not.Nullable();
+			References(m => m.EntryForComment).Column("[Artist]").Not.Nullable();
 			References(m => m.Author).Not.Nullable();
 
 		}

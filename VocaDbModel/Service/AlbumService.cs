@@ -341,7 +341,7 @@ namespace VocaDb.Model.Service {
 				}
 
 				contract.LatestComments = session.Query<AlbumComment>()
-					.Where(c => c.Album.Id == id)
+					.Where(c => c.EntryForComment.Id == id)
 					.OrderByDescending(c => c.Created)
 					.Take(3)
 					.ToArray()

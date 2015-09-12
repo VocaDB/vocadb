@@ -10,6 +10,10 @@ namespace VocaDb.Model.Domain.Songs {
 		public SongListComment(SongList list, string message, AgentLoginData loginData)
 			: base(list, message, loginData) {}
 
+		public override void OnDelete() {
+			EntryForComment.Comments.Remove(this);
+		}
+
 	}
 
 }

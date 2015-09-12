@@ -202,10 +202,10 @@ namespace VocaDb.Model.Service {
 
 				AuditLog("deleting " + comment, session, user);
 
-				if (!user.Equals(comment.Author) && !user.Equals(comment.User))
+				if (!user.Equals(comment.Author) && !user.Equals(comment.EntryForComment))
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
-				comment.User.Comments.Remove(comment);
+				comment.EntryForComment.Comments.Remove(comment);
 				session.Delete(comment);
 
 			});
@@ -219,9 +219,9 @@ namespace VocaDb.Model.Service {
 				var user = session.Load<User>(userId);
 
 				var comments = session.Query<AlbumComment>()
-					.Where(c => c.Author == user && !c.Album.Deleted).OrderByDescending(c => c.Created).ToArray().Cast<Comment>()
+					.Where(c => c.Author == user && !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).ToArray().Cast<Comment>()
 					.Concat(session.Query<ArtistComment>()
-						.Where(c => c.Author == user && !c.Artist.Deleted)).OrderByDescending(c => c.Created).ToArray();
+						.Where(c => c.Author == user && !c.EntryForComment.Deleted)).OrderByDescending(c => c.Created).ToArray();
 
 				return comments.Select(c => new CommentContract(c)).ToArray();
 

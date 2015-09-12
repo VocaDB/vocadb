@@ -14,7 +14,7 @@ namespace VocaDb.Model.Mapping.Albums {
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Message).Length(4000).Not.Nullable();
 
-			References(m => m.Album).Not.Nullable();
+			References(m => m.EntryForComment).Column("[Album]").Not.Nullable();
 			References(m => m.Author).Not.Nullable();
 
 		}
