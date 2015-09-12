@@ -12,14 +12,7 @@ using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
-	public static class CommentQueries {
-		public static CommentQueries<T> Create<T>(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory) 
-			where T : Comment {
-			return new CommentQueries<T>(ctx, permissionContext, userIconFactory, entryLinkFactory);
-		}
-	}
-
-	public class CommentQueries<T> where T : Comment {
+	public class CommentQueries<T, TEntry> where T : GenericComment<TEntry> where TEntry : class, IEntryWithNames {
 
 		private readonly IRepositoryContext<T> ctx;
 		private readonly IEntryLinkFactory entryLinkFactory;
@@ -33,8 +26,7 @@ namespace VocaDb.Model.Service.Queries {
 			this.userIconFactory = userIconFactory;
 		}
 
-		public CommentForApiContract Create<TEntry>(int entryId, CommentForApiContract contract, Func<TEntry, CommentForApiContract, AgentLoginData, T> fac)
-			where TEntry : IEntryBase {
+		public CommentForApiContract Create(int entryId, CommentForApiContract contract, Func<TEntry, CommentForApiContract, AgentLoginData, T> fac) {
 			
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 
@@ -76,9 +68,9 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public CommentForApiContract[] GetList<TComment, TEntry>(int entryId, int count) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames {
+		public CommentForApiContract[] GetList(int entryId, int count) {
 
-			return ctx.Query<TComment>().Where(c => c.EntryForComment.Id == entryId)
+			return ctx.Query<T>().Where(c => c.EntryForComment.Id == entryId)
 				.OrderByDescending(c => c.Created).Take(count).ToArray()
 				.Select(c => new CommentForApiContract(c, userIconFactory))
 				.ToArray();

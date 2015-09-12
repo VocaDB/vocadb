@@ -159,8 +159,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentQueries<ArtistComment> Comments(IRepositoryContext<Artist> ctx) {
-			return CommentQueries.Create(ctx.OfType<ArtistComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		public CommentQueries<ArtistComment, Artist> Comments(IRepositoryContext<Artist> ctx) {
+			return new CommentQueries<ArtistComment, Artist>(ctx.OfType<ArtistComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public ArchivedArtistVersion Archive(IRepositoryContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
@@ -243,7 +243,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			ParamIs.NotNull(() => contract);
 
-			return HandleTransaction(ctx => Comments(ctx).Create<Artist>(artistId, contract, (artist, con, agent) => artist.CreateComment(con.Message, agent.User)));
+			return HandleTransaction(ctx => Comments(ctx).Create(artistId, contract, (artist, con, agent) => artist.CreateComment(con.Message, agent.User)));
 
 		}
 

@@ -108,8 +108,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentQueries<AlbumComment> Comments(IRepositoryContext<Album> ctx) {
-			return CommentQueries.Create(ctx.OfType<AlbumComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		public CommentQueries<AlbumComment, Album> Comments(IRepositoryContext<Album> ctx) {
+			return new CommentQueries<AlbumComment, Album>(ctx.OfType<AlbumComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public AlbumContract Create(CreateAlbumContract contract) {
@@ -157,7 +157,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			ParamIs.NotNull(() => contract);
 
-			return HandleTransaction(ctx => Comments(ctx).Create<Album>(albumId, contract, (album, con, agent) => album.CreateComment(con.Message, agent)));
+			return HandleTransaction(ctx => Comments(ctx).Create(albumId, contract, (album, con, agent) => album.CreateComment(con.Message, agent)));
 
 		}
 

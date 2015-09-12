@@ -17,8 +17,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserIconFactory userIconFactory;
 
-		private CommentQueries<DiscussionComment> Comments<T>(IRepositoryContext<T> ctx) {
-			return CommentQueries.Create(ctx.OfType<DiscussionComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		private CommentQueries<DiscussionComment, DiscussionTopic> Comments<T>(IRepositoryContext<T> ctx) {
+			return new CommentQueries<DiscussionComment, DiscussionTopic>(ctx.OfType<DiscussionComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public DiscussionQueries(IDiscussionFolderRepository repository, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory,
@@ -34,7 +34,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			
 			return repository.HandleTransaction(ctx => {
 				
-				return Comments(ctx).Create<DiscussionTopic>(topicId, contract, (topic, con, agent) => {
+				return Comments(ctx).Create(topicId, contract, (topic, con, agent) => {
 					
 					var comment = new DiscussionComment(topic, contract.Message, agent);
 					topic.Comments.Add(comment);

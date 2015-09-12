@@ -169,8 +169,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentQueries<SongComment> Comments(IRepositoryContext<Song> ctx) {
-			return CommentQueries.Create(ctx.OfType<SongComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		public CommentQueries<SongComment, Song> Comments(IRepositoryContext<Song> ctx) {
+			return new CommentQueries<SongComment, Song>(ctx.OfType<SongComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public ArchivedSongVersion Archive(IRepositoryContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
@@ -255,7 +255,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			ParamIs.NotNull(() => contract);
 
-			return HandleTransaction(ctx => Comments(ctx).Create<Song>(songId, contract, (song, con, agent) => song.CreateComment(con.Message, agent)));
+			return HandleTransaction(ctx => Comments(ctx).Create(songId, contract, (song, con, agent) => song.CreateComment(con.Message, agent)));
 
 		}
 

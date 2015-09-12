@@ -230,10 +230,10 @@ namespace VocaDb.Model.Service {
 
 		private EntryWithCommentsContract[] GetRecentComments(ISession session, int maxComments, bool ssl) {
 
-			var albumComments = session.Query<AlbumComment>().Where(c => !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
-			var artistComments = session.Query<ArtistComment>().Where(c => !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
-			var songComments = session.Query<SongComment>().Where(c => !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
-			var discussionComments = session.Query<DiscussionComment>().Where(c => !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
+			var albumComments = GetComments<Album, AlbumComment>(session, maxComments, true);
+			var artistComments = GetComments<Artist, ArtistComment>(session, maxComments, true);
+			var songComments = GetComments<Song, SongComment>(session, maxComments, true);
+			var discussionComments = GetComments<DiscussionTopic, DiscussionComment>(session, maxComments, true);
 			var songListComments = GetComments<SongList, SongListComment>(session, maxComments, false);
 
 			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway
@@ -242,7 +242,7 @@ namespace VocaDb.Model.Service {
 				Created = t.Created
 			});
 
-			var combined = albumComments.Cast<Comment>()
+			var combined = albumComments
 				.Concat(artistComments)
 				.Concat(songComments)
 				.Concat(songListComments)

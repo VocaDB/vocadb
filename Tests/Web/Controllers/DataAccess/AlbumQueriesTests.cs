@@ -183,7 +183,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var comment = repository.List<AlbumComment>().FirstOrDefault();
 			Assert.IsNotNull(comment, "Comment was saved");
 			Assert.AreEqual(user, comment.Author, "Author");
-			Assert.AreEqual(album, comment.Album, "Album");
+			Assert.AreEqual(album, comment.EntryForComment, "Album");
 			Assert.AreEqual("Hello world", comment.Message, "Comment message");
 
 		}

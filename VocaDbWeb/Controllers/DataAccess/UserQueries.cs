@@ -291,8 +291,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentQueries<UserComment> Comments(IRepositoryContext<User> ctx) {
-			return CommentQueries.Create(ctx.OfType<UserComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		public CommentQueries<UserComment, User> Comments(IRepositoryContext<User> ctx) {
+			return new CommentQueries<UserComment, User>(ctx.OfType<UserComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		/// <summary>
