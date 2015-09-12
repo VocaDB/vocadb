@@ -52,5 +52,17 @@ namespace VocaDb.Model.Domain.Images {
 
 	}
 
+	public static class IEntryImagePersisterExtender {
+
+		public static string GetUrlAbsolute(this IEntryImagePersister persister, IEntryImageInformation picture, ImageSize size, bool ssl, bool checkExists) {
+
+			if (checkExists && !persister.HasImage(picture, size))
+				return null;
+
+			return persister.GetUrlAbsolute(picture, size, ssl);
+
+		}
+
+	}
 
 }

@@ -46,6 +46,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
+		private readonly IEntryImagePersisterOld entryImagePersisterOld;
 		private readonly IEntryThumbPersister thumbPersister;
 
 		private AlbumContract[] GetTopAlbums(ISession session, AlbumContract[] recentAlbums) {
@@ -216,12 +217,24 @@ namespace VocaDb.Model.Service {
 
 		}
 
+		private IEnumerable<Comment> GetComments<TEntry, TComment>(ISession session, int maxComments, bool checkDeleted) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames {
+
+			var q = session.Query<TComment>();
+
+			if (checkDeleted)
+				q = q.Where(c => !c.EntryForComment.Deleted);
+
+			return q.OrderByDescending(c => c.Created).Take(maxComments).ToArray();
+
+		}
+
 		private EntryWithCommentsContract[] GetRecentComments(ISession session, int maxComments, bool ssl) {
 
 			var albumComments = session.Query<AlbumComment>().Where(c => !c.Album.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
 			var artistComments = session.Query<ArtistComment>().Where(c => !c.Artist.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
 			var songComments = session.Query<SongComment>().Where(c => !c.Song.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
-			var discussionComments = session.Query<DiscussionComment>().Where(c => !c.Topic.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
+			var discussionComments = session.Query<DiscussionComment>().Where(c => !c.Topic.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();
+			var songListComments = GetComments<SongList, SongListComment>(session, maxComments, false);
 
 			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway
 			var discussionTopics = session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
@@ -229,21 +242,29 @@ namespace VocaDb.Model.Service {
 				Created = t.Created
 			});
 
-			var combined = albumComments.Cast<Comment>().Concat(artistComments).Concat(songComments).Concat(discussionComments).Concat(discussionTopicsAsComments)
+			var combined = albumComments.Cast<Comment>()
+				.Concat(artistComments)
+				.Concat(songComments)
+				.Concat(songListComments)
+				.Concat(discussionComments)
+				.Concat(discussionTopicsAsComments)
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 				
-			var contracts = CreateEntryWithCommentsContract(combined, c => EntryForApiContract.Create(c.Entry, LanguagePreference, thumbPersister, null, ssl, EntryOptionalFields.MainPicture))
+			var contracts = CreateEntryWithCommentsContract(combined, c => EntryForApiContract.Create(c.Entry, LanguagePreference, thumbPersister, entryImagePersisterOld, 
+				ssl, EntryOptionalFields.MainPicture))
 				.ToArray();
 
 			return contracts;
 
 		}
 
-		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryThumbPersister thumbPersister) 
+		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryThumbPersister thumbPersister,
+			IEntryImagePersisterOld entryImagePersisterOld) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 			
 			this.thumbPersister = thumbPersister;
+			this.entryImagePersisterOld = entryImagePersisterOld;
 
 		}
 

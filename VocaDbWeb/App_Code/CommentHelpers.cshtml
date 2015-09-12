@@ -64,7 +64,7 @@
 
 @helper CommentEntryItem(EntryForApiContract entry) {
 		
-	var thumbUrl = (entry.MainPicture != null ? entry.MainPicture.UrlTinyThumb : null);
+	var thumbUrl = (entry.MainPicture != null ? entry.MainPicture.UrlTinyThumb ?? entry.MainPicture.UrlSmallThumb : null);
 	
 	<div class="media">
 		@if (!string.IsNullOrEmpty(thumbUrl)) {
