@@ -63,7 +63,9 @@
 		<div id="basicInfoTab">
 
 			<div class="editor-label">
-				<label>@EditRes.DefaultLanguageSelection</label>
+				<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
+					@EditRes.DefaultLanguageSelection
+				</label>
 			</div>
 			<div class="editor-field">
 				@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")

@@ -115,6 +115,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The language of the official default name for this entry. Usually this is the one that&apos;s used most commonly in official sources..
+        /// </summary>
+        public static string DefaultLanguageHelp {
+            get {
+                return ResourceManager.GetString("DefaultLanguageHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Original language.
         /// </summary>
         public static string DefaultLanguageSelection {
