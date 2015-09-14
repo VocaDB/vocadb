@@ -51,7 +51,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));
 
 			imagePersister = new InMemoryImagePersister();
-			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister);
+			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, new FakeUserIconFactory());
 
 		}
 
