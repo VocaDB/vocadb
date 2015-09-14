@@ -113,7 +113,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of list names.</returns>
 		[Route("featured/names")]
-		public IEnumerable<string> GetFeatuedListNames(string query = "", 
+		public IEnumerable<string> GetFeaturedListNames(string query = "", 
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
 			int maxResults = 10) {

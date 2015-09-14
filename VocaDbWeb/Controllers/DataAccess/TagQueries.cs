@@ -7,6 +7,7 @@ using NLog;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -17,6 +18,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
@@ -32,6 +34,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryImagePersisterOld imagePersister;
+		private readonly IUserIconFactory userIconFactory;
 
 		private class TagTopUsagesAndCount<T> {
 
@@ -76,6 +79,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			return ctx.Query().FirstOrDefault(t => t.AliasedTo == null && t.Name == tagName);
 
+		}
+
+		private Tag GetTagById(IRepositoryContext<Tag> ctx, int tagId) {
+			return ctx.Query().FirstOrDefault(t => t.Id == tagId);
 		}
 
 		private Tag GetTag(IRepositoryContext<Tag> ctx, string name) {
@@ -125,11 +132,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public TagQueries(ITagRepository repository, IUserPermissionContext permissionContext,
-		                  IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister)
+		                  IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+			this.userIconFactory = userIconFactory;
 
 		}
 
@@ -139,6 +147,18 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			var archived = tag.CreateArchivedVersion(diff, agentLoginData, reason);
 			ctx.OfType<ArchivedTagVersion>().Save(archived);
 			return archived;
+
+		}
+
+		public CommentQueries<TagComment, Tag> Comments(IRepositoryContext<Tag> ctx) {
+			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		}
+
+		public CommentForApiContract CreateComment(int tagId, CommentForApiContract contract) {
+
+			ParamIs.NotNull(() => contract);
+
+			return HandleTransaction(ctx => Comments(ctx).Create(tagId, contract, (song, con, agent) => song.CreateComment(con.Message, agent), () => GetTagById(ctx, tagId)));
 
 		}
 
@@ -245,6 +265,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public CommentForApiContract[] GetComments(int tagId) {
+
+			return HandleQuery(ctx => Comments(ctx).GetList(tagId, int.MaxValue));
+
+		}
+
 		public TagDetailsContract GetDetails(string tagName) {
 
 			ParamIs.NotNullOrEmpty(() => tagName);
@@ -259,12 +285,15 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(session, tagName, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(session, tagName, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
 				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(session, tagName, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
+				var latestComments = Comments(session).GetList(tag.Id, 3);
 
-				return new TagDetailsContract(tag, 
-					artists.TopUsages, artists.TotalCount, 
-					albums.TopUsages, albums.TotalCount, 
-					songs.TopUsages, songs.TotalCount, 
-					PermissionContext.LanguagePreference);
+				return new TagDetailsContract(tag,
+					artists.TopUsages, artists.TotalCount,
+					albums.TopUsages, albums.TotalCount,
+					songs.TopUsages, songs.TotalCount,
+					PermissionContext.LanguagePreference) {
+					LatestComments = latestComments
+				};
 				
 			});
 
@@ -333,7 +362,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			
 			return HandleQuery(ctx => {
 
-				var tag = ctx.Query().FirstOrDefault(t => t.Id == id);
+				var tag = GetTagById(ctx, id);
 
 				if (tag == null)
 					throw new ObjectNotFoundException(id, typeof(Tag));

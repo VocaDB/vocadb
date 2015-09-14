@@ -71,6 +71,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private ISet<ArtistTagUsage> artistTagUsages = new HashSet<ArtistTagUsage>();
 		private string categoryName;
 		private ISet<Tag> children = new HashSet<Tag>();
+		private IList<TagComment> comments = new List<TagComment>();
 		private string description;
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
 
@@ -159,6 +160,26 @@ namespace VocaDb.Model.Domain.Tags {
 				ParamIs.NotNull(() => value);
 				children = value;
 			}
+		}
+
+		public virtual IList<TagComment> Comments {
+			get { return comments; }
+			set {
+				ParamIs.NotNull(() => value);
+				comments = value;
+			}
+		}
+
+		public virtual TagComment CreateComment(string message, AgentLoginData loginData) {
+
+			ParamIs.NotNullOrEmpty(() => message);
+			ParamIs.NotNull(() => loginData);
+
+			var comment = new TagComment(this, message, loginData);
+			Comments.Add(comment);
+
+			return comment;
+
 		}
 
 		/// <summary>

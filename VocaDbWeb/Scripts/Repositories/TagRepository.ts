@@ -12,6 +12,8 @@ module vdb.repositories {
 			$.getJSON(url, { fields: fields }, callback);
 		}
 
+		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
+
 		public getList = (paging: dc.PagingProperties, query: string,
 			allowAliases: boolean, categoryName: string, callback) => {
 

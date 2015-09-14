@@ -235,6 +235,7 @@ namespace VocaDb.Model.Service {
 			var songComments = GetComments<Song, SongComment>(session, maxComments, true);
 			var discussionComments = GetComments<DiscussionTopic, DiscussionComment>(session, maxComments, true);
 			var songListComments = GetComments<SongList, SongListComment>(session, maxComments, false);
+			var tagComments = GetComments<Tag, TagComment>(session, maxComments, false);
 
 			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway
 			var discussionTopics = session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
@@ -248,6 +249,7 @@ namespace VocaDb.Model.Service {
 				.Concat(songListComments)
 				.Concat(discussionComments)
 				.Concat(discussionTopicsAsComments)
+				.Concat(tagComments)
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 				

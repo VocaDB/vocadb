@@ -26,6 +26,7 @@ namespace VocaDb.Model.Mapping.Tags {
 			HasMany(m => m.AllArtistTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllSongTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.Children).KeyColumn("[Parent]").Inverse().Cache.ReadWrite();
+			HasMany(m => m.Comments).Inverse().KeyColumn("[Tag]").PropertyRef("Id").Cascade.AllDeleteOrphan();
 
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Tag]").Inverse().Cascade.All().OrderBy("Created DESC"));

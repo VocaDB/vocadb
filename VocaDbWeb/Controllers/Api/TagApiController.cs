@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
@@ -31,6 +32,20 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Deletes a comment.
+		/// Normal users can delete their own comments, moderators can delete all comments.
+		/// Requires login.
+		/// </summary>
+		/// <param name="commentId">ID of the comment to be deleted.</param>
+		[Route("comments/{commentId:int}")]
+		[Authorize]
+		public void DeleteComment(int commentId) {
+
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
+
+		}
+
+		/// <summary>
 		/// Gets a tag by name.
 		/// </summary>
 		/// <param name="name">Tag name (required).</param>
@@ -55,6 +70,19 @@ namespace VocaDb.Web.Controllers.Api {
 		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) {
 		
 			return queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
+
+		}
+
+		/// <summary>
+		/// Gets a list of comments for a tag.
+		/// Note: pagination and sorting might be added later.
+		/// </summary>
+		/// <param name="tagId">ID of the tag whose comments to load.</param>
+		/// <returns>List of comments in no particular order.</returns>
+		[Route("{tagId:int}/comments")]
+		public PartialFindResult<CommentForApiContract> GetComments(int tagId) {
+
+			return new PartialFindResult<CommentForApiContract>(queries.GetComments(tagId), 0);
 
 		}
 
@@ -132,6 +160,35 @@ namespace VocaDb.Web.Controllers.Api {
 
 			return queries.FindNames(TagSearchTextQuery.Empty, null, TagSortRule.UsageCount, false, true, 15)
 				.OrderBy(t => t).ToArray();
+
+		}
+
+		/// <summary>
+		/// Updates a comment.
+		/// Normal users can edit their own comments, moderators can edit all comments.
+		/// Requires login.
+		/// </summary>
+		/// <param name="commentId">ID of the comment to be edited.</param>
+		/// <param name="contract">New comment data. Only message can be edited.</param>
+		[Route("comments/{commentId:int}")]
+		[Authorize]
+		public void PostEditComment(int commentId, CommentForApiContract contract) {
+
+			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
+
+		}
+
+		/// <summary>
+		/// Posts a new comment.
+		/// </summary>
+		/// <param name="tagId">ID of the tag for which to create the comment.</param>
+		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
+		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
+		[Route("{tagId:int}/comments")]
+		[Authorize]
+		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) {
+
+			return queries.CreateComment(tagId, contract);
 
 		}
 

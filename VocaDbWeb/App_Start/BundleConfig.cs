@@ -67,6 +67,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/AdminRepository.js",
 				"~/Scripts/Repositories/SongRepository.js",
 				"~/Scripts/Repositories/ArtistRepository.js",
+				"~/Scripts/ViewModels/CommentViewModel.js",
+				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/PagedItemsViewModel.js",
 				"~/Scripts/ViewModels/ServerSidePagingViewModel.js",
 				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
@@ -122,8 +124,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
-				"~/Scripts/ViewModels/CommentViewModel.js",
-				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/Album/AlbumDetailsViewModel.js",
@@ -179,8 +179,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
-				"~/Scripts/ViewModels/CommentViewModel.js",
-				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
@@ -224,8 +222,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/Repositories/DiscussionRepository.js",
-				"~/Scripts/ViewModels/CommentViewModel.js",
-				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionTopicViewModel.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
 			));
@@ -273,8 +269,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
-				"~/Scripts/ViewModels/CommentViewModel.js",
-				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/Song/SongDetailsViewModel.js",
@@ -332,8 +326,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/SongListRepository.js",
 				"~/Scripts/Models/ResourcesManager.js",
-				"~/Scripts/ViewModels/CommentViewModel.js",
-				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
@@ -365,6 +357,12 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/SongList/ImportSongListViewModel.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/Tag/Details").Include(
+				"~/Scripts/Repositories/TagRepository.js",
+				"~/Scripts/ViewModels/Tag/TagDetailsViewModel.js",
+				"~/Scripts/Tag/Details.js"
+			));
+		
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Edit").Include(
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",
@@ -397,8 +395,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
-				"~/Scripts/ViewModels/CommentViewModel.js",
-				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",

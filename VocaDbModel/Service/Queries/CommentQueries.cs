@@ -26,7 +26,8 @@ namespace VocaDb.Model.Service.Queries {
 			this.userIconFactory = userIconFactory;
 		}
 
-		public CommentForApiContract Create(int entryId, CommentForApiContract contract, Func<TEntry, CommentForApiContract, AgentLoginData, T> fac) {
+		public CommentForApiContract Create(int entryId, CommentForApiContract contract, Func<TEntry, CommentForApiContract, AgentLoginData, T> fac,
+			Func<TEntry> loadEntry = null) {
 			
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 
@@ -34,7 +35,7 @@ namespace VocaDb.Model.Service.Queries {
 				throw new NotAllowedException("Can only post as self");
 			}
 			
-			var entry = ctx.OfType<TEntry>().Load(entryId);
+			var entry = loadEntry != null ? loadEntry() : ctx.OfType<TEntry>().Load(entryId);
 			var agent = ctx.OfType<User>().CreateAgentLoginData(permissionContext, ctx.OfType<User>().Load(contract.Author.Id));
 
 			var comment = fac(entry, contract, agent);
