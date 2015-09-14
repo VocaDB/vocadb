@@ -5,6 +5,7 @@ using System.Net;
 using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -49,7 +50,8 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public VideoUrlParseResult ParseBySoundCloudUrl(string url) {
 
-			var apiUrl = string.Format("http://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id=YOUR_CLIENT_ID", url);
+			var apikey = AppConfig.SoundCloudClientId;
+			var apiUrl = string.Format("http://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
 
 			var request = WebRequest.Create(apiUrl);
 			request.Timeout = 10000;
