@@ -35,7 +35,6 @@
 
 @helper ActivityEntry(ActivityEntryContract entry, bool showDetails = false) {
 	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.EntryRef.SongThumbUrl);
-	var entryType = entry.EntryRef.EntryType;
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
 			@UserHelpers.UserIconLink(entry.Author, userInfo: true)
@@ -51,7 +50,7 @@
 
 		<div class="media">
 			@if (!string.IsNullOrEmpty(thumbUrl)) {
-				<a class="pull-left" href="@Url.Action(entryType != VocaDb.Model.Domain.EntryType.Tag ? "Details" : "DetailsById", entryType.ToString(), new { id = entry.EntryRef.Id })" title="@entry.EntryRef.Name.AdditionalNames">
+				<a class="pull-left" href="@EntryLinkFactory.GetFullEntryUrl(entry.EntryRef.EntryType, entry.EntryRef.Id)" title="@entry.EntryRef.Name.AdditionalNames">
 					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
 				</a>
 			}

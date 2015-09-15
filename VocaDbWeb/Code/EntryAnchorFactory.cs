@@ -52,6 +52,10 @@ namespace VocaDb.Web.Code {
 					relative = string.Format("S/{0}", id);
 					break;
 
+				case EntryType.Tag:
+					relative = string.Format("Tag/DetailsById/{0}", id);
+					break;
+
 				default:
 					relative = string.Format("{0}/Details/{1}", entryType, id);	
 					break;
