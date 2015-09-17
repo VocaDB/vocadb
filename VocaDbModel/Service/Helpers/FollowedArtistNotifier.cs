@@ -78,7 +78,7 @@ namespace VocaDb.Model.Service.Helpers {
 					artistIds.Contains(afu.Artist.Id) 
 					&& afu.User.Id != creator.Id && afu.User.Active
 					&& afu.SiteNotifications
-					&& afu.User.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) <= 9)
+					&& afu.User.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < afu.User.Options.UnreadNotificationsToKeep)
 				.Select(afu => new {
 					UserId = afu.User.Id, 
 					ArtistId = afu.Artist.Id

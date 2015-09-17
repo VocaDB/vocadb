@@ -387,6 +387,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum number of unread notifications.
+        /// </summary>
+        public static string UnreadNotificationsToKeep {
+            get {
+                return ResourceManager.GetString("UnreadNotificationsToKeep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {

@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			ShowChatbox = user.Options.ShowChatbox;
 			TwitterId = user.Options.TwitterId;
 			TwitterName = user.Options.TwitterName;
+			UnreadNotificationsToKeep = user.Options.UnreadNotificationsToKeep;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 
 		}
@@ -47,6 +48,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public int TwitterId { get; set; }
 
 		public string TwitterName { get; set; }
+
+		public int UnreadNotificationsToKeep { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
 

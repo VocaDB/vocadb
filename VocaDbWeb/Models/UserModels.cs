@@ -148,6 +148,7 @@ namespace VocaDb.Web.Models {
 			ShowChatbox = user.ShowChatbox;
 			TwitterName = user.TwitterName;
 			Username = user.Name;
+			UnreadNotificationsToKeep = user.UnreadNotificationsToKeep;
 			WebLinks = user.WebLinks.Select(w => new WebLinkDisplay(w)).ToArray();
 
 			AccessKey = user.HashedAccessKey;
@@ -227,6 +228,9 @@ namespace VocaDb.Web.Models {
 
 		public string TwitterName { get; set; }
 
+		[Range(1, 100)]
+		public int UnreadNotificationsToKeep { get; set; }
+
 		public UpdateUserSettingsContract ToContract() {
 
 			if (WebLinks == null)
@@ -249,6 +253,7 @@ namespace VocaDb.Web.Models {
 				PublicRatings = this.PublicRatings,
 				ShowChatbox = this.ShowChatbox,
 				NewPass = this.NewPass,
+				UnreadNotificationsToKeep = this.UnreadNotificationsToKeep,
 				WebLinks = this.WebLinks.Select(w => w.ToContract()).ToArray(),
 			};
 

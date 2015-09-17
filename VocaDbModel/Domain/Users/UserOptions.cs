@@ -32,6 +32,7 @@
 			PublicRatings = true;
 			ShowChatbox = true;
 			EmailVerified = false;
+			UnreadNotificationsToKeep = 10;
 
 		}
 
@@ -137,6 +138,8 @@
 				ParamIs.NotNull(() => value);
 			}
 		}
+
+		public virtual int UnreadNotificationsToKeep { get; set; }
 
 		public virtual User User {
 			get { return user; }

@@ -3,6 +3,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201509172250)]
+	public class UnreadNotificationsToKeepForUser : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("UnreadNotificationsToKeep").OnTable(TableNames.UserOptions).AsInt32().NotNullable().WithDefaultValue(10);
+
+		}
+
+	}
+
 	[Migration(201509131540)]
 	public class TagComments : AutoReversingMigration {
 

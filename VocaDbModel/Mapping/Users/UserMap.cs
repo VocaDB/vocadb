@@ -88,6 +88,7 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.TwitterName).Length(200).Not.Nullable();
 			Map(m => m.TwitterOAuthToken).Length(70).Not.Nullable();
 			Map(m => m.TwitterOAuthTokenSecret).Not.Nullable();
+			Map(m => m.UnreadNotificationsToKeep).Not.Nullable();
 
 		}
 

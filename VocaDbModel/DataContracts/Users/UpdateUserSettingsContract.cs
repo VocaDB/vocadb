@@ -16,6 +16,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			Location = user.Options.Location;
 			PublicRatings = user.Options.PublicRatings;
 			ShowChatbox = user.Options.ShowChatbox;
+			UnreadNotificationsToKeep = user.Options.UnreadNotificationsToKeep;
 			WebLinks = user.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
 
 		}
@@ -31,6 +32,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public bool PublicRatings { get; set; }
 
 		public bool ShowChatbox { get; set; }
+
+		public int UnreadNotificationsToKeep { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
 

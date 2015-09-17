@@ -1320,7 +1320,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				user.PreferredVideoService = contract.PreferredVideoService;
 				user.Options.PublicAlbumCollection = contract.PublicAlbumCollection;
 				user.Options.PublicRatings = contract.PublicRatings;
-				user.Options.ShowChatbox = contract.ShowChatbox;
+				//user.Options.ShowChatbox = contract.ShowChatbox;
+				user.Options.UnreadNotificationsToKeep = contract.UnreadNotificationsToKeep;
 				user.SetEmail(email);
 
 				var validWebLinks = contract.WebLinks.Where(w => !string.IsNullOrEmpty(w.Url));
