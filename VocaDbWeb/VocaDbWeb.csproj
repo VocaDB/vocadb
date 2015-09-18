@@ -783,6 +783,7 @@
     <Compile Include="Code\Highcharts\Series.cs" />
     <Compile Include="Code\Highcharts\SeriesType.cs" />
     <Compile Include="Code\Highcharts\Title.cs" />
+    <Compile Include="Code\WebApi\UnhandledExceptionFilter.cs" />
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
     <Compile Include="Controllers\DataAccess\ActivityEntryQueries.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />

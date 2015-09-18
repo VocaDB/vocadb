@@ -3,6 +3,7 @@ using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using VocaDb.Web.Code.WebApi;
 using WebApiContrib.Formatting.Jsonp;
 
 namespace VocaDb.Web.App_Start {
@@ -28,6 +29,8 @@ namespace VocaDb.Web.App_Start {
 			config.Routes.MapHttpRoute(
 				"DefaultApi", "api/{controller}/{id}",
 				new { id = RouteParameter.Optional });
+
+			config.Filters.Add(new UnhandledExceptionFilter());
 
 		}
 
