@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -31,17 +33,21 @@ namespace VocaDb.Web.Controllers.Api {
 
 		private const int absoluteMax = 50;
 		private const int defaultMax = 10;
+		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly SongQueries queries;
 		private readonly SongService service;
+		private readonly IUserPermissionContext userPermissionContext;
 
 		/// <summary>
 		/// Initializes controller.
 		/// </summary>
 		/// <param name="service">Song service. Cannot be null.</param>
 		/// <param name="queries">Song queries. Cannot be null.</param>
-		public SongApiController(SongService service, SongQueries queries) {
+		public SongApiController(SongService service, SongQueries queries, IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext) {
 			this.service = service;
 			this.queries = queries;
+			this.entryLinkFactory = entryLinkFactory;
+			this.userPermissionContext = userPermissionContext;
 		}
 
 		/// <summary>
@@ -81,6 +87,20 @@ namespace VocaDb.Web.Controllers.Api {
 		public IEnumerable<CommentForApiContract> GetComments(int songId) {
 			
 			return queries.GetComments(songId);
+
+		}
+
+		[System.Web.Http.Route("findDuplicate")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[System.Web.Http.HttpGet]
+		public NewSongCheckResultContract GetFindDuplicate([FromUri] string[] term = null, [FromUri] string[] pv = null, [FromUri] int[] artistIds = null, bool getPVInfo = false) {
+
+			var result = queries.FindDuplicates(
+				(term ?? new string[0]).Where(p => p != null).ToArray(),
+				(pv ?? new string[0]).Where(p => p != null).ToArray(),
+				artistIds, getPVInfo);
+
+			return result;
 
 		}
 
@@ -367,6 +387,34 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[System.Web.Http.Route("{songId:int}/pvs")]
+		[System.Web.Http.Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PostPVs(int songId, PVContract[] pvs) {
+
+			queries.HandleTransaction(ctx => {
+
+				var song = ctx.Load(songId);
+
+				EntryPermissionManager.VerifyEdit(userPermissionContext, song);
+
+				var diff = new SongDiff();
+
+				var pvDiff = queries.UpdatePVs(ctx, song, diff, pvs);
+
+				if (pvDiff.Changed) {
+
+					var logStr = string.Format("updated PVs for song {0}", entryLinkFactory.CreateEntryLink(song)).Truncate(400);
+
+					queries.Archive(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
+					ctx.Update(song);
+					ctx.AuditLogger.AuditLog(logStr);
+
+				}
+
+			});
+
+		}
 	}
 
 	public enum TopSongsDateFilterType {

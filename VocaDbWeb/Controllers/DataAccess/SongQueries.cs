@@ -543,6 +543,23 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public CollectionDiffWithValue<PVForSong, PVForSong> UpdatePVs(IRepositoryContext<Song> ctx, Song song, SongDiff diff, IList<PVContract> pvs) {
+
+			var oldPublishDate = song.PublishDate;
+			var pvDiff = song.SyncPVs(pvs);
+			ctx.OfType<PVForSong>().Sync(pvDiff);
+
+			if (pvDiff.Changed)
+				diff.PVs = true;
+
+			if (pvDiff.Changed && !oldPublishDate.Equals(song.PublishDate)) {
+				diff.PublishDate = true;
+			}
+
+			return pvDiff;
+
+		}
+
 		public SongForEditContract UpdateBasicProperties(SongForEditContract properties) {
 
 			ParamIs.NotNull(() => properties);
@@ -615,16 +632,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					diff.PublishDate = true;
 				}
 
-				var oldPublishDate = song.PublishDate;
-				var pvDiff = song.SyncPVs(properties.PVs);
-				ctx.OfType<PVForSong>().Sync(pvDiff);
-
-				if (pvDiff.Changed)
-					diff.PVs = true;
-
-				if (pvDiff.Changed && !oldPublishDate.Equals(song.PublishDate)) {
-					diff.PublishDate = true;
-				}
+				UpdatePVs(ctx, song, diff, properties.PVs);
 
 				var lyricsDiff = song.SyncLyrics(properties.Lyrics);
 				ctx.OfType<LyricsForSong>().Sync(lyricsDiff);
