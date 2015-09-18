@@ -38,7 +38,9 @@ module vdb.repositories {
 
 		}
 
-        public findDuplicate: (params, callback: (result: dc.NewSongCheckResultContract) => void) => void;
+        public findDuplicate = (params, callback: (result: dc.NewSongCheckResultContract) => void) => {
+			$.getJSON(this.urlMapper.mapRelative("/api/songs/findDuplicate"), params, callback);
+		}
 
         private get: (relative: string, params: any, callback: any) => void;
 
@@ -152,10 +154,6 @@ module vdb.repositories {
 
             this.post = (relative, params, callback) => {
                 $.post(this.mapUrl(relative), params, callback);
-            }
-
-            this.findDuplicate = (params, callback: (result: dc.NewSongCheckResultContract) => void) => {
-                this.post("/FindDuplicate", params, callback);
             }
 
 			this.pvForSongAndService = (songId: number, pvService: cls.pvs.PVService, callback: (result: string) => void) => {

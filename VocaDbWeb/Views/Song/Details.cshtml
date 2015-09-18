@@ -315,15 +315,7 @@
 
 		</table>
 		
-		<br />
-		<h3>@ViewRes.EntryDetailsStrings.LatestComments</h3>
-		
-		<div data-bind="with: comments">
-			@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
-			<!-- ko ifnot: comments().length -->
-			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
-			<!-- /ko -->
-		</div>
+		@CommentHelpers.LatestCommentsKnockout()
 		
 		<p>
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>

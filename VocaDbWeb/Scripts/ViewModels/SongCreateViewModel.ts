@@ -30,7 +30,7 @@ module vdb.viewModels {
 			var artists = this.getArtistIds();
 
 			this.songRepository.findDuplicate(
-				{ term1: term1, term2: term2, term3: term3, pv1: pv1, pv2: pv2, artistIds: artists, getPVInfo: getPVInfo },
+				{ term: [ term1, term2, term3 ], pv: [ pv1, pv2 ], artistIds: artists, getPVInfo: getPVInfo },
 				result => {
 
                 this.dupeEntries(result.matches);
