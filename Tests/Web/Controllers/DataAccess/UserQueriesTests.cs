@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -294,11 +295,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual("Hello world", result.Message, "Message");
 
-			var comment = repository.List<UserComment>().FirstOrDefault();
+			var comment = repository.List<Comment>().FirstOrDefault();
 			Assert.IsNotNull(comment, "Comment was saved");
 			Assert.AreEqual("Hello world", comment.Message, "Message");
 			Assert.AreEqual(sender.Id, comment.Author.Id, "Sender Id");
-			Assert.AreEqual(receiver.Id, comment.EntryForComment.Id, "Receiver Id");
+			Assert.AreEqual(receiver.Id, comment.Entry.Id, "Receiver Id");
 
 			var notificationMsg = string.Format("{0} posted a comment on your profile.\n\n{1}", sender.Name, comment.Message);
 			var notification = repository.List<UserMessage>().FirstOrDefault();

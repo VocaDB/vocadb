@@ -12,6 +12,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
@@ -180,10 +181,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var result = CreateComment(39, "Hello world");
 			Assert.IsNotNull(result, "Result");
 
-			var comment = repository.List<AlbumComment>().FirstOrDefault();
+			var comment = repository.List<Comment>().FirstOrDefault();
 			Assert.IsNotNull(comment, "Comment was saved");
 			Assert.AreEqual(user, comment.Author, "Author");
-			Assert.AreEqual(album, comment.EntryForComment, "Album");
+			Assert.AreEqual(album, comment.Entry, "Album");
 			Assert.AreEqual("Hello world", comment.Message, "Comment message");
 
 		}

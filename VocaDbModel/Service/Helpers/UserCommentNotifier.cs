@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
@@ -13,7 +12,7 @@ namespace VocaDb.Model.Service.Helpers {
 	/// </summary>
 	public class UserCommentNotifier {
 
-		public void CheckComment(Comment comment, IEntryLinkFactory entryLinkFactory, IRepositoryContext<User> ctx) {
+		public void CheckComment(ICommentWithEntry comment, IEntryLinkFactory entryLinkFactory, IRepositoryContext<User> ctx) {
 
 			var userMatches = Regex.Match(comment.Message, @"@(\w+)");
 

@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using System;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
@@ -15,7 +16,9 @@ using VocaDb.Model.Helpers;
 namespace VocaDb.Model.Domain.Artists {
 
 	public class Artist : IEntryBase, IEntryWithNames, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, 
-		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage> {
+		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments {
+
+		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
 			get { return ArchivedVersionsManager; }
@@ -363,7 +366,7 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public virtual ArtistComment CreateComment(string message, User author) {
+		public virtual Comment CreateComment(string message, AgentLoginData author) {
 
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => author);

@@ -159,7 +159,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentQueries<ArtistComment, Artist> Comments(IRepositoryContext<Artist> ctx) {
+		public ICommentQueries Comments(IRepositoryContext<Artist> ctx) {
 			return new CommentQueries<ArtistComment, Artist>(ctx.OfType<ArtistComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
@@ -243,7 +243,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			ParamIs.NotNull(() => contract);
 
-			return HandleTransaction(ctx => Comments(ctx).Create(artistId, contract, (artist, con, agent) => artist.CreateComment(con.Message, agent.User)));
+			return HandleTransaction(ctx => Comments(ctx).Create(artistId, contract));
 
 		}
 
@@ -321,12 +321,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				contract.SharedStats.AlbumCount = Math.Max(contract.SharedStats.AlbumCount, contract.LatestAlbums.Length + contract.TopAlbums.Length);
 				contract.SharedStats.SongCount = Math.Max(contract.SharedStats.SongCount, contract.LatestSongs.Length + contract.TopSongs.Length);
 
-				contract.LatestComments = session.OfType<ArtistComment>().Query()
-					.Where(c => c.EntryForComment.Id == id)
-					.OrderByDescending(c => c.Created)
-					.Take(3)
-					.ToArray()
-					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
+				contract.LatestComments = Comments(session).GetList(id, 3);
 
 				if (artist.Deleted) {
 					var mergeEntry = GetMergeRecord(session, id);

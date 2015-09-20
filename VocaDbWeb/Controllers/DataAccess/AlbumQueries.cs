@@ -19,7 +19,6 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
@@ -108,7 +107,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentQueries<AlbumComment, Album> Comments(IRepositoryContext<Album> ctx) {
+		public ICommentQueries Comments(IRepositoryContext<Album> ctx) {
 			return new CommentQueries<AlbumComment, Album>(ctx.OfType<AlbumComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
@@ -157,7 +156,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			ParamIs.NotNull(() => contract);
 
-			return HandleTransaction(ctx => Comments(ctx).Create(albumId, contract, (album, con, agent) => album.CreateComment(con.Message, agent)));
+			return HandleTransaction(ctx => Comments(ctx).Create(albumId, contract));
 
 		}
 
@@ -178,7 +177,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public CommentForApiContract[] GetComments(int albumId) {
 			
-			return HandleQuery(ctx => ctx.Load(albumId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
+			return HandleQuery(ctx => Comments(ctx).GetAll(albumId));
 
 		}
 

@@ -150,15 +150,15 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentQueries<TagComment, Tag> Comments(IRepositoryContext<Tag> ctx) {
-			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		public ICommentQueries Comments(IRepositoryContext<Tag> ctx) {
+			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, userIconFactory, entryLinkFactory, tagId => GetTagById(ctx.OfType<Tag>(), tagId));
 		}
 
 		public CommentForApiContract CreateComment(int tagId, CommentForApiContract contract) {
 
 			ParamIs.NotNull(() => contract);
 
-			return HandleTransaction(ctx => Comments(ctx).Create(tagId, contract, (song, con, agent) => song.CreateComment(con.Message, agent), () => GetTagById(ctx, tagId)));
+			return HandleTransaction(ctx => Comments(ctx).Create(tagId, contract));
 
 		}
 
@@ -267,7 +267,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public CommentForApiContract[] GetComments(int tagId) {
 
-			return HandleQuery(ctx => Comments(ctx).GetList(tagId, int.MaxValue));
+			return HandleQuery(ctx => Comments(ctx).GetAll(tagId));
 
 		}
 

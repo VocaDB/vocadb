@@ -14,11 +14,13 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.Domain.Comments;
 
 namespace VocaDb.Model.Domain.Albums {
 
 	public class Album : IEntryBase, IEntryWithNames, IEntryWithVersions, IEntryWithStatus,
-		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtists<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage> {
+		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtists<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage>,
+		IEntryWithComments {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
 			get { return ArchivedVersionsManager; }
@@ -148,6 +150,8 @@ namespace VocaDb.Model.Domain.Albums {
 				comments = value; 
 			}
 		}
+
+		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		public virtual PictureData CoverPictureData { get; set; }
 
@@ -406,7 +410,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual AlbumComment CreateComment(string message, AgentLoginData loginData) {
+		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
 
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);

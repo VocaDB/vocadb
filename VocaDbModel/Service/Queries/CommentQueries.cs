@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -12,22 +11,40 @@ using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
-	public class CommentQueries<T, TEntry> where T : GenericComment<TEntry> where TEntry : class, IEntryWithNames {
+	public interface ICommentQueries {
+
+		CommentForApiContract Create(int entryId, CommentForApiContract contract);
+
+		void Delete(int commentId);
+
+		CommentForApiContract[] GetAll(int entryId);
+
+		CommentForApiContract[] GetList(int entryId, int count);
+
+		void Update(int commentId, IComment contract);
+
+	}
+
+	public class CommentQueries<T, TEntry> : ICommentQueries where T : GenericComment<TEntry> where TEntry : class, IEntryWithComments {
 
 		private readonly IRepositoryContext<T> ctx;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly Func<int, TEntry> entryLoaderFunc;
 		private readonly IUserPermissionContext permissionContext;
 		private readonly IUserIconFactory userIconFactory;
 
-		public CommentQueries(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory) {
+		public CommentQueries(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
+			Func<int, TEntry> entryLoaderFunc = null) {
+
 			this.ctx = ctx;
 			this.entryLinkFactory = entryLinkFactory;
 			this.permissionContext = permissionContext;
 			this.userIconFactory = userIconFactory;
+			this.entryLoaderFunc = entryLoaderFunc;
+
 		}
 
-		public CommentForApiContract Create(int entryId, CommentForApiContract contract, Func<TEntry, CommentForApiContract, AgentLoginData, T> fac,
-			Func<TEntry> loadEntry = null) {
+		public CommentForApiContract Create(int entryId, CommentForApiContract contract) {
 			
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 
@@ -35,10 +52,10 @@ namespace VocaDb.Model.Service.Queries {
 				throw new NotAllowedException("Can only post as self");
 			}
 			
-			var entry = loadEntry != null ? loadEntry() : ctx.OfType<TEntry>().Load(entryId);
+			var entry = entryLoaderFunc != null ? entryLoaderFunc(entryId) : ctx.OfType<TEntry>().Load(entryId);
 			var agent = ctx.OfType<User>().CreateAgentLoginData(permissionContext, ctx.OfType<User>().Load(contract.Author.Id));
 
-			var comment = fac(entry, contract, agent);
+			var comment = entry.CreateComment(contract.Message, agent);
 
 			ctx.Save(comment);
 
@@ -66,6 +83,15 @@ namespace VocaDb.Model.Service.Queries {
 			comment.OnDelete();
 			
 			ctx.Delete(comment);
+
+		}
+
+		public CommentForApiContract[] GetAll(int entryId) {
+
+			return ctx.Load<TEntry>(entryId).Comments
+				.OrderByDescending(c => c.Created)
+				.Select(c => new CommentForApiContract(c, userIconFactory))
+				.ToArray();
 
 		}
 

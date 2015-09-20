@@ -1,7 +1,6 @@
 ﻿using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
@@ -17,7 +16,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserIconFactory userIconFactory;
 
-		private CommentQueries<DiscussionComment, DiscussionTopic> Comments<T>(IRepositoryContext<T> ctx) {
+		private ICommentQueries Comments<T>(IRepositoryContext<T> ctx) {
 			return new CommentQueries<DiscussionComment, DiscussionTopic>(ctx.OfType<DiscussionComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
@@ -32,17 +31,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public CommentForApiContract CreateComment(int topicId, CommentForApiContract contract) {
 			
-			return repository.HandleTransaction(ctx => {
-				
-				return Comments(ctx).Create(topicId, contract, (topic, con, agent) => {
-					
-					var comment = new DiscussionComment(topic, contract.Message, agent);
-					topic.Comments.Add(comment);
-					return comment;
-
-				});
-
-			});
+			return repository.HandleTransaction(ctx => Comments(ctx).Create(topicId, contract));
 
 		}
 
@@ -95,11 +84,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public void DeleteComment(int commentId) {
 			
-			repository.HandleTransaction(ctx => {
-
-				Comments(ctx).Delete(commentId);
-
-			});
+			repository.HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 
 		}
 
@@ -130,11 +115,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public void UpdateComment(int commentId, IComment contract) {
 			
-			repository.HandleTransaction(ctx => {
-
-				Comments(ctx).Update(commentId, contract);
-				
-			});
+			repository.HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
 		}
 

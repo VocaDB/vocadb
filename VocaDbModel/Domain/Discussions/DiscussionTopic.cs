@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Discussions {
 
-	public class DiscussionTopic : IEntryWithNames {
+	public class DiscussionTopic : IEntryWithNames, IEntryWithComments {
+
+		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		string IEntryBase.DefaultName {
 			get { return Name; }
@@ -101,6 +104,14 @@ namespace VocaDb.Model.Domain.Discussions {
 		}
 
 		public virtual bool Pinned { get; set; }
+
+		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
+
+			var comment = new DiscussionComment(this, message, loginData);
+			Comments.Add(comment);
+			return comment;
+
+		}
 
 		public override string ToString() {
 			return string.Format("Discussion topic '{0}' [{1}]", Name, Id);

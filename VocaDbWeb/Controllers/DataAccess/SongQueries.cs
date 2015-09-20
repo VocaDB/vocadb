@@ -169,7 +169,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public CommentQueries<SongComment, Song> Comments(IRepositoryContext<Song> ctx) {
+		public ICommentQueries Comments(IRepositoryContext<Song> ctx) {
 			return new CommentQueries<SongComment, Song>(ctx.OfType<SongComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
@@ -255,7 +255,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			ParamIs.NotNull(() => contract);
 
-			return HandleTransaction(ctx => Comments(ctx).Create(songId, contract, (song, con, agent) => song.CreateComment(con.Message, agent)));
+			return HandleTransaction(ctx => Comments(ctx).Create(songId, contract));
 
 		}
 
@@ -276,7 +276,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public CommentForApiContract[] GetComments(int songId) {
 			
-			return HandleQuery(ctx => ctx.Load(songId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
+			return HandleQuery(ctx => Comments(ctx).GetAll(songId));
 
 		}
 

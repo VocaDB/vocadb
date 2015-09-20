@@ -17,7 +17,7 @@ namespace VocaDb.Web.Code {
 			this.ssl = ssl;
 		}
 
-		public string GetIconUrl(User user) {
+		public string GetIconUrl(IUserWithEmail user) {
 
 			if (string.IsNullOrEmpty(user.Email))
 				return string.Empty;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
@@ -12,7 +13,9 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class SongList : IEntryWithNames {
+	public class SongList : IEntryWithNames, IEntryWithComments {
+
+		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		INameManager IEntryWithNames.Names {
 			get { return new SingleNameManager(Name); }
@@ -76,7 +79,7 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
-		public virtual SongListComment CreateComment(string message, AgentLoginData loginData) {
+		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
 
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);

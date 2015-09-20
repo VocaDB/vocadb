@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public UserWithIconContract() { }
 
-		public UserWithIconContract(User user, string iconUrl)
+		public UserWithIconContract(IUser user, string iconUrl)
 			: base(user) {
 
 			IconUrl = iconUrl;
@@ -22,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Users {
 		public UserWithIconContract(User user)
 			: this(user, string.Empty) {}
 
-		public UserWithIconContract(User user, IUserIconFactory iconFactory)
+		public UserWithIconContract(IUserWithEmail user, IUserIconFactory iconFactory)
 			: this(user, iconFactory != null ? iconFactory.GetIconUrl(user) : string.Empty) {}
 
 		/// <summary>

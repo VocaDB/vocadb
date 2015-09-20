@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public UserBaseContract() { }
 
-		public UserBaseContract(User user) {
+		public UserBaseContract(IUser user) {
 
 			ParamIs.NotNull(() => user);
 
@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		}
 
-		public UserBaseContract(User user, string fallbackName) {
+		public UserBaseContract(IUser user, string fallbackName) {
 
 			if (user != null) {
 				Id = user.Id;

@@ -13,7 +13,7 @@ namespace VocaDb.Model.DataContracts.Users {
 	/// </summary>
 	public interface IUserIconFactory {
 
-		string GetIconUrl(User user);
+		string GetIconUrl(IUserWithEmail user);
 
 	}
 

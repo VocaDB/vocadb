@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Albums;
@@ -15,19 +14,20 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.PVs;
-using VocaDb.Model.DataContracts.SongImport;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Service.VideoServices;
-using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Songs {
 
 	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtists<ArtistForSong>, 
 		IEntryWithTags<SongTagUsage>,
-		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song> {
+		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song>, IEntryWithComments {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
 			get { return ArchivedVersionsManager; }
 		}
+
+		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		private IList<SongInAlbum> albums = new List<SongInAlbum>();
 		private IList<Song> alternateVersions = new List<Song>();
@@ -404,7 +404,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual SongComment CreateComment(string message, AgentLoginData loginData) {
+		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
 
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);

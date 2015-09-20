@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
@@ -13,7 +14,7 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Tags {
 
-	public class Tag : IEquatable<Tag>, IEntryWithNames, IEntryWithStatus {
+	public class Tag : IEquatable<Tag>, IEntryWithNames, IEntryWithStatus, IEntryWithComments {
 
 		string IEntryBase.DefaultName {
 			get { return Name; }
@@ -28,6 +29,8 @@ namespace VocaDb.Model.Domain.Tags {
 				return new SingleNameManager(TagName);
 			}
 		}
+
+		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		/// <summary>
 		/// Generated image sizes for tag images
@@ -170,7 +173,7 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
-		public virtual TagComment CreateComment(string message, AgentLoginData loginData) {
+		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
 
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);

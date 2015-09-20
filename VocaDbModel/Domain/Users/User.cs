@@ -11,11 +11,14 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Service.Exceptions;
 
 namespace VocaDb.Model.Domain.Users {
 
-	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink> {
+	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink>, IEntryWithComments {
+
+		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		INameManager IEntryWithNames.Names {
 			get {
@@ -499,7 +502,7 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public virtual UserComment CreateComment(string message, AgentLoginData loginData) {
+		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
 
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
