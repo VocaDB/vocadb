@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using NHibernate;
@@ -109,28 +108,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		private int TagUsagesCount<T, TEntry>(IRepositoryContext<Tag> ctx, string[] tagNames, Expression<Func<T, TEntry>> entryFunc)
-			where T : TagUsage
-			where TEntry : IEntryBase {
-
-			return ctx.OfType<T>().Query().Where(a => tagNames.Contains(a.Tag.Name)).Select(entryFunc).Where(e => !e.Deleted).Distinct().Count();
-
-		}
-
-		private IEnumerable<TEntry> TagUsagesQuery<T, TEntry>(IRepositoryContext<Tag> ctx, string[] tagNames, int count, Expression<Func<T, TEntry>> entryFunc) 
-			where T : TagUsage where TEntry : IEntryBase {
-
-			return ctx.OfType<T>().Query()
-				.Where(a => tagNames.Contains(a.Tag.Name))
-				.OrderByDescending(u => u.Count)
-				.Select(entryFunc)
-				.Where(e => !e.Deleted)
-				.Take(count)
-				.ToArray()
-				.Distinct();
-
-		}
-
 		public TagQueries(ITagRepository repository, IUserPermissionContext permissionContext,
 		                  IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext) {
@@ -155,8 +132,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public CommentForApiContract CreateComment(int tagId, CommentForApiContract contract) {
-
-			ParamIs.NotNull(() => contract);
 
 			return HandleTransaction(ctx => Comments(ctx).Create(tagId, contract));
 

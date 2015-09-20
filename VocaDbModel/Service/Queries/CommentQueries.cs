@@ -45,7 +45,9 @@ namespace VocaDb.Model.Service.Queries {
 		}
 
 		public CommentForApiContract Create(int entryId, CommentForApiContract contract) {
-			
+
+			ParamIs.NotNull(() => contract);
+
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 
 			if (contract.Author == null || contract.Author.Id != permissionContext.LoggedUserId) {
@@ -105,7 +107,9 @@ namespace VocaDb.Model.Service.Queries {
         }
 
 		public void Update(int commentId, IComment contract) {
-			
+
+			ParamIs.NotNull(() => contract);
+
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
 				
 			var comment = ctx.OfType<T>().Load(commentId);

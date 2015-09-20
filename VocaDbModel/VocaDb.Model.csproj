@@ -349,7 +349,6 @@
     <Compile Include="Domain\Images\IEntryImagePersister.cs" />
     <Compile Include="Domain\Images\ServerEntryThumbPersister.cs" />
     <Compile Include="Domain\IOptionalDateTime.cs" />
-    <Compile Include="Domain\LinkAlreadyExistsException.cs" />
     <Compile Include="Domain\MergeRecord.cs" />
     <Compile Include="Domain\PVs\IEditablePV.cs" />
     <Compile Include="Domain\PVs\IPV.cs" />

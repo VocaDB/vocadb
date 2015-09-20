@@ -241,8 +241,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public CommentForApiContract CreateComment(int artistId, CommentForApiContract contract) {
 
-			ParamIs.NotNull(() => contract);
-
 			return HandleTransaction(ctx => Comments(ctx).Create(artistId, contract));
 
 		}

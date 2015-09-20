@@ -47,35 +47,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public ArtistForAlbumContract AddAlbum(int artistId, int albumId) {
-
-			VerifyManageDatabase();
-
-			return HandleTransaction(session => {
-
-				var artist = session.Load<Artist>(artistId);
-				var album = session.Load<Album>(albumId);
-
-				var hasAlbum = session.Query<ArtistForAlbum>().Any(a => a.Artist.Id == artistId && a.Album.Id == albumId);
-
-				if (hasAlbum)
-					throw new LinkAlreadyExistsException(string.Format("{0} already has {1}", artist, album));
-
-				AuditLog(string.Format("adding {0} for {1}", 
-					EntryLinkFactory.CreateEntryLink(album), EntryLinkFactory.CreateEntryLink(artist)), session);
-
-				var artistForAlbum = artist.AddAlbum(album);
-				session.Save(artistForAlbum);
-
-				album.UpdateArtistString();
-				session.Update(album);
-
-				return new ArtistForAlbumContract(artistForAlbum, PermissionContext.LanguagePreference);
-
-			});
-
-		}
-
 		public void Archive(ISession session, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
 
 			SysLog("Archiving " + artist);
