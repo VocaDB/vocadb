@@ -10,6 +10,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Web.Controllers;
+using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.API.v1.Controllers
 {
@@ -18,9 +19,11 @@ namespace VocaDb.Web.API.v1.Controllers
 
 		private const int defaultMax = 10;
 		private readonly SongService songService;
+		private readonly SongQueries songQueries;
 
-		public SongApiController(SongService songService) {
+		public SongApiController(SongService songService, SongQueries songQueries) {
 			this.songService = songService;
+			this.songQueries = songQueries;
 		}
 
 		public ActionResult ByPV(PVService? service, string pvId, ContentLanguagePreference? lang, string callback,
@@ -77,7 +80,7 @@ namespace VocaDb.Web.API.v1.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var song = songService.GetSongWithMergeRecord(id, (s, m) => new SongForApiContract(s, m, lang, includeAlbums, includeArtists, includeNames, includePVs, includeTags, true, includeWebLinks));
+			var song = songQueries.GetSongWithMergeRecord(id, (s, m) => new SongForApiContract(s, m, lang, includeAlbums, includeArtists, includeNames, includePVs, includeTags, true, includeWebLinks));
 
 			return Object(song, format, callback);
 

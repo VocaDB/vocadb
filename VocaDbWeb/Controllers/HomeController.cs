@@ -2,11 +2,10 @@
 using System.Web.Mvc;
 using System.Web.SessionState;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.Search;
+using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 
@@ -19,13 +18,11 @@ namespace VocaDb.Web.Controllers
 
 		private readonly BrandableStringsManager brandableStringsManager;
 		private readonly OtherService otherService;
-		private readonly SongService songService;
-		private readonly UserService userService;
+		private readonly SongQueries songService;
 
-		public HomeController(SongService songService, OtherService otherService, UserService userService, BrandableStringsManager brandableStringsManager) {
+		public HomeController(SongQueries songService, OtherService otherService, BrandableStringsManager brandableStringsManager) {
 			this.songService = songService;
 			this.otherService = otherService;
-			this.userService = userService;
 			this.brandableStringsManager = brandableStringsManager;
 		}
 

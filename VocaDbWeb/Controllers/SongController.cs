@@ -132,7 +132,7 @@ namespace VocaDb.Web.Controllers
 
 			WebHelper.VerifyUserAgent(Request);
 
-			var contract = Service.GetSongDetails(id, albumId, GetHostnameForValidHit(), null);
+			var contract = queries.GetSongDetails(id, albumId, GetHostnameForValidHit(), null);
 			var model = new SongDetails(contract);
 
 			var hasDescription = !model.Notes.IsEmpty;
@@ -328,7 +328,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Merge(int id) {
 
-			var song = Service.GetSong(id);
+			var song = queries.GetSong(id);
 			return View(song);
 
 		}
@@ -417,7 +417,7 @@ namespace VocaDb.Web.Controllers
 			if (songId == invalidId)
 				return NoId();
 
-			var song = Service.GetSongWithPVAndVote(songId, true, GetHostnameForValidHit());
+			var song = queries.GetSongWithPVAndVote(songId, true, GetHostnameForValidHit());
 			var pv = PVHelper.PrimaryPV(song.PVs);
 
 			if (pv == null)
@@ -490,7 +490,7 @@ namespace VocaDb.Web.Controllers
 
 		public string ThumbUrl(int id) {
 
-			var songWithPVs = Service.GetSongWithPVAndVote(id, false);
+			var songWithPVs = queries.GetSongWithPVAndVote(id, false);
 			return (songWithPVs.ThumbUrl);
 
 		}

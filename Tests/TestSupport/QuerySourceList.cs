@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Repositories;
@@ -23,6 +24,9 @@ namespace VocaDb.Tests.TestSupport {
 			List<TEntity>().AddRange(entities);
 		}
 
+		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
+			return new FakeTransaction();
+        }
 
 		public void Dispose() {
 			

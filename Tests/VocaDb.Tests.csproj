@@ -66,6 +66,7 @@
       <HintPath>..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
@@ -148,6 +149,7 @@
     <Compile Include="TestSupport\FakeObjectCache.cs" />
     <Compile Include="TestSupport\FakePVParser.cs" />
     <Compile Include="TestSupport\FakeSongRepository.cs" />
+    <Compile Include="TestSupport\FakeTransaction.cs" />
     <Compile Include="TestSupport\FakeUserIconFactory.cs" />
     <Compile Include="TestSupport\FakeUserMessageMailer.cs" />
     <Compile Include="TestSupport\InMemoryImagePersister.cs" />

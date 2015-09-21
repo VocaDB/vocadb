@@ -145,7 +145,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[System.Web.Http.Route("{id:int}")]
 		public SongForApiContract GetById(int id, SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
-			var song = service.GetSongWithMergeRecord(id, (s, m) => new SongForApiContract(s, m, lang, fields));
+			var song = queries.GetSongWithMergeRecord(id, (s, m) => new SongForApiContract(s, m, lang, fields));
 
 			return song;
 

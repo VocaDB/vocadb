@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data;
+using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.Domain.Security;
@@ -17,6 +18,10 @@ namespace VocaDb.Model.Service.Repositories.NHibernate {
 
 		public IAuditLogger AuditLogger {
 			get { return new NHibernateAuditLogger(OfType<AuditLogEntry>(), PermissionContext); }
+		}
+
+		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
+			return new NHibernateTransaction(Session.BeginTransaction(isolationLevel));
 		}
 
 		public void Dispose() {

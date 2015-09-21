@@ -717,6 +717,7 @@
     <Compile Include="Service\Repositories\IEntryReportRepository.cs" />
     <Compile Include="Service\Repositories\IEventRepository.cs" />
     <Compile Include="Service\Repositories\IRepositoryBaseExtender.cs" />
+    <Compile Include="Service\Repositories\IMinimalTransaction.cs" />
     <Compile Include="Service\Repositories\ISongRepository.cs" />
     <Compile Include="Service\Repositories\IUserMessageRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\AlbumNHibernateRepository.cs" />
@@ -759,6 +760,7 @@
     <Compile Include="Service\Repositories\IUserRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\NHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\NHibernateRepositoryContext.cs" />
+    <Compile Include="Service\Repositories\NHibernate\NHibernateTransaction.cs" />
     <Compile Include="Service\Repositories\NHibernate\SongNHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\TagNHibernateRepository.cs" />
     <Compile Include="Service\Repositories\NHibernate\SongListNHibernateRepository.cs" />

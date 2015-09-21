@@ -6,11 +6,10 @@ using NLog;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
-using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Ext;
 
@@ -25,9 +24,9 @@ namespace VocaDb.Web.Controllers
 		private readonly AlbumService albumService;
 		private readonly ArtistService artistService;
 		private readonly IEntryUrlParser entryUrlParser;
-		private readonly SongService songService;
+		private readonly SongQueries songService;
 
-		public ExtController(IEntryUrlParser entryUrlParser, AlbumService albumService, ArtistService artistService, SongService songService) {
+		public ExtController(IEntryUrlParser entryUrlParser, AlbumService albumService, ArtistService artistService, SongQueries songService) {
 			this.entryUrlParser = entryUrlParser;
 			this.albumService = albumService;
 			this.artistService = artistService;

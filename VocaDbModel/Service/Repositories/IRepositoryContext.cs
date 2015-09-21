@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 
 namespace VocaDb.Model.Service.Repositories {
@@ -9,7 +10,9 @@ namespace VocaDb.Model.Service.Repositories {
 		/// Audit logger for the repository.
 		/// </summary>
 		IAuditLogger AuditLogger { get; }
-	
+
+		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel);
+
 		/// <summary>
 		/// Returns a child context for another entity type.
 		/// The unit of work (including transaction) must be shared between this parent context and the child context.

@@ -26,18 +26,18 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly EntryQueries queries;
 		private readonly OtherService otherService;
-		private readonly SongService songService;
+		private readonly SongQueries songQueries;
 
 		private int GetMaxResults(int max) {
 			return Math.Min(max, absoluteMax);	
 		}
 
-		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongService songService, IEntryUrlParser entryUrlParser) {
+		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongQueries songQueries, IEntryUrlParser entryUrlParser) {
 			this.queries = queries;
 			this.otherService = otherService;
 			this.albumService = albumService;
 			this.artistService = artistService;
-			this.songService = songService;
+			this.songQueries = songQueries;
 			this.entryUrlParser = entryUrlParser;
 		}
 
@@ -113,7 +113,7 @@ namespace VocaDb.Web.Controllers.Api {
 					data = RazorHelper.RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id), "EntryApiController", Request);
 					break;
 				case EntryType.Song:
-					data = RazorHelper.RenderPartialViewToString("SongPopupContent", songService.GetSongWithPVAndVote(id, false), "EntryApiController", Request);
+					data = RazorHelper.RenderPartialViewToString("SongPopupContent", songQueries.GetSongWithPVAndVote(id, false), "EntryApiController", Request);
 					break;
 			}
 

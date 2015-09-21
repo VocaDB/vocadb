@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
@@ -161,6 +162,10 @@ namespace VocaDb.Tests.TestSupport {
 			get {
 				return new FakeAuditLogger();
 			}
+		}
+
+		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
+			return new FakeTransaction();
 		}
 
 		public void Delete(T entity) {

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
+using NHibernate;
+using NLog;
 using VocaDb.Model.Domain;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
@@ -10,6 +13,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -44,6 +48,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			}
 		}
 
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly ILanguageDetector languageDetector;
 		private readonly IUserMessageMailer mailer;
@@ -51,6 +56,35 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private readonly IUserIconFactory userIconFactory;
 		private readonly IUserMessageMailer userMessageMailer;
 
+		private void AddSongHit(IRepositoryContext<Song> session, Song song, string hostname) {
+
+			if (!PermissionContext.IsLoggedIn && string.IsNullOrEmpty(hostname))
+				return;
+
+			var agentNum = PermissionContext.IsLoggedIn ? PermissionContext.LoggedUserId : hostname.GetHashCode();
+
+			if (agentNum == 0)
+				return;
+
+			using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted)) {
+
+				var songId = song.Id;
+				var isHit = session.Query<SongHit>().Any(h => h.Song.Id == songId && h.Agent == agentNum);
+
+				if (!isHit) {
+					var hit = new SongHit(song, agentNum);
+					session.Save(hit);
+				}
+
+				try {
+					tx.Commit();
+				} catch (TransactionException x) {
+					log.Error(x, "Unable to save song hit");
+				}
+
+			}
+
+		}
 		private void AddTagsFromPV(VideoUrlParseResult pvResult, Song song, IRepositoryContext<Song> ctx) {
 			
 			if (pvResult.Tags == null || !pvResult.Tags.Any())
@@ -97,6 +131,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				.Select(n => n.Artist)
 				.FirstOrDefault();
 
+		}
+
+		private SongMergeRecord GetMergeRecord(IRepositoryContext<Song> session, int sourceId) {
+			return session.Query<SongMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
 		private Tag[] GetTags(IRepositoryContext<Tag> session, string[] tagNames) {
@@ -275,6 +313,102 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		public CommentForApiContract[] GetComments(int songId) {
 			
 			return HandleQuery(ctx => Comments(ctx).GetAll(songId));
+
+		}
+
+		public SongContract GetSong(int id) {
+
+			return HandleQuery(
+				session => new SongContract(session.Load<Song>(id), PermissionContext.LanguagePreference));
+
+		}
+
+		public SongDetailsContract GetSongDetails(int songId, int albumId, string hostname, ContentLanguagePreference? languagePreference) {
+
+			return HandleQuery(session => {
+
+				var song = session.Load<Song>(songId);
+				var contract = new SongDetailsContract(song, languagePreference ?? PermissionContext.LanguagePreference);
+				var user = PermissionContext.LoggedUser;
+
+				if (user != null) {
+
+					var rating = session.Query<FavoriteSongForUser>()
+						.FirstOrDefault(s => s.Song.Id == songId && s.User.Id == user.Id);
+
+					contract.UserRating = (rating != null ? rating.Rating : SongVoteRating.Nothing);
+
+				}
+
+				contract.CommentCount = session.Query<SongComment>().Count(c => c.EntryForComment.Id == songId);
+				contract.LatestComments = session.Query<SongComment>()
+					.Where(c => c.EntryForComment.Id == songId)
+					.OrderByDescending(c => c.Created).Take(3).ToArray()
+					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
+				contract.Hits = session.Query<SongHit>().Count(h => h.Song.Id == songId);
+
+				if (albumId != 0) {
+
+					var album = session.Load<Album>(albumId);
+
+					var track = album.Songs.FirstOrDefault(s => song.Equals(s.Song));
+
+					if (track != null) {
+
+						contract.AlbumId = albumId;
+
+						var previousIndex = album.PreviousTrackIndex(track.Index);
+						var previous = album.Songs.FirstOrDefault(s => s.Index == previousIndex);
+						contract.PreviousSong = previous != null && previous.Song != null ? new SongInAlbumContract(previous, LanguagePreference, false) : null;
+
+						var nextIndex = album.NextTrackIndex(track.Index);
+						var next = album.Songs.FirstOrDefault(s => s.Index == nextIndex);
+						contract.NextSong = next != null && next.Song != null ? new SongInAlbumContract(next, LanguagePreference, false) : null;
+
+					}
+
+				}
+
+				if (song.Deleted) {
+					var mergeEntry = GetMergeRecord(session, songId);
+					contract.MergedTo = (mergeEntry != null ? new SongContract(mergeEntry.Target, LanguagePreference) : null);
+				}
+
+				AddSongHit(session, song, hostname);
+
+				return contract;
+
+			});
+
+		}
+
+		public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "") {
+
+			return HandleQuery(session => {
+
+				var song = session.Load<Song>(songId);
+				FavoriteSongForUser vote = null;
+
+				if (PermissionContext.IsLoggedIn) {
+					var userId = PermissionContext.LoggedUserId;
+					vote = session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == songId && s.User.Id == userId);
+				}
+
+				if (addHit)
+					AddSongHit(session, song, hostname);
+
+				return new SongWithPVAndVoteContract(song, vote != null ? vote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference);
+
+			});
+
+		}
+
+		public T GetSongWithMergeRecord<T>(int id, Func<Song, SongMergeRecord, T> fac) {
+
+			return HandleQuery(session => {
+				var song = session.Load<Song>(id);
+				return fac(song, (song.Deleted ? GetMergeRecord(session, id) : null));
+			});
 
 		}
 
