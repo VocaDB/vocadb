@@ -43,7 +43,6 @@ namespace VocaDb.Web.Code {
 
 				BigBanners = new [] {
 					new Link("UtaiteDB", "http://utaitedb.net", "utaitedb.png"), 
-					new Link("Virtual Emotions", "http://virtual-emotions.net", "VirtualEmotions.png"), 
 					new Link("Project DIVA wiki", "http://projectdiva.wikispaces.com/", "pjd-wiki.png"),
 					new Link("Mikufan.com", "http://www.mikufan.com", "mikufan_bannertest.png"),
 					new Link("Vocaloidism", "http://vocaloidism.com", "vocaloidism-180px.png"),			
