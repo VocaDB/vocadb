@@ -30,6 +30,7 @@ module vdb.utils {
             { url: ".web.fc2.com", desc: "Website", cat: c.WebLinkCategory.Official },
             { url: ".fc2.com", desc: "Blog", cat: c.WebLinkCategory.Official },
 			{ url: "play.google.com/", desc: "Google Play", cat: c.WebLinkCategory.Commercial },
+            { url: "instagram.com/", desc: "Instagram", cat: c.WebLinkCategory.Official },
             { url: "itunes.apple.com/", desc: "iTunes", cat: c.WebLinkCategory.Commercial },
             { url: "karent.jp/", desc: "KarenT", cat: c.WebLinkCategory.Commercial },
             { url: "last.fm/", desc: "Last.fm", cat: c.WebLinkCategory.Official },
