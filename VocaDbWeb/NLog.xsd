@@ -1039,7 +1039,7 @@
         </xs:attribute>
         <xs:attribute name="archiveAboveSize" type="xs:long">
           <xs:annotation>
-            <xs:documentation>Size in bytes above which log files will be automatically archived.</xs:documentation>
+            <xs:documentation>Size in bytes above which log files will be automatically archived. Warning: combining this with  isn't supported. We cannot create multiple archive files, if they should have the same name. Choose: </xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="enableArchiveFileCompression" type="xs:boolean">
@@ -1049,7 +1049,7 @@
         </xs:attribute>
         <xs:attribute name="forceManaged" type="xs:boolean">
           <xs:annotation>
-            <xs:documentation>Gets ors set a value indicating whether a managed file stream is forced, instead of used the native implementation.</xs:documentation>
+            <xs:documentation>Gets or set a value indicating whether a managed file stream is forced, instead of used the native implementation.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="fileAttributes" type="NLog.Targets.Win32FileAttributes">
@@ -2224,15 +2224,27 @@
       <xs:extension base="Layout">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element name="attribute" minOccurs="0" maxOccurs="unbounded" type="NLog.Layouts.JsonAttribute" />
+          <xs:element name="suppressSpaces" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
+        <xs:attribute name="suppressSpaces" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>Option to suppress the extra spaces in the output json</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="NLog.Layouts.JsonAttribute">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="encode" minOccurs="0" maxOccurs="1" type="xs:boolean" />
       <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
       <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
     </xs:choice>
+    <xs:attribute name="encode" type="xs:boolean">
+      <xs:annotation>
+        <xs:documentation>Determines wether or not this attribute will be Json encoded.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:attribute name="layout" type="SimpleLayoutAttribute">
       <xs:annotation>
         <xs:documentation>Layout that will be rendered as the attribute's value.</xs:documentation>
