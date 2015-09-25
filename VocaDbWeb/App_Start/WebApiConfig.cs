@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -30,7 +31,7 @@ namespace VocaDb.Web.App_Start {
 				"DefaultApi", "api/{controller}/{id}",
 				new { id = RouteParameter.Optional });
 
-			config.Filters.Add(new UnhandledExceptionFilter());
+			config.Services.Add(typeof(IExceptionLogger), new UnhandledExceptionLogger());
 
 		}
 
