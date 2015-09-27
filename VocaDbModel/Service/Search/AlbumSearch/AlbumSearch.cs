@@ -12,12 +12,9 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 	public class AlbumSearch {
 
-		private readonly ContentLanguagePreference languagePreference;
 		private readonly IRepositoryContext querySource;
 
-		private ContentLanguagePreference LanguagePreference {
-			get { return languagePreference; }
-		}
+		private ContentLanguagePreference LanguagePreference { get; }
 
 		private IQueryable<Album> CreateQuery(
 			AlbumQueryParams queryParams, 
@@ -35,7 +32,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 				.WhereHasArtistParticipationStatus(artistIds, queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
 				.WhereHasBarcode(queryParams.Barcode)
 				.WhereHasType(queryParams.AlbumType)
-				.WhereHasTags<Album, AlbumTagUsage>(queryParams.Tags != null && queryParams.Tags.Any() ? queryParams.Tags : new[] {  parsedQuery.TagName });
+				.WhereHasTags<Album, AlbumTagUsage>(queryParams.Tags != null && queryParams.Tags.Any() ? queryParams.Tags : new[] {  parsedQuery.TagName })
+				.WhereSortBy(queryParams.SortRule);
 
 			return query;
 
@@ -167,7 +165,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		public AlbumSearch(IRepositoryContext querySource, ContentLanguagePreference languagePreference) {
 			this.querySource = querySource;
-			this.languagePreference = languagePreference;
+			LanguagePreference = languagePreference;
 		}
 
 		public PartialFindResult<Album> Find(AlbumQueryParams queryParams) {

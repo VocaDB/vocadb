@@ -30,9 +30,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case AlbumSortRule.CollectionCount:
 					return criteria.OrderByDescending(a => a.UserCollections.Count);
 				case AlbumSortRule.ReleaseDate:
-					return criteria
-						.WhereHasReleaseDate()
-						.OrderByReleaseDate();
+					return criteria.OrderByReleaseDate();
 				case AlbumSortRule.ReleaseDateWithNulls:
 					return criteria.OrderByReleaseDate();
 				case AlbumSortRule.AdditionDate:
@@ -189,7 +187,23 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			
 			return query.Where(m => m.Deleted == deleted);
 
-		} 
+		}
+
+		/// <summary>
+		/// Makes sure that the query is filtered by restrictions of the sort rule.
+		/// This can be used to separate the filtering from the actual sorting, when sorting is not needed (for example, only count is needed).
+		/// </summary>
+		public static IQueryable<Album> WhereSortBy(this IQueryable<Album> query, AlbumSortRule sort) {
+
+			switch (sort) {
+				case AlbumSortRule.ReleaseDate:
+					return query.WhereHasReleaseDate();
+
+				default:
+					return query;
+			}
+
+		}
 
 	}
 }
