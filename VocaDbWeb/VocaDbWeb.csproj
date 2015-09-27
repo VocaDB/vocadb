@@ -969,7 +969,6 @@
     <Compile Include="Controllers\DataAccess\EntryQueries.cs" />
     <Compile Include="Controllers\DataAccess\EntryReportQueries.cs" />
     <Compile Include="Controllers\DataAccess\EventQueries.cs" />
-    <Compile Include="Controllers\DataAccess\QueriesBase.cs" />
     <Compile Include="Controllers\DataAccess\SongListQueries.cs" />
     <Compile Include="Controllers\DataAccess\SongQueries.cs" />
     <Compile Include="Controllers\DataAccess\TagQueries.cs" />

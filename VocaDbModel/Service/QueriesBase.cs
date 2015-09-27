@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using VocaDb.Model;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -12,10 +11,9 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
-using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Service {
 
 	public abstract class QueriesBase<TRepo, TEntity> where TRepo : class, IRepository<TEntity> {
 
@@ -32,7 +30,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		protected void AddActivityfeedEntry(IRepositoryContext<ActivityEntry> ctx, ActivityEntry entry) {
 
-			new Model.Service.Queries.ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntry(entry);
+			new Queries.ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntry(entry);
 
 		}
 
@@ -83,8 +81,20 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		protected void AddEntryEditedEntry(IRepositoryContext<ActivityEntry> ctx, Tag entry, EntryEditEvent editEvent, ArchivedTagVersion archivedVersion) {
 
-			new Model.Service.Queries.ActivityEntryQueries(ctx, PermissionContext).AddEntryEditedEntry(entry, editEvent, archivedVersion);
+			new Queries.ActivityEntryQueries(ctx, PermissionContext).AddEntryEditedEntry(entry, editEvent, archivedVersion);
 
+		}
+
+		protected void AuditLog(string doingWhat, IRepositoryContext<TEntity> session, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified) {
+			session.AuditLogger.AuditLog(doingWhat, who, category);
+		}
+
+		protected void AuditLog(string doingWhat, IRepositoryContext<TEntity> session, string who, AuditLogCategory category = AuditLogCategory.Unspecified) {
+			session.AuditLogger.AuditLog(doingWhat, who, category);
+		}
+
+		protected void AuditLog(string doingWhat, IRepositoryContext<TEntity> session, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified) {
+			session.AuditLogger.AuditLog(doingWhat, user, category);
 		}
 
 		protected bool DoSnapshot(ArchivedObjectVersion latestVersion, User user) {
@@ -94,6 +104,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			return ((((latestVersion.Version + 1) % 5) == 0) || !user.Equals(latestVersion.Author));
 
+		}
+
+		protected User GetLoggedUser(IRepositoryContext<TEntity> session) {
+			return session.OfType<User>().GetLoggedUser(PermissionContext);
 		}
 
 		protected void VerifyEntryEdit(IEntryWithStatus entry) {

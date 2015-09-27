@@ -2,16 +2,12 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
-using NHibernate;
-using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
-using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -20,23 +16,18 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Security;
+using VocaDb.Model.Service.Repositories;
+using IUserRepository = VocaDb.Model.Service.Repositories.IUserRepository;
 
 namespace VocaDb.Model.Service {
 
-	public class UserService : ServiceBase {
-
+	public class UserService : QueriesBase<IUserRepository, User> {
 
 // ReSharper disable UnusedMember.Local
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 // ReSharper restore UnusedMember.Local
 
-		private readonly IUserMessageMailer userMessageMailer;
-
-		/*private bool IsPoisoned(ISession session, string lcUserName) {
-
-			return session.Query<UserOptions>().Any(o => o.Poisoned && o.User.NameLC == lcUserName);
-
-		}*/
+		private IEntryLinkFactory EntryLinkFactory { get; }
 
 		private string MakeGeoIpToolLink(string hostname) {
 
@@ -44,11 +35,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public UserService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
+		public UserService(IUserRepository sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
 			IUserMessageMailer userMessageMailer)
-			: base(sessionFactory, permissionContext, entryLinkFactory) {
+			: base(sessionFactory, permissionContext) {
 
-			this.userMessageMailer = userMessageMailer;
+			EntryLinkFactory = entryLinkFactory;
 
 		}
 
@@ -76,25 +67,35 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public UserContract CheckAccessWithKey(string name, string accessKey, string hostname) {
+		public UserContract CheckAccessWithKey(string name, string accessKey, string hostname, bool delayFailedLogin) {
 
 			return HandleQuery(session => {
 
 				var lc = name.ToLowerInvariant();
-				var user = session.Query<User>().FirstOrDefault(u => u.Active && u.Name == lc);
+				var user = session.Query<User>().FirstOrDefault(u => u.Active && u.NameLC == lc);
 
 				if (user == null) {
+
 					AuditLog(string.Format("failed login from {0} - no user.", MakeGeoIpToolLink(hostname)), session, name);
-					Thread.Sleep(2000);
+
+					if (delayFailedLogin)
+						Thread.Sleep(2000);
+
 					return null;
+
 				}
 
 				var hashed = LoginManager.GetHashedAccessKey(user.AccessKey);
 
 				if (accessKey != hashed) {
+
 					AuditLog(string.Format("failed login from {0} - wrong password.", MakeGeoIpToolLink(hostname)), session, name);
-					Thread.Sleep(2000);
-					return null;					
+
+					if (delayFailedLogin)
+						Thread.Sleep(2000);
+
+					return null;		
+								
 				}
 
 				AuditLog(string.Format("logged in from {0} with access key.", MakeGeoIpToolLink(hostname)), session, user);
@@ -104,45 +105,6 @@ namespace VocaDb.Model.Service {
 			});
 
 		}
-
-		/*
-		public LoginResult CheckAuthentication(string name, string pass, string hostname) {
-
-			return HandleTransaction(session => {
-
-				var lc = name.ToLowerInvariant();
-
-				if (IsPoisoned(session, lc)) {
-					SysLog(string.Format("failed login from {0} - account is poisoned.", MakeGeoIpToolLink(hostname)), name);
-					return LoginResult.CreateError(LoginError.AccountPoisoned);
-				}
-
-				var user = session.Query<User>().FirstOrDefault(u => u.Active && u.Name == lc);
-
-				if (user == null) {
-					AuditLog(string.Format("failed login from {0} - no user.", MakeGeoIpToolLink(hostname)), session, name);
-					Thread.Sleep(2000);
-					return LoginResult.CreateError(LoginError.NotFound);
-				}
-
-				var hashed = LoginManager.GetHashedPass(lc, pass, user.Salt);
-
-				if (user.Password != hashed) {
-					AuditLog(string.Format("failed login from {0} - wrong password.", MakeGeoIpToolLink(hostname)), session, name);
-					Thread.Sleep(2000);
-					return LoginResult.CreateError(LoginError.InvalidPassword);
-				}
-
-				AuditLog(string.Format("logged in from {0}.", MakeGeoIpToolLink(hostname)), session, user);
-
-				user.UpdateLastLogin(hostname);
-				session.Update(user);
-
-				return LoginResult.CreateSuccess(new UserContract(user));
-
-			});
-
-		}*/
 
 		public UserContract CheckTwitterAuthentication(string accessToken, string hostname, string culture) {
 
@@ -343,21 +305,6 @@ namespace VocaDb.Model.Service {
 				session.Update(user);
 
 				AuditLog("reset access key", session);
-
-			});
-
-		}
-
-		public void UpdateContentLanguagePreference(ContentLanguagePreference languagePreference) {
-
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
-
-			HandleTransaction(session => {
-
-				var user = GetLoggedUser(session);
-
-				user.DefaultLanguageSelection = languagePreference;
-				session.Update(user);
 
 			});
 

@@ -238,7 +238,7 @@ namespace VocaDb.Web.Services {
 
 		[OperationContract]
 		public UserContract GetUser(string name, string accessKey) {
-			return userService.CheckAccessWithKey(name, accessKey, "localhost");
+			return userService.CheckAccessWithKey(name, accessKey, "localhost", true);
 		}
 
 		#endregion

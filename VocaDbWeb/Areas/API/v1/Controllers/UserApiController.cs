@@ -19,7 +19,7 @@ namespace VocaDb.Web.API.v1.Controllers {
 		[HttpPost]
 		public ActionResult Authenticate(string username, string accesskey) {
 			
-			var user = service.CheckAccessWithKey(username, accesskey, WebHelper.GetRealHost(Request));
+			var user = service.CheckAccessWithKey(username, accesskey, WebHelper.GetRealHost(Request), true);
 
 			if (user == null) {
 				//Response.StatusCode = 401;
