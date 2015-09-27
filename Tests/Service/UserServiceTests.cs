@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestData;
@@ -16,25 +12,34 @@ namespace VocaDb.Tests.Service {
 
 		private FakeUserRepository repository;
 		private UserService service;
+		private User user;
 
 		[TestInitialize]
 		public void SetUp() {
-			
-			repository = new FakeUserRepository();
+
+			user = CreateEntry.User();
+			repository = new FakeUserRepository(user);
 			service = new UserService(repository, new FakePermissionContext(), new FakeEntryLinkFactory(), new FakeUserMessageMailer());
 
 		}
 
 		[TestMethod]
-		public void CheckAccessWithKey() {
-
-			var user = repository.Save(CreateEntry.User());
+		public void CheckAccessWithKey_Valid() {
 
 			var result = service.CheckAccessWithKey(user.Name, LoginManager.GetHashedAccessKey(user.AccessKey), "localhatsune", false);
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(user.Name, result.Name, "Name");
 
+		}
+
+		[TestMethod]
+		public void CheckAccessWithKey_Invalid() {
+
+			var result = service.CheckAccessWithKey(user.Name, LoginManager.GetHashedAccessKey("rinrin"), "localhatsune", false);
+
+			Assert.IsNull(result, "result");
+			
 		}
 
 	}
