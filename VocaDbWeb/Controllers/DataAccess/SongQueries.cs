@@ -340,7 +340,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				}
 
-				contract.CommentCount = session.Query<SongComment>().Count(c => c.EntryForComment.Id == songId);
+				contract.CommentCount = Comments(session).GetCount(songId);
 				contract.LatestComments = session.Query<SongComment>()
 					.Where(c => c.EntryForComment.Id == songId)
 					.OrderByDescending(c => c.Created).Take(3).ToArray()

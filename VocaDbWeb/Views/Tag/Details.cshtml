@@ -47,8 +47,16 @@
 
 			var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
 			var jsonModel = @Html.Raw(JsonHelpers.Serialize(new { Model.Name, Model.Parent, Model.Children, Model.Siblings }));
+			var vm;
 
-			$("#tabs").tabs({ load: function (event, ui) { vdb.functions.disableTabReload(ui.tab); } });
+			$("#tabs").tabs({
+				activate: function (event, ui) {
+					if (ui.newTab.data('tab') === "Discussion") {
+						vm.comments.initComments();
+					}
+				}
+			});
+
 			$("#editTagLink").button({ disabled: $("#editTagLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
 			$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
 			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children);
@@ -57,7 +65,7 @@
 			var latestComments = @ToJS(Model.LatestComments);
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
-			var vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, latestComments, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments);
+			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, latestComments, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments);
 			ko.applyBindings(vm);		
 
 		});
@@ -165,4 +173,24 @@
 	</div>
 }
 
-@CommentHelpers.LatestCommentsKnockout()
+<div id="tabs" class="js-cloak" data-bind="show, with: comments">
+
+	<ul>
+		<li><a href="#latestCommentsTab">@ViewRes.EntryDetailsStrings.LatestComments</a></li>
+		<li data-tab="Discussion">
+			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
+		</li>
+	</ul>
+	
+	<div id="latestCommentsTab">
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+		<!-- ko ifnot: comments().length -->
+		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
+		<!-- /ko -->
+	</div>
+	
+	<div id="discussionTab" >
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)		
+	</div>
+
+</div>

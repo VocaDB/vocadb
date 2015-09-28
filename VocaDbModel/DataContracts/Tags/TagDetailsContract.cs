@@ -65,6 +65,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public string[] Children { get; set; }
 
+		public int CommentCount { get; set; }
+
 		public CommentForApiContract[] LatestComments { get; set; }
 
 		public string[] Siblings { get; set; }

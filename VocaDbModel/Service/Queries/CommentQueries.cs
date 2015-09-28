@@ -19,6 +19,8 @@ namespace VocaDb.Model.Service.Queries {
 
 		CommentForApiContract[] GetAll(int entryId);
 
+		int GetCount(int entryId);
+
 		CommentForApiContract[] GetList(int entryId, int count);
 
 		void Update(int commentId, IComment contract);
@@ -32,6 +34,10 @@ namespace VocaDb.Model.Service.Queries {
 		private readonly Func<int, TEntry> entryLoaderFunc;
 		private readonly IUserPermissionContext permissionContext;
 		private readonly IUserIconFactory userIconFactory;
+
+		private TEntry Load(int entryId) {
+			return entryLoaderFunc != null ? entryLoaderFunc(entryId) : ctx.OfType<TEntry>().Load(entryId);
+        }
 
 		public CommentQueries(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
 			Func<int, TEntry> entryLoaderFunc = null) {
@@ -54,7 +60,7 @@ namespace VocaDb.Model.Service.Queries {
 				throw new NotAllowedException("Can only post as self");
 			}
 			
-			var entry = entryLoaderFunc != null ? entryLoaderFunc(entryId) : ctx.OfType<TEntry>().Load(entryId);
+			var entry = Load(entryId);
 			var agent = ctx.OfType<User>().CreateAgentLoginData(permissionContext, ctx.OfType<User>().Load(contract.Author.Id));
 
 			var comment = entry.CreateComment(contract.Message, agent);
@@ -90,11 +96,16 @@ namespace VocaDb.Model.Service.Queries {
 
 		public CommentForApiContract[] GetAll(int entryId) {
 
-			return ctx.Load<TEntry>(entryId).Comments
+			return Load(entryId)
+				.Comments
 				.OrderByDescending(c => c.Created)
 				.Select(c => new CommentForApiContract(c, userIconFactory))
 				.ToArray();
 
+		}
+
+		public int GetCount(int entryId) {
+			return ctx.Query<T>().Count(c => c.EntryForComment.Id == entryId);
 		}
 
 		public CommentForApiContract[] GetList(int entryId, int count) {

@@ -267,6 +267,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					albums.TopUsages, albums.TotalCount,
 					songs.TopUsages, songs.TotalCount,
 					PermissionContext.LanguagePreference) {
+					CommentCount = Comments(session).GetCount(tag.Id),
 					LatestComments = latestComments
 				};
 				
