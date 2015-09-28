@@ -1,6 +1,22 @@
 ﻿@using VocaDb.Model.Domain.Albums
 @using VocaDb.Web.Helpers
-@model VocaDb.Model.DataContracts.Albums.AlbumContract
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.AlbumContract>
+
+@helper Stars(int current, int max) {
+	for (int i = 1; i <= max; ++i) {
+		if (current >= i) {
+			<img src="@UrlMapper.FullAbsolute(Url.Content("~/Content/star.png"))" alt="*" />
+		} else {
+			<img src="@UrlMapper.FullAbsolute(Url.Content("~/Content/star_disabled.png"))" alt="" />
+		}
+	}
+}
+
+@helper Stars(double current, int max) {
+	<span title="@Math.Round(current, 2)">
+		@Stars((int)Math.Round(current, MidpointRounding.AwayFromZero), max)
+	</span>
+}
 
 <p>
 	<strong class="popupTitle">@Model.Name</strong>
@@ -22,5 +38,6 @@
 </p>
 }
 @if (Model.RatingCount > 0) {
-    @Helpers.Stars(Model.RatingAverage, 5) @("(" + Model.RatingCount + " " + ViewRes.Album.DetailsStrings.Ratings + ")")
+	@* Unable to call helpers here, might need some additional initializations to RazorHelper *@
+    @Stars(Model.RatingAverage, 5) @("(" + Model.RatingCount + " " + ViewRes.Album.DetailsStrings.Ratings + ")")
 }
