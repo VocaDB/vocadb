@@ -371,7 +371,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult MoveToTrash(int id) {
 
-			Service.MoveToTrash(id);
+			queries.MoveToTrash(id);
 
 			TempData.SetStatusMessage("Entry moved to trash");
 

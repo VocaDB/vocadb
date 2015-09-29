@@ -337,6 +337,27 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void MoveToTrash() {
+
+			user.AdditionalPermissions.Add(PermissionToken.MoveToTrash);
+			permissionContext.RefreshLoggedUser(repository);
+			var activityEntry = repository.Save(new AlbumActivityEntry(album, EntryEditEvent.Updated, user, null));
+			Assert.IsTrue(repository.Contains(album), "Album is in repository");
+			Assert.IsTrue(repository.Contains(activityEntry), "Activity entry is in repository");
+
+			var result = queries.MoveToTrash(album.Id);
+
+			Assert.IsFalse(repository.Contains(album), "Album was deleted from repository");
+			Assert.IsFalse(repository.Contains(activityEntry), "Activity entry was deleted from repository");
+
+			var trashedFromRepo = repository.Load<TrashedEntry>(result);
+			Assert.IsNotNull(trashedFromRepo, "Trashed entry was created");
+			Assert.AreEqual(EntryType.Album, trashedFromRepo.EntryType, "Trashed entry type");
+			Assert.AreEqual(album.DefaultName, trashedFromRepo.Name, "Trashed entry name");
+
+		}
+
+		[TestMethod]
 		public void Update_Tracks() {
 			
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);

@@ -332,6 +332,40 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public int MoveToTrash(int albumId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
+
+			return HandleTransaction(ctx => {
+
+				var album = ctx.Load<Album>(albumId);
+
+				AuditLog(string.Format("moving {0} to trash", album), ctx);
+
+				NHibernateUtil.Initialize(album.CoverPictureData);
+
+				var archived = new ArchivedAlbumContract(album, new AlbumDiff(true));
+				var data = XmlHelper.SerializeToXml(archived);
+				var trashed = new TrashedEntry(album, data, GetLoggedUser(ctx));
+
+				ctx.Save(trashed);
+
+				album.DeleteLinks();
+
+				var ctxActivity = ctx.OfType<AlbumActivityEntry>();
+				var activityEntries = ctxActivity.Query().Where(t => t.Entry.Id == albumId).ToArray();
+
+				foreach (var activityEntry in activityEntries)
+					ctxActivity.Delete(activityEntry);
+
+				ctx.Delete(album);
+
+				return trashed.Id;
+
+			});
+
+		}
+
 		public AlbumForEditContract UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract pictureData) {
 
 			ParamIs.NotNull(() => properties);

@@ -489,33 +489,6 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => session.Load<ArchivedAlbumVersion>(id).Data);
 		}
 
-		public int MoveToTrash(int albumId) {
-
-			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
-
-			return HandleTransaction(session => {
-
-				var album = session.Load<Album>(albumId);
-
-				AuditLog(string.Format("moving {0} to trash", album), session);
-
-				NHibernateUtil.Initialize(album.CoverPictureData);
-
-				var archived = new ArchivedAlbumContract(album, new AlbumDiff(true));
-				var data = XmlHelper.SerializeToXml(archived);
-				var trashed = new TrashedEntry(album, data, GetLoggedUser(session));
-
-				session.Save(trashed);
-
-				album.DeleteLinks();
-				session.Delete(album);
-
-				return trashed.Id;
-
-			});
-
-		}
-
 		public int RemoveTagUsage(long tagUsageId) {
 
 			return RemoveTagUsage<AlbumTagUsage>(tagUsageId);

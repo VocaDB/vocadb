@@ -67,6 +67,14 @@ namespace VocaDb.Tests.TestSupport {
 			return HandleQuery(ctx => ctx.Load(id));
 		}
 
+		public T2 Load<T2>(object id) {
+			return OfType<T2>().Load(id);
+		}
+
+		public FakeRepository<T2> OfType<T2>() {
+			return new FakeRepository<T2>(querySource);
+		}
+
 		/// <summary>
 		/// Save the entity into the repository using the repository's own Save method.
 		/// Usually this means an Id will be assigned for the entity, if it's not persisted.
