@@ -189,6 +189,15 @@
   <data name="Unfollow" xml:space="preserve">
     <value>Unfollow</value>
   </data>
+  <data name="ViewModeDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="ViewModePlayList" xml:space="preserve">
+    <value>Playlist</value>
+  </data>
+  <data name="ViewModeTiles" xml:space="preserve">
+    <value>Tiles</value>
+  </data>
   <data name="YouHaveRatedSongs" xml:space="preserve">
     <value>You have rated {0} song(s) by this artist.</value>
   </data>

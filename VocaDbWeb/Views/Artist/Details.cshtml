@@ -299,11 +299,13 @@
 			<div class="pull-right">
 				@KnockoutHelpers.SearchDropDown("true", viewModel, Translate.AlbumSortRuleNames.ValuesAndNamesStrings)
 				<div class="btn-group" data-bind="with: @viewModel">
-					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="Details">
-						<i class="icon-list"></i>
+					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.ViewModeDetails">
+						<i class="icon-list noMargin"></i>
+						@Res.ViewModeDetails
 					</a>
-					<a data-bind="css: { active: viewMode() == 'Tiles' }, click: function() { viewMode('Tiles'); }" class="btn btn-nomargin" href="#" title="Tiles">
-						<i class="icon-th"></i>
+					<a data-bind="css: { active: viewMode() == 'Tiles' }, click: function() { viewMode('Tiles'); }" class="btn btn-nomargin" href="#" title="@Res.ViewModeTiles">
+						<i class="icon-th noMargin"></i>
+						@Res.ViewModeTiles
 					</a>
 				</div>
 			</div>
@@ -329,11 +331,13 @@
 			<div class="pull-right">
 				@KnockoutHelpers.SearchDropDown("true", "songsViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)
 				<div class="btn-group" data-bind="with: songsViewModel">
-					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="Details">
-						<i class="icon-th-list"></i>
+					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.ViewModeDetails">
+						<i class="icon-th-list noMargin"></i>
+						@Res.ViewModeDetails
 					</a>
-					<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="PlayList">
-						<i class="icon-list"></i>
+					<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="@Res.ViewModePlayList">
+						<i class="icon-list noMargin"></i>
+						@Res.ViewModePlayList
 					</a>
 				</div>
 			</div>

@@ -277,6 +277,33 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string ViewModeDetails {
+            get {
+                return ResourceManager.GetString("ViewModeDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlist.
+        /// </summary>
+        public static string ViewModePlayList {
+            get {
+                return ResourceManager.GetString("ViewModePlayList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiles.
+        /// </summary>
+        public static string ViewModeTiles {
+            get {
+                return ResourceManager.GetString("ViewModeTiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have rated {0} song(s) by this artist..
         /// </summary>
         public static string YouHaveRatedSongs {
