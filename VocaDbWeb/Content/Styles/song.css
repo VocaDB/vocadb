@@ -1,0 +1,12 @@
+﻿.song-add-to-list-dialog .btn-group {
+  margin-bottom: 6px;
+}
+.song-add-to-list-dialog .add-to-list-song-lists {
+  width: 100%;
+  height: calc(100% - 110px);
+}
+.song-add-to-list-dialog .add-to-list-notes,
+.song-add-to-list-dialog .add-to-list-name {
+  width: 100%;
+  width: calc(100% - 12px);
+}

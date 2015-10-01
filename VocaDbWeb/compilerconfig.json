@@ -1,12 +1,22 @@
 ﻿[
-  {
-    "outputFile": "Content/Styles/base.css",
-    "inputFile": "Content/Styles/base.less",
-    "minify": {
-      "enabled": false
-    },
-    "includeInProject": true,
-    "sourceMap": false,
-    "options": { "strictMath": true }
-  }
+	{
+		"outputFile": "Content/Styles/base.css",
+		"inputFile": "Content/Styles/base.less",
+		"minify": {
+			"enabled": false
+		},
+		"options": {
+			"strictMath": true
+		}
+	},
+	{
+		"outputFile": "Content/Styles/song.css",
+		"inputFile": "Content/Styles/song.less",
+		"minify": {
+			"enabled": false
+		},
+		"options": {
+			"strictMath": true
+		}	
+	}
 ]

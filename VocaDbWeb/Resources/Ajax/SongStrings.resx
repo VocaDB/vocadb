@@ -123,9 +123,6 @@
   <data name="ArtistFilter" xml:space="preserve">
     <value>artist '{0}'</value>
   </data>
-  <data name="CreateNewList" xml:space="preserve">
-    <value>Create a new list</value>
-  </data>
   <data name="OnlyWithPVsFilter" xml:space="preserve">
     <value>PVs only</value>
   </data>

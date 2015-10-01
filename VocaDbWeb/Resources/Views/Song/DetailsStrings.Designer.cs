@@ -205,6 +205,33 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Featured.
+        /// </summary>
+        public static string ListsTabFeatured {
+            get {
+                return ResourceManager.GetString("ListsTabFeatured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New list.
+        /// </summary>
+        public static string ListsTabNew {
+            get {
+                return ResourceManager.GetString("ListsTabNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal lists.
+        /// </summary>
+        public static string ListsTabPersonal {
+            get {
+                return ResourceManager.GetString("ListsTabPersonal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lyrics.
         /// </summary>
         public static string Lyrics {

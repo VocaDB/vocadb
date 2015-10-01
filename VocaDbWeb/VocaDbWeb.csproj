@@ -1499,6 +1499,9 @@
     <Content Include="Content\Styles\Snow2013.css">
       <DependentUpon>Snow2013.less</DependentUpon>
     </Content>
+    <Content Include="Content\Styles\song.css">
+      <DependentUpon>song.less</DependentUpon>
+    </Content>
     <Content Include="Content\Styles\songlist.css">
       <DependentUpon>songlist.less</DependentUpon>
     </Content>
@@ -1751,6 +1754,10 @@
     <Content Include="Content\Styles\userpage.less" />
     <Content Include="Content\Styles\embedSong.less" />
     <None Include="compilerconfig.json" />
+    <Content Include="Content\Styles\song.less" />
+    <Content Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -3287,13 +3294,16 @@
       <CustomToolNamespace>AjaxRes</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Ajax\SharedStrings.ru.resx" />
-    <EmbeddedResource Include="Resources\Ajax\SongStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Ajax\SongStrings.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Ajax\SongStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Ajax\SongStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Ajax\SongStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>AjaxRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Ajax\SongStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.de.resx" />

@@ -1,4 +1,6 @@
 ﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs {
@@ -17,10 +19,15 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			ParamIs.NotNull(() => songList);
 
+			FeaturedCategory = songList.FeaturedCategory;
 			Id = songList.Id;
 			Name = songList.Name;
 
 		}
+
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public SongListFeaturedCategory FeaturedCategory { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

@@ -167,31 +167,41 @@ module vdb.viewModels {
 
     export class SongListsViewModel {
         
+		private tabName_Personal = "Personal";
+		private tabName_Featured = "Featured";
+		private tabName_New = "New";
+
         public addedToList: () => void;
 
         public addSongToList: () => void;
 
         public dialogVisible = ko.observable(false);
 
+		private featuredLists = ko.observableArray<dc.SongListBaseContract>();
+
         public newListName = ko.observable("");
 
 		public notes = ko.observable("");
+
+		private personalLists = ko.observableArray<dc.SongListBaseContract>()
 
         public selectedListId: KnockoutObservable<number> = ko.observable(null);
 
         public showSongLists: () => void;
 
-        public songLists = ko.observableArray<dc.SongListBaseContract>();
+		public tabName = ko.observable(this.tabName_Personal);
+
+        public songLists = ko.computed(() => this.tabName() === this.tabName_Personal ? this.personalLists() : this.featuredLists());
 
         constructor(repository: rep.SongRepository, resources: SongDetailsResources, songId: number) {
             
             var isValid = () => {
-                return (this.selectedListId() != 0 || this.newListName().length > 0);
+                return (this.selectedListId() != null || this.newListName().length > 0);
             };
 
             this.addSongToList = () => {
                 if (isValid()) {
-                    repository.addSongToList(this.selectedListId(), songId, this.notes(), this.newListName(),() => {
+                    repository.addSongToList(this.selectedListId() || 0, songId, this.notes(), this.newListName(), () => {
 
 						this.notes("");
                         this.dialogVisible(false);
@@ -206,10 +216,21 @@ module vdb.viewModels {
             this.showSongLists = () => {
                 repository.songListsForUser(songId, songLists => {
 
-					songLists.push({ id: 0, name: resources.createNewList });
-                    this.songLists(songLists);
+					var personalLists = _.filter(songLists, list => list.featuredCategory === "Nothing");
+					var featuredLists = _.filter(songLists, list => list.featuredCategory !== "Nothing");
+
+                    this.personalLists(personalLists);
+					this.featuredLists(featuredLists);
+
+					if (personalLists.length)
+						this.tabName(this.tabName_Personal);
+					else if (featuredLists.length)
+						this.tabName(this.tabName_Featured);
+					else
+						this.tabName(this.tabName_New);
+
                     this.newListName("");
-                    this.selectedListId(songLists.length > 0 ? songLists[0].id : undefined);
+                    this.selectedListId(this.songLists().length > 0 ? this.songLists()[0].id : null);
                     this.dialogVisible(true);
 
                 });

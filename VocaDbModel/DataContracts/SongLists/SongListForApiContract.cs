@@ -19,7 +19,6 @@ namespace VocaDb.Model.DataContracts.SongLists {
 
 			Author = new UserForApiContract(list.Author, userIconFactory, UserOptionalFields.None);
 			EventDate = list.EventDate;
-			FeaturedCategory = list.FeaturedCategory;
 
 			if (fields.HasFlag(SongListOptionalFields.MainPicture)) {
 				MainPicture = (list.Thumb != null ? new EntryThumbForApiContract(list.Thumb, imagePersister, ssl) : null);				
@@ -32,9 +31,6 @@ namespace VocaDb.Model.DataContracts.SongLists {
 
 		[DataMember]
 		public DateTime? EventDate { get; set; }
-
-		[DataMember]
-		public SongListFeaturedCategory FeaturedCategory { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }

@@ -79,15 +79,6 @@ namespace AjaxRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a new list.
-        /// </summary>
-        public static string CreateNewList {
-            get {
-                return ResourceManager.GetString("CreateNewList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to PVs only.
         /// </summary>
         public static string OnlyWithPVsFilter {

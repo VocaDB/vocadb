@@ -252,4 +252,13 @@
   <data name="PVDescription" xml:space="preserve">
     <value>Published at {0} by {1}.</value>
   </data>
+  <data name="ListsTabFeatured" xml:space="preserve">
+    <value>Featured</value>
+  </data>
+  <data name="ListsTabNew" xml:space="preserve">
+    <value>New list</value>
+  </data>
+  <data name="ListsTabPersonal" xml:space="preserve">
+    <value>Personal lists</value>
+  </data>
 </root>

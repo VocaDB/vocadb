@@ -123,9 +123,6 @@
   <data name="ArtistFilter" xml:space="preserve">
     <value>artistilla '{0}'</value>
   </data>
-  <data name="CreateNewList" xml:space="preserve">
-    <value>Luo uusi lista</value>
-  </data>
   <data name="OnlyWithPVsFilter" xml:space="preserve">
     <value>vain videot</value>
   </data>
