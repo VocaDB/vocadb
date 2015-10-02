@@ -1,5 +1,5 @@
 ###############################################################################
-# Disable line endings normalization
+# Disable line endings normalization - line endings are configured by .editorconfig
 ###############################################################################
 * -text
 
