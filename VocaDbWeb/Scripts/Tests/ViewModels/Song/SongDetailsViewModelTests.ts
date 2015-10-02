@@ -20,12 +20,16 @@ module vdb.tests.viewModels {
     QUnit.module("SongDetailsViewModelTests", {
         setup: () => {
 			rep = new sup.FakeSongRepository();
-            rep.songLists = [{ id: 1, name: "Favorite Mikus" }];
+            rep.songLists = [
+				{ id: 1, name: "Favorite Mikus", featuredCategory: "Nothing" },
+				{ id: 2, name: "Favorite Lukas", featuredCategory: "Nothing" },
+				{ id: 3, name: "Mikupa 2013", featuredCategory: "Concerts" }
+			];
             target = new vm.SongDetailsViewModel(rep, userRep, res, false, data, [], 0, vdb.models.globalization.ContentLanguagePreference.Default, false, null);
         }
     });
 
-    test("constructor", () => {
+    QUnit.test("constructor", () => {
 
         equal(target.id, 39, "id");
         ok(target.songListDialog, "songListDialog");
@@ -34,26 +38,29 @@ module vdb.tests.viewModels {
 
     });
 
-    test("showSongLists has lists", () => {
+    QUnit.test("showSongLists has lists", () => {
 
         target.songListDialog.showSongLists();
 
         equal(target.songListDialog.songLists().length, 2, "songListDialog.songLists.length");
+        equal(target.songListDialog.songLists()[0].name, "Favorite Mikus", "songListDialog.songLists[0].name");
         equal(target.songListDialog.selectedListId(), 1, "songListDialog.selectedListId");
 
     });
 
-    test("showSongLists no lists", () => {
+    QUnit.test("showSongLists no lists", () => {
 
         rep.songLists = [];
         target.songListDialog.showSongLists();
 
-        equal(target.songListDialog.songLists().length, 1, "songListDialog.songLists.length");
-        equal(target.songListDialog.selectedListId(), 0, "songListDialog.selectedListId");
+        equal(target.songListDialog.songLists().length, 0, "songListDialog.songLists.length");
+        equal(target.songListDialog.selectedListId(), null, "songListDialog.selectedListId");
 
     });
 
-    test("addSongToList", () => {
+    QUnit.test("addSongToList", () => {
+
+        target.songListDialog.showSongLists();
 
         target.songListDialog.addSongToList();
 
@@ -61,7 +68,18 @@ module vdb.tests.viewModels {
 
     });
 
-    test("songInListsDialog show", () => {
+	QUnit.test("tabName featured lists tab", () => {
+
+        target.songListDialog.showSongLists();
+
+		target.songListDialog.tabName("Featured");
+
+        equal(target.songListDialog.songLists().length, 1, "songListDialog.songLists.length");
+        equal(target.songListDialog.songLists()[0].name, "Mikupa 2013", "songListDialog.songLists[0].name");
+
+    });
+
+	QUnit.test("songInListsDialog show", () => {
 
         target.songInListsDialog.show();
 

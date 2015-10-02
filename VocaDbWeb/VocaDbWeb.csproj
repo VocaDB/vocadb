@@ -2704,6 +2704,7 @@
     <Content Include="Views\Shared\LayoutPartials\_TwitterCard.cshtml" />
     <Content Include="Views\Song\Rankings.cshtml" />
     <Content Include="Views\Shared\Partials\_SongListsFilters.cshtml" />
+    <Content Include="Views\Song\Partials\_AddToListDialog.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
