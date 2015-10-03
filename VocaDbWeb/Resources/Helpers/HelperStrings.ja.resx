@@ -150,4 +150,25 @@
   <data name="ReturnWithoutSaving" xml:space="preserve">
     <value>保存せず戻る</value>
   </data>
+  <data name="EntryValidationNoErrors" xml:space="preserve">
+    <value>この項目の必要情報は全て記入されています。</value>
+  </data>
+  <data name="EntryValidationNoErrorsDraft" xml:space="preserve">
+    <value>この項目は「完成」とみなすための必要情報が記入されています。</value>
+  </data>
+  <data name="IsSupportedForFormatting" xml:space="preserve">
+    <value>フォーマット使用</value>
+  </data>
+  <data name="StatusDescriptionApproved" xml:space="preserve">
+    <value>承認された項目は信用されたユーザーがレビューされてます。承認された項目の編集は限られています。</value>
+  </data>
+  <data name="StatusDescriptionDraft" xml:space="preserve">
+    <value>下書きの項目は必要な情報が不足しています。</value>
+  </data>
+  <data name="StatusDescriptionFinished" xml:space="preserve">
+    <value>完成項目は必要情報が全て含まれていますが、信用されたユーザーに承認されていません。</value>
+  </data>
+  <data name="StatusDescriptionLocked" xml:space="preserve">
+    <value>ロックされた項目はスタッフ以外編集できません。</value>
+  </data>
 </root>

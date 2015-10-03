@@ -141,4 +141,7 @@
   <data name="Export" xml:space="preserve">
     <value>エクスポート</value>
   </data>
+  <data name="DefaultSortRule" xml:space="preserve">
+    <value>既定</value>
+  </data>
 </root>
