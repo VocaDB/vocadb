@@ -67,6 +67,57 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
+		private ActionResult AreaChart(string title, IEnumerable<Series> dataSeries) {
+
+			var json = new Highchart {
+				Chart = new Chart {
+					Height = 600,
+					Type = ChartType.Area
+				},
+				Title = title,
+				XAxis = new Axis(AxisType.Datetime, new Title()),
+				YAxis = new Axis {
+					Title = "Percentage",
+					Min = 0
+				},
+				Tooltip = new {
+					Shared = true,
+					Crosshairs = true
+				},
+				PlotOptions = new PlotOptions {
+					Bar = new {
+						DataLabels = new {
+							Enabled = true
+						}
+					},
+					Area = new PlotOptionsArea {
+						Stacking = PlotOptionsAreaStacking.Percent,
+						LineColor = "#ffffff",
+						LineWidth = 1,
+						Marker = new {
+							LineWidth = 1,
+							LineColor = "#ffffff"
+						}
+					}
+				},
+				Legend = new {
+					Layout = "vertical",
+					Align = "left",
+					X = 120,
+					VerticalAlign = "top",
+					Y = 100,
+					Floating = true,
+					BackgroundColor = "#FFFFFF"
+				},
+				Series = (
+					dataSeries
+				)
+			};
+
+			return LowercaseJson(json);
+
+		}
+
 		private ActionResult DateLineChartWithAverage(string title, string pointsTitle, string yAxisTitle, ICollection<Tuple<DateTime, int>> points,
 			bool average = true) {
 			
@@ -295,11 +346,54 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		class DateWithCount {
-			public int Year { get; set; }
-			public int Month { get; set; }
-			public int Day { get; set; }
-			public int Count { get; set; }
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult AlbumSongsOverTime() {
+
+			var data = userRepository.HandleQuery(ctx => {
+
+				Func<Expression<Func<Song, bool>>, CountPerDay[]> songQuery = (where) => {
+
+					return ctx.Query<Song>()
+						.Where(where)
+						.OrderBy(a => a.PublishDate.DateTime.Value.Year)
+						.ThenBy(a => a.PublishDate.DateTime.Value.Month)
+						.GroupBy(a => new {
+							Year = a.PublishDate.DateTime.Value.Year,
+							Month = a.PublishDate.DateTime.Value.Month,
+						})
+						.Select(a => new CountPerDay {
+							Year = a.Key.Year,
+							Month = a.Key.Month,
+							Day = 1,
+							Count = a.Count()
+						})
+						.ToArray();
+
+				};
+
+				// Would be nice to do this in one query
+				var albumSongsByMonth = songQuery(a => !a.Deleted && a.PublishDate.DateTime != null && a.AllAlbums.Any());
+				var independentSongsByMonth = songQuery(a => !a.Deleted && a.PublishDate.DateTime != null && a.AllAlbums.Count == 0);
+
+				return new {
+					albumSongsByMonth,
+					independentSongsByMonth
+				};
+
+			});
+
+			var albumSongsSeries = new Series {
+				Name = "Album songs",
+				Data = Series.DateData(data.albumSongsByMonth)
+			};
+
+			var independentSongsSeries = new Series {
+				Name = "Independent songs",
+				Data = Series.DateData(data.independentSongsByMonth)
+			};
+
+			return AreaChart("Album songs over time", new[] { albumSongsSeries, independentSongsSeries });
+
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec)]
@@ -316,7 +410,7 @@ namespace VocaDb.Web.Controllers {
 						Month = a.CreateDate.Month,
 						Day = a.CreateDate.Day
 					})
-					.Select(a => new DateWithCount {
+					.Select(a => new CountPerDay {
 						Year = a.Key.Year,
 						Month = a.Key.Month,
 						Day = a.Key.Day,
@@ -326,7 +420,7 @@ namespace VocaDb.Web.Controllers {
 
 			});
 
-			var points = values.CumulativeSelect<DateWithCount, Tuple<DateTime, int>>((v, previous) => {
+			var points = values.CumulativeSelect<CountPerDay, Tuple<DateTime, int>>((v, previous) => {
 				return Tuple.Create(new DateTime(v.Year, v.Month, v.Day), (previous != null ? previous.Item2 : 0) + v.Count);
 			}).ToArray();
 
@@ -420,55 +514,10 @@ namespace VocaDb.Web.Controllers {
 			var dataSeries = byService.Select(ser => new Series {
 				//type = "line",
 				Name = ser.Key.ToString(),
-				Data = ser.Select(p => new object[] { HighchartsHelper.ToEpochTime(p.Date), p.Count }).ToArray(),
+				Data = Series.DateData(ser, p => p.Date, p => p.Count)
 			});
 
-			var json = new Highchart {
-				Chart = new Chart {
-					Height = 600,
-					Type = ChartType.Area
-				},
-				Title = "Original PVs per service over time",
-				XAxis = new Axis(AxisType.Datetime, new Title()),
-				YAxis = new Axis {
-					Title = "Percentage",
-					Min = 0
-				},
-				Tooltip = new {
-					Shared = true,
-					Crosshairs = true
-				},
-				PlotOptions = new PlotOptions {
-					Bar = new {
-						DataLabels = new {
-							Enabled = true
-						}
-					},
-					Area = new PlotOptionsArea {
-						Stacking = PlotOptionsAreaStacking.Percent,
-						LineColor = "#ffffff",
-						LineWidth = 1,
-						Marker = new {
-							LineWidth = 1,
-							LineColor = "#ffffff"
-						}
-					}
-				},
-				Legend = new {
-					Layout = "vertical",
-					Align = "left",
-					X = 120,
-					VerticalAlign = "top",
-					Y = 100,
-					Floating = true,
-					BackgroundColor = "#FFFFFF"
-				},
-				Series = (
-					dataSeries
-				)
-			};
-
-			return LowercaseJson(json);
+			return AreaChart("Original PVs per service over time", dataSeries);
 
 		}
 

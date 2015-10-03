@@ -52,6 +52,11 @@ module vdb.viewModels {
 						{ name: 'Songs published per day', url: 'songsPublishedPerDay' },
 						{ name: 'Hits per song', url: 'hitsPerSong', allowTimespan: true },
 						{ name: 'Songs per genre', url: 'songsPerGenre' },
+						{ name: 'Album songs over time', url: 'albumSongsOverTime' }
+					]
+				},
+				{
+					name: 'PVs', reports: [
 						{ name: 'Original PVs over time', url: 'pvsPerServiceOverTime' },
 						{ name: 'Original PVs per service', url: 'pvsPerService?onlyOriginal=true', allowTimespan: true },
 						{ name: 'All PVs per service', url: 'pvsPerService?onlyOriginal=false', allowTimespan: true }
