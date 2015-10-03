@@ -142,7 +142,7 @@
     <value>本当にこの曲項目を削除しますか？</value>
   </data>
   <data name="EditTitle" xml:space="preserve">
-    <value>曲編集：</value>
+    <value>{0}を編集</value>
   </data>
   <data name="LyAddRow" xml:space="preserve">
     <value>行挿入</value>
