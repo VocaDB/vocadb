@@ -14,7 +14,7 @@
 	@if (Login.Manager.HasPermission(PermissionToken.EditFeaturedLists)) {
 		@Html.ActionLink(ViewRes.User.DetailsStrings.CreateNewList, "Edit", null, new { id = "createLink" })
 		@:
-		@Html.ActionLink("Import from Youtube or NicoNicoDouga", "Import", null, new { id = "importLink" })
+		@Html.ActionLink(Res.Import, "Import", null, new { id = "importLink" })
 	}
 }
 

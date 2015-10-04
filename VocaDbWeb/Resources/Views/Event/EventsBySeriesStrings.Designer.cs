@@ -77,5 +77,32 @@ namespace ViewRes.Event {
                 return ResourceManager.GetString("CreateSeries", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By date.
+        /// </summary>
+        public static string ViewByDate {
+            get {
+                return ResourceManager.GetString("ViewByDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By series.
+        /// </summary>
+        public static string ViewBySeries {
+            get {
+                return ResourceManager.GetString("ViewBySeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List.
+        /// </summary>
+        public static string ViewList {
+            get {
+                return ResourceManager.GetString("ViewList", resourceCulture);
+            }
+        }
     }
 }
