@@ -101,19 +101,23 @@
 
 }
 
-@helper EditableComments(bool allowCreateComment, bool well = true, string commentsBinding = "comments", int newCommentRows = 6) {
+@helper CreateComment(string cssClass, int newCommentRows) {
+	<div class="create-comment @cssClass">
+		<form data-bind="submit: createComment">
+			<textarea data-bind="textInput: newComment" rows="@newCommentRows" cols="60" maxlength="2000" class="comment-text-edit" placeholder="@ViewRes.DiscussionContentStrings.NewComment" required></textarea>
+			<button type="submit" class="btn btn-primary">@ViewRes.DiscussionContentStrings.AddComment</button>
+		</form>
+	</div>
+}
+
+@helper EditableComments(bool allowCreateComment, bool well = true, string commentsBinding = "comments", int newCommentRows = 6, bool commentBoxEnd = false) {
 
 	var cssClass = (well ? "well well-transparent" : "standalone");
 
 	<!-- binding context: EditableCommentsViewModel -->
 
-	if (allowCreateComment) {
-		<div class="create-comment @cssClass">
-			<form data-bind="submit: createComment">
-				<textarea data-bind="textInput: newComment" rows="@newCommentRows" cols="60" maxlength="2000" class="comment-text-edit" placeholder="@ViewRes.DiscussionContentStrings.NewComment" required></textarea>
-				<button type="submit" class="btn btn-primary">@ViewRes.DiscussionContentStrings.AddComment</button>
-			</form>
-		</div>
+	if (allowCreateComment && !commentBoxEnd) {
+		@CreateComment(cssClass, newCommentRows)
 	}
 
 	<div data-bind="foreach: @commentsBinding">
@@ -128,6 +132,10 @@
 			</form>
 		</div>
 	</div>
+
+	if (allowCreateComment && commentBoxEnd) {
+		@CreateComment(cssClass, newCommentRows)
+	}
 
 }
 
