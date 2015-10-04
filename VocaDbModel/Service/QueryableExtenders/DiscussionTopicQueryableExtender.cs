@@ -12,6 +12,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.OrderBy(d => d.Name);
 				case DiscussionTopicSortRule.DateCreated:
 					return query.OrderByDescending(d => d.Created);
+				case DiscussionTopicSortRule.LastCommentDate:
+					return query.OrderByDescending(d => d.Comments.Max(c => c.Created));
 			}
 
 			return query;
@@ -26,7 +28,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		Name,
 
-		DateCreated
+		DateCreated,
+
+		LastCommentDate
 
 	}
 

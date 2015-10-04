@@ -92,8 +92,8 @@ namespace VocaDb.Web.Controllers.Api {
 				var folder = ctx.Load(folderId);
 
 				return folder.Topics
-					.OrderByDescending(t => t.Created)
 					.Select(t => new DiscussionTopicContract(t, userIconFactory, fields))
+					.OrderByDescending(t => t.LastComment != null ? t.LastComment.Created : t.Created)
 					.ToArray();
 
 			});
