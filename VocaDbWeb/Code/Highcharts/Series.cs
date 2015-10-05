@@ -16,6 +16,14 @@ namespace VocaDb.Web.Code.Highcharts {
 			return DateData(source, d => new DateTime(d.Year, d.Month, d.Day), d => d.Count);
 		}
 
+		public Series() { }
+
+		public Series(string name, object[][] data, SeriesType? type = null) {
+			Name = name;
+			Data = data;
+			Type = type;
+		}
+
 		public object[][] Data { get; set; }
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]

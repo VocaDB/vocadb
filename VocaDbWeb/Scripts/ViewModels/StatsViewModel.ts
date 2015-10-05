@@ -50,6 +50,7 @@ module vdb.viewModels {
 					name: 'Songs', reports: [
 						{ name: 'Songs added per day', url: 'songsAddedPerDay', allowTimespan: true },
 						{ name: 'Songs published per day', url: 'songsPublishedPerDay' },
+						{ name: 'Songs published per month', url: 'songsPublishedPerDay?unit=Month' },
 						{ name: 'Hits per song', url: 'hitsPerSong', allowTimespan: true },
 						{ name: 'Songs per genre', url: 'songsPerGenre' },
 						{ name: 'Album songs over time', url: 'albumSongsOverTime' }
