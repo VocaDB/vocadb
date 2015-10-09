@@ -7,7 +7,8 @@ module vdb.viewModels.discussions {
 
 		constructor(private repo: rep.DiscussionRepository, private loggedUserId: number,
 			canDeleteAllComments: boolean,
-			contract: dc.discussions.DiscussionTopicContract) {
+			contract: dc.discussions.DiscussionTopicContract,
+			private folders: dc.discussions.DiscussionFolderContract[]) {
 
 			this.contract = ko.observable(contract);
 
@@ -16,7 +17,7 @@ module vdb.viewModels.discussions {
 		}
 
 		public beginEditTopic = () => {
-			this.editModel(new DiscussionTopicEditViewModel(this.loggedUserId, this.contract()));
+			this.editModel(new DiscussionTopicEditViewModel(this.loggedUserId, this.folders, this.contract()));
 		}
 
 		public comments: EditableCommentsViewModel;
@@ -56,13 +57,16 @@ module vdb.viewModels.discussions {
 
 	export class DiscussionTopicEditViewModel {
 
-		constructor(userId: number, contract?: dc.discussions.DiscussionTopicContract) {
+		constructor(userId: number,
+			public folders: dc.discussions.DiscussionFolderContract[],
+			contract?: dc.discussions.DiscussionTopicContract) {
 
 			this.author = { id: userId, name: '' };
 
 			if (contract) {
 				this.author = contract.author;
 				this.content(contract.content);
+				this.folderId(contract.folderId);
 				this.name(contract.name);
 			}
 
@@ -71,6 +75,8 @@ module vdb.viewModels.discussions {
 		public author: dc.UserWithIconContract;
 
 		public content = ko.observable("");
+
+		public folderId = ko.observable(null);
 
 		public name = ko.observable("");
 

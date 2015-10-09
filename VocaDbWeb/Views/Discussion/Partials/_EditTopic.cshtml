@@ -1,4 +1,6 @@
-﻿@using Res = ViewRes.Discussion.IndexStrings
+﻿@inherits VocaDb.Web.Code.VocaDbPage
+@using VocaDb.Model.Domain.Security
+@using Res = ViewRes.Discussion.IndexStrings
 
 <label>@Res.Topic</label>
 <input data-bind="textInput: name" type="text" class="input-xlarge" maxlength="200" required />
@@ -14,6 +16,13 @@
 		<label>@Res.Preview</label>
 		<div data-bind="markdown: content"></div>
 	</div>
+	
+	@if (UserContext.HasPermission(PermissionToken.DeleteComments)) {
+		<div>
+			<label>Folder</label>
+			<select data-bind="value: folderId, options: folders, optionsText: 'name', optionsValue: 'id'"></select>
+		</div>
+	}
 
 </div>
 

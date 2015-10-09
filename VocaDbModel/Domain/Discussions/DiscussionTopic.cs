@@ -113,6 +113,19 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		}
 
+		public virtual void MoveToFolder(DiscussionFolder targetFolder) {
+			
+			ParamIs.NotNull(() => targetFolder);
+
+			if (targetFolder.Equals(Folder))
+				return;
+
+			Folder.AllTopics.Remove(this);
+			Folder = targetFolder;
+			Folder.AllTopics.Add(this);
+
+		}
+
 		public override string ToString() {
 			return string.Format("Discussion topic '{0}' [{1}]", Name, Id);
 		}

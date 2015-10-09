@@ -11,7 +11,7 @@ module vdb.viewModels.discussions {
 			private canDeleteAllComments: boolean,
 			private loggedUserId: number) {
 		
-			this.newTopic = ko.observable(new DiscussionTopicEditViewModel(loggedUserId));
+			this.newTopic = ko.observable(new DiscussionTopicEditViewModel(loggedUserId, this.folders()));
 
 			this.mapRoute("folders/:folderId?", context => {
 
@@ -67,7 +67,7 @@ module vdb.viewModels.discussions {
 			this.repo.createTopic(folder.id, this.newTopic().toContract(), topic => {
 
 				topic.canBeDeleted = false;
-				this.newTopic(new DiscussionTopicEditViewModel(this.loggedUserId));
+				this.newTopic(new DiscussionTopicEditViewModel(this.loggedUserId, this.folders()));
 				this.showCreateNewTopic(false);
 				this.topics.unshift(topic);
 				this.selectTopic(topic);
@@ -163,7 +163,7 @@ module vdb.viewModels.discussions {
 				contract.canBeEdited = this.canEditTopic(contract);
 
 				this.selectFolderById(contract.folderId);
-				this.selectedTopic(new DiscussionTopicViewModel(this.repo, this.loggedUserId, this.canDeleteAllComments, contract));
+				this.selectedTopic(new DiscussionTopicViewModel(this.repo, this.loggedUserId, this.canDeleteAllComments, contract, this.folders()));
 
 			});
 

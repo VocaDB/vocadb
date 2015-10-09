@@ -44,6 +44,7 @@ namespace VocaDb.Model.Domain.Security {
 		/// Delete any comment (not just own comments). 
 		/// Also allows editing any comment. 
 		/// Also allows editing and deleting any discussion topic.
+		/// Also allows moving discussion topics.
 		/// </summary>
 		public static readonly PermissionToken DeleteComments =			New("1b1dfcfa-6b96-4a8a-8aca-d76465439ffb", "DeleteComments");
 		public static readonly PermissionToken DeleteEntries =			New("cc51c6b6-be93-4942-a6e4-fdf88f4520b9", "DeleteEntries");

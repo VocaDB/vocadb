@@ -113,6 +113,18 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		private void MoveTopic(IRepositoryContext ctx, DiscussionTopic topic, int targetFolderId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+
+			var folder = ctx.Load<DiscussionFolder>(targetFolderId);
+
+			ctx.AuditLogger.AuditLog(string.Format("Moving {0} to {1}", topic, folder));
+
+			topic.MoveToFolder(folder);
+
+		}
+
 		public void UpdateComment(int commentId, IComment contract) {
 			
 			repository.HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
@@ -128,6 +140,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
 
 				PermissionContext.VerifyAccess(topic, EntryPermissionManager.CanEdit);
+
+				if (topic.Folder.Id != contract.FolderId && PermissionContext.HasPermission(PermissionToken.DeleteComments)) {
+					MoveTopic(ctx, topic, contract.FolderId);
+				}
 
 				topic.Name = contract.Name;
 				topic.Content = contract.Content;
