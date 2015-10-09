@@ -61,14 +61,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		private User GetLoggedUser(IRepositoryContext<SongList> ctx) {
-
-			permissionContext.VerifyLogin();
-
-			return ctx.OfType<User>().Load(permissionContext.LoggedUser.Id);
-
-		}
-
 		private PartialFindResult<T> GetSongsInList<T>(IRepositoryContext<SongList> session, SongListQueryParams queryParams,
 			Func<SongInList, T> fac) {
 

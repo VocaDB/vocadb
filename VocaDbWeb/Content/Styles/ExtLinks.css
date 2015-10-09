@@ -16,6 +16,9 @@ a.extLink[href*="booth.pm/"] {
 a.extLink[href^="http://d-stage.com/"] {
   background: url("/Content/ExtIcons/dstage.png") no-repeat left 50%;
 }
+a.extLink[href*="deviantart.com/"] {
+  background: url("/Content/ExtIcons/dA.png") no-repeat left 50%;
+}
 a.extLink[href^="http://shop.fasic.jp/"] {
   background: url("/Content/ExtIcons/fasic.png") no-repeat left 50%;
 }
