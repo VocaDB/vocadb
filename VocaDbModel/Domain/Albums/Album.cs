@@ -747,7 +747,7 @@ namespace VocaDb.Model.Domain.Albums {
 			});
 
 			Func<AlbumDiscProperties, AlbumDiscPropertiesContract, bool> update = ((disc, data) => {
-				if (valueEquality(disc, data)) {
+				if (!valueEquality(disc, data)) {
 					disc.CopyContentFrom(data);
 					return true;
 				}

@@ -67,6 +67,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 				data.Description = v.Description;
 				data.DescriptionEng = v.DescriptionEng;
 			});
+			DoIfExists(version, AlbumEditableFields.Discs, xmlCache, v => data.Discs = v.Discs);
 			DoIfExists(version, AlbumEditableFields.Identifiers, xmlCache, v => data.Identifiers = v.Identifiers);
 			DoIfExists(version, AlbumEditableFields.OriginalRelease, xmlCache, v => data.OriginalRelease = v.OriginalRelease);
 			DoIfExists(version, AlbumEditableFields.Names, xmlCache, v => data.Names = v.Names);
@@ -90,6 +91,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			Description = (diff.IncludeDescription ? album.Description.Original : null);
 			DescriptionEng = (diff.IncludeDescription ? album.Description.English : null);
 			DiscType = album.DiscType;
+			Discs = (diff.IncludeDiscs ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToArray() : null);
 			Id = album.Id;
 			Identifiers = album.Identifiers.Select(i => new AlbumIdentifierContract(i)).ToArray();
 			MainPictureMime = album.CoverPictureMime;
@@ -111,6 +113,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public string DescriptionEng { get; set; }
+
+		[DataMember]
+		public AlbumDiscPropertiesContract[] Discs { get; set; }
 
 		[DataMember]
 		public DiscType DiscType { get; set; }

@@ -133,6 +133,12 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
+		public virtual bool IncludeDiscs {
+			get {
+				return (IsSnapshot || Discs);
+			}
+		}
+
 		public virtual bool IncludeNames {
 			get {
 				return (IsSnapshot || Names);
