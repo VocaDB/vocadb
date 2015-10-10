@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.PVs;
@@ -20,6 +21,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			Description = album.Description;
+			Discs = album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToDictionary(a => a.DiscNumber);
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease) : null);
 			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p)).ToArray();
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
@@ -44,6 +46,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public EnglishTranslatedString Description { get; set; }
+
+		[DataMember]
+		public Dictionary<int, AlbumDiscPropertiesContract> Discs { get; set; }
 
 		[DataMember]
 		public int Hits { get; set; }

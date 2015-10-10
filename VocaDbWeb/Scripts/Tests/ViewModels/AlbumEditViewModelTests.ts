@@ -68,6 +68,7 @@ module vdb.tests.viewModels {
 					english: ''
 				},
 				discType: "Album",
+				discs: [],
 				id: 0,
 				identifiers: [],
 				names: [],

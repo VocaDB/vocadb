@@ -87,6 +87,15 @@ namespace VocaDb.Model.Domain.Albums {
 			}		
 		}
 
+		public virtual bool Discs {
+			get {
+				return IsChanged(AlbumEditableFields.Discs);
+			}
+			set {
+				Set(AlbumEditableFields.Discs, value);
+			}
+		}
+
 		public virtual bool DiscType {
 			get {
 				return IsChanged(AlbumEditableFields.DiscType);

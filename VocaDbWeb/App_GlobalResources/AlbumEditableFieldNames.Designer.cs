@@ -97,7 +97,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disc type.
+        ///   Looks up a localized string similar to Discs.
+        /// </summary>
+        internal static string Discs {
+            get {
+                return ResourceManager.GetString("Discs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album type.
         /// </summary>
         internal static string DiscType {
             get {

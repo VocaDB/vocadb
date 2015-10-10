@@ -92,6 +92,8 @@ module vdb.viewModels {
 		public discType: KnockoutObservable<cls.albums.AlbumType>;
 		public discTypeStr: KnockoutObservable<string>;
 
+		public discs: viewModels.albums.AlbumDiscPropertiesListEditViewModel;
+
 		public editArtistRoles = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistRolesEditViewModel.show(artist);
 		}
@@ -159,6 +161,7 @@ module vdb.viewModels {
 				artistLinks: _.map(this.artistLinks(), artist => artist.toContract()),
 				defaultNameLanguage: this.defaultNameLanguage(),
 				description: this.description.toContract(),
+				discs: this.discs.toContracts(),
 				discType: this.discTypeStr(),
 				id: this.id,
 				identifiers: this.identifiers(),
@@ -313,6 +316,8 @@ module vdb.viewModels {
             this.artistLinks = ko.observableArray(_.map(data.artistLinks, artist => new ArtistForAlbumEditViewModel(repository, artist)));
 
 			this.artistRolesEditViewModel = new artists.ArtistRolesEditViewModel(artistRoleNames);
+
+			this.discs = new albums.AlbumDiscPropertiesListEditViewModel(data.discs);
 
             this.editMultipleTrackProperties = () => {
 

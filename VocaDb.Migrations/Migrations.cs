@@ -3,6 +3,25 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201510102223)]
+	public class AlbumDiscProperties : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table(TableNames.AlbumDiscProperties)
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+				.WithColumn("Album").AsInt32().NotNullable()
+					.ForeignKey("FK_AlbumDiscProperties_Albums", TableNames.Albums, "Id").OnDelete(Rule.Cascade)					
+				.WithColumn("DiscNumber").AsInt32().NotNullable()
+				.WithColumn("MediaType").AsString(20).NotNullable()
+				.WithColumn("[Name]").AsString(200).NotNullable();
+
+			Create.Index("IX_AlbumDiscProperties_Album_DiscNumber").OnTable(TableNames.AlbumDiscProperties)
+				.OnColumn("Album").Ascending().OnColumn("DiscNumber").Ascending().WithOptions().Unique();
+		}
+
+	}
+
 	[Migration(201509172250)]
 	public class UnreadNotificationsToKeepForUser : AutoReversingMigration {
 

@@ -264,12 +264,20 @@
 			}
 		</h3>
 		<div class="tracklist">
-			@foreach (var disc in Model.Songs) {
-				if (Model.Songs.Count() > 1) {
-					<h4>@R.DetailsStrings.Disc @disc.Key</h4>
+			@foreach (var disc in Model.Discs) {
+				if (Model.Discs.Length > 1) {
+					<h4>
+						@R.DetailsStrings.Disc @disc.DiscNumber
+						@if (!string.IsNullOrEmpty(disc.Name)) {
+							@:- @disc.Name
+						}
+						@if (disc.TotalLength != TimeSpan.Zero) {
+							<small>(@DateTimeHelper.FormatMinSec(disc.TotalLength))</small>
+						}
+					</h4>
 				}
 				<ul>
-					@foreach (var song in disc) {
+					@foreach (var song in disc.Songs) {
 						<li class="tracklist-track">
 							<div class="tracklist-trackNumber">
 								@song.TrackNumber
@@ -298,7 +306,7 @@
 			}
 		</div>
 
-		@if (!Model.Songs.Any()) {
+		@if (!Model.Discs.Any()) {
 			<p>@ViewRes.Album.DetailsStrings.NoTracklist</p>
 		}
 

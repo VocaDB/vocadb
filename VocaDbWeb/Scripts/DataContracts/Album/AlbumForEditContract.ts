@@ -11,6 +11,8 @@ module vdb.dataContracts.albums {
 
 		description: globalization.EnglishTranslatedStringContract;
 
+		discs: AlbumDiscPropertiesContract[];
+
 		discType: string;
 
 		id: number;

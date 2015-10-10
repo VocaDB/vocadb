@@ -129,6 +129,7 @@
 		<ul>
 			<li><a href="#basicInfoTab">@EditRes.BasicInfo</a></li>
 			<li><a href="#artistsTab">@R.EditStrings.ArtistsTab</a></li>
+			<li><a href="#discsTab">Discs</a></li>
 			<li><a href="#tracksTab">@R.EditStrings.TracksTab</a></li>
 			<li><a href="#picsTab">@R.EditStrings.PicturesTab</a></li>
 			<li><a href="#pvsTab">@R.EditStrings.MediaTab</a></li>
@@ -255,6 +256,47 @@
 			<div class="editor-field">
 				@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
 			</div>
+
+		</div>
+		
+		<div id="discsTab" data-bind="with: discs">
+			
+			<div class="alert alert-info">
+				If the album contains multiple discs you may define extra properties for those discs here.
+				You may specify disc name and type. Name is optional - if not specified, the default "Disc #" will be used, where "#" is the disc number.
+			</div>
+
+			<table>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Name</th>
+						<th>Type</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: items">
+					<tr>
+						<td>
+							<span data-bind="text: $index() + 1"></span>
+						</td>
+						<td>
+							<input type="text" data-bind="textInput: name" placeholder="Name" maxlength="50" />
+						</td>
+						<td>
+							<select data-bind="value: mediaType" class="input-small">
+								<option value="Audio">Audio</option>
+								<option value="Video">Video</option>
+							</select>
+						</td>
+						<td>
+							<a data-bind="click: $parent.remove" href="#" class="iconLink removeLink">Remove</a>							
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<a href="#" class="textLink addLink" data-bind="click: add">Add row</a>
 
 		</div>
 

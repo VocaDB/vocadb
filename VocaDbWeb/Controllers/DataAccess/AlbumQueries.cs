@@ -458,6 +458,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				if (artistsDiff.Changed)
 					diff.Artists = true;
 
+				var discsDiff = album.SyncDiscs(properties.Discs);
+				session.OfType<AlbumDiscProperties>().Sync(discsDiff);
+
+				if (discsDiff.Changed)
+					diff.Discs = true;
+
 				var songGetter = new Func<SongInAlbumEditContract, Song>(contract => {
 
 					if (contract.SongId != 0)

@@ -21,25 +21,27 @@ namespace VocaDb.Model.Domain.Albums {
 
 		Description		= 8,
 
-		DiscType		= 16,
+		Discs			= 16,
 
-		Identifiers		= 32,
+		DiscType		= 32,
 
-		Names			= 64,
+		Identifiers		= 64,
 
-		OriginalName	= 128,
+		Names			= 128,
 
-		OriginalRelease	= 256,
+		OriginalName	= 256,
 
-		Pictures		= 512,
+		OriginalRelease	= 512,
 
-		PVs				= 1024,
+		Pictures		= 1024,
 
-		Status			= 2048,
+		PVs				= 2048,
 
-		Tracks			= 4096,
+		Status			= 4096,
 
-		WebLinks		= 8192
+		Tracks			= 8192,
+
+		WebLinks		= 16384
 
 	}
 

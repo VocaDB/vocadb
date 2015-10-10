@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
@@ -54,7 +56,6 @@ namespace VocaDb.Web.Models {
 			PVs = contract.PVs;
 			RatingAverage = contract.RatingAverage;
 			RatingCount = contract.RatingCount;
-			Songs = contract.Songs.GroupBy(s => s.DiscNumber).ToArray();
 			Status = contract.Status;
 			Tags = contract.Tags;
 			TotalLength = contract.TotalLength;
@@ -63,6 +64,15 @@ namespace VocaDb.Web.Models {
 			WebLinks = contract.WebLinks;
 			WishlistedBy = contract.WishlistCount;
 			mime = contract.CoverPictureMime;
+
+			var songsByDiscs = contract.Songs.GroupBy(s => s.DiscNumber);
+			Discs = 
+				(from songsByDisc in songsByDiscs
+				let dn = songsByDisc.Key
+				select new AlbumDisc(dn, songsByDisc, contract.Discs.ContainsKey(dn) ? contract.Discs[dn] : null))
+				.ToArray();
+			/*Songs = songsByDiscs.Select(songsByDisc => new AlbumDisc(songsByDisc.Key, songsByDisc, 
+				*/
 
 			if (contract.AlbumForUser != null) {
 				AlbumMediaType = contract.AlbumForUser.MediaType;
@@ -115,6 +125,8 @@ namespace VocaDb.Web.Models {
 		public bool Deleted { get; set; }
 
 		public EnglishTranslatedString Description { get; set; }
+
+		public AlbumDisc[] Discs { get; set; }
 
 		public DiscType DiscType { get; set; }
 
@@ -185,8 +197,6 @@ namespace VocaDb.Web.Models {
 			}
 		}
 
-		public IGrouping<int, SongInAlbumContract>[] Songs { get; set; }
-
 		public EntryStatus Status { get; set; }
 
 		public TagUsageForApiContract[] Tags { get; set; }
@@ -202,6 +212,28 @@ namespace VocaDb.Web.Models {
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public int WishlistedBy { get; set; }
+
+	}
+
+	public class AlbumDisc {
+
+		public AlbumDisc(int discNumber, IEnumerable<SongInAlbumContract> songs, AlbumDiscPropertiesContract discProperties) {
+
+			DiscNumber = discNumber;
+			Songs = songs.ToArray();
+
+			Name = discProperties != null ? discProperties.Name : null;
+			TotalLength = Songs.All(s => s.Song != null && s.Song.LengthSeconds > 0) ? TimeSpan.FromSeconds(Songs.Sum(s => s.Song.LengthSeconds)) : TimeSpan.Zero;
+
+		}
+
+		public int DiscNumber { get; set; }
+
+		public TimeSpan TotalLength { get; set; }
+
+		public string Name { get; set; }
+
+		public IEnumerable<SongInAlbumContract> Songs { get; set; }
 
 	}
 

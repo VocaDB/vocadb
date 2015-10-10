@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="DataContracts\Activityfeed\ActivityEntryContract.cs" />
     <Compile Include="DataContracts\Activityfeed\ActivityEntryForApiContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumDiscPropertiesContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumReleaseContract.cs" />
@@ -282,6 +283,7 @@
     <Compile Include="Domain\Activityfeed\GenericActivityEntry.cs" />
     <Compile Include="Domain\Albums\AlbumArchiveReason.cs" />
     <Compile Include="Domain\Albums\AlbumDiff.cs" />
+    <Compile Include="Domain\Albums\AlbumDiscProperties.cs" />
     <Compile Include="Domain\Albums\AlbumEditableFields.cs" />
     <Compile Include="Domain\Albums\AlbumHit.cs" />
     <Compile Include="Domain\Albums\AlbumIdentifier.cs" />
@@ -501,6 +503,7 @@
     <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Mapping\Activityfeed\ActivityEntryMap.cs" />
     <Compile Include="Mapping\Albums\AlbumCommentMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumDiscPropertiesMap.cs" />
     <Compile Include="Mapping\Albums\AlbumHitMap.cs" />
     <Compile Include="Mapping\Albums\AlbumMergeRecordMap.cs" />
     <Compile Include="Mapping\Albums\AlbumNameMap.cs" />

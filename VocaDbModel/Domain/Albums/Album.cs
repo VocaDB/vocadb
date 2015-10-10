@@ -52,6 +52,7 @@ namespace VocaDb.Model.Domain.Albums {
 		private IList<ArtistForAlbum> artists = new List<ArtistForAlbum>();
 		private IList<AlbumComment> comments = new List<AlbumComment>();
 		private EnglishTranslatedString description;
+		private IList<AlbumDiscProperties> discs = new List<AlbumDiscProperties>(); 
 		private IList<AlbumHit> hits = new List<AlbumHit>();
 		private IList<AlbumIdentifier> identifiers = new List<AlbumIdentifier>();
 		private NameManager<AlbumName> names = new NameManager<AlbumName>();
@@ -172,6 +173,14 @@ namespace VocaDb.Model.Domain.Albums {
 			set {
 				ParamIs.NotNull(() => value);
 				description = value;
+			}
+		}
+
+		public virtual IList<AlbumDiscProperties> Discs {
+			get { return discs; }
+			set {
+				ParamIs.NotNull(() => value);
+				discs = value;
 			}
 		}
 
@@ -718,6 +727,38 @@ namespace VocaDb.Model.Domain.Albums {
 				UpdateArtistString();				
 			}
 
+			return diff;
+
+		}
+
+		public virtual CollectionDiffWithValue<AlbumDiscProperties, AlbumDiscProperties> SyncDiscs(AlbumDiscPropertiesContract[] newDiscs) {
+
+			for (var i = 0; i < newDiscs.Length; ++i) {
+				newDiscs[i].DiscNumber = i + 1;
+			}
+
+			Func<AlbumDiscProperties, AlbumDiscPropertiesContract, bool> idEquality = ((i1, i2) => i1.Id == i2.Id);
+			Func<AlbumDiscProperties, AlbumDiscPropertiesContract, bool> valueEquality = ((i1, i2) => i1.DiscNumber.Equals(i2.DiscNumber) && string.Equals(i1.Name, i2.Name) && i1.MediaType.Equals(i2.MediaType));
+
+			Func<AlbumDiscPropertiesContract, AlbumDiscProperties> create = (data => {
+				var disc = new AlbumDiscProperties(this, data);
+				Discs.Add(disc);
+				return disc;
+			});
+
+			Func<AlbumDiscProperties, AlbumDiscPropertiesContract, bool> update = ((disc, data) => {
+				if (valueEquality(disc, data)) {
+					disc.CopyContentFrom(data);
+					return true;
+				}
+				return false;
+			});
+
+			Action<AlbumDiscProperties> remove = (disc => {
+				Discs.Remove(disc);
+			});
+
+			var diff = CollectionHelper.SyncWithContent(Discs, newDiscs, idEquality, create, update, remove);
 			return diff;
 
 		}

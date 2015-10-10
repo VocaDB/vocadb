@@ -127,7 +127,7 @@
     <value>Description</value>
   </data>
   <data name="DiscType" xml:space="preserve">
-    <value>Disc type</value>
+    <value>Album type</value>
   </data>
   <data name="Names" xml:space="preserve">
     <value>Names</value>
@@ -161,5 +161,8 @@
   </data>
   <data name="Identifiers" xml:space="preserve">
     <value>Identifiers</value>
+  </data>
+  <data name="Discs" xml:space="preserve">
+    <value>Discs</value>
   </data>
 </root>
