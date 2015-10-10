@@ -18,7 +18,7 @@
 	</div>
 	
 	@if (UserContext.HasPermission(PermissionToken.DeleteComments)) {
-		<div>
+		<div data-bind="visible: folders && folders.length">
 			<label>Folder</label>
 			<select data-bind="value: folderId, options: folders, optionsText: 'name', optionsValue: 'id'"></select>
 		</div>
