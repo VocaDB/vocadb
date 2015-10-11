@@ -389,6 +389,37 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Update_Discs() {
+
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			repository.Save(CreateEntry.AlbumDisc(album));
+
+			contract.Discs = new[] {
+				new AlbumDiscPropertiesContract { Id = 1, Name = "Past" },
+				new AlbumDiscPropertiesContract { Id = 2, Name = "Present" }
+			};
+
+			contract = CallUpdate(contract);
+
+			var albumFromRepo = repository.Load(contract.Id);
+			Assert.AreEqual(2, albumFromRepo.Discs.Count, "Number of discs");
+
+			var disc1 = albumFromRepo.GetDisc(1);
+			Assert.IsNotNull(disc1, "disc1");
+			Assert.AreEqual("Past", disc1.Name, "disc1.Name");
+
+			var disc2 = albumFromRepo.GetDisc(2);
+			Assert.IsNotNull(disc2, "disc2");
+			Assert.AreEqual("Present", disc2.Name, "disc2.Name");
+
+			var archivedVersion = repository.List<ArchivedAlbumVersion>().FirstOrDefault();
+
+			Assert.IsNotNull(archivedVersion, "Archived version was created");
+			Assert.AreEqual(AlbumEditableFields.Discs, archivedVersion.Diff.ChangedFields, "Changed fields");
+
+		}
+
+		[TestMethod]
 		public void Update_CoverPicture() {
 			
 			var contract = CallUpdate(ResourceHelper.TestImage());

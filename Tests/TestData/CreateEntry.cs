@@ -1,4 +1,5 @@
 ﻿using System;
+using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -15,6 +16,10 @@ namespace VocaDb.Tests.TestData {
 
 		public static Album Album(int id = 0, string name = "Synthesis") {
 			return new Album(new LocalizedString(name, ContentLanguageSelection.Unspecified)) { Id = id };
+		}
+
+		public static AlbumDiscProperties AlbumDisc(Album album, int id = 0, string name = "") {
+			return new AlbumDiscProperties(album, new AlbumDiscPropertiesContract { DiscNumber = 1, Name = name }) { Id = id };
 		}
 
 		public static Artist Artist(ArtistType artistType, int id = 0, string name = "Artist") {

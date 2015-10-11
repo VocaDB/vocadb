@@ -222,12 +222,15 @@ namespace VocaDb.Web.Models {
 			DiscNumber = discNumber;
 			Songs = songs.ToArray();
 
+			IsVideo = discProperties != null && discProperties.MediaType == DiscMediaType.Video;
 			Name = discProperties != null ? discProperties.Name : null;
 			TotalLength = Songs.All(s => s.Song != null && s.Song.LengthSeconds > 0) ? TimeSpan.FromSeconds(Songs.Sum(s => s.Song.LengthSeconds)) : TimeSpan.Zero;
 
 		}
 
 		public int DiscNumber { get; set; }
+
+		public bool IsVideo { get; set; }
 
 		public TimeSpan TotalLength { get; set; }
 

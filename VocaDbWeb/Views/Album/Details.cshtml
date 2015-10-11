@@ -274,6 +274,9 @@
 						@if (disc.TotalLength != TimeSpan.Zero) {
 							<small>(@DateTimeHelper.FormatMinSec(disc.TotalLength))</small>
 						}
+						@if (disc.IsVideo) {
+							<i class="icon-film" title="Video"></i>
+						}
 					</h4>
 				}
 				<ul>

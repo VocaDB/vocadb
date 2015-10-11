@@ -540,6 +540,10 @@ namespace VocaDb.Model.Domain.Albums {
 			return Artists.FirstOrDefault(a => a.Artist != null && a.Artist.Equals(artist));
 		}
 
+		public virtual AlbumDiscProperties GetDisc(int discNumber) {
+			return Discs.FirstOrDefault(d => d.DiscNumber == discNumber);
+		}
+
 		public override int GetHashCode() {
 			return Id.GetHashCode();
 		}
