@@ -1,7 +1,9 @@
-﻿using VocaDb.Model.Domain.Albums;
+﻿using System.Runtime.Serialization;
+using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.DataContracts.Albums {
 
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public class AlbumDiscPropertiesContract {
 
 		public AlbumDiscPropertiesContract() { }
@@ -17,12 +19,16 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		}
 
+		[DataMember]
 		public int DiscNumber { get; set; }
 
+		[DataMember]
 		public int Id { get; set; }
 
+		[DataMember]
 		public DiscMediaType MediaType { get; set; }
 
+		[DataMember]
 		public string Name { get; set; }
 
 	}

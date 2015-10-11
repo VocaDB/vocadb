@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			Description = album.Description;
-			Discs = album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToDictionary(a => a.DiscNumber);
+			Discs = album.Songs.Any(s => s.DiscNumber > 1) ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToDictionary(a => a.DiscNumber) : new Dictionary<int, AlbumDiscPropertiesContract>(0);
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease) : null);
 			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p)).ToArray();
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();

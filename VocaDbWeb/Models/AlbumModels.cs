@@ -71,8 +71,6 @@ namespace VocaDb.Web.Models {
 				let dn = songsByDisc.Key
 				select new AlbumDisc(dn, songsByDisc, contract.Discs.ContainsKey(dn) ? contract.Discs[dn] : null))
 				.ToArray();
-			/*Songs = songsByDiscs.Select(songsByDisc => new AlbumDisc(songsByDisc.Key, songsByDisc, 
-				*/
 
 			if (contract.AlbumForUser != null) {
 				AlbumMediaType = contract.AlbumForUser.MediaType;

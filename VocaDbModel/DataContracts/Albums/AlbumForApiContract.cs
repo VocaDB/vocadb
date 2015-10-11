@@ -36,6 +36,10 @@ namespace VocaDb.Model.DataContracts.Albums {
 				AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
+			if (fields.HasFlag(AlbumOptionalFields.Discs)) {
+				Discs = album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToArray();
+			}
+
 			if (fields.HasFlag(AlbumOptionalFields.Identifiers)) {
 				Identifiers = album.Identifiers.Select(i => new AlbumIdentifierContract(i)).ToArray();
 			}
@@ -135,6 +139,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// </summary>
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public AlbumDiscPropertiesContract[] Discs { get; set; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -236,13 +243,14 @@ namespace VocaDb.Model.DataContracts.Albums {
 		None = 0,
 		AdditionalNames = 1,
 		Artists = 2,
-		Identifiers = 4,
-		MainPicture = 8,
-		Names = 16,
-		PVs = 32,
-		Tags = 64,
-		Tracks = 128,
-		WebLinks = 256
+		Discs = 4,
+		Identifiers = 8,
+		MainPicture = 16,
+		Names = 32,
+		PVs = 64,
+		Tags = 128,
+		Tracks = 256,
+		WebLinks = 512
 
 	}
 
