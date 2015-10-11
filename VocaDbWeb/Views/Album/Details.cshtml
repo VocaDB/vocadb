@@ -258,7 +258,7 @@
 		</div>
 
 		<h3>
-			@ViewRes.Album.DetailsStrings.Tracklist
+			@Res.Tracklist
 			@if (Model.TotalLength != TimeSpan.Zero) {
 				<small>(@string.Format(Res.TotalLength, DateTimeHelper.FormatMinSec(Model.TotalLength)))</small>
 			}
@@ -267,7 +267,7 @@
 			@foreach (var disc in Model.Discs) {
 				if (Model.Discs.Length > 1) {
 					<h4>
-						@R.DetailsStrings.Disc @disc.DiscNumber
+						@Res.Disc @disc.DiscNumber
 						@if (!string.IsNullOrEmpty(disc.Name)) {
 							@:- @disc.Name
 						}
@@ -275,7 +275,7 @@
 							<small>(@DateTimeHelper.FormatMinSec(disc.TotalLength))</small>
 						}
 						@if (disc.IsVideo) {
-							<i class="icon-film" title="Video"></i>
+							<i class="icon-film" title="@Resources.AlbumDiscMediaTypeNames.Video"></i>
 						}
 					</h4>
 				}

@@ -243,6 +243,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumMediaTypeNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumDiscMediaTypeNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Albums\AlbumSortRuleNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1632,6 +1637,10 @@
     <Content Include="App_GlobalResources\Users\RatedSongForUserSortRuleNames.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>RatedSongForUserSortRuleNames.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumDiscMediaTypeNames.Designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Resources\Swagger\index.html" />
     <EmbeddedResource Include="Resources\Swagger\styles.css" />
