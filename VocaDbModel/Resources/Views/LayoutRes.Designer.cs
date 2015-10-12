@@ -70,6 +70,15 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses..
+        /// </summary>
+        internal static string PaypalDonateTitle {
+            get {
+                return ResourceManager.GetString("PaypalDonateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to VocaDB.
         /// </summary>
         internal static string SiteName {

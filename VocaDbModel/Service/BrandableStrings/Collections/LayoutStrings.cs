@@ -8,19 +8,15 @@ namespace VocaDb.Model.Service.BrandableStrings.Collections {
 			ResourceManager = resourceMan;
 		}
 
-		public ResourceManager ResourceManager { get; private set; }
+		public ResourceManager ResourceManager { get; }
 
-		public string Keywords {
-			get { return ResourceManager.GetString("Keywords"); }
-		}
+		public string Keywords => ResourceManager.GetString("Keywords");
 
-		public string SiteName {
-			get { return ResourceManager.GetString("SiteName"); }
-		}
+		public string PaypalDonateTitle => ResourceManager.GetString("PaypalDonateTitle");
 
-		public string SiteTitle {
-			get { return ResourceManager.GetString("SiteTitle"); }
-		}
+		public string SiteName => ResourceManager.GetString("SiteName");
+
+		public string SiteTitle => ResourceManager.GetString("SiteTitle");
 
 	}
 

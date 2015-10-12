@@ -120,6 +120,9 @@
   <data name="Keywords" xml:space="preserve">
     <value>Vocaloid, VocaDB, Vocaloid database, Hatsune Miku</value>
   </data>
+  <data name="PaypalDonateTitle" xml:space="preserve">
+    <value>VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.</value>
+  </data>
   <data name="SiteName" xml:space="preserve">
     <value>VocaDB</value>
   </data>
