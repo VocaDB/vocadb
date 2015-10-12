@@ -606,7 +606,9 @@ namespace VocaDb.Web.Controllers {
 		}
 
 		public ActionResult SongsPerProducer() {
-			
+
+			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
+
 			return SimpleBarChart<Artist>(q => q
 					.Where(a => a.ArtistType == ArtistType.Producer)
 					.Select(a => new LocalizedValue {
@@ -616,8 +618,12 @@ namespace VocaDb.Web.Controllers {
 							Romaji = a.Names.SortNames.Romaji, 
 							Japanese = a.Names.SortNames.Japanese, 
 						},
-						Value = a.AllSongs.Count(s => !s.IsSupport && !s.Song.Deleted && s.Song.SongType == SongType.Original)
-					}), "Original songs by producer", "Songs");
+						Value = a.AllSongs.Count(s => 
+							!s.IsSupport && 
+							!s.Song.Deleted && 
+							s.Song.SongType == SongType.Original &&
+							(s.Roles == ArtistRoles.Default || (s.Roles & producerRoles) != ArtistRoles.Default))
+					}), "Original composed/arranged songs by producer", "Songs");
 
 		}
 
