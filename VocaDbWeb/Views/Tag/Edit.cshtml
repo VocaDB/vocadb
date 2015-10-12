@@ -51,7 +51,7 @@
 		If you're unsure, check the documentation.
 	</div>
 
-	@Helpers.SaveBtn()
+	@Helpers.SaveAndBackBtn(Url.Action("Details", new { id = Model.Name }))
 
 	<div class="editor-label">
 		@Html.LabelFor(m => m.CategoryName)
@@ -113,6 +113,6 @@
 	</div>
 
 	<br />
-	@Helpers.SaveBtn()
+	@Helpers.SaveAndBackBtn(Url.Action("Details", new { id = Model.Name }))
 
 </form>
