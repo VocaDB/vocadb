@@ -2,14 +2,17 @@
   display: inline-block;
 }
 .songlist-mode-selection {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-right: 5px;
 }
 .songlist-sort {
   margin-left: 15px;
+  margin-right: 15px;
 }
 .songlist-sort .btn {
   margin-bottom: 5px;
+}
+.songlist-text-query input {
+  margin-bottom: 0;
 }
 .songlist-playlist-player {
   max-width: 560px;

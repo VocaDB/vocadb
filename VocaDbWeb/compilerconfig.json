@@ -1,29 +1,36 @@
 ﻿[
-  {
-    "outputFile": "Content/Styles/base.css",
-    "inputFile": "Content/Styles/base.less",
-    "minify": {
-      "enabled": false
-    },
-    "options": {
-      "strictMath": true
-    }
-  },
-  {
-    "outputFile": "Content/Styles/song.css",
-    "inputFile": "Content/Styles/song.less",
-    "minify": {
-      "enabled": false
-    },
-    "options": {
-      "strictMath": true
-    }
-  },
-  {
-    "outputFile": "Content/Styles/ExtLinks.css",
+	{
+		"outputFile": "Content/Styles/base.css",
+		"inputFile": "Content/Styles/base.less",
+		"minify": {
+			"enabled": false
+		},
+		"options": {
+			"strictMath": true
+		}
+	},
+	{
+		"outputFile": "Content/Styles/song.css",
+		"inputFile": "Content/Styles/song.less",
+		"minify": {
+			"enabled": false
+		},
+		"options": {
+			"strictMath": true
+		}
+	},
+	{
+		"outputFile": "Content/Styles/ExtLinks.css",
 		"inputFile": "Content/Styles/ExtLinks.less",
-    "minify": {
-      "enabled": false
-    }
-  }
+		"minify": {
+			"enabled": false
+		}
+	},
+	{
+		"outputFile": "Content/Styles/songlist.css",
+		"inputFile": "Content/Styles/songlist.less",
+		"minify": {
+			"enabled": false
+		}	
+	}
 ]

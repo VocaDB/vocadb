@@ -37,7 +37,7 @@ module vdb.viewModels.songList {
 
 			// TODO
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
-			var playListRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongListAdapter(songListRepo, listId, this.sort);
+			var playListRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongListAdapter(songListRepo, listId, this.query, this.sort);
 			this.playlistViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, playListRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel, languageSelection);
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
@@ -45,16 +45,9 @@ module vdb.viewModels.songList {
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 
-			this.sort.subscribe(() => {
-				this.updateResultsWithTotalCount();
-				if (this.playlistMode())
-					this.playlistViewModel.updateResultsWithTotalCount();
-			});
-
-			this.playlistMode.subscribe(mode => {
-				if (mode)
-					this.playlistViewModel.init();
-			});
+			this.sort.subscribe(() => this.updateCurrentMode(true));
+			this.playlistMode.subscribe(() => this.updateCurrentMode(true));
+			this.query.subscribe(() => this.updateCurrentMode(true));
 
 			this.updateResultsWithTotalCount();
 
@@ -75,6 +68,7 @@ module vdb.viewModels.songList {
 		public playlistViewModel: vdb.viewModels.songs.PlayListViewModel;
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;
 		public pvServiceIcons: vdb.models.PVServiceIcons;
+		public query = ko.observable("");
 		private resourceManager: cls.ResourcesManager;
 		public showTags = ko.observable(false);
 		public sort = ko.observable("");
@@ -82,6 +76,16 @@ module vdb.viewModels.songList {
 
 		public updateResultsWithTotalCount = () => this.updateResults(true);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);
+
+		private updateCurrentMode = (clearResults: boolean) => {
+			
+			if (this.playlistMode()) {
+				this.playlistViewModel.updateResultsWithTotalCount();				
+			} else {
+				this.updateResults(clearResults);
+			}
+
+		}
 
 		public updateResults = (clearResults: boolean = true) => {
 
@@ -102,7 +106,7 @@ module vdb.viewModels.songList {
 			if (this.showTags())
 				fields.push(cls.SongOptionalField.Tags);
 
-			this.songListRepo.getSongs(this.listId, null, pagingProperties,
+			this.songListRepo.getSongs(this.listId, this.query(), null, pagingProperties,
 				new cls.SongOptionalFields(fields),
 				this.sort(),
 				this.languageSelection,

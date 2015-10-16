@@ -32,6 +32,7 @@ module vdb.repositories {
 
 		public getSongs = (
 			listId: number,
+			query: string,
 			pvServices: string,
 			paging: dc.PagingProperties,
 			fields: cls.SongOptionalFields,
@@ -41,6 +42,7 @@ module vdb.repositories {
 
 			var url = this.urlMapper.mapRelative("/api/songLists/" + listId + "/songs");
 			var data = {
+				query: query,
 				pvServices: pvServices,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				fields: fields.fields, 

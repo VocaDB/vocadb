@@ -7,6 +7,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public int ListId { get; set; }
 
+		public SearchTextQuery TextQuery { get; set; }
+
 		public PagingProperties Paging { get; set; }
 
 		public PVServices? PVServices { get; set; }

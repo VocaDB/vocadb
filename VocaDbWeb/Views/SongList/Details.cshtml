@@ -104,23 +104,30 @@
 	</div>
 </div>
 
-<div class="btn-group songlist-mode-selection">
-	<a data-bind="click: function() { playlistMode(false); }, css: { active: playlistMode() == false }" class="btn" href="#">
-		<i class="icon-th-list noMargin"></i>
-		@Res.Details
+<div class="clearfix">
+	<div class="btn-group songlist-mode-selection pull-left">
+		<a data-bind="click: function() { playlistMode(false); }, css: { active: playlistMode() == false }" class="btn" href="#">
+			<i class="icon-th-list noMargin"></i>
+			@Res.Details
+		</a>
+		<a data-bind="click: function() { playlistMode(true); }, css: { active: playlistMode() == true }" class="btn" href="#">
+			<i class="icon-list noMargin"></i>
+			@Res.Playlist
+		</a>
+	</div>
+	<a data-bind="css: { active: showTags() }, click: function() { showTags(!showTags()); }, visible: playlistMode() == false" class="btn pull-left" href="#" title="@Res.ShowTags">
+		<i class="icon-tags"></i>
 	</a>
-	<a data-bind="click: function() { playlistMode(true); }, css: { active: playlistMode() == true }" class="btn" href="#">
-		<i class="icon-list noMargin"></i>
-		@Res.Playlist
-	</a>
-</div>
-<a data-bind="css: { active: showTags() }, click: function() { showTags(!showTags()); }, visible: playlistMode() == false" class="btn" href="#" title="@Res.ShowTags">
-	<i class="icon-tags"></i>
-</a>
 
-<div class="inline-block songlist-sort">
-	@ViewRes.EntryIndexStrings.SortBy
-	@KnockoutHelpers.Dropdown(Model.SortRules, "sort", "sortName")
+	<div class="inline-block songlist-sort pull-left">
+		@ViewRes.EntryIndexStrings.SortBy
+		@KnockoutHelpers.Dropdown(Model.SortRules, "sort", "sortName")
+	</div>
+
+	<div class="pull-left songlist-text-query">
+		<i class="icon-search"></i>
+		<input type="text" data-bind="textInput: query" placeholder="@ViewRes.SharedStrings.Search" maxlength="200" />
+	</div>
 </div>
 
 <div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">

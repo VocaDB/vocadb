@@ -66,6 +66,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 			var q = session.OfType<SongInList>().Query()
 				.Where(a => !a.Song.Deleted && a.List.Id == queryParams.ListId)
+				.WhereChildHasName(queryParams.TextQuery)
 				.WhereSongHasPVService(queryParams.PVServices);
 
 			IQueryable<SongInList> resultQ = q.OrderBy(queryParams.SortRule, PermissionContext.LanguagePreference);
