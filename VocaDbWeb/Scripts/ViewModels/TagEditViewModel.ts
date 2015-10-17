@@ -21,8 +21,9 @@ module vdb.viewModels {
 		public description: KnockoutObservable<string>;
 		public name: string;
 		public parentName: KnockoutObservable<string>;
+		public submitting = ko.observable(false);
 
-		denySelf = (tagName: string) => (tagName != this.name);
+		denySelf = (tagName: string) => (tagName !== this.name);
 
 	}
 
