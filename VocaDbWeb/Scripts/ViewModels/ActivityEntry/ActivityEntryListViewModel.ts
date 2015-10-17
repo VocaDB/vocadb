@@ -104,18 +104,20 @@ module vdb.viewModels.activityEntry {
 
 		public getEntryTypeName = (entry: dc.EntryContract) => {
 			
+			var sets = this.resources.resources();
+
 			switch (EntryType[entry.entryType]) {
 				case EntryType.Album:
-					return this.resources.resources().discTypeNames[entry.discType];
+					return sets.discTypeNames[entry.discType];
 				
 				case EntryType.Artist:
-					return this.resources.resources().artistTypeNames[entry.artistType];
+					return sets.artistTypeNames[entry.artistType];
 
 				case EntryType.Song:
-					return this.resources.resources().songTypeNames[entry.songType];
+					return sets.songTypeNames[entry.songType];
 
 				case EntryType.SongList:
-					return this.resources.resources().songList_songListFeaturedCategoryNames[entry.songListFeaturedCategory];
+					return sets.songList_songListFeaturedCategoryNames[entry.songListFeaturedCategory];
 
 				case EntryType.Tag:
 					return entry.tagCategoryName;
@@ -133,7 +135,7 @@ module vdb.viewModels.activityEntry {
 			var url = this.urlMapper.mapRelative("/api/activityEntries");
 			$.getJSON(url, {
 				fields: 'Entry,ArchivedVersion',
-				entryFields: 'MainPicture',
+				entryFields: 'AdditionalNames,MainPicture',
 				lang: this.languageSelection,
 				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
 				userId: this.userId,
