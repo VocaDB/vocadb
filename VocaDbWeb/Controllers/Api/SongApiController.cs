@@ -349,7 +349,10 @@ namespace VocaDb.Web.Controllers.Api {
 				var songs = query.Take(25)
 					.ToArray();
 
-				var contracts = songs.Select(s => new SongForApiContract(s, null, languagePreference, SongOptionalFields.ThumbUrl | SongOptionalFields.Tags)).ToArray();
+				var contracts = songs
+					.Select(s => new SongForApiContract(s, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl | SongOptionalFields.Tags))
+					.ToArray();
+
 				return contracts;
 
 			});
