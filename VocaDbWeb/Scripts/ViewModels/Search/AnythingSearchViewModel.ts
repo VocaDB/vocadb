@@ -20,7 +20,7 @@ module vdb.viewModels.search {
 
 		}
 
-		public fields = ko.computed(() => this.searchViewModel.showTags() ? "MainPicture,Tags" : "MainPicture");
+		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Tags" : "AdditionalNames,MainPicture");
 
 	}
 

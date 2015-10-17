@@ -73,7 +73,7 @@ module vdb.viewModels.search {
 
 		public discTypeName = (discTypeStr: string) => this.resourceManager.resources().discTypeNames != null ? this.resourceManager.resources().discTypeNames[discTypeStr] : "";
 
-		public fields = ko.computed(() => this.showTags() ? "MainPicture,Tags" : "MainPicture");
+		public fields = ko.computed(() => this.showTags() ? "AdditionalNames,MainPicture,Tags" : "AdditionalNames,MainPicture");
 
 		public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
 

@@ -32,7 +32,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 				fields.HasFlag(AlbumOptionalFields.Tags), 
 				fields.HasFlag(AlbumOptionalFields.WebLinks)) {
 
-			if (languagePreference != ContentLanguagePreference.Default || fields.HasFlag(AlbumOptionalFields.AdditionalNames)) {
+			if (fields.HasFlag(AlbumOptionalFields.AdditionalNames)) {
 				AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 

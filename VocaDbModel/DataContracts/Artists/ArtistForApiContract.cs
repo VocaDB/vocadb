@@ -35,7 +35,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Status = artist.Status;
 			Version = artist.Version;
 
-			if (languagePreference != ContentLanguagePreference.Default || includedFields.HasFlag(ArtistOptionalFields.AdditionalNames)) {
+			if (includedFields.HasFlag(ArtistOptionalFields.AdditionalNames)) {
 				AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 

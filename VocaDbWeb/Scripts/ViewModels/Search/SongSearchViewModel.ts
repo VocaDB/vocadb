@@ -149,7 +149,7 @@ module vdb.viewModels.search {
 
 		public artistIds = ko.computed(() => _.map(this.artists(), a => a.id));
 
-		public fields = ko.computed(() => this.showTags() ? "ThumbUrl,Tags" : "ThumbUrl");
+		public fields = ko.computed(() => this.showTags() ? "AdditionalNames,ThumbUrl,Tags" : "AdditionalNames,ThumbUrl");
 
 		public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
 

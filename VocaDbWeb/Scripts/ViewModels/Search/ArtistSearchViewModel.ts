@@ -39,7 +39,7 @@ module vdb.viewModels.search {
 		public sort = ko.observable("Name");
 		public sortName = ko.computed(() => this.searchViewModel.resources().artistSortRuleNames != null ? this.searchViewModel.resources().artistSortRuleNames[this.sort()] : "");
 
-		public fields = ko.computed(() => this.searchViewModel.showTags() ? "MainPicture,Tags" : "MainPicture");
+		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Tags" : "AdditionalNames,MainPicture");
 
 	}
 

@@ -36,7 +36,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Status = song.Status;
 			Version = song.Version;
 
-			if (languagePreference != ContentLanguagePreference.Default || fields.HasFlag(SongOptionalFields.AdditionalNames)) {
+			if (fields.HasFlag(SongOptionalFields.AdditionalNames)) {
 				AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 

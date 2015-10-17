@@ -54,7 +54,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			Name = entry.Names.SortNames[languagePreference];				
 			Version = entry.Version;
 
-			if (fields.HasFlag(EntryOptionalFields.AdditionalNames) || languagePreference != ContentLanguagePreference.Default) {
+			if (fields.HasFlag(EntryOptionalFields.AdditionalNames)) {
 				AdditionalNames = entry.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 

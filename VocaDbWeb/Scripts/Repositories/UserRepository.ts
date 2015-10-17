@@ -55,7 +55,7 @@ module vdb.repositories {
 				artistId: artistId,
 				purchaseStatuses: purchaseStatuses,
 				releaseEventName: releaseEventName,
-				fields: "MainPicture",
+				fields: "AdditionalNames,MainPicture",
 				lang: lang,
 				nameMatchMode: 'Auto',
 				sort: sort
@@ -86,7 +86,7 @@ module vdb.repositories {
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/followedArtists");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				fields: "MainPicture", lang: lang, nameMatchMode: 'Auto', artistType: artistType
+				fields: "AdditionalNames,MainPicture", lang: lang, nameMatchMode: 'Auto', artistType: artistType
 			};
 
 			$.getJSON(url, data, callback);
