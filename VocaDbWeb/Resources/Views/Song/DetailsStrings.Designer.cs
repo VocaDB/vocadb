@@ -475,6 +475,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View all lists ({0}).
+        /// </summary>
+        public static string ViewAllLists {
+            get {
+                return ResourceManager.GetString("ViewAllLists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View on external site.
         /// </summary>
         public static string ViewExternal {

@@ -261,4 +261,7 @@
   <data name="ListsTabPersonal" xml:space="preserve">
     <value>Personal lists</value>
   </data>
+  <data name="ViewAllLists" xml:space="preserve">
+    <value>View all lists ({0})</value>
+  </data>
 </root>

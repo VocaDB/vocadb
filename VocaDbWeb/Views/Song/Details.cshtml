@@ -197,37 +197,37 @@
 					<a data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 					@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {
 						@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
-	 }
+					}
 				</td>
 			</tr>
 			
 			@if (Model.ListCount > 0) {
 				<tr>
-					<td>@R.DetailsStrings.PoolsAndLists</td>
+					<td>@Res.PoolsAndLists</td>
 					<td>
-						@foreach (var pool in Model.Pools) {
-							@Html.ActionLink(pool.Name, "Details", "SongList", new { id = pool.Id }, null)
-	  }
+						@Html.LinkList(Model.Pools, pool => Html.ActionLink(pool.Name, "Details", "SongList", new { id = pool.Id }, null))
 						@if (Model.Pools.Any()) {
-							@("-")
-	  }
-						<a id="songInListsLink" data-bind="click: songInListsDialog.show" href="#">View all lists (@Model.ListCount)</a>
+							@:-
+						}
+						<a id="songInListsLink" data-bind="click: songInListsDialog.show" href="#">
+							@string.Format(Res.ViewAllLists, Model.ListCount)
+						</a>
 					</td>
 				</tr>
-   }	   
+			}	   
 
 			@if (Model.OriginalPVs.Any()) {
 			<tr>
-				<td>@R.DetailsStrings.OriginalMedia</td>
+				<td>@Res.OriginalMedia</td>
 				<td>
 					@PVList(Model.OriginalPVs, false)		
 				</td>
 			</tr>
-   }
+			}
 
 			@if (Model.OtherPVs.Any()) {
 			<tr>
-				<td>@R.DetailsStrings.OtherMedia</td>
+				<td>@Res.OtherMedia</td>
 				<td>
 					@PVList(Model.OtherPVs, true)		
 				</td>
