@@ -40,10 +40,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 				AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
-			if (languagePreference != ContentLanguagePreference.Default) {
-				LocalizedName = song.Names.SortNames[languagePreference];				
-			}
-
 			if (fields.HasFlag(SongOptionalFields.Albums))
 				Albums = song.OnAlbums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
 
@@ -97,7 +93,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			if (languagePreference != ContentLanguagePreference.Default) {
 				AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
-				LocalizedName = song.Names.SortNames[languagePreference];				
 			}
 
 			if (albums)
@@ -183,10 +178,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public int LengthSeconds { get; set; }
-
-		[Obsolete("Use Name")]
-		[DataMember(EmitDefaultValue = false)]
-		public string LocalizedName { get; set; }
 
 		/// <summary>
 		/// List of lyrics. Optional field.

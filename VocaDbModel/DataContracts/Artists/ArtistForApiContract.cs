@@ -39,10 +39,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 				AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
-			if (languagePreference != ContentLanguagePreference.Default) {
-				LocalizedName = artist.Names.SortNames[languagePreference];				
-			}
-
 			if (includedFields.HasFlag(ArtistOptionalFields.Description))
 				Description = artist.Description[languagePreference];
 
@@ -117,10 +113,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public int Id { get; set; }
-
-		[Obsolete("Use Name")]
-		[DataMember(EmitDefaultValue = false)]
-		public string LocalizedName { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }

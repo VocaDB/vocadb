@@ -40,11 +40,11 @@ namespace VocaDb.Model.DataContracts.Api {
 					return new EntryForApiContract((Tag)entry, imagePersisterOld, ssl, includedFields);
 			}
 
-			return new EntryForApiContract(entry, languagePreference);
+			return new EntryForApiContract(entry, languagePreference, includedFields);
 
 		}
 
-		private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference) {
+		private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference, EntryOptionalFields fields) {
 
 			EntryType = entry.EntryType;
 			Id = entry.Id;
@@ -54,16 +54,15 @@ namespace VocaDb.Model.DataContracts.Api {
 			Name = entry.Names.SortNames[languagePreference];				
 			Version = entry.Version;
 
-			if (languagePreference != ContentLanguagePreference.Default) {
+			if (fields.HasFlag(EntryOptionalFields.AdditionalNames) || languagePreference != ContentLanguagePreference.Default) {
 				AdditionalNames = entry.Names.GetAdditionalNamesStringForLanguage(languagePreference);
-				LocalizedName = entry.Names.SortNames[languagePreference];					
 			}
 
 		}
 
 		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, bool ssl, 
 			EntryOptionalFields includedFields)
-			: this(artist, languagePreference) {
+			: this(artist, languagePreference, includedFields) {
 
 			ArtistType = artist.ArtistType;			
 			CreateDate = artist.CreateDate;
@@ -89,7 +88,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, bool ssl, 
 			EntryOptionalFields includedFields)
-			: this(album, languagePreference) {
+			: this(album, languagePreference, includedFields) {
 
 			ArtistString = album.ArtistString[languagePreference];
 			CreateDate = album.CreateDate;
@@ -115,7 +114,7 @@ namespace VocaDb.Model.DataContracts.Api {
 		}
 
 		public EntryForApiContract(ReleaseEvent releaseEvent)
-			: this(releaseEvent, ContentLanguagePreference.Default) {
+			: this(releaseEvent, ContentLanguagePreference.Default, EntryOptionalFields.None) {
 
 			ReleaseEventSeriesName = releaseEvent.Series != null ? releaseEvent.Series.Name : null;
 
@@ -123,14 +122,14 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		// Only used for recent comments atm.
 		public EntryForApiContract(DiscussionTopic topic, ContentLanguagePreference languagePreference)
-			: this((IEntryWithNames)topic, languagePreference) {
+			: this((IEntryWithNames)topic, languagePreference, EntryOptionalFields.None) {
 
 			CreateDate = topic.Created;
 
 		}
 
 		public EntryForApiContract(Song song, ContentLanguagePreference languagePreference, EntryOptionalFields includedFields)
-			: this((IEntryWithNames)song, languagePreference) {
+			: this((IEntryWithNames)song, languagePreference, includedFields) {
 			
 			ArtistString = song.ArtistString[languagePreference];
 			CreateDate = song.CreateDate;
@@ -159,7 +158,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		public EntryForApiContract(SongList songList, IEntryImagePersisterOld thumbPersister, bool ssl, 
 			EntryOptionalFields includedFields)
-			: this(songList, ContentLanguagePreference.Default) {
+			: this(songList, ContentLanguagePreference.Default, includedFields) {
 
 			SongListFeaturedCategory = songList.FeaturedCategory;
 
@@ -171,7 +170,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		public EntryForApiContract(Tag tag, IEntryImagePersisterOld thumbPersister, bool ssl, 
 			EntryOptionalFields includedFields)
-			: this(tag, ContentLanguagePreference.Default) {
+			: this(tag, ContentLanguagePreference.Default, includedFields) {
 
 			TagCategoryName = tag.CategoryName;
 
@@ -212,9 +211,6 @@ namespace VocaDb.Model.DataContracts.Api {
 		public int Id { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string LocalizedName { get; set; }
-
-		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }
 
 		[DataMember]
@@ -253,11 +249,12 @@ namespace VocaDb.Model.DataContracts.Api {
 	public enum EntryOptionalFields {
 
 		None = 0,
-		Description = 1,
-		MainPicture = 2,
-		Names = 4,
-		Tags = 8,
-		WebLinks = 16
+		AdditionalNames = 1,
+		Description = 2,
+		MainPicture = 4,
+		Names = 8,
+		Tags = 16,
+		WebLinks = 32
 
 	}
 

@@ -74,10 +74,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 			Status = album.Status;
 			Version = album.Version;
 
-			if (languagePreference != ContentLanguagePreference.Default) {
-				LocalizedName = album.Names.SortNames[languagePreference];				
-			}
-
 			if (artists)
 				Artists = album.Artists.Select(a => new ArtistForAlbumForApiContract(a, languagePreference)).ToArray();
 
@@ -155,10 +151,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public AlbumIdentifierContract[] Identifiers { get; set; }
-
-		[Obsolete("Use Name")]
-		[DataMember(EmitDefaultValue = false)]
-		public string LocalizedName { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }
