@@ -25,6 +25,11 @@ module vdb.viewModels {
 
 		denySelf = (tagName: string) => (tagName !== this.name);
 
+		public submit = () => {
+			this.submitting(true);
+			return true;
+		}
+
 	}
 
 }

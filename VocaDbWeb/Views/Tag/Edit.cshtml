@@ -40,7 +40,7 @@
 }
 }
 
-<form action="@Url.Action("Edit", "Tag")" method="POST" enctype="multipart/form-data">
+<form action="@Url.Action("Edit", "Tag")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 
 	@Html.HiddenFor(m => m.Name)
 
