@@ -24,7 +24,7 @@ namespace VocaDb.Web.Models.Tag {
 			Status = contract.Status;
 			Thumb = contract.Thumb;
 
-			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).Where(e => e != EntryStatus.Draft).ToArray();
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
 			CopyNonEditableProperties(contract);
 
 		}
