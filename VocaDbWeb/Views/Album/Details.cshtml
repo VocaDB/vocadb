@@ -227,7 +227,7 @@
 
 				@if (Model.PVs.Any()) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.PVs</td>
+						<td>@Res.PVs</td>
 						<td>
 							@foreach (var pv in Model.PVs) {
 								@Helpers.FormatPVLink(pv, false)<br />
@@ -310,7 +310,7 @@
 		</div>
 
 		@if (!Model.Discs.Any()) {
-			<p>@ViewRes.Album.DetailsStrings.NoTracklist</p>
+			<p>@Res.NoTracklist</p>
 		}
 
 		@if (Model.PrimaryPV != null) {

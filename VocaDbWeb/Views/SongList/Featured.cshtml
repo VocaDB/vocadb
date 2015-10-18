@@ -13,7 +13,8 @@
 @section Toolbar {
 	@if (Login.Manager.HasPermission(PermissionToken.EditFeaturedLists)) {
 		@Html.ActionLink(ViewRes.User.DetailsStrings.CreateNewList, "Edit", null, new { id = "createLink" })
-		@:
+	}
+	@if (Login.Manager.HasPermission(PermissionToken.EditProfile)) {
 		@Html.ActionLink(Res.Import, "Import", null, new { id = "importLink" })
 	}
 }

@@ -1466,6 +1466,7 @@
     <Content Include="Content\Icons\soundcloud.png" />
     <Content Include="Content\Icons\star.png" />
     <Content Include="Content\Icons\tick.png" />
+    <Content Include="Content\Icons\wand.png" />
     <Content Include="Content\Icons\world.png" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
@@ -3667,6 +3668,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FeaturedStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\SongList\ImportStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\ImportStrings.resx">

@@ -168,6 +168,9 @@
   <data name="FollowedArtistsTab" xml:space="preserve">
     <value>Followed artists</value>
   </data>
+  <data name="ImportSongList" xml:space="preserve">
+    <value>Import from YouTube or NicoNicoDouga</value>
+  </data>
   <data name="LastLogin" xml:space="preserve">
     <value>Last login</value>
   </data>

@@ -214,6 +214,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import from YouTube or NicoNicoDouga.
+        /// </summary>
+        public static string ImportSongList {
+            get {
+                return ResourceManager.GetString("ImportSongList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last login.
         /// </summary>
         public static string LastLogin {

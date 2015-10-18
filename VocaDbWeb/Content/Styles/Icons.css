@@ -13,6 +13,7 @@
 .searchLink	{ background-image: url(../Icons/search.png); }
 .starIcon	{ background-image: url(../Icons/star.png); }
 .tickLink, .tickIcon { background-image: url(../Icons/tick.png); }
+.wandIcon	{ background-image: url(../Icons/wand.png); }
 
 span.icon {
 	background-position: 3px 7px;
