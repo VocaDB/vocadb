@@ -37,7 +37,7 @@ module vdb.knockoutExtensions {
 			lang: cls.globalization.ContentLanguagePreference[vdb.values.languagePreference],
 			fields: 'AdditionalNames',
 			preferAccurateMatches: true,
-			maxResults: 15
+			maxResults: 20
 		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
