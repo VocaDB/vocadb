@@ -16,8 +16,8 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public ArchivedTagVersion(Tag tag, TagDiff diff, AgentLoginData author,
-			EntryEditEvent commonEditEvent)
-			: base(null, author, tag.Version, EntryStatus.Finished, string.Empty) {
+			EntryEditEvent commonEditEvent, string notes)
+			: base(null, author, tag.Version, EntryStatus.Finished, notes) {
 
 			ParamIs.NotNull(() => diff);
 

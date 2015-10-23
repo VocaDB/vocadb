@@ -241,9 +241,9 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual EntryThumb Thumb { get; set; }
 
-		public virtual ArchivedTagVersion CreateArchivedVersion(TagDiff diff, AgentLoginData author, EntryEditEvent reason) {
+		public virtual ArchivedTagVersion CreateArchivedVersion(TagDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
 
-			var archived = new ArchivedTagVersion(this, diff, author, reason);
+			var archived = new ArchivedTagVersion(this, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 

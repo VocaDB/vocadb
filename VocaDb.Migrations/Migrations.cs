@@ -3,6 +3,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201510232200)]
+	public class ArchivedTagNotes : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("[Notes]").OnTable(TableNames.ArchivedTagVersions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
+			
+		}
+
+	}
+
 	[Migration(201510102223)]
 	public class AlbumDiscProperties : AutoReversingMigration {
 

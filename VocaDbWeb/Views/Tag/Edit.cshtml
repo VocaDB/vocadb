@@ -118,6 +118,10 @@
 	<div class="editor-field">
 		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
 	</div>
+	
+	<br />
+	<p>@ViewRes.EntryEditStrings.UpdateNotes</p>
+	<textarea name="UpdateNotes" id="UpdateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 
 	<br />
 	@Helpers.SaveAndBackBtn(Url.Action("Details", new { id = Model.Name }))

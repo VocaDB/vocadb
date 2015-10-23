@@ -73,7 +73,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Description() {
 
-			var updated = new TagContract(tag);
+			var updated = new TagForEditContract(tag, false);
 			updated.Description = "mikumikudance.wikia.com/wiki/Miku_Hatsune_Appearance_(Mamama)";
 
 			queries.Update(updated, null);
@@ -89,7 +89,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Image() {
 			
-			var updated = new TagContract(tag);
+			var updated = new TagForEditContract(tag, false);
 			using (var stream = TestImage()) {
 				queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });			
 			}
@@ -107,7 +107,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Parent() {
 			
-			var updated = new TagContract(tag);
+			var updated = new TagForEditContract(tag, false);
 			updated.Parent = tag2.Name;
 
 			queries.Update(updated, null);
@@ -124,7 +124,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Parent_IgnoreSelf() {
 			
-			var updated = new TagContract(tag);
+			var updated = new TagForEditContract(tag, false);
 			updated.Parent = tag.Name;
 
 			queries.Update(updated, null);

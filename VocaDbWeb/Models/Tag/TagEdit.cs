@@ -55,6 +55,8 @@ namespace VocaDb.Web.Models.Tag {
 
 		public EntryThumbContract Thumb { get; set; }
 
+		public string UpdateNotes { get; set; }
+
 		public void CopyNonEditableProperties(TagForEditContract contract) {
 
 			IsEmpty = contract.IsEmpty;
@@ -62,15 +64,16 @@ namespace VocaDb.Web.Models.Tag {
 
 		}
 
-		public TagContract ToContract() {
+		public TagForEditContract ToContract() {
 
-			return new TagContract {
+			return new TagForEditContract {
 				Name = this.Name,
 				AliasedTo = this.AliasedTo ?? string.Empty,
 				CategoryName = this.CategoryName ?? string.Empty,
 				Description = this.Description ?? string.Empty,
 				Parent = this.Parent ?? string.Empty,
-				Status = this.Status
+				Status = this.Status,
+				UpdateNotes = this.UpdateNotes ?? string.Empty
 			};
 
 		}

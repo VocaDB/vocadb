@@ -118,10 +118,10 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public ArchivedTagVersion Archive(IRepositoryContext<Tag> ctx, Tag tag, TagDiff diff, EntryEditEvent reason) {
+		public ArchivedTagVersion Archive(IRepositoryContext<Tag> ctx, Tag tag, TagDiff diff, EntryEditEvent reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
-			var archived = tag.CreateArchivedVersion(diff, agentLoginData, reason);
+			var archived = tag.CreateArchivedVersion(diff, agentLoginData, reason, notes);
 			ctx.OfType<ArchivedTagVersion>().Save(archived);
 			return archived;
 
@@ -365,7 +365,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 
-		public void Update(TagContract contract, UploadedFileContract uploadedImage) {
+		public void Update(TagForEditContract contract, UploadedFileContract uploadedImage) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -423,7 +423,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				var logStr = string.Format("updated properties for tag {0} ({1})", entryLinkFactory.CreateEntryLink(tag), diff.ChangedFieldsString);
 				ctx.AuditLogger.AuditLog(logStr);
 
-				var archived = Archive(ctx, tag, diff, EntryEditEvent.Updated);
+				var archived = Archive(ctx, tag, diff, EntryEditEvent.Updated, contract.UpdateNotes);
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), tag, EntryEditEvent.Updated, archived);						
 
 				ctx.Update(tag);

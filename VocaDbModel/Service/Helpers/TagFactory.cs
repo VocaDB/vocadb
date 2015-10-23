@@ -21,7 +21,7 @@ namespace VocaDb.Model.Service.Helpers {
 			var tag = new Tag(name);
 			ctx.Save(tag);
 
-			var archived = tag.CreateArchivedVersion(new TagDiff(), loginData, EntryEditEvent.Created);
+			var archived = tag.CreateArchivedVersion(new TagDiff(), loginData, EntryEditEvent.Created, string.Empty);
 			ctx.Save(archived);
 
 			var activityEntry = new TagActivityEntry(tag, EntryEditEvent.Created, loginData.User, archived);
