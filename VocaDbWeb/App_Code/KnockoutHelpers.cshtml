@@ -86,7 +86,9 @@
 				<li data-bind="visible: @validationMessage.Key">@validationMessage.Value</li>
 			}
 		</ul>
-		<span>See the <a href="@(Url.Action("Index", "Help") + "?guidelines+" + helpSection)">guide</a> for more information.</span>
+		@if (helpSection != null) {
+			<span>See the <a href="@(Url.Action("Index", "Help") + "?guidelines+" + helpSection)">guide</a> for more information.</span>
+		}
 		<!-- /ko -->
 	</div>
 

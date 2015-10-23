@@ -81,7 +81,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public Tag() {
 			CategoryName = string.Empty;
 			Description = string.Empty;
-			Status = EntryStatus.Finished;
+			Status = EntryStatus.Draft;
 		}
 
 		public Tag(string name, string categoryName = "")

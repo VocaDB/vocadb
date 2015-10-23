@@ -1304,6 +1304,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DetailsStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Tag\EditStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\User\AlbumCollectionStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3731,6 +3736,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Tag\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.ja.resx" />

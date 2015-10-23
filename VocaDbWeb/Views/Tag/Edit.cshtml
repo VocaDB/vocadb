@@ -1,18 +1,22 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain.Images
-@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
+@using Res = VocaDb.Web.Resources.Views.Tag.EditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEdit>
 
 @{
-    PageProperties.Title = "Edit tag - " + Model.Name;
-	ViewBag.Parents = new[] { 
+	PageProperties.Title = "Edit tag - " + Model.Name;
+	ViewBag.Parents = new[] {
 		Html.ActionLink("Tags", "Index"),
-		Html.ActionLink(Model.Name, "Details", new { id = Model.Name }) 		
+		Html.ActionLink(Model.Name, "Details", new { id = Model.Name })
 	};
 
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
-	
+
+	var validationErrors = new Dictionary<string, string> {
+		{ "validationError_needDescription", Res.ValidationNeedDescription }
+	};
+
 }
 
 @section BodyScripts {
@@ -40,6 +44,9 @@
 }
 }
 
+@KnockoutHelpers.EntryValidationMessage(Model.Draft, validationErrors, null)
+
+<br />
 <form action="@Url.Action("Edit", "Tag")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 
 	@Html.HiddenFor(m => m.Name)

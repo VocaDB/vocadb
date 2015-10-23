@@ -43,6 +43,8 @@ namespace VocaDb.Web.Models.Tag {
 		[StringLength(1000)]
 		public string Description { get; set; }
 
+		public bool Draft => Status == EntryStatus.Draft;
+
 		public bool IsEmpty { get; set; }
 
 		public string Name { get; set; }
