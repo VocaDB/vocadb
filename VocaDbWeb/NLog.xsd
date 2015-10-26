@@ -1366,9 +1366,9 @@
           <xs:element name="html" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="encoding" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="addNewLines" minOccurs="0" maxOccurs="1" type="xs:boolean" />
-          <xs:element name="bcc" minOccurs="0" maxOccurs="1" type="Layout" />
-          <xs:element name="to" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="cc" minOccurs="0" maxOccurs="1" type="Layout" />
+          <xs:element name="to" minOccurs="0" maxOccurs="1" type="Layout" />
+          <xs:element name="bcc" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="body" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="from" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -1382,6 +1382,8 @@
           <xs:element name="enableSsl" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="smtpPort" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="useSystemNetMailSettings" minOccurs="0" maxOccurs="1" type="xs:boolean" />
+          <xs:element name="pickupDirectoryLocation" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="deliveryMethod" minOccurs="0" maxOccurs="1" type="System.Net.Mail.SmtpDeliveryMethod" />
         </xs:choice>
         <xs:attribute name="name" type="xs:string">
           <xs:annotation>
@@ -1418,9 +1420,9 @@
             <xs:documentation>Indicates whether to add new lines between log entries.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="bcc" type="SimpleLayoutAttribute">
+        <xs:attribute name="cc" type="SimpleLayoutAttribute">
           <xs:annotation>
-            <xs:documentation>BCC email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
+            <xs:documentation>CC email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="to" type="SimpleLayoutAttribute">
@@ -1428,9 +1430,9 @@
             <xs:documentation>Recipients' email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="cc" type="SimpleLayoutAttribute">
+        <xs:attribute name="bcc" type="SimpleLayoutAttribute">
           <xs:annotation>
-            <xs:documentation>CC email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
+            <xs:documentation>BCC email addresses separated by semicolons (e.g. john@domain.com;jane@domain.com).</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="body" type="SimpleLayoutAttribute">
@@ -1498,6 +1500,16 @@
             <xs:documentation>Indicates whether the default Settings from System.Net.MailSettings should be used.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
+        <xs:attribute name="pickupDirectoryLocation" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Folder where applications save mail messages to be processed by the local SMTP server.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="deliveryMethod" type="System.Net.Mail.SmtpDeliveryMethod">
+          <xs:annotation>
+            <xs:documentation>Specifies how outgoing email messages will be handled.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -1506,6 +1518,13 @@
       <xs:enumeration value="None" />
       <xs:enumeration value="Basic" />
       <xs:enumeration value="Ntlm" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="System.Net.Mail.SmtpDeliveryMethod">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Network" />
+      <xs:enumeration value="SpecifiedPickupDirectory" />
+      <xs:enumeration value="PickupDirectoryFromIis" />
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="Memory">
@@ -1852,6 +1871,7 @@
           <xs:element name="counterHelp" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="counterName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="counterType" minOccurs="0" maxOccurs="1" type="System.Diagnostics.PerformanceCounterType" />
+          <xs:element name="incrementValue" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="instanceName" minOccurs="0" maxOccurs="1" type="xs:string" />
         </xs:choice>
         <xs:attribute name="name" type="xs:string">
@@ -1882,6 +1902,11 @@
         <xs:attribute name="counterType" type="System.Diagnostics.PerformanceCounterType">
           <xs:annotation>
             <xs:documentation>Performance counter type.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="incrementValue" type="SimpleLayoutAttribute">
+          <xs:annotation>
+            <xs:documentation>The value by which to increment the counter.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="instanceName" type="xs:string">
