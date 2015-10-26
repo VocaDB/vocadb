@@ -64,45 +64,7 @@
 }
 
 @helper EmbedPV(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 560, int height = 315, bool autoplay = false, bool enableApi = false, string id = null) {
-	var widthStr = (width > 0 ? width.ToString() : "");
-	var heightStr = (height > 0 ? height.ToString() : "");
-	id = id ?? string.Empty;
-	
-	switch (pv.Service) {
-		case VocaDb.Model.Domain.PVs.PVService.Bilibili:
-			<iframe width="@width" height="@height" src="http://static.hdslb.com/miniloader.swf?aid=@(pv.PVId)" style="border: 0"></iframe>
-			break;
-
-		case VocaDb.Model.Domain.PVs.PVService.File:
-		case VocaDb.Model.Domain.PVs.PVService.LocalFile:
-			<audio id="@id" controls src="@pv.Url"></audio>
-			break;
-
-		case VocaDb.Model.Domain.PVs.PVService.NicoNicoDouga:
-			<script type="text/javascript" src="@(string.Format("http://ext.nicovideo.jp/thumb_watch/{0}?w={1}&h={2}", pv.PVId, widthStr, heightStr))"></script>
-			break;
-
-		case VocaDb.Model.Domain.PVs.PVService.Piapro:
-			<iframe src="//piapro.jp/modpub/swf/player03_h.swf?030503&id=@(pv.PVId)&c=1" width="340" height="80" allowTransparency="true" style="border: 0"></iframe>
-			break;
-								   
-		case VocaDb.Model.Domain.PVs.PVService.SoundCloud:
-			var scId = new VocaDb.Model.Service.VideoServices.SoundCloudId(pv.PVId);
-			<iframe id="@id" width="@width" height="@Math.Min(height, 166)" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F@(scId.TrackId)&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
-			break;
-
-		case VocaDb.Model.Domain.PVs.PVService.Youtube:
-			var apParam = (autoplay ? 1 : 0);
-			var apiParam = (enableApi ? 1 : 0);
-			var originParam = (enableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress() : string.Empty);
-			<iframe id="@id" width="@widthStr" height="@heightStr" src="https://www.youtube.com/embed/@(pv.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
-			break;
-
-		case VocaDb.Model.Domain.PVs.PVService.Vimeo:
-            <iframe src="https://player.vimeo.com/video/@pv.PVId" width="@width" height="@height" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-            break;
-    }
-	
+	@PVHelpers.EmbedPV(pv, width, height, autoplay, enableApi, id)
 }
 
 @helper EmbedPVThumb(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 340, int height = 200) {	
