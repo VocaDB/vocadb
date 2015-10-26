@@ -376,6 +376,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[OutputCache(Duration = 600, VaryByParam = "pvId")]
 		public ActionResult PVEmbedNicoIFrame(int pvId = invalidId) {
 
 		    if (pvId == invalidId)

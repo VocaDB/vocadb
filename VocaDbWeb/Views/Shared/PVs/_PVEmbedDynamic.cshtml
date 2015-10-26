@@ -6,5 +6,5 @@
 @if (Model.Service == PVService.NicoNicoDouga) {
 	<iframe width="560" height="315" frameborder="0" scrolling="no" src="@Url.Action("PVEmbedNicoIFrame", "Song", new { pvId = Model.Id })"></iframe>
 } else {
-	@Helpers.EmbedPV(Model)
+	@PVHelpers.EmbedPV(Model)
 }

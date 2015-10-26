@@ -29,7 +29,7 @@
 	</h4>
 	<div style="height: @(Model.PlayerHeight)px" class="@("embed-pv" + (current != null ? " embed-pv-" + Model.CurrentServiceName : string.Empty))">		
 		@if (current != null) {
-			@Helpers.EmbedPVDynamic(current, Model.PlayerWidth, Model.PlayerHeight)
+			@PVHelpers.EmbedPVDynamic(current, Model.PlayerWidth, Model.PlayerHeight)
 		}
 	</div>
   
