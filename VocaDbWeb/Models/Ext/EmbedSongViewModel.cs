@@ -6,37 +6,30 @@ namespace VocaDb.Web.Models.Ext {
 
 	public class EmbedSongViewModel {
 
-		public int ContainerHeight {
-			get {
-				return PlayerHeight + 55;
-			}
-		}
+		private const int DefaultHeight = 315;
+		private const int DefaultWidth = 560;
+
+		public int ContainerHeight => PlayerHeight + 55;
 
 		public PVContract CurrentPV { get; set; }
 
+		public string CurrentServiceName {
+			get {
+				return CurrentPV?.Service.ToString().ToLowerInvariant() ?? string.Empty;
+			}
+		}
+
 		public int? Height { get; set; }
 
-		public SongWithPVAndVoteContract Song { get; set; }
+		public SongForApiContract Song { get; set; }
 
 		public int? Width { get; set; }
 
-		public PVContract[] MainPVs {
-			get {
-				return PVHelper.GetMainPVs(Song.PVs);				
-			}
-		}
+		public PVContract[] MainPVs => PVHelper.GetMainPVs(Song.PVs);
 
-		public int PlayerHeight {
-			get {
-				return Height ?? 315;
-			}
-		}
+		public int PlayerHeight => Height ?? DefaultHeight;
 
-		public int PlayerWidth {
-			get {
-				return Width ?? 560;
-			}
-		}
+		public int PlayerWidth => Width ?? DefaultWidth;
 
 	}
 

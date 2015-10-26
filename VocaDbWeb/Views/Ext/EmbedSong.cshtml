@@ -7,7 +7,6 @@
 
 @{
 	var current = Model.CurrentPV;
-	var serviceName = current != null ? current.Service.ToString().ToLowerInvariant() : string.Empty;
 }
 
 <script type="text/javascript">
@@ -28,7 +27,7 @@
 			(@Translate.SongTypeNames[Model.Song.SongType])
 		</small>
 	</h4>
-	<div style="height: @(Model.PlayerHeight)px" class="@("embed-pv" + (current != null ? " embed-pv-" + serviceName : string.Empty))">		
+	<div style="height: @(Model.PlayerHeight)px" class="@("embed-pv" + (current != null ? " embed-pv-" + Model.CurrentServiceName : string.Empty))">		
 		@if (current != null) {
 			@Helpers.EmbedPVDynamic(current, Model.PlayerWidth, Model.PlayerHeight)
 		}

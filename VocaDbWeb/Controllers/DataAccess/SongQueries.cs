@@ -403,6 +403,22 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		public SongForApiContract GetSongForApi(int songId, SongOptionalFields fields, ContentLanguagePreference? lang = null) {
+
+			return GetSongWithMergeRecord(songId, (song, r) => new SongForApiContract(song, r, lang ?? PermissionContext.LanguagePreference,
+				SongOptionalFields.AdditionalNames | SongOptionalFields.PVs));
+
+		}
+
+		public T GetSong<T>(int id, Func<Song, T> fac) {
+
+			return HandleQuery(session => {
+				var song = session.Load<Song>(id);
+				return fac(song);
+			});
+
+		}
+
 		public T GetSongWithMergeRecord<T>(int id, Func<Song, SongMergeRecord, T> fac) {
 
 			return HandleQuery(session => {

@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.SessionState;
 using NLog;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
@@ -44,7 +45,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(Request.Params[LoginManager.LangParamName]))
 				PermissionContext.LanguagePreferenceSetting.OverrideRequestValue(ContentLanguagePreference.Default);
 
-			var song = songService.GetSongWithPVAndVote(songId, false);
+			var song = songService.GetSongForApi(songId, SongOptionalFields.AdditionalNames | SongOptionalFields.PVs);
 
 			PVContract current = null;
     
