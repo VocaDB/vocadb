@@ -83,6 +83,8 @@ namespace VocaDb.Model.Service {
 				var link = list.AddSong(song, order, notes);
 				session.Save(link);
 
+				SysLog(string.Format("added {0} to {1}", song, list));
+
 			});
 
 		}

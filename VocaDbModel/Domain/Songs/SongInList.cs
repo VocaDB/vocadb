@@ -92,7 +92,7 @@
 		}
 
 		public override string ToString() {
-			return Song + " in " + List;
+			return string.Format("{0} in {1}", Song, List);
 		}
 
 	}
