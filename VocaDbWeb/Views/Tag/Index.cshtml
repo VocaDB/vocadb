@@ -14,7 +14,7 @@
 	
 	foreach (var tag in category.Tags) {
 		<span class="tag">
-			@Html.ActionLink(tag.Name, "DetailsById", new { id = tag.Id, slug = tag.Name })
+			@Html.ActionLink(tag.Name, "DetailsById", new { id = tag.Id, slug = tag.Slug })
 		</span>
 	}
 	<br /><br />

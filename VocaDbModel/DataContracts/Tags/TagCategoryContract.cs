@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
@@ -16,13 +14,13 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ParamIs.NotNull(() => tags);
 
 			Name = name;
-			Tags = tags.Select(t => new TagContract(t)).ToArray();
+			Tags = tags.Select(t => new TagBaseContract(t)).ToArray();
 
 		}
 
 		public string Name { get; set; }
 
-		public TagContract[] Tags { get; set; }
+		public TagBaseContract[] Tags { get; set; }
 
 	}
 
