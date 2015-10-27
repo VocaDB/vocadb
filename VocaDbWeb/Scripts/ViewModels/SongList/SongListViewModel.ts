@@ -57,8 +57,8 @@ module vdb.viewModels.songList {
 
 		public loading = ko.observable(true); // Currently loading for data
 
-		public mapTagUrl = (tagName: string) => {
-			return utils.EntryUrlMapper.details_tag_byName(tagName);
+		public mapTagUrl = (tagUsage: vdb.dataContracts.tags.TagUsageForApiContract) => {
+			return utils.EntryUrlMapper.details_tag(tagUsage.tagId, tagUsage.name);
 		}
 
 		public page = ko.observableArray<dc.songs.SongInListContract>([]); // Current page of items

@@ -51,8 +51,8 @@ module vdb.utils {
 			return EntryUrlMapper.details("Song", entry.id, entry.urlFriendlyName);
 		}
 
-		public static details_tag_byName(name: string) {
-			return vdb.functions.mapAbsoluteUrl("/Tag/Details/" + name);
+		public static details_tag(id: number, slug?: string) {
+            return EntryUrlMapper.details('Tag', id, slug);        
 		}
     
 		public static details_user_byName(name: string) {
