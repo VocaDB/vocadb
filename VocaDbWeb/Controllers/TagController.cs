@@ -1,7 +1,9 @@
 ﻿using System.Web.Mvc;
 using ViewRes.Tag;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
@@ -12,11 +14,13 @@ namespace VocaDb.Web.Controllers
 {
     public class TagController : ControllerBase {
 
+		private readonly IEntryLinkFactory entryLinkFactory;
 	    private readonly TagQueries queries;
 
-		public TagController(TagQueries queries) {
+		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory) {
 
 			this.queries = queries;
+			this.entryLinkFactory = entryLinkFactory;
 
 		}
 
@@ -30,12 +34,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Details(string id) {
-
-			if (string.IsNullOrEmpty(id))
-				return NoId();
-
-			var contract = queries.GetDetails(id);
+		private ActionResult RenderDetails(TagDetailsContract contract) {
 
 			if (contract == null)
 				return HttpNotFound();
@@ -44,24 +43,41 @@ namespace VocaDb.Web.Controllers
 			PageProperties.PageTitle = string.Format("{0} - {1}", DetailsStrings.TagDetails, contract.Name);
 			PageProperties.Title = contract.Name;
 			PageProperties.Subtitle = DetailsStrings.Tag;
-			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
+			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.Tag, contract.Id, contract.Name);
 			PageProperties.OpenGraph.ShowTwitterCard = true;
 
-			return View(contract);
+			return View("Details", contract);
 
 		}
 
-		public ActionResult DetailsById(int id = invalidId) {
+		public ActionResult Details(string id) {
+
+			if (string.IsNullOrEmpty(id))
+				return NoId();
+
+			var tagId = queries.GetTag(id, t => t != null ? t.Id : invalidId);
+
+			if (tagId == invalidId)
+				return HttpNotFound();
+
+			return RedirectToActionPermanent("DetailsById", new { id = tagId, slug = id });
+
+		}
+
+		public ActionResult DetailsById(int id = invalidId, string slug = null) {
 
 			if (id == invalidId)
 				return NoId();
 
 			var tagName = queries.GetTagNameById(id);
 
-			if (tagName == null)
-				return HttpNotFound();
+			if (slug != tagName) {
+				return RedirectToActionPermanent("DetailsById", new { id, slug = tagName });
+			}
 
-			return RedirectToActionPermanent("Details", new { id = tagName });
+			var contract = queries.GetDetails(tagName);
+
+			return RenderDetails(contract);
 
 		}
 

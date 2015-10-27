@@ -256,7 +256,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				if (tag == null)
 					return null;
-				
+
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(session, tagName, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(session, tagName, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
 				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(session, tagName, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
@@ -282,6 +282,17 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return HandleQuery(ctx => {
 				
 				var tag = GetTag(ctx, tagName);
+				return fac(tag);
+
+			});
+
+		}
+
+		public T GetTag<T>(int id, Func<Tag, T> fac) {
+
+			return HandleQuery(ctx => {
+
+				var tag = GetTagById(ctx, id);
 				return fac(tag);
 
 			});

@@ -31,9 +31,10 @@ namespace VocaDb.Web.Code {
 
 		}
 
-		private string GetUrl(string basePart, EntryType entryType, int id) {
+		private string GetUrl(string basePart, EntryType entryType, int id, string slug) {
 
 			string relative;
+			slug = slug ?? string.Empty;
 
 			switch (entryType) {
 				case EntryType.Album:
@@ -53,7 +54,7 @@ namespace VocaDb.Web.Code {
 					break;
 
 				case EntryType.Tag:
-					relative = string.Format("Tag/DetailsById/{0}", id);
+					relative = string.Format("T/{0}{1}{2}", id, slug != string.Empty ? "/" : string.Empty, slug);
 					break;
 
 				default:
@@ -65,19 +66,19 @@ namespace VocaDb.Web.Code {
 
 		}
 
-		public string GetFullEntryUrl(EntryType entryType, int id) {
-			return GetUrl(hostAddress, entryType, id);
+		public string GetFullEntryUrl(EntryType entryType, int id, string slug = null) {
+			return GetUrl(hostAddress, entryType, id, slug);
 		}
 
-		public string CreateEntryLink(EntryType entryType, int id, string name) {
+		public string CreateEntryLink(EntryType entryType, int id, string name, string slug = null) {
 
-			var url = GetUrl(baseUrl, entryType, id);
+			var url = GetUrl(baseUrl, entryType, id, slug);
 
 			return CreateAnchor(url, name);
 
 		}
 
-		public string CreateEntryLink(IEntryBase entry) {
+		public string CreateEntryLink(IEntryBase entry, string slug = null) {
 
 			if (entry.EntryType == EntryType.Tag) {
 				
@@ -86,7 +87,7 @@ namespace VocaDb.Web.Code {
 
 			}
 
-			return CreateEntryLink(entry.EntryType, entry.Id, entry.DefaultName);
+			return CreateEntryLink(entry.EntryType, entry.Id, entry.DefaultName, slug);
 
 		}
 

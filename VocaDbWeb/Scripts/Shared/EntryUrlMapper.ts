@@ -30,7 +30,7 @@ module vdb.utils {
 					prefix = vdb.functions.mapAbsoluteUrl("/S/" + id);
 					break;
 				case cls.EntryType.Tag:
-					prefix = vdb.functions.mapAbsoluteUrl("/Tag/DetailsById/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/T/" + id);
 					break;
 				default:
 					prefix = vdb.functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
