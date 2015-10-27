@@ -16,11 +16,11 @@ namespace VocaDb.Web.Models.Tag {
 
 			ParamIs.NotNull(() => contract);
 
-			AliasedTo = contract.AliasedTo;
+			AliasedTo = contract.AliasedTo?.Name;
 			CategoryName = contract.CategoryName;
 			Description = contract.Description;
 			Name = contract.Name;
-			Parent = contract.Parent;
+			Parent = contract.Parent?.Name;
 			Status = contract.Status;
 			Thumb = contract.Thumb;
 
@@ -68,10 +68,10 @@ namespace VocaDb.Web.Models.Tag {
 
 			return new TagForEditContract {
 				Name = this.Name,
-				AliasedTo = this.AliasedTo ?? string.Empty,
+				AliasedTo = new TagBaseContract { Name = this.AliasedTo ?? string.Empty },
 				CategoryName = this.CategoryName ?? string.Empty,
 				Description = this.Description ?? string.Empty,
-				Parent = this.Parent ?? string.Empty,
+				Parent = new TagBaseContract { Name = this.Parent ?? string.Empty },
 				Status = this.Status,
 				UpdateNotes = this.UpdateNotes ?? string.Empty
 			};

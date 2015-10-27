@@ -390,8 +390,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				var diff = new TagDiff();
 
-				var newAliasedTo = contract.AliasedTo ?? string.Empty;
-				if (!Tag.Equals(tag.AliasedTo, contract.AliasedTo)) {
+				var newAliasedTo = contract.AliasedTo?.Name ?? string.Empty;
+				if (!Tag.Equals(tag.AliasedTo, newAliasedTo)) {
 					diff.AliasedTo = true;
 					tag.AliasedTo = GetRealTag(ctx, newAliasedTo, tag);
 				}
@@ -402,9 +402,9 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				if (tag.Description != contract.Description)
 					diff.Description = true;
 
-				if (!Tag.Equals(tag.Parent, contract.Parent)) {
+				if (!Tag.Equals(tag.Parent, contract.Parent?.Name)) {
 
-					var newParent = GetRealTag(ctx, contract.Parent, tag);
+					var newParent = GetRealTag(ctx, contract.Parent?.Name, tag);
 
 					if (!Equals(newParent, tag.Parent)) {
 						diff.Parent = true;

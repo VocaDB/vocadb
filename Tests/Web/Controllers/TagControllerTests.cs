@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers;
 
 namespace VocaDb.Tests.Web.Controllers {
@@ -15,7 +16,7 @@ namespace VocaDb.Tests.Web.Controllers {
 		[TestInitialize]
 		public void SetUp() {
 
-			controller = new TagController(null);
+			controller = new TagController(null, new FakeEntryLinkFactory());
 
 		}
 

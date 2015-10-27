@@ -43,7 +43,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.PageTitle = string.Format("{0} - {1}", DetailsStrings.TagDetails, contract.Name);
 			PageProperties.Title = contract.Name;
 			PageProperties.Subtitle = DetailsStrings.Tag;
-			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.Tag, contract.Id, contract.Name);
+			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.Tag, contract.Id, contract.Slug);
 			PageProperties.OpenGraph.ShowTwitterCard = true;
 
 			return View("Details", contract);

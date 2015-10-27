@@ -108,7 +108,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_Parent() {
 			
 			var updated = new TagForEditContract(tag, false);
-			updated.Parent = tag2.Name;
+			updated.Parent = new TagBaseContract(tag2);
 
 			queries.Update(updated, null);
 
@@ -125,7 +125,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_Parent_IgnoreSelf() {
 			
 			var updated = new TagForEditContract(tag, false);
-			updated.Parent = tag.Name;
+			updated.Parent = new TagBaseContract(tag);
 
 			queries.Update(updated, null);
 

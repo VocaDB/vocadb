@@ -5,15 +5,15 @@ namespace VocaDb.Tests.TestSupport {
 
 	public class FakeEntryLinkFactory : IEntryLinkFactory  {
 
-		public string CreateEntryLink(IEntryBase entry) {
+		public string CreateEntryLink(IEntryBase entry, string slug) {
 			return string.Empty;
 		}
 
-		public string CreateEntryLink(EntryType entryType, int id, string name) {
+		public string CreateEntryLink(EntryType entryType, int id, string name, string slug) {
 			return string.Empty;
 		}
 
-		public string GetFullEntryUrl(EntryType entryType, int id) {
+		public string GetFullEntryUrl(EntryType entryType, int id, string slug) {
 			return string.Empty;
 		}
 

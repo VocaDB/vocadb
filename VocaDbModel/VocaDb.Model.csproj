@@ -146,6 +146,7 @@
     <Compile Include="DataContracts\Songs\SongInAlbumForApiContract.cs" />
     <Compile Include="DataContracts\Songs\SongInListForApiContract.cs" />
     <Compile Include="DataContracts\Songs\SongListWithArchivedVersionsContract.cs" />
+    <Compile Include="DataContracts\Tags\TagBaseContract.cs" />
     <Compile Include="DataContracts\Tags\TagForApiContract.cs" />
     <Compile Include="DataContracts\Tags\TagUsageForApiContract.cs" />
     <Compile Include="DataContracts\ArchivedEntryPictureFileContract.cs" />

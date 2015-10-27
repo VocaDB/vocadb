@@ -5,29 +5,28 @@ using VocaDb.Model.Domain.Tags;
 namespace VocaDb.Model.DataContracts.Tags {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class TagContract {
+	public class TagContract : TagBaseContract {
 
 		public TagContract() {
-			AliasedTo = string.Empty;
+			AliasedTo = null;
 		}
 
-		public TagContract(Tag tag) {
+		public TagContract(Tag tag)
+			: base(tag) {
 
 			ParamIs.NotNull(() => tag);
 
-			AliasedTo = tag.AliasedTo != null ? tag.AliasedTo.Name : null;
+			AliasedTo = tag.AliasedTo != null ? new TagBaseContract(tag.AliasedTo) : null;
 			CategoryName = tag.CategoryName;
 			Description = tag.Description;
-			Id = tag.Id;
-			Name = tag.TagName;
-			Parent = (tag.Parent != null ? tag.Parent.Name : null);
+			Parent = tag.Parent != null ? new TagBaseContract(tag.Parent) : null;
 			Status = tag.Status;
 			Version = tag.Version;
 
 		}
 
 		[DataMember]
-		public string AliasedTo { get; set; }
+		public TagBaseContract AliasedTo { get; set; }
 
 		[DataMember]
 		public string CategoryName { get; set; }
@@ -36,13 +35,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public string Description { get; set; }
 
 		[DataMember]
-		public int Id { get; set; }
-
-		[DataMember]
-		public string Name { get; set; }
-
-		[DataMember]
-		public string Parent { get; set; }
+		public TagBaseContract Parent { get; set; }
 
 		[DataMember]
 		public EntryStatus Status { get; set; }

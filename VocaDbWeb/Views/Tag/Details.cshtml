@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Model.DataContracts.Tags
 @using R = ViewRes.Tag.DetailsStrings;
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Security
@@ -21,16 +22,16 @@
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
 
 	PageProperties.Description = descriptionStripped;
-		
-	var related = new List<Tuple<string, string>>();
+
+	var related = new List<Tuple<TagBaseContract, string>>();
 
 	if (Model.Parent != null) {
-		related.Add(Tuple.Create(Model.Parent, "parent"));		
+		related.Add(Tuple.Create(Model.Parent, "parent"));
 	}
-	
+
 	related.AddRange(Model.Children.Select(t => Tuple.Create(t, "child")));
 	related.AddRange(Model.Siblings.Select(t => Tuple.Create(t, "sibling")));
-	
+
 }
 
 @section Head {
@@ -98,12 +99,12 @@
 				<p>@R.Category: @Model.CategoryName</p>
 			}
 
-			@if (!string.IsNullOrEmpty(Model.AliasedTo)) {
-				<p>Aliased to @Html.ActionLink(Model.AliasedTo, "Details", new { id = Model.AliasedTo })</p>
+			@if (Model.AliasedTo != null) {
+				<p>Aliased to @Html.ActionLink(Model.AliasedTo.Name, "DetailsById", new { id = Model.AliasedTo.Id, slug = Model.AliasedTo.Slug })</p>
 			}
 
 			@if (Model.Aliases.Any()) {
-				<p>Aliases: @Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias, "Details", new { id = alias }))</p>
+				<p>Aliases: @Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.Slug }))</p>
 			}
 
 			@if (related.Any()) {

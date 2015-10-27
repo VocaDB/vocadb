@@ -37,7 +37,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			IEnumerable<Song> songs, int songCount, ContentLanguagePreference languagePreference)
 			: base(tag) {
 
-			Aliases = tag.Aliases.Select(a => a.Name).ToArray();
+			Aliases = tag.Aliases.Select(a => new TagBaseContract(a)).ToArray();
 
 			Albums = albums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
 			AlbumCount = albumCount;
@@ -45,8 +45,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Artists = artists.Select(a => new ArtistContract(a, languagePreference)).ToArray();
 			ArtistCount = artistCount;
 
-			Children = tag.Children.Select(a => a.Name).ToArray();
-			Siblings = tag.Parent != null ? tag.Parent.Children.Where(t => !t.Equals(tag)).Select(a => a.Name).ToArray() : new string[0];
+			Children = tag.Children.Select(a => new TagBaseContract(a)).ToArray();
+			Siblings = tag.Parent != null ? tag.Parent.Children.Where(t => !t.Equals(tag)).Select(a => new TagBaseContract(a)).ToArray() : new TagBaseContract[0];
 
 			Songs = songs.Select(a => new SongContract(a, languagePreference)).ToArray();
 			SongCount = songCount;
@@ -57,19 +57,19 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public int ArtistCount { get; set; }
 
-		public string[] Aliases { get; set; }
+		public TagBaseContract[] Aliases { get; set; }
 
 		public AlbumContract[] Albums { get; set; }
 
 		public ArtistContract[] Artists { get; set; }
 
-		public string[] Children { get; set; }
+		public TagBaseContract[] Children { get; set; }
 
 		public int CommentCount { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
 
-		public string[] Siblings { get; set; }
+		public TagBaseContract[] Siblings { get; set; }
 
 		public SongContract[] Songs { get; set; }
 

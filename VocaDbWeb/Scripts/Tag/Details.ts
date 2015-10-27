@@ -1,12 +1,14 @@
-﻿function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: string, siblings: string[], children: string[]) {
+﻿import dc = vdb.dataContracts;
 
-	var tagUrl = (tagName: string) => urlMapper.mapRelative("/Tag/Details/" + tagName);
-	var tagLink = (tagName: string) => {
-		var link = '<a href="' + tagUrl(tagName) + '">' + tagName + '</a>';
+function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBaseContract, siblings: dc.TagBaseContract[], children: dc.TagBaseContract[]) {
+
+	var tagUrl = (tag: dc.TagBaseContract) => urlMapper.mapRelative("/T/" + tag.id + "/" + tag.slug);
+	var tagLink = (tag: dc.TagBaseContract) => {
+		var link = '<a href="' + tagUrl(tag) + '">' + tag.name + '</a>';
 		return link;
 	};
 
-	var tagLinks = (tagList: string[]) => {
+	var tagLinks = (tagList: dc.TagBaseContract[]) => {
 
 		var str = "";
 		var links = _.map(tagList, item => tagLink(item));
