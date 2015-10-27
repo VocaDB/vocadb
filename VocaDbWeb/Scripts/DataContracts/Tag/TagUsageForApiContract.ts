@@ -7,6 +7,8 @@ module vdb.dataContracts.tags {
 
 		name: string;
 
+		tagId: number;
+
 	}
 
 }

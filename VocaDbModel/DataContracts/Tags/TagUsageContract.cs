@@ -14,6 +14,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			Count = usage.Count;
 			Id = usage.Id;
+			TagId = usage.Tag.Id;
 			TagName = usage.Tag.Name;
 
 		}
@@ -23,6 +24,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public long Id { get; set; }
+
+		[DataMember]
+		public int TagId { get; set; }
 
 		[DataMember]
 		public string TagName { get; set; }

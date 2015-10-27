@@ -22,8 +22,8 @@ module vdb.viewModels.tags {
 
 		public displayedTagUsages: KnockoutComputed<dc.tags.TagUsageForApiContract[]>;
 
-		public getTagUrl = (tagName: string) => {
-			return vdb.utils.EntryUrlMapper.details_tag_byName(tagName);
+		public getTagUrl = (tag: dc.tags.TagUsageForApiContract) => {
+			return vdb.utils.EntryUrlMapper.details("Tag", tag.tagId, tag.name);
 		}
 
 		public expanded = ko.observable(false);
