@@ -5,9 +5,11 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.DataContracts.Activityfeed;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Comments;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
-using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.UseCases {
 
@@ -18,10 +20,12 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
 			AlbumContract[] newAlbums, IEnumerable<EntryWithCommentsContract> recentComments, AlbumContract[] topAlbums, Song[] newSongs,
 			SongVoteRating firstSongRating,
-			ContentLanguagePreference languagePreference, IEntryThumbPersister entryThumbPersister, IEntryImagePersisterOld entryImagePersisterOld,
-			bool ssl) {
+			ContentLanguagePreference languagePreference, bool ssl, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext, 
+			EntryForApiContractFactory entryForApiContractFactory) {
 
-			ActivityEntries = activityEntries.Select(e => new ActivityEntryContract(e, languagePreference, entryThumbPersister, entryImagePersisterOld, ssl)).ToArray();
+			ActivityEntries = activityEntries.Select(e => new ActivityEntryForApiContract(e,
+				entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference, ssl), 
+				 userIconFactory, permissionContext, ActivityEntryOptionalFields.None)).ToArray();
 			NewAlbums = newAlbums;
 			NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
 			RecentComments = recentComments.ToArray();
@@ -31,7 +35,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		}
 
-		public ActivityEntryContract[] ActivityEntries { get; set; }
+		public ActivityEntryForApiContract[] ActivityEntries { get; set; }
 
 		public SongWithPVAndVoteContract FirstSong { get; set; }
 

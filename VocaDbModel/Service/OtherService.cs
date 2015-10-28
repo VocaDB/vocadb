@@ -12,6 +12,7 @@ using VocaDb.Model.DataContracts.Comments;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -20,7 +21,6 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
@@ -46,8 +46,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private readonly IEntryImagePersisterOld entryImagePersisterOld;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IUserIconFactory userIconFactory;
+		private readonly EntryForApiContractFactory entryForApiContractFactory;
 
 		private AlbumContract[] GetTopAlbums(ISession session, AlbumContract[] recentAlbums) {
 
@@ -253,20 +253,19 @@ namespace VocaDb.Model.Service {
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 				
-			var contracts = CreateEntryWithCommentsContract(combined, c => EntryForApiContract.Create(c.Entry, LanguagePreference, thumbPersister, entryImagePersisterOld, 
-				ssl, EntryOptionalFields.MainPicture))
+			var contracts = CreateEntryWithCommentsContract(combined, c => entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.MainPicture, LanguagePreference, ssl))
 				.ToArray();
 
 			return contracts;
 
 		}
 
-		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryThumbPersister thumbPersister,
-			IEntryImagePersisterOld entryImagePersisterOld) 
+		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
+			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 			
-			this.thumbPersister = thumbPersister;
-			this.entryImagePersisterOld = entryImagePersisterOld;
+			this.userIconFactory = userIconFactory;
+			this.entryForApiContractFactory = entryForApiContractFactory;
 
 		}
 
@@ -456,7 +455,8 @@ namespace VocaDb.Model.Service {
 				var recentComments = GetRecentComments(session, ssl);
 
 				return new FrontPageContract(activityEntries, newAlbums, recentComments, topAlbums, newSongs, 
-					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference, thumbPersister, entryImagePersisterOld, ssl);
+					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference,
+					ssl, userIconFactory, PermissionContext, entryForApiContractFactory);
 
 			});
 

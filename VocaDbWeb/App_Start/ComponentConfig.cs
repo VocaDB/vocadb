@@ -7,6 +7,7 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.Wcf;
 using Autofac.Integration.WebApi;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -69,6 +70,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<MarkdownParser>().AsSelf();
 			builder.Register(x => new IPRuleManager(LoadBlockedIPs(x))).AsSelf().SingleInstance();
 			builder.Register(_ => MemoryCache.Default).As<ObjectCache>().ExternallyOwned(); // Disable dispose
+			builder.RegisterType<EntryForApiContractFactory>().AsSelf();
 
 			// Legacy services
 			builder.RegisterType<ActivityFeedService>().AsSelf();

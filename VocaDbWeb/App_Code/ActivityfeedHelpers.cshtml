@@ -7,8 +7,8 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Activityfeed;
 
-@helper EntryType(ActivityEntryContract entry) {
-	@EntryType(entry.EditEvent, entry.EntryRef.EntryType)
+@helper EntryType(ActivityEntryForApiContract entry) {
+	@EntryType(entry.EditEvent, entry.Entry.EntryType)
 }
 
 @helper EntryType(EntryEditEvent editEvent, EntryType entryType) {
@@ -33,10 +33,10 @@
 
 }
 
-@helper ActivityEntry(ActivityEntryContract entry, bool showDetails = false) {
-	var thumbUrl = entry.EntryRef.MainPicture != null ? entry.EntryRef.MainPicture.UrlTinyThumb : null;
+@helper ActivityEntry(ActivityEntryForApiContract entry, bool showDetails = false) {
+	var thumbUrl = entry.Entry.MainPicture != null ? entry.Entry.MainPicture.UrlTinyThumb : null;
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
-		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
+		@if (entry.Author != null) {
 			@UserHelpers.UserIconLink(entry.Author, userInfo: true)
 		} else {
 			@HelperRes.ActivityFeedHelperStrings.Someone
@@ -50,21 +50,18 @@
 
 		<div class="media">
 			@if (!string.IsNullOrEmpty(thumbUrl)) {
-				<a class="pull-left" href="@EntryLinkFactory.GetFullEntryUrl(entry.EntryRef.EntryType, entry.EntryRef.Id)" title="@entry.EntryRef.AdditionalNames">
+				<a class="pull-left" href="@EntryLinkFactory.GetFullEntryUrl(entry.Entry.EntryType, entry.Entry.Id)" title="@entry.Entry.AdditionalNames">
 					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
 				</a>
 			}
 			<div class="media-body">
 				<h4 class="media-heading">
-					<a href="@Url.EntryDetails(entry.EntryRef)" title="@entry.EntryRef.AdditionalNames">
-						<strong>@entry.EntryRef.Name</strong>
+					<a href="@Url.EntryDetails(entry.Entry)" title="@entry.Entry.AdditionalNames">
+						<strong>@entry.Entry.Name</strong>
 					</a>
-					@if (!string.IsNullOrEmpty(entry.EntryTypeName)) {
-						@:(@entry.EntryTypeName)
-					}
 				</h4>
-				@if (!string.IsNullOrEmpty(entry.EntryRef.ArtistString)) {
-					@entry.EntryRef.ArtistString
+				@if (!string.IsNullOrEmpty(entry.Entry.ArtistString)) {
+					@entry.Entry.ArtistString
 				}
 			</div>
 		</div>

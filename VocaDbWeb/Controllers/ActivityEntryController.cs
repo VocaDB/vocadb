@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers
 {
@@ -22,7 +22,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult FollowedArtistActivity() {
 
-			var result = Service.GetFollowedArtistActivity(entriesPerPage, WebHelper.IsSSL(Request));
+			var result = Service.GetFollowedArtistActivity(entriesPerPage, Request.IsSSL());
 			return View(result.Items);
 
 		}

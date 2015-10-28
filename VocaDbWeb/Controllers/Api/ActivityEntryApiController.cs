@@ -6,7 +6,6 @@ using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Repositories;
@@ -22,21 +21,18 @@ namespace VocaDb.Web.Controllers.Api {
 
 		private const int absoluteMax = 500;
 		private const int defaultMax = 50;
-		private readonly IEntryThumbPersister entryThumbPersister;
-		private readonly IEntryImagePersisterOld entryImagePersisterOld;
 		private readonly IRepository repository;
 		private readonly IUserIconFactory userIconFactory;
 		private readonly IUserPermissionContext permissionContext;
+		private readonly EntryForApiContractFactory entryForApiContractFactory;
 
 		public ActivityEntryApiController(IRepository repository, IUserIconFactory userIconFactory, 
-			IEntryThumbPersister entryThumbPersister, IEntryImagePersisterOld entryImagePersisterOld,
-			IUserPermissionContext permissionContext) {
+			IUserPermissionContext permissionContext, EntryForApiContractFactory entryForApiContractFactory) {
 
 			this.repository = repository;
 			this.userIconFactory = userIconFactory;
-			this.entryThumbPersister = entryThumbPersister;
-			this.entryImagePersisterOld = entryImagePersisterOld;
 			this.permissionContext = permissionContext;
+			this.entryForApiContractFactory = entryForApiContractFactory;
 
 		}
 
@@ -100,7 +96,7 @@ namespace VocaDb.Web.Controllers.Api {
 					.ToArray()
 					.Where(a => !a.EntryBase.Deleted)
 					.Select(a => new ActivityEntryForApiContract(a, 
-						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? EntryForApiContract.Create(a.EntryBase, lang, entryThumbPersister, entryImagePersisterOld, ssl, entryFields) : null, 
+						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? entryForApiContractFactory.Create(a.EntryBase, entryFields, lang, ssl) : null, 
 						userIconFactory, permissionContext, fields))
 					.ToArray();
 

@@ -2,30 +2,31 @@
 using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.DataContracts.Activityfeed;
+using VocaDb.Model.DataContracts.Api;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Service {
 
 	public class ActivityFeedService : ServiceBase {
 
-		private readonly IEntryThumbPersister entryThumbPersister;
-		private readonly IEntryImagePersisterOld entryImagePersisterOld;
+		private readonly IUserIconFactory userIconFactory;
+		private readonly EntryForApiContractFactory entryForApiContractFactory;
 
 		public ActivityFeedService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IEntryThumbPersister entryThumbPersister, IEntryImagePersisterOld entryImagePersisterOld) 
+			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 
-			this.entryThumbPersister = entryThumbPersister;
-			this.entryImagePersisterOld = entryImagePersisterOld;
+			this.userIconFactory = userIconFactory;
+			this.entryForApiContractFactory = entryForApiContractFactory;
 
 		}
 
-		public PartialFindResult<ActivityEntryContract> GetFollowedArtistActivity(int maxEntries, bool ssl) {
+		public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries, bool ssl) {
 
 			if (!PermissionContext.IsLoggedIn)
-				return new PartialFindResult<ActivityEntryContract>();
+				return new PartialFindResult<ActivityEntryForApiContract>();
 
 			return HandleQuery(session => {
 
@@ -47,10 +48,12 @@ namespace VocaDb.Model.Service {
 					.Concat(songEntries)
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxEntries)
-					.Select(e => new ActivityEntryContract(e, PermissionContext.LanguagePreference, entryThumbPersister, entryImagePersisterOld, ssl))
+					.Select(e => new ActivityEntryForApiContract(e, entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, 
+						LanguagePreference, ssl), userIconFactory,
+					PermissionContext, ActivityEntryOptionalFields.None))
 					.ToArray();
 
-				return new PartialFindResult<ActivityEntryContract>(contracts, 0);
+				return new PartialFindResult<ActivityEntryForApiContract>(contracts, 0);
 
 			});
 
