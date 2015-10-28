@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Comments;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.UseCases {
 
@@ -17,9 +18,10 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
 			AlbumContract[] newAlbums, IEnumerable<EntryWithCommentsContract> recentComments, AlbumContract[] topAlbums, Song[] newSongs,
 			SongVoteRating firstSongRating,
-			ContentLanguagePreference languagePreference) {
+			ContentLanguagePreference languagePreference, IEntryThumbPersister entryThumbPersister, IEntryImagePersisterOld entryImagePersisterOld,
+			bool ssl) {
 
-			ActivityEntries = activityEntries.Select(e => new ActivityEntryContract(e, languagePreference)).ToArray();
+			ActivityEntries = activityEntries.Select(e => new ActivityEntryContract(e, languagePreference, entryThumbPersister, entryImagePersisterOld, ssl)).ToArray();
 			NewAlbums = newAlbums;
 			NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
 			RecentComments = recentComments.ToArray();

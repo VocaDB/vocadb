@@ -1,43 +1,26 @@
 ﻿using System;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Helpers;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.Activityfeed {
 
 	public class ActivityEntryContract {
 
-		private string GetArtistString(IEntryBase entry, ContentLanguagePreference languagePreference) {
-
-			return EntryBaseHelper.GetArtistString(entry, languagePreference);
-
-		}
-
-		private string GetMime(IEntryBase entry) {
-
-			return EntryBaseHelper.GetMime(entry);
-
-		}
-
-		private string GetSongThumbUrl(IEntryBase entry) {
-			return EntryBaseHelper.GetSongThumbUrl(entry);
-		}
-
-		public ActivityEntryContract(ActivityEntry entry, ContentLanguagePreference languagePreference) {
+		public ActivityEntryContract(ActivityEntry entry, ContentLanguagePreference languagePreference,
+			IEntryThumbPersister entryThumbPersister, IEntryImagePersisterOld entryImagePersisterOld,
+			bool ssl) {
 
 			ParamIs.NotNull(() => entry);
 
-			ArtistString = GetArtistString(entry.EntryBase, languagePreference);
 			Author = new UserContract(entry.Author);
 			CreateDate = entry.CreateDate;
 			EditEvent = entry.EditEvent;
-			EntryRef = new EntryWithImageContract(entry.EntryBase, GetMime(entry.EntryBase), GetSongThumbUrl(entry.EntryBase), languagePreference);
+			EntryRef = EntryForApiContract.Create(entry.EntryBase, languagePreference, entryThumbPersister, entryImagePersisterOld, ssl, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture);
 
 		}
-
-		public string ArtistString { get; set; }
 
 		public UserContract Author { get; set; }
 
@@ -45,7 +28,7 @@ namespace VocaDb.Model.DataContracts.Activityfeed {
 
 		public EntryEditEvent EditEvent { get; set; }
 
-		public EntryWithImageContract EntryRef { get; set; }
+		public EntryForApiContract EntryRef { get; set; }
 
 		public string EntryTypeName { get; set; }
 

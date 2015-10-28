@@ -128,6 +128,10 @@ module vdb.viewModels.activityEntry {
 
 		}
 
+		public getEntryUrl = (entry: dc.EntryContract) => {
+			return utils.EntryUrlMapper.details_entry(entry, entry.urlSlug);
+		}
+
 		private lastEntryDate: Date;
 
 		public loadMore = () => {

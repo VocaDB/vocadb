@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using VocaDb.Model;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 
 namespace VocaDb.Web.Helpers {
@@ -23,6 +24,22 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
+		public static string EntryDetails(this UrlHelper urlHelper, EntryForApiContract entry) {
+
+			ParamIs.NotNull(() => entry);
+
+			switch (entry.EntryType) {
+				case EntryType.ReleaseEvent:
+					return urlHelper.Action("Details", "Event", new { id = entry.Id });
+
+				case EntryType.Tag:
+					return urlHelper.Action("DetailsById", "Tag", new { id = entry.Id, slug = entry.UrlSlug });
+
+				default:
+					return urlHelper.Action("Details", entry.EntryType.ToString(), new { id = entry.Id });
+			}
+
+		}
 	}
 
 }

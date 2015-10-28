@@ -43,8 +43,8 @@ module vdb.utils {
 
         }
 
-        public static details_entry(entry: dc.EntryRefContract) {       		
-            return EntryUrlMapper.details(entry.entryType, entry.id);        
+        public static details_entry(entry: dc.EntryRefContract, slug?: string) {       		
+            return EntryUrlMapper.details(entry.entryType, entry.id, slug);        
 		}
 
 		public static details_song(entry: dc.SongApiContract) {

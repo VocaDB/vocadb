@@ -456,7 +456,7 @@ namespace VocaDb.Model.Service {
 				var recentComments = GetRecentComments(session, ssl);
 
 				return new FrontPageContract(activityEntries, newAlbums, recentComments, topAlbums, newSongs, 
-					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference);
+					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference, thumbPersister, entryImagePersisterOld, ssl);
 
 			});
 

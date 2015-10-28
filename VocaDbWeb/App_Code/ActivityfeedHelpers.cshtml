@@ -34,7 +34,7 @@
 }
 
 @helper ActivityEntry(ActivityEntryContract entry, bool showDetails = false) {
-	var thumbUrl = Url.EntryThumbUrl(entry.EntryRef, entry.EntryRef.SongThumbUrl);
+	var thumbUrl = entry.EntryRef.MainPicture != null ? entry.EntryRef.MainPicture.UrlTinyThumb : null;
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 		@if (!entry.Author.AnonymousActivity || Login.CanModerateUsers) {
 			@UserHelpers.UserIconLink(entry.Author, userInfo: true)
@@ -50,21 +50,21 @@
 
 		<div class="media">
 			@if (!string.IsNullOrEmpty(thumbUrl)) {
-				<a class="pull-left" href="@EntryLinkFactory.GetFullEntryUrl(entry.EntryRef.EntryType, entry.EntryRef.Id)" title="@entry.EntryRef.Name.AdditionalNames">
+				<a class="pull-left" href="@EntryLinkFactory.GetFullEntryUrl(entry.EntryRef.EntryType, entry.EntryRef.Id)" title="@entry.EntryRef.AdditionalNames">
 					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
 				</a>
 			}
 			<div class="media-body">
 				<h4 class="media-heading">
-					<a href="@Url.EntryDetails(entry.EntryRef)" title="@entry.EntryRef.Name.AdditionalNames">
-						<strong>@entry.EntryRef.Name.DisplayName</strong>
+					<a href="@Url.EntryDetails(entry.EntryRef)" title="@entry.EntryRef.AdditionalNames">
+						<strong>@entry.EntryRef.Name</strong>
 					</a>
 					@if (!string.IsNullOrEmpty(entry.EntryTypeName)) {
 						@:(@entry.EntryTypeName)
 					}
 				</h4>
-				@if (!string.IsNullOrEmpty(entry.ArtistString)) {
-					@entry.ArtistString
+				@if (!string.IsNullOrEmpty(entry.EntryRef.ArtistString)) {
+					@entry.EntryRef.ArtistString
 				}
 			</div>
 		</div>
@@ -94,12 +94,12 @@
 		<small class="pull-right extraInfo" data-bind="attr: { title: createDate }, timeAgo: createDate"></small>
 
 		<div class="media">
-			<a class="pull-left" visible="{{ entry.mainPicture && (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) }}" href="{{ vdb.utils.EntryUrlMapper.details_entry(entry) }}" title="{{ entry.additionalNames }}">
+			<a class="pull-left" visible="{{ entry.mainPicture && (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) }}" href="{{ $parent.getEntryUrl(entry) }}" title="{{ entry.additionalNames }}">
 				<img attr.src="{{ entry.mainPicture ? (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) : '' }}" alt="thumb" class="media-object coverPicThumb" />
 			</a>
 			<div class="media-body">
 				<h4 class="media-heading">
-					<a href="{{ vdb.utils.EntryUrlMapper.details_entry(entry) }}" title="{{ entry.additionalNames }}">
+					<a href="{{ $parent.getEntryUrl(entry) }}" title="{{ entry.additionalNames }}">
 						<strong>{{ entry.name }}</strong>
 					</a>
 					<span visible="{{ @(entryTypeNamesBinding)(entry) }}">({{ @(entryTypeNamesBinding)(entry) }})</span>

@@ -27,6 +27,8 @@ module vdb.dataContracts {
 
 		tagCategoryName?: string;
 
+		urlSlug?: string;
+
 	}
 
 }

@@ -136,10 +136,14 @@ namespace VocaDb.Model.DataContracts.Api {
 			SongType = song.SongType;
 			Status = song.Status;
 
-			var thumb = VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
 
-			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) &&!string.IsNullOrEmpty(thumb)) {
-				MainPicture = new EntryThumbForApiContract { UrlSmallThumb = thumb, UrlThumb = thumb, UrlTinyThumb = thumb };				
+				var thumb = VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
+
+				if (!string.IsNullOrEmpty(thumb)) {
+					MainPicture = new EntryThumbForApiContract { UrlSmallThumb = thumb, UrlThumb = thumb, UrlTinyThumb = thumb };
+				}
+
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
@@ -177,6 +181,8 @@ namespace VocaDb.Model.DataContracts.Api {
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null) {
 				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl, Tag.ImageSizes);					
 			}
+
+			UrlSlug = tag.Name;
 
 		}
 
@@ -236,6 +242,9 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		[DataMember(EmitDefaultValue = false)]
 		public TagUsageForApiContract[] Tags { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public string UrlSlug { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }
