@@ -2,7 +2,7 @@
 
 function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBaseContract, siblings: dc.TagBaseContract[], children: dc.TagBaseContract[]) {
 
-	var tagUrl = (tag: dc.TagBaseContract) => urlMapper.mapRelative("/T/" + tag.id + "/" + tag.slug);
+	var tagUrl = (tag: dc.TagBaseContract) => urlMapper.mapRelative("/T/" + tag.id + "/" + tag.urlSlug);
 	var tagLink = (tag: dc.TagBaseContract) => {
 		var link = '<a href="' + tagUrl(tag) + '">' + tag.name + '</a>';
 		return link;

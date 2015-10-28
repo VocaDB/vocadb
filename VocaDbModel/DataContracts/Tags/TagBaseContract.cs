@@ -13,7 +13,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ParamIs.NotNull(() => tag);
 
 			Id = tag.Id;
-			Name = Slug = tag.Name;
+			Name = UrlSlug = tag.Name;
 
 		}
 
@@ -24,7 +24,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public string Name { get; set; }
 
 		[DataMember]
-		public string Slug { get; set; }
+		public string UrlSlug { get; set; }
 
 	}
 

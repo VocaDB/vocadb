@@ -100,11 +100,11 @@
 			}
 
 			@if (Model.AliasedTo != null) {
-				<p>Aliased to @Html.ActionLink(Model.AliasedTo.Name, "DetailsById", new { id = Model.AliasedTo.Id, slug = Model.AliasedTo.Slug })</p>
+				<p>Aliased to @Html.ActionLink(Model.AliasedTo.Name, "DetailsById", new { id = Model.AliasedTo.Id, slug = Model.AliasedTo.UrlSlug })</p>
 			}
 
 			@if (Model.Aliases.Any()) {
-				<p>Aliases: @Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.Slug }))</p>
+				<p>Aliases: @Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
 			}
 
 			@if (related.Any()) {
