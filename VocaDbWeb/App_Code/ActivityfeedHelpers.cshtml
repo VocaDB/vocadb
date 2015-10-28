@@ -50,7 +50,7 @@
 
 		<div class="media">
 			@if (!string.IsNullOrEmpty(thumbUrl)) {
-				<a class="pull-left" href="@EntryLinkFactory.GetFullEntryUrl(entry.Entry.EntryType, entry.Entry.Id)" title="@entry.Entry.AdditionalNames">
+				<a class="pull-left" href="@Url.EntryDetails(entry.Entry)" title="@entry.Entry.AdditionalNames">
 					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
 				</a>
 			}
