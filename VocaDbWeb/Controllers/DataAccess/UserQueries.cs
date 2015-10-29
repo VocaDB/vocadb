@@ -1064,7 +1064,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public TagUsageContract[] SaveAlbumTags(int albumId, string[] tags, bool onlyAdd) {
+		public TagUsageForApiContract[] SaveAlbumTags(int albumId, string[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries().AddTags<Album, AlbumTagUsage>(
 				albumId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
@@ -1073,7 +1073,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public TagUsageContract[] SaveArtistTags(int artistId, string[] tags, bool onlyAdd) {
+		public TagUsageForApiContract[] SaveArtistTags(int artistId, string[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries().AddTags<Artist, ArtistTagUsage>(
 				artistId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
@@ -1082,7 +1082,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public TagUsageContract[] SaveSongTags(int songId, string[] tags, bool onlyAdd) {
+		public TagUsageForApiContract[] SaveSongTags(int songId, string[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries().AddTags<Song, SongTagUsage>(
 				songId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,

@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Queries {
 
 	public class TagUsageQueries {
 
-		public TagUsageContract[] AddTags<TEntry, TTag>(int entryId, string[] tags, 
+		public TagUsageForApiContract[] AddTags<TEntry, TTag>(int entryId, string[] tags, 
 			bool onlyAdd,
 			IRepository<User> repository, IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.Queries {
 			tags = tags.Where(t => !string.IsNullOrEmpty(t) && Tag.IsValidTagName(t)).ToArray();
 
 			if (onlyAdd && !tags.Any())
-				return new TagUsageContract[0];
+				return new TagUsageForApiContract[0];
 
 			return repository.HandleTransaction(ctx => {
 				
@@ -45,7 +45,7 @@ namespace VocaDb.Model.Service.Queries {
 
 				tagFunc(entry).SyncVotes(user, tags, existingTags, tagFactory, tagUsageFactory, onlyAdd: onlyAdd);
 
-				return tagFunc(entry).Usages.Select(t => new TagUsageContract(t)).ToArray();
+				return tagFunc(entry).Usages.Select(t => new TagUsageForApiContract(t)).ToArray();
 
 			});
 

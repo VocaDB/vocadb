@@ -540,8 +540,7 @@ namespace VocaDb.Web.Controllers.Api {
 			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			return queries.SaveAlbumTags(albumId, tags, false)
-				.Select(t => new TagUsageForApiContract(t)).ToArray();
+			return queries.SaveAlbumTags(albumId, tags, false);
 
 		}
 
@@ -553,8 +552,7 @@ namespace VocaDb.Web.Controllers.Api {
 			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			return queries.SaveArtistTags(artistId, tags, false)
-				.Select(t => new TagUsageForApiContract(t)).ToArray();
+			return queries.SaveArtistTags(artistId, tags, false);
 
 		}
 
@@ -586,8 +584,7 @@ namespace VocaDb.Web.Controllers.Api {
 			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			return queries.SaveSongTags(songId, tags, false)
-				.Select(t => new TagUsageForApiContract(t)).ToArray();
+			return queries.SaveSongTags(songId, tags, false);
 
 		}
 

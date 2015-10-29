@@ -13,11 +13,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Tag = new TagBaseContract(tagUsage.Tag);
 		}
 
-		public TagUsageForApiContract(TagUsageContract tagUsage) {
-			Count = tagUsage.Count;
-			Tag = tagUsage.Tag;
-		}
-
 		[DataMember]
 		public int Count { get; set; }
 
