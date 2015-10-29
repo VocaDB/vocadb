@@ -23,7 +23,7 @@ module vdb.viewModels.tags {
 		public displayedTagUsages: KnockoutComputed<dc.tags.TagUsageForApiContract[]>;
 
 		public getTagUrl = (tag: dc.tags.TagUsageForApiContract) => {
-			return vdb.utils.EntryUrlMapper.details("Tag", tag.tagId, tag.name);
+			return utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 		}
 
 		public expanded = ko.observable(false);

@@ -60,6 +60,10 @@ module vdb.viewModels.songs {
 				
 		}
 
+		public getTagUrl = (tag: dc.tags.TagUsageForApiContract) => {
+			return utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
+		}
+
 		private pvServiceIcons: vdb.models.PVServiceIcons;
 
 		private router: vdb.routing.ObservableUrlParamRouter;

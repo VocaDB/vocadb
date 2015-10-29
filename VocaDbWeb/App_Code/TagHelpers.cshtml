@@ -71,7 +71,7 @@
 		<tbody>
 			@foreach (var usage in tagUsages) {
 				<tr>
-					<td>@TagLink(usage.TagName)</td>
+					<td>@TagLink(usage.Tag.Name)</td>
 					<td>@usage.Count</td>
 					@if (Login.CanManageUsers) {
 						<td>

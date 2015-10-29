@@ -5,9 +5,7 @@ module vdb.dataContracts.tags {
 
 		count: number;
 
-		name: string;
-
-		tagId: number;
+		tag: TagBaseContract;
 
 	}
 

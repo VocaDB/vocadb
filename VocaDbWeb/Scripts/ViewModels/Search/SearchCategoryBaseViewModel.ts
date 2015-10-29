@@ -87,7 +87,7 @@ module vdb.viewModels.search {
 						_.forEach(result.items, (item: dc.EntryWithTagUsagesContract) => {
 
 							if (item.tags)
-								item.tags = _.take(_.sortBy(item.tags, t => t.name.toLowerCase()), 10);
+								item.tags = _.take(_.sortBy(item.tags, t => t.tag.name.toLowerCase()), 10);
 
 						});
 
