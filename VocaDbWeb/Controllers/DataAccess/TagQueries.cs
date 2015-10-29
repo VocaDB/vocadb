@@ -102,6 +102,18 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
+		// Assumes the tag exists
+		private Tag LoadTagById(IRepositoryContext<Tag> ctx, int tagId) {
+
+			var tag = GetTagById(ctx, tagId);
+
+			if (tag == null)
+				throw new ObjectNotFoundException(tagId, typeof(Tag));
+
+			return tag;
+
+		}
+
 		private IQueryable<T> TagUsagesQuery<T>(IRepositoryContext<Tag> ctx, string tagName) where T : TagUsage {
 
 			return ctx.OfType<T>().Query().Where(a => a.Tag.Name == tagName);
@@ -137,20 +149,18 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public void Delete(string name) {
-
-			ParamIs.NotNullOrEmpty(() => name);
+		public void Delete(int id) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
 			repository.HandleTransaction(ctx => {
 
-				var tag = ctx.Load(name);
+				var tag = LoadTagById(ctx, id);
 
 				tag.Delete();
 
 				var ctxActivity = ctx.OfType<TagActivityEntry>();
-				var activityEntries = ctxActivity.Query().Where(t => t.Entry.Name == name).ToArray();
+				var activityEntries = ctxActivity.Query().Where(t => t.Entry.Id == id).ToArray();
 
 				foreach (var activityEntry in activityEntries)
 					ctxActivity.Delete(activityEntry);
@@ -327,17 +337,15 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public TagForEditContract GetTagForEdit(string tagName) {
-
-			ParamIs.NotNullOrEmpty(() => tagName);
+		public TagForEditContract GetTagForEdit(int id) {
 
 			return HandleQuery(session => {
 
-				var inUse = session.Query<ArtistTagUsage>().Any(a => a.Tag.Name == tagName && !a.Artist.Deleted) ||
-					session.Query<AlbumTagUsage>().Any(a => a.Tag.Name == tagName && !a.Album.Deleted) ||
-					session.Query<SongTagUsage>().Any(a => a.Tag.Name == tagName && !a.Song.Deleted);
+				var inUse = session.Query<ArtistTagUsage>().Any(a => a.Tag.Id == id && !a.Artist.Deleted) ||
+					session.Query<AlbumTagUsage>().Any(a => a.Tag.Id == id && !a.Album.Deleted) ||
+					session.Query<SongTagUsage>().Any(a => a.Tag.Id == id && !a.Song.Deleted);
 
-				var contract = new TagForEditContract(session.Load(tagName), !inUse);
+				var contract = new TagForEditContract(LoadTagById(session, id), !inUse);
 
 				return contract;
 
@@ -360,11 +368,11 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(string tagName) {
+		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(int id) {
 
 			return HandleQuery(ctx => {
 
-				var tag = GetTag(ctx, tagName);
+				var tag = GetTagById(ctx, id);
 
 				if (tag == null)
 					return null;

@@ -45,6 +45,8 @@ namespace VocaDb.Web.Models.Tag {
 
 		public bool Draft => Status == EntryStatus.Draft;
 
+		public int Id { get; set; }
+
 		public bool IsEmpty { get; set; }
 
 		public string Name { get; set; }
@@ -57,16 +59,21 @@ namespace VocaDb.Web.Models.Tag {
 
 		public string UpdateNotes { get; set; }
 
+		public string UrlSlug { get; set; }
+
 		public void CopyNonEditableProperties(TagForEditContract contract) {
 
+			Id = contract.Id;
 			IsEmpty = contract.IsEmpty;
 			Thumb = contract.Thumb;
+			UrlSlug = contract.UrlSlug;
 
 		}
 
 		public TagForEditContract ToContract() {
 
 			return new TagForEditContract {
+				Id = this.Id,
 				Name = this.Name,
 				AliasedTo = new TagBaseContract { Name = this.AliasedTo ?? string.Empty },
 				CategoryName = this.CategoryName ?? string.Empty,

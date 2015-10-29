@@ -8,7 +8,7 @@
 	PageProperties.Title = "Edit tag - " + Model.Name;
 	ViewBag.Parents = new[] {
 		Html.ActionLink("Tags", "Index"),
-		Html.ActionLink(Model.Name, "Details", new { id = Model.Name })
+		Html.ActionLink(Model.Name, "DetailsById", new { id = Model.Id, slug = Model.UrlSlug })
 	};
 
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
@@ -40,7 +40,7 @@
 
 @section Toolbar {
 @if (Login.CanDeleteEntries && Model.IsEmpty) {
-	@Html.ActionLink("Delete", "Delete", new { id = Model.Name }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this tag?\");" })
+	@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this tag?\");" })
 }
 }
 
@@ -48,8 +48,10 @@
 
 <br />
 <form action="@Url.Action("Edit", "Tag")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
-
+	
+	@Html.HiddenFor(m => m.Id)
 	@Html.HiddenFor(m => m.Name)
+	@Html.HiddenFor(m => m.UrlSlug)
 
 	<div class="alert" data-bind="visible: aliasedToName() && parentName()" style="display: none;">
 		<span class="icon-line errorIcon"></span>
@@ -58,7 +60,7 @@
 		If you're unsure, check the documentation.
 	</div>
 
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { id = Model.Name }))
+	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
 
 	<div class="editor-label">
 		@Html.LabelFor(m => m.CategoryName)
@@ -124,6 +126,6 @@
 	<textarea name="UpdateNotes" id="UpdateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 
 	<br />
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { id = Model.Name }))
+	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
 
 </form>

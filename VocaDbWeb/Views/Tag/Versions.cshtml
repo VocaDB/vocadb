@@ -7,7 +7,7 @@
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Tags, "Index"), 
-		Html.ActionLink(Model.Name, "Details", new { id = Model.Name }) 
+		Html.ActionLink(Model.Name, "DetailsById", new { id = Model.Id, slug = Model.UrlSlug }) 
 	};
 }
 

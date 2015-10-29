@@ -23,7 +23,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Delete(string id) {
+		public ActionResult Delete(int id) {
 
 			queries.Delete(id);
 
@@ -81,7 +81,7 @@ namespace VocaDb.Web.Controllers
 		}
 
         [Authorize]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
 			var model = new TagEdit(queries.GetTagForEdit(id), PermissionContext);
 			return View(model);
@@ -102,14 +102,14 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-				var contract = queries.GetTagForEdit(model.Name);
+				var contract = queries.GetTagForEdit(model.Id);
 				model.CopyNonEditableProperties(contract);
 				return View(model);
 			}
 
 			queries.Update(model.ToContract(), uploadedPicture);
 
-			return RedirectToAction("Details", new { id = model.Name });
+			return RedirectToAction("DetailsById", new { id = model.Id, slug = model.UrlSlug });
 
 		}
 
@@ -132,10 +132,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Versions(string id) {
-
-			if (string.IsNullOrEmpty(id))
-				return NoId();
+		public ActionResult Versions(int id) {
 
 			var contract = queries.GetTagWithArchivedVersions(id);
 
