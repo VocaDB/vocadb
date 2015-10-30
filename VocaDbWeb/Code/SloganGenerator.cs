@@ -10,7 +10,8 @@ namespace VocaDb.Web.Code {
 			"We got APIs and ApiMikus.", 
 			"Use the search, Luka!",
 			"shu-t up and enjoy",
-			"Now with 39% more Miku"
+			"Now with 39% more Miku",
+			"Our site uses Micookies"
 		};
 
 		public static string Generate() {
