@@ -46,7 +46,7 @@ namespace VocaDb.Web.Helpers {
 
 			ParamIs.NotNull(() => user);
 
-			return urlHelper.Action("Details", "User", new { id = user.Name });
+			return urlHelper.Action("Profile", "User", new { id = user.Name });
 
 		}
 
