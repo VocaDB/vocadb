@@ -39,6 +39,24 @@ namespace VocaDb.Model.DataContracts {
 		[DataMember]
 		public string UrlTinyThumb { get; set; }
 
+		/// <summary>
+		/// Gets the smallest available thumbnail URL that is preferably larger than the specified size.
+		/// </summary>
+		/// <param name="preferLargerThan">Prefer image sizes equal or larger than this. If nothing else is available, smaller size is allowed as well.</param>
+		/// <returns>Thumbnail URL. Can be null or empty.</returns>
+		public string GetSmallestThumb(ImageSize preferLargerThan) {
+			
+			switch (preferLargerThan) {
+				case ImageSize.TinyThumb:
+					return UrlTinyThumb ?? UrlSmallThumb ?? UrlThumb;
+				case ImageSize.SmallThumb:
+					return UrlSmallThumb ?? UrlThumb ?? UrlTinyThumb;
+				default:
+					return UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb;
+			}				
+
+		}
+
 	}
 
 }

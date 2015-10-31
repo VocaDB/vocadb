@@ -2,6 +2,7 @@
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Web.Helpers {
 
@@ -40,6 +41,15 @@ namespace VocaDb.Web.Helpers {
 			}
 
 		}
+
+		public static string UserDetails(this UrlHelper urlHelper, IUser user) {
+
+			ParamIs.NotNull(() => user);
+
+			return urlHelper.Action("Details", "User", new { id = user.Name });
+
+		}
+
 	}
 
 }

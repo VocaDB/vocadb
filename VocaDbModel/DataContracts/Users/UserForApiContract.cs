@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users {
@@ -16,12 +17,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			VerifiedArtist = user.VerifiedArtist;
 
 			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && !string.IsNullOrEmpty(user.Email)) {
-
-				var thumbUrl = iconFactory.GetIconUrl(user);
-
-				MainPicture = new EntryThumbForApiContract {
-					UrlThumb = thumbUrl,
-				};
+				MainPicture = iconFactory.GetIcons(user, ImageSizes.Thumb | ImageSizes.TinyThumb);
 			}
 
 		}

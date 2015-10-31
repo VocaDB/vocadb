@@ -20,6 +20,9 @@ namespace VocaDb.Model.Helpers {
 		public const int DefaultSmallThumbSize = 150;
 		public const int DefaultThumbSize = 250;
 		public const int DefaultTinyThumbSize = 70;
+		public const int UserThumbSize = 80;
+		public const int UserSmallThumbSize = 40;
+		public const int UserTinyThumbSize = 20;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>

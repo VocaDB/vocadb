@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.Users;
+﻿using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users {
 
@@ -14,6 +15,14 @@ namespace VocaDb.Model.DataContracts.Users {
 	public interface IUserIconFactory {
 
 		string GetIconUrl(IUserWithEmail user);
+
+		/// <summary>
+		/// Get multiple icon sizes.
+		/// </summary>
+		/// <param name="user">User whose icons are to be loaded. Cannot be null.</param>
+		/// <param name="sizes">Sizes of icons to get. Note that user icon image sizes are different from other entries.</param>
+		/// <returns>User icons. Cannot be null.</returns>
+		EntryThumbForApiContract GetIcons(IUserWithEmail user, ImageSizes sizes = ImageSizes.All);
 
 	}
 
