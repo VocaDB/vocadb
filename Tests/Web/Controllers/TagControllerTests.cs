@@ -32,7 +32,7 @@ namespace VocaDb.Tests.Web.Controllers {
 		[TestMethod]
 		public void Versions_Null() {
 
-			var result = controller.Versions(null);
+			var result = controller.Versions(0);
 
 			Assert.IsTrue(result is HttpNotFoundResult, "result is HttpNotFoundResult");
 
@@ -41,7 +41,7 @@ namespace VocaDb.Tests.Web.Controllers {
 		[TestMethod]
 		public void Versions_Empty() {
 
-			var result = controller.Versions(string.Empty);
+			var result = controller.Versions(0);
 
 			Assert.IsTrue(result is HttpNotFoundResult, "result is HttpNotFoundResult");
 
