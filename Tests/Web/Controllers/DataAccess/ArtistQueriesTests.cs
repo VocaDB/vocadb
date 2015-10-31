@@ -114,6 +114,27 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void FindDuplicates_Name() {
+
+			var result = queries.FindDuplicates(new[] { artist.DefaultName }, string.Empty);
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(1, result.Length, "Number of results");
+			Assert.AreEqual(artist.Id, result[0].Id, "Matched artist");
+
+		}
+
+		[TestMethod]
+		public void FindDuplicates_IgnoreNullsAndEmpty() {
+
+			var result = queries.FindDuplicates(new[] { null, string.Empty }, string.Empty);
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(0, result.Length, "Number of results");
+
+		}
+
+		[TestMethod]
 		public void GetCoverPictureThumb() {
 			
 			var contract = CallUpdate(ResourceHelper.TestImage());
