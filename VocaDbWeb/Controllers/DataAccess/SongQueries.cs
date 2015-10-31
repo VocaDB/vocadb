@@ -405,8 +405,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public SongForApiContract GetSongForApi(int songId, SongOptionalFields fields, ContentLanguagePreference? lang = null) {
 
-			return GetSongWithMergeRecord(songId, (song, r) => new SongForApiContract(song, r, lang ?? PermissionContext.LanguagePreference,
-				SongOptionalFields.AdditionalNames | SongOptionalFields.PVs));
+			return GetSongWithMergeRecord(songId, (song, r) => new SongForApiContract(song, r, lang ?? PermissionContext.LanguagePreference, fields));
 
 		}
 
