@@ -120,6 +120,9 @@
   <data name="Keywords" xml:space="preserve">
     <value>Utaite, UtaiteDB, Utaite database</value>
   </data>
+  <data name="PaypalDonateTitle" xml:space="preserve">
+    <value>UtaiteDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.</value>
+  </data>
   <data name="SiteName" xml:space="preserve">
     <value>UtaiteDB</value>
   </data>

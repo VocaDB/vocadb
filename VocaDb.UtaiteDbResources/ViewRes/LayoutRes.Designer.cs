@@ -70,6 +70,15 @@ namespace VocaDb.UtaiteDb.Resources.ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UtaiteDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses..
+        /// </summary>
+        public static string PaypalDonateTitle {
+            get {
+                return ResourceManager.GetString("PaypalDonateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UtaiteDB.
         /// </summary>
         public static string SiteName {
