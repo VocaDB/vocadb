@@ -11,37 +11,7 @@ namespace VocaDb.Model.Helpers {
 
 		public const string VariousArtists = "Various artists";
 
-		/// <summary>
-		/// Gets the sort order for an artist in an artist string. 
-		/// Determines the order the artist appear in the list.
-		/// </summary>
-		/// <param name="artistLink">Artist link. Cannot be null.</param>
-		/// <param name="isAnimation">Whether the album is animation (video).</param>
-		/// <returns>Sort order, 0-based.</returns>
-		private static int GetSortOrderForArtistString(IArtistWithSupport artistLink, bool isAnimation) {
-
-			var categories = GetCategories(artistLink);
-
-			// Animator appears first for animation discs.
-			if (isAnimation && categories.HasFlag(ArtistCategories.Animator))
-				return 0;
-
-			// Composer role always appears first
-			if (categories.HasFlag(ArtistCategories.Producer) && artistLink.Roles.HasFlag(ArtistRoles.Composer))
-				return 1;
-
-			// Other producers appear after composers
-			if (categories.HasFlag(ArtistCategories.Producer))
-				return 2;
-
-			if (categories.HasFlag(ArtistCategories.Circle) || categories.HasFlag(ArtistCategories.Band))
-				return 3;
-
-			return 4;
-
-		}
-
-		private static TranslatedString GetTranslatedName(IArtistWithSupport link) {
+		public static TranslatedString GetTranslatedName(IArtistWithSupport link) {
 
 			return (link.Artist != null ? link.Artist.TranslatedName : TranslatedString.Create(link.Name));
 
@@ -62,7 +32,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		private static bool IsValidCreditableArtist(IArtistWithSupport artist) {
+		public static bool IsValidCreditableArtist(IArtistWithSupport artist) {
 
 			if (artist.IsSupport)
 				return false;
@@ -125,48 +95,9 @@ namespace VocaDb.Model.Helpers {
 			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite
 		};
 
-		public static string[] GetArtistNames(IEnumerable<IArtistWithSupport> artists, ContentLanguagePreference languagePreference) {
-			return artists.Select(p => GetTranslatedName(p).GetBestMatch(languagePreference)).ToArray();
-		}
-
 		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistWithSupport> artists, bool isAnimation) {
 
-			ParamIs.NotNull(() => artists);
-
-			var matched = artists.Where(IsValidCreditableArtist).ToArray();
-
-			var producers = matched
-				.Where(a => IsProducerRole(a, isAnimation))
-				.OrderBy(a => GetSortOrderForArtistString(a, isAnimation))
-				.ToArray();
-
-			var performers = matched
-				.Where(a => GetCategories(a).HasFlag(ArtistCategories.Vocalist) && !producers.Contains(a)).ToArray();
-
-			const string various = VariousArtists;
-
-			if (producers.Length >= 4 || (!producers.Any() && performers.Length >= 4))
-				return new TranslatedStringWithDefault(various, various, various, various);
-
-			var performerNames = performers.Select(GetTranslatedName);
-			var producerNames =	producers.Select(GetTranslatedName);
-
-			if (producers.Any() && performers.Length > 2 && producers.Length + performers.Length >= 5) {
-
-				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. various",
-					string.Join(", ", producerNames.Select(p => p[lang]))));
-
-			} else if (producers.Any() && performers.Any()) {
-
-				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. {1}",
-					string.Join(", ", producerNames.Select(p => p[lang])),
-					string.Join(", ", performerNames.Select(p => p[lang]))));
-
-			} else {
-
-				return TranslatedStringWithDefault.Create(lang => string.Join(", ", (producers.Any() ? producers : performers).Select(a => GetTranslatedName(a)[lang])));
-
-			}
+			return new ArtistStringFactory().GetArtistString(artists, isAnimation);
 
 		}
 

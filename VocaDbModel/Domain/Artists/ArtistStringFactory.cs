@@ -1,0 +1,85 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Helpers;
+using VocaDb.Model.Utils;
+
+namespace VocaDb.Model.Domain.Artists {
+
+	public class ArtistStringFactory {
+
+		/// <summary>
+		/// Gets the sort order for an artist in an artist string. 
+		/// Determines the order the artist appear in the list.
+		/// </summary>
+		/// <param name="artistLink">Artist link. Cannot be null.</param>
+		/// <param name="isAnimation">Whether the album is animation (video).</param>
+		/// <returns>Sort order, 0-based.</returns>
+		private int GetSortOrderForArtistString(IArtistWithSupport artistLink, bool isAnimation) {
+
+			var categories = ArtistHelper.GetCategories(artistLink);
+
+			// Animator appears first for animation discs.
+			if (isAnimation && categories.HasFlag(ArtistCategories.Animator))
+				return 0;
+
+			// Composer role always appears first
+			if (categories.HasFlag(ArtistCategories.Producer) && artistLink.Roles.HasFlag(ArtistRoles.Composer))
+				return 1;
+
+			// Other producers appear after composers
+			if (categories.HasFlag(ArtistCategories.Producer))
+				return 2;
+
+			if (categories.HasFlag(ArtistCategories.Circle) || categories.HasFlag(ArtistCategories.Band))
+				return 3;
+
+			return 4;
+
+		}
+
+		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistWithSupport> artists, bool isAnimation) {
+
+			ParamIs.NotNull(() => artists);
+
+			var matched = artists.Where(ArtistHelper.IsValidCreditableArtist).ToArray();
+
+			var producers = matched
+				.Where(a => ArtistHelper.IsProducerRole(a, isAnimation))
+				.OrderBy(a => GetSortOrderForArtistString(a, isAnimation))
+				.ToArray();
+
+			var performers = matched
+				.Where(a => ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Vocalist) && 
+					(!producers.Contains(a) || AppConfig.AllowRepeatingProducerAsPerformer)).ToArray();
+
+			const string various = ArtistHelper.VariousArtists;
+
+			if (producers.Length >= 4 || (!producers.Any() && performers.Length >= 4))
+				return new TranslatedStringWithDefault(various, various, various, various);
+
+			var performerNames = performers.Select(ArtistHelper.GetTranslatedName);
+			var producerNames =	producers.Select(ArtistHelper.GetTranslatedName);
+
+			if (producers.Any() && performers.Length > 2 && producers.Length + performers.Length >= 5) {
+
+				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. various",
+					string.Join(", ", producerNames.Select(p => p[lang]))));
+
+			} else if (producers.Any() && performers.Any()) {
+
+				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. {1}",
+					string.Join(", ", producerNames.Select(p => p[lang])),
+					string.Join(", ", performerNames.Select(p => p[lang]))));
+
+			} else {
+
+				return TranslatedStringWithDefault.Create(lang => string.Join(", ", (producers.Any() ? producers : performers).Select(a => ArtistHelper.GetTranslatedName(a)[lang])));
+
+			}
+
+		}
+
+	}
+
+}

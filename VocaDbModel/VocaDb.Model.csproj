@@ -308,6 +308,7 @@
     <Compile Include="Domain\Albums\ReleaseEventSeriesAlias.cs" />
     <Compile Include="Domain\Artists\ArtistReport.cs" />
     <Compile Include="Domain\Artists\ArtistRoles.cs" />
+    <Compile Include="Domain\Artists\ArtistStringFactory.cs" />
     <Compile Include="Domain\Artists\CustomArtist.cs" />
     <Compile Include="Domain\Artists\IArtistLink.cs" />
     <Compile Include="Domain\Artists\IArtistWithSupport.cs" />

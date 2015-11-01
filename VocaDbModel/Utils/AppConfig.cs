@@ -62,6 +62,14 @@ namespace VocaDb.Model.Utils {
 
 		public static bool AllowCustomTracks => Val("AllowCustomTracks", false);
 
+		/// <summary>
+		/// Allow repeating producer as performer.
+		/// This means, if a person appears in both producing and performing (vocalist) roles, they will be duplicated.
+		/// For example, Deco feat. Deco.
+		/// This was added for UtaiteDB where such behavior is desired.
+		/// </summary>
+		public static bool AllowRepeatingProducerAsPerformer => Val("AllowRepeatingProducerAsPerformer", false);
+
 		public static ArtistType[] ArtistTypes {
 			get {
 				
