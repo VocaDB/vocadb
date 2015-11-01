@@ -15,7 +15,7 @@ namespace VocaDb.Tests.Domain.Artists {
 		private IArtistWithSupport circle;
 		private IArtistWithSupport[] producers;
 		private IArtistWithSupport[] vocalists;
-		private IArtistWithSupport producer;
+		private ArtistForAlbum producer;
 		private IArtistWithSupport producer2;
 		private IArtistWithSupport producer3;
 		private IArtistWithSupport producer4;
@@ -24,7 +24,7 @@ namespace VocaDb.Tests.Domain.Artists {
 		private IArtistWithSupport vocalist3;
 		private IArtistWithSupport vocalist4;
 
-		private IArtistWithSupport CreateArtist(ArtistType artistType, string name) {
+		private ArtistForAlbum CreateArtist(ArtistType artistType, string name) {
 
 			var p = new Artist { ArtistType = artistType };
 			p.Names.Add(new ArtistName(p, new LocalizedString(name, ContentLanguageSelection.English)));
@@ -35,6 +35,10 @@ namespace VocaDb.Tests.Domain.Artists {
 		private string GetNames(params IArtistWithSupport[] artists) {
 			return string.Join(", ", artists.Select(a => a.Artist.DefaultName));
 		}
+
+		private string GetArtistString(params IArtistWithSupport[] artists) {
+			return artistStringFactory.GetArtistString(artists, false).Default;
+        }
 
 		private void TestGetArtistString(int producerCount, int vocalistCount, string expected, string message = "artist string as expected") {
 
@@ -153,6 +157,58 @@ namespace VocaDb.Tests.Domain.Artists {
 			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, true);
 
 			Assert.AreEqual(GetNames(animator, producer), result.Default, "artist string has one producer and animator");
+
+		}
+
+		/// <summary>
+		/// The same artist appears as both producer and vocalist - do not duplicate (default VocaDB behavior).
+		/// </summary>
+		[TestMethod]
+		public void ArtistAsBothProducerAndVocalist_DoNotDuplicate() {
+
+			producer.Roles = ArtistRoles.Composer | ArtistRoles.Vocalist;
+
+			var result = GetArtistString(producer);
+
+			Assert.AreEqual("devilishP", result, "result");
+
+		}
+
+		[TestMethod]
+		public void ArtistAsBothProducerAndVocalist_MultipleArtists_DoNotDuplicate() {
+
+			producer.Roles = ArtistRoles.Composer | ArtistRoles.Vocalist;
+
+			var result = GetArtistString(producer, vocalist);
+
+			Assert.AreEqual("devilishP feat. Hatsune Miku", result, "result");
+
+		}
+
+		/// <summary>
+		/// The same artist appears as both producer and vocalist - allow duplication (UtaiteDB behavior).
+		/// </summary>
+		[TestMethod]
+		public void ArtistAsBothProducerAndVocalist_AllowDuplicate() {
+
+			artistStringFactory = new ArtistStringFactory(true);
+			producer.Roles = ArtistRoles.Composer | ArtistRoles.Vocalist;
+
+			var result = GetArtistString(producer);
+
+			Assert.AreEqual("devilishP feat. devilishP", result, "result");
+
+		}
+
+		[TestMethod]
+		public void ArtistAsBothProducerAndVocalist_MultipleArtists_AllowDuplicate() {
+
+			artistStringFactory = new ArtistStringFactory(true);
+			producer.Roles = ArtistRoles.Composer | ArtistRoles.Vocalist;
+
+			var result = GetArtistString(producer, vocalist);
+
+			Assert.AreEqual("devilishP feat. devilishP, Hatsune Miku", result, "result");
 
 		}
 

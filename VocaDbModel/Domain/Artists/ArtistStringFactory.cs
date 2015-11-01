@@ -8,6 +8,8 @@ namespace VocaDb.Model.Domain.Artists {
 
 	public class ArtistStringFactory {
 
+		private readonly bool allowRepeatingProducerAsPerformer;
+
 		/// <summary>
 		/// Gets the sort order for an artist in an artist string. 
 		/// Determines the order the artist appear in the list.
@@ -38,6 +40,14 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
+		// TODO: it'd be better to inject configuration as interface
+		public ArtistStringFactory() 
+			: this(AppConfig.AllowRepeatingProducerAsPerformer) {}
+
+		public ArtistStringFactory(bool allowRepeatingProducerAsPerformer) {
+			this.allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
+		}
+
 		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistWithSupport> artists, bool isAnimation) {
 
 			ParamIs.NotNull(() => artists);
@@ -51,7 +61,7 @@ namespace VocaDb.Model.Domain.Artists {
 
 			var performers = matched
 				.Where(a => ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Vocalist) && 
-					(!producers.Contains(a) || AppConfig.AllowRepeatingProducerAsPerformer)).ToArray();
+					(!producers.Contains(a) || allowRepeatingProducerAsPerformer)).ToArray();
 
 			const string various = ArtistHelper.VariousArtists;
 
