@@ -8,20 +8,29 @@ namespace VocaDb.Web.Helpers {
 
 	public static class UrlHelperExtender {
 
+		private static string EntryDetails(UrlHelper urlHelper, EntryType entryType, int id, string urlSlug) {
+
+			switch (entryType) {
+				case EntryType.DiscussionTopic:
+					return urlHelper.Action("Index", "Discussion", new { clientPath = string.Format("topics/{0}", id) });
+
+				case EntryType.ReleaseEvent:
+					return urlHelper.Action("Details", "Event", new { id });
+
+				case EntryType.Tag:
+					return urlHelper.Action("DetailsById", "Tag", new { id, slug = urlSlug });
+
+				default:
+					return urlHelper.Action("Details", entryType.ToString(), new { id });
+			}
+
+		}
+
 		public static string EntryDetails(this UrlHelper urlHelper, IEntryBase entryBase) {
 			
 			ParamIs.NotNull(() => entryBase);
 
-			switch (entryBase.EntryType) {
-				case EntryType.ReleaseEvent:
-					return urlHelper.Action("Details", "Event", new { id = entryBase.Id });
-
-				case EntryType.Tag:
-					return urlHelper.Action("DetailsById", "Tag", new { id = entryBase.Id });
-
-				default:
-					return urlHelper.Action("Details", entryBase.EntryType.ToString(), new { id = entryBase.Id });
-			}
+			return EntryDetails(urlHelper, entryBase.EntryType, entryBase.Id, null);
 
 		}
 
@@ -29,16 +38,7 @@ namespace VocaDb.Web.Helpers {
 
 			ParamIs.NotNull(() => entry);
 
-			switch (entry.EntryType) {
-				case EntryType.ReleaseEvent:
-					return urlHelper.Action("Details", "Event", new { id = entry.Id });
-
-				case EntryType.Tag:
-					return urlHelper.Action("DetailsById", "Tag", new { id = entry.Id, slug = entry.UrlSlug });
-
-				default:
-					return urlHelper.Action("Details", entry.EntryType.ToString(), new { id = entry.Id });
-			}
+			return EntryDetails(urlHelper, entry.EntryType, entry.Id, entry.UrlSlug);
 
 		}
 
