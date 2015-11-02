@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Web;
 using NHibernate;
 using NLog;
@@ -15,6 +16,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
@@ -49,12 +51,12 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly ILanguageDetector languageDetector;
 		private readonly IUserMessageMailer mailer;
 		private readonly IPVParser pvParser;
 		private readonly IUserIconFactory userIconFactory;
-		private readonly IUserMessageMailer userMessageMailer;
 
 		private void AddSongHit(IRepositoryContext<Song> session, Song song, string hostname) {
 
@@ -137,6 +139,24 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return session.Query<SongMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
+		private SongListBaseContract[] GetSongPools(IRepositoryContext<Song> ctx, int songId) {
+
+			var cacheKey = string.Format("GetSongPools.{0}", songId);
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () => {
+
+				var lists = ctx
+					.Query<SongList>()
+					.Where(s => s.FeaturedCategory == SongListFeaturedCategory.Pools && s.AllSongs.Any(l => l.Song.Id == songId))
+					.OrderBy(s => s.Name)
+					.Take(3)
+					.ToArray();
+
+				return lists.Select(s => new SongListBaseContract(s)).ToArray();
+
+			});
+
+		}
+
 		private Tag[] GetTags(IRepositoryContext<Tag> session, string[] tagNames) {
 
 			var direct = session.Query().Where(t => tagNames.Contains(t.Name)).ToArray();
@@ -195,7 +215,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
-			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IUserMessageMailer userMessageMailer)
+			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -203,7 +223,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.mailer = mailer;
 			this.languageDetector = languageDetector;
 			this.userIconFactory = userIconFactory;
-			this.userMessageMailer = userMessageMailer;
+			this.cache = cache;
 
 		}
 
@@ -328,7 +348,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			return HandleQuery(session => {
 
 				var song = session.Load<Song>(songId);
-				var contract = new SongDetailsContract(song, languagePreference ?? PermissionContext.LanguagePreference);
+				var contract = new SongDetailsContract(song, languagePreference ?? PermissionContext.LanguagePreference, GetSongPools(session, songId));
 				var user = PermissionContext.LoggedUser;
 
 				if (user != null) {
@@ -346,6 +366,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
 					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
 				contract.Hits = session.Query<SongHit>().Count(h => h.Song.Id == songId);
+				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
 
 				if (albumId != 0) {
 

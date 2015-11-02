@@ -14,7 +14,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		public SongDetailsContract() {}
 
-		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference) {
+		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
+			SongListBaseContract[] pools) {
 
 			Song = new SongContract(song, languagePreference);
 
@@ -31,20 +32,12 @@ namespace VocaDb.Model.DataContracts.Songs {
 			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? 
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);
 
-			// TODO (PERF): this might be handled through a special query if the list is long
-			Pools =
-				song.ListLinks
-				.Where(l => l.List.FeaturedCategory == SongListFeaturedCategory.Pools)
-				.OrderBy(l => l.List.Name).Take(3)
-				.Select(l => new SongListBaseContract(l.List))
-				.ToArray();
-
-			ListCount = song.ListLinks.Count;
-
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(song.TranslatedName);
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
+
+			Pools = pools;
 
 		}
 

@@ -121,7 +121,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			mailer = new FakeUserMessageMailer();
 
-			queries = new SongQueries(repository, permissionContext, entryLinkFactory, pvParser, mailer, new FakeLanguageDetector(), new FakeUserIconFactory(), new FakeUserMessageMailer());
+			queries = new SongQueries(repository, permissionContext, entryLinkFactory, pvParser, mailer, new FakeLanguageDetector(), new FakeUserIconFactory(), new FakeObjectCache());
 
 		}
 
