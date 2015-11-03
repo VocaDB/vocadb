@@ -54,7 +54,7 @@
 				<div data-bind="visible: tags.length">
 					<i class="icon icon-tags"></i>
 					<!-- ko foreach: tags -->
-					<a href="#" data-bind="text: name, click: function() { $parents[1].tag(name); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+					<a href="#" data-bind="text: tag.name, click: function() { $parents[1].selectTag(tag); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
 					<!-- /ko -->
 				</div>
 			</td>

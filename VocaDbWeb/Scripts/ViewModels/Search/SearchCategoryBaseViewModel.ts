@@ -80,6 +80,10 @@ module vdb.viewModels.search {
 
 		};
 
+		public selectTag = (tag: dc.TagBaseContract) => {
+			this.tags(tag ? [tag.name] : []);
+		}
+
 		public showTags: KnockoutObservable<boolean>;
 
 		public tags: KnockoutObservableArray<string>;
