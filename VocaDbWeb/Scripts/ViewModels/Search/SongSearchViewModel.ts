@@ -18,7 +18,7 @@ module vdb.viewModels.search {
 			cultureCode: string,
 			private loggedUserId: number,
 			sort: string,
-			artistId: number,
+			artistId: number[],
 			childVoicebanks: boolean,
 			songType: string,
 			onlyWithPVs: boolean,
@@ -49,7 +49,7 @@ module vdb.viewModels.search {
 				this.sort(sort);
 
 			if (artistId)
-				this.selectArtist(artistId);
+				this.selectArtists(artistId, this.artists, this.artistRepo);
 
 			if (songType)
 				this.songType(songType);
@@ -159,18 +159,8 @@ module vdb.viewModels.search {
 			return this.pvServiceIcons.getIconUrls(services);
 		}
 
-		public selectArtist = (selectedArtistId: number) => {
-			
-			var newArtist = new ArtistFilter(selectedArtistId);
-			this.artists.push(newArtist);
-
-			if (this.artistRepo) {
-				this.artistRepo.getOne(selectedArtistId, artist => {
-					newArtist.name(artist.name);
-					newArtist.artistType(cls.artists.ArtistType[artist.artistType]);
-				});				
-			}
-
+		public selectArtist = (selectedArtistId: number) => {			
+			this.selectArtists([selectedArtistId], this.artists, this.artistRepo);			
 		};
 
 		public showTags: KnockoutObservable<boolean>;

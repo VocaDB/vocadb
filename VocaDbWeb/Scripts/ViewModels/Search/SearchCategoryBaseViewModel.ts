@@ -53,6 +53,33 @@ module vdb.viewModels.search {
 
 		public searchTerm: KnockoutObservable<string>;
 
+		public selectArtists = (
+			selectedArtistIds: number[],
+			artists: KnockoutObservableArray<ArtistFilter>,
+			artistRepo: rep.ArtistRepository) => {
+
+			if (!selectedArtistIds)
+				return;
+
+			var filters = _.map(selectedArtistIds, a => new ArtistFilter(a));
+			ko.utils.arrayPushAll(artists, filters);
+
+			if (!artistRepo)
+				return;
+
+			_.forEach(filters, newArtist => {
+
+				var selectedArtistId = newArtist.id;
+
+				artistRepo.getOne(selectedArtistId, artist => {
+					newArtist.name(artist.name);
+					newArtist.artistType(cls.artists.ArtistType[artist.artistType]);
+				});
+
+			});
+
+		};
+
 		public showTags: KnockoutObservable<boolean>;
 
 		public tags: KnockoutObservableArray<string>;

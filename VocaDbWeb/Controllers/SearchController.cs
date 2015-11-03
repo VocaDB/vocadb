@@ -45,8 +45,8 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", "SongList", new { id });
 		}
 
-		private ActionResult RedirectToTag(string name) {
-			return RedirectToAction("Details", "Tag", new { id = name });			
+		private ActionResult RedirectToTag(int id, string urlSlug) {
+			return RedirectToAction("DetailsById", "Tag", new { id, urlSlug });			
 		}
 
 		private ActionResult TryRedirect(string filter, EntryType searchType) {
@@ -71,7 +71,7 @@ namespace VocaDb.Web.Controllers
 							return RedirectToSong(result.Songs.Items[0].Id);
 
 						if (result.Tags.TotalCount == 1)
-							return RedirectToAction("Details", "Tag", new { id = result.Tags.Items[0].Name });
+							return RedirectToTag(result.Tags.Items[0].Id, result.Tags.Items[0].UrlSlug);
 
 					}
 
@@ -114,9 +114,9 @@ namespace VocaDb.Web.Controllers
 					return RedirectToAction("Featured", "SongList");
 
 				case EntryType.Tag:
-					var tags = tagQueries.Find(t => t.Name, new CommonSearchParams(textQuery, false, true, true), PagingProperties.FirstPage(2), true);
+					var tags = tagQueries.Find(t => new { t.Id, t.Name }, new CommonSearchParams(textQuery, false, true, true), PagingProperties.FirstPage(2), true);
 					if (tags.Items.Length == 1) {
-						return RedirectToTag(tags.Items.First());
+						return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);
 					}
 					break;
 

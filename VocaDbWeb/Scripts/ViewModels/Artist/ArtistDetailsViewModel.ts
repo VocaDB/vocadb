@@ -82,7 +82,7 @@ module vdb.viewModels {
 				return;
 
 			this.mainAlbumsViewModel(new vdb.viewModels.search.AlbumSearchViewModel(null, this.unknownPictureUrl, this.lang,
-				this.albumRepo, null, this.resourceRepo, this.cultureCode, null, this.artistId, null, "Unknown", null));
+				this.albumRepo, null, this.resourceRepo, this.cultureCode, null, [ this.artistId ], null, "Unknown", null));
 			this.mainAlbumsViewModel().artistParticipationStatus("OnlyMainAlbums");
 
 		};
@@ -93,7 +93,7 @@ module vdb.viewModels {
 				return;
 
 			this.collaborationAlbumsViewModel(new vdb.viewModels.search.AlbumSearchViewModel(null, this.unknownPictureUrl, this.lang,
-				this.albumRepo, null, this.resourceRepo, this.cultureCode, null, this.artistId, null, "Unknown", null));
+				this.albumRepo, null, this.resourceRepo, this.cultureCode, null, [ this.artistId ], null, "Unknown", null));
 			this.collaborationAlbumsViewModel().artistParticipationStatus("OnlyCollaborations");
 
 		};
@@ -104,7 +104,7 @@ module vdb.viewModels {
 				return;
 
 			this.songsViewModel(new vdb.viewModels.search.SongSearchViewModel(null, this.urlMapper, this.lang, this.songRepo, null, this.userRepository, this.resourceRepo,
-				this.cultureCode, this.loggedUserId, null, this.artistId, null, null, false, false, null, null, null, null, null, this.pvPlayersFactory));
+				this.cultureCode, this.loggedUserId, null, [ this.artistId ], null, null, false, false, null, null, null, null, null, this.pvPlayersFactory));
 			this.songsViewModel().updateResults(true);
 
 		}

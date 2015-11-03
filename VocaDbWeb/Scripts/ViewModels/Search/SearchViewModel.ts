@@ -18,7 +18,7 @@ module vdb.viewModels.search {
 			searchTerm: string,
 			tag: string,
 			sort: string,
-			artistId: number,
+			artistId: number[],
 			childVoicebanks: boolean,
 			artistType: string,
 			albumType: string, songType: string,

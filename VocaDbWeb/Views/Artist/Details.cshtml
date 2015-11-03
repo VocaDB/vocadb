@@ -194,7 +194,7 @@
 						}
 						@if (Model.PersonalStats != null && Model.PersonalStats.SongRatingCount > 0) {
 							@Html.ActionLink(string.Format(Res.YouHaveRatedSongs, Model.PersonalStats.SongRatingCount), "Index", "Search",
-								new SearchIndexViewModel(EntryType.Song) { ArtistId = Model.Id, OnlyRatedSongs = true }, null);
+								new VocaDb.Model.Utils.Search.SearchRouteParams(EntryType.Song) { artistId = Model.Id, onlyRatedSongs = true }, null);
 						}
 						@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 							<p>

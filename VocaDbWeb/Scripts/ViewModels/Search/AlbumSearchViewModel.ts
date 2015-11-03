@@ -14,7 +14,7 @@ module vdb.viewModels.search {
 			resourceRep: rep.ResourceRepository,
 			cultureCode: string,
 			sort: string,
-			artistId: number,
+			artistId: number[],
 			childVoicebanks: boolean,
 			albumType: string,
 			viewMode: string) {
@@ -36,7 +36,7 @@ module vdb.viewModels.search {
 			this.viewMode = ko.observable(viewMode || "Details");
 
 			if (artistId)
-				this.selectArtist(artistId);
+				this.selectArtists(artistId, this.artists, this.artistRepo);
 
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.albumType.subscribe(this.updateResultsWithTotalCount);
@@ -94,17 +94,7 @@ module vdb.viewModels.search {
 		};
 
 		public selectArtist = (selectedArtistId: number) => {
-
-			var newArtist = new ArtistFilter(selectedArtistId);
-			this.artists.push(newArtist);
-
-			if (this.artistRepo) {
-				this.artistRepo.getOne(selectedArtistId, artist => {
-					newArtist.name(artist.name);
-					newArtist.artistType(cls.artists.ArtistType[artist.artistType]);
-				});
-			}
-
+			this.selectArtists([selectedArtistId], this.artists, this.artistRepo);
 		};
 
 	}

@@ -18,7 +18,7 @@ namespace VocaDb.Web.Models.Search {
 
 		public bool AllowRedirect { get; set; }
 
-		public int? ArtistId { get; set; }
+		public int[] ArtistId { get; set; }
 
 		public ArtistType? ArtistType { get; set; }
 

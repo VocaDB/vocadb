@@ -24,6 +24,8 @@ namespace VocaDb.Model.Utils.Search {
 
 		public string filter { get; set; }
 
+		public bool? onlyRatedSongs { get; set; }
+
 		public bool? onlyWithPVs { get; set; }
 
 		public EntryType? searchType { get; set; }
