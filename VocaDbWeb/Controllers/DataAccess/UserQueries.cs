@@ -784,8 +784,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 				// Apply paging
 				var resultQ = queryWithSort
-					.Skip(queryParams.Paging.Start)
-					.Take(queryParams.Paging.MaxEntries);
+					.Paged(queryParams.Paging);
 
 				var contracts = resultQ.ToArray().Select(fac).ToArray();
 				var totalCount = (queryParams.Paging.GetTotalCount ? q.Count() : 0);

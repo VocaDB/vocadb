@@ -645,13 +645,16 @@ namespace VocaDb.Web.Controllers
 			var inbox = UserInboxType.Received;
 
 			if (messageId.HasValue) {
-				var isNotification = Data.HandleQuery(ctx => ctx.Query<UserMessage>().Any(m => m.Id == messageId && m.Receiver.Id == user.Id && m.Sender == null));
+
+				var isNotification = Data.HandleQuery(ctx => ctx.Query<UserMessage>().Any(
+					m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications));
+
 				if (isNotification)
 					inbox = UserInboxType.Notifications;
+
             }
 				
-
-			var model = new Messages(user, messageId, receiverName, inbox);
+			var model = new Messages(user, messageId, receiverName, inbox);			
 
 			return View(model);
 
