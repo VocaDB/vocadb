@@ -11,7 +11,6 @@ namespace VocaDb.Model.Mapping.Albums {
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
-			Map(m => m.Date).Nullable();
 			Map(m => m.Description).Length(400).Not.Nullable();
 			Map(m => m.Name).Length(50).Not.Nullable();
 			Map(m => m.SeriesNumber).Not.Nullable();
@@ -24,6 +23,8 @@ namespace VocaDb.Model.Mapping.Albums {
 
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Event]").Inverse().Cascade.All().OrderBy("Created DESC"));
+
+			Component(m => m.Date, c => c.Map(m => m.DateTime).Column("[Date]").Nullable());
 
 		}
 

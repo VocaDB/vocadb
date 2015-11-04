@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using System.Web.Mvc;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event {
 
+	[PropertyModelBinder]
 	public class EventEdit {
 
 		public EventEdit() {
@@ -38,7 +38,7 @@ namespace VocaDb.Web.Models.Event {
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
 
-		[CultureInvariantDateTimeModelBinder("Date")]
+		[FromJson]
 		public DateTime? Date { get; set; }
 
 		[StringLength(400)]

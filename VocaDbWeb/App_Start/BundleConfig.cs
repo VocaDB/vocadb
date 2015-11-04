@@ -228,6 +228,13 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/ReleaseEvent/Edit").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
+				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventEditViewModel.js",
+				"~/Scripts/Event/Edit.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/Search/Index").Include(
 				"~/Scripts/soundcloud-api.js",				
 				"~/Scripts/Models/Songs/SongType.js",

@@ -32,7 +32,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			switch (sortRule) {
 				case EventSortRule.Date:
-					return query.OrderByDescending(r => r.Date);
+					return query.OrderByDescending(r => r.Date.DateTime);
 				case EventSortRule.Name:
 					return query.OrderBy(r => r.Name);
 				case EventSortRule.SeriesName:
@@ -48,13 +48,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		public static IQueryable<ReleaseEvent> WhereDateIsBetween(this IQueryable<ReleaseEvent> query, DateTime? begin, DateTime? end) {
 			
 			if (begin.HasValue && end.HasValue)
-				return query.Where(e => e.Date != null && e.Date >= begin && e.Date < end);
+				return query.Where(e => e.Date.DateTime != null && e.Date >= begin && e.Date < end);
 
 			if (begin.HasValue)
-				return query.Where(e => e.Date != null && e.Date >= begin);
+				return query.Where(e => e.Date.DateTime != null && e.Date >= begin);
 
 			if (end.HasValue)
-				return query.Where(e => e.Date != null && e.Date < end);
+				return query.Where(e => e.Date.DateTime != null && e.Date < end);
 
 			return query;
 

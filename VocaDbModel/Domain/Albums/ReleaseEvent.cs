@@ -77,7 +77,7 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
-		public virtual DateTime? Date { get; set; }
+		public virtual Date Date { get; set; }
 
 		public virtual string Description {
 			get { return description; }

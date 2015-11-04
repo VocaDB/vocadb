@@ -124,7 +124,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			
 			return repository.HandleQuery(ctx => ctx
 				.Query()
-				.Where(e => e.Date != null)
+				.Where(e => e.Date.DateTime != null)
 				.OrderBy(sortRule)
 				.ToArray()
 				.Select(e => new ReleaseEventContract(e, includeSeries))
@@ -171,7 +171,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 					ev = session.Load(contract.Id);
 					var diff = new ReleaseEventDiff();
 
-					if (ev.Date != contract.Date)
+					if (!ev.Date.Equals(contract.Date))
 						diff.Date = true;
 
 					if (ev.Description != contract.Description)

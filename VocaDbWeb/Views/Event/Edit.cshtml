@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.EventEdit>
 
 @{
@@ -76,7 +77,8 @@
 		@Html.LabelFor(m => m.Date)
 	</div>
 	<div class="editor-field">
-		@Html.TextBox("Date", (Model.Date != null ? Model.Date.Value.ToString(VocaDb.Web.Code.CultureInvariantDateTimeModelBinder.Format) : string.Empty), new { size = 20, id = "date" })
+		<input type="text" data-bind="datepicker: { value: date, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
+		@Html.HiddenForKnockout(m => m.Date, "value: ko.toJSON(dateStr)")
 		@Html.ValidationMessageFor(m => m.Date)
 	</div>
 	
@@ -86,12 +88,15 @@
 }
 
 @section BodyScripts {
-<script type="text/javascript" src="@Url.Content("~/Scripts/Event/Edit.js")"></script>
+@Scripts.Render("~/bundles/shared/edit", "~/bundles/ReleaseEvent/Edit")
 <script type="text/javascript">
+	$(function () {
 
-	$(document).ready(function () {
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(@ToJS(Model.Date));
+		ko.applyBindings(vm);
+
 		initPage();
-	});
 
+	});
 </script>
 }
