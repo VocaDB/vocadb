@@ -4,6 +4,9 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Code {
 
+	/// <summary>
+	/// Left hand side menu
+	/// </summary>
 	public abstract class MenuPage : VocaDbPage {
 
 		public class Link {

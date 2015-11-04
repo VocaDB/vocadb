@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using VocaDb.Model;
 using VocaDb.Web.Helpers;
 
@@ -26,11 +24,6 @@ namespace VocaDb.Web.Code {
 
 			if (context.HttpContext == null || context.HttpContext.Request == null)
 				throw new InvalidOperationException("Request couldn't be accessed.");
-
-			/*if (JsonRequestBehavior == JsonRequestBehavior.DenyGet &&
-				String.Equals(context.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase)) {
-				throw new InvalidOperationException("This request has been blocked because sensitive information could be disclosed to third party web sites when this is used in a GET request. To allow GET requests, set JsonRequestBehavior to AllowGet.");
-			}*/
 
 			var response = context.HttpContext.Response;
 
