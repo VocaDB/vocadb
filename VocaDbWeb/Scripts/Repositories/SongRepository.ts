@@ -105,6 +105,11 @@ module vdb.repositories {
 
 		}
 
+		// Get PV ID by song ID and PV service.
+		public getPvId = (songId: number, pvService: cls.pvs.PVService, callback: (pvId: string) => void) => {
+			return $.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/pvs"), { service: cls.pvs.PVService[pvService] }, callback);			
+		}
+
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
 

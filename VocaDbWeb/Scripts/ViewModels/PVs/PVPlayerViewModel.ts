@@ -123,9 +123,7 @@ module vdb.viewModels.pvs {
 		private currentPlayer: IPVPlayer = null;
 
 		private loadPVId = (service: serv, songId: number, callback: (pvId: string) => void) => {
-
-			$.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/pvs"), { service: serv[service] }, callback);
-
+			this.songRepo.getPvId(songId, service, callback);
 		}
 
 		private players: { [index: string]: IPVPlayer; };

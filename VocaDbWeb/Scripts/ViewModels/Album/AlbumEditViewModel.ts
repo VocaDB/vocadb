@@ -443,7 +443,6 @@ module vdb.viewModels {
 
 			this.validationError_needArtist = ko.computed(() => _.isEmpty(this.artistLinks()));
 			this.validationError_needCover = ko.computed(() => !this.hasCover);
-			//this.validationError_needReleaseYear = ko.computed(() => !_.isNumber(this.releaseYear()) || this.releaseYear() == null);
 			this.validationError_needReleaseYear = ko.computed(() => {
 				var num = !_.isNumber(this.releaseYear()) || this.releaseYear() == null;
 				return num;
