@@ -38,8 +38,8 @@ module vdb.viewModels.search {
 			if (searchTerm)
 				this.searchTerm(searchTerm);
 
-			var isAlbum = searchType === "Album";
-			var isSong = searchType === "Song";
+			var isAlbum = searchType === SearchType.Album;
+			var isSong = searchType === SearchType.Song;
 
 			this.anythingSearchViewModel = new AnythingSearchViewModel(this, languageSelection, entryRepo);
 			this.artistSearchViewModel = new ArtistSearchViewModel(this, languageSelection, artistRepo, loggedUserId, artistType);
@@ -89,10 +89,10 @@ module vdb.viewModels.search {
 			this.draftsOnly.subscribe(this.updateResults);
 			this.showTags.subscribe(this.updateResults);
 
-			this.showAnythingSearch = ko.computed(() => this.searchType() == 'Anything');
-			this.showArtistSearch = ko.computed(() => this.searchType() == 'Artist');
-			this.showAlbumSearch = ko.computed(() => this.searchType() == 'Album');
-			this.showSongSearch = ko.computed(() => this.searchType() == 'Song');
+			this.showAnythingSearch = ko.computed(() => this.searchType() === SearchType.Anything);
+			this.showArtistSearch = ko.computed(() => this.searchType() === SearchType.Artist);
+			this.showAlbumSearch = ko.computed(() => this.searchType() === SearchType.Album);
+			this.showSongSearch = ko.computed(() => this.searchType() === SearchType.Song);
 
 			this.searchType.subscribe(val => {
 
@@ -106,7 +106,7 @@ module vdb.viewModels.search {
 				this.updateResults();
 			});
 
-			tagRepo.getTopTags("Genres", result => {
+			tagRepo.getTopTags(models.tags.Tag.commonCategory_Genres, result => {
 				this.genreTags(result);
 			});
 
@@ -118,43 +118,42 @@ module vdb.viewModels.search {
 		public songSearchViewModel: SongSearchViewModel;
 		public tagSearchViewModel: TagSearchViewModel;
 
-		private currentSearchType = ko.observable("Anything");
+		private currentSearchType = ko.observable(SearchType.Anything);
 		public draftsOnly = ko.observable(false);
 		public genreTags = ko.observableArray<string>();
 		public pageSize = ko.observable(10);
 		public resourcesManager: vdb.models.ResourcesManager;
 		public resources: KnockoutObservable<dc.ResourcesContract>;
-		//public resources = ko.observable<dc.ResourcesContract>();
 		public showAdvancedFilters = ko.observable(false);
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
-		public searchType = ko.observable("Anything");
+		public searchType = ko.observable(SearchType.Anything);
 		public tags = ko.observableArray([]);
 
 		public showAnythingSearch: KnockoutComputed<boolean>;
 		public showArtistSearch: KnockoutComputed<boolean>;
 		public showAlbumSearch: KnockoutComputed<boolean>;
 		public showSongSearch: KnockoutComputed<boolean>;
-		public showTagSearch = ko.computed(() => this.searchType() == 'Tag');
+		public showTagSearch = ko.computed(() => this.searchType() === SearchType.Tag);
 		public showTagFilter = ko.computed(() => !this.showTagSearch());
 		public showTags = ko.observable(false);
-		public showDraftsFilter = ko.computed(() => this.searchType() != 'Tag');
+		public showDraftsFilter = ko.computed(() => this.searchType() !== SearchType.Tag);
 
-		public isUniversalSearch = ko.computed(() => this.searchType() == 'Anything');
+		public isUniversalSearch = ko.computed(() => this.searchType() === SearchType.Anything);
 
 		public addTag = (tag: string) => this.tags.push(tag);
 
 		public currentCategoryViewModel = (): ISearchCategoryBaseViewModel => {
 			
 			switch (this.searchType()) {
-				case 'Anything':
+				case SearchType.Anything:
 					return this.anythingSearchViewModel;
-				case 'Artist':
+				case SearchType.Artist:
 					return this.artistSearchViewModel;
-				case 'Album':
+				case SearchType.Album:
 					return this.albumSearchViewModel;
-				case 'Song':
+				case SearchType.Song:
 					return this.songSearchViewModel;
-				case 'Tag':
+				case SearchType.Tag:
 					return this.tagSearchViewModel;
 				default:
 					return null;
@@ -171,6 +170,14 @@ module vdb.viewModels.search {
 				
 		}
 
+	}
+
+	class SearchType {
+		public static Anything = "Anything";
+		public static Artist = "Artist";
+		public static Album = "Album";
+		public static Song = "Song";
+		public static Tag = "Tag";
 	}
 
 }

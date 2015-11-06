@@ -2,8 +2,8 @@
 module vdb.helpers {
 	
 	export class KnockoutHelper {
-		
-		public static stringEnum<T>(observable: KnockoutObservable<T>, enumType: any) {
+
+		public static stringEnum<T>(observable: KnockoutObservable<T>, enumType: any): KnockoutComputed<string> {
 
 			return ko.computed({
 				read: () => {
