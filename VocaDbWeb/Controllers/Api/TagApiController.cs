@@ -4,12 +4,12 @@ using System.Web.Http;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
-using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 

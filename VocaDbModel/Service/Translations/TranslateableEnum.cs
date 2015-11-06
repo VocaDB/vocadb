@@ -5,9 +5,8 @@ using System.Linq;
 using System.Resources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using VocaDb.Model;
 
-namespace VocaDb.Web.Helpers.Support {
+namespace VocaDb.Model.Service.Translations {
 
 	public class TranslateableEnum<TEnum> where TEnum : struct, IConvertible {
 

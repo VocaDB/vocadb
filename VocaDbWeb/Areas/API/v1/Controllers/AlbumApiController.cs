@@ -9,7 +9,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Web.Controllers;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Web.Controllers.DataAccess;
+using VocaDb.Model.Queries;
 
 namespace VocaDb.Web.API.v1.Controllers {
 

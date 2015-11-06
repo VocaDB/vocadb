@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using NHibernate;
-using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
@@ -24,9 +23,9 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
-using VocaDb.Web.Helpers;
+using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	/// <summary>
 	/// Database queries related to <see cref="Album"/>.
@@ -34,6 +33,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 	public class AlbumQueries : QueriesBase<IAlbumRepository, Album> {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserMessageMailer mailer;
@@ -81,7 +81,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
-			IUserIconFactory userIconFactory)
+			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -89,6 +89,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.pictureFilePersister = pictureFilePersister;
 			this.mailer = mailer;
 			this.userIconFactory = userIconFactory;
+			this.enumTranslations = enumTranslations;
 
 		}
 
@@ -167,7 +168,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory, report => report.Album.Id == albumId, 
 					(album, reporter, notesTruncated) => new AlbumReport(album, reportType, reporter, hostname, notesTruncated, versionNumber),
-					() => reportType != AlbumReportType.Other ? Translate.AlbumReportTypeNames[reportType] : null,
+					() => reportType != AlbumReportType.Other ? enumTranslations.AlbumReportTypeNames[reportType] : null,
 					albumId, reportType, hostname, notes);
 			});
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Web.Code.Security {
 

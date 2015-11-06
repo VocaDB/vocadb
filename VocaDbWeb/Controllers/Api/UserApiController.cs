@@ -25,9 +25,9 @@ using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
-using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 

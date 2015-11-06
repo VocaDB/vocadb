@@ -7,7 +7,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	/// <summary>
 	/// Queries for <see cref="UserMessage"/>.

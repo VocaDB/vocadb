@@ -791,10 +791,9 @@
     <Compile Include="Code\Highcharts\Title.cs" />
     <Compile Include="Code\WebApi\UnhandledExceptionLogger.cs" />
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
-    <Compile Include="Controllers\DataAccess\ActivityEntryQueries.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
+    <Compile Include="Helpers\EnumTranslations.cs" />
     <Compile Include="Helpers\RazorHelper.cs" />
-    <Compile Include="Helpers\Support\DerivedTranslateableEnum.cs" />
     <Compile Include="Helpers\UrlHelperExtender.cs" />
     <Compile Include="Models\Ext\EmbedSongViewModel.cs" />
     <Compile Include="Models\SongLists\SongListDetailsViewModel.cs" />
@@ -937,8 +936,7 @@
     <Compile Include="Code\MenuPage.cs" />
     <Compile Include="Code\PagePropertiesData.cs" />
     <Compile Include="Code\PropertyModelBinder.cs" />
-    <Compile Include="Code\Security\StopForumSpamClient.cs" />
-    <Compile Include="Code\Security\HostCollection.cs" />
+    <Compile Include="Code\Security\StopForumSpam\StopForumSpamClient.cs" />
     <Compile Include="Code\Security\IPRuleManager.cs" />
     <Compile Include="Code\Security\InMemoryTokenManager.cs" />
     <Compile Include="Code\Security\LogFileReader.cs" />
@@ -968,17 +966,6 @@
     <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
-    <Compile Include="Controllers\DataAccess\AlbumQueries.cs" />
-    <Compile Include="Controllers\DataAccess\ArtistQueries.cs" />
-    <Compile Include="Controllers\DataAccess\DiscussionQueries.cs" />
-    <Compile Include="Controllers\DataAccess\EntryQueries.cs" />
-    <Compile Include="Controllers\DataAccess\EntryReportQueries.cs" />
-    <Compile Include="Controllers\DataAccess\EventQueries.cs" />
-    <Compile Include="Controllers\DataAccess\SongListQueries.cs" />
-    <Compile Include="Controllers\DataAccess\SongQueries.cs" />
-    <Compile Include="Controllers\DataAccess\TagQueries.cs" />
-    <Compile Include="Controllers\DataAccess\UserMessageQueries.cs" />
-    <Compile Include="Controllers\DataAccess\UserQueries.cs" />
     <Compile Include="Controllers\DiscussionController.cs" />
     <Compile Include="Controllers\EntryReportsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -1010,7 +997,6 @@
     <Compile Include="Helpers\ReportUtils.cs" />
     <Compile Include="Helpers\ResourceHelpers.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Helpers\Support\TranslateableEnum.cs" />
     <Compile Include="Helpers\TempDataExtender.cs" />
     <Compile Include="Helpers\Translate.cs" />
     <Compile Include="Helpers\UrlHelperExtenderForImages.cs" />
@@ -2526,6 +2512,7 @@
     <Folder Include="Content\sitemaps\" />
     <Folder Include="EntryImg\Album\" />
     <Folder Include="EntryImg\Artist\" />
+    <Folder Include="Helpers\Support\" />
     <Folder Include="logs\" />
     <Folder Include="Resources\Views\Help\" />
     <Folder Include="Scripts\Admin\" />

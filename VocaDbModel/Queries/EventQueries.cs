@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using NHibernate;
-using VocaDb.Model;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -12,7 +11,7 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent> {
 

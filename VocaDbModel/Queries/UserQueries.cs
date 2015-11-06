@@ -7,7 +7,6 @@ using System.Threading;
 using System.Web;
 using NHibernate;
 using NLog;
-using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
@@ -36,9 +35,9 @@ using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
-using VocaDb.Web.Code.Security;
+using VocaDb.Model.Service.Security.StopForumSpam;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	/// <summary>
 	/// Database queries related to <see cref="User"/>.

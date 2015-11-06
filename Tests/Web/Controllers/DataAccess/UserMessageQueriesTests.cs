@@ -4,11 +4,11 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
-using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 

@@ -6,10 +6,10 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
-using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 

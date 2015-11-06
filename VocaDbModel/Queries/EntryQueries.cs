@@ -13,7 +13,7 @@ using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	public class EntryQueries : QueriesBase<IAlbumRepository, Album> {
 

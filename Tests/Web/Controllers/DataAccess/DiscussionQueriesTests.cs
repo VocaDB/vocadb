@@ -5,9 +5,9 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Queries;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
-using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 

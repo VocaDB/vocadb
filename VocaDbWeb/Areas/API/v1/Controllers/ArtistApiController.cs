@@ -6,10 +6,10 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Controllers;
-using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Web.API.v1.Controllers {
 

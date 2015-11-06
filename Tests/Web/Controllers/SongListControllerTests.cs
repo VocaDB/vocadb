@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers;
-using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Tests.Web.Controllers {
 

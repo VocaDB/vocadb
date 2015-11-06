@@ -16,9 +16,9 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.BBCode;
-using VocaDb.Web.Helpers.Support;
 
 namespace VocaDb.Web.Helpers {
 

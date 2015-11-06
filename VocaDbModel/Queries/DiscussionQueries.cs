@@ -9,7 +9,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	public class DiscussionQueries : QueriesBase<IDiscussionFolderRepository, DiscussionFolder> {
 

@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.Caching;
 using NHibernate;
-using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
@@ -23,9 +22,9 @@ using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
-using VocaDb.Web.Helpers;
+using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	/// <summary>
 	/// Database queries related to <see cref="Artist"/>.
@@ -34,6 +33,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserIconFactory userIconFactory;
@@ -148,7 +148,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		public ArtistQueries(IArtistRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister,
-			ObjectCache cache, IUserIconFactory userIconFactory)
+			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -156,6 +156,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.pictureFilePersister = pictureFilePersister;
 			this.cache = cache;
 			this.userIconFactory = userIconFactory;
+			this.enumTranslations = enumTranslations;
 
 		}
 
@@ -254,7 +255,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory, report => report.Artist.Id == artistId, 
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
-					() => reportType != ArtistReportType.Other ? Translate.ArtistReportTypeNames[reportType] : null,
+					() => reportType != ArtistReportType.Other ? enumTranslations.ArtistReportTypeNames[reportType] : null,
 					artistId, reportType, hostname, notes);
 			});
 

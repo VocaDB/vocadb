@@ -10,9 +10,9 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Queries;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
-using VocaDb.Web.Controllers.DataAccess;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using NHibernate;
 using NLog;
-using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
@@ -23,7 +22,7 @@ using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	/// <summary>
 	/// Database queries for <see cref="Tag"/>.

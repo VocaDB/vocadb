@@ -5,7 +5,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Repositories;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	public class EntryReportQueries : QueriesBase<IEntryReportRepository, EntryReport> {
 

@@ -6,13 +6,12 @@ using System.Runtime.Caching;
 using System.Web;
 using NHibernate;
 using NLog;
-using VocaDb.Model.Domain;
-using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -29,11 +28,11 @@ using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
+using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
-using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	/// <summary>
 	/// Database queries related to <see cref="Song"/>.
@@ -53,6 +52,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEnumTranslations enumTranslations;
 		private readonly ILanguageDetector languageDetector;
 		private readonly IUserMessageMailer mailer;
 		private readonly IPVParser pvParser;
@@ -215,7 +215,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 		}
 
 		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
-			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, ObjectCache cache)
+			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -223,7 +223,8 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			this.mailer = mailer;
 			this.languageDetector = languageDetector;
 			this.userIconFactory = userIconFactory;
-			this.cache = cache;
+			this.enumTranslations = enumTranslations;
+            this.cache = cache;
 
 		}
 
@@ -324,7 +325,7 @@ namespace VocaDb.Web.Controllers.DataAccess {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory, report => report.Song.Id == songId, 
 					(song, reporter, notesTruncated) => new SongReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
-					() => reportType != SongReportType.Other ? Translate.SongReportTypeNames[reportType] : null,
+					() => reportType != SongReportType.Other ? enumTranslations.SongReportTypeNames[reportType] : null,
 					songId, reportType, hostname, notes);
 			});
 

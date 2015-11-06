@@ -110,6 +110,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Queries\ActivityEntryQueries.cs" />
+    <Compile Include="Queries\AlbumQueries.cs" />
+    <Compile Include="Queries\ArtistQueries.cs" />
+    <Compile Include="Queries\DiscussionQueries.cs" />
+    <Compile Include="Queries\EntryQueries.cs" />
+    <Compile Include="Queries\EntryReportQueries.cs" />
+    <Compile Include="Queries\EventQueries.cs" />
+    <Compile Include="Queries\SongListQueries.cs" />
+    <Compile Include="Queries\SongQueries.cs" />
+    <Compile Include="Queries\TagQueries.cs" />
+    <Compile Include="Queries\UserMessageQueries.cs" />
+    <Compile Include="Queries\UserQueries.cs" />
     <Compile Include="DataContracts\Activityfeed\ActivityEntryForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumDiscPropertiesContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
@@ -784,10 +796,18 @@
     <Compile Include="Service\Search\SongSearch\SongListQueryParams.cs" />
     <Compile Include="Service\Search\Tags\TagSearchTextQuery.cs" />
     <Compile Include="Service\Search\User\FollowedArtistQueryParams.cs" />
+    <Compile Include="Service\Security\HostCollection.cs" />
+    <Compile Include="Service\Security\StopForumSpam\IStopForumSpamClient.cs" />
+    <Compile Include="Service\Security\StopForumSpam\SFSCheckResultType.cs" />
+    <Compile Include="Service\Security\StopForumSpam\SFSResponseContract.cs" />
+    <Compile Include="Service\Security\StopForumSpam\SFSResultContract.cs" />
     <Compile Include="Service\SongImport\ISongListImporter.cs" />
     <Compile Include="Service\SongImport\YoutubePlaylistImporter.cs" />
     <Compile Include="Service\TagFormatting\SongCsvFileFormatter.cs" />
     <Compile Include="Service\TagFormatting\SongListFormatter.cs" />
+    <Compile Include="Service\Translations\DerivedTranslateableEnum.cs" />
+    <Compile Include="Service\Translations\IEnumTranslations.cs" />
+    <Compile Include="Service\Translations\TranslateableEnum.cs" />
     <Compile Include="Service\VideoServices\HtmlParsingHelper.cs" />
     <Compile Include="Service\IEntryLinkFactory.cs" />
     <Compile Include="Service\MikuDbAlbumService.cs" />

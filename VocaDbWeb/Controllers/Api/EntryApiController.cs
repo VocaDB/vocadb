@@ -5,9 +5,9 @@ using System.Web.Http.Description;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
-using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {

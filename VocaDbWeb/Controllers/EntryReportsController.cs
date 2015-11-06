@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using VocaDb.Model.Domain;
-using VocaDb.Web.Controllers.DataAccess;
+using VocaDb.Model.Queries;
 
 namespace VocaDb.Web.Controllers
 {

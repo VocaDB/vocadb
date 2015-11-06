@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Resources;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Web.Helpers.Support {
+namespace VocaDb.Model.Service.Translations {
 
 	// Supports loading translations from a "base" enum
 	public class DerivedTranslateableEnum<TEnum, TEnumBase> : TranslateableEnum<TEnum> where TEnum : struct, IConvertible where TEnumBase : struct, IConvertible {

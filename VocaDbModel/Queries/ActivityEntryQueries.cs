@@ -4,7 +4,7 @@ using System.Linq;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Service.Repositories;
 
-namespace VocaDb.Web.Controllers.DataAccess {
+namespace VocaDb.Model.Queries {
 
 	public class ActivityEntryQueries {
 

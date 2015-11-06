@@ -1,4 +1,5 @@
-﻿using VocaDb.Web.Code.Security;
+﻿using VocaDb.Model.Service.Security.StopForumSpam;
+using VocaDb.Web.Code.Security;
 
 namespace VocaDb.Tests.TestSupport {
 

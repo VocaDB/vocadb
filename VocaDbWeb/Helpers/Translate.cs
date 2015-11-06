@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
@@ -11,10 +10,10 @@ using Resources;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
-using VocaDb.Web.Helpers.Support;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Web.Helpers {
 

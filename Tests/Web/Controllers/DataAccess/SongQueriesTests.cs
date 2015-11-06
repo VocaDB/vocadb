@@ -14,14 +14,15 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Resources.Messages;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
-using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Model.Service;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
@@ -121,7 +122,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			mailer = new FakeUserMessageMailer();
 
-			queries = new SongQueries(repository, permissionContext, entryLinkFactory, pvParser, mailer, new FakeLanguageDetector(), new FakeUserIconFactory(), new FakeObjectCache());
+			queries = new SongQueries(repository, permissionContext, entryLinkFactory, pvParser, mailer, 				
+				new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
 
 		}
 

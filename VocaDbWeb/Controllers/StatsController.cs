@@ -13,6 +13,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Web.Code.Highcharts;
 using VocaDb.Web.Helpers;
@@ -460,7 +461,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "cutoff")]
 		public ActionResult EditsPerDay(DateTime? cutoff) {
 			
-			var points = new DataAccess.ActivityEntryQueries(repository).GetEditsPerDay(null, cutoff);
+			var points = new ActivityEntryQueries(repository).GetEditsPerDay(null, cutoff);
 
 			return DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points);
 

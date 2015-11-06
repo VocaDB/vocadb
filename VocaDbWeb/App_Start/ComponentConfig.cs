@@ -12,6 +12,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.ExtSites;
@@ -19,13 +20,15 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Security;
+using VocaDb.Model.Service.Security.StopForumSpam;
+using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
-using VocaDb.Web.Controllers.DataAccess;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Services;
 
 namespace VocaDb.Web.App_Start {
@@ -71,6 +74,7 @@ namespace VocaDb.Web.App_Start {
 			builder.Register(x => new IPRuleManager(LoadBlockedIPs(x))).AsSelf().SingleInstance();
 			builder.Register(_ => MemoryCache.Default).As<ObjectCache>().ExternallyOwned(); // Disable dispose
 			builder.RegisterType<EntryForApiContractFactory>().AsSelf();
+			builder.RegisterType<EnumTranslations>().As<IEnumTranslations>();
 
 			// Legacy services
 			builder.RegisterType<ActivityFeedService>().AsSelf();

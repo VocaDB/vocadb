@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -9,7 +10,6 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
-using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Models.Search;
 
 namespace VocaDb.Web.Controllers

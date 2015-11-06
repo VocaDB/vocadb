@@ -11,11 +11,11 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search.Artists;
-using VocaDb.Web.Controllers.DataAccess;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
