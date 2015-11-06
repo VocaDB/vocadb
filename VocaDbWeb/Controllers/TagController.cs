@@ -54,7 +54,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(id))
 				return NoId();
 
-			var tagId = queries.GetTag(id, t => t != null ? t.Id : invalidId);
+			var tagId = queries.GetTag(id, t => t.Id, invalidId);
 
 			if (tagId == invalidId)
 				return HttpNotFound();

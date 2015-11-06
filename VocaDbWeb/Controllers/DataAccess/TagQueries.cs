@@ -285,13 +285,25 @@ namespace VocaDb.Web.Controllers.DataAccess {
 
 		}
 
-		public T GetTag<T>(string tagName, Func<Tag, T> fac) {
+		/// <summary>
+		/// Get tag by name. Returns null if the tag does not exist.
+		/// </summary>
+		/// <typeparam name="T">Return type.</typeparam>
+		/// <param name="tagName">Tag name.</param>
+		/// <param name="fac">Return value factory. Cannot be null.</param>
+		/// <param name="def">Value to be returned if the tag doesn't exist.</param>
+		/// <returns>Return value. This will be <paramref name="def"/> if the tag doesn't exist.</returns>
+		public T GetTag<T>(string tagName, Func<Tag, T> fac, T def = default(T)) {
 			
 			ParamIs.NotNullOrEmpty(() => tagName);
 
 			return HandleQuery(ctx => {
 				
 				var tag = GetTag(ctx, tagName);
+
+				if (tag == null)
+					return def;
+
 				return fac(tag);
 
 			});
@@ -382,7 +394,6 @@ namespace VocaDb.Web.Controllers.DataAccess {
 			});
 
 		}
-
 
 		public void Update(TagForEditContract contract, UploadedFileContract uploadedImage) {
 
