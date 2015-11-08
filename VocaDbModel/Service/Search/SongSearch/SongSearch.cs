@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -8,7 +9,6 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Search.SongSearch {
@@ -17,7 +17,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly ContentLanguagePreference languagePreference;
-		private readonly IRepositoryContext querySource;
+		private readonly IDatabaseContext querySource;
 
 		private ContentLanguagePreference LanguagePreference {
 			get { return languagePreference; }
@@ -146,7 +146,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		public SongSearch(IRepositoryContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser) {
+		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser) {
 			this.querySource = querySource;
 			this.languagePreference = languagePreference;
 			this.entryUrlParser = entryUrlParser;

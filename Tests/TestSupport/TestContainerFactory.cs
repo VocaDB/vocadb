@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
+using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Repositories;
-using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Search;
 using VocaDb.Tests.DatabaseTests;
 

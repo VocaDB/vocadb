@@ -1,17 +1,17 @@
-﻿using VocaDb.Model.Domain.Activityfeed;
+﻿using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Queries;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Helpers {
 
 	public class TagFactoryRepository : ITagFactory {
 
 		private readonly AgentLoginData loginData;
-		private readonly IRepositoryContext<Tag> ctx;
+		private readonly IDatabaseContext<Tag> ctx;
 
-		public TagFactoryRepository(IRepositoryContext<Tag> ctx, AgentLoginData loginData) {
+		public TagFactoryRepository(IDatabaseContext<Tag> ctx, AgentLoginData loginData) {
 			this.ctx = ctx;
 			this.loginData = loginData;
 		}

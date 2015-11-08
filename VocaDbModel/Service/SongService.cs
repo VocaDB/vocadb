@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using NHibernate;
 using NHibernate.Linq;
 using NLog;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
@@ -19,7 +20,6 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
@@ -36,7 +36,7 @@ namespace VocaDb.Model.Service {
 		private readonly IEntryUrlParser entryUrlParser;
 
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams) {
-			return new SongSearch(new NHibernateRepositoryContext(session, PermissionContext), LanguagePreference, entryUrlParser).Find(queryParams);
+			return new SongSearch(new NHibernateDatabaseContext(session, PermissionContext), LanguagePreference, entryUrlParser).Find(queryParams);
 		}
 
 		private ArtistForSong RestoreArtistRef(Song song, Artist artist, ArchivedArtistForSongContract albumRef) {

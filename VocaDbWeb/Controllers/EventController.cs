@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Web.Models.Event;
 

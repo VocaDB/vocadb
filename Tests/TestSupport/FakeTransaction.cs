@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Service.Repositories;
+﻿using VocaDb.Model.Database.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
 

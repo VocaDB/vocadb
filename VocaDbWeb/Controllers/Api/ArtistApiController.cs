@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model;
+using VocaDb.Model.Database.Queries;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
@@ -11,10 +13,8 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
-using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Helpers;
 
@@ -42,7 +42,7 @@ namespace VocaDb.Web.Controllers.Api {
 			ArtistOptionalFields fields, 
 			ArtistRelationsFields relations,
 			ContentLanguagePreference lang,
-			IRepositoryContext<Artist> ctx) {
+			IDatabaseContext<Artist> ctx) {
 			
 			var contract = new ArtistForApiContract(a, lang, thumbPersister, WebHelper.IsSSL(Request), fields);
 

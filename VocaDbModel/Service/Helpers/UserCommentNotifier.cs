@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Helpers {
 	/// </summary>
 	public class UserCommentNotifier {
 
-		public void CheckComment(ICommentWithEntry comment, IEntryLinkFactory entryLinkFactory, IRepositoryContext<User> ctx) {
+		public void CheckComment(ICommentWithEntry comment, IEntryLinkFactory entryLinkFactory, IDatabaseContext<User> ctx) {
 
 			var userMatches = Regex.Match(comment.Message, @"@(\w+)");
 

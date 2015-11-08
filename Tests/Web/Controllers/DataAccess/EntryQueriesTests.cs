@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;

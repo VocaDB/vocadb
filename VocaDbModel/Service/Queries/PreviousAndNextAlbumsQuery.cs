@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
@@ -13,7 +13,7 @@ namespace VocaDb.Model.Service.Queries {
 	/// </summary>
 	public class PreviousAndNextAlbumsQuery {
 
-		private readonly IRepositoryContext<Album> ctx;
+		private readonly IDatabaseContext<Album> ctx;
 
 		private IQueryable<Album> AddReleaseRestrictionAfter(IQueryable<Album> criteria, DateTime date) {
 
@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public PreviousAndNextAlbumsQuery(IRepositoryContext<Album> ctx) {
+		public PreviousAndNextAlbumsQuery(IDatabaseContext<Album> ctx) {
 			this.ctx = ctx;
 		}
 

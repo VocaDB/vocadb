@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 	public class AlbumSearch {
 
-		private readonly IRepositoryContext querySource;
+		private readonly IDatabaseContext querySource;
 
 		private ContentLanguagePreference LanguagePreference { get; }
 
@@ -163,7 +163,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			return querySource.Query<T>();
 		}
 
-		public AlbumSearch(IRepositoryContext querySource, ContentLanguagePreference languagePreference) {
+		public AlbumSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference) {
 			this.querySource = querySource;
 			LanguagePreference = languagePreference;
 		}

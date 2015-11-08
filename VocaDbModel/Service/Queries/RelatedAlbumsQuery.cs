@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
 	public class RelatedAlbumsQuery {
 
-		private readonly IRepositoryContext<Album> ctx;
+		private readonly IDatabaseContext<Album> ctx;
 
 		private Artist[] GetMainArtists(Album album, IList<IArtistWithSupport> creditableArtists) {
 
@@ -32,7 +32,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public RelatedAlbumsQuery(IRepositoryContext<Album> ctx) {
+		public RelatedAlbumsQuery(IDatabaseContext<Album> ctx) {
 
 			ParamIs.NotNull(() => ctx);
 

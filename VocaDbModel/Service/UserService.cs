@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
 using NLog;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
@@ -16,8 +17,7 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Security;
-using VocaDb.Model.Service.Repositories;
-using IUserRepository = VocaDb.Model.Service.Repositories.IUserRepository;
+using IUserRepository = VocaDb.Model.Database.Repositories.IUserRepository;
 
 namespace VocaDb.Model.Service {
 

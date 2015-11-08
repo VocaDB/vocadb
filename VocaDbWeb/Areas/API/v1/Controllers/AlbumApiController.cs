@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
@@ -9,7 +10,6 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Web.Controllers;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Queries;
 
 namespace VocaDb.Web.API.v1.Controllers {
 

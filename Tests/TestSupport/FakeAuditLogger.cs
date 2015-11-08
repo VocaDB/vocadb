@@ -1,8 +1,8 @@
 ﻿using System;
 using VocaDb.Model;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
 

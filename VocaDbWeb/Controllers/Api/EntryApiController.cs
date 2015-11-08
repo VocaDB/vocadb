@@ -2,10 +2,10 @@
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Web.Helpers;

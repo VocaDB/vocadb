@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Controllers;

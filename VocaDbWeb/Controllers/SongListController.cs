@@ -2,11 +2,11 @@
 using System.Net;
 using System.Text;
 using System.Web.Mvc;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Utils;

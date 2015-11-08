@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
@@ -17,7 +17,7 @@ namespace VocaDb.Model.Service.Queries {
 			IRepository<User> repository, IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
 			Func<TEntry, TagManager<TTag>> tagFunc,
-			Func<TEntry, IRepositoryContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory) 
+			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory) 
 			where TEntry : IEntryBase where TTag : TagUsage {
 			
 			ParamIs.NotNull(() => tags);

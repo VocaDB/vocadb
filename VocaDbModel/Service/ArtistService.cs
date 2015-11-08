@@ -19,8 +19,8 @@ using VocaDb.Model.DataContracts.Albums;
 using System.Drawing;
 using VocaDb.Model.Helpers;
 using System.Collections.Generic;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service {
@@ -35,7 +35,7 @@ namespace VocaDb.Model.Service {
 
 		public PartialFindResult<Artist> Find(ISession session, ArtistQueryParams queryParams) {
 
-			var context = new NHibernateRepositoryContext<Artist>(session, PermissionContext);
+			var context = new NHibernateDatabaseContext<Artist>(session, PermissionContext);
 			return new ArtistSearch(LanguagePreference, context, entryUrlParser).Find(queryParams);
 
 		}

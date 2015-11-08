@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
+using VocaDb.Model.Database.Queries;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -13,8 +15,6 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Queries;
-using VocaDb.Model.Service.Repositories;
 using VocaDb.Web.Code.Highcharts;
 using VocaDb.Web.Helpers;
 
@@ -202,7 +202,7 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private CountPerDay[] SongsPerDay(IRepositoryContext ctx, Expression<Func<Song, bool>> where) {
+		private CountPerDay[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where) {
 
 			var query = ctx.Query<Song>()
 				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
@@ -229,7 +229,7 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private CountPerDay[] SongsPerMonth(IRepositoryContext ctx, Expression<Func<Song, bool>> where) {
+		private CountPerDay[] SongsPerMonth(IDatabaseContext ctx, Expression<Func<Song, bool>> where) {
 
 			var query = ctx.Query<Song>()
 				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);

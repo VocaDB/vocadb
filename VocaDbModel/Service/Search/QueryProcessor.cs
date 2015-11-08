@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search {
 
 	public class QueryProcessor<T> {
 
-		private readonly IRepositoryContext querySource;
+		private readonly IDatabaseContext querySource;
 
-		public QueryProcessor(IRepositoryContext querySource) {
+		public QueryProcessor(IDatabaseContext querySource) {
 			this.querySource = querySource;
 		}
 

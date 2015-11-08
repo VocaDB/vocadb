@@ -23,12 +23,12 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Domain.Artists;
 using System.Drawing;
 using System;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.TagFormatting;
 
 namespace VocaDb.Model.Service {
@@ -41,7 +41,7 @@ namespace VocaDb.Model.Service {
 
 		private PartialFindResult<Album> Find(ISession session, AlbumQueryParams queryParams) {
 
-			return new AlbumSearch(new NHibernateRepositoryContext(session, PermissionContext), LanguagePreference).Find(queryParams);
+			return new AlbumSearch(new NHibernateDatabaseContext(session, PermissionContext), LanguagePreference).Find(queryParams);
 
 		}
 
@@ -56,7 +56,7 @@ namespace VocaDb.Model.Service {
 		private PartialFindResult<Album> FindAdvanced(
 			ISession session, QueryPlan<Album> queryPlan, PagingProperties paging, AlbumSortRule sortRule) {
 
-			var querySource = new NHibernateRepositoryContext(session, PermissionContext);
+			var querySource = new NHibernateDatabaseContext(session, PermissionContext);
 			var processor = new QueryProcessor<Album>(querySource);
 
 			return processor.Query(queryPlan, paging, q => AlbumSearchSort.AddOrder(q, sortRule, LanguagePreference));

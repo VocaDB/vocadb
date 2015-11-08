@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.SessionState;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.Search;

@@ -1,14 +1,14 @@
-﻿using VocaDb.Model.Domain.Users;
+﻿using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources.Messages;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Helpers {
 
 	public class EntryReportNotifier {
 
-		public void SendReportNotification(IRepositoryContext<UserMessage> ctx, 
+		public void SendReportNotification(IDatabaseContext<UserMessage> ctx, 
 			ArchivedObjectVersion reportedVersion, 
 			string notes, 
 			IEntryLinkFactory entryLinkFactory,

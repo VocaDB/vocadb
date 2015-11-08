@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
 
@@ -36,13 +36,13 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}*/
 
-		public IQueryable<Album> Filter(IQueryable<Album> query, IRepositoryContext session) {
+		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session) {
 
 			return query.SelectMany(a => FindHelpers.AddEntryNameFilter(a.Names.Names.AsQueryable(), new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, names))).Select(n => n.Album);
 
 		}
 
-		public IQueryable<Album> Query(IRepositoryContext session) {
+		public IQueryable<Album> Query(IDatabaseContext session) {
 
 			var q = session.Query<AlbumName>();
 

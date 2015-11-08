@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
+using VocaDb.Model.Database.Queries;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;

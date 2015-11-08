@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -57,7 +57,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
 		/// <param name="entryLinkFactory">Factory for creating links to entries. Cannot be null.</param>
 		/// <param name="mailer">Mailer for user email messages. Cannot be null.</param>
-		public void SendNotifications(IRepositoryContext<UserMessage> ctx, IEntryWithNames entry, 
+		public void SendNotifications(IDatabaseContext<UserMessage> ctx, IEntryWithNames entry, 
 			IEnumerable<Artist> artists, IUser creator, IEntryLinkFactory entryLinkFactory,
 			IUserMessageMailer mailer) {
 

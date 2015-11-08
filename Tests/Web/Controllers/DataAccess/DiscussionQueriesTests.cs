@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Queries;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 

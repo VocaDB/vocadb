@@ -11,13 +11,13 @@ using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code.Exceptions;
 using System.Drawing;
 using System.Globalization;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Models.Artist;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service.ExtSites;
 
 namespace VocaDb.Web.Controllers

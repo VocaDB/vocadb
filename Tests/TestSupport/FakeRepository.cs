@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
 
@@ -16,8 +16,8 @@ namespace VocaDb.Tests.TestSupport {
 
 		protected readonly QuerySourceList querySource;
 
-		protected virtual ListRepositoryContext<T> CreateContext() {
-			return new ListRepositoryContext<T>(querySource);
+		protected virtual ListDatabaseContext<T> CreateContext() {
+			return new ListDatabaseContext<T>(querySource);
 		}
 
 		public FakeRepository() {
@@ -47,15 +47,15 @@ namespace VocaDb.Tests.TestSupport {
 			return querySource.List<TEntity>().Contains(entity);
 		}
 
-		public TResult HandleQuery<TResult>(Func<IRepositoryContext<T>, TResult> func, string failMsg = "Unexpected database error") {
+		public TResult HandleQuery<TResult>(Func<IDatabaseContext<T>, TResult> func, string failMsg = "Unexpected database error") {
 			return func(CreateContext());
 		}
 
-		public void HandleTransaction(Action<IRepositoryContext<T>> func, string failMsg = "Unexpected database error") {
+		public void HandleTransaction(Action<IDatabaseContext<T>> func, string failMsg = "Unexpected database error") {
 			func(CreateContext());
 		}
 
-		public TResult HandleTransaction<TResult>(Func<IRepositoryContext<T>, TResult> func, string failMsg = "Unexpected database error") {
+		public TResult HandleTransaction<TResult>(Func<IDatabaseContext<T>, TResult> func, string failMsg = "Unexpected database error") {
 			return func(CreateContext());
 		}
 
@@ -112,7 +112,7 @@ namespace VocaDb.Tests.TestSupport {
 
 	}
 
-	public class ListRepositoryContext<T> : IRepositoryContext<T> {
+	public class ListDatabaseContext<T> : IDatabaseContext<T> {
 
 		private static readonly bool isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T));
 
@@ -162,7 +162,7 @@ namespace VocaDb.Tests.TestSupport {
 
 		protected readonly QuerySourceList querySource;
 
-		public ListRepositoryContext(QuerySourceList querySource) {
+		public ListDatabaseContext(QuerySourceList querySource) {
 			this.querySource = querySource;
 		}
 
@@ -202,8 +202,8 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public virtual IRepositoryContext<T2> OfType<T2>() {
-			return new ListRepositoryContext<T2>(querySource);
+		public virtual IDatabaseContext<T2> OfType<T2>() {
+			return new ListDatabaseContext<T2>(querySource);
 		}
 
 		public IQueryable<T> Query() {

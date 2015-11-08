@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
@@ -7,17 +8,16 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.Queries {
 
 	public class ArtistRelationsQuery {
 
-		private readonly IRepositoryContext<Artist> ctx;
+		private readonly IDatabaseContext<Artist> ctx;
 		private readonly ContentLanguagePreference languagePreference;
 
-		private AlbumContract[] GetLatestAlbums(IRepositoryContext<Artist> session, Artist artist) {
+		private AlbumContract[] GetLatestAlbums(IDatabaseContext<Artist> session, Artist artist) {
 			
 			var id = artist.Id;
 
@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		private AlbumContract[] GetTopAlbums(IRepositoryContext<Artist> session, Artist artist, int[] latestAlbumIds) {
+		private AlbumContract[] GetTopAlbums(IDatabaseContext<Artist> session, Artist artist, int[] latestAlbumIds) {
 			
 			var id = artist.Id;
 
@@ -65,7 +65,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public ArtistRelationsQuery(IRepositoryContext<Artist> ctx, ContentLanguagePreference languagePreference) {
+		public ArtistRelationsQuery(IDatabaseContext<Artist> ctx, ContentLanguagePreference languagePreference) {
 			this.ctx = ctx;
 			this.languagePreference = languagePreference;
 		}

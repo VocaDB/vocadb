@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
 
@@ -17,19 +17,19 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			get { return QueryCost.Medium; }
 		}
 
-		public IQueryable<Album> Filter(IQueryable<Album> query, IRepositoryContext session) {
+		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session) {
 
 			return query.Where(a => a.Tags.Usages.Any(u => u.Tag.Name == tagName));
 
 		}
 
-		public void FilterResults(List<Album> albums, IRepositoryContext session) {
+		public void FilterResults(List<Album> albums, IDatabaseContext session) {
 
 			albums.RemoveAll(a => !(a.Tags.HasTag(tagName)));
 
 		}
 
-		public List<Album> GetResults(IRepositoryContext session) {
+		public List<Album> GetResults(IDatabaseContext session) {
 
 			return session.Query<AlbumTagUsage>()
 				.Where(a => a.Tag.Name == tagName)
@@ -38,7 +38,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
-		public IQueryable<Album> Query(IRepositoryContext session) {
+		public IQueryable<Album> Query(IDatabaseContext session) {
 
 			return session.Query<AlbumTagUsage>()
 				.Where(a => a.Tag.Name == tagName)

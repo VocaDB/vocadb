@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
 
@@ -17,13 +17,13 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			get { return QueryCost.High; }
 		}
 
-		public IQueryable<Album> Filter(IQueryable<Album> query, IRepositoryContext session) {
+		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session) {
 
 			return query.Where(a => a.AllArtists.Any(u => u.Artist.Names.Names.Any(a2 => artistNames.Any(na => a2.Value.Contains(na)))));
 
 		}
 
-		public IQueryable<Album> Query(IRepositoryContext session) {
+		public IQueryable<Album> Query(IDatabaseContext session) {
 
 			/*var n = artistNames.First();
 			return session.Query<ArtistName>()

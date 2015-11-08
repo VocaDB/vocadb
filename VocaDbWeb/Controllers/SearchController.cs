@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;

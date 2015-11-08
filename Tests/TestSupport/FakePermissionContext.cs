@@ -1,8 +1,8 @@
-﻿using VocaDb.Model.DataContracts.Users;
+﻿using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
 

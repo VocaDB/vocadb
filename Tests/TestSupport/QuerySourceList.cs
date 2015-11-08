@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
 
-	public class QuerySourceList : IRepositoryContext {
+	public class QuerySourceList : IDatabaseContext {
 
 		private readonly Dictionary<Type, IList> entities;
 
@@ -38,8 +38,8 @@ namespace VocaDb.Tests.TestSupport {
 			}
 		}
 
-		public IRepositoryContext<T2> OfType<T2>() {
-			return new ListRepositoryContext<T2>(this);
+		public IDatabaseContext<T2> OfType<T2>() {
+			return new ListDatabaseContext<T2>(this);
 		}
 
 		public List<TEntity> List<TEntity>() {

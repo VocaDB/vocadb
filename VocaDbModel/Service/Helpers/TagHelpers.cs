@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -21,7 +21,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		public static Dictionary<string, Tag> GetTags(IRepositoryContext<Tag> session, string[] tagNames) {
+		public static Dictionary<string, Tag> GetTags(IDatabaseContext<Tag> session, string[] tagNames) {
 
 			if (tagNames.Length < 20) {
 				var direct = session.Query().Where(t => tagNames.Contains(t.Name)).ToArray();

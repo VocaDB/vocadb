@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search.Artists {
 
@@ -14,7 +14,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly ContentLanguagePreference languagePreference;
-		private readonly IRepositoryContext<Artist> context; 
+		private readonly IDatabaseContext<Artist> context; 
 
 		private ContentLanguagePreference LanguagePreference {
 			get { return languagePreference; }
@@ -93,7 +93,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		} 
 
-		public ArtistSearch(ContentLanguagePreference languagePreference, IRepositoryContext<Artist> context, IEntryUrlParser entryUrlParser) {
+		public ArtistSearch(ContentLanguagePreference languagePreference, IDatabaseContext<Artist> context, IEntryUrlParser entryUrlParser) {
 			this.languagePreference = languagePreference;
 			this.context = context;
 			this.entryUrlParser = entryUrlParser;

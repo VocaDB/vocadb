@@ -2,10 +2,10 @@
 using System.Text;
 using NHibernate;
 using NHibernate.Linq;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Service.Repositories.NHibernate;
 using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service {
@@ -30,7 +30,7 @@ namespace VocaDb.Model.Service {
 
 			return HandleQuery(session => {
 
-				return new ReleaseEventSearch(new NHibernateRepositoryContext(session, PermissionContext)).Find(query);
+				return new ReleaseEventSearch(new NHibernateDatabaseContext(session, PermissionContext)).Find(query);
 
 			});
 

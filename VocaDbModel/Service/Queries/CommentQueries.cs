@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Web;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.Queries {
 
 	public class CommentQueries<T, TEntry> : ICommentQueries where T : GenericComment<TEntry> where TEntry : class, IEntryWithComments {
 
-		private readonly IRepositoryContext<T> ctx;
+		private readonly IDatabaseContext<T> ctx;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly Func<int, TEntry> entryLoaderFunc;
 		private readonly IUserPermissionContext permissionContext;
@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service.Queries {
 			return entryLoaderFunc != null ? entryLoaderFunc(entryId) : ctx.OfType<TEntry>().Load(entryId);
         }
 
-		public CommentQueries(IRepositoryContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
+		public CommentQueries(IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
 			Func<int, TEntry> entryLoaderFunc = null) {
 
 			this.ctx = ctx;

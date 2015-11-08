@@ -1,18 +1,18 @@
 ﻿using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
 	public class ActivityEntryQueries {
 
-		private readonly IRepositoryContext<ActivityEntry> ctx;
+		private readonly IDatabaseContext<ActivityEntry> ctx;
 		private readonly IUserPermissionContext permissionContext;
 
-		public ActivityEntryQueries(IRepositoryContext<ActivityEntry> ctx, IUserPermissionContext permissionContext) {
+		public ActivityEntryQueries(IDatabaseContext<ActivityEntry> ctx, IUserPermissionContext permissionContext) {
 			this.ctx = ctx;
 			this.permissionContext = permissionContext;
 		}

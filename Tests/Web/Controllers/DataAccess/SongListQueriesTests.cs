@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Users;
@@ -10,7 +11,6 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Queries;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {

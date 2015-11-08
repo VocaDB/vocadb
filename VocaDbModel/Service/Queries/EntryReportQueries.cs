@@ -2,18 +2,18 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Queries {
 
 	public class EntryReportQueries {
 
-		public bool CreateReport<TEntry, TReport, TReportType>(IRepositoryContext<TEntry> ctx, 
+		public bool CreateReport<TEntry, TReport, TReportType>(IDatabaseContext<TEntry> ctx, 
 			IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
 			Expression<Func<TReport, bool>> addExistingEntryFunc, 

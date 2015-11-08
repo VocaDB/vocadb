@@ -1,5 +1,5 @@
-﻿using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Service.Repositories;
+﻿using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Tests.TestSupport {
 

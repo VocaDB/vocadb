@@ -1,9 +1,9 @@
 ﻿using System.Web.Mvc;
 using ViewRes.Tag;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Queries;
 using VocaDb.Model.Service;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Service.Repositories;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
 
@@ -19,7 +19,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			get { return QueryCost.VeryHigh; }
 		}
 
-		public void FilterResults(List<Album> albums, IRepositoryContext session) {
+		public void FilterResults(List<Album> albums, IDatabaseContext session) {
 
 			albums.RemoveAll(a => !(
 				a.Names.Any(n => n.Value.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1)
@@ -30,7 +30,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
-		public List<Album> GetResults(IRepositoryContext session) {
+		public List<Album> GetResults(IDatabaseContext session) {
 
 			var nameRes = session.Query<AlbumName>().Where(n => n.Value.Contains(term))
 				.Select(n => n.Album)
@@ -63,11 +63,11 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
-		public IQueryable<Album> Filter(IQueryable<Album> query, IRepositoryContext session) {
+		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session) {
 			throw new NotImplementedException();
 		}
 
-		public IQueryable<Album> Query(IRepositoryContext session) {
+		public IQueryable<Album> Query(IDatabaseContext session) {
 			throw new NotImplementedException();
 		}
 	}

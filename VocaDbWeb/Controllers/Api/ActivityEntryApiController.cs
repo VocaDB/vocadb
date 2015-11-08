@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
@@ -8,7 +9,6 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Repositories;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
