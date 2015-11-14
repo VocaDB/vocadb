@@ -14,7 +14,7 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Tags {
 
-	public class Tag : IEquatable<Tag>, IEntryWithNames, IEntryWithStatus, IEntryWithComments {
+	public class Tag : IEquatable<Tag>, IEntryWithNames, IEntryWithStatus, IEntryWithComments, ITag {
 
 		string IEntryBase.DefaultName {
 			get { return Name; }
@@ -333,6 +333,48 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public override string ToString() {
 			return string.Format("tag '{0}'", Name);
+		}
+
+	}
+
+	public interface ITag {
+		int Id { get; }
+		string Name { get; }
+	}
+
+	public class TagIdOrNameEqualityComparer<TTag> : IEqualityComparer<TTag> where TTag : class, ITag {
+
+		public bool Equals(TTag x, TTag y) {
+
+			if (ReferenceEquals(x, y))
+				return true;
+
+			if (x == null || y == null)
+				return false;
+
+			if (x.Id != 0 && x.Id == y.Id)
+				return true;
+
+			if (!string.IsNullOrEmpty(x.Name) && string.Equals(x.Name, y.Name, StringComparison.InvariantCultureIgnoreCase))
+				return true;
+
+			return false;
+
+		}
+
+		public int GetHashCode(TTag obj) {
+
+			if (obj == null)
+				return 0;
+
+			if (obj.Id != 0)
+				return obj.Id.GetHashCode();
+
+			if (!string.IsNullOrEmpty(obj.Name))
+				return obj.Name.ToLowerInvariant().GetHashCode();
+
+			return 0;
+
 		}
 
 	}

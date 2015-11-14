@@ -4,7 +4,7 @@ using VocaDb.Model.Domain.Tags;
 namespace VocaDb.Model.DataContracts.Tags {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class TagBaseContract {
+	public class TagBaseContract : ITag {
 
 		public TagBaseContract() { }
 
