@@ -3,13 +3,21 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
 
 @{
-	
+
 	PageProperties.Title = string.Format("{0} - {1}", Res.Event, Model.Name);
 
-	ViewBag.Parents = new[] { 
+	ViewBag.Parents = new[] {
 		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries")
 	};
-	
+
+	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
+	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
+
+	PageProperties.Description = descriptionStripped;
+
+	var smallThumbUrl = Url.ImageThumb(Model.Series, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
+	var fullImageUrl = Url.ImageThumb(Model.Series, VocaDb.Model.Domain.Images.ImageSize.Original);
+
 }
 
 @section Toolbar {
@@ -17,17 +25,28 @@
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 }
 
-@if (Model.Series != null) {
-	<p>@Res.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })</p>
-}
+<div class="media">
+	@if (!string.IsNullOrEmpty(smallThumbUrl)) {
+		<a class="pull-left" href="@fullImageUrl">
+			<img class="media-object" src="@smallThumbUrl" alt="Thumb" />
+		</a>
+	}
+	<div class="media-body">
+		
+		@if (Model.Series != null) {
+			<p>@Res.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })</p>
+		}
 
-@if (Model.Date != null) {
-	<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
-}
+		@if (Model.Date != null) {
+			<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
+		}
 
-@if (!string.IsNullOrEmpty(Model.Description)) {
-	@HtmlHelpers.FormatText(Model.Description)
-}
+		@if (!string.IsNullOrEmpty(Model.Description)) {
+			<p>@Html.Raw(descriptionHtml)</p>
+		}
+
+	</div>
+</div>
 
 @if (Model.Albums.Any()) {
 	<br />
