@@ -20,7 +20,12 @@ namespace VocaDb.Model.Domain.Albums {
 		}
 
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
-		public const int OriginalSize = 500;
+
+		/// <summary>
+		/// We want to prevent users from uploading too large images.
+		/// 600px is the minimum recommended size for Facebook.
+		/// </summary>
+		public const int OriginalSize = 600;
 
 		private IList<ReleaseEventSeriesAlias> aliases = new List<ReleaseEventSeriesAlias>();
 		private string description;

@@ -30,7 +30,7 @@
 }
 
 <div class="media">
-	@if (!string.IsNullOrEmpty(smallThumbUrl)) {
+	@if (!string.IsNullOrEmpty(Model.PictureMime)) {
 		<a class="pull-left" href="@fullImageUrl">
 			<img class="media-object" src="@smallThumbUrl" alt="Thumb" />
 		</a>
