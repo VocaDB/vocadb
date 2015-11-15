@@ -13,14 +13,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class AlbumQueryableExtender {
 
-		public static IQueryable<Album> OrderByReleaseDate(this IQueryable<Album> query) {
-			
-			return query
-				.OrderByDescending(a => a.OriginalRelease.ReleaseDate.Year)
-				.ThenByDescending(a => a.OriginalRelease.ReleaseDate.Month)
-				.ThenByDescending(a => a.OriginalRelease.ReleaseDate.Day);
+		public static IQueryable<Album> OrderByReleaseDate(this IQueryable<Album> query, SortDirection direction) {
 
-		} 
+			return query
+				.OrderBy(a => a.OriginalRelease.ReleaseDate.Year, direction)
+				.ThenBy(a => a.OriginalRelease.ReleaseDate.Month, direction)
+				.ThenBy(a => a.OriginalRelease.ReleaseDate.Day, direction);
+
+		}
 
 		public static IQueryable<Album> OrderBy(this IQueryable<Album> criteria, AlbumSortRule sortRule, ContentLanguagePreference languagePreference) {
 			
@@ -30,9 +30,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case AlbumSortRule.CollectionCount:
 					return criteria.OrderByDescending(a => a.UserCollections.Count);
 				case AlbumSortRule.ReleaseDate:
-					return criteria.OrderByReleaseDate();
+					return criteria.OrderByReleaseDate(SortDirection.Descending);
 				case AlbumSortRule.ReleaseDateWithNulls:
-					return criteria.OrderByReleaseDate();
+					return criteria.OrderByReleaseDate(SortDirection.Descending);
 				case AlbumSortRule.AdditionDate:
 					return criteria.OrderByDescending(a => a.CreateDate);
 				case AlbumSortRule.RatingAverage:

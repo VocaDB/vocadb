@@ -33,7 +33,7 @@ namespace VocaDb.Model.Service.Queries {
 
 			return query
 				.Select(s => s.Album)
-				.OrderByReleaseDate()
+				.OrderByReleaseDate(SortDirection.Descending)
 				.Take(6).ToArray()
 				.Select(s => new AlbumContract(s, languagePreference))
 				.ToArray();

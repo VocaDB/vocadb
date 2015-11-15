@@ -15,6 +15,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Web.Code.Highcharts;
 using VocaDb.Web.Helpers;
 
@@ -431,19 +432,18 @@ namespace VocaDb.Web.Controllers {
 			
 			var values = userRepository.HandleQuery(ctx => {
 
-				return ctx.OfType<Album>().Query()
-					.OrderBy(a => a.CreateDate.Year)
-					.ThenBy(a => a.CreateDate.Month)
-					.ThenBy(a => a.CreateDate.Day)
+				return ctx.Query<Album>()
+					.WhereHasReleaseDate()
+					.OrderByReleaseDate(SortDirection.Ascending)
 					.GroupBy(a => new {
-						Year = a.CreateDate.Year, 
-						Month = a.CreateDate.Month,
-						Day = a.CreateDate.Day
+						Year = a.OriginalRelease.ReleaseDate.Year, 
+						Month = a.OriginalRelease.ReleaseDate.Month,
+						Day = a.OriginalRelease.ReleaseDate.Day
 					})
 					.Select(a => new CountPerDay {
-						Year = a.Key.Year,
-						Month = a.Key.Month,
-						Day = a.Key.Day,
+						Year = a.Key.Year.Value,
+						Month = a.Key.Month.Value,
+						Day = a.Key.Day.Value,
 						Count = a.Count()
 					})
 					.ToArray();

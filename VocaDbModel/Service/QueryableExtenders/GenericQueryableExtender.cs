@@ -1,10 +1,27 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class GenericQueryableExtender {
+
+		public static IOrderedQueryable<TSource> OrderBy<TSource, TKey>(this IQueryable<TSource> query, Expression<Func<TSource, TKey>> keySelector, SortDirection direction) {
+
+			return direction == SortDirection.Ascending ?
+				query.OrderBy(keySelector) :
+				query.OrderByDescending(keySelector);
+
+		}
+
+		public static IOrderedQueryable<TSource> ThenBy<TSource, TKey>(this IOrderedQueryable<TSource> query, Expression<Func<TSource, TKey>> keySelector, SortDirection direction) {
+
+			return direction == SortDirection.Ascending ?
+				query.ThenBy(keySelector) :
+				query.ThenByDescending(keySelector);
+
+		}
 
 		/// <summary>
 		/// Filters query for paging.
@@ -30,5 +47,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 	}
+
+	public enum SortDirection {
+		Ascending,
+		Descending
+	}
+
 
 }
