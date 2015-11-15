@@ -48,13 +48,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		public static IQueryable<ReleaseEvent> WhereDateIsBetween(this IQueryable<ReleaseEvent> query, DateTime? begin, DateTime? end) {
 			
 			if (begin.HasValue && end.HasValue)
-				return query.Where(e => e.Date.DateTime != null && e.Date >= begin && e.Date < end);
+				return query.Where(e => e.Date.DateTime != null && e.Date.DateTime >= begin && e.Date.DateTime < end);
 
 			if (begin.HasValue)
-				return query.Where(e => e.Date.DateTime != null && e.Date >= begin);
+				return query.Where(e => e.Date.DateTime != null && e.Date.DateTime >= begin);
 
 			if (end.HasValue)
-				return query.Where(e => e.Date.DateTime != null && e.Date < end);
+				return query.Where(e => e.Date.DateTime != null && e.Date.DateTime < end);
 
 			return query;
 
