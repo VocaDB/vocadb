@@ -1,6 +1,20 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
+@using System.Web.Mvc
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers;
+
+@helper BootstrapMedia(string url, HelperResult body, string heading, string thumbUrl) {
+	<div class="media">
+		@if (thumbUrl != null) {
+			<a class="pull-left" href="@url">
+				<img class="media-object" src="@thumbUrl" alt="Thumb" />
+			</a>
+		}
+		<div class="media-body">
+			@body
+		</div>
+	</div>
+}
 
 @helper ConvertNewlinesToBreaks(string text) {
 	var lines = text.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.None);

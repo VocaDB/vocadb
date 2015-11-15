@@ -88,6 +88,15 @@ namespace ViewRes.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Happening now.
+        /// </summary>
+        public static string RecentEvents {
+            get {
+                return ResourceManager.GetString("RecentEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Highlighted PVs.
         /// </summary>
         public static string RecentSongs {

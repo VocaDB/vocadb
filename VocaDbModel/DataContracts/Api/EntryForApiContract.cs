@@ -116,6 +116,7 @@ namespace VocaDb.Model.DataContracts.Api {
 		public EntryForApiContract(ReleaseEvent releaseEvent, IEntryThumbPersister thumbPersister, bool ssl, EntryOptionalFields includedFields)
 			: this(releaseEvent, ContentLanguagePreference.Default, includedFields) {
 
+			CreateDate = releaseEvent.Date.DateTime.Value;
 			ReleaseEventSeriesName = releaseEvent.Series != null ? releaseEvent.Series.Name : null;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && releaseEvent.Series != null && !string.IsNullOrEmpty(releaseEvent.Series.PictureMime)) {

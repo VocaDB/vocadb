@@ -47,18 +47,71 @@
 
 <h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
 <div id="newAlbums">
-    @AlbumHelpers.AlbumThumbs(Model.NewAlbums)    
+	@AlbumHelpers.AlbumThumbs(Model.NewAlbums)
 </div>
 
 <h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
 <div id="topAlbums">
-    @AlbumHelpers.AlbumThumbs(Model.TopAlbums)    
+	@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
+</div>
+	
+<h3 class="withMargin">@Res.RecentEvents</h3>
+@*<div>
+		@foreach (var ev in Model.NewEvents) {
+			@HtmlHelpers.BootstrapMedia(Url.EntryDetails(ev), @<a href="@Url.EntryDetails(ev)">
+				@ev.Name
+			</a>
+						@<br />
+						@ev.CreateDate.ToShortDateString()), ev.Name, ev.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.SmallThumb))
+		}
+	</div>*@
+
+<div class="row-fluid">
+	@foreach (var ev in Model.NewEvents) {
+		<div class="well well-transparent span4">
+			<div class="pull-left">
+				@if (ev.MainPicture != null) {
+					<a href="@Url.EntryDetails(ev)">
+						<img class="media-object" src="@ev.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Thumb" />
+					</a>
+				}
+				<div class="pull-left">
+					<a href="@Url.EntryDetails(ev)">
+						@ev.Name
+					</a>
+					<br />
+					@ev.CreateDate.ToShortDateString()
+				</div>
+			</div>
+		</div>
+	}
 </div>
 
 @{ Html.RenderPartial("Partials/_NewsItems"); }
 
 <div class="row-fluid">
     <div class="span7">
+		@*<table>
+		@foreach (var ev in Model.NewEvents) {
+			<tr>
+				<td>
+					@if (ev.MainPicture != null) {
+						<a href="@Url.EntryDetails(ev)">
+							<img src="@ev.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Thumb" />
+						</a>
+					}
+				</td>
+				<td>
+					<a href="@Url.EntryDetails(ev)">
+						@ev.Name
+					</a>
+					<br />
+					@ev.CreateDate.ToShortDateString()
+				</td>
+			</tr>
+		}
+	</table>*@
+
         <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
 
         @foreach (var entry in Model.ActivityEntries) {

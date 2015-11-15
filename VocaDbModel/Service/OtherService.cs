@@ -19,6 +19,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Songs;
@@ -46,6 +47,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
+		private readonly ObjectCache cache;
 		private readonly IUserIconFactory userIconFactory;
 		private readonly EntryForApiContractFactory entryForApiContractFactory;
 
@@ -146,6 +148,46 @@ namespace VocaDb.Model.Service {
 			cache.Add(cacheKey, newAlbums, DateTime.Now + TimeSpan.FromHours(1));
 
 			return newAlbumContracts;
+
+		}
+
+		private EntryForApiContract[] GetRecentEvents(ISession session, bool ssl) {
+
+			var count = 3;
+			var cacheKey = string.Format("OtherService.RecentEvents.{0}.{1}", LanguagePreference, ssl);
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(4), () => {
+
+				var minDate = DateTime.Now - TimeSpan.FromDays(7);
+				var maxDate = DateTime.Now + TimeSpan.FromDays(14);
+
+				var recentEvents = session.Query<ReleaseEvent>()
+					.Where(e => e.Date.DateTime != null && e.Date.DateTime >= minDate && e.Date.DateTime <= maxDate)
+					.OrderByDescending(e => e.Date.DateTime)
+					.Take(count)
+					.ToArray();
+
+				var recentConcerts = session.Query<SongList>()
+					.Where(s => s.FeaturedCategory == SongListFeaturedCategory.Concerts
+						&& s.EventDate.DateTime != null && s.EventDate.DateTime >= minDate && s.EventDate.DateTime <= maxDate)
+					.OrderByDescending(s => s.EventDate.DateTime)
+					.Take(count)
+					.ToArray();
+
+				var items = recentEvents.Select(e => new {
+					Entry = (IEntryWithNames)e,
+					e.Date
+				}).Concat(recentConcerts.Select(e => new {
+					Entry = (IEntryWithNames)e,
+					Date = e.EventDate
+				}))
+				.OrderByDescending(e => e.Date.DateTime)
+				.Take(count);
+
+				var entryContracts = items.Select(i => entryForApiContractFactory.Create(i.Entry, EntryOptionalFields.MainPicture, LanguagePreference, ssl));
+
+				return entryContracts.ToArray();
+
+			});
 
 		}
 
@@ -261,11 +303,12 @@ namespace VocaDb.Model.Service {
 		}
 
 		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory) 
+			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory, ObjectCache cache) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 			
 			this.userIconFactory = userIconFactory;
 			this.entryForApiContractFactory = entryForApiContractFactory;
+			this.cache = cache;
 
 		}
 
@@ -454,7 +497,9 @@ namespace VocaDb.Model.Service {
 
 				var recentComments = GetRecentComments(session, ssl);
 
-				return new FrontPageContract(activityEntries, newAlbums, recentComments, topAlbums, newSongs, 
+				var recentEvents = GetRecentEvents(session, ssl);
+
+				return new FrontPageContract(activityEntries, newAlbums, recentEvents, recentComments, topAlbums, newSongs, 
 					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference,
 					ssl, userIconFactory, PermissionContext, entryForApiContractFactory);
 

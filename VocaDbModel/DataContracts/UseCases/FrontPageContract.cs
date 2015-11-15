@@ -18,7 +18,10 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public FrontPageContract() { }
 
 		public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
-			AlbumContract[] newAlbums, IEnumerable<EntryWithCommentsContract> recentComments, AlbumContract[] topAlbums, Song[] newSongs,
+			AlbumContract[] newAlbums, 
+			EntryForApiContract[] newEvents, 
+			IEnumerable<EntryWithCommentsContract> recentComments, 
+			AlbumContract[] topAlbums, Song[] newSongs,
 			SongVoteRating firstSongRating,
 			ContentLanguagePreference languagePreference, bool ssl, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext, 
 			EntryForApiContractFactory entryForApiContractFactory) {
@@ -30,6 +33,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
 			RecentComments = recentComments.ToArray();
 			TopAlbums = topAlbums;
+			NewEvents = newEvents;
 
 			FirstSong = (newSongs.Any() ? new SongWithPVAndVoteContract(newSongs.First(), firstSongRating, languagePreference) : null);
 
@@ -40,6 +44,11 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public SongWithPVAndVoteContract FirstSong { get; set; }
 
 		public AlbumContract[] NewAlbums { get; set; }	
+
+		/// <summary>
+		/// Album release events and concerts
+		/// </summary>
+		public EntryForApiContract[] NewEvents { get; set; }
 
 		public SongWithPVAndVoteContract[] NewSongs { get; set; }
 
