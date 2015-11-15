@@ -27,16 +27,26 @@
 
 @foreach (var series in Model) {
 
-	<h3 class="withMargin">
-	@if (!string.IsNullOrEmpty(series.Name)) {
-		@Html.ActionLink(series.Name, "SeriesDetails", new { id = series.Id })
-	} else {
-		<text>@ViewRes.SharedStrings.Unsorted</text>
-	}
-	</h3>
-	if (!string.IsNullOrEmpty(series.Description)) {
-		<p>@HtmlHelpers.FormatText(series.Description)</p>
-	}
+	<div class="media withMargin">
+		@if (!string.IsNullOrEmpty(series.PictureMime)) {
+			<a class="pull-left" href="@Url.Action("SeriesDetails", new { id = series.Id })">
+				<img class="media-object" src="@Url.ImageThumb(series, VocaDb.Model.Domain.Images.ImageSize.TinyThumb)" alt="Thumb" />
+			</a>
+		}
+		<div class="media-body">
+			<h3 class="media-heading">
+				@if (!string.IsNullOrEmpty(series.Name)) {
+					@Html.ActionLink(series.Name, "SeriesDetails", new { id = series.Id })
+				} else {
+					<text>@ViewRes.SharedStrings.Unsorted</text>
+				}
+			</h3>
+						
+			@if (!string.IsNullOrEmpty(series.Description)) {
+				<p>@HtmlHelpers.FormatMarkdown(series.Description)</p>
+			}
+		</div>
+	</div>
 	
 	<ul>
 	@foreach (var ev in series.Events) {

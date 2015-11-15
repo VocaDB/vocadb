@@ -28,7 +28,7 @@
 	</ul>
 
 	@if (Login.CanManageEventSeries) {
-		@Html.ActionLink(ViewRes.Event.EventsBySeriesStrings.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
 	}
 }
 
