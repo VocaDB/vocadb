@@ -44,7 +44,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var user = CreateEntry.User();
 			repository.Save(user);
-			queries = new EventQueries(repository, new FakeEntryLinkFactory(), new FakePermissionContext(user));
+			queries = new EventQueries(repository, new FakeEntryLinkFactory(), new FakePermissionContext(user), new InMemoryImagePersister());
 
 		}
 
