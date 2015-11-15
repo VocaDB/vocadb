@@ -107,33 +107,21 @@ namespace VocaDb.Model.Service {
 
 			var now = DateTime.Now;
 
-			var upcoming = session.Query<Album>().Where(a => !a.Deleted
-				&& a.OriginalRelease.ReleaseDate.Year != null
-				&& a.OriginalRelease.ReleaseDate.Month != null
-				&& a.OriginalRelease.ReleaseDate.Day != null
-				&& (a.OriginalRelease.ReleaseDate.Year > now.Year
-				|| (a.OriginalRelease.ReleaseDate.Year == now.Year && a.OriginalRelease.ReleaseDate.Month > now.Month)
-				|| (a.OriginalRelease.ReleaseDate.Year == now.Year
-					&& a.OriginalRelease.ReleaseDate.Month == now.Month
-					&& a.OriginalRelease.ReleaseDate.Day > now.Day)))
-				.OrderBy(a => a.OriginalRelease.ReleaseDate.Year)
-				.ThenBy(a => a.OriginalRelease.ReleaseDate.Month)
-				.ThenBy(a => a.OriginalRelease.ReleaseDate.Day)
-				.Take(4).ToArray();
+			var upcoming = session.Query<Album>()
+				.Where(a => !a.Deleted)
+				.WhereHasReleaseDate()
+				.WhereReleaseDateIsAfter(now)
+				.OrderByReleaseDate(SortDirection.Ascending)
+				.Take(4)
+				.ToArray();
 
-			var recent = session.Query<Album>().Where(a => !a.Deleted
-				&& a.OriginalRelease.ReleaseDate.Year != null
-				&& a.OriginalRelease.ReleaseDate.Month != null
-				&& a.OriginalRelease.ReleaseDate.Day != null
-				&& (a.OriginalRelease.ReleaseDate.Year < now.Year
-				|| (a.OriginalRelease.ReleaseDate.Year == now.Year && a.OriginalRelease.ReleaseDate.Month < now.Month)
-				|| (a.OriginalRelease.ReleaseDate.Year == now.Year
-					&& a.OriginalRelease.ReleaseDate.Month == now.Month
-					&& a.OriginalRelease.ReleaseDate.Day <= now.Day)))
-				.OrderByDescending(a => a.OriginalRelease.ReleaseDate.Year)
-				.ThenByDescending(a => a.OriginalRelease.ReleaseDate.Month)
-				.ThenByDescending(a => a.OriginalRelease.ReleaseDate.Day)
-				.Take(3).ToArray();
+			var recent = session.Query<Album>()
+				.Where(a => !a.Deleted)
+				.WhereHasReleaseDate()
+				.WhereReleaseDateIsBefore(now)
+				.OrderByReleaseDate(SortDirection.Descending)
+				.Take(3)
+				.ToArray();
 
 			var newAlbums = upcoming.Reverse().Concat(recent)
 				.Select(a => new TranslatedAlbumContract(a))
