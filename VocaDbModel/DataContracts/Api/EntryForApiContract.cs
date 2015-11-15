@@ -31,7 +31,7 @@ namespace VocaDb.Model.DataContracts.Api {
 				case EntryType.DiscussionTopic:
 					return new EntryForApiContract((DiscussionTopic)entry, languagePreference);
 				case EntryType.ReleaseEvent:
-					return new EntryForApiContract((ReleaseEvent)entry);
+					return new EntryForApiContract((ReleaseEvent)entry, thumbPersister, ssl, includedFields);
 				case EntryType.Song:
 					return new EntryForApiContract((Song)entry, languagePreference, includedFields);
 				case EntryType.SongList:
@@ -113,10 +113,14 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(ReleaseEvent releaseEvent)
-			: this(releaseEvent, ContentLanguagePreference.Default, EntryOptionalFields.None) {
+		public EntryForApiContract(ReleaseEvent releaseEvent, IEntryThumbPersister thumbPersister, bool ssl, EntryOptionalFields includedFields)
+			: this(releaseEvent, ContentLanguagePreference.Default, includedFields) {
 
 			ReleaseEventSeriesName = releaseEvent.Series != null ? releaseEvent.Series.Name : null;
+
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && releaseEvent.Series != null && !string.IsNullOrEmpty(releaseEvent.Series.PictureMime)) {
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(releaseEvent.Series, releaseEvent.Series.PictureMime), thumbPersister, ssl);
+			}
 
 		}
 
