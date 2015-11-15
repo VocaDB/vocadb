@@ -89,42 +89,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public int UpdateSeries(ReleaseEventSeriesForEditContract contract) {
-
-			ParamIs.NotNull(() => contract);
-
-			PermissionContext.VerifyPermission(PermissionToken.ManageEventSeries);
-
-			return HandleTransaction(session => {
-
-				ReleaseEventSeries series;
-
-				if (contract.Id == 0) {
-
-					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Aliases);
-
-					session.Save(series);
-
-					AuditLog("created " + series, session);
-
-				} else {
-
-					series = session.Load<ReleaseEventSeries>(contract.Id);
-
-					series.Name = contract.Name;
-					series.Description = contract.Description;
-					series.UpdateAliases(contract.Aliases);
-
-					AuditLog("updated " + series, session);
-
-				}
-
-				return series.Id;
-
-			});
-
-		}
-
 	}
 
 }

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
@@ -106,16 +107,18 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-        public ActionResult EditSeries(SeriesEdit model)
+        public ActionResult EditSeries(SeriesEdit model, HttpPostedFileBase pictureUpload = null)
         {
 
 			if (!ModelState.IsValid) {
 				return View(model);
 			}
 
-			Service.UpdateSeries(model.ToContract());
+			var pictureData = ParsePicture(pictureUpload, "Picture");
 
-			return RedirectToAction("EventsBySeries");
+			var id = queries.UpdateSeries(model.ToContract(), pictureData);
+
+			return RedirectToAction("SeriesDetails", new { id });
 
 		}
 

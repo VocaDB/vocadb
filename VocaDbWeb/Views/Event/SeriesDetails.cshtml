@@ -2,14 +2,22 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
 
 @{
-	
-    PageProperties.Title = ViewRes.MiscStrings.EventSeries + " - " + Model.Name;
+
+	PageProperties.Title = ViewRes.MiscStrings.EventSeries + " - " + Model.Name;
 	PageProperties.Subtitle = string.Join(", ", Model.Aliases);
 
-	ViewBag.Parents = new[] { 
+	ViewBag.Parents = new[] {
 		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries")
-	};	
-	
+	};
+
+	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
+	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
+
+	PageProperties.Description = descriptionStripped;
+
+	var smallThumbUrl = Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
+	var fullImageUrl = Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Original);
+
 }
 
 @section Toolbar {
@@ -21,9 +29,18 @@
 	}	
 }
 
-@if (!string.IsNullOrEmpty(Model.Description)) {
-	<p>@HtmlHelpers.FormatText(Model.Description)</p>
-}
+<div class="media">
+	@if (!string.IsNullOrEmpty(smallThumbUrl)) {
+		<a class="pull-left" href="@fullImageUrl">
+			<img class="media-object" src="@smallThumbUrl" alt="Thumb" />
+		</a>
+	}
+	<div class="media-body">
+		@if (!string.IsNullOrEmpty(Model.Description)) {
+			<p>@Html.Raw(descriptionHtml)</p>
+		}
+	</div>
+</div>
 
 <h3>@ViewRes.SharedStrings.ReleaseEvents</h3>
 <ul>

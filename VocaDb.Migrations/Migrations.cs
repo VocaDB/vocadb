@@ -3,6 +3,32 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201511151730)]
+	public class ReleaseEventSeriesPicture : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("PictureMime").OnTable(TableNames.AlbumReleaseEventSeries).AsString(32).Nullable();
+
+		}
+
+	}
+
+	[Migration(201511022300)]
+	public class UserMessagesIndexReceiver : AutoReversingMigration {
+
+		public override void Up() {
+
+			// Used for checking unread messages
+			Create.Index("IX_UserMessages_User").OnTable(TableNames.UserMessages)
+				.OnColumn("[User]").Ascending()
+				.OnColumn("[Inbox]").Ascending()
+				.OnColumn("[Read]").Ascending();
+
+		}
+
+	}
+
 	[Migration(201510232200)]
 	public class ArchivedTagNotes : AutoReversingMigration {
 

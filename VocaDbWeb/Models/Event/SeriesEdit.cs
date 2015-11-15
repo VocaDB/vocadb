@@ -16,6 +16,7 @@ namespace VocaDb.Web.Models.Event {
 
 			ParamIs.NotNull(() => contract);
 
+			Contract = contract;
 			Aliases = contract.Aliases.ToList();
 			Description = contract.Description;
 			Id = contract.Id;
@@ -24,6 +25,8 @@ namespace VocaDb.Web.Models.Event {
 		}
 
 		public IList<string> Aliases { get; set; }
+
+		public ReleaseEventSeriesForEditContract Contract { get; set; }
 
 		public string Description { get; set; }
 

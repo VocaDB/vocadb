@@ -1,10 +1,24 @@
 ﻿using System.Runtime.Serialization;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ReleaseEventSeriesContract {
+	public class ReleaseEventSeriesContract : IEntryImageInformation {
+
+		EntryType IEntryImageInformation.EntryType {
+			get { return EntryType.ReleaseEventSeries; }
+		}
+
+		string IEntryImageInformation.Mime {
+			get { return PictureMime; }
+		}
+
+		int IEntryImageInformation.Version {
+			get { return 0; }
+		}
 
 		public ReleaseEventSeriesContract() {
 			Description = string.Empty;
@@ -18,6 +32,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = series.Description;
 			Id = series.Id;
 			Name = series.Name;
+			PictureMime = series.PictureMime;
 
 		}
 
@@ -29,6 +44,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public string Name { get; set; }
+
+		[DataMember]
+		public string PictureMime { get; set; }
 
 		public override string ToString() {
 			return string.Format("release event series {0} [{1}]", Name, Id);

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Albums {
@@ -18,6 +18,9 @@ namespace VocaDb.Model.Domain.Albums {
 		int IEntryBase.Version {
 			get { return 0; }
 		}
+
+		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
+		public const int OriginalSize = 500;
 
 		private IList<ReleaseEventSeriesAlias> aliases = new List<ReleaseEventSeriesAlias>();
 		private string description;
@@ -78,6 +81,8 @@ namespace VocaDb.Model.Domain.Albums {
 				name = value; 
 			}
 		}
+
+		public virtual string PictureMime { get; set; }
 
 		public virtual ReleaseEventSeriesAlias CreateAlias(string alias) {
 

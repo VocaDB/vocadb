@@ -1,4 +1,6 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.SeriesEdit>
+﻿@using VocaDb.Model.Helpers
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.SeriesEdit>
 
 @{
 	
@@ -27,7 +29,7 @@
 
 @Helpers.ValidationSymmaryPanel("Unable to save properties.")
 
-@using (Html.BeginForm()) {
+<form action="@Url.Action("EditSeries")" method="POST" enctype="multipart/form-data">
 	@Html.HiddenFor(m => m.Id)
 
 	@Helpers.SaveBtn()
@@ -46,25 +48,41 @@
 	<div class="editor-field">
 		@Html.TextAreaFor(m => m.Description, new { cols = 60, rows = 4, @class = "span4" })
 	</div>
-	
+
 	<div class="editor-label">
 		@Html.LabelFor(m => m.Aliases)
 	</div>
 	<div class="editor-field">
 		<ul id="aliases">
 			@foreach (var alias in Model.Aliases) {
-	   Html.RenderPartial("AliasForSeries", alias);
-   }
+				Html.RenderPartial("AliasForSeries", alias);
+			}
 		</ul>
-	
+
 		<input id="newAliasName" type="text" maxlength="50" />
 		<a href="#" id="createAliasLink" class="textLink addLink">Add</a>
 	</div>
-	
+
+	<div class="editor-label">
+		<label>Picture</label>
+	</div>
+	<div class="editor-field">
+		<table>
+			<tr>
+				<td>
+					<img src="@Url.ImageThumb(Model.Contract, VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Picture" class="coverPic" />
+				</td>
+				<td>
+					<p>@string.Format("Allowed types: {0}. Maximum size is {1} MB.", string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
+					<input type="file" id="pictureUpload" name="pictureUpload" />
+				</td>
+			</tr>
+		</table>
+	</div>
 	<br />
 	@Helpers.SaveBtn()
-	
-}
+
+</form>
 
 @section BodyScripts {
 <script type="text/javascript" src="@Url.Content("~/Scripts/Event/SeriesEdit.js")"></script>

@@ -6,6 +6,7 @@
 		public const string AlbumDiscProperties = "AlbumDiscProperties";
         public const string Albums = "Albums";
 		public const string AlbumReleaseEvents = "AlbumReleaseEvents";
+		public const string AlbumReleaseEventSeries = "AlbumReleaseEventSeries";
 		public const string ArchivedAlbumVersions = "ArchivedAlbumVersions";
 		public const string ArchivedArtistVersions = "ArchivedArtistVersions";
 		public const string ArchivedEventVersions = "ArchivedEventVersions";

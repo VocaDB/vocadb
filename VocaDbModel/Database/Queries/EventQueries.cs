@@ -2,11 +2,15 @@
 using System.Linq;
 using NHibernate;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -16,6 +20,7 @@ namespace VocaDb.Model.Database.Queries {
 	public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent> {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryThumbPersister imagePersister;
 
 		private ArchivedReleaseEventVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason) {
 
@@ -52,10 +57,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext)
+		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
+			IEntryThumbPersister imagePersister)
 			: base(eventRepository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
+			this.imagePersister = imagePersister;
 
 		}
 
@@ -207,6 +214,66 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				return new ReleaseEventContract(ev);
+
+			});
+
+		}
+
+		private void SaveImage(ReleaseEventSeries series, EntryPictureFileContract pictureData) {
+
+			if (pictureData != null) {
+
+				var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
+				series.PictureMime = parsed.Mime;
+
+				pictureData.Id = series.Id;
+				pictureData.EntryType = EntryType.ReleaseEventSeries;
+				var thumbGenerator = new ImageThumbGenerator(imagePersister);
+				thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ReleaseEventSeries.ImageSizes, originalSize: ReleaseEventSeries.OriginalSize);
+
+			}
+
+		}
+
+		public int UpdateSeries(ReleaseEventSeriesForEditContract contract, EntryPictureFileContract pictureData) {
+
+			ParamIs.NotNull(() => contract);
+
+			PermissionContext.VerifyPermission(PermissionToken.ManageEventSeries);
+
+			return HandleTransaction(session => {
+
+				ReleaseEventSeries series;
+
+				if (contract.Id == 0) {
+
+					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Aliases);
+
+					session.Save(series);
+
+					if (pictureData != null) {
+						SaveImage(series, pictureData);
+						session.Update(series);
+					}
+
+					AuditLog("created " + series, session);
+
+				} else {
+
+					series = session.Load<ReleaseEventSeries>(contract.Id);
+
+					series.Name = contract.Name;
+					series.Description = contract.Description;
+					series.UpdateAliases(contract.Aliases);
+					SaveImage(series, pictureData);
+
+					session.Update(series);
+
+					AuditLog("updated " + series, session);
+
+				}
+
+				return series.Id;
 
 			});
 
