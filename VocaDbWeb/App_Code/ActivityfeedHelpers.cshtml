@@ -44,7 +44,7 @@
 
 		@EntryType(entry)
 
-		<small class="pull-right extraInfo" title="@entry.CreateDate.ToUniversalTime().ToString("g")">
+		<small class="pull-right extraInfo" title="@entry.CreateDate.ToUniversalTime().ToString("g") UTC">
 			@TimeAgoStringBuilder.FormatTimeAgo(entry.CreateDate)
 		</small>
 

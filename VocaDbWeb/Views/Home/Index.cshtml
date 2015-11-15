@@ -2,7 +2,7 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
-@using R = ViewRes.Home;
+@using Res = ViewRes.Home.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.FrontPageContract>
 
 @{
@@ -13,7 +13,7 @@
 <h1 class="page-title">@br.Welcome <small>@br.WelcomeSubtitle</small></h1>
 
 @if (Model.NewSongs.Any()) {
-<h3 class="withMargin">@R.IndexStrings.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h3>
+<h3 class="withMargin">@Res.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h3>
     
 <div class="pvPlayer">
 	<div class="scrollable-navi">
@@ -45,12 +45,12 @@
 
 <br />
 
-<h3 class="withMargin">@R.IndexStrings.NewAlbums (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
+<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
 <div id="newAlbums">
     @AlbumHelpers.AlbumThumbs(Model.NewAlbums)    
 </div>
 
-<h3 class="withMargin">@R.IndexStrings.TopAlbums (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
+<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
 <div id="topAlbums">
     @AlbumHelpers.AlbumThumbs(Model.TopAlbums)    
 </div>
@@ -59,14 +59,14 @@
 
 <div class="row-fluid">
     <div class="span7">
-        <h3 class="withMargin">@ViewRes.Home.IndexStrings.RecentActivity (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "ActivityEntry"))</h3>
+        <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
 
         @foreach (var entry in Model.ActivityEntries) {
 	        @ActivityfeedHelpers.ActivityEntry(entry, false)
         }            
     </div>
     <div class="span5">
-        <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Comment"))</h3>
+        <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(Res.ViewMore, "Index", "Comment"))</h3>
             
         @foreach (var comment in Model.RecentComments) {
 			@CommentHelpers.CommentWithEntryVertical(comment, 400)
@@ -74,7 +74,7 @@
     </div>
 </div>
 
-<h4 class="withMargin">@R.IndexStrings.SearchSite</h4>
+<h4 class="withMargin">@Res.SearchSite</h4>
 @Helpers.GoogleSiteSearch()
 
 @section Head {
