@@ -33,6 +33,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 				.WhereHasBarcode(queryParams.Barcode)
 				.WhereHasType(queryParams.AlbumType)
 				.WhereHasTags<Album, AlbumTagUsage>(queryParams.Tags != null && queryParams.Tags.Any() ? queryParams.Tags : new[] {  parsedQuery.TagName })
+				.WhereReleaseDateIsAfter(queryParams.ReleaseDateAfter)
+				.WhereReleaseDateIsBefore(queryParams.ReleaseDateBefore)
 				.WhereSortBy(queryParams.SortRule);
 
 			return query;

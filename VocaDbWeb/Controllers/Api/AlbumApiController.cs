@@ -161,6 +161,8 @@ namespace VocaDb.Web.Controllers.Api {
 			bool childVoicebanks = false,
 			string barcode = null,
 			EntryStatus? status = null,
+			DateTime? releaseDateAfter = null,
+			DateTime? releaseDateBefore = null,
 			int start = 0, 
 			int maxResults = defaultMax,
 			bool getTotalCount = false, 
@@ -179,7 +181,9 @@ namespace VocaDb.Web.Controllers.Api {
 				ArtistParticipationStatus = artistParticipationStatus,
 				ChildVoicebanks = childVoicebanks,
 				Barcode = barcode,
-				Deleted = deleted
+				Deleted = deleted,
+				ReleaseDateAfter = releaseDateAfter,
+				ReleaseDateBefore = releaseDateBefore
 			};
 			queryParams.Common.EntryStatus = status;
 
