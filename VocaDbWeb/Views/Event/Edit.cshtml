@@ -3,22 +3,25 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.EventEdit>
 
 @{
-	
+
 	var isNew = (Model.Id == 0);
+	string backAction;
 
 	if (!isNew) {
 		PageProperties.Title = "Edit event - " + Model.OldName;
-		ViewBag.Parents = new[] { 
+		backAction = Url.Action("Details", new { id = Model.Id });
+		ViewBag.Parents = new[] {
 			Html.ActionLink("Events", "EventsBySeries"),
 			Html.ActionLink(Model.OldName, "Details", new { id = Model.Id })
-		};		
+		};
 	} else {
 		PageProperties.Title = "Create a new event";
-		ViewBag.Parents = new[] { 
+		backAction = Url.Action("EventsBySeries");
+		ViewBag.Parents = new[] {
 			Html.ActionLink("Events", "EventsBySeries")
 		};
 	}
-	
+
 }
 
 @section Toolbar {
@@ -29,12 +32,12 @@
 
 @Helpers.ValidationSymmaryPanel("Unable to save properties.")
 
-@using (Html.BeginForm()) {
+<form method="POST" data-bind="submit: submit">
 	@Html.HiddenFor(m => m.Id)
 
-	@Helpers.SaveBtn()
+	@Helpers.SaveAndBackBtn(backAction)
 
-	if (Model.SeriesId == null) {
+	@if (Model.SeriesId == null) {
 		@Html.HiddenFor(m => m.SeriesNumber)
 
 		<div class="editor-label">
@@ -83,9 +86,9 @@
 	</div>
 	
 	<br />
-	@Helpers.SaveBtn()
+	@Helpers.SaveAndBackBtn(backAction)
 	
-}
+</form>
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/ReleaseEvent/Edit")
