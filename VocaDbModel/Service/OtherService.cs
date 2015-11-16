@@ -143,21 +143,21 @@ namespace VocaDb.Model.Service {
 
 			var count = 3;
 			var cacheKey = string.Format("OtherService.RecentEvents.{0}.{1}", LanguagePreference, ssl);
-			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(4), () => {
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () => {
 
-				var minDate = DateTime.Now - TimeSpan.FromDays(7);
+				var minDate = DateTime.Now - TimeSpan.FromDays(2);
 				var maxDate = DateTime.Now + TimeSpan.FromDays(14);
 
 				var recentEvents = session.Query<ReleaseEvent>()
-					.Where(e => e.Date.DateTime != null && e.Date.DateTime >= minDate && e.Date.DateTime <= maxDate)
-					.OrderByDescending(e => e.Date.DateTime)
+					.WhereDateIsBetween(minDate, maxDate)
+					.OrderByDate(SortDirection.Descending)
 					.Take(count)
 					.ToArray();
 
 				var recentConcerts = session.Query<SongList>()
-					.Where(s => s.FeaturedCategory == SongListFeaturedCategory.Concerts
-						&& s.EventDate.DateTime != null && s.EventDate.DateTime >= minDate && s.EventDate.DateTime <= maxDate)
-					.OrderByDescending(s => s.EventDate.DateTime)
+					.Where(s => s.FeaturedCategory == SongListFeaturedCategory.Concerts)
+					.WhereEventDateIsBetween(minDate, maxDate)
+					.OrderByDate(SortDirection.Descending)
 					.Take(count)
 					.ToArray();
 

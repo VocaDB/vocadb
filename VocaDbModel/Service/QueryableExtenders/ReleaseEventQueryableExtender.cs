@@ -28,11 +28,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IOrderedQueryable<ReleaseEvent> OrderByDate(this IQueryable<ReleaseEvent> query, SortDirection direction) {
+			return query.OrderBy(e => e.Date.DateTime, direction);
+		}
+
 		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule) {
 
 			switch (sortRule) {
 				case EventSortRule.Date:
-					return query.OrderByDescending(r => r.Date.DateTime);
+					return query.OrderByDate(SortDirection.Descending);
 				case EventSortRule.Name:
 					return query.OrderBy(r => r.Name);
 				case EventSortRule.SeriesName:

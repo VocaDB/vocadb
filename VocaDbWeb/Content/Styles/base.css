@@ -1,14 +1,13 @@
 ﻿/* Validation
 -----------------------------------------------------------*/
-
 .field-validation-error {
-  color: red;
+  color: #ff0000;
 }
 .field-validation-valid {
   display: none;
 }
 .input-validation-error {
-  border: 1px solid red;
+  border: 1px solid #ff0000;
   background-color: #ffeeee;
 }
 .validation-summary-errors {
@@ -116,11 +115,11 @@ body {
 .vdb .navbar-inverse .btn-navbar {
   margin-top: 1px;
   margin-left: 10px;
-  background-color: #081a21;
-  background-image: - webkit-gradient(linear, 0 0, 0 100%, from(#2c8fb2), to(#216b88));
-  background-image: - webkit-linear-gradient(top, #2c8fb2, #216b88);
-  background-image: - o-linear-gradient(top, #2c8fb2, #216b88);
-  background-image: - moz-linear-gradient(center top, #2c8fb2, #216b88);
+  background-color: #081A21;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2c8fb2), to(#216b88));
+  background-image: -webkit-linear-gradient(top, #2c8fb2, #216b88);
+  background-image: -o-linear-gradient(top, #2c8fb2, #216b88);
+  background-image: -moz-linear-gradient(center top, #2c8fb2, #216b88);
   background-image: linear-gradient(top, #2c8fb2, #216b88);
 }
 .vdb .navbar-inverse .btn-navbar:hover {
@@ -183,6 +182,9 @@ body {
 }
 .archived-entry-compare-modified {
   font-weight: bold;
+}
+.front-page-recent-events a {
+  margin-right: 5px;
 }
 .song-lists-filters {
   margin-bottom: 20px;

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
@@ -12,13 +13,32 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			switch (sortRule) {
 				case SongListSortRule.Date:
 					return query
-						.OrderByDescending(r => r.EventDate)
+						.OrderByDate(SortDirection.Descending)
 						.ThenBy(r => r.Name);
 				case SongListSortRule.CreateDate:
 					return query.OrderByDescending(r => r.CreateDate);
 				case SongListSortRule.Name:
 					return query.OrderBy(r => r.Name);
 			}
+
+			return query;
+
+		}
+
+		public static IOrderedQueryable<SongList> OrderByDate(this IQueryable<SongList> query, SortDirection direction) {
+			return query.OrderBy(s => s.EventDate, direction);
+		}
+
+		public static IQueryable<SongList> WhereEventDateIsBetween(this IQueryable<SongList> query, DateTime? begin, DateTime? end) {
+
+			if (begin.HasValue && end.HasValue)
+				return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime >= begin && e.EventDate.DateTime < end);
+
+			if (begin.HasValue)
+				return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime >= begin);
+
+			if (end.HasValue)
+				return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime < end);
 
 			return query;
 

@@ -90,6 +90,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			EntryOptionalFields includedFields)
 			: this(album, languagePreference, includedFields) {
 
+			ActivityDate = album.OriginalReleaseDate.IsFullDate ? (DateTime?)album.OriginalReleaseDate.ToDateTime() : null;
 			ArtistString = album.ArtistString[languagePreference];
 			CreateDate = album.CreateDate;
 			DiscType = album.DiscType;
@@ -116,7 +117,7 @@ namespace VocaDb.Model.DataContracts.Api {
 		public EntryForApiContract(ReleaseEvent releaseEvent, IEntryThumbPersister thumbPersister, bool ssl, EntryOptionalFields includedFields)
 			: this(releaseEvent, ContentLanguagePreference.Default, includedFields) {
 
-			CreateDate = releaseEvent.Date.DateTime.Value;
+			ActivityDate = releaseEvent.Date.DateTime;
 			ReleaseEventSeriesName = releaseEvent.Series != null ? releaseEvent.Series.Name : null;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && releaseEvent.Series != null && !string.IsNullOrEmpty(releaseEvent.Series.PictureMime)) {
@@ -135,7 +136,8 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		public EntryForApiContract(Song song, ContentLanguagePreference languagePreference, EntryOptionalFields includedFields)
 			: this((IEntryWithNames)song, languagePreference, includedFields) {
-			
+
+			ActivityDate = song.PublishDate.DateTime;
 			ArtistString = song.ArtistString[languagePreference];
 			CreateDate = song.CreateDate;
 			SongType = song.SongType;
@@ -169,6 +171,8 @@ namespace VocaDb.Model.DataContracts.Api {
 			EntryOptionalFields includedFields)
 			: this(songList, ContentLanguagePreference.Default, includedFields) {
 
+			ActivityDate = songList.EventDate;
+			CreateDate = songList.CreateDate;
 			SongListFeaturedCategory = songList.FeaturedCategory;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null) {
@@ -190,6 +194,17 @@ namespace VocaDb.Model.DataContracts.Api {
 			UrlSlug = tag.Name;
 
 		}
+
+		/// <summary>
+		/// Date when this entry was published or the indicated activity happened.
+		/// PRERELEASE - this might change.
+		/// </summary>
+		/// <remarks>
+		/// For albums and songs: publish date.
+		/// For events and song lists: event date.
+		/// </remarks>
+		[DataMember(EmitDefaultValue = false)]
+		public DateTime? ActivityDate { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set;}
