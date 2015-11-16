@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.Albums;
+﻿using System;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
@@ -47,6 +48,10 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 		public bool Deleted { get; set; }
 
 		public PagingProperties Paging { get; set; }
+
+		public DateTime? ReleaseDateAfter { get; set; }
+
+		public DateTime? ReleaseDateBefore { get; set; }
 
 		public AlbumSortRule SortRule { get; set; }
 

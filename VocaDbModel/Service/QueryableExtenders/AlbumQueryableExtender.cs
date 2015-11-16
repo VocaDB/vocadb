@@ -189,6 +189,36 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Album> WhereReleaseDateIsAfter(this IQueryable<Album> query, DateTime? beginDateNullable) {
+
+			if (!beginDateNullable.HasValue)
+				return query;
+
+			var beginDate = beginDateNullable.Value;
+
+			return query.Where(a => a.OriginalRelease.ReleaseDate.Year > beginDate.Year
+				|| (a.OriginalRelease.ReleaseDate.Year == beginDate.Year && a.OriginalRelease.ReleaseDate.Month > beginDate.Month)
+				|| (a.OriginalRelease.ReleaseDate.Year == beginDate.Year
+					&& a.OriginalRelease.ReleaseDate.Month == beginDate.Month
+					&& a.OriginalRelease.ReleaseDate.Day >= beginDate.Day));
+
+		}
+
+		public static IQueryable<Album> WhereReleaseDateIsBefore(this IQueryable<Album> query, DateTime? endDateNullable) {
+
+			if (!endDateNullable.HasValue)
+				return query;
+
+			var endDate = endDateNullable.Value;
+
+			return query.Where(a => a.OriginalRelease.ReleaseDate.Year < endDate.Year
+				|| (a.OriginalRelease.ReleaseDate.Year == endDate.Year && a.OriginalRelease.ReleaseDate.Month < endDate.Month)
+				|| (a.OriginalRelease.ReleaseDate.Year == endDate.Year
+					&& a.OriginalRelease.ReleaseDate.Month == endDate.Month
+					&& a.OriginalRelease.ReleaseDate.Day < endDate.Day));
+
+		}
+
 		/// <summary>
 		/// Makes sure that the query is filtered by restrictions of the sort rule.
 		/// This can be used to separate the filtering from the actual sorting, when sorting is not needed (for example, only count is needed).
