@@ -129,6 +129,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
 		/// <param name="barcode">Filter by album barcode (optional).</param>
+		/// <param name="releaseDateAfter">Filter by albums whose release date is after this date (inclusive).</param>
+		/// <param name="releaseDateBefore">Filter by albums whose release date is before this date (exclusive).</param>
 		/// <param name="status">Filter by entry status (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
