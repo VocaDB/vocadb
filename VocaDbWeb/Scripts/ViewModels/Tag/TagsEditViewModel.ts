@@ -27,7 +27,7 @@ module vdb.viewModels.tags {
 			if (selection) {
 				selection.selected(true);
 			} else {
-				this.selections.push(new TagSelectionViewModel({ tagName: tagName, selected: true }));
+				this.selections.push(new TagSelectionViewModel({ tagName: tagName, selected: true, tagId: null }));
 			}
 
 		}
@@ -59,8 +59,10 @@ module vdb.viewModels.tags {
 		
 		public save = () => {
 
-			var selectedTags = _.chain(this.selections()).filter(sel => sel.selected()).map(sel => sel.tagName).value();
-			this.repo.saveTagSelections(selectedTags);
+			var tags = _.chain(this.selections()).filter(sel => sel.selected()).map(sel => {
+				return { id: sel.tagId, name: sel.tagName }
+			}).value();
+			this.repo.saveTagSelections(tags);
 			this.dialogVisible(false);
 
 		}
@@ -80,12 +82,15 @@ module vdb.viewModels.tags {
 		
 		constructor(contract: dataContracts.tags.TagSelectionContract) {
 		
+			this.tagId = contract.tagId;
 			this.tagName = contract.tagName;
 			this.selected = ko.observable(contract.selected || false);
 
 		}
 
 		selected: KnockoutObservable<boolean>;
+
+		tagId: number;
 
 		tagName: string;
 
@@ -95,7 +100,7 @@ module vdb.viewModels.tags {
 		
 		getTagSelections(callback: (selections: dataContracts.tags.TagSelectionContract[]) => void): void;
 
-		saveTagSelections(tags: string[]): void;
+		saveTagSelections(tags: dc.TagBaseContract[]): void;
 
 	}
 
