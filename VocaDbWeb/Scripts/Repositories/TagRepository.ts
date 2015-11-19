@@ -29,7 +29,7 @@ module vdb.repositories {
 
 		}
 
-		public getTopTags = (categoryName?: string, callback?) => {
+		public getTopTags = (categoryName?: string, callback?: (tags: dc.TagBaseContract[]) => void) => {
 			
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/top");
 			var data = { categoryName: categoryName };

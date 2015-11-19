@@ -46,7 +46,8 @@ module vdb.viewModels.user {
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public sort = ko.observable("Name");
 		public sortName = ko.computed(() => this.resources() != null ? this.resources().albumSortRuleNames[this.sort()] : "");
-		public tag = ko.observable("");
+		public tag = ko.observable<dc.TagBaseContract>(null);
+		public tagName = ko.computed(() => this.tag() ? this.tag().name : null);
 		public viewMode = ko.observable("Details");
 
 		public init = () => {
@@ -93,7 +94,7 @@ module vdb.viewModels.user {
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
 			this.userRepo.getAlbumCollectionList(this.loggedUserId, pagingProperties, this.languageSelection, this.searchTerm(),
-				this.tag(),
+				this.tagName(),
 				this.artistId(),
 				this.collectionStatus(), this.releaseEventName(), this.sort(),
 				(result: any) => {

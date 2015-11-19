@@ -35,6 +35,8 @@ module vdb.viewModels.search {
 				this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 			}
 
+			this.tagNames = ko.computed(() => _.map(this.tags(), t => t.name));
+
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 
 		}
@@ -81,12 +83,14 @@ module vdb.viewModels.search {
 		};
 
 		public selectTag = (tag: dc.TagBaseContract) => {
-			this.tags(tag ? [tag.name] : []);
+			this.tags(tag ? [tag] : []);
 		}
 
 		public showTags: KnockoutObservable<boolean>;
 
-		public tags: KnockoutObservableArray<string>;
+		public tags: KnockoutObservableArray<dc.TagBaseContract>;
+
+		public tagNames: KnockoutComputed<string[]>;
 
 		// Update results loading the first page and updating total number of items.
 		// Commonly this is done after changing the filters or sorting.
@@ -110,7 +114,7 @@ module vdb.viewModels.search {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
-			this.loadResults(pagingProperties, this.searchTerm(), this.tags(),
+			this.loadResults(pagingProperties, this.searchTerm(), this.tagNames(),
 				this.draftsOnly() ? "Draft" : null, (result: any) => {
 
 					if (this.showTags()) {

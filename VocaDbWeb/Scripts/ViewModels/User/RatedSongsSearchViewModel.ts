@@ -57,7 +57,7 @@ module vdb.viewModels.user {
 
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForRatedSongsAdapter(userRepo, loggedUserId, this.searchTerm, this.sort,
-				this.tag, this.artistId, this.childVoicebanks,
+				this.tagName, this.artistId, this.childVoicebanks,
 				this.rating, this.songListId, this.groupByRating, ko.observable("AdditionalNames,ThumbUrl"));
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[languageSelection]);
@@ -91,7 +91,8 @@ module vdb.viewModels.user {
 		public sort = ko.observable("Name");
 		public sortName = ko.computed(() => this.resources() != null ? (this.resources().user_ratedSongForUserSortRuleNames[this.sort()]
 			|| this.resources().songSortRuleNames[this.sort()]) : "");
-		public tag = ko.observable("");
+		public tag = ko.observable<dc.TagBaseContract>(null);
+		public tagName = ko.computed(() => this.tag() ? this.tag().name : null);
 		public viewMode = ko.observable("Details");
 
 		public fields = ko.computed(() => {
@@ -152,7 +153,7 @@ module vdb.viewModels.user {
 			}
 
 			this.userRepo.getRatedSongsList(this.loggedUserId, pagingProperties, this.languageSelection, this.searchTerm(),
-				this.tag(),
+				this.tagName(),
 				this.artistId(),
 				this.childVoicebanks(),
 				this.rating(), this.songListId(),

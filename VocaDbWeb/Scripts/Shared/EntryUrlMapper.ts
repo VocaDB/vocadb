@@ -52,7 +52,19 @@ module vdb.utils {
 		}
 
 		public static details_tag(id: number, slug?: string) {
-            return EntryUrlMapper.details('Tag', id, slug);        
+			return EntryUrlMapper.details('Tag', id, slug);
+		}
+
+		public static details_tag_contract(tag: dc.TagBaseContract) {
+
+			if (!tag)
+				return null;
+
+			if (!tag.id)
+				return "/Tag/Details/" + tag.name; // Legacy URL, this will be removed
+
+			return EntryUrlMapper.details('Tag', tag.id, tag.urlSlug);
+
 		}
     
 		public static details_user_byName(name: string) {

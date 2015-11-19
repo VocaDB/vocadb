@@ -32,10 +32,15 @@ module vdb.viewModels.tags {
 
 		}
 
-		public autoCompletedTag = (tagName: string) => {
-			
-			this.newTagName(tagName);
-			this.addTag();
+		public autoCompletedTag = (tag: dc.TagBaseContract) => {
+
+			var selection = _.find(this.selections(), sel => sel.tagId === tag.id);
+
+			if (selection) {
+				selection.selected(true);
+			} else {
+				this.selections.push(new TagSelectionViewModel({ tagName: tag.name, selected: true, tagId: tag.id }));
+			}
 
 		}
 

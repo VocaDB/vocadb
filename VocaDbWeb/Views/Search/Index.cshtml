@@ -90,11 +90,11 @@
 				<!-- ko foreach: tags -->
 					<div class="control-group">
 						<div style="display: inline-block;" class="input-append input-prepend">
-							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: '/Tag/Details/' + $data }">
+							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag_contract($data) }">
 								<i class="icon icon-info-sign"></i>
 							</a>
 							<div class="input-append">
-								<input type="text" class="input-large" readonly data-bind="value: $data" />
+								<input type="text" class="input-large" readonly data-bind="value: name" />
 								<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.tags.remove($data); }">Clear</button>
 							</div>
 						</div>
@@ -112,7 +112,7 @@
 						</button>
 						<ul data-bind="foreach: genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 							<li>
-								<a href="#" data-bind="attr: { href: '/Tag/Details/' + $data }, text: $data, click: function(selectedTag) { $parent.addTag(selectedTag); }"></a>
+								<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag_contract($data) }, text: name, click: function(selectedTag) { $parent.addTag(selectedTag); }"></a>
 							</li>
 						</ul>
 					</div>
