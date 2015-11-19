@@ -511,6 +511,7 @@
     <Compile Include="Helpers\SongHelper.cs" />
     <Compile Include="Helpers\StreamHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\UrlValidator.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
