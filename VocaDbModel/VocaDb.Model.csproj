@@ -117,12 +117,14 @@
     <Compile Include="Database\Queries\EntryQueries.cs" />
     <Compile Include="Database\Queries\EntryReportQueries.cs" />
     <Compile Include="Database\Queries\EventQueries.cs" />
+    <Compile Include="Database\Queries\SongAggregateQueries.cs" />
     <Compile Include="Database\Queries\SongListQueries.cs" />
     <Compile Include="Database\Queries\SongQueries.cs" />
     <Compile Include="Database\Queries\TagQueries.cs" />
     <Compile Include="Database\Queries\UserMessageQueries.cs" />
     <Compile Include="Database\Queries\UserQueries.cs" />
     <Compile Include="DataContracts\Activityfeed\ActivityEntryForApiContract.cs" />
+    <Compile Include="DataContracts\Aggregate\CountPerDayContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumDiscPropertiesContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />

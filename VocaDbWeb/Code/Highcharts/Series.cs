@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using VocaDb.Model.DataContracts.Aggregate;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code.Highcharts {
@@ -12,7 +13,7 @@ namespace VocaDb.Web.Code.Highcharts {
 			return source.Select(p => new object[] { HighchartsHelper.ToEpochTime(dateSelector(p)), valSelector(p) }).ToArray();
         }
 
-		public static object[][] DateData(IEnumerable<CountPerDay> source) {
+		public static object[][] DateData(IEnumerable<CountPerDayContract> source) {
 			return DateData(source, d => new DateTime(d.Year, d.Month, d.Day), d => d.Count);
 		}
 

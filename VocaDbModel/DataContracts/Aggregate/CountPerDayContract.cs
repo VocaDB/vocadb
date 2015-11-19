@@ -1,8 +1,8 @@
-﻿namespace VocaDb.Web.Code.Highcharts {
+﻿namespace VocaDb.Model.DataContracts.Aggregate {
 
-	public class CountPerDay {
+	public class CountPerDayContract {
 
-		public CountPerDay() {
+		public CountPerDayContract() {
 			Day = 1;
 		}
 

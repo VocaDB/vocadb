@@ -6,6 +6,7 @@ using System.Web.Http.Description;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Aggregate;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
@@ -36,14 +37,16 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly SongQueries queries;
 		private readonly SongService service;
+		private readonly SongAggregateQueries songAggregateQueries;
 		private readonly IUserPermissionContext userPermissionContext;
 
 		/// <summary>
 		/// Initializes controller.
 		/// </summary>
-		public SongApiController(SongService service, SongQueries queries, IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext) {
+		public SongApiController(SongService service, SongQueries queries, SongAggregateQueries songAggregateQueries, IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext) {
 			this.service = service;
 			this.queries = queries;
+			this.songAggregateQueries = songAggregateQueries;
 			this.entryLinkFactory = entryLinkFactory;
 			this.userPermissionContext = userPermissionContext;
 		}
@@ -296,6 +299,15 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			var pv = queries.PVForSongAndService(songId, service);
 			return pv.PVId;
+
+		}
+
+		[Route("over-time")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
+		public IEnumerable<CountPerDayContract[]> GetSongsOverTime(TimeUnit timeUnit, int artistId) {
+
+			return songAggregateQueries.SongsOverTime(timeUnit, s => s.AllArtists.Any(a => a.Artist.Id == artistId));
 
 		}
 
