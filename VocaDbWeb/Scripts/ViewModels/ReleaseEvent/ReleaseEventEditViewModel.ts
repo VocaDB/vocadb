@@ -14,6 +14,8 @@ module vdb.viewModels.releaseEvents {
 
 		public dateStr: KnockoutComputed<string>;
 
+		public description = ko.observable<string>();
+
 		public submit = () => {
 			this.submitting(true);
 			return true;
