@@ -69,6 +69,7 @@
 					<a href="@Url.EntryDetails(ev)">
 						@ev.Name
 					</a>
+					(@Translate.EntryTypeNames[ev.EntryType])
 					<br />
 					@(ev.ActivityDate.HasValue ? ev.ActivityDate.Value.ToShortDateString() : string.Empty)
 				</div>
