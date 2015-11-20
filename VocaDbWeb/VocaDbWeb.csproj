@@ -783,7 +783,6 @@
     <Compile Include="Code\Highcharts\CamelCaseStringEnumConverter.cs" />
     <Compile Include="Code\Highcharts\Chart.cs" />
     <Compile Include="Code\Highcharts\ChartType.cs" />
-    <Compile Include="Code\Highcharts\CountPerDay.cs" />
     <Compile Include="Code\Highcharts\Highchart.cs" />
     <Compile Include="Code\Highcharts\PlotOptions.cs" />
     <Compile Include="Code\Highcharts\Series.cs" />

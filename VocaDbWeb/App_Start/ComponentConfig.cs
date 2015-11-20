@@ -106,6 +106,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<EntryReportQueries>().AsSelf();
 			builder.RegisterType<EventQueries>().AsSelf();
 			builder.RegisterType<SongQueries>().AsSelf();
+			builder.RegisterType<SongAggregateQueries>().AsSelf();
 			builder.RegisterType<SongListQueries>().AsSelf();
 			builder.RegisterType<TagQueries>().AsSelf();
 			builder.RegisterType<UserQueries>().AsSelf();

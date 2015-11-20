@@ -7,6 +7,7 @@ using System.Web.Caching;
 using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.Aggregate;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -39,11 +40,7 @@ namespace VocaDb.Web.Controllers {
 	public class StatsController : ControllerBase {
 
 		private const int clientCacheDurationSec = 86400;
-
-		public enum TimeUnit {
-			Month,
-			Day
-		}
+		private readonly SongAggregateQueries songAggregateQueries;
 
 		private T GetCachedReport<T>() where T : class {
 
@@ -203,67 +200,6 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private CountPerDay[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where) {
-
-			var query = ctx.Query<Song>()
-				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
-
-			if (where != null)
-				query = query.Where(where);
-
-			return query
-				.OrderBy(a => a.PublishDate.DateTime.Value.Year)
-				.ThenBy(a => a.PublishDate.DateTime.Value.Month)
-				.ThenBy(a => a.PublishDate.DateTime.Value.Day)
-				.GroupBy(a => new {
-					Year = a.PublishDate.DateTime.Value.Year,
-					Month = a.PublishDate.DateTime.Value.Month,
-					Day = a.PublishDate.DateTime.Value.Day,
-				})
-				.Select(a => new CountPerDay {
-					Year = a.Key.Year,
-					Month = a.Key.Month,
-					Day = a.Key.Day,
-					Count = a.Count()
-				})
-				.ToArray();
-
-		}
-
-		private CountPerDay[] SongsPerMonth(IDatabaseContext ctx, Expression<Func<Song, bool>> where) {
-
-			var query = ctx.Query<Song>()
-				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
-
-			if (where != null)
-				query = query.Where(where);
-
-			return query
-				.OrderBy(a => a.PublishDate.DateTime.Value.Year)
-				.ThenBy(a => a.PublishDate.DateTime.Value.Month)
-				.GroupBy(a => new {
-					Year = a.PublishDate.DateTime.Value.Year,
-					Month = a.PublishDate.DateTime.Value.Month,
-				})
-				.Select(a => new CountPerDay {
-					Year = a.Key.Year,
-					Month = a.Key.Month,
-					Count = a.Count()
-				})
-				.ToArray();
-
-		}
-
-		private CountPerDay[][] SongsOverTime(TimeUnit timeUnit, params Expression<Func<Song, bool>>[] filters) {
-
-			return repository.HandleQuery(ctx => {
-
-				var results = filters.Select(f => timeUnit == TimeUnit.Month ? SongsPerMonth(ctx, f) : SongsPerDay(ctx, f)).ToArray();
-				return results;
-
-			});
-
-		}
 
 		private ICollection<Tuple<string, int>> GetGenreTagUsages<T>() where T : TagUsage {
 			
@@ -320,11 +256,15 @@ namespace VocaDb.Web.Controllers {
 		private readonly IRepository repository;
 		private readonly IUserRepository userRepository;
 
-		public StatsController(IUserRepository userRepository, IRepository repository, IUserPermissionContext permissionContext, HttpContextBase context) {
+		public StatsController(IUserRepository userRepository, IRepository repository, IUserPermissionContext permissionContext, SongAggregateQueries songAggregateQueries,
+			HttpContextBase context) {
+
 			this.userRepository = userRepository;
 			this.repository = repository;
 			this.permissionContext = permissionContext;
+			this.songAggregateQueries = songAggregateQueries;
 			this.context = context;
+
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec)]
@@ -418,7 +358,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult AlbumSongsOverTime() {
 
-			var data = SongsOverTime(TimeUnit.Month, a => a.AllAlbums.Any(), a => a.AllAlbums.Count == 0);
+			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, a => a.AllAlbums.Any(), a => a.AllAlbums.Count == 0);
 
 			return AreaChart("Album songs over time",
 				new Series("Album songs", Series.DateData(data[0])),
@@ -440,7 +380,7 @@ namespace VocaDb.Web.Controllers {
 						Month = a.OriginalRelease.ReleaseDate.Month,
 						Day = a.OriginalRelease.ReleaseDate.Day
 					})
-					.Select(a => new CountPerDay {
+					.Select(a => new CountPerDayContract {
 						Year = a.Key.Year.Value,
 						Month = a.Key.Month.Value,
 						Day = a.Key.Day.Value,
@@ -450,7 +390,7 @@ namespace VocaDb.Web.Controllers {
 
 			});
 
-			var points = values.CumulativeSelect<CountPerDay, Tuple<DateTime, int>>((v, previous) => {
+			var points = values.CumulativeSelect<CountPerDayContract, Tuple<DateTime, int>>((v, previous) => {
 				return Tuple.Create(new DateTime(v.Year, v.Month, v.Day), (previous != null ? previous.Item2 : 0) + v.Count);
 			}).ToArray();
 
@@ -590,7 +530,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "unit")]
 		public ActionResult SongsPublishedPerDay(TimeUnit unit = TimeUnit.Day) {
 			
-			var values = SongsOverTime(unit, s => true, null)[0];
+			var values = songAggregateQueries.SongsOverTime(unit, s => true, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
 
@@ -650,7 +590,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult SongsWithoutPVOverTime() {
 
-			var data = SongsOverTime(TimeUnit.Month, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0);
+			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0);
 
 			return AreaChart("Songs with and without PV over time",
 				new Series("Songs with a PV", Series.DateData(data[0])),

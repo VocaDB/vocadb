@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using System.Text.RegularExpressions;
-using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.XPath;
@@ -11,15 +9,6 @@ namespace VocaDb.Model.Helpers {
 	/// Various helper methods for XML processing.
 	/// </summary>
 	public static class XmlHelper {
-
-		/// <summary>
-		/// Removes unsupported control characters from XML.
-		/// See http://en.wikipedia.org/w/index.php?title=C0_and_C1_control_codes for more info.
-		/// </summary>
-		private static string CleanInvalidXmlChars(string text) {
-			var re = @"(&#x1;)|(&#x2;)";
-			return Regex.Replace(text, re, "");
-		}
 
 		public static string GetNodeTextOrEmpty(XElement node) {
 
@@ -88,7 +77,7 @@ namespace VocaDb.Model.Helpers {
 
 			using (var writer = new StringWriter()) {
 				serializer.Serialize(writer, obj);
-				var str = CleanInvalidXmlChars(writer.ToString());
+				var str = StringHelper.CleanInvalidXmlChars(writer.ToString());
 				doc = XDocument.Parse(str);
 			}
 

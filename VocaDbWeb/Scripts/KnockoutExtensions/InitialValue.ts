@@ -7,8 +7,11 @@
 ko.bindingHandlers.initialValue = {
 	init: (element: HTMLElement, valueAccessor, allBindings) => {
 		var bindings = allBindings();
+		var val = $(element).val();
 		if (bindings.value) {
-			bindings.value($(element).val());
+			bindings.value(val);
+		} else if (bindings.textInput) {
+			bindings.textInput(val);
 		}
 	}
 }; 
