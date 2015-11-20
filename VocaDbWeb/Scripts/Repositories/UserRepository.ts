@@ -298,14 +298,4 @@ module vdb.repositories {
 		Notifications			
 	}
 
-	export interface TagSelections {
-
-		// IDs of selected tags.
-		tagIds: number[];
-
-		// Names of tags without ID. This is primarily for new tags. Tags with an ID are not included.
-		tagNames: string[];
-
-	}
-
 }
