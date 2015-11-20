@@ -2146,6 +2146,7 @@
     <TypeScriptCompile Include="Scripts\Shared\Routing\ObservableUrlParamRouter.ts" />
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />
+    <TypeScriptCompile Include="Scripts\Tests\Helpers\AjaxHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\HtmlHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Shared\Routing\ObservableUrlParamRouterTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Artist\ArtistRolesEditViewModelTests.ts" />

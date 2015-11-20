@@ -222,9 +222,9 @@ module vdb.repositories {
 
 		};
 
-        public updateAlbumTags = (albumId: number, tags: string[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+        public updateAlbumTags = (albumId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
 
-			helpers.AjaxHelper.putJSON_Url(this.urlMapper.mapRelative("/api/users/current/albumTags/" + albumId), "tags", tags, callback);
+			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/albumTags/" + albumId), tags, callback);
 
         }
 
@@ -237,9 +237,9 @@ module vdb.repositories {
 
 		};
 
-        public updateArtistTags = (artistId: number, tags: string[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+        public updateArtistTags = (artistId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
 
-			helpers.AjaxHelper.putJSON_Url(this.urlMapper.mapRelative("/api/users/current/artistTags/" + artistId), "tags", tags, callback);
+			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/artistTags/" + artistId), tags, callback);
 
         }
 
@@ -255,9 +255,9 @@ module vdb.repositories {
         // callback: Callback function to be executed when the operation is complete.
         public updateSongRating: (songId: number, rating: vdb.models.SongVoteRating, callback: any) => void;
 
-        public updateSongTags = (songId: number, tags: string[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
-	       
-			helpers.AjaxHelper.putJSON_Url(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), "tags", tags, callback);
+        public updateSongTags = (songId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+
+			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), tags, callback);
 			 
         }
 

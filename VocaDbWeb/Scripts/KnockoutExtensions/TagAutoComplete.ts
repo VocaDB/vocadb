@@ -7,30 +7,36 @@ interface KnockoutBindingHandlers {
 ko.bindingHandlers.tagAutoComplete = {
 	init: (element: HTMLElement, valueAccessor: () => any, allBindingsAccessor: () => any) => {
 
-		var tagFilter: (string) => boolean = allBindingsAccessor().tagFilter;
+		var tagFilter: (any) => boolean = allBindingsAccessor().tagFilter;
 		var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
 		var allowAliases: boolean = ko.unwrap(allBindingsAccessor().allowAliases);
 
 		if (clearValue == null)
 			clearValue = true;
 
-		$(element).autocomplete({
-			source: (ui, callback) => {
-				$.getJSON(vdb.functions.mapAbsoluteUrl("/api/tags/names"), { query: ui.term, allowAliases: allowAliases }, (result: string[]) => {
-					var tags = tagFilter ? _.filter(result, tagFilter) : result;
-					callback(tags);
-				});
+		var queryParams = {
+			nameMatchMode: 'Auto',
+			fields: 'AdditionalNames',
+			preferAccurateMatches: true,
+			maxResults: 20,
+			sort: 'Name',
+			allowAliases: allowAliases
+		};
+
+		var params: vdb.EntryAutoCompleteParams<dc.TagBaseContract> = {
+			acceptSelection: (id, term, itemType, item) => {
+				valueAccessor()(item);
 			},
-			select: (event, ui) => {
-				valueAccessor()(ui.item.label);
-				if (clearValue) {
-					$(element).val("");
-					return false;					
-				} else {
-					return true;
-				}
-			}
-		});
+			createNewItem: null,
+			createOptionFirstRow: (item) => item.name,
+			createOptionSecondRow: null,
+			extraQueryParams: queryParams,
+			filter: tagFilter,
+			termParamName: 'query',
+			method: 'GET'
+		};
+
+		vdb.initEntrySearch(element, "Tag", vdb.functions.mapAbsoluteUrl("/api/tags"), params);
 
 	}
 }

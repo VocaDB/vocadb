@@ -156,10 +156,10 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>List of names of the most commonly used tags in that category.</returns>
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public string[] GetTopTags(string categoryName = null) {
+		public TagBaseContract[] GetTopTags(string categoryName = null) {
 
-			return queries.FindNames(TagSearchTextQuery.Empty, null, TagSortRule.UsageCount, false, true, 15)
-				.OrderBy(t => t).ToArray();
+			return queries.Find(t => new TagBaseContract(t), new CommonSearchParams(), new PagingProperties(0, 15, false), false, string.Empty, TagSortRule.UsageCount)
+				.Items.OrderBy(t => t.Name).ToArray();
 
 		}
 

@@ -62,7 +62,7 @@
 				<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: '/Tag/Details/' + tag() }" title="Tag information">
 					<i class="icon icon-info-sign"></i>
 				</a>
-				@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "tag")
+				@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "tag", "tagName")
 			</div>
 		</div>
 	</div>

@@ -2,7 +2,7 @@
 
 	export interface EntryAutoCompleteParams<TContract> {
 
-		acceptSelection: (entryId?: number, name?: string, entryType?: string) => void;
+		acceptSelection: (entryId?: number, name?: string, entryType?: string, data?: TContract) => void;
 
 		createCustomItem?: string;
 
@@ -125,7 +125,7 @@
 			var item: AutoCompleteItem<TContract> = ui.item;
 
 			// namebox value is cleared when using keyboard
-			acceptSelection(item.value, $(nameBoxElem).val() || item.term, item.itemType);
+			acceptSelection(item.value, $(nameBoxElem).val() || item.term, item.itemType, item.data);
 			$(nameBoxElem).val("");
 
 			return false;

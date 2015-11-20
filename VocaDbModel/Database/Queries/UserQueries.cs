@@ -891,7 +891,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tagVotes = session.Query<AlbumTagVote>().Where(a => a.User.Id == userId && a.Usage.Album.Id == albumId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
-					new TagSelectionContract(t.Tag.Name, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+					new TagSelectionContract(t.Tag, t.Votes.Any(v => tagVotes.Any(v.Equals))));
 
 				return tagSelections.ToArray();
 
@@ -907,7 +907,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Artist.Id == artistId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
-					new TagSelectionContract(t.Tag.Name, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+					new TagSelectionContract(t.Tag, t.Votes.Any(v => tagVotes.Any(v.Equals))));
 
 				return tagSelections.ToArray();
 
@@ -923,7 +923,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tagVotes = session.Query<SongTagVote>().Where(a => a.User.Id == userId && a.Usage.Song.Id == songId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
-					new TagSelectionContract(t.Tag.Name, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+					new TagSelectionContract(t.Tag, t.Votes.Any(v => tagVotes.Any(v.Equals))));
 
 				return tagSelections.ToArray();
 
@@ -1062,7 +1062,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagUsageForApiContract[] SaveAlbumTags(int albumId, string[] tags, bool onlyAdd) {
+		public TagUsageForApiContract[] SaveAlbumTags(int albumId, TagBaseContract[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries().AddTags<Album, AlbumTagUsage>(
 				albumId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
@@ -1071,7 +1071,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagUsageForApiContract[] SaveArtistTags(int artistId, string[] tags, bool onlyAdd) {
+		public TagUsageForApiContract[] SaveArtistTags(int artistId, TagBaseContract[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries().AddTags<Artist, ArtistTagUsage>(
 				artistId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
@@ -1080,7 +1080,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagUsageForApiContract[] SaveSongTags(int songId, string[] tags, bool onlyAdd) {
+		public TagUsageForApiContract[] SaveSongTags(int songId, TagBaseContract[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries().AddTags<Song, SongTagUsage>(
 				songId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,

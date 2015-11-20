@@ -535,7 +535,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/albumTags/{albumId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutAlbumTags(int albumId, [FromUri] string[] tags) {
+		public TagUsageForApiContract[] PutAlbumTags(int albumId, TagBaseContract[] tags) {
 			
 			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -547,7 +547,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/artistTags/{artistId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutArtistTags(int artistId, [FromUri] string[] tags) {
+		public TagUsageForApiContract[] PutArtistTags(int artistId, TagBaseContract[] tags) {
 			
 			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -563,23 +563,23 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Authorization cookie is required.
 		/// </summary>
 		/// <param name="songId">ID of the song to be tagged.</param>
-		/// <param name="tag">List of tags to be appended.</param>
+		/// <param name="tags">List of tags to be appended.</param>
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
 		[EnableCors(origins: "*", headers: "*", methods: "post", SupportsCredentials = true)]
-		public void PostSongTags(int songId, [FromUri] string[] tag) {
+		public void PostSongTags(int songId, TagBaseContract[] tags) {
 			
-			if (tag == null)
+			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			queries.SaveSongTags(songId, tag, true);
+			queries.SaveSongTags(songId, tags, true);
 
 		}
 
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutSongTags(int songId, [FromUri] string[] tags) {
+		public TagUsageForApiContract[] PutSongTags(int songId, TagBaseContract[] tags) {
 			
 			if (tags == null)
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
