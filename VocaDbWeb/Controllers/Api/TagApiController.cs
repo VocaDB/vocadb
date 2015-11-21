@@ -132,12 +132,14 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var ssl = WebHelper.IsSSL(Request);
-			var queryParams = new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, false, false);
-			var paging = new PagingProperties(start, maxResults, getTotalCount);
+			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, false, false),
+				new PagingProperties(start, maxResults, getTotalCount)) {
+					AllowAliases = allowAliases,
+					CategoryName = categoryName,
+					SortRule = sort ?? TagSortRule.Name
+			};
 
-			var tags = queries.Find(t => new TagForApiContract(t, thumbPersister, ssl, fields), 
-				queryParams, paging, 
-				allowAliases, categoryName, sort ?? TagSortRule.Name);
+			var tags = queries.Find(queryParams, fields, ssl);
 
 			return tags;
 
@@ -176,8 +178,10 @@ namespace VocaDb.Web.Controllers.Api {
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
 		public TagBaseContract[] GetTopTags(string categoryName = null) {
 
-			return queries.Find(t => new TagBaseContract(t), new CommonSearchParams(), new PagingProperties(0, 15, false), false, string.Empty, TagSortRule.UsageCount)
-				.Items.OrderBy(t => t.Name).ToArray();
+			return queries.Find(t => new TagBaseContract(t), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
+				SortRule = TagSortRule.UsageCount
+			})
+			.Items.OrderBy(t => t.Name).ToArray();
 
 		}
 

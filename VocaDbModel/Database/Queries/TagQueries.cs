@@ -172,37 +172,23 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<T> Find<T>(Func<Tag, T> fac, CommonSearchParams queryParams, PagingProperties paging, 
-			bool allowAliases = false, string categoryName = "", TagSortRule sortRule = TagSortRule.Name)
+		public PartialFindResult<T> Find<T>(Func<Tag, T> fac, TagQueryParams queryParams, bool onlyMinimalFields = false)
 			where T : class {
-
-			var textQuery = TagSearchTextQuery.Create(queryParams.Query, queryParams.NameMatchMode);
 
 			return HandleQuery(ctx => {
 
-				var query = ctx.Query()
-					.WhereHasName(textQuery)
-					.WhereAllowAliases(allowAliases)
-					.WhereHasCategoryName(categoryName);
+				var result = new TagSearch(ctx).Find(queryParams, onlyMinimalFields);
 
-				var tags = query
-					.OrderBy(sortRule)
-					.Paged(paging)
-					.ToArray();
-
-				var count = 0;
-
-				if (paging.GetTotalCount) {
-					
-					count = query.Count();
-
-				}
-
-				var result = tags.Select(fac).ToArray();
-
-				return new PartialFindResult<T>(result, count, queryParams.Query, false);
+				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(), result.TotalCount, queryParams.Common.Query, false);
 
 			});
+
+		}
+
+		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields, bool ssl) {
+
+			return Find(tag => new TagForApiContract(
+				tag, imagePersister, ssl, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
 
 		}
 

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service;
@@ -10,6 +11,8 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;
 
 namespace VocaDb.Web.Controllers
@@ -114,7 +117,8 @@ namespace VocaDb.Web.Controllers
 					return RedirectToAction("Featured", "SongList");
 
 				case EntryType.Tag:
-					var tags = tagQueries.Find(t => new { t.Id, t.Name }, new CommonSearchParams(textQuery, false, true, true), PagingProperties.FirstPage(2), true);
+					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, false, true, true), PagingProperties.FirstPage(2)) { AllowAliases = true },
+						TagOptionalFields.None, WebHelper.IsSSL(Request));
 					if (tags.Items.Length == 1) {
 						return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);
 					}

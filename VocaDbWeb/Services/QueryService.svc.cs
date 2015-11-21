@@ -198,8 +198,8 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public TagContract GetTagByName(string name) {
 
-			var tag = tagQueries.Find(t => new TagContract(t), new CommonSearchParams(TagSearchTextQuery.Create(name), false, false, true), 
-				new PagingProperties(0, 1, false), true).Items.FirstOrDefault();
+			var tag = tagQueries.Find(t => new TagContract(t), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, false, true),
+				new PagingProperties(0, 1, false)) { AllowAliases = true }).Items.FirstOrDefault();
 
 			return tag;
 

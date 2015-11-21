@@ -797,6 +797,8 @@
     <Compile Include="Service\Search\SearchTextQuery.cs" />
     <Compile Include="Service\Search\SongSearch\ParsedSongQuery.cs" />
     <Compile Include="Service\Search\SongSearch\SongListQueryParams.cs" />
+    <Compile Include="Service\Search\Tags\TagQueryParams.cs" />
+    <Compile Include="Service\Search\Tags\TagSearch.cs" />
     <Compile Include="Service\Search\Tags\TagSearchTextQuery.cs" />
     <Compile Include="Service\Search\User\FollowedArtistQueryParams.cs" />
     <Compile Include="Service\Security\HostCollection.cs" />
