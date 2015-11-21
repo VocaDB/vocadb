@@ -28,7 +28,7 @@
 		initPage();
 
 		var tagRepo = new vdb.repositories.TagRepository('@RootPath');
-		tagRepo.getByName('@Model.Name', "Description", function (contract) {
+		tagRepo.getById('@Model.Id', "AliasedTo,Description,Parent", function (contract) {
 			var viewModel = new vdb.viewModels.TagEditViewModel(contract);
 			ko.applyBindings(viewModel);
 		});
@@ -75,7 +75,7 @@
 	</div>
 	<div class="editor-field">
 		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "aliasedTo", "aliasedToName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false")
-		@Html.HiddenForKnockout(m => m.AliasedTo, "value: aliasedToName")
+		@Html.HiddenForKnockout(m => m.AliasedTo, "value: ko.toJSON(aliasedTo)")
 	</div>
 
 	<div class="editor-label">
@@ -83,7 +83,7 @@
 	</div>
 	<div class="editor-field">
 		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "parent", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false")
-		@Html.HiddenForKnockout(m => m.Parent, "value: parentName")
+		@Html.HiddenForKnockout(m => m.Parent, "value: ko.toJSON(parent)")
 	</div>
 
 	<div class="editor-label">

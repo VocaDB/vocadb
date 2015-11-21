@@ -8,23 +8,17 @@ module vdb.viewModels {
 
 		constructor(contract: dc.TagApiContract) {
 
-			this.aliasedToName = ko.observable(contract.aliasedToName);
+			this.aliasedTo = ko.observable(contract.aliasedTo);
 			this.categoryName = ko.observable(contract.categoryName);
 			this.description = ko.observable(contract.description);
+			this.id = contract.id;
 			this.name = contract.name;
-			this.parentName = ko.observable(contract.parentName);
+			this.parent = ko.observable(contract.parent);
 
 			this.validationError_needDescription = ko.computed(() => !this.description());
 
-			this.aliasedTo = ko.computed({
-				read: () => { return this.aliasedToName() ? { name: this.aliasedToName(), id: null } : null },
-				write: (val: dc.TagBaseContract) => this.aliasedToName(val ? val.name : null)
-			});
-
-			this.parent = ko.computed({
-				read: () => { return this.parentName() ? { name: this.parentName(), id: null } : null },
-				write: (val: dc.TagBaseContract) => this.parentName(val ? val.name : null)
-			});
+			this.aliasedToName = ko.computed(() => this.aliasedTo() ? this.aliasedTo().name : null);
+			this.parentName = ko.computed(() => this.parent() ? this.parent().name : null);
 
 			this.hasValidationErrors = ko.computed(() =>
 				this.validationError_needDescription()
@@ -32,19 +26,20 @@ module vdb.viewModels {
 
 		}
 
-		public aliasedTo: KnockoutComputed<dc.TagBaseContract>;
-		public aliasedToName: KnockoutObservable<string>;
+		public aliasedTo: KnockoutObservable<dc.TagBaseContract>;
+		public aliasedToName: KnockoutComputed<string>;
 		public categoryName: KnockoutObservable<string>;
 		public description: KnockoutObservable<string>;
 		public hasValidationErrors: KnockoutComputed<boolean>;
+		private id: number;
 		public name: string;
-		public parent: KnockoutComputed<dc.TagBaseContract>;
-		public parentName: KnockoutObservable<string>;
+		public parent: KnockoutObservable<dc.TagBaseContract>;
+		public parentName: KnockoutComputed<string>;
 		public submitting = ko.observable(false);
 		public validationExpanded = ko.observable(false);
 		public validationError_needDescription: KnockoutComputed<boolean>;
 
-		denySelf = (tag: dc.TagBaseContract) => (tag && tag.name !== this.name);
+		denySelf = (tag: dc.TagBaseContract) => (tag && tag.id !== this.id);
 
 		public submit = () => {
 			this.submitting(true);

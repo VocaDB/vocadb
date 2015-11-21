@@ -18,13 +18,15 @@ namespace VocaDb.Model.DataContracts.Tags {
 			bool ssl,			
 			TagOptionalFields optionalFields) {
 			
-			AliasedToName = tag.AliasedTo != null ? tag.AliasedTo.Name : null;
 			CategoryName = tag.CategoryName;
 			Id = tag.Id;
 			Name = tag.Name;
-			ParentName = tag.Parent != null ? tag.Parent.Name : null;
 			Status = tag.Status;
 			Version = tag.Version;
+
+			if (optionalFields.HasFlag(TagOptionalFields.AliasedTo) && tag.AliasedTo != null) {
+				AliasedTo = new TagBaseContract(tag.AliasedTo);
+			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
 				Description = tag.Description;
@@ -34,10 +36,14 @@ namespace VocaDb.Model.DataContracts.Tags {
 				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl);
 			}
 
+			if (optionalFields.HasFlag(TagOptionalFields.Parent) && tag.Parent != null) {
+				Parent = new TagBaseContract(tag.Parent);
+			}
+
 		}
 
 		[DataMember]
-		public string AliasedToName { get; set; }
+		public TagBaseContract AliasedTo { get; set; }
 
 		[DataMember]
 		public string CategoryName { get; set; }
@@ -55,7 +61,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public string Name { get; set; }
 
 		[DataMember]
-		public string ParentName { get; set; }
+		public TagBaseContract Parent { get; set; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -70,8 +76,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 	public enum TagOptionalFields {
 
 		None		= 0,
-		Description = 1,
-		MainPicture = 2,
+		AliasedTo	= 1,
+		Description = 2,
+		MainPicture = 4,
+		Parent		= 8
 
 	}
 

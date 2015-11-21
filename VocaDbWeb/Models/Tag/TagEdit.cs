@@ -5,9 +5,11 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Tag {
 
+	[PropertyModelBinder]
 	public class TagEdit {
 
 		public TagEdit() {}
@@ -16,11 +18,11 @@ namespace VocaDb.Web.Models.Tag {
 
 			ParamIs.NotNull(() => contract);
 
-			AliasedTo = contract.AliasedTo?.Name;
+			AliasedTo = contract.AliasedTo;
 			CategoryName = contract.CategoryName;
 			Description = contract.Description;
 			Name = contract.Name;
-			Parent = contract.Parent?.Name;
+			Parent = contract.Parent;
 			Status = contract.Status;
 			Thumb = contract.Thumb;
 
@@ -31,9 +33,8 @@ namespace VocaDb.Web.Models.Tag {
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
-		[Display(Name = "Aliased to")]
-		[StringLength(30)]
-		public string AliasedTo { get; set; }
+		[FromJson]
+		public TagBaseContract AliasedTo { get; set; }
 
 		[Display(Name = "Category")]
 		[StringLength(30)]
@@ -51,7 +52,8 @@ namespace VocaDb.Web.Models.Tag {
 
 		public string Name { get; set; }
 
-		public string Parent { get; set; }
+		[FromJson]
+		public TagBaseContract Parent { get; set; }
 
 		public EntryStatus Status { get; set; }
 
@@ -75,10 +77,10 @@ namespace VocaDb.Web.Models.Tag {
 			return new TagForEditContract {
 				Id = this.Id,
 				Name = this.Name,
-				AliasedTo = new TagBaseContract { Name = this.AliasedTo ?? string.Empty },
+				AliasedTo = this.AliasedTo,
 				CategoryName = this.CategoryName ?? string.Empty,
 				Description = this.Description ?? string.Empty,
-				Parent = new TagBaseContract { Name = this.Parent ?? string.Empty },
+				Parent = this.Parent,
 				Status = this.Status,
 				UpdateNotes = this.UpdateNotes ?? string.Empty
 			};

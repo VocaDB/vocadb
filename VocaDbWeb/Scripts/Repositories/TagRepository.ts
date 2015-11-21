@@ -7,6 +7,11 @@ module vdb.repositories {
 		
 		constructor(private baseUrl: string) { }
 
+		public getById = (id: number, fields: string, callback?: (result: dc.TagApiContract) => void) => {
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
+			$.getJSON(url, { fields: fields }, callback);
+		}
+
 		public getByName = (name: string, fields: string, callback?: (result: dc.TagApiContract) => void) => {
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/byName/" + name);
 			$.getJSON(url, { fields: fields }, callback);

@@ -46,6 +46,24 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Gets a tag by ID.
+		/// </summary>
+		/// <param name="id">Tag ID (required).</param>
+		/// <param name="fields">
+		/// List of optional fields (optional). 
+		/// </param>
+		/// <example>http://vocadb.net/api/tags/1</example>
+		/// <returns>Tag data.</returns>
+		[Route("{id:int}")]
+		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None) {
+
+			var tag = queries.GetTag(id, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));
+
+			return tag;
+
+		}
+
+		/// <summary>
 		/// Gets a tag by name.
 		/// </summary>
 		/// <param name="name">Tag name (required).</param>
