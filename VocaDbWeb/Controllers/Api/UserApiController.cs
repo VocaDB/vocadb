@@ -451,6 +451,15 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("{id:int}/songs-per-genre")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[CacheOutput(ClientTimeSpan = Constants.SecondsInADay)]
+		public Tuple<string, int>[] GetSongsPerGenre(int id) {
+
+			return queries.GetRatingsByGenre(id);
+
+		}
+
 		/// <summary>
 		/// Gets tags for a specific song and information whether the logged in user has voted on those tags.
 		/// </summary>

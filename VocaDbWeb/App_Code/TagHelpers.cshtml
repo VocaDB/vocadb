@@ -7,33 +7,6 @@
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper TagGrid(IEnumerable<TagWithImageContract> tags, int columns) {
-	
-	<table>
-		@{ int i = 0; }
-	
-		@foreach (var tag in tags) {
-				if (i % columns == 0) {
-				@Html.Raw("<tr>")
-				}
-			<td>
-				@TagIconLink(tag)
-			</td>
-			<td>
-				@TagLink(tag.Name)
-			</td>
-			{ i++; }
-			if (i % columns == 0) {
-				@Html.Raw("</tr>")
-			}
-		}
-		@if (i % columns != 0) {
-			@Html.Raw("</tr>")
-		}
-	</table>
-			
-}
-
 @helper TagIconLink(TagWithImageContract tag) {
 	var smallThumbUrl = Url.EntryImageOld(tag.Thumb, ImageSize.SmallThumb);
 	if (!string.IsNullOrEmpty(smallThumbUrl)) {
@@ -47,8 +20,8 @@
 	@Html.ActionLink(tagName, "Details", "Tag", new { id = tagName }, null)	
 }
 
-@helper TagList(string[] tagNames) {
-	@Html.LinkList(tagNames, tagName => Html.ActionLink(tagName, "Details", "Tag", new System.Web.Routing.RouteValueDictionary { { "id", tagName } }, null))
+@helper TagList(TagBaseContract[] tagNames) {
+	@Html.LinkList(tagNames, tag => Html.ActionLink(tag.Name, "DetailsById", "Tag", new { id = tag.Id, slug = tag.UrlSlug }, null))
 }
 
 @helper TagUsagesManageTable(EntryType entryType, TagUsageWithVotesContract[] tagUsages) {

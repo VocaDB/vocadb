@@ -25,7 +25,7 @@ module vdb.viewModels.user {
 
 		public getRatingsByGenre = (callback: (data: HighchartsOptions) => void) => {
 
-			var url = this.urlMapper.mapRelative('/User/SongsPerGenre/' + this.userId);
+			var url = this.urlMapper.mapRelative('/api/users/' + this.userId +  '/songs-per-genre/');
 			$.getJSON(url, data => {
 				callback(vdb.helpers.HighchartsHelper.simplePieChart(null, "Songs", data));
 			});
