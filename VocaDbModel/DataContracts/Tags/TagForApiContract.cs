@@ -22,6 +22,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Id = tag.Id;
 			Name = tag.Name;
 			Status = tag.Status;
+			UrlSlug = tag.Name;
 			Version = tag.Version;
 
 			if (optionalFields.HasFlag(TagOptionalFields.AliasedTo) && tag.AliasedTo != null) {
@@ -66,6 +67,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
+
+		[DataMember]
+		public string UrlSlug { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }

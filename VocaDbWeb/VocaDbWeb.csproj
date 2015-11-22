@@ -2240,6 +2240,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchCategoryBaseViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SongSearchViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\TagFilter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\TagSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ServerSidePagingViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongCreateViewModel.ts" />

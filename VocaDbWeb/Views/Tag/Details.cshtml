@@ -115,19 +115,19 @@
 			
 			@if (Model.ArtistCount > 0) {
 				<div>
-					@Html.ActionLink(R.AllArtists + " (" + Model.ArtistCount + ")", "Index", "Search", UrlMapper.Search.Artists(tag: Model.Name), null)
+					@Html.ActionLink(R.AllArtists + " (" + Model.ArtistCount + ")", "Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id), null)
 				</div>
 			}
 			
 			@if (Model.AlbumCount > 0) {
 				<div>
-					@Html.ActionLink(R.AllAlbums + " (" + Model.AlbumCount + ")", "Index", "Search", UrlMapper.Search.Albums(tag: Model.Name), null)
+					@Html.ActionLink(R.AllAlbums + " (" + Model.AlbumCount + ")", "Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id), null)
 				</div>
 			}
 			
 			@if (Model.SongCount > 0) {
 				<div>
-					@Html.ActionLink(R.AllSongs + " (" + Model.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tag: Model.Name), null)
+					@Html.ActionLink(R.AllSongs + " (" + Model.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id), null)
 				</div>
 			}
 
@@ -137,9 +137,9 @@
 
 @if (Model.Artists.Any()) {
 	<div class="well well-transparent">
-		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tag: Model.Name)))
+		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id)))
 		<h3>
-			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Artists(tag: Model.Name))">
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))">
 				@R.TopArtists
 				<small>(@Model.ArtistCount @SharedRes.Total)</small>
 			</a>
@@ -150,9 +150,9 @@
 
 @if (Model.Albums.Any()) {
 	<div class="well well-transparent">
-		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tag: Model.Name)))
+		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id)))
 		<h3>
-			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Albums(tag: Model.Name))">
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))">
 				@R.TopAlbums
 				<small>(@Model.AlbumCount @SharedRes.Total)</small>
 			</a>							
@@ -163,9 +163,9 @@
 
 @if (Model.Songs.Any()) {
 	<div class="well well-transparent">
-		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tag: Model.Name)))
+		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id)))
 		<h3>
-			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Songs(tag: Model.Name))">
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))">
 				@R.TopSongs
 				<small>(@Model.SongCount @SharedRes.Total)</small>
 			</a>

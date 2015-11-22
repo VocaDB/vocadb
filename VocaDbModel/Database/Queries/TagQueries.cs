@@ -350,6 +350,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public int GetTagIdByName(string name) {
+			return GetTag(name, t => t.Id);
+		}
+
 		public string GetTagNameById(int id) {
 			
 			return HandleQuery(ctx => {

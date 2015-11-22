@@ -9,7 +9,7 @@ module vdb.repositories {
 
 		public getById = (id: number, fields: string, callback?: (result: dc.TagApiContract) => void) => {
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
-			$.getJSON(url, { fields: fields }, callback);
+			$.getJSON(url, { fields: fields || undefined }, callback);
 		}
 
 		public getByName = (name: string, fields: string, callback?: (result: dc.TagApiContract) => void) => {

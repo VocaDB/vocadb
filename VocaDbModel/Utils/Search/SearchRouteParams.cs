@@ -36,6 +36,8 @@ namespace VocaDb.Model.Utils.Search {
 
 		public string tag { get; set; }
 
+		public int? tagId { get; set; }
+
 	}
 
 	public class SearchRouteParamsFactory {
@@ -44,18 +46,18 @@ namespace VocaDb.Model.Utils.Search {
 			get { return new SearchRouteParamsFactory(); }
 		}
 
-		public SearchRouteParams Albums(string tag = null) {
+		public SearchRouteParams Albums(int? tagId = null) {
 			
 			return new SearchRouteParams(EntryType.Album) {
-				tag = tag,
+				tagId = tagId,
 			};
 
 		}
 
-		public SearchRouteParams Artists(string tag = null) {
+		public SearchRouteParams Artists(int? tagId = null) {
 			
 			return new SearchRouteParams(EntryType.Artist) {
-				tag = tag,
+				tagId = tagId,
 			};
 
 		}
@@ -64,11 +66,12 @@ namespace VocaDb.Model.Utils.Search {
 			int? artistId = null, 
 			SongType? songType = null, 
 			object sort = null, 
-			string tag = null) {
+			int? tagId = null) {
 			
 			return new SearchRouteParams(EntryType.Song) {
 				artistId = artistId, songType =  songType, 
-				sort = sort, tag = tag,
+				sort = sort,
+				tagId = tagId
 			};
 
 		}

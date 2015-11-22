@@ -52,6 +52,8 @@ namespace VocaDb.Web.Models.Search {
 
 		public string Tag { get; set; }
 
+		public int[] TagId { get; set; }
+
 		public SongType? SongType { get; set; }
 
 		public string Sort { get; set; }

@@ -35,7 +35,7 @@ module vdb.viewModels.search {
 				this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 			}
 
-			this.tagNames = ko.computed(() => _.map(this.tags(), t => t.name));
+			this.tagNames = ko.computed(() => _.map(this.tags(), t => t.name()));
 
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 
@@ -83,12 +83,12 @@ module vdb.viewModels.search {
 		};
 
 		public selectTag = (tag: dc.TagBaseContract) => {
-			this.tags(tag ? [tag] : []);
+			this.tags(tag ? [ new TagFilter(tag.id, tag.name, tag.urlSlug) ] : []);
 		}
 
 		public showTags: KnockoutObservable<boolean>;
 
-		public tags: KnockoutObservableArray<dc.TagBaseContract>;
+		public tags: KnockoutObservableArray<TagFilter>;
 
 		public tagNames: KnockoutComputed<string[]>;
 

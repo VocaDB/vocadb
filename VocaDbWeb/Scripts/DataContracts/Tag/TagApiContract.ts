@@ -19,6 +19,8 @@ module vdb.dataContracts {
 
 		status: string;
 
+		urlSlug?: string;
+
 	}
 
 } 

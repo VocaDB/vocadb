@@ -90,7 +90,7 @@
 				<!-- ko foreach: tags -->
 					<div class="control-group">
 						<div style="display: inline-block;" class="input-append input-prepend">
-							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag_contract($data) }">
+							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag(id, urlSlug()) }">
 								<i class="icon icon-info-sign"></i>
 							</a>
 							<div class="input-append">
@@ -316,7 +316,7 @@
 			var cultureCode = '@UICulture';
 			var languageSelection = '@UserContext.LanguagePreference';
 			var query = @Html.Raw(JsonHelpers.Serialize(Model.Filter));
-			var tag = @Html.Raw(JsonHelpers.Serialize(Model.Tag));
+			var tagIds = @ToJS(Model.TagId);
 			var searchType = '@Model.SearchTypeName';
 			var sort = '@Model.Sort';
 			var artistId = @ToJS(Model.ArtistId);
@@ -351,7 +351,7 @@
 			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo, tagRepo, resourceRepo,
 				userRepo,
 				unknownPictureUrl,
-				languageSelection, loggedUserId, cultureCode, searchType, query, tag, sort,
+				languageSelection, loggedUserId, cultureCode, searchType, query, tagIds, sort,
 				artistId,
 				childVoicebanks,
 				artistType, discType, songType,

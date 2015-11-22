@@ -164,6 +164,10 @@ namespace VocaDb.Web.Controllers
 
 			}
 
+			if (!string.IsNullOrEmpty(viewModel.Tag)) {
+				viewModel.TagId = new[] { tagQueries.GetTagIdByName(viewModel.Tag) };
+			}
+
 			viewModel.Filter = filter;
 
 			SetSearchEntryType(viewModel.SearchType);

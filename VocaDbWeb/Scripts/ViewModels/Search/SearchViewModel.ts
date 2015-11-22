@@ -16,7 +16,7 @@ module vdb.viewModels.search {
 			unknownPictureUrl: string,
 			languageSelection: string, loggedUserId: number, cultureCode: string, searchType: string,
 			searchTerm: string,
-			tag: string,
+			tagIds: number[],
 			sort: string,
 			artistId: number[],
 			childVoicebanks: boolean,
@@ -71,14 +71,14 @@ module vdb.viewModels.search {
 
 			this.tagSearchViewModel = new TagSearchViewModel(this, tagRepo);
 
-			if (tag || artistId != null || artistType || albumType || songType || onlyWithPVs != null || since || minScore)
+			if (tagIds != null || artistId != null || artistType || albumType || songType || onlyWithPVs != null || since || minScore)
 				this.showAdvancedFilters(true);
 
 			if (searchType)
 				this.searchType(searchType);
 
-			if (tag)
-				this.addTag({ name: tag, id: null });
+			if (tagIds)
+				this.addTags(tagIds, tagRepo);
 
 			if (pageSize)
 				this.pageSize(pageSize);
@@ -127,7 +127,7 @@ module vdb.viewModels.search {
 		public showAdvancedFilters = ko.observable(false);
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public searchType = ko.observable(SearchType.Anything);
-		public tags = ko.observableArray<dc.TagBaseContract>([]);
+		public tags = ko.observableArray<TagFilter>([]);
 
 		public showAnythingSearch: KnockoutComputed<boolean>;
 		public showArtistSearch: KnockoutComputed<boolean>;
@@ -140,7 +140,33 @@ module vdb.viewModels.search {
 
 		public isUniversalSearch = ko.computed(() => this.searchType() === SearchType.Anything);
 
-		public addTag = (tag: dc.TagBaseContract) => this.tags.push(tag);
+		public addTag = (tag: dc.TagBaseContract) => this.tags.push(new TagFilter(tag.id, tag.name, tag.urlSlug));
+
+		public addTags = (
+			selectedTagIds: number[],
+			tagRepo: rep.TagRepository) => {
+
+			if (!selectedTagIds)
+				return;
+
+			var filters = _.map(selectedTagIds, a => new TagFilter(a));
+			ko.utils.arrayPushAll(this.tags, filters);
+
+			if (!tagRepo)
+				return;
+
+			_.forEach(filters, newTag => {
+
+				var selectedTagId = newTag.id;
+
+				tagRepo.getById(selectedTagId, null, tag => {
+					newTag.name(tag.name);
+					newTag.urlSlug(tag.urlSlug);
+				});
+
+			});
+
+		};
 
 		public currentCategoryViewModel = (): ISearchCategoryBaseViewModel => {
 			
