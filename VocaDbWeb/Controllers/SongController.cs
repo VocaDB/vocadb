@@ -259,6 +259,9 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult PostMedia(HttpPostedFileBase file) {
 
+			if (file == null || file.ContentLength == 0)
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "File cannot be empty");
+
 			PermissionContext.VerifyPermission(PermissionToken.UploadMedia);
 
 			if (!LocalFileManager.MimeTypes.Contains(file.ContentType)) {
