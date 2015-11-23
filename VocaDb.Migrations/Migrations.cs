@@ -3,6 +3,40 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	/// <summary>
+	/// Replace index in tag usages tables with a unique index of entry + tag pair (since that combination is unique).
+	/// </summary>
+	[Migration(201511232100)]
+	public class TagUsagesUniqueIndexes : Migration {
+
+		private void CreateIndex(string table, string indexName, string entityColumn) {
+			Delete.Index(indexName).OnTable(table);
+			Create.Index(indexName).OnTable(table).OnColumn(entityColumn).Ascending().OnColumn("Tag").Ascending().WithOptions().Unique();
+		}
+
+		private void RevertIndex(string table, string indexName, string entityColumn) {
+			Delete.Index(indexName).OnTable(table);
+			Create.Index(indexName).OnTable(table).OnColumn(entityColumn).Ascending();
+		}
+
+		public override void Up() {
+
+			CreateIndex(TableNames.SongTagUsages, "IX_SongTagUsages", "Song");
+			CreateIndex(TableNames.AlbumTagUsages, "IX_AlbumTagUsages", "Album");
+			CreateIndex(TableNames.ArtistTagUsages, "IX_ArtistTagUsages", "Artist");
+
+		}
+
+		public override void Down() {
+
+			RevertIndex(TableNames.SongTagUsages, "IX_SongTagUsages", "Song");
+			RevertIndex(TableNames.AlbumTagUsages, "IX_AlbumTagUsages", "Album");
+			RevertIndex(TableNames.ArtistTagUsages, "IX_ArtistTagUsages", "Artist");
+
+		}
+
+	}
+
 	[Migration(201511151730)]
 	public class ReleaseEventSeriesPicture : AutoReversingMigration {
 
