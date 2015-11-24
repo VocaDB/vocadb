@@ -128,6 +128,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="query">Artist name query (optional).</param>
 		/// <param name="artistTypes">Filtered artist type (optional).</param>
+		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
 		/// <param name="tag">Filter by tag (optional).</param>
 		/// <param name="followedByUserId">Filter by user following the artists. By default there is no filtering.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
@@ -151,6 +152,7 @@ namespace VocaDb.Web.Controllers.Api {
 			string query = "", 
 			string artistTypes = null,
 			[FromUri] string[] tag = null,
+			[FromUri] int[] tagId = null,
 			int? followedByUserId = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -165,6 +167,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, preferAccurateMatches) {
 				Tags = tag,
+				TagIds = tagId,
 				UserFollowerId = followedByUserId ?? 0
 			};
 			param.Common.EntryStatus = status;

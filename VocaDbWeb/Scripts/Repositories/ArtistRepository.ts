@@ -54,14 +54,14 @@ module vdb.repositories {
 		};
 
 		public getList = (paging: dc.PagingProperties, lang: string, query: string, sort: string,
-			artistTypes: string, tags: string[], followedByUserId: number, fields: string, status: string, callback) => {
+			artistTypes: string, tags: number[], followedByUserId: number, fields: string, status: string, callback) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
 				artistTypes: artistTypes,
-				tag: tags,
+				tagId: tags,
 				followedByUserId: followedByUserId,
 				status: status
 			};

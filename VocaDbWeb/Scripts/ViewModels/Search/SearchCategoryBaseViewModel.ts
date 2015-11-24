@@ -35,7 +35,7 @@ module vdb.viewModels.search {
 				this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 			}
 
-			this.tagNames = ko.computed(() => _.map(this.tags(), t => t.name()));
+			this.tagIds = ko.computed(() => _.map(this.tags(), t => t.id));
 
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 
@@ -44,7 +44,7 @@ module vdb.viewModels.search {
 		public draftsOnly: KnockoutObservable<boolean>;
 
 		// Method for loading a page of results.
-		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tags: string[],
+		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tags: number[],
 			status: string, callback: (result: any) => void) => void;
 
 		public loading = ko.observable(true); // Currently loading for data
@@ -90,7 +90,7 @@ module vdb.viewModels.search {
 
 		public tags: KnockoutObservableArray<TagFilter>;
 
-		public tagNames: KnockoutComputed<string[]>;
+		public tagIds: KnockoutComputed<number[]>;
 
 		// Update results loading the first page and updating total number of items.
 		// Commonly this is done after changing the filters or sorting.
@@ -114,7 +114,7 @@ module vdb.viewModels.search {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
-			this.loadResults(pagingProperties, this.searchTerm(), this.tagNames(),
+			this.loadResults(pagingProperties, this.searchTerm(), this.tagIds(),
 				this.draftsOnly() ? "Draft" : null, (result: any) => {
 
 					if (this.showTags()) {

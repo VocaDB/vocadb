@@ -51,6 +51,8 @@ namespace VocaDb.Model.Service.Search.User {
 
 		public string Tag { get; set; }
 
+		public int TagId { get; set; }
+
 		public SearchTextQuery TextQuery { get; set; }
 
 		/// <summary>

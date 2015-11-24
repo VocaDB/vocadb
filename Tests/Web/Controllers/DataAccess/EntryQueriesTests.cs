@@ -21,6 +21,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private FakeAlbumRepository repository;
 		private EntryQueries queries;
+		private Tag tag;
 
 		private EntryForApiContract AssertHasEntry(PartialFindResult<EntryForApiContract> result, string name, EntryType entryType) {
 			
@@ -34,7 +35,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private PartialFindResult<EntryForApiContract> CallGetList(
 			string query = null, 
-			string[] tag = null,
+			int[] tag = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = 10, bool getTotalCount = true,
 			NameMatchMode nameMatchMode = NameMatchMode.Words,
@@ -42,7 +43,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			bool ssl = false) {
 			
-			return queries.GetList(query, tag, status, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang, ssl);
+			return queries.GetList(query, tag, null, status, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang, ssl);
 
 		}
 
@@ -57,7 +58,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var group = CreateEntry.Artist(ArtistType.OtherGroup, name: "1640mP");
 			var artist = CreateEntry.Producer(name: "40mP");
-			var tag = new Tag("pop_rock");
+			tag = new Tag("pop_rock");
 			artist.Tags.Usages.Add(new ArtistTagUsage(artist, tag));
 			var artist2 = CreateEntry.Producer(name: "Tripshots");
 			var album = CreateEntry.Album(name: "40mP Piano Arrange Album");
@@ -113,7 +114,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void List_FilterByTag() {
 			
-			var result = CallGetList(tag: new [] { "pop_rock" });
+			var result = CallGetList(tag: new [] { tag.Id });
 
 			Assert.AreEqual(1, result.TotalCount, "TotalCount");
 			AssertHasEntry(result, "40mP", EntryType.Artist);

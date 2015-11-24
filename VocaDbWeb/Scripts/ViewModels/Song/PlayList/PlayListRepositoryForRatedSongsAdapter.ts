@@ -10,7 +10,7 @@ module vdb.viewModels.songs {
 			private userId: number,
 			private query: KnockoutObservable<string>,
 			private sort: KnockoutObservable<string>,
-			private tag: KnockoutObservable<string>,
+			private tag: KnockoutObservable<number>,
 			private artistId: KnockoutObservable<number>,
 			private childVoicebanks: KnockoutObservable<boolean>,
 			private rating: KnockoutObservable<string>,

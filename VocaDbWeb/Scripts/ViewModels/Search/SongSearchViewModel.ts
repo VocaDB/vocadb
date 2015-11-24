@@ -81,7 +81,7 @@ module vdb.viewModels.search {
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
-				this.tagNames, this.artistIds, this.artistParticipationStatus, this.childVoicebanks, this.pvsOnly, this.since,
+				this.tagIds, this.artistIds, this.artistParticipationStatus, this.childVoicebanks, this.pvsOnly, this.since,
 				this.minScore,
 				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly);
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,

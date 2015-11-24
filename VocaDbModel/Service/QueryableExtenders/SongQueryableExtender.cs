@@ -230,6 +230,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> WhereHasTags(this IQueryable<Song> query, int[] tagId) {
+
+			return query.WhereHasTags<Song, SongTagUsage>(tagId);
+
+		}
+
 		public static IQueryable<Song> WhereHasType(this IQueryable<Song> query, SongType[] songTypes) {
 
 			if (!songTypes.Any())

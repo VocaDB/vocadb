@@ -93,6 +93,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<T> WhereSongHasTag<T>(this IQueryable<T> query, int tagId)
+			where T : ISongLink {
+
+			if (tagId == 0)
+				return query;
+
+			return query.Where(s => s.Song.Tags.Usages.Any(t => t.Tag.Id == tagId));
+
+		}
+
 	}
 
 }

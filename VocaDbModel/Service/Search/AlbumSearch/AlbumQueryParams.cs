@@ -57,6 +57,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		public string[] Tags { get; set; }
 
+		public int[] TagIds { get; set; }
+
 	}
 
 }

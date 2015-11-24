@@ -79,6 +79,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="userId">ID of the user whose albums are to be browsed.</param>
 		/// <param name="query">Album name query (optional).</param>
+		/// <param name="tagId">Filter by tag Id (optional).</param>
 		/// <param name="tag">Filter by tag (optional).</param>
 		/// <param name="artistId">Filter by album artist (optional).</param>
 		/// <param name="purchaseStatuses">
@@ -98,7 +99,8 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{userId:int}/albums")]
 		public PartialFindResult<AlbumForUserForApiContract> GetAlbumCollection(
 			int userId,
-			string query = "", 
+			string query = "",
+			int? tagId = null,
 			string tag = null,
 			int? artistId = null,
 			[FromUri] PurchaseStatuses? purchaseStatuses = null,
@@ -121,6 +123,7 @@ namespace VocaDb.Web.Controllers.Api {
 				TextQuery = textQuery,
 				ReleaseEventName = releaseEventName,
 				Sort = sort ?? AlbumSortRule.Name,
+				TagId = tagId ?? 0,
 				Tag = tag
 			};
 
@@ -313,6 +316,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="userId">ID of the user whose songs are to be browsed.</param>
 		/// <param name="query">Song name query (optional).</param>
+		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
 		/// <param name="tag">Filter by tag (optional).</param>
 		/// <param name="artistId">Filter by song artist (optional).</param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
@@ -333,8 +337,9 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{userId:int}/ratedSongs")]
 		public PartialFindResult<RatedSongForUserForApiContract> GetRatedSongs(
 			int userId,
-			string query = "", 
-			string tag = null,
+			string query = "",
+			string tag = null, 
+			int? tagId = null,
 			int? artistId = null,
 			bool childVoicebanks = false,
 			SongVoteRating? rating = null,
@@ -359,7 +364,8 @@ namespace VocaDb.Web.Controllers.Api {
 				GroupByRating = groupByRating,
 				PVServices = pvServices,
 				SonglistId = songListId ?? 0,
-				Tag = tag
+				TagId = tagId ?? 0,
+                Tag = tag
 			};
 
 			var songs = queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));

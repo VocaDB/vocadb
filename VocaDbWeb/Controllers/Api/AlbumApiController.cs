@@ -119,6 +119,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="discTypes">
 		/// Disc type. By default nothing. Possible values are Album, Single, EP, SplitAlbum, Compilation, Video, Other. Note: only one type supported for now.
 		/// </param>
+		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
 		/// <param name="tag">Filter by tag (optional). This filter can be specified multiple times.</param>
 		/// <param name="artistId">Filter by artist Id (optional).</param>
 		/// <param name="artistParticipationStatus">
@@ -158,6 +159,7 @@ namespace VocaDb.Web.Controllers.Api {
 			string query = "", 
 			DiscType discTypes = DiscType.Unknown,
 			[FromUri] string[] tag = null,
+			[FromUri] int[] tagId = null,
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
@@ -179,6 +181,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches) {
 				Tags = tag,
+				TagIds = tagId,
 				ArtistIds = artistId,
 				ArtistParticipationStatus = artistParticipationStatus,
 				ChildVoicebanks = childVoicebanks,

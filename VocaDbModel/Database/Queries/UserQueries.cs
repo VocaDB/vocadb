@@ -675,6 +675,7 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereHasCollectionStatus(queryParams.FilterByStatus)
 					.WhereHasArtist(queryParams.ArtistId)
 					.WhereHasReleaseEventName(queryParams.ReleaseEventName)
+					.WhereAlbumHasTag(queryParams.TagId)
 					.WhereAlbumHasTag(queryParams.Tag);
 
 				var albums = query
@@ -769,6 +770,7 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereSongHasArtist(queryParams.ArtistId, queryParams.ChildVoicebanks)
 					.WhereHasRating(queryParams.FilterByRating)
 					.WhereSongIsInList(queryParams.SonglistId)
+					.WhereSongHasTag(queryParams.TagId)
 					.WhereSongHasTag(queryParams.Tag)
 					.WhereSongHasPVService(queryParams.PVServices);
 

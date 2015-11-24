@@ -35,6 +35,8 @@ namespace VocaDb.Model.Service.Search.User {
 
 		public string Tag { get; set; }
 
+		public int TagId { get; set; }
+
 		/// <summary>
 		/// Id of the user whose albums to get.
 		/// </summary>
