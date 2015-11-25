@@ -130,7 +130,7 @@ namespace VocaDb.Web.Controllers.Api {
 			TagSortRule? sort = null,
 			TagOptionalFields fields = TagOptionalFields.None) {
 			
-			maxResults = Math.Min(maxResults, absoluteMax);
+			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? absoluteMax : int.MaxValue);
 			var ssl = WebHelper.IsSSL(Request);
 			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, false, false),
 				new PagingProperties(start, maxResults, getTotalCount)) {

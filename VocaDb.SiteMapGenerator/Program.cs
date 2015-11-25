@@ -7,6 +7,7 @@ using VocaDb.SiteMapGenerator.Sitemap;
 using VocaDb.SiteMapGenerator.VocaDb;
 
 namespace VocaDb.SiteMapGenerator {
+
 	class Program {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -26,11 +27,11 @@ namespace VocaDb.SiteMapGenerator {
 			log.Info("Generating sitemap");
 
 			var generator = new SitemapGenerator(config.SiteRootUrl, config.SitemapRootUrl);
-			generator.Generate(config.OutFolder, new Dictionary<EntryType, IEnumerable<object>> {
-				{ EntryType.Artist, artists.Cast<object>() },
-				{ EntryType.Album, albums.Cast<object>() },
-				{ EntryType.Song, songs.Cast<object>() },
-				{ EntryType.Tag, tags },
+			generator.Generate(config.OutFolder, new Dictionary<EntryType, IEnumerable<EntryReference>> {
+				{ EntryType.Artist, artists.Select(e => new EntryReference(e)) },
+				{ EntryType.Album, albums.Select(e => new EntryReference(e)) },
+				{ EntryType.Song, songs.Select(e => new EntryReference(e)) },
+				{ EntryType.Tag, tags.Items.Select(e => new EntryReference(e.Id, e.UrlSlug)) },
 			});
 
 		}

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NLog;
+using VocaDb.SiteMapGenerator.VocaDb.DataContracts;
 
 namespace VocaDb.SiteMapGenerator.VocaDb {
 
@@ -59,9 +60,9 @@ namespace VocaDb.SiteMapGenerator.VocaDb {
 			return await GetEntries<int[]>(string.Format("{0}api/songs/ids", apiRoot));
 		}
 
-		public async Task<string[]> GetTags() {
+		public async Task<PartialFindResult<TagBaseContract>> GetTags() {
 			log.Info("Getting tags");
-			return await GetEntries<string[]>(string.Format("{0}api/tags/names?maxResults=100000&allowAliases=false", apiRoot));
+			return await GetEntries<PartialFindResult<TagBaseContract>>(string.Format("{0}api/tags?maxResults=100000&allowAliases=false", apiRoot));
 		}
 
 	}

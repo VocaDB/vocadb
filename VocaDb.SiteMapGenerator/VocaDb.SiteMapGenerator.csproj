@@ -60,10 +60,13 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Sitemap\SitemapGenerator.cs" />
+    <Compile Include="VocaDb\DataContracts\PartialFindResult.cs" />
+    <Compile Include="VocaDb\DataContracts\TagBaseContract.cs" />
     <Compile Include="VocaDb\EntryIdContract.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VocaDb\EntryType.cs" />
+    <Compile Include="VocaDb\EntryReference.cs" />
     <Compile Include="VocaDb\VocaDbClient.cs" />
   </ItemGroup>
   <ItemGroup>
