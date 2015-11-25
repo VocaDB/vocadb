@@ -1,27 +1,16 @@
 ﻿@using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Tags
 @using VocaDb.Model.Domain
-@using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Security
-@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper TagIconLink(TagWithImageContract tag) {
-	var smallThumbUrl = Url.EntryImageOld(tag.Thumb, ImageSize.SmallThumb);
-	if (!string.IsNullOrEmpty(smallThumbUrl)) {
-		<a href="@Url.Action("Details", "Tag", new { id = tag.Name })">
-			<img src="@smallThumbUrl" alt="Thumb" class="coverPicThumb" />
-		</a>
-	}
-}
-
-@helper TagLink(string tagName) {
-	@Html.ActionLink(tagName, "Details", "Tag", new { id = tagName }, null)	
+@helper TagLink(TagBaseContract tag) {
+	@Html.ActionLink(tag.Name, "DetailsById", "Tag", new { id = tag.Id, slug = tag.UrlSlug }, null)
 }
 
 @helper TagList(TagBaseContract[] tagNames) {
-	@Html.LinkList(tagNames, tag => Html.ActionLink(tag.Name, "DetailsById", "Tag", new { id = tag.Id, slug = tag.UrlSlug }, null))
+	@Html.LinkListHtml(tagNames, TagLink)
 }
 
 @helper TagUsagesManageTable(EntryType entryType, TagUsageWithVotesContract[] tagUsages) {
@@ -44,7 +33,7 @@
 		<tbody>
 			@foreach (var usage in tagUsages) {
 				<tr>
-					<td>@TagLink(usage.Tag.Name)</td>
+					<td>@TagLink(usage.Tag)</td>
 					<td>@usage.Count</td>
 					@if (Login.CanManageUsers) {
 						<td>

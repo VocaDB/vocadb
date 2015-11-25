@@ -275,6 +275,12 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
+		public static MvcHtmlString LinkListHtml<T>(this HtmlHelper htmlHelper, IEnumerable<T> list, Func<T, IHtmlString> linkFunc) {
+
+			return StringHelper.Join(", ", list.Select(linkFunc));
+
+		}
+
 		public static MvcHtmlString SongTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, SongType>> expression, object htmlAttributes = null, object selectedValue = null) {
 
