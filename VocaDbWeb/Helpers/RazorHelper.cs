@@ -15,7 +15,7 @@ namespace VocaDb.Web.Helpers {
 
 				var routeData = new RouteData();
 				routeData.Values.Add("controller", controllerName);
-				var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, request.RequestUri.ToString(), null), new HttpResponse(null))), routeData, new HelpController());
+				var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, request.RequestUri.ToString(), null), new HttpResponse(null))), routeData, new HelpController(null));
 
 				var razorViewEngine = new RazorViewEngine();
 				var razorViewResult = razorViewEngine.FindPartialView(fakeControllerContext, viewName, false);
