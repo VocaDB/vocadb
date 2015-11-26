@@ -80,13 +80,6 @@ namespace VocaDb.Web.Code {
 
 		public string CreateEntryLink(IEntryBase entry, string slug = null) {
 
-			if (entry.EntryType == EntryType.Tag) {
-				
-				var url = VocaUriBuilder.MergeUrls(baseUrl, string.Format("Tag/Details/{0}", entry.DefaultName));
-				return CreateAnchor(url, entry.DefaultName);
-
-			}
-
 			return CreateEntryLink(entry.EntryType, entry.Id, entry.DefaultName, slug);
 
 		}

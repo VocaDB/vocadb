@@ -49,6 +49,7 @@ module vdb.viewModels.user {
 		public tag = ko.observable<dc.TagBaseContract>(null);
 		public tagId = ko.computed(() => this.tag() ? this.tag().id : null);
 		public tagName = ko.computed(() => this.tag() ? this.tag().name : null);
+		public tagUrl = ko.computed(() => utils.EntryUrlMapper.details_tag_contract(this.tag()));
 		public viewMode = ko.observable("Details");
 
 		public init = () => {

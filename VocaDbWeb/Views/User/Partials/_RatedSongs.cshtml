@@ -59,7 +59,7 @@
 		<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 		<div class="controls">
 			<div class="input-append input-prepend">
-				<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: '/Tag/Details/' + tag() }" title="Tag information">
+				<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: tagUrl() }" title="Tag information">
 					<i class="icon icon-info-sign"></i>
 				</a>
 				@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "tag", "tagName")
