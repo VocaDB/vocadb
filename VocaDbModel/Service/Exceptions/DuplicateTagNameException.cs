@@ -2,9 +2,9 @@
 
 namespace VocaDb.Model.Service.Exceptions {
 
-	public class TagNameAlreadyInUseException : Exception {
+	public class DuplicateTagNameException : Exception {
 
-		public TagNameAlreadyInUseException(string name)
+		public DuplicateTagNameException(string name)
 			: base("Tag name already in use: " + name) {}
 
 	}

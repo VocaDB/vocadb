@@ -418,10 +418,12 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (tag.EnglishName != contract.EnglishName) {
 
+					Tag.ValidateName(contract.EnglishName);
+
 					var hasDuplicate = ctx.Query().Any(t => t.EnglishName == contract.EnglishName && t.Id != contract.Id);
 
 					if (hasDuplicate) {
-						throw new TagNameAlreadyInUseException(contract.EnglishName);
+						throw new DuplicateTagNameException(contract.EnglishName);
                     }
 
 					diff.Names = true;

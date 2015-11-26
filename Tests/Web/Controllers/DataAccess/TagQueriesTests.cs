@@ -122,11 +122,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(TagNameAlreadyInUseException))]
+		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_Duplicate() {
 
 			var updated = new TagForEditContract(tag, false);
 			updated.EnglishName = "MMD";
+
+			queries.Update(updated, null);
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidTagNameException))]
+		public void Update_Name_Invalid() {
+
+			var updated = new TagForEditContract(tag, false);
+			updated.EnglishName = "初音ミク";
 
 			queries.Update(updated, null);
 

@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Service.Exceptions;
 
 namespace VocaDb.Model.Domain.Tags {
 
@@ -48,6 +49,13 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <returns>True if <paramref name="tagName"/> is a valid tag name, otherwise false.</returns>
 		public static bool IsValidTagName(string tagName) {
 			return TagNameRegex.IsMatch(tagName);
+		}
+
+		public static void ValidateName(string name) {
+
+			if (!IsValidTagName(name))
+				throw new InvalidTagNameException(name);
+
 		}
 
 		public const string CommonCategory_Distribution = "Distribution";
@@ -88,8 +96,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public Tag(string name, string categoryName = "")
 			: this() {
 
-			if (!IsValidTagName(name))
-				throw new ArgumentException("Tag name must contain only word characters", "name");
+			ValidateName(name);
 
 			Name = name;
 			EnglishName = name;
