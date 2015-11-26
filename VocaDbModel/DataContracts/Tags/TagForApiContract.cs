@@ -17,7 +17,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 			IEntryImagePersisterOld thumbPersister,
 			bool ssl,			
 			TagOptionalFields optionalFields) {
-			
+
+			ParamIs.NotNull(() => tag);
+
 			CategoryName = tag.CategoryName;
 			Id = tag.Id;
 			Name = tag.Name;

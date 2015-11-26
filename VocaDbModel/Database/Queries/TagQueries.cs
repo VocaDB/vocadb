@@ -384,6 +384,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public T LoadTag<T>(int id, Func<Tag, T> fac) {
+
+			return HandleQuery(ctx => fac(LoadTagById(ctx, id)));
+
+		}
+
 		public void Update(TagForEditContract contract, UploadedFileContract uploadedImage) {
 
 			ParamIs.NotNull(() => contract);

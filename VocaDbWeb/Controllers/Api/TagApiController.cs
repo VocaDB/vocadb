@@ -57,8 +57,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{id:int}")]
 		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None) {
 
-			var tag = queries.GetTag(id, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));
-
+			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));
 			return tag;
 
 		}
