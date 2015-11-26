@@ -5,9 +5,7 @@ module vdb.dataContracts.tags {
 
 		selected?: boolean;
 
-		tagId: number;
-
-		tagName: string;
+		tag: TagBaseContract;
 
 	}
 

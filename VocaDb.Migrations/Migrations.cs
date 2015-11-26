@@ -1,7 +1,25 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using FluentMigrator;
 
 namespace VocaDb.Migrations {
+
+	[Migration(201511261900)]
+	public class TagEnglishName : Migration {
+
+		public override void Up() {
+
+			Create.Column("EnglishName").OnTable(TableNames.Tags).AsString(100).NotNullable().WithDefaultValue(string.Empty);
+			Execute.Sql(string.Format("UPDATE {0} SET EnglishName = Name", TableNames.Tags));
+			Create.Index("IX_Tags_EnglishName").OnTable(TableNames.Tags).OnColumn("EnglishName").Unique();
+
+		}
+
+		public override void Down() {
+			Delete.Column("EnglishName").FromTable(TableNames.Tags);
+		}
+
+	}
 
 	/// <summary>
 	/// Replace index in tag usages tables with a unique index of entry + tag pair (since that combination is unique).

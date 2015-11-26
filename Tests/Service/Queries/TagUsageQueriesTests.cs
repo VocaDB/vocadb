@@ -29,6 +29,10 @@ namespace VocaDb.Tests.Service.Queries {
 			return new TagBaseContract { Id = id };
 		}
 
+		private TagBaseContract Contract(string name) {
+			return new TagBaseContract { Name = name };
+		}
+
 		[TestInitialize]
 		public void SetUp() {
 			user = repository.Save(CreateEntry.User());
@@ -38,9 +42,7 @@ namespace VocaDb.Tests.Service.Queries {
 		[TestMethod]
 		public void AddTagByName() {
 
-			var tags = new[] {
-				new TagBaseContract { Name = "vocarock" }
-			};
+			var tags = new[] { Contract("vocarock") };
 
 			AddTags(entry.Id, tags);
 
@@ -56,11 +58,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var tag = repository.Save(CreateEntry.Tag("vocarock"));
 
-			var tags = new[] {
-				new TagBaseContract { Id = tag.Id }
-			};
-
-			AddTags(entry.Id, tags);
+			AddTags(entry.Id, Contract(tag.Id));
 
 			Assert.AreEqual(1, entry.Tags.Tags.Count(), "Number of tags");
 			var usage = entry.Tags.Usages.First();
@@ -82,6 +80,21 @@ namespace VocaDb.Tests.Service.Queries {
 			var entryTags = entry.Tags.Tags.ToArray();
 			Assert.AreEqual(1, entryTags.Length, "Number of tags");
 			Assert.IsTrue(entryTags.Any(t => t.Name == "vocarock"), "vocarock tag is added");
+
+		}
+
+		[TestMethod]
+		public void AddByTranslation() {
+
+			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
+			tag.EnglishName = "rock";
+
+			// vocarock was renamed to rock
+			AddTags(entry.Id, Contract("rock"));
+
+			var entryTags = entry.Tags.Tags.ToArray();
+			Assert.AreEqual(1, entryTags.Length, "Number of tags");
+			Assert.IsTrue(entryTags.Any(t => t.Id == 39), "vocarock tag is added");
 
 		}
 

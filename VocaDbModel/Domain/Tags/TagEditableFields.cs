@@ -17,11 +17,13 @@ namespace VocaDb.Model.Domain.Tags {
 
 		Description		= 4,
 
-		Parent			= 8,
+		Names			= 8,
 
-		Picture			= 16,
+		Parent			= 16,
 
-		Status			= 32
+		Picture			= 32,
+
+		Status			= 64
 
 	}
 

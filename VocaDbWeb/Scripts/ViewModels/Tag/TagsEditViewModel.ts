@@ -27,7 +27,7 @@ module vdb.viewModels.tags {
 			if (selection) {
 				selection.selected(true);
 			} else {
-				this.selections.push(new TagSelectionViewModel({ tagName: tagName, selected: true, tagId: null }));
+				this.selections.push(new TagSelectionViewModel({ tag: { name: tagName, id: null }, selected: true }));
 			}
 
 		}
@@ -39,7 +39,7 @@ module vdb.viewModels.tags {
 			if (selection) {
 				selection.selected(true);
 			} else {
-				this.selections.push(new TagSelectionViewModel({ tagName: tag.name, selected: true, tagId: tag.id }));
+				this.selections.push(new TagSelectionViewModel({ tag: tag, selected: true }));
 			}
 
 		}
@@ -87,8 +87,8 @@ module vdb.viewModels.tags {
 		
 		constructor(contract: dataContracts.tags.TagSelectionContract) {
 		
-			this.tagId = contract.tagId;
-			this.tagName = contract.tagName;
+			this.tagId = contract.tag.id;
+			this.tagName = contract.tag.name;
 			this.selected = ko.observable(contract.selected || false);
 
 		}

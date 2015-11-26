@@ -126,6 +126,9 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Names" xml:space="preserve">
+    <value>Names</value>
+  </data>
   <data name="Parent" xml:space="preserve">
     <value>Parent</value>
   </data>

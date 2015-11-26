@@ -32,7 +32,7 @@ module vdb.tests.viewModels.tags {
 
 	QUnit.test("addTag - already exists", () => {
 
-		var selection = new vm.tags.TagSelectionViewModel({ tagName: 'Miku', tagId: 39 });
+		var selection = new vm.tags.TagSelectionViewModel({ tag: { name: 'Miku', id: 39 } });
 		viewModel.selections.push(selection);
 		QUnit.equal(selection.selected(), false, "selection.selected");
 		viewModel.newTagName("Miku");

@@ -17,24 +17,15 @@ namespace VocaDb.Model.Service.Queries {
 			if (contract == null)
 				return false;
 
-			if (contract.Id != 0)
+			if (HasId(contract))
 				return true;
 
 			return !string.IsNullOrEmpty(contract.Name) && Tag.IsValidTagName(contract.Name);
 
 		}
 
-		public TagUsageForApiContract[] AddTags<TEntry, TTag>(int entryId, string[] tags,
-			bool onlyAdd,
-			IRepository<User> repository, IUserPermissionContext permissionContext,
-			IEntryLinkFactory entryLinkFactory,
-			Func<TEntry, TagManager<TTag>> tagFunc,
-			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory)
-			where TEntry : IEntryBase where TTag : TagUsage {
-
-			return AddTags(entryId, tags.Select(t => new TagBaseContract { Name = t }).ToArray(), onlyAdd, repository,
-				permissionContext, entryLinkFactory, tagFunc, tagUsageFactoryFactory);
-
+		private bool HasId(TagBaseContract contract) {
+			return contract.Id > 0;
 		}
 
 		public TagUsageForApiContract[] AddTags<TEntry, TTag>(int entryId, TagBaseContract[] tags, 
@@ -56,10 +47,14 @@ namespace VocaDb.Model.Service.Queries {
 
 			return repository.HandleTransaction(ctx => {
 				
-				var tagIdsWithoutName = tags.Where(t => string.IsNullOrEmpty(t.Name)).Select(t => t.Id).ToArray();
-				var tagsWithName = tags.Select(t => t.Name).Where(t => !string.IsNullOrEmpty(t));
-				var tagFromIds = ctx.Query<Tag>().Where(t => tagIdsWithoutName.Contains(t.Id)).Select(t => t.Name).ToArray();
-				var tagNames = tagsWithName.Concat(tagFromIds).Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray();
+				// Tags are primarily added by Id, secondarily by translated name.
+				var tagIds = tags.Where(HasId).Select(t => t.Id).ToArray();
+				var translatedTagNames = tags.Where(t => !HasId(t) && !string.IsNullOrEmpty(t.Name)).Select(t => t.Name).ToArray();
+
+				var tagsFromNames = ctx.Query<Tag>().Where(t => translatedTagNames.Contains(t.EnglishName)).Select(t => new { t.Name, t.EnglishName }).ToArray();
+				var tagsFromIds = ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).Select(t => t.Name).ToArray();
+				var newTags = translatedTagNames.Except(tagsFromNames.Select(t => t.EnglishName)).ToArray();
+				var tagNames = tagsFromNames.Select(t => t.Name).Concat(tagsFromIds).Concat(newTags).Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray();
 
 				var user = ctx.OfType<User>().GetLoggedUser(permissionContext);
 				var entry = ctx.OfType<TEntry>().Load(entryId);

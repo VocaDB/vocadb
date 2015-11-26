@@ -91,6 +91,7 @@ namespace VocaDb.Model.Domain.Tags {
 				throw new ArgumentException("Tag name must contain only word characters", "name");
 
 			Name = name;
+			EnglishName = name;
 			CategoryName = categoryName;
 
 		}
@@ -192,6 +193,8 @@ namespace VocaDb.Model.Domain.Tags {
 			get { return description; }
 			set { description = value; }
 		}
+
+		public virtual string EnglishName { get; set; }
 
 		public virtual EntryType EntryType {
 			get { return EntryType.Tag; }
@@ -328,6 +331,8 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public virtual EntryStatus Status { get; set; }
+
+		public virtual string UrlSlug => EnglishName;
 
 		public virtual int Version { get; set; }
 

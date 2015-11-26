@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.Search.Tags {
 
 			if (onlyMinimalFields) {
 				tags = orderedAndPaged.Select(t => new Tag {
-					Id = t.Id, Name = t.Name, CategoryName = t.CategoryName, Status = t.Status, Version = t.Version
+					Id = t.Id, EnglishName = t.EnglishName, CategoryName = t.CategoryName, Status = t.Status, Version = t.Version
 				}).ToArray();
 			} else {
 				tags = orderedAndPaged.ToArray();

@@ -13,7 +13,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ParamIs.NotNull(() => tag);
 
 			Id = tag.Id;
-			Name = UrlSlug = tag.Name;
+			Name = tag.EnglishName;
+			UrlSlug = tag.UrlSlug;
 
 		}
 
