@@ -691,6 +691,7 @@
     <Compile Include="Service\Exceptions\InvalidEmailFormatException.cs" />
     <Compile Include="Service\Exceptions\NoPasswordException.cs" />
     <Compile Include="Service\Exceptions\RequestNotValidException.cs" />
+    <Compile Include="Service\Exceptions\TagNameAlreadyInUseException.cs" />
     <Compile Include="Service\Exceptions\TooFastRegistrationException.cs" />
     <Compile Include="Service\ExtSites\AlbumDescriptionGenerator.cs" />
     <Compile Include="Service\ExtSites\ArtistDescriptionGenerator.cs" />

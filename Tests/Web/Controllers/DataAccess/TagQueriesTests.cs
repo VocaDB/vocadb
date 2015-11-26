@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
@@ -101,6 +102,33 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var archivedVersion = GetArchivedVersion(tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(TagEditableFields.Picture, archivedVersion.Diff.ChangedFields, "Changed fields");
+
+		}
+
+		[TestMethod]
+		public void Update_Name() {
+
+			var updated = new TagForEditContract(tag, false);
+			updated.EnglishName = "Api_Miku";
+
+			queries.Update(updated, null);
+
+			Assert.AreEqual("Api_Miku", tag.EnglishName, "EnglishName");
+
+			var archivedVersion = GetArchivedVersion(tag);
+			Assert.IsNotNull(archivedVersion, "Archived version was created");
+			Assert.AreEqual(TagEditableFields.Names, archivedVersion.Diff.ChangedFields, "Changed fields");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(TagNameAlreadyInUseException))]
+		public void Update_Name_Duplicate() {
+
+			var updated = new TagForEditContract(tag, false);
+			updated.EnglishName = "MMD";
+
+			queries.Update(updated, null);
 
 		}
 

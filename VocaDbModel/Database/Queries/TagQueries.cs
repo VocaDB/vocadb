@@ -16,6 +16,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -415,8 +416,18 @@ namespace VocaDb.Model.Database.Queries {
 				if (tag.Description != contract.Description)
 					diff.Description = true;
 
-				if (tag.EnglishName != contract.EnglishName)
+				if (tag.EnglishName != contract.EnglishName) {
+
+					var hasDuplicate = ctx.Query().Any(t => t.EnglishName == contract.EnglishName && t.Id != contract.Id);
+
+					if (hasDuplicate) {
+						throw new TagNameAlreadyInUseException(contract.EnglishName);
+                    }
+
 					diff.Names = true;
+					tag.EnglishName = contract.EnglishName;
+
+				}
 
 				if (!Tag.Equals(tag.Parent, contract.Parent?.Name)) {
 
@@ -434,7 +445,6 @@ namespace VocaDb.Model.Database.Queries {
 
 				tag.CategoryName = contract.CategoryName;
 				tag.Description = contract.Description;
-				tag.EnglishName = contract.EnglishName;
 				tag.Status = contract.Status;
 
 				if (uploadedImage != null) {

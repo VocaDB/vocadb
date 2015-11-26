@@ -17,7 +17,7 @@ namespace VocaDb.Model.Domain.Tags {
 	public class Tag : IEquatable<Tag>, IEntryWithNames, IEntryWithStatus, IEntryWithComments, ITag {
 
 		string IEntryBase.DefaultName {
-			get { return Name; }
+			get { return EnglishName; }
 		}
 
 		bool IDeletableEntry.Deleted {
@@ -26,7 +26,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		INameManager IEntryWithNames.Names {
 			get {
-				return new SingleNameManager(TagName);
+				return new SingleNameManager(EnglishName);
 			}
 		}
 
@@ -77,6 +77,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private IList<TagComment> comments = new List<TagComment>();
 		private string description;
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
+		private string englishName;
 
 		public Tag() {
 			CategoryName = string.Empty;
@@ -194,7 +195,16 @@ namespace VocaDb.Model.Domain.Tags {
 			set { description = value; }
 		}
 
-		public virtual string EnglishName { get; set; }
+		/// <summary>
+		/// User-visible tag name, primarily in English.
+		/// </summary>
+		public virtual string EnglishName {
+			get { return englishName; }
+			set {
+				ParamIs.NotNullOrEmpty(() => value);
+				englishName = value;
+			}
+		}
 
 		public virtual EntryType EntryType {
 			get { return EntryType.Tag; }
@@ -214,6 +224,8 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		/// <remarks>
 		/// Unlike other entry types, tags use the string name field as the primary key.
+		/// This field should only be used as a database identifier, <see cref="EnglishName"/> is the user-visible name.
+		/// Eventually all tag references should be migrated to use the <see cref="Id"/> field.
 		/// 
 		/// Accessing this field does not guarantee the tag even exists in the database because NHibernate won't
 		/// try to load the object if only the Id is accessed.
