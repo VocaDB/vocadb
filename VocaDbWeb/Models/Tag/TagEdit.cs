@@ -27,8 +27,7 @@ namespace VocaDb.Web.Models.Tag {
 			Status = contract.Status;
 			Thumb = contract.Thumb;
 
-			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
-			CopyNonEditableProperties(contract);
+			CopyNonEditableProperties(contract, permissionContext);
 
 		}
 
@@ -68,8 +67,9 @@ namespace VocaDb.Web.Models.Tag {
 
 		public string UrlSlug { get; set; }
 
-		public void CopyNonEditableProperties(TagForEditContract contract) {
+		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext) {
 
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
 			Id = contract.Id;
 			IsEmpty = contract.IsEmpty;
 			Thumb = contract.Thumb;

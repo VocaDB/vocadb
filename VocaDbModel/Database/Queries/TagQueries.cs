@@ -241,16 +241,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagDetailsContract GetDetails(string tagName) {
+		public TagDetailsContract GetDetails(int tagId) {
 
-			ParamIs.NotNullOrEmpty(() => tagName);
+			return HandleQuery(session => {
 
-			return HandleQuery(session => { 
-				
+				var tagName = LoadTagById(session, tagId).Name;
 				var tag = GetTag(session, tagName);
-
-				if (tag == null)
-					return null;
 
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(session, tagName, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(session, tagName, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);

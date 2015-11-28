@@ -5,6 +5,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;
 using VocaDb.Web.Models.Tag;
@@ -74,7 +75,7 @@ namespace VocaDb.Web.Controllers
 				return RedirectToActionPermanent("DetailsById", new { id, slug = tagName });
 			}
 
-			var contract = queries.GetDetails(tagName);
+			var contract = queries.GetDetails(id);
 
 			return RenderDetails(contract);
 
@@ -85,6 +86,12 @@ namespace VocaDb.Web.Controllers
         {
 			var model = new TagEdit(queries.GetTagForEdit(id), PermissionContext);
 			return View(model);
+		}
+
+		private ActionResult RenderEdit(TagEdit model) {
+			var contract = queries.GetTagForEdit(model.Id);
+			model.CopyNonEditableProperties(contract, PermissionContext);
+			return View("Edit", model);
 		}
 
 		[HttpPost]
@@ -102,12 +109,15 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-				var contract = queries.GetTagForEdit(model.Id);
-				model.CopyNonEditableProperties(contract);
-				return View(model);
-			}
+				return RenderEdit(model);
+            }
 
-			queries.Update(model.ToContract(), uploadedPicture);
+			try {
+				queries.Update(model.ToContract(), uploadedPicture);
+			} catch (DuplicateTagNameException x) {
+				ModelState.AddModelError("EnglishName", x.Message);
+				return RenderEdit(model);
+			}
 
 			return RedirectToAction("DetailsById", new { id = model.Id, slug = model.UrlSlug });
 

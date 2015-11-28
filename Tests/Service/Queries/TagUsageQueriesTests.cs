@@ -98,6 +98,23 @@ namespace VocaDb.Tests.Service.Queries {
 
 		}
 
+		// Adding a new tag where tag name already exists as an ID, but display name is renamed.
+		[TestMethod]
+		public void AddNewTag_TagNameExists() {
+
+			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
+			tag.EnglishName = "rock";
+
+			// Attempting to add tag "vocarock". The "vocarock" tag was renamed as "rock" so this is a new tag.
+			AddTags(entry.Id, Contract("vocarock"));
+
+			var entryTags = entry.Tags.Tags.ToArray();
+			Assert.AreEqual(1, entryTags.Length, "Number of tags");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "vocarock"), "vocarock tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.Id != 39), "tag name cannot be the same as rock tag");
+
+		}
+
 		[TestMethod]
 		public void SkipDuplicates() {
 

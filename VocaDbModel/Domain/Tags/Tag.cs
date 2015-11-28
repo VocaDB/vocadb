@@ -356,7 +356,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int Version { get; set; }
 
 		public override string ToString() {
-			return string.Format("tag '{0}'", Name);
+			return string.Format("tag '{0}' [{1},{2}]", EnglishName, Id, Name);
 		}
 
 	}
