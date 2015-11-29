@@ -386,15 +386,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void Update(TagForEditContract contract, UploadedFileContract uploadedImage) {
+		public TagBaseContract Update(TagForEditContract contract, UploadedFileContract uploadedImage) {
 
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageDatabase);
 
-			repository.HandleTransaction(ctx => {
+			return repository.HandleTransaction(ctx => {
 
-				var tag = ctx.Load(contract.Name);
+				var tag = LoadTagById(ctx, contract.Id);
 
 				permissionContext.VerifyEntryEdit(tag);
 
@@ -463,6 +463,8 @@ namespace VocaDb.Model.Database.Queries {
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), tag, EntryEditEvent.Updated, archived);						
 
 				ctx.Update(tag);
+
+				return new TagBaseContract(tag);
 
 			});
 

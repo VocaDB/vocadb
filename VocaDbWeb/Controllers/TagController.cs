@@ -112,14 +112,16 @@ namespace VocaDb.Web.Controllers
 				return RenderEdit(model);
             }
 
+			TagBaseContract result;
+
 			try {
-				queries.Update(model.ToContract(), uploadedPicture);
+				result = queries.Update(model.ToContract(), uploadedPicture);
 			} catch (DuplicateTagNameException x) {
 				ModelState.AddModelError("EnglishName", x.Message);
 				return RenderEdit(model);
 			}
 
-			return RedirectToAction("DetailsById", new { id = model.Id, slug = model.UrlSlug });
+			return RedirectToAction("DetailsById", new { id = result.Id, slug = result.UrlSlug });
 
 		}
 
