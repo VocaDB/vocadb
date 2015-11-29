@@ -104,6 +104,17 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
+		public Tag(TagNameAndTranslation name, string categoryName = "")
+			: this() {
+
+			ValidateName(name.TagName);
+
+			Name = name.TagName;
+			EnglishName = name.EnglishName;
+			CategoryName = categoryName;
+
+		}
+
 		/// <summary>
 		/// Actual tag to be used for this tag name.
 		/// If this tag has been aliased to some other tag, that tag name will be used.

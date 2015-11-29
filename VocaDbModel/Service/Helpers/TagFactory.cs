@@ -16,7 +16,7 @@ namespace VocaDb.Model.Service.Helpers {
 			this.loginData = loginData;
 		}
 
-		public Tag CreateTag(string name) {
+		public Tag CreateTag(TagNameAndTranslation name) {
 
 			var tag = new Tag(name);
 			ctx.Save(tag);

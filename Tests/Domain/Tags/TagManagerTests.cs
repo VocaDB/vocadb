@@ -17,7 +17,7 @@ namespace VocaDb.Tests.Domain.Tags {
 
 			private readonly Song song = new Song();
 
-			public Tag CreateTag(string name) {
+			public Tag CreateTag(TagNameAndTranslation name) {
 				return new Tag(name);
 			}
 
@@ -35,7 +35,7 @@ namespace VocaDb.Tests.Domain.Tags {
 		private User user;
 
 		private void SyncVotes(params string[] tagNames) {
-			manager.SyncVotes(user, tagNames, allTags, tagFactory, tagFactory);
+			manager.SyncVotes(user, tagNames.Select(t => new TagNameAndTranslation(t, t)).ToArray(), allTags, tagFactory, tagFactory);
 		}
 
 		[TestInitialize]
