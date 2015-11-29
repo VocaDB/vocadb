@@ -67,15 +67,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private Tag GetRealTag(IDatabaseContext<Tag> ctx, string tagName, Tag ignoreSelf) {
+		private Tag GetRealTag(IDatabaseContext<Tag> ctx, ITag tag, Tag ignoreSelf) {
 
-			if (string.IsNullOrEmpty(tagName))
+			if (tag == null || tag.Id == 0)
 				return null;
 
-			if (ignoreSelf != null && Tag.Equals(ignoreSelf, tagName))
+			if (ignoreSelf != null && Tag.Equals(ignoreSelf, tag))
 				return null;
 
-			return ctx.Query().FirstOrDefault(t => t.AliasedTo == null && t.Name == tagName);
+			return ctx.Query().FirstOrDefault(t => t.AliasedTo == null && t.Id == tag.Id);
 
 		}
 
@@ -400,10 +400,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				var diff = new TagDiff();
 
-				var newAliasedTo = contract.AliasedTo?.Name ?? string.Empty;
-				if (!Tag.Equals(tag.AliasedTo, newAliasedTo)) {
+				if (!Tag.Equals(tag.AliasedTo, contract.AliasedTo)) {
 					diff.AliasedTo = true;
-					tag.AliasedTo = GetRealTag(ctx, newAliasedTo, tag);
+					tag.AliasedTo = GetRealTag(ctx, contract.AliasedTo, tag);
 				}
 
 				if (tag.CategoryName != contract.CategoryName)
@@ -427,9 +426,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				if (!Tag.Equals(tag.Parent, contract.Parent?.Name)) {
+				if (!Tag.Equals(tag.Parent, contract.Parent)) {
 
-					var newParent = GetRealTag(ctx, contract.Parent?.Name, tag);
+					var newParent = GetRealTag(ctx, contract.Parent, tag);
 
 					if (!Equals(newParent, tag.Parent)) {
 						diff.Parent = true;

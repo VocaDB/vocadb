@@ -176,5 +176,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		[TestMethod]
+		public void Update_Parent_Renamed() {
+
+			var updated = new TagForEditContract(tag, false);
+			tag2.EnglishName = "Api_Miku";
+			updated.Parent = new TagBaseContract(tag2);
+
+			queries.Update(updated, null);
+
+			Assert.AreEqual(tag2, tag.Parent, "Parent");
+			Assert.IsTrue(tag2.Children.Contains(tag), "Parent contains child tag");
+
+		}
+
 	}
 }

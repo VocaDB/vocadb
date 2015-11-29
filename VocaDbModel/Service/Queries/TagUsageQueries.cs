@@ -25,7 +25,7 @@ namespace VocaDb.Model.Service.Queries {
 				return tagName;
 
 			var hash = new HashSet<string>(prefixMatch, StringComparer.InvariantCultureIgnoreCase);
-			return Enumerable.Range(0, int.MaxValue).Select(i => tagName + i).First(name => !hash.Contains(name));
+			return Enumerable.Range(0, int.MaxValue).Select(i => string.Format("{0}{1}", tagName, i)).First(name => !hash.Contains(name));
 
 		}
 

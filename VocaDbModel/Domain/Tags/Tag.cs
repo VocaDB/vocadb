@@ -66,13 +66,8 @@ namespace VocaDb.Model.Domain.Tags {
 		public const string CommonTag_Instrumental = "instrumental";
 		public const string CommonTag_Nicovideo_downloadmusic = "nicovideo_downloadmusic";
 
-		public static bool Equals(Tag tag, string tagName) {
-			
-			var leftTagName = tag != null ? tag.Name : string.Empty;
-			var rightTagName = tagName ?? string.Empty;
-
-			return string.Equals(leftTagName, rightTagName, StringComparison.InvariantCultureIgnoreCase);
-
+		public static bool Equals(ITag left, ITag right) {
+			return left?.Id == right?.Id;
 		}
 
 		private ISet<AlbumTagUsage> albumTagUsages = new HashSet<AlbumTagUsage>();
