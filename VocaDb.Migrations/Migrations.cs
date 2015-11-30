@@ -4,6 +4,47 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201511302100)]
+	public class TagIdReferences : Migration {
+
+		private void MigrateUsagesTable(string usagesTableName, string entryColumnName) {
+
+			Delete.Index(string.Format("IX_{0}", usagesTableName)).OnTable(usagesTableName);
+			Delete.Index(string.Format("IX_{0}_1", usagesTableName)).OnTable(usagesTableName);
+			Rename.Column("Tag").OnTable(usagesTableName).To("TagName");
+
+			Create.Column("Tag").OnTable(usagesTableName).AsInt32().Nullable();
+			Execute.Sql(string.Format("UPDATE {0} SET {0}.Tag = {1}.Id FROM {0} INNER JOIN {1} ON ({0}.TagName = {1}.Name)", usagesTableName, TableNames.Tags));
+			Alter.Column("Tag").OnTable(usagesTableName).AsInt32().NotNullable();
+			Create.Index(string.Format("IX_{0}", usagesTableName))
+				.OnTable(usagesTableName).OnColumn(entryColumnName).Ascending()
+				.OnColumn("Tag").Ascending()
+				.WithOptions().Unique();
+			Create.Index(string.Format("IX_{0}_1", usagesTableName))
+				.OnTable(usagesTableName).OnColumn("Tag").Ascending();
+
+			Delete.ForeignKey(string.Format("FK_{0}_Tags", usagesTableName)).OnTable(usagesTableName);
+			Create.ForeignKey(string.Format("FK_{0}_Tags", usagesTableName))
+				.FromTable(usagesTableName).ForeignColumn("Tag")
+				.ToTable(TableNames.Tags).PrimaryColumn("Id")
+				.OnDelete(Rule.Cascade);
+
+		}
+
+		public override void Up() {
+
+			MigrateUsagesTable(TableNames.SongTagUsages, "Song");
+			MigrateUsagesTable(TableNames.AlbumTagUsages, "Album");
+			MigrateUsagesTable(TableNames.ArtistTagUsages, "Artist");
+
+		}
+
+		public override void Down() {
+			
+		}
+
+	}
+
 	[Migration(201511261900)]
 	public class TagEnglishName : Migration {
 
