@@ -7,15 +7,30 @@ namespace VocaDb.Migrations {
 	[Migration(201511302100)]
 	public class TagIdReferences : Migration {
 
+		private void CopyTagNameToId(string tableName, string foreignKeyColumnName) {
+
+			var tagNameColumn = string.Format("{0}Name", foreignKeyColumnName);
+
+			Rename.Column(foreignKeyColumnName).OnTable(tableName).To(tagNameColumn);
+			Create.Column(foreignKeyColumnName).OnTable(tableName).AsInt32().Nullable();
+
+			// Ex. UPDATE SongTagUsages SET SongTagUsages.Tag = Tags.Id FROM SongTagUsages INNER JOIN Tags ON (SongTagUsages.TagName = Tags.Name)
+			Execute.Sql(string.Format("UPDATE {0} SET {0}.{1} = {2}.Id FROM {0} INNER JOIN {2} ON ({0}.{3} = {2}.Name)", 
+				tableName, foreignKeyColumnName, TableNames.Tags, tagNameColumn));
+
+			Alter.Column(foreignKeyColumnName).OnTable(tableName).AsInt32().NotNullable();
+			Delete.Column(tagNameColumn).FromTable(tableName);
+
+		}
+
 		private void MigrateUsagesTable(string usagesTableName, string entryColumnName) {
 
 			Delete.Index(string.Format("IX_{0}", usagesTableName)).OnTable(usagesTableName);
 			Delete.Index(string.Format("IX_{0}_1", usagesTableName)).OnTable(usagesTableName);
-			Rename.Column("Tag").OnTable(usagesTableName).To("TagName");
+			Delete.ForeignKey(string.Format("FK_{0}_Tags", usagesTableName)).OnTable(usagesTableName);
 
-			Create.Column("Tag").OnTable(usagesTableName).AsInt32().Nullable();
-			Execute.Sql(string.Format("UPDATE {0} SET {0}.Tag = {1}.Id FROM {0} INNER JOIN {1} ON ({0}.TagName = {1}.Name)", usagesTableName, TableNames.Tags));
-			Alter.Column("Tag").OnTable(usagesTableName).AsInt32().NotNullable();
+			CopyTagNameToId(usagesTableName, "Tag");
+
 			Create.Index(string.Format("IX_{0}", usagesTableName))
 				.OnTable(usagesTableName).OnColumn(entryColumnName).Ascending()
 				.OnColumn("Tag").Ascending()
@@ -23,7 +38,6 @@ namespace VocaDb.Migrations {
 			Create.Index(string.Format("IX_{0}_1", usagesTableName))
 				.OnTable(usagesTableName).OnColumn("Tag").Ascending();
 
-			Delete.ForeignKey(string.Format("FK_{0}_Tags", usagesTableName)).OnTable(usagesTableName);
 			Create.ForeignKey(string.Format("FK_{0}_Tags", usagesTableName))
 				.FromTable(usagesTableName).ForeignColumn("Tag")
 				.ToTable(TableNames.Tags).PrimaryColumn("Id")
@@ -33,14 +47,36 @@ namespace VocaDb.Migrations {
 
 		public override void Up() {
 
+			// Tag usages
 			MigrateUsagesTable(TableNames.SongTagUsages, "Song");
 			MigrateUsagesTable(TableNames.AlbumTagUsages, "Album");
 			MigrateUsagesTable(TableNames.ArtistTagUsages, "Artist");
 
+			// Archived versions
+			Delete.ForeignKey("FK_ArchivedTagVersions_Tags").OnTable(TableNames.ArchivedTagVersions);
+			CopyTagNameToId(TableNames.ArchivedTagVersions, "Tag");
+			Create.ForeignKey(string.Format("FK_{0}_Tags", TableNames.ArchivedTagVersions))
+				.FromTable(TableNames.ArchivedTagVersions).ForeignColumn("Tag")
+				.ToTable(TableNames.Tags).PrimaryColumn("Id")
+				.OnDelete(Rule.Cascade);
+
+			// AliasedTo + Parent
+			Delete.ForeignKey("FK_Tags_Tags").OnTable(TableNames.Tags);
+			Delete.ForeignKey("FK_Tags_Tags1").OnTable(TableNames.Tags);
+			CopyTagNameToId(TableNames.Tags, "AliasedTo");
+			CopyTagNameToId(TableNames.Tags, "Parent");
+			Create.ForeignKey("FK_Tags_Tags").FromTable(TableNames.Tags).ForeignColumn("AliasedTo").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_Tags_Tags1").FromTable(TableNames.Tags).ForeignColumn("Parent").ToTable(TableNames.Tags).PrimaryColumn("Id");
+
+			// Activity entries
+			Delete.ForeignKey("FK_ActivityEntries_Tags").OnTable(TableNames.ActivityEntries);
+			CopyTagNameToId(TableNames.ActivityEntries, "Tag");
+			Create.ForeignKey("FK_ActivityEntries_Tags").FromTable(TableNames.ActivityEntries).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+
 		}
 
 		public override void Down() {
-			
+			// Sorry
 		}
 
 	}
