@@ -48,7 +48,12 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <param name="tagName">Tag name to be validated.</param>
 		/// <returns>True if <paramref name="tagName"/> is a valid tag name, otherwise false.</returns>
 		public static bool IsValidTagName(string tagName) {
+
+			if (string.IsNullOrEmpty(tagName))
+				return false;
+
 			return TagNameRegex.IsMatch(tagName);
+
 		}
 
 		public static void ValidateName(string name) {

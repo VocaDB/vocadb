@@ -119,6 +119,9 @@ namespace VocaDb.Web.Controllers
 			} catch (DuplicateTagNameException x) {
 				ModelState.AddModelError("EnglishName", x.Message);
 				return RenderEdit(model);
+			} catch (InvalidTagNameException x) {
+				ModelState.AddModelError("EnglishName", x.Message);
+				return RenderEdit(model);
 			}
 
 			return RedirectToAction("DetailsById", new { id = result.Id, slug = result.UrlSlug });

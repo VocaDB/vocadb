@@ -40,6 +40,8 @@ namespace VocaDb.Web.Models.Tag {
 		[StringLength(30)]
 		public string CategoryName { get; set; }
 
+		public string CurrentName { get; set; }
+
 		[Display(Name = "Description")]
 		[StringLength(1000)]
 		public string Description { get; set; }
@@ -70,6 +72,7 @@ namespace VocaDb.Web.Models.Tag {
 		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext) {
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
+			CurrentName = contract.EnglishName;
 			Id = contract.Id;
 			IsEmpty = contract.IsEmpty;
 			Thumb = contract.Thumb;
