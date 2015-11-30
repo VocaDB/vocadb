@@ -66,7 +66,7 @@
 		@Html.LabelFor(m => m.EnglishName)
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxFor(m => m.EnglishName)
+		@Html.TextBoxFor(m => m.EnglishName, new { maxlength = 100 })
 		@Html.ValidationMessageFor(m => m.EnglishName)
 	</div>
 
