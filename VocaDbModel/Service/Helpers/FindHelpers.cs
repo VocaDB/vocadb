@@ -3,9 +3,7 @@ using System.Linq;
 using NHibernate;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Search;
-using VocaDb.Model.Service.Search.Tags;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -77,26 +75,6 @@ namespace VocaDb.Model.Service.Helpers {
 					return criteria.OrderBy(e => e.Names.SortNames.English).Asc;
 				default:
 					return criteria.OrderBy(e => e.Names.SortNames.Romaji).Asc;
-			}
-
-		}
-
-		public static IQueryable<Tag> AddTagNameFilter(IQueryable<Tag> query, TagSearchTextQuery textQuery) {
-
-			if (textQuery.IsEmpty)
-				return query;
-
-			var name = textQuery.Query;
-
-			switch (textQuery.MatchMode) {
-				case NameMatchMode.Exact:
-					return query.Where(m => m.Name == name);
-
-				case NameMatchMode.StartsWith:
-					return query.Where(m => m.Name.StartsWith(name));
-
-				default:
-					return query.Where(m => m.Name.Contains(name));
 			}
 
 		}

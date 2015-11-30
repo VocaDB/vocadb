@@ -79,18 +79,18 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		public virtual void SyncVotes(User user, string[] tagNames, Dictionary<string, Tag> allTags, ITagFactory tagFactory, ITagUsageFactory<T> tagUsageFactory,
+		public virtual void SyncVotes(User user, TagNameAndTranslation[] tagNames, Dictionary<string, Tag> allTags, ITagFactory tagFactory, ITagUsageFactory<T> tagUsageFactory,
 			bool onlyAdd = false) {
 
-			var newTags = tagNames.Where(t => !allTags.ContainsKey(t));
+			var newTags = tagNames.Where(t => !allTags.ContainsKey(t.TagName));
 
 			foreach (var tag in newTags) {
 				var newTag = tagFactory.CreateTag(tag);
 				allTags.Add(newTag.Name, newTag);
 			}
 
-			tagNames = tagNames.Select(t => allTags[t].ActualTag.Name).Distinct().ToArray();
-			var tagUsagesDiff = CollectionHelper.Diff(Usages, tagNames, (t1, t2) => t1.Tag.Name.Equals(t2, StringComparison.InvariantCultureIgnoreCase));
+			var actualTagNames = tagNames.Select(t => allTags[t.TagName].ActualTag.Name).Distinct().ToArray();
+			var tagUsagesDiff = CollectionHelper.Diff(Usages, actualTagNames, (t1, t2) => t1.Tag.Name.Equals(t2, StringComparison.InvariantCultureIgnoreCase));
 
 			foreach (var newUsageName in tagUsagesDiff.Added) {
 				var tag = allTags[newUsageName];
@@ -117,6 +117,20 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 
 		}
+
+	}
+
+	public class TagNameAndTranslation {
+
+		public TagNameAndTranslation() { }
+
+		public TagNameAndTranslation(string tagName, string englishName) {
+			TagName = tagName;
+			EnglishName = englishName;
+		}
+
+		public string EnglishName { get; set; }
+		public string TagName { get; set; }
 
 	}
 

@@ -11,13 +11,14 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Service.Exceptions;
 
 namespace VocaDb.Model.Domain.Tags {
 
 	public class Tag : IEquatable<Tag>, IEntryWithNames, IEntryWithStatus, IEntryWithComments, ITag {
 
 		string IEntryBase.DefaultName {
-			get { return Name; }
+			get { return EnglishName; }
 		}
 
 		bool IDeletableEntry.Deleted {
@@ -26,7 +27,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		INameManager IEntryWithNames.Names {
 			get {
-				return new SingleNameManager(TagName);
+				return new SingleNameManager(EnglishName);
 			}
 		}
 
@@ -47,7 +48,19 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <param name="tagName">Tag name to be validated.</param>
 		/// <returns>True if <paramref name="tagName"/> is a valid tag name, otherwise false.</returns>
 		public static bool IsValidTagName(string tagName) {
+
+			if (string.IsNullOrEmpty(tagName))
+				return false;
+
 			return TagNameRegex.IsMatch(tagName);
+
+		}
+
+		public static void ValidateName(string name) {
+
+			if (!IsValidTagName(name))
+				throw new InvalidTagNameException(name);
+
 		}
 
 		public const string CommonCategory_Distribution = "Distribution";
@@ -58,13 +71,8 @@ namespace VocaDb.Model.Domain.Tags {
 		public const string CommonTag_Instrumental = "instrumental";
 		public const string CommonTag_Nicovideo_downloadmusic = "nicovideo_downloadmusic";
 
-		public static bool Equals(Tag tag, string tagName) {
-			
-			var leftTagName = tag != null ? tag.Name : string.Empty;
-			var rightTagName = tagName ?? string.Empty;
-
-			return string.Equals(leftTagName, rightTagName, StringComparison.InvariantCultureIgnoreCase);
-
+		public static bool Equals(ITag left, ITag right) {
+			return left?.Id == right?.Id;
 		}
 
 		private ISet<AlbumTagUsage> albumTagUsages = new HashSet<AlbumTagUsage>();
@@ -77,6 +85,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private IList<TagComment> comments = new List<TagComment>();
 		private string description;
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
+		private string englishName;
 
 		public Tag() {
 			CategoryName = string.Empty;
@@ -87,10 +96,21 @@ namespace VocaDb.Model.Domain.Tags {
 		public Tag(string name, string categoryName = "")
 			: this() {
 
-			if (!IsValidTagName(name))
-				throw new ArgumentException("Tag name must contain only word characters", "name");
+			ValidateName(name);
 
 			Name = name;
+			EnglishName = name;
+			CategoryName = categoryName;
+
+		}
+
+		public Tag(TagNameAndTranslation name, string categoryName = "")
+			: this() {
+
+			ValidateName(name.TagName);
+
+			Name = name.TagName;
+			EnglishName = name.EnglishName;
 			CategoryName = categoryName;
 
 		}
@@ -193,6 +213,17 @@ namespace VocaDb.Model.Domain.Tags {
 			set { description = value; }
 		}
 
+		/// <summary>
+		/// User-visible tag name, primarily in English.
+		/// </summary>
+		public virtual string EnglishName {
+			get { return englishName; }
+			set {
+				ParamIs.NotNullOrEmpty(() => value);
+				englishName = value;
+			}
+		}
+
 		public virtual EntryType EntryType {
 			get { return EntryType.Tag; }
 		}
@@ -211,6 +242,8 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		/// <remarks>
 		/// Unlike other entry types, tags use the string name field as the primary key.
+		/// This field should only be used as a database identifier, <see cref="EnglishName"/> is the user-visible name.
+		/// Eventually all tag references should be migrated to use the <see cref="Id"/> field.
 		/// 
 		/// Accessing this field does not guarantee the tag even exists in the database because NHibernate won't
 		/// try to load the object if only the Id is accessed.
@@ -329,10 +362,12 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual EntryStatus Status { get; set; }
 
+		public virtual string UrlSlug => EnglishName;
+
 		public virtual int Version { get; set; }
 
 		public override string ToString() {
-			return string.Format("tag '{0}'", Name);
+			return string.Format("tag '{0}' [{1},{2}]", EnglishName, Id, Name);
 		}
 
 	}

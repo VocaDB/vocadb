@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
 
@@ -12,11 +11,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			switch (sortRule) {
 				case TagSortRule.Name:
-					return query.OrderBy(t => t.Name);
+					return query.OrderBy(t => t.EnglishName);
 				case TagSortRule.UsageCount:
 					return query
 						.OrderByDescending(t => t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count + t.AllSongTagUsages.Count)
-						.ThenBy(t => t.Name);
+						.ThenBy(t => t.EnglishName);
 			}
 
 			return query;
@@ -56,7 +55,21 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, TagSearchTextQuery textQuery) {
 
-			return FindHelpers.AddTagNameFilter(query, textQuery);
+			if (textQuery.IsEmpty)
+				return query;
+
+			var name = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
+				case NameMatchMode.Exact:
+					return query.Where(m => m.EnglishName == name);
+
+				case NameMatchMode.StartsWith:
+					return query.Where(m => m.EnglishName.StartsWith(name));
+
+				default:
+					return query.Where(m => m.EnglishName.Contains(name));
+			}
 
 		}
 

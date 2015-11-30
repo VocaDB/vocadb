@@ -5,10 +5,10 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEdit>
 
 @{
-	PageProperties.Title = "Edit tag - " + Model.Name;
+	PageProperties.Title = "Edit tag - " + Model.CurrentName;
 	ViewBag.Parents = new[] {
 		Html.ActionLink("Tags", "Index"),
-		Html.ActionLink(Model.Name, "DetailsById", new { id = Model.Id, slug = Model.UrlSlug })
+		Html.ActionLink(Model.CurrentName, "DetailsById", new { id = Model.Id, slug = Model.UrlSlug })
 	};
 
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
@@ -61,6 +61,14 @@
 	</div>
 
 	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
+	
+	<div class="editor-label">
+		@Html.LabelFor(m => m.EnglishName)
+	</div>
+	<div class="editor-field">
+		@Html.TextBoxFor(m => m.EnglishName)
+		@Html.ValidationMessageFor(m => m.EnglishName)
+	</div>
 
 	<div class="editor-label">
 		@Html.LabelFor(m => m.CategoryName)

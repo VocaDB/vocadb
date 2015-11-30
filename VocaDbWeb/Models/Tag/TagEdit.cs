@@ -21,13 +21,13 @@ namespace VocaDb.Web.Models.Tag {
 			AliasedTo = contract.AliasedTo;
 			CategoryName = contract.CategoryName;
 			Description = contract.Description;
+			EnglishName = contract.EnglishName;
 			Name = contract.Name;
 			Parent = contract.Parent;
 			Status = contract.Status;
 			Thumb = contract.Thumb;
 
-			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
-			CopyNonEditableProperties(contract);
+			CopyNonEditableProperties(contract, permissionContext);
 
 		}
 
@@ -40,11 +40,17 @@ namespace VocaDb.Web.Models.Tag {
 		[StringLength(30)]
 		public string CategoryName { get; set; }
 
+		public string CurrentName { get; set; }
+
 		[Display(Name = "Description")]
 		[StringLength(1000)]
 		public string Description { get; set; }
 
 		public bool Draft => Status == EntryStatus.Draft;
+
+		[Display(Name = "English name")]
+		[StringLength(100)]
+		public string EnglishName { get; set; }
 
 		public int Id { get; set; }
 
@@ -63,8 +69,10 @@ namespace VocaDb.Web.Models.Tag {
 
 		public string UrlSlug { get; set; }
 
-		public void CopyNonEditableProperties(TagForEditContract contract) {
+		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext) {
 
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
+			CurrentName = contract.EnglishName;
 			Id = contract.Id;
 			IsEmpty = contract.IsEmpty;
 			Thumb = contract.Thumb;
@@ -80,6 +88,7 @@ namespace VocaDb.Web.Models.Tag {
 				AliasedTo = this.AliasedTo,
 				CategoryName = this.CategoryName ?? string.Empty,
 				Description = this.Description ?? string.Empty,
+				EnglishName = this.EnglishName,
 				Parent = this.Parent,
 				Status = this.Status,
 				UpdateNotes = this.UpdateNotes ?? string.Empty

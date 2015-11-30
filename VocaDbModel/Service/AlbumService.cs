@@ -218,7 +218,7 @@ namespace VocaDb.Model.Service {
 
 		public EntryRefWithCommonPropertiesContract[] FindDuplicates(string[] anyName) {
 
-			var names = anyName.Select(n => n.Trim()).Where(n => n != string.Empty).ToArray();
+			var names = anyName.Where(n => !string.IsNullOrEmpty(n)).Select(n => n.Trim()).ToArray();
 
 			if (!names.Any())
 				return new EntryRefWithCommonPropertiesContract[] { };

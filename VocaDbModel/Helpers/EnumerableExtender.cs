@@ -6,6 +6,11 @@ namespace VocaDb.Model.Helpers {
 
 	public static class EnumerableExtender {
 
+		public static IEnumerable<T> Distinct<T, T2>(this IEnumerable<T> source, Func<T, T2> func, IEqualityComparer<T2> propertyEquality) {
+			var comparer = new DistinctPropertyEqualityComparer<T, T2>(func, propertyEquality);
+			return source.Distinct(comparer);
+		}
+	
 		public static IEnumerable<T> Insert<T>(this IEnumerable<T> source, T element) {
 			return Enumerable.Repeat(element, 1).Concat(source);
 		}
@@ -56,6 +61,31 @@ namespace VocaDb.Model.Helpers {
 
 			return vals;
 
+		}
+
+	}
+
+	public class DistinctPropertyEqualityComparer<T, T2> : IEqualityComparer<T> {
+
+		private readonly IEqualityComparer<T2> propertyEquality;
+		private readonly Func<T, T2> func;
+
+		public DistinctPropertyEqualityComparer(Func<T, T2> func, IEqualityComparer<T2> propertyEquality) {
+			this.func = func;
+			this.propertyEquality = propertyEquality;
+        }
+
+		public bool Equals(T x, T y) {
+
+			if (ReferenceEquals(x, y))
+				return true;
+
+			return propertyEquality.Equals(func(x), func(y));
+
+		}
+
+		public int GetHashCode(T obj) {
+			return propertyEquality.GetHashCode(func(obj));
 		}
 
 	}

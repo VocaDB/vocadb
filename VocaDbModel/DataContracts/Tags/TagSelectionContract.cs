@@ -7,16 +7,13 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagSelectionContract() { }
 
 		public TagSelectionContract(Tag tag, bool selected) {
-			TagName = tag.Name;
-			TagId = tag.Id;
+			Tag = new TagBaseContract(tag);
 			Selected = selected;
 		}
 
 		public bool Selected { get; set; }
 
-		public int TagId { get; set; }
-
-		public string TagName { get; set; }
+		public TagBaseContract Tag { get; set; }
 	
 	}
 

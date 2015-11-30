@@ -16,7 +16,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -67,15 +67,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private Tag GetRealTag(IDatabaseContext<Tag> ctx, string tagName, Tag ignoreSelf) {
+		private Tag GetRealTag(IDatabaseContext<Tag> ctx, ITag tag, Tag ignoreSelf) {
 
-			if (string.IsNullOrEmpty(tagName))
+			if (tag == null || tag.Id == 0)
 				return null;
 
-			if (ignoreSelf != null && Tag.Equals(ignoreSelf, tagName))
+			if (ignoreSelf != null && Tag.Equals(ignoreSelf, tag))
 				return null;
 
-			return ctx.Query().FirstOrDefault(t => t.AliasedTo == null && t.Name == tagName);
+			return ctx.Query().FirstOrDefault(t => t.AliasedTo == null && t.Id == tag.Id);
 
 		}
 
@@ -226,7 +226,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tags = q
 					.OrderBy(sortRule)
 					.Take(maxEntries)
-					.Select(t => t.Name)
+					.Select(t => t.EnglishName)
 					.ToArray();
 
 				return tags;
@@ -241,16 +241,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagDetailsContract GetDetails(string tagName) {
+		public TagDetailsContract GetDetails(int tagId) {
 
-			ParamIs.NotNullOrEmpty(() => tagName);
+			return HandleQuery(session => {
 
-			return HandleQuery(session => { 
-				
+				var tagName = LoadTagById(session, tagId).Name;
 				var tag = GetTag(session, tagName);
-
-				if (tag == null)
-					return null;
 
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(session, tagName, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(session, tagName, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
@@ -390,24 +386,23 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void Update(TagForEditContract contract, UploadedFileContract uploadedImage) {
+		public TagBaseContract Update(TagForEditContract contract, UploadedFileContract uploadedImage) {
 
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageDatabase);
 
-			repository.HandleTransaction(ctx => {
+			return repository.HandleTransaction(ctx => {
 
-				var tag = ctx.Load(contract.Name);
+				var tag = LoadTagById(ctx, contract.Id);
 
 				permissionContext.VerifyEntryEdit(tag);
 
 				var diff = new TagDiff();
 
-				var newAliasedTo = contract.AliasedTo?.Name ?? string.Empty;
-				if (!Tag.Equals(tag.AliasedTo, newAliasedTo)) {
+				if (!Tag.Equals(tag.AliasedTo, contract.AliasedTo)) {
 					diff.AliasedTo = true;
-					tag.AliasedTo = GetRealTag(ctx, newAliasedTo, tag);
+					tag.AliasedTo = GetRealTag(ctx, contract.AliasedTo, tag);
 				}
 
 				if (tag.CategoryName != contract.CategoryName)
@@ -416,9 +411,24 @@ namespace VocaDb.Model.Database.Queries {
 				if (tag.Description != contract.Description)
 					diff.Description = true;
 
-				if (!Tag.Equals(tag.Parent, contract.Parent?.Name)) {
+				if (tag.EnglishName != contract.EnglishName) {
 
-					var newParent = GetRealTag(ctx, contract.Parent?.Name, tag);
+					Tag.ValidateName(contract.EnglishName);
+
+					var hasDuplicate = ctx.Query().Any(t => t.EnglishName == contract.EnglishName && t.Id != contract.Id);
+
+					if (hasDuplicate) {
+						throw new DuplicateTagNameException(contract.EnglishName);
+                    }
+
+					diff.Names = true;
+					tag.EnglishName = contract.EnglishName;
+
+				}
+
+				if (!Tag.Equals(tag.Parent, contract.Parent)) {
+
+					var newParent = GetRealTag(ctx, contract.Parent, tag);
 
 					if (!Equals(newParent, tag.Parent)) {
 						diff.Parent = true;
@@ -452,6 +462,8 @@ namespace VocaDb.Model.Database.Queries {
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), tag, EntryEditEvent.Updated, archived);						
 
 				ctx.Update(tag);
+
+				return new TagBaseContract(tag);
 
 			});
 

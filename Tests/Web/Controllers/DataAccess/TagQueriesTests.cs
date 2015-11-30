@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
@@ -105,6 +106,44 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Update_Name() {
+
+			var updated = new TagForEditContract(tag, false);
+			updated.EnglishName = "Api_Miku";
+
+			queries.Update(updated, null);
+
+			Assert.AreEqual("Api_Miku", tag.EnglishName, "EnglishName");
+
+			var archivedVersion = GetArchivedVersion(tag);
+			Assert.IsNotNull(archivedVersion, "Archived version was created");
+			Assert.AreEqual(TagEditableFields.Names, archivedVersion.Diff.ChangedFields, "Changed fields");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DuplicateTagNameException))]
+		public void Update_Name_Duplicate() {
+
+			var updated = new TagForEditContract(tag, false);
+			updated.EnglishName = "MMD";
+
+			queries.Update(updated, null);
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidTagNameException))]
+		public void Update_Name_Invalid() {
+
+			var updated = new TagForEditContract(tag, false);
+			updated.EnglishName = "初音ミク";
+
+			queries.Update(updated, null);
+
+		}
+
+		[TestMethod]
 		public void Update_Parent() {
 			
 			var updated = new TagForEditContract(tag, false);
@@ -134,6 +173,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var archivedVersion = GetArchivedVersion(tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(TagEditableFields.Nothing, archivedVersion.Diff.ChangedFields, "Changed fields");
+
+		}
+
+		[TestMethod]
+		public void Update_Parent_Renamed() {
+
+			var updated = new TagForEditContract(tag, false);
+			tag2.EnglishName = "Api_Miku";
+			updated.Parent = new TagBaseContract(tag2);
+
+			queries.Update(updated, null);
+
+			Assert.AreEqual(tag2, tag.Parent, "Parent");
+			Assert.IsTrue(tag2.Children.Contains(tag), "Parent contains child tag");
 
 		}
 

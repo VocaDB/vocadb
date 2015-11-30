@@ -86,6 +86,15 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual bool IsSnapshot { get; set; }
 
+		public virtual bool Names {
+			get {
+				return IsChanged(TagEditableFields.Names);
+			}
+			set {
+				Set(TagEditableFields.Names, value);
+			}
+		}
+
 		public virtual bool Parent {
 			get {
 				return IsChanged(TagEditableFields.Parent);

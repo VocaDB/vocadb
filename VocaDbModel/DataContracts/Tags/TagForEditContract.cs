@@ -13,11 +13,15 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagForEditContract(Tag tag, bool isEmpty)
 			: base(tag) {
 
+			EnglishName = tag.EnglishName;
 			IsEmpty = isEmpty;
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			UpdateNotes = string.Empty;
 
 		}
+
+		[DataMember]
+		public string EnglishName { get; set; }
 
 		[DataMember]
 		public bool IsEmpty { get; set; }
