@@ -56,7 +56,7 @@ namespace VocaDb.Tests.TestData {
 		}
 
 		public static Tag Tag(string name, int id = 0) {
-			return new Tag(name) { Id = id, TagName = name };
+			return new Tag(name) { Id = id };
 		}
 
 		public static User User(int id = 0, string name = "Miku", UserGroupId group = UserGroupId.Regular, string email = "") {

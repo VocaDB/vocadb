@@ -43,13 +43,13 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		private TagTopUsagesAndCount<TEntry> GetTopUsagesAndCount<TUsage, TEntry, TSort>(
-			IDatabaseContext<Tag> ctx, string tagName, 
+			IDatabaseContext<Tag> ctx, int tagId, 
 			Expression<Func<TUsage, bool>> whereExpression, 
 			Expression<Func<TUsage, TSort>> createDateExpression,
 			Expression<Func<TUsage, TEntry>> selectExpression)
 			where TUsage: TagUsage {
 			
-			var q = TagUsagesQuery<TUsage>(ctx, tagName)
+			var q = TagUsagesQuery<TUsage>(ctx, tagId)
 				.Where(whereExpression);
 
 			var topUsages = q
@@ -87,10 +87,12 @@ namespace VocaDb.Model.Database.Queries {
 
 			try {
 
-				var tag = ctx.Load(name);
+				var tag = ctx.Query().FirstOrDefault(t => t.Name == name);
 
-				if (name != tag.TagName)
-					tag = ctx.Load(tag.TagName);
+				if (tag == null) {
+					log.Warn("Tag not found: {0}", name);
+					return null;
+				}
 
 				return tag;
 
@@ -104,18 +106,13 @@ namespace VocaDb.Model.Database.Queries {
 		// Assumes the tag exists
 		private Tag LoadTagById(IDatabaseContext<Tag> ctx, int tagId) {
 
-			var tag = GetTagById(ctx, tagId);
-
-			if (tag == null)
-				throw new ObjectNotFoundException(tagId, typeof(Tag));
-
-			return tag;
+			return ctx.Load(tagId);
 
 		}
 
-		private IQueryable<T> TagUsagesQuery<T>(IDatabaseContext<Tag> ctx, string tagName) where T : TagUsage {
+		private IQueryable<T> TagUsagesQuery<T>(IDatabaseContext<Tag> ctx, int tagId) where T : TagUsage {
 
-			return ctx.OfType<T>().Query().Where(a => a.Tag.Name == tagName);
+			return ctx.OfType<T>().Query().Where(a => a.Tag.Id == tagId);
 
 		}
 
@@ -139,7 +136,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<Tag> ctx) {
-			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, userIconFactory, entryLinkFactory, tagId => GetTagById(ctx.OfType<Tag>(), tagId));
+			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public CommentForApiContract CreateComment(int tagId, CommentForApiContract contract) {
@@ -245,12 +242,11 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagName = LoadTagById(session, tagId).Name;
-				var tag = GetTag(session, tagName);
+				var tag = LoadTagById(session, tagId);
 
-				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(session, tagName, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
-				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(session, tagName, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
-				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(session, tagName, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
+				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(session, tagId, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
+				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(session, tagId, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
+				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(session, tagId, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
 				var latestComments = Comments(session).GetList(tag.Id, 3);
 
 				return new TagDetailsContract(tag,
@@ -348,21 +344,6 @@ namespace VocaDb.Model.Database.Queries {
 
 		public int GetTagIdByName(string name) {
 			return GetTag(name, t => t.Id);
-		}
-
-		public string GetTagNameById(int id) {
-			
-			return HandleQuery(ctx => {
-
-				var tag = GetTagById(ctx, id);
-
-				if (tag == null)
-					throw new ObjectNotFoundException(id, typeof(Tag));
-
-				return tag.Name;
-
-			});
-
 		}
 
 		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(int id) {
