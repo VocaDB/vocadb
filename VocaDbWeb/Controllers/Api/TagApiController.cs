@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
@@ -63,7 +64,7 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
-		/// Gets a tag by name.
+		/// DEPRECATED. Gets a tag by name.
 		/// </summary>
 		/// <param name="name">Tag name (required).</param>
 		/// <param name="fields">
@@ -72,6 +73,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <example>http://vocadb.net/api/tags/byName/vocarock</example>
 		/// <returns>Tag data.</returns>
 		[Route("byName/{name}")]
+		[Obsolete]
 		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None) {
 			
 			var tag = queries.GetTag(name, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));

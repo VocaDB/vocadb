@@ -9,14 +9,13 @@ namespace VocaDb.Model.Mapping.Tags {
 		public TagMap() {
 
 			Cache.NonStrictReadWrite();
-			Id(m => m.Name).Column("[Name]").Length(30).GeneratedBy.Assigned();
+			Id(m => m.Id);
 
-			Map(m => m.Id).Generated.Insert().Not.Nullable().Not.Insert().Not.Update();
+			Map(m => m.Name).Length(30).Not.Nullable();
 			Map(m => m.CategoryName).Length(30).Not.Nullable();
 			Map(m => m.Description).Length(1000).Not.Nullable();
 			Map(m => m.EnglishName).Length(100).Not.Nullable();
 			Map(m => m.Status).CustomType(typeof(EntryStatus)).Not.Nullable();
-			Map(m => m.TagName).Column("[Name]").ReadOnly().Not.Insert();
 			Map(m => m.Version).Not.Nullable();
 
 			References(m => m.AliasedTo).Nullable();
@@ -27,7 +26,7 @@ namespace VocaDb.Model.Mapping.Tags {
 			HasMany(m => m.AllArtistTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllSongTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.Children).KeyColumn("[Parent]").Inverse().Cache.ReadWrite();
-			HasMany(m => m.Comments).Inverse().KeyColumn("[Tag]").PropertyRef("Id").Cascade.AllDeleteOrphan();
+			HasMany(m => m.Comments).Inverse().KeyColumn("[Tag]").Cascade.AllDeleteOrphan();
 
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Tag]").Inverse().Cascade.All().OrderBy("Created DESC"));

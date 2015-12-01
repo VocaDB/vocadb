@@ -4,6 +4,134 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201512011830)]
+	public class TagPrimaryKey : Migration {
+
+		private const string pkName = "PK_Tags";
+		private const string ixName = "IX_Tags";
+
+		public override void Up() {
+
+			Delete.PrimaryKey(pkName).FromTable(TableNames.Tags);
+			Create.PrimaryKey(pkName).OnTable(TableNames.Tags).Column("Id");
+
+			Delete.ForeignKey("FK_Tags_Tags").OnTable(TableNames.Tags);
+			Delete.ForeignKey("FK_Tags_Tags1").OnTable(TableNames.Tags);
+			Delete.ForeignKey("FK_ActivityEntries_Tags").OnTable(TableNames.ActivityEntries);
+			Delete.ForeignKey("FK_ArchivedTagVersions_Tags").OnTable(TableNames.ArchivedTagVersions);
+			Delete.ForeignKey("FK_ArtistTagUsages_Tags").OnTable(TableNames.ArtistTagUsages);
+			Delete.ForeignKey("FK_AlbumTagUsages_Tags").OnTable(TableNames.AlbumTagUsages);
+			Delete.ForeignKey("FK_SongTagUsages_Tags").OnTable(TableNames.SongTagUsages);
+			Delete.ForeignKey("FK_TagComments_Tags").OnTable(TableNames.TagComments);
+
+			Delete.UniqueConstraint(ixName).FromTable(TableNames.Tags);
+
+			Create.ForeignKey("FK_Tags_Tags").FromTable(TableNames.Tags).ForeignColumn("AliasedTo").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_Tags_Tags1").FromTable(TableNames.Tags).ForeignColumn("Parent").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_ActivityEntries_Tags").FromTable(TableNames.ActivityEntries).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_ArchivedTagVersions_Tags").FromTable(TableNames.ArchivedTagVersions).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_ArtistTagUsages_Tags").FromTable(TableNames.ArtistTagUsages).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_AlbumTagUsages_Tags").FromTable(TableNames.AlbumTagUsages).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_SongTagUsages_Tags").FromTable(TableNames.SongTagUsages).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_TagComments_Tags").FromTable(TableNames.TagComments).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+
+		}
+
+		public override void Down() {
+
+		}
+
+	}
+
+	[Migration(201511302100)]
+	public class TagIdReferences : Migration {
+
+		private void CopyTagNameToId(string tableName, string foreignKeyColumnName, bool nullable = false) {
+
+			var tagNameColumn = string.Format("{0}Name", foreignKeyColumnName);
+
+			Rename.Column(foreignKeyColumnName).OnTable(tableName).To(tagNameColumn);
+			Create.Column(foreignKeyColumnName).OnTable(tableName).AsInt32().Nullable();
+
+			// Ex. UPDATE SongTagUsages SET SongTagUsages.Tag = Tags.Id FROM SongTagUsages INNER JOIN Tags ON (SongTagUsages.TagName = Tags.Name)
+			Execute.Sql(string.Format("UPDATE {0} SET {0}.{1} = SourceTable.Id FROM {0} INNER JOIN {2} SourceTable ON ({0}.{3} = SourceTable.Name)", 
+				tableName, foreignKeyColumnName, TableNames.Tags, tagNameColumn));
+
+			if (!nullable)
+				Alter.Column(foreignKeyColumnName).OnTable(tableName).AsInt32().NotNullable();
+
+			Delete.Column(tagNameColumn).FromTable(tableName);
+
+		}
+
+		private void MigrateUsagesTable(string usagesTableName, string entryColumnName) {
+
+			var primaryIndexName = string.Format("IX_{0}", usagesTableName);
+			var secondaryIndexname = string.Format("IX_{0}_1", usagesTableName);
+			var foreignKeyName = string.Format("FK_{0}_Tags", usagesTableName);
+
+			Delete.Index(primaryIndexName).OnTable(usagesTableName);
+
+			if (Schema.Table(usagesTableName).Index(secondaryIndexname).Exists()) {
+				Delete.Index(secondaryIndexname).OnTable(usagesTableName);
+			}
+
+			if (Schema.Table(usagesTableName).Constraint(foreignKeyName).Exists()) {
+				Delete.ForeignKey(foreignKeyName).OnTable(usagesTableName);
+			}
+
+			CopyTagNameToId(usagesTableName, "Tag");
+
+			Create.Index(primaryIndexName)
+				.OnTable(usagesTableName).OnColumn(entryColumnName).Ascending()
+				.OnColumn("Tag").Ascending()
+				.WithOptions().Unique();
+			Create.Index(secondaryIndexname)
+				.OnTable(usagesTableName).OnColumn("Tag").Ascending();
+
+			Create.ForeignKey(foreignKeyName)
+				.FromTable(usagesTableName).ForeignColumn("Tag")
+				.ToTable(TableNames.Tags).PrimaryColumn("Id")
+				.OnDelete(Rule.Cascade);
+
+		}
+
+		public override void Up() {
+
+			// Tag usages
+			MigrateUsagesTable(TableNames.SongTagUsages, "Song");
+			MigrateUsagesTable(TableNames.AlbumTagUsages, "Album");
+			MigrateUsagesTable(TableNames.ArtistTagUsages, "Artist");
+
+			// Archived versions
+			Delete.ForeignKey("FK_ArchivedTagVersions_Tags").OnTable(TableNames.ArchivedTagVersions);
+			CopyTagNameToId(TableNames.ArchivedTagVersions, "Tag");
+			Create.ForeignKey(string.Format("FK_{0}_Tags", TableNames.ArchivedTagVersions))
+				.FromTable(TableNames.ArchivedTagVersions).ForeignColumn("Tag")
+				.ToTable(TableNames.Tags).PrimaryColumn("Id")
+				.OnDelete(Rule.Cascade);
+
+			// AliasedTo + Parent
+			Delete.ForeignKey("FK_Tags_Tags").OnTable(TableNames.Tags);
+			Delete.ForeignKey("FK_Tags_Tags1").OnTable(TableNames.Tags);
+			CopyTagNameToId(TableNames.Tags, "AliasedTo", true);
+			CopyTagNameToId(TableNames.Tags, "Parent", true);
+			Create.ForeignKey("FK_Tags_Tags").FromTable(TableNames.Tags).ForeignColumn("AliasedTo").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_Tags_Tags1").FromTable(TableNames.Tags).ForeignColumn("Parent").ToTable(TableNames.Tags).PrimaryColumn("Id");
+
+			// Activity entries
+			Delete.ForeignKey("FK_ActivityEntries_Tags").OnTable(TableNames.ActivityEntries);
+			CopyTagNameToId(TableNames.ActivityEntries, "Tag", true);
+			Create.ForeignKey("FK_ActivityEntries_Tags").FromTable(TableNames.ActivityEntries).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+
+		}
+
+		public override void Down() {
+			// Sorry
+		}
+
+	}
+
 	[Migration(201511261900)]
 	public class TagEnglishName : Migration {
 

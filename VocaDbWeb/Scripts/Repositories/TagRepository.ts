@@ -12,11 +12,6 @@ module vdb.repositories {
 			$.getJSON(url, { fields: fields || undefined }, callback);
 		}
 
-		public getByName = (name: string, fields: string, callback?: (result: dc.TagApiContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/byName/" + name);
-			$.getJSON(url, { fields: fields }, callback);
-		}
-
 		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
 
 		public getList = (paging: dc.PagingProperties, query: string,
