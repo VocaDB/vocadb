@@ -4,6 +4,45 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201512011830)]
+	public class TagPrimaryKey : Migration {
+
+		private const string pkName = "PK_Tags";
+		private const string ixName = "IX_Tags";
+
+		public override void Up() {
+
+			Delete.PrimaryKey(pkName).FromTable(TableNames.Tags);
+			Create.PrimaryKey(pkName).OnTable(TableNames.Tags).Column("Id");
+
+			Delete.ForeignKey("FK_Tags_Tags").OnTable(TableNames.Tags);
+			Delete.ForeignKey("FK_Tags_Tags1").OnTable(TableNames.Tags);
+			Delete.ForeignKey("FK_ActivityEntries_Tags").OnTable(TableNames.ActivityEntries);
+			Delete.ForeignKey("FK_ArchivedTagVersions_Tags").OnTable(TableNames.ArchivedTagVersions);
+			Delete.ForeignKey("FK_ArtistTagUsages_Tags").OnTable(TableNames.ArtistTagUsages);
+			Delete.ForeignKey("FK_AlbumTagUsages_Tags").OnTable(TableNames.AlbumTagUsages);
+			Delete.ForeignKey("FK_SongTagUsages_Tags").OnTable(TableNames.SongTagUsages);
+			Delete.ForeignKey("FK_TagComments_Tags").OnTable(TableNames.TagComments);
+
+			Delete.UniqueConstraint(ixName).FromTable(TableNames.Tags);
+
+			Create.ForeignKey("FK_Tags_Tags").FromTable(TableNames.Tags).ForeignColumn("AliasedTo").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_Tags_Tags1").FromTable(TableNames.Tags).ForeignColumn("Parent").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_ActivityEntries_Tags").FromTable(TableNames.ActivityEntries).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_ArchivedTagVersions_Tags").FromTable(TableNames.ArchivedTagVersions).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_ArtistTagUsages_Tags").FromTable(TableNames.ArtistTagUsages).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_AlbumTagUsages_Tags").FromTable(TableNames.AlbumTagUsages).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_SongTagUsages_Tags").FromTable(TableNames.SongTagUsages).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+			Create.ForeignKey("FK_TagComments_Tags").FromTable(TableNames.TagComments).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
+
+		}
+
+		public override void Down() {
+
+		}
+
+	}
+
 	[Migration(201511302100)]
 	public class TagIdReferences : Migration {
 
