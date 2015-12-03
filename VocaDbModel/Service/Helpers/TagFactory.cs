@@ -16,9 +16,9 @@ namespace VocaDb.Model.Service.Helpers {
 			this.loginData = loginData;
 		}
 
-		public Tag CreateTag(TagNameAndTranslation name) {
+		public Tag CreateTag(string englishName) {
 
-			var tag = new Tag(name);
+			var tag = new Tag(englishName);
 			ctx.Save(tag);
 
 			var archived = tag.CreateArchivedVersion(new TagDiff(), loginData, EntryEditEvent.Created, string.Empty);

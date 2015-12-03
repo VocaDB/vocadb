@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Tags;
@@ -7,27 +6,11 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Queries {
 
 	public class TagUsageQueries {
-
-		/// <summary>
-		/// Gets the next free name for a tag
-		/// </summary>
-		private string GetNewTagName(IDatabaseContext<User> ctx, string tagName) {
-
-			var prefixMatch = ctx.Query<Tag>().Where(t => t.Name.StartsWith(tagName)).Select(t => t.Name).ToArray();
-
-			if (!prefixMatch.Any())
-				return tagName;
-
-			var hash = new HashSet<string>(prefixMatch, StringComparer.InvariantCultureIgnoreCase);
-			return Enumerable.Range(0, int.MaxValue).Select(i => string.Format("{0}{1}", tagName, i)).First(name => !hash.Contains(name));
-
-		}
 
 		private bool IsValid(TagBaseContract contract) {
 
@@ -70,30 +53,28 @@ namespace VocaDb.Model.Service.Queries {
 				var translatedTagNames = tags.Where(t => !HasId(t) && !string.IsNullOrEmpty(t.Name)).Select(t => t.Name).ToArray();
 
 				// Load existing tags by name and ID.
-				var tagsFromNames = ctx.Query<Tag>().Where(t => translatedTagNames.Contains(t.EnglishName))
-					.Select(t => new TagNameAndTranslation { TagName = t.Name, EnglishName = t.EnglishName }).ToArray();
+				var tagsFromIds = ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).ToArray();
 
-				var tagsFromIds = ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id))
-					.Select(t => new TagNameAndTranslation { TagName = t.Name, EnglishName = t.EnglishName }).ToArray();
+				var tagsFromNames = ctx.Query<Tag>().Where(t => translatedTagNames.Contains(t.EnglishName)).ToArray();
 
 				// Figure out tags that don't exist yet (no ID and no matching name).
-				var newTags = translatedTagNames.Except(tagsFromNames.Select(t => t.EnglishName)).Select(t => new TagNameAndTranslation(GetNewTagName(ctx, t), t)).ToArray();
-
-				// Get the final list of tag names with translations
-				var appliedTags = tagsFromNames.Concat(tagsFromIds).Concat(newTags).Distinct(t => t.TagName, StringComparer.InvariantCultureIgnoreCase).ToArray();
-				var tagNames = appliedTags.Select(t => t.TagName).ToArray();
+				var newTagNames = translatedTagNames.Except(tagsFromNames.Select(t => t.EnglishName), StringComparer.InvariantCultureIgnoreCase).ToArray();
 
 				var user = ctx.OfType<User>().GetLoggedUser(permissionContext);
-				var entry = ctx.OfType<TEntry>().Load(entryId);
+				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
+				var newTags = newTagNames.Select(t => tagFactory.CreateTag(t)).ToArray();
 
+				// Get the final list of tag names with translations
+				var appliedTags = tagsFromNames.Concat(tagsFromIds).Concat(newTags).Distinct().ToArray();
+
+				var entry = ctx.OfType<TEntry>().Load(entryId);
+				var tagUsageFactory = tagUsageFactoryFactory(entry, ctx.OfType<TTag>());
+
+				var tagNames = appliedTags.Select(t => t.EnglishName);
 				ctx.AuditLogger.AuditLog(string.Format("tagging {0} with {1}",
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
 
-				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
-				var tagUsageFactory = tagUsageFactoryFactory(entry, ctx.OfType<TTag>());
-				var existingTags = TagHelpers.GetTags(ctx.OfType<Tag>(), tagNames);
-
-				tagFunc(entry).SyncVotes(user, appliedTags, existingTags, tagFactory, tagUsageFactory, onlyAdd: onlyAdd);
+				tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
 
 				return tagFunc(entry).Usages.Select(t => new TagUsageForApiContract(t)).ToArray();
 

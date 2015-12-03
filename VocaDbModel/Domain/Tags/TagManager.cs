@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
@@ -31,7 +30,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual IEnumerable<Tag> TagsByVotes {
 			get {
-				return Usages.OrderByDescending(u => u.Count).ThenBy(u => u.Tag.Name).Select(u => u.Tag);
+				return Usages.OrderByDescending(u => u.Count).ThenBy(u => u.Tag.EnglishName).Select(u => u.Tag);
 			}
 		}
 
@@ -79,22 +78,14 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		public virtual void SyncVotes(User user, TagNameAndTranslation[] tagNames, Dictionary<string, Tag> allTags, ITagFactory tagFactory, ITagUsageFactory<T> tagUsageFactory,
+		public virtual void SyncVotes(User user, Tag[] tags, ITagUsageFactory<T> tagUsageFactory,
 			bool onlyAdd = false) {
 
-			var newTags = tagNames.Where(t => !allTags.ContainsKey(t.TagName));
+			var actualTags = tags.Select(t => t.ActualTag).Distinct().ToArray();
+			var tagUsagesDiff = CollectionHelper.Diff(Usages, actualTags, (t1, t2) => t1.Tag.Equals(t2));
 
-			foreach (var tag in newTags) {
-				var newTag = tagFactory.CreateTag(tag);
-				allTags.Add(newTag.Name, newTag);
-			}
-
-			var actualTagNames = tagNames.Select(t => allTags[t.TagName].ActualTag.Name).Distinct().ToArray();
-			var tagUsagesDiff = CollectionHelper.Diff(Usages, actualTagNames, (t1, t2) => t1.Tag.Name.Equals(t2, StringComparison.InvariantCultureIgnoreCase));
-
-			foreach (var newUsageName in tagUsagesDiff.Added) {
-				var tag = allTags[newUsageName];
-				var newUsage = tagUsageFactory.CreateTagUsage(tag);
+			foreach (var newUsageTag in tagUsagesDiff.Added) {
+				var newUsage = tagUsageFactory.CreateTagUsage(newUsageTag);
 				Usages.Add(newUsage);
 				newUsage.CreateVote(user);
 			}
@@ -117,20 +108,6 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 
 		}
-
-	}
-
-	public class TagNameAndTranslation {
-
-		public TagNameAndTranslation() { }
-
-		public TagNameAndTranslation(string tagName, string englishName) {
-			TagName = tagName;
-			EnglishName = englishName;
-		}
-
-		public string EnglishName { get; set; }
-		public string TagName { get; set; }
 
 	}
 

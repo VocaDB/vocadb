@@ -208,7 +208,7 @@ namespace VocaDb.Web.Controllers {
 				var genres = ctx.OfType<T>()
 					.Query()
 					.Where(u => u.Tag.AliasedTo == null && u.Tag.Parent == null && u.Tag.CategoryName == Tag.CommonCategory_Genres)
-					.GroupBy(s => s.Tag.Name)
+					.GroupBy(s => s.Tag.EnglishName)
 					.Select(g => new {
 						TagName = g.Key,
 						Count = g.Count()

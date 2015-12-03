@@ -1446,17 +1446,17 @@ namespace VocaDb.Model.Database.Queries {
 	public class SongTagUsageFactory : ITagUsageFactory<SongTagUsage> {
 
 		private readonly Song song;
-		private readonly IDatabaseContext<SongTagUsage> session;
+		private readonly IDatabaseContext<SongTagUsage> ctx;
 
-		public SongTagUsageFactory(IDatabaseContext<SongTagUsage> session, Song song) {
-			this.session = session;
+		public SongTagUsageFactory(IDatabaseContext<SongTagUsage> ctx, Song song) {
+			this.ctx = ctx;
 			this.song = song;
 		}
 
 		public SongTagUsage CreateTagUsage(Tag tag) {
 
 			var usage = new SongTagUsage(song, tag);
-			session.Save(usage);
+			ctx.Save(usage);
 
 			return usage;
 
