@@ -79,31 +79,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private Tag GetTagById(IDatabaseContext<Tag> ctx, int tagId) {
-			return ctx.Query().FirstOrDefault(t => t.Id == tagId);
-		}
-
 		private Tag GetTag(IDatabaseContext<Tag> ctx, string name) {
 
-			try {
+			var tag = ctx.Query().FirstOrDefault(t => t.EnglishName == name);
 
-				var tag = ctx.Query().FirstOrDefault(t => t.Name == name);
-
-				if (tag == null) {
-					log.Warn("Tag not found: {0}", name);
-					return null;
-				}
-
-				return tag;
-
-			} catch (ObjectNotFoundException) {
+			if (tag == null) {
 				log.Warn("Tag not found: {0}", name);
-				return null;
 			}
+
+			return tag;
 
 		}
 
-		// Assumes the tag exists
+		/// <summary>
+		/// Assumes the tag exists - throws an exception if it doesn't.
+		/// </summary>
 		private Tag LoadTagById(IDatabaseContext<Tag> ctx, int tagId) {
 
 			return ctx.Load(tagId);
@@ -287,17 +277,6 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public T GetTag<T>(int id, Func<Tag, T> fac) {
-
-			return HandleQuery(ctx => {
-
-				var tag = GetTagById(ctx, id);
-				return fac(tag);
-
-			});
-
-		}
-
 		public TagCategoryContract[] GetTagsByCategories() {
 
 			return HandleQuery(ctx => {
@@ -305,7 +284,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tags = ctx.Query()
 					.Where(t => t.AliasedTo == null)
 					.OrderBy(t => t.CategoryName)
-					.ThenBy(t => t.Name)
+					.ThenBy(t => t.EnglishName)
 					.GroupBy(t => t.CategoryName)
 					.ToArray();
 
@@ -348,16 +327,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(int id) {
 
-			return HandleQuery(ctx => {
-
-				var tag = GetTagById(ctx, id);
-
-				if (tag == null)
-					return null;
-
-				return new TagWithArchivedVersionsContract(tag);
-
-			});
+			return LoadTag(id, tag => new TagWithArchivedVersionsContract(tag));
 
 		}
 

@@ -25,6 +25,7 @@ namespace VocaDb.Web.Controllers
 				return View("External");
 
 			ViewBag.FreeTagId = tagQueries.GetTagIdByName(Tag.CommonTag_Free);
+			ViewBag.InstrumentalTagId = tagQueries.GetTagIdByName(Tag.CommonTag_Instrumental);
 
 			if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ja")
 				return View("Index.ja");

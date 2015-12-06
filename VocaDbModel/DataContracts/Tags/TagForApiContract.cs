@@ -72,6 +72,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public EntryStatus Status { get; set; }
 
 		[DataMember]
+		[Obsolete]
 		public string TagName { get; set; }
 
 		[DataMember]

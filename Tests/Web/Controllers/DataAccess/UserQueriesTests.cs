@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Comments;
@@ -390,8 +391,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		public void GetRatingsByGenre() {
-			
-			var fakeTag = new Tag("temp") { Name = null }; // Need to fake it because NHibernate doesn't work with ?:
+
+			var fakeTagMock = new Mock<Tag>();
+			fakeTagMock.SetupGet(m => m.EnglishName).Returns((string)null); // Need to fake it because NHibernate doesn't work with ?:
+			var fakeTag = fakeTagMock.Object; 
 			var vocarock = new Tag("Vocarock", Tag.CommonCategory_Genres) { Parent = fakeTag, AliasedTo = fakeTag };
 			var electronic = new Tag("Electronic", Tag.CommonCategory_Genres) { Parent = fakeTag, AliasedTo = fakeTag };
 			var trance = new Tag("Trance", Tag.CommonCategory_Genres) { Parent = electronic, AliasedTo = fakeTag };
@@ -417,11 +420,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(2, result.Length, "Number of results");
 			var first = result[0];
-			Assert.AreEqual(electronic.Name, first.Item1, "First result is Electronic");
+			Assert.AreEqual(electronic.EnglishName, first.Item1, "First result is Electronic");
 			Assert.AreEqual(3, first.Item2, "Votes for Electronic");
 
 			var second = result[1];
-			Assert.AreEqual(vocarock.Name, second.Item1, "First result is Vocarock");
+			Assert.AreEqual(vocarock.EnglishName, second.Item1, "First result is Vocarock");
 			Assert.AreEqual(2, second.Item2, "Votes for Vocarock");
 
 		}

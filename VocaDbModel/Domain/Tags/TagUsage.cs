@@ -74,7 +74,7 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public override int GetHashCode() {
-			var format = string.Format("{0}_{1}{2}", Tag.Name, Entry.EntryType, Entry.Id);
+			var format = string.Format("{0}_{1}{2}", Tag.Id, Entry.EntryType, Entry.Id);
 			return format.GetHashCode();
 		}
 

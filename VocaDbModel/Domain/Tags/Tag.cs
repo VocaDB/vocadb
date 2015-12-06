@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -100,17 +101,6 @@ namespace VocaDb.Model.Domain.Tags {
 
 			Name = name;
 			EnglishName = name;
-			CategoryName = categoryName;
-
-		}
-
-		public Tag(TagNameAndTranslation name, string categoryName = "")
-			: this() {
-
-			ValidateName(name.TagName);
-
-			Name = name.TagName;
-			EnglishName = name.EnglishName;
 			CategoryName = categoryName;
 
 		}
@@ -238,6 +228,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// Tag name identifier. To be deleted. Replaced by <see cref="Id"/>.
 		/// </summary>
+		[Obsolete]
 		public virtual string Name { get; set; }
 
 		/// <summary>
@@ -251,7 +242,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual string NameWithSpaces {
 			get {
-				return Name.Replace('_', ' ');
+				return EnglishName.Replace('_', ' ');
 			}
 		}
 
@@ -296,7 +287,10 @@ namespace VocaDb.Model.Domain.Tags {
 			if (tag == null)
 				return false;
 
-			return tag.Name.Equals(Name, StringComparison.InvariantCultureIgnoreCase);
+			if (ReferenceEquals(this, tag))
+				return true;
+
+			return Id != 0 && Id == tag.Id;
 
 		}
 
@@ -305,7 +299,7 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public override int GetHashCode() {
-			return Name.ToLowerInvariant().GetHashCode();
+			return Id.GetHashCode();
 		}
 
 		public virtual void SetParent(Tag newParent) {
@@ -351,7 +345,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int Version { get; set; }
 
 		public override string ToString() {
-			return string.Format("tag '{0}' [{1},{2}]", EnglishName, Id, Name);
+			return string.Format("tag '{0}' [{1}]", EnglishName, Id);
 		}
 
 	}
@@ -359,43 +353,6 @@ namespace VocaDb.Model.Domain.Tags {
 	public interface ITag {
 		int Id { get; }
 		string Name { get; }
-	}
-
-	public class TagIdOrNameEqualityComparer<TTag> : IEqualityComparer<TTag> where TTag : class, ITag {
-
-		public bool Equals(TTag x, TTag y) {
-
-			if (ReferenceEquals(x, y))
-				return true;
-
-			if (x == null || y == null)
-				return false;
-
-			if (x.Id != 0 && x.Id == y.Id)
-				return true;
-
-			if (!string.IsNullOrEmpty(x.Name) && string.Equals(x.Name, y.Name, StringComparison.InvariantCultureIgnoreCase))
-				return true;
-
-			return false;
-
-		}
-
-		public int GetHashCode(TTag obj) {
-
-			if (obj == null)
-				return 0;
-
-			if (obj.Id != 0)
-				return obj.Id.GetHashCode();
-
-			if (!string.IsNullOrEmpty(obj.Name))
-				return obj.Name.ToLowerInvariant().GetHashCode();
-
-			return 0;
-
-		}
-
 	}
 
 }
