@@ -81,7 +81,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			Assert.AreEqual(1, entry.Tags.Tags.Count(), "Number of tags");
 			var usage = entry.Tags.Usages.First();
-			Assert.AreEqual("vocarock", usage.Tag.Name, "Added tag name");
+			Assert.AreEqual("vocarock", usage.Tag.EnglishName, "Added tag name");
 			Assert.AreEqual(tag.Id, usage.Tag.Id, "Added tag Id");
 
 		}
@@ -98,7 +98,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var entryTags = entry.Tags.Tags.ToArray();
 			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.Name == "vocarock"), "vocarock tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "vocarock"), "vocarock tag is added");
 
 		}
 
@@ -126,7 +126,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var tags = new[] {
 				new TagBaseContract { Id = tag.Id },
-				new TagBaseContract { Name = tag.Name }
+				new TagBaseContract { Name = tag.EnglishName }
 			};
 
 			AddTags(entry.Id, tags);
@@ -151,8 +151,8 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var entryTags = entry.Tags.Tags.ToArray();
             Assert.AreEqual(2, entryTags.Length, "Number of applied tags");
-			Assert.IsTrue(entryTags.Any(t => t.Name == "vocarock"), "vocarock tag is added");
-			Assert.IsTrue(entryTags.Any(t => t.Name == "power_metal"), "power_metal tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "vocarock"), "vocarock tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "power_metal"), "power_metal tag is added");
 
 		}
 
@@ -171,7 +171,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var entryTags = entry.Tags.Tags.ToArray();
 			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.Name == "power_metal"), "power_metal tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "power_metal"), "power_metal tag is added");
 
 		}
 	}

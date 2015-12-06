@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
@@ -19,6 +20,7 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		[Obsolete]
 		public virtual IEnumerable<string> TagNames {
 			get {
 				return Usages.Select(t => t.Tag.Name);
@@ -70,6 +72,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
+		[Obsolete]
 		public virtual bool HasTag(string tagName) {
 
 			ParamIs.NotNull(() => tagName);

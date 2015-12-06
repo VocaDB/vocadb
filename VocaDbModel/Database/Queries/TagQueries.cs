@@ -284,7 +284,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tags = ctx.Query()
 					.Where(t => t.AliasedTo == null)
 					.OrderBy(t => t.CategoryName)
-					.ThenBy(t => t.Name)
+					.ThenBy(t => t.EnglishName)
 					.GroupBy(t => t.CategoryName)
 					.ToArray();
 

@@ -191,7 +191,7 @@ namespace VocaDb.Model.DataContracts.Api {
 				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl, Tag.ImageSizes);					
 			}
 
-			UrlSlug = tag.Name;
+			UrlSlug = tag.UrlSlug;
 
 		}
 

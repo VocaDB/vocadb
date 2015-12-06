@@ -61,7 +61,7 @@ namespace VocaDb.Model.Database.Queries {
 			public int FavoriteSongCount { get; set; }
 
 			// Statistical information, not essential
-			public string[] FavoriteTags { get; set; }
+			public int[] FavoriteTags { get; set; }
 
 			// Only used for "power"
 			public int OwnedAlbumCount { get; set; }
@@ -135,7 +135,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution
 						&& t.AllSongTagUsages.Any(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
 					.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
-					.Select(t => t.Name)
+					.Select(t => t.Id)
 					.Take(8)
 					.ToArray();
 
@@ -169,7 +169,7 @@ namespace VocaDb.Model.Database.Queries {
 			details.AlbumCollectionCount = cachedStats.AlbumCollectionCount;
 			details.ArtistCount = cachedStats.ArtistCount;
 			details.FavoriteSongCount = cachedStats.FavoriteSongCount;
-			details.FavoriteTags = session.Query<Tag>().Where(t => cachedStats.FavoriteTags.Contains(t.Name)).ToArray().Select(t => new TagBaseContract(t)).ToArray();
+			details.FavoriteTags = session.Query<Tag>().Where(t => cachedStats.FavoriteTags.Contains(t.Id)).ToArray().Select(t => new TagBaseContract(t)).ToArray();
 			details.CommentCount = cachedStats.CommentCount;
 			details.EditCount = cachedStats.EditCount;
 			details.SubmitCount = cachedStats.SubmitCount;
@@ -815,7 +815,7 @@ namespace VocaDb.Model.Database.Queries {
 					.OfType<SongTagUsage>()
 					.Query()
 					.Where(u => u.Song.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == Tag.CommonCategory_Genres)
-					.GroupBy(s => new { TagName = s.Tag.Name, Parent = s.Tag.Parent.Name, AliasedTo = s.Tag.AliasedTo.Name })
+					.GroupBy(s => new { TagName = s.Tag.EnglishName, Parent = s.Tag.Parent.EnglishName, AliasedTo = s.Tag.AliasedTo.EnglishName })
 					.Select(g => new {
 						TagName = g.Key.TagName,
 						Parent = g.Key.Parent,

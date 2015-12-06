@@ -84,14 +84,14 @@ namespace VocaDb.Model.Service.Queries {
 			if (song.Tags.Tags.Any()) {
 
 				// Take top 5 tags
-				var tagNames = song.Tags.Usages.OrderByDescending(u => u.Count).Take(5).Select(t => t.Tag.Name).ToArray();
+				var tagIds = song.Tags.Usages.OrderByDescending(u => u.Count).Take(5).Select(t => t.Tag.Id).ToArray();
 
 				var songsWithTags =
 					ctx.Query().Where(al => 
 						al.Id != songId
 						&& !loadedSongs.Contains(al.Id) 
 						&& !al.Deleted 
-						&& al.Tags.Usages.Any(t => tagNames.Contains(t.Tag.Name)))
+						&& al.Tags.Usages.Any(t => tagIds.Contains(t.Tag.Id)))
 					.OrderBy(a => a.RatingScore)
 					.Take(12)
 					.ToArray();

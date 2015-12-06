@@ -228,6 +228,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// Tag name identifier. To be deleted. Replaced by <see cref="Id"/>.
 		/// </summary>
+		[Obsolete]
 		public virtual string Name { get; set; }
 
 		/// <summary>
