@@ -5,13 +5,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class AlbumLinkQueryableExtender {
 
-		public static IQueryable<T> WhereAlbumHasTag<T>(this IQueryable<T> query, string tag)
+		public static IQueryable<T> WhereAlbumHasTag<T>(this IQueryable<T> query, string tagName)
 			where T : IAlbumLink {
 			
-			if (string.IsNullOrEmpty(tag))
+			if (string.IsNullOrEmpty(tagName))
 				return query;
 
-			return query.Where(s => s.Album.Tags.Usages.Any(t => t.Tag.Name == tag));
+			return query.Where(s => s.Album.Tags.Usages.Any(t => t.Tag.Name == tagName));
 
 		}
 

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using ViewRes.Tag;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -50,6 +51,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		// Kept for now since there's external references.
+		[Obsolete]
 		public ActionResult Details(string id) {
 
 			if (string.IsNullOrEmpty(id))
@@ -132,10 +135,10 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(filter)) {
 
-				var tag = queries.GetTag(filter, t => new { t.Id, t.Name });
+				var tag = queries.GetTag(filter, t => new { t.Id, t.EnglishName });
 
 				if (tag != null) {
-					return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.Name });
+					return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.EnglishName });
 				}
 
 				return RedirectToAction("Index", "Search", new SearchIndexViewModel(EntryType.Tag, filter));
@@ -153,10 +156,6 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var contract = queries.GetTagWithArchivedVersions(id);
-
-			if (contract == null)
-				return HttpNotFound();
-
 			return View(contract);
 
 		}

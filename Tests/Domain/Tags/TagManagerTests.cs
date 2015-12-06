@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -17,7 +16,7 @@ namespace VocaDb.Tests.Domain.Tags {
 
 			private readonly Song song = new Song();
 
-			public Tag CreateTag(TagNameAndTranslation name) {
+			public Tag CreateTag(string name) {
 				return new Tag(name);
 			}
 
@@ -28,14 +27,13 @@ namespace VocaDb.Tests.Domain.Tags {
 		}
 
 		private Tag aliasedTag;
-		private Dictionary<string, Tag> allTags;
 		private TagManager<SongTagUsage> manager; 
 		private Tag tag;
 		private TagFactory tagFactory;
 		private User user;
 
-		private void SyncVotes(params string[] tagNames) {
-			manager.SyncVotes(user, tagNames.Select(t => new TagNameAndTranslation(t, t)).ToArray(), allTags, tagFactory, tagFactory);
+		private void SyncVotes(params Tag[] tags) {
+			manager.SyncVotes(user, tags, tagFactory);
 		}
 
 		[TestInitialize]
@@ -44,7 +42,6 @@ namespace VocaDb.Tests.Domain.Tags {
 			tagFactory = new TagFactory();
 			tag = new Tag("drumnbass");
 			aliasedTag = new Tag("Drum_and_bass") { AliasedTo = tag };
-			allTags = new[] {tag, aliasedTag}.ToDictionary(t => t.Name);
 			manager = new TagManager<SongTagUsage>();
 			user = new User();
 
@@ -53,7 +50,7 @@ namespace VocaDb.Tests.Domain.Tags {
 		[TestMethod]
 		public void Sync_ReplaceWithAlias() {
 
-			SyncVotes(aliasedTag.Name);
+			SyncVotes(aliasedTag);
 
 			Assert.AreEqual(1, manager.Tags.Count(), "one tag");
 			Assert.AreEqual(tag, manager.Tags.First(), "tag is the actual one");
@@ -63,7 +60,7 @@ namespace VocaDb.Tests.Domain.Tags {
 		[TestMethod]
 		public void Sync_BothAliasAndActual() {
 
-			SyncVotes(tag.Name, aliasedTag.Name);
+			SyncVotes(tag, aliasedTag);
 
 			Assert.AreEqual(1, manager.Tags.Count(), "one tag");
 			Assert.AreEqual(tag, manager.Tags.First(), "tag is the actual one");

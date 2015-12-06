@@ -345,8 +345,8 @@ namespace VocaDb.Model.Service {
 
 				var tagNames = session.Query<Tag>()
 					.WhereHasName(tagTextQuery)
-					.OrderBy(t => t.Name)
-					.Select(t => t.Name)
+					.OrderBy(t => t.EnglishName)
+					.Select(t => t.EnglishName)
 					.Take(maxResults)
 					.ToArray();
 
@@ -435,7 +435,7 @@ namespace VocaDb.Model.Service {
 
 				var tags = session.Query<Tag>()
 					.WhereHasName(tagTextQuery)
-					.OrderBy(t => t.Name)
+					.OrderBy(t => t.EnglishName)
 					.Take(maxResults)
 					.ToArray();
 

@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Tests.TestData;
@@ -40,7 +41,7 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddTagByName() {
+		public void AddNewTagByName() {
 
 			var tags = new[] { Contract("vocarock") };
 
@@ -48,8 +49,26 @@ namespace VocaDb.Tests.Service.Queries {
 
 			Assert.AreEqual(1, entry.Tags.Tags.Count(), "Number of tags");
 			var usage = entry.Tags.Usages.First();
-			Assert.AreEqual("vocarock", usage.Tag.Name, "Added tag name");
+			Assert.AreEqual("vocarock", usage.Tag.EnglishName, "Added tag name");
 			Assert.IsTrue(usage.HasVoteByUser(user), "Vote is by the logged in user");
+
+			Assert.AreEqual(1, repository.List<Tag>().Count, "Number of tags in the repository");
+			Assert.AreEqual(usage.Tag, repository.List<Tag>().FirstOrDefault(), "Tag in repository is the same as the one applied");
+
+		}
+
+		[TestMethod]
+		public void AddExistingTagByName() {
+
+			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
+			tag.EnglishName = "rock";
+
+			// vocarock was renamed to rock
+			AddTags(entry.Id, Contract("rock"));
+
+			var entryTags = entry.Tags.Tags.ToArray();
+			Assert.AreEqual(1, entryTags.Length, "Number of tags");
+			Assert.IsTrue(entryTags.Any(t => t.Id == 39), "vocarock tag is added");
 
 		}
 
@@ -62,7 +81,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			Assert.AreEqual(1, entry.Tags.Tags.Count(), "Number of tags");
 			var usage = entry.Tags.Usages.First();
-			Assert.AreEqual("vocarock", usage.Tag.Name, "Added tag name");
+			Assert.AreEqual("vocarock", usage.Tag.EnglishName, "Added tag name");
 			Assert.AreEqual(tag.Id, usage.Tag.Id, "Added tag Id");
 
 		}
@@ -79,22 +98,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var entryTags = entry.Tags.Tags.ToArray();
 			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.Name == "vocarock"), "vocarock tag is added");
-
-		}
-
-		[TestMethod]
-		public void AddByTranslation() {
-
-			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
-			tag.EnglishName = "rock";
-
-			// vocarock was renamed to rock
-			AddTags(entry.Id, Contract("rock"));
-
-			var entryTags = entry.Tags.Tags.ToArray();
-			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.Id == 39), "vocarock tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "vocarock"), "vocarock tag is added");
 
 		}
 
@@ -122,7 +126,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var tags = new[] {
 				new TagBaseContract { Id = tag.Id },
-				new TagBaseContract { Name = tag.Name }
+				new TagBaseContract { Name = tag.EnglishName }
 			};
 
 			AddTags(entry.Id, tags);
@@ -146,9 +150,9 @@ namespace VocaDb.Tests.Service.Queries {
 			AddTags(entry.Id, tags);
 
 			var entryTags = entry.Tags.Tags.ToArray();
-            Assert.AreEqual(2, entryTags.Count(), "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.Name == "vocarock"), "vocarock tag is added");
-			Assert.IsTrue(entryTags.Any(t => t.Name == "power_metal"), "power_metal tag is added");
+            Assert.AreEqual(2, entryTags.Length, "Number of applied tags");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "vocarock"), "vocarock tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "power_metal"), "power_metal tag is added");
 
 		}
 
@@ -167,7 +171,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var entryTags = entry.Tags.Tags.ToArray();
 			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.Name == "power_metal"), "power_metal tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.EnglishName == "power_metal"), "power_metal tag is added");
 
 		}
 	}

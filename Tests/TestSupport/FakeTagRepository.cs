@@ -17,10 +17,6 @@ namespace VocaDb.Tests.TestSupport {
 
 	public class TagListDatabaseContext : ListDatabaseContext<Tag> {
 
-		protected override object GetId(Tag entity) {
-			return entity.Name;
-		}
-
 		public TagListDatabaseContext(QuerySourceList querySource) 
 			: base(querySource) {}
 
