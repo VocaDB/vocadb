@@ -2,7 +2,6 @@
 using System.Linq;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources;
 
@@ -10,7 +9,7 @@ namespace VocaDb.Model.Service.EntryValidators {
 
 	public class SongValidator {
 
-		public bool IsValid(Song song) {
+		public bool IsValid(Song song, int instrumentalTagId) {
 			
 			ParamIs.NotNull(() => song);
 
@@ -33,7 +32,7 @@ namespace VocaDb.Model.Service.EntryValidators {
 
 			if (song.SongType != SongType.Instrumental 
 				&& song.SongType != SongType.DramaPV 
-				&& !song.Tags.HasTag(Tag.CommonTag_Instrumental) 
+				&& !song.Tags.HasTag(instrumentalTagId) 
 				&& !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any())
 				errors.Add(SongValidationErrors.NonInstrumentalSongNeedsVocalists);
 

@@ -58,7 +58,7 @@ namespace VocaDb.Tests.Domain.Songs {
 		[TestMethod]
 		public void LyricsFromParents_NoLyrics() {
 
-			var result = new Song().LyricsFromParents;
+			var result = new Song().GetLyricsFromParents(0);
 
 			Assert.AreEqual(0, result.Count, "no lyrics");
 
@@ -67,7 +67,7 @@ namespace VocaDb.Tests.Domain.Songs {
 		[TestMethod]
 		public void LyricsFromParents_NoParent() {
 
-			var result = song.LyricsFromParents;
+			var result = song.GetLyricsFromParents(0);
 
 			Assert.AreEqual(1, result.Count, "one entry");
 			Assert.AreSame(lyrics, result.First(), "returned lyrics from entry");
@@ -79,7 +79,7 @@ namespace VocaDb.Tests.Domain.Songs {
 
 			var derived = new Song();
 			derived.OriginalVersion = song;
-			var result = derived.LyricsFromParents;
+			var result = derived.GetLyricsFromParents(0);
 
 			Assert.AreEqual(1, result.Count, "one entry");
 			Assert.AreSame(lyrics, result.First(), "returned lyrics from entry");

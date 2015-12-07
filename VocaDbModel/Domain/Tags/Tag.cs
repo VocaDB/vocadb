@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -67,10 +66,6 @@ namespace VocaDb.Model.Domain.Tags {
 		public const string CommonCategory_Distribution = "Distribution";
 		public const string CommonCategory_Genres = "Genres";
 		public const string CommonCategory_Lyrics = "Lyrics";
-		public const string CommonTag_ChangedLyrics = "changed_lyrics";
-		public const string CommonTag_Free = "free";
-		public const string CommonTag_Instrumental = "instrumental";
-		public const string CommonTag_Nicovideo_downloadmusic = "nicovideo_downloadmusic";
 
 		public static bool Equals(ITag left, ITag right) {
 			return left?.Id == right?.Id;

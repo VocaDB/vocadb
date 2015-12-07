@@ -31,6 +31,7 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
+using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Database.Queries {
 
@@ -51,6 +52,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly ObjectCache cache;
+		private readonly VdbConfigManager config;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly ILanguageDetector languageDetector;
@@ -215,7 +217,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
-			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, ObjectCache cache)
+			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, ObjectCache cache, VdbConfigManager config)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -225,6 +227,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
             this.cache = cache;
+			this.config = config;
 
 		}
 
@@ -292,7 +295,7 @@ namespace VocaDb.Model.Database.Queries {
 				var pvDiff = song.SyncPVs(pvs);
 				ctx.OfType<PVForSong>().Sync(pvDiff);
 
-				song.Status = (contract.Draft || !(new SongValidator().IsValid(song))) ? EntryStatus.Draft : EntryStatus.Finished;
+				song.Status = (contract.Draft || !(new SongValidator().IsValid(song, config.SpecialTags.Instrumental))) ? EntryStatus.Draft : EntryStatus.Finished;
 
 				song.UpdateArtistString();
 
@@ -349,7 +352,8 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(session => {
 
 				var song = session.Load<Song>(songId);
-				var contract = new SongDetailsContract(song, languagePreference ?? PermissionContext.LanguagePreference, GetSongPools(session, songId));
+				var contract = new SongDetailsContract(song, languagePreference ?? PermissionContext.LanguagePreference, GetSongPools(session, songId), 
+					config.SpecialTags.ChangedLyrics);
 				var user = PermissionContext.LoggedUser;
 
 				if (user != null) {

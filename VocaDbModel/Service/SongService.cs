@@ -24,6 +24,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service {
 
@@ -33,6 +34,7 @@ namespace VocaDb.Model.Service {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 #pragma warning restore 169
 
+		private readonly VdbConfigManager config;
 		private readonly IEntryUrlParser entryUrlParser;
 
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams) {
@@ -53,10 +55,12 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser)
+		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser,
+			VdbConfigManager config)
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 
 			this.entryUrlParser = entryUrlParser;
+			this.config = config;
 
 		}
 
@@ -164,7 +168,7 @@ namespace VocaDb.Model.Service {
 
 		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery) {
 
-			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0]), new[]{ textQuery.Query }, textQuery.MatchMode);
+			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0], config.SpecialTags.ChangedLyrics), new[]{ textQuery.Query }, textQuery.MatchMode);
 
 		}
 
@@ -601,7 +605,7 @@ namespace VocaDb.Model.Service {
 					matches = matches.Where(s => s.Albums.Any(a => albums.Contains(a.Album))).ToArray();
 
 				if (matches.Length == 1)
-					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0]);
+					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0], 0);
 
 				if (matches.Length == 0)
 					return null;
@@ -618,7 +622,7 @@ namespace VocaDb.Model.Service {
 					matches = matches.Where(s => s.Albums.Any(a => albums.Contains(a.Album))).ToArray();
 
 				if (matches.Length == 1)
-					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0]);
+					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0], 0);
 
 				return null;
 

@@ -21,6 +21,14 @@ namespace VocaDb.Model.Utils.Config {
 			}
 		}
 
+		public SpecialTagsSection SpecialTags
+		{
+			get
+			{
+				var section = (SpecialTagsSection)WebConfigurationManager.GetSection("vocaDb/specialTags");
+				return section ?? new SpecialTagsSection();
+			}
+		}
 	}
 
 }

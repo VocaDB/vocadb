@@ -41,6 +41,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private FakeSongRepository repository;
 		private SongQueries queries;
 		private Song song;
+		private Tag tag;
 		private User user;
 		private User user2;
 		private User user3;
@@ -98,7 +99,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Add(user, user2);
 			repository.Add(producer, vocalist);
 
-			repository.Add(new Tag("vocarock"), new Tag("vocaloud"));
+			tag = new Tag("vocarock");
+			repository.Add(tag, new Tag("vocaloud"));
 
 			permissionContext = new FakePermissionContext(user);
 			entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
@@ -123,7 +125,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			mailer = new FakeUserMessageMailer();
 
 			queries = new SongQueries(repository, permissionContext, entryLinkFactory, pvParser, mailer, 				
-				new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
+				new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache(), new Model.Utils.Config.VdbConfigManager());
 
 		}
 
@@ -228,7 +230,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			song = repository.HandleQuery(q => q.Query().FirstOrDefault(a => a.DefaultName == "Resistance"));
 
 			Assert.AreEqual(1, song.Tags.Tags.Count(), "Tags.Count");
-			Assert.IsTrue(song.Tags.HasTag("vocarock"), "Has vocarock tag");
+			Assert.IsTrue(song.Tags.HasTag(tag), "Has vocarock tag");
 
 		}
 

@@ -20,13 +20,6 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
-		[Obsolete]
-		public virtual IEnumerable<string> TagNames {
-			get {
-				return Usages.Select(t => t.Tag.Name);
-			}
-		}
-
 		/// <summary>
 		/// Tags sorted descending by the number of votes. Cannot be null.
 		/// </summary>
@@ -72,12 +65,9 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		[Obsolete]
-		public virtual bool HasTag(string tagName) {
+		public virtual bool HasTag(int tagId) {
 
-			ParamIs.NotNull(() => tagName);
-
-			return Usages.Any(u => u.Tag.Name.Equals(tagName));
+			return Usages.Any(u => u.Tag.Id == tagId);
 
 		}
 

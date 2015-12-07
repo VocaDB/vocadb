@@ -34,10 +34,6 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 							filter = new AlbumArtistFilter(artistId);
 						break;
 
-					case "tag":
-						filter = new AlbumTagFilter(word.Value);
-						break;
-
 					default:
 						filter = new AlbumNameFilter(new[] { word.Value });
 						break;

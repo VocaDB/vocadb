@@ -30,7 +30,7 @@ module vdb.dataContracts.songs {
 
 		status: string;
 
-		tags: string[];
+		tags: number[];
 
 		updateNotes?: string;
 

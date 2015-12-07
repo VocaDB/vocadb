@@ -18,7 +18,7 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		private Artist vocalist;
 
 		private void TestValidate(bool expectedResult, Song song) {
-			Assert.AreEqual(expectedResult, new SongValidator().IsValid(song));
+			Assert.AreEqual(expectedResult, new SongValidator().IsValid(song, 0));
 		}
 
 		[TestInitialize]

@@ -228,15 +228,13 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <summary>
 		/// Lyrics for this song, either from the song entry itself, or its original version.
 		/// </summary>
-		public virtual IList<LyricsForSong> LyricsFromParents {
-			get {
+		public virtual IList<LyricsForSong> GetLyricsFromParents(int changedLyricsTagId) {
 
-				if (SongType != SongType.Instrumental && HasOriginalVersion && !Lyrics.Any() && OriginalVersion.Lyrics.Any() && !Tags.HasTag(Tag.CommonTag_ChangedLyrics))
-					return OriginalVersion.Lyrics;
+			if (SongType != SongType.Instrumental && HasOriginalVersion && !Lyrics.Any() && OriginalVersion.Lyrics.Any() && !Tags.HasTag(changedLyricsTagId))
+				return OriginalVersion.Lyrics;
 
-				return Lyrics;
+			return Lyrics;
 
-			}
 		}
 
 		public virtual NameManager<SongName> Names {

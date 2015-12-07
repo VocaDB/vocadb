@@ -33,7 +33,7 @@ module vdb.viewModels {
 		public status: KnockoutObservable<string>;
 		public submittedJson = ko.observable("");
 		public submitting = ko.observable(false);
-		private tags: string[];
+		private tags: number[];
 		public updateNotes = ko.observable("");
 		public validationExpanded = ko.observable(false);
         public webLinks: WebLinksEditViewModel;
@@ -154,7 +154,8 @@ module vdb.viewModels {
 			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
 			data: dc.songs.SongForEditContract,
 			canBulkDeletePVs: boolean,
-			private dialogService: ui_dialog.IDialogService) {
+			private dialogService: ui_dialog.IDialogService,
+			private instrumentalTagId: number) {
 
 			this.artistLinks = ko.observableArray(_.map(data.artists, artist => new ArtistForAlbumEditViewModel(null, artist)));
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
@@ -214,7 +215,7 @@ module vdb.viewModels {
 			this.showInstrumentalNote = ko.computed(() => {
 				return this.pvs.isPossibleInstrumental()
 					&& this.songType() !== models.songs.SongType.Instrumental
-					&& !_.some(this.tags, t => t === cls.tags.Tag.commonTag_instrumental);
+					&& !_.some(this.tags, t => t === this.instrumentalTagId);
 			});
 
 			this.validationError_duplicateArtist = ko.computed(() => {
@@ -240,7 +241,7 @@ module vdb.viewModels {
 
 				return (!this.validationError_needArtist()
 					&& !hel.SongHelper.isInstrumental(this.songType())
-					&& !_.some(this.tags, t => t == cls.tags.Tag.commonTag_instrumental))
+					&& !_.some(this.tags, t => t === this.instrumentalTagId))
 					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArray()));
 
 			});

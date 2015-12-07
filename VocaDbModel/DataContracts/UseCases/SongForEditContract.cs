@@ -25,7 +25,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			Notes = new EnglishTranslatedStringContract(song.Notes);
 			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? new SongContract(song.OriginalVersion, languagePreference) : null);
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-			Tags = song.Tags.TagNames.ToArray();
+			Tags = song.Tags.Tags.Select(t => t.Id).ToArray();
 			UpdateNotes = string.Empty;
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
@@ -54,7 +54,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		// Required here for validation
 		[DataMember]
-		public string[] Tags { get; set; }
+		public int[] Tags { get; set; }
 
 		[DataMember]
 		public string UpdateNotes { get; set; }

@@ -394,6 +394,7 @@
     <Compile Include="Domain\Songs\SongTagVote.cs" />
     <Compile Include="Domain\Songs\SongVoteRating.cs" />
     <Compile Include="Domain\Tags\ArchivedTagVersion.cs" />
+    <Compile Include="Domain\Tags\SpecialTagType.cs" />
     <Compile Include="Domain\Tags\TagComment.cs" />
     <Compile Include="Domain\Tags\TagDiff.cs" />
     <Compile Include="Domain\Tags\TagEditableFields.cs" />
@@ -829,7 +830,6 @@
     <Compile Include="Service\Search\AlbumSearch\AlbumQueryBuilder.cs" />
     <Compile Include="Service\Search\AlbumSearch\AlbumQueryParams.cs" />
     <Compile Include="Service\Search\AlbumSearch\AlbumSearch.cs" />
-    <Compile Include="Service\Search\AlbumSearch\AlbumTagFilter.cs" />
     <Compile Include="Service\Search\AlbumSearch\AlbumUniversalFilter.cs" />
     <Compile Include="Service\Search\Artists\ArtistQueryParams.cs" />
     <Compile Include="Service\Search\Artists\ArtistSearch.cs" />
@@ -887,6 +887,7 @@
     <Compile Include="Utils\Config\AffiliatesSection.cs" />
     <Compile Include="Utils\Config\GlobalLinksSection.cs" />
     <Compile Include="Utils\Config\SiteSettingsSection.cs" />
+    <Compile Include="Utils\Config\SpecialTagsSection.cs" />
     <Compile Include="Utils\Config\VdbConfigManager.cs" />
     <Compile Include="Utils\Search\SearchRouteParams.cs" />
     <Compile Include="Utils\UrlFriendlyNameFactory.cs" />
