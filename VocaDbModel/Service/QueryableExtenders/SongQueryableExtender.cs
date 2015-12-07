@@ -51,7 +51,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (string.IsNullOrEmpty(tagName))
 				return query;
 
-			return query.Where(s => s.AllArtists.Any(a => a.Artist.Tags.Usages.Any(u => u.Tag.Name == tagName)));
+			return query.Where(s => s.AllArtists.Any(a => a.Artist.Tags.Usages.Any(u => u.Tag.EnglishName == tagName)));
 
 		}
 

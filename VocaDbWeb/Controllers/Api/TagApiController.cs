@@ -76,7 +76,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Obsolete]
 		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None) {
 			
-			var tag = queries.GetTag(name, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));
+			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));
 
 			return tag;
 

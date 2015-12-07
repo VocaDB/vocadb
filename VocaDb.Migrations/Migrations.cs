@@ -4,6 +4,23 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201512072000)]
+	public class RemoveTagName : Migration {
+
+		public override void Up() {
+
+			Delete.Column("[Name]").FromTable(TableNames.Tags);
+
+		}
+
+		public override void Down() {
+
+			Create.Column("[Name]").OnTable(TableNames.Tags).AsString(30).NotNullable().WithDefaultValue(string.Empty);
+
+		}
+
+	}
+
 	[Migration(201512011830)]
 	public class TagPrimaryKey : Migration {
 

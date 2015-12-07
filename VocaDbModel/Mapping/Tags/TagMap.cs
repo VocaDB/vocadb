@@ -11,7 +11,6 @@ namespace VocaDb.Model.Mapping.Tags {
 			Cache.NonStrictReadWrite();
 			Id(m => m.Id);
 
-			Map(m => m.Name).Length(30).Not.Nullable();
 			Map(m => m.CategoryName).Length(30).Not.Nullable();
 			Map(m => m.Description).Length(1000).Not.Nullable();
 			Map(m => m.EnglishName).Length(100).Not.Nullable();

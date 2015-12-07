@@ -79,7 +79,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private Tag GetTag(IDatabaseContext<Tag> ctx, string name) {
+		private Tag GetTagByName(IDatabaseContext<Tag> ctx, string name) {
 
 			var tag = ctx.Query().FirstOrDefault(t => t.EnglishName == name);
 
@@ -260,13 +260,13 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="fac">Return value factory. Cannot be null.</param>
 		/// <param name="def">Value to be returned if the tag doesn't exist.</param>
 		/// <returns>Return value. This will be <paramref name="def"/> if the tag doesn't exist.</returns>
-		public T GetTag<T>(string tagName, Func<Tag, T> fac, T def = default(T)) {
+		public T GetTagByName<T>(string tagName, Func<Tag, T> fac, T def = default(T)) {
 			
 			ParamIs.NotNullOrEmpty(() => tagName);
 
 			return HandleQuery(ctx => {
 				
-				var tag = GetTag(ctx, tagName);
+				var tag = GetTagByName(ctx, tagName);
 
 				if (tag == null)
 					return def;
@@ -322,7 +322,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public int GetTagIdByName(string name) {
-			return GetTag(name, t => t.Id);
+			return GetTagByName(name, t => t.Id);
 		}
 
 		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(int id) {

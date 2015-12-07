@@ -89,7 +89,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (string.IsNullOrEmpty(tag))
 				return query;
 
-			return query.Where(s => s.Song.Tags.Usages.Any(t => t.Tag.Name == tag));
+			return query.Where(s => s.Song.Tags.Usages.Any(t => t.Tag.EnglishName == tag));
 
 		}
 

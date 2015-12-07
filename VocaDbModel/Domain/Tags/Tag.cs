@@ -94,7 +94,6 @@ namespace VocaDb.Model.Domain.Tags {
 
 			ValidateName(name);
 
-			Name = name;
 			EnglishName = name;
 			CategoryName = categoryName;
 
@@ -221,12 +220,6 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int Id { get; set; }
 
 		/// <summary>
-		/// Tag name identifier. To be deleted. Replaced by <see cref="Id"/>.
-		/// </summary>
-		[Obsolete]
-		public virtual string Name { get; set; }
-
-		/// <summary>
 		/// Parent tag, if any. Can be null.
 		/// </summary>
 		public virtual Tag Parent { get; set; }
@@ -347,7 +340,6 @@ namespace VocaDb.Model.Domain.Tags {
 
 	public interface ITag {
 		int Id { get; }
-		string Name { get; }
 	}
 
 }

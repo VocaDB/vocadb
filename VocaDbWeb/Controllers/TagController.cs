@@ -58,7 +58,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(id))
 				return NoId();
 
-			var tagId = queries.GetTag(id, t => t.Id, invalidId);
+			var tagId = queries.GetTagByName(id, t => t.Id, invalidId);
 
 			if (tagId == invalidId)
 				return HttpNotFound();
@@ -135,7 +135,7 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(filter)) {
 
-				var tag = queries.GetTag(filter, t => new { t.Id, t.EnglishName });
+				var tag = queries.GetTagByName(filter, t => new { t.Id, t.EnglishName });
 
 				if (tag != null) {
 					return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.EnglishName });

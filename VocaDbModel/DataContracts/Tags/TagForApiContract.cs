@@ -24,7 +24,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Id = tag.Id;
 			Name = tag.EnglishName;
 			Status = tag.Status;
-			TagName = tag.Name;
 			UrlSlug = tag.UrlSlug;
 			Version = tag.Version;
 
@@ -70,10 +69,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
-
-		[DataMember]
-		[Obsolete]
-		public string TagName { get; set; }
 
 		[DataMember]
 		public string UrlSlug { get; set; }
