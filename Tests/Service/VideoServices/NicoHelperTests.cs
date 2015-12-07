@@ -80,7 +80,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 			Assert.AreEqual("14270239", result.AuthorId, "AuthorId");
 			Assert.AreEqual("ProjectDIVAチャンネル", result.Author, "Author");
 			Assert.AreEqual(1, result.Tags.Length, "Tags.Length");
-			Assert.AreEqual("Vocarock", result.Tags.First(), "Tag name");
+			Assert.AreEqual("rock", result.Tags.First(), "Tag name");
 
 		}
 
