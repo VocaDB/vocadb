@@ -121,7 +121,6 @@
     <value>追加</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>タグを選択、または追加。
-タグには英数字または下線のみ使用可能</value>
+    <value>タグを選択、または追加。</value>
   </data>
 </root>

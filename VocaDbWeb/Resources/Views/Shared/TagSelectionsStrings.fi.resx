@@ -121,6 +121,6 @@
     <value>Lisää tägi</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Merkitse sopivat tägit tai lisää omia. Tägit voivat sisältää vain aakkosia, numeroita ja alaviivoja.</value>
+    <value>Merkitse sopivat tägit tai lisää omia.</value>
   </data>
 </root>
