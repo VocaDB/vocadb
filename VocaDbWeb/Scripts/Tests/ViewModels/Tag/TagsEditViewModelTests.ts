@@ -5,11 +5,10 @@ module vdb.tests.viewModels.tags {
 
 	var viewModel: vm.tags.TagsEditViewModel;
 
-	QUnit.module("ArtistRolesEditViewModel", {
+	QUnit.module("TagsEditViewModel", {
 		setup: () => {
 
 			viewModel = new vm.tags.TagsEditViewModel(null);
-			viewModel.invalidTagError = () => { };
 
 		}
 	});
@@ -40,27 +39,6 @@ module vdb.tests.viewModels.tags {
 		viewModel.addTag();
 
 		QUnit.equal(selection.selected(), true, "selection.selected");
-
-	});
-
-	QUnit.test("addTag - convert spaces",() => {
-
-		viewModel.newTagName("Kyary Pamyu Pamyu");
-
-		viewModel.addTag();
-
-		var selection = viewModel.selections()[0];
-		QUnit.equal(selection.tagName, "Kyary_Pamyu_Pamyu", "selection.tagName");
-
-	});
-
-	QUnit.test("addTag - invalid tag",() => {
-
-		viewModel.newTagName("Miku!");
-
-		viewModel.addTag();
-
-		QUnit.equal(viewModel.selections().length, 0, "selections.length");
 
 	});
 

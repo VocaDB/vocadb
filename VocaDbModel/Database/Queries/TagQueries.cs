@@ -364,8 +364,6 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (tag.EnglishName != contract.EnglishName) {
 
-					Tag.ValidateName(contract.EnglishName);
-
 					var hasDuplicate = ctx.Query().Any(t => t.EnglishName == contract.EnglishName && t.Id != contract.Id);
 
 					if (hasDuplicate) {

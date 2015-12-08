@@ -690,7 +690,6 @@
     <Compile Include="Service\EntryValidators\SongValidator.cs" />
     <Compile Include="Service\Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Service\Exceptions\InvalidEmailFormatException.cs" />
-    <Compile Include="Service\Exceptions\InvalidTagNameException.cs" />
     <Compile Include="Service\Exceptions\NoPasswordException.cs" />
     <Compile Include="Service\Exceptions\RequestNotValidException.cs" />
     <Compile Include="Service\Exceptions\DuplicateTagNameException.cs" />

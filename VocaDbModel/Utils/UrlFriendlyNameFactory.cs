@@ -53,6 +53,7 @@ namespace VocaDb.Model.Utils {
 			if (string.IsNullOrEmpty(name))
 				return string.Empty;
 
+			// Note: perf test about 100000 iterations per second, although could be optimized/cached
 			var cleanedName = Regex.Replace(name.Replace(' ', '-'), @"[^a-zA-Z0-9_-]", string.Empty);
 			return cleanedName.Trim(' ', '-', '_').Truncate(30).ToLowerInvariant();
 

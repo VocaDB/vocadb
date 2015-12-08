@@ -11,15 +11,13 @@ namespace VocaDb.Model.Service.Search.Tags {
 			NameMatchMode defaultMode = NameMatchMode.Words) {
 			
 			var parsedQuery = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
-			var tagNameQuery = !string.IsNullOrEmpty(parsedQuery) ? parsedQuery.Replace(' ', '_') : parsedQuery;
-			return new TagSearchTextQuery(tagNameQuery, selectedMode, query);
+			return new TagSearchTextQuery(parsedQuery, selectedMode, query);
 
 		}
 
 		public static TagSearchTextQuery Create(SearchTextQuery textQuery) {
 			
-			var tagNameQuery = !textQuery.IsEmpty ? textQuery.Query.Replace(' ', '_') : textQuery.Query;
-			return new TagSearchTextQuery(tagNameQuery, textQuery.MatchMode, textQuery.OriginalQuery);
+			return new TagSearchTextQuery(textQuery.Query, textQuery.MatchMode, textQuery.OriginalQuery);
 
 		}
 

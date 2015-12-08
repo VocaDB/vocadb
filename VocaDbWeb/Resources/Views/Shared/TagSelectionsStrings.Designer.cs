@@ -70,7 +70,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check tags that apply, or add your own. Tags may contain only alphanumeric characters and underscores..
+        ///   Looks up a localized string similar to Check tags that apply, or add your own..
         /// </summary>
         public static string Info {
             get {
