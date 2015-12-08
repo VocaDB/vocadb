@@ -20,7 +20,7 @@ namespace VocaDb.Model.Service.Queries {
 			if (HasId(contract))
 				return true;
 
-			return !string.IsNullOrEmpty(contract.Name) && Tag.IsValidTagName(contract.Name);
+			return !string.IsNullOrEmpty(contract.Name);
 
 		}
 

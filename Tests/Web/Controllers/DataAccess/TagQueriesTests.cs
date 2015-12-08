@@ -133,17 +133,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidTagNameException))]
-		public void Update_Name_Invalid() {
-
-			var updated = new TagForEditContract(tag, false);
-			updated.EnglishName = "初音ミク";
-
-			queries.Update(updated, null);
-
-		}
-
-		[TestMethod]
 		public void Update_Parent() {
 			
 			var updated = new TagForEditContract(tag, false);

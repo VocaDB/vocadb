@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service.TagFormatting {
 					return track.DiscNumber.ToString();
 
 				case "genres":
-					return string.Join(", ", SongHelper.GetGenreTags(track).Select(t => t.NameWithSpaces));
+					return string.Join(", ", SongHelper.GetGenreTags(track).Select(t => t.EnglishName));
 
 				// Album release date
 				case "releasedate":		

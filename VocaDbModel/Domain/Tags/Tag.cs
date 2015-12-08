@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -11,7 +10,6 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Versioning;
-using VocaDb.Model.Service.Exceptions;
 
 namespace VocaDb.Model.Domain.Tags {
 
@@ -39,29 +37,6 @@ namespace VocaDb.Model.Domain.Tags {
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb;
 
 		public const int MaxDisplayedTags = 4;
-		private static readonly Regex TagNameRegex = new Regex(@"^[a-zA-Z0-9_-]+$");
-
-		/// <summary>
-		/// Tests whether a string is a valid name for a tag.
-		/// Note that spaces are not allowed.
-		/// </summary>
-		/// <param name="tagName">Tag name to be validated.</param>
-		/// <returns>True if <paramref name="tagName"/> is a valid tag name, otherwise false.</returns>
-		public static bool IsValidTagName(string tagName) {
-
-			if (string.IsNullOrEmpty(tagName))
-				return false;
-
-			return TagNameRegex.IsMatch(tagName);
-
-		}
-
-		public static void ValidateName(string name) {
-
-			if (!IsValidTagName(name))
-				throw new InvalidTagNameException(name);
-
-		}
 
 		public const string CommonCategory_Distribution = "Distribution";
 		public const string CommonCategory_Genres = "Genres";
@@ -91,8 +66,6 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public Tag(string name, string categoryName = "")
 			: this() {
-
-			ValidateName(name);
 
 			EnglishName = name;
 			CategoryName = categoryName;
@@ -225,16 +198,6 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual Tag Parent { get; set; }
 
 		/// <summary>
-		/// Tag name with underscores replaced with spaces.
-		/// Cannot be null or empty.
-		/// </summary>
-		public virtual string NameWithSpaces {
-			get {
-				return EnglishName.Replace('_', ' ');
-			}
-		}
-
-		/// <summary>
 		/// Entry thumbnail picture. Can be null.
 		/// </summary>
 		public virtual EntryThumb Thumb { get; set; }
@@ -328,7 +291,11 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual EntryStatus Status { get; set; }
 
-		public virtual string UrlSlug => EnglishName;
+		public virtual string UrlSlug {
+			get {
+				return Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(EnglishName);
+			}
+		}
 
 		public virtual int Version { get; set; }
 

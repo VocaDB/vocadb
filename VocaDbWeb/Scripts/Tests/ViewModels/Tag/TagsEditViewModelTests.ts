@@ -9,7 +9,6 @@ module vdb.tests.viewModels.tags {
 		setup: () => {
 
 			viewModel = new vm.tags.TagsEditViewModel(null);
-			viewModel.invalidTagError = () => { };
 
 		}
 	});
