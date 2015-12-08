@@ -530,7 +530,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "unit")]
 		public ActionResult SongsPublishedPerDay(TimeUnit unit = TimeUnit.Day) {
 			
-			var values = songAggregateQueries.SongsOverTime(unit, s => true, null)[0];
+			var values = songAggregateQueries.SongsOverTime(unit, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
 
