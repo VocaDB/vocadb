@@ -268,6 +268,9 @@
 			</h3>
 			@SongHelpers.SongGrid(Model.TopSongs, 2, true)
 		}
+		
+		<h3>Songs per month</h3>
+		<div style="width: 600px; height: 300px;" data-bind="highcharts: loadHighcharts"></div>
 
 		@CommentHelpers.LatestCommentsKnockout()
 
@@ -417,7 +420,7 @@
 				latestComments);
 			ko.applyBindings(viewModel);
 
-			initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
+			vdb.views.artist.initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 
 		});
 

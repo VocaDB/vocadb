@@ -51,6 +51,19 @@ module vdb.viewModels {
 
 			});
 
+			this.loadHighcharts = (callback) => {
+				
+				// Delayed load highcharts stuff
+				var highchartsPromise = $.getScript(functions.mapAbsoluteUrl("scripts/highcharts/4.1.5/highcharts.js"));
+				var highchartsHelperPromise = $.getScript(functions.mapAbsoluteUrl("/scripts/helpers/HighchartsHelper.js"));
+				var songsPerMonthDataPromise = songRepo.getOverTime(vdb.models.aggregate.TimeUnit.month, artistId);
+
+				$.when(highchartsPromise, highchartsHelperPromise, songsPerMonthDataPromise).done((x, y, songsPerMonthData) => {
+					callback(vdb.helpers.HighchartsHelper.dateLineChartWithAverage('Songs per month', null, 'Songs', songsPerMonthData[0], false));
+				});
+
+			}
+
 		}
 
 		public comments: EditableCommentsViewModel;
@@ -58,6 +71,9 @@ module vdb.viewModels {
 		customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
 
 		private lang: string;
+
+		public loadHighcharts: (callback: (data: HighchartsOptions) => void) => void;
+
 		public showAllMembers = ko.observable(false);
 		public showTranslatedDescription: KnockoutObservable<boolean>;
 		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
