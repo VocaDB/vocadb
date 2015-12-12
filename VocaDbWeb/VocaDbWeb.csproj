@@ -2121,6 +2121,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Artist\ArtistTypeLabel.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\Datepicker.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\UsernameAutocomplete.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\Bootstrap\Tooltip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ConfirmClick.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatDateFilter.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatLengthSecondsFilter.ts" />
