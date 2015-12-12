@@ -22,6 +22,8 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Highcharts;
+using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -308,9 +310,9 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("over-time")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
-		public IEnumerable<CountPerDayContract[]> GetSongsOverTime(TimeUnit timeUnit, int artistId) {
+		public CountPerDayContract[] GetSongsOverTime(TimeUnit timeUnit, int artistId) {
 
-			return songAggregateQueries.SongsOverTime(timeUnit, s => s.AllArtists.Any(a => a.Artist.Id == artistId));
+			return songAggregateQueries.SongsOverTime(timeUnit, true, s => s.PublishDate.DateTime <= DateTime.Now && s.AllArtists.Any(a => a.Artist.Id == artistId))[0];
 
 		}
 

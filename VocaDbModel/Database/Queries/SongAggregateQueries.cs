@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using VocaDb.Model.Database.Repositories;
@@ -13,6 +14,42 @@ namespace VocaDb.Model.Database.Queries {
 
 		public SongAggregateQueries(ISongRepository repository, IUserPermissionContext permissionContext) 
 			: base(repository, permissionContext) {}
+
+		/// <summary>
+		/// Generates dates between a range
+		/// </summary>
+		private IEnumerable<DateTime> DateGenerator(DateTime start, DateTime end, TimeUnit timeUnit) {
+
+			var current = start;
+			while (current <= end) {
+
+				yield return current;
+
+				if (timeUnit == TimeUnit.Month)
+					current = current.AddMonths(1);
+				else
+					current = current.AddDays(1);
+
+			}
+
+		}
+
+		private CountPerDayContract GetCount(Dictionary<DateTime, CountPerDayContract> dict, DateTime date) {
+			return dict.ContainsKey(date) ? dict[date] : new CountPerDayContract(date, 0);
+		}
+
+		private CountPerDayContract[] AddZeros(CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit) {
+
+			if (!addZeros)
+				return query;
+
+			var dict = query.ToDictionary(t => new DateTime(t.Year, t.Month, t.Day));
+
+			return DateGenerator(dict.First().Key, dict.Last().Key, timeUnit)
+				.Select(d => GetCount(dict, d))
+				.ToArray();
+
+		}
 
 		private CountPerDayContract[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where) {
 
@@ -65,11 +102,23 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public CountPerDayContract[][] SongsOverTime(TimeUnit timeUnit, params Expression<Func<Song, bool>>[] filters) {
+		/// <summary>
+		/// Get number of songs published per month or per day.
+		/// </summary>
+		/// <param name="timeUnit">Time unit, whether to get per month or per day.</param>
+		/// <param name="addZeros">
+		/// Whether to add zeros for missing values. This is needed by highcharts when drawing area charts for example.
+		/// </param>
+		/// <param name="filters">Additional filters for songs. One result will be produced per filter. Cannot be null.</param>
+		/// <returns>Results. One result per filter.</returns>
+		public CountPerDayContract[][] SongsOverTime(TimeUnit timeUnit, bool addZeros, params Expression<Func<Song, bool>>[] filters) {
 
 			return repository.HandleQuery(ctx => {
 
-				var results = filters.Select(f => timeUnit == TimeUnit.Month ? SongsPerMonth(ctx, f) : SongsPerDay(ctx, f)).ToArray();
+				var results = filters
+					.Select(f => AddZeros(timeUnit == TimeUnit.Month ? SongsPerMonth(ctx, f) : SongsPerDay(ctx, f), addZeros, timeUnit))
+					.ToArray();
+
 				return results;
 
 			});

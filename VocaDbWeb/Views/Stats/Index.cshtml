@@ -19,11 +19,12 @@
 	<option value="8760">Last year</option>
 </select>
 
-<div id="chartContainer"></div>
+<div data-bind="highcharts: chartData"></div>
 
 @section BodyScripts {
 	<script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/moment-with-locales.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/KnockoutExtensions/Highcharts.js")"></script>
 	<script src="@Url.Content("~/Scripts/ViewModels/StatsViewModel.js")" type="text/javascript"></script>
 
 	<script type="text/javascript">
@@ -31,11 +32,6 @@
 		$(function () {
 
 			var vm = new vdb.viewModels.StatsViewModel();
-
-			vm.chartData.subscribe(function(data) {
-				$('#chartContainer').highcharts(data);
-			});
-
 			ko.applyBindings(vm);
 
 		});

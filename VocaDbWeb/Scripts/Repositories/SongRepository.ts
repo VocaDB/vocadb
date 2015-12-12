@@ -105,6 +105,11 @@ module vdb.repositories {
 
 		}
 
+		public getOverTime = (timeUnit: models.aggregate.TimeUnit, artistId: number, callback?: (points: dataContracts.aggregate.CountPerDayContract[]) => void) => {
+			var url = this.urlMapper.mapRelative("/api/songs/over-time");
+			return $.getJSON(url, { timeUnit: models.aggregate.TimeUnit[timeUnit], artistId: artistId }, callback);
+		}
+
 		// Get PV ID by song ID and PV service.
 		public getPvId = (songId: number, pvService: cls.pvs.PVService, callback: (pvId: string) => void) => {
 			return $.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/pvs"), { service: cls.pvs.PVService[pvService] }, callback);			
