@@ -40,7 +40,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private CountPerDayContract[] AddZeros(CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit) {
 
-			if (!addZeros)
+			if (!addZeros || !query.Any())
 				return query;
 
 			var dict = query.ToDictionary(t => new DateTime(t.Year, t.Month, t.Day));
