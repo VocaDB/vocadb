@@ -8,29 +8,27 @@ module vdb.helpers {
 
 	export class HighchartsHelper {
 
-		public static dateLineChartWithAverage = (title: string, pointsTitle: string, yAxisTitle: string, points: dataContracts.aggregate.CountPerDayContract[],
-			average: boolean): HighchartsOptions => {
+		public static dateLineChartWithAverage = (title: string, pointsTitle: string, yAxisTitle: string, points: dataContracts.aggregate.CountPerDayContract[]): HighchartsOptions => {
 			
-			var averages = points;
-		//var averages = (average ? points.Select(p => Tuple.Create(p.Item1, Math.Floor(points.Where(p2 => p2.Item1 >= p.Item1 - TimeSpan.FromDays(182) && p2.Item1 <= p.Item1 + TimeSpan.FromDays(182)).Average(p3 => p3.Item2)))).ToArray() : new Tuple < DateTime, double > [0]);
-
 			var dataSeries: HighchartsSeriesOptions = {
+				animation: false,
 				type: 'area',
 				name: pointsTitle,
 				data: _.map(points, p => [Date.UTC(p.year, p.month, p.day), p.count]),
 				showInLegend: pointsTitle != null
 			};
 
-		return {
-			chart: {
-				animation: false,
-				height: 300
-			},
-			title: title,
+			return {
+				chart: {
+					animation: false,
+					height: 300
+				},
+				title: title,
 				xAxis: { type: 'datetime'},
 				yAxis: {
 					title: yAxisTitle,
-					min: 0
+					min: 0,
+					tickInterval: 1
 				},
 				tooltip: {
 					shared: true,
@@ -55,17 +53,7 @@ module vdb.helpers {
 					floating: true,
 					backgroundColor: "#FFFFFF"
 				},
-				series: (average ? [
-					dataSeries,
-					<any>{
-						type: 'spline',
-						name: "Average",
-						data: _.map(averages, p => [ Date.UTC(p.year, p.month, p.day), p.count ]),
-						marker: {
-							enabled: false
-						},
-						lineWidth: 4
-				}] : [ dataSeries ])
+				series: [ dataSeries ]
 			};
 
 		}

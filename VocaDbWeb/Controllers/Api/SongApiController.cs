@@ -312,26 +312,9 @@ namespace VocaDb.Web.Controllers.Api {
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
 		public CountPerDayContract[] GetSongsOverTime(TimeUnit timeUnit, int artistId) {
 
-			return songAggregateQueries.SongsOverTime(timeUnit, s => s.AllArtists.Any(a => a.Artist.Id == artistId))[0];
+			return songAggregateQueries.SongsOverTime(timeUnit, true, s => s.PublishDate.DateTime <= DateTime.Now && s.AllArtists.Any(a => a.Artist.Id == artistId))[0];
 
 		}
-
-		/*
-		[Route("over-time/chart")]
-		[ApiExplorerSettings(IgnoreApi = true)]
-		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
-		public Highchart GetSongsOverTimeChart(TimeUnit timeUnit, int artistId) {
-
-			var values = songAggregateQueries.SongsOverTime(timeUnit, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
-
-			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
-
-			//return HighchartsHelper.DateLineChartWithAverage("Songs per " + timeUnit.ToString().ToLowerInvariant(), "Time", "Number of songs",
-			//	)
-			//return DateLineChartWithAverage("Songs published per " + unit.ToString().ToLowerInvariant(), "Songs", "Number of songs", points);
-
-
-		}*/
 
 		[System.Web.Http.Route("top-rated")]
 		[ApiExplorerSettings(IgnoreApi=true)]

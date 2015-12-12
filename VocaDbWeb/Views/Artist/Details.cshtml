@@ -269,8 +269,10 @@
 			@SongHelpers.SongGrid(Model.TopSongs, 2, true)
 		}
 		
-		<h3>Songs per month</h3>
-		<div style="width: 600px; height: 300px;" data-bind="highcharts: loadHighcharts"></div>
+		<div data-bind="visible: songsOverTimeChart">
+			<h3 class="withMargin">Songs per month</h3>
+			<div style="width: 100%; max-width: 800px; height: 300px;" data-bind="highcharts: songsOverTimeChart"></div>
+		</div>
 
 		@CommentHelpers.LatestCommentsKnockout()
 

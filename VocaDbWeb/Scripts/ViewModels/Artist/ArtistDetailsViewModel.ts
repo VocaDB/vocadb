@@ -51,18 +51,7 @@ module vdb.viewModels {
 
 			});
 
-			this.loadHighcharts = (callback) => {
-				
-				// Delayed load highcharts stuff
-				var highchartsPromise = $.getScript(functions.mapAbsoluteUrl("scripts/highcharts/4.1.5/highcharts.js"));
-				var highchartsHelperPromise = $.getScript(functions.mapAbsoluteUrl("/scripts/helpers/HighchartsHelper.js"));
-				var songsPerMonthDataPromise = songRepo.getOverTime(vdb.models.aggregate.TimeUnit.month, artistId);
-
-				$.when(highchartsPromise, highchartsHelperPromise, songsPerMonthDataPromise).done((x, y, songsPerMonthData) => {
-					callback(vdb.helpers.HighchartsHelper.dateLineChartWithAverage('Songs per month', null, 'Songs', songsPerMonthData[0], false));
-				});
-
-			}
+			this.loadHighcharts();
 
 		}
 
@@ -72,11 +61,32 @@ module vdb.viewModels {
 
 		private lang: string;
 
-		public loadHighcharts: (callback: (data: HighchartsOptions) => void) => void;
+		//public loadHighcharts: (callback: (data: HighchartsOptions) => void) => void;
+		private loadHighcharts = () => {
+			
+			// Delayed load highcharts stuff
+			var highchartsPromise = $.getScript(functions.mapAbsoluteUrl("scripts/highcharts/4.1.5/highcharts.js"));
+			var highchartsHelperPromise = $.getScript(functions.mapAbsoluteUrl("/scripts/helpers/HighchartsHelper.js"));
+			var songsPerMonthDataPromise = this.songRepo.getOverTime(vdb.models.aggregate.TimeUnit.month, this.artistId);
+
+			$.when(songsPerMonthDataPromise, highchartsPromise, highchartsHelperPromise).done((songsPerMonthData: JQueryPromiseCallback<dataContracts.aggregate.CountPerDayContract[]>) => {
+
+				var points: dataContracts.aggregate.CountPerDayContract[] = songsPerMonthData[0];
+
+				if (points.length) {
+					this.songsOverTimeChart(vdb.helpers.HighchartsHelper.dateLineChartWithAverage('Songs per month', null, 'Songs', points));					
+				}
+
+			});
+
+		}
 
 		public showAllMembers = ko.observable(false);
 		public showTranslatedDescription: KnockoutObservable<boolean>;
 		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
+
+		public songsOverTimeChart = ko.observable<HighchartsOptions>(null);
+
 		public collaborationAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
 		public mainAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
 
