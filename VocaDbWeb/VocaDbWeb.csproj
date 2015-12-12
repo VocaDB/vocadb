@@ -2207,7 +2207,6 @@
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
     <TypeScriptCompile Include="Scripts\User\Details.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ActivityEntry\ActivityEntryListViewModel.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\Aggregate\DateLineChartViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumDiscPropertiesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\ArchivedAlbumViewModel.ts" />
