@@ -162,6 +162,15 @@ module vdb.repositories {
 
 		}
 
+		public getRatingsByGenre = (userId: number, callback: (points: vdb.helpers.Tuple2<string, number>[]) => void) => {
+	    
+			var url = this.urlMapper.mapRelative('/api/users/' + userId + '/songs-per-genre/');
+			$.getJSON(url, data => {
+				callback(data);
+			});
+
+		}
+
 		public getSongLists = (userId: number, query: string, paging: dc.PagingProperties, sort: string, fields: string,
 			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
 	    

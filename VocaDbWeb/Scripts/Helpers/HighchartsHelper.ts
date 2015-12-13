@@ -1,7 +1,7 @@
 ﻿
 module vdb.helpers {
 	
-	interface Tuple2<T1, T2> {
+	export interface Tuple2<T1, T2> {
 		item1: T1;
 		item2: T2;
 	}

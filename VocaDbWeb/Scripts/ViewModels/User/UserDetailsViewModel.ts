@@ -23,20 +23,13 @@ module vdb.viewModels.user {
 
 		public comments: EditableCommentsViewModel;
 
-		public getRatingsByGenre = (callback: (data: HighchartsOptions) => void) => {
-
-			var url = this.urlMapper.mapRelative('/api/users/' + this.userId +  '/songs-per-genre/');
-			$.getJSON(url, data => {
-				callback(vdb.helpers.HighchartsHelper.simplePieChart(null, "Songs", data));
-			});
-
-		}
-
 		public initComments = () => {
 
 			this.comments.initComments();
 
 		};
+
+		public ratingsByGenreChart = ko.observable<HighchartsOptions>(null);
 
 		public view = ko.observable(UserDetailsViewModel.overview);
 
@@ -105,6 +98,10 @@ module vdb.viewModels.user {
 				if (window.location.hash && window.location.hash.length >= 1)
 					this.setView(window.location.hash.substr(1));
 			};
+
+			userRepo.getRatingsByGenre(userId, data => {
+				this.ratingsByGenreChart(vdb.helpers.HighchartsHelper.simplePieChart(null, "Songs", data));
+			});
 
         }
 
