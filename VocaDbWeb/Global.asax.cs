@@ -14,6 +14,7 @@ using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Security;
 using VocaDb.Web.App_Start;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Filters;
 
 namespace VocaDb.Web {
 
@@ -133,8 +134,7 @@ namespace VocaDb.Web {
 		}
 
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
-			//filters.Add(new HandleErrorAttribute { ExceptionType = typeof(ObjectNotFoundException), View = "NotFound" });
-			//filters.Add(new HandleErrorAttribute());
+			filters.Add(new DisableWapFilter());
 		}
 
 		protected void Application_Start() {
