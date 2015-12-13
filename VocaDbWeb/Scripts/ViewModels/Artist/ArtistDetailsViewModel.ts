@@ -61,19 +61,20 @@ module vdb.viewModels {
 
 		private lang: string;
 
-		//public loadHighcharts: (callback: (data: HighchartsOptions) => void) => void;
 		private loadHighcharts = () => {
 			
 			// Delayed load highcharts stuff
-			var highchartsPromise = $.getScript(functions.mapAbsoluteUrl("scripts/highcharts/4.1.5/highcharts.js"));
-			var highchartsHelperPromise = $.getScript(functions.mapAbsoluteUrl("/scripts/helpers/HighchartsHelper.js"));
+			var highchartsPromise = $.getScript(this.urlMapper.mapRelative("scripts/highcharts/4.1.5/highcharts.js"));
+			var highchartsHelperPromise = $.getScript(this.urlMapper.mapRelative("/scripts/helpers/HighchartsHelper.js"));
 			var songsPerMonthDataPromise = this.songRepo.getOverTime(vdb.models.aggregate.TimeUnit.month, this.artistId);
 
-			$.when(songsPerMonthDataPromise, highchartsPromise, highchartsHelperPromise).done((songsPerMonthData: JQueryPromiseCallback<dataContracts.aggregate.CountPerDayContract[]>) => {
+			$.when(songsPerMonthDataPromise, highchartsPromise, highchartsHelperPromise)
+				.done((songsPerMonthData: JQueryPromiseCallback<dataContracts.aggregate.CountPerDayContract[]>) => {
 
 				var points: dataContracts.aggregate.CountPerDayContract[] = songsPerMonthData[0];
 
-				if (points.length) {
+				// Need at least 2 points because lone point looks weird
+				if (points && points.length >= 2) {
 					this.songsOverTimeChart(vdb.helpers.HighchartsHelper.dateLineChartWithAverage('Songs per month', null, 'Songs', points));					
 				}
 
