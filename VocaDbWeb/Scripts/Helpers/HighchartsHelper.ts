@@ -14,7 +14,7 @@ module vdb.helpers {
 				animation: false,
 				type: 'area',
 				name: pointsTitle,
-				data: _.map(points, p => [Date.UTC(p.year, p.month, p.day), p.count]),
+				data: _.map(points, p => [Date.UTC(p.year, (p.month - 1), p.day), p.count]), // Month numbers start from 0, wtf
 				showInLegend: pointsTitle != null
 			};
 
