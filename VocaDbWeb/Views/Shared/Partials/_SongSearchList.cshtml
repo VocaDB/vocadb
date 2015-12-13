@@ -58,6 +58,9 @@
 				<span data-bind="visible: $data.rating === 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
 				
 				@KnockoutHelpers.DraftIcon("status")
+				
+				<i class="icon-calendar" data-bind="visible: $data.publishDate, attr: { title: ($data.publishDate ? 'Published: ' + new Date($data.publishDate).toLocaleDateString() : '') }, tooltip: { placement: 'right' }"></i>
+
 				<br />
 				<small class="extraInfo" data-bind="text: artistString"></small>
 
