@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
@@ -103,6 +104,33 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			return querySource.Query<T>();
 		}
 
+		private DateTime? ParseDateOrNull(string str) {
+
+			DateTime parsed;
+			if (DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+				return parsed;
+			else
+				return null;
+
+		}
+
+		private ParsedSongQuery ParseDateRange(string str) {
+
+			if (string.IsNullOrEmpty(str))
+				return new ParsedSongQuery();
+
+			var parts = str.Split('-');
+
+			if (parts.Length == 0)
+				return new ParsedSongQuery();
+
+			return new ParsedSongQuery {
+				PublishedAfter = ParseDateOrNull(parts[0]),
+				PublishedBefore = parts.Length > 1 ? ParseDateOrNull(parts[1]) : null
+			};
+
+		}
+
 		public ParsedSongQuery ParseTextQuery(SearchTextQuery textQuery) {
 
 			var query = textQuery.Query;
@@ -112,7 +140,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			var trimmed = query.Trim();
 
-			var term = GetTerm(trimmed, "id", "tag", "artist-tag", "artist-type");
+			var term = GetTerm(trimmed, "id", "tag", "artist-tag", "artist-type", "publish-date");
 			
 			if (term == null) {
 
@@ -143,6 +171,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 						return new ParsedSongQuery { ArtistType = EnumVal<ArtistType>.ParseSafe(term.Value, ArtistType.Unknown) };
 					case "id":
 						return new ParsedSongQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) };
+					case "publish-date":
+						return ParseDateRange(term.Value);
 				}
 				
 			}

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Tests.TestSupport;
@@ -57,6 +58,34 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("id:miku!"));
 
 			Assert.AreEqual(0, result.Id, "Id query");
+
+		}
+
+		[TestMethod]
+		public void ParseTextQuery_DateAfter() {
+
+			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:2015/9/3"));
+
+			Assert.AreEqual(new DateTime(2015, 9, 3), result.PublishedAfter, "Publish date after");
+
+		}
+
+		[TestMethod]
+		public void ParseTextQuery_DateRange() {
+
+			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:2015/9/3-2015/10/1"));
+
+			Assert.AreEqual(new DateTime(2015, 9, 3), result.PublishedAfter, "Publish date after");
+			Assert.AreEqual(new DateTime(2015, 10, 1), result.PublishedBefore, "Publish date before");
+
+		}
+
+		[TestMethod]
+		public void ParseTextQuery_DateInvalid() {
+
+			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:Miku!"));
+
+			Assert.IsNull(result.PublishedAfter, "Publish date after");
 
 		}
 
