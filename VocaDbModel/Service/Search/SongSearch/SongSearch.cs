@@ -76,7 +76,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereIdIs(parsedQuery.Id)
 				.WhereIdNotIn(queryParams.IgnoredIds)
 				.WhereInUserCollection(queryParams.UserCollectionId)
-				.WhereHasLyrics(queryParams.LyricsLanguages);
+				.WhereHasLyrics(queryParams.LyricsLanguages)
+				.WherePublishDateIsBetween(parsedQuery.PublishedAfter, parsedQuery.PublishedBefore);
 
 			query = AddScoreFilter(query, queryParams.MinScore);
 			query = AddTimeFilter(query, queryParams.TimeFilter);
@@ -102,8 +103,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			return querySource.Query<T>();
 		}
 
-		private ParsedSongQuery ParseTextQuery(string query) {
-			
+		public ParsedSongQuery ParseTextQuery(SearchTextQuery textQuery) {
+
+			var query = textQuery.Query;
+
 			if (string.IsNullOrWhiteSpace(query))
 				return new ParsedSongQuery();
 
@@ -163,8 +166,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			ParamIs.NotNull(() => queryParams);
 
-			var query = queryParams.Common.Query ?? string.Empty;
-			var parsedQuery = ParseTextQuery(query);
+			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
 			var isMoveToTopQuery = 	(queryParams.Common.MoveExactToTop 
 				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith 

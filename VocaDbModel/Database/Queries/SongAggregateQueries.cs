@@ -60,7 +60,7 @@ namespace VocaDb.Model.Database.Queries {
 				query = query.Where(where);
 
 			return query
-				.OrderBy(a => a.PublishDate.DateTime.Value.Year)
+				.OrderBy(a => a.PublishDate.DateTime) // Need to order by part of publish date because we're grouping
 				.ThenBy(a => a.PublishDate.DateTime.Value.Month)
 				.ThenBy(a => a.PublishDate.DateTime.Value.Day)
 				.GroupBy(a => new {

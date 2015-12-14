@@ -289,6 +289,21 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> WherePublishDateIsBetween(this IQueryable<Song> query, DateTime? begin, DateTime? end) {
+
+			if (begin.HasValue && end.HasValue)
+				return query.Where(e => e.PublishDate.DateTime != null && e.PublishDate.DateTime >= begin && e.PublishDate.DateTime < end);
+
+			if (begin.HasValue)
+				return query.Where(e => e.PublishDate.DateTime != null && e.PublishDate.DateTime >= begin);
+
+			if (end.HasValue)
+				return query.Where(e => e.PublishDate.DateTime != null && e.PublishDate.DateTime < end);
+
+			return query;
+
+		}
+
 	}
 
 	public enum SongVocalistSelection {

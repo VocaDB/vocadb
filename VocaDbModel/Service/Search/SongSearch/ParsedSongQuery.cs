@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.Artists;
+﻿using System;
+using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Service.Search.SongSearch {
 
@@ -17,6 +18,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		public string Name { get; set; }
 
 		public string NicoId { get; set; }
+
+		public DateTime? PublishedAfter { get; set; }
+
+		public DateTime? PublishedBefore { get; set; }
 
 		public string TagName { get; set; }
 
