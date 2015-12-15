@@ -113,6 +113,7 @@
     <Compile Include="DatabaseTests\DatabaseTestContext.cs" />
     <Compile Include="DatabaseTests\Search\SongSearch\SongSearchDatabaseTests.cs" />
     <Compile Include="DatabaseTests\TestDatabase.cs" />
+    <Compile Include="Database\Queries\SongAggregateQueriesTests.cs" />
     <Compile Include="Domain\Albums\AlbumTests.cs" />
     <Compile Include="Domain\Albums\ArtistForAlbumTests.cs" />
     <Compile Include="Domain\Artists\ArtistStringFactoryTests.cs" />

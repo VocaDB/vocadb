@@ -17,6 +17,8 @@
 	<option value="168">Last week</option>
 	<option value="720">Last month</option>
 	<option value="8760">Last year</option>
+	<option value="17520">Last 2 years</option>
+	<option value="26280">Last 3 years</option>
 </select>
 
 <div data-bind="highcharts: chartData"></div>
@@ -30,10 +32,8 @@
 	<script type="text/javascript">
 
 		$(function () {
-
 			var vm = new vdb.viewModels.StatsViewModel();
 			ko.applyBindings(vm);
-
 		});
 
 	</script>

@@ -8,6 +8,13 @@ namespace VocaDb.Model.DataContracts.Aggregate {
 			Day = 1;
 		}
 
+		public CountPerDayContract(int year, int month, int day, int count) {
+			Year = year;
+			Month = month;
+			Day = day;
+			Count = count;
+		}
+
 		public CountPerDayContract(DateTime dt, int count) {
 			Year = dt.Year;
 			Month = dt.Month;

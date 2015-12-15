@@ -38,7 +38,7 @@ namespace VocaDb.Model.Database.Queries {
 			return dict.ContainsKey(date) ? dict[date] : new CountPerDayContract(date, 0);
 		}
 
-		private CountPerDayContract[] AddZeros(CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit) {
+		public CountPerDayContract[] AddZeros(CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit) {
 
 			if (!addZeros || !query.Any())
 				return query;
