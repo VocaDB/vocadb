@@ -13,20 +13,10 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Tags {
 
-	public class Tag : IEquatable<Tag>, IEntryWithNames, IEntryWithStatus, IEntryWithComments, ITag {
-
-		string IEntryBase.DefaultName {
-			get { return EnglishName; }
-		}
+	public class Tag : IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag {
 
 		bool IDeletableEntry.Deleted {
 			get { return false; }
-		}
-
-		INameManager IEntryWithNames.Names {
-			get {
-				return new SingleNameManager(EnglishName);
-			}
 		}
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
@@ -55,6 +45,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private ISet<Tag> children = new HashSet<Tag>();
 		private IList<TagComment> comments = new List<TagComment>();
 		private string description;
+		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
 		private string englishName;
 
@@ -162,6 +153,12 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
+		public virtual string DefaultName {
+			get {
+				return TranslatedName.Default;
+			}
+		}
+
 		/// <summary>
 		/// Tag description, may contain Markdown formatting.
 		/// </summary>
@@ -192,6 +189,22 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual int Id { get; set; }
 
+		public virtual NameManager<TagName> Names{
+			get { return names; }
+			set {
+				ParamIs.NotNull(() => value);
+				names = value;
+			}
+		}
+
+		INameManager<TagName> IEntryWithNames<TagName>.Names{
+			get { return Names; }
+		}
+
+		INameManager IEntryWithNames.Names {
+			get { return Names; }
+		}
+
 		/// <summary>
 		/// Parent tag, if any. Can be null.
 		/// </summary>
@@ -201,6 +214,10 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Entry thumbnail picture. Can be null.
 		/// </summary>
 		public virtual EntryThumb Thumb { get; set; }
+
+		public virtual TranslatedString TranslatedName {
+			get { return Names.SortNames; }
+		}
 
 		public virtual ArchivedTagVersion CreateArchivedVersion(TagDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
 

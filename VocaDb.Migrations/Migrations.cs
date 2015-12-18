@@ -4,6 +4,26 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201512182300)]
+	public class CreateTranslatedTagName : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table(TableNames.TagNames)
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey()
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Language").AsString(16).NotNullable()
+				.WithColumn("[Value]").AsString(255).NotNullable().Unique();
+
+			Alter.Table(TableNames.Tags)
+				.AddColumn("DefaultNameLanguage").AsString(20).NotNullable().WithDefaultValue("English")
+				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
+
+		}
+
+	}
+
 	[Migration(201512072000)]
 	public class RemoveTagName : Migration {
 

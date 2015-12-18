@@ -343,6 +343,7 @@
     <Compile Include="Domain\EntryReport.cs" />
     <Compile Include="Domain\EntryThumb.cs" />
     <Compile Include="Domain\Globalization\EnglishTranslatedString.cs" />
+    <Compile Include="Domain\Globalization\EntryName.cs" />
     <Compile Include="Domain\Globalization\ILanguageDetector.cs" />
     <Compile Include="Domain\Globalization\ILocalizedString.cs" />
     <Compile Include="Domain\Globalization\InterfaceLanguage.cs" />
@@ -398,6 +399,7 @@
     <Compile Include="Domain\Tags\TagComment.cs" />
     <Compile Include="Domain\Tags\TagDiff.cs" />
     <Compile Include="Domain\Tags\TagEditableFields.cs" />
+    <Compile Include="Domain\Tags\TagName.cs" />
     <Compile Include="Domain\TrashedEntry.cs" />
     <Compile Include="Domain\Users\ArtistForUser.cs" />
     <Compile Include="Domain\Users\IUser.cs" />
