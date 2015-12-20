@@ -343,10 +343,10 @@ namespace VocaDb.Model.Service {
 					.Take(maxResults)
 					.ToArray();
 
-				var tagNames = session.Query<Tag>()
-					.WhereHasName(tagTextQuery)
-					.OrderBy(t => t.EnglishName)
-					.Select(t => t.EnglishName)
+				var tagNames = session.Query<TagName>()
+					.WhereEntryNameIs(tagTextQuery)
+					.Select(t => t.Value)
+					.OrderBy(t => t)
 					.Take(maxResults)
 					.ToArray();
 
@@ -433,14 +433,17 @@ namespace VocaDb.Model.Service {
 					.Count()
 					: 0);
 
-				var tags = session.Query<Tag>()
-					.WhereHasName(tagTextQuery)
-					.OrderBy(t => t.EnglishName)
+				var tags = session.Query<TagName>()
+					.WhereEntryNameIs(tagTextQuery)
+					.Select(n => n.Entry)
+					.OrderByEntryName(LanguagePreference)
+					.Distinct()
 					.Take(maxResults)
 					.ToArray();
 
-				var tagCount = (getTotalCount ? session.Query<Tag>()
-					.WhereHasName(tagTextQuery)
+				var tagCount = (getTotalCount ? session.Query<TagName>()
+					.WhereEntryNameIs(textQuery)
+					.Select(n => n.Entry)
 					.Distinct()
 					.Count()
 					: 0);
@@ -455,7 +458,7 @@ namespace VocaDb.Model.Service {
 					songs.Select(a => new SongWithAlbumContract(a, PermissionContext.LanguagePreference)).ToArray(), songCount);
 
 				var tagResult = new PartialFindResult<TagContract>(
-					tags.Select(a => new TagContract(a)).ToArray(), tagCount);
+					tags.Select(a => new TagContract(a, PermissionContext.LanguagePreference)).ToArray(), tagCount);
 
 				return new AllEntriesSearchResult(query, albumResult, artistResult, songResult, tagResult);
 

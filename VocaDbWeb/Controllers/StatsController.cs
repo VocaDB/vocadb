@@ -208,16 +208,20 @@ namespace VocaDb.Web.Controllers {
 				var genres = ctx.OfType<T>()
 					.Query()
 					.Where(u => u.Tag.AliasedTo == null && u.Tag.Parent == null && u.Tag.CategoryName == Tag.CommonCategory_Genres)
-					.GroupBy(s => s.Tag.EnglishName)
+					.GroupBy(s => s.Tag.Id)
 					.Select(g => new {
-						TagName = g.Key,
+						TagId = g.Key,
 						Count = g.Count()
 					})
 					.OrderByDescending(g => g.Count)
 					.ToArray();
 
-				var mainGenres = genres.Take(10).ToArray();
-				var otherCount = genres.Skip(10).Sum(g => g.Count);
+				var mainGenreIds = genres.OrderByDescending(t => t.Count).Take(10).Select(t => t.TagId).ToArray();
+				var mainGenreTags = ctx.Query<Tag>().Where(t => mainGenreIds.Contains(t.Id)).SelectIdAndName(PermissionContext.LanguagePreference).ToArray();
+				var sorted = genres.Select(t => new { TagName = mainGenreTags[t.TagId].Name, Count = t.Count }).OrderByDescending(t => t.Count);
+
+				var mainGenres = sorted.Take(10).ToArray();
+				var otherCount = sorted.Skip(10).Sum(g => g.Count);
 				var points = mainGenres.Concat(new[] { new {
 					TagName = "Other genres", 
 					Count = otherCount

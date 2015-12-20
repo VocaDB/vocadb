@@ -33,7 +33,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);
 
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-			Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u)).OrderByDescending(t => t.Count).ToArray();
+			Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(song.TranslatedName);
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 

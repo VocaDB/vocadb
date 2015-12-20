@@ -10,10 +10,10 @@ namespace VocaDb.Migrations {
 		public override void Up() {
 
 			Create.Table(TableNames.TagNames)
-				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey()
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Language").AsString(16).NotNullable()
-				.WithColumn("[Value]").AsString(255).NotNullable().Unique();
+				.WithColumn("Value").AsString(255).NotNullable().Unique();
 
 			Alter.Table(TableNames.Tags)
 				.AddColumn("DefaultNameLanguage").AsString(20).NotNullable().WithDefaultValue("English")

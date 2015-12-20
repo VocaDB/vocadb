@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
@@ -8,12 +9,12 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagBaseContract() { }
 
-		public TagBaseContract(Tag tag) {
+		public TagBaseContract(Tag tag, ContentLanguagePreference languagePreference) {
 			
 			ParamIs.NotNull(() => tag);
 
 			Id = tag.Id;
-			Name = tag.EnglishName;
+			Name = tag.Names.SortNames[languagePreference];
 			UrlSlug = tag.UrlSlug;
 
 		}

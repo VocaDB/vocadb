@@ -81,7 +81,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private Tag GetTagByName(IDatabaseContext<Tag> ctx, string name) {
 
-			var tag = ctx.Query().FirstOrDefault(t => t.EnglishName == name);
+			var tag = ctx.Query().WhereHasName(name).FirstOrDefault();
 
 			if (tag == null) {
 				log.Warn("Tag not found: {0}", name);
@@ -164,7 +164,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(ctx => {
 
-				var result = new TagSearch(ctx).Find(queryParams, onlyMinimalFields);
+				var result = new TagSearch(ctx, LanguagePreference).Find(queryParams, onlyMinimalFields);
 
 				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(), result.TotalCount, queryParams.Common.Query, false);
 
@@ -175,7 +175,7 @@ namespace VocaDb.Model.Database.Queries {
 		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields, bool ssl) {
 
 			return Find(tag => new TagForApiContract(
-				tag, imagePersister, ssl, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
+				tag, imagePersister, ssl, LanguagePreference, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
 
 		}
 
@@ -196,24 +196,20 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public string[] FindNames(TagSearchTextQuery textQuery, string categoryName, TagSortRule sortRule, bool allowAliases, bool allowEmptyName, int maxEntries) {
-
-			if (!allowEmptyName && textQuery.IsEmpty)
-				return new string[] { };
+		public string[] FindNames(TagSearchTextQuery textQuery, bool allowAliases, int maxEntries) {
 
 			return HandleQuery(session => {
 
-				var q = session.Query()
-					.WhereHasName(textQuery)
-					.WhereHasCategoryName(categoryName);
+				var q = session.Query<TagName>()
+					.WhereEntryNameIs(textQuery);
 
 				if (!allowAliases)
-					q = q.Where(t => t.AliasedTo == null);
+					q = q.Where(t => t.Entry.AliasedTo == null);
 
 				var tags = q
-					.OrderBy(sortRule)
+					.Select(t => t.Value)
+					.OrderBy(t => t)
 					.Take(maxEntries)
-					.Select(t => t.EnglishName)
 					.ToArray();
 
 				return tags;
@@ -284,7 +280,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tags = ctx.Query()
 					.Where(t => t.AliasedTo == null)
 					.OrderBy(t => t.CategoryName)
-					.ThenBy(t => t.EnglishName)
+					.ThenByEntryName(PermissionContext.LanguagePreference)
 					.GroupBy(t => t.CategoryName)
 					.ToArray();
 
@@ -296,7 +292,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Concat(tags.Except(new[] { genres, empty }))
 					.Concat(new[] { empty })
 					.Where(t => t != null)
-					.Select(t => new TagCategoryContract(t.Key, t))
+					.Select(t => new TagCategoryContract(t.Key, LanguagePreference, t))
 					.ToArray();
 
 				return tagsByCategories;
@@ -313,7 +309,7 @@ namespace VocaDb.Model.Database.Queries {
 					session.Query<AlbumTagUsage>().Any(a => a.Tag.Id == id && !a.Album.Deleted) ||
 					session.Query<SongTagUsage>().Any(a => a.Tag.Id == id && !a.Song.Deleted);
 
-				var contract = new TagForEditContract(LoadTagById(session, id), !inUse);
+				var contract = new TagForEditContract(LoadTagById(session, id), !inUse, LanguagePreference);
 
 				return contract;
 
@@ -327,7 +323,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(int id) {
 
-			return LoadTag(id, tag => new TagWithArchivedVersionsContract(tag));
+			return LoadTag(id, tag => new TagWithArchivedVersionsContract(tag, LanguagePreference));
 
 		}
 
@@ -362,16 +358,24 @@ namespace VocaDb.Model.Database.Queries {
 				if (tag.Description != contract.Description)
 					diff.Description = true;
 
-				if (tag.EnglishName != contract.EnglishName) {
+				var nameDiff = tag.Names.Sync(contract.Names, tag);
+				ctx.OfType<TagName>().Sync(nameDiff);
 
-					var hasDuplicate = ctx.Query().Any(t => t.EnglishName == contract.EnglishName && t.Id != contract.Id);
+				if (nameDiff.Changed) {
+					
+					diff.Names = true;
 
-					if (hasDuplicate) {
-						throw new DuplicateTagNameException(contract.EnglishName);
+					var names = contract.Names.Select(n => n.Value).ToArray();
+					var duplicateName = ctx.Query<TagName>()
+						.Where(t => t.Entry.Id != contract.Id && names.Contains(t.Value))
+						.Select(t => t.Value)
+						.FirstOrDefault();
+
+					if (duplicateName != null) {
+						throw new DuplicateTagNameException(duplicateName);
                     }
 
 					diff.Names = true;
-					tag.EnglishName = contract.EnglishName;
 
 				}
 
@@ -412,7 +416,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.Update(tag);
 
-				return new TagBaseContract(tag);
+				return new TagBaseContract(tag, LanguagePreference);
 
 			});
 

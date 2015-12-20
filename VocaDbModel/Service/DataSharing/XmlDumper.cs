@@ -103,7 +103,7 @@ namespace VocaDb.Model.Service.DataSharing {
 				loader.DumpSkipDeleted<Song, ArchivedSongContract>("/Songs/", a => new ArchivedSongContract(a, new SongDiff()));
 				loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", a => new ArchivedEventSeriesContract(a));
 				loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", a => new ArchivedEventContract(a));
-				loader.Dump<Tag, ArchivedTagContract>("/Tags/", a => new ArchivedTagContract(a));
+				loader.Dump<Tag, ArchivedTagContract>("/Tags/", a => new ArchivedTagContract(a, new TagDiff()));
 				
 			}
 

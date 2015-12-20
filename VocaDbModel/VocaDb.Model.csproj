@@ -213,7 +213,6 @@
     <Compile Include="DataContracts\Tags\ArchivedTagContract.cs" />
     <Compile Include="DataContracts\Tags\ArchivedTagVersionContract.cs" />
     <Compile Include="DataContracts\Tags\TagUsageWithVotesContract.cs" />
-    <Compile Include="DataContracts\Tags\TagWithImageContract.cs" />
     <Compile Include="DataContracts\UploadedFileContract.cs" />
     <Compile Include="DataContracts\UseCases\DuplicateEntryResultContract.cs" />
     <Compile Include="DataContracts\UseCases\EntryIdAndVersionContract.cs" />

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
@@ -11,15 +12,15 @@ namespace VocaDb.Model.DataContracts.Tags {
 			AliasedTo = null;
 		}
 
-		public TagContract(Tag tag)
-			: base(tag) {
+		public TagContract(Tag tag, ContentLanguagePreference languagePreference)
+			: base(tag, languagePreference) {
 
 			ParamIs.NotNull(() => tag);
 
-			AliasedTo = tag.AliasedTo != null ? new TagBaseContract(tag.AliasedTo) : null;
+			AliasedTo = tag.AliasedTo != null ? new TagBaseContract(tag.AliasedTo, languagePreference) : null;
 			CategoryName = tag.CategoryName;
 			Description = tag.Description;
-			Parent = tag.Parent != null ? new TagBaseContract(tag.Parent) : null;
+			Parent = tag.Parent != null ? new TagBaseContract(tag.Parent, languagePreference) : null;
 			Status = tag.Status;
 			Version = tag.Version;
 

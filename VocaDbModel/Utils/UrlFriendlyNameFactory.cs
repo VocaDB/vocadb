@@ -18,15 +18,15 @@ namespace VocaDb.Model.Utils {
 
 			// Try English if English is the default language selection
 			if (nameManager.SortNames.DefaultLanguage == ContentLanguageSelection.English)
-				raw = nameManager.FirstNameValue(ContentLanguageSelection.English);
+				raw = nameManager.SortNames.English;
 
 			// Otherwise try Romaji
 			if (raw == null)
-				raw = nameManager.FirstNameValue(ContentLanguageSelection.Romaji);
+				raw = nameManager.SortNames.Romaji;
 
 			// Try English again since there was no Romaji name
 			if (raw == null)
-				raw = nameManager.FirstNameValue(ContentLanguageSelection.English);
+				raw = nameManager.SortNames.English;
 
 			// No English or Romaji names, return empty.
 			if (raw == null)

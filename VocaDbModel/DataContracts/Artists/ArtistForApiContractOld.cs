@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Description = artist.Description[languagePreference];
 			Groups = artist.Groups.Select(g => new ArtistContract(g.Group, languagePreference)).ToArray();
 			Members = artist.Members.Select(m => new ArtistContract(m.Member, languagePreference)).ToArray();
-			Tags = artist.Tags.Usages.Select(u => new TagUsageForApiContract(u)).ToArray();
+			Tags = artist.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 			WebLinks = artist.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 
 			if (mergeRecord != null)
@@ -38,7 +38,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 				Members = artist.Members.Select(m => new ArtistContract(m.Member, languagePreference)).ToArray();
 			}
 
-			Tags = artist.Tags.Usages.Select(u => new TagUsageForApiContract(u)).ToArray();
+			Tags = artist.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
 			if (includedFields.HasFlag(ArtistEditableFields.WebLinks))
 				WebLinks = artist.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();

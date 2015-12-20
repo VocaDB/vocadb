@@ -65,16 +65,15 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		public static IQueryOver<TRoot, TSubType> AddNameOrder<TRoot, TSubType>(IQueryOver<TRoot, TSubType> criteria, 
-			ContentLanguagePreference languagePreference) where TSubType : IEntryWithNames {
+		public static IOrderedQueryable<T> AddNameOrder<T>(IOrderedQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames {
 
 			switch (languagePreference) {
 				case ContentLanguagePreference.Japanese:
-					return criteria.OrderBy(e => e.Names.SortNames.Japanese).Asc;
+					return criteria.ThenBy(e => e.Names.SortNames.Japanese);
 				case ContentLanguagePreference.English:
-					return criteria.OrderBy(e => e.Names.SortNames.English).Asc;
+					return criteria.ThenBy(e => e.Names.SortNames.English);
 				default:
-					return criteria.OrderBy(e => e.Names.SortNames.Romaji).Asc;
+					return criteria.ThenBy(e => e.Names.SortNames.Romaji);
 			}
 
 		}

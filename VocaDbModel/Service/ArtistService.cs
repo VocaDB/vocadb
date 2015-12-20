@@ -194,7 +194,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				var artist = session.Load<Artist>(artistId);
-				return new EntryWithTagUsagesContract(artist, artist.Tags.Usages);
+				return new EntryWithTagUsagesContract(artist, artist.Tags.Usages, LanguagePreference);
 
 			});
 

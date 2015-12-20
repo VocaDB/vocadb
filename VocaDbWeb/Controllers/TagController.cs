@@ -132,10 +132,10 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(filter)) {
 
-				var tag = queries.GetTagByName(filter, t => new { t.Id, t.EnglishName });
+				var tag = queries.GetTagByName(filter, t => new { t.Id, t.UrlSlug });
 
 				if (tag != null) {
-					return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.EnglishName });
+					return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.UrlSlug });
 				}
 
 				return RedirectToAction("Index", "Search", new SearchIndexViewModel(EntryType.Tag, filter));

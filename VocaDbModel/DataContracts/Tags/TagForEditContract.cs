@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Linq;
+using System.Runtime.Serialization;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
@@ -10,21 +12,21 @@ namespace VocaDb.Model.DataContracts.Tags {
 			UpdateNotes = string.Empty;
 		}
 
-		public TagForEditContract(Tag tag, bool isEmpty)
-			: base(tag) {
+		public TagForEditContract(Tag tag, bool isEmpty, ContentLanguagePreference languagePreference)
+			: base(tag, languagePreference) {
 
-			EnglishName = tag.EnglishName;
 			IsEmpty = isEmpty;
+			Names = tag.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			UpdateNotes = string.Empty;
 
 		}
 
 		[DataMember]
-		public string EnglishName { get; set; }
+		public bool IsEmpty { get; set; }
 
 		[DataMember]
-		public bool IsEmpty { get; set; }
+		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		[DataMember]
 		public EntryThumbContract Thumb { get; set; }

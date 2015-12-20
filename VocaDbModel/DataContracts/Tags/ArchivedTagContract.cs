@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Linq;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
@@ -8,16 +9,16 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public ArchivedTagContract() { }
 
-		public ArchivedTagContract(Tag tag) {
+		public ArchivedTagContract(Tag tag, TagDiff diff) {
 
 			ParamIs.NotNull(() => tag);
 
-			AliasedTo = tag.AliasedTo != null ? new ObjectRefContract(tag.AliasedTo.Id, tag.AliasedTo.EnglishName) : null;
+			AliasedTo = tag.AliasedTo != null ? new ObjectRefContract(tag.AliasedTo) : null;
 			CategoryName = tag.CategoryName;
 			Description = tag.Description;
-			EnglishName = tag.EnglishName;
 			Id = tag.Id;
-			Parent = tag.Parent != null ? new ObjectRefContract(tag.Parent.Id, tag.Parent.EnglishName) : null;
+			Names = diff.IncludeNames ? tag.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
+			Parent = tag.Parent != null ? new ObjectRefContract(tag.Parent) : null;
 			ThumbMime = tag.Thumb != null ? tag.Thumb.Mime : null;
 
 		}
@@ -32,10 +33,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public string Description { get; set; }
 
 		[DataMember]
-		public string EnglishName { get; set; }
+		public int Id { get; set; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public LocalizedStringContract[] Names { get; set; }
 
 		[DataMember]
 		public ObjectRefContract Parent { get; set; }

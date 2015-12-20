@@ -169,7 +169,7 @@ namespace VocaDb.Model.Database.Queries {
 			details.AlbumCollectionCount = cachedStats.AlbumCollectionCount;
 			details.ArtistCount = cachedStats.ArtistCount;
 			details.FavoriteSongCount = cachedStats.FavoriteSongCount;
-			details.FavoriteTags = session.Query<Tag>().Where(t => cachedStats.FavoriteTags.Contains(t.Id)).ToArray().Select(t => new TagBaseContract(t)).ToArray();
+			details.FavoriteTags = session.Query<Tag>().Where(t => cachedStats.FavoriteTags.Contains(t.Id)).ToArray().Select(t => new TagBaseContract(t, LanguagePreference)).ToArray();
 			details.CommentCount = cachedStats.CommentCount;
 			details.EditCount = cachedStats.EditCount;
 			details.SubmitCount = cachedStats.SubmitCount;
@@ -795,15 +795,15 @@ namespace VocaDb.Model.Database.Queries {
 			});
 		}
 
-		private void AddCount(Dictionary<string, int> genresDict, string parentTag, int count) {
+		private void AddCount(Dictionary<int, int> genresDict, int? parentTag, int count) {
 			
 			if (parentTag == null)
 				return;
 
-			if (genresDict.ContainsKey(parentTag))
-				genresDict[parentTag] += count;
+			if (genresDict.ContainsKey(parentTag.Value))
+				genresDict[parentTag.Value] += count;
 			else
-				genresDict.Add(parentTag, count);
+				genresDict.Add(parentTag.Value, count);
 
 		}
 
@@ -815,16 +815,16 @@ namespace VocaDb.Model.Database.Queries {
 					.OfType<SongTagUsage>()
 					.Query()
 					.Where(u => u.Song.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == Tag.CommonCategory_Genres)
-					.GroupBy(s => new { TagName = s.Tag.EnglishName, Parent = s.Tag.Parent.EnglishName, AliasedTo = s.Tag.AliasedTo.EnglishName })
+					.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id, AliasedTo = (int?)s.Tag.AliasedTo.Id })
 					.Select(g => new {
-						TagName = g.Key.TagName,
+						TagId = g.Key.TagId,
 						Parent = g.Key.Parent,
 						AliasedTo = g.Key.AliasedTo,
 						Count = g.Count()
 					})
 					.ToArray();
 
-				var genresDict = genres.Where(g => g.AliasedTo == null && g.Parent == null).ToDictionary(t => t.TagName, t => t.Count);
+				var genresDict = genres.Where(g => g.AliasedTo == null && g.Parent == null).ToDictionary(t => t.TagId, t => t.Count);
 					
 				foreach (var tag in genres) {
 
@@ -832,7 +832,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var sorted = genresDict.Select(t => new { TagName = t.Key, Count = t.Value }).OrderByDescending(t => t.Count).ToArray();
+				var mainGenreIds = genresDict.OrderByDescending(t => t.Value).Take(10).Select(t => t.Key).ToArray();
+				var mainGenreTags = ctx.Query<Tag>().Where(t => mainGenreIds.Contains(t.Id)).SelectIdAndName(LanguagePreference).ToArray();
+
+				var sorted = genresDict.Select(t => new { TagName = mainGenreTags[t.Key].Name, Count = t.Value }).OrderByDescending(t => t.Count);
 				var mainGenres = sorted.Take(10);
 				var otherCount = sorted.Skip(10).Sum(g => g.Count);
 
@@ -893,7 +896,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tagVotes = session.Query<AlbumTagVote>().Where(a => a.User.Id == userId && a.Usage.Album.Id == albumId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
-					new TagSelectionContract(t.Tag, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
 
 				return tagSelections.ToArray();
 
@@ -909,7 +912,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Artist.Id == artistId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
-					new TagSelectionContract(t.Tag, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
 
 				return tagSelections.ToArray();
 
@@ -925,7 +928,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tagVotes = session.Query<SongTagVote>().Where(a => a.User.Id == userId && a.Usage.Song.Id == songId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
-					new TagSelectionContract(t.Tag, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
 
 				return tagSelections.ToArray();
 

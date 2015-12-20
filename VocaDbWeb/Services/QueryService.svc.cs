@@ -113,7 +113,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public string[] FindTags(string term, int maxResults) {
 
-			return tagQueries.FindNames(TagSearchTextQuery.Create(term), null, TagSortRule.Name, true, false, 10);
+			return tagQueries.FindNames(TagSearchTextQuery.Create(term), true, 10);
 
 		}
 
@@ -198,7 +198,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public TagContract GetTagByName(string name) {
 
-			var tag = tagQueries.Find(t => new TagContract(t), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, false, true),
+			var tag = tagQueries.Find(t => new TagContract(t, ContentLanguagePreference.Default), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, false, true),
 				new PagingProperties(0, 1, false)) { AllowAliases = true }).Items.FirstOrDefault();
 
 			return tag;

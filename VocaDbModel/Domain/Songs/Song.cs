@@ -315,9 +315,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual string ThumbUrl { get; set; }
 
-		public virtual TranslatedString TranslatedName {
-			get { return Names.SortNames; }
-		}
+		public virtual TranslatedString TranslatedName => Names.SortNames;
 
 		/// <summary>
 		/// NicoNicoDouga Id for the PV (for example sm12850213). Is unique, but can be null.

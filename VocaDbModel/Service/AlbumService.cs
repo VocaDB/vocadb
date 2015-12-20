@@ -440,7 +440,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => { 
 				
 				var album = session.Load<Album>(albumId);
-				return new EntryWithTagUsagesContract(album, album.Tags.Usages);
+				return new EntryWithTagUsagesContract(album, album.Tags.Usages, LanguagePreference);
 
 			});
 

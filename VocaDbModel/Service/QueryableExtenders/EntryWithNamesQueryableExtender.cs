@@ -18,6 +18,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IOrderedQueryable<T> ThenByEntryName<T>(this IOrderedQueryable<T> criteria, ContentLanguagePreference languagePreference)
+			where T : IEntryWithNames {
+
+			return FindHelpers.AddNameOrder(criteria, languagePreference);
+
+		}
+
 		public static IQueryable<EntryIdAndName> SelectIdAndName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
 			where T: class, IEntryWithNames {
 
@@ -63,7 +70,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <returns>Filtered query. Cannot be null.</returns>
 		/// <typeparam name="TEntry">Entry type.</typeparam>
 		/// <typeparam name="TName">Entry name type.</typeparam>
-		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, SearchTextQuery textQuery) where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId {
+		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, SearchTextQuery textQuery) where TEntry 
+			: IEntryWithNames<TName> where TName : LocalizedStringWithId {
 
 			if (textQuery.IsEmpty)
 				return query;

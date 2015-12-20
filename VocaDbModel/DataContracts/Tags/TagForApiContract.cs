@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 
@@ -15,20 +17,21 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagForApiContract(Tag tag, 
 			IEntryImagePersisterOld thumbPersister,
-			bool ssl,			
+			bool ssl,
+			ContentLanguagePreference languagePreference,
 			TagOptionalFields optionalFields) {
 
 			ParamIs.NotNull(() => tag);
 
 			CategoryName = tag.CategoryName;
 			Id = tag.Id;
-			Name = tag.EnglishName;
+			Name = tag.Names.SortNames[languagePreference];
 			Status = tag.Status;
 			UrlSlug = tag.UrlSlug;
 			Version = tag.Version;
 
 			if (optionalFields.HasFlag(TagOptionalFields.AliasedTo) && tag.AliasedTo != null) {
-				AliasedTo = new TagBaseContract(tag.AliasedTo);
+				AliasedTo = new TagBaseContract(tag.AliasedTo, languagePreference);
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
@@ -39,8 +42,12 @@ namespace VocaDb.Model.DataContracts.Tags {
 				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl);
 			}
 
+			if (optionalFields.HasFlag(TagOptionalFields.Names)) {
+				Names = tag.Names.Select(n => new LocalizedStringContract(n)).ToArray();
+			}
+
 			if (optionalFields.HasFlag(TagOptionalFields.Parent) && tag.Parent != null) {
-				Parent = new TagBaseContract(tag.Parent);
+				Parent = new TagBaseContract(tag.Parent, languagePreference);
 			}
 
 		}
@@ -62,6 +69,12 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string Name { get; set; }
+
+		/// <summary>
+		/// List of all names for this entry. Optional field.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public LocalizedStringContract[] Names { get; set; }
 
 		[DataMember]
 		public TagBaseContract Parent { get; set; }
@@ -85,7 +98,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		AliasedTo	= 1,
 		Description = 2,
 		MainPicture = 4,
-		Parent		= 8
+		Names		= 8,
+		Parent		= 16
 
 	}
 

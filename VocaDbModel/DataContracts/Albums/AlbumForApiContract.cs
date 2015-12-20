@@ -84,7 +84,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 				PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 
 			if (tags)
-				Tags = album.Tags.Usages.Select(u => new TagUsageForApiContract(u)).ToArray();
+				Tags = album.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
 			if (webLinks)
 				WebLinks = album.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();

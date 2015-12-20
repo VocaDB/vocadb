@@ -74,7 +74,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Description() {
 
-			var updated = new TagForEditContract(tag, false);
+			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
 			updated.Description = "mikumikudance.wikia.com/wiki/Miku_Hatsune_Appearance_(Mamama)";
 
 			queries.Update(updated, null);
@@ -90,7 +90,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Image() {
 			
-			var updated = new TagForEditContract(tag, false);
+			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
 			using (var stream = TestImage()) {
 				queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });			
 			}
@@ -108,12 +108,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Name() {
 
-			var updated = new TagForEditContract(tag, false);
-			updated.EnglishName = "Api_Miku";
+			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			updated.Names[0].Value = "Api_Miku";
 
 			queries.Update(updated, null);
 
-			Assert.AreEqual("Api_Miku", tag.EnglishName, "EnglishName");
+			Assert.AreEqual("Api_Miku", tag.DefaultName, "EnglishName");
 
 			var archivedVersion = GetArchivedVersion(tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
@@ -125,8 +125,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_Duplicate() {
 
-			var updated = new TagForEditContract(tag, false);
-			updated.EnglishName = "MMD";
+			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			updated.Names[0].Value = "MMD";
 
 			queries.Update(updated, null);
 
@@ -135,8 +135,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Parent() {
 			
-			var updated = new TagForEditContract(tag, false);
-			updated.Parent = new TagBaseContract(tag2);
+			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			updated.Parent = new TagBaseContract(tag2, ContentLanguagePreference.English);
 
 			queries.Update(updated, null);
 
@@ -152,8 +152,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Parent_IgnoreSelf() {
 			
-			var updated = new TagForEditContract(tag, false);
-			updated.Parent = new TagBaseContract(tag);
+			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			updated.Parent = new TagBaseContract(tag, ContentLanguagePreference.English);
 
 			queries.Update(updated, null);
 
@@ -168,9 +168,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Parent_Renamed() {
 
-			var updated = new TagForEditContract(tag, false);
-			tag2.EnglishName = "Api_Miku";
-			updated.Parent = new TagBaseContract(tag2);
+			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			tag2.TranslatedName.Default = "Api_Miku";
+			updated.Parent = new TagBaseContract(tag2, ContentLanguagePreference.English);
 
 			queries.Update(updated, null);
 

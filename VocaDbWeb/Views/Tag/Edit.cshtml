@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared
 @using Res = VocaDb.Web.Resources.Views.Tag.EditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEdit>
 
@@ -63,11 +64,22 @@
 	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
 	
 	<div class="editor-label">
-		@Html.LabelFor(m => m.EnglishName)
+		<label class="helpTip" data-bind="qTip">
+			Default language
+		</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxFor(m => m.EnglishName, new { maxlength = 100 })
-		@Html.ValidationMessageFor(m => m.EnglishName)
+		@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+	</div>
+
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip: null">
+			Names
+		</label>
+		@Helpers.RequiredField()
+	</div>
+	<div class="editor-field" data-bind="with: names">
+		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel { ShowAliases = false }); }
 	</div>
 
 	<div class="editor-label">
