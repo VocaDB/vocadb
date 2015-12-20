@@ -72,7 +72,10 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var tagName = queries.LoadTag(id, t => t.UrlSlug);
+			// TODO: write test for null slug
+			slug = slug ?? string.Empty;
+
+			var tagName = queries.LoadTag(id, t => t.UrlSlug ?? string.Empty);
 
 			if (slug != tagName) {
 				return RedirectToActionPermanent("DetailsById", new { id, slug = tagName });
