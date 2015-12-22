@@ -10,9 +10,10 @@ module vdb.viewModels {
 
 			this.aliasedTo = ko.observable(contract.aliasedTo);
 			this.categoryName = ko.observable(contract.categoryName);
+			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
 			this.description = ko.observable(contract.description);
 			this.id = contract.id;
-			this.name = contract.name;
+			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
 			this.parent = ko.observable(contract.parent);
 
 			this.validationError_needDescription = ko.computed(() => !this.description());
@@ -29,10 +30,11 @@ module vdb.viewModels {
 		public aliasedTo: KnockoutObservable<dc.TagBaseContract>;
 		public aliasedToName: KnockoutComputed<string>;
 		public categoryName: KnockoutObservable<string>;
+		public defaultNameLanguage: KnockoutObservable<string>;
 		public description: KnockoutObservable<string>;
 		public hasValidationErrors: KnockoutComputed<boolean>;
 		private id: number;
-		public name: string;
+		public names: globalization.NamesEditViewModel;
 		public parent: KnockoutObservable<dc.TagBaseContract>;
 		public parentName: KnockoutComputed<string>;
 		public submitting = ko.observable(false);

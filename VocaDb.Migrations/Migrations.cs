@@ -5,7 +5,7 @@ using FluentMigrator;
 namespace VocaDb.Migrations {
 
 	[Migration(201512182300)]
-	public class CreateTranslatedTagName : AutoReversingMigration {
+	public class CreateTranslatedTagName : Migration {
 
 		public override void Up() {
 
@@ -20,6 +20,15 @@ namespace VocaDb.Migrations {
 				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
 				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
 
+			Execute.Sql(string.Format("INSERT INTO {0} (Tag, Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.TagNames, TableNames.Tags));
+
+		}
+
+		public override void Down() {
+			Delete.Table(TableNames.TagNames);
+			Delete.Column("DefaultNameLanguage").FromTable(TableNames.Tags);
+			Delete.Column("JapaneseName").FromTable(TableNames.Tags);
+			Delete.Column("RomajiName").FromTable(TableNames.Tags);
 		}
 
 	}

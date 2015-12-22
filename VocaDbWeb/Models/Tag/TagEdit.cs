@@ -54,6 +54,9 @@ namespace VocaDb.Web.Models.Tag {
 		public string Name { get; set; }
 
 		[FromJson]
+		public LocalizedStringWithIdContract[] Names { get; set; }
+
+		[FromJson]
 		public TagBaseContract Parent { get; set; }
 
 		public EntryStatus Status { get; set; }
@@ -80,6 +83,7 @@ namespace VocaDb.Web.Models.Tag {
 			return new TagForEditContract {
 				Id = this.Id,
 				Name = this.Name,
+				Names = Names,
 				AliasedTo = this.AliasedTo,
 				CategoryName = this.CategoryName ?? string.Empty,
 				Description = this.Description ?? string.Empty,

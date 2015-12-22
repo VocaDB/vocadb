@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ParamIs.NotNull(() => tag);
 
 			CategoryName = tag.CategoryName;
+			DefaultNameLanguage = tag.TranslatedName.DefaultLanguage;
 			Id = tag.Id;
 			Name = tag.Names.SortNames[languagePreference];
 			Status = tag.Status;
@@ -43,7 +44,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.Names)) {
-				Names = tag.Names.Select(n => new LocalizedStringContract(n)).ToArray();
+				Names = tag.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.Parent) && tag.Parent != null) {
@@ -57,6 +58,13 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string CategoryName { get; set; }
+
+		/// <summary>
+		/// Language selection of the original name.
+		/// </summary>
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }
@@ -74,7 +82,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		/// List of all names for this entry. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		[DataMember]
 		public TagBaseContract Parent { get; set; }

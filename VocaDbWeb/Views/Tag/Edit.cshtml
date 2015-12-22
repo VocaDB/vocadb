@@ -29,7 +29,7 @@
 		initPage();
 
 		var tagRepo = new vdb.repositories.TagRepository('@RootPath');
-		tagRepo.getById('@Model.Id', "AliasedTo,Description,Parent", function (contract) {
+		tagRepo.getById('@Model.Id', "AliasedTo,Description,Names,Parent", function (contract) {
 			var viewModel = new vdb.viewModels.TagEditViewModel(contract);
 			ko.applyBindings(viewModel);
 		});
@@ -80,6 +80,7 @@
 	</div>
 	<div class="editor-field" data-bind="with: names">
 		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel { ShowAliases = false }); }
+		@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
 	</div>
 
 	<div class="editor-label">

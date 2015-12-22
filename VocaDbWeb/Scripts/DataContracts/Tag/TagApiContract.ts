@@ -7,6 +7,8 @@ module vdb.dataContracts {
 
 		categoryName: string;
 
+		defaultNameLanguage: string;
+
 		description: string;
 
 		id: number;
@@ -14,6 +16,8 @@ module vdb.dataContracts {
 		mainPicture: EntryThumbContract;
 
 		name: string;
+
+		names: globalization.LocalizedStringWithIdContract[];
 
 		parent: TagBaseContract;
 
