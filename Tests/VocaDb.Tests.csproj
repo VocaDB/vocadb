@@ -129,6 +129,7 @@
     <Compile Include="Domain\Users\FavoriteSongForUserTests.cs" />
     <Compile Include="Domain\Users\OwnedArtistForUserTests.cs" />
     <Compile Include="Domain\Users\UserTests.cs" />
+    <Compile Include="Domain\Versioning\ArchivedVersionManagerTests.cs" />
     <Compile Include="Domain\WebLinkTests.cs" />
     <Compile Include="Helpers\ArtistHelperTests.cs" />
     <Compile Include="Helpers\CollectionHelperTests.cs" />
