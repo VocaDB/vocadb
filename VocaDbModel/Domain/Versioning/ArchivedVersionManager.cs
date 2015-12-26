@@ -43,7 +43,12 @@ namespace VocaDb.Model.Domain.Versioning {
 		}
 
 		public virtual TVersion GetLatestVersion() {
-			return Versions.OrderByDescending(m => m.Created).FirstOrDefault();
+
+			return Versions
+				.OrderByDescending(m => m.Version)
+				.ThenByDescending(m => m.Created)
+				.FirstOrDefault();
+
 		}
 
 		/// <summary>

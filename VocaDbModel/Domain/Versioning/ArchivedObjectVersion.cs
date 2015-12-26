@@ -3,7 +3,6 @@ using System.Xml.Linq;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Activityfeed;
-using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Domain.Versioning {
 
@@ -58,6 +57,12 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		public virtual EntryStatus Status { get; protected set; }
 
+		/// <summary>
+		/// Version number. 
+		/// </summary>
+		/// <remarks>
+		/// Note that not all entry types track version number. For those entry types this will always be 0.
+		/// </remarks>
 		public virtual int Version { get; protected set; }
 
 		public override string ToString() {

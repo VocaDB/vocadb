@@ -14,7 +14,6 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Helpers;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
@@ -199,6 +198,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
 			Assert.IsNotNull(lastVersion, "Last version is available");
+			Assert.AreEqual(2, lastVersion.Version, "Last version number");
 			Assert.AreEqual(ArtistArchiveReason.Reverted, lastVersion.Reason, "Last version archive reason");
 			Assert.IsTrue(lastVersion.Diff.Picture, "Picture was changed");
 
