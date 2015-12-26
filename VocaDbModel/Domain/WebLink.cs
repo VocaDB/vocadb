@@ -6,7 +6,7 @@ using System;
 
 namespace VocaDb.Model.Domain {
 
-	public class WebLink : IWebLink {
+	public class WebLink : IWebLink, IEntryWithIntId {
 
 		public static CollectionDiffWithValue<T,T> Sync<T>(IList<T> oldLinks, IEnumerable<WebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory) 
 			where T : WebLink {
