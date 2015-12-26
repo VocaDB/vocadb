@@ -246,6 +246,9 @@
   <ItemGroup>
     <EmbeddedResource Include="TestData\NicoResponse_Error.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\vocadb_favicon.png" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

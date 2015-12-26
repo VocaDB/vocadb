@@ -41,6 +41,8 @@ namespace VocaDb.Tests.TestSupport {
 			return GetFileStream("yokohma_bay_concert.jpg");
 		}
 
+		public static Stream TestImage2 => GetFileStream("vocadb_favicon.png");
+
 	}
 
 }

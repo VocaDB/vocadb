@@ -1,24 +1,17 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
-using System.Web;
 using System.Xml.Linq;
 using NLog;
 using VocaDb.Model.Domain.Globalization;
 using NHibernate;
 using NHibernate.Linq;
-using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.DataContracts.Albums;
 using System.Drawing;
 using VocaDb.Model.Helpers;
-using System.Collections.Generic;
 using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
@@ -329,81 +322,6 @@ namespace VocaDb.Model.Service {
 				Archive(session, artist, new ArtistDiff(false), ArtistArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(artist), session);
-
-			});
-
-		}
-
-		/// <summary>
-		/// Reverts an album to an earlier archived version.
-		/// </summary>
-		/// <param name="archivedArtistVersionId">Id of the archived version to be restored.</param>
-		/// <returns>Result of the revert operation, with possible warnings if any. Cannot be null.</returns>
-		/// <remarks>Requires the RestoreRevisions permission.</remarks>
-		public EntryRevertedContract RevertToVersion(int archivedArtistVersionId) {
-
-			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
-
-			return HandleTransaction(session => {
-
-				var archivedVersion = session.Load<ArchivedArtistVersion>(archivedArtistVersionId);
-				var artist = archivedVersion.Artist;
-
-				SysLog("reverting " + artist + " to version " + archivedVersion.Version);
-
-				var fullProperties = ArchivedArtistContract.GetAllProperties(archivedVersion);
-				var warnings = new List<string>();
-
-				artist.ArtistType = fullProperties.ArtistType;
-				artist.Description.Original = fullProperties.Description;
-				artist.Description.English = fullProperties.DescriptionEng ?? string.Empty;
-				artist.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
-				artist.BaseVoicebank = SessionHelper.RestoreWeakRootEntityRef<Artist>(session, warnings, fullProperties.BaseVoicebank);
-
-				// Picture
-				var versionWithPic = archivedVersion.GetLatestVersionWithField(ArtistEditableFields.Picture);
-
-				if (versionWithPic != null)
-					artist.Picture = versionWithPic.Picture;
-
-				/*
-				// Albums
-				SessionHelper.RestoreObjectRefs<ArtistForAlbum, Album>(
-					session, warnings, artist.AllAlbums, fullProperties.Albums, (a1, a2) => (a1.Album.Id == a2.Id),
-					album => (!artist.HasAlbum(album) ? artist.AddAlbum(album) : null),
-					albumForArtist => albumForArtist.Delete());
-				 */
-
-				// Groups
-				SessionHelper.RestoreObjectRefs<GroupForArtist, Artist>(
-					session, warnings, artist.AllGroups, fullProperties.Groups, (a1, a2) => (a1.Group.Id == a2.Id),
-					grp => (!artist.HasGroup(grp) ? artist.AddGroup(grp) : null),
-					groupForArtist => groupForArtist.Delete());
-
-				/*
-				// Members
-				SessionHelper.RestoreObjectRefs<GroupForArtist, Artist>(
-					session, warnings, artist.AllMembers, fullProperties.Members, (a1, a2) => (a1.Member.Id == a2.Id),
-					member => (!artist.HasMember(member) ? artist.AddMember(member) : null),
-					groupForArtist => groupForArtist.Delete());
-				 */
-
-				// Names
-				if (fullProperties.Names != null) {
-					var nameDiff = artist.Names.SyncByContent(fullProperties.Names, artist);
-					SessionHelper.Sync(session, nameDiff);
-				}
-
-				// Weblinks
-				if (fullProperties.WebLinks != null) {
-					var webLinkDiff = WebLink.SyncByValue(artist.WebLinks, fullProperties.WebLinks, artist);
-					SessionHelper.Sync(session, webLinkDiff);
-				}
-
-				Archive(session, artist, ArtistArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				AuditLog(string.Format("reverted {0} to revision {1}", EntryLinkFactory.CreateEntryLink(artist), archivedVersion.Version), session);
-
-				return new EntryRevertedContract(artist, warnings);
 
 			});
 

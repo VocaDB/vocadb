@@ -10,6 +10,10 @@ namespace VocaDb.Model.Domain {
 	/// </summary>
 	public class PictureData {
 
+		public static bool IsNullOrEmpty(PictureData pictureData) {
+			return pictureData == null || pictureData.IsEmpty;
+		}
+
 		public PictureData() {
 		}
 
@@ -53,6 +57,8 @@ namespace VocaDb.Model.Domain {
 			return requestedSize != Size.Empty && Thumb250 != null && Thumb250.IsValidFor(requestedSize);
 
 		}
+
+		public virtual bool IsEmpty => Bytes == null || Bytes.Length == 0;
 
 	}
 

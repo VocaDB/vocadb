@@ -60,6 +60,10 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		public virtual int Version { get; protected set; }
 
+		public override string ToString() {
+			return string.Format("archived version {0} for {1}", Version, EntryBase);
+		}
+
 	}
 
 }
