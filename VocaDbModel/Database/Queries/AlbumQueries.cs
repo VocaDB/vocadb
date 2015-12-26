@@ -62,7 +62,7 @@ namespace VocaDb.Model.Database.Queries {
 			var artistDiff = song.SyncArtists(artistContracts, 
 				addedArtistContracts => GetArtists(ctx, addedArtistContracts));
 
-			ctx.OfType<ArtistForSong>().Sync(artistDiff);
+			ctx.Sync(artistDiff);
 
 			if (artistDiff.Changed) {
 
@@ -391,7 +391,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var parsedBarcodes = properties.Identifiers.Select(Album.ParseBarcode).ToArray();
 				var barcodeDiff = album.SyncIdentifiers(parsedBarcodes);
-				session.OfType<AlbumIdentifier>().Sync(barcodeDiff);
+				session.Sync(barcodeDiff);
 				if (barcodeDiff.Changed) {
 					diff.Identifiers = true;
 				}
@@ -485,7 +485,7 @@ namespace VocaDb.Model.Database.Queries {
 							session.Update(song);
 						}
 
-						session.OfType<ArtistForSong>().Sync(songArtistDiff);
+						session.Sync(songArtistDiff);
 
 						var archived = ArchiveSong(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
 							string.Format("Created for album '{0}'", album.DefaultName));

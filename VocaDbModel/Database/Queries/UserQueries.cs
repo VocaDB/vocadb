@@ -1168,7 +1168,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var diff = OwnedArtistForUser.Sync(user.AllOwnedArtists, contract.OwnedArtistEntries, a => user.AddOwnedArtist(session.Load<Artist>(a.Artist.Id)));
-				session.OfType<OwnedArtistForUser>().Sync(diff);
+				session.Sync(diff);
 				user.VerifiedArtist = user.OwnedArtists.Any();
 
 				user.Active = contract.Active;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace VocaDb.Model.Domain.Versioning {
 
@@ -43,7 +42,14 @@ namespace VocaDb.Model.Domain.Versioning {
 		}
 
 		public virtual TVersion GetLatestVersion() {
-			return Versions.OrderByDescending(m => m.Created).FirstOrDefault();
+
+			// Sort first by version number because it's more accurate.
+			// Also need to sort by creation date because version number is not available for all entry types.
+			return Versions
+				.OrderByDescending(m => m.Version)
+				.ThenByDescending(m => m.Created)
+				.FirstOrDefault();
+
 		}
 
 		/// <summary>

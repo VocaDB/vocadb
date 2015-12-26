@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
 using NHibernate;
@@ -21,6 +23,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Translations;
 
@@ -402,6 +405,90 @@ namespace VocaDb.Model.Database.Queries {
 			});
 
 		}
+
+		/// <summary>
+		/// Reverts an album to an earlier archived version.
+		/// </summary>
+		/// <param name="archivedArtistVersionId">Id of the archived version to be restored.</param>
+		/// <returns>Result of the revert operation, with possible warnings if any. Cannot be null.</returns>
+		/// <remarks>Requires the RestoreRevisions permission.</remarks>
+		public EntryRevertedContract RevertToVersion(int archivedArtistVersionId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
+
+			return HandleTransaction(session => {
+
+				var archivedVersion = session.Load<ArchivedArtistVersion>(archivedArtistVersionId);
+				var artist = archivedVersion.Artist;
+
+				session.AuditLogger.SysLog("reverting " + artist + " to version " + archivedVersion.Version);
+
+				var fullProperties = ArchivedArtistContract.GetAllProperties(archivedVersion);
+				var warnings = new List<string>();
+				var diff = new ArtistDiff();
+
+				artist.ArtistType = fullProperties.ArtistType;
+				artist.Description.Original = fullProperties.Description;
+				artist.Description.English = fullProperties.DescriptionEng ?? string.Empty;
+				artist.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
+				artist.BaseVoicebank = DatabaseContextHelper.RestoreWeakRootEntityRef(session, warnings, fullProperties.BaseVoicebank);
+
+				// Picture
+				var versionWithPic = archivedVersion.GetLatestVersionWithField(ArtistEditableFields.Picture);
+
+				if (versionWithPic != null) {
+
+					artist.Picture = versionWithPic.Picture;
+					artist.PictureMime = versionWithPic.PictureMime;
+
+					if (versionWithPic.Picture != null) {
+
+						var thumbGenerator = new ImageThumbGenerator(imagePersister);
+						using (var stream = new MemoryStream(versionWithPic.Picture.Bytes)) {
+							var thumb = new EntryThumb(artist, versionWithPic.PictureMime);
+							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+						}
+
+					}
+
+					// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
+
+				} else {
+
+					artist.Picture = null;
+					artist.PictureMime = null;
+
+				}
+
+				diff.Picture = !Equals(artist.ArchivedVersionsManager.GetLatestVersionWithField(ArtistEditableFields.Picture, artist.Version), versionWithPic);
+
+				// Groups
+				DatabaseContextHelper.RestoreObjectRefs<GroupForArtist, Artist>(
+					session, warnings, artist.AllGroups, fullProperties.Groups, (a1, a2) => (a1.Group.Id == a2.Id),
+					grp => (!artist.HasGroup(grp) ? artist.AddGroup(grp) : null),
+					groupForArtist => groupForArtist.Delete());
+
+				// Names
+				if (fullProperties.Names != null) {
+					var nameDiff = artist.Names.SyncByContent(fullProperties.Names, artist);
+					session.Sync(nameDiff);
+				}
+
+				// Weblinks
+				if (fullProperties.WebLinks != null) {
+					var webLinkDiff = WebLink.SyncByValue(artist.WebLinks, fullProperties.WebLinks, artist);
+					session.Sync(webLinkDiff);
+				}
+
+				Archive(session, artist, diff, ArtistArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
+				AuditLog(string.Format("reverted {0} to revision {1}", entryLinkFactory.CreateEntryLink(artist), archivedVersion.Version), session);
+
+				return new EntryRevertedContract(artist, warnings);
+
+			});
+
+		}
+
 		public int Update(ArtistForEditContract properties, EntryPictureFileContract pictureData, IUserPermissionContext permissionContext) {
 			
 			ParamIs.NotNull(() => properties);

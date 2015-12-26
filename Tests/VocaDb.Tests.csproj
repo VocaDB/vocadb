@@ -129,6 +129,7 @@
     <Compile Include="Domain\Users\FavoriteSongForUserTests.cs" />
     <Compile Include="Domain\Users\OwnedArtistForUserTests.cs" />
     <Compile Include="Domain\Users\UserTests.cs" />
+    <Compile Include="Domain\Versioning\ArchivedVersionManagerTests.cs" />
     <Compile Include="Domain\WebLinkTests.cs" />
     <Compile Include="Helpers\ArtistHelperTests.cs" />
     <Compile Include="Helpers\CollectionHelperTests.cs" />
@@ -245,6 +246,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestData\NicoResponse_Error.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\vocadb_favicon.png" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

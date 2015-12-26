@@ -81,6 +81,14 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
+		public static void Sync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff) {
+
+			ParamIs.NotNull(() => ctx);
+
+			Sync<T2>(ctx.OfType<T2>(), diff);
+
+		}
+
 		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff) {
 
 			ParamIs.NotNull(() => ctx);

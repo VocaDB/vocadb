@@ -123,6 +123,7 @@
     <Compile Include="Database\Queries\TagQueries.cs" />
     <Compile Include="Database\Queries\UserMessageQueries.cs" />
     <Compile Include="Database\Queries\UserQueries.cs" />
+    <Compile Include="Database\Repositories\DatabaseContextHelper.cs" />
     <Compile Include="DataContracts\Activityfeed\ActivityEntryForApiContract.cs" />
     <Compile Include="DataContracts\Aggregate\CountPerDayContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumDiscPropertiesContract.cs" />
