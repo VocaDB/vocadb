@@ -329,7 +329,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult RevertToVersion(int archivedAlbumVersionId) {
 
-			var result = Service.RevertToVersion(archivedAlbumVersionId);
+			var result = queries.RevertToVersion(archivedAlbumVersionId);
 
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 

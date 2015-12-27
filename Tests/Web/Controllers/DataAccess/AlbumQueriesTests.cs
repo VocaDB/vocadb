@@ -105,7 +105,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			foreach (var name in album.Names)
 				Save(name);
 			user = CreateEntry.User(1, "Miku");
-			user.GroupId = UserGroupId.Trusted;
+			user.GroupId = UserGroupId.Moderator;
 			user2 = CreateEntry.User(2, "Luka");
 			Save(user, user2);
 			Save(producer, vocalist, vocalist2);
@@ -303,6 +303,58 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			VocaDbAssert.HasSong(album2, song, 1);
 			VocaDbAssert.HasSong(album2, "Bonus song 2", 2);
 			VocaDbAssert.HasSong(album2, "Bonus song 1", 3);
+
+		}
+
+		[TestMethod]
+		public void Revert() {
+
+			// Arrange
+			album.Description.English = "Original";
+			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, album, AlbumArchiveReason.PropertiesUpdated));
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			contract.Description.English = "Updated";
+			CallUpdate(contract);
+
+			var entryFromRepo = repository.Load<Album>(album.Id);
+			Assert.AreEqual("Updated", entryFromRepo.Description.English, "Description was updated");
+
+			// Act
+			var result = queries.RevertToVersion(oldVer.Id);
+
+			// Assert
+			Assert.AreEqual(0, result.Warnings.Length, "Number of warnings");
+
+			entryFromRepo = repository.Load<Album>(result.Id);
+			Assert.AreEqual("Original", entryFromRepo.Description.English, "Description was restored");
+
+			var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
+			Assert.IsNotNull(lastVersion, "Last version is available");
+			Assert.AreEqual(AlbumArchiveReason.Reverted, lastVersion.Reason, "Last version archive reason");
+			Assert.IsFalse(lastVersion.Diff.Cover, "Picture was not changed");
+
+		}
+
+		/// <summary>
+		/// Old version has no image, image will be removed.
+		/// </summary>
+		[TestMethod]
+		public void Revert_RemoveImage() {
+
+			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, album, AlbumArchiveReason.PropertiesUpdated));
+			CallUpdate(ResourceHelper.TestImage());
+
+			var result = queries.RevertToVersion(oldVer.Id);
+
+			var entryFromRepo = repository.Load<Album>(result.Id);
+			Assert.IsTrue(PictureData.IsNullOrEmpty(entryFromRepo.CoverPictureData), "Picture data was removed");
+			Assert.IsTrue(string.IsNullOrEmpty(entryFromRepo.CoverPictureMime), "Picture MIME was removed");
+
+			var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
+			Assert.IsNotNull(lastVersion, "Last version is available");
+			Assert.AreEqual(2, lastVersion.Version, "Last version number");
+			Assert.AreEqual(AlbumArchiveReason.Reverted, lastVersion.Reason, "Last version archive reason");
+			Assert.IsTrue(lastVersion.Diff.Cover, "Picture was changed");
 
 		}
 
