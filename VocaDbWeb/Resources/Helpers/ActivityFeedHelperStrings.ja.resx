@@ -128,12 +128,12 @@
   </data>
   <data name="CreatedNew" xml:space="preserve">
     <value>{0}を樹立された</value>
-  </data>
+  <comment>not used for jp</comment></data>
   <data name="CreatedSong" xml:space="preserve">
-    <value>新しい曲が登録されました</value>
+    <value>さんが新しい曲を登録しました</value>
   </data>
   <data name="Updated" xml:space="preserve">
-    <value>{0}を更新した</value>
+    <value>さんが{0}を更新しました</value>
   </data>
   <data name="UpdatedAlbum" xml:space="preserve">
     <value>さんがアルバムを更新しました</value>
@@ -142,7 +142,7 @@
     <value>さんがアーティストを更新しました</value>
   </data>
   <data name="UpdatedSong" xml:space="preserve">
-    <value>曲が更新されました</value>
+    <value>さんが曲を更新しました</value>
   </data>
   <data name="EntryAlbum" xml:space="preserve">
     <value>アルバム</value>
