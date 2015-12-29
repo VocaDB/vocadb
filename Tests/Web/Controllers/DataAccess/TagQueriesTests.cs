@@ -35,6 +35,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			return repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == tag.Id);
 		}
 
+		private Tag CreateAndSaveTag(string englishName) {
+
+			var t = CreateEntry.Tag(englishName);
+
+			repository.Save(t);
+
+			foreach (var name in t.Names)
+				repository.Save(name);
+
+			return t;
+
+		}
+
 		private Stream TestImage() {
 			return ResourceHelper.TestImage();
 		}
@@ -42,9 +55,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestInitialize]
 		public void SetUp() {
 
-			tag = CreateEntry.Tag("Appearance_Miku");
-			tag2 = CreateEntry.Tag("MMD");
-			repository = new FakeTagRepository(tag, tag2);
+			repository = new FakeTagRepository();
+
+			tag = CreateAndSaveTag("Appearance_Miku");
+			tag2 = CreateAndSaveTag("MMD");
 
 			user = new User("User", "123", "test@test.com", 123);
 			repository.Add(user);

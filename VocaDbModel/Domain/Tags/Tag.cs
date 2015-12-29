@@ -54,11 +54,16 @@ namespace VocaDb.Model.Domain.Tags {
 			Status = EntryStatus.Draft;
 		}
 
-		public Tag(string name, string categoryName = "")
+		public Tag(string englishName, string categoryName = "")
+			: this(new LocalizedString(englishName, ContentLanguageSelection.English), categoryName) {}
+
+		public Tag(LocalizedString name, string categoryName = "")
 			: this() {
 
-			Names.SortNames.English = name;
-			Names.SortNames.DefaultLanguage = ContentLanguageSelection.English;
+			ParamIs.NotNull(() => name);
+
+			Names.SortNames.DefaultLanguage = name.Language;
+			Names.Add(new TagName(this, name));
 			CategoryName = categoryName;
 
 		}

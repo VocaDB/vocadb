@@ -107,7 +107,8 @@ namespace VocaDb.Tests.Service.Queries {
 		public void AddNewTag_TagNameExists() {
 
 			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
-			tag.TranslatedName.Default = "rock";
+			tag.Names.First().Value = "rock";
+			tag.Names.UpdateSortNames();
 
 			// Attempting to add tag "vocarock". The "vocarock" tag was renamed as "rock" so this is a new tag.
 			AddTags(entry.Id, Contract("vocarock"));

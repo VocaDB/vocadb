@@ -797,7 +797,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private void AddCount(Dictionary<int, int> genresDict, int? parentTag, int count) {
 			
-			if (parentTag == null)
+			if (parentTag == null || parentTag == 0)
 				return;
 
 			if (genresDict.ContainsKey(parentTag.Value))
@@ -824,7 +824,9 @@ namespace VocaDb.Model.Database.Queries {
 					})
 					.ToArray();
 
-				var genresDict = genres.Where(g => g.AliasedTo == null && g.Parent == null).ToDictionary(t => t.TagId, t => t.Count);
+				var genresDict = genres
+					.Where(g => (g.AliasedTo == null || g.AliasedTo == 0) && (g.Parent == null || g.Parent == 0))
+					.ToDictionary(t => t.TagId, t => t.Count);
 					
 				foreach (var tag in genres) {
 
@@ -833,7 +835,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var mainGenreIds = genresDict.OrderByDescending(t => t.Value).Take(10).Select(t => t.Key).ToArray();
-				var mainGenreTags = ctx.Query<Tag>().Where(t => mainGenreIds.Contains(t.Id)).SelectIdAndName(LanguagePreference).ToArray();
+				var mainGenreTags = ctx.Query<Tag>().Where(t => mainGenreIds.Contains(t.Id)).SelectIdAndName(LanguagePreference).ToDictionary(t => t.Id);
 
 				var sorted = genresDict.Select(t => new { TagName = mainGenreTags[t.Key].Name, Count = t.Value }).OrderByDescending(t => t.Count);
 				var mainGenres = sorted.Take(10);

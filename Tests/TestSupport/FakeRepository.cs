@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Tests.TestSupport {
@@ -103,10 +104,17 @@ namespace VocaDb.Tests.TestSupport {
 
 			ctx.Save(song);
 
-			foreach (var name in song.Names)
-				ctx.Save(name);
+			SaveNames(song);
 
 			return song;
+
+		}
+
+		public void SaveNames<TName>(params IEntryWithNames<TName>[] entries) 
+			where TName : LocalizedStringWithId {
+
+			foreach (var name in entries.SelectMany(e => e.Names.Names))
+				Save(name);
 
 		}
 

@@ -398,7 +398,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var vocarock = new Tag("Vocarock", Tag.CommonCategory_Genres) { Parent = fakeTag, AliasedTo = fakeTag };
 			var electronic = new Tag("Electronic", Tag.CommonCategory_Genres) { Parent = fakeTag, AliasedTo = fakeTag };
 			var trance = new Tag("Trance", Tag.CommonCategory_Genres) { Parent = electronic, AliasedTo = fakeTag };
-			repository.Add(vocarock, electronic, trance);
+			repository.Save(vocarock, electronic, trance);
+			repository.SaveNames(vocarock, electronic, trance);
 
 			var song1 = CreateEntry.Song(name: "Nebula");
 			var song2 = CreateEntry.Song(name: "Anger");
