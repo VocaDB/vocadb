@@ -67,34 +67,6 @@ namespace VocaDb.Model.Service {
 			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
-		private ArtistForAlbum RestoreArtistRef(Album album, Artist artist, ArchivedArtistForAlbumContract albumRef) {
-
-			if (artist != null) {
-
-				return (!artist.HasAlbum(album) ? artist.AddAlbum(album, albumRef.IsSupport, albumRef.Roles) : null);
-
-			} else {
-
-				return album.AddArtist(albumRef.NameHint, albumRef.IsSupport, albumRef.Roles);
-
-			}
-
-		}
-
-		private SongInAlbum RestoreTrackRef(Album album, Song song, SongInAlbumRefContract songRef) {
-
-			if (song != null) {
-
-				return (!album.HasSong(song) ? album.AddSong(song, songRef.TrackNumber, songRef.DiscNumber) : null);
-
-			} else {
-
-				return album.AddSong(songRef.NameHint, songRef.TrackNumber, songRef.DiscNumber);
-
-			}
-
-		}
-
 		private readonly IUserIconFactory userIconFactory;
 
 		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
@@ -508,88 +480,6 @@ namespace VocaDb.Model.Service {
 				Archive(session, album, new AlbumDiff(false), AlbumArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(album), session);
-
-			});
-
-		}
-
-		public EntryRevertedContract RevertToVersion(int archivedAlbumVersionId) {
-
-			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
-
-			return HandleTransaction(session => {
-
-				var archivedVersion = session.Load<ArchivedAlbumVersion>(archivedAlbumVersionId);
-				var album = archivedVersion.Album;
-
-				SysLog("reverting " + album + " to version " + archivedVersion.Version);
-
-				var fullProperties = ArchivedAlbumContract.GetAllProperties(archivedVersion);
-				var warnings = new List<string>();
-
-				album.Description.Original = fullProperties.Description;
-				album.Description.English = fullProperties.DescriptionEng ?? string.Empty;
-				album.DiscType = fullProperties.DiscType;
-				album.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
-
-				// Picture
-				var versionWithPic = archivedVersion.GetLatestVersionWithField(AlbumEditableFields.Cover);
-
-				if (versionWithPic != null)
-					album.CoverPictureData = versionWithPic.CoverPicture;
-
-				// Original release
-				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease) : null);
-
-				// Artists
-				SessionHelper.RestoreObjectRefs<ArtistForAlbum, Artist, ArchivedArtistForAlbumContract>(
-					session, warnings, album.AllArtists, fullProperties.Artists, 
-					(a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(artist, albumRef) => RestoreArtistRef(album, artist, albumRef),
-					albumForArtist => albumForArtist.Delete());
-
-				// Songs
-				SessionHelper.RestoreObjectRefs<SongInAlbum, Song, SongInAlbumRefContract>(
-					session, warnings, album.AllSongs, fullProperties.Songs, 
-					(a1, a2) => ((a1.Song != null && a1.Song.Id == a2.Id) || a1.Song == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(song, songRef) => RestoreTrackRef(album, song, songRef),
-					songInAlbum => songInAlbum.Delete());
-
-				// Names
-				if (fullProperties.Names != null) {
-					var nameDiff = album.Names.SyncByContent(fullProperties.Names, album);
-					SessionHelper.Sync(session, nameDiff);
-				}
-
-				// Weblinks
-				if (fullProperties.WebLinks != null) {
-					var webLinkDiff = WebLink.SyncByValue(album.WebLinks, fullProperties.WebLinks, album);
-					SessionHelper.Sync(session, webLinkDiff);
-				}
-
-				// PVs
-				if (fullProperties.PVs != null) {
-
-					var pvDiff = CollectionHelper.Diff(album.PVs, fullProperties.PVs, (p1, p2) => (p1.PVId == p2.PVId && p1.Service == p2.Service));
-
-					foreach (var pv in pvDiff.Added) {
-						session.Save(album.CreatePV(new PVContract(pv)));
-					}
-
-					foreach (var pv in pvDiff.Removed) {
-						pv.OnDelete();
-						session.Delete(pv);
-					}
-
-				}
-
-				album.UpdateArtistString();
-				album.UpdateRatingTotals();
-
-				Archive(session, album, AlbumArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				AuditLog(string.Format("reverted {0} to revision {1}", EntryLinkFactory.CreateEntryLink(album), archivedVersion.Version), session);
-
-				return new EntryRevertedContract(album, warnings);
 
 			});
 

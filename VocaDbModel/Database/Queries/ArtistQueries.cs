@@ -285,7 +285,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var linkMatches = !string.IsNullOrEmpty(urlTrimmed) ?
 					session.Query<ArtistWebLink>()
-					.Where(w => w.Url == urlTrimmed)
+					.Where(w => w.Url == urlTrimmed && !w.Artist.Deleted)
 					.Select(w => w.Artist)
 					.Take(10)
 					.ToArray()
@@ -451,7 +451,6 @@ namespace VocaDb.Model.Database.Queries {
 
 					}
 
-					// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
 
 				} else {
 
@@ -460,6 +459,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
+				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
 				diff.Picture = !Equals(artist.ArchivedVersionsManager.GetLatestVersionWithField(ArtistEditableFields.Picture, artist.Version), versionWithPic);
 
 				// Groups

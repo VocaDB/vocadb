@@ -52,6 +52,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			artist = CreateEntry.Producer(name: "Tripshots");
 			repository = new FakeArtistRepository(artist);
+			var weblink = new ArtistWebLink(artist, "Website", "http://tripshots.net", WebLinkCategory.Official);
+			artist.WebLinks.Add(weblink);
+			repository.Save(weblink);
 
 			foreach (var name in artist.Names)
 				repository.Save(name);
@@ -127,9 +130,31 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void FindDuplicates_Link() {
+
+			var result = queries.FindDuplicates(new string[0], "http://tripshots.net");
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(1, result.Length, "Number of results");
+			Assert.AreEqual(artist.Id, result[0].Id, "Matched artist");
+
+		}
+
+		[TestMethod]
 		public void FindDuplicates_IgnoreNullsAndEmpty() {
 
 			var result = queries.FindDuplicates(new[] { null, string.Empty }, string.Empty);
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(0, result.Length, "Number of results");
+
+		}
+
+		[TestMethod]
+		public void FindDuplicates_Link_IgnoreDeleted() {
+
+			artist.Deleted = true;
+			var result = queries.FindDuplicates(new string[0], "http://tripshots.net");
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(0, result.Length, "Number of results");

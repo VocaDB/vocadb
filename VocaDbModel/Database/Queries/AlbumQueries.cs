@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using NHibernate;
@@ -7,6 +9,7 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
@@ -55,6 +58,34 @@ namespace VocaDb.Model.Database.Queries {
 		private Artist[] GetArtists(IDatabaseContext<Album> ctx, ArtistContract[] artistContracts) {
 			var ids = artistContracts.Select(a => a.Id).ToArray();
 			return ctx.OfType<Artist>().Query().Where(a => ids.Contains(a.Id)).ToArray();			
+		}
+
+		private ArtistForAlbum RestoreArtistRef(Album album, Artist artist, ArchivedArtistForAlbumContract albumRef) {
+
+			if (artist != null) {
+
+				return (!artist.HasAlbum(album) ? artist.AddAlbum(album, albumRef.IsSupport, albumRef.Roles) : null);
+
+			} else {
+
+				return album.AddArtist(albumRef.NameHint, albumRef.IsSupport, albumRef.Roles);
+
+			}
+
+		}
+
+		private SongInAlbum RestoreTrackRef(Album album, Song song, SongInAlbumRefContract songRef) {
+
+			if (song != null) {
+
+				return (!album.HasSong(song) ? album.AddSong(song, songRef.TrackNumber, songRef.DiscNumber) : null);
+
+			} else {
+
+				return album.AddSong(songRef.NameHint, songRef.TrackNumber, songRef.DiscNumber);
+
+			}
+
 		}
 
 		private void UpdateSongArtists(IDatabaseContext<Album> ctx, Song song, ArtistContract[] artistContracts) {
@@ -362,6 +393,112 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.Delete(album);
 
 				return trashed.Id;
+
+			});
+
+		}
+
+		public EntryRevertedContract RevertToVersion(int archivedAlbumVersionId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
+
+			return HandleTransaction(session => {
+
+				var archivedVersion = session.Load<ArchivedAlbumVersion>(archivedAlbumVersionId);
+				var album = archivedVersion.Album;
+
+				session.AuditLogger.SysLog("reverting " + album + " to version " + archivedVersion.Version);
+
+				var fullProperties = ArchivedAlbumContract.GetAllProperties(archivedVersion);
+				var warnings = new List<string>();
+				var diff = new AlbumDiff();
+
+				album.Description.Original = fullProperties.Description;
+				album.Description.English = fullProperties.DescriptionEng ?? string.Empty;
+				album.DiscType = fullProperties.DiscType;
+				album.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
+
+				// Picture
+				var versionWithPic = archivedVersion.GetLatestVersionWithField(AlbumEditableFields.Cover);
+
+				if (versionWithPic != null) {
+
+					album.CoverPictureData = versionWithPic.CoverPicture;
+					album.CoverPictureMime = versionWithPic.CoverPictureMime;
+
+					if (versionWithPic.CoverPicture != null) {
+
+						var thumbGenerator = new ImageThumbGenerator(imagePersister);
+						using (var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes)) {
+							var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime);
+							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+						}
+
+					}
+
+
+				} else {
+
+					album.CoverPictureData = null;
+					album.CoverPictureMime = null;
+
+				}
+
+				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
+				diff.Cover = !Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic);
+
+				// Original release
+				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease) : null);
+
+				// Artists
+				DatabaseContextHelper.RestoreObjectRefs<ArtistForAlbum, Artist, ArchivedArtistForAlbumContract>(
+					session.OfType<Artist>(), warnings, album.AllArtists, fullProperties.Artists,
+					(a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
+					(artist, albumRef) => RestoreArtistRef(album, artist, albumRef),
+					albumForArtist => albumForArtist.Delete());
+
+				// Songs
+				DatabaseContextHelper.RestoreObjectRefs<SongInAlbum, Song, SongInAlbumRefContract>(
+					session.OfType<Song>(), warnings, album.AllSongs, fullProperties.Songs,
+					(a1, a2) => ((a1.Song != null && a1.Song.Id == a2.Id) || a1.Song == null && a2.Id == 0 && a1.Name == a2.NameHint),
+					(song, songRef) => RestoreTrackRef(album, song, songRef),
+					songInAlbum => songInAlbum.Delete());
+
+				// Names
+				if (fullProperties.Names != null) {
+					var nameDiff = album.Names.SyncByContent(fullProperties.Names, album);
+					session.Sync(nameDiff);
+				}
+
+				// Weblinks
+				if (fullProperties.WebLinks != null) {
+					var webLinkDiff = WebLink.SyncByValue(album.WebLinks, fullProperties.WebLinks, album);
+					session.Sync(webLinkDiff);
+				}
+
+				// PVs
+				if (fullProperties.PVs != null) {
+
+					var pvDiff = CollectionHelper.Diff(album.PVs, fullProperties.PVs, (p1, p2) => (p1.PVId == p2.PVId && p1.Service == p2.Service));
+
+					foreach (var pv in pvDiff.Added) {
+						session.Save(album.CreatePV(new PVContract(pv)));
+					}
+
+					foreach (var pv in pvDiff.Removed) {
+						pv.OnDelete();
+						session.Delete(pv);
+					}
+
+				}
+
+				album.UpdateArtistString();
+				album.UpdateRatingTotals();
+
+				Archive(session, album, diff, AlbumArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
+				AuditLog(string.Format("reverted {0} to revision {1}", EntryLinkFactory.CreateEntryLink(album), archivedVersion.Version), session);
+
+				return new EntryRevertedContract(album, warnings);
 
 			});
 
