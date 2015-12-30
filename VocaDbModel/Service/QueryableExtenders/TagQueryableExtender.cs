@@ -59,10 +59,17 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		/// <summary>
+		/// Filters query by one or more tag names.
+		/// The tag has to match at least one of the names.
+		/// For empty list of names nothing is matched.
+		/// </summary>
+		/// <param name="query">Query to be filtered. Cannot be null.</param>
+		/// <param name="names">List of names to filter by. Can be null or empty, but in that case no tags will be matched.</param>
+		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, params string[] names) {
 
-			if (names == null || !names.Any())
-				return query;
+			names = names ?? new string[0];
 
 			return query.Where(t => names.Contains(t.Names.SortNames.English) || names.Contains(t.Names.SortNames.Romaji) || names.Contains(t.Names.SortNames.Japanese));
 

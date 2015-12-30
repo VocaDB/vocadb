@@ -815,6 +815,7 @@ namespace VocaDb.Model.Database.Queries {
 					.OfType<SongTagUsage>()
 					.Query()
 					.Where(u => u.Song.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == Tag.CommonCategory_Genres)
+					// NH doesn't support ? operator, instead casting ID to nullable works
 					.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id, AliasedTo = (int?)s.Tag.AliasedTo.Id })
 					.Select(g => new {
 						TagId = g.Key.TagId,
@@ -834,10 +835,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
+				// Load names for top 10 genres.
 				var mainGenreIds = genresDict.OrderByDescending(t => t.Value).Take(10).Select(t => t.Key).ToArray();
 				var mainGenreTags = ctx.Query<Tag>().Where(t => mainGenreIds.Contains(t.Id)).SelectIdAndName(LanguagePreference).ToDictionary(t => t.Id);
 
-				var sorted = genresDict.Select(t => new { TagName = mainGenreTags[t.Key].Name, Count = t.Value }).OrderByDescending(t => t.Count);
+				var sorted = genresDict.Select(t => new { TagName = mainGenreTags.ContainsKey(t.Key) ? mainGenreTags[t.Key].Name : null, Count = t.Value }).OrderByDescending(t => t.Count);
 				var mainGenres = sorted.Take(10);
 				var otherCount = sorted.Skip(10).Sum(g => g.Count);
 

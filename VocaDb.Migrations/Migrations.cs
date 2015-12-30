@@ -20,6 +20,7 @@ namespace VocaDb.Migrations {
 				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
 				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
 
+			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.Tags));
 			Execute.Sql(string.Format("INSERT INTO {0} (Tag, Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.TagNames, TableNames.Tags));
 
 		}

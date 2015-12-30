@@ -38,6 +38,7 @@ namespace VocaDb.Tests.Service.Queries {
 		public void SetUp() {
 			user = repository.Save(CreateEntry.User());
 			entry = repository.Save(CreateEntry.Song(name: "Puppet"));
+			repository.Save(CreateEntry.Tag("techno"));
 		}
 
 		[TestMethod]
@@ -52,8 +53,8 @@ namespace VocaDb.Tests.Service.Queries {
 			Assert.AreEqual("vocarock", usage.Tag.DefaultName, "Added tag name");
 			Assert.IsTrue(usage.HasVoteByUser(user), "Vote is by the logged in user");
 
-			Assert.AreEqual(1, repository.List<Tag>().Count, "Number of tags in the repository");
-			Assert.AreEqual(usage.Tag, repository.List<Tag>().FirstOrDefault(), "Tag in repository is the same as the one applied");
+			Assert.AreEqual(2, repository.List<Tag>().Count, "Number of tags in the repository");
+			Assert.IsTrue(repository.List<Tag>().Contains(usage.Tag), "Tag in repository is the same as the one applied");
 
 		}
 
