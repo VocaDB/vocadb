@@ -217,7 +217,8 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
-		public virtual CollectionDiffWithValue<T,T> Sync(IEnumerable<LocalizedStringWithIdContract> newNames, INameFactory<T> nameFactory) {
+		public virtual CollectionDiffWithValue<T,T> Sync(IEnumerable<LocalizedStringWithIdContract> newNames, INameFactory<T> nameFactory,
+			Action<T[]> deletedCallback = null, Action<T[]> editedCallback = null) {
 
 			ParamIs.NotNull(() => newNames);
 			ParamIs.NotNull(() => nameFactory);
@@ -230,25 +231,28 @@ namespace VocaDb.Model.Domain.Globalization {
 				Remove(n);
 			}
 
-			foreach (var nameEntry in newNames) {
+			if (deletedCallback != null)
+				deletedCallback(diff.Removed);
 
-				var entry = nameEntry;
-				var old = (entry.Id != 0 ? Names.FirstOrDefault(n => n.Id == entry.Id) : null);
+			foreach (var old in diff.Unchanged) {
 
-				if (old != null) {
+				var nameEntry = newNames.First(n => n.Id == old.Id);
 
-					if (!old.ContentEquals(nameEntry)) {
-						old.Language = nameEntry.Language;
-						old.Value = nameEntry.Value;
-						edited.Add(old);
-					}
-
-				} else {
-
-					var n = nameFactory.CreateName(nameEntry.Value, nameEntry.Language);
-					created.Add(n);
-
+				if (!old.ContentEquals(nameEntry)) {
+					old.Language = nameEntry.Language;
+					old.Value = nameEntry.Value;
+					edited.Add(old);
 				}
+
+			}
+
+			if (editedCallback != null)
+				editedCallback(edited.ToArray());
+
+			foreach (var nameEntry in diff.Added) {
+
+				var n = nameFactory.CreateName(nameEntry.Value, nameEntry.Language);
+				created.Add(n);
 
 			}
 

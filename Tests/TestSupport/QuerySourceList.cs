@@ -38,6 +38,10 @@ namespace VocaDb.Tests.TestSupport {
 			}
 		}
 
+		public void Flush() {
+			
+		}
+
 		public IDatabaseContext<T2> OfType<T2>() {
 			return new ListDatabaseContext<T2>(this);
 		}

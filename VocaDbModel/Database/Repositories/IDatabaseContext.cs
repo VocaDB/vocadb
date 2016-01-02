@@ -13,6 +13,8 @@ namespace VocaDb.Model.Database.Repositories {
 
 		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel);
 
+		void Flush();
+
 		/// <summary>
 		/// Returns a child context for another entity type.
 		/// The unit of work (including transaction) must be shared between this parent context and the child context.

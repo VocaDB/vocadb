@@ -15,6 +15,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Queries;
@@ -333,6 +334,34 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private CollectionDiffWithValue<TagName, TagName> SyncNames(IDatabaseContext<TagName> ctx, Tag tag, LocalizedStringWithIdContract[] names) {
+
+			/* 
+				We have a unique constraint on tag name.
+				By default, NH would first cascade inserts and updates, and only then deletes,
+				which would cause a constraint violation. See http://stackoverflow.com/a/707364
+				That's why we must manually call Flush after all names have been deleted and updated.
+			*/
+			var diff = tag.Names.Sync(names, tag, 
+				deleted => {
+					foreach (var name in deleted)
+						ctx.Delete(name);
+					ctx.Flush();
+				},
+				edited => {
+					foreach (var name in edited)
+						ctx.Update(name);
+					ctx.Flush();
+				}
+			);
+	
+			foreach (var n in diff.Added)
+				ctx.Save(n);
+
+			return diff;
+
+		}
+
 		public TagBaseContract Update(TagForEditContract contract, UploadedFileContract uploadedImage) {
 
 			ParamIs.NotNull(() => contract);
@@ -358,8 +387,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (tag.Description != contract.Description)
 					diff.Description = true;
 
-				var nameDiff = tag.Names.Sync(contract.Names, tag);
-				ctx.OfType<TagName>().Sync(nameDiff);
+				var nameDiff = SyncNames(ctx.OfType<TagName>(), tag, contract.Names);
 
 				if (nameDiff.Changed) {
 					

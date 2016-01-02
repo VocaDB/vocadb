@@ -28,6 +28,10 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			Session.Dispose();
 		}
 
+		public void Flush() {
+			Session.Flush();
+		}
+
 		public IDatabaseContext<T2> OfType<T2>() {
 			return new NHibernateDatabaseContext<T2>(Session, PermissionContext);
 		}

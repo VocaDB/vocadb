@@ -192,6 +192,10 @@ namespace VocaDb.Tests.TestSupport {
 			
 		}
 
+		public void Flush() {
+			
+		}
+
 		public T Get(object id) {
 							
 			var list = querySource.List<T>();
