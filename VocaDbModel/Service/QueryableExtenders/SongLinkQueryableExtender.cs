@@ -36,6 +36,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.OrderByDescending(a => a.Song.FavoritedTimes);
 				case SongSortRule.RatingScore:
 					return query.OrderByDescending(a => a.Song.RatingScore);
+				case SongSortRule.PublishDate:
+					return query.OrderByDescending(a => a.Song.PublishDate.DateTime);
 			}
 
 			return query;
