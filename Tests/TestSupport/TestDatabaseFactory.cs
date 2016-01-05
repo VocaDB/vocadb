@@ -21,7 +21,6 @@ namespace VocaDb.Tests.TestSupport {
 
 			}
 
-
 		}
 
 		/// <summary>
@@ -44,7 +43,27 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
+		private void RecreateSchema(NHibernate.Cfg.Configuration cfg, string connectionStringName) {
+
+			#if !DEBUG
+			return;
+			#endif
+
+			// NH schema export does not correctly drop all constraints
+			// SQL from http://stackoverflow.com/a/26348027
+			RunSql(connectionStringName, @"
+				exec sp_MSforeachtable ""declare @name nvarchar(max); set @name = parsename('?', 1); exec sp_MSdropconstraints @name"";
+			");
+
+			var export = new SchemaExport(cfg);
+			//export.SetOutputFile(@"C:\Temp\vdb.sql");
+			export.Drop(false, true);
+			export.Create(false, true);
+
+		}
+
 		public ISessionFactory BuildTestSessionFactory() {
+
 
 			var testDatabaseConnectionString = "LocalDB";
 			var config = DatabaseConfiguration.Configure(testDatabaseConnectionString);
@@ -60,20 +79,7 @@ namespace VocaDb.Tests.TestSupport {
 			CreateSchemas(fac);*/
 
 			// Drop old database if any, create new schema
-			config.ExposeConfiguration(cfg => {
-
-				// NH schema export does not correctly drop all constraints
-				// SQL from http://stackoverflow.com/a/26348027
-				RunSql(testDatabaseConnectionString, @"
-					exec sp_MSforeachtable ""declare @name nvarchar(max); set @name = parsename('?', 1); exec sp_MSdropconstraints @name"";
-				");
-
-				var export = new SchemaExport(cfg);
-				//export.SetOutputFile(@"C:\Temp\vdb.sql");
-				export.Drop(false, true);
-				export.Create(false, true);
-
-			});
+			config.ExposeConfiguration(cfg => RecreateSchema(cfg, testDatabaseConnectionString));
 
 			var fac = DatabaseConfiguration.BuildSessionFactory(config);
 			return fac;
