@@ -133,7 +133,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public ParsedSongQuery ParseTextQuery(SearchTextQuery textQuery) {
 
-			var query = textQuery.Query;
+			var query = textQuery.OriginalQuery;
 
 			if (string.IsNullOrWhiteSpace(query))
 				return new ParsedSongQuery();
