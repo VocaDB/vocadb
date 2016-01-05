@@ -66,6 +66,7 @@
       <HintPath>..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Caching" />
@@ -162,6 +163,7 @@
     <Compile Include="TestSupport\QuerySourceList.cs" />
     <Compile Include="TestSupport\TestCategories.cs" />
     <Compile Include="TestSupport\TestContainerFactory.cs" />
+    <Compile Include="TestSupport\TestDatabaseFactory.cs" />
     <Compile Include="TestSupport\VocaDbAssert.cs" />
     <Compile Include="TestSupport\FakeAlbumRepository.cs" />
     <Compile Include="TestSupport\FakeAuditLogger.cs" />
