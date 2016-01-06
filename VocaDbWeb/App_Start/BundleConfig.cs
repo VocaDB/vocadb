@@ -374,6 +374,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Details").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/ViewModels/Tag/TagDetailsViewModel.js",
 				"~/Scripts/Tag/Details.js"
