@@ -26,6 +26,10 @@ namespace VocaDb.Tests.DatabaseTests {
 		public Song Song5 { get; private set; }
 		public Song Song6 { get; private set; }
 		public Song SongWithSpecialChars { get; private set; }
+		public Tag Tag { get; private set; }
+		public Tag Tag2 { get; private set; }
+		public Tag Tag3 { get; private set; }
+		public Tag Tag4 { get; private set; }
 
 		public TestDatabase(ISessionFactory sessionFactory) {
 			Seed(sessionFactory);
@@ -45,14 +49,23 @@ namespace VocaDb.Tests.DatabaseTests {
 				Producer3 = new Artist(TranslatedString.Create("Keeno"));
 				session.Save(Producer3);
 
-				var tag = new Tag("Electronic");
-				session.Save(tag);
+				Tag = new Tag("electronic");
+				session.Save(Tag);
+
+				Tag2 = new Tag("rock");
+				session.Save(Tag2);
+
+				Tag3 = new Tag("alternative rock");
+				session.Save(Tag3);
+
+				Tag4 = new Tag("techno");
+				session.Save(Tag4);
 
 				Song = new Song(new LocalizedString("Nebula", ContentLanguageSelection.English)) {
 					Id = SongId, SongType = SongType.Original, FavoritedTimes = 1, PVServices = PVServices.Youtube, CreateDate = new DateTime(2012, 6, 1)
 				};
 				Song.Lyrics.Add(new LyricsForSong(Song, ContentLanguageSelection.English, "Here be lyrics", string.Empty));
-				Song.Tags.Usages.Add(new SongTagUsage(Song, tag));
+				Song.Tags.Usages.Add(new SongTagUsage(Song, Tag));
 				session.Save(Song);
 
 				Song2 = new Song(new LocalizedString("Tears of Palm", ContentLanguageSelection.English)) {
