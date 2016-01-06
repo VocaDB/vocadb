@@ -21,7 +21,10 @@
 }
 
 @helper LyricsInfo(LyricsForSongContract lyrics) {
-	<text>@lyrics.Language (@lyrics.Source)</text>
+	@:@lyrics.Language
+	if (!string.IsNullOrEmpty(lyrics.Source)) {
+		@:(@lyrics.Source)
+	}
 }
 
 @helper PrintArchivedSongData(ComparedSongsContract comparedSongs) {
