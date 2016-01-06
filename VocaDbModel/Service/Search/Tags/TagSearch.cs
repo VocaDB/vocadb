@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.Tags {
