@@ -21,7 +21,7 @@
 		<div class="form-inline">
 			@ViewRes.TagSelectionsStrings.AddTag:
 			<div class="input-append">
-				<input type="text" class="input-large" maxlength="30" data-bind="textInput: newTagName, tagAutoComplete: autoCompletedTag" />
+				<input type="text" class="input-large" maxlength="30" data-bind="textInput: newTagName, tagAutoComplete: autoCompletedTag, allowAliases: true" />
 				<button type="button" class="btn" data-bind="click: addTag">@ViewRes.SharedStrings.Add</button>
 			</div>
 		</div>
