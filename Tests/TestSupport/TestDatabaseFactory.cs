@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
@@ -8,7 +9,7 @@ namespace VocaDb.Tests.TestSupport {
 
 	public class TestDatabaseFactory {
 
-		private void RunSql(string connectionStringName, string sql) {
+		private void RunSql(string connectionStringName, Action<SqlConnection> func) {
 
 			var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
 
@@ -16,8 +17,7 @@ namespace VocaDb.Tests.TestSupport {
 
 				connection.Open();
 
-				var command = new SqlCommand(sql, connection);
-				command.ExecuteNonQuery();
+				func(connection);
 
 			}
 
@@ -30,35 +30,43 @@ namespace VocaDb.Tests.TestSupport {
 		private void CreateSchemas(string connectionString) {
 
 			// SQL from http://stackoverflow.com/a/521271 (might be T-SQL specific)
-			RunSql(connectionString, @"
-				IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'mikudb')
-				BEGIN
-				EXEC('CREATE SCHEMA [mikudb]');
-				END
-				IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'discussions')
-				BEGIN
-				EXEC('CREATE SCHEMA [discussions]');
-				END
-			");
+			RunSql(connectionString, connection => {
+
+				new SqlCommand(@"
+					IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'mikudb')
+					BEGIN
+					EXEC('CREATE SCHEMA [mikudb]');
+					END
+					IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'discussions')
+					BEGIN
+					EXEC('CREATE SCHEMA [discussions]');
+					END
+				", connection).ExecuteNonQuery();
+
+			});
 
 		}
 
+		// Drop old database if any, create new schema
 		private void RecreateSchema(NHibernate.Cfg.Configuration cfg, string connectionStringName) {
 
 			#if !DEBUG
 			return;
 			#endif
 
-			// NH schema export does not correctly drop all constraints
-			// SQL from http://stackoverflow.com/a/26348027
-			RunSql(connectionStringName, @"
-				exec sp_MSforeachtable ""declare @name nvarchar(max); set @name = parsename('?', 1); exec sp_MSdropconstraints @name"";
-			");
+			RunSql(connectionStringName, connection => {
 
-			var export = new SchemaExport(cfg);
-			//export.SetOutputFile(@"C:\Temp\vdb.sql");
-			export.Drop(false, true);
-			export.Create(false, true);
+				// NH schema export does not correctly drop all constraints
+				// SQL from http://stackoverflow.com/a/26348027
+				new SqlCommand(@"
+					exec sp_MSforeachtable ""declare @name nvarchar(max); set @name = parsename('?', 1); exec sp_MSdropconstraints @name"";
+				", connection).ExecuteNonQuery();
+
+				var export = new SchemaExport(cfg);
+				//export.SetOutputFile(@"C:\Temp\vdb.sql");
+				export.Execute(false, true, false, connection, null);
+
+			});
 
 		}
 
@@ -69,16 +77,11 @@ namespace VocaDb.Tests.TestSupport {
 			var config = DatabaseConfiguration.Configure(testDatabaseConnectionString);
 
 			/* 
-			 * Need to comment these out when not needed because session factory can only be created once.
 			 * Database schemas need to be created BEFORE NHibernate schema export.
 			 * This needs to be run only once.
-			*/
-			/*
-			var fac = DatabaseConfiguration.BuildSessionFactory(config);
+			*/			
+			//CreateSchemas(testDatabaseConnectionString);
 
-			CreateSchemas(fac);*/
-
-			// Drop old database if any, create new schema
 			config.ExposeConfiguration(cfg => RecreateSchema(cfg, testDatabaseConnectionString));
 
 			var fac = DatabaseConfiguration.BuildSessionFactory(config);

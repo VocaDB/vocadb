@@ -25,6 +25,7 @@ namespace VocaDb.Tests.DatabaseTests {
 		public Song Song4 { get; private set; }
 		public Song Song5 { get; private set; }
 		public Song Song6 { get; private set; }
+		public Song SongWithSpecialChars { get; private set; }
 
 		public TestDatabase(ISessionFactory sessionFactory) {
 			Seed(sessionFactory);
@@ -83,6 +84,11 @@ namespace VocaDb.Tests.DatabaseTests {
 				};
 				Song6.AddArtist(Producer3);
 				session.Save(Song6);
+
+				SongWithSpecialChars = new Song(new LocalizedString("Nebula [Extend RMX]", ContentLanguageSelection.English)) {
+					CreateDate = new DateTime(2011, 1, 1)
+				};
+				session.Save(SongWithSpecialChars);
 
 				tx.Commit();
 
