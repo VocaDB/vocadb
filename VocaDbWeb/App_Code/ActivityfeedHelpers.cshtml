@@ -71,7 +71,7 @@
 @helper ActivityEntryKnockout(string entryTypeNamesBinding, string activityFeedEventNamesBinding, string changedFieldNamesBinding, bool showDetails = false) {
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 		<span data-bind="with: $data.author">
-			@UserHelpers.IconNameAndTypeLinkKnockout("resources.userGroupNames")
+			@UserHelpers.IconNameAndTypeLinkKnockout("$parents[1].resources.resources().userGroupNames")
 		</span>
 		<span data-bind="visible: !$data.author">@ActivityFeedHelperStrings.Someone</span>
 

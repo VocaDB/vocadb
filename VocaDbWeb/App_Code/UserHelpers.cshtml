@@ -28,7 +28,7 @@
 }
 
 @helper IconNameAndTypeLinkKnockout(string groupResources, int iconSize = 20) {
-	<a href="#" data-bind="attr: { href: '/User/Profile/' + name }" title='@(groupResources + "[groupId] + '\\nJoined: ' + memberSince")'>
+	<a href="#" data-bind="attr: { href: '/User/Profile/' + name, title: @(groupResources + "[groupId] + '\\nJoined: ' + memberSince") }">
 		@ProfileIconKnockout("mainPicture.urlThumb", iconSize)
 		<span data-bind="text: name"></span>
 	</a>
