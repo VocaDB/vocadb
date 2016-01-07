@@ -152,6 +152,7 @@
     <Compile Include="Service\UserServiceTests.cs" />
     <Compile Include="Service\VideoServices\VideoServiceFileTests.cs" />
     <Compile Include="TestData\CreateEntry.cs" />
+    <Compile Include="TestSupport\DatabaseContextAsRepositoryWrapper.cs" />
     <Compile Include="TestSupport\FakeArtistRepository.cs" />
     <Compile Include="TestSupport\FakeDiscussionFolderRepository.cs" />
     <Compile Include="TestSupport\FakeEventRepository.cs" />

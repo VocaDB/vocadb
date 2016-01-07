@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Tests.TestData;
 
 namespace VocaDb.Tests.DatabaseTests {
@@ -30,6 +31,7 @@ namespace VocaDb.Tests.DatabaseTests {
 		public Tag Tag2 { get; private set; }
 		public Tag Tag3 { get; private set; }
 		public Tag Tag4 { get; private set; }
+		public User UserWithEditPermissions { get; private set; }
 
 		public TestDatabase(ISessionFactory sessionFactory) {
 			Seed(sessionFactory);
@@ -102,6 +104,9 @@ namespace VocaDb.Tests.DatabaseTests {
 					CreateDate = new DateTime(2011, 1, 1)
 				};
 				session.Save(SongWithSpecialChars);
+
+				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", 3939);
+				session.Save(UserWithEditPermissions);
 
 				tx.Commit();
 

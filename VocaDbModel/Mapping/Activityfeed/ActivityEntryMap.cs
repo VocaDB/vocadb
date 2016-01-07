@@ -29,7 +29,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 			DiscriminatorValue("Album");
 
 			References(m => m.ArchivedVersion).Column("[ArchivedAlbumVersion]").Nullable();
-			References(m => m.Entry).Column("[Album]").Not.Nullable();
+			References(m => m.Entry).Column("[Album]").Nullable();
 
 		}
 
@@ -42,7 +42,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 			DiscriminatorValue("Artist");
 
 			References(m => m.ArchivedVersion).Column("[ArchivedArtistVersion]").Nullable();
-			References(m => m.Entry).Column("[Artist]").Not.Nullable();
+			References(m => m.Entry).Column("[Artist]").Nullable();
 
 		}
 
@@ -55,7 +55,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 			DiscriminatorValue(EntryType.ReleaseEvent.ToString());
 
 			References(m => m.ArchivedVersion).Column("[ArchivedReleaseEventVersion]").Nullable();
-			References(m => m.Entry).Column("[ReleaseEvent]").Not.Nullable();
+			References(m => m.Entry).Column("[ReleaseEvent]").Nullable();
 
 		}
 
@@ -68,7 +68,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 			DiscriminatorValue("Song");
 
 			References(m => m.ArchivedVersion).Column("[ArchivedSongVersion]").Nullable();
-			References(m => m.Entry).Column("[Song]").Not.Nullable();
+			References(m => m.Entry).Column("[Song]").Nullable();
 
 		}
 
@@ -81,7 +81,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 			DiscriminatorValue("SongList");
 
 			References(m => m.ArchivedVersion).Column("[ArchivedSongListVersion]").Nullable();
-			References(m => m.Entry).Column("[SongList]").Not.Nullable();
+			References(m => m.Entry).Column("[SongList]").Nullable();
 
 		}
 
@@ -94,7 +94,7 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 			DiscriminatorValue("Tag");
 
 			References(m => m.ArchivedVersion).Column("[ArchivedTagVersion]").Nullable();
-			References(m => m.Entry).Column("[Tag]").Not.Nullable();
+			References(m => m.Entry).Column("[Tag]").Nullable();
 
 		}
 
