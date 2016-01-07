@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.DatabaseTests {
@@ -22,6 +23,8 @@ namespace VocaDb.Tests.DatabaseTests {
 		}
 
 	}
+
+	public class DatabaseTestContext : DatabaseTestContext<IDatabaseContext> { }
 
 	public static class TestContainerManager {
 

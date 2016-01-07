@@ -17,21 +17,15 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags {
 	[TestClass]
 	public class TagSearchDatabaseTests {
 
-		private DatabaseTestContext<IDatabaseContext> context;
-		private TagQueryParams queryParams;
+		private readonly DatabaseTestContext context = new DatabaseTestContext();
+		private readonly TagQueryParams queryParams = new TagQueryParams {
+			SortRule = TagSortRule.Name, Common = new CommonSearchParams(), Paging = new PagingProperties(0, 100, true)
+		};
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
 		private void AssertHasTag(PartialFindResult<Tag> result, Tag expected) {
 
 			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), string.Format("Found {0}", expected));
-
-		}
-
-		[TestInitialize]
-		public void SetUp() {
-
-			queryParams = new TagQueryParams { SortRule = TagSortRule.Name, Common = new CommonSearchParams(), Paging = new PagingProperties(0, 100, true) };
-			context = new DatabaseTestContext<IDatabaseContext>();
 
 		}
 

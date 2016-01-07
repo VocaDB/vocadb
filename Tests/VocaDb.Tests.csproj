@@ -112,6 +112,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DatabaseTests\DatabaseTestContext.cs" />
+    <Compile Include="DatabaseTests\Queries\TagQueriesDatabaseTests.cs" />
     <Compile Include="DatabaseTests\Search\SongSearch\SongSearchDatabaseTests.cs" />
     <Compile Include="DatabaseTests\Search\Tags\TagSearchDatabaseTests.cs" />
     <Compile Include="DatabaseTests\TestDatabase.cs" />
