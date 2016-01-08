@@ -28,6 +28,9 @@ namespace VocaDb.Model.DataContracts.Users {
 		[DataMember]
 		public UserGroupId GroupId { get; set; }
 
+		/// <summary>
+		/// Can be null.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }
 
