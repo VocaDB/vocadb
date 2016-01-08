@@ -20,6 +20,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
 		[TestMethod]
+		[TestCategory(TestCategories.Database)]
 		public void Update_ReplaceName() {
 
 			var contract = new TagForEditContract(Db.Tag, false, ContentLanguagePreference.English);
