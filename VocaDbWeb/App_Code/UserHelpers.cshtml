@@ -105,7 +105,7 @@
 
 @helper UserIconLink(UserForApiContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false) {
 	<a href="@Url.UserDetails(user)" title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.MemberSince.ToShortDateString()) : "")'>
-		@ProfileIcon(user != null ? user.MainPicture.GetSmallestThumb(ImageSize.TinyThumb) : null, size)
+		@ProfileIcon(user != null && user.MainPicture != null ? user.MainPicture.GetSmallestThumb(ImageSize.TinyThumb) : null, size)
 		<span>@(user != null ? user.Name : "")</span>
 	</a>
 }
