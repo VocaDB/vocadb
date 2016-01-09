@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
@@ -61,11 +62,9 @@ namespace VocaDb.Tests.Service.Queries {
 		[TestMethod]
 		public void AddExistingTagByName() {
 
-			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
-			tag.TranslatedName.Default = "rock";
+			repository.Save(CreateEntry.Tag("vocarock", 39));
 
-			// vocarock was renamed to rock
-			AddTags(entry.Id, Contract("rock"));
+			AddTags(entry.Id, Contract("vocarock"));
 
 			var entryTags = entry.Tags.Tags.ToArray();
 			Assert.AreEqual(1, entryTags.Length, "Number of tags");
@@ -87,6 +86,27 @@ namespace VocaDb.Tests.Service.Queries {
 
 		}
 
+		/// <summary>
+		/// Add tag based on translated name
+		/// </summary>
+		[TestMethod]
+		public void AddTagByTranslation() {
+
+			var tag = repository.Save(CreateEntry.Tag("rock"));
+			tag.CreateName("ロック", ContentLanguageSelection.Japanese);
+
+			AddTags(entry.Id, Contract("ロック"));
+
+			Assert.AreEqual(1, entry.Tags.Tags.Count(), "Number of tags");
+			var usage = entry.Tags.Usages.First();
+			Assert.AreEqual("rock", usage.Tag.DefaultName, "Added tag name");
+			Assert.AreEqual(tag.Id, usage.Tag.Id, "Added tag Id");
+
+		}
+
+		/// <summary>
+		/// Add (base) tag based on alias.
+		/// </summary>
 		[TestMethod]
 		public void AddAlias() {
 
@@ -103,9 +123,11 @@ namespace VocaDb.Tests.Service.Queries {
 
 		}
 
-		// Adding a new tag where tag name already exists as an ID, but display name is renamed.
+		/// <summary>
+		/// Add renamed tag by name
+		/// </summary>
 		[TestMethod]
-		public void AddNewTag_TagNameExists() {
+		public void AddNewTag_TagIsRenamed() {
 
 			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
 			tag.Names.First().Value = "rock";
@@ -124,11 +146,13 @@ namespace VocaDb.Tests.Service.Queries {
 		[TestMethod]
 		public void SkipDuplicates() {
 
-			var tag = repository.Save(CreateEntry.Tag("vocarock"));
+			var tag = repository.Save(CreateEntry.Tag("rock"));
+			tag.CreateName("ロック", ContentLanguageSelection.Japanese);
 
 			var tags = new[] {
-				new TagBaseContract { Id = tag.Id },
-				new TagBaseContract { Name = tag.DefaultName }
+				Contract(tag.Id),
+				Contract(tag.DefaultName),
+				Contract("ロック")
 			};
 
 			AddTags(entry.Id, tags);
