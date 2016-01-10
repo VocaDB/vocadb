@@ -88,6 +88,15 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		public virtual ArchivedTagVersion GetLatestVersionWithField(TagEditableFields field) {
+
+			if (IsIncluded(field))
+				return this;
+
+			return Tag.ArchivedVersionsManager.GetLatestVersionWithField(field, Version);
+
+		}
+
 		public virtual bool IsIncluded(TagEditableFields field) {
 			return true;
 		}

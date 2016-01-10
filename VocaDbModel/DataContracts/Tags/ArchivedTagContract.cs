@@ -1,11 +1,44 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.DataContracts.Tags {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedTagContract {
+
+		private static void DoIfExists(ArchivedTagVersion version, TagEditableFields field,
+			XmlCache<ArchivedTagContract> xmlCache, Action<ArchivedTagContract> func) {
+
+			var versionWithField = version.GetLatestVersionWithField(field);
+
+			if (versionWithField != null && versionWithField.Data != null) {
+				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
+				func(data);
+			}
+
+		}
+
+		public static ArchivedTagContract GetAllProperties(ArchivedTagVersion version) {
+
+			var data = new ArchivedTagContract();
+			var xmlCache = new XmlCache<ArchivedTagContract>();
+			var thisVersion = version.Data != null ? xmlCache.Deserialize(version.Version, version.Data) : new ArchivedTagContract();
+
+			data.CategoryName = thisVersion.CategoryName;
+			data.Id = thisVersion.Id;
+			data.TranslatedName = thisVersion.TranslatedName;
+
+			DoIfExists(version, TagEditableFields.AliasedTo, xmlCache, v => data.AliasedTo = v.AliasedTo);
+			DoIfExists(version, TagEditableFields.Description, xmlCache, v => data.Description = v.Description);
+			DoIfExists(version, TagEditableFields.Names, xmlCache, v => data.Names = v.Names);
+			DoIfExists(version, TagEditableFields.Parent, xmlCache, v => data.Parent = v.Parent);
+
+			return data;
+
+		}
 
 		public ArchivedTagContract() { }
 

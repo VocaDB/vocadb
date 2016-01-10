@@ -798,6 +798,7 @@
     <Compile Include="Models\Ext\EmbedSongViewModel.cs" />
     <Compile Include="Models\Shared\NamesEditorViewModel.cs" />
     <Compile Include="Models\SongLists\SongListDetailsViewModel.cs" />
+    <Compile Include="Models\Tag\Versions.cs" />
     <Compile Include="Resources\Domain\EntryReportTypeNames.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2757,6 +2758,7 @@
     <Content Include="Views\Song\Rankings.cshtml" />
     <Content Include="Views\Shared\Partials\_SongListsFilters.cshtml" />
     <Content Include="Views\Song\Partials\_AddToListDialog.cshtml" />
+    <Content Include="Views\Tag\ViewVersion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

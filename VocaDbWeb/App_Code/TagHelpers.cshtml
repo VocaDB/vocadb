@@ -5,6 +5,24 @@
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.HelperPage
 
+@helper PrintArchivedSongData(ComparedTagsContract comparedTags) {
+
+	<div class="well well-transparent archived-entry-contents">
+		<h4>Content</h4>
+
+		<table class="table table-bordered">
+			@ArchivedEntryHelpers.DataRow("Id", comparedTags.FirstData.Id)
+			@ArchivedEntryHelpers.TranslatedNameRow(comparedTags, d => d.TranslatedName)
+			@ArchivedEntryHelpers.DataRowList("Names", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+			@ArchivedEntryHelpers.DataRow("Description", comparedTags, d => d.Description)
+			@ArchivedEntryHelpers.DataRow("Aliased to", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.AliasedTo))
+			@ArchivedEntryHelpers.DataRow("Parent", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.Parent))
+		</table>
+
+	</div>
+
+}
+
 @helper TagLink(TagBaseContract tag) {
 	@Html.ActionLink(tag.Name, "DetailsById", "Tag", new { id = tag.Id, slug = tag.UrlSlug }, null)
 }

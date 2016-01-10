@@ -328,6 +328,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public ArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
+
+			return HandleQuery(session =>
+				new ArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
+					comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
+					PermissionContext.LanguagePreference));
+
+		}
+
 		public T LoadTag<T>(int id, Func<Tag, T> fac) {
 
 			return HandleQuery(ctx => fac(LoadTagById(ctx, id)));

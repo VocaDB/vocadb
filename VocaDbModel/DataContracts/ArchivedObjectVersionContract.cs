@@ -14,7 +14,7 @@ namespace VocaDb.Model.DataContracts {
 			
 			ParamIs.NotNull(() => archivedObjectVersion);
 
-			AgentName = archivedObjectVersion.AgentName;
+			AgentName = !string.IsNullOrEmpty(archivedObjectVersion.AgentName) || archivedObjectVersion.Author == null ? archivedObjectVersion.AgentName : archivedObjectVersion.Author.Name;
 			Author = (archivedObjectVersion.Author != null ? new UserContract(archivedObjectVersion.Author) : null);
 			Created = archivedObjectVersion.Created;
 			EditEvent = archivedObjectVersion.EditEvent;
