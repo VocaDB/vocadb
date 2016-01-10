@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
@@ -20,7 +21,7 @@ namespace VocaDb.Tests.Service.Search.Tags {
 
 		private PartialFindResult<Tag> CallFind(TagQueryParams queryParams, bool onlyMinimalFields) {
 
-			return repository.HandleQuery(ctx => new TagSearch(ctx).Find(queryParams, onlyMinimalFields));
+			return repository.HandleQuery(ctx => new TagSearch(ctx, ContentLanguagePreference.English).Find(queryParams, onlyMinimalFields));
 
 		}
 
@@ -28,7 +29,7 @@ namespace VocaDb.Tests.Service.Search.Tags {
 		public void SetUp() {
 
 			repository.Save(
-				CreateEntry.Tag("dnb"), CreateEntry.Tag("rock"), CreateEntry.Tag("alternative rock"), CreateEntry.Tag("techno"));
+				CreateEntry.Tag("electronic"), CreateEntry.Tag("rock"), CreateEntry.Tag("alternative rock"), CreateEntry.Tag("techno"));
 
 		}
 
@@ -41,8 +42,8 @@ namespace VocaDb.Tests.Service.Search.Tags {
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(2, result.Items.Length, "Number of items returned");
 			Assert.AreEqual(2, result.TotalCount, "Total number of items");
-			Assert.AreEqual("alternative rock", result.Items[0].EnglishName, "First tag name");
-			Assert.AreEqual("rock", result.Items[1].EnglishName, "Second tag name");
+			Assert.AreEqual("alternative rock", result.Items[0].DefaultName, "First tag name");
+			Assert.AreEqual("rock", result.Items[1].DefaultName, "Second tag name");
 
 		}
 
@@ -54,7 +55,7 @@ namespace VocaDb.Tests.Service.Search.Tags {
 			}, true);
 
 			Assert.AreEqual(4, result.Items.Length, "Number of items returned");
-			Assert.AreEqual("alternative rock", result.Items[0].EnglishName, "First tag name");
+			Assert.AreEqual("alternative rock", result.Items[0].DefaultName, "First tag name");
 
 		}
 

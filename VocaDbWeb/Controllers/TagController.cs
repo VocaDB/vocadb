@@ -123,7 +123,7 @@ namespace VocaDb.Web.Controllers
 			try {
 				result = queries.Update(model.ToContract(), uploadedPicture);
 			} catch (DuplicateTagNameException x) {
-				ModelState.AddModelError("EnglishName", x.Message);
+				ModelState.AddModelError("Names", x.Message);
 				return RenderEdit(model);
 			}
 
@@ -135,10 +135,10 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(filter)) {
 
-				var tag = queries.GetTagByName(filter, t => new { t.Id, t.EnglishName });
+				var tag = queries.GetTagByName(filter, t => new { t.Id, t.UrlSlug });
 
 				if (tag != null) {
-					return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.EnglishName });
+					return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.UrlSlug });
 				}
 
 				return RedirectToAction("Index", "Search", new SearchIndexViewModel(EntryType.Tag, filter));

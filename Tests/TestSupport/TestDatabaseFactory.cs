@@ -76,11 +76,8 @@ namespace VocaDb.Tests.TestSupport {
 			var testDatabaseConnectionString = "LocalDB";
 			var config = DatabaseConfiguration.Configure(testDatabaseConnectionString);
 
-			/* 
-			 * Database schemas need to be created BEFORE NHibernate schema export.
-			 * This needs to be run only once.
-			*/			
-			//CreateSchemas(testDatabaseConnectionString);
+			// Database schemas need to be created BEFORE NHibernate schema export.
+			CreateSchemas(testDatabaseConnectionString);
 
 			config.ExposeConfiguration(cfg => RecreateSchema(cfg, testDatabaseConnectionString));
 

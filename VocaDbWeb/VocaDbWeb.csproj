@@ -796,6 +796,7 @@
     <Compile Include="Helpers\RazorHelper.cs" />
     <Compile Include="Helpers\UrlHelperExtender.cs" />
     <Compile Include="Models\Ext\EmbedSongViewModel.cs" />
+    <Compile Include="Models\Shared\NamesEditorViewModel.cs" />
     <Compile Include="Models\SongLists\SongListDetailsViewModel.cs" />
     <Compile Include="Resources\Domain\EntryReportTypeNames.designer.cs">
       <AutoGen>True</AutoGen>

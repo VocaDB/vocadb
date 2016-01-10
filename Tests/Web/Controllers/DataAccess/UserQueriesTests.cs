@@ -393,12 +393,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void GetRatingsByGenre() {
 
 			var fakeTagMock = new Mock<Tag>();
-			fakeTagMock.SetupGet(m => m.EnglishName).Returns((string)null); // Need to fake it because NHibernate doesn't work with ?:
 			var fakeTag = fakeTagMock.Object; 
 			var vocarock = new Tag("Vocarock", Tag.CommonCategory_Genres) { Parent = fakeTag, AliasedTo = fakeTag };
 			var electronic = new Tag("Electronic", Tag.CommonCategory_Genres) { Parent = fakeTag, AliasedTo = fakeTag };
 			var trance = new Tag("Trance", Tag.CommonCategory_Genres) { Parent = electronic, AliasedTo = fakeTag };
-			repository.Add(vocarock, electronic, trance);
+			repository.Save(vocarock, electronic, trance);
+			repository.SaveNames(vocarock, electronic, trance);
 
 			var song1 = CreateEntry.Song(name: "Nebula");
 			var song2 = CreateEntry.Song(name: "Anger");
@@ -420,11 +420,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(2, result.Length, "Number of results");
 			var first = result[0];
-			Assert.AreEqual(electronic.EnglishName, first.Item1, "First result is Electronic");
+			Assert.AreEqual(electronic.DefaultName, first.Item1, "First result is Electronic");
 			Assert.AreEqual(3, first.Item2, "Votes for Electronic");
 
 			var second = result[1];
-			Assert.AreEqual(vocarock.EnglishName, second.Item1, "First result is Vocarock");
+			Assert.AreEqual(vocarock.DefaultName, second.Item1, "First result is Vocarock");
 			Assert.AreEqual(2, second.Item2, "Votes for Vocarock");
 
 		}

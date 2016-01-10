@@ -47,7 +47,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public override string ToString() {
-			return "name '" + Value + "' for " + Song;
+			return string.Format("name '{0}' for {1}", Value, Song);
 		}
 
 	}

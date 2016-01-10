@@ -88,9 +88,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Save(song.AddArtist(producer));
 			Save(song.AddArtist(vocalist));
 			Save(song.CreatePV(new PVContract { Id = 1, Service = PVService.Youtube, PVId = "hoLu7c2XZYU", Name = "Nebula", PVType = PVType.Original }));
-
-			foreach (var name in song.Names)
-				repository.Save(name);
+			repository.SaveNames(song);
 
 			user = CreateEntry.User(id: 1, name: "Miku");
 			user.GroupId = UserGroupId.Trusted;

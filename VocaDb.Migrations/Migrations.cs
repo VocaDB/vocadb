@@ -4,6 +4,47 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201601101900)]
+	public class CreateDataForArchivedTagVersion : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("Data").OnTable(TableNames.ArchivedTagVersions).AsXml().Nullable();
+				
+		}
+
+	}
+
+	[Migration(201512182300)]
+	public class CreateTranslatedTagName : Migration {
+
+		public override void Up() {
+
+			Create.Table(TableNames.TagNames)
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Language").AsString(16).NotNullable()
+				.WithColumn("Value").AsString(255).NotNullable().Unique();
+
+			Alter.Table(TableNames.Tags)
+				.AddColumn("DefaultNameLanguage").AsString(20).NotNullable().WithDefaultValue("English")
+				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
+
+			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.Tags));
+			Execute.Sql(string.Format("INSERT INTO {0} (Tag, Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.TagNames, TableNames.Tags));
+
+		}
+
+		public override void Down() {
+			Delete.Table(TableNames.TagNames);
+			Delete.Column("DefaultNameLanguage").FromTable(TableNames.Tags);
+			Delete.Column("JapaneseName").FromTable(TableNames.Tags);
+			Delete.Column("RomajiName").FromTable(TableNames.Tags);
+		}
+
+	}
+
 	[Migration(201512072000)]
 	public class RemoveTagName : Migration {
 

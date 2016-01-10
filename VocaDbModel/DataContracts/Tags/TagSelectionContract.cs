@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.Tags;
+﻿using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
 
@@ -6,8 +7,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagSelectionContract() { }
 
-		public TagSelectionContract(Tag tag, bool selected) {
-			Tag = new TagBaseContract(tag);
+		public TagSelectionContract(Tag tag, ContentLanguagePreference languagePreference, bool selected) {
+			Tag = new TagBaseContract(tag, languagePreference);
 			Selected = selected;
 		}
 

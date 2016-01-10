@@ -6,7 +6,7 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts {
 
-	[DataContract]
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryThumbContract : IEntryImageInformation {
 
 		public EntryThumbContract() {}

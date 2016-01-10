@@ -59,7 +59,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.Tags))
-				Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u)).ToArray();
+				Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.ThumbUrl))
 				ThumbUrl = !string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
@@ -111,7 +111,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 
 			if (tags)
-				Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u)).ToArray();
+				Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
 			if (thumbUrl)
 				ThumbUrl = !string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs);

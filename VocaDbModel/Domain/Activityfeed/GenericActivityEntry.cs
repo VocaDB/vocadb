@@ -18,6 +18,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 		protected GenericActivityEntry(TEntry entry, EntryEditEvent editEvent, User author, TArchivedVersion archivedVersion)
 			: base(author, editEvent) {
 
+			ParamIs.NotNull(() => entry);
+
 			Entry = entry;
 			EditEvent = editEvent;
 			ArchivedVersion = archivedVersion;

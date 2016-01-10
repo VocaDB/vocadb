@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (string.IsNullOrEmpty(tagName))
 				return query;
 
-			return query.Where(s => s.Tags.Usages.Any(a => a.Tag.EnglishName == tagName));
+			return query.Where(s => s.Tags.Usages.Any(t => t.Tag.Names.SortNames.English == tagName || t.Tag.Names.SortNames.Romaji == tagName || t.Tag.Names.SortNames.Japanese == tagName));
 
 		}
 

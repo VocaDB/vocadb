@@ -5,6 +5,7 @@ using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
@@ -56,9 +57,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <example>http://vocadb.net/api/tags/1</example>
 		/// <returns>Tag data.</returns>
 		[Route("{id:int}")]
-		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None) {
+		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));
+			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields));
 			return tag;
 
 		}
@@ -74,9 +75,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Tag data.</returns>
 		[Route("byName/{name}")]
 		[Obsolete]
-		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None) {
+		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
-			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), fields));
+			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields));
 
 			return tag;
 
@@ -150,7 +151,6 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Find tag names by a part of name.
 		/// 
 		/// Matching is done anywhere from the name.
-		/// Spaces are automatically converted into underscores.
 		/// </summary>
 		/// <param name="query">Tag name query, for example "rock".</param>
 		/// <param name="allowAliases">
@@ -166,7 +166,7 @@ namespace VocaDb.Web.Controllers.Api {
 			string query = "", bool allowAliases = true,
 			int maxResults = 10) {
 			
-			return queries.FindNames(TagSearchTextQuery.Create(query), null, TagSortRule.Name, allowAliases, true, maxResults);
+			return queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
 
 		}
 
@@ -177,9 +177,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>List of names of the most commonly used tags in that category.</returns>
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public TagBaseContract[] GetTopTags(string categoryName = null) {
+		public TagBaseContract[] GetTopTags(string categoryName = null, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
 
-			return queries.Find(t => new TagBaseContract(t), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
+			return queries.Find(t => new TagBaseContract(t, languagePreference), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
 				SortRule = TagSortRule.UsageCount
 			})
 			.Items.OrderBy(t => t.Name).ToArray();

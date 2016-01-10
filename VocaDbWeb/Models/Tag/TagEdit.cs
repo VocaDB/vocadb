@@ -21,7 +21,6 @@ namespace VocaDb.Web.Models.Tag {
 			AliasedTo = contract.AliasedTo;
 			CategoryName = contract.CategoryName;
 			Description = contract.Description;
-			EnglishName = contract.EnglishName;
 			Name = contract.Name;
 			Parent = contract.Parent;
 			Status = contract.Status;
@@ -48,15 +47,14 @@ namespace VocaDb.Web.Models.Tag {
 
 		public bool Draft => Status == EntryStatus.Draft;
 
-		[Display(Name = "English name")]
-		[StringLength(100)]
-		public string EnglishName { get; set; }
-
 		public int Id { get; set; }
 
 		public bool IsEmpty { get; set; }
 
 		public string Name { get; set; }
+
+		[FromJson]
+		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		[FromJson]
 		public TagBaseContract Parent { get; set; }
@@ -72,7 +70,7 @@ namespace VocaDb.Web.Models.Tag {
 		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext) {
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
-			CurrentName = contract.EnglishName;
+			CurrentName = contract.Name;
 			Id = contract.Id;
 			IsEmpty = contract.IsEmpty;
 			Thumb = contract.Thumb;
@@ -85,10 +83,10 @@ namespace VocaDb.Web.Models.Tag {
 			return new TagForEditContract {
 				Id = this.Id,
 				Name = this.Name,
+				Names = Names,
 				AliasedTo = this.AliasedTo,
 				CategoryName = this.CategoryName ?? string.Empty,
 				Description = this.Description ?? string.Empty,
-				EnglishName = this.EnglishName,
 				Parent = this.Parent,
 				Status = this.Status,
 				UpdateNotes = this.UpdateNotes ?? string.Empty

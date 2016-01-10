@@ -85,13 +85,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		} 
 
-		public static IQueryable<T> WhereSongHasTag<T>(this IQueryable<T> query, string tag)
+		public static IQueryable<T> WhereSongHasTag<T>(this IQueryable<T> query, string tagName)
 			where T : ISongLink {
 			
-			if (string.IsNullOrEmpty(tag))
+			if (string.IsNullOrEmpty(tagName))
 				return query;
 
-			return query.Where(s => s.Song.Tags.Usages.Any(t => t.Tag.EnglishName == tag));
+			return query.Where(s => s.Song.Tags.Usages.Any(t => t.Tag.Names.SortNames.English == tagName || t.Tag.Names.SortNames.Romaji == tagName || t.Tag.Names.SortNames.Japanese == tagName));
 
 		}
 

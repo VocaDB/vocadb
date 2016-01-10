@@ -1,10 +1,22 @@
-﻿using VocaDb.Model.Domain.Activityfeed;
+﻿using System.Xml.Linq;
+using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Tags {
 
 	public class ArchivedTagVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<TagEditableFields> {
+
+		public static ArchivedTagVersion Create(Tag tag, TagDiff diff, AgentLoginData author, EntryEditEvent commonEditEvent, string notes) {
+
+			var contract = new ArchivedTagContract(tag, diff);
+			var data = XmlHelper.SerializeToXml(contract);
+
+			return tag.CreateArchivedVersion(data, diff, author, commonEditEvent, notes);
+
+		}
 
 		private string categoryName;
 		private string description;
@@ -15,9 +27,9 @@ namespace VocaDb.Model.Domain.Tags {
 			Status = EntryStatus.Finished;
 		}
 
-		public ArchivedTagVersion(Tag tag, TagDiff diff, AgentLoginData author,
+		public ArchivedTagVersion(Tag tag, XDocument data, TagDiff diff, AgentLoginData author,
 			EntryEditEvent commonEditEvent, string notes)
-			: base(null, author, tag.Version, EntryStatus.Finished, notes) {
+			: base(data, author, tag.Version, EntryStatus.Finished, notes) {
 
 			ParamIs.NotNull(() => diff);
 

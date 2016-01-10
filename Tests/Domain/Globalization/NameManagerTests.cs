@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Tests.Domain.Globalization {
 
@@ -10,16 +14,62 @@ namespace VocaDb.Tests.Domain.Globalization {
 	[TestClass]
 	public class NameManagerTests {
 
+		class NameFactory : INameFactory<LocalizedStringWithId> {
+
+			private readonly NameManager<LocalizedStringWithId> nameManager;
+
+			public NameFactory(NameManager<LocalizedStringWithId> nameManager) {
+				this.nameManager = nameManager;
+			}
+
+			public LocalizedStringWithId CreateName(string val, ContentLanguageSelection language) {
+				var name = new LocalizedStringWithId(val, language);
+				nameManager.Add(name);
+				return name;
+			}
+
+		}
+
+		private int id = 1;
+		private NameFactory nameFactory;
 		private NameManager<LocalizedStringWithId> nameManager;
 
-		private void AddName(string name, ContentLanguageSelection lang) {
-			nameManager.Add(new LocalizedStringWithId(name, lang));
+		private void AddName(string name, ContentLanguageSelection lang = ContentLanguageSelection.English) {
+			nameManager.Add(new LocalizedStringWithId(name, lang) { Id = id++ });
+		}
+
+		private void AssertNames(CollectionDiff<LocalizedStringWithId, LocalizedStringWithId> result, 
+			IEnumerable<LocalizedStringWithIdContract> added = null,
+			IEnumerable<LocalizedStringWithIdContract> removed = null, IEnumerable<LocalizedStringWithIdContract> unchanged = null) {
+
+			AssertCollection(result.Added, added, "added");
+			AssertCollection(result.Removed, removed, "removed");
+			AssertCollection(result.Unchanged, unchanged, "unchanged");
+
+		}
+
+		private void AssertCollection(LocalizedStringWithId[] actual, IEnumerable<LocalizedStringWithIdContract> expected, string action) {
+
+			Assert.AreEqual(expected?.Count() ?? 0, actual.Length, "Number of items " + action);
+
+			if (expected == null)
+				return;
+
+			foreach (var item in actual) {
+				Assert.IsTrue(actual.Any(n => n.ContentEquals(item)), string.Format("Found name '{0}' ({1})", item, action));
+			}
+
+		}
+
+		private LocalizedStringWithIdContract Contract(string val, ContentLanguageSelection lang) {
+			return new LocalizedStringWithIdContract { Value = val, Language = lang };
 		}
 
 		[TestInitialize]
 		public void SetUp() {
 
 			nameManager = new NameManager<LocalizedStringWithId>();
+			nameFactory = new NameFactory(nameManager);
 
 		}
 
@@ -42,6 +92,33 @@ namespace VocaDb.Tests.Domain.Globalization {
 			nameManager.UpdateSortNames();
 
 			Assert.AreEqual(string.Empty, nameManager.GetAdditionalNamesStringForLanguage(ContentLanguagePreference.English), "Additional names string is empty");
+
+		}
+
+		[TestMethod]
+		public void Sync_NewNames() {
+
+			var added = new[] { Contract("Miku", ContentLanguageSelection.English) };
+
+			var result = nameManager.Sync(added, nameFactory);
+
+			AssertNames(result, added: added);
+			Assert.AreEqual(1, nameManager.Names.Count, "Number of names");
+				
+		}
+
+		[TestMethod]
+		public void Sync_AddedAndRemoved() {
+
+			AddName("Luka");
+
+			var added = new[] { Contract("Miku", ContentLanguageSelection.English) };
+
+			var result = nameManager.Sync(added, nameFactory);
+
+			AssertCollection(result.Added, added, "added");
+			Assert.AreEqual(1, result.Removed.Length, "Number of items removed");
+			Assert.AreEqual(1, nameManager.Names.Count, "Number of names");
 
 		}
 

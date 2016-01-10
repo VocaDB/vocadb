@@ -12,7 +12,7 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts.Tags {
 
-	public class TagDetailsContract : TagWithImageContract, IEntryWithStatus {
+	public class TagDetailsContract : TagContract, IEntryWithStatus {
 
 		bool IDeletableEntry.Deleted {
 			get { return false; }
@@ -35,9 +35,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagDetailsContract(Tag tag, 
 			IEnumerable<Artist> artists, int artistCount, IEnumerable<Album> albums, int albumCount,
 			IEnumerable<Song> songs, int songCount, ContentLanguagePreference languagePreference)
-			: base(tag) {
+			: base(tag, languagePreference) {
 
-			Aliases = tag.Aliases.Select(a => new TagBaseContract(a)).ToArray();
+			AdditionalNames = tag.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			Aliases = tag.Aliases.Select(a => new TagBaseContract(a, languagePreference)).ToArray();
 
 			Albums = albums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
 			AlbumCount = albumCount;
@@ -45,13 +46,17 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Artists = artists.Select(a => new ArtistContract(a, languagePreference)).ToArray();
 			ArtistCount = artistCount;
 
-			Children = tag.Children.Select(a => new TagBaseContract(a)).ToArray();
-			Siblings = tag.Parent != null ? tag.Parent.Children.Where(t => !t.Equals(tag)).Select(a => new TagBaseContract(a)).ToArray() : new TagBaseContract[0];
+			Children = tag.Children.Select(a => new TagBaseContract(a, languagePreference)).ToArray();
+			Siblings = tag.Parent != null ? tag.Parent.Children.Where(t => !t.Equals(tag)).Select(a => new TagBaseContract(a, languagePreference)).ToArray() : new TagBaseContract[0];
 
 			Songs = songs.Select(a => new SongContract(a, languagePreference)).ToArray();
 			SongCount = songCount;
 
+			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
+
 		}
+
+		public string AdditionalNames { get; set; }
 
 		public int AlbumCount { get; set; }
 
@@ -74,6 +79,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public SongContract[] Songs { get; set; }
 
 		public int SongCount { get; set; }
+
+		public EntryThumbContract Thumb { get; set; }
 
 	}
 

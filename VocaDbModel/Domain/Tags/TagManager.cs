@@ -25,7 +25,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual IEnumerable<Tag> TagsByVotes {
 			get {
-				return Usages.OrderByDescending(u => u.Count).ThenBy(u => u.Tag.EnglishName).Select(u => u.Tag);
+				return Usages.OrderByDescending(u => u.Count).Select(u => u.Tag);
 			}
 		}
 

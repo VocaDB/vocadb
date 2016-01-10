@@ -112,7 +112,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DatabaseTests\DatabaseTestContext.cs" />
+    <Compile Include="DatabaseTests\Queries\TagQueriesDatabaseTests.cs" />
     <Compile Include="DatabaseTests\Search\SongSearch\SongSearchDatabaseTests.cs" />
+    <Compile Include="DatabaseTests\Search\Tags\TagSearchDatabaseTests.cs" />
     <Compile Include="DatabaseTests\TestDatabase.cs" />
     <Compile Include="Database\Queries\SongAggregateQueriesTests.cs" />
     <Compile Include="Domain\Albums\AlbumTests.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Service\UserServiceTests.cs" />
     <Compile Include="Service\VideoServices\VideoServiceFileTests.cs" />
     <Compile Include="TestData\CreateEntry.cs" />
+    <Compile Include="TestSupport\DatabaseContextAsRepositoryWrapper.cs" />
     <Compile Include="TestSupport\FakeArtistRepository.cs" />
     <Compile Include="TestSupport\FakeDiscussionFolderRepository.cs" />
     <Compile Include="TestSupport\FakeEventRepository.cs" />

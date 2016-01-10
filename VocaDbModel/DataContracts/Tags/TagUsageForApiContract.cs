@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
@@ -8,9 +9,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagUsageForApiContract() { }
 
-		public TagUsageForApiContract(TagUsage tagUsage) {
+		public TagUsageForApiContract(TagUsage tagUsage, ContentLanguagePreference languagePreference) {
 			Count = tagUsage.Count;
-			Tag = new TagBaseContract(tagUsage.Tag);
+			Tag = new TagBaseContract(tagUsage.Tag, languagePreference);
 		}
 
 		[DataMember]

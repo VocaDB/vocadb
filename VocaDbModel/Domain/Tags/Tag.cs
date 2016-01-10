@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -13,20 +14,10 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Tags {
 
-	public class Tag : IEquatable<Tag>, IEntryWithNames, IEntryWithStatus, IEntryWithComments, ITag {
-
-		string IEntryBase.DefaultName {
-			get { return EnglishName; }
-		}
+	public class Tag : IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName> {
 
 		bool IDeletableEntry.Deleted {
 			get { return false; }
-		}
-
-		INameManager IEntryWithNames.Names {
-			get {
-				return new SingleNameManager(EnglishName);
-			}
 		}
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
@@ -55,8 +46,8 @@ namespace VocaDb.Model.Domain.Tags {
 		private ISet<Tag> children = new HashSet<Tag>();
 		private IList<TagComment> comments = new List<TagComment>();
 		private string description;
+		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
-		private string englishName;
 
 		public Tag() {
 			CategoryName = string.Empty;
@@ -64,10 +55,16 @@ namespace VocaDb.Model.Domain.Tags {
 			Status = EntryStatus.Draft;
 		}
 
-		public Tag(string name, string categoryName = "")
+		public Tag(string englishName, string categoryName = "")
+			: this(new LocalizedString(englishName, ContentLanguageSelection.English), categoryName) {}
+
+		public Tag(LocalizedString name, string categoryName = "")
 			: this() {
 
-			EnglishName = name;
+			ParamIs.NotNull(() => name);
+
+			Names.SortNames.DefaultLanguage = name.Language;
+			Names.Add(new TagName(this, name));
 			CategoryName = categoryName;
 
 		}
@@ -162,23 +159,18 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
+		public virtual string DefaultName {
+			get {
+				return TranslatedName.Default;
+			}
+		}
+
 		/// <summary>
 		/// Tag description, may contain Markdown formatting.
 		/// </summary>
 		public virtual string Description {
 			get { return description; }
 			set { description = value; }
-		}
-
-		/// <summary>
-		/// User-visible tag name, primarily in English.
-		/// </summary>
-		public virtual string EnglishName {
-			get { return englishName; }
-			set {
-				ParamIs.NotNullOrEmpty(() => value);
-				englishName = value;
-			}
 		}
 
 		public virtual EntryType EntryType {
@@ -192,6 +184,22 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual int Id { get; set; }
 
+		public virtual NameManager<TagName> Names{
+			get { return names; }
+			set {
+				ParamIs.NotNull(() => value);
+				names = value;
+			}
+		}
+
+		INameManager<TagName> IEntryWithNames<TagName>.Names{
+			get { return Names; }
+		}
+
+		INameManager IEntryWithNames.Names {
+			get { return Names; }
+		}
+
 		/// <summary>
 		/// Parent tag, if any. Can be null.
 		/// </summary>
@@ -202,13 +210,34 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual EntryThumb Thumb { get; set; }
 
-		public virtual ArchivedTagVersion CreateArchivedVersion(TagDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
+		public virtual TranslatedString TranslatedName => Names.SortNames;
 
-			var archived = new ArchivedTagVersion(this, diff, author, reason, notes);
+		public virtual ArchivedTagVersion CreateArchivedVersion(XDocument data, TagDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
+
+			var archived = new ArchivedTagVersion(this, data, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
+
+		}
+
+		public virtual TagName CreateName(string val, ContentLanguageSelection language) {
+
+			ParamIs.NotNullOrEmpty(() => val);
+
+			return CreateName(new LocalizedString(val, language));
+
+		}
+
+		public virtual TagName CreateName(LocalizedString localizedString) {
+
+			ParamIs.NotNull(() => localizedString);
+
+			var name = new TagName(this, localizedString);
+			Names.Add(name);
+
+			return name;
 
 		}
 
@@ -293,14 +322,14 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual string UrlSlug {
 			get {
-				return Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(EnglishName);
+				return Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(Names);
 			}
 		}
 
 		public virtual int Version { get; set; }
 
 		public override string ToString() {
-			return string.Format("tag '{0}' [{1}]", EnglishName, Id);
+			return string.Format("tag '{0}' [{1}]", DefaultName, Id);
 		}
 
 	}

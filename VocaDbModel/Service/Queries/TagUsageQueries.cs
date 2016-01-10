@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Queries {
 
@@ -55,10 +56,10 @@ namespace VocaDb.Model.Service.Queries {
 				// Load existing tags by name and ID.
 				var tagsFromIds = ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).ToArray();
 
-				var tagsFromNames = ctx.Query<Tag>().Where(t => translatedTagNames.Contains(t.EnglishName)).ToArray();
+				var tagsFromNames = ctx.Query<Tag>().WhereHasName(translatedTagNames).ToArray();
 
 				// Figure out tags that don't exist yet (no ID and no matching name).
-				var newTagNames = translatedTagNames.Except(tagsFromNames.Select(t => t.EnglishName), StringComparer.InvariantCultureIgnoreCase).ToArray();
+				var newTagNames = translatedTagNames.Except(tagsFromNames.SelectMany(t => t.Names.AllValues), StringComparer.InvariantCultureIgnoreCase).ToArray();
 
 				var user = ctx.OfType<User>().GetLoggedUser(permissionContext);
 				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
@@ -70,13 +71,13 @@ namespace VocaDb.Model.Service.Queries {
 				var entry = ctx.OfType<TEntry>().Load(entryId);
 				var tagUsageFactory = tagUsageFactoryFactory(entry, ctx.OfType<TTag>());
 
-				var tagNames = appliedTags.Select(t => t.EnglishName);
+				var tagNames = appliedTags.Select(t => t.DefaultName);
 				ctx.AuditLogger.AuditLog(string.Format("tagging {0} with {1}",
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
 
 				tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
 
-				return tagFunc(entry).Usages.Select(t => new TagUsageForApiContract(t)).ToArray();
+				return tagFunc(entry).Usages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
 
 			});
 
