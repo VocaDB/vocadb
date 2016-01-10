@@ -80,6 +80,7 @@
 	</div>
 	<div class="editor-field" data-bind="with: names">
 		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel { ShowAliases = false }); }
+		@Html.ValidationMessageFor(m => m.Names)
 		@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
 	</div>
 

@@ -336,6 +336,27 @@ namespace VocaDb.Model.Database.Queries {
 
 		private CollectionDiffWithValue<TagName, TagName> SyncNames(IDatabaseContext<TagName> ctx, Tag tag, LocalizedStringWithIdContract[] names) {
 
+			var nameValues = names.Select(n => n.Value).ToArray();
+
+			// Verify no duplicates for this tag
+			var duplicateName = nameValues
+				.GroupBy(n => n)
+				.Where(n => n.Count() > 1)
+				.Select(n => n.First())
+				.FirstOrDefault();
+
+			// Verify no duplicates for other tags
+			if (duplicateName == null) {
+				duplicateName = ctx.Query<TagName>()
+					.Where(t => t.Entry.Id != tag.Id && nameValues.Contains(t.Value))
+					.Select(t => t.Value)
+					.FirstOrDefault();
+			}
+
+			if (duplicateName != null) {
+				throw new DuplicateTagNameException(duplicateName);
+			}
+
 			/* 
 				We have a unique constraint on tag name.
 				By default, NH would first cascade inserts and updates, and only then deletes,
@@ -389,22 +410,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				var nameDiff = SyncNames(ctx.OfType<TagName>(), tag, contract.Names);
 
-				if (nameDiff.Changed) {
-					
+				if (nameDiff.Changed) {					
 					diff.Names = true;
-
-					var names = contract.Names.Select(n => n.Value).ToArray();
-					var duplicateName = ctx.Query<TagName>()
-						.Where(t => t.Entry.Id != contract.Id && names.Contains(t.Value))
-						.Select(t => t.Value)
-						.FirstOrDefault();
-
-					if (duplicateName != null) {
-						throw new DuplicateTagNameException(duplicateName);
-                    }
-
-					diff.Names = true;
-
 				}
 
 				if (!Tag.Equals(tag.Parent, contract.Parent)) {

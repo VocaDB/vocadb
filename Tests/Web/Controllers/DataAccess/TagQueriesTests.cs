@@ -57,7 +57,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			repository = new FakeTagRepository();
 
-			tag = CreateAndSaveTag("Appearance_Miku");
+			tag = CreateAndSaveTag("Appearance Miku");
 			tag2 = CreateAndSaveTag("MMD");
 
 			user = new User("User", "123", "test@test.com", 123);
@@ -81,7 +81,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var firstCategory = result[0];
 			Assert.AreEqual("Animation", firstCategory.Name, "First category name");
 			Assert.AreEqual(1, firstCategory.Tags.Length, "Number of tags in the Animation category");
-			Assert.AreEqual("Appearance_Miku", firstCategory.Tags[0].Name, "First tag in the Animation category");
+			Assert.AreEqual("Appearance Miku", firstCategory.Tags[0].Name, "First tag in the Animation category");
 
 		}
 
@@ -123,11 +123,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_Name() {
 
 			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
-			updated.Names[0].Value = "Api_Miku";
+			updated.Names[0].Value = "Api Miku";
 
 			queries.Update(updated, null);
 
-			Assert.AreEqual("Api_Miku", tag.DefaultName, "EnglishName");
+			Assert.AreEqual("Api Miku", tag.DefaultName, "EnglishName");
 
 			var archivedVersion = GetArchivedVersion(tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
@@ -137,10 +137,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateTagNameException))]
-		public void Update_Name_Duplicate() {
+		public void Update_Name_DuplicateWithAnotherTag() {
 
 			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
 			updated.Names[0].Value = "MMD";
+
+			queries.Update(updated, null);
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DuplicateTagNameException))]
+		public void Update_Name_DuplicateTranslation() {
+
+			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			updated.Names = updated.Names.Concat(new[] { new LocalizedStringWithIdContract { Value = "Appearance Miku", Language = ContentLanguageSelection.Romaji } }).ToArray();
 
 			queries.Update(updated, null);
 
@@ -183,7 +194,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_Parent_Renamed() {
 
 			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
-			tag2.TranslatedName.Default = "Api_Miku";
+			tag2.TranslatedName.Default = "Api Miku";
 			updated.Parent = new TagBaseContract(tag2, ContentLanguagePreference.English);
 
 			queries.Update(updated, null);

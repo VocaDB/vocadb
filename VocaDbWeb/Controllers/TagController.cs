@@ -123,7 +123,7 @@ namespace VocaDb.Web.Controllers
 			try {
 				result = queries.Update(model.ToContract(), uploadedPicture);
 			} catch (DuplicateTagNameException x) {
-				ModelState.AddModelError("EnglishName", x.Message);
+				ModelState.AddModelError("Names", x.Message);
 				return RenderEdit(model);
 			}
 
