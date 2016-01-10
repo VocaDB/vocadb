@@ -22,7 +22,7 @@ namespace VocaDb.Model.Service.Helpers {
 			var tag = new Tag(new LocalizedString(englishName, ContentLanguageSelection.English));
 			ctx.Save(tag);
 
-			var archived = tag.CreateArchivedVersion(new TagDiff(), loginData, EntryEditEvent.Created, string.Empty);
+			var archived = ArchivedTagVersion.Create(tag, new TagDiff(), loginData, EntryEditEvent.Created, string.Empty);
 			ctx.Save(archived);
 
 			var activityEntry = new TagActivityEntry(tag, EntryEditEvent.Created, loginData.User, archived);

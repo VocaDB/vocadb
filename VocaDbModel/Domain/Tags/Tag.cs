@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -211,9 +212,9 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 
-		public virtual ArchivedTagVersion CreateArchivedVersion(TagDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
+		public virtual ArchivedTagVersion CreateArchivedVersion(XDocument data, TagDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
 
-			var archived = new ArchivedTagVersion(this, diff, author, reason, notes);
+			var archived = new ArchivedTagVersion(this, data, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 

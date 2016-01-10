@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201601101900)]
+	public class CreateDataForArchivedTagVersion : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("Data").OnTable(TableNames.ArchivedTagVersions).AsXml().Nullable();
+				
+		}
+
+	}
+
 	[Migration(201512182300)]
 	public class CreateTranslatedTagName : Migration {
 

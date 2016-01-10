@@ -120,7 +120,7 @@ namespace VocaDb.Model.Database.Queries {
 		public ArchivedTagVersion Archive(IDatabaseContext<Tag> ctx, Tag tag, TagDiff diff, EntryEditEvent reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
-			var archived = tag.CreateArchivedVersion(diff, agentLoginData, reason, notes);
+			var archived = ArchivedTagVersion.Create(tag, diff, agentLoginData, reason, notes);
 			ctx.OfType<ArchivedTagVersion>().Save(archived);
 			return archived;
 

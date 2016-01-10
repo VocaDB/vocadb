@@ -20,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Names = diff.IncludeNames ? tag.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			Parent = tag.Parent != null ? new ObjectRefContract(tag.Parent) : null;
 			ThumbMime = tag.Thumb != null ? tag.Thumb.Mime : null;
+			TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 
 		}
 
@@ -43,6 +44,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string ThumbMime { get; set; }
+
+		[DataMember]
+		public ArchivedTranslatedStringContract TranslatedName { get; set; }
 
 	}
 
