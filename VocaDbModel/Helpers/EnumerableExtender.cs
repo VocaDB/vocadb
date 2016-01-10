@@ -10,7 +10,12 @@ namespace VocaDb.Model.Helpers {
 			var comparer = new DistinctPropertyEqualityComparer<T, T2>(func, propertyEquality);
 			return source.Distinct(comparer);
 		}
-	
+
+		public static IEnumerable<T> Distinct<T, T2>(this IEnumerable<T> source, Func<T, T2> func) {
+			var comparer = new DistinctPropertyEqualityComparer<T, T2>(func);
+			return source.Distinct(comparer);
+		}
+
 		public static IEnumerable<T> Insert<T>(this IEnumerable<T> source, T element) {
 			return Enumerable.Repeat(element, 1).Concat(source);
 		}
@@ -74,6 +79,9 @@ namespace VocaDb.Model.Helpers {
 			this.func = func;
 			this.propertyEquality = propertyEquality;
         }
+
+		public DistinctPropertyEqualityComparer(Func<T, T2> func)
+			: this(func, EqualityComparer<T2>.Default) {}
 
 		public bool Equals(T x, T y) {
 

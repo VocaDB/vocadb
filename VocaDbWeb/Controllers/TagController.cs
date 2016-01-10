@@ -7,21 +7,25 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;
+using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Tag;
 
 namespace VocaDb.Web.Controllers
 {
     public class TagController : ControllerBase {
 
+		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
 	    private readonly TagQueries queries;
 
-		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory) {
+		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations) {
 
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
+			this.enumTranslations = enumTranslations;
 
 		}
 
@@ -156,7 +160,7 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var contract = queries.GetTagWithArchivedVersions(id);
-			return View(contract);
+			return View(new Versions(contract, enumTranslations));
 
 		}
 
@@ -164,7 +168,7 @@ namespace VocaDb.Web.Controllers
 
 			var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(contract);
+			return View(new ViewVersion<ArchivedTagVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 
 		}
 

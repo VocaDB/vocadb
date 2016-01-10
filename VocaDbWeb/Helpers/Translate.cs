@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
@@ -18,6 +21,32 @@ using VocaDb.Model.Service.Translations;
 namespace VocaDb.Web.Helpers {
 
 	public static class Translate {
+
+		private static readonly Dictionary<Type, ITranslateableEnum> allResourceManagers;
+
+		private static Type GetEnumType(FieldInfo property) {
+
+			return property.FieldType.GetGenericArguments().First();
+
+		}
+
+		private static ITranslateableEnum GetResourceManager(FieldInfo property) {
+
+			return (ITranslateableEnum)property.GetValue(null);
+
+		}
+			 
+		static Translate() {
+
+			var enums = typeof(Translate).GetFields().Where(p => typeof(ITranslateableEnum).IsAssignableFrom(p.FieldType));
+			allResourceManagers = enums
+				.Select(p => new {
+					TranslateableEnum = GetResourceManager(p), EnumType = GetEnumType(p)
+				} )
+				.Distinct(p => p.EnumType)
+				.ToDictionary(p => p.EnumType, p => p.TranslateableEnum);
+
+		}
 
 		public static readonly TranslateableEnum<PurchaseStatus> AlbumCollectionStatusNames =
 			new TranslateableEnum<PurchaseStatus>(() => global::Resources.AlbumCollectionStatusNames.ResourceManager);
@@ -207,6 +236,10 @@ namespace VocaDb.Web.Helpers {
 				return (token.Name != null ? PermissionTokenNames.ResourceManager.GetString(token.Name) : null) ?? token.Name ?? token.Id.ToString();
 			}
 
+		}
+
+		public static TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, IConvertible {
+			return (TranslateableEnum<TEnum>)allResourceManagers[typeof(TEnum)];
 		}
 
 	}

@@ -214,7 +214,6 @@
     <Compile Include="Web\Controllers\EventControllerTests.cs" />
     <Compile Include="Web\Controllers\SongControllerTests.cs" />
     <Compile Include="Web\Controllers\SongListControllerTests.cs" />
-    <Compile Include="Web\Controllers\TagControllerTests.cs" />
     <Compile Include="Web\Controllers\UserControllerTests.cs" />
     <Compile Include="Web\Helpers\WebHelperTests.cs" />
   </ItemGroup>

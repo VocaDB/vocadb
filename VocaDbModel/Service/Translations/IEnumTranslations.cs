@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.Albums;
+﻿using System;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 
@@ -11,6 +12,8 @@ namespace VocaDb.Model.Service.Translations {
 		TranslateableEnum<ArtistReportType> ArtistReportTypeNames { get; }
 
 		TranslateableEnum<SongReportType> SongReportTypeNames { get; }
+
+		TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, IConvertible;
 
 	}
 

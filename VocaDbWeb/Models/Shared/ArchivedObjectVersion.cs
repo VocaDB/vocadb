@@ -1,10 +1,18 @@
 ﻿using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.Shared {
 
 	public class ArchivedObjectVersion {
+
+		public static ArchivedObjectVersion Create(ArchivedObjectVersionContract contract, IEnumTranslations translator) {
+
+			return new ArchivedObjectVersion(contract, contract.TranslateReason(translator),
+				contract.TranslateChangedFields(translator), contract.IsAnythingChanged());
+
+		}
 
 		public ArchivedObjectVersion() { }
 

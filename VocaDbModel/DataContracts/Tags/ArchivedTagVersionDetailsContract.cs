@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using VocaDb.Model.DataContracts.Versioning;
-using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
@@ -31,11 +30,11 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		}
 
-		public ArchivedTagVersionContract ArchivedVersion { get; set; }
+		public ArchivedObjectVersionContract ArchivedVersion { get; set; }
 
-		public ArchivedObjectVersionWithFieldsContract<TagEditableFields, EntryEditEvent>[] ComparableVersions { get; set; }
+		public ArchivedObjectVersionContract[] ComparableVersions { get; set; }
 
-		public ArchivedTagVersionContract ComparedVersion { get; set; }
+		public ArchivedObjectVersionContract ComparedVersion { get; set; }
 
 		public int ComparedVersionId { get; set; }
 
@@ -44,7 +43,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagContract Tag { get; set; }
 
 		public ComparedTagsContract Versions { get; set; }
-
 
 	}
 

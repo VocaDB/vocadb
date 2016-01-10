@@ -8,7 +8,7 @@ using Newtonsoft.Json.Converters;
 
 namespace VocaDb.Model.Service.Translations {
 
-	public class TranslateableEnum<TEnum> where TEnum : struct, IConvertible {
+	public class TranslateableEnum<TEnum> : ITranslateableEnum where TEnum : struct, IConvertible {
 
 		private readonly Func<ResourceManager> resourceManager;
 		private readonly TEnum[] values;
@@ -100,6 +100,10 @@ namespace VocaDb.Model.Service.Translations {
 			return values.ToDictionary(t => t.ToString(), t => GetName(t, res));
 		}
 
+	}
+
+	public interface ITranslateableEnum {
+		
 	}
 
 	public class TranslateableEnumField<T> where T : struct, IConvertible {

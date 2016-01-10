@@ -1,17 +1,13 @@
-﻿@using VocaDb.Model.Domain.Tags
-@using VocaDb.Web.Helpers
-@using VocaDb.Web.Models.Shared
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagWithArchivedVersionsContract>
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.Versions>
 
 @{
-	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
+	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Tags, "Index"), 
-		Html.ActionLink(Model.Name, "DetailsById", new { id = Model.Id, slug = Model.UrlSlug }) 
+		Html.ActionLink(Model.Entry.Name, "DetailsById", new { id = Model.Entry.Id, slug = Model.Entry.UrlSlug }) 
 	};
 }
 
-@ArchivedEntryHelpers.CurrentVersionMessage(Model.Version, Model.Status)
+@ArchivedEntryHelpers.CurrentVersionMessage(Model.Entry.Version, Model.Entry.Status)
 
-@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions.Select(
-	a => new ArchivedObjectVersion(a, Translate.TagEditableFieldNames.GetAllNameNames(a.ChangedFields, TagEditableFields.Nothing))), id => Url.Action("ViewVersion", new { id }))
+@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id }))

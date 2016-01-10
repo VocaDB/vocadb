@@ -3,6 +3,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.DataContracts {
 
@@ -43,6 +44,18 @@ namespace VocaDb.Model.DataContracts {
 		public EntryStatus Status { get; set; }
 
 		public int Version { get; set; }
+
+		public virtual bool IsAnythingChanged() {
+			return false;
+		}
+
+		public virtual string TranslateChangedFields(IEnumTranslations translator) {
+			return string.Empty;
+		}
+
+		public virtual string TranslateReason(IEnumTranslations translator) {
+			return string.Empty;
+		}
 
 	}
 

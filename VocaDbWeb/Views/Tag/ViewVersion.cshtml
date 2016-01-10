@@ -1,16 +1,15 @@
 ﻿@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Tag;
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.ArchivedTagVersionDetailsContract>
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Tags.ArchivedTagVersionDetailsContract>>
 
 @{
 
-	PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
 
-	if (Model.Tag != null) {
+	if (Model.Entry.Tag != null) {
 		ViewBag.Parents = new[] {
 			Html.ActionLink("Tags", "Index"),
-			Html.ActionLink(Model.Tag.Name, "DetailsById", new { id = Model.Tag.Id, slug = Model.Tag.UrlSlug }),
-			Html.ActionLink("Revisions", "Versions", new { id = Model.Tag.Id })
+			Html.ActionLink(Model.Entry.Tag.Name, "DetailsById", new { id = Model.Entry.Tag.Id, slug = Model.Entry.Tag.UrlSlug }),
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Entry.Tag.Id })
 		};
 	} else {
 		ViewBag.Parents = new[] {
@@ -20,16 +19,16 @@
 
 }
 
-@if (Model.ComparableVersions.Any()) {
+@if (Model.Entry.ComparableVersions.Any()) {
 	using (Html.BeginForm("ViewVersion", "Tag", FormMethod.Post, new { @class = "form form-inline" })) {
-		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.ComparableVersions, i => i.Id, i => i.Version + " (" + Versions.GetChangeString(i.ChangedFields) + " by " + i.AgentName + ")", Model.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
+		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.Entry.ComparableVersions, i => i.Id, i => i.Version + " (" + i.TranslateChangedFields(Model.EnumTranslations) + " by " + i.AgentName + ")", Model.Entry.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
 		<button type="submit" class="btn btn-primary">Compare</button>
 	}
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForTag(Model.ArchivedVersion), 
-	Model.ComparedVersion != null ? Versions.CreateForTag(Model.ComparedVersion) : null)
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion), 
+	Model.Version(Model.Entry.ComparedVersion))
 
-@TagHelpers.PrintArchivedSongData(Model.Versions)
+@TagHelpers.PrintArchivedTagData(Model.Entry.Versions)
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
