@@ -71,7 +71,7 @@
 					<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 				</div>
 				<div class="editor-field" data-bind="with: names">
-					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor"); }
+					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
 				</div>
 
 				<div class="editor-label">

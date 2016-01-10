@@ -393,7 +393,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void GetRatingsByGenre() {
 
 			var fakeTagMock = new Mock<Tag>();
-			//fakeTagMock.SetupGet(m => m.Id).Returns(0); // Need to fake it because NHibernate doesn't work with ?:
 			var fakeTag = fakeTagMock.Object; 
 			var vocarock = new Tag("Vocarock", Tag.CommonCategory_Genres) { Parent = fakeTag, AliasedTo = fakeTag };
 			var electronic = new Tag("Electronic", Tag.CommonCategory_Genres) { Parent = fakeTag, AliasedTo = fakeTag };
