@@ -14,7 +14,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ParamIs.NotNull(() => tag);
 
 			Id = tag.Id;
-			Name = tag.Names.SortNames[languagePreference];
+			Name = tag.TranslatedName[languagePreference];
 			UrlSlug = tag.UrlSlug;
 
 		}

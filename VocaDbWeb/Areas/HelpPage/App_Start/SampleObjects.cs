@@ -53,7 +53,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start {
 				new LocalizedStringContract("Synthesis", ContentLanguageSelection.English)
 			},
 			Tags = new [] {
-				new TagUsageForApiContract { Tag = new TagBaseContract { Name = "electronic" } }
+				new TagUsageForApiContract { Tag = new TagForApiContract { Name = "electronic" } }
 			},
 			WebLinks = new[] {
 				new WebLinkForApiContract(new WebLink("KarenT", "http://karent.jp/album/29", WebLinkCategory.Official)), 
@@ -76,7 +76,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start {
 				new LocalizedStringContract("Tripshots", ContentLanguageSelection.English)				
 			},
 			Tags = new[] {
-				new TagUsageForApiContract { Tag = new TagBaseContract { Name = "electronic" }, Count = 39 }
+				new TagUsageForApiContract { Tag = new TagForApiContract { Name = "electronic" }, Count = 39 }
 			},
 			WebLinks = new[] {
 				new WebLinkForApiContract { Category = WebLinkCategory.Official, Url = "http://tripshots.net/", Description = "Official website" },

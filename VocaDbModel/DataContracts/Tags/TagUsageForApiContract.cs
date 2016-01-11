@@ -11,14 +11,15 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagUsageForApiContract(TagUsage tagUsage, ContentLanguagePreference languagePreference) {
 			Count = tagUsage.Count;
-			Tag = new TagBaseContract(tagUsage.Tag, languagePreference);
+			Tag = new TagForApiContract(tagUsage.Tag, null, false, languagePreference, TagOptionalFields.AdditionalNames);
 		}
 
 		[DataMember]
 		public int Count { get; set; }
 
 		[DataMember]
-		public TagBaseContract Tag { get; set; }
+		public TagForApiContract Tag { get; set; }
 
 	}
+
 }

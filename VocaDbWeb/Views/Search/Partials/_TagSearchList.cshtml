@@ -29,8 +29,10 @@
 					</a>
 				</td>
 				<td>
-					<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details_tag(id, urlSlug) }" href="#"></a><br />
+					<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details_tag(id, urlSlug) }" href="#"></a>
 					@KnockoutHelpers.DraftIcon("status")
+					<br />
+					<small class="extraInfo" data-bind="text: $data.additionalNames"></small>
 				</td>
 				<td>
 					<p data-bind="text: categoryName"></p>

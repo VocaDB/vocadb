@@ -26,10 +26,14 @@ namespace VocaDb.Model.DataContracts.Tags {
 			CategoryName = tag.CategoryName;
 			DefaultNameLanguage = tag.TranslatedName.DefaultLanguage;
 			Id = tag.Id;
-			Name = tag.Names.SortNames[languagePreference];
+			Name = tag.TranslatedName[languagePreference];
 			Status = tag.Status;
 			UrlSlug = tag.UrlSlug;
 			Version = tag.Version;
+
+			if (optionalFields.HasFlag(TagOptionalFields.AdditionalNames)) {
+				AdditionalNames = tag.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.AliasedTo) && tag.AliasedTo != null) {
 				AliasedTo = new TagBaseContract(tag.AliasedTo, languagePreference);
@@ -52,6 +56,12 @@ namespace VocaDb.Model.DataContracts.Tags {
 			}
 
 		}
+
+		/// <summary>
+		/// Comma-separated list of all other names that aren't the display name.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public string AdditionalNames { get; set; }
 
 		[DataMember]
 		public TagBaseContract AliasedTo { get; set; }
@@ -102,12 +112,13 @@ namespace VocaDb.Model.DataContracts.Tags {
 	[Flags]
 	public enum TagOptionalFields {
 
-		None		= 0,
-		AliasedTo	= 1,
-		Description = 2,
-		MainPicture = 4,
-		Names		= 8,
-		Parent		= 16
+		None			= 0,
+		AdditionalNames = 1,
+		AliasedTo		= 2,
+		Description		= 4,
+		MainPicture		= 8,
+		Names			= 16,
+		Parent			= 32
 
 	}
 

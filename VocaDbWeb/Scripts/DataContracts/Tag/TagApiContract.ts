@@ -3,6 +3,8 @@ module vdb.dataContracts {
 
 	export interface TagApiContract {
 
+		additionalNames?: string;
+
 		aliasedTo: TagBaseContract;
 
 		categoryName: string;
