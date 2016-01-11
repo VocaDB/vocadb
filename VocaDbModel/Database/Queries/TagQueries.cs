@@ -417,6 +417,11 @@ namespace VocaDb.Model.Database.Queries {
 				if (tag.Description != contract.Description)
 					diff.Description = true;
 
+				if (tag.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
+					tag.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
+					diff.OriginalName = true;
+				}
+
 				var nameDiff = SyncNames(ctx.OfType<TagName>(), tag, contract.Names);
 
 				if (nameDiff.Changed) {					

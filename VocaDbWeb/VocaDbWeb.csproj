@@ -1038,7 +1038,7 @@
     <Compile Include="Models\Song\Index.cs" />
     <Compile Include="Models\Song\SongEditViewModel.cs" />
     <Compile Include="Models\Song\Versions.cs" />
-    <Compile Include="Models\Tag\TagEdit.cs" />
+    <Compile Include="Models\Tag\TagEditViewModel.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\AlbumCollection.cs" />
     <Compile Include="Models\User\ComposeMessage.cs" />

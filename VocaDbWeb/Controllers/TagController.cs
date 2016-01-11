@@ -94,11 +94,11 @@ namespace VocaDb.Web.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
-			var model = new TagEdit(queries.GetTagForEdit(id), PermissionContext);
+			var model = new TagEditViewModel(queries.GetTagForEdit(id), PermissionContext);
 			return View(model);
 		}
 
-		private ActionResult RenderEdit(TagEdit model) {
+		private ActionResult RenderEdit(TagEditViewModel model) {
 			var contract = queries.GetTagForEdit(model.Id);
 			model.CopyNonEditableProperties(contract, PermissionContext);
 			return View("Edit", model);
@@ -106,7 +106,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-        public ActionResult Edit(TagEdit model)
+        public ActionResult Edit(TagEditViewModel model)
         {
 
 			var coverPicUpload = Request.Files["thumbPicUpload"];

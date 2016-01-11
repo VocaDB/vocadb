@@ -101,6 +101,15 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		public virtual bool OriginalName {
+			get {
+				return IsChanged(TagEditableFields.OriginalName);
+			}
+			set {
+				Set(TagEditableFields.OriginalName, value);
+			}
+		}
+
 		public virtual bool Parent {
 			get {
 				return IsChanged(TagEditableFields.Parent);

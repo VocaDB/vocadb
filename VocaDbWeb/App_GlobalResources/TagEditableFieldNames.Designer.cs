@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default name language.
+        /// </summary>
+        internal static string OriginalName {
+            get {
+                return ResourceManager.GetString("OriginalName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parent.
         /// </summary>
         internal static string Parent {

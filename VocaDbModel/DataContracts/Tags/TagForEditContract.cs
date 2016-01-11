@@ -15,12 +15,16 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagForEditContract(Tag tag, bool isEmpty, ContentLanguagePreference languagePreference)
 			: base(tag, languagePreference) {
 
+			DefaultNameLanguage = tag.TranslatedName.DefaultLanguage;
 			IsEmpty = isEmpty;
 			Names = tag.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			UpdateNotes = string.Empty;
 
 		}
+
+		[DataMember]
+		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[DataMember]
 		public bool IsEmpty { get; set; }

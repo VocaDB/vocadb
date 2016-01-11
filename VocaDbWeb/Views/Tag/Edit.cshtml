@@ -3,7 +3,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared
 @using Res = VocaDb.Web.Resources.Views.Tag.EditStrings;
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEdit>
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEditViewModel>
 
 @{
 	PageProperties.Title = "Edit tag - " + Model.CurrentName;
@@ -70,6 +70,7 @@
 	</div>
 	<div class="editor-field">
 		@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 	</div>
 
 	<div class="editor-label">

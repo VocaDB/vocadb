@@ -4,22 +4,24 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Tag {
 
 	[PropertyModelBinder]
-	public class TagEdit {
+	public class TagEditViewModel {
 
-		public TagEdit() {}
+		public TagEditViewModel() {}
 
-		public TagEdit(TagForEditContract contract, IUserPermissionContext permissionContext) {
+		public TagEditViewModel(TagForEditContract contract, IUserPermissionContext permissionContext) {
 
 			ParamIs.NotNull(() => contract);
 
 			AliasedTo = contract.AliasedTo;
 			CategoryName = contract.CategoryName;
+			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Description = contract.Description;
 			Name = contract.Name;
 			Parent = contract.Parent;
@@ -40,6 +42,8 @@ namespace VocaDb.Web.Models.Tag {
 		public string CategoryName { get; set; }
 
 		public string CurrentName { get; set; }
+
+		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[Display(Name = "Description")]
 		[StringLength(1000)]
@@ -86,6 +90,7 @@ namespace VocaDb.Web.Models.Tag {
 				Names = Names,
 				AliasedTo = this.AliasedTo,
 				CategoryName = this.CategoryName ?? string.Empty,
+				DefaultNameLanguage = DefaultNameLanguage,
 				Description = this.Description ?? string.Empty,
 				Parent = this.Parent,
 				Status = this.Status,

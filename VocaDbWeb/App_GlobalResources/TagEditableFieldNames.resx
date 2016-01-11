@@ -129,6 +129,9 @@
   <data name="Names" xml:space="preserve">
     <value>Names</value>
   </data>
+  <data name="OriginalName" xml:space="preserve">
+    <value>Default name language</value>
+  </data>
   <data name="Parent" xml:space="preserve">
     <value>Parent</value>
   </data>
