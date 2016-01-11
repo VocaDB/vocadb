@@ -349,7 +349,7 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 	<tr>
 		<td>Original language</td>
 		<td colspan="@(compareToName != null ? 1 : 2)">
-			@Translate.ContentLanguageSelectionName(name.DefaultLanguage)
+			@(name != null ? Translate.ContentLanguageSelectionName(name.DefaultLanguage) : string.Empty)
 		</td>
 		@if (compareToName != null) {
 			<td>			
@@ -360,9 +360,11 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 	<tr>
 		<td>Primary names</td>
 		<td colspan="@(compareToName != null ? 1 : 2)">
-			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese): @name.Japanese<br />
-			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji): @name.Romaji<br />
-			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.English): @name.English<br />
+			@if (name != null) {
+				@:@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese): @name.Japanese<br />
+				@:@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji): @name.Romaji<br />
+				@:@Translate.ContentLanguageSelectionName(ContentLanguageSelection.English): @name.English<br />
+			}
 		</td>
 		@if (compareToName != null) {
 			<td>			

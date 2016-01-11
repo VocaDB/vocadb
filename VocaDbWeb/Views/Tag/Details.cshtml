@@ -95,12 +95,12 @@
 				@Html.Raw(descriptionHtml)
 			}
 			
-			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
-				<p>Translations: @Model.AdditionalNames</p>
-			}
-
 			@if (Model.CategoryName != string.Empty) {
 				<p>@R.Category: @Model.CategoryName</p>
+			}
+			
+			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+				<p>Translations: @Model.AdditionalNames</p>
 			}
 
 			@if (Model.AliasedTo != null) {
