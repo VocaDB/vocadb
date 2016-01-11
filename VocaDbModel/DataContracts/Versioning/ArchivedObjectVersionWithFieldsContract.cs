@@ -7,6 +7,8 @@ namespace VocaDb.Model.DataContracts.Versioning {
 	public class ArchivedObjectVersionWithFieldsContract<TFields, TReason>
 		: ArchivedObjectVersionContract where TFields : struct, IConvertible where TReason : struct, IConvertible {
 
+		private TFields DefaultField => default(TFields);
+
 		public ArchivedObjectVersionWithFieldsContract() { }
 
 		public ArchivedObjectVersionWithFieldsContract(ArchivedObjectVersion archivedVersion,
@@ -23,11 +25,11 @@ namespace VocaDb.Model.DataContracts.Versioning {
 		public TReason Reason { get; set; }
 
 		public override bool IsAnythingChanged() {
-			return !Equals(ChangedFields, default(TFields)) || !Equals(Reason, default(TReason));
+			return !Equals(ChangedFields, DefaultField) || !Equals(Reason, default(TReason));
 		}
 
 		public override string TranslateChangedFields(IEnumTranslations translator) {
-			return !Equals(ChangedFields, default(TFields)) ? translator.Translations<TFields>().GetName(ChangedFields) : string.Empty;
+			return !Equals(ChangedFields, DefaultField) ? translator.Translations<TFields>().GetAllNameNames(ChangedFields, DefaultField) : string.Empty;
 		}
 
 		public override string TranslateReason(IEnumTranslations translator) {
