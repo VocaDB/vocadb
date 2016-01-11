@@ -11,6 +11,7 @@ namespace VocaDb.Model.Utils {
 		/// The processed name can be used as user-friendly part of an URL.
 		/// 
 		/// English or Romanized name is preferred.
+		/// This method will use the original names list, which is slower and should be cached.
 		/// </summary>
 		public static string GetUrlFriendlyName(INameManager nameManager) {
 
@@ -30,6 +31,36 @@ namespace VocaDb.Model.Utils {
 
 			// No English or Romaji names, return empty.
 			if (raw == null)
+				return string.Empty;
+
+			return GetUrlFriendlyName(raw);
+
+		}
+
+		/// <summary>
+		/// Gets an URL-friendly name from translated name.
+		/// The processed name can be used as user-friendly part of an URL.
+		/// 
+		/// English or Romanized name is preferred.
+		/// </summary>
+		public static string GetUrlFriendlyName(TranslatedString translatedString) {
+
+			string raw = null;
+
+			// Try English if English is the default language selection
+			if (translatedString.DefaultLanguage == ContentLanguageSelection.English)
+				raw = translatedString.English;
+
+			// Otherwise try Romaji
+			if (string.IsNullOrEmpty(raw))
+				raw = translatedString.Romaji;
+
+			// Try English again since there was no Romaji name
+			if (string.IsNullOrEmpty(raw))
+				raw = translatedString.English;
+
+			// No English or Romaji names, return empty.
+			if (string.IsNullOrEmpty(raw))
 				return string.Empty;
 
 			return GetUrlFriendlyName(raw);

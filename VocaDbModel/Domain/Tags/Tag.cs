@@ -322,7 +322,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual string UrlSlug {
 			get {
-				return Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(Names);
+				return Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
 			}
 		}
 

@@ -40,6 +40,16 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
+		public TranslatedString(string original, string romaji, string english, 
+			ContentLanguageSelection defaultLanguage) {
+
+			Japanese = original;
+			Romaji = romaji;
+			English = english;
+			DefaultLanguage = defaultLanguage;
+
+		}
+
 		public TranslatedString(ITranslatedString contract)
 			: this() {
 
