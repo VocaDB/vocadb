@@ -37,7 +37,7 @@ namespace VocaDb.Model.DataContracts.Api {
 				case EntryType.SongList:
 					return new EntryForApiContract((SongList)entry, imagePersisterOld, ssl, includedFields);
 				case EntryType.Tag:
-					return new EntryForApiContract((Tag)entry, imagePersisterOld, ssl, includedFields);
+					return new EntryForApiContract((Tag)entry, languagePreference, imagePersisterOld, ssl, includedFields);
 			}
 
 			return new EntryForApiContract(entry, languagePreference, includedFields);
@@ -181,9 +181,9 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(Tag tag, IEntryImagePersisterOld thumbPersister, bool ssl, 
+		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IEntryImagePersisterOld thumbPersister, bool ssl, 
 			EntryOptionalFields includedFields)
-			: this(tag, ContentLanguagePreference.Default, includedFields) {
+			: this(tag, languagePreference, includedFields) {
 
 			TagCategoryName = tag.CategoryName;
 
