@@ -302,6 +302,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public T GetTag<T>(int id, Func<Tag, T> fac, T def = default(T)) {
+
+			return HandleQuery(ctx => {
+
+				var tag = ctx.Get(id);
+
+				if (tag != null)
+					return fac(tag);
+
+				return def;
+
+			});
+
+		}
+
 		public TagForEditContract GetTagForEdit(int id) {
 
 			return HandleQuery(session => {
