@@ -169,7 +169,8 @@ namespace VocaDb.Model.Database.Queries {
 			details.AlbumCollectionCount = cachedStats.AlbumCollectionCount;
 			details.ArtistCount = cachedStats.ArtistCount;
 			details.FavoriteSongCount = cachedStats.FavoriteSongCount;
-			details.FavoriteTags = session.Query<Tag>().Where(t => cachedStats.FavoriteTags.Contains(t.Id)).ToArray().Select(t => new TagBaseContract(t, LanguagePreference)).ToArray();
+			details.FavoriteTags = session.Query<Tag>().Where(t => cachedStats.FavoriteTags.Contains(t.Id)).ToArray()
+				.Select(t => new TagBaseContract(t, LanguagePreference, true)).ToArray();
 			details.CommentCount = cachedStats.CommentCount;
 			details.EditCount = cachedStats.EditCount;
 			details.SubmitCount = cachedStats.SubmitCount;

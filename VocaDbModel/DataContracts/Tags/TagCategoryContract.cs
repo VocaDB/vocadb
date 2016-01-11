@@ -15,13 +15,13 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ParamIs.NotNull(() => tags);
 
 			Name = name;
-			Tags = tags.Select(t => new TagForApiContract(t, null, false, languagePreference, TagOptionalFields.AdditionalNames)).ToArray();
+			Tags = tags.Select(t => new TagBaseContract(t, languagePreference, true)).ToArray();
 
 		}
 
 		public string Name { get; set; }
 
-		public TagForApiContract[] Tags { get; set; }
+		public TagBaseContract[] Tags { get; set; }
 
 	}
 

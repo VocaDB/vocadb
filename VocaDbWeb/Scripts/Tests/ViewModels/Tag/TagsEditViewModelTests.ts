@@ -22,7 +22,7 @@ module vdb.tests.viewModels.tags {
 		QUnit.equal(viewModel.selections().length, 1, "selections.length");
 
 		var selection = viewModel.selections()[0];
-		QUnit.equal(selection.tagName, "Miku", "selection.tagName");
+		QUnit.equal(selection.tag.name, "Miku", "selection.tag.name");
 		QUnit.equal(selection.selected(), true, "selection.selected");
 
 		QUnit.equal(viewModel.newTagName(), "", "newTagName");

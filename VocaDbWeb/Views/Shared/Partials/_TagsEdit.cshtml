@@ -9,10 +9,10 @@
 		<p>@ViewRes.TagSelectionsStrings.Info</p>
 
 		<div data-bind="foreach: selections">
-			<span class="tag">
-				<input type="checkbox" data-bind="id: 'tagSelection' + tagName, jqButtonset: selected" class="jqButton" />
+			<span class="tag" data-bind="attr: { title: tag.additionalNames }">
+				<input type="checkbox" data-bind="id: 'tagSelection' + tag.name, jqButtonset: selected" class="jqButton" />
 				<label>
-					<span data-bind="text: tagName"></span>
+					<span data-bind="text: tag.name"></span>
 				</label>
 			</span>
 		</div>

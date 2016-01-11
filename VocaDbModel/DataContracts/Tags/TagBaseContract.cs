@@ -9,7 +9,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagBaseContract() { }
 
-		public TagBaseContract(Tag tag, ContentLanguagePreference languagePreference) {
+		public TagBaseContract(Tag tag, ContentLanguagePreference languagePreference,
+			bool includeAdditionalNames = false) {
 			
 			ParamIs.NotNull(() => tag);
 
@@ -17,7 +18,16 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Name = tag.TranslatedName[languagePreference];
 			UrlSlug = tag.UrlSlug;
 
+			if (includeAdditionalNames)
+				AdditionalNames = tag.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+
 		}
+
+		/// <summary>
+		/// Additional names - optional field.
+		/// </summary>
+		[DataMember]
+		public string AdditionalNames { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

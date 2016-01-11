@@ -24,7 +24,7 @@
 }
 
 @helper TagLink(TagBaseContract tag) {
-	@Html.ActionLink(tag.Name, "DetailsById", "Tag", new { id = tag.Id, slug = tag.UrlSlug }, null)
+	@Html.ActionLink(tag.Name, "DetailsById", "Tag", new { id = tag.Id, slug = tag.UrlSlug }, new { title = tag.AdditionalNames })
 }
 
 @helper TagList(TagBaseContract[] tagNames) {

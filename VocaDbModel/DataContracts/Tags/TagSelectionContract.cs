@@ -8,7 +8,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagSelectionContract() { }
 
 		public TagSelectionContract(Tag tag, ContentLanguagePreference languagePreference, bool selected) {
-			Tag = new TagBaseContract(tag, languagePreference);
+			Tag = new TagBaseContract(tag, languagePreference, true);
 			Selected = selected;
 		}
 

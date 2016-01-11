@@ -17,7 +17,7 @@ module vdb.viewModels.tags {
 			tagName = _.trim(tagName);
 
 			// If tag is already added, select it
-			var selection = _.find(this.selections(), sel => sel.tagName.toLowerCase() === tagName.toLowerCase());
+			var selection = _.find(this.selections(), sel => sel.tag.name.toLowerCase() === tagName.toLowerCase());
 
 			if (selection) {
 				selection.selected(true);
@@ -29,7 +29,7 @@ module vdb.viewModels.tags {
 
 		public autoCompletedTag = (tag: dc.TagBaseContract) => {
 
-			var selection = _.find(this.selections(), sel => sel.tagId === tag.id);
+			var selection = _.find(this.selections(), sel => sel.tag.id === tag.id);
 
 			if (selection) {
 				selection.selected(true);
@@ -47,9 +47,12 @@ module vdb.viewModels.tags {
 		
 		public save = () => {
 
-			var tags = _.chain(this.selections()).filter(sel => sel.selected()).map(sel => {
-				return { id: sel.tagId, name: sel.tagName }
-			}).value();
+			var tags = _
+				.chain(this.selections())
+				.filter(sel => sel.selected())
+				.map(sel => sel.tag)
+				.value();
+
 			this.repo.saveTagSelections(tags);
 			this.dialogVisible(false);
 
@@ -70,17 +73,14 @@ module vdb.viewModels.tags {
 		
 		constructor(contract: dataContracts.tags.TagSelectionContract) {
 		
-			this.tagId = contract.tag.id;
-			this.tagName = contract.tag.name;
+			this.tag = contract.tag;
 			this.selected = ko.observable(contract.selected || false);
 
 		}
 
 		selected: KnockoutObservable<boolean>;
 
-		tagId: number;
-
-		tagName: string;
+		tag: dc.TagBaseContract;
 
 	}
 
