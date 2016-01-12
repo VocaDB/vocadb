@@ -94,8 +94,12 @@ namespace VocaDb.Web.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
+
+			CheckConcurrentEdit(EntryType.Tag, id);
+
 			var model = new TagEditViewModel(queries.GetTagForEdit(id), PermissionContext);
 			return View(model);
+
 		}
 
 		private ActionResult RenderEdit(TagEditViewModel model) {

@@ -6,7 +6,9 @@ module vdb.viewModels {
 
 	export class TagEditViewModel {
 
-		constructor(contract: dc.TagApiContract) {
+		constructor(
+			userRepository: vdb.repositories.UserRepository,
+			contract: dc.TagApiContract) {
 
 			this.aliasedTo = ko.observable(contract.aliasedTo);
 			this.categoryName = ko.observable(contract.categoryName);
@@ -24,6 +26,8 @@ module vdb.viewModels {
 			this.hasValidationErrors = ko.computed(() =>
 				this.validationError_needDescription()
 			);
+
+			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Tag, contract.id), 10000);
 
 		}
 

@@ -28,9 +28,12 @@
 		
 		initPage();
 
+		var urlMapper = new vdb.UrlMapper('@RootPath');
 		var tagRepo = new vdb.repositories.TagRepository('@RootPath');
+		var userRepo = new vdb.repositories.UserRepository(urlMapper);
+
 		tagRepo.getById('@Model.Id', "AliasedTo,Description,Names,Parent", function (contract) {
-			var viewModel = new vdb.viewModels.TagEditViewModel(contract);
+			var viewModel = new vdb.viewModels.TagEditViewModel(userRepo, contract);
 			ko.applyBindings(viewModel);
 		});
 		
