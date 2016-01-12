@@ -61,6 +61,24 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aliased to.
+        /// </summary>
+        public static string AliasedTo {
+            get {
+                return ResourceManager.GetString("AliasedTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aliases.
+        /// </summary>
+        public static string Aliases {
+            get {
+                return ResourceManager.GetString("Aliases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All albums.
         /// </summary>
         public static string AllAlbums {
@@ -147,6 +165,15 @@ namespace ViewRes.Tag {
         public static string TopSongs {
             get {
                 return ResourceManager.GetString("TopSongs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translations.
+        /// </summary>
+        public static string Translations {
+            get {
+                return ResourceManager.GetString("Translations", resourceCulture);
             }
         }
     }

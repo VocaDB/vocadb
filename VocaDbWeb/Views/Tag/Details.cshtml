@@ -1,6 +1,6 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Tags
-@using R = ViewRes.Tag.DetailsStrings;
+@using Res = ViewRes.Tag.DetailsStrings;
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
@@ -9,7 +9,7 @@
 
 @{
 
-	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Tags, "Index") };
+	ViewBag.Parents = new[] { Html.ActionLink(SharedRes.Tags, "Index") };
 
 	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original);
@@ -81,7 +81,7 @@
 }
 
 <div class="well well-transparent">
-	<h3>@R.Overview</h3>
+	<h3>@Res.Overview</h3>
 
 	<div class="media">
 		@if (!string.IsNullOrEmpty(smallThumbUrl)) {
@@ -96,19 +96,19 @@
 			}
 			
 			@if (Model.CategoryName != string.Empty) {
-				<p>@R.Category: @Model.CategoryName</p>
+				<p>@Res.Category: @Model.CategoryName</p>
 			}
 			
 			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
-				<p>Translations: @Model.AdditionalNames</p>
+				<p>@Res.Translations: @Model.AdditionalNames</p>
 			}
 
 			@if (Model.AliasedTo != null) {
-				<p>Aliased to @Html.ActionLink(Model.AliasedTo.Name, "DetailsById", new { id = Model.AliasedTo.Id, slug = Model.AliasedTo.UrlSlug })</p>
+				<p>@Res.AliasedTo @Html.ActionLink(Model.AliasedTo.Name, "DetailsById", new { id = Model.AliasedTo.Id, slug = Model.AliasedTo.UrlSlug })</p>
 			}
 
 			@if (Model.Aliases.Any()) {
-				<p>Aliases: @Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
+				<p>@Res.Aliases: @Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
 			}
 
 			@if (related.Any()) {
@@ -119,19 +119,19 @@
 			
 			@if (Model.ArtistCount > 0) {
 				<div>
-					@Html.ActionLink(R.AllArtists + " (" + Model.ArtistCount + ")", "Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id), null)
+					@Html.ActionLink(Res.AllArtists + " (" + Model.ArtistCount + ")", "Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id), null)
 				</div>
 			}
 			
 			@if (Model.AlbumCount > 0) {
 				<div>
-					@Html.ActionLink(R.AllAlbums + " (" + Model.AlbumCount + ")", "Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id), null)
+					@Html.ActionLink(Res.AllAlbums + " (" + Model.AlbumCount + ")", "Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id), null)
 				</div>
 			}
 			
 			@if (Model.SongCount > 0) {
 				<div>
-					@Html.ActionLink(R.AllSongs + " (" + Model.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id), null)
+					@Html.ActionLink(Res.AllSongs + " (" + Model.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id), null)
 				</div>
 			}
 
@@ -144,7 +144,7 @@
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id)))
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))">
-				@R.TopArtists
+				@Res.TopArtists
 				<small>(@Model.ArtistCount @SharedRes.Total)</small>
 			</a>
 		</h3>
@@ -157,7 +157,7 @@
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id)))
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))">
-				@R.TopAlbums
+				@Res.TopAlbums
 				<small>(@Model.AlbumCount @SharedRes.Total)</small>
 			</a>							
 		</h3>
@@ -170,7 +170,7 @@
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id)))
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))">
-				@R.TopSongs
+				@Res.TopSongs
 				<small>(@Model.SongCount @SharedRes.Total)</small>
 			</a>
 		</h3>
