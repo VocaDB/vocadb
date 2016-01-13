@@ -360,6 +360,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		private CollectionDiffWithValue<TagName, TagName> SyncNames(IDatabaseContext<TagName> ctx, Tag tag, LocalizedStringWithIdContract[] names) {
 
+			ParamIs.NotNull(() => tag);
+			ParamIs.NotNull(() => names);
+
 			var nameValues = names.Select(n => n.Value).ToArray();
 
 			// Verify no duplicates for this tag

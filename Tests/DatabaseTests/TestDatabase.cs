@@ -55,6 +55,7 @@ namespace VocaDb.Tests.DatabaseTests {
 				session.Save(Tag);
 
 				Tag2 = new Tag("rock");
+				Tag2.CreateName("ロック", ContentLanguageSelection.Japanese);
 				session.Save(Tag2);
 
 				Tag3 = new Tag("alternative rock");

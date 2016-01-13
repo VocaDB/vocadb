@@ -19,17 +19,11 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		private readonly DatabaseTestContext<ISessionFactory> context = new DatabaseTestContext<ISessionFactory>();
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
-		[TestMethod]
-		[TestCategory(TestCategories.Database)]
-		public void Update_ReplaceName() {
+		private TagForEditContract Update(TagForEditContract contract) {
 
-			var contract = new TagForEditContract(Db.Tag, false, ContentLanguagePreference.English);
-			contract.Names[0] = new LocalizedStringWithIdContract {
-				Value = "electronic", Language = ContentLanguageSelection.Japanese
-			};
 			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
-			var result = context.RunTest(sessionFactory => {
+			return context.RunTest(sessionFactory => {
 
 				var repository = new TagNHibernateRepository(sessionFactory, permissionContext);
 
@@ -42,6 +36,19 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 			});
 
+		}
+
+		[TestMethod]
+		[TestCategory(TestCategories.Database)]
+		public void Update_ReplaceName() {
+
+			var contract = new TagForEditContract(Db.Tag, false, ContentLanguagePreference.English);
+			contract.Names[0] = new LocalizedStringWithIdContract {
+				Value = "electronic", Language = ContentLanguageSelection.Japanese
+			};
+
+			var result = Update(contract);
+
 			Assert.AreEqual(1, result.Names.Length, "Number of names");
 			var name = result.Names[0];
 			Assert.AreEqual(ContentLanguageSelection.Japanese, name.Language, "Name language");
@@ -50,6 +57,23 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		}
 
+		// This fails, need to fix
+		[TestMethod]
+		[TestCategory(TestCategories.Database)]
+		[Ignore]
+		public void Update_SwapName() {
+
+			var contract = new TagForEditContract(Db.Tag2, false, ContentLanguagePreference.English);
+			contract.Names[0].Value = "ロック"; // Swap values
+			contract.Names[1].Value = "rock";
+
+			var result = Update(contract);
+
+			Assert.AreEqual(2, result.Names.Length, "Number of names");
+			var name = result.Names[0];
+			Assert.AreEqual("ロック", name.Value, "Name value");
+
+		}
 	}
 
 }
