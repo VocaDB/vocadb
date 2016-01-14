@@ -34,7 +34,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 				return queries.GetTagForEdit(updated.Id);
 
-			}, transaction: true);
+			});
 
 		}
 

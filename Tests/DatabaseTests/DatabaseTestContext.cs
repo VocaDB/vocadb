@@ -10,20 +10,17 @@ namespace VocaDb.Tests.DatabaseTests {
 
 		private IContainer Container => TestContainerManager.Container;
 
-		public TResult RunTest<TResult>(Func<TTarget, TResult> func, bool transaction = false) {
+		public TResult RunTest<TResult>(Func<TTarget, TResult> func) {
 
 			using (Container.BeginLifetimeScope()) {
 				
 				var target = Container.Resolve<TTarget>();
 				TResult result;
 
-				if (transaction) {
-					using (var tx = Container.Resolve<ISession>().BeginTransaction()) {
-						result = func(target);
-						tx.Rollback();
-					}
-				} else {
+				// Wrap inside transaction to make the test atomic
+				using (var tx = Container.Resolve<ISession>().BeginTransaction()) {
 					result = func(target);
+					tx.Rollback();
 				}
 
 				return result;
