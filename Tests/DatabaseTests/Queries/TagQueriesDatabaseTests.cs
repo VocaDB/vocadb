@@ -34,7 +34,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 				return queries.GetTagForEdit(updated.Id);
 
-			});
+			}, transaction: true);
 
 		}
 
@@ -56,12 +56,10 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 			Assert.AreNotEqual(0, name.Id, "Id was assigned");
 
 		}
-
-		// This fails, need to fix
+		
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		[Ignore]
-		public void Update_SwapName() {
+		public void Update_SwapNameTranslations() {
 
 			var contract = new TagForEditContract(Db.Tag2, false, ContentLanguagePreference.English);
 			contract.Names[0].Value = "ロック"; // Swap values

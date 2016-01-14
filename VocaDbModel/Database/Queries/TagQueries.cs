@@ -388,19 +388,15 @@ namespace VocaDb.Model.Database.Queries {
 				We have a unique constraint on tag name.
 				By default, NH would first cascade inserts and updates, and only then deletes,
 				which would cause a constraint violation. See http://stackoverflow.com/a/707364
-				That's why we must manually call Flush after all names have been deleted and updated.
+				That's why we must manually call Flush after all names have been deleted.
+				Updating the names could also cause temporary duplicates, so the names are treated as immutable instead.
 			*/
 			var diff = tag.Names.Sync(names, tag, 
 				deleted => {
 					foreach (var name in deleted)
 						ctx.Delete(name);
 					ctx.Flush();
-				},
-				edited => {
-					foreach (var name in edited)
-						ctx.Update(name);
-					ctx.Flush();
-				}
+				}, immutable: true
 			);
 	
 			foreach (var n in diff.Added)

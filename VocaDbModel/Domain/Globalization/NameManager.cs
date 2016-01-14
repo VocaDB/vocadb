@@ -217,13 +217,27 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
+		/// <summary>
+		/// Sync names. Adds new names, updates existing names (unless immutable), and deletes removed names.
+		/// </summary>
+		/// <param name="newNames">New list of names. Cannot be null.</param>
+		/// <param name="nameFactory">Factory for creating new names. Cannot be null.</param>
+		/// <param name="deletedCallback">
+		/// Callback to be executed after names have been deleted. Can be null.
+		/// </param>
+		/// <param name="editedCallback">Callback to be executed after names have been updated. Can be null.</param>
+		/// <param name="immutable">
+		/// Whether to treat names as immutable. 
+		/// If this is true, names will never be updated - instead, changed names are deleted and recreated.
+		/// </param>
+		/// <returns>Resulted diff for name update. Cannot be null.</returns>
 		public virtual CollectionDiffWithValue<T,T> Sync(IEnumerable<LocalizedStringWithIdContract> newNames, INameFactory<T> nameFactory,
-			Action<T[]> deletedCallback = null, Action<T[]> editedCallback = null) {
+			Action<T[]> deletedCallback = null, Action<T[]> editedCallback = null, bool immutable = false) {
 
 			ParamIs.NotNull(() => newNames);
 			ParamIs.NotNull(() => nameFactory);
 
-			var diff = CollectionHelper.Diff(Names, newNames, (n1, n2) => n1.Id == n2.Id);
+			var diff = CollectionHelper.Diff(Names, newNames, (n1, n2) => n1.Id == n2.Id && (!immutable || n1.ContentEquals(n2)));
 			var created = new List<T>();
 			var edited = new List<T>();
 

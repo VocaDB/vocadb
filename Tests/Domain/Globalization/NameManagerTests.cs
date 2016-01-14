@@ -34,8 +34,10 @@ namespace VocaDb.Tests.Domain.Globalization {
 		private NameFactory nameFactory;
 		private NameManager<LocalizedStringWithId> nameManager;
 
-		private void AddName(string name, ContentLanguageSelection lang = ContentLanguageSelection.English) {
-			nameManager.Add(new LocalizedStringWithId(name, lang) { Id = id++ });
+		private LocalizedStringWithId AddName(string name, ContentLanguageSelection lang = ContentLanguageSelection.English) {
+			var str = new LocalizedStringWithId(name, lang) { Id = id++ };
+			nameManager.Add(str);
+			return str;
 		}
 
 		private void AssertNames(CollectionDiff<LocalizedStringWithId, LocalizedStringWithId> result, 
@@ -119,6 +121,24 @@ namespace VocaDb.Tests.Domain.Globalization {
 			AssertCollection(result.Added, added, "added");
 			Assert.AreEqual(1, result.Removed.Length, "Number of items removed");
 			Assert.AreEqual(1, nameManager.Names.Count, "Number of names");
+
+		}
+
+		[TestMethod]
+		public void Sync_Updated() {
+
+			var name = new LocalizedStringWithIdContract(AddName("Miku"));
+			var nameId = name.Id;
+			name.Value = "Miku Miku";
+			var updated = new[] { name };
+
+			var result = nameManager.Sync(updated, nameFactory);
+
+			AssertCollection(result.Edited, updated, "edited");
+			Assert.AreEqual(1, nameManager.Names.Count, "Number of names");
+			Assert.AreEqual("Miku Miku", nameManager.Names[0].Value, "Name was updated");
+			Assert.AreEqual(nameId, nameManager.Names[0].Id, "Id remains unchanged");
+
 
 		}
 

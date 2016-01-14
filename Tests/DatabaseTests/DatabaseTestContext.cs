@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using NHibernate;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Tests.TestSupport;
 
@@ -7,16 +8,25 @@ namespace VocaDb.Tests.DatabaseTests {
 
 	public class DatabaseTestContext<TTarget> {
 
-		private IContainer Container {
-			get { return TestContainerManager.Container; }
-		}
+		private IContainer Container => TestContainerManager.Container;
 
-		public TResult RunTest<TResult>(Func<TTarget, TResult> func) {
+		public TResult RunTest<TResult>(Func<TTarget, TResult> func, bool transaction = false) {
 
 			using (Container.BeginLifetimeScope()) {
 				
 				var target = Container.Resolve<TTarget>();
-				return func(target);
+				TResult result;
+
+				if (transaction) {
+					using (var tx = Container.Resolve<ISession>().BeginTransaction()) {
+						result = func(target);
+						tx.Rollback();
+					}
+				} else {
+					result = func(target);
+				}
+
+				return result;
 
 			}
 
