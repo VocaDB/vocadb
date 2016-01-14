@@ -64,7 +64,7 @@ module vdb.viewModels {
 		private loadHighcharts = () => {
 			
 			// Delayed load highcharts stuff
-			var highchartsPromise = $.getScript(this.urlMapper.mapRelative("scripts/highcharts/4.1.5/highcharts.js"));
+			var highchartsPromise = $.getScript(this.urlMapper.mapRelative("scripts/highcharts/4.2.0/highcharts.js"));
 			var highchartsHelperPromise = $.getScript(this.urlMapper.mapRelative("/scripts/helpers/HighchartsHelper.js"));
 			var songsPerMonthDataPromise = this.songRepo.getOverTime(vdb.models.aggregate.TimeUnit.month, this.artistId);
 

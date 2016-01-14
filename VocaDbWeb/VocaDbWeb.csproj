@@ -93,8 +93,8 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
@@ -192,7 +192,7 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WebApi.OutputCache.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -1745,6 +1745,46 @@
     <Content Include="Scripts\highcharts\4.1.5\themes\grid.js" />
     <Content Include="Scripts\highcharts\4.1.5\themes\sand-signika.js" />
     <Content Include="Scripts\highcharts\4.1.5\themes\skies.js" />
+    <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.js" />
+    <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts-3d.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts-3d.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts-more.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts-more.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts.js" />
+    <Content Include="Scripts\highcharts\4.2.0\highcharts.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\boost.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\boost.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\broken-axis.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\broken-axis.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\canvas-tools.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\data.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\data.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\drilldown.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\drilldown.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\exporting.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\exporting.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\funnel.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\funnel.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\heatmap.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\heatmap.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\no-data-to-display.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\no-data-to-display.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\offline-exporting.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\offline-exporting.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\solid-gauge.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\solid-gauge.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\treemap.js" />
+    <Content Include="Scripts\highcharts\4.2.0\modules\treemap.src.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\dark-blue.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\dark-green.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\dark-unica.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\gray.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\grid-light.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\grid.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\sand-signika.js" />
+    <Content Include="Scripts\highcharts\4.2.0\themes\skies.js" />
     <Content Include="Scripts\Home\Index.js" />
     <Content Include="App_Code\CommentHelpers.cshtml" />
     <Content Include="Content\Styles\ExtLinks.less" />
@@ -1811,6 +1851,9 @@
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\jquery.tools.min.js" />
@@ -2685,6 +2728,7 @@
     <Content Include="Views\Discussion\Partials\_EditTopic.cshtml" />
     <Content Include="Views\Discussion\Partials\_ViewFolders.cshtml" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\AliasForSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
