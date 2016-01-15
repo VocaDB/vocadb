@@ -5,7 +5,9 @@ module vdb.viewModels.search {
 
 	export class TagSearchViewModel extends SearchCategoryBaseViewModel<dc.TagApiContract> {
 
-		constructor(searchViewModel: SearchViewModel, private tagRepo: rep.TagRepository) {
+		constructor(searchViewModel: SearchViewModel,
+			lang: string,
+			private tagRepo: rep.TagRepository) {
 
 			super(searchViewModel);
 
@@ -14,7 +16,7 @@ module vdb.viewModels.search {
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
-				this.tagRepo.getList(pagingProperties, searchTerm, this.allowAliases(), this.categoryName(), callback);
+				this.tagRepo.getList(pagingProperties, lang, searchTerm, this.allowAliases(), this.categoryName(), callback);
 
 			}
 

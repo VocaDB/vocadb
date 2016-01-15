@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
@@ -54,6 +53,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="fields">
 		/// List of optional fields (optional). 
 		/// </param>
+		/// <param name="lang">Content language preference (optional).</param>
 		/// <example>http://vocadb.net/api/tags/1</example>
 		/// <returns>Tag data.</returns>
 		[Route("{id:int}")]
@@ -71,6 +71,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="fields">
 		/// List of optional fields (optional). 
 		/// </param>
+		/// <param name="lang">Content language preference (optional).</param>
 		/// <example>http://vocadb.net/api/tags/byName/vocarock</example>
 		/// <returns>Tag data.</returns>
 		[Route("byName/{name}")]
@@ -120,6 +121,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="fields">
 		/// List of optional fields (optional). Possible values are Description, MainPicture.
 		/// </param>
+		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of tags.</returns>
 		/// <example>http://vocadb.net/api/tags?query=voca&amp;nameMatchMode=StartsWith</example>
 		[Route("")]
@@ -130,7 +132,8 @@ namespace VocaDb.Web.Controllers.Api {
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			TagSortRule? sort = null,
-			TagOptionalFields fields = TagOptionalFields.None) {
+			TagOptionalFields fields = TagOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? absoluteMax : int.MaxValue);
 			var ssl = WebHelper.IsSSL(Request);
@@ -141,7 +144,7 @@ namespace VocaDb.Web.Controllers.Api {
 					SortRule = sort ?? TagSortRule.Name
 			};
 
-			var tags = queries.Find(queryParams, fields, ssl);
+			var tags = queries.Find(queryParams, fields, ssl, lang);
 
 			return tags;
 
@@ -174,12 +177,13 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets the most common tags in a category.
 		/// </summary>
 		/// <param name="categoryName">Tag category, for example "Genres". Optional - if not specified, no filtering is done.</param>
+		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of names of the most commonly used tags in that category.</returns>
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public TagBaseContract[] GetTopTags(string categoryName = null, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+		public TagBaseContract[] GetTopTags(string categoryName = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.Find(t => new TagBaseContract(t, languagePreference), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
+			return queries.Find(t => new TagBaseContract(t, lang), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
 				SortRule = TagSortRule.UsageCount
 			})
 			.Items.OrderBy(t => t.Name).ToArray();

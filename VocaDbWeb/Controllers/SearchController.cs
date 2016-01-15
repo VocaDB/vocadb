@@ -4,6 +4,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -27,6 +28,7 @@ namespace VocaDb.Web.Controllers
 		private readonly SongService songService;
 		private readonly SongListQueries songListQueries;
 		private readonly TagQueries tagQueries;
+		private readonly IUserPermissionContext permissionContext;
 
 		private ActionResult RedirectToAlbum(int id) {
 			return RedirectToAction("Details", "Album", new { id });			
@@ -118,7 +120,7 @@ namespace VocaDb.Web.Controllers
 
 				case EntryType.Tag:
 					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, false, true, true), PagingProperties.FirstPage(2)) { AllowAliases = true },
-						TagOptionalFields.None, WebHelper.IsSSL(Request));
+						TagOptionalFields.None, WebHelper.IsSSL(Request), permissionContext.LanguagePreference);
 					if (tags.Items.Length == 1) {
 						return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);
 					}
@@ -137,7 +139,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService, SongListQueries songListQueries, 
-			TagQueries tagQueries, EventQueries eventQueries) {
+			TagQueries tagQueries, EventQueries eventQueries, IUserPermissionContext permissionContext) {
+
 			this.services = services;
 			this.artistService = artistService;
 			this.albumService = albumService;
@@ -145,6 +148,8 @@ namespace VocaDb.Web.Controllers
 			this.songListQueries = songListQueries;
 			this.tagQueries = tagQueries;
 			this.eventQueries = eventQueries;
+			this.permissionContext = permissionContext;
+
 		}
 
 		public ActionResult Index(SearchIndexViewModel viewModel) {

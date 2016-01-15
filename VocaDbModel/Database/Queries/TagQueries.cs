@@ -11,6 +11,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -173,10 +174,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields, bool ssl) {
+		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields, bool ssl,
+			ContentLanguagePreference lang) {
 
 			return Find(tag => new TagForApiContract(
-				tag, imagePersister, ssl, LanguagePreference, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
+				tag, imagePersister, ssl, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
 
 		}
 
