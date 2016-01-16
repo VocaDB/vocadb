@@ -31,6 +31,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Tag> WhereAllowChildren(this IQueryable<Tag> query, bool allowChildren = true) {
+
+			if (allowChildren)
+				return query;
+
+			return query.Where(t => t.Parent == null);
+
+		}
+
 		public static IQueryable<Tag> WhereHasCategoryName(this IQueryable<Tag> query, string categoryName) {
 
 			return WhereHasCategoryName(query, SearchTextQuery.Create(categoryName, NameMatchMode.Exact));

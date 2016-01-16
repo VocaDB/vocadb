@@ -23,6 +23,7 @@ namespace VocaDb.Model.Service.Search.Tags {
 			var query = dbContext.Query()
 				.WhereHasName(textQuery)
 				.WhereAllowAliases(queryParams.AllowAliases)
+				.WhereAllowChildren(queryParams.AllowChildren)
 				.WhereHasCategoryName(queryParams.CategoryName);
 
 			var orderedAndPaged = query

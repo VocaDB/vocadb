@@ -14,6 +14,8 @@ namespace VocaDb.Model.Service.Search.Tags {
 
 		public bool AllowAliases { get; set; }
 
+		public bool AllowChildren { get; set; }
+
 		public string CategoryName { get; set; }
 
 		public CommonSearchParams Common { get; set; }

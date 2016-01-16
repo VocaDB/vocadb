@@ -95,6 +95,24 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Gets a list of child tags for a tag.
+		/// Only direct children will be included.
+		/// </summary>
+		/// <param name="tagId">ID of the tag whose children to load.</param>
+		/// <param name="fields">List of optional fields (optional).</param>
+		/// <param name="lang">Content language preference (optional).</param>
+		/// <returns>List of child tags.</returns>
+		/// <example>http://vocadb.net/api/tags/481/children</example>
+		[Route("{tagId:int}/children")]
+		public TagForApiContract[] GetChildTags(int tagId, 
+			TagOptionalFields fields = TagOptionalFields.None, 
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+
+			return queries.HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields)).ToArray());
+
+		}
+
+		/// <summary>
 		/// Gets a list of comments for a tag.
 		/// Note: pagination and sorting might be added later.
 		/// </summary>
@@ -112,15 +130,14 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="query">Tag name query (optional).</param>
 		/// <param name="allowAliases">Whether to allow tag alises. If this is false, alises will not be included.</param>
+		/// <param name="allowChildren">Whether to allow child tags. If this is false, only root tags (that aren't children of any other tag) will be included.</param>
 		/// <param name="categoryName">Filter tags by category (optional). If specified, this must be an exact match (case insensitive).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 30).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Exact).</param>
 		/// <param name="sort">Sort rule (optional, by default tags are sorted by name).Possible values are Name and UsageCount.</param>
-		/// <param name="fields">
-		/// List of optional fields (optional). Possible values are Description, MainPicture.
-		/// </param>
+		/// <param name="fields">List of optional fields (optional).</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of tags.</returns>
 		/// <example>http://vocadb.net/api/tags?query=voca&amp;nameMatchMode=StartsWith</example>
@@ -128,6 +145,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<TagForApiContract> GetList(
 			string query = "",
 			bool allowAliases = false,
+			bool allowChildren = true,
 			string categoryName = "",
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
@@ -140,6 +158,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, false, false),
 				new PagingProperties(start, maxResults, getTotalCount)) {
 					AllowAliases = allowAliases,
+					AllowChildren = allowChildren,
 					CategoryName = categoryName,
 					SortRule = sort ?? TagSortRule.Name
 			};
