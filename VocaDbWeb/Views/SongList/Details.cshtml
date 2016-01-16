@@ -183,7 +183,7 @@
 					<div data-bind="visible: song.tags && song.tags.length">
 						<i class="icon icon-tags"></i>
 						<!-- ko foreach: song.tags -->
-						<a href="#" data-bind="text: tag.name, attr: { href: $parents[1].mapTagUrl($data) }"></a><span data-bind="visible: $data != _.last($parent.song.tags)">,</span>
+						<a href="#" data-bind="text: tag.name, attr: { href: $parents[1].mapTagUrl($data), title: tag.additionalNames }"></a><span data-bind="visible: $data != _.last($parent.song.tags)">,</span>
 						<!-- /ko -->
 					</div>					
 				</td>
