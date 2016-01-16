@@ -1,22 +1,31 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagCategoryContract[]>
 
 @{
-    PageProperties.Title = ViewRes.SharedStrings.Tags;
+	PageProperties.Title = ViewRes.SharedStrings.Tags;
+	var tagCount = Model.Sum(m => m.Tags.Length);
+	var avgUsageCount = Model.Sum(m => m.Tags.Sum(t => t.UsageCount)) / tagCount;
+}
+
+@functions {
+	int GetFontSizePercent(int usageCount, int avgUsage) {
+		return Math.Min(Math.Max(usageCount * 80 / avgUsage, 60), 100);
+	}
 }
 
 @foreach (var category in Model) {
 
-	if (category.Name != string.Empty) {
+	<div class="tag-cloud">
+		@if (category.Name != string.Empty) {
 		<h3>@category.Name</h3>
-	} else {
+		} else {
 		<h3>@ViewRes.SharedStrings.Unsorted</h3>
-	}
-	
-	foreach (var tag in category.Tags) {
-		<span class="tag">
-			@Html.ActionLink(tag.Name, "DetailsById", new { id = tag.Id, slug = tag.UrlSlug }, new { title = tag.AdditionalNames })
-		</span>
-	}
-	<br /><br />
-	
+		}
+
+		@foreach (var tag in category.Tags) {
+			<span class="tag" style="font-size: @(GetFontSizePercent(tag.UsageCount, avgUsageCount))%">
+				@Html.ActionLink(tag.Name, "DetailsById", new { id = tag.Id, slug = tag.UrlSlug }, new { title = tag.AdditionalNames, style = "font-size: " })
+			</span>
+		}
+	</div>
+
 }

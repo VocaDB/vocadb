@@ -15,6 +15,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagForApiContract() { }
 
+		public TagForApiContract(Tag tag,
+			ContentLanguagePreference languagePreference,
+			TagOptionalFields optionalFields) : this(tag, null, false, languagePreference, optionalFields) { }
+
 		public TagForApiContract(Tag tag, 
 			IEntryImagePersisterOld thumbPersister,
 			bool ssl,

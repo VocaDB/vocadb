@@ -160,6 +160,10 @@ body {
 .song-list-year {
   margin: 0;
 }
+.tag-cloud {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
 .comment-with-entry {
   width: auto;
 }
