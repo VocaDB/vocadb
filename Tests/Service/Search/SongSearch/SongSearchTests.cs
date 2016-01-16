@@ -1,7 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.Search.SongSearch {
@@ -13,13 +16,54 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 	public class SongSearchTests {
 
 		private Model.Service.Search.SongSearch.SongSearch songSearch;
+		private readonly SongQueryParams queryParams = new SongQueryParams { SortRule = SongSortRule.Name };
 
 		[TestInitialize]
 		public void SetUp() {
 
-			songSearch = new Model.Service.Search.SongSearch.SongSearch(new QuerySourceList(), 
+			var repo = new FakeSongRepository();
+			songSearch = new Model.Service.Search.SongSearch.SongSearch(repo.CreateContext(), 
 				Model.Domain.Globalization.ContentLanguagePreference.Default, 
 				new EntryUrlParser("http://test.vocadb.net", "http://test.vocadb.net"));
+
+			repo.Save(
+				CreateEntry.Song(name: "Nebula"),
+				CreateEntry.Song(name: "Anger"),
+				CreateEntry.Song(name: "Anger [EXTEND RMX]")
+			);
+
+		}
+
+		private PartialFindResult<Song> CallFind() {
+			return songSearch.Find(queryParams);
+		}
+
+		[TestMethod]
+		public void Find_NameWords() {
+
+			queryParams.Common.TextQuery = SearchTextQuery.Create("Anger");
+
+			var result = CallFind();
+
+			Assert.AreEqual(2, result.TotalCount, "Total number of results");
+			Assert.AreEqual(2, result.Items.Length, "Number of returned items");
+			Assert.AreEqual("Anger", result.Items[0].DefaultName, "First returned song");
+			Assert.AreEqual("Anger [EXTEND RMX]", result.Items[1].DefaultName, "Second returned song");
+
+		}
+
+		// FIXME: currently broken
+		[TestMethod]
+		[Ignore]
+		public void Find_ExactName() {
+
+			queryParams.Common.TextQuery = SearchTextQuery.Create("\"Anger\"");
+
+			var result = CallFind();
+
+			Assert.AreEqual(1, result.TotalCount, "Total number of results");
+			Assert.AreEqual(1, result.Items.Length, "Number of returned items");
+			Assert.AreEqual("Anger", result.Items[0].DefaultName, "Returned song");
 
 		}
 

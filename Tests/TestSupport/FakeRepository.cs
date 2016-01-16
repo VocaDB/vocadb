@@ -17,10 +17,6 @@ namespace VocaDb.Tests.TestSupport {
 
 		protected readonly QuerySourceList querySource;
 
-		protected virtual ListDatabaseContext<T> CreateContext() {
-			return new ListDatabaseContext<T>(querySource);
-		}
-
 		public FakeRepository() {
 			querySource = new QuerySourceList();
 		}
@@ -46,6 +42,10 @@ namespace VocaDb.Tests.TestSupport {
 
 		public bool Contains<TEntity>(TEntity entity) {
 			return querySource.List<TEntity>().Contains(entity);
+		}
+
+		public virtual ListDatabaseContext<T> CreateContext() {
+			return new ListDatabaseContext<T>(querySource);
 		}
 
 		public TResult HandleQuery<TResult>(Func<IDatabaseContext<T>, TResult> func, string failMsg = "Unexpected database error") {

@@ -6,7 +6,7 @@ namespace VocaDb.Tests.TestSupport {
 
 	public class FakeTagRepository : FakeRepository<Tag>, ITagRepository {
 
-		protected override ListDatabaseContext<Tag> CreateContext() {
+		public override ListDatabaseContext<Tag> CreateContext() {
 			return new TagListDatabaseContext(querySource);
 		}
 
