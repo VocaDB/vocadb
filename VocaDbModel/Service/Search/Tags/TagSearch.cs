@@ -34,7 +34,10 @@ namespace VocaDb.Model.Service.Search.Tags {
 
 			if (onlyMinimalFields) {
 				tags = orderedAndPaged.Select(t => new Tag {
-					Id = t.Id, CategoryName = t.CategoryName, Status = t.Status, Version = t.Version,
+					Id = t.Id,
+					CategoryName = t.CategoryName,
+					Status = t.Status,
+					Version = t.Version,
 					Names = new NameManager<TagName> { SortNames = {
 						English = t.Names.SortNames.English,
 						Romaji = t.Names.SortNames.Romaji,

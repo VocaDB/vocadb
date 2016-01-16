@@ -157,7 +157,8 @@ namespace VocaDb.Web.Controllers.Api {
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
-			SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default
+			SongOptionalFields fields = SongOptionalFields.None, 
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
 			) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);

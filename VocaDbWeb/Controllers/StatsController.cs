@@ -217,8 +217,11 @@ namespace VocaDb.Web.Controllers {
 					.ToArray();
 
 				var mainGenreIds = genres.OrderByDescending(t => t.Count).Take(10).Select(t => t.TagId).ToArray();
-				var mainGenreTags = ctx.Query<Tag>().Where(t => mainGenreIds.Contains(t.Id)).SelectIdAndName(PermissionContext.LanguagePreference).ToArray();
-				var sorted = genres.Select(t => new { TagName = mainGenreTags[t.TagId].Name, Count = t.Count }).OrderByDescending(t => t.Count);
+				var mainGenreTags = ctx.Query<Tag>().Where(t => mainGenreIds.Contains(t.Id)).SelectIdAndName(PermissionContext.LanguagePreference).ToDictionary(t => t.Id);
+				var sorted = genres.Select(t => new {
+					TagName = mainGenreTags.ContainsKey(t.TagId) ? mainGenreTags[t.TagId].Name : null,
+					Count = t.Count
+				}).OrderByDescending(t => t.Count);
 
 				var mainGenres = sorted.Take(10).ToArray();
 				var otherCount = sorted.Skip(10).Sum(g => g.Count);
