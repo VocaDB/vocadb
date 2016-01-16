@@ -20,6 +20,10 @@ namespace VocaDb.Model.Service.Search {
 
 		public static SearchTextQuery Empty => new SearchTextQuery();
 
+		public static bool IsNullOrEmpty(SearchTextQuery query) {
+			return query == null || query.IsEmpty;
+		}
+
 		/// <summary>
 		/// Creates search text query.
 		/// Determines the actual name match mode.
@@ -58,7 +62,7 @@ namespace VocaDb.Model.Service.Search {
 			string[] words = null) {
 
 			if (!string.IsNullOrEmpty(query) && matchMode == NameMatchMode.Auto)
-				throw new ArgumentException("'Auto' is not allowed here; specific name match mode is required", "matchMode");
+				throw new ArgumentException("'Auto' is not allowed here; specific name match mode is required", nameof(MatchMode));
 
 			this.query = query;
 			this.matchMode = matchMode;
@@ -79,7 +83,8 @@ namespace VocaDb.Model.Service.Search {
 		public bool IsExact => MatchMode == NameMatchMode.Exact;
 
 		/// <summary>
-		/// Selected name match mode. This cannot be Auto.
+		/// Selected name match mode. 
+		/// This can never be "Auto" (checked in the constructor).
 		/// </summary>
 		public NameMatchMode MatchMode => matchMode;
 

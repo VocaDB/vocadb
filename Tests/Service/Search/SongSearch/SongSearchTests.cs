@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
@@ -34,6 +35,17 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 
 		}
 
+		private void AssertTags(PartialFindResult<Song> result, params string[] songNames) {
+
+			Assert.AreEqual(songNames.Length, result.TotalCount, "Total number of results");
+			Assert.AreEqual(songNames.Length, result.Items.Length, "Number of returned items");
+
+			foreach (var songName in songNames) {
+				Assert.IsTrue(result.Items.Any(s => s.DefaultName == songName), string.Format("Song named '{0}' was returned", songName));
+			}
+
+		}
+
 		private PartialFindResult<Song> CallFind() {
 			return songSearch.Find(queryParams);
 		}
@@ -45,25 +57,32 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 
 			var result = CallFind();
 
-			Assert.AreEqual(2, result.TotalCount, "Total number of results");
-			Assert.AreEqual(2, result.Items.Length, "Number of returned items");
-			Assert.AreEqual("Anger", result.Items[0].DefaultName, "First returned song");
-			Assert.AreEqual("Anger [EXTEND RMX]", result.Items[1].DefaultName, "Second returned song");
+			AssertTags(result, "Anger", "Anger [EXTEND RMX]");
 
 		}
 
-		// FIXME: currently broken
 		[TestMethod]
-		[Ignore]
-		public void Find_ExactName() {
+		public void Find_NameMatchModeExact() {
+
+			queryParams.Common.TextQuery = SearchTextQuery.Create("Anger", NameMatchMode.Exact);
+
+			var result = CallFind();
+
+			AssertTags(result, "Anger");
+
+		}
+
+		/// <summary>
+		/// Find by exact name because the name is quoted.
+		/// </summary>
+		[TestMethod]
+		public void Find_NameQuotedExact() {
 
 			queryParams.Common.TextQuery = SearchTextQuery.Create("\"Anger\"");
 
 			var result = CallFind();
 
-			Assert.AreEqual(1, result.TotalCount, "Total number of results");
-			Assert.AreEqual(1, result.Items.Length, "Number of returned items");
-			Assert.AreEqual("Anger", result.Items[0].DefaultName, "Returned song");
+			AssertTags(result, "Anger");
 
 		}
 
@@ -82,7 +101,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("Hatsune Miku"));
 
 			Assert.IsTrue(result.HasNameQuery, "HasNameQuery");
-			Assert.AreEqual("Hatsune Miku", result.Name, "Name query");
+			Assert.AreEqual("Hatsune Miku", result.Name.Query, "Name query");
 
 		}
 

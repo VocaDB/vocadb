@@ -58,7 +58,9 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			ParsedSongQuery parsedQuery, 
 			NameMatchMode? nameMatchMode = null) {
 			
-			var textQuery = SearchTextQuery.Create(parsedQuery.Name, nameMatchMode ?? queryParams.Common.NameMatchMode);
+			var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name) ? 
+				new SearchTextQuery(parsedQuery.Name.Query, nameMatchMode ?? parsedQuery.Name.MatchMode, parsedQuery.Name.OriginalQuery)
+				: SearchTextQuery.Empty;
 
 			var query = Query<Song>()
 				.Where(s => !s.Deleted)
@@ -177,7 +179,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				
 			}
 
-			return new ParsedSongQuery { Name = trimmed };
+			return new ParsedSongQuery { Name = textQuery };
 
 		}
 

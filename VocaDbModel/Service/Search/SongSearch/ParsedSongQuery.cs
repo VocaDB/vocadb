@@ -19,7 +19,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// Song name filter. 
 		/// This is the original name query, without wildcard processing.
 		/// </summary>
-		public string Name { get; set; }
+		public SearchTextQuery Name { get; set; }
 
 		public string NicoId { get; set; }
 
@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public string TagName { get; set; }
 
-		public bool HasNameQuery => !string.IsNullOrEmpty(Name);
+		public bool HasNameQuery => !SearchTextQuery.IsNullOrEmpty(Name);
 
 	}
 

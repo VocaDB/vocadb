@@ -25,7 +25,12 @@ namespace VocaDb.Tests.DatabaseTests {
 		public Song Song3 { get; private set; } // Song for Producer
 		public Song Song4 { get; private set; }
 		public Song Song5 { get; private set; }
+
+		/// <summary>
+		/// Song named "Tears"
+		/// </summary>
 		public Song Song6 { get; private set; }
+
 		public Song SongWithSpecialChars { get; private set; }
 		public Tag Tag { get; private set; }
 		public Tag Tag2 { get; private set; }
