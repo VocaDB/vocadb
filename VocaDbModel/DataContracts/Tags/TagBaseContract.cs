@@ -26,7 +26,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		/// <summary>
 		/// Additional names - optional field.
 		/// </summary>
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set; }
 
 		[DataMember]

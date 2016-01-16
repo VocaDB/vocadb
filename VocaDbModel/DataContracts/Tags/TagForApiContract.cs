@@ -31,12 +31,14 @@ namespace VocaDb.Model.DataContracts.Tags {
 			UrlSlug = tag.UrlSlug;
 			Version = tag.Version;
 
-			if (optionalFields.HasFlag(TagOptionalFields.AdditionalNames)) {
+			var includeAdditionalNames = optionalFields.HasFlag(TagOptionalFields.AdditionalNames);
+
+			if (includeAdditionalNames) {
 				AdditionalNames = tag.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.AliasedTo) && tag.AliasedTo != null) {
-				AliasedTo = new TagBaseContract(tag.AliasedTo, languagePreference);
+				AliasedTo = new TagBaseContract(tag.AliasedTo, languagePreference, includeAdditionalNames);
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
@@ -52,7 +54,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.Parent) && tag.Parent != null) {
-				Parent = new TagBaseContract(tag.Parent, languagePreference);
+				Parent = new TagBaseContract(tag.Parent, languagePreference, includeAdditionalNames);
 			}
 
 		}
@@ -63,7 +65,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set; }
 
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public TagBaseContract AliasedTo { get; set; }
 
 		[DataMember]
@@ -94,7 +96,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember(EmitDefaultValue = false)]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public TagBaseContract Parent { get; set; }
 
 		[DataMember]
