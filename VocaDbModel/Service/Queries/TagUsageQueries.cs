@@ -14,6 +14,8 @@ namespace VocaDb.Model.Service.Queries {
 
 	public class TagUsageQueries {
 
+		private readonly IUserPermissionContext permissionContext;
+
 		private bool IsValid(TagBaseContract contract) {
 
 			if (contract == null)
@@ -30,9 +32,13 @@ namespace VocaDb.Model.Service.Queries {
 			return contract.Id > 0;
 		}
 
+		public TagUsageQueries(IUserPermissionContext permissionContext) {
+			this.permissionContext = permissionContext;
+		}
+
 		public TagUsageForApiContract[] AddTags<TEntry, TTag>(int entryId, TagBaseContract[] tags, 
 			bool onlyAdd,
-			IRepository<User> repository, IUserPermissionContext permissionContext,
+			IRepository<User> repository,
 			IEntryLinkFactory entryLinkFactory,
 			Func<TEntry, TagManager<TTag>> tagFunc,
 			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory) 
@@ -82,6 +88,28 @@ namespace VocaDb.Model.Service.Queries {
 				RecomputeTagUsagesCounts(ctx.OfType<Tag>(), updatedTags);
 
 				return tagFunc(entry).Usages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
+
+			});
+
+		}
+
+		public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository) where TUsage : TagUsage {
+
+			permissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
+
+			return repository.HandleTransaction(ctx => {
+
+				ctx.AuditLogger.SysLog(string.Format("deleting tag usage with Id {0}", tagUsageId));
+
+				var tagUsage = ctx.Load<TUsage>(tagUsageId);
+
+				ctx.AuditLogger.AuditLog(string.Format("removing {0}", tagUsage));
+
+				tagUsage.Delete();
+				ctx.Delete(tagUsage);
+				ctx.Update(tagUsage.Tag);
+
+				return tagUsage.Entry.Id;
 
 			});
 

@@ -1,9 +1,11 @@
 ﻿namespace VocaDb.Model.Domain {
 
 	public interface IEntryWithIntId {
+		int Id { get; set; }	
+	}
 
-		int Id { get; set; }
-
+	public interface IEntryWithLongId {
+		long Id { get; set; }
 	}
 
 	public static class IEntryWithIntIdExtender {

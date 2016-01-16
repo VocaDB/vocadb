@@ -17,12 +17,12 @@ namespace VocaDb.Tests.Service.Queries {
 
 		private Song entry;
 		private readonly FakeUserRepository repository = new FakeUserRepository();
-        private readonly TagUsageQueries queries = new TagUsageQueries();
+        private TagUsageQueries queries;
 		private User user;
 
 		private void AddTags(int entryId, params TagBaseContract[] tags) {
 
-			queries.AddTags<Song, SongTagUsage>(entryId, tags, false, repository, new FakePermissionContext(user),
+			queries.AddTags<Song, SongTagUsage>(entryId, tags, false, repository,
 				new FakeEntryLinkFactory(), song => song.Tags, (song, ctx) => new SongTagUsageFactory(ctx, song));
 
 		}
@@ -37,7 +37,8 @@ namespace VocaDb.Tests.Service.Queries {
 
 		[TestInitialize]
 		public void SetUp() {
-			user = repository.Save(CreateEntry.User());
+			user = repository.Save(CreateEntry.User(group: UserGroupId.Trusted));
+			queries = new TagUsageQueries(new FakePermissionContext(user));
 			entry = repository.Save(CreateEntry.Song(name: "Puppet"));
 			repository.Save(CreateEntry.Tag("techno"));
 		}
@@ -206,6 +207,23 @@ namespace VocaDb.Tests.Service.Queries {
 			Assert.AreEqual(0, tag1.UsageCount, "Number of usages for the removed tag");
 
 		}
+
+		[TestMethod]
+		public void RemoveTagUsage() {
+
+			var tag = repository.Save(CreateEntry.Tag("rock"));
+			var tag2 = repository.Save(CreateEntry.Tag("metal"));
+			var usage = repository.Save(entry.AddTag(tag).Result);
+			repository.Save(entry.AddTag(tag2).Result);
+
+			queries.RemoveTagUsage<SongTagUsage, Song>(usage.Id, repository.OfType<Song>());
+
+			Assert.AreEqual(1, entry.Tags.Usages.Count, "Number of tag usages for entry");
+			Assert.AreEqual(0, tag.UsageCount, "Number of usages for tag");
+			Assert.IsFalse(entry.Tags.HasTag(tag), "Tag was removed from entry");
+
+		}
+
 	}
 
 }

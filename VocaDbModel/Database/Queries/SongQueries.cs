@@ -102,12 +102,15 @@ namespace VocaDb.Model.Database.Queries {
 							
 				var usage = song.AddTag(tag.ActualTag);
 
+				// Only add the vote if the tag usage isn't added yet.
 				if (usage.IsNew) {
 
 					ctx.Save(usage.Result);
 
 					var vote = usage.Result.CreateVote(user);
-					ctx.Save(vote);					
+					ctx.Save(vote);
+
+					ctx.Update(usage.Result.Tag);
 
 				}
 
@@ -714,6 +717,12 @@ namespace VocaDb.Model.Database.Queries {
 				return primaryPv != null ? new PVContract(primaryPv) : null;
 
 			});
+
+		}
+
+		public int RemoveTagUsage(long tagUsageId) {
+
+			return new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, repository);
 
 		}
 

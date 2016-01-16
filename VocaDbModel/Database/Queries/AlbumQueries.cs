@@ -398,6 +398,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public int RemoveTagUsage(long tagUsageId) {
+
+			return new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, repository);
+
+		}
+
 		public EntryRevertedContract RevertToVersion(int archivedAlbumVersionId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);

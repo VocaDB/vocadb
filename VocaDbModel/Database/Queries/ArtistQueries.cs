@@ -406,6 +406,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public int RemoveTagUsage(long tagUsageId) {
+
+			return new TagUsageQueries(PermissionContext).RemoveTagUsage<ArtistTagUsage, Artist>(tagUsageId, repository);
+
+		}
+
 		/// <summary>
 		/// Reverts an album to an earlier archived version.
 		/// </summary>

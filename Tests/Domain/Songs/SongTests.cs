@@ -56,6 +56,35 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
+		public void AddTag_NewTag() {
+
+			var tag = CreateEntry.Tag("rock");
+			var result = song.AddTag(tag);
+
+			Assert.IsNotNull(result, "result");
+			Assert.IsTrue(result.IsNew, "Is new");
+			Assert.AreEqual(tag, result.Result.Tag, "Added tag");
+			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of tag usages for song");
+			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
+
+		}
+
+		[TestMethod]
+		public void AddTag_ExistingTag() {
+
+			var tag = CreateEntry.Tag("rock");
+			song.AddTag(tag);
+			var result = song.AddTag(tag);
+
+			Assert.IsNotNull(result, "result");
+			Assert.IsFalse(result.IsNew, "Is new");
+			Assert.AreEqual(tag, result.Result.Tag, "Added tag");
+			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of tag usages for song");
+			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
+
+		}
+
+		[TestMethod]
 		public void LyricsFromParents_NoLyrics() {
 
 			var result = new Song().GetLyricsFromParents(0);

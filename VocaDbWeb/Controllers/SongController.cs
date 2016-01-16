@@ -467,7 +467,7 @@ namespace VocaDb.Web.Controllers
         [Authorize]
         public ActionResult RemoveTagUsage(long id) {
 
-            var songId = Service.RemoveTagUsage(id);
+            var songId = queries.RemoveTagUsage(id);
             TempData.SetStatusMessage("Tag usage removed");
 
             return RedirectToAction("ManageTagUsages", new { id = songId });

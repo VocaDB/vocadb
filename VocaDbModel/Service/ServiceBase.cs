@@ -336,28 +336,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		protected int RemoveTagUsage<T>(long tagUsageId) where T : TagUsage {
-
-			PermissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
-
-			SysLog(string.Format("deleting tag usage with Id {0}", tagUsageId));
-
-			return HandleTransaction(session => {
-
-				var tagUsage = session.Load<T>(tagUsageId);
-
-				AuditLog(string.Format("removing {0}", tagUsage), session);
-
-				tagUsage.Delete();
-				session.Delete(tagUsage);
-				session.Update(tagUsage.Tag);
-
-				return tagUsage.Entry.Id;
-
-			});
-
-		}
-
 		protected void UpdateEntity<TEntity>(int id, Action<TEntity> func, PermissionToken permissionFlags, bool skipLog = false) {
 
 			var typeName = typeof(TEntity).Name;

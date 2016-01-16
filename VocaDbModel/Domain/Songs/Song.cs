@@ -374,9 +374,13 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <summary>
 		/// Adds a tag to the song.
 		/// First checks if the tag has already been added.
+		/// No votes will be added, just the usage.
 		/// </summary>
 		/// <param name="tag">Tag to be added. Cannot be null.</param>
-		/// <returns>The created tag usage. Can be null if the tag has already been added.</returns>
+		/// <returns>
+		/// Result of usage addition. Cannot be null.
+		/// If the usage was added, it doesn't any have votes.
+		/// </returns>
 		public virtual CollectionAddResult<SongTagUsage> AddTag(Tag tag) {
 			
 			ParamIs.NotNull(() => tag);
@@ -386,6 +390,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 			var usage = new SongTagUsage(this, tag);
 			Tags.Usages.Add(usage);
+			tag.UsageCount++;
+
 			return CollectionAddResult.Create(usage, true);
 
 		}

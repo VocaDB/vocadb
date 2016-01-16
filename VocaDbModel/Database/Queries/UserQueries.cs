@@ -1074,8 +1074,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagUsageForApiContract[] SaveAlbumTags(int albumId, TagBaseContract[] tags, bool onlyAdd) {
 			
-			return new TagUsageQueries().AddTags<Album, AlbumTagUsage>(
-				albumId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
+			return new TagUsageQueries(PermissionContext).AddTags<Album, AlbumTagUsage>(
+				albumId, tags, onlyAdd, repository, entryLinkFactory,
 				album => album.Tags, 
 				(album, ctx) => new AlbumTagUsageFactory(ctx, album));
 
@@ -1083,8 +1083,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagUsageForApiContract[] SaveArtistTags(int artistId, TagBaseContract[] tags, bool onlyAdd) {
 			
-			return new TagUsageQueries().AddTags<Artist, ArtistTagUsage>(
-				artistId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
+			return new TagUsageQueries(PermissionContext).AddTags<Artist, ArtistTagUsage>(
+				artistId, tags, onlyAdd, repository, entryLinkFactory,
 				artist => artist.Tags, 
 				(artist, ctx) => new ArtistTagUsageFactory(ctx, artist));
 
@@ -1092,8 +1092,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagUsageForApiContract[] SaveSongTags(int songId, TagBaseContract[] tags, bool onlyAdd) {
 			
-			return new TagUsageQueries().AddTags<Song, SongTagUsage>(
-				songId, tags, onlyAdd, repository, PermissionContext, entryLinkFactory,
+			return new TagUsageQueries(PermissionContext).AddTags<Song, SongTagUsage>(
+				songId, tags, onlyAdd, repository, entryLinkFactory,
 				song => song.Tags, 
 				(song, ctx) => new SongTagUsageFactory(ctx, song));
 

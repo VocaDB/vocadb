@@ -461,12 +461,6 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => session.Load<ArchivedAlbumVersion>(id).Data);
 		}
 
-		public int RemoveTagUsage(long tagUsageId) {
-
-			return RemoveTagUsage<AlbumTagUsage>(tagUsageId);
-
-		}
-
 		public void Restore(int albumId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);

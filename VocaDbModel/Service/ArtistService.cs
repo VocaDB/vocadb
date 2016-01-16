@@ -300,12 +300,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public int RemoveTagUsage(long tagUsageId) {
-
-			return RemoveTagUsage<ArtistTagUsage>(tagUsageId);
-
-		}
-
 		public void Restore(int artistId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
