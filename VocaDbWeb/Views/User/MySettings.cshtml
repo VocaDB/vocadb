@@ -30,10 +30,11 @@
 	<div id="tabs">
 
 		<ul>
-			<li><a href="#accountSettings">@R.MySettingsStrings.AccountSettings</a></li>
-			<li><a href="#interface">@R.MySettingsStrings.Interface</a></li>
-			<li><a href="#profile">@R.MySettingsStrings.Profile</a></li>
-			<li><a href="#connectivity">@R.MySettingsStrings.Connectivity</a></li>
+			<li><a href="#accountSettings">@Res.AccountSettings</a></li>
+			<li><a href="#password">@Res.ChangePassword</a></li>
+			<li><a href="#interface">@Res.Interface</a></li>
+			<li><a href="#profile">@Res.Profile</a></li>
+			<li><a href="#connectivity">@Res.Connectivity</a></li>
 		</ul>
 
 		<div id="accountSettings">
@@ -60,7 +61,7 @@
 					@R.MySettingsStrings.EmailOptions
 				</div>
 				<div class="editor-field">
-					@Html.EmailOptionsDropDownListFor(m => m.EmailOptions)
+					@Html.EmailOptionsDropDownListFor(m => m.EmailOptions, new { @class = "input-xlarge" })
 				</div>
 				
 				<div class="editor-label">
@@ -86,36 +87,41 @@
 						</label>
 					</p>
 				</div>
-                
-				@if (Model.HasPassword) {
+                				   
+			</div>
+		</div>
+		
+		<div id="password">
+			<div class="alert alert-info">
+				@Res.ChangePasswordNotice
+			</div>
+			
+			@if (Model.HasPassword) {
 				<div class="editor-label">
-					@R.MySettingsStrings.CurrentPass
-					@R.MySettingsStrings.RequiredForChangingPassword
+					@Res.CurrentPass
 				</div>
 				<div class="editor-field">
 					@Html.PasswordFor(m => m.OldPass)
 					@Html.ValidationMessageFor(m => m.OldPass)
 				</div>
-                }
+			}
 
-				<div class="editor-label">
-					@R.MySettingsStrings.NewPass
-					@R.MySettingsStrings.FillIfChangingPassword
-				</div>
-				<div class="editor-field">
-					@Html.PasswordFor(m => m.NewPass)
-					@Html.ValidationMessageFor(m => m.NewPass)
-				</div>
-
-				<div class="editor-label">
-					@R.MySettingsStrings.NewPassAgain
-				</div>
-				<div class="editor-field">
-					@Html.PasswordFor(m => m.NewPassAgain)
- 					@Html.ValidationMessageFor(m => m.NewPassAgain)
-				</div>
-				   
+			<div class="editor-label">
+				@Res.NewPass
 			</div>
+			<div class="editor-field">
+				@Html.PasswordFor(m => m.NewPass)
+				@Html.ValidationMessageFor(m => m.NewPass)
+			</div>
+
+			<div class="editor-label">
+				@Res.NewPassAgain
+			</div>
+			<div class="editor-field">
+				@Html.PasswordFor(m => m.NewPassAgain)
+				@Html.ValidationMessageFor(m => m.NewPassAgain)
+			</div>
+
 		</div>
 	
 		<div id="interface">

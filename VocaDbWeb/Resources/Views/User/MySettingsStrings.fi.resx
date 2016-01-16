@@ -132,6 +132,12 @@
   <data name="Automatic" xml:space="preserve">
     <value>(Automaattinen)</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Vaihda salasana</value>
+  </data>
+  <data name="ChangePasswordNotice" xml:space="preserve">
+    <value>Nämä tiedot täytyy syöttää vain jos haluat vaihtaa salasanasi</value>
+  </data>
   <data name="Connect" xml:space="preserve">
     <value>Yhdistä</value>
   </data>
@@ -161,9 +167,6 @@
   </data>
   <data name="ExternalLinks" xml:space="preserve">
     <value>Ulkoiset linkit</value>
-  </data>
-  <data name="FillIfChangingPassword" xml:space="preserve">
-    <value>(täytä jos vaihdat salasanaa)</value>
   </data>
   <data name="Interface" xml:space="preserve">
     <value>Käyttöliittymä</value>
@@ -206,9 +209,6 @@
   </data>
   <data name="ReallyReset" xml:space="preserve">
     <value>Haluatko varmasti resetoida?</value>
-  </data>
-  <data name="RequiredForChangingPassword" xml:space="preserve">
-    <value>(vaaditaan salasanan vaihtamiseen)</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Resetoi</value>

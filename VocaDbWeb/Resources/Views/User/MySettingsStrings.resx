@@ -137,6 +137,12 @@
   <data name="Automatic" xml:space="preserve">
     <value>(Automatic)</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="ChangePasswordNotice" xml:space="preserve">
+    <value>You only need to fill these if you want to change your password.</value>
+  </data>
   <data name="Connect" xml:space="preserve">
     <value>Connect</value>
   </data>
@@ -166,9 +172,6 @@
   </data>
   <data name="ExternalLinks" xml:space="preserve">
     <value>External links</value>
-  </data>
-  <data name="FillIfChangingPassword" xml:space="preserve">
-    <value>(fill if changing password.)</value>
   </data>
   <data name="Interface" xml:space="preserve">
     <value>Interface</value>
@@ -214,9 +217,6 @@
   </data>
   <data name="ReallyReset" xml:space="preserve">
     <value>Really reset code?</value>
-  </data>
-  <data name="RequiredForChangingPassword" xml:space="preserve">
-    <value>(required for changing password.)</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>

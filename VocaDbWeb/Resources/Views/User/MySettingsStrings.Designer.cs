@@ -117,6 +117,24 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        public static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You only need to fill these if you want to change your password..
+        /// </summary>
+        public static string ChangePasswordNotice {
+            get {
+                return ResourceManager.GetString("ChangePasswordNotice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string Connect {
@@ -203,15 +221,6 @@ namespace ViewRes.User {
         public static string ExternalLinks {
             get {
                 return ResourceManager.GetString("ExternalLinks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to (fill if changing password.).
-        /// </summary>
-        public static string FillIfChangingPassword {
-            get {
-                return ResourceManager.GetString("FillIfChangingPassword", resourceCulture);
             }
         }
         
@@ -347,15 +356,6 @@ namespace ViewRes.User {
         public static string ReallyReset {
             get {
                 return ResourceManager.GetString("ReallyReset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to (required for changing password.).
-        /// </summary>
-        public static string RequiredForChangingPassword {
-            get {
-                return ResourceManager.GetString("RequiredForChangingPassword", resourceCulture);
             }
         }
         
