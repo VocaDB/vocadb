@@ -13,10 +13,11 @@ module vdb.viewModels.search {
 
 			this.allowAliases.subscribe(this.updateResultsWithTotalCount);
 			this.categoryName.subscribe(this.updateResultsWithTotalCount);
+			this.sort.subscribe(this.updateResultsWithTotalCount);
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
-				this.tagRepo.getList(pagingProperties, lang, searchTerm, this.allowAliases(), this.categoryName(), callback);
+				this.tagRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.allowAliases(), this.categoryName(), callback);
 
 			}
 
@@ -24,6 +25,7 @@ module vdb.viewModels.search {
 
 		public allowAliases = ko.observable(false);
 		public categoryName = ko.observable("");
+		public sort = ko.observable("Name");
 
 	}
 

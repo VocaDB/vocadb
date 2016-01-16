@@ -1422,6 +1422,7 @@ namespace VocaDb.Model.Database.Queries {
 		public AlbumTagUsage CreateTagUsage(Tag tag) {
 
 			var usage = new AlbumTagUsage(album, tag);
+			tag.AllAlbumTagUsages.Add(usage);
 			session.Save(usage);
 
 			return usage;
@@ -1443,6 +1444,7 @@ namespace VocaDb.Model.Database.Queries {
 		public ArtistTagUsage CreateTagUsage(Tag tag) {
 
 			var usage = new ArtistTagUsage(artist, tag);
+			tag.AllArtistTagUsages.Add(usage);
 			session.Save(usage);
 
 			return usage;
@@ -1464,6 +1466,7 @@ namespace VocaDb.Model.Database.Queries {
 		public SongTagUsage CreateTagUsage(Tag tag) {
 
 			var usage = new SongTagUsage(song, tag);
+			tag.AllSongTagUsages.Add(usage);
 			ctx.Save(usage);
 
 			return usage;

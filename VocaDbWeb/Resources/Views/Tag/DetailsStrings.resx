@@ -129,6 +129,9 @@
   <data name="AllArtists" xml:space="preserve">
     <value>All artists</value>
   </data>
+  <data name="AllEntries" xml:space="preserve">
+    <value>All entries</value>
+  </data>
   <data name="AllSongs" xml:space="preserve">
     <value>All songs</value>
   </data>

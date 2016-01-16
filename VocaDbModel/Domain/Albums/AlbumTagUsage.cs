@@ -58,10 +58,11 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public override void Delete() {
 
+			base.Delete();
+
 			Album.Tags.Usages.Remove(this);
 			Tag.AllAlbumTagUsages.Remove(this);
 			Votes.Clear();
-			Count = 0;
 
 		}
 
@@ -80,6 +81,10 @@ namespace VocaDb.Model.Domain.Albums {
 
 			Votes.Remove(vote);
 			Count--;
+
+			if (!HasVotes) {
+				Tag.AllAlbumTagUsages.Remove(this);
+			}
 
 			return vote;
 

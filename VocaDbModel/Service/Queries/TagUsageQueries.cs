@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Tags;
@@ -75,11 +76,39 @@ namespace VocaDb.Model.Service.Queries {
 				ctx.AuditLogger.AuditLog(string.Format("tagging {0} with {1}",
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
 
-				tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
+				var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
+
+				// We could just update usage counts incrementally while syncing, but it's not much faster and this is more reliable
+				RecomputeTagUsagesCounts(ctx.OfType<Tag>(), updatedTags);
 
 				return tagFunc(entry).Usages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
 
 			});
+
+		}
+
+		private Dictionary<int, int> GetActualTagUsageCounts(IDatabaseContext<Tag> ctx, int[] tagIds) {
+
+			var result = ctx.Query().Where(t => tagIds.Contains(t.Id)).Select(t => new {
+				Id = t.Id,
+				Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count + t.AllSongTagUsages.Count
+			}).ToDictionary(t => t.Id, t => t.Count);
+
+			return result;
+
+		} 
+
+		private void RecomputeTagUsagesCounts(IDatabaseContext<Tag> ctx, Tag[] tags) {
+
+			var ids = tags.Select(t => t.Id).ToArray();
+			var usages = GetActualTagUsageCounts(ctx, ids);
+
+			foreach (var tag in tags) {
+				if (usages.ContainsKey(tag.Id) && tag.UsageCount != usages[tag.Id]) {
+					tag.UsageCount = usages[tag.Id];
+					ctx.Update(tag);
+				}
+			}
 
 		}
 

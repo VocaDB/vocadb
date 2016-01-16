@@ -4,6 +4,25 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201601161800)]
+	public class TagUsageCount : Migration {
+
+		public override void Up() {
+
+			Create.Column("UsageCount").OnTable(TableNames.Tags).AsInt32().NotNullable().WithDefaultValue(0);
+
+			Execute.SqlFormat(@"UPDATE {0} SET UsageCount = 
+				(SELECT COUNT(*) FROM {1} WHERE Tag = {0}.Id) + (SELECT COUNT(*) FROM {2} WHERE Tag = {0}.Id) + (SELECT COUNT(*) FROM {3} WHERE Tag = {0}.Id)", 
+				TableNames.Tags, TableNames.AlbumTagUsages, TableNames.ArtistTagUsages, TableNames.SongTagUsages);
+
+		}
+
+		public override void Down() {
+			Delete.Column("UsageCount").FromTable(TableNames.Tags);
+		}
+
+	}
+
 	[Migration(201601101900)]
 	public class CreateDataForArchivedTagVersion : AutoReversingMigration {
 

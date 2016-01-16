@@ -326,6 +326,12 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		/// <summary>
+		/// Number of tag usages.
+		/// This is persisted to database.
+		/// </summary>
+		public virtual int UsageCount { get; set; }
+
 		public virtual int Version { get; set; }
 
 		public override string ToString() {

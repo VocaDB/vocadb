@@ -29,6 +29,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Name = tag.TranslatedName[languagePreference];
 			Status = tag.Status;
 			UrlSlug = tag.UrlSlug;
+			UsageCount = tag.UsageCount;
 			Version = tag.Version;
 
 			var includeAdditionalNames = optionalFields.HasFlag(TagOptionalFields.AdditionalNames);
@@ -105,6 +106,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string UrlSlug { get; set; }
+
+		[DataMember]
+		public int UsageCount { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }

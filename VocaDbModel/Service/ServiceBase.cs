@@ -350,6 +350,7 @@ namespace VocaDb.Model.Service {
 
 				tagUsage.Delete();
 				session.Delete(tagUsage);
+				session.Update(tagUsage.Tag);
 
 				return tagUsage.Entry.Id;
 

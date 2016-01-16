@@ -15,7 +15,8 @@ module vdb.repositories {
 		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
 
 		public getList = (paging: dc.PagingProperties, lang: string, query: string,
-			allowAliases: boolean, categoryName: string, callback) => {
+			sort: string,
+			allowAliases: boolean, categoryName: string, callback?: (result: dc.PartialFindResultContract<dc.TagApiContract>) => void) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags");
 			var data = {
@@ -23,7 +24,8 @@ module vdb.repositories {
 				query: query, fields: "AdditionalNames,MainPicture", nameMatchMode: 'Auto',
 				allowAliases: allowAliases,
 				categoryName: categoryName,
-				lang: lang
+				lang: lang,
+				sort: sort
 			};
 
 			$.getJSON(url, data, callback);

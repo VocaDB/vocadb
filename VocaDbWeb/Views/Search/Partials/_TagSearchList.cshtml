@@ -14,10 +14,19 @@
 		<thead>
 			<tr>
 				<th colspan="2">
-					@SharedRes.Name
+					<a data-bind="click: function() { sort('Name') }" href="#">
+						@SharedRes.Name
+						<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
+					</a>
 				</th>
 				<th>
 					@Res.Category
+				</th>
+				<th>
+					<a data-bind="click: function() { sort('UsageCount') }" href="#">
+						@Res.TagUsages
+						<span class="sortDirection_down" data-bind="visible: sort() == 'UsageCount'"></span>
+					</a>
 				</th>
 			</tr>
 		</thead>
@@ -36,6 +45,9 @@
 				</td>
 				<td>
 					<p data-bind="text: categoryName"></p>
+				</td>
+				<td>
+					<p data-bind="text: usageCount"></p>
 				</td>
 			</tr>
 		</tbody>

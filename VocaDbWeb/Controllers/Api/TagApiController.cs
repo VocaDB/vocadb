@@ -88,6 +88,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a list of tag category names.
 		/// </summary>
 		[Route("categoryNames")]
+		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
 		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) {
 		
 			return queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));

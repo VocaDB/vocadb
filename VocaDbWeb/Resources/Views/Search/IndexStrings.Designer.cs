@@ -268,6 +268,15 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Usages.
+        /// </summary>
+        public static string TagUsages {
+            get {
+                return ResourceManager.GetString("TagUsages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to time(s).
         /// </summary>
         public static string Times {

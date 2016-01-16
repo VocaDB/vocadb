@@ -14,8 +14,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case TagSortRule.Name:
 					return query.OrderByEntryName(languagePreference);
 				case TagSortRule.UsageCount:
-					return query
-						.OrderByDescending(t => t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count + t.AllSongTagUsages.Count);
+					return query.OrderByDescending(t => t.UsageCount);
 			}
 
 			return query;

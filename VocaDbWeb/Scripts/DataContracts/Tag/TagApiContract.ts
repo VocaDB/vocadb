@@ -27,6 +27,8 @@ module vdb.dataContracts {
 
 		urlSlug?: string;
 
+		usageCount: number;
+
 	}
 
 } 

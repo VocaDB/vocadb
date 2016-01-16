@@ -53,6 +53,7 @@ namespace VocaDb.Tests.Service.Queries {
 			var usage = entry.Tags.Usages.First();
 			Assert.AreEqual("vocarock", usage.Tag.DefaultName, "Added tag name");
 			Assert.IsTrue(usage.HasVoteByUser(user), "Vote is by the logged in user");
+			Assert.AreEqual(1, usage.Tag.UsageCount, "Number of usages for tag");
 
 			Assert.AreEqual(2, repository.List<Tag>().Count, "Number of tags in the repository");
 			Assert.IsTrue(repository.List<Tag>().Contains(usage.Tag), "Tag in repository is the same as the one applied");
@@ -83,6 +84,7 @@ namespace VocaDb.Tests.Service.Queries {
 			var usage = entry.Tags.Usages.First();
 			Assert.AreEqual("vocarock", usage.Tag.DefaultName, "Added tag name");
 			Assert.AreEqual(tag.Id, usage.Tag.Id, "Added tag Id");
+			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
 
 		}
 
@@ -160,6 +162,7 @@ namespace VocaDb.Tests.Service.Queries {
 			Assert.AreEqual(1, entry.Tags.Tags.Count(), "Number of tags");
 			var usage = entry.Tags.Usages.First();
 			Assert.AreEqual(tag.Id, usage.Tag.Id, "Added tag name");
+			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
 
 		}
 
@@ -170,7 +173,7 @@ namespace VocaDb.Tests.Service.Queries {
 
 			var tags = new[] {
 				new TagBaseContract { Id = tag1.Id },
-				new TagBaseContract { Name = "power_metal" }
+				new TagBaseContract { Name = "power metal" }
 			};
 
 			AddTags(entry.Id, tags);
@@ -178,7 +181,8 @@ namespace VocaDb.Tests.Service.Queries {
 			var entryTags = entry.Tags.Tags.ToArray();
             Assert.AreEqual(2, entryTags.Length, "Number of applied tags");
 			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "vocarock"), "vocarock tag is added");
-			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "power_metal"), "power_metal tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "power metal"), "power metal tag is added");
+			Assert.AreEqual(1, entryTags[0].UsageCount, "Number of usages for tag");
 
 		}
 
@@ -190,14 +194,16 @@ namespace VocaDb.Tests.Service.Queries {
 			AddTags(entry.Id, new TagBaseContract { Id = tag1.Id });
 
 			var tags = new[] {
-				new TagBaseContract { Name = "power_metal" }
+				new TagBaseContract { Name = "power metal" }
 			};
 
 			AddTags(entry.Id, tags);
 
 			var entryTags = entry.Tags.Tags.ToArray();
 			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "power_metal"), "power_metal tag is added");
+			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "power metal"), "power metal tag is added");
+			Assert.AreEqual(1, entryTags[0].UsageCount, "Number of usages for the added tag");
+			Assert.AreEqual(0, tag1.UsageCount, "Number of usages for the removed tag");
 
 		}
 	}

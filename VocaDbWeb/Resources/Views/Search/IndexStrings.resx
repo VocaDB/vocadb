@@ -198,4 +198,7 @@
   <data name="ShowingItemsOf" xml:space="preserve">
     <value>Showing {0} items of {1}</value>
   </data>
+  <data name="TagUsages" xml:space="preserve">
+    <value>Usages</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 	/// <summary>
 	/// Tag attached to an entry (song, album, artist).
+	/// Tag usage may have multiple votes (<see cref="TagVote"/>), at most one vote per user.
 	/// </summary>
 	public abstract class TagUsage {
 
@@ -26,6 +27,8 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Attached entry. Cannot be null.
 		/// </summary>
 		public abstract IEntryBase Entry { get; }
+
+		public virtual bool HasVotes => Count > 0;
 
 		public virtual long Id { get; set; }
 
@@ -52,7 +55,18 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </remarks>
 		public abstract TagVote CreateVote(User user);
 
-		public virtual void Delete() { }
+		/// <summary>
+		/// Deletes tag usage and performs any necessary cleanup associated with that.
+		/// </summary>
+		/// <remarks>
+		/// Derived methods must call this base implementation.
+		/// </remarks>
+		public virtual void Delete() {
+
+			Count = 0;
+			Tag.UsageCount--;
+
+		}
 
 		public virtual bool Equals(TagUsage another) {
 
