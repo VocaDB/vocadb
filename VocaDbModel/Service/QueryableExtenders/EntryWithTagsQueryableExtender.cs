@@ -36,13 +36,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<TEntry> WhereHasTags<TEntry, TTagLink>(this IQueryable<TEntry> query, int[] tagNames)
+		public static IQueryable<TEntry> WhereHasTags<TEntry, TTagLink>(this IQueryable<TEntry> query, int[] tagIds)
 			where TEntry : IEntryWithTags<TTagLink> where TTagLink : TagUsage {
 
-			if (tagNames == null || !tagNames.Any())
+			if (tagIds == null || !tagIds.Any())
 				return query;
 
-			return tagNames.Aggregate(query, WhereHasTag<TEntry, TTagLink>);
+			return tagIds.Aggregate(query, WhereHasTag<TEntry, TTagLink>);
 
 		}
 

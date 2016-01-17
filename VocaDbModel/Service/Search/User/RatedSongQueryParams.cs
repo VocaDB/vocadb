@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.Search.User {
 
 		}
 
-		public int ArtistId { get; set; }
+		public int[] ArtistIds { get; set; }
 
 		public bool ChildVoicebanks { get; set; }
 
@@ -49,9 +49,9 @@ namespace VocaDb.Model.Service.Search.User {
 		/// </summary>
 		public RatedSongForUserSortRule SortRule { get; set; }
 
-		public string Tag { get; set; }
+		public string TagName { get; set; }
 
-		public int TagId { get; set; }
+		public int[] TagIds { get; set; }
 
 		public SearchTextQuery TextQuery { get; set; }
 

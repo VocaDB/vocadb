@@ -317,7 +317,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="userId">ID of the user whose songs are to be browsed.</param>
 		/// <param name="query">Song name query (optional).</param>
 		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
-		/// <param name="tag">Filter by tag (optional).</param>
+		/// <param name="tagName">Filter by tag name (optional).</param>
 		/// <param name="artistId">Filter by song artist (optional).</param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
 		/// <param name="rating">Filter songs by given rating (optional).</param>
@@ -338,9 +338,9 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<RatedSongForUserForApiContract> GetRatedSongs(
 			int userId,
 			string query = "",
-			string tag = null, 
-			int? tagId = null,
-			int? artistId = null,
+			string tagName = null,
+			[FromUri] int[] tagId = null,
+			[FromUri] int[] artistId = null,
 			bool childVoicebanks = false,
 			SongVoteRating? rating = null,
 			int? songListId = null,
@@ -358,14 +358,14 @@ namespace VocaDb.Web.Controllers.Api {
 			var queryParams = new RatedSongQueryParams(userId, new PagingProperties(start, maxResults, getTotalCount)) {
 				TextQuery = textQuery,
 				SortRule = sort ?? RatedSongForUserSortRule.Name,
-				ArtistId = artistId ?? 0,
+				ArtistIds = artistId,
 				ChildVoicebanks = childVoicebanks,
 				FilterByRating = rating ?? SongVoteRating.Nothing,
 				GroupByRating = groupByRating,
 				PVServices = pvServices,
 				SonglistId = songListId ?? 0,
-				TagId = tagId ?? 0,
-                Tag = tag
+				TagIds = tagId,
+                TagName = tagName
 			};
 
 			var songs = queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));

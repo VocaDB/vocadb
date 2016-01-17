@@ -163,8 +163,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Filtered song types (optional). 
 		/// Possible values are Original, Remaster, Remix, Cover, Instrumental, Mashup, MusicPV, DramaPV, Other.
 		/// </param>
+		/// <param name="tagName">Filter by one or more tag names (optional).</param>
 		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
-		/// <param name="tag">Filter by one or more tags (optional).</param>
 		/// <param name="artistId">Filter by artist Id.</param>
 		/// <param name="artistParticipationStatus">
 		/// Filter by artist participation status. Only valid if artistId is specified.
@@ -201,7 +201,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongForApiContract> GetList(
 			string query = "", 
 			string songTypes = null,
-			[FromUri] string[] tag = null,
+			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
@@ -225,7 +225,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, preferAccurateMatches, null) {
 				TagIds = tagId,
-				Tags = tag, 
+				Tags = tagName, 
 				OnlyWithPVs = onlyWithPvs,
 				ArtistIds = artistId,		
 				ArtistParticipationStatus = artistParticipationStatus,

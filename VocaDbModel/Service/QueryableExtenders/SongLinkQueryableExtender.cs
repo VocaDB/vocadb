@@ -2,6 +2,7 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
@@ -57,6 +58,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<T> WhereSongHasArtists<T>(this IQueryable<T> query, EntryIdsCollection artistIds, bool childVoicebanks)
+			where T : ISongLink {
+
+			if (!artistIds.HasAny)
+				return query;
+
+			return artistIds.Ids.Aggregate(query, (current, artistId) => current.WhereSongHasArtist(artistId, childVoicebanks));
+
+		}
+
 		public static IQueryable<T> WhereSongIsInList<T>(this IQueryable<T> query, int listId)
 			where T : ISongLink {
 			
@@ -102,6 +113,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			return query.Where(s => s.Song.Tags.Usages.Any(t => t.Tag.Id == tagId));
+
+		}
+
+		public static IQueryable<T> WhereSongHasTags<T>(this IQueryable<T> query, int[] tagIds)
+			where T : ISongLink {
+
+			if (tagIds == null || !tagIds.Any())
+				return query;
+
+			return tagIds.Aggregate(query, WhereSongHasTag);
 
 		}
 

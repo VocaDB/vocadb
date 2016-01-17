@@ -140,6 +140,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="listId">ID of the song list.</param>
 		/// <param name="query">Song name query (optional).</param>
 		/// <param name="pvServices">Filter by one or more PV services (separated by commas). The song will pass the filter if it has a PV for any of the matched services.</param>
+		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
+		/// <param name="artistId">Filter by artist Id.</param>
+		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -154,6 +157,9 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongInListForApiContract> GetSongs(int listId,
 			string query = "", 
 			[FromUri] PVServices? pvServices = null,
+			[FromUri] int[] tagId = null,
+			[FromUri] int[] artistId = null,
+			bool childVoicebanks = false,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -169,6 +175,9 @@ namespace VocaDb.Web.Controllers.Api {
 					ListId = listId, 
 					Paging = new PagingProperties(start, maxResults, getTotalCount),
 					PVServices = pvServices,
+					ArtistIds = artistId,
+					ChildVoicebanks = childVoicebanks,
+					TagIds = tagId,
 					SortRule = sort
 				}, 
 				songInList => new SongInListForApiContract(songInList, lang, fields));

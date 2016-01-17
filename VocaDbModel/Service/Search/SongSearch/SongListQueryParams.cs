@@ -5,6 +5,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 	public class SongListQueryParams {
 
+		public int[] ArtistIds { get; set; }
+
+		public bool ChildVoicebanks { get; set; }
+
 		public int ListId { get; set; }
 
 		public SearchTextQuery TextQuery { get; set; }
@@ -17,6 +21,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// Song sort rule. If null, Order field will be used.
 		/// </summary>
 		public SongSortRule? SortRule { get; set; }
+
+		public int[] TagIds { get; set; }
 
 	}
 
