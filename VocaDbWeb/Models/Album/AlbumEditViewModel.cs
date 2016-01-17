@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.UseCases;
@@ -59,6 +60,7 @@ namespace VocaDb.Web.Models.Album {
 		}
 
 		[FromJson]
+		[AllowHtml]
 		public AlbumForEditContract EditedAlbum { get; set; }
 
 		public bool HasCoverPicture {
