@@ -2323,11 +2323,13 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AlbumSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AnythingSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistFilter.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistFilters.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchCategoryBaseViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SongSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\TagFilter.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\TagFilters.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\TagSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ServerSidePagingViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongCreateViewModel.ts" />
@@ -2805,6 +2807,7 @@
     <Content Include="Views\Shared\Partials\_SongListsFilters.cshtml" />
     <Content Include="Views\Song\Partials\_AddToListDialog.cshtml" />
     <Content Include="Views\Tag\ViewVersion.cshtml" />
+    <Content Include="Views\Shared\Partials\_TagFilters.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

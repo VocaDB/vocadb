@@ -56,32 +56,19 @@
 	</div>
 	
 	<div class="control-group">
-		<div class="control-label">@ViewRes.SharedStrings.Tag</div>
-		<div class="controls">
-			<div class="input-append input-prepend">
-				<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: tagUrl() }" title="Tag information">
-					<i class="icon icon-info-sign"></i>
-				</a>
-				@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "tag", "tagName")
+		<div class="control-label">@SharedRes.Tag</div>
+		<div class="controls" data-bind="with: tagFilters">
+			@{ Html.RenderPartial("Partials/_TagFilters"); }
+			<div>
+				<input type="text" class="input-large" data-bind="tagAutoComplete: addTag" placeholder="@ViewRes.SharedStrings.Search" />
 			</div>
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
-		<div class="controls">
-			<div style="display: inline-block;" class="input-append">
-				@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId")
-			</div>
-		</div>
-	</div>
-	
-	<div class="control-group" data-bind="visible: showChildVoicebanks">
-		<div class="controls">
-			<label class="checkbox">
-				<input type="checkbox" data-bind="checked: childVoicebanks" />
-				@SearchRes.IncludeDerivedVoicebanks
-			</label>
+		<div class="controls" data-bind="with: artistFilters">
+			@KnockoutHelpers.ArtistFilters(artistParticipationStatus: false)
 		</div>
 	</div>
 

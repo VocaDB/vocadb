@@ -1,6 +1,40 @@
 ﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.HelperPage
 
+@helper ArtistFilters(bool artistParticipationStatus) {
+
+	<!-- ko foreach: artists -->
+		<div class="control-group">
+			<div style="display: inline-block;" class="input-append input-prepend">
+				<a href="#" class="btn btn-nomargin" data-bind="attr: { href: '/Ar/' + id }">
+					<i class="icon icon-info-sign"></i>
+				</a>
+				<div class="input-append">
+					<input type="text" class="input-large" readonly data-bind="value: name" />
+					<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.artists.remove($data); }">Clear</button>
+				</div>
+			</div>
+			@if (artistParticipationStatus) {
+				<!-- ko if: $parent.hasSingleArtist -->
+				@SongHelpers.ArtistParticipationStatusOptionsKnockout("$parent.artistParticipationStatus")
+				<!-- /ko -->
+			}
+		</div>
+	<!-- /ko -->
+
+	<div class="control-group" data-bind="visible: showChildVoicebanks">
+		<label class="checkbox">
+			<input type="checkbox" data-bind="checked: childVoicebanks" />
+			Include derived voicebanks
+		</label>
+	</div>
+
+	<div>
+		<input type="text" class="input-large" data-bind="artistAutoComplete: artistSearchParams" placeholder="@ViewRes.SharedStrings.Search" />
+	</div>
+
+}
+
 @helper CheckBoxButtons(Dictionary<string, string> options, string binding) {
 	<div style="display: inline-block;">
 		@foreach (var option in options) {
