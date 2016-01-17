@@ -35,7 +35,6 @@ module vdb.viewModels.user {
 				this.groupByRating(groupByRating);
 
 			this.artistSearchParams = {
-				allowCreateNew: false,
 				acceptSelection: this.selectArtist,
 				height: 300
 			};

@@ -22,7 +22,7 @@ module vdb.knockoutExtensions {
 
 			filter = (item) => {
 
-				if (item.id == properties.ignoreId) {
+				if (item.id === properties.ignoreId) {
 					return false;
 				}
 
@@ -49,9 +49,7 @@ module vdb.knockoutExtensions {
 			createOptionSecondRow: (item) => (item.additionalNames),
 			extraQueryParams: queryParams,
 			filter: filter,
-			height: properties.height,
-			termParamName: 'query',
-			method: 'GET'
+			termParamName: 'query'
 		};
 
 		vdb.initEntrySearch(element, "Artist", vdb.functions.mapAbsoluteUrl("/api/artists"), params);
