@@ -87,6 +87,8 @@ namespace VocaDb.Model.Service.Queries {
 				// We could just update usage counts incrementally while syncing, but it's not much faster and this is more reliable
 				RecomputeTagUsagesCounts(ctx.OfType<Tag>(), updatedTags);
 
+				ctx.AuditLogger.SysLog("finished tagging");
+
 				return tagFunc(entry).Usages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
 
 			});
