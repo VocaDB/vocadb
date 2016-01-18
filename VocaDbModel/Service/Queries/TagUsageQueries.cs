@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
@@ -14,6 +15,7 @@ namespace VocaDb.Model.Service.Queries {
 
 	public class TagUsageQueries {
 
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IUserPermissionContext permissionContext;
 
 		private bool IsValid(TagBaseContract contract) {
@@ -83,9 +85,12 @@ namespace VocaDb.Model.Service.Queries {
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
 
 				var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
+				var tagCtx = ctx.OfType<Tag>();
 
-				// We could just update usage counts incrementally while syncing, but it's not much faster and this is more reliable
-				RecomputeTagUsagesCounts(ctx.OfType<Tag>(), updatedTags);
+				foreach (var tag in updatedTags)
+					tagCtx.Update(tag);
+
+				RecomputeTagUsagesCounts(tagCtx, updatedTags);
 
 				ctx.AuditLogger.SysLog("finished tagging");
 
@@ -119,6 +124,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		private Dictionary<int, int> GetActualTagUsageCounts(IDatabaseContext<Tag> ctx, int[] tagIds) {
 
+			// Note: these counts are not up to date in tests, only when querying the real DB
 			var result = ctx.Query().Where(t => tagIds.Contains(t.Id)).Select(t => new {
 				Id = t.Id,
 				Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count + t.AllSongTagUsages.Count
@@ -135,8 +141,9 @@ namespace VocaDb.Model.Service.Queries {
 
 			foreach (var tag in tags) {
 				if (usages.ContainsKey(tag.Id) && tag.UsageCount != usages[tag.Id]) {
-					tag.UsageCount = usages[tag.Id];
-					ctx.Update(tag);
+					// This is expected for tests
+					// TODO: come up with a proper fix that works for tests and the real DB
+					log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);
 				}
 			}
 

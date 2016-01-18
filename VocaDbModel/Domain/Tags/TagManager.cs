@@ -82,6 +82,7 @@ namespace VocaDb.Model.Domain.Tags {
 				var newUsage = tagUsageFactory.CreateTagUsage(newUsageTag);
 				Usages.Add(newUsage);
 				newUsage.CreateVote(user);
+				newUsageTag.UsageCount++;
 				modifiedTags.Add(newUsageTag);
 			}
 
@@ -91,6 +92,7 @@ namespace VocaDb.Model.Domain.Tags {
 					removedTag.RemoveVote(user);
 
 					if (!removedTag.HasVotes) {
+						removedTag.Tag.UsageCount--;
 						Usages.Remove(removedTag);
 					}
 

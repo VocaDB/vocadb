@@ -82,10 +82,6 @@ namespace VocaDb.Model.Domain.Songs {
 			Votes.Remove(vote);
 			Count--;
 
-			if (!HasVotes) {
-				Tag.AllSongTagUsages.Remove(this);
-			}
-
 			return vote;
 
 		}
