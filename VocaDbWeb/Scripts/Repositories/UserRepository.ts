@@ -135,8 +135,8 @@ module vdb.repositories {
 		public getRatedSongsList = (
 			userId: number,
 			paging: dc.PagingProperties, lang: string, query: string,
-			tag: number,
-			artistId: number,
+			tagIds: number[],
+			artistIds: number[],
 			childVoicebanks: boolean,
 			rating: string,
 			songListId: number,
@@ -149,8 +149,8 @@ module vdb.repositories {
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/ratedSongs");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				query: query, tagId: tag,
-				artistId: artistId,
+				query: query, tagId: tagIds,
+				artistId: artistIds,
 				childVoicebanks: childVoicebanks,
 				rating: rating, songListId: songListId,
 				groupByRating: groupByRating,

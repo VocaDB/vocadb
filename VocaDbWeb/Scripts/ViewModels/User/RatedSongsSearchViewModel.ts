@@ -12,6 +12,7 @@ module vdb.viewModels.user {
 			private userRepo: rep.UserRepository, private artistRepo: rep.ArtistRepository,
 			private songRepo: rep.SongRepository,
 			private resourceRepo: rep.ResourceRepository,
+			tagRepo: rep.TagRepository,
 			private languageSelection: string, private loggedUserId: number, private cultureCode: string,
 			sort: string, groupByRating: boolean,
 			pvPlayersFactory: pvs.PVPlayersFactory,
@@ -19,12 +20,10 @@ module vdb.viewModels.user {
 			artistId?: number,
 			childVoicebanks?: boolean) {	
 
-			this.artistId = ko.observable(artistId);
+			this.artistFilters = new viewModels.search.ArtistFilters(artistRepo, childVoicebanks);
 
 			if (artistId)
-				this.selectArtist(artistId);
-
-			this.childVoicebanks = ko.observable(childVoicebanks || false);
+				this.artistFilters.selectArtist(artistId);
 
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
@@ -34,13 +33,10 @@ module vdb.viewModels.user {
 			if (groupByRating != null)
 				this.groupByRating(groupByRating);
 
-			this.artistSearchParams = {
-				acceptSelection: this.selectArtist,
-				height: 300
-			};
+			this.tagFilters = new viewModels.search.TagFilters(tagRepo);
 
-			this.artistId.subscribe(this.updateResultsWithTotalCount);
-			this.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
 			this.groupByRating.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
@@ -49,14 +45,12 @@ module vdb.viewModels.user {
 			this.showTags.subscribe(this.updateResultsWithoutTotalCount);
 			this.songListId.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithoutTotalCount);
-			this.tag.subscribe(this.updateResultsWithTotalCount);
+			this.tagFilters.tags.subscribe(this.updateResultsWithTotalCount);
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
-
-			this.showChildVoicebanks = ko.computed(() => this.artistId() != null && helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType()));
 
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForRatedSongsAdapter(userRepo, loggedUserId, this.searchTerm, this.sort,
-				this.tagId, this.artistId, this.childVoicebanks,
+				this.tagFilters.tagIds, this.artistFilters.artistIds, this.artistFilters.childVoicebanks,
 				this.rating, this.songListId, this.groupByRating, ko.observable("AdditionalNames,ThumbUrl"));
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[languageSelection]);
@@ -66,11 +60,7 @@ module vdb.viewModels.user {
 
 		}
 
-		public artistId: KnockoutObservable<number>;
-		public artistName = ko.observable("");
-		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
-		public artistType = ko.observable<cls.artists.ArtistType>(null);
-		public childVoicebanks: KnockoutObservable<boolean>;
+		public artistFilters: viewModels.search.ArtistFilters;
 		public groupByRating = ko.observable(true);
 		public isInit = false;
 		public loading = ko.observable(true); // Currently loading for data
@@ -83,17 +73,13 @@ module vdb.viewModels.user {
 		public rating = ko.observable("Nothing");
 		public resources = ko.observable<any>();
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
-		public showChildVoicebanks: KnockoutComputed<boolean>;
 		public showTags = ko.observable(false);
 		public songListId = ko.observable<number>(undefined);
 		public songLists = ko.observableArray<dc.SongListBaseContract>([]);
 		public sort = ko.observable("Name");
 		public sortName = ko.computed(() => this.resources() != null ? (this.resources().user_ratedSongForUserSortRuleNames[this.sort()]
 			|| this.resources().songSortRuleNames[this.sort()]) : "");
-		public tag = ko.observable<dc.TagBaseContract>(null);
-		public tagId = ko.computed(() => this.tag() ? this.tag().id : null);
-		public tagName = ko.computed(() => this.tag() ? this.tag().name : null);
-		public tagUrl = ko.computed(() => utils.EntryUrlMapper.details_tag_contract(this.tag()));
+		public tagFilters: viewModels.search.TagFilters;
 		public viewMode = ko.observable("Details");
 
 		public fields = ko.computed(() => {
@@ -117,15 +103,6 @@ module vdb.viewModels.user {
 				this.isInit = true;
 			});
 
-		};
-
-		public selectArtist = (selectedArtistId: number) => {
-			this.artistId(selectedArtistId);
-			this.artistType(null);
-			this.artistRepo.getOne(selectedArtistId, artist => {
-				this.artistName(artist.name);
-				this.artistType(cls.artists.ArtistType[artist.artistType]);
-			});
 		};
 
 		public updateResultsWithTotalCount = () => this.updateResults(true);
@@ -154,9 +131,9 @@ module vdb.viewModels.user {
 			}
 
 			this.userRepo.getRatedSongsList(this.loggedUserId, pagingProperties, this.languageSelection, this.searchTerm(),
-				this.tagId(),
-				this.artistId(),
-				this.childVoicebanks(),
+				this.tagFilters.tagIds(),
+				this.artistFilters.artistIds(),
+				this.artistFilters.childVoicebanks(),
 				this.rating(), this.songListId(),
 				this.groupByRating(),
 				null,

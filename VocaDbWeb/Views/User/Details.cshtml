@@ -391,6 +391,7 @@
 			var artistRepo = repoFactory.artistRepository();
 			var resourceRepo = repoFactory.resourceRepository();
 			var songRepo = repoFactory.songRepository();
+			var tagRepo = repoFactory.tagRepository();
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory($("#pv-player-wrapper"));
 			var latestComments = @ToJS(Model.LatestComments);
 
@@ -404,7 +405,8 @@
 			var albumCollectionViewModel = new vdb.viewModels.user.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, userId, cultureCode,
 				publicCollection, false);
 
-			var ratedSongsViewModel = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, userId, cultureCode,
+			var ratedSongsViewModel = new vdb.viewModels.user.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, tagRepo, 
+				languageSelection, userId, cultureCode,
 				sort, groupByRating, pvPlayersFactory, false, artistId, childVoicebanks);
 
 			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, canDeleteComments, urlMapper, 
