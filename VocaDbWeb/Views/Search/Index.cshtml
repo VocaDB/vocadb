@@ -151,35 +151,8 @@
 
 			<div class="control-group">
 				<div class="control-label">@EntryTypeNames.Artist</div>
-				<div class="controls">
-					<!-- ko foreach: artists -->
-					<div class="control-group">
-						<div style="display: inline-block;" class="input-append input-prepend">
-							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: '/Ar/' + id }">
-								<i class="icon icon-info-sign"></i>
-							</a>
-							<div class="input-append">
-								<input type="text" class="input-large" readonly data-bind="value: name" />
-								<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.artists.remove($data); }">Clear</button>
-							</div>
-						</div>
-						<!-- ko if: $parent.hasSingleArtist -->
-						@SongHelpers.ArtistParticipationStatusOptionsKnockout("$parent.artistParticipationStatus")
-						<!-- /ko -->
-					</div>
-					<!-- /ko -->
-
-					<div class="control-group" data-bind="visible: showChildVoicebanks">
-						<label class="checkbox">
-							<input type="checkbox" data-bind="checked: childVoicebanks" />
-							@Res.IncludeDerivedVoicebanks
-						</label>
-					</div>
-
-					<div>
-						<input type="text" class="input-large" data-bind="artistAutoComplete: artistSearchParams" placeholder="@ViewRes.SharedStrings.Search" />
-					</div>
-
+				<div class="controls" data-bind="with: artistFilters">
+					@KnockoutHelpers.ArtistFilters(artistParticipationStatus: true)
 				</div>
 			</div>
 		</div>
@@ -195,35 +168,8 @@
 
 			<div class="control-group">
 				<div class="control-label">@EntryTypeNames.Artist</div>
-				<div class="controls">					
-					<!-- ko foreach: artists -->
-					<div class="control-group">
-						<div style="display: inline-block;" class="input-append input-prepend">
-							<a href="#" class="btn btn-nomargin" data-bind="attr: { href: '/Ar/' + id }">
-								<i class="icon icon-info-sign"></i>
-							</a>
-							<div class="input-append">
-								<input type="text" class="input-large" readonly data-bind="value: name" />
-								<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.artists.remove($data); }">Clear</button>
-							</div>
-						</div>
-						<!-- ko if: $parent.hasSingleArtist -->
-						@SongHelpers.ArtistParticipationStatusOptionsKnockout("$parent.artistParticipationStatus")						
-						<!-- /ko -->
-					</div>
-					<!-- /ko -->
-					
-					<div class="control-group" data-bind="visible: showChildVoicebanks">
-						<label class="checkbox">
-							<input type="checkbox" data-bind="checked: childVoicebanks" />
-							@Res.IncludeDerivedVoicebanks
-						</label>						
-					</div>
-
-					<div>
-						<input type="text" class="input-large" data-bind="artistAutoComplete: artistSearchParams" placeholder="@ViewRes.SharedStrings.Search" />											
-					</div>
-
+				<div class="controls" data-bind="with: artistFilters">					
+					@KnockoutHelpers.ArtistFilters(artistParticipationStatus: true)
 				</div>
 			</div>
 

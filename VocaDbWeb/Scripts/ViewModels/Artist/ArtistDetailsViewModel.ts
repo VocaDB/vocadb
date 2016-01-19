@@ -110,7 +110,7 @@ module vdb.viewModels {
 
 			this.mainAlbumsViewModel(new vdb.viewModels.search.AlbumSearchViewModel(null, this.unknownPictureUrl, this.lang,
 				this.albumRepo, null, this.resourceRepo, this.cultureCode, null, [ this.artistId ], null, "Unknown", null));
-			this.mainAlbumsViewModel().artistParticipationStatus("OnlyMainAlbums");
+			this.mainAlbumsViewModel().artistFilters.artistParticipationStatus("OnlyMainAlbums");
 
 		};
 
@@ -121,7 +121,7 @@ module vdb.viewModels {
 
 			this.collaborationAlbumsViewModel(new vdb.viewModels.search.AlbumSearchViewModel(null, this.unknownPictureUrl, this.lang,
 				this.albumRepo, null, this.resourceRepo, this.cultureCode, null, [ this.artistId ], null, "Unknown", null));
-			this.collaborationAlbumsViewModel().artistParticipationStatus("OnlyCollaborations");
+			this.collaborationAlbumsViewModel().artistFilters.artistParticipationStatus("OnlyCollaborations");
 
 		};
 

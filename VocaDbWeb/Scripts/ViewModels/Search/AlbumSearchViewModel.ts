@@ -28,45 +28,37 @@ module vdb.viewModels.search {
 				this.resourceManager.loadResources(null, "albumSortRuleNames", "discTypeNames");
 			}
 
-			this.artistSearchParams = { acceptSelection: this.selectArtist };
+			this.artistFilters = new ArtistFilters(this.artistRepo, childVoicebanks);
+			this.artistFilters.selectArtists(artistId);
 
 			this.albumType = ko.observable(albumType || "Unknown");
-			this.childVoicebanks = ko.observable(childVoicebanks || false);
 			this.sort = ko.observable(sort || "Name");
 			this.viewMode = ko.observable(viewMode || "Details");
 
-			if (artistId)
-				this.selectArtists(artistId, this.artists, this.artistRepo);
-
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.albumType.subscribe(this.updateResultsWithTotalCount);
-			this.artists.subscribe(this.updateResultsWithTotalCount);
-			this.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
-			this.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
 
-			this.showChildVoicebanks = ko.computed(() => this.hasSingleArtist() && helpers.ArtistHelper.canHaveChildVoicebanks(this.artists()[0].artistType()));
 			this.sortName = ko.computed(() => {
 				return this.resourceManager.resources().albumSortRuleNames != null ? this.resourceManager.resources().albumSortRuleNames[this.sort()] : "";
 			});
 
 			this.loadResults = (pagingProperties, searchTerm, tags, status, callback) => {
 
-				var artistIds = _.map(this.artists(), a => a.id);
+				var artistIds = this.artistFilters.artistIds();
 
 				this.albumRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.albumType(), tags, artistIds,
-					this.artistParticipationStatus(), this.childVoicebanks(), this.fields(), status, false, callback);
+					this.artistFilters.artistParticipationStatus(), this.artistFilters.childVoicebanks(), this.fields(), status, false, callback);
 
 			}
 
 		}
 
 		public albumType: KnockoutObservable<string>;
-		public artists = ko.observableArray<ArtistFilter>();
-		public artistParticipationStatus = ko.observable("Everything");
-		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
-		public childVoicebanks: KnockoutObservable<boolean>;
+		public artistFilters: ArtistFilters;
 		private resourceManager: cls.ResourcesManager;
-		public showChildVoicebanks: KnockoutComputed<boolean>;
 		public sort: KnockoutObservable<string>;
 		public sortName: KnockoutComputed<string>;
 		public viewMode: KnockoutObservable<string>;
@@ -74,10 +66,6 @@ module vdb.viewModels.search {
 		public discTypeName = (discTypeStr: string) => this.resourceManager.resources().discTypeNames != null ? this.resourceManager.resources().discTypeNames[discTypeStr] : "";
 
 		public fields = ko.computed(() => this.showTags() ? "AdditionalNames,MainPicture,Tags" : "AdditionalNames,MainPicture");
-
-		public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
-
-		public hasSingleArtist = ko.computed(() => this.artists().length === 1);
 
 		public ratingStars = (album: dc.AlbumContract) => {
 
@@ -91,10 +79,6 @@ module vdb.viewModels.search {
 			});
 			return ratings;
 
-		};
-
-		public selectArtist = (selectedArtistId: number) => {
-			this.selectArtists([selectedArtistId], this.artists, this.artistRepo);
 		};
 
 	}

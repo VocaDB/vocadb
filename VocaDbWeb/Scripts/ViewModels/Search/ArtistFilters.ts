@@ -17,9 +17,12 @@ module vdb.viewModels.search {
 
 		public artists = ko.observableArray<ArtistFilter>();
 		public artistIds = ko.computed(() => _.map(this.artists(), a => a.id));
+		public artistParticipationStatus = ko.observable("Everything");
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 
 		public childVoicebanks: KnockoutObservable<boolean>;
+
+		public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
 
 		public hasSingleArtist = ko.computed(() => this.artists().length === 1);
 
