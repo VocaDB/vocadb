@@ -4,8 +4,9 @@ module vdb.viewModels.search {
 	// Manages tag filters for search
 	export class TagFilters {
 
-		constructor(private tagRepo: repositories.TagRepository) {
+		constructor(private tagRepo: repositories.TagRepository, tags: KnockoutObservableArray<TagFilter> = null) {
 			
+			this.tags = (tags || ko.observableArray<TagFilter>());
 			this.tagIds = ko.computed(() => _.map(this.tags(), t => t.id));
 
 		}
@@ -38,7 +39,7 @@ module vdb.viewModels.search {
 
 		};
 
-		public tags = ko.observableArray<TagFilter>([]);
+		public tags: KnockoutObservableArray<TagFilter>;
 		public tagIds: KnockoutComputed<number[]>;
 
 	}

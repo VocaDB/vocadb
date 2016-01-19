@@ -55,10 +55,6 @@ module vdb.viewModels.search {
 
 		public searchTerm: KnockoutObservable<string>;
 
-		public selectTag = (tag: dc.TagBaseContract) => {
-			this.tags(tag ? [ new TagFilter(tag.id, tag.name, tag.urlSlug) ] : []);
-		}
-
 		public showTags: KnockoutObservable<boolean>;
 
 		public tags: KnockoutObservableArray<TagFilter>;
