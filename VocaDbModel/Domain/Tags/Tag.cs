@@ -87,6 +87,10 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		/// <summary>
+		/// List of all album tag usages (including deleted albums) for this tag.
+		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// </summary>
 		public virtual ISet<AlbumTagUsage> AllAlbumTagUsages {
 			get { return albumTagUsages; }
 			set {
@@ -95,12 +99,20 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		/// <summary>
+		/// List of all album tag usages (not including deleted albums) for this tag.
+		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// </summary>
 		public virtual IEnumerable<AlbumTagUsage> AlbumTagUsages {
 			get {
 				return AllAlbumTagUsages.Where(a => !a.Album.Deleted);
 			}
 		}
 
+		/// <summary>
+		/// List of all artist tag usages (including deleted artists) for this tag.
+		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// </summary>
 		public virtual ISet<ArtistTagUsage> AllArtistTagUsages {
 			get { return artistTagUsages; }
 			set {
@@ -117,6 +129,10 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		/// <summary>
+		/// List of all artist tag usages (not including deleted artists) for this tag.
+		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// </summary>
 		public virtual IEnumerable<ArtistTagUsage> ArtistTagUsages {
 			get {
 				return AllArtistTagUsages.Where(a => !a.Artist.Deleted);
@@ -304,6 +320,10 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
+		/// <summary>
+		/// List of all song tag usages (including deleted songs) for this tag.
+		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// </summary>
 		public virtual ISet<SongTagUsage> AllSongTagUsages {
 			get { return songTagUsages; }
 			set {
@@ -312,6 +332,10 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		/// <summary>
+		/// List of all song tag usages (not including deleted songs) for this tag.
+		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// </summary>
 		public virtual IEnumerable<SongTagUsage> SongTagUsages {
 			get {
 				return AllSongTagUsages.Where(a => !a.Song.Deleted);

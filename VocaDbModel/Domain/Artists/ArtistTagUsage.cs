@@ -82,10 +82,6 @@ namespace VocaDb.Model.Domain.Artists {
 			Votes.Remove(vote);
 			Count--;
 
-			if (!HasVotes) {
-				Tag.AllArtistTagUsages.Remove(this);
-			}
-
 			return vote;
 
 		}
