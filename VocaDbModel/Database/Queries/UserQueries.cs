@@ -104,18 +104,59 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private int[] GetFavoriteTagIds(IDatabaseContext<User> ctx, User user) {
+
+			return ctx
+				.Query<Tag>()
+				.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution
+					&& t.AllSongTagUsages.Any(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
+				.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
+				.Select(t => t.Id)
+				.Take(8)
+				.ToArray();
+
+		}
+
+		private CachedUserStats GetAlbumCounts(IDatabaseContext<User> ctx, User user) {
+
+			return ctx
+				.Query()
+				.Where(u => u.Id == user.Id)
+				.Select(u => new CachedUserStats {
+					AlbumCollectionCount = u.AllAlbums.Count(a => !a.Album.Deleted),
+					OwnedAlbumCount = u.AllAlbums.Count(a => !a.Album.Deleted && a.PurchaseStatus == PurchaseStatus.Owned),
+					RatedAlbumCount = u.AllAlbums.Count(a => !a.Album.Deleted && a.Rating != 0),
+				})
+				.First();
+
+		}
+
+		private int GetArtistCount(IDatabaseContext<User> ctx, User user) {
+
+			return ctx.Query<ArtistForUser>().Count(u => u.User.Id == user.Id && !u.Artist.Deleted);
+
+		}
+
+		private int GetSongCount(IDatabaseContext<User> ctx, User user) {
+
+			return ctx.Query<FavoriteSongForUser>().Count(u => u.User.Id == user.Id && !u.Song.Deleted);
+
+		}
+
 		private CachedUserStats GetCachedUserStats(IDatabaseContext<User> ctx, User user) {
 			
 			var key = string.Format("CachedUserStats.{0}", user.Id);
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(4), () => {
 
-				var stats = ctx.Query().Where(u => u.Id == user.Id).Select(u => new CachedUserStats {
-					AlbumCollectionCount = u.AllAlbums.Count(a => !a.Album.Deleted),
-					ArtistCount = u.AllArtists.Count(a => !a.Artist.Deleted),
-					FavoriteSongCount = u.FavoriteSongs.Count(c => !c.Song.Deleted),
-					OwnedAlbumCount = u.AllAlbums.Count(a => !a.Album.Deleted && a.PurchaseStatus == PurchaseStatus.Owned),
-					RatedAlbumCount = u.AllAlbums.Count(a => !a.Album.Deleted && a.Rating != 0),
-				}).First();
+				var stats = new CachedUserStats();
+
+				var albumCounts = GetAlbumCounts(ctx, user);
+				stats.AlbumCollectionCount = albumCounts.AlbumCollectionCount;
+				stats.OwnedAlbumCount = albumCounts.OwnedAlbumCount;
+				stats.RatedAlbumCount = albumCounts.RatedAlbumCount;
+
+				stats.ArtistCount = GetArtistCount(ctx, user);
+				stats.FavoriteSongCount = GetSongCount(ctx, user);
 
 				stats.CommentCount
 					= ctx.Query<AlbumComment>().Count(c => c.Author.Id == user.Id)
@@ -131,13 +172,7 @@ namespace VocaDb.Model.Database.Queries {
 					+ ctx.Query<AlbumTagVote>().Count(t => t.User.Id == user.Id)
 					+ ctx.Query<ArtistTagVote>().Count(t => t.User.Id == user.Id);
 
-				stats.FavoriteTags = ctx.Query<Tag>()
-					.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution
-						&& t.AllSongTagUsages.Any(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
-					.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
-					.Select(t => t.Id)
-					.Take(8)
-					.ToArray();
+				stats.FavoriteTags = GetFavoriteTagIds(ctx, user);
 
 				return stats;
 
