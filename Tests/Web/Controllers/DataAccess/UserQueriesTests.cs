@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
@@ -19,7 +20,6 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Security.StopForumSpam;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
-using VocaDb.Web.Code.Security;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
@@ -51,6 +51,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(expected.Name, actual.Name, "Name");
 			Assert.AreEqual(expected.Id, actual.Id, "Id");
 
+		}
+
+		private void AssertHasAlbum(User user, Album album) {
+			Assert.IsTrue(userWithEmail.Albums.Any(a => a.Album == album), "User has album");
 		}
 
 		private UserContract CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, 
@@ -557,6 +561,45 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var contract = new UserMessageContract { Sender = new UserWithIconContract(sender), Receiver = new UserWithIconContract(receiver), Subject = "Subject", Body = "Body" };
 			data.SendMessage(contract, string.Empty, string.Empty);
+
+		}
+
+		[TestMethod]
+		public void UpdateAlbumForUser_Add() {
+
+			var album = repository.Save(CreateEntry.Album());
+			data.UpdateAlbumForUser(userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, 5);
+
+			AssertHasAlbum(userWithEmail, album);
+
+		}
+
+		[TestMethod]
+		public void UpdateAlbumForUser_Update() {
+
+			var album = repository.Save(CreateEntry.Album());
+			data.UpdateAlbumForUser(userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, 5);
+
+			data.UpdateAlbumForUser(userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.DigitalDownload, 5);
+
+			var albumForUser = userWithEmail.Albums.First(a => a.Album == album);
+			Assert.AreEqual(MediaType.DigitalDownload, albumForUser.MediaType, "Media type was updated");
+			Assert.AreEqual(1, userWithEmail.Albums.Count(), "Number of albums for user");
+			Assert.AreEqual(1, repository.List<AlbumForUser>().Count, "Number of album links in the repo");
+
+		}
+
+		[TestMethod]
+		public void UpdateAlbumForUser_Delete() {
+
+			var album = repository.Save(CreateEntry.Album());
+			data.UpdateAlbumForUser(userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, 5);
+
+			data.UpdateAlbumForUser(userWithEmail.Id, album.Id, PurchaseStatus.Nothing, MediaType.Other, 0);
+
+			Assert.IsFalse(userWithEmail.Albums.Any(a => a.Album == album), "Album was removed");
+			Assert.AreEqual(0, userWithEmail.Albums.Count(), "Number of albums for user");
+			Assert.AreEqual(0, repository.List<AlbumForUser>().Count, "Number of album links in the repo");
 
 		}
 
