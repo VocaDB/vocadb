@@ -4,6 +4,30 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201601202130)]
+	public class AlbumForUserUniqueIndex : Migration {
+
+		public override void Up() {
+
+			Delete.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers);
+
+			Create.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers)
+				.OnColumn("[User]").Ascending()
+				.OnColumn("Album").Ascending()
+				.WithOptions().Unique();
+
+		}
+
+		public override void Down() {
+
+			Delete.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers);
+
+			Create.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers).OnColumn("[User]").Ascending();
+
+		}
+
+	}
+
 	[Migration(201601161800)]
 	public class TagUsageCount : Migration {
 
