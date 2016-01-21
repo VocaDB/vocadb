@@ -106,8 +106,8 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.PurchaseStatus).Not.Nullable();
 			Map(m => m.Rating).Not.Nullable();
 
-			References(m => m.Album).Not.Nullable();
-			References(m => m.User).Not.Nullable();
+			References(m => m.Album).Not.Nullable().UniqueKey("IX_AlbumsForUsers");
+			References(m => m.User).Not.Nullable().UniqueKey("IX_AlbumsForUsers");
 
 		}
 
@@ -142,8 +142,8 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.Date).Not.Nullable();
 			Map(m => m.Rating).CustomType<SongVoteRating>().Not.Nullable();
 
-			References(m => m.Song).Not.Nullable();
-			References(m => m.User).Not.Nullable();
+			References(m => m.Song).Not.Nullable().UniqueKey("IX_FavoriteSongsForUsers_3");
+			References(m => m.User).Not.Nullable().UniqueKey("IX_FavoriteSongsForUsers_3");
 
 		}
 

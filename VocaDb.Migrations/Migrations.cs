@@ -3,13 +3,51 @@ using System.Data;
 using FluentMigrator;
 
 namespace VocaDb.Migrations {
+	
+	/// <summary>
+	/// Add index to ActivityEntries table, Author column. This is used especially on the user profile page.
+	/// Add unique key between songs and users, in the FavoriteSongsForUsers table. This is a performance as well as integrity improvement.
+	/// </summary>
+	[Migration(201601212000)]
+	public class AddIndicesMigration : Migration {
 
+		public override void Up() {
+
+			Create.Index("IX_ActivityEntries_Author_EditEvent").OnTable(TableNames.ActivityEntries)
+				.OnColumn("Author").Ascending()
+				.OnColumn("EditEvent").Ascending(); // Include EditEvent column because it's used for filtering
+
+			Delete.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers);
+
+			Create.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers)
+				.OnColumn("[User]").Ascending()
+				.OnColumn("Song").Ascending()
+				.WithOptions().Unique();
+
+		}
+
+		public override void Down() {
+
+			Delete.Index("IX_ActivityEntries_Author_EditEvent").OnTable(TableNames.ActivityEntries);
+			Delete.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers);
+			Create.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers)
+				.OnColumn("[User]").Ascending()
+				.OnColumn("Song").Ascending();
+
+		}
+
+	}
+
+	/// <summary>
+	/// Add unique index for AlbumsForUsers table (User, Album). This is used especially on the user profile page.
+	/// </summary>
 	[Migration(201601202130)]
 	public class AlbumForUserUniqueIndex : Migration {
 
 		public override void Up() {
 
-			Delete.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers);
+			if (Schema.Table(TableNames.AlbumsForUsers).Index("IX_AlbumsForUsers").Exists())
+				Delete.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers);
 
 			Create.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers)
 				.OnColumn("[User]").Ascending()
