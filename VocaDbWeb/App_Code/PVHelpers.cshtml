@@ -12,7 +12,10 @@
 
 	switch (pv.Service) {
 		case PVService.Bilibili:
-				<iframe width="@width" height="@height" src="http://static.hdslb.com/miniloader.swf?aid=@(pv.PVId)" style="border: 0"></iframe>
+				<object type="application/x-shockwave-flash" width="@widthStr" height="@heightStr" style="border: 0">
+					<param name="movie" value="http://static.hdslb.com/miniloader.swf?aid=@(pv.PVId)" />
+					<param name="quality" value="high" />
+				</object>
 				break;
 
 			case PVService.File:
