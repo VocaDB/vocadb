@@ -25,7 +25,12 @@
 				break;
 
 			case PVService.Piapro:
-				<iframe src="//piapro.jp/modpub/swf/player03_h.swf?030503&id=@(pv.PVId)&c=1" width="340" height="80" allowTransparency="true" style="border: 0"></iframe>
+				@* <object> embed instead of iframe because iframe doesn't work with flash disabled *@
+				var piaproSwf = string.Format("//piapro.jp/modpub/swf/player03_h.swf?030503&id={0}&c=1", pv.PVId);
+				<object type="application/x-shockwave-flash" width="340" height="80" style="border: 0">
+				  <param name="movie" value="@piaproSwf" />
+				  <param name="quality" value="high"/>
+				</object>
 			break;
 
 		case PVService.SoundCloud:
