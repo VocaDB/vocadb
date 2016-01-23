@@ -325,12 +325,14 @@ namespace VocaDb.Migrations {
 	public class TagUsagesUniqueIndexes : Migration {
 
 		private void CreateIndex(string table, string indexName, string entityColumn) {
-			Delete.Index(indexName).OnTable(table);
+			if (Schema.Table(table).Index(indexName).Exists())
+				Delete.Index(indexName).OnTable(table);
 			Create.Index(indexName).OnTable(table).OnColumn(entityColumn).Ascending().OnColumn("Tag").Ascending().WithOptions().Unique();
 		}
 
 		private void RevertIndex(string table, string indexName, string entityColumn) {
-			Delete.Index(indexName).OnTable(table);
+			if (Schema.Table(table).Index(indexName).Exists())
+				Delete.Index(indexName).OnTable(table);
 			Create.Index(indexName).OnTable(table).OnColumn(entityColumn).Ascending();
 		}
 
