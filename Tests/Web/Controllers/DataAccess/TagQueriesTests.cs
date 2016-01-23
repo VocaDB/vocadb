@@ -4,6 +4,7 @@ using System.Net.Mime;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -89,11 +90,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_Description() {
 
 			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
-			updated.Description = "mikumikudance.wikia.com/wiki/Miku_Hatsune_Appearance_(Mamama)";
+			updated.Description = new EnglishTranslatedStringContract { Original = "mikumikudance.wikia.com/wiki/Miku_Hatsune_Appearance_(Mamama)", English = string.Empty };
 
 			queries.Update(updated, null);
 
-			Assert.AreEqual(updated.Description, tag.Description, "Description was updated");
+			Assert.AreEqual(updated.Description.Original, tag.Description.Original, "Description was updated");
 
 			var archivedVersion = repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == tag.Id);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");

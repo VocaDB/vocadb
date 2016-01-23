@@ -10,13 +10,17 @@ module vdb.viewModels.tags {
 			latestComments: dc.CommentContract[],
 			loggedUserId: number,
 			tagId: number,
-			canDeleteAllComments: boolean) {
+			canDeleteAllComments: boolean,
+			showTranslatedDescription: boolean) {
 			
 			this.comments = new EditableCommentsViewModel(repo.getComments(), tagId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
+			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
 
 		}
 
 		public comments: EditableCommentsViewModel;
+
+		public showTranslatedDescription: KnockoutObservable<boolean>;
 
 	}
 

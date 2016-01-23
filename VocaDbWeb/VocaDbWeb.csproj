@@ -1842,9 +1842,9 @@
     <Content Include="App_Code\PVHelpers.cshtml" />
     <None Include="compilerconfig.json" />
     <Content Include="Content\Styles\song.less" />
-    <Content Include="compilerconfig.json.defaults">
+    <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
-    </Content>
+    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

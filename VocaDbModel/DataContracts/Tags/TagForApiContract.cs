@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -47,7 +48,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
-				Description = tag.Description;
+				Description = tag.Description[languagePreference];
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.MainPicture) && tag.Thumb != null) {
@@ -60,6 +61,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			if (optionalFields.HasFlag(TagOptionalFields.Parent) && tag.Parent != null) {
 				Parent = new TagBaseContract(tag.Parent, languagePreference, includeAdditionalNames);
+			}
+
+			if (optionalFields.HasFlag(TagOptionalFields.TranslatedDescription)) {
+				TranslatedDescription = new EnglishTranslatedStringContract(tag.Description);
 			}
 
 		}
@@ -108,6 +113,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public EnglishTranslatedStringContract TranslatedDescription { get; set; }
+
 		[DataMember]
 		public string UrlSlug { get; set; }
 
@@ -122,13 +130,14 @@ namespace VocaDb.Model.DataContracts.Tags {
 	[Flags]
 	public enum TagOptionalFields {
 
-		None			= 0,
-		AdditionalNames = 1,
-		AliasedTo		= 2,
-		Description		= 4,
-		MainPicture		= 8,
-		Names			= 16,
-		Parent			= 32
+		None					= 0,
+		AdditionalNames			= 1,
+		AliasedTo				= 2,
+		Description				= 4,
+		MainPicture				= 8,
+		Names					= 16,
+		Parent					= 32,
+		TranslatedDescription	= 64
 
 	}
 

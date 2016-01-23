@@ -5,7 +5,7 @@
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
 @using SharedRes = ViewRes.SharedStrings;
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagDetailsContract>
+@inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
 
 @{
 
@@ -13,15 +13,8 @@
 
 	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
 	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original);
-	if (!string.IsNullOrEmpty(thumbUrl)) {
-		PageProperties.OpenGraph.Image = thumbUrl;
-	}
 
 	var url = PageProperties.CanonicalUrl;
-	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
-	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
-
-	PageProperties.Description = descriptionStripped;
 
 	var related = new List<Tuple<TagBaseContract, string>>();
 
@@ -66,7 +59,8 @@
 			var latestComments = @ToJS(Model.LatestComments);
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
-			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, latestComments, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments);
+			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, latestComments, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
+				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
 			ko.applyBindings(vm);		
 
 		});
@@ -91,8 +85,11 @@
 		}
 
 		<div class="media-body">
-			@if (Model.Description != string.Empty) {
-				@Html.Raw(descriptionHtml)
+			@if (!Model.Description.IsEmpty) {
+				<div class="entry-description">
+					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }					
+				</div>
+				<br />
 			}
 			
 			@if (Model.CategoryName != string.Empty) {

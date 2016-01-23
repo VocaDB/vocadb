@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			AliasedTo = tag.AliasedTo != null ? new TagBaseContract(tag.AliasedTo, languagePreference) : null;
 			CategoryName = tag.CategoryName;
-			Description = tag.Description;
+			Description = tag.Description.GetBestMatch(languagePreference);
 			Parent = tag.Parent != null ? new TagBaseContract(tag.Parent, languagePreference) : null;
 			Status = tag.Status;
 			Version = tag.Version;

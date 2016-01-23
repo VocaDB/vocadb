@@ -46,6 +46,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Artists = artists.Select(a => new ArtistContract(a, languagePreference)).ToArray();
 			ArtistCount = artistCount;
 
+			Description = tag.Description;
+
 			Children = tag.Children.Select(a => new TagBaseContract(a, languagePreference)).ToArray();
 			Siblings = tag.Parent != null ? tag.Parent.Children.Where(t => !t.Equals(tag)).Select(a => new TagBaseContract(a, languagePreference)).ToArray() : new TagBaseContract[0];
 
@@ -71,6 +73,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagBaseContract[] Children { get; set; }
 
 		public int CommentCount { get; set; }
+
+		public EnglishTranslatedString Description { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
 

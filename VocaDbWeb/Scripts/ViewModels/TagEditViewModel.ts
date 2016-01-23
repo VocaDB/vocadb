@@ -13,12 +13,12 @@ module vdb.viewModels {
 			this.aliasedTo = ko.observable(contract.aliasedTo);
 			this.categoryName = ko.observable(contract.categoryName);
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
-			this.description = ko.observable(contract.description);
+			this.description = new globalization.EnglishTranslatedStringEditViewModel(contract.translatedDescription);
 			this.id = contract.id;
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
 			this.parent = ko.observable(contract.parent);
 
-			this.validationError_needDescription = ko.computed(() => !this.description());
+			this.validationError_needDescription = ko.computed(() => !this.description.original());
 
 			this.aliasedToName = ko.computed(() => this.aliasedTo() ? this.aliasedTo().name : null);
 			this.parentName = ko.computed(() => this.parent() ? this.parent().name : null);
@@ -35,7 +35,7 @@ module vdb.viewModels {
 		public aliasedToName: KnockoutComputed<string>;
 		public categoryName: KnockoutObservable<string>;
 		public defaultNameLanguage: KnockoutObservable<string>;
-		public description: KnockoutObservable<string>;
+		public description: globalization.EnglishTranslatedStringEditViewModel;
 		public hasValidationErrors: KnockoutComputed<boolean>;
 		private id: number;
 		public names: globalization.NamesEditViewModel;

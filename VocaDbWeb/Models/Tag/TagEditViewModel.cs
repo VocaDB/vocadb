@@ -2,6 +2,7 @@
 using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -46,8 +47,8 @@ namespace VocaDb.Web.Models.Tag {
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[Display(Name = "Description")]
-		[StringLength(1000)]
-		public string Description { get; set; }
+		[FromJson]
+		public EnglishTranslatedStringContract Description { get; set; }
 
 		public bool Draft => Status == EntryStatus.Draft;
 
@@ -91,7 +92,7 @@ namespace VocaDb.Web.Models.Tag {
 				AliasedTo = this.AliasedTo,
 				CategoryName = this.CategoryName ?? string.Empty,
 				DefaultNameLanguage = DefaultNameLanguage,
-				Description = this.Description ?? string.Empty,
+				Description = this.Description,
 				Parent = this.Parent,
 				Status = this.Status,
 				UpdateNotes = this.UpdateNotes ?? string.Empty

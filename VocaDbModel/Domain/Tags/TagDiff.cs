@@ -84,6 +84,12 @@ namespace VocaDb.Model.Domain.Tags {
 			}		
 		}
 
+		public virtual bool IncludeDescription {
+			get {
+				return (IsSnapshot || Description);
+			}
+		}
+
 		public virtual bool IncludeNames {
 			get {
 				return (IsSnapshot || Names);

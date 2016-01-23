@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using NHibernate;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -430,8 +429,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (tag.CategoryName != contract.CategoryName)
 					diff.CategoryName = true;
 
-				if (tag.Description != contract.Description)
-					diff.Description = true;
+				diff.Description = tag.Description.CopyFrom(contract.Description);
 
 				if (tag.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
 					tag.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
@@ -459,7 +457,6 @@ namespace VocaDb.Model.Database.Queries {
 					diff.Status = true;
 
 				tag.CategoryName = contract.CategoryName;
-				tag.Description = contract.Description;
 				tag.Status = contract.Status;
 
 				if (uploadedImage != null) {

@@ -32,7 +32,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 			data.TranslatedName = thisVersion.TranslatedName;
 
 			DoIfExists(version, TagEditableFields.AliasedTo, xmlCache, v => data.AliasedTo = v.AliasedTo);
-			DoIfExists(version, TagEditableFields.Description, xmlCache, v => data.Description = v.Description);
+			DoIfExists(version, TagEditableFields.Description, xmlCache, v => {
+				data.Description = v.Description;
+				data.DescriptionEng = v.DescriptionEng;
+			});
 			DoIfExists(version, TagEditableFields.Names, xmlCache, v => data.Names = v.Names);
 			DoIfExists(version, TagEditableFields.Parent, xmlCache, v => data.Parent = v.Parent);
 
@@ -48,7 +51,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			AliasedTo = tag.AliasedTo != null ? new ObjectRefContract(tag.AliasedTo) : null;
 			CategoryName = tag.CategoryName;
-			Description = tag.Description;
+			Description = diff.IncludeDescription ? tag.Description.Original : null;
+			DescriptionEng = diff.IncludeDescription ? tag.Description.English : null;
 			Id = tag.Id;
 			Names = diff.IncludeNames ? tag.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			Parent = tag.Parent != null ? new ObjectRefContract(tag.Parent) : null;
@@ -65,6 +69,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string Description { get; set; }
+
+		[DataMember]
+		public string DescriptionEng { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

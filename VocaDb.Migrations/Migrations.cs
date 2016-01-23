@@ -3,7 +3,37 @@ using System.Data;
 using FluentMigrator;
 
 namespace VocaDb.Migrations {
-	
+
+	[Migration(201601231630)]
+	public class RemoveInlineFieldsFromArchivedTags : Migration {
+
+		public override void Up() {
+
+			Delete.Column("CategoryName").FromTable(TableNames.ArchivedTagVersions);
+			Delete.Column("Description").FromTable(TableNames.ArchivedTagVersions);
+
+		}
+
+		public override void Down() {
+
+			Create.Column("CategoryName").OnTable(TableNames.ArchivedTagVersions).AsString(30).NotNullable().WithDefaultValue(string.Empty);
+			Create.Column("Description").OnTable(TableNames.ArchivedTagVersions).AsString(1000).NotNullable().WithDefaultValue(string.Empty);
+
+		}
+
+	}
+
+	[Migration(201601231230)]
+	public class TranslatedTagDescription : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("DescriptionEng").OnTable(TableNames.Tags).AsString(1000).NotNullable().WithDefaultValue(string.Empty);
+
+		}
+
+	}
+
 	/// <summary>
 	/// Add index to ActivityEntries table, Author column. This is used especially on the user profile page.
 	/// Add unique key between songs and users, in the FavoriteSongsForUsers table. This is a performance as well as integrity improvement.

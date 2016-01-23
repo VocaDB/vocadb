@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
@@ -16,6 +17,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			: base(tag, languagePreference) {
 
 			DefaultNameLanguage = tag.TranslatedName.DefaultLanguage;
+			Description = new EnglishTranslatedStringContract(tag.Description);
 			IsEmpty = isEmpty;
 			Names = tag.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
@@ -25,6 +27,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		[DataMember]
+		public EnglishTranslatedStringContract Description { get; set; }
 
 		[DataMember]
 		public bool IsEmpty { get; set; }

@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Globalization;
 using System.Web.Mvc;
 using ViewRes.Tag;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;
 using VocaDb.Web.Models.Shared;
@@ -19,13 +22,15 @@ namespace VocaDb.Web.Controllers
 
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
-	    private readonly TagQueries queries;
+		private readonly MarkdownParser markdownParser;
+		private readonly TagQueries queries;
 
-		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations) {
+		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser) {
 
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
 			this.enumTranslations = enumTranslations;
+			this.markdownParser = markdownParser;
 
 		}
 
@@ -86,6 +91,15 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var contract = queries.GetDetails(id);
+
+			var prop = PageProperties;
+
+			var thumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.Original);
+			if (!string.IsNullOrEmpty(thumbUrl)) {
+				PageProperties.OpenGraph.Image = thumbUrl;
+			}
+
+			prop.Description = markdownParser.GetPlainText(contract.Description.EnglishOrOriginal);
 
 			return RenderDetails(contract);
 

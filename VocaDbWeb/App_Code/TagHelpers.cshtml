@@ -15,6 +15,7 @@
 			@ArchivedEntryHelpers.TranslatedNameRow(comparedTags, d => d.TranslatedName)
 			@ArchivedEntryHelpers.DataRowList("Names", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
 			@ArchivedEntryHelpers.DataRow("Description", comparedTags, d => d.Description)
+			@ArchivedEntryHelpers.DataRow("Description English", comparedTags, d => d.DescriptionEng)
 			@ArchivedEntryHelpers.DataRow("Aliased to", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.AliasedTo))
 			@ArchivedEntryHelpers.DataRow("Parent", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.Parent))
 		</table>

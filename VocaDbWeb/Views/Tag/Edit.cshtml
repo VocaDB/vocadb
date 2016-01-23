@@ -32,7 +32,7 @@
 		var tagRepo = new vdb.repositories.TagRepository('@RootPath');
 		var userRepo = new vdb.repositories.UserRepository(urlMapper);
 
-		tagRepo.getById('@Model.Id', "AliasedTo,Description,Names,Parent", function (contract) {
+		tagRepo.getById('@Model.Id', "AliasedTo,TranslatedDescription,Names,Parent", function (contract) {
 			var viewModel = new vdb.viewModels.TagEditViewModel(userRepo, contract);
 			ko.applyBindings(viewModel);
 		});
@@ -116,13 +116,9 @@
 		@Html.LabelFor(m => m.Description)
 		@Helpers.MarkdownNotice()
 	</div>
-	<div class="editor-field">
-		@Html.TextAreaForKnockout(m => m.Description, binding: "textInput: description", cssClass: "span6", maxLength: 1000, rows: 8, cols: 50)
-		@Html.ValidationMessageFor(m => m.Description)
-
-		Live preview
-		<div data-bind="markdown: description"></div>
-		<br />
+	<div class="editor-field entry-edit-description" data-bind="with: description">
+		@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
+		@Html.HiddenForKnockout(m => m.Description, "value: ko.toJSON($data)")
 	</div>
 
 	<div class="editor-label">

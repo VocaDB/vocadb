@@ -45,13 +45,13 @@ namespace VocaDb.Model.Domain.Tags {
 		private string categoryName;
 		private ISet<Tag> children = new HashSet<Tag>();
 		private IList<TagComment> comments = new List<TagComment>();
-		private string description;
+		private EnglishTranslatedString description;
 		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
 
 		public Tag() {
 			CategoryName = string.Empty;
-			Description = string.Empty;
+			Description = new EnglishTranslatedString();
 			Status = EntryStatus.Draft;
 		}
 
@@ -184,9 +184,12 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// Tag description, may contain Markdown formatting.
 		/// </summary>
-		public virtual string Description {
+		public virtual EnglishTranslatedString Description {
 			get { return description; }
-			set { description = value; }
+			set {
+				ParamIs.NotNull(() => value);
+				description = value;
+			}
 		}
 
 		public virtual EntryType EntryType {

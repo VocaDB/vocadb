@@ -12,7 +12,6 @@ namespace VocaDb.Model.Mapping.Tags {
 			Id(m => m.Id);
 
 			Map(m => m.CategoryName).Length(30).Not.Nullable();
-			Map(m => m.Description).Length(1000).Not.Nullable();
 			Map(m => m.Status).CustomType(typeof(EntryStatus)).Not.Nullable();
 			Map(m => m.UsageCount).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
@@ -29,6 +28,11 @@ namespace VocaDb.Model.Mapping.Tags {
 
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Tag]").Inverse().Cascade.All().OrderBy("Created DESC"));
+
+			Component(m => m.Description, c => {
+				c.Map(m => m.Original).Column("Description").Not.Nullable().Length(int.MaxValue);
+				c.Map(m => m.English).Column("DescriptionEng").Not.Nullable().Length(int.MaxValue);
+			});
 
 			Component(m => m.Names, c => {
 				c.HasMany(m => m.Names).Table("TagNames").KeyColumn("[Tag]").Inverse().Cascade.All().Cache.ReadWrite();
@@ -55,11 +59,9 @@ namespace VocaDb.Model.Mapping.Tags {
 
 			Id(m => m.Id);
 
-			Map(m => m.CategoryName).Length(30).Not.Nullable();
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data).Nullable();
-			Map(m => m.Description).Length(1000).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();

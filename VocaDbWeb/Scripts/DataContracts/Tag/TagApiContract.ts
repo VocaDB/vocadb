@@ -25,6 +25,8 @@ module vdb.dataContracts {
 
 		status: string;
 
+		translatedDescription?: globalization.EnglishTranslatedStringContract;
+
 		urlSlug?: string;
 
 		usageCount: number;

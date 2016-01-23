@@ -30,23 +30,11 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// <summary>
 		/// Primarily gets English name, Original if English is not specified.
 		/// </summary>
-		public virtual string EnglishOrOriginal {
-			get {
-				return GetBestMatch(ContentLanguagePreference.English);
-			}
-		}
+		public virtual string EnglishOrOriginal => GetBestMatch(ContentLanguagePreference.English);
 
-		public virtual bool HasEnglish {
-			get {
-				return !string.IsNullOrEmpty(English);
-			}
-		}
+		public virtual bool HasEnglish => !string.IsNullOrEmpty(English);
 
-		public virtual bool IsEmpty {
-			get {
-				return string.IsNullOrEmpty(Original);
-			}
-		}
+		public virtual bool IsEmpty => string.IsNullOrEmpty(Original);
 
 		public virtual string Original {
 			get { return original; }
@@ -84,11 +72,7 @@ namespace VocaDb.Model.Domain.Globalization {
 			return ShowEnglish(languagePreference) ? English : Original;
 		}
 
-		public string this[ContentLanguagePreference preference] {
-			get {
-				return GetBestMatch(preference);
-			}
-		}
+		public string this[ContentLanguagePreference preference] => GetBestMatch(preference);
 
 	}
 
