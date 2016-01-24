@@ -553,8 +553,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (nameDiff.Changed)
 					diff.Names = true;
 
-				var validWebLinks = properties.WebLinks.Where(w => !string.IsNullOrEmpty(w.Url));
-				var webLinkDiff = WebLink.Sync(album.WebLinks, validWebLinks, album);
+				var webLinkDiff = WebLink.Sync(album.WebLinks, properties.WebLinks, album);
 				session.OfType<AlbumWebLink>().Sync(webLinkDiff);
 
 				if (webLinkDiff.Changed)

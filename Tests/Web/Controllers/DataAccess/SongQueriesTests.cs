@@ -588,5 +588,34 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		[TestMethod]
+		public void Update_Weblinks() {
+
+			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
+			contract.WebLinks = new[] {
+				new WebLinkContract("http://vocadb.net", "VocaDB", Model.Domain.WebLinkCategory.Reference)
+			};
+
+			contract = queries.UpdateBasicProperties(contract);
+			var songFromRepo = repository.Load(contract.Id);
+			Assert.AreEqual(1, songFromRepo.WebLinks.Count, "Number of weblinks");
+			Assert.AreEqual("http://vocadb.net", songFromRepo.WebLinks[0].Url, "Weblink URL");
+
+		}
+
+		[TestMethod]
+		public void Update_Weblinks_SkipWhitespace() {
+
+			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
+			contract.WebLinks = new[] {
+				new WebLinkContract(" ", "VocaDB", Model.Domain.WebLinkCategory.Reference)
+			};
+
+			contract = queries.UpdateBasicProperties(contract);
+			var songFromRepo = repository.Load(contract.Id);
+			Assert.AreEqual(0, songFromRepo.WebLinks.Count, "Number of weblinks");
+
+		}
+
 	}
 }

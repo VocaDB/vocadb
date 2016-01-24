@@ -130,6 +130,21 @@ namespace VocaDb.Tests.Domain {
 
 		}
 
+		[TestMethod]
+		public void Sync_Contracts_SkipWhitespace() {
+
+			var newLinks = new[] { new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference) };
+
+			var result = WebLink.Sync(new WebLink[] { }, newLinks, webLinkFactory);
+
+			Assert.IsNotNull(result, "result is not null");
+			Assert.IsFalse(result.Changed, "is changed");
+			Assert.AreEqual(0, result.Added.Length, "1 added");
+			Assert.AreEqual(0, result.Edited.Length, "none edited");
+			Assert.AreEqual(0, result.Removed.Length, "none removed");
+			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
+
+		}
 	}
 
 }
