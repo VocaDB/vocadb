@@ -57,7 +57,7 @@ module vdb.viewModels {
 			var msg = this.selectedMessage();
 			$("#receiverName").val(msg.sender.name);
 
-			$("#newMessageSubject").val("Re: " + msg.subject);
+			$("#newMessageSubject").val(msg.subject && msg.subject.indexOf("Re:") === 0 ? msg.subject : "Re: " + msg.subject);
 
             this.selectTab("#composeTab");
 
