@@ -14,7 +14,7 @@ namespace VocaDb.Web.Code.Highcharts {
         }
 
 		public static object[][] DateData(IEnumerable<CountPerDayContract> source) {
-			return DateData(source, d => new DateTime(d.Year, d.Month, d.Day), d => d.Count);
+			return DateData(source, d => d.ToDateTime(), d => d.Count);
 		}
 
 		public Series() { }

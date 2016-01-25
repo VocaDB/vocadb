@@ -35,6 +35,12 @@ namespace VocaDb.Web.Controllers {
 			}        
 		}
 
+		public static Tuple<DateTime, int>[] CumulativeSum(this IEnumerable<CountPerDayContract> sequence) {
+			return sequence.CumulativeSelect<CountPerDayContract, Tuple<DateTime, int>>((v, previous) => {
+				return Tuple.Create(v.ToDateTime(), (previous != null ? previous.Item2 : 0) + v.Count);
+			}).ToArray();
+		}
+
 	}
 
 	public class StatsController : ControllerBase {
@@ -397,11 +403,20 @@ namespace VocaDb.Web.Controllers {
 
 			});
 
-			var points = values.CumulativeSelect<CountPerDayContract, Tuple<DateTime, int>>((v, previous) => {
-				return Tuple.Create(new DateTime(v.Year, v.Month, v.Day), (previous != null ? previous.Item2 : 0) + v.Count);
-			}).ToArray();
+			var points = values.CumulativeSum();
 
 			return DateLineChartWithAverage("Cumulative albums per day", "Albums", "Number of albums", points, false);
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult CumulativeSongsPublished() {
+
+			var values = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0).First();
+
+			var points = values.CumulativeSum();
+
+			return DateLineChartWithAverage("Cumulative songs published per day", "Songs", "Number of songs", points, false);
 
 		}
 

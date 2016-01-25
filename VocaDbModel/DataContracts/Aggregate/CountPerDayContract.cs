@@ -26,6 +26,11 @@ namespace VocaDb.Model.DataContracts.Aggregate {
 		public int Month { get; set; }
 		public int Day { get; set; }
 		public int Count { get; set; }
+
+		public DateTime ToDateTime() {
+			return new DateTime(Year, Month, Day);
+		}
+
 	}
 
 }
