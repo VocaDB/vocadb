@@ -157,6 +157,7 @@
 			@ArchivedEntryHelpers.DataRow("Release date", comparedAlbums, d => d.OriginalRelease != null && d.OriginalRelease.ReleaseDate != null && !d.OriginalRelease.ReleaseDate.IsEmpty ? ArchivedEntryHelpers.FormatReleaseDate(d.OriginalRelease.ReleaseDate) : string.Empty)
 			@ArchivedEntryHelpers.DataRow("Catalog number", comparedAlbums, d => d.OriginalRelease != null ? d.OriginalRelease.CatNum : string.Empty)
 			@ArchivedEntryHelpers.DataRow("Release event", comparedAlbums, d => d.OriginalRelease != null ? d.OriginalRelease.EventName : string.Empty)
+			@ArchivedEntryHelpers.DataRowList("Barcodes", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Identifiers, d2 => new MvcHtmlString(d2.Value)))
 			@ArchivedEntryHelpers.DataRowList("External links", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
 			@ArchivedEntryHelpers.DataRowList("Artists", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Artists != null ? d.Artists.OrderBy(a => a.NameHint) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
 			@ArchivedEntryHelpers.DataRowList("Discs", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Discs != null ? d.Discs.OrderBy(s => s.DiscNumber) : null, disc => MvcHtmlString.Create(disc.DiscNumber + ": " + disc.Name + " (" + disc.MediaType + ") [" + disc.Id + "]")))

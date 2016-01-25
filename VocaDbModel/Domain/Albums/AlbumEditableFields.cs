@@ -15,6 +15,7 @@ namespace VocaDb.Model.Domain.Albums {
 		/// <summary>
 		/// Identifiers list
 		/// </summary>
+		[Obsolete("Replaced by Identifiers")]
 		Barcode			= 2,
 
 		Cover			= 4,
