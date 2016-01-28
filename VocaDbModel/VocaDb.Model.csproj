@@ -397,6 +397,7 @@
     <Compile Include="Domain\Songs\SongTagVote.cs" />
     <Compile Include="Domain\Songs\SongVoteRating.cs" />
     <Compile Include="Domain\Tags\ArchivedTagVersion.cs" />
+    <Compile Include="Domain\Tags\RelatedTag.cs" />
     <Compile Include="Domain\Tags\SpecialTagType.cs" />
     <Compile Include="Domain\Tags\TagComment.cs" />
     <Compile Include="Domain\Tags\TagDiff.cs" />
@@ -563,6 +564,7 @@
     <Compile Include="Mapping\Songs\SongMergeRecordMap.cs" />
     <Compile Include="Mapping\Songs\SongTagUsageMap.cs" />
     <Compile Include="Mapping\Songs\SongTagVoteMap.cs" />
+    <Compile Include="Mapping\Tags\RelatedTagMap.cs" />
     <Compile Include="Mapping\Tags\TagCommentMap.cs" />
     <Compile Include="Mapping\Tags\TagMap.cs" />
     <Compile Include="Mapping\TrashedEntryMap.cs" />

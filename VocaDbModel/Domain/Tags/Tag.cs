@@ -47,6 +47,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private IList<TagComment> comments = new List<TagComment>();
 		private EnglishTranslatedString description;
 		private NameManager<TagName> names = new NameManager<TagName>();
+		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
 
 		public Tag() {
@@ -332,6 +333,14 @@ namespace VocaDb.Model.Domain.Tags {
 			set {
 				ParamIs.NotNull(() => value);
 				songTagUsages = value;
+			}
+		}
+
+		public virtual ISet<RelatedTag> RelatedTags {
+			get { return relatedTags; }
+			set {
+				ParamIs.NotNull(() => value);
+				relatedTags = value;
 			}
 		}
 
