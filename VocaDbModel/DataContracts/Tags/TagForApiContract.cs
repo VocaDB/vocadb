@@ -63,6 +63,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 				Parent = new TagBaseContract(tag.Parent, languagePreference, includeAdditionalNames);
 			}
 
+			if (optionalFields.HasFlag(TagOptionalFields.RelatedTags)) {
+				RelatedTags = tag.RelatedTags.Select(t => new TagBaseContract(t.Tag2, languagePreference, includeAdditionalNames)).ToArray();
+			}
+
 			if (optionalFields.HasFlag(TagOptionalFields.TranslatedDescription)) {
 				TranslatedDescription = new EnglishTranslatedStringContract(tag.Description);
 			}
@@ -109,6 +113,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember(EmitDefaultValue = false)]
 		public TagBaseContract Parent { get; set; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public TagBaseContract[] RelatedTags { get; set; }
+
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
@@ -137,7 +144,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		MainPicture				= 8,
 		Names					= 16,
 		Parent					= 32,
-		TranslatedDescription	= 64
+		RelatedTags				= 64,
+		TranslatedDescription	= 128
 
 	}
 
