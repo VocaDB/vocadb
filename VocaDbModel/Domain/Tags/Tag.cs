@@ -371,7 +371,12 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual int Version { get; set; }
 
-		private RelatedTag AddRelatedTag(Tag tag) {
+		public RelatedTag AddRelatedTag(Tag tag) {
+
+			ParamIs.NotNull(() => tag);
+
+			if (Equals(tag))
+				throw new ArgumentException("Cannot add self as related tag");
 
 			var link = new RelatedTag(this, tag);
 			RelatedTags.Add(link);

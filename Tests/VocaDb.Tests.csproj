@@ -129,6 +129,7 @@
     <Compile Include="Domain\Security\EntryPermissionManagerTests.cs" />
     <Compile Include="Domain\Songs\SongTests.cs" />
     <Compile Include="Domain\Tags\TagManagerTests.cs" />
+    <Compile Include="Domain\Tags\TagTests.cs" />
     <Compile Include="Domain\Users\FavoriteSongForUserTests.cs" />
     <Compile Include="Domain\Users\OwnedArtistForUserTests.cs" />
     <Compile Include="Domain\Users\UserTests.cs" />
