@@ -20,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Description = new EnglishTranslatedStringContract(tag.Description);
 			IsEmpty = isEmpty;
 			Names = tag.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
+			RelatedTags = tag.RelatedTags.Select(t => new TagBaseContract(t.LinkedTag, languagePreference, false)).ToArray();
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			UpdateNotes = string.Empty;
 
@@ -36,6 +37,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public LocalizedStringWithIdContract[] Names { get; set; }
+
+		[DataMember]
+		public TagBaseContract[] RelatedTags { get; set; }
 
 		[DataMember]
 		public EntryThumbContract Thumb { get; set; }

@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Tags {
 
@@ -369,6 +370,30 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int UsageCount { get; set; }
 
 		public virtual int Version { get; set; }
+
+		private RelatedTag AddRelatedTag(Tag tag) {
+
+			var link = new RelatedTag(this, tag);
+			RelatedTags.Add(link);
+
+			var reverseLink = link.CreateReversed();
+			tag.RelatedTags.Add(reverseLink);
+
+			return link;
+
+		}
+
+		public virtual CollectionDiff<RelatedTag> SyncRelatedTags(IEnumerable<ITag> newRelatedTags, Func<int, Tag> loadTagFunc) {
+
+			Func<ITag, RelatedTag> create = tagRef => {
+				var tag = loadTagFunc(tagRef.Id);
+				return AddRelatedTag(tag);
+			};
+
+			var diff = CollectionHelper.Sync(RelatedTags, newRelatedTags, (t1, t2) => Equals(t1.LinkedTag, t2), create, link => link.Delete());
+			return diff;
+
+		}
 
 		public override string ToString() {
 			return string.Format("tag '{0}' [{1}]", DefaultName, Id);

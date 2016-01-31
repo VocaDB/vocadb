@@ -147,7 +147,7 @@ namespace VocaDb.Model.Helpers {
 		/// Can be null.
 		/// </param>
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
-		public static CollectionDiff<T, T> Sync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Action<T> remove = null) {
+		public static CollectionDiff<T> Sync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Action<T> remove = null) {
 
 			return Sync(oldItems, newItems, equality.Equals, t => t, remove);
 
@@ -172,7 +172,7 @@ namespace VocaDb.Model.Helpers {
 		/// Can be null.
 		/// </param>
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
-		public static CollectionDiff<T, T> Sync<T, T2>(IList<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality, Func<T2, T> create, Action<T> remove = null) {
+		public static CollectionDiff<T> Sync<T, T2>(ICollection<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality, Func<T2, T> create, Action<T> remove = null) {
 
 			var diff = Diff(old, newItems, equality);
 			var created = new List<T>();
@@ -192,7 +192,7 @@ namespace VocaDb.Model.Helpers {
 				created.Add(link);
 			}
 
-			return new CollectionDiff<T, T>(created, diff.Removed, diff.Unchanged);
+			return new CollectionDiff<T>(created, diff.Removed, diff.Unchanged);
 
 		}
 
@@ -317,6 +317,17 @@ namespace VocaDb.Model.Helpers {
 		/// Note: the contents of those entriers might still be changed, depending on equality.
 		/// </summary>
 		public T[] Unchanged { get; private set; }
+
+	}
+
+	/// <summary>
+	/// Difference between two collections of the same type.
+	/// </summary>
+	/// <typeparam name="T">Type of the collection.</typeparam>
+	public class CollectionDiff<T> : CollectionDiff<T, T> {
+
+		public CollectionDiff(IEnumerable<T> added, IEnumerable<T> removed, IEnumerable<T> unchanged) 
+			: base(added, removed, unchanged) {}
 
 	}
 

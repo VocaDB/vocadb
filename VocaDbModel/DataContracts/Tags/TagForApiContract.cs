@@ -64,7 +64,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.RelatedTags)) {
-				RelatedTags = tag.RelatedTags.Select(t => new TagBaseContract(t.Tag2, languagePreference, includeAdditionalNames)).ToArray();
+				RelatedTags = tag.RelatedTags.Select(t => new TagBaseContract(t.LinkedTag, languagePreference, includeAdditionalNames)).ToArray();
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.TranslatedDescription)) {

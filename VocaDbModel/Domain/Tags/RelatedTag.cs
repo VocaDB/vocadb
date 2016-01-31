@@ -8,8 +8,13 @@
 		public RelatedTag() { }
 
 		public RelatedTag(Tag ownerTag, Tag linkedTag) {
+
+			ParamIs.NotNull(() => ownerTag);
+			ParamIs.NotNull(() => linkedTag);
+
 			OwnerTag = ownerTag;
 			LinkedTag = linkedTag;
+
 		}
 
 		public int Id { get; set; }
@@ -30,8 +35,17 @@
 			}
 		}
 
+		public virtual RelatedTag CreateReversed() {
+			return new RelatedTag(LinkedTag, OwnerTag);
+		}
+
+		public virtual void Delete() {
+			OwnerTag.RelatedTags.Remove(this);
+			LinkedTag.RelatedTags.Remove(CreateReversed());
+		}
+
 		protected bool Equals(RelatedTag other) {
-			return Equals(ownerTag, other.ownerTag) && Equals(linkedTag, other.linkedTag);
+			return OwnerTag.Equals(other.OwnerTag) && LinkedTag.Equals(other.LinkedTag);
 		}
 
 		public override bool Equals(object obj) {
@@ -43,7 +57,7 @@
 
 		public override int GetHashCode() {
 			unchecked {
-				return ((ownerTag != null ? ownerTag.GetHashCode() : 0)*397) ^ (linkedTag != null ? linkedTag.GetHashCode() : 0);
+				return ((OwnerTag != null ? OwnerTag.GetHashCode() : 0)*397) ^ (LinkedTag != null ? LinkedTag.GetHashCode() : 0);
 			}
 		}
 

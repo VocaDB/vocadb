@@ -10,8 +10,8 @@ namespace VocaDb.Model.Mapping.Tags {
 			Cache.ReadOnly(); // Immutable
 			Id(m => m.Id);
 
-			References(m => m.Tag1).Not.Nullable().UniqueKey("IX_RelatedTags_Tag1_Tag2");
-			References(m => m.Tag2).Not.Nullable().UniqueKey("IX_RelatedTags_Tag1_Tag2");
+			References(m => m.OwnerTag).Not.Nullable().UniqueKey("IX_RelatedTags_Tag1_Tag2");
+			References(m => m.LinkedTag).Not.Nullable().UniqueKey("IX_RelatedTags_Tag1_Tag2");
 
 		}
 

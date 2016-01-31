@@ -25,7 +25,9 @@ namespace VocaDb.Model.Domain.Tags {
 
 		Picture			= 64,
 
-		Status			= 128
+		RelatedTags		= 128,
+
+		Status			= 256
 
 	}
 

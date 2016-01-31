@@ -453,6 +453,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
+				var relatedTagsDiff = tag.SyncRelatedTags(contract.RelatedTags, tagId => ctx.Load(tagId));
+				ctx.Sync(relatedTagsDiff);
+				diff.RelatedTags = relatedTagsDiff.Changed;
+
 				if (tag.Status != contract.Status)
 					diff.Status = true;
 
