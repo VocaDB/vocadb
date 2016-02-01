@@ -106,7 +106,7 @@ module vdb.viewModels.search {
 				this.updateResults();
 			});
 
-			tagRepo.getTopTags(models.tags.Tag.commonCategory_Genres, result => {
+			tagRepo.getTopTags(languageSelection, models.tags.Tag.commonCategory_Genres, result => {
 				this.genreTags(result);
 			});
 
