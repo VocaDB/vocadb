@@ -89,7 +89,7 @@ namespace VocaDb.Model.Service.Queries {
 					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport)
 					.WhereIsMainSong(artist.ArtistType)
 					.Select(s => s.Song)
-					.OrderByDescending(s => s.CreateDate)
+					.OrderByPublishDate(SortDirection.Descending)
 					.Take(8).ToArray()
 					.Select(s => new SongContract(s, languagePreference))
 					.ToArray();
