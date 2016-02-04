@@ -54,6 +54,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/Show.js",
 				"~/Scripts/KnockoutExtensions/ToggleClick.js",
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
+				"~/Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
 				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",
 				"~/Scripts/Models/SongVoteRating.js",				// Referred by UserRepository
@@ -183,7 +184,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/Highcharts.js",
-				"~/Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
@@ -250,7 +250,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
-				"~/Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Models/Tags/Tag.js",
 				"~/Scripts/Helpers/ArtistHelper.js",

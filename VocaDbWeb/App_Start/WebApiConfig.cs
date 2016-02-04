@@ -31,6 +31,7 @@ namespace VocaDb.Web.App_Start {
 				"DefaultApi", "api/{controller}/{id}",
 				new { id = RouteParameter.Optional });
 
+			config.Filters.Add(new ObjectNotFoundExceptionFilterAttribute());
 			config.Services.Add(typeof(IExceptionLogger), new UnhandledExceptionLogger());
 
 		}

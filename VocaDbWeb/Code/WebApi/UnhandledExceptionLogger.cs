@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http.ExceptionHandling;
+using NHibernate;
 using NLog;
 
 namespace VocaDb.Web.Code.WebApi {
@@ -9,13 +10,15 @@ namespace VocaDb.Web.Code.WebApi {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private bool ShouldLog(Exception x) {
-			return x != null && !(x is TaskCanceledException);
+		public override bool ShouldLog(ExceptionLoggerContext context) {
+			var x = context.Exception;
+			return x != null && !(x is TaskCanceledException) && !(x is ObjectNotFoundException);
 		}
+
 
 		public override void Log(ExceptionLoggerContext context) {
 
-			if (!ShouldLog(context.Exception))
+			if (!ShouldLog(context))
 				return;
 
 			log.Error(context.Exception, "Exception raised by web API");

@@ -254,10 +254,10 @@
 		@if (Model.LatestSongs.Any()) {
 			<br />
 			<h3>
-				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.AdditionDate), null)
+				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.PublishDate), null)
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.SongCount))</small>
 			</h3>
-			@SongHelpers.SongGrid(Model.LatestSongs, 2, true)
+			@SongHelpers.SongGrid(Model.LatestSongs, 2, true, true)
 		}
 
 		@if (Model.TopSongs.Any()) {
@@ -266,7 +266,7 @@
 				@Html.ActionLink(ViewRes.Artist.DetailsStrings.TopSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.RatingScore), null)
 				<small>(@string.Format("{0} rated songs total", Model.SharedStats.RatedSongCount))</small>
 			</h3>
-			@SongHelpers.SongGrid(Model.TopSongs, 2, true)
+			@SongHelpers.SongGrid(Model.TopSongs, 2, true, true)
 		}
 		
 		<div data-bind="visible: songsOverTimeChart">

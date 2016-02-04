@@ -32,10 +32,10 @@ module vdb.repositories {
 
 		}
 
-		public getTopTags = (categoryName?: string, callback?: (tags: dc.TagBaseContract[]) => void) => {
+		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: dc.TagBaseContract[]) => void) => {
 			
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/top");
-			var data = { categoryName: categoryName };
+			var data = { lang: lang, categoryName: categoryName };
 
 			$.getJSON(url, data, callback);
 

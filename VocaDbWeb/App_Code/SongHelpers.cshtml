@@ -87,7 +87,7 @@
 }
 
 @helper SongGrid(IEnumerable<SongContract> songs, int columns,
-	bool displayType = false) {
+	bool displayType = false, bool displayPublishDate = false) {
 	
 	<table>
 		@{ int i = 0; }
@@ -105,6 +105,9 @@
 				@SongLink(song)
 				@if (displayType) {
 					@SongTypeLabel(song.SongType)
+				}
+				@if (displayPublishDate && song.PublishDate.HasValue) {
+					<i class="icon-calendar" title="Published: @song.PublishDate.Value.ToShortDateString()" data-bind="tooltip: { placement: 'right' }"></i>					
 				}
 				<br />
 				<span class="extraInfo">@song.ArtistString</span>
