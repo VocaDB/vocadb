@@ -466,7 +466,7 @@ namespace VocaDb.Model.Database.Queries {
 					var thumb = new EntryThumb(tag, uploadedImage.Mime);
 					tag.Thumb = thumb;
 					var thumbGenerator = new ImageThumbGenerator(imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(uploadedImage.Stream, thumb, Tag.ImageSizes, originalSize: 500);
+					thumbGenerator.GenerateThumbsAndMoveImage(uploadedImage.Stream, thumb, Tag.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
 
 				}
 
