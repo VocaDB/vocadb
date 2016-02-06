@@ -445,7 +445,9 @@ module vdb.viewModels {
 			this.validationError_needArtist = ko.computed(() => _.isEmpty(this.artistLinks()));
 			this.validationError_needCover = ko.computed(() => !this.hasCover);
 
-			this.validationError_needReferences = ko.computed(() => _.isEmpty(this.description.original()) && _.isEmpty(this.webLinks.webLinks()));
+			this.validationError_needReferences = ko.computed(() => _.isEmpty(this.description.original())
+				&& _.isEmpty(this.webLinks.webLinks())
+				&& _.isEmpty(this.pvs.pvs()));
 
 			this.validationError_needReleaseYear = ko.computed(() => {
 				var num = !_.isNumber(this.releaseYear()) || this.releaseYear() == null;

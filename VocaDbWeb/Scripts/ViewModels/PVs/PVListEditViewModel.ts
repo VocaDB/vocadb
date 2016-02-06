@@ -96,13 +96,6 @@ module vdb.viewModels.pvs {
 					this.pvs.push(new PVEditViewModel(result, 'Original'));
 				}
 			});
-			/*
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST', "../UploadMedia", true);
-			xhr.onloadend = result => {
-				this.pvs.pvs.push(new vdb.viewModels.pvs.PVEditViewModel(result., 'Original'));
-			}
-			xhr.send(fd);*/
 
 		}
 
