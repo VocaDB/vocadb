@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.EntryValidators {
 			if (song.SongType == SongType.Unspecified)
 				errors.Add(SongValidationErrors.NeedType);
 
-			var derivedTypes = new[] { SongType.Cover, SongType.Instrumental, SongType.MusicPV, SongType.Other, SongType.Remix };
+			var derivedTypes = new[] { SongType.Remaster, SongType.Cover, SongType.Instrumental, SongType.MusicPV, SongType.Other, SongType.Remix };
 
 			if (song.Notes.IsEmpty && !song.HasOriginalVersion && derivedTypes.Contains(song.SongType)) {
 				errors.Add(SongValidationErrors.NeedOriginal);			

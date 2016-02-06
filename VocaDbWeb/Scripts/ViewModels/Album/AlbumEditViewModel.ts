@@ -448,7 +448,7 @@ module vdb.viewModels {
 				return num;
 			});
 			this.validationError_needTracks = ko.computed(() => _.isEmpty(this.tracks()));
-			this.validationError_needType = ko.computed(() => this.discType() == cls.albums.AlbumType.Unknown);
+			this.validationError_needType = ko.computed(() => this.discType() === cls.albums.AlbumType.Unknown);
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 
 			this.hasValidationErrors = ko.computed(() =>
