@@ -246,4 +246,7 @@
   <data name="PossibleProducerMessage" xml:space="preserve">
     <value>ボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、{0}をご覧下さい。</value>
   </data>
+  <data name="ImportSongList" xml:space="preserve">
+    <value>Import from YouTube or NicoNicoDouga</value>
+  </data>
 </root>

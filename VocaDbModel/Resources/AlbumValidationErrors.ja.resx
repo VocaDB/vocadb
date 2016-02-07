@@ -126,6 +126,9 @@
   <data name="NeedCover" xml:space="preserve">
     <value>アルバムジャケットが必要です。</value>
   </data>
+  <data name="NeedReferences" xml:space="preserve">
+    <value>Album needs a description or links for reference.</value>
+  </data>
   <data name="NeedReleaseYear" xml:space="preserve">
     <value>アルバム公開年が必要です。</value>
   </data>
