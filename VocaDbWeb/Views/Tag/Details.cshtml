@@ -7,7 +7,7 @@
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
 
-@{
+	@{
 
 	ViewBag.Parents = new[] { Html.ActionLink(SharedRes.Tags, "Index") };
 
@@ -61,7 +61,7 @@
 
 			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, latestComments, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
 				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
-			ko.applyBindings(vm);		
+			ko.applyBindings(vm);
 
 		});
 
@@ -87,15 +87,19 @@
 		<div class="media-body">
 			@if (!Model.Description.IsEmpty) {
 				<div class="entry-description">
-					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }					
+					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
 				</div>
 				<br />
 			}
-			
+
+			@if (Model.RelatedTags.Any()) {
+				<p>Related tags: @Html.LinkList(Model.RelatedTags, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
+			}
+
 			@if (Model.CategoryName != string.Empty) {
 				<p>@Res.Category: @Model.CategoryName</p>
 			}
-			
+
 			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
 				<p>@Res.Translations: @Model.AdditionalNames</p>
 			}
@@ -111,9 +115,9 @@
 			@if (related.Any()) {
 				<div id="hierarchyContainer" style='width: 1000px; height: @((75 + (Model.Parent != null ? 125 : 0) + (Model.Children.Any() ? 125 : 0)) + "px")'></div>
 			}
-			
+
 			<br />
-			
+
 			<div>
 				@Html.ActionLink(Res.AllEntries + " (" + (Model.ArtistCount + Model.AlbumCount + Model.SongCount) + ")", "Index", "Search", UrlMapper.Search.Entries(tagId: Model.Id), null)
 			</div>
@@ -123,13 +127,13 @@
 					@Html.ActionLink(Res.AllArtists + " (" + Model.ArtistCount + ")", "Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id), null)
 				</div>
 			}
-			
+
 			@if (Model.AlbumCount > 0) {
 				<div>
 					@Html.ActionLink(Res.AllAlbums + " (" + Model.AlbumCount + ")", "Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id), null)
 				</div>
 			}
-			
+
 			@if (Model.SongCount > 0) {
 				<div>
 					@Html.ActionLink(Res.AllSongs + " (" + Model.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id), null)
@@ -160,7 +164,7 @@
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))">
 				@Res.TopAlbums
 				<small>(@Model.AlbumCount @SharedRes.Total)</small>
-			</a>							
+			</a>
 		</h3>
 		@AlbumHelpers.AlbumGrid(Model.Albums.Select(a => a), 2, false, false, true)
 	</div>
@@ -187,16 +191,16 @@
 			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
 		</li>
 	</ul>
-	
+
 	<div id="latestCommentsTab">
 		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
 		<!-- ko ifnot: comments().length -->
 		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 		<!-- /ko -->
 	</div>
-	
+
 	<div id="discussionTab" >
-		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)		
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)
 	</div>
 
 </div>

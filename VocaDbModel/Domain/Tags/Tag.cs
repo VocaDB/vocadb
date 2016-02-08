@@ -371,7 +371,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual int Version { get; set; }
 
-		public RelatedTag AddRelatedTag(Tag tag) {
+		public virtual RelatedTag AddRelatedTag(Tag tag) {
 
 			ParamIs.NotNull(() => tag);
 

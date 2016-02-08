@@ -17,9 +17,9 @@
 
 		}
 
-		public int Id { get; set; }
+		public virtual int Id { get; set; }
 
-		public Tag OwnerTag {
+		public virtual Tag OwnerTag {
 			get { return ownerTag; }
 			set {
 				ParamIs.NotNull(() => value);
@@ -27,7 +27,7 @@
 			}
 		}
 
-		public Tag LinkedTag {
+		public virtual Tag LinkedTag {
 			get { return linkedTag; }
 			set {
 				ParamIs.NotNull(() => value);

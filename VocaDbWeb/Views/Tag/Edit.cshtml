@@ -32,7 +32,7 @@
 		var tagRepo = new vdb.repositories.TagRepository('@RootPath');
 		var userRepo = new vdb.repositories.UserRepository(urlMapper);
 
-		tagRepo.getById('@Model.Id', "AliasedTo,TranslatedDescription,Names,Parent", function (contract) {
+		tagRepo.getById('@Model.Id', "AliasedTo,TranslatedDescription,Names,Parent,RelatedTags", function (contract) {
 			var viewModel = new vdb.viewModels.TagEditViewModel(userRepo, contract);
 			ko.applyBindings(viewModel);
 		});
@@ -134,6 +134,27 @@
 				<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
 			</div>
 		</div>
+	</div>
+
+	<div class="editor-label">
+		Related tags
+	</div>
+	<div class="editor-field">
+		<table>
+			<tbody data-bind="foreach: relatedTags">
+				<tr>
+					<td>
+						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag(id, urlSlug) }, text: name"></a>
+					</td>
+					<td>
+						<a data-bind="click: function () { $parent.relatedTags.remove($data); }" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<input type="text" data-bind="tagAutoComplete: function(data) { relatedTags.push(data); }, tagFilter: denySelf" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
+		@Html.HiddenForKnockout(m => m.RelatedTags, "value: ko.toJSON(relatedTags)")
 	</div>
 
 	<div class="editor-label">
