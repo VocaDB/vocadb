@@ -229,7 +229,7 @@ namespace VocaDb.Model.Database.Queries {
 				pictureData.Id = series.Id;
 				pictureData.EntryType = EntryType.ReleaseEventSeries;
 				var thumbGenerator = new ImageThumbGenerator(imagePersister);
-				thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ReleaseEventSeries.ImageSizes, originalSize: ReleaseEventSeries.OriginalSize);
+				thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ReleaseEventSeries.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
 
 			}
 

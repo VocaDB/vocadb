@@ -220,6 +220,7 @@ module vdb.viewModels {
 		public validationError_duplicateArtist: KnockoutComputed<boolean>;
 		public validationError_needArtist: KnockoutComputed<boolean>;
 		public validationError_needCover: KnockoutComputed<boolean>;
+		public validationError_needReferences: KnockoutComputed<boolean>;
 		public validationError_needReleaseYear: KnockoutComputed<boolean>;
 		public validationError_needTracks: KnockoutComputed<boolean>;
 		public validationError_needType: KnockoutComputed<boolean>;
@@ -443,18 +444,24 @@ module vdb.viewModels {
 
 			this.validationError_needArtist = ko.computed(() => _.isEmpty(this.artistLinks()));
 			this.validationError_needCover = ko.computed(() => !this.hasCover);
+
+			this.validationError_needReferences = ko.computed(() => _.isEmpty(this.description.original())
+				&& _.isEmpty(this.webLinks.webLinks())
+				&& _.isEmpty(this.pvs.pvs()));
+
 			this.validationError_needReleaseYear = ko.computed(() => {
 				var num = !_.isNumber(this.releaseYear()) || this.releaseYear() == null;
 				return num;
 			});
 			this.validationError_needTracks = ko.computed(() => _.isEmpty(this.tracks()));
-			this.validationError_needType = ko.computed(() => this.discType() == cls.albums.AlbumType.Unknown);
+			this.validationError_needType = ko.computed(() => this.discType() === cls.albums.AlbumType.Unknown);
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 
 			this.hasValidationErrors = ko.computed(() =>
 				this.validationError_duplicateArtist() ||
 				this.validationError_needArtist() ||
 				this.validationError_needCover() ||
+				this.validationError_needReferences() ||
 				this.validationError_needReleaseYear() ||
 				this.validationError_needTracks() ||
 				this.validationError_needType() ||

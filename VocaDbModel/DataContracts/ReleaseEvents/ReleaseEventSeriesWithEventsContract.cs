@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 
@@ -13,7 +12,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ReleaseEventSeriesWithEventsContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference)
 			: base(series) {
 
-				Events = series.Events.Select(e => new ReleaseEventContract(e)).ToArray();
+			Events = series.Events.OrderBy(e => e.SeriesNumber).ThenBy(e => e.Date.DateTime).Select(e => new ReleaseEventContract(e)).ToArray();
 		
 		}
 
@@ -22,7 +21,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => events);
 
-			Events = events.OrderBy(e => e.SeriesNumber).Select(e => new ReleaseEventContract(e)).ToArray();
+			Events = events.OrderBy(e => e.SeriesNumber).ThenBy(e => e.Date.DateTime).Select(e => new ReleaseEventContract(e)).ToArray();
 
 		}
 

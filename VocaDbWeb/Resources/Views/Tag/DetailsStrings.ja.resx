@@ -123,6 +123,9 @@
   <data name="AllArtists" xml:space="preserve">
     <value>アーティスト全て</value>
   </data>
+  <data name="AllEntries" xml:space="preserve">
+    <value>All entries</value>
+  </data>
   <data name="AllSongs" xml:space="preserve">
     <value>曲全て</value>
   </data>
@@ -146,5 +149,8 @@
   </data>
   <data name="TopSongs" xml:space="preserve">
     <value>トップ曲</value>
+  </data>
+  <data name="Translations" xml:space="preserve">
+    <value>Translations</value>
   </data>
 </root>

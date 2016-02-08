@@ -88,6 +88,15 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album needs a description or links for reference..
+        /// </summary>
+        public static string NeedReferences {
+            get {
+                return ResourceManager.GetString("NeedReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Release year needs to be specified..
         /// </summary>
         public static string NeedReleaseYear {

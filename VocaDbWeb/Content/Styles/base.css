@@ -137,7 +137,7 @@ body {
 .entry-field-label-col {
   min-width: 100px;
 }
-.entry-description p {
+.entry-description p:last-child {
   margin-bottom: 0;
 }
 .entry-edit-description .edit-text {

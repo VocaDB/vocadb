@@ -183,11 +183,10 @@ module vdb.viewModels {
 				height: 300
 			};
 
-			this.canHaveOriginalVersion = ko.computed(() => this.songType() != cls.songs.SongType.Original);
+			this.canHaveOriginalVersion = ko.computed(() => this.songType() !== cls.songs.SongType.Original);
 
 			this.originalVersionSearchParams = {
 				acceptSelection: this.originalVersion.id,
-				allowCreateNew: false,
 				extraQueryParams: {
 					songTypes: "Unspecified,Original,Remaster,Remix,Cover,Mashup,DramaPV,Other"
 				},
@@ -227,7 +226,7 @@ module vdb.viewModels {
 			this.validationError_needOriginal = ko.computed(() => {
 				
 				var songType = models.songs.SongType;
-				var derivedTypes = [ songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix ];
+				var derivedTypes = [songType.Remaster, songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix];
 				return (this.notes.original() === null || this.notes.original() === "")
 					&& this.originalVersion.entry() == null
 					&& _.contains(derivedTypes, this.songType());
@@ -235,7 +234,7 @@ module vdb.viewModels {
 			});
 
 			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArray(), hel.SongHelper.isAnimation(this.songType()))));
-			this.validationError_needType = ko.computed(() => this.songType() == SongType.Unspecified);
+			this.validationError_needType = ko.computed(() => this.songType() === SongType.Unspecified);
 
 			this.validationError_nonInstrumentalSongNeedsVocalists = ko.computed(() => {
 
