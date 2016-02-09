@@ -90,11 +90,9 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
-		public virtual bool IncludeNames {
-			get {
-				return (IsSnapshot || Names);
-			}
-		}
+		public virtual bool IncludeNames => IsSnapshot || Names;
+
+		public virtual bool IncludeRelatedTags => IsSnapshot || RelatedTags;
 
 		public virtual bool IsSnapshot { get; set; }
 
@@ -161,5 +159,10 @@ namespace VocaDb.Model.Domain.Tags {
 			return ChangedFields.HasFlag(field);
 		}
 
+		public bool IsIncluded(TagEditableFields field) {
+
+			return IsSnapshot || IsChanged(field);
+
+		}
 	}
 }

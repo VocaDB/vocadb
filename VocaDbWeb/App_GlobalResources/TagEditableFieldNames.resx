@@ -138,6 +138,9 @@
   <data name="Picture" xml:space="preserve">
     <value>Picture</value>
   </data>
+  <data name="RelatedTags" xml:space="preserve">
+    <value>Related tags</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>

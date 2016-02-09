@@ -77,7 +77,7 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public virtual bool IsIncluded(TagEditableFields field) {
-			return true;
+			return (Diff != null && Data != null && Diff.IsIncluded(field));
 		}
 
 	}

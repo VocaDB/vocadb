@@ -1,4 +1,5 @@
-﻿@using System.Web.Mvc.Html;
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Tags
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
@@ -16,6 +17,7 @@
 			@ArchivedEntryHelpers.DataRowList("Names", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
 			@ArchivedEntryHelpers.DataRow("Description", comparedTags, d => d.Description)
 			@ArchivedEntryHelpers.DataRow("Description English", comparedTags, d => d.DescriptionEng)
+			@ArchivedEntryHelpers.ObjectRefList("Related tags", comparedTags, d => d.RelatedTags))
 			@ArchivedEntryHelpers.DataRow("Aliased to", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.AliasedTo))
 			@ArchivedEntryHelpers.DataRow("Parent", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.Parent))
 		</table>

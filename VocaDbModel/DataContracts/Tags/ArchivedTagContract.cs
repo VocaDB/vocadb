@@ -38,6 +38,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			});
 			DoIfExists(version, TagEditableFields.Names, xmlCache, v => data.Names = v.Names);
 			DoIfExists(version, TagEditableFields.Parent, xmlCache, v => data.Parent = v.Parent);
+			DoIfExists(version, TagEditableFields.RelatedTags, xmlCache, v => data.RelatedTags = v.RelatedTags);
 
 			return data;
 
@@ -56,6 +57,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Id = tag.Id;
 			Names = diff.IncludeNames ? tag.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			Parent = tag.Parent != null ? new ObjectRefContract(tag.Parent) : null;
+			RelatedTags = diff.IncludeRelatedTags ? tag.RelatedTags.Select(t => new ObjectRefContract(t.LinkedTag)).ToArray() : null;
 			ThumbMime = tag.Thumb != null ? tag.Thumb.Mime : null;
 			TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 
@@ -81,6 +83,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public ObjectRefContract Parent { get; set; }
+
+		[DataMember]
+		public ObjectRefContract[] RelatedTags { get; set; }
 
 		[DataMember]
 		public string ThumbMime { get; set; }
