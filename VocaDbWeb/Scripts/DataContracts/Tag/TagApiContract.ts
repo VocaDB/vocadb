@@ -23,6 +23,8 @@ module vdb.dataContracts {
 
 		parent: TagBaseContract;
 
+		relatedTags?: TagBaseContract[];
+
 		status: string;
 
 		translatedDescription?: globalization.EnglishTranslatedStringContract;

@@ -64,6 +64,9 @@ namespace VocaDb.Web.Models.Tag {
 		[FromJson]
 		public TagBaseContract Parent { get; set; }
 
+		[FromJson]
+		public TagBaseContract[] RelatedTags { get; set; }
+
 		public EntryStatus Status { get; set; }
 
 		public EntryThumbContract Thumb { get; set; }
@@ -94,6 +97,7 @@ namespace VocaDb.Web.Models.Tag {
 				DefaultNameLanguage = DefaultNameLanguage,
 				Description = this.Description,
 				Parent = this.Parent,
+				RelatedTags = RelatedTags,
 				Status = this.Status,
 				UpdateNotes = this.UpdateNotes ?? string.Empty
 			};

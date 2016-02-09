@@ -4,6 +4,24 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201602082130)]
+	public class RelatedTags : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table(TableNames.RelatedTags)
+				.WithColumn("Id").AsInt32().Identity().PrimaryKey()
+				.WithColumn("OwnerTag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("LinkedTag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id");
+
+			Create.Index("IX_RelatedTags_Tag1_Tag2").OnTable(TableNames.RelatedTags)
+				.OnColumn("OwnerTag").Ascending()
+				.OnColumn("LinkedTag").Unique();
+
+		}
+
+	}
+
 	[Migration(201601231630)]
 	public class RemoveInlineFieldsFromArchivedTags : Migration {
 

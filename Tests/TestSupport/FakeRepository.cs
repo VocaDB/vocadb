@@ -64,6 +64,10 @@ namespace VocaDb.Tests.TestSupport {
 			return querySource.List<TEntity>();
 		}
 
+		public T Load(int id) {
+			return HandleQuery(ctx => ctx.Load(id));
+		}
+
 		public T Load(object id) {
 			return HandleQuery(ctx => ctx.Load(id));
 		}

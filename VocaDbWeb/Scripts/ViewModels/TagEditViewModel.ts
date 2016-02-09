@@ -17,6 +17,7 @@ module vdb.viewModels {
 			this.id = contract.id;
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
 			this.parent = ko.observable(contract.parent);
+			this.relatedTags = ko.observableArray(contract.relatedTags);
 
 			this.validationError_needDescription = ko.computed(() => !this.description.original());
 
@@ -41,11 +42,16 @@ module vdb.viewModels {
 		public names: globalization.NamesEditViewModel;
 		public parent: KnockoutObservable<dc.TagBaseContract>;
 		public parentName: KnockoutComputed<string>;
+		public relatedTags: KnockoutObservableArray<dc.TagBaseContract>;
 		public submitting = ko.observable(false);
 		public validationExpanded = ko.observable(false);
 		public validationError_needDescription: KnockoutComputed<boolean>;
 
-		denySelf = (tag: dc.TagBaseContract) => (tag && tag.id !== this.id);
+		public addRelatedTag = (tag: dc.TagBaseContract) => this.relatedTags.push(tag);		
+
+		public allowRelatedTag = (tag: dc.TagBaseContract) => this.denySelf(tag) && _.all(this.relatedTags(), t => t.id !== tag.id);
+
+		public denySelf = (tag: dc.TagBaseContract) => (tag && tag.id !== this.id);
 
 		public submit = () => {
 			this.submitting(true);

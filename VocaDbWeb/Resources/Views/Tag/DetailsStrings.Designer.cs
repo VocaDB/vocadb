@@ -133,6 +133,15 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Related tags.
+        /// </summary>
+        public static string RelatedTags {
+            get {
+                return ResourceManager.GetString("RelatedTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag.
         /// </summary>
         public static string Tag {

@@ -134,6 +134,15 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		public virtual bool RelatedTags {
+			get {
+				return IsChanged(TagEditableFields.RelatedTags);
+			}
+			set {
+				Set(TagEditableFields.RelatedTags, value);
+			}
+		}
+
 		public virtual bool Status {
 			get {
 				return IsChanged(TagEditableFields.Status);

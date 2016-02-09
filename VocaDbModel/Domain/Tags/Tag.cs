@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Tags {
 
@@ -47,6 +48,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private IList<TagComment> comments = new List<TagComment>();
 		private EnglishTranslatedString description;
 		private NameManager<TagName> names = new NameManager<TagName>();
+		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
 
 		public Tag() {
@@ -279,6 +281,9 @@ namespace VocaDb.Model.Domain.Tags {
 				alias.AliasedTo = null;
 			}
 
+			while (RelatedTags.Any())
+				RelatedTags.First().Delete();
+
 		}
 
 		public virtual bool Equals(Tag tag) {
@@ -335,6 +340,14 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		public virtual ISet<RelatedTag> RelatedTags {
+			get { return relatedTags; }
+			set {
+				ParamIs.NotNull(() => value);
+				relatedTags = value;
+			}
+		}
+
 		/// <summary>
 		/// List of all song tag usages (not including deleted songs) for this tag.
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
@@ -360,6 +373,35 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int UsageCount { get; set; }
 
 		public virtual int Version { get; set; }
+
+		public virtual RelatedTag AddRelatedTag(Tag tag) {
+
+			ParamIs.NotNull(() => tag);
+
+			if (Equals(tag))
+				throw new ArgumentException("Cannot add self as related tag");
+
+			var link = new RelatedTag(this, tag);
+			RelatedTags.Add(link);
+
+			var reverseLink = link.CreateReversed();
+			tag.RelatedTags.Add(reverseLink);
+
+			return link;
+
+		}
+
+		public virtual CollectionDiff<RelatedTag> SyncRelatedTags(IEnumerable<ITag> newRelatedTags, Func<int, Tag> loadTagFunc) {
+
+			Func<ITag, RelatedTag> create = tagRef => {
+				var tag = loadTagFunc(tagRef.Id);
+				return AddRelatedTag(tag);
+			};
+
+			var diff = CollectionHelper.Sync(RelatedTags, newRelatedTags, (t1, t2) => Equals(t1.LinkedTag, t2), create, link => link.Delete());
+			return diff;
+
+		}
 
 		public override string ToString() {
 			return string.Format("tag '{0}' [{1}]", DefaultName, Id);
