@@ -4,7 +4,10 @@ module vdb.viewModels.search {
 	// Manages tag filters for search
 	export class TagFilters {
 
-		constructor(private tagRepo: repositories.TagRepository, tags: KnockoutObservableArray<TagFilter> = null) {
+		constructor(
+			private tagRepo: repositories.TagRepository,
+			private languageSelection: string,
+			tags: KnockoutObservableArray<TagFilter> = null) {
 			
 			this.tags = (tags || ko.observableArray<TagFilter>());
 			this.tagIds = ko.computed(() => _.map(this.tags(), t => t.id));
@@ -30,7 +33,7 @@ module vdb.viewModels.search {
 
 				var selectedTagId = newTag.id;
 
-				tagRepo.getById(selectedTagId, null, tag => {
+				tagRepo.getById(selectedTagId, null, this.languageSelection, tag => {
 					newTag.name(tag.name);
 					newTag.urlSlug(tag.urlSlug);
 				});

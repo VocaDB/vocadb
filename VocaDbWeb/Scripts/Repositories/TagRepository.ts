@@ -7,9 +7,9 @@ module vdb.repositories {
 		
 		constructor(private baseUrl: string) { }
 
-		public getById = (id: number, fields: string, callback?: (result: dc.TagApiContract) => void) => {
+		public getById = (id: number, fields: string, lang: string, callback?: (result: dc.TagApiContract) => void) => {
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
-			$.getJSON(url, { fields: fields || undefined }, callback);
+			$.getJSON(url, { fields: fields || undefined, lang: lang }, callback);
 		}
 
 		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");

@@ -33,7 +33,7 @@ module vdb.viewModels.user {
 			if (groupByRating != null)
 				this.groupByRating(groupByRating);
 
-			this.tagFilters = new viewModels.search.TagFilters(tagRepo);
+			this.tagFilters = new viewModels.search.TagFilters(tagRepo, languageSelection);
 
 			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);

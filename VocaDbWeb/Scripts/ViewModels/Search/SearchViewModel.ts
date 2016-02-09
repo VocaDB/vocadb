@@ -14,7 +14,7 @@ module vdb.viewModels.search {
 			resourceRepo: rep.ResourceRepository,
 			userRepo: rep.UserRepository,
 			unknownPictureUrl: string,
-			languageSelection: string, loggedUserId: number, cultureCode: string, searchType: string,
+			private languageSelection: string, loggedUserId: number, cultureCode: string, searchType: string,
 			searchTerm: string,
 			tagIds: number[],
 			sort: string,
@@ -159,7 +159,7 @@ module vdb.viewModels.search {
 
 				var selectedTagId = newTag.id;
 
-				tagRepo.getById(selectedTagId, null, tag => {
+				tagRepo.getById(selectedTagId, null, this.languageSelection, tag => {
 					newTag.name(tag.name);
 					newTag.urlSlug(tag.urlSlug);
 				});
