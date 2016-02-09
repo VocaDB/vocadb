@@ -141,6 +141,9 @@
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>
   </data>
+  <data name="RelatedTags" xml:space="preserve">
+    <value>Related tags</value>
+  </data>
   <data name="Tag" xml:space="preserve">
     <value>Tag</value>
   </data>

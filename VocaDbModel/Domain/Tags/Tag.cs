@@ -281,6 +281,9 @@ namespace VocaDb.Model.Domain.Tags {
 				alias.AliasedTo = null;
 			}
 
+			while (RelatedTags.Any())
+				RelatedTags.First().Delete();
+
 		}
 
 		public virtual bool Equals(Tag tag) {

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
@@ -10,6 +11,32 @@ namespace VocaDb.Tests.Domain.Tags {
 	/// </summary>
 	[TestClass]
 	public class TagTests {
+
+		[TestMethod]
+		public void AddRelatedTag() {
+
+			var tag = CreateEntry.Tag("rock");
+			var tag2 = CreateEntry.Tag("metal");
+
+			tag.AddRelatedTag(tag2);
+
+			Assert.IsTrue(tag.RelatedTags.Any(t => t.LinkedTag.Equals(tag2)), "Related tag was added from the owner side");
+			Assert.IsTrue(tag2.RelatedTags.Any(t => t.LinkedTag.Equals(tag)), "Owner tag was added from the linked side");
+
+		}
+
+		[TestMethod]
+		public void Delete() {
+
+			var tag = CreateEntry.Tag("rock");
+			var relatedTag = CreateEntry.Tag("metal");
+			tag.AddRelatedTag(relatedTag);
+
+			tag.Delete();
+
+			Assert.IsFalse(relatedTag.RelatedTags.Any(t => t.LinkedTag.Equals(tag)), "Tag was removed from the linked side");
+
+		}
 
 		[TestMethod]
 		public void SyncRelatedTags() {

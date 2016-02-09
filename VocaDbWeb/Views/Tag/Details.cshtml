@@ -93,7 +93,7 @@
 			}
 
 			@if (Model.RelatedTags.Any()) {
-				<p>Related tags: @Html.LinkList(Model.RelatedTags, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
+				<p>@Res.RelatedTags: @Html.LinkList(Model.RelatedTags, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
 			}
 
 			@if (Model.CategoryName != string.Empty) {

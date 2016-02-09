@@ -47,7 +47,11 @@ module vdb.viewModels {
 		public validationExpanded = ko.observable(false);
 		public validationError_needDescription: KnockoutComputed<boolean>;
 
-		denySelf = (tag: dc.TagBaseContract) => (tag && tag.id !== this.id);
+		public addRelatedTag = (tag: dc.TagBaseContract) => this.relatedTags.push(tag);		
+
+		public allowRelatedTag = (tag: dc.TagBaseContract) => this.denySelf(tag) && _.all(this.relatedTags(), t => t.id !== tag.id);
+
+		public denySelf = (tag: dc.TagBaseContract) => (tag && tag.id !== this.id);
 
 		public submit = () => {
 			this.submitting(true);

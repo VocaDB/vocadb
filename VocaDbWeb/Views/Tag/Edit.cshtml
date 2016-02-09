@@ -153,7 +153,7 @@
 			</tbody>
 		</table>
 
-		<input type="text" data-bind="tagAutoComplete: function(data) { relatedTags.push(data); }, tagFilter: denySelf" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
+		<input type="text" data-bind="tagAutoComplete: addRelatedTag, tagFilter: allowRelatedTag" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
 		@Html.HiddenForKnockout(m => m.RelatedTags, "value: ko.toJSON(relatedTags)")
 	</div>
 

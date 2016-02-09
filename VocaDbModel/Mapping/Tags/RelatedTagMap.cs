@@ -7,7 +7,7 @@ namespace VocaDb.Model.Mapping.Tags {
 
 		public RelatedTagMap() {
 
-			Cache.ReadOnly(); // Immutable
+			Cache.ReadWrite();
 			Id(m => m.Id);
 
 			References(m => m.OwnerTag).Not.Nullable().UniqueKey("IX_RelatedTags_Tag1_Tag2");
