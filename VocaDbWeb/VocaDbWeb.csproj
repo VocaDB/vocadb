@@ -2805,6 +2805,7 @@
     <Content Include="Views\Song\Partials\_AddToListDialog.cshtml" />
     <Content Include="Views\Tag\ViewVersion.cshtml" />
     <Content Include="Views\Shared\Partials\_TagFilters.cshtml" />
+    <Content Include="Views\Shared\Partials\_Footer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -153,6 +153,9 @@
   <data name="IRCLink" xml:space="preserve">
     <value>IRC channel on Rizon</value>
   </data>
+  <data name="License" xml:space="preserve">
+    <value>Content licensed under Creative Commons.</value>
+  </data>
   <data name="LogIn" xml:space="preserve">
     <value>Log in</value>
   </data>
