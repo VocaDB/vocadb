@@ -220,6 +220,9 @@ If so, please see the {0}.</value>
   <data name="Submissions" xml:space="preserve">
     <value>Submissions</value>
   </data>
+  <data name="SupporterTitle" xml:space="preserve">
+    <value>Patreon supporter</value>
+  </data>
   <data name="TagVotes" xml:space="preserve">
     <value>Tag votes</value>
   </data>

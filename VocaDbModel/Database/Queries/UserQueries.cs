@@ -1213,6 +1213,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.Active = contract.Active;
 				user.Options.Poisoned = contract.Poisoned;
+				user.Options.Supporter = contract.Supporter;
 
 				session.AuditLogger.AuditLog(string.Format("updated user {0}", EntryLinkFactory.CreateEntryLink(user)));
 

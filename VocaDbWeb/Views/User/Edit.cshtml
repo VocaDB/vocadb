@@ -29,6 +29,10 @@
 			@Html.CheckBoxFor(m => m.Poisoned)
 			Poisoned (autoban for logging in)
 		</p>
+		<p>
+			@Html.CheckBoxFor(m => m.Supporter)
+			Patreon supporter
+		</p>
 
 		@Html.LabelFor(m => m.GroupId)
 		@Html.EnumDropDownListFor(m => m.GroupId, Model.EditableGroups)

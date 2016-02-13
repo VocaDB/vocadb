@@ -121,6 +121,9 @@
 				{
 					<span class="label">@R.AccountDisabled</span>
 				}
+				@if (Model.Supporter) {
+					<span class="label label-success">@R.SupporterTitle</span>
+				}
 				@if (Model.EmailVerified)
 				{
 					<img src="@Url.Content("~/Content/Icons/tick.png")" title="Verified email" />

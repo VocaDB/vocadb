@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201602140100)]
+	public class SupporterUser : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("Supporter").OnTable(TableNames.UserOptions).AsBoolean().NotNullable().WithDefaultValue(false);
+
+		}
+
+	}
+
 	[Migration(201602082130)]
 	public class RelatedTags : AutoReversingMigration {
 

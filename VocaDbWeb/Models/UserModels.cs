@@ -280,6 +280,7 @@ namespace VocaDb.Web.Models {
 			Permissions = PermissionToken.All
 				.Select(p => new PermissionFlagEntry(p, contract.AdditionalPermissions.Contains(p), contract.EffectivePermissions.Contains(p))).ToArray();
 			Poisoned = contract.Poisoned;
+			Supporter = contract.Supporter;
 
 		}
 
@@ -300,6 +301,8 @@ namespace VocaDb.Web.Models {
 
 		public bool Poisoned { get; set; }
 
+		public bool Supporter { get; set; }
+
 		public UserWithPermissionsContract ToContract() {
 
 			return new UserWithPermissionsContract {
@@ -309,6 +312,7 @@ namespace VocaDb.Web.Models {
 				Name = this.Name,
 				OwnedArtistEntries = OwnedArtists.ToArray(),
 				Poisoned = this.Poisoned,
+				Supporter = this.Supporter,
 				AdditionalPermissions = new HashSet<PermissionToken>(Permissions.Where(p => p.HasFlag).Select(p => PermissionToken.GetById(p.PermissionType.Id)))
 			};
 

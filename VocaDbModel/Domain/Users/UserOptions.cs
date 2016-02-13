@@ -113,6 +113,8 @@
 
 		public virtual bool ShowChatbox { get; set; }
 
+		public virtual bool Supporter { get; set; }
+
 		public virtual int TwitterId { get; set; }
 
 		public virtual string TwitterName {

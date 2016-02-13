@@ -25,6 +25,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			OwnedArtistEntries = user.OwnedArtists.Select(a => new ArtistForUserContract(a, languagePreference)).ToArray();
 			Poisoned = user.Options.Poisoned;
 			ShowChatbox = user.Options.ShowChatbox;
+			Supporter = user.Options.Supporter;
 
 		}
 
@@ -48,6 +49,9 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public bool ShowChatbox { get; set; }
+
+		[DataMember]
+		public bool Supporter { get; set; }
 
 		[DataMember]
 		public int UnreadMessagesCount { get; set; }

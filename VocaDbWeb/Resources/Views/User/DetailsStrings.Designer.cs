@@ -368,6 +368,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Patreon supporter.
+        /// </summary>
+        public static string SupporterTitle {
+            get {
+                return ResourceManager.GetString("SupporterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag votes.
         /// </summary>
         public static string TagVotes {
