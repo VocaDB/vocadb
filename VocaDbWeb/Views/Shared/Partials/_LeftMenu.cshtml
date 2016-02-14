@@ -66,6 +66,10 @@
 				@SmallBanner(link.Title, link.Url, link.BannerImg)
 			}
 		</div>
+		@if (!string.IsNullOrEmpty(Config.SiteSettings.PatreonLink)) {
+			<hr />
+			Html.RenderPartial("Partials/_PatreonLink");
+		}
 		@if (!string.IsNullOrEmpty(Config.SiteSettings.PaypalDonateCert)) {
 			<hr />
 			Html.RenderPartial("Partials/_PaypalDonateButton");

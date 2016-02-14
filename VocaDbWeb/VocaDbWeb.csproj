@@ -1466,6 +1466,7 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\patreon.png" />
     <Content Include="Content\qunit-1.19.0.css" />
     <Content Include="Content\Sign-in-with-Twitter-darker.png" />
     <Content Include="Content\Site-bs.css" />
@@ -2806,6 +2807,7 @@
     <Content Include="Views\Tag\ViewVersion.cshtml" />
     <Content Include="Views\Shared\Partials\_TagFilters.cshtml" />
     <Content Include="Views\Shared\Partials\_Footer.cshtml" />
+    <Content Include="Views\Shared\Partials\_PatreonLink.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -31,6 +31,12 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["paypalDonateCert"] = value; }			
 		}
 
+		[ConfigurationProperty("patreonLink", DefaultValue = "")]
+		public string PatreonLink {
+			get { return (string)this["patreonLink"]; }
+			set { this["patreonLink"] = value; }
+		}
+
 		[ConfigurationProperty("signupsDisabled", DefaultValue = "false")]
 		public bool SignupsDisabled {
 			get { return (bool)this["signupsDisabled"]; }
