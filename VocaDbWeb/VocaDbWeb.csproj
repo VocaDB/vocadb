@@ -1467,6 +1467,7 @@
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\patreon.png" />
+    <Content Include="Content\pixelart-miku.png" />
     <Content Include="Content\qunit-1.19.0.css" />
     <Content Include="Content\Sign-in-with-Twitter-darker.png" />
     <Content Include="Content\Site-bs.css" />

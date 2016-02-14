@@ -121,9 +121,6 @@
 				{
 					<span class="label">@R.AccountDisabled</span>
 				}
-				@if (Model.Supporter) {
-					<span class="label label-success">@R.SupporterTitle</span>
-				}
 				@if (Model.EmailVerified)
 				{
 					<img src="@Url.Content("~/Content/Icons/tick.png")" title="Verified email" />
@@ -159,6 +156,15 @@
 
 			<h4 class="withMargin">@R.MemberSince</h4>
 			@Model.CreateDate.ToShortDateString()
+			
+			@if (Model.Supporter) {
+				<div class="withMargin media">
+					<img class="pull-left" style="margin-top: 2px;" src="@Url.Content("~/Content/pixelart-miku.png")" />
+					<div class="media-body">
+						@string.Format(Res.SupporterTitle, BrandableStrings.Layout.SiteName)
+					</div>
+				</div>
+			}
 		</div>
 
 		<div class="span8 well well-transparent">

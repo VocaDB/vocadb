@@ -368,7 +368,7 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Patreon supporter.
+        ///   Looks up a localized string similar to Thanks for supporting {0}!.
         /// </summary>
         public static string SupporterTitle {
             get {

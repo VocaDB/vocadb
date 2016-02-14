@@ -221,7 +221,7 @@ If so, please see the {0}.</value>
     <value>Submissions</value>
   </data>
   <data name="SupporterTitle" xml:space="preserve">
-    <value>Patreon supporter</value>
+    <value>Thanks for supporting {0}!</value>
   </data>
   <data name="TagVotes" xml:space="preserve">
     <value>Tag votes</value>
