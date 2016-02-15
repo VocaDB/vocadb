@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
@@ -593,7 +594,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.WebLinks = new[] {
-				new WebLinkContract("http://vocadb.net", "VocaDB", Model.Domain.WebLinkCategory.Reference)
+				new WebLinkContract("http://vocadb.net", "VocaDB", WebLinkCategory.Reference)
 			};
 
 			contract = queries.UpdateBasicProperties(contract);
@@ -608,7 +609,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.WebLinks = new[] {
-				new WebLinkContract(" ", "VocaDB", Model.Domain.WebLinkCategory.Reference)
+				new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference)
 			};
 
 			contract = queries.UpdateBasicProperties(contract);

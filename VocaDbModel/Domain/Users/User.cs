@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.Exceptions;
 
 namespace VocaDb.Model.Domain.Users {

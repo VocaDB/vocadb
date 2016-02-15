@@ -2,9 +2,8 @@
 using System.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Helpers;
-using System;
 
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain.ExtLinks {
 
 	public class WebLink : IWebLink, IEntryWithIntId {
 

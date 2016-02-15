@@ -27,7 +27,9 @@ namespace VocaDb.Model.Domain.Tags {
 
 		RelatedTags		= 128,
 
-		Status			= 256
+		Status			= 256,
+
+		WebLinks		= 512
 
 	}
 

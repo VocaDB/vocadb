@@ -94,6 +94,8 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual bool IncludeRelatedTags => IsSnapshot || RelatedTags;
 
+		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks;
+
 		public virtual bool IsSnapshot { get; set; }
 
 		public virtual bool Names {
@@ -147,6 +149,15 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 			set {
 				Set(TagEditableFields.Status, value);
+			}
+		}
+
+		public virtual bool WebLinks {
+			get {
+				return IsChanged(TagEditableFields.WebLinks);
+			}
+			set {
+				Set(TagEditableFields.WebLinks, value);
 			}
 		}
 

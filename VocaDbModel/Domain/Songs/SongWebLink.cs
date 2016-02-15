@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Songs {
+﻿using VocaDb.Model.Domain.ExtLinks;
+
+namespace VocaDb.Model.Domain.Songs {
 
 	public class SongWebLink : WebLink {
 

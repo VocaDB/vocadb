@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.DataContracts {
 

@@ -4,6 +4,21 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201602151700)]
+	public class TagWebLinks : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table(TableNames.TagWebLinks)
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade).Indexed("IX_TagWebLinks")
+				.WithColumn("Description").AsString(512).NotNullable()
+				.WithColumn("Url").AsString(512).NotNullable();
+
+		}
+
+	}
+
 	[Migration(201602140100)]
 	public class SupporterUser : AutoReversingMigration {
 

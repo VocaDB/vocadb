@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Web.Models.Artist {
 

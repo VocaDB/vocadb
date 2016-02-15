@@ -28,6 +28,7 @@
 		public const string Tags = "Tags";
 		public const string TagComments = "TagComments";
 		public const string TagNames = "TagNames";
+		public const string TagWebLinks = "TagWebLinks";
 		public const string UserOptions = "UserOptions";
 		public const string UserMessages = "UserMessages";
 		public const string Users = "Users";

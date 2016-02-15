@@ -2,6 +2,7 @@
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Service.ExtSites {
 	

@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
@@ -50,6 +51,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
+		private WebLinkManager<TagWebLink> webLinks = new WebLinkManager<TagWebLink>();
 
 		public Tag() {
 			CategoryName = string.Empty;
@@ -373,6 +375,14 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int UsageCount { get; set; }
 
 		public virtual int Version { get; set; }
+
+		public virtual WebLinkManager<TagWebLink> WebLinks {
+			get { return webLinks; }
+			set {
+				ParamIs.NotNull(() => value);
+				webLinks = value;
+			}
+		}
 
 		public virtual RelatedTag AddRelatedTag(Tag tag) {
 

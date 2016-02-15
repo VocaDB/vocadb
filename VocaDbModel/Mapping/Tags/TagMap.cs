@@ -92,4 +92,9 @@ namespace VocaDb.Model.Mapping.Tags {
 		}
 
 	}
+
+	public class TagWebLinkMap : WebLinkMap<TagWebLink, Tag> {
+		
+	}
+
 }

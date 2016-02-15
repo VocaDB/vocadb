@@ -21,6 +21,7 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Web.Models {
 

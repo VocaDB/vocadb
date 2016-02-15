@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Albums {
+﻿using VocaDb.Model.Domain.ExtLinks;
+
+namespace VocaDb.Model.Domain.Albums {
 
 	public class AlbumWebLink : WebLink {
 
