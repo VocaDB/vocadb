@@ -7,8 +7,11 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public TagWebLink() {}
 
-		public TagWebLink(Tag entry, WebLinkContract contract) 
-			: base(entry, contract) {}
+		public TagWebLink(Tag tag, WebLinkContract contract) 
+			: base(tag, contract) {}
+
+		public TagWebLink(Tag tag, string description, string url)
+			: base(tag, description, url, WebLinkCategory.Other) {}
 
 	}
 

@@ -18,6 +18,7 @@ module vdb.viewModels {
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
 			this.parent = ko.observable(contract.parent);
 			this.relatedTags = ko.observableArray(contract.relatedTags);
+			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 			this.validationError_needDescription = ko.computed(() => !this.description.original());
 
@@ -46,6 +47,7 @@ module vdb.viewModels {
 		public submitting = ko.observable(false);
 		public validationExpanded = ko.observable(false);
 		public validationError_needDescription: KnockoutComputed<boolean>;
+        public webLinks: WebLinksEditViewModel;
 
 		public addRelatedTag = (tag: dc.TagBaseContract) => this.relatedTags.push(tag);		
 

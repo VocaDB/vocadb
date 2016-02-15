@@ -71,6 +71,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 				TranslatedDescription = new EnglishTranslatedStringContract(tag.Description);
 			}
 
+			if (optionalFields.HasFlag(TagOptionalFields.WebLinks)) {
+				WebLinks = tag.WebLinks.Links.Select(w => new WebLinkForApiContract(w)).ToArray();
+			}
+
 		}
 
 		/// <summary>
@@ -132,6 +136,12 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember]
 		public int Version { get; set; }
 
+		/// <summary>
+		/// List of external links. Optional field.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public WebLinkForApiContract[] WebLinks { get; set; }
+
 	}
 
 	[Flags]
@@ -145,7 +155,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		Names					= 16,
 		Parent					= 32,
 		RelatedTags				= 64,
-		TranslatedDescription	= 128
+		TranslatedDescription	= 128,
+		WebLinks				= 256
 
 	}
 

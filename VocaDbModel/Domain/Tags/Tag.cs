@@ -16,7 +16,7 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Tags {
 
-	public class Tag : IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName> {
+	public class Tag : IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName>, IWebLinkFactory<TagWebLink> {
 
 		bool IDeletableEntry.Deleted {
 			get { return false; }
@@ -261,6 +261,18 @@ namespace VocaDb.Model.Domain.Tags {
 			Names.Add(name);
 
 			return name;
+
+		}
+
+		public virtual TagWebLink CreateWebLink(string description, string url, WebLinkCategory category) {
+
+			ParamIs.NotNull(() => description);
+			ParamIs.NotNullOrEmpty(() => url);
+
+			var link = new TagWebLink(this, description, url);
+			WebLinks.Links.Add(link);
+
+			return link;
 
 		}
 

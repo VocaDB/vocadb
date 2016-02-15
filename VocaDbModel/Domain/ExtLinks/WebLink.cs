@@ -10,6 +10,9 @@ namespace VocaDb.Model.Domain.ExtLinks {
 		public static CollectionDiffWithValue<T,T> Sync<T>(IList<T> oldLinks, IEnumerable<WebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory) 
 			where T : WebLink {
 
+			ParamIs.NotNull(() => oldLinks);
+			ParamIs.NotNull(() => newLinks);
+
 			var validLinks = newLinks.Where(w => !string.IsNullOrWhiteSpace(w.Url)).ToArray();
 			var diff = CollectionHelper.Diff(oldLinks, validLinks, (n1, n2) => n1.Id == n2.Id);
 			var created = new List<T>();

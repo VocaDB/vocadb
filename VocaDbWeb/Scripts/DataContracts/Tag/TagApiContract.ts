@@ -33,6 +33,8 @@ module vdb.dataContracts {
 
 		usageCount: number;
 
+		webLinks: dc.WebLinkContract[];
+
 	}
 
 } 

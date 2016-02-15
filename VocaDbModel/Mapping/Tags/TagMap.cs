@@ -50,6 +50,10 @@ namespace VocaDb.Model.Mapping.Tags {
 				c.ParentReference(m => m.Entry);
 			});
 
+			Component(m => m.WebLinks, c => {
+				c.HasMany(m => m.Links).Table("TagWebLinks").KeyColumn("[Tag]").Inverse().Cascade.All().Cache.ReadWrite();
+			});
+
 		}
 
 	}
@@ -93,8 +97,6 @@ namespace VocaDb.Model.Mapping.Tags {
 
 	}
 
-	public class TagWebLinkMap : WebLinkMap<TagWebLink, Tag> {
-		
-	}
+	public class TagWebLinkMap : WebLinkMap<TagWebLink, Tag> {}
 
 }

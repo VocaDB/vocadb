@@ -15,6 +15,13 @@ namespace VocaDb.Model.Domain.ExtLinks {
 
 		}
 
+		protected GenericWebLink(TEntry entry, string description, string url, WebLinkCategory category)
+			: base(description, url, category) {
+
+			Entry = entry;
+
+		}
+
 		public virtual TEntry Entry {
 			get { return entry; }
 			set {

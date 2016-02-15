@@ -23,6 +23,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			RelatedTags = tag.RelatedTags.Select(t => new TagBaseContract(t.LinkedTag, languagePreference, false)).ToArray();
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			UpdateNotes = string.Empty;
+			WebLinks = tag.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
 
@@ -46,6 +47,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string UpdateNotes { get; set; }
+
+		[DataMember]
+		public WebLinkContract[] WebLinks { get; set; }
 
 	}
 }

@@ -95,6 +95,11 @@
 			@if (Model.RelatedTags.Any()) {
 				<p>@Res.RelatedTags: @Html.LinkList(Model.RelatedTags, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
 			}
+			
+			@if (Model.WebLinks.Any()) {
+				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
+				<br />
+			}
 
 			@if (Model.CategoryName != string.Empty) {
 				<p>@Res.Category: @Model.CategoryName</p>
