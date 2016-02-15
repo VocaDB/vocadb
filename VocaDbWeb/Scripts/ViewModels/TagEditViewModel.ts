@@ -20,7 +20,10 @@ module vdb.viewModels {
 			this.relatedTags = ko.observableArray(contract.relatedTags);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
-			this.validationError_needDescription = ko.computed(() => !this.description.original());
+			this.validationError_needDescription = ko.computed(() =>
+				!this.description.original() &&
+				_.isEmpty(this.webLinks.webLinks())
+			);
 
 			this.aliasedToName = ko.computed(() => this.aliasedTo() ? this.aliasedTo().name : null);
 			this.parentName = ko.computed(() => this.parent() ? this.parent().name : null);

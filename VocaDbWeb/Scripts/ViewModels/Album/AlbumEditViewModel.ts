@@ -445,7 +445,8 @@ module vdb.viewModels {
 			this.validationError_needArtist = ko.computed(() => _.isEmpty(this.artistLinks()));
 			this.validationError_needCover = ko.computed(() => !this.hasCover);
 
-			this.validationError_needReferences = ko.computed(() => _.isEmpty(this.description.original())
+			this.validationError_needReferences = ko.computed(() =>
+				_.isEmpty(this.description.original())
 				&& _.isEmpty(this.webLinks.webLinks())
 				&& _.isEmpty(this.pvs.pvs()));
 
