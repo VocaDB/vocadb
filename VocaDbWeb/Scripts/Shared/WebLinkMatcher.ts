@@ -46,6 +46,7 @@ module vdb.utils {
             { url: "nicovideo.jp/user/", desc: "NND Account", cat: c.WebLinkCategory.Official },
             { url: "com.nicovideo.jp/community/", desc: "NND Community", cat: c.WebLinkCategory.Official },
             { url: "nicovideo.jp/mylist/", desc: "NND MyList", cat: c.WebLinkCategory.Official },
+            { url: "nicovideo.jp/tag/", desc: "NND Tag", cat: c.WebLinkCategory.Reference },
             { url: "piapro.jp/", desc: "Piapro", cat: c.WebLinkCategory.Official },
             { url: "www.pixiv.net/", desc: "Pixiv", cat: c.WebLinkCategory.Official },
             { url: "books.rakuten.co.jp/", desc: "Rakuten", cat: c.WebLinkCategory.Commercial },
