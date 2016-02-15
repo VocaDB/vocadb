@@ -339,6 +339,7 @@
     <Compile Include="Domain\EntryHit.cs" />
     <Compile Include="Domain\ExtLinks\GenericWebLink.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkManager.cs" />
+    <Compile Include="Domain\GenericEntryReport.cs" />
     <Compile Include="Domain\GlobalEntryId.cs" />
     <Compile Include="Domain\EntryIdAndName.cs" />
     <Compile Include="Domain\EntryPictureFile.cs" />

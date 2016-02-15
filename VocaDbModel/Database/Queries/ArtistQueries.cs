@@ -257,7 +257,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleTransaction(ctx => {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory, report => report.Artist.Id == artistId, 
+					entryLinkFactory, report => report.Entry.Id == artistId, 
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != ArtistReportType.Other ? enumTranslations.ArtistReportTypeNames[reportType] : null,
 					artistId, reportType, hostname, notes);

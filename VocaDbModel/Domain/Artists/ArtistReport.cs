@@ -4,50 +4,23 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Artists {
 
-	public class ArtistReport : EntryReport {
+	public class ArtistReport : GenericEntryReport<Artist, ArtistReportType> {
 
         public static readonly HashSet<ArtistReportType> ReportTypesWithRequiredNotes = 
             new HashSet<ArtistReportType>{ ArtistReportType.InvalidInfo, ArtistReportType.Other };
 
-		private Artist artist;
-
 		public ArtistReport() { }
 
 		public ArtistReport(Artist artist, ArtistReportType reportType, User user, string hostname, string notes, int? versionNumber)
-			: base(user, hostname, notes, versionNumber) {
-
-			Artist = artist;
-			ReportType = reportType;
-
-		}
-
-		public override IEntryWithNames EntryBase {
-			get { return Artist; }
-		}
-
-		public virtual ArtistReportType ReportType { get; set; }
-
-		public virtual Artist Artist {
-			get { return artist; }
-			set {
-				ParamIs.NotNull(() => value);
-				artist = value;
-			}
-		}
+			: base(artist, reportType, user, hostname, notes, versionNumber) {}
 
 		public virtual ArchivedArtistVersion Version {
 			get {
-				return VersionNumber.HasValue ? Artist.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
+				return VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 			}
 		}
 
-		public override ArchivedObjectVersion VersionBase {
-			get { return Version; }
-		}
-
-		public override string ToString() {
-			return string.Format("Entry report '{0}' for {1} [{2}]", ReportType, EntryBase, Id);
-		}
+		public override ArchivedObjectVersion VersionBase => Version;
 
 	}
 

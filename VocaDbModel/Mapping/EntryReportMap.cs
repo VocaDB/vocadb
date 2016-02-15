@@ -33,7 +33,7 @@ namespace VocaDb.Model.Mapping {
 
 			Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Album).Not.Nullable();
+			References(m => m.Entry).Column("Album").Not.Nullable();
 
 		}
 
@@ -47,7 +47,7 @@ namespace VocaDb.Model.Mapping {
 
 			Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Artist).Not.Nullable();
+			References(m => m.Entry).Column("Artist").Not.Nullable();
 
 		}
 
@@ -61,7 +61,7 @@ namespace VocaDb.Model.Mapping {
 
 			Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.Song).Not.Nullable();
+			References(m => m.Entry).Column("Song").Not.Nullable();
 
 		}
 
@@ -75,7 +75,7 @@ namespace VocaDb.Model.Mapping {
 
 			Map(m => m.ReportType).Not.Nullable();
 
-			References(m => m.ReportedUser).Not.Nullable();
+			References(m => m.Entry).Column("ReportedUser").Not.Nullable();
 
 		}
 

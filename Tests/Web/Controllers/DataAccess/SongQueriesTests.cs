@@ -306,7 +306,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = repository.List<SongReport>().First();
-			Assert.AreEqual(song, report.Song, "Report was created for song");
+			Assert.AreEqual(song, report.Entry, "Report was created for song");
 			Assert.IsNull(report.Version, "Version");
 
 			var notification = repository.List<UserMessage>().FirstOrDefault();
@@ -324,7 +324,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = repository.List<SongReport>().First();
-			Assert.AreEqual(song, report.Song, "Report was created for song");
+			Assert.AreEqual(song, report.Entry, "Report was created for song");
 			Assert.IsNull(report.Version, "Version");
 
 			var notification = repository.List<UserMessage>().FirstOrDefault();

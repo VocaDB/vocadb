@@ -1,36 +1,11 @@
 ﻿namespace VocaDb.Model.Domain.Users {
 
-	public class UserReport : EntryReport {
-
-		private User user;
+	public class UserReport : GenericEntryReport<User, UserReportType> {
 
 		public UserReport() { }
 
 		public UserReport(User reportedUser, UserReportType reportType, User user, string hostname, string notes)
-			: base(user, hostname, notes, null) {
-
-			ReportedUser = reportedUser;
-			ReportType = reportType;
-
-		}
-
-		public override IEntryWithNames EntryBase {
-			get { return ReportedUser; }
-		}
-
-		public virtual UserReportType ReportType { get; set; }
-
-		public virtual User ReportedUser {
-			get { return user; }
-			set {
-				ParamIs.NotNull(() => value);
-				user = value;
-			}
-		}
-
-		public override string ToString() {
-			return string.Format("Entry report '{0}' for {1} [{2}]", ReportType, EntryBase, Id);
-		}
+			: base(reportedUser, reportType, user, hostname, notes, null) {}
 
 	}
 
