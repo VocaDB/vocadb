@@ -4,6 +4,7 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Web.Models.Shared {
 

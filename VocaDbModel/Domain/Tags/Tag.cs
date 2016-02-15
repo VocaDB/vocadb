@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
@@ -15,7 +16,7 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Tags {
 
-	public class Tag : IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName> {
+	public class Tag : IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName>, IWebLinkFactory<TagWebLink> {
 
 		bool IDeletableEntry.Deleted {
 			get { return false; }
@@ -50,6 +51,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
+		private WebLinkManager<TagWebLink> webLinks = new WebLinkManager<TagWebLink>();
 
 		public Tag() {
 			CategoryName = string.Empty;
@@ -262,6 +264,18 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
+		public virtual TagWebLink CreateWebLink(string description, string url, WebLinkCategory category) {
+
+			ParamIs.NotNull(() => description);
+			ParamIs.NotNullOrEmpty(() => url);
+
+			var link = new TagWebLink(this, description, url);
+			WebLinks.Links.Add(link);
+
+			return link;
+
+		}
+
 		public virtual void Delete() {
 
 			while (AllAlbumTagUsages.Any())
@@ -373,6 +387,14 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int UsageCount { get; set; }
 
 		public virtual int Version { get; set; }
+
+		public virtual WebLinkManager<TagWebLink> WebLinks {
+			get { return webLinks; }
+			set {
+				ParamIs.NotNull(() => value);
+				webLinks = value;
+			}
+		}
 
 		public virtual RelatedTag AddRelatedTag(Tag tag) {
 

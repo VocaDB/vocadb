@@ -28,6 +28,7 @@ namespace VocaDb.Web.Models.Tag {
 			Parent = contract.Parent;
 			Status = contract.Status;
 			Thumb = contract.Thumb;
+			WebLinks = contract.WebLinks;
 
 			CopyNonEditableProperties(contract, permissionContext);
 
@@ -75,6 +76,9 @@ namespace VocaDb.Web.Models.Tag {
 
 		public string UrlSlug { get; set; }
 
+		[FromJson]
+		public WebLinkContract[] WebLinks { get; set; }
+
 		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext) {
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
@@ -99,7 +103,8 @@ namespace VocaDb.Web.Models.Tag {
 				Parent = this.Parent,
 				RelatedTags = RelatedTags,
 				Status = this.Status,
-				UpdateNotes = this.UpdateNotes ?? string.Empty
+				UpdateNotes = this.UpdateNotes ?? string.Empty,
+				WebLinks = WebLinks
 			};
 
 		}

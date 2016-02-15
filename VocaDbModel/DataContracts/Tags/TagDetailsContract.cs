@@ -56,6 +56,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			SongCount = songCount;
 
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
+			WebLinks = tag.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
 
@@ -88,6 +89,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public int SongCount { get; set; }
 
 		public EntryThumbContract Thumb { get; set; }
+
+		public WebLinkContract[] WebLinks { get; set; }
 
 	}
 

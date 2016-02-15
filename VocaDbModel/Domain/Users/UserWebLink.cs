@@ -1,4 +1,5 @@
 ﻿using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Domain.Users {
 

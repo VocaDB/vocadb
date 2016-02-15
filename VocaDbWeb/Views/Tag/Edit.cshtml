@@ -3,6 +3,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared
 @using Res = VocaDb.Web.Resources.Views.Tag.EditStrings;
+@using EditRes = ViewRes.EntryEditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEditViewModel>
 
 @{
@@ -32,7 +33,7 @@
 		var tagRepo = new vdb.repositories.TagRepository('@RootPath');
 		var userRepo = new vdb.repositories.UserRepository(urlMapper);
 
-		tagRepo.getById('@Model.Id', "AliasedTo,TranslatedDescription,Names,Parent,RelatedTags", '@UserContext.LanguagePreference.ToString()', function (contract) {
+		tagRepo.getById('@Model.Id', "AliasedTo,TranslatedDescription,Names,Parent,RelatedTags,WebLinks", '@UserContext.LanguagePreference.ToString()', function (contract) {
 			var viewModel = new vdb.viewModels.TagEditViewModel(userRepo, contract);
 			ko.applyBindings(viewModel);
 		});
@@ -155,6 +156,16 @@
 
 		<input type="text" data-bind="tagAutoComplete: addRelatedTag, tagFilter: allowRelatedTag" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
 		@Html.HiddenForKnockout(m => m.RelatedTags, "value: ko.toJSON(relatedTags)")
+	</div>
+	
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
+			@EditRes.WebLinks
+		</label>
+	</div>
+	<div class="editor-field" data-bind="with: webLinks">
+		@KnockoutHelpers.WebLinksEditViewKnockout(false)
+		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
 	</div>
 
 	<div class="editor-label">

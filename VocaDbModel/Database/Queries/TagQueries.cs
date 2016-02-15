@@ -457,6 +457,12 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.Sync(relatedTagsDiff);
 				diff.RelatedTags = relatedTagsDiff.Changed;
 
+				var webLinkDiff = tag.WebLinks.Sync(contract.WebLinks, tag);
+				ctx.OfType<TagWebLink>().Sync(webLinkDiff);
+
+				if (webLinkDiff.Changed)
+					diff.WebLinks = true;
+
 				if (tag.Status != contract.Status)
 					diff.Status = true;
 

@@ -15,6 +15,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.Songs {

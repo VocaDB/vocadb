@@ -15,6 +15,7 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Domain.Albums {
 

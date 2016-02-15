@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using System;
 using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;

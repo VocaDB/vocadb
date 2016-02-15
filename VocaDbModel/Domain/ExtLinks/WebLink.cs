@@ -2,14 +2,16 @@
 using System.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Helpers;
-using System;
 
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain.ExtLinks {
 
 	public class WebLink : IWebLink, IEntryWithIntId {
 
 		public static CollectionDiffWithValue<T,T> Sync<T>(IList<T> oldLinks, IEnumerable<WebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory) 
 			where T : WebLink {
+
+			ParamIs.NotNull(() => oldLinks);
+			ParamIs.NotNull(() => newLinks);
 
 			var validLinks = newLinks.Where(w => !string.IsNullOrWhiteSpace(w.Url)).ToArray();
 			var diff = CollectionHelper.Diff(oldLinks, validLinks, (n1, n2) => n1.Id == n2.Id);

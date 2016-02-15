@@ -337,6 +337,8 @@
     <Compile Include="Domain\Discussions\DiscussionFolder.cs" />
     <Compile Include="Domain\Discussions\DiscussionTopic.cs" />
     <Compile Include="Domain\EntryHit.cs" />
+    <Compile Include="Domain\ExtLinks\GenericWebLink.cs" />
+    <Compile Include="Domain\ExtLinks\WebLinkManager.cs" />
     <Compile Include="Domain\GlobalEntryId.cs" />
     <Compile Include="Domain\EntryIdAndName.cs" />
     <Compile Include="Domain\EntryPictureFile.cs" />
@@ -403,6 +405,7 @@
     <Compile Include="Domain\Tags\TagDiff.cs" />
     <Compile Include="Domain\Tags\TagEditableFields.cs" />
     <Compile Include="Domain\Tags\TagName.cs" />
+    <Compile Include="Domain\Tags\TagWebLink.cs" />
     <Compile Include="Domain\TrashedEntry.cs" />
     <Compile Include="Domain\Users\ArtistForUser.cs" />
     <Compile Include="Domain\Users\IUser.cs" />
@@ -493,7 +496,7 @@
     <Compile Include="Domain\Songs\SongInAlbum.cs" />
     <Compile Include="Domain\Songs\SongName.cs" />
     <Compile Include="Domain\Songs\SongWebLink.cs" />
-    <Compile Include="Domain\WebLink.cs" />
+    <Compile Include="Domain\ExtLinks\WebLink.cs" />
     <Compile Include="EmbeddedResources\EmbeddedResourceManager.cs" />
     <Compile Include="EnumVal.cs" />
     <Compile Include="Helpers\AlbumHelper.cs" />
@@ -553,6 +556,7 @@
     <Compile Include="Mapping\Discussions\DiscussionFolderMap.cs" />
     <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
+    <Compile Include="Mapping\WebLinkMap.cs" />
     <Compile Include="Mapping\MikuDb\MikuDbAlbumMap.cs" />
     <Compile Include="Mapping\Security\AuditLogEntryMap.cs" />
     <Content Include="Mapping\Security\PermissionTokenMap.cs" />
