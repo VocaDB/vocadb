@@ -160,9 +160,9 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				var link = session.Query<AlbumWebLink>()
-					.FirstOrDefault(w => !w.Album.Deleted && w.Url.Contains("mikudb.com/" + mikuDbId + "/"));
+					.FirstOrDefault(w => !w.Entry.Deleted && w.Url.Contains("mikudb.com/" + mikuDbId + "/"));
 
-				return (link != null ? (int?)link.Album.Id : null);
+				return (link != null ? (int?)link.Entry.Id : null);
 
 			});
 
@@ -261,7 +261,7 @@ namespace VocaDb.Model.Service {
 
 				var webLink = session.Query<AlbumWebLink>().FirstOrDefault(p => p.Url.Contains(link));
 
-				return (webLink != null ? new AlbumContract(webLink.Album, PermissionContext.LanguagePreference) : null);
+				return (webLink != null ? new AlbumContract(webLink.Entry, PermissionContext.LanguagePreference) : null);
 
 			});
 

@@ -158,22 +158,7 @@ namespace VocaDb.Model.Mapping.Songs {
 
 	}
 
-	public class SongWebLinkMap : ClassMap<SongWebLink> {
-
-		public SongWebLinkMap() {
-
-			Cache.ReadWrite();
-			Id(m => m.Id);
-
-			Map(m => m.Category).Not.Nullable();
-			Map(m => m.Description).Not.Nullable();
-			Map(m => m.Url).Not.Nullable();
-
-			References(m => m.Song).Not.Nullable();
-
-		}
-
-	}
+	public class SongWebLinkMap : WebLinkMap<SongWebLink, Song> {}
 
 	public class PVForSongMap : ClassMap<PVForSong> {
 		

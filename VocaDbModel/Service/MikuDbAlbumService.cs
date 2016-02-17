@@ -226,7 +226,7 @@ namespace VocaDb.Model.Service {
 
 			var webLinkMatches = session.Query<AlbumWebLink>()
 				.Where(w => w.Url == imported.SourceUrl)
-				.Select(w => w.Album)
+				.Select(w => w.Entry)
 				.ToArray();
 
 			var nameMatchDirect = session.Query<Album>()

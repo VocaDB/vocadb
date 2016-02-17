@@ -186,8 +186,8 @@ namespace VocaDb.Model.Database.Queries {
 				var authorPage = NicoHelper.GetUserProfileUrlById(res.AuthorId);
 
 				var author = ctx.OfType<ArtistWebLink>().Query()
-					.Where(w => w.Url == authorPage && !w.Artist.Deleted)
-					.Select(w => w.Artist)
+					.Where(w => w.Url == authorPage && !w.Entry.Deleted)
+					.Select(w => w.Entry)
 					.FirstOrDefault();
 
 				if (author != null)

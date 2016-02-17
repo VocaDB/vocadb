@@ -167,10 +167,10 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				var contracts = session.Query<ArtistWebLink>()
-					.Where(l => !l.Artist.Deleted 
-						&& (l.Artist.ArtistType == ArtistType.Producer || l.Artist.ArtistType == ArtistType.Circle || l.Artist.ArtistType == ArtistType.Animator) 
+					.Where(l => !l.Entry.Deleted 
+						&& (l.Entry.ArtistType == ArtistType.Producer || l.Entry.ArtistType == ArtistType.Circle || l.Entry.ArtistType == ArtistType.Animator) 
 						&& (l.Url.Contains("youtube.com/user/") || l.Url.Contains("youtube.com/channel/")))
-					.Select(l => l.Artist)
+					.Select(l => l.Entry)
 					.Distinct()
 					.ToArray()
 					.Select(a => new ArtistForApiContract(a, languagePreference, null, false, ArtistOptionalFields.WebLinks))

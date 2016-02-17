@@ -286,8 +286,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				var linkMatches = !string.IsNullOrEmpty(urlTrimmed) ?
 					session.Query<ArtistWebLink>()
-					.Where(w => w.Url == urlTrimmed && !w.Artist.Deleted)
-					.Select(w => w.Artist)
+					.Where(w => w.Url == urlTrimmed && !w.Entry.Deleted)
+					.Select(w => w.Entry)
 					.Take(10)
 					.ToArray()
 					.Distinct() : new Artist[] { };
