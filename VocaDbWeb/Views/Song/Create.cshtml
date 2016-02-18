@@ -74,6 +74,20 @@
 			<div class="editor-field">
 				@Html.DropdownForKnockout(m => m.SongType, ViewHelper.CreateSongTypesList(null), "value: songType")
 			</div>
+			
+			<!-- ko if: canHaveOriginalVersion -->
+			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip: null" title="@R.EditStrings.BaOriginalVersionHelp">
+					@R.EditStrings.BaOriginalVersion
+				</label>
+			</div>
+			<div class="editor-field">
+				<div style="display: inline-block;" class="input-append">
+					@KnockoutHelpers.LockingAutoComplete("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id")
+				</div>
+				@Html.HiddenForKnockout(m => m.OriginalVersion, "value: ko.toJSON(originalVersion)")
+			</div>
+			<!-- /ko -->
 
 			<div class="editor-label">
 				<span>@R.CreateStrings.ArtistsInfo</span>

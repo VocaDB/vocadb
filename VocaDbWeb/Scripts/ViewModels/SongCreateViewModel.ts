@@ -1,6 +1,7 @@
 
 module vdb.viewModels {
 
+	import cls = models;
     import dc = vdb.dataContracts;
 
     // View model for song creation view
@@ -68,9 +69,15 @@ module vdb.viewModels {
         nameOriginal = ko.observable("");
         nameRomaji = ko.observable("");
         nameEnglish = ko.observable("");
+
+		originalVersion: BasicEntryLinkViewModel<dc.SongContract>;
+		originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
+
         pv1 = ko.observable("");
         pv2 = ko.observable("");
         songType = ko.observable("Original");
+
+		canHaveOriginalVersion = ko.computed(() => cls.songs.SongType[this.songType()] !== cls.songs.SongType.Original);
 
         hasName: KnockoutComputed<boolean>;
 
@@ -119,6 +126,13 @@ module vdb.viewModels {
                 return _.some(this.dupeEntries(), item => { return item.matchProperty == 'PV' });
             });
             
+			this.originalVersion = new BasicEntryLinkViewModel<dc.SongContract>(null, songRepository.getOne);
+
+			this.originalVersionSearchParams = {
+				acceptSelection: this.originalVersion.id,
+				extraQueryParams: { songTypes: helpers.SongHelper.originalVersionTypesString() }
+			};
+
             this.removeArtist = (artist: dc.ArtistContract) => {
                 this.artists.remove(artist);
             };

@@ -87,6 +87,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/WebLinkEditViewModel.js",
 				"~/Scripts/ViewModels/WebLinksEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/EnglishTranslatedStringEditViewModel.js",
+				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SongAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/FocusOut.js",
@@ -160,7 +161,6 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/Album/Merge").Include(
 				"~/Scripts/KnockoutExtensions/AlbumAutoComplete.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Album/AlbumMergeViewModel.js"
 			));
 
@@ -211,7 +211,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/EntryPictureFileEditViewModel.js",
 				"~/Scripts/ViewModels/EntryPictureFileListEditViewModel.js",
 				"~/Scripts/ViewModels/Artist/ArtistEditViewModel.js",
@@ -220,7 +219,6 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Merge").Include(
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Artist/ArtistMergeViewModel.js"
 			));
 
@@ -281,6 +279,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Create").Include(
+				"~/Scripts/Models/Songs/SongType.js",
+				"~/Scripts/Helpers/SongHelper.js",
 				"~/Scripts/ViewModels/SongCreateViewModel.js"
 			));
 
@@ -309,7 +309,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/SongHelper.js",
 				"~/Scripts/Repositories/PVRepository.js",
 				"~/Scripts/ViewModels/BasicListEditViewModel.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 				"~/Scripts/ViewModels/Artist/ArtistRolesEditViewModel.js",
@@ -322,7 +321,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Merge").Include(
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Song/SongMergeViewModel.js"
 			));
 

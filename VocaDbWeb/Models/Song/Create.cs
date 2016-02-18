@@ -4,6 +4,7 @@ using System.Linq;
 using ViewRes;
 using ViewRes.Song;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
@@ -36,6 +37,9 @@ namespace VocaDb.Web.Models.Song {
 		[StringLength(255)]
 		public string NameOriginal { get; set; }
 
+		[FromJson]
+		public SongContract OriginalVersion { get; set; }
+
 		[Display(ResourceType = typeof(CreateStrings), Name = "OriginalPV")]
 		[StringLength(255)]
 		public string PVUrl { get; set; }
@@ -57,6 +61,7 @@ namespace VocaDb.Web.Models.Song {
 				Artists = this.Artists.ToArray(),
 				Draft = this.Draft,
 				Names = LocalizedStringHelper.SkipNullAndEmpty(NameOriginal, NameRomaji, NameEnglish).ToArray(),
+				OriginalVersion = OriginalVersion,
 				PVUrl = this.PVUrl,
 				ReprintPVUrl = this.ReprintPVUrl,
 				SongType = this.SongType

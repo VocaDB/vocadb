@@ -2,8 +2,15 @@
 module vdb.helpers {
 
 	import cls = vdb.models;
+	import SongType = cls.songs.SongType;
 
 	export class SongHelper {
+
+		public static originalVersionTypes = [
+			SongType.Unspecified, SongType.Original, SongType.Remaster, SongType.Remix, SongType.Cover, SongType.Mashup, SongType.DramaPV, SongType.Other
+		];
+
+		public static originalVersionTypesString = () => _.map(SongHelper.originalVersionTypes, s => cls.songs.SongType[s]).join(",");
 		
 		// Checks whether a song type is to be considered animation where animators are considered as the main role
 		public static isAnimation(songType: cls.songs.SongType) {

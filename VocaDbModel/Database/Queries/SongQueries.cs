@@ -271,7 +271,13 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
 
+				var diff = new SongDiff { Names = true };
 				var song = new Song { SongType = contract.SongType };
+
+				if (contract.OriginalVersion != null) {
+					song.OriginalVersion = ctx.Load(contract.OriginalVersion.Id);
+					diff.OriginalVersion = true;
+				}
 
 				song.Names.Init(contract.Names, song);
 
@@ -282,6 +288,8 @@ namespace VocaDb.Model.Database.Queries {
 					if (!song.HasArtist(artist))
 						ctx.OfType<ArtistForSong>().Save(song.AddArtist(artist));
 				}
+
+				diff.Artists = contract.Artists.Any();
 
 				var pvs = new List<PVContract>();
 
@@ -299,12 +307,13 @@ namespace VocaDb.Model.Database.Queries {
 
 				var pvDiff = song.SyncPVs(pvs);
 				ctx.OfType<PVForSong>().Sync(pvDiff);
+				diff.PVs = pvs.Any();
 
 				song.Status = (contract.Draft || !(new SongValidator().IsValid(song, config.SpecialTags.Instrumental))) ? EntryStatus.Draft : EntryStatus.Finished;
 
 				song.UpdateArtistString();
 
-				var archived = Archive(ctx, song, SongArchiveReason.Created);
+				var archived = Archive(ctx, song, diff, SongArchiveReason.Created);
 				ctx.Update(song);
 
 				ctx.AuditLogger.AuditLog(string.Format("created song {0} ({1})", entryLinkFactory.CreateEntryLink(song), song.SongType));
