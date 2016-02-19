@@ -260,7 +260,7 @@ namespace VocaDb.Model.Database.Queries {
 			ParamIs.NotNull(() => contract);
 
 			if (contract.Names == null || !contract.Names.Any())
-				throw new ArgumentException("Song needs at least one name", "contract");
+				throw new ArgumentException("Song needs at least one name", nameof(contract));
 
 			VerifyManageDatabase();
 
@@ -274,7 +274,7 @@ namespace VocaDb.Model.Database.Queries {
 				var diff = new SongDiff { Names = true };
 				var song = new Song { SongType = contract.SongType };
 
-				if (contract.OriginalVersion != null) {
+				if (contract.OriginalVersion != null && contract.OriginalVersion.Id != 0) {
 					song.OriginalVersion = ctx.Load(contract.OriginalVersion.Id);
 					diff.OriginalVersion = true;
 				}
