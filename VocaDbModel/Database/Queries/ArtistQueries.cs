@@ -57,7 +57,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
 
-				var types = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.OtherVoiceSynthesizer };
+				var types = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
 
 				var topVocaloidIdsAndCounts = ctx
 					.Query<ArtistForSong>()
