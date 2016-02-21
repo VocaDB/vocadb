@@ -113,7 +113,6 @@ module vdb.viewModels {
             };
 
             this.artistSearchParams = {
-                allowCreateNew: false,
                 acceptSelection: this.addArtist,
                 height: 300
             };
@@ -123,7 +122,7 @@ module vdb.viewModels {
             });
 
             this.isDuplicatePV = ko.computed(() => {
-                return _.some(this.dupeEntries(), item => { return item.matchProperty == 'PV' });
+                return _.some(this.dupeEntries(), item => { return item.matchProperty === 'PV' });
             });
             
 			this.originalVersion = new BasicEntryLinkViewModel<dc.SongContract>(null, songRepository.getOne);

@@ -52,19 +52,20 @@
 				<table><tr><td class="formLabel">				
 					@Html.LabelFor(m => m.NameOriginal)
 				</td><td>
-					@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
+					<!-- change event is fired when the field is focused out AND content has changed -->
+					@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr>
 
 				<tr><td class="formLabel">
 					@Html.LabelFor(m => m.NameRomaji)
 				</td><td>
-					@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
+					@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr>
 					
 				<tr><td class="formLabel">
 					@Html.LabelFor(m => m.NameEnglish)
 				</td><td>
-					@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, focusout: checkDuplicates", cssClass: "span12", maxLength: 255, size: 40)
+					@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
 				</td></tr></table>
 			</div>
 
