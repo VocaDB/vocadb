@@ -27,12 +27,15 @@ module vdb.viewModels {
 				}
 			});
 
+			this.isEmpty = ko.computed(() => this.entry() == null);
 
 		}
 
 		public entry: KnockoutObservable<TEntry>;
 
 		public id: KnockoutComputed<number>;
+
+		public isEmpty: KnockoutComputed<boolean>;
 
 		public name: KnockoutComputed<string>;
 

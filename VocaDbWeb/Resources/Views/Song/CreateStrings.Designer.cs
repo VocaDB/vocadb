@@ -151,11 +151,29 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is any of these the original version?.
+        /// </summary>
+        public static string OriginalSuggestionsTitle {
+            get {
+                return ResourceManager.GetString("OriginalSuggestionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to URL to the reprint of the PV (such as NicoNicoDouga or YouTube).
         /// </summary>
         public static string ReprintPV {
             get {
                 return ResourceManager.GetString("ReprintPV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         

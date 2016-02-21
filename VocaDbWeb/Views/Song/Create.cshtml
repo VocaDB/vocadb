@@ -1,10 +1,10 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers;
-@using R = ViewRes.Song;
+@using Res = ViewRes.Song.CreateStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.Create>
 
 @{
-	PageProperties.Title = R.CreateStrings.SubmitSong;
+	PageProperties.Title = Res.SubmitSong;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null)
 	};	
@@ -12,7 +12,7 @@
 
 <form action="@Url.Action("Create", "Song")" method="POST" data-bind="submit: submit">
 
-	@Helpers.ValidationSymmaryDiv(R.CreateStrings.UnableToCreateSong)
+	@Helpers.ValidationSymmaryDiv(Res.UnableToCreateSong)
 																								
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">
@@ -22,14 +22,14 @@
 			</div>
 
 			<div class="alert alert-danger" data-bind="visible: isDuplicatePV" style="display:none">
-				@R.CreateStrings.DuplicatePV
+				@Res.DuplicatePV
 			</div>
 			
 			<div class="editor-label">
 				@Html.LabelFor(m => m.PVUrl)
 			</div>
 			<div class="editor-field">
-				@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, focusout: checkDuplicatesAndPV", cssClass: "span8", maxLength: 255, size: 30)
+				@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, event: { change: checkDuplicatesAndPV }", cssClass: "span8", maxLength: 255, size: 30)
 				@Html.ValidationMessageFor(m => m.PVUrl)
 			</div>
 
@@ -37,12 +37,12 @@
 				@Html.LabelFor(m => m.ReprintPVUrl)
 			</div>
 			<div class="editor-field">
-				@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, focusout: checkDuplicates", cssClass: "span8", maxLength: 255, size: 30)
+				@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, event: { change: checkDuplicates }", cssClass: "span8", maxLength: 255, size: 30)
 				@Html.ValidationMessageFor(m => m.ReprintPVUrl)
 			</div>
 
 			<div class="editor-label">
-				@R.CreateStrings.Name
+				@Res.Name
 				@Helpers.RequiredField()
 			</div>
 
@@ -78,23 +78,40 @@
 			
 			<!-- ko if: canHaveOriginalVersion -->
 			<div class="editor-label">
-				<label class="helpTip" data-bind="qTip: null" title="@R.EditStrings.BaOriginalVersionHelp">
-					@R.EditStrings.BaOriginalVersion
+				<label class="helpTip" data-bind="qTip: null" title="@ViewRes.Song.EditStrings.BaOriginalVersionHelp">
+					@ViewRes.Song.EditStrings.BaOriginalVersion
 				</label>
 			</div>
 			<div class="editor-field">
 				<div style="display: inline-block;" class="input-append">
 					@KnockoutHelpers.LockingAutoComplete("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id")
 				</div>
+				<div data-bind="visible: originalVersion.isEmpty() && originalSongSuggestions().length" style="display: none;">
+					<h4>@Res.OriginalSuggestionsTitle</h4>
+					<table data-bind="foreach: originalSongSuggestions">
+						<tr >
+							<td>
+								<a data-bind="text: entry.name.displayName, attr: { href: vdb.utils.EntryUrlMapper.details_entry(entry) }, entryToolTip: entry" href="#" target="_blank"></a>
+								(<span data-bind="text: entry.entryTypeName"></span>)
+								<div data-bind="if: entry.artistString">
+									<span data-bind="text: entry.artistString"></span>
+								</div>
+							</td>
+							<td style="max-width: 150px;">
+								<a class="textLink acceptLink" href="#" data-bind="click: $parent.selectOriginal">@Res.Select</a>
+							</td>
+						</tr>
+					</table>					
+				</div>
 				@Html.HiddenForKnockout(m => m.OriginalVersion, "value: ko.toJSON(originalVersion)")
 			</div>
 			<!-- /ko -->
 
 			<div class="editor-label">
-				<span>@R.CreateStrings.ArtistsInfo</span>
+				<span>@Res.ArtistsInfo</span>
 				@Helpers.RequiredField()
 				<br />
-				<span class="extraInfo">@R.CreateStrings.ArtistDesc</span>
+				<span class="extraInfo">@Res.ArtistDesc</span>
 			</div>
 			<div class="editor-field">
 				@Html.ValidationMessage("Artists")
@@ -119,7 +136,7 @@
 			<p>
 				<label class="checkbox">
 					@Html.CheckBoxFor(m => m.Draft)
-					@R.CreateStrings.Draft
+					@Res.Draft
 				</label>
 			</p>
 			
@@ -133,9 +150,9 @@
 				@Html.Raw(BrandableStrings.Song.NewSongInfo)
 			</div>			     
 			<div class="alert alert-info">
-				<p>@R.CreateStrings.NoArtistsToName</p>
-				<p>@R.CreateStrings.NameHelp</p>
-				<p>@R.CreateStrings.ArtistHelp</p>
+				<p>@Res.NoArtistsToName</p>
+				<p>@Res.NameHelp</p>
+				<p>@Res.ArtistHelp</p>
 			</div>	
 			
 			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }

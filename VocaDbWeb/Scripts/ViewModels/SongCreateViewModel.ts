@@ -17,11 +17,11 @@ module vdb.viewModels {
 			return _.map(this.artists(), a => a.id);
 		}
 
-		public checkDuplicatesAndPV = () => {
-			this.checkDuplicates(null, true);
+		public checkDuplicatesAndPV = (vm?, event?: JQueryEventObject) => {
+			this.checkDuplicates(vm, event, true);
 		}
 
-        public checkDuplicates = (event?: JQueryEventObject, getPVInfo = false) => {
+        public checkDuplicates = (vm?, event?: JQueryEventObject, getPVInfo = false) => {
 	   
 			var term1 = this.nameOriginal();
 			var term2 = this.nameRomaji();
@@ -58,7 +58,12 @@ module vdb.viewModels {
 
                 }
 
-            });
+				});
+
+			if (event)
+				event.preventDefault();
+
+			return false;
 			 
 		}
 
@@ -70,6 +75,8 @@ module vdb.viewModels {
         nameRomaji = ko.observable("");
         nameEnglish = ko.observable("");
 
+		originalSongSuggestions: KnockoutComputed<dc.DuplicateEntryResultContract[]>;
+
 		originalVersion: BasicEntryLinkViewModel<dc.SongContract>;
 		originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
 
@@ -80,6 +87,10 @@ module vdb.viewModels {
 		canHaveOriginalVersion = ko.computed(() => cls.songs.SongType[this.songType()] !== cls.songs.SongType.Original);
 
         hasName: KnockoutComputed<boolean>;
+
+		selectOriginal = (dupe: dc.DuplicateEntryResultContract) => {
+			this.songRepository.getOne(dupe.entry.id, song => this.originalVersion.entry(song));
+		}
 
         public submit = () => {
             this.submitting(true);
@@ -131,6 +142,15 @@ module vdb.viewModels {
 				acceptSelection: this.originalVersion.id,
 				extraQueryParams: { songTypes: helpers.SongHelper.originalVersionTypesString() }
 			};
+
+			this.originalSongSuggestions = ko.computed(() => {
+
+				if (!this.dupeEntries() || this.dupeEntries().length === 0)
+					return [];
+
+				return _.take(this.dupeEntries(), 3);
+
+			});
 
             this.removeArtist = (artist: dc.ArtistContract) => {
                 this.artists.remove(artist);
