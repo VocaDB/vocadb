@@ -80,6 +80,7 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/shared/edit").Include(
 				"~/Scripts/knockout-sortable.js",
 				"~/Scripts/Models/WebLinkCategory.js",
+				"~/Scripts/Models/EntryStatus.js",
 				"~/Scripts/Shared/WebLinkMatcher.js",
 				"~/Scripts/Shared/DialogService.js",
 				"~/Scripts/Helpers/SearchTextQueryHelper.js",
@@ -321,6 +322,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Merge").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
 				"~/Scripts/ViewModels/Song/SongMergeViewModel.js"
 			));
 
@@ -479,6 +482,7 @@ namespace VocaDb.Web.App_Start {
 
 #if DEBUG
 			bundles.Add(new ScriptBundle("~/bundles/tests")
+				.Include("~/Scripts/moment.js")
 				.IncludeDirectory("~/Scripts/Models", "*.js", true)
 				.IncludeDirectory("~/Scripts/Helpers", "*.js")
 				.IncludeDirectory("~/Scripts/Repositories", "*.js", true)

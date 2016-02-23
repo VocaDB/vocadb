@@ -43,7 +43,7 @@ module vdb.tests.viewModels {
 			song = {
 				additionalNames: "", artistString: "Tripshots", artists: [ { id: 0, artist: producer, isSupport: false, name: null, roles: null } ], id: 2, lengthSeconds: 0, name: "Anger", pvServices: "Nothing",
 				ratingScore: 0, songType: 'Original',
-				vote: "Nothing"
+				createDate: null, status: 'Finished'
 			};
             songRep.song = song;
 

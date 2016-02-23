@@ -7,6 +7,8 @@ module vdb.dataContracts {
 
         artistString: string;
 
+		createDate: string;
+
         id: number;
 
 		lengthSeconds: number;
@@ -21,6 +23,8 @@ module vdb.dataContracts {
 		ratingScore: number;
 
 		songType: string;
+
+		status: string;
 
 		thumbUrl?: string;
 

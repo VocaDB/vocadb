@@ -97,6 +97,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongType SongType { get; set; }
 
 		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
 
 		[DataMember]

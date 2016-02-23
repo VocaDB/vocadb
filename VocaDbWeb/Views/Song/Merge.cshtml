@@ -18,9 +18,26 @@
 	<input type="hidden" name="targetSongId" id="targetSongId" data-bind="value: target.id" />
 	
 	<br />
-	@KnockoutHelpers.LockingAutoComplete("songAutoComplete", "targetSearchParams", "target.name", "target.id")
-	
-	<br /><br />
+	<div class="clearfix">
+		<div class="pull-left">
+			@KnockoutHelpers.LockingAutoComplete("songAutoComplete", "targetSearchParams", "target.name", "target.id")
+		</div>
+		<div class="pull-left entry-field-inline-warning">
+			<div class="alert" data-bind="visible: validationError_targetIsNewer" style="display: none;">
+				<span class="icon-line errorIcon"></span>
+				The selected entry seems to be newer then the one being merged from.
+				Prefer merging from newer entry to the older entry.
+			</div>
+
+			<div class="alert" data-bind="visible: validationError_targetIsLessComplete" style="display: none;">
+				<span class="icon-line errorIcon"></span>
+				The selected entry seems to be draft while the the one being merged from is not.
+				Prefer merging from less complete entry to the more complete entry.
+			</div>			
+		</div>
+	</div>
+
+	<br />
 
 	<button type="submit" class="btn btn-primary" id="mergeBtn" data-bind="enable: target.id">Merge</button>
 
@@ -33,7 +50,8 @@
 		$(function () {
 
 			var repo = new vdb.repositories.SongRepository('@RootPath', @LanguagePreferenceInt);
-			var vm = new vdb.viewModels.songs.SongMergeViewModel(repo, @Model.Id);
+			var data = @ToJS(Model);
+			var vm = new vdb.viewModels.songs.SongMergeViewModel(repo, data);
 			ko.applyBindings(vm);
 
 			$("#mergeBtn").click(function () {

@@ -154,6 +154,9 @@ body {
   display: inline-block;
   margin-right: 10px;
 }
+.entry-field-inline-warning {
+  margin-left: 20px;
+}
 .song-pv-player {
   margin: 24px;
 }
