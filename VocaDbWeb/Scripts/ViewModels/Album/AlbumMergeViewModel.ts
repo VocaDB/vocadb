@@ -12,7 +12,6 @@ module vdb.viewModels.albums {
 
 			this.targetSearchParams = {
 				acceptSelection: this.target.id,
-				allowCreateNew: false,
 				ignoreId: id
 			};
 

@@ -2,19 +2,41 @@
 module vdb.helpers {
 	
 	export class EntryMergeValidationHelper {
+
+		private static toEnum(statusStr: string | models.EntryStatus): models.EntryStatus {
 		
-		public static validate(baseStatus: string, targetStatus: string, baseCreated: string, targetCreated: string) {
-			return {
-				validationError_targetIsLessComplete: moment(targetCreated) <= moment(baseCreated) && models.EntryStatus[targetStatus] === models.EntryStatus.Draft && models.EntryStatus[baseStatus] > models.EntryStatus.Draft,
-				validationError_targetIsNewer: !(models.EntryStatus[targetStatus] > models.EntryStatus.Draft && models.EntryStatus[baseStatus] === models.EntryStatus.Draft) && moment(targetCreated) > moment(baseCreated)
-			};
+			if (typeof statusStr === "string") {
+				return models.EntryStatus[statusStr];
+			} else {
+				return statusStr;
+			}
+				 
 		}
 
-		public static validationError_targetIsLessComplete = (baseStatus: string, targetStatus: string) =>
-			models.EntryStatus[targetStatus] < models.EntryStatus[baseStatus];
+		public static validate(baseStatus: string | models.EntryStatus, targetStatus: string | models.EntryStatus, baseCreated: string, targetCreated: string) {
 
-		public static validationError_targetIsNewer = (baseCreated: string, targetCreated: string) =>
-			moment(targetCreated) > moment(baseCreated);
+			var baseStatusEnum = EntryMergeValidationHelper.toEnum(baseStatus);
+			var targetStatusEnum = EntryMergeValidationHelper.toEnum(targetStatus);
+
+			return {
+				validationError_targetIsLessComplete: moment(targetCreated) <= moment(baseCreated) && targetStatusEnum === models.EntryStatus.Draft && baseStatusEnum > models.EntryStatus.Draft,
+				validationError_targetIsNewer: !(targetStatusEnum > models.EntryStatus.Draft && baseStatusEnum === models.EntryStatus.Draft) && moment(targetCreated) > moment(baseCreated)
+			};
+
+		}
+
+		public static validateEntry(base: dc.CommonEntryContract, target: dc.CommonEntryContract) {
+
+			if (base == null || target == null) {
+				return {
+					validationError_targetIsLessComplete: false,
+					validationError_targetIsNewer: false
+				}
+			}
+
+			return EntryMergeValidationHelper.validate(base.status, target.status, base.createDate, target.createDate);
+
+		}
 
 	}
 

@@ -1,7 +1,7 @@
 ﻿
 module vdb.dataContracts {
-	
-	export interface AlbumContract extends EntryWithTagUsagesContract {
+
+	export interface AlbumContract extends CommonEntryContract, EntryWithTagUsagesContract {
 
 		additionalNames: string;
 
@@ -9,11 +9,7 @@ module vdb.dataContracts {
 
 		discType: string;
 
-		id: number;
-
 		mainPicture: EntryThumbContract;
-
-		name: string;
 
 		ratingAverage: number;
 

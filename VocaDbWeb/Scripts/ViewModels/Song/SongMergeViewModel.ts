@@ -17,13 +17,7 @@ module vdb.viewModels.songs {
 
 			ko.computed(() => {
 
-				if (this.target.isEmpty()) {
-					this.validationError_targetIsLessComplete(false);
-					this.validationError_targetIsNewer(false);
-					return;
-				}
-
-				var result = helpers.EntryMergeValidationHelper.validate(this.base.status, this.target.entry().status, this.base.createDate, this.target.entry().createDate);
+				var result = helpers.EntryMergeValidationHelper.validateEntry(this.base, this.target.entry());
 				this.validationError_targetIsLessComplete(result.validationError_targetIsLessComplete);
 				this.validationError_targetIsNewer(result.validationError_targetIsNewer);
 

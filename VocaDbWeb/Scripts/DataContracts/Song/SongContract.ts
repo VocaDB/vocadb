@@ -1,19 +1,13 @@
 
 module vdb.dataContracts {
 
-    export interface SongContract {
+    export interface SongContract extends CommonEntryContract {
 
         additionalNames: string;
 
         artistString: string;
 
-		createDate: string;
-
-        id: number;
-
 		lengthSeconds: number;
-
-		name: string;
 
 		// Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
 		publishDate?: string;
@@ -23,8 +17,6 @@ module vdb.dataContracts {
 		ratingScore: number;
 
 		songType: string;
-
-		status: string;
 
 		thumbUrl?: string;
 

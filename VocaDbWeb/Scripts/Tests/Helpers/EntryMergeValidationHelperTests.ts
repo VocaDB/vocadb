@@ -6,7 +6,7 @@ module vdb.tests.helpers {
 	QUnit.module("EntryMergeValidationHelper");
 
 	function testValidate(expectedLessComplete: boolean, expectedNewer: boolean, baseStatus: cls.EntryStatus, targetStatus: cls.EntryStatus, baseDate: moment.Moment, targetDate: moment.Moment) {
-		var result = vdb.helpers.EntryMergeValidationHelper.validate(cls.EntryStatus[baseStatus], cls.EntryStatus[targetStatus], baseDate.toISOString(), targetDate.toISOString());
+		var result = vdb.helpers.EntryMergeValidationHelper.validate(baseStatus, targetStatus, baseDate.toISOString(), targetDate.toISOString());
 		QUnit.equal(result.validationError_targetIsLessComplete, expectedLessComplete, "expectedLessComplete");
 		QUnit.equal(result.validationError_targetIsNewer, expectedNewer, "expectedNewer");
 	}
