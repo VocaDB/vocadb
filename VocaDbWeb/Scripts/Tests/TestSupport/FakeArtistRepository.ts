@@ -1,4 +1,3 @@
-/// <reference path="../../DataContracts/ArtistContract.ts" />
 /// <reference path="../../Repositories/ArtistRepository.ts" />
 
 module vdb.tests.testSupport {

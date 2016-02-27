@@ -1209,6 +1209,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryIndexStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Shared\EntryMergeStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryMergeStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Shared\MiscStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1697,7 +1702,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\NewSongCheckResultContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\EntryRefContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\DuplicateEntryResultContract.ts" />
-    <TypeScriptCompile Include="Scripts\DataContracts\ArtistContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ArtistForAlbumContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\TranslatedEnumField.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongContract.ts" />
@@ -3679,6 +3684,11 @@
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryMergeStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ja.resx" />

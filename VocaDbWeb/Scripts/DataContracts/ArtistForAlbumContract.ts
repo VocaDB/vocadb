@@ -1,4 +1,3 @@
-/// <reference path="ArtistContract.ts" />
 
 module vdb.dataContracts {
 

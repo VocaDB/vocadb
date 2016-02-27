@@ -160,6 +160,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Album/Merge").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
 				"~/Scripts/KnockoutExtensions/AlbumAutoComplete.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/ViewModels/Album/AlbumMergeViewModel.js"
@@ -219,6 +221,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Merge").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/ViewModels/Artist/ArtistMergeViewModel.js"
 			));

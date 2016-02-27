@@ -25,21 +25,19 @@
 		<div class="pull-left entry-field-inline-warning">
 			<div class="alert" data-bind="visible: validationError_targetIsNewer" style="display: none;">
 				<span class="icon-line errorIcon"></span>
-				The selected entry seems to be newer then the one being merged from.
-				Prefer merging from newer entry to the older entry.
+				@ViewRes.EntryMergeStrings.ValidationErrorTargetIsNewer
 			</div>
 
 			<div class="alert" data-bind="visible: validationError_targetIsLessComplete" style="display: none;">
 				<span class="icon-line errorIcon"></span>
-				The selected entry seems to be draft while the the one being merged from is not.
-				Prefer merging from less complete entry to the more complete entry.
+				@ViewRes.EntryMergeStrings.ValidationErrorTargetIsLessComplete
 			</div>			
 		</div>
 	</div>
 
 	<br />
 
-	<button type="submit" class="btn btn-primary" id="mergeBtn" data-bind="enable: target.id">Merge</button>
+	<button type="submit" class="btn btn-primary" id="mergeBtn" data-bind="enable: target.id">@ViewRes.EntryMergeStrings.MergeBtnText</button>
 
 }
 

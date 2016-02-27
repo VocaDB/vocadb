@@ -17,9 +17,24 @@
 	<input type="hidden" name="targetAlbumId" id="targetAlbumId" data-bind="value: target.id" />
 
 	<br />
-	@KnockoutHelpers.LockingAutoComplete("albumAutoComplete", "targetSearchParams", "target.name", "target.id")
+	<div class="clearfix">
+		<div class="pull-left">
+			@KnockoutHelpers.LockingAutoComplete("albumAutoComplete", "targetSearchParams", "target.name", "target.id")
+		</div>
+		<div class="pull-left entry-field-inline-warning">
+			<div class="alert" data-bind="visible: validationError_targetIsNewer" style="display: none;">
+				<span class="icon-line errorIcon"></span>
+				@ViewRes.EntryMergeStrings.ValidationErrorTargetIsNewer
+			</div>
 
-	<br /><br />
+			<div class="alert" data-bind="visible: validationError_targetIsLessComplete" style="display: none;">
+				<span class="icon-line errorIcon"></span>
+				@ViewRes.EntryMergeStrings.ValidationErrorTargetIsLessComplete
+			</div>
+		</div>
+	</div>
+
+	<br />
 
 	<button type="submit" class="btn btn-primary" id="mergeBtn" data-bind="enable: target.id">Merge</button>
 

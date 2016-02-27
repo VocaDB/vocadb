@@ -1,6 +1,5 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../DataContracts/ArtistContract.ts" />
 /// <reference path="../DataContracts/DuplicateEntryResultContract.ts" />
 
 module vdb.repositories {

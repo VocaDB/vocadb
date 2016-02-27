@@ -3,13 +3,13 @@ module vdb.dataContracts {
 	
 	export interface CommonEntryContract {
 
-		createDate: string;
+		createDate?: string;
 		
 		id: number;
 
 		name: string;
 
-		status: string;
+		status?: string;
 
 	}
 
