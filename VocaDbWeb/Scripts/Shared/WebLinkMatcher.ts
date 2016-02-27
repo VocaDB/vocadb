@@ -36,7 +36,7 @@ module vdb.utils {
             { url: "last.fm/", desc: "Last.fm", cat: c.WebLinkCategory.Official },
             { url: "listen.jp/store/", desc: "Listen Japan", cat: c.WebLinkCategory.Commercial },
             { url: "shop.melonbooks.co.jp/", desc: "Melonbooks", cat: c.WebLinkCategory.Commercial },
-            { url: "mikudb.com/", desc: "MikuDB", cat: c.WebLinkCategory.Reference },
+            { url: "mikumikudance.wikia.com/wiki/", desc: "MikuMikuDance Wiki", cat: c.WebLinkCategory.Reference },
             { url: "www5.atwiki.jp/hmiku/", desc: "MikuWiki", cat: c.WebLinkCategory.Reference },
             { url: "mora.jp/", desc: "mora", cat: c.WebLinkCategory.Commercial },
             { url: "musicbrainz.org/", desc: "MusicBrainz", cat: c.WebLinkCategory.Reference },
