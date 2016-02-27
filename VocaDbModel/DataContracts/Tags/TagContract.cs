@@ -12,8 +12,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 			AliasedTo = null;
 		}
 
-		public TagContract(Tag tag, ContentLanguagePreference languagePreference)
-			: base(tag, languagePreference) {
+		public TagContract(Tag tag, ContentLanguagePreference languagePreference, bool includeAdditionalNames = false)
+			: base(tag, languagePreference, includeAdditionalNames) {
 
 			ParamIs.NotNull(() => tag);
 

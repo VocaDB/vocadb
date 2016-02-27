@@ -198,7 +198,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public TagContract GetTagById(int id, ContentLanguagePreference? language = null) {
 
-			var tag = tagQueries.GetTag(id, t => new TagContract(t, language ?? userPermissionContext.LanguagePreference));
+			var tag = tagQueries.GetTag(id, t => new TagContract(t, language ?? userPermissionContext.LanguagePreference, true));
 			return tag;
 
 		}
@@ -206,7 +206,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public TagContract GetTagByName(string name) {
 
-			var tag = tagQueries.Find(t => new TagContract(t, ContentLanguagePreference.Default), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, false, true),
+			var tag = tagQueries.Find(t => new TagContract(t, ContentLanguagePreference.Default, true), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, false, true),
 				new PagingProperties(0, 1, false)) { AllowAliases = true }).Items.FirstOrDefault();
 
 			return tag;
