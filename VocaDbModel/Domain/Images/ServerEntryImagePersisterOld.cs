@@ -38,13 +38,16 @@ namespace VocaDb.Model.Domain.Images {
 		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl) {
 
 			ParamIs.NotNull(() => picture);
-			var host = ssl ? AppConfig.StaticContentHostSSL : AppConfig.HostAddress;
+
+			string url;
 
 			if (picture.Version > 0) {
-				return string.Format("{0}/EntryImg/{1}/{2}?v={3}", host, picture.EntryType, GetFileName(picture, size), picture.Version);
+				url = string.Format("/EntryImg/{0}/{1}?v={2}", picture.EntryType, GetFileName(picture, size), picture.Version);
 			} else {
-				return string.Format("{0}/EntryImg/{1}/{2}", host, picture.EntryType, GetFileName(picture, size));
+				url = string.Format("/EntryImg/{0}/{1}", picture.EntryType, GetFileName(picture, size));
 			}
+
+			return VocaUriBuilder.Absolute(url, ssl);
 
 		}
 
