@@ -28,6 +28,9 @@ a.extLink[href^="https://play.google.com/"] {
 a.extLink[href^="http://www.hmv.co.jp/"] {
   background: url("/Content/ExtIcons/hmv.png") no-repeat left 50%;
 }
+a.extLink[href^="http://mikumikudance.wikia.com/wiki/"] {
+  background: url("/Content/ExtIcons/mmdwiki.png") no-repeat left 50%;
+}
 a.extLink[href^="http://www.play-asia.com/"] {
   background: url("/Content/ExtIcons/playasia.png") no-repeat left 50%;
 }

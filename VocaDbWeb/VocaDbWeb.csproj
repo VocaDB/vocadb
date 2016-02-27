@@ -1421,6 +1421,7 @@
     <Content Include="Content\ExtIcons\melonbooks.png" />
     <Content Include="Content\ExtIcons\mikudb.png" />
     <Content Include="Content\ExtIcons\mikustar.png" />
+    <Content Include="Content\ExtIcons\mmdwiki.png" />
     <Content Include="Content\ExtIcons\mora.png" />
     <Content Include="Content\ExtIcons\nicochokuhan.png" />
     <Content Include="Content\ExtIcons\nicopedia.png" />
