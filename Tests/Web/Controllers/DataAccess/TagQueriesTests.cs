@@ -72,6 +72,25 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Create() {
+
+			var result = queries.Create("Apimiku");
+
+			Assert.AreEqual("Apimiku", result.Name, "Created tag name");
+			var tagFromRepo = repository.Load(result.Id);
+			Assert.AreEqual("Apimiku", tagFromRepo.DefaultName, "Tag found from repository");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DuplicateTagNameException))]
+		public void Create_Duplicate() {
+
+			queries.Create("Appearance Miku");
+
+		}
+
+		[TestMethod]
 		public void GetTagsByCategories() {
 			
 			tag.CategoryName = "Animation";

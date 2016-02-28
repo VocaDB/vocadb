@@ -401,6 +401,11 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Tag/Edit.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/Tag/Index").Include(
+				"~/Scripts/Repositories/TagRepository.js",
+				"~/Scripts/ViewModels/Tag/TagCreateViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/User/AlbumCollection").Include(
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ReleaseEventNameAutoComplete.js",

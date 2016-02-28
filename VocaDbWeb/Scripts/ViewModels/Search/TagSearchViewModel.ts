@@ -17,7 +17,7 @@ module vdb.viewModels.search {
 
 			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
 
-				this.tagRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.allowAliases(), this.categoryName(), callback);
+				this.tagRepo.getList(pagingProperties, lang, searchTerm, models.NameMatchMode.Auto, this.sort(), this.allowAliases(), this.categoryName(), "AdditionalNames,MainPicture", callback);
 
 			}
 

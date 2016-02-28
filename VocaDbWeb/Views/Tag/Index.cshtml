@@ -1,4 +1,6 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagCategoryContract[]>
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagCategoryContract[]>
 
 @{
 	PageProperties.Title = ViewRes.SharedStrings.Tags;
@@ -9,6 +11,12 @@
 @functions {
 	int GetFontSizePercent(int usageCount, int avgUsage) {
 		return Math.Min(Math.Max(usageCount * 80 / avgUsage, 60), 100);
+	}
+}
+
+@section Toolbar {
+	@if (Login.CanManageDb) {
+		<a href="#" id="createButton" data-bind="jqButton: { icon: 'ui-icon-plus' }, click: function() { dialogVisible(true); }">Create new</a>
 	}
 }
 
@@ -28,4 +36,40 @@
 		}
 	</div>
 
+}
+
+<div style="display:none;" title="Create tag"
+	 data-bind="
+	 dialog: {
+		 autoOpen: false, width: 310, modal: true,
+		 position: { my: 'left top', at: 'left bottom', of: $('#createButton') }
+	 },
+	 dialogVisible: dialogVisible,
+	 dialogButtons: [
+		 { text: 'Create', click: createTag, disabled: !isValid() },
+		 { text: '@ViewRes.SharedStrings.Cancel', click: function() { dialogVisible(false); } }
+	 ]
+	 ">
+
+	<input type="text" data-bind="textInput: newTagName" maxlength="200" />
+	
+	<div class="alert alert-danger" data-bind="visible: duplicateName">
+		Tag name must be unique
+	</div>
+
+</div>
+
+@section BodyScripts {
+	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Tag/Index")
+	<script type="text/javascript">
+
+		$(function () {
+
+			var tagRepo = new vdb.repositories.TagRepository('@RootPath');
+			var viewModel = new vdb.viewModels.tags.TagCreateViewModel(tagRepo);
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
 }

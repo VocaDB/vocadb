@@ -2575,6 +2575,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Song\RankingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\StatsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\TagEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagCreateViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagsEditViewModel.ts" />
