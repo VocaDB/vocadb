@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -128,6 +129,39 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ICommentQueries Comments(IDatabaseContext<Tag> ctx) {
 			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+		}
+
+		/// <summary>
+		/// Creates a new tag.
+		/// </summary>
+		/// <param name="name">Tag English name. Cannot be null or empty. Must be unique.</param>
+		/// <returns>The created tag. Cannot be null.</returns>
+		/// <exception cref="DuplicateTagNameException">If a tag with the specified name already exists.</exception>
+		public TagBaseContract Create(string name) {
+
+			ParamIs.NotNullOrWhiteSpace(() => name);
+
+			PermissionContext.VerifyManageDatabase();
+
+			return repository.HandleTransaction(ctx => {
+
+				var duplicateName = ctx.Query<TagName>()
+					.Select(t => t.Value)
+					.FirstOrDefault(t => t == name);
+
+				if (duplicateName != null) {
+					throw new DuplicateTagNameException(duplicateName);
+				}
+
+				var factory = new TagFactoryRepository(ctx, ctx.CreateAgentLoginData(PermissionContext));
+				var tag = factory.CreateTag(name);
+
+				ctx.AuditLogger.AuditLog(string.Format("created {0}", tag));
+
+				return new TagBaseContract(tag, PermissionContext.LanguagePreference);
+
+			});
+
 		}
 
 		public CommentForApiContract CreateComment(int tagId, CommentForApiContract contract) {

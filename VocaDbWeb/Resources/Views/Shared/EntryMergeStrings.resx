@@ -118,7 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MergeBtnText" xml:space="preserve">
-    <value />
+    <value>Merge</value>
+  </data>
+  <data name="MergeInfo" xml:space="preserve">
+    <value>Choose the entry which this one will be merged to. All references will be pointed to that new entry and this entry will be deleted.
+Prefer merging the later entry to the earlier one, unless the new entry is finalized while the older one is draft.</value>
+  </data>
+  <data name="MergeWarning" xml:space="preserve">
+    <value>This action cannot be undone! Please make sure the entries really need to be merged before proceeding.</value>
   </data>
   <data name="ValidationErrorTargetIsLessComplete" xml:space="preserve">
     <value>The selected entry seems to be draft while the the one being merged from is not.

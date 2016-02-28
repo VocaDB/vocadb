@@ -61,11 +61,30 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Merge.
         /// </summary>
         public static string MergeBtnText {
             get {
                 return ResourceManager.GetString("MergeBtnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose the entry which this one will be merged to. All references will be pointed to that new entry and this entry will be deleted.
+        ///Prefer merging the later entry to the earlier one, unless the new entry is finalized while the older one is draft..
+        /// </summary>
+        public static string MergeInfo {
+            get {
+                return ResourceManager.GetString("MergeInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action cannot be undone! Please make sure the entries really need to be merged before proceeding..
+        /// </summary>
+        public static string MergeWarning {
+            get {
+                return ResourceManager.GetString("MergeWarning", resourceCulture);
             }
         }
         

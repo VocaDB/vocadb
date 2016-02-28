@@ -211,6 +211,19 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Creates a new tag.
+		/// </summary>
+		/// <param name="name">Tag English name. Tag names must be unique.</param>
+		/// <returns>The created tag.</returns>
+		[Route("")]
+		[Authorize]
+		public TagBaseContract PostNewTag(string name) {
+
+			return queries.Create(name);
+
+		}
+
+		/// <summary>
 		/// Updates a comment.
 		/// Normal users can edit their own comments, moderators can edit all comments.
 		/// Requires login.

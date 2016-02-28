@@ -176,12 +176,10 @@
 
 @helper MergeEntryInfo() {
 	<div class="alert">
-		<h4>This action cannot be undone! Please make sure the entries really need to be merged before proceeding.</h4>
+		<h4>@ViewRes.EntryMergeStrings.MergeWarning</h4>
 	</div>
 	<div class="alert alert-info">
-		Choose the entry which this one will be merged to. All references will be pointed to that new entry and this entry will be deleted.
-		<br />
-		Prefer merging the later entry to the earlier one, unless the new entry is finalized while the older one is draft.
+		@HtmlHelpers.ConvertNewlinesToBreaks(ViewRes.EntryMergeStrings.MergeInfo)
 	</div>	
 }
 
