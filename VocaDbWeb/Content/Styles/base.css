@@ -179,7 +179,7 @@ body {
   margin-bottom: 0;
 }
 .comment-text-edit {
-  max-width: 700px;
+  max-width: 900px;
   width: 90%;
   width: calc(100% - 20px);
   display: block;

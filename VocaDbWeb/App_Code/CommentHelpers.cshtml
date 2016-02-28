@@ -7,8 +7,8 @@
 @using VocaDb.Web.Code
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper CommentBodyKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
-	bool standalone = true) {
+@helper CommentKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
+	bool standalone = true, HelperResult body = null) {
 	<div class="comment media @(standalone ? "comment-large" : "")">
 		<a data-bind="attr: { href: '/User/Profile/' + author.name }" class="pull-left">
 			@UserHelpers.ProfileIconKnockout("author.iconUrl", 70)
@@ -33,9 +33,24 @@
 			<h3 class="media-heading comment-large-header">
 				<a data-bind="attr: { href: '/User/Profile/' + author.name }, text: author.name"></a>
 			</h3>
-			<p data-bind="markdown: @messageBinding"></p>
+			@(body ?? CommentBodyKnockout(messageBinding))
 		</div>
 	</div>
+}
+
+@helper CommentBodyKnockout(string messageBinding) {
+	<p data-bind="markdown: @messageBinding"></p>
+}
+
+@helper CommentBodyEditableKnockout(string messageBinding) {
+	<div data-bind="visible: $parent.editCommentModel() !== $data">
+		@CommentBodyKnockout(messageBinding)
+	</div>
+	<form data-bind="visible: $parent.editCommentModel() === $data, submit: $parent.saveEditedComment">
+		<textarea data-bind="textInput: editedMessage" rows="6" cols="60" maxlength="3000" class="comment-text-edit" required></textarea>
+		<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+		<button data-bind="click: $parent.cancelEditComment" class="btn">Cancel</button>
+	</form>
 }
 
 @helper CommentBodyLarge(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false) {
@@ -122,14 +137,7 @@
 
 	<div data-bind="foreach: @commentsBinding">
 		<div class="editable-comment @cssClass">
-			<div data-bind="visible: $parent.editCommentModel() !== $data">
-				@CommentBodyKnockout("message", false, editHandler: "$parent.beginEditComment", standalone: !well)
-			</div>
-			<form data-bind="visible: $parent.editCommentModel() === $data, submit: $parent.saveEditedComment">
-				<textarea data-bind="textInput: editedMessage" rows="6" cols="60" maxlength="3000" class="comment-text-edit" required></textarea>
-				<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
-				<button data-bind="click: $parent.cancelEditComment" class="btn">Cancel</button>
-			</form>
+			@CommentKnockout("message", false, editHandler: "$parent.beginEditComment", standalone: !well, body: CommentBodyEditableKnockout("message"))
 		</div>
 	</div>
 

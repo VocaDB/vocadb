@@ -8,7 +8,7 @@
 			<h3 data-bind="text: contract().name"></h3>
 
 			<div data-bind="with: contract">
-				@CommentHelpers.CommentBodyKnockout("content", true, "$parents[1].deleteTopic", "$parent.beginEditTopic")
+				@CommentHelpers.CommentKnockout("content", true, "$parents[1].deleteTopic", "$parent.beginEditTopic")
 			</div>
 
 		</div>	
