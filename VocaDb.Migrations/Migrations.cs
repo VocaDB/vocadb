@@ -4,6 +4,23 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201602292300)]
+	public class PVForAlbumPvIdColumnLength : Migration {
+
+		public override void Up() {
+
+			Alter.Table(TableNames.PVsForAlbums).AlterColumn("PVId").AsString(255).NotNullable();
+				
+		}
+
+		public override void Down() {
+
+			Alter.Table(TableNames.PVsForAlbums).AlterColumn("PVId").AsString(100).NotNullable();
+
+		}
+
+	}
+
 	[Migration(201602151700)]
 	public class TagWebLinks : AutoReversingMigration {
 

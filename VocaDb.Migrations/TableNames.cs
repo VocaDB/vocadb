@@ -19,6 +19,7 @@
 		public const string ArtistTagUsages = "ArtistTagUsages";
 		public const string EntryReports = "EntryReports";
 		public const string FavoriteSongsForUsers = "FavoriteSongsForUsers";
+		public const string PVsForAlbums = "PVsForAlbums";
 		public const string PVsForSongs = "PVsForSongs";
 		public const string RelatedTags = "RelatedTags";
 		public const string SongsInAlbums = "SongsInAlbums";
