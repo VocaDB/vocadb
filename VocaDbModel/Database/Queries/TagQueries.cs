@@ -83,7 +83,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private Tag GetTagByName(IDatabaseContext<Tag> ctx, string name) {
 
-			var tag = ctx.Query().WhereHasName(name).FirstOrDefault();
+			var tag = ctx.Query().WhereHasName(TagSearchTextQuery.Create(name, NameMatchMode.Exact)).FirstOrDefault();
 
 			if (tag == null) {
 				log.Warn("Tag not found: {0}", name);
@@ -285,10 +285,10 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		/// <summary>
-		/// Get tag by name. Returns null if the tag does not exist.
+		/// Get tag by (exact) name. Returns null if the tag does not exist.
 		/// </summary>
 		/// <typeparam name="T">Return type.</typeparam>
-		/// <param name="tagName">Tag name.</param>
+		/// <param name="tagName">Tag name (exact match, case insensitive).</param>
 		/// <param name="fac">Return value factory. Cannot be null.</param>
 		/// <param name="def">Value to be returned if the tag doesn't exist.</param>
 		/// <returns>Return value. This will be <paramref name="def"/> if the tag doesn't exist.</returns>
@@ -368,6 +368,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Get tag Id by (exact) tag name.
+		/// </summary>
+		/// <param name="name">Tag name (exact match, case insensitive).</param>
+		/// <returns>Tag Id.</returns>
 		public int GetTagIdByName(string name) {
 			return GetTagByName(name, t => t.Id);
 		}

@@ -70,7 +70,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <summary>
 		/// Filters query by one or more tag names.
 		/// The tag has to match at least one of the names.
-		/// For empty list of names nothing is matched.
+		/// For empty list of names (or null) nothing is matched.
+		/// The name has to be exact match (case insensitive).
 		/// </summary>
 		/// <param name="query">Query to be filtered. Cannot be null.</param>
 		/// <param name="names">List of names to filter by. Can be null or empty, but in that case no tags will be matched.</param>
@@ -79,7 +80,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			names = names ?? new string[0];
 
-			return query.Where(t => names.Contains(t.Names.SortNames.English) || names.Contains(t.Names.SortNames.Romaji) || names.Contains(t.Names.SortNames.Japanese));
+			var predicate = names.Aggregate(PredicateBuilder.False<Tag>(), (nameExp, name) => nameExp.Or(q => q.Names.Names.Any(n => n.Value == name)));
+			return query.Where(predicate);
 
 		}
 
