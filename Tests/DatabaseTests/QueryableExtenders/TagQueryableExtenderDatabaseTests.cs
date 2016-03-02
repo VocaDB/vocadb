@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.DatabaseTests.QueryableExtenders {
 
@@ -23,6 +24,7 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtenders {
 		}
 
 		[TestMethod]
+		[TestCategory(TestCategories.Database)]
 		public void WhereHasName() {
 
 			var tags = WhereHasName("rock", "electronic");
@@ -35,6 +37,7 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtenders {
 
 
 		[TestMethod]
+		[TestCategory(TestCategories.Database)]
 		public void WhereHasName_Empty() {
 
 			var tags = WhereHasName(new string[0]);
