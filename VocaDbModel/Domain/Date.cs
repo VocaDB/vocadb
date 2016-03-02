@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain {
 	/// For example, normally midnight 2015/03/09 00:00 in Japan time would be 2015/03/08 in the US because of timezones.
 	/// Obviously 2015/03/09 00:00 in Japan time and US time would be different dates, but here we want to handle them the same.
 	/// </remarks>
-	public struct Date {
+	public struct Date : IComparable<Date> {
 
 		public static implicit operator Date(DateTime? dateTime) {
 			return new Date(dateTime);
@@ -43,6 +43,10 @@ namespace VocaDb.Model.Domain {
 				// It's important to do the SpecifyKind *before* extracting date as we don't want any timezone conversions.
 				dateTime = value != null ? (DateTime?)System.DateTime.SpecifyKind(value.Value, DateTimeKind.Utc).Date : null;
 			}
+		}
+
+		public int CompareTo(Date other) {
+			return Nullable.Compare(DateTime, other.DateTime);
 		}
 
 		public bool Equals(DateTime? anotherDateTime) {
