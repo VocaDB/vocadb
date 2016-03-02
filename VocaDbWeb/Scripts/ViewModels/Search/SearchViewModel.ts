@@ -69,7 +69,7 @@ module vdb.viewModels.search {
 				shuffle,
 				pvPlayersFactory);
 
-			this.tagSearchViewModel = new TagSearchViewModel(this, languageSelection, tagRepo);
+			this.tagSearchViewModel = new TagSearchViewModel(this, models.globalization.ContentLanguageSelection[languageSelection], tagRepo);
 
 			if (tagIds != null || artistId != null || artistType || albumType || songType || onlyWithPVs != null || since || minScore)
 				this.showAdvancedFilters(true);

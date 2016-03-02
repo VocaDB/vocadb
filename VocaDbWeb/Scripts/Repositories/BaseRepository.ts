@@ -17,16 +17,18 @@ module vdb.repositories {
 	// Common parameters for entry queries (listings).
 	export interface CommonQueryParams {
 
-		// Comma-separated list of optional fields
-		fields?: string;
+		getTotalCount?: boolean;
 
 		// Content language preference
-		lang?: string;
+		lang?: vdb.models.globalization.ContentLanguagePreference;
 
-		// Maxiumum number of search results.
 		maxResults?: number;
 
-		nameMatchMode?: string;
+		nameMatchMode?: cls.NameMatchMode;
+
+		start?: number;
+
+		query?: string;
 
 	}
 

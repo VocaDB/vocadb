@@ -19,25 +19,21 @@ module vdb.repositories {
 
 		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
 
-		public getList = (paging: dc.PagingProperties, lang: string, query: string,
-			nameMatchMode: models.NameMatchMode,
-			sort: string,
-			allowAliases: boolean, categoryName: string,
-			fields: string,
+		public getList = (queryParams: TagQueryParams,
 			callback?: (result: dc.PartialFindResultContract<dc.TagApiContract>) => void) => {
 
-			nameMatchMode = nameMatchMode || models.NameMatchMode.Auto;
+			var nameMatchMode = queryParams.nameMatchMode || models.NameMatchMode.Auto;
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags");
 			var data = {
-				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				query: query,
-				fields: fields || undefined,
+				start: queryParams.start, getTotalCount: queryParams.getTotalCount, maxResults: queryParams.maxResults,
+				query: queryParams.query,
+				fields: queryParams.fields || undefined,
 				nameMatchMode: models.NameMatchMode[nameMatchMode],
-				allowAliases: allowAliases,
-				categoryName: categoryName,
-				lang: lang,
-				sort: sort
+				allowAliases: queryParams.allowAliases,
+				categoryName: queryParams.categoryName,
+				lang: queryParams.lang,
+				sort: queryParams.sort
 			};
 
 			$.getJSON(url, data, callback);
@@ -52,6 +48,19 @@ module vdb.repositories {
 			$.getJSON(url, data, callback);
 
 		}
+
+	}
+
+	export interface TagQueryParams extends CommonQueryParams {
+		
+		allowAliases?: boolean;
+
+		categoryName?: string;
+
+		// Comma-separated list of optional fields
+		fields?: string;
+
+		sort?: string;
 
 	}
 

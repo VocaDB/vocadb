@@ -12,7 +12,7 @@ module vdb.viewModels.tags {
 					return;
 				}
 
-				tagRepo.getList({ start: 0, maxEntries: 1, getTotalCount: false }, 'Default', val, models.NameMatchMode.Exact, 'Name', true, null, null, result => {
+				tagRepo.getList({ start: 0, maxResults: 1, getTotalCount: false, query: val, nameMatchMode: models.NameMatchMode.Exact, allowAliases: true }, result => {
 					this.duplicateName(result.items.length > 0);
 				});
 			});
