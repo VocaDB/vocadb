@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201603031800)]
+	public class TagAdditionalNamesString : AutoReversingMigration {
+
+		public override void Up() {
+
+			Alter.Table(TableNames.Tags).AddColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty);
+
+		}
+
+	}
+
 	[Migration(201602292300)]
 	public class PVForAlbumPvIdColumnLength : Migration {
 

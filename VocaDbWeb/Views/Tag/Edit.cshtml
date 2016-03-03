@@ -84,7 +84,7 @@
 		@Helpers.RequiredField()
 	</div>
 	<div class="editor-field" data-bind="with: names">
-		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel { ShowAliases = false }); }
+		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel()); }
 		@Html.ValidationMessageFor(m => m.Names)
 		@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
 	</div>
@@ -138,7 +138,7 @@
 	</div>
 
 	<div class="editor-label">
-		Related tags
+		@Res.RelatedTags
 	</div>
 	<div class="editor-field">
 		<table>
@@ -169,14 +169,14 @@
 	</div>
 
 	<div class="editor-label">
-		@Helpers.HelpLabel("Entry status", Resources.CommonMessages.EntryStatusExplanation)
+		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
 	</div>
 	<div class="editor-field">
 		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
 	</div>
 	
 	<br />
-	<p>@ViewRes.EntryEditStrings.UpdateNotes</p>
+	<p>@EditRes.UpdateNotes</p>
 	<textarea name="UpdateNotes" id="UpdateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 
 	<br />

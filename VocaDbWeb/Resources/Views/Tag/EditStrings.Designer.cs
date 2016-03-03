@@ -61,6 +61,15 @@ namespace VocaDb.Web.Resources.Views.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Related tags.
+        /// </summary>
+        public static string RelatedTags {
+            get {
+                return ResourceManager.GetString("RelatedTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag should have a description.
         /// </summary>
         public static string ValidationNeedDescription {
