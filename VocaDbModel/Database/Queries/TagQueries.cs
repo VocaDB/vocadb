@@ -398,6 +398,78 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void Merge(int sourceId, int targetId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.MergeEntries);
+
+			if (sourceId == targetId)
+				throw new ArgumentException("Source and target songs can't be the same", nameof(targetId));
+
+			repository.HandleTransaction(ctx => {
+
+				var source = ctx.Load(sourceId);
+				var target = ctx.Load(targetId);
+				var diff = new TagDiff(false) {
+					Names = true
+				};
+
+				ctx.AuditLogger.AuditLog(string.Format("Merging {0} to {1}",
+					entryLinkFactory.CreateEntryLink(source), entryLinkFactory.CreateEntryLink(target)));
+
+				// Other properties
+				if (string.IsNullOrEmpty(target.CategoryName) && !string.IsNullOrEmpty(source.CategoryName)) {
+					target.CategoryName = source.CategoryName;
+					diff.CategoryName = true;
+				}
+
+				if (target.Description.IsEmpty && !source.Description.IsEmpty) {
+					target.Description.Original = source.Description.Original;
+					target.Description.English = source.Description.English;
+					diff.Description = true;
+				}
+
+				// Parent tag
+				if (target.Parent == null && source.Parent != null) {
+					target.SetParent(source.Parent);
+					diff.Parent = true;
+				}
+
+				// Related tags
+				foreach (var relatedTag in source.RelatedTags.Select(r => r.LinkedTag).Where(r => !target.RelatedTags.Any(r2 => r.Equals(r2.LinkedTag)))) {
+					var link = target.AddRelatedTag(relatedTag);
+					ctx.Save(link);
+					diff.RelatedTags = true;
+				}
+
+				// Weblinks
+				foreach (var w in source.WebLinks.Links.Where(w => !target.WebLinks.HasLink(w.Url))) {
+					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
+					ctx.Save(link);
+					diff.WebLinks = true;
+				}
+
+				// TODO: tag usages
+
+				// Delete entry before copying names
+				var names = source.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray();
+
+				ctx.Delete(source);
+				ctx.Flush();
+
+				// Names
+				foreach (var n in names) {
+					var name = target.CreateName(n.Value, n.Language);
+					ctx.Save(name);
+				}
+
+				Archive(ctx, target, diff, EntryEditEvent.Updated, string.Format("Merged from {0}", source));
+
+				ctx.Update(target);
+
+			});
+
+		}
+
 		private CollectionDiffWithValue<TagName, TagName> SyncNames(IDatabaseContext<TagName> ctx, Tag tag, LocalizedStringWithIdContract[] names) {
 
 			ParamIs.NotNull(() => tag);

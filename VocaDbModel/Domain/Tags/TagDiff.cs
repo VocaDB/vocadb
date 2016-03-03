@@ -15,8 +15,10 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		public TagDiff() {
-			IsSnapshot = true;
+		public TagDiff() : this(true) {}
+
+		public TagDiff(bool isSnapShot) {
+			IsSnapshot = isSnapShot;
 		}
 
 		public virtual bool AliasedTo {

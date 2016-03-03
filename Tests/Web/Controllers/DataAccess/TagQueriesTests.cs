@@ -10,6 +10,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Exceptions;
@@ -61,7 +62,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			tag = CreateAndSaveTag("Appearance Miku");
 			tag2 = CreateAndSaveTag("MMD");
 
-			user = new User("User", "123", "test@test.com", 123);
+			user = new User("User", "123", "test@test.com", 123) { GroupId = UserGroupId.Trusted };
 			repository.Add(user);
 
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));
@@ -102,6 +103,34 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual("Animation", firstCategory.Name, "First category name");
 			Assert.AreEqual(1, firstCategory.Tags.Length, "Number of tags in the Animation category");
 			Assert.AreEqual("Appearance Miku", firstCategory.Tags[0].Name, "First tag in the Animation category");
+
+		}
+
+		[TestMethod]
+		public void Merge_ToEmpty() {
+
+			var target = new Tag();
+			repository.Save(target);
+
+			queries.Merge(tag.Id, target.Id);
+
+			Assert.AreEqual("Appearance Miku", target.Names.AllValues.FirstOrDefault(), "Name was copied");
+
+		}
+
+		// TODO: more tests
+
+		[TestMethod]
+		[ExpectedException(typeof(NotAllowedException))]
+		public void Merge_NoPermissions() {
+
+			user.GroupId = UserGroupId.Regular;
+			permissionContext.RefreshLoggedUser(repository);
+
+			var target = new Tag();
+			repository.Save(target);
+
+			queries.Merge(tag.Id, target.Id);
 
 		}
 
