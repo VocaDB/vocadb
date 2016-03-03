@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using NLog;
@@ -398,6 +399,31 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private Tag[] MergeTagUsages<TUsage>(ICollection<TUsage> sourceUsages, Tag target, ICollection<TUsage> targetUsages, ITagUsageFactory<TUsage> usageFactory) where TUsage : TagUsage {
+
+			var modifiedTags = new HashSet<Tag>();
+
+			foreach (var usage in sourceUsages) {
+
+				var targetUsage = targetUsages.FirstOrDefault(a => a.Entry.Equals(usage.Entry));
+
+				if (targetUsage == null) {
+					targetUsage = usageFactory.CreateTagUsage(target, usage);
+					usage.Tag.UsageCount++;
+					modifiedTags.Add(usage.Tag);
+				}
+
+				foreach (var vote in usage.VotesBase.Where(v => !targetUsage.HasVoteByUser(v.User))) {
+					targetUsage.CreateVote(vote.User);
+					modifiedTags.Add(usage.Tag);
+				}
+
+			}
+
+			return modifiedTags.ToArray();
+
+		}
+
 		public void Merge(int sourceId, int targetId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.MergeEntries);
@@ -448,7 +474,9 @@ namespace VocaDb.Model.Database.Queries {
 					diff.WebLinks = true;
 				}
 
-				// TODO: tag usages
+				MergeTagUsages(source.AllAlbumTagUsages, target, target.AllAlbumTagUsages, new AlbumTagUsageFactory(ctx.OfType<AlbumTagUsage>(), null));
+				MergeTagUsages(source.AllArtistTagUsages, target, target.AllArtistTagUsages, new ArtistTagUsageFactory(ctx.OfType<ArtistTagUsage>(), null));
+				MergeTagUsages(source.AllSongTagUsages, target, target.AllSongTagUsages, new SongTagUsageFactory(ctx.OfType<SongTagUsage>(), null));
 
 				// Delete entry before copying names
 				var names = source.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray();

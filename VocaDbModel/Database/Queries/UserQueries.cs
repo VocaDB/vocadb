@@ -1465,6 +1465,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public AlbumTagUsage CreateTagUsage(Tag tag, AlbumTagUsage oldUsage) {
+
+			var usage = new AlbumTagUsage(oldUsage.Album, tag);
+			session.Save(usage);
+
+			return usage;
+
+		}
+
 	}
 
 	public class ArtistTagUsageFactory : ITagUsageFactory<ArtistTagUsage> {
@@ -1486,6 +1495,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public ArtistTagUsage CreateTagUsage(Tag tag, ArtistTagUsage oldUsage) {
+
+			var usage = new ArtistTagUsage(oldUsage.Artist, tag);
+			session.Save(usage);
+
+			return usage;
+
+		}
+
 	}
 
 	public class SongTagUsageFactory : ITagUsageFactory<SongTagUsage> {
@@ -1501,6 +1519,15 @@ namespace VocaDb.Model.Database.Queries {
 		public SongTagUsage CreateTagUsage(Tag tag) {
 
 			var usage = new SongTagUsage(song, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+		public SongTagUsage CreateTagUsage(Tag tag, SongTagUsage oldUsage) {
+
+			var usage = new SongTagUsage(oldUsage.Song, tag);
 			ctx.Save(usage);
 
 			return usage;
