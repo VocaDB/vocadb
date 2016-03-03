@@ -171,6 +171,15 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
+		public string GetTranslationsString(ContentLanguagePreference languagePreference) {
+
+			var display = SortNames[languagePreference];
+			var different = SortNames.All.Where(s => s != display).Distinct();
+
+			return string.Join(", ", different);
+
+		}
+
 		public virtual string GetUrlFriendlyName() {
 			return UrlFriendlyNameFactory.GetUrlFriendlyName(this);
 		}

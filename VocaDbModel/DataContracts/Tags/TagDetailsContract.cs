@@ -37,7 +37,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 			IEnumerable<Song> songs, int songCount, ContentLanguagePreference languagePreference)
 			: base(tag, languagePreference) {
 
-			AdditionalNames = tag.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			AdditionalNames = tag.Names.AdditionalNamesString;
+			Translations = tag.Names.GetTranslationsString(languagePreference);
 			Aliases = tag.Aliases.Select(a => new TagBaseContract(a, languagePreference)).ToArray();
 
 			Albums = albums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
@@ -89,6 +90,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public int SongCount { get; set; }
 
 		public EntryThumbContract Thumb { get; set; }
+
+		public string Translations { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
 

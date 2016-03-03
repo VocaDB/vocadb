@@ -7,7 +7,7 @@
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
 
-	@{
+@{
 
 	ViewBag.Parents = new[] { Html.ActionLink(SharedRes.Tags, "Index") };
 
@@ -95,7 +95,7 @@
 			@if (Model.RelatedTags.Any()) {
 				<p>@Res.RelatedTags: @Html.LinkList(Model.RelatedTags, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
 			}
-			
+
 			@if (Model.WebLinks.Any()) {
 				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 				<br />
@@ -105,16 +105,25 @@
 				<p>@Res.Category: @Model.CategoryName</p>
 			}
 
-			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
-				<p>@Res.Translations: @Model.AdditionalNames</p>
+			@if (!string.IsNullOrEmpty(Model.Translations)) {
+				<p>@Res.Translations: @Model.Translations</p>
 			}
 
 			@if (Model.AliasedTo != null) {
 				<p>@Res.AliasedTo @Html.ActionLink(Model.AliasedTo.Name, "DetailsById", new { id = Model.AliasedTo.Id, slug = Model.AliasedTo.UrlSlug })</p>
 			}
 
-			@if (Model.Aliases.Any()) {
-				<p>@Res.Aliases: @Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))</p>
+			@if (Model.Aliases.Any() || !string.IsNullOrEmpty(Model.AdditionalNames)) {
+				<p>
+					@Res.Aliases:
+					@Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))
+					@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+						if (Model.Aliases.Any()) {
+							@:, 
+						}
+						@Model.AdditionalNames
+					}
+				</p>
 			}
 
 			@if (related.Any()) {
@@ -204,7 +213,7 @@
 		<!-- /ko -->
 	</div>
 
-	<div id="discussionTab" >
+	<div id="discussionTab">
 		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)
 	</div>
 

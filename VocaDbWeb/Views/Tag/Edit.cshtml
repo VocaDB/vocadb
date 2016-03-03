@@ -58,13 +58,6 @@
 	@Html.HiddenFor(m => m.Name)
 	@Html.HiddenFor(m => m.UrlSlug)
 
-	<div class="alert" data-bind="visible: aliasedToName() && parentName()" style="display: none;">
-		<span class="icon-line errorIcon"></span>
-		Both "Aliased to" and "Parent" are specified.
-		Most of the time this doesn't make sense.
-		If you're unsure, check the documentation.
-	</div>
-
 	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
 	
 	<div class="editor-label">
@@ -98,15 +91,7 @@
 	</div>
 
 	<div class="editor-label">
-		<label for="aliasedTo" class="helpTip" title="If specified, makes this tag an alias of another tag. Alias means an alternative name, for example 'dnb' and 'drumnbass'.">Aliased to</label>
-	</div>
-	<div class="editor-field">
-		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "aliasedTo", "aliasedToName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false")
-		@Html.HiddenForKnockout(m => m.AliasedTo, "value: ko.toJSON(aliasedTo)")
-	</div>
-
-	<div class="editor-label">
-		<label for="parent" class="helpTip" title="Parent tag groups related tags under one parent. Child tags are still considered separate, unlike aliases.">Parent</label>
+		<label for="parent" class="helpTip" title="Parent tag groups related tags under one parent. Child tags are still considered separate.">Parent</label>
 	</div>
 	<div class="editor-field">
 		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "parent", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false")
