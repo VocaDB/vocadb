@@ -12,6 +12,7 @@ namespace VocaDb.Model.Mapping.Tags {
 			Id(m => m.Id);
 
 			Map(m => m.CategoryName).Length(30).Not.Nullable();
+			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Status).CustomType(typeof(EntryStatus)).Not.Nullable();
 			Map(m => m.UsageCount).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();

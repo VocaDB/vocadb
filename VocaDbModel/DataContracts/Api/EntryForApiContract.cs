@@ -185,6 +185,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			EntryOptionalFields includedFields)
 			: this(tag, languagePreference, includedFields) {
 
+			CreateDate = tag.CreateDate;
 			TagCategoryName = tag.CategoryName;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null) {

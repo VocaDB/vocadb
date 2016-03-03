@@ -55,6 +55,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public Tag() {
 			CategoryName = string.Empty;
+			CreateDate = DateTime.Now;
 			Description = new EnglishTranslatedString();
 			Status = EntryStatus.Draft;
 		}
@@ -166,6 +167,11 @@ namespace VocaDb.Model.Domain.Tags {
 				comments = value;
 			}
 		}
+
+		/// <summary>
+		/// Date when this entry was created.
+		/// </summary>
+		public virtual DateTime CreateDate { get; set; }
 
 		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
 
