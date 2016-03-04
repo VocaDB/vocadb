@@ -171,6 +171,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private void DeleteActivityEntries(IDatabaseContext<Tag> ctx, int tagId) {
+
+			var ctxActivity = ctx.OfType<TagActivityEntry>();
+			var activityEntries = ctxActivity.Query().Where(t => t.Entry.Id == tagId).ToArray();
+
+			foreach (var activityEntry in activityEntries)
+				ctxActivity.Delete(activityEntry);
+
+		}
+
 		public void Delete(int id) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
@@ -181,11 +191,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				tag.Delete();
 
-				var ctxActivity = ctx.OfType<TagActivityEntry>();
-				var activityEntries = ctxActivity.Query().Where(t => t.Entry.Id == id).ToArray();
-
-				foreach (var activityEntry in activityEntries)
-					ctxActivity.Delete(activityEntry);
+				DeleteActivityEntries(ctx, id);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", tag));
 
@@ -408,10 +414,9 @@ namespace VocaDb.Model.Database.Queries {
 				TagUsage targetUsage;
 
 				if (!targetTagUsages.TryGetValue(new GlobalEntryId(usage.Entry.EntryType, usage.Entry.Id), out targetUsage)) {
-					usage.Move(target);
+					targetUsage = usage.Move(target);
 					source.UsageCount--;
 					target.UsageCount++;
-					targetUsage = usage;
 				}
 
 				foreach (var vote in usage.VotesBase.Where(v => !targetUsage.HasVoteByUser(v.User))) {
@@ -476,6 +481,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				// Delete entry before copying names
 				var names = source.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray();
+
+				source.Delete();
+				DeleteActivityEntries(ctx, sourceId);
 
 				ctx.Delete(source);
 				ctx.Flush();

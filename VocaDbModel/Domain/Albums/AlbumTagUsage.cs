@@ -72,17 +72,19 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public override void Move(Tag target) {
+		public override TagUsage Move(Tag target) {
 
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Tag))
-				return;
+				return this;
 
-			// TODO: lists are currently not updated because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
-			//Tag.AllAlbumTagUsages.Remove(this);
-			Tag = target;
-			//target.AllAlbumTagUsages.Add(this);
+			// TODO: have to make a clone because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
+			Tag.AllAlbumTagUsages.Remove(this);
+			var newUsage = new AlbumTagUsage(Album, target);
+			target.AllAlbumTagUsages.Add(newUsage);
+
+			return newUsage;
 
 		}
 

@@ -104,7 +104,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Moves this tag usage from one tag to another.
 		/// </summary>
 		/// <param name="target">Target tag. Cannot be null.</param>
-		public abstract void Move(Tag target);
+		public abstract TagUsage Move(Tag target);
 
 		public abstract TagVote RemoveVote(User user);
 
