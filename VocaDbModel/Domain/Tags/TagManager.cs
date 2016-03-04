@@ -10,7 +10,7 @@ namespace VocaDb.Model.Domain.Tags {
 	/// There's always one tag manager per entry.
 	/// </summary>
 	/// <typeparam name="T">Type of tag usage.</typeparam>
-	public class TagManager<T> where T : TagUsage {
+	public class TagManager<T> : ITagManager where T : TagUsage {
 
 		private ISet<T> tags = new HashSet<T>();
 
@@ -111,6 +111,14 @@ namespace VocaDb.Model.Domain.Tags {
 			return modifiedTags.ToArray();
 
 		}
+
+	}
+
+	public interface ITagManager {
+
+		IEnumerable<Tag> Tags { get; }
+
+		bool HasTag(Tag tag);
 
 	}
 

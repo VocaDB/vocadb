@@ -24,6 +24,10 @@ namespace VocaDb.Tests.Domain.Tags {
 				return new SongTagUsage(song, tag);
 			}
 
+			public SongTagUsage CreateTagUsage(Tag tag, SongTagUsage usage) {
+				return new SongTagUsage(usage.Song, tag);
+			}
+
 		}
 
 		private Tag aliasedTag;

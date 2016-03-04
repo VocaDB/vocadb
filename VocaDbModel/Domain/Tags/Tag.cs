@@ -126,6 +126,8 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		public virtual IEnumerable<TagUsage> AllTagUsages => AllAlbumTagUsages.Cast<TagUsage>().Concat(AllArtistTagUsages).Concat(AllSongTagUsages);
+
 		public virtual ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> ArchivedVersionsManager {
 			get { return archivedVersions; }
 			set {

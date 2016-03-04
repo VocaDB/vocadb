@@ -276,6 +276,8 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
+		ITagManager IEntryWithTags.Tags => Tags;
+
 		/// <summary>
 		/// List of users who follow this artist. Cannot be null.
 		/// </summary>

@@ -406,6 +406,14 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Tag/TagCreateViewModel.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/Tag/Merge").Include(
+				"~/Scripts/moment-with-locales.js",
+				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
+				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
+				"~/Scripts/Repositories/TagRepository.js",
+				"~/Scripts/ViewModels/Tag/TagMergeViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/User/AlbumCollection").Include(
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ReleaseEventNameAutoComplete.js",

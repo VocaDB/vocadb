@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using NLog;
@@ -398,6 +399,29 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private void MergeTagUsages(Tag source, Tag target) {
+
+			var targetTagUsages = target.AllTagUsages.ToDictionary(t => new GlobalEntryId(t.Entry.EntryType, t.Entry.Id));
+
+			foreach (var usage in source.AllTagUsages.ToArray()) {
+
+				TagUsage targetUsage;
+
+				if (!targetTagUsages.TryGetValue(new GlobalEntryId(usage.Entry.EntryType, usage.Entry.Id), out targetUsage)) {
+					usage.Move(target);
+					source.UsageCount--;
+					target.UsageCount++;
+					targetUsage = usage;
+				}
+
+				foreach (var vote in usage.VotesBase.Where(v => !targetUsage.HasVoteByUser(v.User))) {
+					targetUsage.CreateVote(vote.User);
+				}
+
+			}
+
+		}
+
 		public void Merge(int sourceId, int targetId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.MergeEntries);
@@ -448,7 +472,7 @@ namespace VocaDb.Model.Database.Queries {
 					diff.WebLinks = true;
 				}
 
-				// TODO: tag usages
+				MergeTagUsages(source, target);
 
 				// Delete entry before copying names
 				var names = source.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray();
@@ -458,7 +482,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				// Names
 				foreach (var n in names) {
-					var name = target.CreateName(n.Value, n.Language);
+					var lang = target.Names.HasNameForLanguage(n.Language) ? ContentLanguageSelection.Unspecified : n.Language;
+					var name = target.CreateName(n.Value, lang);
 					ctx.Save(name);
 				}
 

@@ -2578,6 +2578,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagCreateViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagListViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Tag\TagsEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\AlbumCollectionViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\FollowedArtistsViewModel.ts" />
@@ -2819,6 +2820,7 @@
     <Content Include="Views\Shared\Partials\_TagFilters.cshtml" />
     <Content Include="Views\Shared\Partials\_Footer.cshtml" />
     <Content Include="Views\Shared\Partials\_PatreonLink.cshtml" />
+    <Content Include="Views\Tag\Merge.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -5,5 +5,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		T CreateTagUsage(Tag tag);
 
+		T CreateTagUsage(Tag tag, T usage);
+
 	}
 }

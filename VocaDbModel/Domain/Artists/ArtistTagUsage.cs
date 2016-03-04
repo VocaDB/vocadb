@@ -43,6 +43,7 @@ namespace VocaDb.Model.Domain.Artists {
 			get { return Votes; }
 		}
 
+
 		public override TagVote CreateVote(User user) {
 
 			if (FindVote(user) != null)
@@ -69,6 +70,19 @@ namespace VocaDb.Model.Domain.Artists {
 		public virtual ArtistTagVote FindVote(User user) {
 
 			return Votes.FirstOrDefault(v => v.User.Equals(user));
+
+		}
+
+		public override void Move(Tag target) {
+
+			ParamIs.NotNull(() => target);
+
+			if (target.Equals(Tag))
+				return;
+
+			Tag.AllArtistTagUsages.Remove(this);
+			Tag = target;
+			target.AllArtistTagUsages.Add(this);
 
 		}
 
