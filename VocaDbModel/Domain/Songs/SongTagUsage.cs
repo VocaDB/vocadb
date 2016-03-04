@@ -79,9 +79,11 @@ namespace VocaDb.Model.Domain.Songs {
 			if (target.Equals(Tag))
 				return;
 
-			Tag.AllSongTagUsages.Remove(this);
+			// TODO: lists are currently not updated because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
+			//Tag.AllSongTagUsages.Remove(this);
+			//target.AllSongTagUsages.Add(new SongTagUsage(Song, target));
 			Tag = target;
-			target.AllSongTagUsages.Add(this);
+			//target.AllSongTagUsages.Add(this);
 
 		}
 

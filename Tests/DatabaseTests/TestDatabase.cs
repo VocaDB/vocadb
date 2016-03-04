@@ -73,7 +73,9 @@ namespace VocaDb.Tests.DatabaseTests {
 					Id = SongId, SongType = SongType.Original, FavoritedTimes = 1, PVServices = PVServices.Youtube, CreateDate = new DateTime(2012, 6, 1)
 				};
 				Song.Lyrics.Add(new LyricsForSong(Song, ContentLanguageSelection.English, "Here be lyrics", string.Empty));
-				Song.Tags.Usages.Add(new SongTagUsage(Song, Tag));
+				var tagUsage = new SongTagUsage(Song, Tag);
+				Song.Tags.Usages.Add(tagUsage);
+				Tag.AllSongTagUsages.Add(tagUsage);
 				session.Save(Song);
 
 				Song2 = new Song(new LocalizedString("Tears of Palm", ContentLanguageSelection.English)) {
@@ -111,7 +113,7 @@ namespace VocaDb.Tests.DatabaseTests {
 				};
 				session.Save(SongWithSpecialChars);
 
-				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", 3939);
+				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", 3939) { GroupId = UserGroupId.Trusted };
 				session.Save(UserWithEditPermissions);
 
 				tx.Commit();

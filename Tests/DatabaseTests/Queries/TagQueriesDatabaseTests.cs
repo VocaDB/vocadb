@@ -19,6 +19,25 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		private readonly DatabaseTestContext<ISessionFactory> context = new DatabaseTestContext<ISessionFactory>();
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
+		private TagForApiContract Merge(int sourceId, int targetId) {
+
+			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+
+			return context.RunTest(sessionFactory => {
+
+				var repository = new TagNHibernateRepository(sessionFactory, permissionContext);
+
+				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(),
+					new FakeUserIconFactory());
+
+				queries.Merge(sourceId, targetId);
+
+				return queries.GetTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, TagOptionalFields.None));
+
+			});
+
+		}
+
 		private TagForEditContract Update(TagForEditContract contract) {
 
 			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
@@ -35,6 +54,16 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 				return queries.GetTagForEdit(updated.Id);
 
 			});
+
+		}
+
+		[TestMethod]
+		[TestCategory(TestCategories.Database)]
+		public void Merge_MoveUsages() {
+
+			var target = Merge(Db.Tag.Id, Db.Tag2.Id);
+
+			Assert.AreEqual(1, target.UsageCount, "UsageCount for the target tag");
 
 		}
 
