@@ -29,6 +29,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ParamIs.NotNull(() => tag);
 
 			CategoryName = tag.CategoryName;
+			CreateDate = tag.CreateDate;
 			DefaultNameLanguage = tag.TranslatedName.DefaultLanguage;
 			Id = tag.Id;
 			Name = tag.TranslatedName[languagePreference];
@@ -88,6 +89,12 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string CategoryName { get; set; }
+
+		/// <summary>
+		/// Date this entry was created.
+		/// </summary>
+		[DataMember]
+		public DateTime CreateDate { get; set; }
 
 		/// <summary>
 		/// Language selection of the original name.

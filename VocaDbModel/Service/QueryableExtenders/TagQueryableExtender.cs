@@ -11,6 +11,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		public static IQueryable<Tag> OrderBy(this IQueryable<Tag> query, TagSortRule sortRule, ContentLanguagePreference languagePreference) {
 
 			switch (sortRule) {
+				case TagSortRule.AdditionDate:
+					return query.OrderByDescending(t => t.CreateDate);
 				case TagSortRule.Name:
 					return query.OrderByEntryName(languagePreference);
 				case TagSortRule.UsageCount:
@@ -90,6 +92,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 	public enum TagSortRule {
 		Nothing,
 		Name,
+		AdditionDate,
 		UsageCount
 	}
 

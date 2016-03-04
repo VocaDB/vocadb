@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
@@ -19,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			AliasedTo = tag.AliasedTo != null ? new TagBaseContract(tag.AliasedTo, languagePreference) : null;
 			CategoryName = tag.CategoryName;
+			CreateDate = tag.CreateDate;
 			Description = tag.Description.GetBestMatch(languagePreference);
 			Parent = tag.Parent != null ? new TagBaseContract(tag.Parent, languagePreference) : null;
 			Status = tag.Status;
@@ -31,6 +33,12 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string CategoryName { get; set; }
+
+		/// <summary>
+		/// Date this entry was created.
+		/// </summary>
+		[DataMember]
+		public DateTime CreateDate { get; set; }
 
 		[DataMember]
 		public string Description { get; set; }
