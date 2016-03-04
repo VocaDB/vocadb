@@ -33,8 +33,7 @@ ko.bindingHandlers.tagAutoComplete = {
 			createOptionSecondRow: null,
 			extraQueryParams: queryParams,
 			filter: tagFilter,
-			termParamName: 'query',
-			method: 'GET'
+			termParamName: 'query'
 		};
 
 		vdb.initEntrySearch(element, "Tag", vdb.functions.mapAbsoluteUrl("/api/tags"), params);

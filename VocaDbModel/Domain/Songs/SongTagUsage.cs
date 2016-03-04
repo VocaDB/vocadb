@@ -72,6 +72,19 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
+		public override void Move(Tag target) {
+
+			ParamIs.NotNull(() => target);
+
+			if (target.Equals(Tag))
+				return;
+
+			Tag.AllSongTagUsages.Remove(this);
+			Tag = target;
+			target.AllSongTagUsages.Add(this);
+
+		}
+
 		public override TagVote RemoveVote(User user) {
 
 			var vote = FindVote(user);

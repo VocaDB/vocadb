@@ -19,7 +19,7 @@ interface jqButtonParams {
 ko.bindingHandlers.jqButton = {
     init: (element, valueAccessor) => {
 
-        var params: jqButtonParams = ko.utils.unwrapObservable(valueAccessor());
+        var params: jqButtonParams = ko.utils.unwrapObservable(valueAccessor()) || {};
 
         $(element).button({ disabled: params.disabled, icons: { primary: params.icon } });
 

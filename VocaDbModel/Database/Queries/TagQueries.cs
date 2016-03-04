@@ -399,28 +399,26 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private Tag[] MergeTagUsages<TUsage>(ICollection<TUsage> sourceUsages, Tag target, ICollection<TUsage> targetUsages, ITagUsageFactory<TUsage> usageFactory) where TUsage : TagUsage {
+		private void MergeTagUsages(Tag source, Tag target) {
 
-			var modifiedTags = new HashSet<Tag>();
+			var targetTagUsages = target.AllTagUsages.ToDictionary(t => new GlobalEntryId(t.Entry.EntryType, t.Entry.Id));
 
-			foreach (var usage in sourceUsages) {
+			foreach (var usage in source.AllTagUsages.ToArray()) {
 
-				var targetUsage = targetUsages.FirstOrDefault(a => a.Entry.Equals(usage.Entry));
+				TagUsage targetUsage;
 
-				if (targetUsage == null) {
-					targetUsage = usageFactory.CreateTagUsage(target, usage);
-					usage.Tag.UsageCount++;
-					modifiedTags.Add(usage.Tag);
+				if (!targetTagUsages.TryGetValue(new GlobalEntryId(usage.Entry.EntryType, usage.Entry.Id), out targetUsage)) {
+					usage.Move(target);
+					source.UsageCount--;
+					target.UsageCount++;
+					targetUsage = usage;
 				}
 
 				foreach (var vote in usage.VotesBase.Where(v => !targetUsage.HasVoteByUser(v.User))) {
 					targetUsage.CreateVote(vote.User);
-					modifiedTags.Add(usage.Tag);
 				}
 
 			}
-
-			return modifiedTags.ToArray();
 
 		}
 
@@ -474,9 +472,7 @@ namespace VocaDb.Model.Database.Queries {
 					diff.WebLinks = true;
 				}
 
-				MergeTagUsages(source.AllAlbumTagUsages, target, target.AllAlbumTagUsages, new AlbumTagUsageFactory(ctx.OfType<AlbumTagUsage>(), null));
-				MergeTagUsages(source.AllArtistTagUsages, target, target.AllArtistTagUsages, new ArtistTagUsageFactory(ctx.OfType<ArtistTagUsage>(), null));
-				MergeTagUsages(source.AllSongTagUsages, target, target.AllSongTagUsages, new SongTagUsageFactory(ctx.OfType<SongTagUsage>(), null));
+				MergeTagUsages(source, target);
 
 				// Delete entry before copying names
 				var names = source.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray();
@@ -486,7 +482,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				// Names
 				foreach (var n in names) {
-					var name = target.CreateName(n.Value, n.Language);
+					var lang = target.Names.HasNameForLanguage(n.Language) ? ContentLanguageSelection.Unspecified : n.Language;
+					var name = target.CreateName(n.Value, lang);
 					ctx.Save(name);
 				}
 

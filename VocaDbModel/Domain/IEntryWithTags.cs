@@ -2,9 +2,9 @@
 
 namespace VocaDb.Model.Domain {
 
-	public interface IEntryWithTags<TTagLink> where TTagLink : TagUsage {
+	public interface IEntryWithTags<TTagLink> : IEntryWithTags where TTagLink : TagUsage {
 
-		TagManager<TTagLink> Tags { get; }
+		new TagManager<TTagLink> Tags { get; }
 
 	}
 

@@ -341,6 +341,8 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
+		ITagManager IEntryWithTags.Tags => Tags;
+
 		public virtual IList<AlbumForUser> UserCollections {
 			get { return userCollections; }
 			set {

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,6 +12,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Exceptions;
@@ -109,8 +111,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Merge_ToEmpty() {
 
-			var target = new Tag();
-			repository.Save(target);
+			var target = repository.Save(new Tag());
 
 			queries.Merge(tag.Id, target.Id);
 
@@ -118,7 +119,35 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		// TODO: more tests
+		[TestMethod]
+		public void Merge_MoveUsages() {
+
+			Action<Song, Tag> AddTag = (s, tag) => {
+				var u = s.AddTag(tag);
+				tag.AllSongTagUsages.Add(u.Result);
+				u.Result.CreateVote(user);
+			};
+
+			var song = CreateEntry.Song();
+			var song2 = CreateEntry.Song();
+			var song3 = CreateEntry.Song();
+			repository.Save(song, song2, song3);
+
+			AddTag(song, tag);
+			AddTag(song2, tag);
+
+			var target = repository.Save(new Tag());
+			AddTag(song2, target);
+			AddTag(song3, target);
+
+			queries.Merge(tag.Id, target.Id);
+
+			Assert.AreEqual(3, target.AllSongTagUsages.Count, "Number of song tag usages");
+			Assert.AreEqual(3, target.UsageCount, "Tag's UsageCount");
+			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Song == song);
+			Assert.IsNotNull(usage, "Found usage");
+
+		}
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]

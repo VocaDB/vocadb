@@ -172,6 +172,27 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult Merge(int id) {
+
+			var tag = queries.GetTag(id, t => new TagBaseContract(t, PermissionContext.LanguagePreference));
+			return View(tag);
+
+		}
+
+		[HttpPost]
+		public ActionResult Merge(int id, int? targetTagId) {
+
+			if (targetTagId == null) {
+				ModelState.AddModelError("targetTagId", "Tag must be selected");
+				return Merge(id);
+			}
+
+			queries.Merge(id, targetTagId.Value);
+
+			return RedirectToAction("Edit", new { id = targetTagId.Value });
+
+		}
+
 		public ActionResult Versions(int id = invalidId) {
 
 			if (id == invalidId)

@@ -314,6 +314,8 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		ITagManager IEntryWithTags.Tags => Tags;
+
 		public virtual string ThumbUrl { get; set; }
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
