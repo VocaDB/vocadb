@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Transactions;
 using Autofac;
 using NHibernate;
 using VocaDb.Model.Database.Repositories;
@@ -12,16 +13,14 @@ namespace VocaDb.Tests.DatabaseTests {
 
 		public TResult RunTest<TResult>(Func<TTarget, TResult> func) {
 
+			// Wrap inside transaction scope to make the test atomic
+			using (new TransactionScope())
 			using (Container.BeginLifetimeScope()) {
 				
 				var target = Container.Resolve<TTarget>();
 				TResult result;
 
-				// Wrap inside transaction to make the test atomic
-				using (var tx = Container.Resolve<ISession>().BeginTransaction()) {
-					result = func(target);
-					tx.Rollback();
-				}
+				result = func(target);
 
 				return result;
 

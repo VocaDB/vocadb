@@ -61,7 +61,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		[TestCategory(TestCategories.Database)]
 		public void Merge_MoveUsages() {
 
-			var target = Merge(Db.Tag.Id, Db.Tag2.Id);
+			var target = Merge(Db.Tag.Id, Db.Tag3.Id);
 
 			Assert.AreEqual(1, target.UsageCount, "UsageCount for the target tag");
 
