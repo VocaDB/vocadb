@@ -101,7 +101,6 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		// TODO: should be combined with common name query somehow, but NH is making it hard
 		/// <summary>
 		/// Filters an artist query by a name query.
 		/// </summary>

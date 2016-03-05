@@ -19,7 +19,7 @@ using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Domain.Albums {
 
-	public class Album : IEntryBase, IEntryWithNames, IEntryWithVersions, IEntryWithStatus,
+	public class Album : IEntryBase, IEntryWithNames<AlbumName>, IEntryWithVersions, IEntryWithStatus,
 		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtists<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage>,
 		IEntryWithComments {
 
@@ -229,9 +229,9 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
-		INameManager IEntryWithNames.Names {
-			get { return Names; }
-		}
+		INameManager<AlbumName> IEntryWithNames<AlbumName>.Names => Names;
+
+		INameManager IEntryWithNames.Names => Names;
 
 		public virtual AlbumRelease OriginalRelease {
 			get { return originalRelease; }

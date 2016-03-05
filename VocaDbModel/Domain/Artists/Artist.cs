@@ -16,7 +16,7 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Artists {
 
-	public class Artist : IEntryBase, IEntryWithNames, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, 
+	public class Artist : IEntryBase, IEntryWithNames<ArtistName>, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, 
 		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
@@ -233,9 +233,9 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
-		INameManager IEntryWithNames.Names {
-			get { return Names; }
-		}
+		INameManager<ArtistName> IEntryWithNames<ArtistName>.Names => Names;
+
+		INameManager IEntryWithNames.Names => Names;
 
 		/// <summary>
 		/// List of users who are verifid owners of this artist. Cannot be null.
