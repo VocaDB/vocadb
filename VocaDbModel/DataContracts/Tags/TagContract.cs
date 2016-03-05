@@ -29,6 +29,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		}
 
 		[DataMember]
+		[Obsolete("Tag aliases are now just names")]
 		public TagBaseContract AliasedTo { get; set; }
 
 		[DataMember]

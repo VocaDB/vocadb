@@ -85,6 +85,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public string AdditionalNames { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
+		[Obsolete("Tag aliases are now just names")]
 		public TagBaseContract AliasedTo { get; set; }
 
 		[DataMember]
@@ -156,7 +157,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		None					= 0,
 		AdditionalNames			= 1,
-		AliasedTo				= 2,
+		[Obsolete("Tag aliases are now just names")]
+		AliasedTo = 2,
 		Description				= 4,
 		MainPicture				= 8,
 		Names					= 16,
