@@ -29,7 +29,9 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 				queries.Merge(sourceId, targetId);
 
-				return queries.GetTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, TagOptionalFields.None));
+				var result = queries.GetTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, TagOptionalFields.None));
+
+				return result;
 
 			});
 
@@ -56,7 +58,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		[TestCategory(TestCategories.Database)]
 		public void Merge_MoveUsages() {
 
-			var target = Merge(Db.Tag.Id, Db.Tag3.Id);
+			var target = Merge(Db.Tag.Id, Db.Tag2.Id);
 
 			Assert.AreEqual(1, target.UsageCount, "UsageCount for the target tag");
 

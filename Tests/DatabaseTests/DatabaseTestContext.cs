@@ -3,6 +3,7 @@ using System.Transactions;
 using Autofac;
 using NHibernate;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.DatabaseTests {
@@ -15,12 +16,13 @@ namespace VocaDb.Tests.DatabaseTests {
 
 			// Wrap inside transaction scope to make the test atomic
 			using (new TransactionScope())
-			using (Container.BeginLifetimeScope()) {
+			using (var lifetimeScope = Container.BeginLifetimeScope()) {
 				
-				var target = Container.Resolve<TTarget>();
-				TResult result;
+				var target = lifetimeScope.Resolve<TTarget>();
 
-				result = func(target);
+				var result = func(target);
+
+				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
 
 				return result;
 

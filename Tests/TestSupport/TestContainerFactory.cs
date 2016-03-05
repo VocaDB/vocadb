@@ -33,7 +33,7 @@ namespace VocaDb.Tests.TestSupport {
 			builder.RegisterType<EntryReportNHibernateRepository>().As<IEntryReportRepository>();
 			builder.RegisterType<SongNHibernateRepository>().As<ISongRepository>();
 			builder.RegisterType<SongListNHibernateRepository>().As<ISongListRepository>();
-			builder.RegisterType<TagNHibernateSessionPerRequestRepository>().As<ITagRepository>();
+			builder.RegisterType<TagNHibernateSessionPerRequestRepository>().As<ITagRepository>().InstancePerLifetimeScope();
 			builder.RegisterType<UserNHibernateRepository>().As<IUserRepository>();
 			builder.RegisterType<UserMessageNHibernateRepository>().As<IUserMessageRepository>();
 
