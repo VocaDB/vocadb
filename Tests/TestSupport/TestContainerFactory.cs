@@ -24,7 +24,7 @@ namespace VocaDb.Tests.TestSupport {
 			builder.Register(x => BuildTestSessionFactory()).SingleInstance();
 			builder.Register(x => x.Resolve<ISessionFactory>().OpenSession()).InstancePerLifetimeScope();
 			builder.RegisterType<TestDatabase>().AsSelf();
-			builder.RegisterType<FakePermissionContext>().As<IUserPermissionContext>();
+			builder.Register(x => new FakePermissionContext { Name = "Miku" }).As<IUserPermissionContext>();
 			builder.RegisterType<EntryUrlParser>().As<IEntryUrlParser>().SingleInstance();
 			builder.Register(x => new NHibernateDatabaseContext(x.Resolve<ISession>(), x.Resolve<IUserPermissionContext>())).As<IDatabaseContext>();
 
@@ -33,7 +33,7 @@ namespace VocaDb.Tests.TestSupport {
 			builder.RegisterType<EntryReportNHibernateRepository>().As<IEntryReportRepository>();
 			builder.RegisterType<SongNHibernateRepository>().As<ISongRepository>();
 			builder.RegisterType<SongListNHibernateRepository>().As<ISongListRepository>();
-			builder.RegisterType<TagNHibernateRepository>().As<ITagRepository>();
+			builder.RegisterType<TagNHibernateSessionPerRequestRepository>().As<ITagRepository>();
 			builder.RegisterType<UserNHibernateRepository>().As<IUserRepository>();
 			builder.RegisterType<UserMessageNHibernateRepository>().As<IUserMessageRepository>();
 

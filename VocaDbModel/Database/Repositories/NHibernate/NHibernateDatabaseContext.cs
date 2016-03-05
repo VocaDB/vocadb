@@ -24,7 +24,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			return new NHibernateTransaction(Session.BeginTransaction(isolationLevel));
 		}
 
-		public void Dispose() {
+		public virtual void Dispose() {
 			Session.Dispose();
 		}
 

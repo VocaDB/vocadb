@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NHibernate;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.Database.Repositories.NHibernate;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
@@ -16,16 +15,14 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 	[TestClass]
 	public class TagQueriesDatabaseTests {
 
-		private readonly DatabaseTestContext<ISessionFactory> context = new DatabaseTestContext<ISessionFactory>();
+		private readonly DatabaseTestContext<ITagRepository> context = new DatabaseTestContext<ITagRepository>();
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
 		private TagForApiContract Merge(int sourceId, int targetId) {
 
 			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
-			return context.RunTest(sessionFactory => {
-
-				var repository = new TagNHibernateRepository(sessionFactory, permissionContext);
+			return context.RunTest(repository => {
 
 				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(),
 					new FakeUserIconFactory());
@@ -42,9 +39,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
-			return context.RunTest(sessionFactory => {
-
-				var repository = new TagNHibernateRepository(sessionFactory, permissionContext);
+			return context.RunTest(repository => {
 
 				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(),
 					new FakeUserIconFactory());

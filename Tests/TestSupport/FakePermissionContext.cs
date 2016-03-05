@@ -33,7 +33,7 @@ namespace VocaDb.Tests.TestSupport {
 			get { return LoggedUser != null; }
 		}
 
-		public ContentLanguagePreference LanguagePreference { get; private set; }
+		public ContentLanguagePreference LanguagePreference { get; set; }
 
 		public UserSettingLanguagePreference LanguagePreferenceSetting {
 			get { throw new System.NotImplementedException(); }
@@ -45,7 +45,7 @@ namespace VocaDb.Tests.TestSupport {
 			get { return (LoggedUser != null ? LoggedUser.Id : 0); }
 		}
 
-		public string Name { get; private set; }
+		public string Name { get; set; }
 
 		public UserSettingShowChatbox ShowChatbox {
 			get { throw new System.NotImplementedException(); }

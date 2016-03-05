@@ -77,7 +77,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 		public IUserPermissionContext PermissionContext { get; private set; }
 		public ISessionFactory SessionFactory { get; private set; }
 
-		protected NHibernateDatabaseContext<T> OpenSessionForContext() {
+		protected virtual NHibernateDatabaseContext<T> OpenSessionForContext() {
 			return new NHibernateDatabaseContext<T>(SessionFactory.OpenSession(), PermissionContext);
 		}
 
