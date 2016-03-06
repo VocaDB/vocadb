@@ -89,7 +89,7 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public void CreateReport(int songId, SongReportType reportType, string notes, int? versionNumber) {
 
-			queries.CreateReport(songId, reportType, CfHelper.GetRealIp(Request), notes ?? string.Empty, versionNumber);
+			queries.CreateReport(songId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 
 		}
 

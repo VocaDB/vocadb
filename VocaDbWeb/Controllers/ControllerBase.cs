@@ -36,7 +36,7 @@ namespace VocaDb.Web.Controllers {
 
 		protected string Hostname {
 			get {
-				return CfHelper.GetRealIp(Request);
+				return WebHelper.GetRealHost(Request);
 			}
 		}
 
