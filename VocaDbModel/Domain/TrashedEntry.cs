@@ -20,6 +20,7 @@ namespace VocaDb.Model.Domain {
 			ParamIs.NotNull(() => entry);
 
 			Data = data;
+			EntryId = entry.Id;
 			EntryType = entry.EntryType;
 			Name = entry.DefaultName;
 			User = user;
@@ -35,6 +36,8 @@ namespace VocaDb.Model.Domain {
 				data = value; 
 			}
 		}
+
+		public virtual int EntryId { get; set; }
 
 		public virtual EntryType EntryType { get; set; }
 

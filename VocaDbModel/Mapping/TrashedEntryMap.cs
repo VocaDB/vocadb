@@ -13,6 +13,7 @@ namespace VocaDb.Model.Mapping {
 
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
+			Map(m => m.EntryId).Not.Nullable();
 			Map(m => m.EntryType).Not.Nullable();
 			Map(m => m.Name).Not.Nullable().Length(255);
 

@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201603062100)]
+	public class TrashedEntryId : AutoReversingMigration {
+
+		public override void Up() {
+
+			Alter.Table(TableNames.TrashedEntries).AddColumn("EntryId").AsInt32().NotNullable().WithDefaultValue(0);
+
+		}
+
+	}
+
 	[Migration(201603061800)]
 	public class TagReports : AutoReversingMigration {
 
