@@ -3,6 +3,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Mapping {
@@ -62,6 +63,20 @@ namespace VocaDb.Model.Mapping {
 			Map(m => m.ReportType).Not.Nullable();
 
 			References(m => m.Entry).Column("Song").Not.Nullable();
+
+		}
+
+	}
+
+	public class TagReportMap : SubclassMap<TagReport> {
+
+		public TagReportMap() {
+
+			DiscriminatorValue("Tag");
+
+			Map(m => m.ReportType).Not.Nullable();
+
+			References(m => m.Entry).Column("Tag").Not.Nullable();
 
 		}
 

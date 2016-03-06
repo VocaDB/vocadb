@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201603061800)]
+	public class TagReports : AutoReversingMigration {
+
+		public override void Up() {
+
+			Alter.Table(TableNames.EntryReports).AddColumn("Tag").AsInt32().Nullable().ForeignKey(TableNames.Tags, "Id");
+
+		}
+
+	}
+
 	[Migration(201603031900)]
 	public class TagCreateDate : AutoReversingMigration {
 

@@ -8,17 +8,29 @@ module vdb.viewModels.tags {
 		
 		constructor(repo: rep.TagRepository,
 			latestComments: dc.CommentContract[],
+			reportTypes: IEntryReportType[],
 			loggedUserId: number,
 			tagId: number,
 			canDeleteAllComments: boolean,
 			showTranslatedDescription: boolean) {
 			
 			this.comments = new EditableCommentsViewModel(repo.getComments(), tagId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
+
+			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
+
+				repo.createReport(tagId, reportType, notes, null);
+
+				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+
+			});
+
 			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
 
 		}
 
 		public comments: EditableCommentsViewModel;
+
+		public reportViewModel: ReportEntryViewModel;
 
 		public showTranslatedDescription: KnockoutObservable<boolean>;
 

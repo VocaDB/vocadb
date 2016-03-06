@@ -18,6 +18,10 @@ namespace VocaDb.Web.Helpers {
 			return Translate.Translations<TEnum>();
 		}
 
+		public string Translation<TEnum>(TEnum val) where TEnum : struct, IConvertible {
+			return Translations<TEnum>()[val];
+		}
+
 	}
 
 }

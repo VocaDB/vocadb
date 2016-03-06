@@ -1,8 +1,10 @@
-﻿using VocaDb.Model.Domain.Users;
+﻿using System;
+using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Domain {
 
-	public abstract class GenericEntryReport<TEntry, TReport> : EntryReport where TEntry : class, IEntryWithNames where TReport: struct {
+	public abstract class GenericEntryReport<TEntry, TReport> : EntryReport where TEntry : class, IEntryWithNames where TReport: struct, IConvertible {
 
 		private TEntry song;
 
@@ -30,6 +32,10 @@ namespace VocaDb.Model.Domain {
 
 		public override string ToString() {
 			return string.Format("Entry report '{0}' for {1} [{2}]", ReportType, EntryBase, Id);
+		}
+
+		public override string TranslatedReportTypeName(IEnumTranslations enumTranslations) {
+			return enumTranslations.Translation(ReportType);
 		}
 
 	}

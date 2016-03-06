@@ -410,6 +410,7 @@
     <Compile Include="Domain\Tags\TagDiff.cs" />
     <Compile Include="Domain\Tags\TagEditableFields.cs" />
     <Compile Include="Domain\Tags\TagName.cs" />
+    <Compile Include="Domain\Tags\TagReport.cs" />
     <Compile Include="Domain\Tags\TagWebLink.cs" />
     <Compile Include="Domain\TrashedEntry.cs" />
     <Compile Include="Domain\Users\ArtistForUser.cs" />

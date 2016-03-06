@@ -12,6 +12,13 @@ module vdb.repositories {
 			$.post(url, callback);
 		}
 
+		public createReport = (tagId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
+
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + helpers.AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
+			$.post(url, callback);
+
+		}
+
 		public getById = (id: number, fields: string, lang: string, callback?: (result: dc.TagApiContract) => void) => {
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
 			$.getJSON(url, { fields: fields || undefined, lang: lang }, callback);

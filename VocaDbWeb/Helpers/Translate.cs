@@ -147,6 +147,9 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<TagEditableFields> TagEditableFieldNames =
 			new TranslateableEnum<TagEditableFields>(() => global::Resources.TagEditableFieldNames.ResourceManager);
 
+		public static readonly TranslateableEnum<TagReportType> TagReportTypeNames =
+			new TranslateableEnum<TagReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+
 		public static readonly TranslateableEnum<UserGroupId> UserGroups =
 			new TranslateableEnum<UserGroupId>(() => UserGroupNames.ResourceManager);
 

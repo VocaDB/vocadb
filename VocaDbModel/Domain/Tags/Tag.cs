@@ -16,7 +16,9 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Tags {
 
-	public class Tag : IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName>, IWebLinkFactory<TagWebLink> {
+	public class Tag : 
+		IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName>, IWebLinkFactory<TagWebLink>,
+		IEntryWithVersions {
 
 		bool IDeletableEntry.Deleted {
 			get { return false; }
@@ -138,6 +140,8 @@ namespace VocaDb.Model.Domain.Tags {
 				archivedVersions = value;
 			}
 		}
+
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		/// <summary>
 		/// List of all artist tag usages (not including deleted artists) for this tag.

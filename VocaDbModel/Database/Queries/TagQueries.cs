@@ -24,6 +24,7 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Database.Queries {
 
@@ -34,6 +35,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryImagePersisterOld imagePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -110,12 +112,14 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public TagQueries(ITagRepository repository, IUserPermissionContext permissionContext,
-		                  IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IUserIconFactory userIconFactory)
+			IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IUserIconFactory userIconFactory,
+			IEnumTranslations enumTranslations)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
 			this.userIconFactory = userIconFactory;
+			this.enumTranslations = enumTranslations;
 
 		}
 
@@ -168,6 +172,21 @@ namespace VocaDb.Model.Database.Queries {
 		public CommentForApiContract CreateComment(int tagId, CommentForApiContract contract) {
 
 			return HandleTransaction(ctx => Comments(ctx).Create(tagId, contract));
+
+		}
+
+		public bool CreateReport(int tagId, TagReportType reportType, string hostname, string notes, int? versionNumber) {
+
+			ParamIs.NotNull(() => hostname);
+			ParamIs.NotNull(() => notes);
+
+			return HandleTransaction(ctx => {
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+					entryLinkFactory, report => report.Entry.Id == tagId,
+					(song, reporter, notesTruncated) => new TagReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
+					() => reportType != TagReportType.Other ? enumTranslations.Translation(reportType) : null,
+					tagId, reportType, hostname, notes);
+			});
 
 		}
 

@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.ServiceModel.Channels;
 using System.Web;
 using NLog;
 using VocaDb.Model.Domain.Globalization;
@@ -52,6 +53,22 @@ namespace VocaDb.Web.Helpers {
 		public static string GetRealHost(HttpRequestBase request) {
 
 			return CfHelper.GetRealIp(request);
+
+		}
+
+		public static string GetRealHost(HttpRequestMessage request) {
+
+			// From https://blogs.msdn.microsoft.com/hongmeig1/2012/07/09/how-to-access-the-clients-ip-address-in-web-api/
+			if (HttpContext.Current != null)
+				return HttpContext.Current.Request.UserHostAddress;
+
+			object property;
+			if (request.Properties.TryGetValue(typeof(RemoteEndpointMessageProperty).FullName, out property)) {
+				var remoteProperty = (RemoteEndpointMessageProperty)property;
+				return remoteProperty.Address;
+			}
+
+			return null;
 
 		}
 

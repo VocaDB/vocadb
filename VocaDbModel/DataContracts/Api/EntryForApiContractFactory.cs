@@ -4,6 +4,9 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.Api {
 
+	/// <summary>
+	/// Creates instances of <see cref="EntryForApiContract"/>.
+	/// </summary>
 	public class EntryForApiContractFactory {
 
 		private readonly IEntryImagePersisterOld imagePersisterOld;

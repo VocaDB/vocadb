@@ -19,21 +19,30 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.DataSharing;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service {
 
 	public class AdminService : ServiceBase {
 
+		private readonly IEnumTranslations enumTranslations;
+
 		private void VerifyAdmin() {
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 		}
 
-		public AdminService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
-			: base(sessionFactory, permissionContext, entryLinkFactory) {}
+		public AdminService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
+			IEnumTranslations enumTranslations) 
+			: base(sessionFactory, permissionContext, entryLinkFactory) {
+
+			this.enumTranslations = enumTranslations;
+
+		}
 
 		public int CleanupOldLogEntries() {
 
@@ -262,9 +271,8 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				var reports = session.Query<EntryReport>().OrderByDescending(r => r.Created).Take(200).ToArray();
-				var fac = new EntryReportContractFactory();
-
-				return reports.Select(r => fac.Create(r, PermissionContext.LanguagePreference)).ToArray();
+				var fac = new EntryForApiContractFactory(null, null);
+				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference, false), enumTranslations)).ToArray();
 
 			});
 

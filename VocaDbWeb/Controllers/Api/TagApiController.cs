@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -207,6 +208,20 @@ namespace VocaDb.Web.Controllers.Api {
 				SortRule = TagSortRule.UsageCount
 			})
 			.Items.OrderBy(t => t.Name).ToArray();
+
+		}
+
+		/// <summary>
+		/// Creates a new report.
+		/// </summary>
+		/// <param name="tagId">Tag to be reported.</param>
+		/// <param name="reportType">Report type.</param>
+		/// <param name="notes">Notes. Optional.</param>
+		/// <param name="versionNumber">Version to be reported. Optional.</param>
+		[Route("{tagId:int}/reports")]
+		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) {
+
+			queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 
 		}
 

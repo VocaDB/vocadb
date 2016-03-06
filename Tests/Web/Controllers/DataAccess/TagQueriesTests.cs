@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
@@ -70,7 +71,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));
 
 			imagePersister = new InMemoryImagePersister();
-			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, new FakeUserIconFactory());
+			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, new FakeUserIconFactory(), new EnumTranslations());
 
 		}
 

@@ -15,6 +15,8 @@ namespace VocaDb.Model.Service.Translations {
 
 		TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, IConvertible;
 
+		string Translation<TEnum>(TEnum val) where TEnum : struct, IConvertible;
+
 	}
 
 }

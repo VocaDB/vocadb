@@ -3,6 +3,7 @@
 @using Res = ViewRes.Tag.DetailsStrings;
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Domain.Tags
 @using VocaDb.Web.Helpers;
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
@@ -53,13 +54,15 @@
 
 			$("#editTagLink").button({ disabled: $("#editTagLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
 			$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
 			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children);
 
 			var repo = new vdb.repositories.TagRepository('@RootPath');
 			var latestComments = @ToJS(Model.LatestComments);
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+			var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.TagReportTypeNames, TagReport.ReportTypesWithRequiredNotes));
 
-			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, latestComments, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
+			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
 				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
 			ko.applyBindings(vm);
 
@@ -71,6 +74,7 @@
 @section Toolbar {
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editTagLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 	@Helpers.EntryStatusMessage(Model.Status)
 }
 
@@ -218,3 +222,5 @@
 	</div>
 
 </div>
+
+@EntryDetailsHelpers.ReportEntryPopupKnockout()

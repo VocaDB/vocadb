@@ -1,6 +1,7 @@
 ﻿using System;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Domain {
 
@@ -30,9 +31,7 @@ namespace VocaDb.Model.Domain {
 
 		public abstract IEntryWithNames EntryBase { get; }
 
-		public virtual EntryType EntryType {
-			get { return EntryBase.EntryType; }
-		}
+		public virtual EntryType EntryType => EntryBase.EntryType;
 
 		public virtual string Hostname {
 			get { return hostname; }
@@ -49,12 +48,11 @@ namespace VocaDb.Model.Domain {
 			}
 		}
 
+		public abstract string TranslatedReportTypeName(IEnumTranslations enumTranslations);
+
 		public virtual User User { get; set; }
 
-		public virtual ArchivedObjectVersion VersionBase
-		{
-			get { return null; }
-		}
+		public virtual ArchivedObjectVersion VersionBase => null;
 
 		public virtual int? VersionNumber { get; set; }
 
