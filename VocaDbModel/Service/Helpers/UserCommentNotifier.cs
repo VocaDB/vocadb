@@ -14,12 +14,12 @@ namespace VocaDb.Model.Service.Helpers {
 
 		public void CheckComment(ICommentWithEntry comment, IEntryLinkFactory entryLinkFactory, IDatabaseContext<User> ctx) {
 
-			var userMatches = Regex.Match(comment.Message, @"@(\w+)");
+			var userMatches = Regex.Matches(comment.Message, @"@(\w+)");
 
-			if (!userMatches.Success)
+			if (userMatches.Count == 0)
 				return;
 
-			var userNames = userMatches.Groups.Cast<Group>().Skip(1).Select(g => g.Value).ToArray();
+			var userNames = userMatches.Cast<Match>().Select(m => m.Groups[1].Value).ToArray();
 
 			var users = ctx.Query().Where(u => u.Active && userNames.Contains(u.Name)).ToArray();
 

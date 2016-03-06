@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 
@@ -21,6 +22,7 @@ namespace VocaDb.Tests.Service.Helpers {
 		private EntryAnchorFactory entryLinkFactory;
 		private FakeUserRepository repository;
 		private User user;
+		private User user2;
 
 		[TestInitialize]
 		public void SetUp() {
@@ -28,8 +30,9 @@ namespace VocaDb.Tests.Service.Helpers {
 			album = new Album(TranslatedString.Create("Synthesis")) { Id = 39 };
 			agentName = "Rin";
 			entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
-			user = new User { Name = "miku" };
-			repository = new FakeUserRepository(user);
+			user = CreateEntry.User(name: "miku");
+			user2 = CreateEntry.User(name: "luka");
+			repository = new FakeUserRepository(user, user2);
 
 		}
 
@@ -54,6 +57,17 @@ namespace VocaDb.Tests.Service.Helpers {
 			Assert.IsNull(notification.Sender, "Sender");
 			Assert.AreEqual(user.Id, notification.Receiver.Id, "Receiver Id");
 			Assert.AreEqual("Mentioned in a comment", notification.Subject, "Subject");
+
+		}
+
+		[TestMethod]
+		public void CheckComment_Mentioned_Multiple() {
+
+			CheckComment("Hello world, @miku @luka");
+
+			var messages = repository.List<UserMessage>();
+			Assert.AreEqual(2, messages.Count, "Messages generated for both users");
+			Assert.AreEqual(user, messages[0].Receiver, "First user as expected");
 
 		}
 
