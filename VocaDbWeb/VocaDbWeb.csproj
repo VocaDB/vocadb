@@ -993,7 +993,6 @@
     <Compile Include="Helpers\DateTimeUtils.cs" />
     <Compile Include="Helpers\HighchartsHelper.cs" />
     <Compile Include="Helpers\HtmlPrefixScopeExtensions.cs" />
-    <Compile Include="Helpers\CfHelper.cs" />
     <Compile Include="Helpers\JsonHelpers.cs" />
     <Compile Include="Helpers\KnockoutHtmlExtender.cs" />
     <Compile Include="Helpers\Login.cs" />

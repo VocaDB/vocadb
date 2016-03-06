@@ -52,7 +52,7 @@ namespace VocaDb.Web.Helpers {
 
 		public static string GetRealHost(HttpRequestBase request) {
 
-			return CfHelper.GetRealIp(request);
+			return request.UserHostAddress;
 
 		}
 
