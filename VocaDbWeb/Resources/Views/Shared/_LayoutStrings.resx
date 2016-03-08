@@ -121,13 +121,13 @@
     <value>Account</value>
   </data>
   <data name="AddAlbum" xml:space="preserve">
-    <value>Submit an album</value>
+    <value>Submit a MikuAlbum</value>
   </data>
   <data name="AddArtist" xml:space="preserve">
-    <value>Add an artist</value>
+    <value>Add a MikuArtist</value>
   </data>
   <data name="AddSong" xml:space="preserve">
-    <value>Submit a song</value>
+    <value>Submit a MikuSong</value>
   </data>
   <data name="BackgroundCredit" xml:space="preserve">
     <value>Background illustration by {0}</value>
@@ -151,7 +151,7 @@
     <value>Home</value>
   </data>
   <data name="IRCLink" xml:space="preserve">
-    <value>IRC channel on Rizon</value>
+    <value>MikuIRC channel on Rizon</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Content licensed under Creative Commons.</value>
@@ -169,10 +169,10 @@
     <value>Album import</value>
   </data>
   <data name="NewAlbums" xml:space="preserve">
-    <value>New albums</value>
+    <value>New MikuAlbums</value>
   </data>
   <data name="NewPVs" xml:space="preserve">
-    <value>Recent PVs</value>
+    <value>Recent MikuPVs</value>
   </data>
   <data name="OtherCredit" xml:space="preserve">
     <value>Other credits and source code</value>
@@ -181,7 +181,7 @@
     <value>Register</value>
   </data>
   <data name="RelatedSites" xml:space="preserve">
-    <value>Related sites</value>
+    <value>Related MikuSites</value>
   </data>
   <data name="Services" xml:space="preserve">
     <value>Services</value>

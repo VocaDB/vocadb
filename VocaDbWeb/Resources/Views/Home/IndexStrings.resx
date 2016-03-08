@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NewAlbums" xml:space="preserve">
-    <value>Recent or upcoming albums</value>
+    <value>Recent or upcoming MikuAlbums</value>
   </data>
   <data name="News" xml:space="preserve">
-    <value>News</value>
+    <value>MikuNews</value>
   </data>
   <data name="RecentActivity" xml:space="preserve">
     <value>Recent activity</value>
@@ -130,13 +130,13 @@
     <value>Happening now</value>
   </data>
   <data name="RecentSongs" xml:space="preserve">
-    <value>Highlighted PVs</value>
+    <value>Highlighted MikuPVs</value>
   </data>
   <data name="SearchSite" xml:space="preserve">
     <value>Search the whole site using Google custom search</value>
   </data>
   <data name="TopAlbums" xml:space="preserve">
-    <value>Random popular albums</value>
+    <value>Random popular MikuAlbums</value>
   </data>
   <data name="ViewAll" xml:space="preserve">
     <value>view all</value>
@@ -148,9 +148,9 @@
     <value>Song info</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome to the Vocaloid Database!</value>
+    <value>Welcome to the Vocaloid MikuBase!</value>
   </data>
   <data name="WelcomeSubtitle" xml:space="preserve">
-    <value>The collaborative database with Vocaloid artists, discography, PVs and more.</value>
+    <value>The collaborative database with Vocaloid artists, discography, MikuPVs and more.</value>
   </data>
 </root>

@@ -61,7 +61,7 @@ namespace ViewRes.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recent or upcoming albums.
+        ///   Looks up a localized string similar to Recent or upcoming MikuAlbums.
         /// </summary>
         public static string NewAlbums {
             get {
@@ -70,7 +70,7 @@ namespace ViewRes.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to News.
+        ///   Looks up a localized string similar to MikuNews.
         /// </summary>
         public static string News {
             get {
@@ -97,7 +97,7 @@ namespace ViewRes.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Highlighted PVs.
+        ///   Looks up a localized string similar to Highlighted MikuPVs.
         /// </summary>
         public static string RecentSongs {
             get {
@@ -115,7 +115,7 @@ namespace ViewRes.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Random popular albums.
+        ///   Looks up a localized string similar to Random popular MikuAlbums.
         /// </summary>
         public static string TopAlbums {
             get {
@@ -151,7 +151,7 @@ namespace ViewRes.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to the Vocaloid Database!.
+        ///   Looks up a localized string similar to Welcome to the Vocaloid MikuBase!.
         /// </summary>
         public static string Welcome {
             get {
@@ -160,7 +160,7 @@ namespace ViewRes.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The collaborative database with Vocaloid artists, discography, PVs and more..
+        ///   Looks up a localized string similar to The collaborative database with Vocaloid artists, discography, MikuPVs and more..
         /// </summary>
         public static string WelcomeSubtitle {
             get {

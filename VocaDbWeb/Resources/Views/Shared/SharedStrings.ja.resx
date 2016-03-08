@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Albums" xml:space="preserve">
-    <value>アルバム</value>
+    <value>ミクアルバム</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>表示</value>
@@ -127,7 +127,7 @@
     <value>アーティスト名</value>
   </data>
   <data name="Artists" xml:space="preserve">
-    <value>アーティスト</value>
+    <value>ミクアーティスト</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>削除</value>
@@ -155,7 +155,8 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>タイトル</value>
-  <comment>Check usage</comment></data>
+    <comment>Check usage</comment>
+  </data>
   <data name="ReleaseEvents" xml:space="preserve">
     <value>イベント</value>
   </data>
@@ -169,7 +170,7 @@
     <value>もっと見る</value>
   </data>
   <data name="Songs" xml:space="preserve">
-    <value>曲</value>
+    <value>ミク曲</value>
   </data>
   <data name="Tag" xml:space="preserve">
     <value>タグ</value>
@@ -208,10 +209,10 @@
     <value>読み込み中…</value>
   </data>
   <data name="Media" xml:space="preserve">
-    <value>メディア</value>
+    <value>ミクメディア</value>
   </data>
   <data name="PVs" xml:space="preserve">
-    <value>PV</value>
+    <value>ミクPV</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>取り除く</value>
@@ -221,6 +222,6 @@
     <comment>check usage</comment>
   </data>
   <data name="Users" xml:space="preserve">
-    <value>ユーザー</value>
+    <value>ミクユーザー</value>
   </data>
 </root>

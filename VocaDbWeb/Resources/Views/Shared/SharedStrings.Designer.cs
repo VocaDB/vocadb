@@ -79,7 +79,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albums.
+        ///   Looks up a localized string similar to MikuAlbums.
         /// </summary>
         public static string Albums {
             get {
@@ -106,7 +106,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Artists.
+        ///   Looks up a localized string similar to MikuArtists.
         /// </summary>
         public static string Artists {
             get {
@@ -214,7 +214,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Media.
+        ///   Looks up a localized string similar to MikuMedia.
         /// </summary>
         public static string Media {
             get {
@@ -232,7 +232,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PVs.
+        ///   Looks up a localized string similar to MikuPVs.
         /// </summary>
         public static string PVs {
             get {
@@ -241,7 +241,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Events.
+        ///   Looks up a localized string similar to MikuEvents.
         /// </summary>
         public static string ReleaseEvents {
             get {
@@ -286,7 +286,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Songs.
+        ///   Looks up a localized string similar to MikuSongs.
         /// </summary>
         public static string Songs {
             get {
@@ -313,7 +313,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Top rated songs.
+        ///   Looks up a localized string similar to Top rated MikuSongs.
         /// </summary>
         public static string TopFavoritedSongs {
             get {
@@ -322,7 +322,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Top rated albums.
+        ///   Looks up a localized string similar to Top rated MikuAlbums.
         /// </summary>
         public static string TopRatedAlbums {
             get {
@@ -367,7 +367,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Users.
+        ///   Looks up a localized string similar to MikuUsers.
         /// </summary>
         public static string Users {
             get {

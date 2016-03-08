@@ -124,7 +124,7 @@
     <value>Add</value>
   </data>
   <data name="Albums" xml:space="preserve">
-    <value>Albums</value>
+    <value>MikuAlbums</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Apply</value>
@@ -133,7 +133,7 @@
     <value>Name</value>
   </data>
   <data name="Artists" xml:space="preserve">
-    <value>Artists</value>
+    <value>MikuArtists</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -169,16 +169,16 @@
     <value>Loading...</value>
   </data>
   <data name="Media" xml:space="preserve">
-    <value>Media</value>
+    <value>MikuMedia</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="PVs" xml:space="preserve">
-    <value>PVs</value>
+    <value>MikuPVs</value>
   </data>
   <data name="ReleaseEvents" xml:space="preserve">
-    <value>Events</value>
+    <value>MikuEvents</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
@@ -193,7 +193,7 @@
     <value>Show more</value>
   </data>
   <data name="Songs" xml:space="preserve">
-    <value>Songs</value>
+    <value>MikuSongs</value>
   </data>
   <data name="Tag" xml:space="preserve">
     <value>Tag</value>
@@ -202,10 +202,10 @@
     <value>Tags</value>
   </data>
   <data name="TopFavoritedSongs" xml:space="preserve">
-    <value>Top rated songs</value>
+    <value>Top rated MikuSongs</value>
   </data>
   <data name="TopRatedAlbums" xml:space="preserve">
-    <value>Top rated albums</value>
+    <value>Top rated MikuAlbums</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>total</value>
@@ -220,6 +220,6 @@
     <value>Username</value>
   </data>
   <data name="Users" xml:space="preserve">
-    <value>Users</value>
+    <value>MikuUsers</value>
   </data>
 </root>

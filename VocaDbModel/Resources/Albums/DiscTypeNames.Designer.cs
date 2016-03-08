@@ -61,7 +61,7 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Original album.
+        ///   Looks up a localized string similar to Original MikuAlbum.
         /// </summary>
         public static string Album {
             get {
@@ -70,7 +70,7 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compilation.
+        ///   Looks up a localized string similar to Miku Compilation.
         /// </summary>
         public static string Compilation {
             get {
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E.P..
+        ///   Looks up a localized string similar to Miku E.P..
         /// </summary>
         public static string EP {
             get {
@@ -88,7 +88,7 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other.
+        ///   Looks up a localized string similar to Other Miku.
         /// </summary>
         public static string Other {
             get {
@@ -97,7 +97,7 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Single.
+        ///   Looks up a localized string similar to Single Miku.
         /// </summary>
         public static string Single {
             get {
@@ -106,7 +106,7 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Split album.
+        ///   Looks up a localized string similar to Split MikuAlbum.
         /// </summary>
         public static string SplitAlbum {
             get {
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Video.
+        ///   Looks up a localized string similar to MikuVideo.
         /// </summary>
         public static string Video {
             get {

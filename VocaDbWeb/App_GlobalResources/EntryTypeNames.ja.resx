@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Album" xml:space="preserve">
-    <value>アルバム</value>
+    <value>ミクアルバム</value>
   </data>
   <data name="Artist" xml:space="preserve">
-    <value>アーティスト</value>
+    <value>ミクアーティスト</value>
   </data>
   <data name="Song" xml:space="preserve">
-    <value>曲</value>
+    <value>ミク曲</value>
   </data>
   <data name="SongList" xml:space="preserve">
     <value>曲目リスト</value>
@@ -136,6 +136,6 @@
     <value>すべて</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>ユーザー</value>
+    <value>ミクユーザー</value>
   </data>
 </root>

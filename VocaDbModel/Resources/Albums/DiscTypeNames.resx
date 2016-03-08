@@ -118,27 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Album" xml:space="preserve">
-    <value>Original album</value>
+    <value>Original MikuAlbum</value>
   </data>
   <data name="Compilation" xml:space="preserve">
-    <value>Compilation</value>
+    <value>Miku Compilation</value>
   </data>
   <data name="EP" xml:space="preserve">
-    <value>E.P.</value>
+    <value>Miku E.P.</value>
   </data>
   <data name="Other" xml:space="preserve">
-    <value>Other</value>
+    <value>Other Miku</value>
   </data>
   <data name="Single" xml:space="preserve">
-    <value>Single</value>
+    <value>Single Miku</value>
   </data>
   <data name="SplitAlbum" xml:space="preserve">
-    <value>Split album</value>
+    <value>Split MikuAlbum</value>
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>Not specified</value>
   </data>
   <data name="Video" xml:space="preserve">
-    <value>Video</value>
+    <value>MikuVideo</value>
   </data>
 </root>
