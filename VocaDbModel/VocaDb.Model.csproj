@@ -1020,6 +1020,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\HomeRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.de.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>

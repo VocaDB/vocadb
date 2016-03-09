@@ -4,6 +4,18 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201603092000)]
+	public class UserLanguageCodeExtend : AutoReversingMigration {
+
+		public override void Up() {
+
+			Alter.Table(TableNames.Users).AlterColumn("Language").AsString(10).NotNullable().WithDefaultValue("");
+			Alter.Table(TableNames.Users).AlterColumn("[Culture]").AsAnsiString(10).NotNullable();
+
+		}
+
+	}
+
 	[Migration(201603062100)]
 	public class TrashedEntryId : AutoReversingMigration {
 

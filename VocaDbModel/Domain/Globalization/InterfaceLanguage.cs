@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 		public static readonly string[] LanguageCodes = {
-			"en-US", "de-DE", "fi-Fi", "ru-RU", "ja-JP"
+			"en-US", "de-DE", "fi-Fi", "ru-RU", "ja-JP", "zh-Hans"
 		};
 
 	}
