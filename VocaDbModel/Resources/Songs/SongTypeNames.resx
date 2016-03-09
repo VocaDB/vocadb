@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cover" xml:space="preserve">
-    <value>MiCover</value>
+    <value>Cover</value>
   </data>
   <data name="DramaPV" xml:space="preserve">
     <value>Drama PV</value>
@@ -133,19 +133,19 @@
     <value>Mashup</value>
   </data>
   <data name="MusicPV" xml:space="preserve">
-    <value>MikuPV</value>
+    <value>Music PV</value>
   </data>
   <data name="Original" xml:space="preserve">
-    <value>Original MikuSong</value>
+    <value>Original song</value>
   </data>
   <data name="Other" xml:space="preserve">
     <value>Other</value>
   </data>
   <data name="Remaster" xml:space="preserve">
-    <value>Mikumaster</value>
+    <value>Remaster</value>
   </data>
   <data name="Remix" xml:space="preserve">
-    <value>Mikumix</value>
+    <value>Remix</value>
   </data>
   <data name="Unspecified" xml:space="preserve">
     <value>Unspecified</value>

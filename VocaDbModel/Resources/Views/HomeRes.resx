@@ -121,9 +121,9 @@
     <value>VocaDB is a Vocaloid music database with translated artists, albums and songs.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome to the Vocaloid MikuBase!</value>
+    <value>Welcome to the Vocaloid Database!</value>
   </data>
   <data name="WelcomeSubtitle" xml:space="preserve">
-    <value>The collaborative database with Vocaloid artists, discography, MikuPVs and more.</value>
+    <value>The collaborative database with Vocaloid artists, discography, PVs and more.</value>
   </data>
 </root>

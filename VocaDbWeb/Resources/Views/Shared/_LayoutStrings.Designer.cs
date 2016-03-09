@@ -70,7 +70,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit a MikuAlbum.
+        ///   Looks up a localized string similar to Submit an album.
         /// </summary>
         public static string AddAlbum {
             get {
@@ -79,7 +79,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a MikuArtist.
+        ///   Looks up a localized string similar to Add an artist.
         /// </summary>
         public static string AddArtist {
             get {
@@ -88,7 +88,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit a MikuSong.
+        ///   Looks up a localized string similar to Submit a song.
         /// </summary>
         public static string AddSong {
             get {
@@ -160,7 +160,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MikuIRC channel on Rizon.
+        ///   Looks up a localized string similar to IRC channel on Rizon.
         /// </summary>
         public static string IRCLink {
             get {
@@ -214,7 +214,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New MikuAlbums.
+        ///   Looks up a localized string similar to New albums.
         /// </summary>
         public static string NewAlbums {
             get {
@@ -223,7 +223,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recent MikuPVs.
+        ///   Looks up a localized string similar to Recent PVs.
         /// </summary>
         public static string NewPVs {
             get {
@@ -250,7 +250,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Related MikuSites.
+        ///   Looks up a localized string similar to Related sites.
         /// </summary>
         public static string RelatedSites {
             get {

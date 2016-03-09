@@ -88,7 +88,7 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vocaloid MikuBase.
+        ///   Looks up a localized string similar to Vocaloid Database.
         /// </summary>
         internal static string SiteTitle {
             get {

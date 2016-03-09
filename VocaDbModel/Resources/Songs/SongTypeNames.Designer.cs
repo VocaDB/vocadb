@@ -61,7 +61,7 @@ namespace VocaDb.Model.Resources.Songs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MiCover.
+        ///   Looks up a localized string similar to Cover.
         /// </summary>
         public static string Cover {
             get {
@@ -106,7 +106,7 @@ namespace VocaDb.Model.Resources.Songs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MikuPV.
+        ///   Looks up a localized string similar to Music PV.
         /// </summary>
         public static string MusicPV {
             get {
@@ -115,7 +115,7 @@ namespace VocaDb.Model.Resources.Songs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Original MikuSong.
+        ///   Looks up a localized string similar to Original song.
         /// </summary>
         public static string Original {
             get {
@@ -133,7 +133,7 @@ namespace VocaDb.Model.Resources.Songs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mikumaster.
+        ///   Looks up a localized string similar to Remaster.
         /// </summary>
         public static string Remaster {
             get {
@@ -142,7 +142,7 @@ namespace VocaDb.Model.Resources.Songs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mikumix.
+        ///   Looks up a localized string similar to Remix.
         /// </summary>
         public static string Remix {
             get {

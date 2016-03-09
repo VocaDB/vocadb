@@ -70,7 +70,7 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to the Vocaloid MikuBase!.
+        ///   Looks up a localized string similar to Welcome to the Vocaloid Database!.
         /// </summary>
         internal static string Welcome {
             get {
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The collaborative database with Vocaloid artists, discography, MikuPVs and more..
+        ///   Looks up a localized string similar to The collaborative database with Vocaloid artists, discography, PVs and more..
         /// </summary>
         internal static string WelcomeSubtitle {
             get {

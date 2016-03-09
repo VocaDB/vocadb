@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MikuAlbum.
+        ///   Looks up a localized string similar to Album.
         /// </summary>
         internal static string Album {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MikuArtist.
+        ///   Looks up a localized string similar to Artist.
         /// </summary>
         internal static string Artist {
             get {
@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MikuEvent.
+        ///   Looks up a localized string similar to Event.
         /// </summary>
         internal static string ReleaseEvent {
             get {
@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MikuSong.
+        ///   Looks up a localized string similar to Song.
         /// </summary>
         internal static string Song {
             get {
@@ -124,7 +124,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MikuUser.
+        ///   Looks up a localized string similar to User.
         /// </summary>
         internal static string User {
             get {

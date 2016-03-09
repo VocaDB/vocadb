@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Album" xml:space="preserve">
-    <value>MikuAlbum</value>
+    <value>Album</value>
   </data>
   <data name="Artist" xml:space="preserve">
-    <value>MikuArtist</value>
+    <value>Artist</value>
   </data>
   <data name="ReleaseEvent" xml:space="preserve">
-    <value>MikuEvent</value>
+    <value>Event</value>
   </data>
   <data name="Song" xml:space="preserve">
-    <value>MikuSong</value>
+    <value>Song</value>
   </data>
   <data name="SongList" xml:space="preserve">
     <value>Song list</value>
@@ -139,6 +139,6 @@
     <value>Anything</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>MikuUser</value>
+    <value>User</value>
   </data>
 </root>
