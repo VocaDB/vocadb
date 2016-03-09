@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutMe" xml:space="preserve">
-    <value>About me</value>
+    <value>关于我</value>
   </data>
   <data name="AccountDisabled" xml:space="preserve">
     <value>Account disabled</value>
@@ -133,13 +133,13 @@
     <value>artist verification page</value>
   </data>
   <data name="CollectionTab" xml:space="preserve">
-    <value>Collection</value>
+    <value>收藏夹</value>
   </data>
   <data name="Comments" xml:space="preserve">
-    <value>Comments</value>
+    <value>评论</value>
   </data>
   <data name="CommentsMade" xml:space="preserve">
-    <value>Comments</value>
+    <value>总评论数</value>
   </data>
   <data name="ComposeMessage" xml:space="preserve">
     <value>Compose a message</value>
@@ -151,7 +151,7 @@
     <value>Create new list</value>
   </data>
   <data name="CustomListsTab" xml:space="preserve">
-    <value>Custom lists</value>
+    <value>自定义歌单</value>
   </data>
   <data name="Disable" xml:space="preserve">
     <value>Disable</value>
@@ -163,13 +163,13 @@
     <value>Email</value>
   </data>
   <data name="FavoriteSongsTab" xml:space="preserve">
-    <value>Liked songs</value>
+    <value>喜欢的歌曲</value>
   </data>
   <data name="FavoriteTags" xml:space="preserve">
-    <value>My favorite tags</value>
+    <value>我喜欢的标签</value>
   </data>
   <data name="FollowedArtistsTab" xml:space="preserve">
-    <value>Followed artists</value>
+    <value>关注的艺术家</value>
   </data>
   <data name="ImportSongList" xml:space="preserve">
     <value>Import from YouTube or NicoNicoDouga</value>
@@ -178,13 +178,13 @@
     <value>Last login</value>
   </data>
   <data name="Level" xml:space="preserve">
-    <value>Level</value>
+    <value>等级</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>位置</value>
   </data>
   <data name="MemberSince" xml:space="preserve">
-    <value>A member since</value>
+    <value>注册时间</value>
   </data>
   <data name="Messages" xml:space="preserve">
     <value>Messages</value>
@@ -193,47 +193,47 @@
     <value>My settings</value>
   </data>
   <data name="Overview" xml:space="preserve">
-    <value>Overview</value>
+    <value>概览</value>
   </data>
   <data name="PossibleProducerMessage" xml:space="preserve">
     <value>Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?
 If so, please see the {0}.</value>
   </data>
   <data name="Power" xml:space="preserve">
-    <value>Power</value>
+    <value>经验值</value>
   </data>
   <data name="SetAvatar" xml:space="preserve">
     <value>Set your avatar at gravatar.com</value>
   </data>
   <data name="SomeAlbumsILike" xml:space="preserve">
-    <value>Some albums I like</value>
+    <value>我喜欢的专辑</value>
   </data>
   <data name="SomeArtistsIFollow" xml:space="preserve">
-    <value>Some artists I follow</value>
+    <value>我关注的艺术家</value>
   </data>
   <data name="SomeSongsILike" xml:space="preserve">
-    <value>Some songs I like</value>
+    <value>我喜欢的歌曲</value>
   </data>
   <data name="Staff" xml:space="preserve">
     <value>Staff</value>
   </data>
   <data name="StatsTab" xml:space="preserve">
-    <value>Statistics</value>
+    <value>统计数据</value>
   </data>
   <data name="Submissions" xml:space="preserve">
-    <value>Submissions</value>
+    <value>总添加数</value>
   </data>
   <data name="SupporterTitle" xml:space="preserve">
     <value>Thanks for supporting {0}!</value>
   </data>
   <data name="TagVotes" xml:space="preserve">
-    <value>Tag votes</value>
+    <value>标签添加数</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>{0} total</value>
+    <value>总计{0}</value>
   </data>
   <data name="TotalEdits" xml:space="preserve">
-    <value>Total edits</value>
+    <value>总编辑数</value>
   </data>
   <data name="TwitterAccount" xml:space="preserve">
     <value>Twitter account</value>
@@ -251,7 +251,7 @@ If so, please see the {0}.</value>
     <value>Verified artist</value>
   </data>
   <data name="VerifiedEmail" xml:space="preserve">
-    <value>Verified email</value>
+    <value>已验证邮箱</value>
   </data>
   <data name="VerifiedOwner" xml:space="preserve">
     <value>Verified owner</value>

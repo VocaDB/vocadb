@@ -123,6 +123,9 @@
   <data name="CollectionStatusAnything" xml:space="preserve">
     <value>Anything</value>
   </data>
+  <data name="CollectionWishedOrOrdered" xml:space="preserve">
+    <value>Wished or ordered</value>
+  </data>
   <data name="MediaType" xml:space="preserve">
     <value>Media type</value>
   </data>

@@ -79,6 +79,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wished or ordered.
+        /// </summary>
+        public static string CollectionWishedOrOrdered {
+            get {
+                return ResourceManager.GetString("CollectionWishedOrOrdered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Media type.
         /// </summary>
         public static string MediaType {

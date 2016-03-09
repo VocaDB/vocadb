@@ -954,6 +954,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ArtistTypeNames.ru.resx" />
+    <EmbeddedResource Include="Resources\ArtistTypeNames.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.de.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.resx">
@@ -1026,6 +1027,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LayoutRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\LayoutRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.de.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.ja.resx" />

@@ -124,6 +124,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comments.
+        /// </summary>
+        public static string CommentsMade {
+            get {
+                return ResourceManager.GetString("CommentsMade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compose a message.
         /// </summary>
         public static string ComposeMessage {
@@ -445,6 +454,15 @@ namespace ViewRes.User {
         public static string VerifiedAccount {
             get {
                 return ResourceManager.GetString("VerifiedAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verified email.
+        /// </summary>
+        public static string VerifiedEmail {
+            get {
+                return ResourceManager.GetString("VerifiedEmail", resourceCulture);
             }
         }
         

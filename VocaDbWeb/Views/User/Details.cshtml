@@ -123,7 +123,7 @@
 				}
 				@if (Model.EmailVerified)
 				{
-					<img src="@Url.Content("~/Content/Icons/tick.png")" title="Verified email" />
+					<img src="@Url.Content("~/Content/Icons/tick.png")" title="@R.VerifiedEmail" />
 				}
 			</p>
 
@@ -150,7 +150,7 @@
 					<text>@editText</text>
 				}
 			</span><br />
-			<span>@R.Comments: @Model.CommentCount</span><br />
+			<span>@R.CommentsMade: @Model.CommentCount</span><br />
 			<span>@R.TagVotes: @Model.TagVotes</span><br />
 			<span>@R.Power: @Model.Power (@R.Level @Model.Level)</span>
 

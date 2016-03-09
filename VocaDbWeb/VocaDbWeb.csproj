@@ -228,6 +228,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumCollectionStatusNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\AlbumCollectionStatusNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumCollectionStatusNames.zh-Hans.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\AlbumEditableFieldNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +247,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumMediaTypeNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\AlbumMediaTypeNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumMediaTypeNames.zh-Hans.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -323,6 +333,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContentLanguageSelectionNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ContentLanguageSelectionNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContentLanguageSelectionNames.zh-Hans.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\EntryEditEventNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -337,6 +352,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EntryTypeNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryTypeNames.zh-Hans.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\PermissionFlagNames.de.designer.cs">
       <AutoGen>True</AutoGen>
@@ -428,6 +448,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongVoteRatingNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Songs\SongVoteRatingNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongVoteRatingNames.zh-Hans.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\TagEditableFieldNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -452,6 +477,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UserGroupNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserGroupNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserGroupNames.zh-Hans.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Users\RatedSongForUserSortRuleNames.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1645,6 +1675,32 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>AlbumDiscMediaTypeNames.Designer.cs</LastGenOutput>
     </Content>
+    <Content Include="App_GlobalResources\EntryTypeNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryTypeNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ContentLanguageSelectionNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ContentLanguageSelectionNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Songs\SongVoteRatingNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongVoteRatingNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\UserGroupNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserGroupNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\AlbumMediaTypeNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumMediaTypeNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\AlbumCollectionStatusNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumCollectionStatusNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Other\PagedListStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Swagger\index.html" />
     <EmbeddedResource Include="Resources\Swagger\styles.css" />
     <Content Include="robots.txt" />
@@ -2915,6 +2971,7 @@
     <Content Include="App_GlobalResources\AlbumCollectionStatusNames.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>AlbumCollectionStatusNames.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -3478,6 +3535,7 @@
     <EmbeddedResource Include="Resources\Other\PagedListStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PagedListStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Other\PagedListStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.ja.resx" />
@@ -3575,6 +3633,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3620,6 +3679,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Home\IndexStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Search\IndexStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Search\IndexStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Search\IndexStrings.ja.resx" />
@@ -3629,6 +3689,7 @@
       <CustomToolNamespace>ViewRes.Search</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\Search\IndexStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.ja.resx" />
@@ -3648,6 +3709,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.ja.resx" />
@@ -3668,6 +3730,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.resx">
@@ -3684,8 +3747,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryIndexStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryMergeStrings.Designer.cs</LastGenOutput>
@@ -3718,6 +3783,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.ja.resx" />
@@ -3733,7 +3799,9 @@
     <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TimeStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.ja.resx" />
@@ -3742,6 +3810,7 @@
       <LastGenOutput>TopBarStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.ja.resx">
@@ -3754,6 +3823,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.ja.resx" />
@@ -3811,6 +3881,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\DetailsStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Song\EditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Song\EditStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3847,8 +3918,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumCollectionStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.ja.resx" />
@@ -3869,6 +3942,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\User\DetailsStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\User\FavoriteSongsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\FavoriteSongsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3931,6 +4005,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

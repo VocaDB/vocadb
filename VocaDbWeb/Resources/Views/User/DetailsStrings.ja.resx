@@ -252,4 +252,7 @@
   <data name="SupporterTitle" xml:space="preserve">
     <value>ご支援ありがとうございます</value>
   </data>
+  <data name="CommentsMade" xml:space="preserve">
+    <value>コメント</value>
+  </data>
 </root>

@@ -117,146 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutMe" xml:space="preserve">
-    <value>About me</value>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nothing</value>
   </data>
-  <data name="AccountDisabled" xml:space="preserve">
-    <value>Account disabled</value>
+  <data name="Ordered" xml:space="preserve">
+    <value>已预订</value>
   </data>
-  <data name="Active" xml:space="preserve">
-    <value>Active</value>
+  <data name="Owned" xml:space="preserve">
+    <value>持有</value>
   </data>
-  <data name="AdditionalPermissions" xml:space="preserve">
-    <value>Additional permissions</value>
-  </data>
-  <data name="ArtistVerificationPage" xml:space="preserve">
-    <value>artist verification page</value>
-  </data>
-  <data name="CollectionTab" xml:space="preserve">
-    <value>Collection</value>
-  </data>
-  <data name="Comments" xml:space="preserve">
-    <value>Comments</value>
-  </data>
-  <data name="CommentsMade" xml:space="preserve">
-    <value>Comments</value>
-  </data>
-  <data name="ComposeMessage" xml:space="preserve">
-    <value>Compose a message</value>
-  </data>
-  <data name="ConfirmDisable" xml:space="preserve">
-    <value>Are you sure you want to disable this user?</value>
-  </data>
-  <data name="CreateNewList" xml:space="preserve">
-    <value>Create new list</value>
-  </data>
-  <data name="CustomListsTab" xml:space="preserve">
-    <value>Custom lists</value>
-  </data>
-  <data name="Disable" xml:space="preserve">
-    <value>Disable</value>
-  </data>
-  <data name="EffectivePermissions" xml:space="preserve">
-    <value>Effective permissions</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="FavoriteSongsTab" xml:space="preserve">
-    <value>Liked songs</value>
-  </data>
-  <data name="FavoriteTags" xml:space="preserve">
-    <value>My favorite tags</value>
-  </data>
-  <data name="FollowedArtistsTab" xml:space="preserve">
-    <value>Followed artists</value>
-  </data>
-  <data name="ImportSongList" xml:space="preserve">
-    <value>Import from YouTube or NicoNicoDouga</value>
-  </data>
-  <data name="LastLogin" xml:space="preserve">
-    <value>Last login</value>
-  </data>
-  <data name="Level" xml:space="preserve">
-    <value>Level</value>
-  </data>
-  <data name="Location" xml:space="preserve">
-    <value>Location</value>
-  </data>
-  <data name="MemberSince" xml:space="preserve">
-    <value>A member since</value>
-  </data>
-  <data name="Messages" xml:space="preserve">
-    <value>Messages</value>
-  </data>
-  <data name="MySettings" xml:space="preserve">
-    <value>My settings</value>
-  </data>
-  <data name="Overview" xml:space="preserve">
-    <value>Overview</value>
-  </data>
-  <data name="PossibleProducerMessage" xml:space="preserve">
-    <value>Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?
-If so, please see the {0}.</value>
-  </data>
-  <data name="Power" xml:space="preserve">
-    <value>Power</value>
-  </data>
-  <data name="SetAvatar" xml:space="preserve">
-    <value>Set your avatar at gravatar.com</value>
-  </data>
-  <data name="SomeAlbumsILike" xml:space="preserve">
-    <value>Some albums I like</value>
-  </data>
-  <data name="SomeArtistsIFollow" xml:space="preserve">
-    <value>Some artists I follow</value>
-  </data>
-  <data name="SomeSongsILike" xml:space="preserve">
-    <value>Some songs I like</value>
-  </data>
-  <data name="Staff" xml:space="preserve">
-    <value>Staff</value>
-  </data>
-  <data name="StatsTab" xml:space="preserve">
-    <value>Statistics</value>
-  </data>
-  <data name="Submissions" xml:space="preserve">
-    <value>Submissions</value>
-  </data>
-  <data name="SupporterTitle" xml:space="preserve">
-    <value>Thanks for supporting {0}!</value>
-  </data>
-  <data name="TagVotes" xml:space="preserve">
-    <value>Tag votes</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>{0} total</value>
-  </data>
-  <data name="TotalEdits" xml:space="preserve">
-    <value>Total edits</value>
-  </data>
-  <data name="TwitterAccount" xml:space="preserve">
-    <value>Twitter account</value>
-  </data>
-  <data name="UserDetails" xml:space="preserve">
-    <value>User details</value>
-  </data>
-  <data name="UserGroup" xml:space="preserve">
-    <value>User group</value>
-  </data>
-  <data name="UserName" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="VerifiedAccount" xml:space="preserve">
-    <value>Verified artist</value>
-  </data>
-  <data name="VerifiedEmail" xml:space="preserve">
-    <value>Verified email</value>
-  </data>
-  <data name="VerifiedOwner" xml:space="preserve">
-    <value>Verified owner</value>
-  </data>
-  <data name="VisibleOnlyToMe" xml:space="preserve">
-    <value>Visible only to me and staff.</value>
+  <data name="Wishlisted" xml:space="preserve">
+    <value>想要</value>
   </data>
 </root>
