@@ -249,4 +249,7 @@
   <data name="ImportSongList" xml:space="preserve">
     <value>Import from YouTube or NicoNicoDouga</value>
   </data>
+  <data name="SupporterTitle" xml:space="preserve">
+    <value>ご支援ありがとうございます</value>
+  </data>
 </root>

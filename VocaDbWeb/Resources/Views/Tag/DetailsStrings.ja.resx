@@ -118,22 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AllAlbums" xml:space="preserve">
-    <value>アルバム全て</value>
+    <value>アルバム</value>
   </data>
   <data name="AllArtists" xml:space="preserve">
-    <value>アーティスト全て</value>
+    <value>アーティスト</value>
   </data>
   <data name="AllEntries" xml:space="preserve">
-    <value>All entries</value>
+    <value>すべてのエントリ</value>
   </data>
   <data name="AllSongs" xml:space="preserve">
-    <value>曲全て</value>
+    <value>曲</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>カテゴリー</value>
   </data>
   <data name="Overview" xml:space="preserve">
     <value>概要</value>
+  </data>
+  <data name="RelatedTags" xml:space="preserve">
+    <value>関連タグ</value>
   </data>
   <data name="Tag" xml:space="preserve">
     <value>タグ</value>
@@ -151,6 +154,6 @@
     <value>トップ曲</value>
   </data>
   <data name="Translations" xml:space="preserve">
-    <value>Translations</value>
+    <value>他言語の名前</value>
   </data>
 </root>
