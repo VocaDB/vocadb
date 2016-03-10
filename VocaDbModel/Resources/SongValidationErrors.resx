@@ -129,6 +129,9 @@
   <data name="NeedProducer" xml:space="preserve">
     <value>Song should have at least one producer (composer, arranger or animator) role.</value>
   </data>
+  <data name="NeedReferences" xml:space="preserve">
+    <value>Songs needs notes, PVs or links for reference.</value>
+  </data>
   <data name="NeedType" xml:space="preserve">
     <value>Song type needs to be specified.</value>
   </data>

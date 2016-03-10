@@ -3823,7 +3823,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.ru.resx" />
-    <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.zh-Hans.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.ja.resx" />

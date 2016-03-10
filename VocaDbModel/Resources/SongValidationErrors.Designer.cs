@@ -97,6 +97,15 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Songs needs notes, PVs or links for reference..
+        /// </summary>
+        public static string NeedReferences {
+            get {
+                return ResourceManager.GetString("NeedReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Song type needs to be specified..
         /// </summary>
         public static string NeedType {
