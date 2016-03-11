@@ -56,6 +56,10 @@
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editUserLink" });
 	}
+	@if (Login.Manager.HasPermission(PermissionToken.RemoveEditPermission) && Model.GroupId != UserGroupId.Limited && Model.Active && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
+		@Html.Raw("&nbsp;")
+		@Html.ActionLink(ViewRes.SharedStrings.SetToLimited, "SetToLimited", new { id = Model.Id }, new { id = "setToLimitedLink" });
+	}
 	@if (Login.Manager.HasPermission(PermissionToken.DisableUsers) && Login.User.Id != Model.Id && Model.Active) {
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(R.Disable, "Disable", new { id = Model.Id }, new { id = "disableUserLink" });

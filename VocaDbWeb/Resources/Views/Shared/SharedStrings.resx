@@ -189,6 +189,9 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="SetToLimited" xml:space="preserve">
+    <value>Remove database editing permissions</value>
+  </data>
   <data name="ShowMore" xml:space="preserve">
     <value>Show more</value>
   </data>

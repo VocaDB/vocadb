@@ -27,7 +27,8 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.EditFeaturedLists, 
 			PermissionToken.ManageEntryReports, 
 			PermissionToken.ManageEventSeries, 
-			PermissionToken.MergeEntries, 
+			PermissionToken.MergeEntries,
+			PermissionToken.RemoveEditPermission,
 			PermissionToken.RemoveTagUsages
 		);
 

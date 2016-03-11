@@ -1187,18 +1187,36 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private void VerifyEditUser(IDatabaseContext<User> ctx, IUserPermissionContext permissionContext, User user) {
+
+			if (!EntryPermissionManager.CanEditUser(PermissionContext, user.GroupId)) {
+				var loggedUser = ctx.GetLoggedUser(PermissionContext);
+				var msg = string.Format("{0} (level {1}) not allowed to edit {2} (level {3})", loggedUser, loggedUser.GroupId, user, user.GroupId);
+				log.Error(msg);
+				throw new NotAllowedException(msg);
+			}
+
+		}
+
+		public void SetUserToLimited(int userId) {
+
+			repository.UpdateEntity<User, IDatabaseContext<User>>(userId, (session, user) => {
+
+				VerifyEditUser(session, PermissionContext, user);
+
+				user.GroupId = UserGroupId.Limited;
+
+			}, PermissionToken.RemoveEditPermission, PermissionContext);
+
+		}
+
 		public void UpdateUser(UserWithPermissionsContract contract) {
 
 			ParamIs.NotNull(() => contract);
 
 			repository.UpdateEntity<User, IDatabaseContext<User>>(contract.Id, (session, user) => {
 
-				if (!EntryPermissionManager.CanEditUser(PermissionContext, user.GroupId)) {
-					var loggedUser = session.OfType<User>().GetLoggedUser(PermissionContext);
-					var msg = string.Format("{0} (level {1}) not allowed to edit {2} (level {3})", loggedUser, loggedUser.GroupId, user, user.GroupId);
-					log.Error(msg);
-					throw new NotAllowedException(msg);
-				}
+				VerifyEditUser(session, PermissionContext, user);
 
 				if (EntryPermissionManager.CanEditGroupTo(PermissionContext, contract.GroupId)) {
 					user.GroupId = contract.GroupId;

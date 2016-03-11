@@ -277,6 +277,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove database editing permissions.
+        /// </summary>
+        public static string SetToLimited {
+            get {
+                return ResourceManager.GetString("SetToLimited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show more.
         /// </summary>
         public static string ShowMore {
