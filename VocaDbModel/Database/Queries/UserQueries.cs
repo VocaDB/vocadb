@@ -1231,6 +1231,7 @@ namespace VocaDb.Model.Database.Queries {
 				user.VerifiedArtist = user.OwnedArtists.Any();
 
 				user.Active = contract.Active;
+				user.Email = contract.Email;
 				user.Options.Poisoned = contract.Poisoned;
 				user.Options.Supporter = contract.Supporter;
 

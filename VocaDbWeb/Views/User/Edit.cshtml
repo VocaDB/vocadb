@@ -33,6 +33,9 @@
 			@Html.CheckBoxFor(m => m.Supporter)
 			Patreon supporter
 		</p>
+		
+		@Html.LabelFor(m => m.Email, "Email")
+		@Html.TextBoxFor(m => m.Email, new { maxlength = 50 })
 
 		@Html.LabelFor(m => m.GroupId)
 		@Html.EnumDropDownListFor(m => m.GroupId, Model.EditableGroups)

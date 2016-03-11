@@ -273,6 +273,7 @@ namespace VocaDb.Web.Models {
 			: this() {
 
 			Active = contract.Active;
+			Email = contract.Email;
 			GroupId = contract.GroupId;
 			Id = contract.Id;
 			Name = contract.Name;
@@ -287,6 +288,8 @@ namespace VocaDb.Web.Models {
 		public bool Active { get; set; }
 
 		public TranslateableEnum<UserGroupId> EditableGroups { get; set; }
+
+		public string Email { get; set; }
 
 		[Display(Name = "User group")]
 		public UserGroupId GroupId { get; set; }
@@ -307,6 +310,7 @@ namespace VocaDb.Web.Models {
 
 			return new UserWithPermissionsContract {
 				Active = this.Active,
+				Email = Email ?? string.Empty,
 				GroupId = this.GroupId,
 				Id = this.Id,
 				Name = this.Name,
