@@ -201,19 +201,18 @@ namespace VocaDb.Web.Controllers
 
 			try {
 				Data.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
-				TempData.SetStatusMessage(ViewRes.User.ForgotPasswordStrings.MessageSent);
-				return RedirectToAction("Login");
-			} catch (UserNotFoundException) {
-				ModelState.AddModelError("Username", ViewRes.User.ForgotPasswordStrings.UsernameDoesNotMatch);
-				return View();
-			}
+			} catch (UserNotFoundException) {}
+
+			TempData.SetStatusMessage(ViewRes.User.ForgotPasswordStrings.MessageSent);
+
+			return RedirectToAction("Login");
 
 		}
 
-			//
-        // GET: /User/
+		//
+		// GET: /User/
 
-        public ActionResult Index(string filter = null) {
+		public ActionResult Index(string filter = null) {
 
 			if (!string.IsNullOrEmpty(filter)) {
 

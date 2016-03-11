@@ -502,6 +502,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(UserNotFoundException))]
+		public void RequestPasswordReset_Disabled() {
+
+			userWithEmail.Active = false;
+			data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
+
+		}
+
+		[TestMethod]
 		public void ResetPassword() {
 			
 			data.ResetPassword(request.Id, "123");

@@ -1051,6 +1051,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Create password reset request and send it by email.
+		/// The user is identified by username and email, and the account must be active.
+		/// </summary>
+		/// <param name="username">Username of the user for whom the reset was requested.</param>
+		/// <param name="email">User email. Must belong to that user. Cannot be null or empty.</param>
+		/// <param name="resetUrl">Password reset URL. Cannot be null or empty.</param>
+		/// <exception cref="UserNotFoundException">If no active user matching the email was found.</exception>
 		public void RequestPasswordReset(string username, string email, string resetUrl) {
 
 			ParamIs.NotNullOrEmpty(() => username);
@@ -1060,10 +1068,12 @@ namespace VocaDb.Model.Database.Queries {
 
 			repository.HandleTransaction(ctx => {
 
-				var user = ctx.Query().FirstOrDefault(u => u.NameLC.Equals(lc) && email.Equals(u.Email));
+				var user = ctx.Query().FirstOrDefault(u => u.Active && u.NameLC.Equals(lc) && email.Equals(u.Email));
 
-				if (user == null)
+				if (user == null) {
+					log.Info("User not found or not active: {0}", username);
 					throw new UserNotFoundException();
+				}
 
 				var request = new PasswordResetRequest(user);
 				ctx.Save(request);
@@ -1075,6 +1085,8 @@ namespace VocaDb.Model.Database.Queries {
 					"You can perform this action at " + resetUrl + "/" + request.Id + ". If you did not request this action, you can ignore this message.";
 
 				mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
+
+				ctx.AuditLogger.SysLog("requested password reset", username);
 
 			});
 

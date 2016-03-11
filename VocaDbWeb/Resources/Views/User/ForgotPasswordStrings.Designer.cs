@@ -79,7 +79,7 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password reset message has been sent..
+        ///   Looks up a localized string similar to If the provided information matches our records, you should receive email shortly. If not, check that the username and email match, and that the account is not disabled. If the email still doesn&apos;t arrive, contact a moderator..
         /// </summary>
         public static string MessageSent {
             get {
