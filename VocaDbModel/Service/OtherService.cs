@@ -283,7 +283,7 @@ namespace VocaDb.Model.Service {
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 				
-			var contracts = CreateEntryWithCommentsContract(combined, c => entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.MainPicture, LanguagePreference, ssl))
+			var contracts = CreateEntryWithCommentsContract(combined, c => entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, LanguagePreference, ssl))
 				.ToArray();
 
 			return contracts;
