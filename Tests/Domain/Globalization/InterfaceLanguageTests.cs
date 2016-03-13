@@ -43,7 +43,7 @@ namespace VocaDb.Tests.Domain.Globalization {
 		[TestMethod]
 		public void GetAvailableLanguageCode_Chinese_China() {
 
-			TestAvailableLanguageCode("zh", "zh-CH");
+			TestAvailableLanguageCode("zh", "zh-CN");
 
 		}
 
