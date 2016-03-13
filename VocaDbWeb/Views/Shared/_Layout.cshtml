@@ -1,11 +1,13 @@
-﻿@using System.Web.Optimization
+﻿@using System.Globalization
+@using System.Web.Optimization
+@using VocaDb.Model.Domain.Globalization
 @using VocaDb.Web.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Code
 @inherits VocaDbPage
 
 <!DOCTYPE html>
-<html>
+<html lang="@InterfaceLanguage.GetAvailableLanguageCode(CultureInfo.CurrentUICulture)">
 <head>
     <title>@(!string.IsNullOrEmpty(PageProperties.PageTitle) ? PageProperties.PageTitle + " - " : "")@BrandableStrings.Layout.SiteTitle</title>
 	<meta name="description" content="@PageProperties.SummarizedDescription" />	

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Globalization;
 
@@ -6,10 +7,26 @@ namespace VocaDb.Model.Domain.Globalization {
 
 	public static class InterfaceLanguage {
 
-		public static IEnumerable<CultureInfo> Cultures {
-			get {
-				return LanguageCodes.Select(CultureInfo.GetCultureInfo);
-			}
+		private static readonly ImmutableHashSet<string> languageCodes;
+
+		static InterfaceLanguage() {
+			languageCodes = ImmutableHashSet.CreateRange(Cultures.Select(c => c.TwoLetterISOLanguageName));
+		}
+
+		public static IEnumerable<CultureInfo> Cultures => LanguageCodes.Select(CultureInfo.GetCultureInfo);
+
+		/// <summary>
+		/// Gets the ISO 639-1 two letter language code matching a culture,
+		/// if that culture is supported as display language on the site.
+		/// </summary>
+		/// <param name="culture">Culture to be tested. Cannot be null.</param>
+		/// <returns>Language code matching the culture. If there was no match, this returns an empty string.</returns>
+		public static string GetAvailableLanguageCode(CultureInfo culture) {
+			return IsValidCulture(culture) ? culture.TwoLetterISOLanguageName : string.Empty;
+		}
+
+		private static bool IsValidCulture(CultureInfo culture) {
+			return languageCodes.Contains(culture.TwoLetterISOLanguageName);
 		}
 
 		public static readonly string[] LanguageCodes = {

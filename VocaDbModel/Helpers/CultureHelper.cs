@@ -4,13 +4,7 @@ namespace VocaDb.Model.Helpers {
 
 	public static class CultureHelper {
 
-		public static CultureInfo Default
-		{
-			get
-			{
-				return CultureInfo.InvariantCulture;
-			}
-		}
+		public static CultureInfo Default => CultureInfo.InvariantCulture;
 
 		/// <summary>
 		/// Gets the culture with the specific name, or the application default culture (English basically).
