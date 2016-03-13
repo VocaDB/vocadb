@@ -11,7 +11,7 @@ module vdb.viewModels.tags {
 			
 			this.tagUsages = ko.observableArray(tagUsages);
 
-			if (tagUsages.length <= TagListViewModel.maxDisplayedTags)
+			if (tagUsages.length <= TagListViewModel.maxDisplayedTags + 1)
 				this.expanded(true);
 
 			this.displayedTagUsages = ko.computed(() =>
