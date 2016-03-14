@@ -140,7 +140,7 @@ namespace VocaDb.Web.Controllers
 				? markdownParser.GetPlainText(model.Description.EnglishOrOriginal)
 				: new ArtistDescriptionGenerator().GenerateDescription(model, a => Translate.ArtistTypeNames.GetName(a, CultureInfo.InvariantCulture));
 			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new {id }));
-			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("Picture", new { id })).ToString();
+			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
 			prop.OpenGraph.Title = hasDescription ? string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType)) : model.Name;
 			prop.OpenGraph.ShowTwitterCard = true;
 
