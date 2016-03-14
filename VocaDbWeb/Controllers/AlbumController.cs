@@ -134,7 +134,7 @@ namespace VocaDb.Web.Controllers
 			prop.Title = model.Name;
 			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			prop.GlobalSearchType = EntryType.Album;
-			prop.OpenGraph.Image = VocaUriBuilder.CreateAbsolute(Url.Action("CoverPicture", new { id })).ToString();
+			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
 			prop.OpenGraph.Type = OpenGraphTypes.Album;
 			prop.OpenGraph.ShowTwitterCard = true;
 

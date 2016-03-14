@@ -114,15 +114,17 @@ namespace VocaDb.Web.Helpers {
 
 			}
 
+			var ssl = WebHelper.IsSSL(HttpContext.Current.Request);
+
 			if (dynamicUrl != null) {				
-				return (fullUrl ? AppConfig.HostAddress + dynamicUrl : dynamicUrl);
+				return fullUrl ? VocaUriBuilder.Absolute(dynamicUrl, ssl) : dynamicUrl;
 			}
 
 			if (!shouldExist)
 				return GetUnknownImageUrl(urlHelper, imageInfo);
 
 			// For all other cases use the static file
-			return imagePersister.GetUrlAbsolute(imageInfo, size, WebHelper.IsSSL(HttpContext.Current.Request));
+			return imagePersister.GetUrlAbsolute(imageInfo, size, ssl);
 
 		}
 
