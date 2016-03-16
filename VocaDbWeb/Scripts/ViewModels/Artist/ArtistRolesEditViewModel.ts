@@ -8,7 +8,7 @@ module vdb.viewModels.artists {
 			this.roleSelections = [];
 
 			for (var role in roleNames) {
-				if (role !== models.artists.ArtistRoles[models.artists.ArtistRoles.Default] && roleNames.hasOwnProperty(role)) {
+				if (role !== this.defaultRoleName && roleNames.hasOwnProperty(role)) {
 					this.roleSelections.push({ id: role, name: roleNames[role], selected: ko.observable(false) });								
 				}
 			}
@@ -16,6 +16,8 @@ module vdb.viewModels.artists {
 			this.roleSelections = _.sortBy(this.roleSelections, r => r.name);
 
 		}
+
+		private defaultRoleName = models.artists.ArtistRoles[models.artists.ArtistRoles.Default];
 
 		public dialogVisible = ko.observable(false);
 
@@ -29,7 +31,7 @@ module vdb.viewModels.artists {
 			var selectedRoles = _.chain(this.roleSelections).filter(r => r.selected()).map(r => r.id).value();
 
 			if (selectedRoles.length === 0)
-				selectedRoles = ['Default'];
+				selectedRoles = [this.defaultRoleName];
 
 			this.selectedArtist().rolesArray(selectedRoles);
 			this.dialogVisible(false);
@@ -53,8 +55,10 @@ module vdb.viewModels.artists {
 
 	export interface RoleSelection {
 
+		// Role Id, for example "VoiceManipulator"
 		id: string;
 		
+		// User-visible role name, for example "Voice Manipulator"
 		name: string;
 
 		selected: KnockoutObservable<boolean>;

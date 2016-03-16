@@ -634,6 +634,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryReportStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Messages\UserAccountStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserAccountStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Songs\SongTypeNames.Designer.cs">
       <DependentUpon>SongTypeNames.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -973,6 +978,10 @@
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryReportStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\UserAccountStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserAccountStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.de.resx" />
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.fi.resx">

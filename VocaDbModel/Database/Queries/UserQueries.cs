@@ -27,7 +27,9 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Resources.Messages;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
@@ -77,6 +79,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly BrandableStringsManager brandableStringsManager;
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryImagePersisterOld entryImagePersister;
@@ -292,7 +295,7 @@ namespace VocaDb.Model.Database.Queries {
 			var request = new PasswordResetRequest(user);
 			ctx.Save(request);
 
-			var body = string.Format("Please click the link below to verify your email at VocaDB.\n{0}?token={1}", resetUrl, request.Id);
+			var body = string.Format(UserAccountStrings.VerifyEmailBody, brandableStringsManager.Layout.SiteName, resetUrl, request.Id);
 
 			mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
 
@@ -309,7 +312,8 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public UserQueries(IUserRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IStopForumSpamClient sfsClient,
-			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister, ObjectCache cache)
+			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister, ObjectCache cache, 
+			BrandableStringsManager brandableStringsManager)
 			: base(repository, permissionContext) {
 
 			ParamIs.NotNull(() => repository);
@@ -324,6 +328,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.userIconFactory = userIconFactory;
 			this.entryImagePersister = entryImagePersister;
 			this.cache = cache;
+			this.brandableStringsManager = brandableStringsManager;
 
 		}
 
@@ -532,7 +537,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			if (timeSpan < TimeSpan.FromSeconds(5)) {
 
-				log.Warn(string.Format("Suspicious registration form fill time ({0}) from {1}.", timeSpan, hostname));
+				log.Warn("Suspicious registration form fill time ({0}) from {1}.", timeSpan, hostname);
 
 				if (timeSpan < TimeSpan.FromSeconds(2)) {
 					softbannedIPs.Add(hostname);
@@ -586,7 +591,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				if (!string.IsNullOrEmpty(user.Email)) {
-					var subject = "Welcome to VocaDB, please verify your email.";
+					var subject = string.Format(UserAccountStrings.AccountCreatedSubject, brandableStringsManager.Layout.SiteName);
 					SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
 				}
 
@@ -1078,11 +1083,9 @@ namespace VocaDb.Model.Database.Queries {
 				var request = new PasswordResetRequest(user);
 				ctx.Save(request);
 
-				var subject = "Password reset requested.";
-
-				var body = 
-					"You (or someone who knows your email address) has requested to reset your password on VocaDB.\n" +
-					"You can perform this action at " + resetUrl + "/" + request.Id + ". If you did not request this action, you can ignore this message.";
+				var resetFullUrl = string.Format("{0}/{1}", resetUrl, request.Id);
+				var subject = UserAccountStrings.PasswordResetSubject;
+				var body = string.Format(UserAccountStrings.PasswordResetBody, resetFullUrl);
 
 				mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
 

@@ -90,7 +90,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			stopForumSpamClient = new FakeStopForumSpamClient();
 			mailer = new FakeUserMessageMailer();
 			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer, 
-				new FakeUserIconFactory(), null, new FakeObjectCache());
+				new FakeUserIconFactory(), null, new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager());
 			softBannedIPs = new HostCollection();
 
 			request = new PasswordResetRequest(userWithEmail) { Id = Guid.NewGuid() };
