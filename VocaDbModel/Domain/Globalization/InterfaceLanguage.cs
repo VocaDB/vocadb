@@ -7,10 +7,10 @@ namespace VocaDb.Model.Domain.Globalization {
 
 	public static class InterfaceLanguage {
 
-		private static readonly ImmutableHashSet<string> languageCodes;
+		private static readonly ImmutableHashSet<string> twoLetterLanguageCodes;
 
 		static InterfaceLanguage() {
-			languageCodes = ImmutableHashSet.CreateRange(Cultures.Select(c => c.TwoLetterISOLanguageName));
+			twoLetterLanguageCodes = ImmutableHashSet.CreateRange(Cultures.Select(c => c.TwoLetterISOLanguageName));
 		}
 
 		public static IEnumerable<CultureInfo> Cultures => LanguageCodes.Select(CultureInfo.GetCultureInfo);
@@ -26,7 +26,7 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 		private static bool IsValidCulture(CultureInfo culture) {
-			return languageCodes.Contains(culture.TwoLetterISOLanguageName);
+			return twoLetterLanguageCodes.Contains(culture.TwoLetterISOLanguageName);
 		}
 
 		public static readonly string[] LanguageCodes = {

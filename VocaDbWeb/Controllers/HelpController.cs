@@ -26,10 +26,14 @@ namespace VocaDb.Web.Controllers
 			ViewBag.FreeTagId = config.SpecialTags.Free;
 			ViewBag.InstrumentalTagId = config.SpecialTags.Instrumental;
 
-			if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ja")
-				return View("Index.ja");
-			else
-				return View();
+			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName) {
+				case "ja":
+					return View("Index.ja");
+				case "zh":
+					return View("Index.zh-Hans");
+				default:
+					return View();
+			}
 
         }
 
