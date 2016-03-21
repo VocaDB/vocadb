@@ -46,7 +46,7 @@
 				</div>
 
 				<div class="editor-label">
-					CAPTCHA
+					@R.Captcha
 				</div>
 				<div class="editor-field">
 					@Helpers.ReCaptcha2()
@@ -62,12 +62,12 @@
 
 				<br /><br />
 				<p>
-					<button type="submit" class="btn btn-primary">@ViewRes.User.CreateStrings.DoRegister</button>
+					<button type="submit" class="btn btn-primary">@R.DoRegister</button>
 				</p>
 
 				<hr />
 				<a href="@Url.Action("LoginTwitter")">
-					<img src="@Url.Content("~/Content/Sign-in-with-Twitter-darker.png")" alt="Sign in with Twitter" />
+					<img src="@Url.Content("~/Content/Sign-in-with-Twitter-darker.png")" alt="@R.LoginWithTwitter" />
 				</a>
 			</div>
 

@@ -117,55 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Captcha" xml:space="preserve">
-    <value>CAPTCHA</value>
+  <data name="DoLogin" xml:space="preserve">
+    <value>登陆</value>
   </data>
-  <data name="CaptchaInvalid" xml:space="preserve">
-    <value>CAPTCHA is invalid.</value>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>忘记密码？</value>
   </data>
-  <data name="DoRegister" xml:space="preserve">
-    <value>Register</value>
+  <data name="KeepMeLoggedIn" xml:space="preserve">
+    <value>在此电脑上自动登录</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email address (required)</value>
+  <data name="Login" xml:space="preserve">
+    <value>登陆</value>
   </data>
-  <data name="EmailIsRequired" xml:space="preserve">
-    <value>Email address is required.</value>
+  <data name="LoginUsingSSL" xml:space="preserve">
+    <value>Login using SSL</value>
   </data>
-  <data name="EmailNote" xml:space="preserve">
-    <value>Your email address will not be shown to other users. Make sure you enter a valid address. You'll need it if you ever forget your password. For a profile picture you'll need an email address associated with Gravatar. Email address can be changed later.</value>
-  </data>
-  <data name="EmailTaken" xml:space="preserve">
-    <value>This email address is already in use. If it's your address, please use the reset password function instead, or if that doesn't work, contact support.</value>
+  <data name="LoginWithoutSSL" xml:space="preserve">
+    <value>不使用SSL登陆(较为不安全)</value>
   </data>
   <data name="LoginWithTwitter" xml:space="preserve">
-    <value>Sign in with Twitter</value>
+    <value>用Twitter账号登陆</value>
+  </data>
+  <data name="NoAccount" xml:space="preserve">
+    <value>没有账户？</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>密码</value>
   </data>
   <data name="PasswordIsRequired" xml:space="preserve">
     <value>Password is required.</value>
   </data>
-  <data name="Register" xml:space="preserve">
-    <value>Register</value>
+  <data name="RegisterHere" xml:space="preserve">
+    <value>点此注册。</value>
   </data>
-  <data name="RegistrationUnsuccessful" xml:space="preserve">
-    <value>Registration was unsuccessful.</value>
+  <data name="ResetPass" xml:space="preserve">
+    <value>点此重设。</value>
   </data>
-  <data name="TwitterNote" xml:space="preserve">
-    <value>Alternatively, you may sign in using your Twitter account. A Twitter account can also be connected afterwards.</value>
+  <data name="UnableToLogin" xml:space="preserve">
+    <value>Unable to log in.</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>用户名</value>
   </data>
   <data name="UsernameIsRequired" xml:space="preserve">
     <value>Username is required.</value>
   </data>
-  <data name="UsernameNote" xml:space="preserve">
-    <value>Username needs to be at least 3 characters, and may contain only English alphabet, numbers and underscores. Password needs to be at least 5 characters.</value>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome back, {0}!</value>
   </data>
-  <data name="UsernameTaken" xml:space="preserve">
-    <value>Username is already taken.</value>
+  <data name="WrongPassword" xml:space="preserve">
+    <value>Username or password doesn't match</value>
   </data>
 </root>

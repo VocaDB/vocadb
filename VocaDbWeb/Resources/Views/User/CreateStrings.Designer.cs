@@ -61,6 +61,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CAPTCHA.
+        /// </summary>
+        public static string Captcha {
+            get {
+                return ResourceManager.GetString("Captcha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CAPTCHA is invalid..
         /// </summary>
         public static string CaptchaInvalid {
@@ -111,6 +120,15 @@ namespace ViewRes.User {
         public static string EmailTaken {
             get {
                 return ResourceManager.GetString("EmailTaken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign in with Twitter.
+        /// </summary>
+        public static string LoginWithTwitter {
+            get {
+                return ResourceManager.GetString("LoginWithTwitter", resourceCulture);
             }
         }
         

@@ -115,6 +115,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sign in with Twitter.
+        /// </summary>
+        public static string LoginWithTwitter {
+            get {
+                return ResourceManager.GetString("LoginWithTwitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No account?.
         /// </summary>
         public static string NoAccount {

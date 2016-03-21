@@ -118,37 +118,37 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Captcha" xml:space="preserve">
-    <value>CAPTCHA</value>
+    <value>验证码</value>
   </data>
   <data name="CaptchaInvalid" xml:space="preserve">
     <value>CAPTCHA is invalid.</value>
   </data>
   <data name="DoRegister" xml:space="preserve">
-    <value>Register</value>
+    <value>注册</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email address (required)</value>
+    <value>电子邮件地址(必填)</value>
   </data>
   <data name="EmailIsRequired" xml:space="preserve">
     <value>Email address is required.</value>
   </data>
   <data name="EmailNote" xml:space="preserve">
-    <value>Your email address will not be shown to other users. Make sure you enter a valid address. You'll need it if you ever forget your password. For a profile picture you'll need an email address associated with Gravatar. Email address can be changed later.</value>
+    <value>其他用户不会看到您的电子邮件地址。请确保您输入的地址是有效的。忘记密码时需要通过该邮件地址找回。要添加用户头像，您需要将您的电子邮件地址与Gravatar绑定。电子邮件地址可以在日后更换。</value>
   </data>
   <data name="EmailTaken" xml:space="preserve">
     <value>This email address is already in use. If it's your address, please use the reset password function instead, or if that doesn't work, contact support.</value>
   </data>
   <data name="LoginWithTwitter" xml:space="preserve">
-    <value>Sign in with Twitter</value>
+    <value>用Twitter账号登陆</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>密码</value>
   </data>
   <data name="PasswordIsRequired" xml:space="preserve">
     <value>Password is required.</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>注册</value>
   </data>
   <data name="RegistrationUnsuccessful" xml:space="preserve">
     <value>Registration was unsuccessful.</value>
@@ -157,13 +157,13 @@
     <value>Alternatively, you may sign in using your Twitter account. A Twitter account can also be connected afterwards.</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>用户名</value>
   </data>
   <data name="UsernameIsRequired" xml:space="preserve">
     <value>Username is required.</value>
   </data>
   <data name="UsernameNote" xml:space="preserve">
-    <value>Username needs to be at least 3 characters, and may contain only English alphabet, numbers and underscores. Password needs to be at least 5 characters.</value>
+    <value>用户名必须至少3个字符，只能包含英文字母、数字和下划线。密码必须至少5个字符。</value>
   </data>
   <data name="UsernameTaken" xml:space="preserve">
     <value>Username is already taken.</value>

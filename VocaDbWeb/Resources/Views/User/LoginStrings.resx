@@ -135,6 +135,9 @@
   <data name="LoginWithoutSSL" xml:space="preserve">
     <value>Login without SSL (less secure)</value>
   </data>
+  <data name="LoginWithTwitter" xml:space="preserve">
+    <value>Sign in with Twitter</value>
+  </data>
   <data name="NoAccount" xml:space="preserve">
     <value>No account?</value>
   </data>

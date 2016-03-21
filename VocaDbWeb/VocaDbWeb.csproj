@@ -3945,6 +3945,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\User\CreateStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.ja.resx" />
@@ -3989,6 +3990,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\LoginStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\User\LoginStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.ja.resx" />
