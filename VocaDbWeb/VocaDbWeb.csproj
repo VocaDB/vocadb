@@ -1709,6 +1709,7 @@
       <LastGenOutput>EntryStatusNames.zh-Hans.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Helpers\HelperStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Other\PagedListStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Swagger\index.html" />
     <EmbeddedResource Include="Resources\Swagger\styles.css" />

@@ -117,146 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutMe" xml:space="preserve">
-    <value>关于我</value>
+  <data name="StatusDescriptionApproved" xml:space="preserve">
+    <value>此词条已经过信任用户的核准，对词条的编辑受到限制。</value>
   </data>
-  <data name="AccountDisabled" xml:space="preserve">
-    <value>Account disabled</value>
+  <data name="StatusDescriptionDraft" xml:space="preserve">
+    <value>此词条处于草稿状态，有部分信息不全。</value>
   </data>
-  <data name="Active" xml:space="preserve">
-    <value>Active</value>
+  <data name="StatusDescriptionFinished" xml:space="preserve">
+    <value>此词条包含了所有必要的信息，但没有经过核准。</value>
   </data>
-  <data name="AdditionalPermissions" xml:space="preserve">
-    <value>Additional permissions</value>
-  </data>
-  <data name="ArtistVerificationPage" xml:space="preserve">
-    <value>artist verification page</value>
-  </data>
-  <data name="CollectionTab" xml:space="preserve">
-    <value>收藏夹</value>
-  </data>
-  <data name="Comments" xml:space="preserve">
-    <value>评论</value>
-  </data>
-  <data name="CommentsMade" xml:space="preserve">
-    <value>总评论数</value>
-  </data>
-  <data name="ComposeMessage" xml:space="preserve">
-    <value>Compose a message</value>
-  </data>
-  <data name="ConfirmDisable" xml:space="preserve">
-    <value>Are you sure you want to disable this user?</value>
-  </data>
-  <data name="CreateNewList" xml:space="preserve">
-    <value>Create new list</value>
-  </data>
-  <data name="CustomListsTab" xml:space="preserve">
-    <value>自定义歌单</value>
-  </data>
-  <data name="Disable" xml:space="preserve">
-    <value>Disable</value>
-  </data>
-  <data name="EffectivePermissions" xml:space="preserve">
-    <value>Effective permissions</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="FavoriteSongsTab" xml:space="preserve">
-    <value>喜欢的歌曲</value>
-  </data>
-  <data name="FavoriteTags" xml:space="preserve">
-    <value>我喜欢的标签</value>
-  </data>
-  <data name="FollowedArtistsTab" xml:space="preserve">
-    <value>关注的艺术家</value>
-  </data>
-  <data name="ImportSongList" xml:space="preserve">
-    <value>Import from YouTube or NicoNicoDouga</value>
-  </data>
-  <data name="LastLogin" xml:space="preserve">
-    <value>Last login</value>
-  </data>
-  <data name="Level" xml:space="preserve">
-    <value>等级</value>
-  </data>
-  <data name="Location" xml:space="preserve">
-    <value>位置</value>
-  </data>
-  <data name="MemberSince" xml:space="preserve">
-    <value>注册时间</value>
-  </data>
-  <data name="Messages" xml:space="preserve">
-    <value>信息</value>
-  </data>
-  <data name="MySettings" xml:space="preserve">
-    <value>用户设置</value>
-  </data>
-  <data name="Overview" xml:space="preserve">
-    <value>概览</value>
-  </data>
-  <data name="PossibleProducerMessage" xml:space="preserve">
-    <value>Are you possibly an artist (such as producer, animator or illustrator) working with Vocaloid/UTAU?
-If so, please see the {0}.</value>
-  </data>
-  <data name="Power" xml:space="preserve">
-    <value>经验值</value>
-  </data>
-  <data name="SetAvatar" xml:space="preserve">
-    <value>Set your avatar at gravatar.com</value>
-  </data>
-  <data name="SomeAlbumsILike" xml:space="preserve">
-    <value>我喜欢的专辑</value>
-  </data>
-  <data name="SomeArtistsIFollow" xml:space="preserve">
-    <value>我关注的艺术家</value>
-  </data>
-  <data name="SomeSongsILike" xml:space="preserve">
-    <value>我喜欢的歌曲</value>
-  </data>
-  <data name="Staff" xml:space="preserve">
-    <value>Staff</value>
-  </data>
-  <data name="StatsTab" xml:space="preserve">
-    <value>统计数据</value>
-  </data>
-  <data name="Submissions" xml:space="preserve">
-    <value>总添加数</value>
-  </data>
-  <data name="SupporterTitle" xml:space="preserve">
-    <value>Thanks for supporting {0}!</value>
-  </data>
-  <data name="TagVotes" xml:space="preserve">
-    <value>标签添加数</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>总计{0}</value>
-  </data>
-  <data name="TotalEdits" xml:space="preserve">
-    <value>总编辑数</value>
-  </data>
-  <data name="TwitterAccount" xml:space="preserve">
-    <value>Twitter account</value>
-  </data>
-  <data name="UserDetails" xml:space="preserve">
-    <value>User details</value>
-  </data>
-  <data name="UserGroup" xml:space="preserve">
-    <value>User group</value>
-  </data>
-  <data name="UserName" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="VerifiedAccount" xml:space="preserve">
-    <value>Verified artist</value>
-  </data>
-  <data name="VerifiedEmail" xml:space="preserve">
-    <value>已验证邮箱</value>
-  </data>
-  <data name="VerifiedOwner" xml:space="preserve">
-    <value>Verified owner</value>
-  </data>
-  <data name="VisibleOnlyToMe" xml:space="preserve">
-    <value>Visible only to me and staff.</value>
+  <data name="StatusDescriptionLocked" xml:space="preserve">
+    <value>Locked entries can only be edited by staff members.</value>
   </data>
 </root>
