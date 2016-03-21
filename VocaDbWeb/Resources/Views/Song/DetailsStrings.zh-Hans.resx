@@ -117,10 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddToCustomList" xml:space="preserve">
+    <value>添加到自定义歌单</value>
+  </data>
   <data name="AddToFavorites" xml:space="preserve">
     <value>喜爱</value>
   </data>
+  <data name="AlternateVersions" xml:space="preserve">
+    <value>其他版本</value>
+  </data>
+  <data name="Animators" xml:space="preserve">
+    <value>视频制作人</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>时长</value>
+  </data>
+  <data name="Embed" xml:space="preserve">
+    <value>嵌入代码</value>
+  </data>
+  <data name="Favorites" xml:space="preserve">
+    <value>喜爱人数{0}</value>
+  </data>
   <data name="Like" xml:space="preserve">
     <value>喜欢</value>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>喜欢人数{0}</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>链接</value>
+  </data>
+  <data name="OriginalMedia" xml:space="preserve">
+    <value>媒体文件(官方上传)</value>
+  </data>
+  <data name="OriginalVersion" xml:space="preserve">
+    <value>原版</value>
+  </data>
+  <data name="OtherArtists" xml:space="preserve">
+    <value>其他艺术家</value>
+  </data>
+  <data name="OtherMedia" xml:space="preserve">
+    <value>媒体文件(转载)</value>
+  </data>
+  <data name="PoolsAndLists" xml:space="preserve">
+    <value>歌单</value>
+  </data>
+  <data name="Producers" xml:space="preserve">
+    <value>制作人</value>
+  </data>
+  <data name="RelatedSongs" xml:space="preserve">
+    <value>相关歌曲</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>分享</value>
+  </data>
+  <data name="ViewAllLists" xml:space="preserve">
+    <value>查看全部歌单({0})</value>
+  </data>
+  <data name="Vocalists" xml:space="preserve">
+    <value>歌手</value>
   </data>
 </root>

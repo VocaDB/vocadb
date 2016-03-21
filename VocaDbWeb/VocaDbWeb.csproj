@@ -348,6 +348,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryStatusNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\EntryStatusNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryStatusNames.zh-Hans.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\EntryTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1698,6 +1703,10 @@
     <Content Include="App_GlobalResources\AlbumCollectionStatusNames.zh-Hans.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>AlbumCollectionStatusNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\EntryStatusNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryStatusNames.zh-Hans.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Other\PagedListStrings.zh-Hans.resx" />

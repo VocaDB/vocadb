@@ -117,13 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdditionDate" xml:space="preserve">
+    <value>添加时间</value>
+  </data>
+  <data name="BasicInfoTab" xml:space="preserve">
+    <value>基本信息</value>
+  </data>
+  <data name="DiscussionTab" xml:space="preserve">
+    <value>评论区</value>
+  </data>
+  <data name="EditTags" xml:space="preserve">
+    <value>编辑标签</value>
+  </data>
   <data name="ExternalLinks" xml:space="preserve">
     <value>外部链接</value>
   </data>
   <data name="LatestComments" xml:space="preserve">
     <value>最新评论</value>
   </data>
+  <data name="Link" xml:space="preserve">
+    <value>链接</value>
+  </data>
+  <data name="ManageTags" xml:space="preserve">
+    <value>管理标签</value>
+  </data>
   <data name="NoComments" xml:space="preserve">
     <value>还没有人发过评论!</value>
+  </data>
+  <data name="OtherLinks" xml:space="preserve">
+    <value>非官方链接</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>发布时间</value>
+  </data>
+  <data name="ReportAnError" xml:space="preserve">
+    <value>报告错误信息</value>
+  </data>
+  <data name="Social" xml:space="preserve">
+    <value>社交网站</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>统计数据</value>
+  </data>
+  <data name="ViewAllComments" xml:space="preserve">
+    <value>查看全部评论</value>
+  </data>
+  <data name="ViewModifications" xml:space="preserve">
+    <value>查看编辑履历</value>
   </data>
 </root>

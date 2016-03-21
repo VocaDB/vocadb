@@ -1001,6 +1001,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SongTypeNames.ru.designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.de.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.resx">
