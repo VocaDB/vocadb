@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using ViewRes.User;
 using VocaDb.Model.DataContracts.Users;
 
@@ -15,6 +16,7 @@ namespace VocaDb.Web.Models.User {
 		[Display(ResourceType = typeof(MessagesStrings), Name = "Body")]
 		[Required]
 		[StringLength(10000)]
+		[AllowHtml]
 		public string Body { get; set; }
 
 		[Display(ResourceType = typeof(MessagesStrings), Name = "HighPriority")]
