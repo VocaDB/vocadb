@@ -32,7 +32,7 @@
 }
 
 @helper Avatar() {
-	if (Login.Manager.IsLoggedIn && Login.User.Id == Model.Id && Login.User.Active) {
+	if (UserContext.IsLoggedIn && UserContext.LoggedUserId == Model.Id && Login.User.Active) {
 		<a href="http://gravatar.com/emails/" title="@R.SetAvatar" id="avatar" class="user-avatar">
 			@AvatarImg()
 		</a>
@@ -48,19 +48,19 @@
 		@Html.ActionLink(R.Messages, "Messages", null, new { id = "messagesLink" });
 	}
 
-	@if (Login.Manager.IsLoggedIn && Login.User.Id != Model.Id && Login.User.Active) {
+	@if (UserContext.IsLoggedIn && UserContext.LoggedUserId != Model.Id && Login.User.Active) {
 		@Html.ActionLink(R.ComposeMessage, "Messages", null, null, null, "composeTab", new { receiverName = Model.Name }, new { id = "composeMessageLink" });
 	}
 
-	@if (Login.CanManageUsers && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
+	@if (Login.CanManageUsers && EntryPermissionManager.CanEditUser(UserContext, Model.GroupId)) {
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editUserLink" });
 	}
-	@if (Login.Manager.HasPermission(PermissionToken.RemoveEditPermission) && Model.GroupId != UserGroupId.Limited && Model.Active && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
+	@if (Login.Manager.HasPermission(PermissionToken.RemoveEditPermission) && UserContext.LoggedUserId != Model.Id && Model.GroupId != UserGroupId.Limited && Model.Active && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(ViewRes.SharedStrings.SetToLimited, "SetToLimited", new { id = Model.Id }, new { id = "setToLimitedLink" });
 	}
-	@if (Login.Manager.HasPermission(PermissionToken.DisableUsers) && Login.User.Id != Model.Id && Model.Active) {
+	@if (Login.Manager.HasPermission(PermissionToken.DisableUsers) && UserContext.LoggedUserId != Model.Id && Model.Active) {
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(R.Disable, "Disable", new { id = Model.Id }, new { id = "disableUserLink" });
 	}
