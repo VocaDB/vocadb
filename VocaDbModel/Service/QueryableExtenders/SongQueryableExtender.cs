@@ -200,6 +200,17 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> WhereCreateDateIsWithin(this IQueryable<Song> criteria, TimeSpan timeFilter) {
+
+			if (timeFilter == TimeSpan.Zero)
+				return criteria;
+
+			var since = DateTime.Now - timeFilter;
+
+			return criteria.Where(t => t.CreateDate >= since);
+
+		}
+
 		public static IQueryable<Song> WhereHasNicoId(this IQueryable<Song> query, string nicoId) {
 
 			if (string.IsNullOrEmpty(nicoId))
@@ -224,6 +235,24 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return query.Where(s => (s.PVServices & pvServices) != PVServices.Nothing);
 
 		} 
+
+		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> criteria, bool onlyWithPVs) {
+
+			if (onlyWithPVs)
+				return criteria.Where(t => t.PVServices != PVServices.Nothing);
+			else
+				return criteria;
+
+		}
+
+		public static IQueryable<Song> WhereHasScore(this IQueryable<Song> query, int minScore) {
+
+			if (minScore <= 0)
+				return query;
+
+			return query.Where(q => q.RatingScore >= minScore);
+
+		}
 
 		public static IQueryable<Song> WhereHasTag(this IQueryable<Song> query, string tagName) {
 
