@@ -123,6 +123,9 @@
   <data name="CreatedAlbum" xml:space="preserve">
     <value>添加了专辑</value>
   </data>
+  <data name="CreatedArtist" xml:space="preserve">
+    <value>添加了艺术家</value>
+  </data>
   <data name="CreatedNew" xml:space="preserve">
     <value>created a new {0}</value>
   </data>

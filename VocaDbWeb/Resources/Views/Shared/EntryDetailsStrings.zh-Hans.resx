@@ -132,6 +132,9 @@
   <data name="ExternalLinks" xml:space="preserve">
     <value>外部链接</value>
   </data>
+  <data name="Hits" xml:space="preserve">
+    <value>点击量{0}</value>
+  </data>
   <data name="LatestComments" xml:space="preserve">
     <value>最新评论</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="NoComments" xml:space="preserve">
     <value>还没有人发过评论!</value>
+  </data>
+  <data name="OfficialLinks" xml:space="preserve">
+    <value>官方链接</value>
   </data>
   <data name="OtherLinks" xml:space="preserve">
     <value>非官方链接</value>
@@ -163,6 +169,6 @@
     <value>查看全部评论</value>
   </data>
   <data name="ViewModifications" xml:space="preserve">
-    <value>查看编辑履历</value>
+    <value>查看编辑历史</value>
   </data>
 </root>

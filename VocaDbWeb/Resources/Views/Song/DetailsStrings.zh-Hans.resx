@@ -147,6 +147,12 @@
   <data name="Link" xml:space="preserve">
     <value>链接</value>
   </data>
+  <data name="Lyrics" xml:space="preserve">
+    <value>歌词</value>
+  </data>
+  <data name="LyricsLC" xml:space="preserve">
+    <value>歌词</value>
+  </data>
   <data name="OriginalMedia" xml:space="preserve">
     <value>媒体文件(官方上传)</value>
   </data>
@@ -168,11 +174,23 @@
   <data name="RelatedSongs" xml:space="preserve">
     <value>相关歌曲</value>
   </data>
+  <data name="RemoveFromFavorites" xml:space="preserve">
+    <value>取消评分</value>
+  </data>
+  <data name="SearchYoutube" xml:space="preserve">
+    <value>在YouTube上搜索</value>
+  </data>
   <data name="Share" xml:space="preserve">
     <value>分享</value>
   </data>
+  <data name="TotalScore" xml:space="preserve">
+    <value>总分{0}</value>
+  </data>
   <data name="ViewAllLists" xml:space="preserve">
     <value>查看全部歌单({0})</value>
+  </data>
+  <data name="ViewExternal" xml:space="preserve">
+    <value>在外部链接上查看</value>
   </data>
   <data name="Vocalists" xml:space="preserve">
     <value>歌手</value>
