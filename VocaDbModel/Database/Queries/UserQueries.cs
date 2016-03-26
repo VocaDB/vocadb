@@ -858,22 +858,21 @@ namespace VocaDb.Model.Database.Queries {
 					.Query()
 					.Where(u => u.Song.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == Tag.CommonCategory_Genres)
 					// NH doesn't support ? operator, instead casting ID to nullable works
-					.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id, AliasedTo = (int?)s.Tag.AliasedTo.Id })
+					.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id })
 					.Select(g => new {
 						TagId = g.Key.TagId,
 						Parent = g.Key.Parent,
-						AliasedTo = g.Key.AliasedTo,
 						Count = g.Count()
 					})
 					.ToArray();
 
 				var genresDict = genres
-					.Where(g => (g.AliasedTo == null || g.AliasedTo == 0) && (g.Parent == null || g.Parent == 0))
+					.Where(g => g.Parent == null || g.Parent == 0)
 					.ToDictionary(t => t.TagId, t => t.Count);
 					
 				foreach (var tag in genres) {
 
-					AddCount(genresDict, tag.Parent ?? tag.AliasedTo, tag.Count);
+					AddCount(genresDict, tag.Parent, tag.Count);
 
 				}
 

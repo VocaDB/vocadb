@@ -6,7 +6,6 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -20,38 +19,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		private readonly ContentLanguagePreference languagePreference;
 		private readonly IDatabaseContext querySource;
 
-		private ContentLanguagePreference LanguagePreference {
-			get { return languagePreference; }
-		}
-
-		private IQueryable<Song> AddPVFilter(IQueryable<Song> criteria, bool onlyWithPVs) {
-
-			if (onlyWithPVs)
-				return criteria.Where(t => t.PVServices != PVServices.Nothing);
-			else
-				return criteria;
-
-		}
-
-		private IQueryable<Song> AddScoreFilter(IQueryable<Song> query, int minScore) {
-
-			if (minScore <= 0)
-				return query;
-
-			return query.Where(q => q.RatingScore >= minScore);
-
-		}
-
-		private IQueryable<Song> AddTimeFilter(IQueryable<Song> criteria, TimeSpan timeFilter) {
-
-			if (timeFilter == TimeSpan.Zero)
-				return criteria;
-
-			var since = DateTime.Now - timeFilter;
-
-			return criteria.Where(t => t.CreateDate >= since);
-
-		}
+		private ContentLanguagePreference LanguagePreference => languagePreference;
 
 		private IQueryable<Song> CreateQuery(
 			SongQueryParams queryParams, 
@@ -80,11 +48,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereIdNotIn(queryParams.IgnoredIds)
 				.WhereInUserCollection(queryParams.UserCollectionId)
 				.WhereHasLyrics(queryParams.LyricsLanguages)
-				.WherePublishDateIsBetween(parsedQuery.PublishedAfter, parsedQuery.PublishedBefore);
-
-			query = AddScoreFilter(query, queryParams.MinScore);
-			query = AddTimeFilter(query, queryParams.TimeFilter);
-			query = AddPVFilter(query, queryParams.OnlyWithPVs);
+				.WherePublishDateIsBetween(parsedQuery.PublishedAfter, parsedQuery.PublishedBefore)
+				.WhereHasScore(queryParams.MinScore)
+				.WhereCreateDateIsWithin(queryParams.TimeFilter)
+				.WhereHasPV(queryParams.OnlyWithPVs);
 
 			return query;
 
