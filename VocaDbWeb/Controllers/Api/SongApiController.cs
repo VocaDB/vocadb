@@ -272,6 +272,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Song data.</returns>
 		/// <example>http://vocadb.net/api/songs?pvId=sm19923781&amp;pvService=NicoNicoDouga</example>
 		[System.Web.Http.Route("")]
+		[System.Web.Http.Route("byPv")]
 		public SongForApiContract GetByPV(
 			PVService pvService, 
 			string pvId, 
