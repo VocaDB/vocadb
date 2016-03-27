@@ -29,6 +29,9 @@ module vdb.utils {
 				case cls.EntryType.Song:
 					prefix = vdb.functions.mapAbsoluteUrl("/S/" + id);
 					break;
+				case cls.EntryType.SongList:
+					prefix = vdb.functions.mapAbsoluteUrl("/L/" + id);
+					break;
 				case cls.EntryType.Tag:
 					prefix = vdb.functions.mapAbsoluteUrl("/T/" + id);
 					break;
