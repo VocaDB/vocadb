@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Utils;
 
@@ -9,6 +11,17 @@ namespace VocaDb.Model.Service {
 	/// This default implementation is based on regular expressions and handles most common cases.
 	/// </summary>
 	public class EntryUrlParser : IEntryUrlParser {
+
+		private readonly Dictionary<string, EntryType> entryTypeNames = new Dictionary<string, EntryType>(StringComparer.InvariantCultureIgnoreCase) {
+			{ "Al", EntryType.Album },
+			{ "Album/Details", EntryType.Album },
+			{ "Ar", EntryType.Artist },
+			{ "Artist/Details", EntryType.Artist },
+			{ "S", EntryType.Song },
+			{ "Song/Details", EntryType.Song },
+			{ "L", EntryType.SongList },
+			{ "T", EntryType.Tag }
+		};
 
 		private readonly Regex entryUrlRegex;
 		private readonly Regex entryUrlRegexOptionalPrefix;
@@ -21,15 +34,11 @@ namespace VocaDb.Model.Service {
 			// Host addresses http and https
 			var hostAddresses = VocaUriBuilder.RemoveTrailingSlash(hostAddress) + "|" + VocaUriBuilder.RemoveTrailingSlash(hostAddressSecure);
 
-			var entryUrlRegexBase = @"^(?:{0})/(Al|Ar|S|Album/Details|Artist/Details|Song/Details)/(\d+)";
+			var entryUrlRegexTemplate = @"^(?:{0}){1}/(Al|Ar|S|L|T|Album/Details|Artist/Details|Song/Details)/(\d+)";
 
-			entryUrlRegex = new Regex(string.Format(entryUrlRegexBase, hostAddresses), 
-				RegexOptions.IgnoreCase);
+			entryUrlRegex = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, string.Empty), RegexOptions.IgnoreCase);
 
-			var entryUrlRegexBaseOptionalPrefix = @"^(?:{0})?/(Al|Ar|S|Album/Details|Artist/Details|Song/Details)/(\d+)";
-
-			entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexBaseOptionalPrefix, hostAddresses), 
-				RegexOptions.IgnoreCase);
+			entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, "?"), RegexOptions.IgnoreCase);
 
 		}
 
@@ -38,33 +47,20 @@ namespace VocaDb.Model.Service {
 			if (string.IsNullOrEmpty(url))
 				return GlobalEntryId.Empty;
 
-			var match = (allowRelative ? entryUrlRegexOptionalPrefix.Match(url) : entryUrlRegex.Match(url));
+			var match = allowRelative ? entryUrlRegexOptionalPrefix.Match(url) : entryUrlRegex.Match(url);
 
 			if (!match.Success)
 				return GlobalEntryId.Empty;
 
-			var entryTypeStr = match.Groups[1].Value;
-			var entryId = match.Groups[2].Value;
+			var entryTypeStr = match.Groups[1].Value; // URL portion that identifies the entry type, for example "Al" or "Album/Details".
+			var entryId = match.Groups[2].Value; // Entry ID, integer
 			EntryType entryType;
 
-			switch (entryTypeStr.ToLowerInvariant()) {
-				case "al":
-				case "album/details":
-					entryType = EntryType.Album;
-					break;
-				case "ar":
-				case "artist/details":
-					entryType = EntryType.Artist;
-					break;
-				case "s":
-				case "song/details":
-					entryType = EntryType.Song;
-					break;
-				default:
-					return GlobalEntryId.Empty;
+			if (entryTypeNames.TryGetValue(entryTypeStr, out entryType)) {
+				return new GlobalEntryId(entryType, int.Parse(entryId));
+			} else {
+				return GlobalEntryId.Empty;
 			}
-
-			return new GlobalEntryId(entryType, int.Parse(entryId));
 
 		}
 
