@@ -20,6 +20,7 @@ module vdb.viewModels {
 			this.comments = ko.observableArray<CommentViewModel>(null);
 			this.commentsLoaded = commentContracts != null && !hasMoreComments;
 			this.topComments = ko.computed(() => _.take(this.comments(), 3));
+			this.pageOfComments = ko.computed(() => this.comments().slice(this.paging.firstItem(), this.paging.firstItem() + this.paging.pageSize()));
 
 			if (commentContracts) {
 				this.setComments(commentContracts);				
@@ -69,11 +70,15 @@ module vdb.viewModels {
 			this.repo.createComment(this.entryId, commentContract, result => {
 
 				var processed = this.processComment(result);
+				this.paging.totalItems(this.paging.totalItems() + 1);
 
-				if (this.ascending)
+				if (this.ascending) {
 					this.comments.push(processed);
-				else
+					this.paging.goToLastPage();
+				} else {
 					this.comments.unshift(processed);
+					this.paging.goToFirstPage();
+				}
 
 				if (this.onCommentCreated)
 					this.onCommentCreated(_.clone(processed));
@@ -87,6 +92,7 @@ module vdb.viewModels {
 			this.comments.remove(comment);
 
 			this.repo.deleteComment(comment.id);
+			this.paging.totalItems(this.paging.totalItems() - 1);
 
 		}
 
@@ -108,6 +114,10 @@ module vdb.viewModels {
 		public newComment = ko.observable("");
 
 		public onCommentCreated: (comment: CommentViewModel) => void;
+
+		public paging: ServerSidePagingViewModel = new ServerSidePagingViewModel();
+
+		public pageOfComments: KnockoutComputed<CommentViewModel[]>;
 
 		private processComment = (contract: dc.CommentContract) => {
 
@@ -133,7 +143,11 @@ module vdb.viewModels {
 			
 			var commentViewModels = _.sortBy(_.map(commentContracts, comment => this.processComment(comment)), comment => comment.created);
 
-			if (!this.ascending)
+			this.paging.totalItems(commentContracts.length);
+
+			if (this.ascending)
+				this.paging.goToLastPage();
+			else
 				commentViewModels = commentViewModels.reverse();
 
 			this.comments(commentViewModels);

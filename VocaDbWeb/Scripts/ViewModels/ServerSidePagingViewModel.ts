@@ -22,7 +22,7 @@ module vdb.viewModels {
 
 		}
 
-		getItemsCallback: (paging: dc.PagingProperties) => void
+		getItemsCallback: (paging: dc.PagingProperties) => void;
 
 
 		page = ko.observable(1);
@@ -35,6 +35,8 @@ module vdb.viewModels {
 		firstItem = ko.computed(() => (this.page() - 1) * this.pageSize());
 
 		totalPages = ko.computed(() => Math.ceil(this.totalItems() / this.pageSize()));
+
+		public hasMultiplePages = ko.computed(() => this.totalPages() > 1);
 
 		isFirstPage = ko.computed(() => this.page() <= 1);
 
@@ -62,6 +64,8 @@ module vdb.viewModels {
 			};
 
 		}
+
+		goToFirstPage = () => this.page(1);
 
 		goToLastPage = () => this.page(this.totalPages());
 

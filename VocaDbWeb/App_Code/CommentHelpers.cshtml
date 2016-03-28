@@ -125,7 +125,7 @@
 	</div>
 }
 
-@helper EditableComments(bool allowCreateComment, bool well = true, string commentsBinding = "comments", int newCommentRows = 6, bool commentBoxEnd = false) {
+@helper EditableComments(bool allowCreateComment, bool well = true, string commentsBinding = "pageOfComments", int newCommentRows = 6, bool commentBoxEnd = false) {
 
 	var cssClass = (well ? "well well-transparent" : "standalone");
 
@@ -134,6 +134,10 @@
 	if (allowCreateComment && !commentBoxEnd) {
 		@CreateComment(cssClass, newCommentRows)
 	}
+
+	<div data-bind="with: paging, visible: paging.hasMultiplePages">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
 
 	<div data-bind="foreach: @commentsBinding">
 		<div class="editable-comment @cssClass">
