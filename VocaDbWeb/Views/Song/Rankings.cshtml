@@ -101,7 +101,7 @@
 				<div data-bind="if: $data.tags && tags.length">
 					<i class="icon icon-tags fix-icon-margin"></i>
 					<!-- ko foreach: tags -->
-					<a data-bind="text: tag.name" href="{{ $parents[1].getTagUrl($data) }}"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+					<a data-bind="text: tag.name" href="{{ $parents[1].getTagUrl($data) }}" title="{{ tag.additionalNames }}"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
 					<!-- /ko -->
 				</div>
 			</td>
