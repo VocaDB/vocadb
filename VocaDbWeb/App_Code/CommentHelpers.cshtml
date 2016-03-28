@@ -145,6 +145,10 @@
 		</div>
 	</div>
 
+	<div data-bind="with: paging, visible: paging.hasMultiplePages">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
 	if (allowCreateComment && commentBoxEnd) {
 		@CreateComment(cssClass, newCommentRows)
 	}
