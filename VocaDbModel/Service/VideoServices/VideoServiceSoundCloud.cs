@@ -5,6 +5,7 @@ using System.Net;
 using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -53,19 +54,15 @@ namespace VocaDb.Model.Service.VideoServices {
 			var apikey = AppConfig.SoundCloudClientId;
 			var apiUrl = string.Format("http://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
 
-			var request = WebRequest.Create(apiUrl);
-			request.Timeout = 10000;
 			SoundCloudResult result;
 
-			try {
-				using (var response = request.GetResponse())
-				using (var stream = response.GetResponseStream())
-				using (var streamReader = new StreamReader(stream))
-				using (var jsonReader = new JsonTextReader(streamReader)) {
-					var serializer = new JsonSerializer();
-					result = serializer.Deserialize<SoundCloudResult>(jsonReader);
-				}
+			try {				
+				result = JsonRequest.ReadObject<SoundCloudResult>(apiUrl, timeoutMs: 10000);
 			} catch (WebException x) {
+				var msg = string.Format("Unable to load SoundCloud URL {0}", url);
+				log.Warn(x, msg);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
+			} catch (JsonSerializationException x) {
 				var msg = string.Format("Unable to load SoundCloud URL {0}", url);
 				log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
