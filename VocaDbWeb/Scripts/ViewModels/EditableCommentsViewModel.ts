@@ -49,6 +49,7 @@ module vdb.viewModels {
 			
 		public comments: KnockoutObservableArray<CommentViewModel>;
 
+		// Whether all comments have been loaded
 		private commentsLoaded: boolean;
 
 		public createComment = () => {
@@ -139,6 +140,7 @@ module vdb.viewModels {
 
 		}
 
+		// Latest N comments
 		public topComments: KnockoutComputed<CommentViewModel[]>;
 
 	}
