@@ -277,6 +277,51 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your musical compatibility with {0} is {1} ({2} %, {3} songs).
+        /// </summary>
+        public static string MusicalCompatibility {
+            get {
+                return ResourceManager.GetString("MusicalCompatibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to high.
+        /// </summary>
+        public static string MusicalCompatibilityHigh {
+            get {
+                return ResourceManager.GetString("MusicalCompatibilityHigh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to low.
+        /// </summary>
+        public static string MusicalCompatibilityLow {
+            get {
+                return ResourceManager.GetString("MusicalCompatibilityLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to medium.
+        /// </summary>
+        public static string MusicalCompatibilityMedium {
+            get {
+                return ResourceManager.GetString("MusicalCompatibilityMedium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SUPER.
+        /// </summary>
+        public static string MusicalCompatibilitySuper {
+            get {
+                return ResourceManager.GetString("MusicalCompatibilitySuper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My settings.
         /// </summary>
         public static string MySettings {

@@ -21,6 +21,23 @@
 
 	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = Model.Name })).ToString();
 
+	string musicalCompatibility = null;
+	string musicalCompatibilityLabel = null;
+	var relationshipPercent = Model.RelationshipStats.MatchedSongPercent;
+	if (relationshipPercent > 90) {
+		musicalCompatibility = Res.MusicalCompatibilitySuper;
+		musicalCompatibilityLabel = "alert-danger";
+	} else if (relationshipPercent > 60) {
+		musicalCompatibility = Res.MusicalCompatibilityHigh;
+		musicalCompatibilityLabel = "alert-warning";
+	} else if (relationshipPercent > 20) {
+		musicalCompatibility = Res.MusicalCompatibilityMedium;
+		musicalCompatibilityLabel = "alert-info";
+	} else if (relationshipPercent > 10) {
+		musicalCompatibility = Res.MusicalCompatibilityLow;
+		musicalCompatibilityLabel = "";
+	}
+
 }
 
 @helper AvatarImg() {
@@ -172,6 +189,10 @@
 		</div>
 
 		<div class="span8 well well-transparent">
+			
+			@if (musicalCompatibility != null) {
+				<p>@string.Format(Res.MusicalCompatibility, Model.Name, musicalCompatibility, relationshipPercent, Model.RelationshipStats.MatchedSongCount)</p>
+			}
 
 			@if (!string.IsNullOrEmpty(Model.AboutMe))
 			{

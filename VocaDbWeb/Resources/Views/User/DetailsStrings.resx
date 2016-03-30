@@ -189,6 +189,21 @@
   <data name="Messages" xml:space="preserve">
     <value>Messages</value>
   </data>
+  <data name="MusicalCompatibility" xml:space="preserve">
+    <value>Your musical compatibility with {0} is {1} ({2} %, {3} songs)</value>
+  </data>
+  <data name="MusicalCompatibilityHigh" xml:space="preserve">
+    <value>high</value>
+  </data>
+  <data name="MusicalCompatibilityLow" xml:space="preserve">
+    <value>low</value>
+  </data>
+  <data name="MusicalCompatibilityMedium" xml:space="preserve">
+    <value>medium</value>
+  </data>
+  <data name="MusicalCompatibilitySuper" xml:space="preserve">
+    <value>SUPER</value>
+  </data>
   <data name="MySettings" xml:space="preserve">
     <value>My settings</value>
   </data>

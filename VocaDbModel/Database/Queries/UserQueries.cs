@@ -87,9 +87,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IStopForumSpamClient sfsClient;
 		private readonly IUserIconFactory userIconFactory;
 
-		public IEntryLinkFactory EntryLinkFactory {
-			get { return entryLinkFactory; }
-		}
+		public IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
 
 		private IQueryable<User> AddOrder(IQueryable<User> query, UserSortRule sortRule) {
 
@@ -141,7 +139,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private int GetSongCount(IDatabaseContext<User> ctx, User user) {
+		private int GetSongCount(IDatabaseContext<User> ctx, IUser user) {
 
 			return ctx.Query<FavoriteSongForUser>().Count(u => u.User.Id == user.Id && !u.Song.Deleted);
 
@@ -181,6 +179,27 @@ namespace VocaDb.Model.Database.Queries {
 				return stats;
 
 			});
+
+		}
+
+		private CachedUserRelationshipStats GetRelationshipStats(IDatabaseContext<User> ctx, User user, int ratedSongCount) {
+
+			if (!PermissionContext.IsLoggedIn || user.Id == PermissionContext.LoggedUserId || ratedSongCount < 10)
+				return new CachedUserRelationshipStats();
+
+			var key = string.Format("GetRelationshipStats.{0}.{1}", user.Id, PermissionContext.LoggedUserId);
+			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(4), () => {
+
+				var matchedSongCount = ctx.Query<Song>().Count(s => s.UserFavorites.Any(f => f.User.Id == user.Id) && s.UserFavorites.Any(f => f.User.Id == PermissionContext.LoggedUserId));
+
+				var stats = new CachedUserRelationshipStats();
+				stats.MatchedSongCount = matchedSongCount;
+				stats.MatchedSongPercent = matchedSongCount * 100 / ratedSongCount;
+
+				return stats;
+
+			});
+
 
 		}
 
@@ -253,6 +272,8 @@ namespace VocaDb.Model.Database.Queries {
 			details.ArtistCount = Math.Max(details.ArtistCount, details.FollowedArtists.Length);
 			details.FavoriteSongCount = Math.Max(details.FavoriteSongCount, details.LatestRatedSongs.Length);
 			var songListCount = session.Query<SongList>().Count(l => l.Author.Id == user.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing);
+
+			details.RelationshipStats = GetRelationshipStats(session, user, details.FavoriteSongCount);
 
 			details.Power = UserHelper.GetPower(details, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount, songListCount);
 			details.Level = UserHelper.GetLevel(details.Power);
@@ -1569,4 +1590,11 @@ namespace VocaDb.Model.Database.Queries {
 
 	}
 
+	public class CachedUserRelationshipStats {
+
+		public int MatchedSongCount { get; set; }
+
+		public int MatchedSongPercent { get; set; }
+
+	}
 }

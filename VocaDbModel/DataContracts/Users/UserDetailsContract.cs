@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
@@ -72,6 +73,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		/// This is done by matching username with the artist name.
 		/// </summary>
 		public bool PossibleProducerAccount { get; set; }
+
+		public CachedUserRelationshipStats RelationshipStats { get; set; }
 
 		public SongListContract[] SongLists { get; set; }
 
