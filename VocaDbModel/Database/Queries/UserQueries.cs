@@ -179,8 +179,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					stats.FavoriteTags = GetFavoriteTagIds(ctx, user);
 				} catch (HibernateException x) {
-					// TODO: Loading of stats timeouts sometimes. Since they're not essential we can accept returning only partial stats
-					// However, this should be fixed by tuning the queries further
+					// TODO: Loading of stats timeouts sometimes. Since they're not essential we can accept returning only partial stats.
+					// However, this should be fixed by tuning the queries further.
 					log.Error(x, "Unable to load user stats");
 				}
 

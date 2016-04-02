@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
 using NHibernate;
+using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
@@ -35,6 +36,7 @@ namespace VocaDb.Model.Database.Queries {
 	/// </summary>
 	public class ArtistQueries : QueriesBase<IArtistRepository, Artist> {
 
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
@@ -119,28 +121,37 @@ namespace VocaDb.Model.Database.Queries {
 			
 			var key = string.Format("ArtistQueries.SharedArtistStatsContract.{0}", artist.Id);
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
-				
-				var stats = ctx.Query()
-					.Where(a => a.Id == artist.Id)
-					.Select(a => new {
-						FollowCount = a.Users.Count,
-						AlbumCount = a.AllAlbums.Count(l => !l.Album.Deleted),
-						RatedAlbumCount = a.AllAlbums.Count(l => !l.Album.Deleted && l.Album.RatingCount > 0),
-						SongCount = a.AllSongs.Count(s => !s.Song.Deleted),
-						RatedSongCount = a.AllSongs.Count(s => !s.Song.Deleted && s.Song.RatingScore > 0),
-						AlbumRatingsTotalCount = a.AllAlbums.Any() ? a.AllAlbums.Sum(l => l.Album.RatingCount) : 0,
-						AlbumRatingsTotalSum = a.AllAlbums.Any() ? a.AllAlbums.Sum(l => l.Album.RatingTotal) : 0
-					})
-					.FirstOrDefault();
 
-				return new SharedArtistStatsContract {
-					AlbumCount = stats.AlbumCount,
-					FollowerCount = stats.FollowCount,
-					RatedAlbumCount = stats.RatedAlbumCount,
-					SongCount = stats.SongCount,
-					RatedSongCount = stats.RatedSongCount,
-					AlbumRatingAverage = (stats.AlbumRatingsTotalCount > 0 ? Math.Round(stats.AlbumRatingsTotalSum / (double)stats.AlbumRatingsTotalCount, 2) : 0)
-				};
+				try {
+
+					var stats = ctx.Query()
+						.Where(a => a.Id == artist.Id)
+						.Select(a => new {
+							FollowCount = a.Users.Count,
+							AlbumCount = a.AllAlbums.Count(l => !l.Album.Deleted),
+							RatedAlbumCount = a.AllAlbums.Count(l => !l.Album.Deleted && l.Album.RatingCount > 0),
+							SongCount = a.AllSongs.Count(s => !s.Song.Deleted),
+							RatedSongCount = a.AllSongs.Count(s => !s.Song.Deleted && s.Song.RatingScore > 0),
+							AlbumRatingsTotalCount = a.AllAlbums.Any() ? a.AllAlbums.Sum(l => l.Album.RatingCount) : 0,
+							AlbumRatingsTotalSum = a.AllAlbums.Any() ? a.AllAlbums.Sum(l => l.Album.RatingTotal) : 0
+						})
+						.FirstOrDefault();
+
+					return new SharedArtistStatsContract {
+						AlbumCount = stats.AlbumCount,
+						FollowerCount = stats.FollowCount,
+						RatedAlbumCount = stats.RatedAlbumCount,
+						SongCount = stats.SongCount,
+						RatedSongCount = stats.RatedSongCount,
+						AlbumRatingAverage = (stats.AlbumRatingsTotalCount > 0 ? Math.Round(stats.AlbumRatingsTotalSum / (double)stats.AlbumRatingsTotalCount, 2) : 0)
+					};
+
+				} catch (HibernateException x) {
+					// TODO: Loading of stats timeouts sometimes. Since they're not essential we can accept returning only partial stats.
+					// However, this should be fixed by tuning the queries further.
+					log.Error(x, "Unable to load shared artist stats");
+					return new SharedArtistStatsContract();
+				}
 
 			});
 			
