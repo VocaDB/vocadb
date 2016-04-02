@@ -883,7 +883,6 @@
     <Compile Include="Service\Security\LoginManager.cs" />
     <Compile Include="Service\Security\VocaDbPrincipal.cs" />
     <Compile Include="Service\ServiceBase.cs" />
-    <Compile Include="Service\ServiceException.cs" />
     <Compile Include="Service\SongService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Service\VideoServices\VideoServiceFile.cs" />
