@@ -504,11 +504,6 @@
       <DependentUpon>WebLinkCategoryNames.ja.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\SwaggerConfig.cs" />
-    <Compile Include="Areas\API\v1\ApiV1Registration.cs" />
-    <Compile Include="Areas\API\v1\Controllers\AlbumApiController.cs" />
-    <Compile Include="Areas\API\v1\Controllers\ArtistApiController.cs" />
-    <Compile Include="Areas\API\v1\Controllers\SongApiController.cs" />
-    <Compile Include="Areas\API\v1\Controllers\UserApiController.cs" />
     <Compile Include="App_GlobalResources\AlbumArchiveReasonNames.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
