@@ -7,10 +7,7 @@ using NHibernate.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Api;
-using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Comments;
-using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -360,107 +357,6 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				return NameHelper.MoveExactNamesToTop(allNames, textQuery.Query);
-
-			});
-
-		}
-
-		public AllEntriesSearchResult Find(string query, int maxResults, bool getTotalCount) {
-
-			if (string.IsNullOrWhiteSpace(query))
-				return new AllEntriesSearchResult();
-
-			var textQuery = SearchTextQuery.Create(query);
-			var artistTextQuery = ArtistSearchTextQuery.Create(query); // Can't use the existing words collection here as they are noncanonized
-			var tagTextQuery = TagSearchTextQuery.Create(query);
-
-			return HandleQuery(session => {
-
-				var artists = 
-					session.Query<ArtistName>()
-					.WhereArtistNameIs(artistTextQuery)
-					.Where(a => !a.Artist.Deleted)
-					.Select(n => n.Artist)
-					.OrderByEntryName(LanguagePreference)
-					.Distinct()
-					.Take(maxResults)
-					.ToArray();
-
-				var artistCount = (getTotalCount ?
-					session.Query<ArtistName>()
-					.WhereArtistNameIs(artistTextQuery)
-					.Where(a => !a.Artist.Deleted)
-					.Select(n => n.Artist)
-					.Distinct()
-					.Count() 
-					: 0);
-
-				var albums = 
-					session.Query<AlbumName>()
-					.WhereEntryNameIs(textQuery)
-					.Where(a => !a.Album.Deleted)
-					.Select(n => n.Album)
-					.OrderByEntryName(LanguagePreference)
-					.Distinct()
-					.Take(maxResults)
-					.ToArray();
-
-				var albumCount = (getTotalCount ?
-					session.Query<AlbumName>()
-					.WhereEntryNameIs(textQuery)
-					.Where(a => !a.Album.Deleted)
-					.Select(n => n.Album)
-					.Distinct()
-					.Count()
-					: 0);
-
-				var songs = 
-					session.Query<SongName>()
-					.WhereEntryNameIs(textQuery)
-					.Where(a => !a.Song.Deleted)
-					.Select(n => n.Song)
-					.OrderByEntryName(LanguagePreference)
-					.Distinct()
-					.Take(maxResults)
-					.ToArray();
-
-				var songCount = (getTotalCount ?
-					session.Query<SongName>()
-					.WhereEntryNameIs(textQuery)
-					.Where(a => !a.Song.Deleted)
-					.Select(n => n.Song)
-					.Distinct()
-					.Count()
-					: 0);
-
-				var tags = session.Query<TagName>()
-					.WhereEntryNameIs(tagTextQuery)
-					.Select(n => n.Entry)
-					.OrderByEntryName(LanguagePreference)
-					.Distinct()
-					.Take(maxResults)
-					.ToArray();
-
-				var tagCount = (getTotalCount ? session.Query<TagName>()
-					.WhereEntryNameIs(textQuery)
-					.Select(n => n.Entry)
-					.Distinct()
-					.Count()
-					: 0);
-
-				var artistResult = new PartialFindResult<ArtistContract>(
-					artists.Select(a => new ArtistContract(a, PermissionContext.LanguagePreference)).ToArray(), artistCount);
-
-				var albumResult = new PartialFindResult<AlbumContract>(
-					albums.Select(a => new AlbumContract(a, PermissionContext.LanguagePreference)).ToArray(), albumCount);
-
-				var songResult = new PartialFindResult<SongWithAlbumContract>(
-					songs.Select(a => new SongWithAlbumContract(a, PermissionContext.LanguagePreference)).ToArray(), songCount);
-
-				var tagResult = new PartialFindResult<TagContract>(
-					tags.Select(a => new TagContract(a, PermissionContext.LanguagePreference)).ToArray(), tagCount);
-
-				return new AllEntriesSearchResult(query, albumResult, artistResult, songResult, tagResult);
 
 			});
 

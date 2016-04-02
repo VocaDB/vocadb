@@ -254,7 +254,6 @@
     <Compile Include="DataContracts\Songs\SongWithArchivedVersionsContract.cs" />
     <Compile Include="DataContracts\Tags\TagForEditContract.cs" />
     <Compile Include="DataContracts\Tags\TagWithArchivedVersionsContract.cs" />
-    <Compile Include="DataContracts\UseCases\AllEntriesSearchResult.cs" />
     <Compile Include="DataContracts\UseCases\ArtistSelectionForTrackContract.cs" />
     <Compile Include="DataContracts\UseCases\EntryForPictureDisplayContract.cs" />
     <Compile Include="DataContracts\UseCases\EntryRevertedContract.cs" />

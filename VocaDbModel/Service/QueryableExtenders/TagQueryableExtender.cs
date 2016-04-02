@@ -23,6 +23,20 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Tag> OrderBy(
+			this IQueryable<Tag> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) {
+
+			switch (sortRule) {
+				case EntrySortRule.Name:
+					return query.OrderByEntryName(languagePreference);
+				case EntrySortRule.AdditionDate:
+					return query.OrderByDescending(a => a.CreateDate);
+			}
+
+			return query;
+
+		}
+
 		public static IQueryable<Tag> WhereAllowAliases(this IQueryable<Tag> query, bool allowAliases = true) {
 
 			if (allowAliases)
@@ -63,7 +77,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, TagSearchTextQuery textQuery) {
+		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, SearchTextQuery textQuery) {
 
 			return query.WhereHasNameGeneric<Tag, TagName>(textQuery);
 

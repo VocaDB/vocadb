@@ -63,21 +63,25 @@ namespace VocaDb.Web.Controllers
 			switch (searchType) {
 				
 				case EntryType.Undefined: {
-					var result = services.Find(filter, 1, true);
+					var result = entryQueries.GetList(filter, null, null, null, 0, 1, true, EntrySortRule.Name, NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default, false, true);
 
-					if (result.OnlyOneItem) {
+					if (result.TotalCount == 1) {
 
-						if (result.Albums.TotalCount == 1)
-							return RedirectToAlbum(result.Albums.Items[0].Id);
+						var item = result.Items.First();
+						var entryType = item.EntryType;
+						var entryId = item.Id;
 
-						if (result.Artists.TotalCount == 1)
-							return RedirectToArtist(result.Artists.Items[0].Id);
+						if (entryType == EntryType.Album)
+							return RedirectToAlbum(entryId);
 
-						if (result.Songs.TotalCount == 1)
-							return RedirectToSong(result.Songs.Items[0].Id);
+						if (entryType == EntryType.Artist)
+							return RedirectToArtist(entryId);
 
-						if (result.Tags.TotalCount == 1)
-							return RedirectToTag(result.Tags.Items[0].Id, result.Tags.Items[0].UrlSlug);
+						if (entryType == EntryType.Song)
+							return RedirectToSong(entryId);
+
+						if (entryType == EntryType.Tag)
+							return RedirectToTag(entryId, item.UrlSlug);
 
 					}
 

@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -17,11 +18,14 @@ namespace VocaDb.Model.Database.Queries {
 
 	public class EntryQueries : QueriesBase<IAlbumRepository, Album> {
 
+		private readonly IEntryImagePersisterOld entryImagePersisterOld;
 		private readonly IEntryThumbPersister entryThumbPersister;
 
-		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryThumbPersister entryThumbPersister) 
+		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryThumbPersister entryThumbPersister,
+			IEntryImagePersisterOld entryImagePersisterOld) 
 			: base(repository, permissionContext) {
 			this.entryThumbPersister = entryThumbPersister;
+			this.entryImagePersisterOld = entryImagePersisterOld;
 		}
 
 		public PartialFindResult<EntryForApiContract> GetList(
@@ -34,7 +38,8 @@ namespace VocaDb.Model.Database.Queries {
 			NameMatchMode nameMatchMode,
 			EntryOptionalFields fields,
 			ContentLanguagePreference lang,
-			bool ssl
+			bool ssl,
+			bool searchTags = false
 			) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
@@ -82,8 +87,18 @@ namespace VocaDb.Model.Database.Queries {
 					.SelectEntryBase(lang, EntryType.Song)
 					.ToArray();
 
+				var tagQuery = searchTags ? ctx.OfType<Tag>().Query()
+					.WhereHasName(textQuery)
+					.WhereStatusIs(status) : null;
+
+				var tagNames = searchTags ? tagQuery
+					.OrderBy(sort, lang)
+					.Take(start + maxResults)
+					.SelectEntryBase(lang, EntryType.Tag)
+					.ToArray() : null;
+
 				// Get page of combined names
-				var entryNames = artistNames.Concat(albumNames).Concat(songNames)
+				var entryNames = artistNames.Concat(albumNames).Concat(songNames).Concat(tagNames ?? new DataContracts.EntryBaseContract[0])
 					.OrderBy(e => e.DefaultName)
 					.Skip(start)
 					.Take(maxResults)
@@ -92,6 +107,7 @@ namespace VocaDb.Model.Database.Queries {
 				var artistIds = entryNames.Where(e => e.EntryType == EntryType.Artist).Select(a => a.Id).ToArray();
 				var albumIds = entryNames.Where(e => e.EntryType == EntryType.Album).Select(a => a.Id).ToArray();
 				var songIds = entryNames.Where(e => e.EntryType == EntryType.Song).Select(a => a.Id).ToArray();
+				var searchedTagIds = searchTags ? entryNames.Where(e => e.EntryType == EntryType.Tag).Select(a => a.Id).ToArray() : new int[0];
 
 				// Get the actual entries in the page
 				var artists = artistIds.Any() ? ctx.OfType<Artist>().Query()
@@ -109,8 +125,13 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray()
 					.Select(a => new EntryForApiContract(a, lang, fields)) : new EntryForApiContract[0];
 
+				var searchedTags = searchTags && searchedTagIds.Any() ? ctx.OfType<Tag>().Query()
+					.Where(a => searchedTagIds.Contains(a.Id))
+					.ToArray()
+					.Select(a => new EntryForApiContract(a, lang, entryImagePersisterOld, ssl, fields)) : new EntryForApiContract[0];
+
 				// Merge and sort the final list
-				var entries = artists.Concat(albums).Concat(songs);
+				var entries = artists.Concat(albums).Concat(songs).Concat(searchedTags);
 
 				if (sort == EntrySortRule.Name)
 					entries = entries.OrderBy(a => a.Name);
@@ -131,7 +152,10 @@ namespace VocaDb.Model.Database.Queries {
 					var songCount =
 						(songNames.Length >= maxResults ? songQuery.Count() : songNames.Length);
 
-					count = artistCount + albumCount + songCount;
+					var tagCount =
+						searchTags ? (tagNames.Length >= maxResults ? tagQuery.Count() : tagNames.Length) : 0;
+
+					count = artistCount + albumCount + songCount + tagCount;
 
 				}
 
