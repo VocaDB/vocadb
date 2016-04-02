@@ -179,7 +179,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches) {
+			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches) {
 				Tags = tag,
 				TagIds = tagId,
 				ArtistIds = artistId,

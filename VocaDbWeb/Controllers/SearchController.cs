@@ -84,14 +84,14 @@ namespace VocaDb.Web.Controllers
 				break;
 
 				case EntryType.Artist:
-					var artist = artistService.FindArtists(new ArtistQueryParams(artistTextQuery, null, 0, 2, false, false, ArtistSortRule.None, false));
+					var artist = artistService.FindArtists(new ArtistQueryParams(artistTextQuery, null, 0, 2, false, ArtistSortRule.None, false));
 					if (artist.Items.Length == 1) {
 						return RedirectToArtist(artist.Items[0].Id);
 					}
 					break;
 
 				case EntryType.Album:
-					var album = albumService.Find(new AlbumQueryParams(textQuery, DiscType.Unknown, 0, 2, false, false, AlbumSortRule.None, false));
+					var album = albumService.Find(new AlbumQueryParams(textQuery, DiscType.Unknown, 0, 2, false, AlbumSortRule.None, false));
 					if (album.Items.Length == 1) {
 						return RedirectToAlbum(album.Items[0].Id);
 					}
@@ -105,7 +105,7 @@ namespace VocaDb.Web.Controllers
 					return RedirectToAction("EventsBySeries", "Event");
 
 				case EntryType.Song:
-					var song = songService.Find(new SongQueryParams(textQuery, null, 0, 2, false, false, SongSortRule.None, false, false, null));
+					var song = songService.Find(new SongQueryParams(textQuery, null, 0, 2, false, SongSortRule.None, false, false, null));
 					if (song.Items.Length == 1) {
 						return RedirectToSong(song.Items[0].Id);
 					}
@@ -119,7 +119,7 @@ namespace VocaDb.Web.Controllers
 					return RedirectToAction("Featured", "SongList");
 
 				case EntryType.Tag:
-					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, false, true, true), PagingProperties.FirstPage(2)) { AllowAliases = true },
+					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, true, true), PagingProperties.FirstPage(2)) { AllowAliases = true },
 						TagOptionalFields.None, WebHelper.IsSSL(Request), permissionContext.LanguagePreference);
 					if (tags.Items.Length == 1) {
 						return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);

@@ -34,7 +34,7 @@ namespace VocaDb.Web.API.v1.Controllers {
 			if (string.IsNullOrEmpty(query))
 				return Object(new PartialFindResult<SongForApiContract>(), format, callback);
 
-			var param = new ArtistQueryParams(ArtistSearchTextQuery.Create(query, nameMatchMode ?? NameMatchMode.Exact), new ArtistType[] { }, 0, defaultMax, false, true, ArtistSortRule.Name, false);
+			var param = new ArtistQueryParams(ArtistSearchTextQuery.Create(query, nameMatchMode ?? NameMatchMode.Exact), new ArtistType[] { }, 0, defaultMax, true, ArtistSortRule.Name, false);
 
 			if (start.HasValue)
 				param.Paging.Start = start.Value;

@@ -7,14 +7,14 @@ namespace VocaDb.Model.Service.Search {
 	/// </summary>
 	public class CommonSearchParams : CommonSearchParams<SearchTextQuery> {
 
-		public static CommonSearchParams<TTextQuery> Create<TTextQuery>(TTextQuery textQuery, bool draftOnly, bool onlyByName, bool moveExactToTop) where TTextQuery : SearchTextQuery, new() {
-			return new CommonSearchParams<TTextQuery>(textQuery, draftOnly, onlyByName, moveExactToTop);
+		public static CommonSearchParams<TTextQuery> Create<TTextQuery>(TTextQuery textQuery, bool onlyByName, bool moveExactToTop) where TTextQuery : SearchTextQuery, new() {
+			return new CommonSearchParams<TTextQuery>(textQuery, onlyByName, moveExactToTop);
 		}
 
 		public CommonSearchParams() {}
 
-		public CommonSearchParams(SearchTextQuery textQuery, bool draftOnly, bool onlyByName, bool moveExactToTop)
-			: base(textQuery, draftOnly, onlyByName, moveExactToTop) {}
+		public CommonSearchParams(SearchTextQuery textQuery, bool onlyByName, bool moveExactToTop)
+			: base(textQuery, onlyByName, moveExactToTop) {}
 
 	}
 
@@ -27,18 +27,14 @@ namespace VocaDb.Model.Service.Search {
 			TextQuery = new TTextQuery();
 		}
 
-		public CommonSearchParams(TTextQuery textQuery, bool draftOnly, bool onlyByName, bool moveExactToTop)
+		public CommonSearchParams(TTextQuery textQuery, bool onlyByName, bool moveExactToTop)
 			: this() {
 
-			DraftOnly = draftOnly;
 			TextQuery = textQuery;
 			OnlyByName = onlyByName;
 			MoveExactToTop = moveExactToTop;
 
 		}
-
-		// TODO: replaced with EntryStatus filter.
-		public bool DraftOnly { get; set; }
 
 		public EntryStatus? EntryStatus { get; set; }
 

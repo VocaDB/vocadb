@@ -276,7 +276,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				var songContract = Find(session, new SongQueryParams(SearchTextQuery.Create(query), 
-					new SongType[] {}, 0, 10, false, false, 
+					new SongType[] {}, 0, 10, false, 
 					SongSortRule.Name, false, true, null)).Items;
 
 				if (!songContract.Any())

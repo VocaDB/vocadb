@@ -29,7 +29,6 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// <param name="songTypes">Allowed song types. Can be null or empy, in which case no filtering by song type is done.</param>
 		/// <param name="start">0-based order number of the first item to be returned.</param>
 		/// <param name="maxResults">Maximum number of results to be returned.</param>
-		/// <param name="draftsOnly">Whether to return only entries with a draft status.</param>
 		/// <param name="getTotalCount">Whether to return the total number of entries matching the criteria.</param>
 		/// <param name="nameMatchMode">Mode for name maching. Ignored when query string is null or empty.</param>
 		/// <param name="sortRule">Sort rule for results.</param>
@@ -37,10 +36,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
 		/// <param name="ignoredIds">List of entries to be ignored. Can be null in which case no filtering is done.</param>
 		public SongQueryParams(SearchTextQuery textQuery, SongType[] songTypes, int start, int maxResults,
-			bool draftsOnly, bool getTotalCount, SongSortRule sortRule, 
+			bool getTotalCount, SongSortRule sortRule, 
 			bool onlyByName, bool moveExactToTop, int[] ignoredIds) {
 
-			Common = new CommonSearchParams(textQuery, draftsOnly, onlyByName, moveExactToTop);
+			Common = new CommonSearchParams(textQuery, onlyByName, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
 
 			ArtistParticipationStatus = ArtistAlbumParticipationStatus.Everything;

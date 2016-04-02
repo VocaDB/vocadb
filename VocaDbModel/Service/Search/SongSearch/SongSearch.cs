@@ -34,7 +34,6 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.Where(s => !s.Deleted)
 				.WhereHasName(textQuery)
 				.WhereHasArtistParticipationStatus(new EntryIdsCollection(queryParams.ArtistIds), queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
-				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasType(queryParams.SongTypes)
 				.WhereHasTags(queryParams.TagIds)

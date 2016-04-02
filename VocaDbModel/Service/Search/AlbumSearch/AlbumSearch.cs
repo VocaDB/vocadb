@@ -27,7 +27,6 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			var query = Query<Album>()
 				.WhereIsDeleted(queryParams.Deleted)
 				.WhereHasName(textQuery, allowCatNum: true)
-				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasArtistParticipationStatus(artistIds, queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
 				.WhereHasBarcode(queryParams.Barcode)

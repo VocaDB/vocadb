@@ -165,7 +165,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<ArtistType>.ParseMultiple(artistTypes);
 
-			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, preferAccurateMatches) {
+			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, preferAccurateMatches) {
 				Tags = tag,
 				TagIds = tagId,
 				UserFollowerId = followedByUserId ?? 0

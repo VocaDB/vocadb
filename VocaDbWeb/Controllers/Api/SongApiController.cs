@@ -223,7 +223,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
-			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), false, getTotalCount, sort, false, preferAccurateMatches, null) {
+			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, false, preferAccurateMatches, null) {
 				TagIds = tagId,
 				Tags = tagName, 
 				OnlyWithPVs = onlyWithPvs,

@@ -66,7 +66,7 @@ namespace VocaDb.Web.Services {
 		public PartialFindResult<AlbumContract> FindAlbums(string term, int maxResults, 
 			NameMatchMode nameMatchMode = NameMatchMode.Auto, AlbumSortRule sort = AlbumSortRule.NameThenReleaseDate) {
 
-			return albumService.Find(SearchTextQuery.Create(term, nameMatchMode), DiscType.Unknown, 0, maxResults, false, true, moveExactToTop: true, sortRule: sort);
+			return albumService.Find(SearchTextQuery.Create(term, nameMatchMode), DiscType.Unknown, 0, maxResults, true, moveExactToTop: true, sortRule: sort);
 
 		}
 
@@ -87,7 +87,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public PartialFindResult<ArtistContract> FindArtists(string term, int maxResults, NameMatchMode nameMatchMode = NameMatchMode.Auto) {
 
-			return artistService.FindArtists(new ArtistQueryParams(ArtistSearchTextQuery.Create(term, nameMatchMode), new ArtistType[] {}, 0, maxResults, false, true, ArtistSortRule.Name, true));
+			return artistService.FindArtists(new ArtistQueryParams(ArtistSearchTextQuery.Create(term, nameMatchMode), new ArtistType[] {}, 0, maxResults, true, ArtistSortRule.Name, true));
 
 		}
 
@@ -104,7 +104,7 @@ namespace VocaDb.Web.Services {
 			var sampleSize = Math.Min(maxResults * 2, 30);
 
 			var results = songService.FindWithAlbum(new SongQueryParams(
-				SearchTextQuery.Create(term, nameMatchMode), new SongType[] {}, 0, sampleSize, false, true, SongSortRule.Name, false, true, null), false);
+				SearchTextQuery.Create(term, nameMatchMode), new SongType[] {}, 0, sampleSize, true, SongSortRule.Name, false, true, null), false);
 
 			return new PartialFindResult<SongWithAlbumAndPVsContract>(results.Items.Take(maxResults).ToArray(), results.TotalCount, results.Term, results.FoundExactMatch);
 
@@ -120,7 +120,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public AlbumContract GetAlbumDetails(string term, AlbumSortRule sort = AlbumSortRule.NameThenReleaseDate) {
 
-			var albums = albumService.Find(SearchTextQuery.Create(term), DiscType.Unknown, 0, 10, false, false, moveExactToTop: true, sortRule: sort);
+			var albums = albumService.Find(SearchTextQuery.Create(term), DiscType.Unknown, 0, 10, false, moveExactToTop: true, sortRule: sort);
 			return albums.Items.FirstOrDefault();
 
 		}
@@ -137,7 +137,7 @@ namespace VocaDb.Web.Services {
 		public ArtistDetailsContract GetArtistDetails(string term) {
 
 			var artists = artistService.FindArtists(new ArtistQueryParams(ArtistSearchTextQuery.Create(term), new ArtistType[] {}, 0, 10, 
-				false, false, ArtistSortRule.Name, true));
+				false, ArtistSortRule.Name, true));
 
 			if (!artists.Items.Any())
 				return null;
@@ -206,7 +206,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public TagContract GetTagByName(string name) {
 
-			var tag = tagQueries.Find(t => new TagContract(t, ContentLanguagePreference.Default, true), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, false, true),
+			var tag = tagQueries.Find(t => new TagContract(t, ContentLanguagePreference.Default, true), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, true),
 				new PagingProperties(0, 1, false)) { AllowAliases = true }).Items.FirstOrDefault();
 
 			return tag;

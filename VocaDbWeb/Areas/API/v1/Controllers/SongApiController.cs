@@ -58,7 +58,7 @@ namespace VocaDb.Web.API.v1.Controllers
 			string callback = null, DataFormat format = DataFormat.Auto) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode ?? NameMatchMode.Exact);
-			var param = new SongQueryParams(textQuery, new SongType[] {}, 0, defaultMax, false, true, SongSortRule.Name, true, false, new int[] {});
+			var param = new SongQueryParams(textQuery, new SongType[] {}, 0, defaultMax, true, SongSortRule.Name, true, false, new int[] {});
 
 			if (start.HasValue)
 				param.Paging.Start = start.Value;

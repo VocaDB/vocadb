@@ -18,10 +18,10 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
-		public AlbumQueryParams(SearchTextQuery textQuery, DiscType discType, int start, int maxResults, bool draftsOnly, bool getTotalCount,
+		public AlbumQueryParams(SearchTextQuery textQuery, DiscType discType, int start, int maxResults, bool getTotalCount,
 			AlbumSortRule sortRule = AlbumSortRule.Name, bool moveExactToTop = false) {
 
-			Common = new CommonSearchParams(textQuery, draftsOnly, false, moveExactToTop);
+			Common = new CommonSearchParams(textQuery, false, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
 
 			AlbumType = discType;

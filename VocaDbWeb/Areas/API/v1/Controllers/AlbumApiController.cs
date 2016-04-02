@@ -49,7 +49,7 @@ namespace VocaDb.Web.API.v1.Controllers {
 			DataFormat format = DataFormat.Auto, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			var queryParams = new AlbumQueryParams(SearchTextQuery.Create(query, nameMatchMode), discType, start, maxResults, false, getTotalCount, sort);
+			var queryParams = new AlbumQueryParams(SearchTextQuery.Create(query, nameMatchMode), discType, start, maxResults, getTotalCount, sort);
 
 			var entries = Service.Find(a => new AlbumForApiContract(a, null, lang, includeArtists, includeNames, includePVs, includeTags, includeWebLinks), queryParams);
 

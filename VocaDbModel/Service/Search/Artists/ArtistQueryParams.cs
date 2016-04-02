@@ -20,15 +20,14 @@ namespace VocaDb.Model.Service.Search.Artists {
 		/// <param name="songTypes">Allowed song types. Can be null or empy, in which case no filtering by song type is done.</param>
 		/// <param name="start">0-based order number of the first item to be returned.</param>
 		/// <param name="maxResults">Maximum number of results to be returned.</param>
-		/// <param name="draftsOnly">Whether to return only entries with a draft status.</param>
 		/// <param name="getTotalCount">Whether to return the total number of entries matching the criteria.</param>
 		/// <param name="nameMatchMode">Mode for name maching. Ignored when query string is null or empty.</param>
 		/// <param name="sortRule">Sort rule for results.</param>
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
 		public ArtistQueryParams(ArtistSearchTextQuery textQuery, ArtistType[] songTypes, int start, int maxResults,
-			bool draftsOnly, bool getTotalCount, ArtistSortRule sortRule, bool moveExactToTop) {
+			bool getTotalCount, ArtistSortRule sortRule, bool moveExactToTop) {
 
-			Common = CommonSearchParams.Create(textQuery, draftsOnly, true, moveExactToTop);
+			Common = CommonSearchParams.Create(textQuery, true, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
 
 			ArtistTypes = songTypes ?? new ArtistType[] { };

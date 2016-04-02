@@ -30,7 +30,6 @@ namespace VocaDb.Model.Service.Search.Artists {
 			var query = context.Query()
 				.Where(s => !s.Deleted)
 				.WhereHasName_Canonized(textQuery)
-				.WhereDraftsOnly(queryParams.Common.DraftOnly)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasExternalLinkUrl(parsedQuery.ExternalLinkUrl)
 				.WhereHasType(queryParams.ArtistTypes)

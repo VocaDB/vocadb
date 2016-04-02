@@ -287,7 +287,6 @@ namespace VocaDb.Web.Controllers
 			var timeFilter = DateTimeUtils.ParseFromSimpleString(indexParams.since);
 			var filter = indexParams.filter;
 			var songType = indexParams.songType ?? SongType.Unspecified;
-			var draftsOnly = indexParams.draftsOnly ?? false;
 			var matchMode = indexParams.matchMode ?? NameMatchMode.Auto;
 			var onlyWithPVs = indexParams.onlyWithPVs ?? false;
 			var minScore = indexParams.minScore ?? 0;
@@ -295,7 +294,7 @@ namespace VocaDb.Web.Controllers
 			var textQuery = SearchTextQuery.Create(filter, matchMode);
 			var queryParams = new SongQueryParams(textQuery,
 				songType != SongType.Unspecified ? new[] { songType } : new SongType[] { },
-				0, pageSize, draftsOnly, false, sortRule, false, false, null) {
+				0, pageSize, false, sortRule, false, false, null) {
 
 					TimeFilter = timeFilter,
 					OnlyWithPVs = onlyWithPVs,

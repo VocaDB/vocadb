@@ -35,7 +35,7 @@ namespace VocaDb.Tests.Service.Search.Tags {
 
 		public void Find_ByName() {
 
-			var result = CallFind(new TagQueryParams(new CommonSearchParams(SearchTextQuery.Create("rock"), false, false, false), new PagingProperties(0, 100, true)) {
+			var result = CallFind(new TagQueryParams(new CommonSearchParams(SearchTextQuery.Create("rock"), false, false), new PagingProperties(0, 100, true)) {
 				SortRule = TagSortRule.Name
 			}, false);
 
@@ -50,7 +50,7 @@ namespace VocaDb.Tests.Service.Search.Tags {
 		[TestMethod]
 		public void Find_MinimalFields() {
 
-			var result = CallFind(new TagQueryParams(new CommonSearchParams(SearchTextQuery.Empty, false, false, false), new PagingProperties(0, 100, true)) {
+			var result = CallFind(new TagQueryParams(new CommonSearchParams(SearchTextQuery.Empty, false, false), new PagingProperties(0, 100, true)) {
 				SortRule = TagSortRule.Name
 			}, true);
 

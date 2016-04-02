@@ -259,7 +259,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			// If the user is viewing their own profile, check for possible producer account.
 			// Skip users who are not active, limited or are already verified artists.
-			if (user.Active && user.GroupId >= UserGroupId.Regular && user.Equals(PermissionContext.LoggedUser) && !user.VerifiedArtist) {
+			if (user.Active && user.GroupId >= UserGroupId.Regular && user.GroupId <= UserGroupId.Trusted && user.Equals(PermissionContext.LoggedUser) && !user.VerifiedArtist) {
 				
 				// Scan by Twitter account name and entry name.
 				var twitterUrl = !string.IsNullOrEmpty(user.Options.TwitterName) ? string.Format("https://twitter.com/{0}", user.Options.TwitterName) : null;
