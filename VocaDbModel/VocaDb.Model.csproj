@@ -779,10 +779,8 @@
     <Compile Include="Service\AlbumService.cs" />
     <Compile Include="Service\ArtistService.cs" />
     <Compile Include="Service\BBCode\AutoLinkTransformer.cs" />
-    <Compile Include="Service\BBCode\SimpleBBCodeTransformer.cs" />
     <Compile Include="Service\BBCode\BBCodeConverter.cs" />
     <Compile Include="Service\BBCode\IBBCodeElementTransformer.cs" />
-    <Compile Include="Service\BBCode\BBElement.cs" />
     <Compile Include="Service\DatabaseConfiguration.cs" />
     <Compile Include="Service\DataSharing\XmlDumper.cs" />
     <Compile Include="Service\EntryViewMode.cs" />
