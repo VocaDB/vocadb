@@ -154,29 +154,35 @@ namespace VocaDb.Model.Database.Queries {
 
 				var stats = new CachedUserStats();
 
-				var albumCounts = GetAlbumCounts(ctx, user);
-				stats.AlbumCollectionCount = albumCounts.AlbumCollectionCount;
-				stats.OwnedAlbumCount = albumCounts.OwnedAlbumCount;
-				stats.RatedAlbumCount = albumCounts.RatedAlbumCount;
+				try {
+					var albumCounts = GetAlbumCounts(ctx, user);
+					stats.AlbumCollectionCount = albumCounts.AlbumCollectionCount;
+					stats.OwnedAlbumCount = albumCounts.OwnedAlbumCount;
+					stats.RatedAlbumCount = albumCounts.RatedAlbumCount;
 
-				stats.ArtistCount = GetArtistCount(ctx, user);
-				stats.FavoriteSongCount = GetSongCount(ctx, user);
+					stats.ArtistCount = GetArtistCount(ctx, user);
+					stats.FavoriteSongCount = GetSongCount(ctx, user);
 
-				stats.CommentCount
-					= ctx.Query<AlbumComment>().Count(c => c.Author.Id == user.Id)
-					+ ctx.Query<ArtistComment>().Count(c => c.Author.Id == user.Id)
-					+ ctx.Query<SongComment>().Count(c => c.Author.Id == user.Id);
+					stats.CommentCount
+						= ctx.Query<AlbumComment>().Count(c => c.Author.Id == user.Id)
+						+ ctx.Query<ArtistComment>().Count(c => c.Author.Id == user.Id)
+						+ ctx.Query<SongComment>().Count(c => c.Author.Id == user.Id);
 
-				stats.EditCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id);
+					stats.EditCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id);
 
-				stats.SubmitCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id && c.EditEvent == EntryEditEvent.Created);					
+					stats.SubmitCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id && c.EditEvent == EntryEditEvent.Created);
 
-				stats.TagVotes
-					= ctx.Query<SongTagVote>().Count(t => t.User.Id == user.Id)
-					+ ctx.Query<AlbumTagVote>().Count(t => t.User.Id == user.Id)
-					+ ctx.Query<ArtistTagVote>().Count(t => t.User.Id == user.Id);
+					stats.TagVotes
+						= ctx.Query<SongTagVote>().Count(t => t.User.Id == user.Id)
+						+ ctx.Query<AlbumTagVote>().Count(t => t.User.Id == user.Id)
+						+ ctx.Query<ArtistTagVote>().Count(t => t.User.Id == user.Id);
 
-				stats.FavoriteTags = GetFavoriteTagIds(ctx, user);
+					stats.FavoriteTags = GetFavoriteTagIds(ctx, user);
+				} catch (HibernateException x) {
+					// TODO: Loading of stats timeouts sometimes. Since they're not essential we can accept returning only partial stats
+					// However, this should be fixed by tuning the queries further
+					log.Error(x, "Unable to load user stats");
+				}
 
 				return stats;
 
