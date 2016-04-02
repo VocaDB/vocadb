@@ -371,8 +371,8 @@ namespace VocaDb.Model.Service {
 				return new AllEntriesSearchResult();
 
 			var textQuery = SearchTextQuery.Create(query);
-			var artistTextQuery = ArtistSearchTextQuery.Create(query, textQuery.MatchMode); // Can't use the existing words collection here as they are noncanonized
-			var tagTextQuery = TagSearchTextQuery.Create(query, textQuery.MatchMode);
+			var artistTextQuery = ArtistSearchTextQuery.Create(query); // Can't use the existing words collection here as they are noncanonized
+			var tagTextQuery = TagSearchTextQuery.Create(query);
 
 			return HandleQuery(session => {
 

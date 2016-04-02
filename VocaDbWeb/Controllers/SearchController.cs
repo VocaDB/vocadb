@@ -23,6 +23,7 @@ namespace VocaDb.Web.Controllers
 
 		private readonly AlbumService albumService;
 		private readonly ArtistService artistService;
+		private readonly EntryQueries entryQueries;
 		private readonly EventQueries eventQueries;
 		private readonly OtherService services;
 		private readonly SongService songService;
@@ -139,7 +140,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService, SongListQueries songListQueries, 
-			TagQueries tagQueries, EventQueries eventQueries, IUserPermissionContext permissionContext) {
+			TagQueries tagQueries, EventQueries eventQueries, EntryQueries entryQueries, IUserPermissionContext permissionContext) {
 
 			this.services = services;
 			this.artistService = artistService;
@@ -148,6 +149,7 @@ namespace VocaDb.Web.Controllers
 			this.songListQueries = songListQueries;
 			this.tagQueries = tagQueries;
 			this.eventQueries = eventQueries;
+			this.entryQueries = entryQueries;
 			this.permissionContext = permissionContext;
 
 		}

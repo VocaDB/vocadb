@@ -42,7 +42,7 @@ $(() => {
 
 		},
 		select: (event: Event, ui) => {
-			$("#globalSearchTerm").val(ui.item.value);
+			$("#globalSearchTerm").val("\"" + ui.item.value + "\"");
 			$("#globalSearchBox").submit();
 		}
 	});

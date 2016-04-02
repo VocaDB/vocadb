@@ -4,6 +4,7 @@ using System.ServiceModel;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
@@ -33,6 +34,7 @@ namespace VocaDb.Web.Services {
 		private readonly AlbumService albumService;
 		private readonly ArtistQueries artistQueries;
 		private readonly ArtistService artistService;
+		private readonly EntryQueries entryQueries;
 		private readonly OtherService otherService;
 		private readonly TagQueries tagQueries;
 		private readonly IUserPermissionContext userPermissionContext;
@@ -44,7 +46,7 @@ namespace VocaDb.Web.Services {
 
 		public QueryService(ArtistQueries artistQueries, TagQueries tagQueries, UserQueries userQueries, 
 			AlbumService albumService, ArtistService artistService, SongQueries songQueries, SongService songService, SongListQueries songListQueries, UserService userService, 
-			OtherService otherService,
+			OtherService otherService, EntryQueries entryQueries,
 			IUserPermissionContext userPermissionContext) {
 
 			this.artistQueries = artistQueries;
@@ -53,6 +55,7 @@ namespace VocaDb.Web.Services {
 			this.albumService = albumService;
 			this.artistService = artistService;
 			this.songQueries = songQueries;
+			this.entryQueries = entryQueries;
 			this.songService = songService;
 			this.songListQueries = songListQueries;
 			this.userService = userService;
@@ -78,9 +81,10 @@ namespace VocaDb.Web.Services {
 		}
 
 		[OperationContract]
-		public AllEntriesSearchResult FindAll(string term, int maxResults) {
+		public PartialFindResult<EntryForApiContract> FindAll(string term, int maxResults, ContentLanguagePreference languagePreference) {
 
-			return otherService.Find(term, maxResults, true);
+			return entryQueries.GetList(term, null, null, null, 0, maxResults, true, EntrySortRule.Name, 
+				NameMatchMode.Auto, EntryOptionalFields.AdditionalNames, languagePreference, false);
 
 		}
 
