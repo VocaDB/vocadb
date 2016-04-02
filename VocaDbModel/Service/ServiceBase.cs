@@ -10,7 +10,6 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Helpers;
@@ -477,19 +476,12 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PartialFindResult(T[] items, int totalCount, string term, bool foundExactMatch)
+		public PartialFindResult(T[] items, int totalCount, string term)
 			: this(items, totalCount) {
 
 			Term = term;
-			FoundExactMatch = foundExactMatch;
 
 		}
-
-		/// <summary>
-		/// Not in use, should be removed
-		/// </summary>
-		[DataMember]
-		public bool FoundExactMatch { get; set; }
 
 		[DataMember]
 		public T[] Items { get; set; }

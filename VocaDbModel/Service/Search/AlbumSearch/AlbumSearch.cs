@@ -100,7 +100,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 			var count = (queryParams.Paging.GetTotalCount ? query.Count() : 0);
 
-			return new PartialFindResult<Album>(albums, count, queryParams.Common.Query, false);
+			return new PartialFindResult<Album>(albums, count, queryParams.Common.Query);
 
 		}
 
@@ -158,7 +158,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 					.Where(s => ids.Contains(s.Id))
 					.ToArray(), ids);
 
-			return new PartialFindResult<Album>(albums, count, queryParams.Common.Query, true);
+			return new PartialFindResult<Album>(albums, count, queryParams.Common.Query);
 
 		}
 

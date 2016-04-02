@@ -128,7 +128,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 			var count = (queryParams.Paging.GetTotalCount ? query.Count() : 0);
 
-			return new PartialFindResult<Artist>(artists, count, queryParams.Common.Query, false);
+			return new PartialFindResult<Artist>(artists, count, queryParams.Common.Query);
 
 		}
 
@@ -185,7 +185,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 				.Where(s => ids.Contains(s.Id))
 				.ToArray(), ids);
 
-			return new PartialFindResult<Artist>(artist, count, queryParams.Common.Query, true);
+			return new PartialFindResult<Artist>(artist, count, queryParams.Common.Query);
 
 		}
 

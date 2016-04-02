@@ -86,7 +86,7 @@ namespace VocaDb.Model.Service {
 				var result = Find(session, queryParams);
 
 				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(),
-					result.TotalCount, result.Term, result.FoundExactMatch);
+					result.TotalCount, result.Term);
 
 			});
 

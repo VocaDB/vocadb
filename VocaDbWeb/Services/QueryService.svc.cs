@@ -106,7 +106,7 @@ namespace VocaDb.Web.Services {
 			var results = songService.FindWithAlbum(new SongQueryParams(
 				SearchTextQuery.Create(term, nameMatchMode), new SongType[] {}, 0, sampleSize, true, SongSortRule.Name, false, true, null), false);
 
-			return new PartialFindResult<SongWithAlbumAndPVsContract>(results.Items.Take(maxResults).ToArray(), results.TotalCount, results.Term, results.FoundExactMatch);
+			return new PartialFindResult<SongWithAlbumAndPVsContract>(results.Items.Take(maxResults).ToArray(), results.TotalCount, results.Term);
 
 		}
 

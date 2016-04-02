@@ -235,7 +235,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 					.Where(s => ids.Contains(s.Id))
 					.ToArray(), ids);
 
-			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query, true);
+			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
 
 		}
 
@@ -256,7 +256,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			var count = (queryParams.Paging.GetTotalCount ? query.Count() : 0);
 
-			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query, false);
+			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
 
 		}
 

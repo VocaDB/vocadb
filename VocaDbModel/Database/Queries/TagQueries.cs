@@ -239,7 +239,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var result = new TagSearch(ctx, LanguagePreference).Find(queryParams, onlyMinimalFields);
 
-				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(), result.TotalCount, queryParams.Common.Query, false);
+				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(), result.TotalCount, queryParams.Common.Query);
 
 			});
 

@@ -10,7 +10,6 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
@@ -181,7 +180,7 @@ namespace VocaDb.Model.Service {
 				var result = Find(session, queryParams);
 
 				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(),
-					result.TotalCount, result.Term, result.FoundExactMatch);
+					result.TotalCount, result.Term);
 
 			});
 

@@ -1,19 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Xml.Linq;
 using NLog;
-using VocaDb.Model.DataContracts.PVs;
 using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -27,7 +22,6 @@ using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
-using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.TagFormatting;
 
@@ -119,7 +113,7 @@ namespace VocaDb.Model.Service {
 				var result = Find(session, queryParams);
 
 				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(),
-					result.TotalCount, result.Term, result.FoundExactMatch);
+					result.TotalCount, result.Term);
 
 			});
 
@@ -149,7 +143,7 @@ namespace VocaDb.Model.Service {
 
 				return new PartialFindResult<AlbumContract>(
 					results.Items.Select(a => new AlbumContract(a, PermissionContext.LanguagePreference)).ToArray(),
-					results.TotalCount, results.Term, results.FoundExactMatch);
+					results.TotalCount, results.Term);
 
 			});
 
@@ -167,26 +161,6 @@ namespace VocaDb.Model.Service {
 			});
 
 		}
-
-		/*
-		public AlbumWithAdditionalNamesContract FindByNames(string[] query) {
-
-			return HandleQuery(session => {
-
-				foreach (var q in query.Where(q => !string.IsNullOrWhiteSpace(q))) {
-
-					var result = Find(session, q, DiscType.Unknown, 0, 1, false, false, NameMatchMode.Exact, AlbumSortRule.Name, false);
-
-					if (result.Items.Any())
-						return new AlbumWithAdditionalNamesContract(result.Items.First(), PermissionContext.LanguagePreference);
-
-				}
-
-				return null;
-
-			});
-
-		}*/
 
 		public EntryRefWithCommonPropertiesContract[] FindDuplicates(string[] anyName) {
 
