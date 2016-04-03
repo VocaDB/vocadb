@@ -20,6 +20,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			DefaultNameLanguage = song.TranslatedName.DefaultLanguage;
+			HasAlbums = song.Albums.Any();
 			Lyrics = song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray();
 			Names = song.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			Notes = new EnglishTranslatedStringContract(song.Notes);
@@ -36,6 +37,12 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		/// <summary>
+		/// Song is on one or more albums
+		/// </summary>
+		[DataMember]
+		public bool HasAlbums { get; set; }
 
 		[DataMember]
 		public LyricsForSongContract[] Lyrics { get; set; }

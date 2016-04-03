@@ -89,6 +89,8 @@ module vdb.viewModels {
 			this.artistRolesEditViewModel.show(artist);
 		}
 
+		private hasAlbums: boolean;
+
 		// Removes an artist from this album.
 		public removeArtist = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistLinks.remove(artist);
@@ -109,6 +111,7 @@ module vdb.viewModels {
 				artists: _.map(this.artistLinks(), artist => artist.toContract()),
 				defaultNameLanguage: this.defaultNameLanguage(),
 				deleted: this.deleted,
+				hasAlbums: this.hasAlbums,
 				id: this.id,
 				lengthSeconds: this.length(),
 				lyrics: this.lyrics.toContracts(),
@@ -186,6 +189,8 @@ module vdb.viewModels {
 
 			this.canHaveOriginalVersion = ko.computed(() => this.songType() !== cls.songs.SongType.Original);
 
+			this.hasAlbums = data.hasAlbums;
+
 			this.originalVersionSearchParams = {
 				acceptSelection: this.originalVersion.id,
 				extraQueryParams: {
@@ -237,7 +242,8 @@ module vdb.viewModels {
 			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArray(), hel.SongHelper.isAnimation(this.songType()))));
 
 			this.validationError_needReferences = ko.computed(() =>
-				_.isEmpty(this.notes.original())
+				!this.hasAlbums
+				&& _.isEmpty(this.notes.original())
 				&& _.isEmpty(this.webLinks.webLinks())
 				&& _.isEmpty(this.pvs.pvs()));
 

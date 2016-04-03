@@ -9,6 +9,8 @@ module vdb.dataContracts.songs {
 
 		deleted: boolean;
 
+		hasAlbums: boolean;
+
 		id: number;
 
 		lengthSeconds: number;
