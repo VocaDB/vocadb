@@ -49,6 +49,16 @@ namespace VocaDb.Model.DataContracts.Songs {
 			if (fields.HasFlag(SongOptionalFields.Lyrics))
 				Lyrics = song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray();
 
+			if (fields.HasFlag(SongOptionalFields.MainPicture)) {
+
+				var thumb = song.GetThumbUrl();
+
+				if (!string.IsNullOrEmpty(thumb)) {
+					MainPicture = new EntryThumbForApiContract { UrlThumb = thumb };
+				}
+
+			}
+
 			if (fields.HasFlag(SongOptionalFields.Names))
 				Names = song.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 
@@ -62,7 +72,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.ThumbUrl))
-				ThumbUrl = !string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
+				ThumbUrl = song.GetThumbUrl();
 
 			if (fields.HasFlag(SongOptionalFields.WebLinks))
 				WebLinks = song.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
@@ -185,6 +195,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember(EmitDefaultValue = false)]
 		public LyricsForSongContract[] Lyrics { get; set; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public EntryThumbForApiContract MainPicture { get; set; }
+
 		/// <summary>
 		/// Id of the entry this entry was merged to, if any.
 		/// </summary>
@@ -275,11 +288,12 @@ namespace VocaDb.Model.DataContracts.Songs {
 		Albums = 2,
 		Artists = 4,
 		Lyrics = 8,
-		Names = 16,
-		PVs = 32,
-		Tags = 64,
-		ThumbUrl = 128,
-		WebLinks = 256
+		MainPicture = 16,
+		Names = 32,
+		PVs = 64,
+		Tags = 128,
+		ThumbUrl = 256,
+		WebLinks = 512
 
 	}
 

@@ -145,7 +145,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
 
-				var thumb = VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
+				var thumb = song.GetThumbUrl();
 
 				if (!string.IsNullOrEmpty(thumb)) {
 					MainPicture = new EntryThumbForApiContract { UrlSmallThumb = thumb, UrlThumb = thumb, UrlTinyThumb = thumb };

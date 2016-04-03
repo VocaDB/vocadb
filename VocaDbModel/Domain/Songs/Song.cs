@@ -316,6 +316,12 @@ namespace VocaDb.Model.Domain.Songs {
 
 		ITagManager IEntryWithTags.Tags => Tags;
 
+		/// <summary>
+		/// Absolute URL to primary thumbnail for this song, based on the PVs list.
+		/// For example, http://tn-skr1.smilevideo.jp/smile?i=12849032.
+		/// Can be null or empty if no thumbnail is available.
+		/// Also see <see cref="GetThumbUrl"/>.
+		/// </summary>
 		public virtual string ThumbUrl { get; set; }
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
@@ -525,6 +531,20 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual ArchivedSongVersion GetLatestVersion() {
 			return ArchivedVersionsManager.GetLatestVersion();
+		}
+
+		/// <summary>
+		/// Gets primary thumbnail URL for this song.
+		/// For new songs this is saved directly to the song entry, but for older entries the PVs list needs to be loaded.
+		/// Therefore, there might be some performance penalty.
+		/// See <see cref="ThumbUrl"/>.
+		/// </summary>
+		/// <returns>
+		/// Absolute URL to song thumbnail. For example, http://tn-skr1.smilevideo.jp/smile?i=12849032. 
+		/// Can be null or empty if no thumbnail is available.
+		/// </returns>
+		public virtual string GetThumbUrl() {
+			return !string.IsNullOrEmpty(ThumbUrl) ? ThumbUrl : VideoServiceHelper.GetThumbUrl(PVs.PVs);
 		}
 
 		public virtual bool HasArtist(Artist artist) {
