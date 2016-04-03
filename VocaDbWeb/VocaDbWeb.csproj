@@ -323,6 +323,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonMessages.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\CommonMessages.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonMessages.zh-Hans.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ContentLanguageSelectionNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -502,6 +507,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WebLinkCategoryNames.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\WebLinkCategoryNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebLinkCategoryNames.zh-Hans.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_GlobalResources\AlbumArchiveReasonNames.Designer.cs">
@@ -1701,6 +1711,14 @@
     <Content Include="App_GlobalResources\EntryStatusNames.zh-Hans.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\WebLinkCategoryNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>WebLinkCategoryNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\CommonMessages.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>CommonMessages.zh-Hans.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Helpers\HelperStrings.zh-Hans.resx" />
@@ -3745,6 +3763,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.ja.resx" />
@@ -3896,6 +3915,7 @@
       <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\Song\EditStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.ja.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

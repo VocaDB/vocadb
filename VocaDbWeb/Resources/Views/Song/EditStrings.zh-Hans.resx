@@ -117,37 +117,103 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cover" xml:space="preserve">
-    <value>翻唱曲</value>
+  <data name="ArActions" xml:space="preserve">
+    <value>Actions</value>
   </data>
-  <data name="DramaPV" xml:space="preserve">
-    <value>短剧PV</value>
+  <data name="ArAddArtistTitle" xml:space="preserve">
+    <value>Add artist</value>
   </data>
-  <data name="Instrumental" xml:space="preserve">
-    <value>纯音乐</value>
+  <data name="ArArtist" xml:space="preserve">
+    <value>Artist</value>
   </data>
-  <data name="Live" xml:space="preserve">
-    <value>Live recording</value>
+  <data name="ArArtistsNote" xml:space="preserve">
+    <value>Note that you can tag artists for a song much faster after tagging the album first.</value>
   </data>
-  <data name="Mashup" xml:space="preserve">
-    <value>混搭曲</value>
+  <data name="ArRoles" xml:space="preserve">
+    <value>Roles</value>
   </data>
-  <data name="MusicPV" xml:space="preserve">
-    <value>音乐PV</value>
+  <data name="ArSupport" xml:space="preserve">
+    <value>Support</value>
   </data>
-  <data name="Original" xml:space="preserve">
-    <value>原创曲</value>
+  <data name="BaDuration" xml:space="preserve">
+    <value>时长（精确到分秒）</value>
   </data>
-  <data name="Other" xml:space="preserve">
-    <value>其他</value>
+  <data name="BaNames" xml:space="preserve">
+    <value>主名称 (至少用一种语言填写)</value>
   </data>
-  <data name="Remaster" xml:space="preserve">
-    <value>重调版</value>
+  <data name="BaNotes" xml:space="preserve">
+    <value>备注</value>
   </data>
-  <data name="Remix" xml:space="preserve">
-    <value>Remix</value>
+  <data name="BaOriginalVersion" xml:space="preserve">
+    <value>原版</value>
   </data>
-  <data name="Unspecified" xml:space="preserve">
-    <value>未定义</value>
+  <data name="BaOriginalVersionHelp" xml:space="preserve">
+    <value>如果本站有这首曲子的原版的信息，请在此处填写。您可以通过搜索歌名的方式找到此曲的原版。</value>
+  </data>
+  <data name="BaPublishDate" xml:space="preserve">
+    <value>发布日期</value>
+  </data>
+  <data name="BaPublishDateHelp" xml:space="preserve">
+    <value>这首歌的发布日期。（如果是专辑曲，请填写专辑的发售日期）</value>
+  </data>
+  <data name="BaSongType" xml:space="preserve">
+    <value>歌曲类别</value>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>Edit song {0}</value>
+  </data>
+  <data name="LyAddRow" xml:space="preserve">
+    <value>Add row</value>
+  </data>
+  <data name="LyLanguage" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="LySource" xml:space="preserve">
+    <value>Source:</value>
+  </data>
+  <data name="PvAddMedia" xml:space="preserve">
+    <value>Add media</value>
+  </data>
+  <data name="PvAuthor" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="PvDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="PvInstrumentalNote" xml:space="preserve">
+    <value>Note that instrumental versions are to be added in external links instead of media.</value>
+  </data>
+  <data name="PvLength" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="PvName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PvNewType" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="PvService" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="PvSupportedServices" xml:space="preserve">
+    <value>Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>
+  </data>
+  <data name="PvType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="PvUrl" xml:space="preserve">
+    <value>URL:</value>
+  </data>
+  <data name="TabArtists" xml:space="preserve">
+    <value>艺术家</value>
+  </data>
+  <data name="TabBasicInfo" xml:space="preserve">
+    <value>基本信息</value>
+  </data>
+  <data name="TabLyrics" xml:space="preserve">
+    <value>歌词</value>
+  </data>
+  <data name="TabMedia" xml:space="preserve">
+    <value>媒体文件</value>
   </data>
 </root>

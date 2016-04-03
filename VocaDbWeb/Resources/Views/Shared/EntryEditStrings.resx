@@ -170,6 +170,12 @@ Additional names can be entered as aliases. See more in the guide.</value>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="TranslatedStringAddEnglishTranslation" xml:space="preserve">
+    <value>Add English translation</value>
+  </data>
+  <data name="TranslatedStringEnglishTranslation" xml:space="preserve">
+    <value>English translation</value>
+  </data>
   <data name="UpdateNotes" xml:space="preserve">
     <value>Update notes (optional)</value>
   </data>

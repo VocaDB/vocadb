@@ -196,6 +196,24 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add English translation.
+        /// </summary>
+        public static string TranslatedStringAddEnglishTranslation {
+            get {
+                return ResourceManager.GetString("TranslatedStringAddEnglishTranslation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English translation.
+        /// </summary>
+        public static string TranslatedStringEnglishTranslation {
+            get {
+                return ResourceManager.GetString("TranslatedStringEnglishTranslation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update notes (optional).
         /// </summary>
         public static string UpdateNotes {

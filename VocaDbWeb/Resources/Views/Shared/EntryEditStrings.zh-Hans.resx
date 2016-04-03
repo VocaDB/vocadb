@@ -117,37 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cover" xml:space="preserve">
-    <value>翻唱曲</value>
+  <data name="Aliases" xml:space="preserve">
+    <value>别名（可选）</value>
   </data>
-  <data name="DramaPV" xml:space="preserve">
-    <value>短剧PV</value>
+  <data name="AliasesDesc" xml:space="preserve">
+    <value>别名项为可选填写项目，不限语言。</value>
   </data>
-  <data name="Instrumental" xml:space="preserve">
-    <value>纯音乐</value>
+  <data name="BasicInfo" xml:space="preserve">
+    <value>基本信息</value>
   </data>
-  <data name="Live" xml:space="preserve">
-    <value>Live recording</value>
+  <data name="ConcurrentEditWarning" xml:space="preserve">
+    <value>{0} also edited this entry {1} minute(s) ago.</value>
   </data>
-  <data name="Mashup" xml:space="preserve">
-    <value>混搭曲</value>
+  <data name="ConcurrentEditWarningNow" xml:space="preserve">
+    <value>{0} is also editing this entry right now!</value>
   </data>
-  <data name="MusicPV" xml:space="preserve">
-    <value>音乐PV</value>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Please confirm that you wish to delete this entry. You may provide additional explanation below (optional).</value>
   </data>
-  <data name="Original" xml:space="preserve">
-    <value>原创曲</value>
+  <data name="DefaultLanguageHelp" xml:space="preserve">
+    <value>该词条的初始名所使用的语言。</value>
   </data>
-  <data name="Other" xml:space="preserve">
-    <value>其他</value>
+  <data name="DefaultLanguageSelection" xml:space="preserve">
+    <value>原语言</value>
   </data>
-  <data name="Remaster" xml:space="preserve">
-    <value>重调版</value>
+  <data name="ExternalLinksQuickHelp" xml:space="preserve">
+    <value>External links relevant to this entry. Keep in mind no illegal/direct download links will be allowed!&lt;br /&gt;
+&lt;br /&gt;
+Fill in the URL first, and description and category will be guessed automatically if the domain is known.&lt;br /&gt;
+&lt;br /&gt;
+Official: artist's official site (usually blogs, websites, Facebook etc.).&lt;br /&gt;
+Commercial: authorized sales such as Amazon and CDJapan.&lt;br /&gt;
+Reference: fansites with useful information such as wikis.&lt;br /&gt;
+Other: for those that don't fit into anything above.&lt;br /&gt;</value>
   </data>
-  <data name="Remix" xml:space="preserve">
-    <value>Remix</value>
+  <data name="Merge" xml:space="preserve">
+    <value>合并</value>
   </data>
-  <data name="Unspecified" xml:space="preserve">
-    <value>未定义</value>
+  <data name="NameHelp" xml:space="preserve">
+    <value>如果初始名不是英文，或者无法确认初始名的语言，请将其填入非英文框。如果能确认初始名的读音，请将其填入罗马字框。如果初始名是英文或有英文译名，请将其填入英文框。
+
+您不需要填满所有的框，系统会根据您填的内容进行自动识别需要显示的名字。</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="SaveWarning" xml:space="preserve">
+    <value>This entry has validation warnings. Are you sure you want to save it as finished?</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="TranslatedStringAddEnglishTranslation" xml:space="preserve">
+    <value>添加英文译文</value>
+  </data>
+  <data name="TranslatedStringEnglishTranslation" xml:space="preserve">
+    <value>英文译文</value>
+  </data>
+  <data name="UpdateNotes" xml:space="preserve">
+    <value>留言（可选）</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>外部链接</value>
   </data>
 </root>

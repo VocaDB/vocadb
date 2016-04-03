@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EntryValidationNoErrors" xml:space="preserve">
+    <value>本词条包含了所有必要的信息。</value>
+  </data>
+  <data name="GitHubMarkdown" xml:space="preserve">
+    <value>支持用GitHub式Markdown语言进行编辑</value>
+  </data>
+  <data name="IsSupportedForFormatting" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NameNewRow" xml:space="preserve">
+    <value>添加新的内容</value>
+  </data>
+  <data name="ReturnWithoutSaving" xml:space="preserve">
+    <value>不保存修改返回</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>保存修改</value>
+  </data>
   <data name="StatusDescriptionApproved" xml:space="preserve">
     <value>此词条已经过信任用户的核准，对词条的编辑受到限制。</value>
   </data>
@@ -128,5 +146,17 @@
   </data>
   <data name="StatusDescriptionLocked" xml:space="preserve">
     <value>Locked entries can only be edited by staff members.</value>
+  </data>
+  <data name="WebLinkCategoryTitle" xml:space="preserve">
+    <value>类别</value>
+  </data>
+  <data name="WebLinkDescriptionTitle" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="WebLinkNewRow" xml:space="preserve">
+    <value>添加新的内容</value>
+  </data>
+  <data name="WebLinkUrlTitle" xml:space="preserve">
+    <value>网址</value>
   </data>
 </root>

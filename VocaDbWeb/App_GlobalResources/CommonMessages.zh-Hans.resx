@@ -117,37 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cover" xml:space="preserve">
-    <value>翻唱曲</value>
-  </data>
-  <data name="DramaPV" xml:space="preserve">
-    <value>短剧PV</value>
-  </data>
-  <data name="Instrumental" xml:space="preserve">
-    <value>纯音乐</value>
-  </data>
-  <data name="Live" xml:space="preserve">
-    <value>Live recording</value>
-  </data>
-  <data name="Mashup" xml:space="preserve">
-    <value>混搭曲</value>
-  </data>
-  <data name="MusicPV" xml:space="preserve">
-    <value>音乐PV</value>
-  </data>
-  <data name="Original" xml:space="preserve">
-    <value>原创曲</value>
-  </data>
-  <data name="Other" xml:space="preserve">
-    <value>其他</value>
-  </data>
-  <data name="Remaster" xml:space="preserve">
-    <value>重调版</value>
-  </data>
-  <data name="Remix" xml:space="preserve">
-    <value>Remix</value>
-  </data>
-  <data name="Unspecified" xml:space="preserve">
-    <value>未定义</value>
+  <data name="EntryStatusExplanation" xml:space="preserve">
+    <value>草稿：表示词条缺少一些必要的信息或需要被更正。&lt;br /&gt;
+已完成：表示词条包含了所有必要的信息，但未经过信任用户的核准。&lt;br /&gt;
+已核准：表示词条已经过信任用户的核准。经过核准后的词条只能由信任用户进行编辑。</value>
   </data>
 </root>
