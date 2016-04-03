@@ -237,6 +237,10 @@ namespace VocaDb.Model.DataContracts.Api {
 		[DataMember]
 		public int Id { get; set; }
 
+		/// <summary>
+		/// Entry main picture, in multiple sizes if available.
+		/// For songs this is the thumbnail.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }
 

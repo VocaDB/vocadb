@@ -83,7 +83,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="query">Text query.</param>
 		/// <param name="nameMatchMode">Name match mode.</param>
 		/// <param name="maxResults">Maximum number of results.</param>
-		/// <returns>List of album names.</returns>
+		/// <returns>List of entry names.</returns>
 		[Route("names")]
 		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) {
 			

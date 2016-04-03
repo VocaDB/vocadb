@@ -77,17 +77,17 @@ namespace VocaDb.Model.Domain.Images {
 		Original = 1,
 
 		/// <summary>
-		/// Large thumbnail, default size is 250x250
+		/// Large thumbnail, default size is 250x250px.
 		/// </summary>
 		Thumb = 2,
 
 		/// <summary>
-		/// Small thumbnail, default size is 150x150
+		/// Small thumbnail, default size is 150x150px.
 		/// </summary>
 		SmallThumb = 4,
 
 		/// <summary>
-		/// Tiny thumbnail, default size is 70x70
+		/// Tiny thumbnail, default size is 70x70px.
 		/// </summary>
 		TinyThumb = 8,
 
