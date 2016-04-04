@@ -1,4 +1,5 @@
-﻿@* Binding context: PVEditViewModel, parent context: PVListEditViewModel *@
+﻿@using VocaDb.Web.Helpers
+@* Binding context: PVEditViewModel, parent context: PVListEditViewModel *@
 
 <tr>
 	<td>
@@ -8,7 +9,9 @@
 		</a>
 	</td>
 	<td>
-		{{ pvType }}
+		@foreach (var pvType in Translate.PVTypeNames.AllFields) {
+			<span visible="{{ pvType == '@pvType.Id.ToString()' }}">@pvType.Name</span>
+		}
 	</td>
 	<td>
 		<input type="text" data-bind="textInput: name" size="40" maxlength="200" class="input-xlarge" />
