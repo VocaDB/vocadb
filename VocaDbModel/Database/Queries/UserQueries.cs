@@ -110,14 +110,27 @@ namespace VocaDb.Model.Database.Queries {
 
 		private int[] GetFavoriteTagIds(IDatabaseContext<User> ctx, User user) {
 
-			return ctx
+			/* 
+				Note: There have been some performance problems with this query.
+				There's a DB index for both AllSongTagUsages (Tag-Song) and UserFavorites (Song-User).
+				Attempting to do the sorting by count in memory.
+			*/
+
+			var tags = ctx
 				.Query<Tag>()
-				.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution
-					&& t.AllSongTagUsages.Any(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
-				.OrderByDescending(t => t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id)))
-				.Select(t => t.Id)
+				.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution)
+				.Select(t => new {
+					Id = t.Id,
+					Count = t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id))
+				})
+				.ToArray()
+				.Where(t => t.Count > 0)
+				.OrderByDescending(t => t.Count)
 				.Take(8)
+				.Select(t => t.Id)
 				.ToArray();
+
+			return tags;
 
 		}
 
