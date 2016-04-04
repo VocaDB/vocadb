@@ -1006,6 +1006,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\SongValidationErrors.ru.resx" />
+    <EmbeddedResource Include="Resources\SongValidationErrors.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.de.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.ja.resx" />

@@ -117,109 +117,133 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Actions" xml:space="preserve">
-    <value>Actions</value>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add track</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>添加</value>
+  <data name="ArAddArtist" xml:space="preserve">
+    <value>Add artist</value>
   </data>
-  <data name="Albums" xml:space="preserve">
-    <value>专辑</value>
+  <data name="ArtistRolesTitle" xml:space="preserve">
+    <value>艺术家职务</value>
   </data>
-  <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+  <data name="ArtistsForSong" xml:space="preserve">
+    <value>Artists for song {0}</value>
   </data>
-  <data name="ArtistName" xml:space="preserve">
-    <value>Name</value>
+  <data name="ArtistsTab" xml:space="preserve">
+    <value>Artists</value>
   </data>
-  <data name="Artists" xml:space="preserve">
-    <value>艺术家</value>
+  <data name="BaCatNum" xml:space="preserve">
+    <value>Catalog number</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="BaDescription" xml:space="preserve">
+    <value>Album description</value>
   </data>
-  <data name="Clear" xml:space="preserve">
-    <value>Clear</value>
+  <data name="BaDiscType" xml:space="preserve">
+    <value>Record type</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>删除</value>
+  <data name="BaDiscTypeExplanation" xml:space="preserve">
+    <value>If unsure of which type to use, try to find out how the artists themselves call the album. For more elaborate descriptions, please refer to Wikipedia, Discogs or Musicbrainz.</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="BaMainCoverPicture" xml:space="preserve">
+    <value>Main cover picture</value>
   </data>
-  <data name="Drafts" xml:space="preserve">
-    <value>Drafts</value>
+  <data name="BaNames" xml:space="preserve">
+    <value>Primary name (in one or more languages)</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>编辑</value>
+  <data name="BaPictureInfo" xml:space="preserve">
+    <value>Allowed types: {0}. Maximum size is {1} MB.</value>
   </data>
-  <data name="EmailAddress" xml:space="preserve">
-    <value>Email address</value>
+  <data name="BaReleaseDate" xml:space="preserve">
+    <value>Release date</value>
   </data>
-  <data name="EntriesFound" xml:space="preserve">
-    <value>Entries found: {0}</value>
+  <data name="BaReleaseDay" xml:space="preserve">
+    <value>Day</value>
   </data>
-  <data name="FeaturedSongLists" xml:space="preserve">
-    <value>精选歌单</value>
+  <data name="BaReleaseEvent" xml:space="preserve">
+    <value>Release event</value>
   </data>
-  <data name="Filter" xml:space="preserve">
-    <value>Filter</value>
+  <data name="BaReleaseMonth" xml:space="preserve">
+    <value>Month</value>
   </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Loading...</value>
+  <data name="BaReleaseYear" xml:space="preserve">
+    <value>Year</value>
   </data>
-  <data name="Media" xml:space="preserve">
+  <data name="ChangesAreSavedImmediately" xml:space="preserve">
+    <value>Changes on this tab are saved immediately.</value>
+  </data>
+  <data name="ConfirmMoveToTrash" xml:space="preserve">
+    <value>Are you sure you want to move this album to trash?</value>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>Edit album - {0}</value>
+  </data>
+  <data name="ImagePreview" xml:space="preserve">
+    <value>Image preview</value>
+  </data>
+  <data name="MediaTab" xml:space="preserve">
     <value>Media</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>名字</value>
+  <data name="MoveToTrash" xml:space="preserve">
+    <value>Move to trash</value>
   </data>
-  <data name="PVs" xml:space="preserve">
-    <value>PVs</value>
+  <data name="PiCreateNew" xml:space="preserve">
+    <value>Create new</value>
   </data>
-  <data name="ReleaseEvents" xml:space="preserve">
-    <value>相关活动</value>
+  <data name="PicturesTab" xml:space="preserve">
+    <value>Additional pictures</value>
   </data>
-  <data name="Remove" xml:space="preserve">
-    <value>删除</value>
+  <data name="PiPicturesGuide" xml:space="preserve">
+    <value>Note that the main picture is edited on the "Basic Info" tab. Please only upload pictures relevant to this album, nothing else.</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
+  <data name="PvAdd" xml:space="preserve">
+    <value>Add media</value>
   </data>
-  <data name="Search" xml:space="preserve">
-    <value>搜索</value>
+  <data name="PvAuthor" xml:space="preserve">
+    <value>Author</value>
   </data>
-  <data name="ShowMore" xml:space="preserve">
-    <value>显示更多</value>
+  <data name="PvIntro" xml:space="preserve">
+    <value>You can use this page to add advertisements or crossfades related to this album.</value>
   </data>
-  <data name="Songs" xml:space="preserve">
-    <value>歌曲</value>
+  <data name="PvName" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="Tag" xml:space="preserve">
-    <value>标签</value>
+  <data name="PvService" xml:space="preserve">
+    <value>Service</value>
   </data>
-  <data name="Tags" xml:space="preserve">
-    <value>标签</value>
+  <data name="PvSupportedServices" xml:space="preserve">
+    <value>Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>
   </data>
-  <data name="TopFavoritedSongs" xml:space="preserve">
-    <value>高分歌曲</value>
+  <data name="PvType" xml:space="preserve">
+    <value>Type</value>
   </data>
-  <data name="TopRatedAlbums" xml:space="preserve">
-    <value>高分专辑</value>
+  <data name="PvURL" xml:space="preserve">
+    <value>URL:</value>
   </data>
-  <data name="Total" xml:space="preserve">
-    <value>total</value>
+  <data name="TrackPropertiesTitle" xml:space="preserve">
+    <value>Track properties</value>
   </data>
-  <data name="Type" xml:space="preserve">
-    <value>类别</value>
+  <data name="TracksTab" xml:space="preserve">
+    <value>Tracks</value>
   </data>
-  <data name="Unsorted" xml:space="preserve">
-    <value>Unsorted</value>
+  <data name="TrAddTrackHelp" xml:space="preserve">
+    <value>Note: do not write the artist name or track number into the track name. Artists will be specified separately.</value>
   </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
+  <data name="TrDiscHead" xml:space="preserve">
+    <value>Disc</value>
   </data>
-  <data name="Users" xml:space="preserve">
-    <value>用户</value>
+  <data name="TrNameHead" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="TrSetArtists" xml:space="preserve">
+    <value>Set artists for selected tracks</value>
+  </data>
+  <data name="TrTrackHead" xml:space="preserve">
+    <value>Track</value>
+  </data>
+  <data name="TrTrackNameHelp" xml:space="preserve">
+    <value>Click track name to edit artists.</value>
+  </data>
+  <data name="UnableToSaveProperties" xml:space="preserve">
+    <value>Unable to save properties</value>
   </data>
 </root>

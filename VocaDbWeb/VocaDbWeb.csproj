@@ -303,6 +303,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistRoleNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ArtistRoleNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistRoleNames.zh-Hans.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Artists\ArtistSortRuleNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -388,10 +393,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PVTypeDescriptions.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\PVTypeDescriptions.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PVTypeDescriptions.zh-Hans.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\PVTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PVTypeNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PVTypeNames.zh-Hans.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PVTypeNames.zh-Hans.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ReleaseEventEditableFieldNames.de.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1719,6 +1734,18 @@
     <Content Include="App_GlobalResources\CommonMessages.zh-Hans.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>CommonMessages.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ArtistRoleNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistRoleNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PVTypeNames.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PVTypeNames.zh-Hans.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PVTypeDescriptions.zh-Hans.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PVTypeDescriptions.zh-Hans.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Helpers\HelperStrings.zh-Hans.resx" />
@@ -3575,6 +3602,7 @@
       <CustomToolNamespace>ViewRes.Album</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Album\CreateStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Album\CreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Album\CreateStrings.ja.resx">
@@ -3608,6 +3636,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\EditStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.ja.resx" />

@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ArActions" xml:space="preserve">
-    <value>Actions</value>
+    <value>操作</value>
   </data>
   <data name="ArAddArtistTitle" xml:space="preserve">
     <value>Add artist</value>
   </data>
   <data name="ArArtist" xml:space="preserve">
-    <value>Artist</value>
+    <value>艺术家</value>
   </data>
   <data name="ArArtistsNote" xml:space="preserve">
-    <value>Note that you can tag artists for a song much faster after tagging the album first.</value>
+    <value>注意，如果这首歌被收录于一个专辑，那么建议您在添加完专辑的艺术家信息之后编辑歌曲信息，这样会方便很多。</value>
   </data>
   <data name="ArRoles" xml:space="preserve">
-    <value>Roles</value>
+    <value>职务</value>
   </data>
   <data name="ArSupport" xml:space="preserve">
-    <value>Support</value>
+    <value>辅助</value>
   </data>
   <data name="BaDuration" xml:space="preserve">
     <value>时长（精确到分秒）</value>
@@ -163,46 +163,46 @@
     <value>Edit song {0}</value>
   </data>
   <data name="LyAddRow" xml:space="preserve">
-    <value>Add row</value>
+    <value>添加新的内容</value>
   </data>
   <data name="LyLanguage" xml:space="preserve">
-    <value>Language:</value>
+    <value>语言：</value>
   </data>
   <data name="LySource" xml:space="preserve">
-    <value>Source:</value>
+    <value>来源：</value>
   </data>
   <data name="PvAddMedia" xml:space="preserve">
     <value>Add media</value>
   </data>
   <data name="PvAuthor" xml:space="preserve">
-    <value>Author</value>
+    <value>上传者</value>
   </data>
   <data name="PvDate" xml:space="preserve">
-    <value>Date</value>
+    <value>发布日期</value>
   </data>
   <data name="PvInstrumentalNote" xml:space="preserve">
     <value>Note that instrumental versions are to be added in external links instead of media.</value>
   </data>
   <data name="PvLength" xml:space="preserve">
-    <value>Length</value>
+    <value>时长</value>
   </data>
   <data name="PvName" xml:space="preserve">
-    <value>Name</value>
+    <value>名字</value>
   </data>
   <data name="PvNewType" xml:space="preserve">
-    <value>Type:</value>
+    <value>类别:</value>
   </data>
   <data name="PvService" xml:space="preserve">
-    <value>Service</value>
+    <value>网站</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>
+    <value>目前仅支持以下网站：YouTube，Niconico动画，Vimeo，SoundCloud，Piapro以及Bilibili。</value>
   </data>
   <data name="PvType" xml:space="preserve">
-    <value>Type</value>
+    <value>类别</value>
   </data>
   <data name="PvUrl" xml:space="preserve">
-    <value>URL:</value>
+    <value>网址:</value>
   </data>
   <data name="TabArtists" xml:space="preserve">
     <value>艺术家</value>
