@@ -78,7 +78,7 @@ namespace VocaDb.Web.Helpers {
 		}
 
 		public static SelectList CreateEnumList<T>(object selectedValue, TranslateableEnum<T> enumType) where T : struct, IConvertible {
-			return CreateEnumList(selectedValue, enumType.ValuesAndNames);
+			return CreateEnumList(selectedValue, enumType.AllFields);
 		}
 
 		public static SelectList CreateEnumList<T>(object selectedValue, IEnumerable<KeyValuePair<T, string>> vals) where T : struct, IConvertible {

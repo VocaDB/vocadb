@@ -207,5 +207,5 @@
 }
 
 @helper SongTypesDropdownKnockout(string binding) {
-	@KnockoutHelpers.CheckBoxButtons(Translate.SongTypeNames.GetValuesAndNames(AppConfig.SongTypes).ToDictionary(k => k.Key.ToString(), k => k.Value), binding);
+	@KnockoutHelpers.CheckBoxButtons(Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes), binding);
 }

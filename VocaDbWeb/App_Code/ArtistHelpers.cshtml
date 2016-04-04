@@ -167,8 +167,8 @@
 
 @helper ArtistTypesDropdownKnockout(string binding) {
 	<select data-bind="value: @(binding)">
-		@foreach (var artistType in Translate.ArtistTypeNames.GetValuesAndNames(AppConfig.ArtistTypes)) {
-			<option value="@artistType.Key">@artistType.Value</option>
+		@foreach (var artistType in Translate.ArtistTypeNames.GetTranslatedFields(AppConfig.ArtistTypes)) {
+			<option value="@artistType.Id">@artistType.Name</option>
 		}
 	</select>
 }

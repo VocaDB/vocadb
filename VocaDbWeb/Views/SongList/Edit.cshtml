@@ -115,7 +115,7 @@
 				@Helpers.HelpLabel(Res.Status, Resources.CommonMessages.EntryStatusExplanation)
 			</div>
 			<div class="editor-field">
-				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses)), "value: status")
+				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetTranslatedFields(Model.AllowedEntryStatuses)), "value: status")
 			</div>
 
 		</div>

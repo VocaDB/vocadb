@@ -55,12 +55,6 @@ namespace VocaDb.Model.Service.Translations {
 			}
 		}
 
-		public Dictionary<TEnum, string> ValuesAndNames {
-			get {
-				return GetValuesAndNames(Values);
-			}
-		}
-
 		public Dictionary<string, string> ValuesAndNamesStrings {
 			get {
 				return GetValuesAndNamesStrings(Values);
@@ -116,17 +110,17 @@ namespace VocaDb.Model.Service.Translations {
 		
 	}
 
-	public class TranslateableEnumField<T> where T : struct, IConvertible {
+	public struct TranslateableEnumField<T> where T : struct, IConvertible {
 
 		public TranslateableEnumField(T id, string translation) {
-			this.Id = id;
-			this.Name = translation;
+			Id = id;
+			Name = translation;
 		}
 
 		[JsonConverter(typeof(StringEnumConverter))]
-		public T Id { get; set; }
+		public T Id { get; }
 
-		public string Name { get; set; }
+		public string Name { get; }
 
 		public KeyValuePair<T, string> ToKeyValuePair() {
 			return new KeyValuePair<T, string>(Id, Name);
