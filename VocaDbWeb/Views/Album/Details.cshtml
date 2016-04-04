@@ -398,10 +398,10 @@
 				};
 			vdb.resources.albumDetails = @Html.Raw(JsonHelpers.Serialize(new { download = AjaxRes.AlbumStrings.Download }));
 
-			var reportTypes = @ToJS(Translate.AlbumReportTypeNames.ValuesAndNames.Select(r => new {
-				Id = r.Key,
-				Name = r.Value,
-				NotesRequired = AlbumReport.ReportTypesWithRequiredNotes.Contains(r.Key)
+			var reportTypes = @ToJS(Translate.AlbumReportTypeNames.Select(r => new {
+				r.Id,
+				r.Name,
+				NotesRequired = AlbumReport.ReportTypesWithRequiredNotes.Contains(r.Id)
 			}));
 
 			var jsonModel = @Html.Raw(Model.Json);

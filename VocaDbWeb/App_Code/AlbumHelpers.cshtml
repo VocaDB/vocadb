@@ -115,7 +115,7 @@
 }
 
 @helper DiscTypesDropdownKnockout(string binding) {
-	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.ValuesAndNames.ToDictionary(k => k.Key.ToString(), k => k.Value), binding)
+	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.ValuesAndNamesStrings, binding)
 }
 
 @helper EditCollectionDialog(PurchaseStatus purchaseStatus, MediaType mediaType) {

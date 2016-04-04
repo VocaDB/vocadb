@@ -402,10 +402,10 @@
 			var tagUsages = @Html.Raw(JsonHelpers.Serialize(Model.Tags));
 			var latestComments = @ToJS(Model.LatestComments);
 
-			var reportTypes = @ToJS(Translate.ArtistReportTypeNames.ValuesAndNames.Select(r => new {
-				Id = r.Key,
-				Name = r.Value,
-				NotesRequired = ArtistReport.ReportTypesWithRequiredNotes.Contains(r.Key)
+			var reportTypes = @ToJS(Translate.ArtistReportTypeNames.Select(r => new {
+				r.Id,
+				r.Name,
+				NotesRequired = ArtistReport.ReportTypesWithRequiredNotes.Contains(r.Id)
 			}));
 
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(artistRepo, @Model.Id,

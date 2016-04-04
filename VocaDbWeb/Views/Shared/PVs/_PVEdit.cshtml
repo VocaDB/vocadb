@@ -9,7 +9,7 @@
 		</a>
 	</td>
 	<td>
-		@foreach (var pvType in Translate.PVTypeNames.AllFields) {
+		@foreach (var pvType in Translate.PVTypeNames) {
 			<span visible="{{ pvType == '@pvType.Id.ToString()' }}">@pvType.Name</span>
 		}
 	</td>

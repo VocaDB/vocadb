@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,7 +9,8 @@ using Newtonsoft.Json.Converters;
 
 namespace VocaDb.Model.Service.Translations {
 
-	public class TranslateableEnum<TEnum> : ITranslateableEnum where TEnum : struct, IConvertible {
+	public class TranslateableEnum<TEnum> : ITranslateableEnum, IEnumerable<TranslateableEnumField<TEnum>> 
+		where TEnum : struct, IConvertible {
 
 		private readonly Func<ResourceManager> resourceManager;
 		private readonly TEnum[] values;
@@ -75,6 +77,14 @@ namespace VocaDb.Model.Service.Translations {
 				.Where(f => !except.Contains(f) && EnumVal<TEnum>.FlagIsSet(flags, f))
 				.Select(GetName));
 
+		}
+
+		IEnumerator IEnumerable.GetEnumerator() {
+			return GetEnumerator();
+		}
+
+		public IEnumerator<TranslateableEnumField<TEnum>> GetEnumerator() {
+			return AllFields.GetEnumerator();
 		}
 
 		public IEnumerable<TranslateableEnumField<TEnum>> GetTranslatedFields(params TEnum[] values) {
