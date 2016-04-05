@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DoLogin" xml:space="preserve">
-    <value>登陆</value>
+    <value>登录</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>忘记密码？</value>
@@ -127,16 +127,16 @@
     <value>在此电脑上自动登录</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>登陆</value>
+    <value>登录</value>
   </data>
   <data name="LoginUsingSSL" xml:space="preserve">
     <value>Login using SSL</value>
   </data>
   <data name="LoginWithoutSSL" xml:space="preserve">
-    <value>不使用SSL登陆(较为不安全)</value>
+    <value>不使用SSL登录(较为不安全)</value>
   </data>
   <data name="LoginWithTwitter" xml:space="preserve">
-    <value>用Twitter账号登陆</value>
+    <value>用Twitter账号登录</value>
   </data>
   <data name="NoAccount" xml:space="preserve">
     <value>没有账户？</value>
@@ -148,10 +148,10 @@
     <value>Password is required.</value>
   </data>
   <data name="RegisterHere" xml:space="preserve">
-    <value>点此注册。</value>
+    <value>点此注册</value>
   </data>
   <data name="ResetPass" xml:space="preserve">
-    <value>点此重设。</value>
+    <value>点此重设</value>
   </data>
   <data name="UnableToLogin" xml:space="preserve">
     <value>Unable to log in.</value>

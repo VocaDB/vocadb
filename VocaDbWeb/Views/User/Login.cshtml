@@ -45,9 +45,9 @@
 
 </form>
 
-@ViewRes.User.LoginStrings.NoAccount @Html.ActionLink(Res.RegisterHere, "Create"). <br />
+@Res.NoAccount @Html.ActionLink(Res.RegisterHere, "Create")@ViewRes.SharedStrings.Period<br />
 
-@ViewRes.User.LoginStrings.ForgotPassword @Html.ActionLink(Res.ResetPass, "ForgotPassword"). <br />
+@Res.ForgotPassword @Html.ActionLink(Res.ResetPass, "ForgotPassword")@ViewRes.SharedStrings.Period<br />
 
 @if (Model.SecureLogin) {
 	@Html.ActionLink(Res.LoginWithoutSSL, "Login", new { secureLogin = false })
