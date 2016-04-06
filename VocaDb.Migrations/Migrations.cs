@@ -4,6 +4,21 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201604062130)]
+	public class SongNotesExtend : Migration {
+
+		public override void Up() {
+			Delete.DefaultConstraint().OnTable(TableNames.Songs).OnColumn("Notes");
+			Alter.Table(TableNames.Songs).AlterColumn("Notes").AsString(2000).NotNullable().WithDefaultValue("");
+		}
+
+		public override void Down() {
+			Delete.DefaultConstraint().OnTable(TableNames.Songs).OnColumn("Notes");
+			Alter.Table(TableNames.Songs).AlterColumn("Notes").AsString(800).NotNullable().WithDefaultValue("");
+		}
+
+	}
+
 	[Migration(201603092000)]
 	public class UserLanguageCodeExtend : AutoReversingMigration {
 
