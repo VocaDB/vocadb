@@ -430,6 +430,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Loads a tag assuming that the tag exists - throws an exception if it doesn't.
+		/// </summary>
 		public T LoadTag<T>(int id, Func<Tag, T> fac) {
 
 			return HandleQuery(ctx => fac(LoadTagById(ctx, id)));

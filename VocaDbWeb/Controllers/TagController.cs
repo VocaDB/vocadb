@@ -174,7 +174,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Merge(int id) {
 
-			var tag = queries.GetTag(id, t => new TagBaseContract(t, PermissionContext.LanguagePreference));
+			var tag = queries.LoadTag(id, t => new TagBaseContract(t, PermissionContext.LanguagePreference));
 			return View(tag);
 
 		}
