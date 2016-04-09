@@ -375,6 +375,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Loads a tag which might not exist.
+		/// </summary>
+		/// <typeparam name="T">Return type.</typeparam>
+		/// <param name="id">Tag Id.</param>
+		/// <param name="fac">Return type factory. Cannot be null. This won't be called if the tag is not found.</param>
+		/// <param name="def">Value to be returned if the tag is not found.</param>
+		/// <returns>
+		/// Return value, constructed by <paramref name="fac"/>. If the tag was not found, this will be <paramref name="def"/>.
+		/// </returns>
 		public T GetTag<T>(int id, Func<Tag, T> fac, T def = default(T)) {
 
 			return HandleQuery(ctx => {

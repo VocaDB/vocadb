@@ -63,6 +63,10 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		/// <param name="id">Entity Id.</param>
 		/// <returns>The loaded entity. Cannot be null.</returns>
+		/// <remarks>
+		/// This method returns a proxy that will be loaded when it's first accessed. 
+		/// Accessing the proxy throws a NHibernate exception if the entity is not found.
+		/// </remarks>
 		T Load(object id);
 			
 		/// <summary>
