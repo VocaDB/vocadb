@@ -15,6 +15,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Helpers;
 
@@ -214,9 +215,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var versions = queries
 				.HandleQuery(ctx => ctx.Query()
 					.Where(a => !a.Deleted)
-					.Select(a => new { a.Id, a.Version })
-					.ToArray()
-					.Select(v => new EntryIdAndVersionContract(v.Id, v.Version))
+					.Select(a => new EntryIdAndVersionContract { Id = a.Id, Version = a.Version })
 					.ToArray());
 
 			return versions;
