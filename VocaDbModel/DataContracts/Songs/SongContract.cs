@@ -6,20 +6,15 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.DataContracts.Songs {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongContract : IEntryWithStatus {
 
-		string IEntryBase.DefaultName {
-			get { return Name; }
-		}
+		string IEntryBase.DefaultName => Name;
 
-		EntryType IEntryBase.EntryType {
-			get { return EntryType.Song; }
-		}
+		EntryType IEntryBase.EntryType => EntryType.Song;
 
 		public SongContract() {}
 
@@ -27,8 +22,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			: this(song, languagePreference, string.Empty) {
 
 			if (getThumbUrl) {
-				// TODO: Used on the front page. Should be moved elsewhere.
-				ThumbUrl = !string.IsNullOrEmpty(song.ThumbUrl) ? song.ThumbUrl : VideoServiceHelper.GetThumbUrl(song.PVs.PVs);
+				ThumbUrl = song.GetThumbUrl();
 			}
 
 		}
