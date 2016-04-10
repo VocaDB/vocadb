@@ -115,7 +115,7 @@ namespace VocaDb.Web.Controllers.Api {
 					data = RazorHelper.RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id), "EntryApiController", Request);
 					break;
 				case EntryType.Song:
-					data = RazorHelper.RenderPartialViewToString("SongPopupContent", songQueries.GetSongWithPVAndVote(id, false), "EntryApiController", Request);
+					data = RazorHelper.RenderPartialViewToString("SongPopupContent", songQueries.GetSong(id), "EntryApiController", Request);
 					break;
 			}
 

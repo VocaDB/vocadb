@@ -88,7 +88,7 @@ namespace VocaDb.Web.Controllers
 					data = RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id));
 					break;
 				case EntryType.Song:
-					data = RenderPartialViewToString("SongPopupContent", songService.GetSongWithPVAndVote(id, false));
+					data = RenderPartialViewToString("SongPopupContent", songService.GetSong(id));
 					break;
 			}
 

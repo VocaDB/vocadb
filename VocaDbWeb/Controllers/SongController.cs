@@ -493,8 +493,7 @@ namespace VocaDb.Web.Controllers
 
 		public string ThumbUrl(int id) {
 
-			var songWithPVs = queries.GetSongWithPVAndVote(id, false);
-			return (songWithPVs.ThumbUrl);
+			return queries.GetSong(id, s => s.GetThumbUrl());
 
 		}
 
