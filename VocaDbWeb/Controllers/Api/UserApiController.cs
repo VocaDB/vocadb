@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
@@ -28,6 +27,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
@@ -250,7 +250,7 @@ namespace VocaDb.Web.Controllers.Api {
 			bool getTotalCount = false) {
 
 			if (userId != permissionContext.LoggedUserId) {
-				throw new HttpResponseException(HttpStatusCode.Forbidden);
+				throw new HttpForbiddenException();
 			}
 
 			return messageQueries.GetList(permissionContext.LoggedUserId, new PagingProperties(start, maxResults, getTotalCount), 
@@ -268,7 +268,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public void DeleteMessages(int userId, [FromUri] int[] messageId) {
 
 			if (userId != permissionContext.LoggedUserId) {
-				throw new HttpResponseException(HttpStatusCode.Forbidden);
+				throw new HttpForbiddenException();
 			}
 
 			foreach (var id in messageId)
@@ -553,7 +553,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public TagUsageForApiContract[] PutAlbumTags(int albumId, TagBaseContract[] tags) {
 			
 			if (tags == null)
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+				throw new HttpBadRequestException();
 
 			return queries.SaveAlbumTags(albumId, tags, false);
 
@@ -565,7 +565,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public TagUsageForApiContract[] PutArtistTags(int artistId, TagBaseContract[] tags) {
 			
 			if (tags == null)
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+				throw new HttpBadRequestException();
 
 			return queries.SaveArtistTags(artistId, tags, false);
 
@@ -585,7 +585,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public void PostSongTags(int songId, TagBaseContract[] tags) {
 			
 			if (tags == null)
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+				throw new HttpBadRequestException();
 
 			queries.SaveSongTags(songId, tags, true);
 
@@ -597,7 +597,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public TagUsageForApiContract[] PutSongTags(int songId, TagBaseContract[] tags) {
 			
 			if (tags == null)
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+				throw new HttpBadRequestException();
 
 			return queries.SaveSongTags(songId, tags, false);
 
@@ -627,7 +627,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public void PostSetting(int userId, string settingName, [FromBody] string settingValue) {
 			
 			if (userId != 0 && userId != permissionContext.LoggedUserId)
-				throw new HttpResponseException(HttpStatusCode.Unauthorized);
+				throw new HttpForbiddenException();
 
 			IUserSetting setting = null;
 
@@ -641,7 +641,7 @@ namespace VocaDb.Web.Controllers.Api {
 			}
 
 			if (setting == null) {
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+				throw new HttpBadRequestException();
 			}
 
 			setting.ParseFromValue(settingValue);

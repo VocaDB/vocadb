@@ -46,6 +46,21 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		// http://blog.jukkahyv.com/2016/04/09/transform-object-to-another-type-in-a-linq-query/
+		public static IQueryable<TResult> SelectObject<TSource, TResult>(this IQueryable<TSource> query) {
+
+			var t1 = typeof(TSource);
+			var t2 = typeof(TResult);
+			var properties = t2.GetProperties().Where(p => p.CanWrite && t1.GetProperty(p.Name)?.PropertyType == p.PropertyType).ToArray();
+			var param = Expression.Parameter(typeof(TSource), "p");
+			var memberBindings = properties.Select(targetProperty => 
+				Expression.Bind(targetProperty, Expression.Property(param, t1.GetProperty(targetProperty.Name)))); // Prop = p.Prop
+			var memberInit = Expression.MemberInit(Expression.New(typeof(TResult)), memberBindings); // new T2 { Prop = p.Prop, ... }
+
+			return query.Select(Expression.Lambda<Func<TSource, TResult>>(memberInit, param));
+
+		}
+
 	}
 
 	public enum SortDirection {

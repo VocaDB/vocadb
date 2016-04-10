@@ -834,6 +834,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongListFeaturedCategoryNames.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="Code\Exceptions\HttpBadRequestException.cs" />
+    <Compile Include="Code\Exceptions\HttpForbiddenException.cs" />
     <Compile Include="Code\Filters\DisableWapFilter.cs" />
     <Compile Include="Code\Highcharts\Axis.cs" />
     <Compile Include="Code\Highcharts\CamelCaseStringEnumConverter.cs" />
