@@ -47,7 +47,7 @@
 	@Helpers.DraftMessage("glproducers")
 }
 
-<div id="tabs" class="js-cloak" data-bind="show">
+<div id="tabs" class="artist-details-page js-cloak" data-bind="show">
 
 	<ul>
 		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
@@ -73,7 +73,7 @@
 
 		<div class="clearfix">
 			<!-- Artist picture -->
-			<div class="pull-left">
+			<div class="pull-left entry-main-picture">
 				<a href="@Url.Action("Picture", new { id = Model.Id, v = Model.Version })">
 					<img src="@Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Thumb)" alt="@ViewRes.Artist.DetailsStrings.ArtistPicture" class="coverPic" />
 				</a>
