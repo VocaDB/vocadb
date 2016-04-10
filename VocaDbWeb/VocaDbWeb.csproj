@@ -849,7 +849,6 @@
     <Compile Include="Code\WebApi\ObjectNotFoundExceptionFilterAttribute.cs" />
     <Compile Include="Code\WebApi\UnhandledExceptionLogger.cs" />
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
-    <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\EnumTranslations.cs" />
     <Compile Include="Helpers\RazorHelper.cs" />
     <Compile Include="Helpers\UrlHelperExtender.cs" />

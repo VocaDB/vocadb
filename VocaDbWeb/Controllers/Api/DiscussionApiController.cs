@@ -12,6 +12,9 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Web.Controllers.Api {
 
+	/// <summary>
+	/// API queries for discussions.
+	/// </summary>
 	[RoutePrefix("api/discussions")]	
 	public class DiscussionApiController : ApiController {
 

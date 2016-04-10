@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
@@ -8,6 +7,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -95,13 +95,14 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("tooltip")]
 		public string GetToolTip(string url) {
 
-			if (string.IsNullOrWhiteSpace(url))
-				ApiHelper.ThrowHttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
+			if (string.IsNullOrWhiteSpace(url)) {
+				throw new HttpBadRequestException("URL must be specified");
+			}
 
 			var entryId = entryUrlParser.Parse(url, allowRelative: true);
 
 			if (entryId.IsEmpty) {
-				ApiHelper.ThrowHttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid URL");
+				throw new HttpBadRequestException("Invalid URL");
 			}
 
 			var data = string.Empty;
