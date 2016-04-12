@@ -1,5 +1,22 @@
 ﻿@model VocaDb.Model.Domain.Globalization.EnglishTranslatedString
-		   
+		  
+<!-- Viewmodel: EnglishTranslatedStringViewModel -->
+ 
+@helper Text(string str) {
+var maxLength = 400;
+	if (str == null || str.Length <= maxLength) {
+		@HtmlHelpers.FormatMarkdown(str)	
+	} else {
+		<div data-bind="visible: isFullDescriptionShown()">
+			@HtmlHelpers.FormatMarkdown(str)			
+		</div>
+		<div data-bind="visible: !isFullDescriptionShown()">
+			@HtmlHelpers.FormatMarkdown(str.Substring(0, maxLength) + "...")
+			<p><a href="" data-bind="click: showFullDescription">Show full description</a></p>
+		</div>
+	}
+}
+
 @if (Model.HasEnglish) {
 	<div>
 		<ul class="nav nav-pills pull-right no-margin">
@@ -15,12 +32,12 @@
 			</li>
 		</ul>
 		<div data-bind="visible: !showTranslatedDescription()">
-			@HtmlHelpers.FormatMarkdown(Model.Original)
+			@Text(Model.Original)
 		</div>
 		<div data-bind="visible: showTranslatedDescription()">
-			@HtmlHelpers.FormatMarkdown(Model.English)
+			@Text(Model.English)
 		</div>
 	</div>
 } else {
-	@HtmlHelpers.FormatMarkdown(Model.Original)
+	@Text(Model.Original)
 }

@@ -55,7 +55,7 @@ module vdb.viewModels {
 
         public showAllVersions: () => void;
 
-		public showTranslatedDescription: KnockoutObservable<boolean>;
+		public description: globalization.EnglishTranslatedStringViewModel;
 
         public songInListsDialog: SongInListsViewModel;
 
@@ -121,7 +121,7 @@ module vdb.viewModels {
             this.songListDialog = new SongListsViewModel(repository, resources, this.id);
 			this.selectedLyricsId = ko.observable(data.selectedLyricsId);
 			this.selectedPvId = ko.observable(data.selectedPvId);
-			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
+			this.description = new globalization.EnglishTranslatedStringViewModel(showTranslatedDescription);
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepository.getSongTagSelections(this.id, callback),

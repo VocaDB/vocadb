@@ -18,7 +18,7 @@ module vdb.viewModels {
 
 		public reportViewModel: ReportEntryViewModel;
 
-		public showTranslatedDescription: KnockoutObservable<boolean>;
+		public description: globalization.EnglishTranslatedStringViewModel;
 
 		public tagsEditViewModel: tags.TagsEditViewModel;
 
@@ -57,7 +57,7 @@ module vdb.viewModels {
 
 			this.id = data.id;
             this.downloadTagsDialog = new DownloadTagsViewModel(this.id, formatString);
-			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
+			this.description = new globalization.EnglishTranslatedStringViewModel(showTranslatedDescription);
 			this.comments = new EditableCommentsViewModel(repo, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, data.latestComments, true);
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({

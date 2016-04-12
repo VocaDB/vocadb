@@ -31,7 +31,7 @@ module vdb.viewModels {
 
 			this.lang = cls.globalization.ContentLanguagePreference[languagePreference];
 			this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(artistId, emailNotifications, siteNotifications, userRepository);
-			this.showTranslatedDescription = ko.observable((hasEnglishDescription
+			this.description = new globalization.EnglishTranslatedStringViewModel((hasEnglishDescription
 				&& (languagePreference === cls.globalization.ContentLanguagePreference.English || languagePreference === cls.globalization.ContentLanguagePreference.Romaji)));
 
 			this.comments = new EditableCommentsViewModel(repo, artistId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
@@ -83,7 +83,7 @@ module vdb.viewModels {
 		}
 
 		public showAllMembers = ko.observable(false);
-		public showTranslatedDescription: KnockoutObservable<boolean>;
+		public description: globalization.EnglishTranslatedStringViewModel;
 		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
 
 		public songsOverTimeChart = ko.observable<HighchartsOptions>(null);

@@ -2387,6 +2387,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\EntryPictureFileEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\EntryPictureFileListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Globalization\EnglishTranslatedStringEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Globalization\EnglishTranslatedStringViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Globalization\LocalizedStringWithIdEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\Models\PVServiceIcons.ts" />
     <TypeScriptCompile Include="Scripts\Models\Songs\SongType.ts" />

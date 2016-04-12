@@ -24,7 +24,7 @@ module vdb.viewModels.tags {
 
 			});
 
-			this.showTranslatedDescription = ko.observable(showTranslatedDescription);
+			this.description = new globalization.EnglishTranslatedStringViewModel(showTranslatedDescription);
 
 		}
 
@@ -32,7 +32,7 @@ module vdb.viewModels.tags {
 
 		public reportViewModel: ReportEntryViewModel;
 
-		public showTranslatedDescription: KnockoutObservable<boolean>;
+		public description: globalization.EnglishTranslatedStringViewModel;
 
 	}
 
