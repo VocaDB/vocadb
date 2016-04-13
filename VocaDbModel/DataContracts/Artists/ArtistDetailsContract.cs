@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
-using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
@@ -22,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
-			ChildVoicebanks = artist.CanHaveChildVoicebanks ? artist.ChildVoicebanks.Select(c => new ArtistContract(c, languagePreference)).ToArray() : new ArtistContract[0];
+			ChildVoicebanks = artist.CanHaveChildVoicebanks ? artist.ChildVoicebanks.Where(c => !c.Deleted).Select(c => new ArtistContract(c, languagePreference)).ToArray() : new ArtistContract[0];
 			CreateDate = artist.CreateDate;
 			Description =  artist.Description;
 			Draft = artist.Status == EntryStatus.Draft;
