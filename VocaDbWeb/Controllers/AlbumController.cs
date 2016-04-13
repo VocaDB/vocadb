@@ -53,7 +53,10 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult ArchivedVersionCoverPicture(int id) {
+		public ActionResult ArchivedVersionCoverPicture(int id = invalidId) {
+
+			if (id == invalidId)
+				return NoId();
 
 			var contract = Service.GetArchivedAlbumPicture(id);
 
@@ -302,7 +305,10 @@ namespace VocaDb.Web.Controllers
 
         }
 
-		public ActionResult Related(int id) {
+		public ActionResult Related(int id = invalidId) {
+
+			if (id == invalidId)
+				return NoId();
 
 			var related = queries.GetRelatedAlbums(id);
 			return PartialView("RelatedAlbums", related);
