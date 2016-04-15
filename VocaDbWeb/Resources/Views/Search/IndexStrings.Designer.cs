@@ -106,6 +106,15 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include child tags.
+        /// </summary>
+        public static string ChildTags {
+            get {
+                return ResourceManager.GetString("ChildTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string EntryType {

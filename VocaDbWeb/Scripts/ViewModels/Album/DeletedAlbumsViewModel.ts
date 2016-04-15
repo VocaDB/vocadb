@@ -30,7 +30,7 @@ module vdb.viewModels {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 			this.albumRepo.getList(pagingProperties, this.albumRepo.languagePreferenceStr, this.searchTerm(), "Name", undefined, null,
-				null, undefined, undefined, "AdditionalNames,MainPicture", null, true, result => {
+				null, null, undefined, undefined, "AdditionalNames,MainPicture", null, true, result => {
 
 					this.page(result.items);
 

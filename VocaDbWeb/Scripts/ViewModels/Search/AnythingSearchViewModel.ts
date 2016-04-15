@@ -9,8 +9,8 @@ module vdb.viewModels.search {
 
 			super(searchViewModel);
 
-			this.loadResults = (pagingProperties, searchTerm, tags, status, callback) =>
-				this.entryRepo.getList(pagingProperties, lang, searchTerm, tags, this.fields(), status, callback);
+			this.loadResults = (pagingProperties, searchTerm, tags, childTags, status, callback) =>
+				this.entryRepo.getList(pagingProperties, lang, searchTerm, tags, childTags, this.fields(), status, callback);
 
 		}
 

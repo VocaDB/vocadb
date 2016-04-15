@@ -15,10 +15,12 @@ module vdb.viewModels.search {
 			this.categoryName.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 
-			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
+			this.loadResults = (pagingProperties, searchTerm, tag, childTags, status, callback) => {
 
-				this.tagRepo.getList({ start: pagingProperties.start, maxResults: pagingProperties.maxEntries, getTotalCount: pagingProperties.getTotalCount, lang: lang, query: searchTerm, sort: this.sort(), allowAliases: this.allowAliases(), categoryName: this.categoryName(), fields: "AdditionalNames,MainPicture" },
-					callback);
+				this.tagRepo.getList({
+					start: pagingProperties.start, maxResults: pagingProperties.maxEntries, getTotalCount: pagingProperties.getTotalCount,
+					lang: lang, query: searchTerm, sort: this.sort(), allowAliases: this.allowAliases(), categoryName: this.categoryName(), fields: "AdditionalNames,MainPicture"
+				}, callback);
 
 			}
 

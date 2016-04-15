@@ -53,7 +53,9 @@ module vdb.repositories {
 		};
 
 		public getList = (paging: dc.PagingProperties, lang: string, query: string, sort: string,
-			artistTypes: string, tags: number[], followedByUserId: number, fields: string, status: string, callback) => {
+			artistTypes: string, tags: number[],
+			childTags: boolean,
+			followedByUserId: number, fields: string, status: string, callback) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists");
 			var data = {
@@ -61,6 +63,7 @@ module vdb.repositories {
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
 				artistTypes: artistTypes,
 				tagId: tags,
+				childTags: childTags,
 				followedByUserId: followedByUserId,
 				status: status
 			};

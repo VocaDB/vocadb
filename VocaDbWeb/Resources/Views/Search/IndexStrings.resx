@@ -201,4 +201,7 @@
   <data name="TagUsages" xml:space="preserve">
     <value>Usages</value>
   </data>
+  <data name="ChildTags" xml:space="preserve">
+    <value>Include child tags</value>
+  </data>
 </root>

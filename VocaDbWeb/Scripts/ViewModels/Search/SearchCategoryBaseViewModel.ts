@@ -17,6 +17,7 @@ module vdb.viewModels.search {
 		constructor(public searchViewModel: SearchViewModel) {
 
 			if (searchViewModel) {
+				this.childTags = searchViewModel.childTags;
 				this.draftsOnly = searchViewModel.draftsOnly;
 				this.searchTerm = searchViewModel.searchTerm;
 				this.showTags = searchViewModel.showTags;
@@ -24,10 +25,12 @@ module vdb.viewModels.search {
 				searchViewModel.pageSize.subscribe(pageSize => this.paging.pageSize(pageSize));				
 				this.paging.pageSize.subscribe(pageSize => searchViewModel.pageSize(pageSize));
 			} else {
+				this.childTags = ko.observable(false);
 				this.draftsOnly = ko.observable(false);
 				this.searchTerm = ko.observable("");
 				this.showTags = ko.observable(false);
 				this.tags = ko.observableArray([]);
+				this.childTags.subscribe(this.updateResultsWithTotalCount);
 				this.draftsOnly.subscribe(this.updateResultsWithTotalCount);
 				this.searchTerm.subscribe(this.updateResultsWithTotalCount);
 				this.showTags.subscribe(this.updateResultsWithoutTotalCount);
@@ -41,11 +44,13 @@ module vdb.viewModels.search {
 
 		}
 
+		public childTags = ko.observable(false);
+
 		public draftsOnly: KnockoutObservable<boolean>;
 
 		// Method for loading a page of results.
 		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tags: number[],
-			status: string, callback: (result: any) => void) => void;
+			childTags: boolean, status: string, callback: (result: any) => void) => void;
 
 		public loading = ko.observable(true); // Currently loading for data
 
@@ -84,6 +89,7 @@ module vdb.viewModels.search {
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
 			this.loadResults(pagingProperties, this.searchTerm(), this.tagIds(),
+				this.childTags(),
 				this.draftsOnly() ? "Draft" : null, (result: any) => {
 
 					if (this.showTags()) {

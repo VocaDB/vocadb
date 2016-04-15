@@ -45,11 +45,11 @@ module vdb.viewModels.search {
 				return this.resourceManager.resources().albumSortRuleNames != null ? this.resourceManager.resources().albumSortRuleNames[this.sort()] : "";
 			});
 
-			this.loadResults = (pagingProperties, searchTerm, tags, status, callback) => {
+			this.loadResults = (pagingProperties, searchTerm, tags, childTags, status, callback) => {
 
 				var artistIds = this.artistFilters.artistIds();
 
-				this.albumRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.albumType(), tags, artistIds,
+				this.albumRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.albumType(), tags, childTags, artistIds,
 					this.artistFilters.artistParticipationStatus(), this.artistFilters.childVoicebanks(), this.fields(), status, false, callback);
 
 			}

@@ -101,6 +101,13 @@
 					</div>				
 				<!-- /ko -->
 				
+				<div data-bind="visible: tags().length">
+					<label class="checkbox">
+						<input type="checkbox" data-bind="checked: childTags" />
+						@Res.ChildTags
+					</label>
+				</div>
+
 				<div>
 					
 					<input type="text" class="input-large" data-bind="tagAutoComplete: addTag" placeholder="@ViewRes.SharedStrings.Search" />
@@ -117,7 +124,7 @@
 						</ul>
 					</div>
 
-				</div>
+				</div>			
 
 			</div>
 		</div>

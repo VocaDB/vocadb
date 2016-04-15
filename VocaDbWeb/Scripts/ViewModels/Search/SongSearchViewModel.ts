@@ -77,13 +77,15 @@ module vdb.viewModels.search {
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
-				this.tagIds, this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus, this.artistFilters.childVoicebanks, this.pvsOnly, this.since,
+				this.tagIds, this.childTags,
+				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus, this.artistFilters.childVoicebanks, this.pvsOnly, this.since,
 				this.minScore,
 				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly);
+
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[lang]);
 
-			this.loadResults = (pagingProperties, searchTerm, tag, status, callback) => {
+			this.loadResults = (pagingProperties, searchTerm, tag, childTags, status, callback) => {
 
 				if (this.viewMode() === "PlayList") {
 					this.playListViewModel.updateResultsWithTotalCount();		
@@ -93,6 +95,7 @@ module vdb.viewModels.search {
 					this.songRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
 						this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
 						tag,
+						childTags,
 						this.artistFilters.artistIds(),
 						this.artistFilters.artistParticipationStatus(),
 						this.artistFilters.childVoicebanks(),

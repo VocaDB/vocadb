@@ -86,6 +86,7 @@ module vdb.viewModels.search {
 			this.pageSize.subscribe(this.updateResults);
 			this.searchTerm.subscribe(this.updateResults);
 			this.tags.subscribe(this.updateResults);
+			this.childTags.subscribe(this.updateResults);
 			this.draftsOnly.subscribe(this.updateResults);
 			this.showTags.subscribe(this.updateResults);
 
@@ -118,6 +119,7 @@ module vdb.viewModels.search {
 		public songSearchViewModel: SongSearchViewModel;
 		public tagSearchViewModel: TagSearchViewModel;
 
+		public childTags = ko.observable(false);
 		private currentSearchType = ko.observable(SearchType.Anything);
 		public draftsOnly = ko.observable(false);
 		public genreTags = ko.observableArray<dc.TagBaseContract>();
