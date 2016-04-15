@@ -37,6 +37,8 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		public ArtistType[] ArtistTypes { get; set; }
 
+		public bool ChildTags { get; set; }
+
 		public CommonSearchParams<ArtistSearchTextQuery> Common { get; set; }
 
 		public PagingProperties Paging { get; set; }

@@ -32,6 +32,7 @@ namespace VocaDb.Model.Database.Queries {
 			string query, 
 			int[] tagIds,
 			string[] tags,
+			bool childTags,
 			EntryStatus? status,
 			int start, int maxResults, bool getTotalCount,
 			EntrySortRule sort,
@@ -51,7 +52,7 @@ namespace VocaDb.Model.Database.Queries {
 				var artistQuery = ctx.OfType<Artist>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName_Canonized(artistTextQuery)
-					.WhereHasTags(tagIds)
+					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
 					.WhereStatusIs(status);
 
@@ -64,7 +65,7 @@ namespace VocaDb.Model.Database.Queries {
 				var albumQuery = ctx.OfType<Album>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName(textQuery)
-					.WhereHasTags(tagIds)
+					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
 					.WhereStatusIs(status);
 
@@ -77,7 +78,7 @@ namespace VocaDb.Model.Database.Queries {
 				var songQuery = ctx.OfType<Song>().Query()
 					.Where(a => !a.Deleted)
 					.WhereHasName(textQuery)
-					.WhereHasTags(tagIds)
+					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
 					.WhereStatusIs(status);
 

@@ -120,7 +120,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Disc type. By default nothing. Possible values are Album, Single, EP, SplitAlbum, Compilation, Video, Other. Note: only one type supported for now.
 		/// </param>
 		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
-		/// <param name="tag">Filter by tag (optional). This filter can be specified multiple times.</param>
+		/// <param name="tagName">Filter by tag name (optional). This filter can be specified multiple times.</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="artistId">Filter by artist Id (optional).</param>
 		/// <param name="artistParticipationStatus">
 		/// Filter by artist participation status. Only valid if artistId is specified.
@@ -158,8 +159,9 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<AlbumForApiContract> GetList(
 			string query = "", 
 			DiscType discTypes = DiscType.Unknown,
-			[FromUri] string[] tag = null,
+			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
@@ -180,8 +182,9 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches) {
-				Tags = tag,
+				Tags = tagName,
 				TagIds = tagId,
+				ChildTags = childTags,
 				ArtistIds = artistId,
 				ArtistParticipationStatus = artistParticipationStatus,
 				ChildVoicebanks = childVoicebanks,

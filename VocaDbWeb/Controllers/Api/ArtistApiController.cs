@@ -129,7 +129,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="query">Artist name query (optional).</param>
 		/// <param name="artistTypes">Filtered artist type (optional).</param>
 		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
-		/// <param name="tag">Filter by tag (optional).</param>
+		/// <param name="tagName">Filter by tag name (optional).</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="followedByUserId">Filter by user following the artists. By default there is no filtering.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
@@ -151,8 +152,9 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<ArtistForApiContract> GetList(
 			string query = "", 
 			string artistTypes = null,
-			[FromUri] string[] tag = null,
+			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			int? followedByUserId = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -166,8 +168,9 @@ namespace VocaDb.Web.Controllers.Api {
 			var types = EnumVal<ArtistType>.ParseMultiple(artistTypes);
 
 			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, preferAccurateMatches) {
-				Tags = tag,
+				Tags = tagName,
 				TagIds = tagId,
+				ChildTags = childTags,
 				UserFollowerId = followedByUserId ?? 0
 			};
 			param.Common.EntryStatus = status;

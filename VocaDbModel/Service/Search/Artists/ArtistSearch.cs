@@ -33,7 +33,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasExternalLinkUrl(parsedQuery.ExternalLinkUrl)
 				.WhereHasType(queryParams.ArtistTypes)
-				.WhereHasTags(queryParams.TagIds)
+				.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
 				.WhereHasTags(queryParams.Tags)
 				.WhereIdIs(parsedQuery.Id)
 				.WhereIsFollowedByUser(queryParams.UserFollowerId);

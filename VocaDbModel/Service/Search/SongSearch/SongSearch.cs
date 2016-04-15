@@ -36,7 +36,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereHasArtistParticipationStatus(new EntryIdsCollection(queryParams.ArtistIds), queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasType(queryParams.SongTypes)
-				.WhereHasTags(queryParams.TagIds)
+				.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
 				.WhereHasTags(queryParams.Tags)
 				.WhereHasTag(parsedQuery.TagName)
 				.WhereArtistHasTag(parsedQuery.ArtistTag)

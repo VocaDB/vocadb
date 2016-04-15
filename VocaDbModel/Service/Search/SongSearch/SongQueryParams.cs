@@ -55,6 +55,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public ArtistAlbumParticipationStatus ArtistParticipationStatus { get; set; }
 
+		public bool ChildTags { get; set; }
+
 		public bool ChildVoicebanks { get; set; }
 
 		public CommonSearchParams Common { get; set; }

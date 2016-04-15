@@ -63,7 +63,8 @@ namespace VocaDb.Web.Controllers
 			switch (searchType) {
 				
 				case EntryType.Undefined: {
-					var result = entryQueries.GetList(filter, null, null, null, 0, 1, true, EntrySortRule.Name, NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default, false, true);
+					var result = entryQueries.GetList(filter, null, null, false, null, 0, 1, true, EntrySortRule.Name, 
+						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default, false, true);
 
 					if (result.TotalCount == 1) {
 

@@ -41,6 +41,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		public string Barcode { get; set; }
 
+		public bool ChildTags { get; set; }
+
 		public bool ChildVoicebanks { get; set; }
 
 		public CommonSearchParams Common { get; set; }

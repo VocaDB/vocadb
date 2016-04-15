@@ -165,6 +165,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		/// <param name="tagName">Filter by one or more tag names (optional).</param>
 		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="artistId">Filter by artist Id.</param>
 		/// <param name="artistParticipationStatus">
 		/// Filter by artist participation status. Only valid if artistId is specified.
@@ -203,6 +204,7 @@ namespace VocaDb.Web.Controllers.Api {
 			string songTypes = null,
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
@@ -226,6 +228,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, false, preferAccurateMatches, null) {
 				TagIds = tagId,
 				Tags = tagName, 
+				ChildTags = childTags,
 				OnlyWithPVs = onlyWithPvs,
 				ArtistIds = artistId,		
 				ArtistParticipationStatus = artistParticipationStatus,

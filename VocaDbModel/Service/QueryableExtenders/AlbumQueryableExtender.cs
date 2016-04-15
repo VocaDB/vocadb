@@ -173,9 +173,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, int[] tagId) {
+		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, int[] tagId, bool childTags = false) {
 
-			return query.WhereHasTags<Album, AlbumTagUsage>(tagId);
+			return query.WhereHasTags<Album, AlbumTagUsage>(tagId, childTags);
 
 		}
 
