@@ -21,6 +21,7 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -214,8 +215,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="list">Song list properties.</param>
 		/// <returns>ID of the created list.</returns>
 		[Route("")]
+		[Authorize]
 		public int Post(SongListForEditContract list) {
-			
+
+			if (list == null)
+				throw new HttpBadRequestException();
+
 			return queries.UpdateSongList(list, null);
 
 		}

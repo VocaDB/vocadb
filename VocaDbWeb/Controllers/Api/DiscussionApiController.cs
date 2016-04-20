@@ -28,6 +28,7 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("comments/{commentId:int}")]
+		[Authorize]
 		public void DeleteComment(int commentId) {
 			
 			queries.DeleteComment(commentId);
@@ -35,6 +36,7 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("topics/{topicId:int}")]
+		[Authorize]
 		public void DeleteTopic(int topicId) {
 			
 			queries.DeleteTopic(topicId);
