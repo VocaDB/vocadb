@@ -141,4 +141,16 @@
   <data name="EditTitle" xml:space="preserve">
     <value>Editar artista - {0}</value>
   </data>
+  <data name="PiAdd" xml:space="preserve">
+    <value>Adicionar</value>
+  </data>
+  <data name="PiPictureDescription" xml:space="preserve">
+    <value>Descrição da foto</value>
+  </data>
+  <data name="PiPicturesNote" xml:space="preserve">
+    <value>Faça upload the fotos pertencentes a este artista.</value>
+  </data>
+  <data name="TabAdditionalPictures" xml:space="preserve">
+    <value>Fotos adicionais</value>
+  </data>
 </root>

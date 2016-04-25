@@ -123,4 +123,37 @@
   <data name="Groups" xml:space="preserve">
     <value>Grupos</value>
   </data>
+  <data name="Length" xml:space="preserve">
+    <value>Duração</value>
+  </data>
+  <data name="Lyrics" xml:space="preserve">
+    <value>Letra</value>
+  </data>
+  <data name="Names" xml:space="preserve">
+    <value>Nomes</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notas</value>
+  </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="OriginalName" xml:space="preserve">
+    <value>Nome original</value>
+  </data>
+  <data name="OriginalVersion" xml:space="preserve">
+    <value>Versão original</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Data de publicação</value>
+  </data>
+  <data name="SongType" xml:space="preserve">
+    <value>Tipo de música</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>Links externos</value>
+  </data>
 </root>

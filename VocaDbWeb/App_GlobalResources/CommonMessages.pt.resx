@@ -128,4 +128,11 @@
 Acabado = a página tem todas as informações cruciais, mas ainda não foi aprovada por um utilizador de confiança.&lt;br /&gt;
 Aprovado = a página foi aprovada foi um utilizador de confiança. Estas páginas só podem ser editadas por esses utilizadores.</value>
   </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Esta página está trancada, ou seja, só a administração a pode editar.</value>
+  </data>
+  <data name="NameLanguageHelp" xml:space="preserve">
+    <value>Escolha o idioma deste nome. "Original" é o nome na língua não inglesa, por exemplo, Japonês.
+Se a língua original é Inglês, não introduza um nome em língua "Original".</value>
+  </data>
 </root>

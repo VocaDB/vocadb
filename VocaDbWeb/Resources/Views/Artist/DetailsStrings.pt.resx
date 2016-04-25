@@ -156,4 +156,46 @@
   <data name="GroupsHelp" xml:space="preserve">
     <value>Círculos, editoras e outros grupos</value>
   </data>
+  <data name="MainAlbums" xml:space="preserve">
+    <value>Álbuns principais</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Membros</value>
+  </data>
+  <data name="MostlyUses" xml:space="preserve">
+    <value>Usa principalmente:</value>
+  </data>
+  <data name="RatedAlbums" xml:space="preserve">
+    <value>{0} álbuns classificados</value>
+  </data>
+  <data name="RatedSongs" xml:space="preserve">
+    <value>{0} músicas classificadas</value>
+  </data>
+  <data name="RecentAlbums" xml:space="preserve">
+    <value>Álbuns recentes</value>
+  </data>
+  <data name="RecentSongs" xml:space="preserve">
+    <value>Músicas e PVs recentes</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Partilhar</value>
+  </data>
+  <data name="TopAlbums" xml:space="preserve">
+    <value>Álbuns populares</value>
+  </data>
+  <data name="TopSongs" xml:space="preserve">
+    <value>Músicas populares</value>
+  </data>
+  <data name="Unfollow" xml:space="preserve">
+    <value>Parar de seguir</value>
+  </data>
+  <data name="ViewModeDetails" xml:space="preserve">
+    <value>Detalhes</value>
+  </data>
+  <data name="ViewModeTiles" xml:space="preserve">
+    <value>Telhas</value>
+  </data>
+  <data name="YouHaveRatedSongs" xml:space="preserve">
+    <value>Classificou {0} música(s) deste artista.</value>
+  </data>
 </root>

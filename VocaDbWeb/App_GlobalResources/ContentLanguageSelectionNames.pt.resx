@@ -123,4 +123,13 @@
   <data name="English" xml:space="preserve">
     <value>Inglês</value>
   </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>Não-Inglês</value>
+  </data>
+  <data name="Romaji" xml:space="preserve">
+    <value>Romanização</value>
+  </data>
+  <data name="Unspecified" xml:space="preserve">
+    <value>Não especificado</value>
+  </data>
 </root>

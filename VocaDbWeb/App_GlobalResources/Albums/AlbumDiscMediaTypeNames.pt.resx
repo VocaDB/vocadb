@@ -120,4 +120,7 @@
   <data name="Audio" xml:space="preserve">
     <value>Audio</value>
   </data>
+  <data name="Video" xml:space="preserve">
+    <value>Vídeo</value>
+  </data>
 </root>

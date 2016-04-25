@@ -126,4 +126,13 @@
   <data name="FollowerCount" xml:space="preserve">
     <value>Número de seguidores</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="SongCount" xml:space="preserve">
+    <value>Número de músicas</value>
+  </data>
+  <data name="SongRating" xml:space="preserve">
+    <value>Classificação total da música</value>
+  </data>
 </root>

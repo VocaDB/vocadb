@@ -123,4 +123,13 @@
   <data name="CreateSeries" xml:space="preserve">
     <value>Create uma série</value>
   </data>
+  <data name="ViewByDate" xml:space="preserve">
+    <value>Por data</value>
+  </data>
+  <data name="ViewBySeries" xml:space="preserve">
+    <value>Por série</value>
+  </data>
+  <data name="ViewList" xml:space="preserve">
+    <value>Lista</value>
+  </data>
 </root>

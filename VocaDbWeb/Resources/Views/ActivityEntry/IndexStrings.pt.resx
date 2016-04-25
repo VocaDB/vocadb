@@ -126,4 +126,10 @@
   <data name="FollowedArtists" xml:space="preserve">
     <value>Só artistas que sigo</value>
   </data>
+  <data name="RecentActivity" xml:space="preserve">
+    <value>Atividade recente</value>
+  </data>
+  <data name="ViewMore" xml:space="preserve">
+    <value>Ver mais</value>
+  </data>
 </root>

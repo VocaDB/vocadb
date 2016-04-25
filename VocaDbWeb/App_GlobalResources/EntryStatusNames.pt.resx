@@ -126,4 +126,7 @@
   <data name="Finished" xml:space="preserve">
     <value>Acabado</value>
   </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Trancado</value>
+  </data>
 </root>

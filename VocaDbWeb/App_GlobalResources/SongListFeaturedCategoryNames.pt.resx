@@ -120,4 +120,16 @@
   <data name="Concerts" xml:space="preserve">
     <value>Setlists de concertos</value>
   </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Outros</value>
+  </data>
+  <data name="Pools" xml:space="preserve">
+    <value>Pools</value>
+  </data>
+  <data name="VocaloidRanking" xml:space="preserve">
+    <value>Classificações Vocaloid</value>
+  </data>
 </root>

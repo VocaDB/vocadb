@@ -141,4 +141,28 @@
   <data name="Illustrator" xml:space="preserve">
     <value>Ilustrador</value>
   </data>
+  <data name="Instrumentalist" xml:space="preserve">
+    <value>Instrumentalista</value>
+  </data>
+  <data name="Lyricist" xml:space="preserve">
+    <value>Letra</value>
+  </data>
+  <data name="Mastering" xml:space="preserve">
+    <value>Masterização</value>
+  </data>
+  <data name="Mixer" xml:space="preserve">
+    <value>Misturador</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Outros</value>
+  </data>
+  <data name="Publisher" xml:space="preserve">
+    <value>Editora</value>
+  </data>
+  <data name="Vocalist" xml:space="preserve">
+    <value>Vocalista</value>
+  </data>
+  <data name="VoiceManipulator" xml:space="preserve">
+    <value>Editor da voz</value>
+  </data>
 </root>

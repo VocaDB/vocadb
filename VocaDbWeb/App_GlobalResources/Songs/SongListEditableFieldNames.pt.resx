@@ -126,4 +126,13 @@
   <data name="FeaturedCategory" xml:space="preserve">
     <value>Categoria destacada</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Songs" xml:space="preserve">
+    <value>Músicas</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
 </root>

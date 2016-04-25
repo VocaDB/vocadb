@@ -120,4 +120,10 @@
   <data name="Event" xml:space="preserve">
     <value>Evento</value>
   </data>
+  <data name="OccurrenceDate" xml:space="preserve">
+    <value>Data de ocorrência</value>
+  </data>
+  <data name="Series" xml:space="preserve">
+    <value>Série</value>
+  </data>
 </root>

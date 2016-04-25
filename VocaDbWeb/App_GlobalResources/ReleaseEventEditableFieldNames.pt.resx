@@ -123,4 +123,13 @@
   <data name="Description" xml:space="preserve">
     <value>Descrição</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="SeriesNumber" xml:space="preserve">
+    <value>Número de série</value>
+  </data>
+  <data name="SeriesSuffix" xml:space="preserve">
+    <value>Sufixo de série</value>
+  </data>
 </root>

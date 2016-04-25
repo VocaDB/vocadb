@@ -120,4 +120,19 @@
   <data name="Admin" xml:space="preserve">
     <value>Administrador</value>
   </data>
+  <data name="Limited" xml:space="preserve">
+    <value>Utilizador limitado</value>
+  </data>
+  <data name="Moderator" xml:space="preserve">
+    <value>Moderador</value>
+  </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="Regular" xml:space="preserve">
+    <value>Utilizador normal</value>
+  </data>
+  <data name="Trusted" xml:space="preserve">
+    <value>Utilizador de confiança</value>
+  </data>
 </root>

@@ -153,4 +153,46 @@
   <data name="EditProfile" xml:space="preserve">
     <value>Editar perfil pessoal</value>
   </data>
+  <data name="LockEntries" xml:space="preserve">
+    <value>Trancar páginas</value>
+  </data>
+  <data name="ManageDatabase" xml:space="preserve">
+    <value>Gerir base de dados</value>
+  </data>
+  <data name="ManageEntryReports" xml:space="preserve">
+    <value>Gerir páginas denunciadas</value>
+  </data>
+  <data name="ManageEventSeries" xml:space="preserve">
+    <value>Gerir séries de eventos</value>
+  </data>
+  <data name="ManageIPRules" xml:space="preserve">
+    <value>Gerir regras de IP</value>
+  </data>
+  <data name="ManageUserPermissions" xml:space="preserve">
+    <value>Gerir permissões de utlizador</value>
+  </data>
+  <data name="MergeEntries" xml:space="preserve">
+    <value>Fundir páginas</value>
+  </data>
+  <data name="MikuDbImport" xml:space="preserve">
+    <value>Importar álbum</value>
+  </data>
+  <data name="MoveToTrash" xml:space="preserve">
+    <value>Mandar para o lixo</value>
+  </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="ReadRecentComments" xml:space="preserve">
+    <value>Ler comentários recentes</value>
+  </data>
+  <data name="RemoveTagUsages" xml:space="preserve">
+    <value>Apagar tags</value>
+  </data>
+  <data name="RestoreRevisions" xml:space="preserve">
+    <value>Restaurar revisões</value>
+  </data>
+  <data name="ViewAuditLog" xml:space="preserve">
+    <value>Ver registo de eventos</value>
+  </data>
 </root>

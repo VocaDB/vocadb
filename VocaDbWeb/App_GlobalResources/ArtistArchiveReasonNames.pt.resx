@@ -123,4 +123,19 @@
   <data name="Deleted" xml:space="preserve">
     <value>Apagado</value>
   </data>
+  <data name="Merged" xml:space="preserve">
+    <value>Fundido de outra página</value>
+  </data>
+  <data name="PropertiesUpdated" xml:space="preserve">
+    <value>Propriedades atualizadas</value>
+  </data>
+  <data name="Restored" xml:space="preserve">
+    <value>Restaurado</value>
+  </data>
+  <data name="Reverted" xml:space="preserve">
+    <value>Reverter para uma versão anterior</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Desconhecido</value>
+  </data>
 </root>

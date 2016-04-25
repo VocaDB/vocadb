@@ -126,4 +126,10 @@
   <data name="FilterPre" xml:space="preserve">
     <value>Filtrando</value>
   </data>
+  <data name="StartsWithTitleFilter" xml:space="preserve">
+    <value>começando com o título '{0}'</value>
+  </data>
+  <data name="TitleFilter" xml:space="preserve">
+    <value>título '{0}'</value>
+  </data>
 </root>

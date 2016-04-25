@@ -141,4 +141,10 @@
   <data name="EntryTag" xml:space="preserve">
     <value>tag</value>
   </data>
+  <data name="Someone" xml:space="preserve">
+    <value>Um contribuidor</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>atualizado {0}</value>
+  </data>
 </root>

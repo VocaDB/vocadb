@@ -123,4 +123,16 @@
   <data name="CollectionCount" xml:space="preserve">
     <value>Contagem de coleções</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="RatingAverage" xml:space="preserve">
+    <value>Média de classificações</value>
+  </data>
+  <data name="RatingTotal" xml:space="preserve">
+    <value>Pontuação total</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Data de lançamento</value>
+  </data>
 </root>

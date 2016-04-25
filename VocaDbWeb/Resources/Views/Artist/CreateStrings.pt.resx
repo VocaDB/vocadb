@@ -129,4 +129,28 @@
   <data name="ExternalLink" xml:space="preserve">
     <value>Link externo (para o site do artista, Hatsune Miku wiki, NND MyList, etc.)</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome (precisa de pelo menos um)</value>
+  </data>
+  <data name="NameHelp" xml:space="preserve">
+    <value>Se a página original não é Inglês (por exemplo, Japonês), ou se o nome está numa língua desconhecida, introduza isso mesmo no campo Não-Inglês. Se puder, introduza o nome romanizado também. Se o nome oficial é Inglês, ou se há uma tradução inglesa, introduza isso no campo Inglês.</value>
+  </data>
+  <data name="NeedWebLinkOrDescription" xml:space="preserve">
+    <value>Precisa de introduzir uma descrição OU link externo.</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>(opcional)</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Foto</value>
+  </data>
+  <data name="UnableToCreateArtist" xml:space="preserve">
+    <value>Erro ao criar o artista. Corrija os erros e tente outra vez.</value>
+  </data>
+  <data name="WebLinkCategory" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="WebLinkDescription" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
 </root>

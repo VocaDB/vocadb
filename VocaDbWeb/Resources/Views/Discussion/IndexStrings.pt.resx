@@ -135,4 +135,28 @@
   <data name="Folder" xml:space="preserve">
     <value>Pasta</value>
   </data>
+  <data name="LastComment" xml:space="preserve">
+    <value>Último comentário</value>
+  </data>
+  <data name="LastTopic" xml:space="preserve">
+    <value>Último tópico</value>
+  </data>
+  <data name="PostContent" xml:space="preserve">
+    <value>Conteúdo</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Previsualização</value>
+  </data>
+  <data name="RecentTopics" xml:space="preserve">
+    <value>Tópicos recentes</value>
+  </data>
+  <data name="Topic" xml:space="preserve">
+    <value>Tópico</value>
+  </data>
+  <data name="Topics" xml:space="preserve">
+    <value>Tópicos</value>
+  </data>
+  <data name="WriteNewPost" xml:space="preserve">
+    <value>Escrever uma nova mensagem</value>
+  </data>
 </root>

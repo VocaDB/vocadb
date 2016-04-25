@@ -126,4 +126,16 @@
   <data name="Inappropriate" xml:space="preserve">
     <value>Conteúdo inapropriado</value>
   </data>
+  <data name="InvalidInfo" xml:space="preserve">
+    <value>Informação em falta ou inválida.</value>
+  </data>
+  <data name="MaliciousIP" xml:space="preserve">
+    <value>IP suspeito</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Outros (especificar nas notas)</value>
+  </data>
+  <data name="OwnershipClaim" xml:space="preserve">
+    <value>Reclamar uma página como sua</value>
+  </data>
 </root>

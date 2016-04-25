@@ -120,4 +120,10 @@
   <data name="DigitalDownload" xml:space="preserve">
     <value>Download digital</value>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>Não especificado</value>
+  </data>
+  <data name="PhysicalDisc" xml:space="preserve">
+    <value>Disco em formato físico</value>
+  </data>
 </root>

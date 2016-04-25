@@ -120,4 +120,7 @@
   <data name="Created" xml:space="preserve">
     <value>Criado</value>
   </data>
+  <data name="Updated" xml:space="preserve">
+    <value>Atualizado</value>
+  </data>
 </root>

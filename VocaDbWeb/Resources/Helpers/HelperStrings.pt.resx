@@ -138,4 +138,52 @@
   <data name="EntryValidationWarningDetails" xml:space="preserve">
     <value>Detalhes</value>
   </data>
+  <data name="NameLangTitle" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="NameNewRow" xml:space="preserve">
+    <value>Nova linha</value>
+  </data>
+  <data name="NameValueTitle" xml:space="preserve">
+    <value>Nome (obrigatório)</value>
+  </data>
+  <data name="ReturnWithoutSaving" xml:space="preserve">
+    <value>Voltar sem gravar</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Gravar mudanças</value>
+  </data>
+  <data name="SeeGuide" xml:space="preserve">
+    <value>guia</value>
+  </data>
+  <data name="SeeGuidePost" xml:space="preserve">
+    <value>para mais informações.</value>
+  </data>
+  <data name="SeeGuidePre" xml:space="preserve">
+    <value>Veja a</value>
+  </data>
+  <data name="StatusDescriptionApproved" xml:space="preserve">
+    <value>Páginas aprovadas foram inspecionadas por um utilizador de confiança. Assim, só alguns utilizadores podem fazer mudanças.</value>
+  </data>
+  <data name="StatusDescriptionDraft" xml:space="preserve">
+    <value>Páginas draft não têm algumas informações cruciais.</value>
+  </data>
+  <data name="StatusDescriptionFinished" xml:space="preserve">
+    <value>Páginas acabadas contêm todas as informações cruciais mas não foram revistas pela administração.</value>
+  </data>
+  <data name="StatusDescriptionLocked" xml:space="preserve">
+    <value>Páginas trancadas só podem ser editadas por membros da administração.</value>
+  </data>
+  <data name="UploadPictureInfo" xml:space="preserve">
+    <value>Tipos permitidos: {0}. Tamanho máximo é {1} MB. Por favor respeito os direitos de autor e mencione a fonte da imagem nas notas, se possível.</value>
+  </data>
+  <data name="WebLinkCategoryTitle" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="WebLinkDescriptionTitle" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="WebLinkNewRow" xml:space="preserve">
+    <value>Nova linha</value>
+  </data>
 </root>

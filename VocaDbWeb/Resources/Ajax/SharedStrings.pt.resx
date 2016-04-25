@@ -120,4 +120,13 @@
   <data name="AddExtraArtist" xml:space="preserve">
     <value>Adicionar artista chamado '{0}'</value>
   </data>
+  <data name="ReportSent" xml:space="preserve">
+    <value>Denúncia feita. Obrigado!</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Gravar</value>
+  </data>
+  <data name="ThanksForRating" xml:space="preserve">
+    <value>Obrigado por classificar!</value>
+  </data>
 </root>

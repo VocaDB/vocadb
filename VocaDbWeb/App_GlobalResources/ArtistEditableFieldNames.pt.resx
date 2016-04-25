@@ -132,4 +132,25 @@
   <data name="Groups" xml:space="preserve">
     <value>Grupos</value>
   </data>
+  <data name="Names" xml:space="preserve">
+    <value>Nomes</value>
+  </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="OriginalName" xml:space="preserve">
+    <value>Nome original</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Foto principal</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Fotos</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>Links externos</value>
+  </data>
 </root>

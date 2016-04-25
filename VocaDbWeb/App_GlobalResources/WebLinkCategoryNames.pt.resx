@@ -120,4 +120,13 @@
   <data name="Commercial" xml:space="preserve">
     <value>Comercial</value>
   </data>
+  <data name="Official" xml:space="preserve">
+    <value>Oficial</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Outros</value>
+  </data>
+  <data name="Reference" xml:space="preserve">
+    <value>Referência</value>
+  </data>
 </root>

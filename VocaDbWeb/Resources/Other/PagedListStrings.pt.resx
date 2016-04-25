@@ -120,4 +120,13 @@
   <data name="First" xml:space="preserve">
     <value>Primeiro</value>
   </data>
+  <data name="Last" xml:space="preserve">
+    <value>Último</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Próximo</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
 </root>

@@ -126,4 +126,25 @@
   <data name="EditProfile" xml:space="preserve">
     <value>Editar perfil pessoal</value>
   </data>
+  <data name="ManageDatabase" xml:space="preserve">
+    <value>Gerir base de dados</value>
+  </data>
+  <data name="ManageUserBlocks" xml:space="preserve">
+    <value>Moderar utilizadores</value>
+  </data>
+  <data name="ManageUsers" xml:space="preserve">
+    <value>Gerir todos os utilizadores</value>
+  </data>
+  <data name="MergeEntries" xml:space="preserve">
+    <value>Fundir páginas</value>
+  </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="RestoreEntries" xml:space="preserve">
+    <value>Restaurar revisões</value>
+  </data>
+  <data name="ViewAuditLog" xml:space="preserve">
+    <value>Ver registo de eventos</value>
+  </data>
 </root>

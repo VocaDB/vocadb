@@ -123,4 +123,16 @@
   <data name="FavoritedTimes" xml:space="preserve">
     <value>Número de favoritos</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Data de publicação</value>
+  </data>
+  <data name="RatingScore" xml:space="preserve">
+    <value>Pontuação de classificação</value>
+  </data>
 </root>

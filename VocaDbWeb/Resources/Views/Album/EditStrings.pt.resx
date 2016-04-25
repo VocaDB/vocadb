@@ -180,4 +180,67 @@
   <data name="ImagePreview" xml:space="preserve">
     <value>Previsualização da imagem</value>
   </data>
+  <data name="MoveToTrash" xml:space="preserve">
+    <value>Mandar para o lixo</value>
+  </data>
+  <data name="PiCreateNew" xml:space="preserve">
+    <value>Criar novo</value>
+  </data>
+  <data name="PicturesTab" xml:space="preserve">
+    <value>Fotos adicionais.</value>
+  </data>
+  <data name="PiPicturesGuide" xml:space="preserve">
+    <value>A foto principal é editada a partir da tab "Informações Básicas". Faça upload the fotos pertencentes a este álbum e nada mais.</value>
+  </data>
+  <data name="PvAdd" xml:space="preserve">
+    <value>Adicionar media</value>
+  </data>
+  <data name="PvAuthor" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="PvIntro" xml:space="preserve">
+    <value>Pode usar esta página para adicionar publicidades ou crossfades deste álbum.</value>
+  </data>
+  <data name="PvName" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="PvService" xml:space="preserve">
+    <value>Serviço</value>
+  </data>
+  <data name="PvSupportedServices" xml:space="preserve">
+    <value>Serviços suportados: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro e Bilibili.</value>
+  </data>
+  <data name="PvType" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="PvURL" xml:space="preserve">
+    <value>URL:</value>
+  </data>
+  <data name="TrackPropertiesTitle" xml:space="preserve">
+    <value>Propriedades da música</value>
+  </data>
+  <data name="TracksTab" xml:space="preserve">
+    <value>Músicas</value>
+  </data>
+  <data name="TrAddTrackHelp" xml:space="preserve">
+    <value>Nota: não escreva o nome de artista ou o número da música no nome da música. Os artistas serão especificados separadamente.</value>
+  </data>
+  <data name="TrDiscHead" xml:space="preserve">
+    <value>Disco</value>
+  </data>
+  <data name="TrNameHead" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="TrSetArtists" xml:space="preserve">
+    <value>Especificar artistas para as músicas selecionadas</value>
+  </data>
+  <data name="TrTrackHead" xml:space="preserve">
+    <value>Música</value>
+  </data>
+  <data name="TrTrackNameHelp" xml:space="preserve">
+    <value>Clique no nome da música para editar os seus artistas.</value>
+  </data>
+  <data name="UnableToSaveProperties" xml:space="preserve">
+    <value>Erro em gravar as propriedades</value>
+  </data>
 </root>

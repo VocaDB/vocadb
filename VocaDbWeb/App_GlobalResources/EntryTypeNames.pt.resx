@@ -123,4 +123,19 @@
   <data name="Artist" xml:space="preserve">
     <value>Artista</value>
   </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Evento</value>
+  </data>
+  <data name="Song" xml:space="preserve">
+    <value>Música</value>
+  </data>
+  <data name="SongList" xml:space="preserve">
+    <value>Lista de músicas</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Tudo</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Utilizador</value>
+  </data>
 </root>

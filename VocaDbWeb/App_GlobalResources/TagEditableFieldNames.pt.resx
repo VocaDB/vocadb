@@ -126,4 +126,25 @@
   <data name="Description" xml:space="preserve">
     <value>Descrição</value>
   </data>
+  <data name="Names" xml:space="preserve">
+    <value>Nomes</value>
+  </data>
+  <data name="OriginalName" xml:space="preserve">
+    <value>Língua do nome</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>Principal</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Foto</value>
+  </data>
+  <data name="RelatedTags" xml:space="preserve">
+    <value>Tags relacionadas</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>Links externos</value>
+  </data>
 </root>

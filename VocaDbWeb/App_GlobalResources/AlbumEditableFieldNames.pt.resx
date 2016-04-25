@@ -138,4 +138,28 @@
   <data name="Identifiers" xml:space="preserve">
     <value>Identificadores</value>
   </data>
+  <data name="Names" xml:space="preserve">
+    <value>Nomes</value>
+  </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="OriginalName" xml:space="preserve">
+    <value>Nome original</value>
+  </data>
+  <data name="OriginalRelease" xml:space="preserve">
+    <value>Lançamento original</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Fotos</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="Tracks" xml:space="preserve">
+    <value>Músicas</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>Links externos</value>
+  </data>
 </root>

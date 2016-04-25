@@ -120,4 +120,16 @@
   <data name="AddedToList" xml:space="preserve">
     <value>Adicionado à lista.</value>
   </data>
+  <data name="OnlyWithPVsFilter" xml:space="preserve">
+    <value>Só PVs</value>
+  </data>
+  <data name="SinceFilter" xml:space="preserve">
+    <value>mais recente que {0}</value>
+  </data>
+  <data name="SongTypeFilter" xml:space="preserve">
+    <value>tipo de música '{0}'</value>
+  </data>
+  <data name="ThanksForRating" xml:space="preserve">
+    <value>Obrigado por classificar!</value>
+  </data>
 </root>

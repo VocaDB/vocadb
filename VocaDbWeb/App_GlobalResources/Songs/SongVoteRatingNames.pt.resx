@@ -120,4 +120,7 @@
   <data name="Favorite" xml:space="preserve">
     <value>Favorito</value>
   </data>
+  <data name="Like" xml:space="preserve">
+    <value>Gosto</value>
+  </data>
 </root>

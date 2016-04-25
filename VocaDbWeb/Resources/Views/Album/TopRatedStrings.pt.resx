@@ -120,4 +120,7 @@
   <data name="Average" xml:space="preserve">
     <value>média</value>
   </data>
+  <data name="RatedTimes" xml:space="preserve">
+    <value>classificado {0} vezes</value>
+  </data>
 </root>

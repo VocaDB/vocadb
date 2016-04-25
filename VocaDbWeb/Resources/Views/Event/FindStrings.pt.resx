@@ -126,4 +126,16 @@
   <data name="FindEvent" xml:space="preserve">
     <value>Encontrar evento</value>
   </data>
+  <data name="Number" xml:space="preserve">
+    <value>número</value>
+  </data>
+  <data name="Series" xml:space="preserve">
+    <value>Série</value>
+  </data>
+  <data name="UngroupedEventNamed" xml:space="preserve">
+    <value>Evento não-agrupado de nome:</value>
+  </data>
+  <data name="YouMayAddTheEvent" xml:space="preserve">
+    <value>Pode adicionar este evento à base de dados.</value>
+  </data>
 </root>

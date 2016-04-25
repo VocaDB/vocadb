@@ -126,4 +126,13 @@
   <data name="DiscType" xml:space="preserve">
     <value>Tipo de disco</value>
   </data>
+  <data name="NeedArtist" xml:space="preserve">
+    <value>Precisa de pelo menos um arista.</value>
+  </data>
+  <data name="SubmitAlbum" xml:space="preserve">
+    <value>Submeter um novo álbum</value>
+  </data>
+  <data name="UnableToCreateAlbum" xml:space="preserve">
+    <value>Erro ao criar o álbum. Corrija os erros e tente outra vez.</value>
+  </data>
 </root>
