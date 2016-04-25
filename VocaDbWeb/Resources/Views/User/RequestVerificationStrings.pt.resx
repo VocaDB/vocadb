@@ -120,4 +120,39 @@
   <data name="ArtistTitle" xml:space="preserve">
     <value>Página do artista que represento (necessário)</value>
   </data>
+  <data name="Info" xml:space="preserve">
+    <value>&lt;p&gt;
+   Se é um produtor, ilustrador, animador ou cria outro tipo de conteúdo com Vocaloid ou outros sintetizadores,
+   ou representativo de um círculo, pode usar este formulário para associar a sua conta a uma página de artista.
+  &lt;/p&gt;
+  &lt;p&gt;
+   Depois da administração verificar o seu pedido, aparecerá um link para a sua conta na(s) página(s) de artista, e vice versa.
+   Precisa de apresentar algum tipo de prova de como é o legítimo dono da página, senão o fizer o seu pedido não será cumprido.
+   Por exemplo, postar no Twitter ou blog um link para a sua conta no VocaDB account é uma boa forma de provar que é o artista em questão.
+   Deve também já ter uma ou duas músicas na base de dados (Vocaloid ou UTAU) - pode adicioná-las se nenhum outro utilizador ainda o fez.
+  &lt;/p&gt;
+  &lt;p&gt;
+   Depois da verificação poderá controlar a sua página de artista, limitando quem a pode editar.
+   De momento só as páginas de artista podem ser "protegidas" desta forma - músicas e álbuns não são afetadas.
+  &lt;/p&gt;
+  &lt;p&gt;
+   Mesmo assim, compreenda que temos o direito de recusar o seu pedido, pelas razões acima descritas ou outras.
+   Normalmente, no caso de ser recusado, entraremos em contato consigo para averiguar o caso mais detalhadamente.
+  &lt;/p&gt;</value>
+  </data>
+  <data name="MessageTitle" xml:space="preserve">
+    <value>Mensagem do pedido (obrigatório)</value>
+  </data>
+  <data name="NotLoggedInMessage" xml:space="preserve">
+    <value>Desculpe, precisa de {0} ou {1} para utilizar esta ferramenta.</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Pedir verificação da conta</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Enviar pedido</value>
+  </data>
+  <data name="Signup" xml:space="preserve">
+    <value>registo</value>
+  </data>
 </root>

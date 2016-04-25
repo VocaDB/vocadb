@@ -141,4 +141,67 @@
   <data name="IncludeDerivedVoicebanks" xml:space="preserve">
     <value>Incluir bancos de voz derivados</value>
   </data>
+  <data name="InMyCollection" xml:space="preserve">
+    <value>Na minha coleção</value>
+  </data>
+  <data name="ItemsPerPage" xml:space="preserve">
+    <value>{0} iténs por página</value>
+  </data>
+  <data name="MinScore" xml:space="preserve">
+    <value>Classificação mínima</value>
+  </data>
+  <data name="MoreFilters" xml:space="preserve">
+    <value>Mais filtros</value>
+  </data>
+  <data name="MoreRecentThan" xml:space="preserve">
+    <value>Mais recente que</value>
+  </data>
+  <data name="OnlyMyFollowedArtists" xml:space="preserve">
+    <value>Só os artistas que sigo</value>
+  </data>
+  <data name="OnlyWithPVs" xml:space="preserve">
+    <value>Só com PVs</value>
+  </data>
+  <data name="Playlist" xml:space="preserve">
+    <value>Playlist</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Previsualização</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Classificação</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Data de lançamento</value>
+  </data>
+  <data name="ShowingItemsOf" xml:space="preserve">
+    <value>Mostrando {0} iténs de {1}</value>
+  </data>
+  <data name="ShowTags" xml:space="preserve">
+    <value>Mostrar tags</value>
+  </data>
+  <data name="SongType" xml:space="preserve">
+    <value>Tipo de música</value>
+  </data>
+  <data name="TagCategory" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="TagInformation" xml:space="preserve">
+    <value>Informação da tag</value>
+  </data>
+  <data name="TagUsages" xml:space="preserve">
+    <value>Utilizações</value>
+  </data>
+  <data name="Times" xml:space="preserve">
+    <value>vez(es)</value>
+  </data>
+  <data name="TopGenres" xml:space="preserve">
+    <value>Melhores estilos</value>
+  </data>
+  <data name="TotalScore" xml:space="preserve">
+    <value>pontuação total</value>
+  </data>
+  <data name="TypeSomething" xml:space="preserve">
+    <value>Escreva algo...</value>
+  </data>
 </root>

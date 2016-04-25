@@ -141,4 +141,67 @@
   <data name="Hits" xml:space="preserve">
     <value>{0} visualizaçõe(s)</value>
   </data>
+  <data name="LatestComments" xml:space="preserve">
+    <value>Comentários recentes</value>
+  </data>
+  <data name="ManageTags" xml:space="preserve">
+    <value>Gerir</value>
+  </data>
+  <data name="NoComments" xml:space="preserve">
+    <value>Nenhum comentário!</value>
+  </data>
+  <data name="NoMatches" xml:space="preserve">
+    <value>Desculpe, não encontrámos nada :(</value>
+  </data>
+  <data name="NumTotal" xml:space="preserve">
+    <value>{0} ao todo</value>
+  </data>
+  <data name="OfficialLinks" xml:space="preserve">
+    <value>Links oficiais</value>
+  </data>
+  <data name="OtherLinks" xml:space="preserve">
+    <value>Links não-oficiais</value>
+  </data>
+  <data name="PicturesTab" xml:space="preserve">
+    <value>Fotos</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Publicado</value>
+  </data>
+  <data name="ReportAnError" xml:space="preserve">
+    <value>Denunciar um erro</value>
+  </data>
+  <data name="ReportArchivedVersionExplanation" xml:space="preserve">
+    <value>Denuncie um erro nesta página. O utilizador também será notificado.</value>
+  </data>
+  <data name="ReportArchivedVersionMessage" xml:space="preserve">
+    <value>Explique o que está errado</value>
+  </data>
+  <data name="ReportNotes" xml:space="preserve">
+    <value>Notas</value>
+  </data>
+  <data name="ReportNotesRequired" xml:space="preserve">
+    <value>(obrigatório)</value>
+  </data>
+  <data name="ReportType" xml:space="preserve">
+    <value>Tipo de denúncia</value>
+  </data>
+  <data name="Revisions" xml:space="preserve">
+    <value>Revisões</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Partilhar um link</value>
+  </data>
+  <data name="ShowAllTags" xml:space="preserve">
+    <value>Mostrar tudo</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Estatísticas</value>
+  </data>
+  <data name="ViewAllComments" xml:space="preserve">
+    <value>Ver todos os comentários</value>
+  </data>
+  <data name="ViewModifications" xml:space="preserve">
+    <value>Ver modificações</value>
+  </data>
 </root>

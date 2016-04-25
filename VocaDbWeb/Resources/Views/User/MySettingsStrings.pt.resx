@@ -173,4 +173,64 @@ Mantenha a sua chave em segredo! Se suspeitar que alguém a descobriu, mude-a ra
   <data name="ExternalLinks" xml:space="preserve">
     <value>Links externo</value>
   </data>
+  <data name="Interface" xml:space="preserve">
+    <value>Interface</value>
+  </data>
+  <data name="InterfaceLanguageSelection" xml:space="preserve">
+    <value>Língua da interface</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Verifique o formato do endereço de email.</value>
+  </data>
+  <data name="LivePreview" xml:space="preserve">
+    <value>Previsualização ao vivo</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Localização</value>
+  </data>
+  <data name="MySettingsTitle" xml:space="preserve">
+    <value>Minhas definições</value>
+  </data>
+  <data name="NewPass" xml:space="preserve">
+    <value>Nova password</value>
+  </data>
+  <data name="NewPassAgain" xml:space="preserve">
+    <value>Nova password (outra vez)</value>
+  </data>
+  <data name="PasswordsMustMatch" xml:space="preserve">
+    <value>Passwords têm de ser iguais</value>
+  </data>
+  <data name="PreferredVideoService" xml:space="preserve">
+    <value>Site de streaming favorito</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Opções de privacidade</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="PublicAlbumCollection" xml:space="preserve">
+    <value>Permitir que outros vejam os álbuns que comprei.</value>
+  </data>
+  <data name="PublicRatings" xml:space="preserve">
+    <value>Permitir que todos veja as minhas classificações de músicas e álbuns.</value>
+  </data>
+  <data name="ReallyReset" xml:space="preserve">
+    <value>Mudar o código?</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Mudar</value>
+  </data>
+  <data name="SettingsUpdated" xml:space="preserve">
+    <value>Definições atualizadas</value>
+  </data>
+  <data name="UnableToSave" xml:space="preserve">
+    <value>Erro em gravar as definições. Por favor corrija os errors e tente outra vez.</value>
+  </data>
+  <data name="UnreadNotificationsToKeep" xml:space="preserve">
+    <value>Máximo número de mensagen por ler</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Utilizador</value>
+  </data>
 </root>

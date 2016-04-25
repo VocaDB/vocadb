@@ -120,4 +120,16 @@
   <data name="EntryReports" xml:space="preserve">
     <value>Denúncias de páginas</value>
   </data>
+  <data name="MyAlbums" xml:space="preserve">
+    <value>Meus álbuns</value>
+  </data>
+  <data name="MySongs" xml:space="preserve">
+    <value>Minhas músicas</value>
+  </data>
+  <data name="NoUnreadMessages" xml:space="preserve">
+    <value>Sem mensagens por ler</value>
+  </data>
+  <data name="ViewAllMessages" xml:space="preserve">
+    <value>Ver todas as mensagens</value>
+  </data>
 </root>

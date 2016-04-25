@@ -159,4 +159,25 @@
   <data name="FilterPublishDateDescription" xml:space="preserve">
     <value>Músicas que foram publicadas recentemente</value>
   </data>
+  <data name="NoSongs" xml:space="preserve">
+    <value>Nenhumas música encontradas :(</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Previsualização</value>
+  </data>
+  <data name="TotalScore" xml:space="preserve">
+    <value>pontuação total</value>
+  </data>
+  <data name="VocalistAll" xml:space="preserve">
+    <value>Todos os vocalistas</value>
+  </data>
+  <data name="VocalistOther" xml:space="preserve">
+    <value>Outros vocalistas</value>
+  </data>
+  <data name="VocalistUTAU" xml:space="preserve">
+    <value>Só UTAU</value>
+  </data>
+  <data name="VocalistVocaloid" xml:space="preserve">
+    <value>Só Vocaloid</value>
+  </data>
 </root>

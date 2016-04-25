@@ -165,4 +165,49 @@
   <data name="Filter" xml:space="preserve">
     <value>Filtro</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Carregando...</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="ReleaseEvents" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Apagar</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Gravar</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Procura</value>
+  </data>
+  <data name="SetToLimited" xml:space="preserve">
+    <value>Apagar permissões de editar a base de dados</value>
+  </data>
+  <data name="ShowMore" xml:space="preserve">
+    <value>Mostrar mais</value>
+  </data>
+  <data name="Songs" xml:space="preserve">
+    <value>Músicas</value>
+  </data>
+  <data name="TopFavoritedSongs" xml:space="preserve">
+    <value>Músicas com melhor classificação</value>
+  </data>
+  <data name="TopRatedAlbums" xml:space="preserve">
+    <value>Álbuns com melhor classificação</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Unsorted" xml:space="preserve">
+    <value>Não organizado</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Utilizador</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Utilizadores</value>
+  </data>
 </root>

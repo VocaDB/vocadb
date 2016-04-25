@@ -153,4 +153,112 @@
   <data name="Favorites" xml:space="preserve">
     <value>{0} favorito(s)</value>
   </data>
+  <data name="Like" xml:space="preserve">
+    <value>Gosto</value>
+  </data>
+  <data name="LikedByTitle" xml:space="preserve">
+    <value>Gostos de</value>
+  </data>
+  <data name="Likes" xml:space="preserve">
+    <value>{0} gosto(s)</value>
+  </data>
+  <data name="ListsTabFeatured" xml:space="preserve">
+    <value>Destacado</value>
+  </data>
+  <data name="ListsTabNew" xml:space="preserve">
+    <value>Nova lista</value>
+  </data>
+  <data name="ListsTabPersonal" xml:space="preserve">
+    <value>Listas pessoais</value>
+  </data>
+  <data name="Lyrics" xml:space="preserve">
+    <value>Letra</value>
+  </data>
+  <data name="LyricsFrom" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="LyricsLC" xml:space="preserve">
+    <value>letra</value>
+  </data>
+  <data name="MatchingArtists" xml:space="preserve">
+    <value>Artistas correspondentes</value>
+  </data>
+  <data name="MatchingLikes" xml:space="preserve">
+    <value>Gostos correspondentes</value>
+  </data>
+  <data name="MatchingTags" xml:space="preserve">
+    <value>Tags correspondentes</value>
+  </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navegação</value>
+  </data>
+  <data name="NewListName" xml:space="preserve">
+    <value>Nome da nova lista</value>
+  </data>
+  <data name="NicoMimiDownload" xml:space="preserve">
+    <value>Veja o NicoMimi para fazer download</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notas</value>
+  </data>
+  <data name="OriginalMedia" xml:space="preserve">
+    <value>Media original</value>
+  </data>
+  <data name="OriginalVersion" xml:space="preserve">
+    <value>Versão original</value>
+  </data>
+  <data name="OtherArtists" xml:space="preserve">
+    <value>Outros artistas</value>
+  </data>
+  <data name="OtherMedia" xml:space="preserve">
+    <value>Outros media</value>
+  </data>
+  <data name="PoolsAndLists" xml:space="preserve">
+    <value>Pools e listas de músicas</value>
+  </data>
+  <data name="Producers" xml:space="preserve">
+    <value>Produtores</value>
+  </data>
+  <data name="PVDescription" xml:space="preserve">
+    <value>Publicado em {1} por {1}.</value>
+  </data>
+  <data name="PVDetails" xml:space="preserve">
+    <value>PV</value>
+  </data>
+  <data name="RelatedSongs" xml:space="preserve">
+    <value>Músicas relacionadas</value>
+  </data>
+  <data name="RemoveFromFavorites" xml:space="preserve">
+    <value>Apagar a minha classificação</value>
+  </data>
+  <data name="SearchYoutube" xml:space="preserve">
+    <value>Procurar no YouTube</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Partilhar</value>
+  </data>
+  <data name="ShowAllVersions" xml:space="preserve">
+    <value>Mostrar tudo</value>
+  </data>
+  <data name="SongDetails" xml:space="preserve">
+    <value>Música</value>
+  </data>
+  <data name="SongInLists" xml:space="preserve">
+    <value>Música nas listas</value>
+  </data>
+  <data name="SongRatings" xml:space="preserve">
+    <value>Classificações da música</value>
+  </data>
+  <data name="TotalScore" xml:space="preserve">
+    <value>{0} pontuação total</value>
+  </data>
+  <data name="ViewAllLists" xml:space="preserve">
+    <value>Ver todas as listas ({0})</value>
+  </data>
+  <data name="ViewExternal" xml:space="preserve">
+    <value>Ver no site externo</value>
+  </data>
+  <data name="Vocalists" xml:space="preserve">
+    <value>Vocalistas</value>
+  </data>
 </root>

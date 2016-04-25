@@ -123,4 +123,43 @@
   <data name="ForgotPassword" xml:space="preserve">
     <value>Esqueceste-te da tua password?</value>
   </data>
+  <data name="KeepMeLoggedIn" xml:space="preserve">
+    <value>Manter-me logged in neste computador</value>
+  </data>
+  <data name="LoginUsingSSL" xml:space="preserve">
+    <value>Login usando SSL</value>
+  </data>
+  <data name="LoginWithoutSSL" xml:space="preserve">
+    <value>Login sem SSL (menos seguro)</value>
+  </data>
+  <data name="LoginWithTwitter" xml:space="preserve">
+    <value>Login com o Twitter</value>
+  </data>
+  <data name="NoAccount" xml:space="preserve">
+    <value>Não tem conta?</value>
+  </data>
+  <data name="PasswordIsRequired" xml:space="preserve">
+    <value>Password é obrigatória.</value>
+  </data>
+  <data name="RegisterHere" xml:space="preserve">
+    <value>Registe-se aqui</value>
+  </data>
+  <data name="ResetPass" xml:space="preserve">
+    <value>Faça a mudança aqui</value>
+  </data>
+  <data name="UnableToLogin" xml:space="preserve">
+    <value>Erro ao fazer o login.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Utilizador</value>
+  </data>
+  <data name="UsernameIsRequired" xml:space="preserve">
+    <value>Utilizador é obrigatório.</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Bem-vindo de volta, {0}!</value>
+  </data>
+  <data name="WrongPassword" xml:space="preserve">
+    <value>Utilizador e password não correspondem um ao outro</value>
+  </data>
 </root>

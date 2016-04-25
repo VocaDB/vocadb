@@ -120,4 +120,7 @@
   <data name="Import" xml:space="preserve">
     <value>Importar do YouTube ou NicoNicoDouga</value>
   </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Organizar por</value>
+  </data>
 </root>

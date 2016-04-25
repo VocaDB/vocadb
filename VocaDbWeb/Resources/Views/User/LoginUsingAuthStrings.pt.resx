@@ -123,4 +123,10 @@
   <data name="AuthError" xml:space="preserve">
     <value>Desculpe - não foi possível fazer a autenticação. Verifique que tem as cookies ligadas e tente outra vez.</value>
   </data>
+  <data name="LoginUsingTwitter" xml:space="preserve">
+    <value>Login com o Twitter</value>
+  </data>
+  <data name="SignInCancelled" xml:space="preserve">
+    <value>Login cancelado.</value>
+  </data>
 </root>

@@ -117,22 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Author" xml:space="preserve">
-    <value>Autor</value>
+  <data name="MergeBtnText" xml:space="preserve">
+    <value>Fundir</value>
   </data>
-  <data name="Changes" xml:space="preserve">
-    <value>Mudanças</value>
+  <data name="MergeInfo" xml:space="preserve">
+    <value>Escolher a página com a qual esta será fundida. Todas as referências será apontadas para essa página e está será apagada.
+Deve fundir a página mais recente com a mais velha, a não ser que a mais recente esteja acabada e a velha seja draft.</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>Criado</value>
+  <data name="MergeWarning" xml:space="preserve">
+    <value>Esta ação não pode ser desfeita. Tem a certeza que quer continuar?</value>
   </data>
-  <data name="CurrentVersionIs" xml:space="preserve">
-    <value>Versão atual é</value>
+  <data name="ValidationErrorTargetIsLessComplete" xml:space="preserve">
+    <value>A página selecionada é um draft enquanto que a outra, com a qual vai fundir, não é. Funda sempre uma página incompleta com uma mais completa.</value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>Notas</value>
-  </data>
-  <data name="Version" xml:space="preserve">
-    <value>Versão</value>
+  <data name="ValidationErrorTargetIsNewer" xml:space="preserve">
+    <value>A página selecionada é mais novo do que a outra, com a qual vai fundir. Funda sempre uma página mais nova com a mais velha, nesta ordem.</value>
   </data>
 </root>

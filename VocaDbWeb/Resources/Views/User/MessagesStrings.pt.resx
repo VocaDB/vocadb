@@ -141,4 +141,34 @@
   <data name="HighPriority" xml:space="preserve">
     <value>Alta prioridade</value>
   </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Mensagens</value>
+  </data>
+  <data name="MessageSendError" xml:space="preserve">
+    <value>Erro ao enviar a mensagem.</value>
+  </data>
+  <data name="MessageSent" xml:space="preserve">
+    <value>A mensagem foi enviada.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notificações</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Recebido</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>Responder</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="Sent" xml:space="preserve">
+    <value>Enviado</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Título</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Para</value>
+  </data>
 </root>

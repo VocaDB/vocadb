@@ -123,4 +123,7 @@
   <data name="Date" xml:space="preserve">
     <value>Data de evento</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
 </root>

@@ -138,4 +138,16 @@
   <data name="FeaturedCategory" xml:space="preserve">
     <value>Categoria destacada</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado da página</value>
+  </data>
+  <data name="TabProperties" xml:space="preserve">
+    <value>Propriedades</value>
+  </data>
+  <data name="TabSongs" xml:space="preserve">
+    <value>Músicas</value>
+  </data>
 </root>

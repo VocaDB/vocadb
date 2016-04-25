@@ -126,4 +126,19 @@
   <data name="CollectionWishedOrOrdered" xml:space="preserve">
     <value>Wishlist ou encomendas</value>
   </data>
+  <data name="MediaType" xml:space="preserve">
+    <value>Tipo de media</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Classificação</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Data de lançamento</value>
+  </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Evento de lançamento</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado da coleção</value>
+  </data>
 </root>

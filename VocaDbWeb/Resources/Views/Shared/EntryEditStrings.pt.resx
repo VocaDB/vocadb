@@ -151,4 +151,33 @@ Comercial: vendas autorizadas, como Amazon e CDJapan.&lt;br /&gt;
 Referência: fansites com informações úteis, como as wikis.&lt;br /&gt;
 Outro: para aqueles que não se incluam nas categorias anteriores.&lt;br /&gt;</value>
   </data>
+  <data name="Merge" xml:space="preserve">
+    <value>Fundir</value>
+  </data>
+  <data name="NameHelp" xml:space="preserve">
+    <value>Se o nome original não é Inglês (por exemplo, Japonês), ou se o nome está numa língua desconhecida, introduza isso mesmo no campo Não-Inglês. Se puder, introduza o nome romanizado também. Se o nome oficial é Inglês, ou se há uma tradução inglesa, introduza isso no campo Inglês.
+&lt;br /&gt;
+Não é preciso introduzir nomes em todos os campos, se não possuir essa informação.</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restaurar</value>
+  </data>
+  <data name="SaveWarning" xml:space="preserve">
+    <value>Esta página tem avisos de falta de informações. De certeza que a quer marcar como acabada?</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="TranslatedStringAddEnglishTranslation" xml:space="preserve">
+    <value>Adicionar tradução inglesa</value>
+  </data>
+  <data name="TranslatedStringEnglishTranslation" xml:space="preserve">
+    <value>Tradução inglesa</value>
+  </data>
+  <data name="UpdateNotes" xml:space="preserve">
+    <value>Atualizar notas (opcional)</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>Links externos</value>
+  </data>
 </root>

@@ -138,4 +138,25 @@
   <data name="Category" xml:space="preserve">
     <value>Categoria</value>
   </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Visão global</value>
+  </data>
+  <data name="RelatedTags" xml:space="preserve">
+    <value>Tags relacionadas</value>
+  </data>
+  <data name="TagDetails" xml:space="preserve">
+    <value>Detalhes da tag</value>
+  </data>
+  <data name="TopAlbums" xml:space="preserve">
+    <value>Melhores álbuns</value>
+  </data>
+  <data name="TopArtists" xml:space="preserve">
+    <value>Melhores artistas</value>
+  </data>
+  <data name="TopSongs" xml:space="preserve">
+    <value>Melhores músicas</value>
+  </data>
+  <data name="Translations" xml:space="preserve">
+    <value>Traduções</value>
+  </data>
 </root>

@@ -150,4 +150,46 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="IRCLink" xml:space="preserve">
+    <value>Canal do IRC em Rizon</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>Conteúdo sob a licença Creative Commons.</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Gerir</value>
+  </data>
+  <data name="MikuDbAlbum" xml:space="preserve">
+    <value>Importar álbum</value>
+  </data>
+  <data name="NewAlbums" xml:space="preserve">
+    <value>Novos álbuns</value>
+  </data>
+  <data name="NewPVs" xml:space="preserve">
+    <value>PVs recentes</value>
+  </data>
+  <data name="OtherCredit" xml:space="preserve">
+    <value>Outros créditos e código-fonte</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registar</value>
+  </data>
+  <data name="RelatedSites" xml:space="preserve">
+    <value>Sites relacionados</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Serviços</value>
+  </data>
+  <data name="SocialSites" xml:space="preserve">
+    <value>Comunidade</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags / estilos</value>
+  </data>
+  <data name="UnreadMessages" xml:space="preserve">
+    <value>Tem mensagens por ler</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Bem-vindo</value>
+  </data>
 </root>

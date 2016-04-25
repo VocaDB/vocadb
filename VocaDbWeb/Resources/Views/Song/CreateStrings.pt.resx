@@ -129,4 +129,37 @@
   <data name="DuplicatePV" xml:space="preserve">
     <value>Este PV já foi adicionado à base de dados.</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome (precisa de pelo menos um)</value>
+  </data>
+  <data name="NameHelp" xml:space="preserve">
+    <value>Se a página original não é Inglês (por exemplo, Japonês), ou se o nome está numa língua desconhecida, introduza isso mesmo no campo Não-Inglês. Se puder, introduza o nome romanizado também. Se o nome oficial é Inglês, ou se há uma tradução inglesa, introduza isso no campo Inglês.</value>
+  </data>
+  <data name="NeedArtist" xml:space="preserve">
+    <value>Precisa de pelo menos um artista.</value>
+  </data>
+  <data name="NoArtistsToName" xml:space="preserve">
+    <value>Não introduza nomes de artistas no campo de nome. Utilize a lista de artistas.</value>
+  </data>
+  <data name="OriginalPV" xml:space="preserve">
+    <value>URL do PV original (NicoNicoDouga, YouTube, etc)</value>
+  </data>
+  <data name="OriginalSuggestionsTitle" xml:space="preserve">
+    <value>Alguns destes são a versão original?</value>
+  </data>
+  <data name="ReprintPV" xml:space="preserve">
+    <value>URL para o reprint do PV (como NicoNicoDouga ou YouTube)</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Selecionar</value>
+  </data>
+  <data name="SongType" xml:space="preserve">
+    <value>Tipo de música</value>
+  </data>
+  <data name="SubmitSong" xml:space="preserve">
+    <value>Adicionar uma música nova à base de dados</value>
+  </data>
+  <data name="UnableToCreateSong" xml:space="preserve">
+    <value>Erro ao criar a música. Corrija os erros e tente outra vez.</value>
+  </data>
 </root>

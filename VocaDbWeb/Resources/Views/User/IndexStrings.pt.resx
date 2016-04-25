@@ -117,22 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Author" xml:space="preserve">
-    <value>Autor</value>
+  <data name="ShowDisabledUsers" xml:space="preserve">
+    <value>Mostrar contas bloqueadas</value>
   </data>
-  <data name="Changes" xml:space="preserve">
-    <value>Mudanças</value>
-  </data>
-  <data name="Created" xml:space="preserve">
-    <value>Criado</value>
-  </data>
-  <data name="CurrentVersionIs" xml:space="preserve">
-    <value>Versão atual é</value>
-  </data>
-  <data name="Notes" xml:space="preserve">
-    <value>Notas</value>
-  </data>
-  <data name="Version" xml:space="preserve">
-    <value>Versão</value>
+  <data name="VerifiedArtists" xml:space="preserve">
+    <value>Contas de artistas</value>
   </data>
 </root>

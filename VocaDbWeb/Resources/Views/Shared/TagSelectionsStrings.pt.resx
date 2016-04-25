@@ -120,4 +120,7 @@
   <data name="AddTag" xml:space="preserve">
     <value>Adicionar tag</value>
   </data>
+  <data name="Info" xml:space="preserve">
+    <value>Clique nas tags que gosta, ou adicione novas.</value>
+  </data>
 </root>

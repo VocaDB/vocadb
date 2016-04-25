@@ -174,4 +174,85 @@
   <data name="ImportSongList" xml:space="preserve">
     <value>Importar do YouTube ou NicoNicoDouga</value>
   </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Último login</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Nível</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Localização</value>
+  </data>
+  <data name="MemberSince" xml:space="preserve">
+    <value>Membro desde</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Mensagens</value>
+  </data>
+  <data name="MySettings" xml:space="preserve">
+    <value>Minhas definições</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Visão global</value>
+  </data>
+  <data name="PossibleProducerMessage" xml:space="preserve">
+    <value>É um artista (produtor, animador, ilustrador) de Vocaloid/UTAU? Se sim, por favor leia {0}.</value>
+  </data>
+  <data name="Power" xml:space="preserve">
+    <value>Nível</value>
+  </data>
+  <data name="SetAvatar" xml:space="preserve">
+    <value>Escolha o seu avatar em gravatar.com</value>
+  </data>
+  <data name="SomeAlbumsILike" xml:space="preserve">
+    <value>Alguns álbuns que gosto</value>
+  </data>
+  <data name="SomeArtistsIFollow" xml:space="preserve">
+    <value>Alguns artistas que sigo</value>
+  </data>
+  <data name="SomeSongsILike" xml:space="preserve">
+    <value>Algumas músicas que gosto</value>
+  </data>
+  <data name="Staff" xml:space="preserve">
+    <value>Administração</value>
+  </data>
+  <data name="StatsTab" xml:space="preserve">
+    <value>Estatísticas</value>
+  </data>
+  <data name="Submissions" xml:space="preserve">
+    <value>Submissões</value>
+  </data>
+  <data name="SupporterTitle" xml:space="preserve">
+    <value>Obrigado por apoiar o {0}!</value>
+  </data>
+  <data name="TagVotes" xml:space="preserve">
+    <value>Votos da tag</value>
+  </data>
+  <data name="TotalEdits" xml:space="preserve">
+    <value>Mudanças totais</value>
+  </data>
+  <data name="TwitterAccount" xml:space="preserve">
+    <value>Conta no Twitter</value>
+  </data>
+  <data name="UserDetails" xml:space="preserve">
+    <value>Detalhes do utilizador</value>
+  </data>
+  <data name="UserGroup" xml:space="preserve">
+    <value>Grupo do utilizador</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="VerifiedAccount" xml:space="preserve">
+    <value>Artista verificado</value>
+  </data>
+  <data name="VerifiedEmail" xml:space="preserve">
+    <value>Email verificado</value>
+  </data>
+  <data name="VerifiedOwner" xml:space="preserve">
+    <value>Dono verificado</value>
+  </data>
+  <data name="VisibleOnlyToMe" xml:space="preserve">
+    <value>Visível apenas para mim e a administração.</value>
+  </data>
 </root>

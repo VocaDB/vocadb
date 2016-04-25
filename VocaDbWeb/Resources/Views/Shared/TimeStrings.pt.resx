@@ -123,4 +123,13 @@
   <data name="Hours" xml:space="preserve">
     <value>horas</value>
   </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>minutos</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>meses</value>
+  </data>
+  <data name="TimeAgo" xml:space="preserve">
+    <value>{0} {1} atrás</value>
+  </data>
 </root>

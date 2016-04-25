@@ -120,4 +120,16 @@
   <data name="Drafts" xml:space="preserve">
     <value>Estas páginas estão em construção o que significa que falta-lhes alguma informação.</value>
   </data>
+  <data name="ManageDeleted" xml:space="preserve">
+    <value>Gerir páginas apagadas</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>Sem resultados! Experimente uma pesquisa diferente.</value>
+  </data>
+  <data name="OnlyDrafts" xml:space="preserve">
+    <value>Só drafts</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Organizar por</value>
+  </data>
 </root>

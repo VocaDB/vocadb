@@ -129,4 +129,19 @@
   <data name="Export" xml:space="preserve">
     <value>Exportar</value>
   </data>
+  <data name="Playlist" xml:space="preserve">
+    <value>Playlist</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Previsualização</value>
+  </data>
+  <data name="ShowTags" xml:space="preserve">
+    <value>Mostrar tags</value>
+  </data>
+  <data name="SongList" xml:space="preserve">
+    <value>Lista de músicas</value>
+  </data>
+  <data name="Songs" xml:space="preserve">
+    <value>música(s)</value>
+  </data>
 </root>

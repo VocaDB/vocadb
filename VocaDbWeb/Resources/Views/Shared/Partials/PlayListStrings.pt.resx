@@ -123,4 +123,10 @@
   <data name="AutoplayNote" xml:space="preserve">
     <value>Autoplay só é suportado no YouTube e Soundcloud</value>
   </data>
+  <data name="NextSong" xml:space="preserve">
+    <value>Próxima música</value>
+  </data>
+  <data name="Shuffle" xml:space="preserve">
+    <value>Aleatório</value>
+  </data>
 </root>

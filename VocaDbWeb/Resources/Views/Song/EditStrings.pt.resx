@@ -162,4 +162,58 @@
   <data name="EditTitle" xml:space="preserve">
     <value>Editar música</value>
   </data>
+  <data name="LyAddRow" xml:space="preserve">
+    <value>Adicionar linha</value>
+  </data>
+  <data name="LyLanguage" xml:space="preserve">
+    <value>Língua</value>
+  </data>
+  <data name="LySource" xml:space="preserve">
+    <value>Fonte:</value>
+  </data>
+  <data name="PvAddMedia" xml:space="preserve">
+    <value>Adicionar media</value>
+  </data>
+  <data name="PvAuthor" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="PvDate" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="PvInstrumentalNote" xml:space="preserve">
+    <value>Versões instrumentais têm que ser adicionadas em links externos em vez de media.</value>
+  </data>
+  <data name="PvLength" xml:space="preserve">
+    <value>Duração</value>
+  </data>
+  <data name="PvName" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="PvNewType" xml:space="preserve">
+    <value>Tipo:</value>
+  </data>
+  <data name="PvService" xml:space="preserve">
+    <value>Serviço</value>
+  </data>
+  <data name="PvSupportedServices" xml:space="preserve">
+    <value>Serviços suportados: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro e Bilibili.</value>
+  </data>
+  <data name="PvType" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="PvUrl" xml:space="preserve">
+    <value>URL:</value>
+  </data>
+  <data name="TabArtists" xml:space="preserve">
+    <value>Artistas</value>
+  </data>
+  <data name="TabBasicInfo" xml:space="preserve">
+    <value>Informações básicas</value>
+  </data>
+  <data name="TabLyrics" xml:space="preserve">
+    <value>Letra</value>
+  </data>
+  <data name="TabMedia" xml:space="preserve">
+    <value>Media</value>
+  </data>
 </root>

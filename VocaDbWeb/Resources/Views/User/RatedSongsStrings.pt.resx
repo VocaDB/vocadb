@@ -120,4 +120,16 @@
   <data name="GroupByRating" xml:space="preserve">
     <value>Agrupar por classificação</value>
   </data>
+  <data name="NoSongListSelection" xml:space="preserve">
+    <value>Nada</value>
+  </data>
+  <data name="RatingAnything" xml:space="preserve">
+    <value>Tudo</value>
+  </data>
+  <data name="ShowTags" xml:space="preserve">
+    <value>Mostrar tags</value>
+  </data>
+  <data name="SongList" xml:space="preserve">
+    <value>Lista de músicas</value>
+  </data>
 </root>

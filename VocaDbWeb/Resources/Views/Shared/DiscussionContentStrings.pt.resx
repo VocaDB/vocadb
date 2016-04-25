@@ -120,4 +120,7 @@
   <data name="AddComment" xml:space="preserve">
     <value>Adicionar um comentário</value>
   </data>
+  <data name="NewComment" xml:space="preserve">
+    <value>Escrever um comentário.</value>
+  </data>
 </root>

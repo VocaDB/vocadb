@@ -117,22 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Author" xml:space="preserve">
-    <value>Autor</value>
+  <data name="NewAlbums" xml:space="preserve">
+    <value>Álbuns recentes ou prestes a sair.</value>
   </data>
-  <data name="Changes" xml:space="preserve">
-    <value>Mudanças</value>
+  <data name="News" xml:space="preserve">
+    <value>Notícias</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>Criado</value>
+  <data name="RecentActivity" xml:space="preserve">
+    <value>Atividade recente</value>
   </data>
-  <data name="CurrentVersionIs" xml:space="preserve">
-    <value>Versão atual é</value>
+  <data name="RecentEvents" xml:space="preserve">
+    <value>Acontecendo agora</value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>Notas</value>
+  <data name="RecentSongs" xml:space="preserve">
+    <value>PVs destacados</value>
   </data>
-  <data name="Version" xml:space="preserve">
-    <value>Versão</value>
+  <data name="SearchSite" xml:space="preserve">
+    <value>Procurar no site todo usando o Google</value>
+  </data>
+  <data name="TopAlbums" xml:space="preserve">
+    <value>Álbuns populares aleatórios</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>ver todos</value>
+  </data>
+  <data name="ViewMore" xml:space="preserve">
+    <value>ver mais</value>
+  </data>
+  <data name="ViewSongInfo" xml:space="preserve">
+    <value>Informação da música</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Bem-vindo à Vocaloid Database!</value>
+  </data>
+  <data name="WelcomeSubtitle" xml:space="preserve">
+    <value>A base de dados colaborativa, com artistas de Vocaloid, discografias, PVs e mais.</value>
   </data>
 </root>

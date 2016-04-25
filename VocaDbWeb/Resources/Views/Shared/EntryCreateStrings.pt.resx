@@ -123,4 +123,25 @@
   <data name="FoundPossibleDuplicates" xml:space="preserve">
     <value>Páginas iguais foram encontradas na base de dados. Verifique que não está a adicionar um duplicado.</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome (precisa de pelo menos um)</value>
+  </data>
+  <data name="NameHelp" xml:space="preserve">
+    <value>Se o nome original não é Inglês (por exemplo, Japonês), ou se o nome está numa língua desconhecida, introduza isso mesmo no campo Não-Inglês. Se puder, introduza o nome romanizado também. Se o nome oficial é Inglês, ou se há uma tradução inglesa, introduza isso no campo Inglês.</value>
+  </data>
+  <data name="NeedName" xml:space="preserve">
+    <value>Precisa de pelo menos um nome.</value>
+  </data>
+  <data name="NoArtistsToName" xml:space="preserve">
+    <value>Não introduza nomes de artistas no campo de nome. Utilize a lista de artistas.</value>
+  </data>
+  <data name="NonEnglishName" xml:space="preserve">
+    <value>Nome não-inglês</value>
+  </data>
+  <data name="PictureInfo" xml:space="preserve">
+    <value>Tipos permitidos: {0}. Tamanho limite é {1} MB.</value>
+  </data>
+  <data name="RomajiName" xml:space="preserve">
+    <value>Romanização</value>
+  </data>
 </root>
