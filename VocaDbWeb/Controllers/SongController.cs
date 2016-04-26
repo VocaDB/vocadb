@@ -141,7 +141,7 @@ namespace VocaDb.Web.Controllers
 			prop.Title = model.Name;
 			prop.Description = hasDescription ? 
 				markdownParser.GetPlainText(model.Notes.EnglishOrOriginal) :
-				new SongDescriptionGenerator().GenerateDescription(contract.Song, d => Translate.SongTypeNames.GetName(d, CultureInfo.InvariantCulture));
+				new SongDescriptionGenerator().GenerateDescription(contract.Song, Translate.SongTypeNames);
 			prop.OpenGraph.ShowTwitterCard = true;
 
 			string titleAndArtist;
