@@ -678,6 +678,10 @@ namespace VocaDb.Model.Database.Queries {
 					target.LengthSeconds = source.LengthSeconds;
 				}
 
+				if (target.PublishDate.IsEmpty) {
+					target.PublishDate = source.PublishDate;
+				}
+
 				// Create merge record
 				var mergeEntry = new SongMergeRecord(source, target);
 				ctx.Save(mergeEntry);
