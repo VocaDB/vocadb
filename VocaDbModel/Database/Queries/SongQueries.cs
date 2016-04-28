@@ -190,7 +190,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(w => w.Entry)
 					.FirstOrDefault();
 
-				if (author != null)
+				if (author != null && !titleParseResult.Artists.Contains(author))
 					titleParseResult.Artists.Add(author);
 
 			}
