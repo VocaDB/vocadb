@@ -131,8 +131,9 @@ namespace VocaDb.Model.Service.Queries {
 
 			ctx.Update(comment);
 				
-			ctx.AuditLogger.AuditLog(string.Format("updated {0}: '{1}'", 
-				comment, HttpUtility.HtmlEncode(contract.Message)));
+			ctx.AuditLogger.AuditLog(string.Format("updated comment for {0}: '{1}'", 
+				entryLinkFactory.CreateEntryLink(comment.Entry), 
+				HttpUtility.HtmlEncode(contract.Message)));
 
 		}
 
