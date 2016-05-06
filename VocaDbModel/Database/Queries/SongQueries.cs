@@ -190,7 +190,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(w => w.Entry)
 					.FirstOrDefault();
 
-				if (author != null)
+				if (author != null && !titleParseResult.Artists.Contains(author))
 					titleParseResult.Artists.Add(author);
 
 			}
@@ -676,6 +676,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (target.LengthSeconds == 0) {
 					target.LengthSeconds = source.LengthSeconds;
+				}
+
+				if (target.PublishDate.IsEmpty) {
+					target.PublishDate = source.PublishDate;
 				}
 
 				// Create merge record

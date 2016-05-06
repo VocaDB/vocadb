@@ -36,6 +36,9 @@ namespace VocaDb.Model.Domain {
 			DateTime = dateTimeOffset.HasValue ? (DateTime?)dateTimeOffset.Value.Date : null;
 		}
 
+		/// <summary>
+		/// Internal DateTime instance. Can be null.
+		/// </summary>
 		public DateTime? DateTime {
 			get { return dateTime; }
 			set {
@@ -44,6 +47,8 @@ namespace VocaDb.Model.Domain {
 				dateTime = value != null ? (DateTime?)System.DateTime.SpecifyKind(value.Value, DateTimeKind.Utc).Date : null;
 			}
 		}
+
+		public bool IsEmpty => !DateTime.HasValue;
 
 		public int CompareTo(Date other) {
 			return Nullable.Compare(DateTime, other.DateTime);

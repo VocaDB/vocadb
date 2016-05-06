@@ -43,11 +43,7 @@ namespace VocaDb.Model.Service.Translations {
 			this.values = values.ToArray();
 		}
 
-		public string this[TEnum val] {
-			get {
-				return GetName(val);
-			}
-		}
+		public string this[TEnum val] => GetName(val);
 
 		public IEnumerable<TranslateableEnumField<TEnum>> AllFields {
 			get {
