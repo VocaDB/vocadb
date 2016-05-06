@@ -1,4 +1,5 @@
 ﻿@model VocaDb.Model.Domain.Globalization.EnglishTranslatedString
+@using Res = VocaDb.Web.Resources.Views.Shared.Partials.EnglishTranslatedStringStrings
 		  
 <!-- Viewmodel: EnglishTranslatedStringViewModel -->
  
@@ -12,7 +13,7 @@ var maxLength = 400;
 		</div>
 		<div data-bind="visible: !isFullDescriptionShown()">
 			@HtmlHelpers.FormatMarkdown(str.Substring(0, maxLength) + "...")
-			<p><a href="" data-bind="click: showFullDescription">Show full description</a></p>
+			<p><a href="" data-bind="click: showFullDescription">@Res.ShowFullDescription</a></p>
 		</div>
 	}
 }

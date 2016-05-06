@@ -233,7 +233,7 @@
 		@if (Model.LatestAlbums.Any()) {
 			<h3 class="withMargin">
 				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.AdditionDate }, null)
-				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.AlbumCount))</small>
+				<small>@string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.SharedStats.AlbumCount)</small>
 			</h3>
 			<div id="newAlbums">
 				@AlbumHelpers.AlbumThumbs(Model.LatestAlbums)

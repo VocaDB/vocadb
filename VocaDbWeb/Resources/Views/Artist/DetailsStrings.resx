@@ -144,6 +144,9 @@
   <data name="Customize" xml:space="preserve">
     <value>Customize</value>
   </data>
+  <data name="CustomizeSubscriptionTitle" xml:space="preserve">
+    <value>Customize subscription</value>
+  </data>
   <data name="Follow" xml:space="preserve">
     <value>Follow</value>
   </data>
@@ -179,6 +182,18 @@
   </data>
   <data name="Share" xml:space="preserve">
     <value>Share</value>
+  </data>
+  <data name="SubscriptionEmail" xml:space="preserve">
+    <value>Notify me both on-site and by email.</value>
+  </data>
+  <data name="SubscriptionNoNotification" xml:space="preserve">
+    <value>No notifications.</value>
+  </data>
+  <data name="SubscriptionOnSite" xml:space="preserve">
+    <value>Notify me on-site.</value>
+  </data>
+  <data name="SubscriptionOptions" xml:space="preserve">
+    <value>Notifications for new songs and albums.</value>
   </data>
   <data name="TopAlbums" xml:space="preserve">
     <value>Popular albums</value>

@@ -187,6 +187,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ({0} total).
+        /// </summary>
+        public static string NumTotalParenthesis {
+            get {
+                return ResourceManager.GetString("NumTotalParenthesis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Official links.
         /// </summary>
         public static string OfficialLinks {

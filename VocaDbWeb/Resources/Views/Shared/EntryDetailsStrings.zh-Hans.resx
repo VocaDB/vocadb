@@ -147,11 +147,17 @@
   <data name="NoComments" xml:space="preserve">
     <value>还没有人发过评论!</value>
   </data>
+  <data name="NumTotalParenthesis" xml:space="preserve">
+    <value>（总计{0}）</value>
+  </data>
   <data name="OfficialLinks" xml:space="preserve">
     <value>官方链接</value>
   </data>
   <data name="OtherLinks" xml:space="preserve">
     <value>非官方链接</value>
+  </data>
+  <data name="PicturesTab" xml:space="preserve">
+    <value>图片</value>
   </data>
   <data name="PublishDate" xml:space="preserve">
     <value>发布时间</value>

@@ -127,6 +127,6 @@
     <value>已完成</value>
   </data>
   <data name="Locked" xml:space="preserve">
-    <value>Locked</value>
+    <value>已锁定</value>
   </data>
 </root>

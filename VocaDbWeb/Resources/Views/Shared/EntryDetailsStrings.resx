@@ -159,6 +159,9 @@
   <data name="NumTotal" xml:space="preserve">
     <value>{0} total</value>
   </data>
+  <data name="NumTotalParenthesis" xml:space="preserve">
+    <value>({0} total)</value>
+  </data>
   <data name="OfficialLinks" xml:space="preserve">
     <value>Official links</value>
   </data>

@@ -163,13 +163,13 @@
     <value>Playlist</value>
   </data>
   <data name="Preview" xml:space="preserve">
-    <value>Preview</value>
+    <value>预览</value>
   </data>
   <data name="Rating" xml:space="preserve">
-    <value>Rating</value>
+    <value>评分</value>
   </data>
   <data name="ReleaseDate" xml:space="preserve">
-    <value>Release date</value>
+    <value>发布时间</value>
   </data>
   <data name="ShowingItemsOf" xml:space="preserve">
     <value>显示{1}项中的{0}项</value>
@@ -190,7 +190,7 @@
     <value>Usages</value>
   </data>
   <data name="Times" xml:space="preserve">
-    <value>time(s)</value>
+    <value>次评分</value>
   </data>
   <data name="TopGenres" xml:space="preserve">
     <value>Top genres</value>

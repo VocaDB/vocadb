@@ -142,6 +142,15 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customize subscription.
+        /// </summary>
+        public static string CustomizeSubscriptionTitle {
+            get {
+                return ResourceManager.GetString("CustomizeSubscriptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow.
         /// </summary>
         public static string Follow {
@@ -246,6 +255,42 @@ namespace ViewRes.Artist {
         public static string Share {
             get {
                 return ResourceManager.GetString("Share", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notify me both on-site and by email..
+        /// </summary>
+        public static string SubscriptionEmail {
+            get {
+                return ResourceManager.GetString("SubscriptionEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No notifications..
+        /// </summary>
+        public static string SubscriptionNoNotification {
+            get {
+                return ResourceManager.GetString("SubscriptionNoNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notify me on-site..
+        /// </summary>
+        public static string SubscriptionOnSite {
+            get {
+                return ResourceManager.GetString("SubscriptionOnSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications for new songs and albums..
+        /// </summary>
+        public static string SubscriptionOptions {
+            get {
+                return ResourceManager.GetString("SubscriptionOptions", resourceCulture);
             }
         }
         
