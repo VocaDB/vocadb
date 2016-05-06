@@ -135,11 +135,17 @@
   <data name="Embed" xml:space="preserve">
     <value>嵌入代码</value>
   </data>
+  <data name="FavoritedByTitle" xml:space="preserve">
+    <value>以下用户喜爱这首歌</value>
+  </data>
   <data name="Favorites" xml:space="preserve">
     <value>喜爱人数{0}</value>
   </data>
   <data name="Like" xml:space="preserve">
     <value>喜欢</value>
+  </data>
+  <data name="LikedByTitle" xml:space="preserve">
+    <value>以下用户喜欢这首歌</value>
   </data>
   <data name="Likes" xml:space="preserve">
     <value>喜欢人数{0}</value>
