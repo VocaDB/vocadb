@@ -1,0 +1,107 @@
+<html>
+<head>
+	<title>VocaDB Event calendar demo</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
+	<style>
+		body {
+			margin: 40px 10px;
+			padding: 0;
+			font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+			font-size: 14px;
+		}
+
+		#calendar-container {
+			max-width: 1000px;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+
+<body>
+	
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+	
+				<div id="calendar-container">
+					<h1>VocaDB Event calendar demo</h1>
+		
+					<div id='calendar'></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			$('#calendar').fullCalendar({
+				eventSources: [
+					{
+						color: 'teal',
+						textColor: 'white',
+						events: function (start, end, timezone, callback) {
+							$.getJSON("http://vocadb.net/api/releaseEvents", { afterDate: start.toJSON(), beforeDate: end.toJSON() }, function (result) {
+								var events = [];
+								$(result.items).each(function () {
+									events.push({
+										title: this.name,
+										start: this.date,
+										url: 'http://vocadb.net/Event/Details/' + this.id,
+										allDay: true
+									});
+								});
+								callback(events);
+							});
+						}
+					},
+					{
+						color: 'darkblue',
+						textColor: 'white',
+						events: function (start, end, timezone, callback) {
+							$.getJSON("http://vocadb.net/api/albums", { releaseDateAfter: start.toJSON(), releaseDateBefore: end.toJSON() }, function (result) {
+								var events = [];
+								$(result.items).each(function () {
+									events.push({
+										title: this.name,
+										start: moment({ year: this.releaseDate.year, month: this.releaseDate.month - 1, day: this.releaseDate.day }),
+										url: 'http://vocadb.net/Al/' + this.id,
+										allDay: true
+								});
+								});
+								callback(events);
+							});
+						}
+					},
+					{
+						color: 'darkred',
+						textColor: 'white',
+						events: function (start, end, timezone, callback) {
+							$.getJSON("http://vocadb.net/api/songLists/featured", { featuredCategory: 'Concerts', releaseDateAfter: start.toJSON(), releaseDateBefore: end.toJSON() }, function (result) {
+								var events = [];
+								$(result.items).each(function () {
+									events.push({
+										title: this.name,
+										start: this.eventDate,
+										url: 'http://vocadb.net/SongList/Details/' + this.id,
+										allDay: true
+								});
+								});
+								callback(events);
+							});
+						}
+					}					
+				]
+			});
+
+		});
+
+	</script>	
+</body>
+</html>

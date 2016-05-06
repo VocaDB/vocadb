@@ -1,0 +1,101 @@
+<html>
+<head>
+	<title>VocaDB Song lyrics demo</title>
+</head>
+
+<body>
+	
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+			
+				<h1>VocaDB Song lyrics demo</h1>
+				
+				<div class="alert alert-info">
+					Search songs with lyrics in specific language using the <a href="http://vocadb.net/apiHelp">VocaDB song lyrics API</a>.
+				</div>
+				
+				<div class="btn-group">
+					<button class="btn" data-bind="css: { active: japanese() }, click: function () { japanese(!japanese()); }">Non-English</button>
+					<button class="btn" data-bind="css: { active: romaji() }, click: function () { romaji(!romaji()); }">Romanized</button>
+					<button class="btn" data-bind="css: { active: english() }, click: function () { english(!english()); }">English</button>
+				</div>
+				
+				<br />
+				<input type="text" placeholder="Type something..." data-bind="value: searchTerm, valueUpdate: 'afterkeydown'" class="input-xlarge" />
+			
+				<hr />
+			
+				<div data-bind="foreach: items">
+					<div class="media">
+						<a class="pull-left" href="#" data-bind="if: $data.mainPicture, attr: { href: 'http://vocadb.net/S/' + id }">
+							<img class="media-object" data-bind="attr: { src: mainPicture.urlTinyThumb }">
+						</a>
+						<div class="media-body">
+							<a data-bind="attr: { href: 'http://vocadb.net/S/' + id }">
+								<h4 class="media-heading" data-bind="text: name"></h4>
+							</a>
+							<small data-bind="text: artistString"></small>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
+	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		
+		function ViewModel() {
+		
+			var self = this;
+			this.items = ko.observableArray([]); // Current page of items
+			this.searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } }); // Delay updates by 300ms
+			this.japanese = ko.observable(true);
+			this.romaji = ko.observable(true);
+			this.english = ko.observable(true);
+			
+			this.updateData = ko.computed(function () {
+			
+				var lyricsParams = [];
+
+				if (self.japanese())
+					lyricsParams.push("Japanese");
+				if (self.romaji())
+					lyricsParams.push("Romaji");
+				if (self.english())
+					lyricsParams.push("English");
+			
+				// Call the VocaDB API to get a page of albums
+				$.getJSON("http://vocadb.net/api/songs", 
+					{
+						query: self.searchTerm(), 
+						lyrics: lyricsParams.join(","),
+						fields: 'MainPicture', // Getting the main picture optional field
+						nameMatchMode: 'Auto', // 'Auto' selects the optimal name match mode based on query
+						lang: 'English'        // For this demo we want names localized in English when possible
+					},
+					function(result) {					
+						self.items(result.items);					
+					}
+				);
+			
+			});
+			
+			// Update results when search term changes.
+			//this.searchTerm.subscribe(this.updateData);
+			
+			// Immediately populate initial contents on page load
+			//this.updateData();
+			
+		}
+			
+		ko.applyBindings(new ViewModel());
+		
+	</script>		
+</body>
+</html>

@@ -1,0 +1,127 @@
+<html>
+<head>
+	<title>VocaDB Event calendar demo</title>
+	<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
+	<style>
+
+	</style>
+</head>
+
+<body>
+	
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+	
+				<div id="calendar-container">
+					<h1>VocaDB Events demo</h1>
+		
+					<script type="text/html" id="events-template">
+						<div data-bind="visible: events.length">
+							<h2 data-bind="text: title"></h2>
+							<ul data-bind="foreach: events">
+								<li>
+									<a data-bind="text: $data.title + ' (' + $data.date.format('l') + ')', attr: { href: url }"></a>
+									<span class="label label-success" data-bind="visible: type === 'releaseEvent'">Release event</span>
+									<span class="label label-info" data-bind="visible: type === 'album'">Album</span>
+									<span class="label label-error" data-bind="visible: type === 'songList'">Concert</span>
+								</li>
+							</ul>
+						</div>
+					</script>
+		
+					<div data-bind="template: { name: 'events-template', data: futureEvents }"></div>
+					<div data-bind="template: { name: 'events-template', data: currentEvents }"></div>
+					<div data-bind="template: { name: 'events-template', data: pastEvents }"></div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			var minDatePast = moment().subtract(7, 'days');
+			var minDateNow = moment().subtract(1, 'days');
+			var minDateFuture = moment().add(2, 'days');
+			var eventsPromise = $.getJSON("http://vocadb.net/api/releaseEvents", { afterDate: minDatePast.toJSON() });
+			var albumsPromise = $.getJSON("http://vocadb.net/api/albums", { releaseDateAfter: minDatePast.toJSON() });
+			var concertsPromise = $.getJSON("http://vocadb.net/api/songLists/featured", { featuredCategory: 'Concerts', releaseDateAfter: minDatePast.toJSON() });
+		
+			function ViewModel(all) {
+			
+				var self = this;
+				this.futureEvents = ko.observable();
+				this.currentEvents = ko.observable();
+				this.pastEvents = ko.observable();
+											
+					self.futureEvents({ 
+						title: 'Future events', 
+						events: _.sortByOrder(_.filter(all, function (ev) { 
+							return ev.date.isAfter(minDateFuture); 
+						}), 'desc')
+					});
+				
+					self.currentEvents({ 
+						title: 'Current events', 
+						events: _.sortBy(_.filter(all, function (ev) { 
+							return ev.date.isAfter(minDateNow) && ev.date.isBefore(minDateFuture); 
+						}))
+					});				
+					
+					self.pastEvents({
+						title: 'Past events', 
+						events: _.sortBy(_.filter(all, function (ev) { 
+							return ev.date.isAfter(minDatePast) && ev.date.isBefore(minDateNow); 
+						}))
+					});				
+					
+				}
+
+				
+			$.when(eventsPromise, albumsPromise, concertsPromise).done(function (events, albums, concerts) {
+			
+				var all = _.chain(_.map(events[0].items, function (ev) {
+					return {
+						title: ev.name,
+						date: moment(ev.date),
+						url: 'http://vocadb.net/Event/Details/' + ev.id,
+						type: 'releaseEvent'
+					};
+				}))
+				.concat(_.map(albums[0].items, function (al) {
+					return {
+						title: al.name,
+						date: moment({ year: al.releaseDate.year, month: al.releaseDate.month - 1, day: al.releaseDate.day }),
+						url: 'http://vocadb.net/Al/' + al.id,
+						type: 'album'
+					};				
+				}))
+				.concat(_.map(concerts[0].items, function (sl) {
+					return {
+						title: sl.name,
+						date: moment(sl.eventDate),
+						url: 'http://vocadb.net/SongList/Details/' + sl.id,
+						type: 'songList'
+					};				
+				}))
+				.value();
+				
+				var sorted = _.sortByOrder(all, 'desc');
+			
+				ko.applyBindings(new ViewModel(all));
+				
+			});
+
+		});
+
+	</script>	
+</body>
+</html>
