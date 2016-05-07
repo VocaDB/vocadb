@@ -320,10 +320,21 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets top rated songs.
+		/// </summary>
+		/// <param name="durationHours">Duration in hours from which to get songs.</param>
+		/// <param name="startDate">Lower bound of the date. Optional.</param>
+		/// <param name="filterBy">Filtering mode.</param>
+		/// <param name="vocalist">Vocalist selection.</param>
+		/// <param name="fields">Optional song fields to load.</param>
+		/// <param name="languagePreference">Language preference.</param>
+		/// <returns>List of sorts, sorted by the rating position.</returns>
 		[System.Web.Http.Route("top-rated")]
-		[ApiExplorerSettings(IgnoreApi=true)]
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
-		public IEnumerable<SongForApiContract> GetTopSongs(int? durationHours = null, 
+		public IEnumerable<SongForApiContract> GetTopSongs(
+			int? durationHours = null, 
+			DateTime? startDate = null,
 			TopSongsDateFilterType? filterBy = null,
 			SongVocalistSelection? vocalist = null,
 			SongOptionalFields fields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl | SongOptionalFields.Tags,
@@ -337,24 +348,32 @@ namespace VocaDb.Web.Controllers.Api {
 
 				if (durationHours.HasValue) {
 
+					var timeSpan = TimeSpan.FromHours(durationHours.Value);
+					DateTime? endDate = null;
+
+					if (!startDate.HasValue) {
+						startDate = DateTime.Now - timeSpan;
+					} else {
+						endDate = startDate + timeSpan;
+					}
+
 					switch (filterBy) {
 						case TopSongsDateFilterType.PublishDate: {
-							var endDate = (DateTime.Now - TimeSpan.FromHours(durationHours.Value)).Date;
-							query = query.Where(s => s.PublishDate.DateTime != null && s.PublishDate.DateTime.Value >= endDate);
+							startDate = startDate?.Date;
+							endDate = endDate?.Date;
+							query = query.WherePublishDateIsBetween(startDate, endDate);
 							break;
 						}
 						case TopSongsDateFilterType.CreateDate: {
-							var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);
-							query = query.Where(s => s.CreateDate >= endDate);
+							query = query.Where(s => s.CreateDate >= startDate);
 							break;		
 						}
 						case TopSongsDateFilterType.Popularity: {
 							// Sort by number of ratings and hits during that time
 							// Older songs get more hits so value them even less
-							var endDate = DateTime.Now - TimeSpan.FromHours(durationHours.Value);
 							query = query.OrderByDescending(s => s.UserFavorites
-								.Where(f => f.Date >= endDate)
-								.Sum(f => (int)f.Rating) + (s.Hits.Count(h => h.Date >= endDate) / 100));
+								.Where(f => f.Date >= startDate)
+								.Sum(f => (int)f.Rating) + (s.Hits.Count(h => h.Date >= startDate) / 100));
 							break;
 						}
 					}
