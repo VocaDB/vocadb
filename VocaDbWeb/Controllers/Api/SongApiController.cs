@@ -326,6 +326,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public IEnumerable<SongForApiContract> GetTopSongs(int? durationHours = null, 
 			TopSongsDateFilterType? filterBy = null,
 			SongVocalistSelection? vocalist = null,
+			SongOptionalFields fields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl | SongOptionalFields.Tags,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
 			
 			return queries.HandleQuery(ctx => {			
@@ -370,7 +371,7 @@ namespace VocaDb.Web.Controllers.Api {
 					.ToArray();
 
 				var contracts = songs
-					.Select(s => new SongForApiContract(s, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl | SongOptionalFields.Tags))
+					.Select(s => new SongForApiContract(s, null, languagePreference, fields))
 					.ToArray();
 
 				return contracts;
