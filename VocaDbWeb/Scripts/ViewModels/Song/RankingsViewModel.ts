@@ -37,6 +37,7 @@ module vdb.viewModels.songs {
 			$.getJSON(this.urlMapper.mapRelative('/api/songs/top-rated'),
 				{
 					durationHours: this.durationHours(),
+					fields: 'AdditionalNames,ThumbUrl,Tags',
 					vocalist: this.vocalistSelection(),
 					filterBy: this.dateFilterType(),
 					languagePreference: this.languagePreference

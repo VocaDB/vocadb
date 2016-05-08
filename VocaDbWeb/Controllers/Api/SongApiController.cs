@@ -339,7 +339,7 @@ namespace VocaDb.Web.Controllers.Api {
 			TopSongsDateFilterType? filterBy = null,
 			SongVocalistSelection? vocalist = null,
 			int maxResults = 25,
-			SongOptionalFields fields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl | SongOptionalFields.Tags,
+			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
 			
 			return queries.HandleQuery(ctx => {			
