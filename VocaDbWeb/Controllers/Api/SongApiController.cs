@@ -327,6 +327,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="startDate">Lower bound of the date. Optional.</param>
 		/// <param name="filterBy">Filtering mode.</param>
 		/// <param name="vocalist">Vocalist selection.</param>
+		/// <param name="maxResults">Maximum number of results to be loaded (optional).</param>
 		/// <param name="fields">Optional song fields to load.</param>
 		/// <param name="languagePreference">Language preference.</param>
 		/// <returns>List of sorts, sorted by the rating position.</returns>
@@ -337,6 +338,7 @@ namespace VocaDb.Web.Controllers.Api {
 			DateTime? startDate = null,
 			TopSongsDateFilterType? filterBy = null,
 			SongVocalistSelection? vocalist = null,
+			int maxResults = 25,
 			SongOptionalFields fields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl | SongOptionalFields.Tags,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
 			
@@ -386,7 +388,8 @@ namespace VocaDb.Web.Controllers.Api {
 					query = query.OrderByDescending(s => s.RatingScore);			
 				}
 					
-				var songs = query.Take(25)
+				var songs = query
+					.Take(maxResults)
 					.ToArray();
 
 				var contracts = songs
