@@ -298,18 +298,26 @@
 				</td>	
 			</tr>
 			
-			@if (Model.Contract.PreviousSong != null || Model.Contract.NextSong != null) {
+			@if (Model.Contract.AlbumSong != null) {
 			<tr>
 				<td>@Res.Navigation</td>
 				<td>
-					@if (Model.Contract.PreviousSong != null) {						
-						@SongAlbumLink(Model.Contract.PreviousSong.Song, "icon-fast-backward", Model.Contract.AlbumId)
+					<p>
+						Track #@Model.Contract.AlbumSong.TrackNumber
+						@if (Model.Contract.AlbumSong.DiscNumber > 1) {
+							@:on disc @Model.Contract.AlbumSong.DiscNumber
+						}
+						on album @AlbumHelpers.AlbumLink(Model.Contract.Album)
+					</p>
+					@if (Model.Contract.PreviousSong != null) {
+						@SongAlbumLink(Model.Contract.PreviousSong.Song, "icon-fast-backward", Model.Contract.Album.Id)
 					}
 
 					@if (Model.Contract.NextSong != null) {
-						@SongAlbumLink(Model.Contract.NextSong.Song, "icon-fast-forward", Model.Contract.AlbumId)
+						@SongAlbumLink(Model.Contract.NextSong.Song, "icon-fast-forward", Model.Contract.Album.Id)
 					}
 				</td>
+
 			</tr>
 			}
 

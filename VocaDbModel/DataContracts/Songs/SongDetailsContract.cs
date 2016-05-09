@@ -45,10 +45,13 @@ namespace VocaDb.Model.DataContracts.Songs {
 		/// Album id of the album being browsed.
 		/// 0 if none.
 		/// </summary>
-		public int AlbumId { get; set; }
+		public AlbumContract Album { get; set; }
 
 		[DataMember]
 		public AlbumContract[] Albums { get; set; }
+
+		[DataMember]
+		public SongInAlbumContract AlbumSong { get; set; }
 
 		[DataMember]
 		public SongContract[] AlternateVersions { get; set; }

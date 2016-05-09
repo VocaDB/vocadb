@@ -365,8 +365,9 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
+				var lang = languagePreference ?? PermissionContext.LanguagePreference;
 				var song = session.Load<Song>(songId);
-				var contract = new SongDetailsContract(song, languagePreference ?? PermissionContext.LanguagePreference, GetSongPools(session, songId), 
+				var contract = new SongDetailsContract(song, lang, GetSongPools(session, songId), 
 					config.SpecialTags.ChangedLyrics);
 				var user = PermissionContext.LoggedUser;
 
@@ -395,15 +396,17 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (track != null) {
 
-						contract.AlbumId = albumId;
+						contract.Album = new DataContracts.Albums.AlbumContract(album, lang);
+
+						contract.AlbumSong = new SongInAlbumContract(track, lang, false);
 
 						var previousIndex = album.PreviousTrackIndex(track.Index);
 						var previous = album.Songs.FirstOrDefault(s => s.Index == previousIndex);
-						contract.PreviousSong = previous != null && previous.Song != null ? new SongInAlbumContract(previous, LanguagePreference, false) : null;
+						contract.PreviousSong = previous != null && previous.Song != null ? new SongInAlbumContract(previous, lang, false) : null;
 
 						var nextIndex = album.NextTrackIndex(track.Index);
 						var next = album.Songs.FirstOrDefault(s => s.Index == nextIndex);
-						contract.NextSong = next != null && next.Song != null ? new SongInAlbumContract(next, LanguagePreference, false) : null;
+						contract.NextSong = next != null && next.Song != null ? new SongInAlbumContract(next, lang, false) : null;
 
 					}
 
@@ -411,7 +414,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (song.Deleted) {
 					var mergeEntry = GetMergeRecord(session, songId);
-					contract.MergedTo = (mergeEntry != null ? new SongContract(mergeEntry.Target, LanguagePreference) : null);
+					contract.MergedTo = (mergeEntry != null ? new SongContract(mergeEntry.Target, lang) : null);
 				}
 
 				AddSongHit(session, song, hostname);
