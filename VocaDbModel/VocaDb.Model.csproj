@@ -931,6 +931,7 @@
       <LastGenOutput>DiscTypeNames.ja.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Albums\DiscTypeNames.pt.resx" />
     <EmbeddedResource Include="Resources\Albums\DiscTypeNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DiscTypeNames.Designer.cs</LastGenOutput>
@@ -941,6 +942,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AlbumValidationErrors.de.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.ja.resx" />
+    <EmbeddedResource Include="Resources\AlbumValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumValidationErrors.Designer.cs</LastGenOutput>
@@ -949,6 +951,7 @@
     <EmbeddedResource Include="Resources\ArtistTypeNames.de.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.fi.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.ja.resx" />
+    <EmbeddedResource Include="Resources\ArtistTypeNames.pt.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistTypeNames.Designer.cs</LastGenOutput>
@@ -958,6 +961,7 @@
     <EmbeddedResource Include="Resources\ArtistTypeNames.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.de.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.ja.resx" />
+    <EmbeddedResource Include="Resources\ArtistValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistValidationErrors.Designer.cs</LastGenOutput>
@@ -965,16 +969,19 @@
     <EmbeddedResource Include="Resources\ArtistValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\ExtSites.de.resx" />
     <EmbeddedResource Include="Resources\ExtSites.ja.resx" />
+    <EmbeddedResource Include="Resources\ExtSites.pt.resx" />
     <EmbeddedResource Include="Resources\ExtSites.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExtSites.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.ja.resx" />
+    <EmbeddedResource Include="Resources\Messages\EntryReportStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryReportStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\UserAccountStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UserAccountStrings.Designer.cs</LastGenOutput>
@@ -988,6 +995,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SongTypeNames.ja.designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.pt.resx" />
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongTypeNames.Designer.cs</LastGenOutput>
@@ -1000,6 +1008,7 @@
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.de.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.ja.resx" />
+    <EmbeddedResource Include="Resources\SongValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongValidationErrors.Designer.cs</LastGenOutput>
@@ -1010,6 +1019,7 @@
     <EmbeddedResource Include="Resources\Views\AlbumRes.de.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\AlbumRes.pt.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumRes.Designer.cs</LastGenOutput>
@@ -1017,6 +1027,7 @@
     <EmbeddedResource Include="Resources\Views\ArtistRes.de.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\ArtistRes.pt.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistRes.Designer.cs</LastGenOutput>
@@ -1024,12 +1035,14 @@
     <EmbeddedResource Include="Resources\Views\HomeRes.de.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\HomeRes.pt.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\HomeRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\LayoutRes.pt.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LayoutRes.Designer.cs</LastGenOutput>
@@ -1038,6 +1051,7 @@
     <EmbeddedResource Include="Resources\Views\SongRes.de.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\SongRes.pt.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SongRes.Designer.cs</LastGenOutput>
