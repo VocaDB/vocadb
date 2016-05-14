@@ -12,6 +12,11 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 	public abstract class SongCsvFileFormatter<T> where T : ISongLink {
 
+		struct FieldMatch {
+			public string FieldName { get; set; }
+			public string TokenStr { get; set; }
+		}
+
 		private readonly IEntryLinkFactory entryLinkFactory;
 
 		protected SongCsvFileFormatter(IEntryLinkFactory entryLinkFactory) {
@@ -54,6 +59,9 @@ namespace VocaDb.Model.Service.TagFormatting {
 					var vocalistStr = GetVocalistStr(song, languagePreference);
 					return (vocalistStr.Any() ? " feat. " + vocalistStr : string.Empty);
 
+				case "id":
+					return song.Id.ToString();
+
 				// List of producers
 				case "producers":
 					return GetProducerStr(song, languagePreference);
@@ -93,12 +101,12 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 		}
 
-		private string ApplyFormat(T track, string format, ContentLanguagePreference languagePreference, MatchCollection fieldMatches) {
+		private string ApplyFormat(T track, string format, ContentLanguagePreference languagePreference, IEnumerable<FieldMatch> fieldMatches) {
 
 			var sb = new StringBuilder(format);
 
-			foreach (Match match in fieldMatches) {
-				ReplaceField(match.Groups[1].Value, match.Value, sb, track, languagePreference);
+			foreach (var match in fieldMatches) {
+				ReplaceField(match.FieldName, match.TokenStr, sb, track, languagePreference);
 			}
 
 			return sb.ToString();
@@ -117,21 +125,36 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 		}
 
+		private IEnumerable<FieldMatch> GetMatches(string format) {
+
+			var fieldRegex = new Regex(@"%([\w\.!]+)%");
+
+			return fieldRegex.Matches(format).Cast<Match>().Select(m => new FieldMatch { FieldName = m.Groups[1].Value.ToLowerInvariant(), TokenStr = m.Value });
+
+		}
+
 		protected string ApplyFormat(IEnumerable<T> songs, string format, ContentLanguagePreference languagePreference, bool includeHeader) {
 
 			var sb = new StringBuilder();
 
-			var fieldRegex = new Regex(@"%([\w\.!]+)%");
-			var formatFields = fieldRegex.Matches(format);
+			var formatFields = GetMatches(format).ToArray();
 
 			if (includeHeader) {
-				sb.AppendLine(string.Join(";", formatFields.Cast<Match>().Select(f => GetField(f.Groups[1].Value))));
+				sb.AppendLine(string.Join(";", formatFields.Select(f => GetField(f.FieldName))));
 			}
 
 			foreach (var song in songs)
 				sb.AppendLine(ApplyFormat(song, format, languagePreference, formatFields));
 
 			return sb.ToString();
+
+		}
+
+		protected Dictionary<string, string>[] ApplyFormatDict(IEnumerable<T> songs, string[] fields, ContentLanguagePreference languagePreference) {
+
+			var formatFields = fields.Distinct().Select(f => f.ToLowerInvariant()).ToArray();
+
+			return songs.Select(s => formatFields.ToDictionary(m => m, m => GetFieldValue(m, s, languagePreference))).ToArray();
 
 		}
 

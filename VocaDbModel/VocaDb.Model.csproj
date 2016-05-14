@@ -827,6 +827,7 @@
     <Compile Include="Service\Security\StopForumSpam\SFSResultContract.cs" />
     <Compile Include="Service\SongImport\ISongListImporter.cs" />
     <Compile Include="Service\SongImport\YoutubePlaylistImporter.cs" />
+    <Compile Include="Service\TagFormatting\FormattedSong.cs" />
     <Compile Include="Service\TagFormatting\SongCsvFileFormatter.cs" />
     <Compile Include="Service\TagFormatting\SongListFormatter.cs" />
     <Compile Include="Service\Translations\DerivedTranslateableEnum.cs" />

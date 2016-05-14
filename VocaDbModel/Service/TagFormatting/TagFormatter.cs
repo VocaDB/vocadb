@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
@@ -87,6 +88,12 @@ namespace VocaDb.Model.Service.TagFormatting {
 		public string ApplyFormat(Album album, string format, ContentLanguagePreference languagePreference, bool includeHeader) {
 
 			return ApplyFormat(album.Songs, format, languagePreference, includeHeader);
+
+		}
+
+		public Dictionary<string, string>[] ApplyFormatDict(Album album, string[] fields, ContentLanguagePreference languagePreference) {
+
+			return ApplyFormatDict(album.Songs, fields, languagePreference);
 
 		}
 

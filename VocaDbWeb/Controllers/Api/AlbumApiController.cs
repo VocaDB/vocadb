@@ -239,6 +239,20 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets tracks for an album formatted using the CSV format string.
+		/// </summary>
+		/// <param name="id">Album ID.</param>
+		/// <param name="field">Field to be included, for example "featvocalists" or "url". Can be specified multiple times.</param>
+		/// <param name="lang">Language preference.</param>
+		/// <returns>List of songs with the specified fields.</returns>
+		[Route("{id:int}/tracks/fields")]
+		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, [FromUri] string[] field = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+
+			return queries.GetTracksFormatted(id, field, lang);
+
+		}
+
 		[Route("ids")]
 		[ApiExplorerSettings(IgnoreApi=true)]
 		public IEnumerable<int> GetIds() {

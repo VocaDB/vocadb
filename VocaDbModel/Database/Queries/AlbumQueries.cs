@@ -27,6 +27,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
+using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Database.Queries {
@@ -265,6 +266,15 @@ namespace VocaDb.Model.Database.Queries {
 					};
 
 			});
+
+		}
+
+		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, string[] fields, ContentLanguagePreference lang) {
+
+			if (fields == null || fields.Length == 0)
+				fields = new[] { "id", "title" };
+
+			return HandleQuery(db => new TagFormatter(entryLinkFactory).ApplyFormatDict(db.Load(id), fields, lang));
 
 		}
 
