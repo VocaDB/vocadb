@@ -118,12 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DuplicateArtist" xml:space="preserve">
-    <value>Lo mismo artista no puede ser adicionado duas vezes. Remove lo duplicado y cambia los créditos.</value>
-  </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Album necesita</value>
+    <value>El mismo artista no se puede añadir dos veces. Por favor, elimine el duplicado y corrija los créditos.</value>
   </data>
   <data name="NeedReferences" xml:space="preserve">
-    <value>El disco necesita una descripción y links de referencia.</value>
+    <value>Música necesita notas, videos o links de referencia.</value>
   </data>
 </root>
