@@ -62,6 +62,9 @@ namespace VocaDb.Model.Service.TagFormatting {
 				case "id":
 					return song.Id.ToString();
 
+				case "lengthseconds":
+					return song.LengthSeconds.ToString();
+
 				// List of producers
 				case "producers":
 					return GetProducerStr(song, languagePreference);
