@@ -29,6 +29,8 @@ namespace VocaDb.Model.Service.TagFormatting {
 				// Album title
 				case "album":			
 					return album.Names.SortNames[languagePreference];
+				case "albumid":
+					return album.Id.ToString();
 
 				// Artists for album
 				case "albumartist":
