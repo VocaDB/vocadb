@@ -76,7 +76,7 @@ namespace VocaDb.Web.Controllers
         {
 
 			// Either series or name must be specified. If series is specified, name is generated automatically.
-			if (!model.SeriesId.HasValue && string.IsNullOrEmpty(model.Name)) {
+			if (string.IsNullOrEmpty(model.Name) && (!model.SeriesId.HasValue || model.CustomName)) {
 				ModelState.AddModelError("Name", "Name cannot be empty");
 			}
 

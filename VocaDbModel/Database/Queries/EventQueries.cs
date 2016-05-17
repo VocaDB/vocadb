@@ -194,6 +194,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					var oldName = ev.Name;
 
+					ev.CustomName = contract.CustomName;
 					ev.Date = contract.Date;
 					ev.Description = contract.Description;
 					ev.Name = contract.Name;

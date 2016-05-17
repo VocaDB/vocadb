@@ -48,7 +48,6 @@
 			@Html.ValidationMessageFor(m => m.Name)
 		</div>
 	} else {
-		@Html.HiddenFor(m => m.Name)
 		@Html.HiddenFor(m => m.SeriesId)
 		@Html.HiddenFor(m => m.SeriesName)
 		
@@ -62,10 +61,32 @@
 		</div>
 
 		<div class="editor-label">
-			@Html.LabelFor(m => m.SeriesSuffix)
+
 		</div>
 		<div class="editor-field">
-			@Html.TextBoxFor(m => m.SeriesSuffix, new { size = 20 })<br />
+			<label>
+				<input type="checkbox" data-bind="initialValue, checked: customName" @(Model.CustomName ? "checked" : "") />
+				Customize event name
+			</label>
+			@Html.HiddenForKnockout(m => m.CustomName, "value: customName")
+		</div>
+
+		<div data-bind="visible: customName()">
+			<div class="editor-label">
+				Name
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Name, new { size = 40, @class = "span3", maxlength = 50 })<br />
+			</div>
+		</div>
+
+		<div data-bind="visible: !customName()">
+			<div class="editor-label">
+				@Html.LabelFor(m => m.SeriesSuffix)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.SeriesSuffix, new { size = 20 })<br />
+			</div>
 		</div>
 	}
 

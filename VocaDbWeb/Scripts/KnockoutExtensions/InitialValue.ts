@@ -12,6 +12,8 @@ ko.bindingHandlers.initialValue = {
 			bindings.value(val);
 		} else if (bindings.textInput) {
 			bindings.textInput(val);
+		} else if (bindings.checked) {
+			bindings.checked((<HTMLInputElement>element).checked);
 		}
 	}
 }; 

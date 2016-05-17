@@ -10,6 +10,8 @@ module vdb.viewModels.releaseEvents {
 
 		}
 
+		public customName = ko.observable(false);
+
 		public date: KnockoutObservable<Date>;
 
 		public dateStr: KnockoutComputed<string>;

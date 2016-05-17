@@ -77,6 +77,8 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
+		public virtual bool CustomName { get; set; }
+
 		public virtual Date Date { get; set; }
 
 		public virtual string Description {
@@ -157,7 +159,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual void UpdateNameFromSeries() {
 
-			if (Series != null) {
+			if (Series != null && !CustomName) {
 				Name = Series.GetEventName(SeriesNumber, SeriesSuffix);				
 			}
 			

@@ -4,6 +4,15 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201605172100)]
+	public class EventCustomName : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("CustomName").OnTable(TableNames.AlbumReleaseEvents).AsBoolean().NotNullable().WithDefaultValue(false);
+		}
+
+	}
+
 	[Migration(201604062130)]
 	public class SongNotesExtend : Migration {
 

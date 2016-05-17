@@ -12,6 +12,23 @@ namespace VocaDb.Web.Helpers {
 	/// </summary>
 	public static class KnockoutHtmlExtender {
 
+		public static MvcHtmlString CheckboxForKnockout<TModel>(
+			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression,
+			string binding, string id = null) {
+
+			ParamIs.NotNull(() => htmlHelper);
+			ParamIs.NotNull(() => expression);
+			ParamIs.NotNull(() => binding);
+
+			var htmlAttributes = new Dictionary<string, object> { { "data-bind", binding } };
+
+			if (!string.IsNullOrEmpty(id))
+				htmlAttributes.Add("id", id);
+
+			return htmlHelper.CheckBoxFor(expression, htmlAttributes);
+
+		}
+
 		/// <summary>
 		/// Dropdown list bound to knockout model.
 		/// </summary>

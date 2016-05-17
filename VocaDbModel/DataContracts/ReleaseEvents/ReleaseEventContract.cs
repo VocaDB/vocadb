@@ -14,6 +14,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => ev);
 
+			CustomName = ev.CustomName;
 			Date = ev.Date;
 			Description = ev.Description;
 			Id = ev.Id;
@@ -23,6 +24,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				Series = new ReleaseEventSeriesContract(ev.Series);
 
 		}
+
+		public bool CustomName { get; set; }
 
 		public DateTime? Date { get; set; }
 

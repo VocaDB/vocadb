@@ -25,6 +25,7 @@ namespace VocaDb.Web.Models.Event {
 
 			ParamIs.NotNull(() => contract);
 
+			CustomName = contract.CustomName = contract.CustomName;
 			Date = contract.Date;
 			Description = contract.Description;
 			Id = contract.Id;
@@ -37,6 +38,8 @@ namespace VocaDb.Web.Models.Event {
 		}
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
+
+		public bool CustomName { get; set; }
 
 		[FromJson]
 		public DateTime? Date { get; set; }
@@ -84,6 +87,7 @@ namespace VocaDb.Web.Models.Event {
 		public ReleaseEventDetailsContract ToContract() {
 
 			return new ReleaseEventDetailsContract {
+				CustomName = this.CustomName,
 				Date = this.Date,
 				Description = this.Description ?? string.Empty,
 				Id = this.Id,
