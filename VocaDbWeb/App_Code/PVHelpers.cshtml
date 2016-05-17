@@ -12,11 +12,7 @@
 
 	switch (pv.Service) {
 		case PVService.Bilibili:
-			var biliSwf = string.Format("http://static.hdslb.com/miniloader.swf?aid={0}", pv.PVId);
-			<object type="application/x-shockwave-flash" width="@widthStr" height="@heightStr" style="border: 0" data="@biliSwf">
-				<param name="movie" value="@biliSwf" />
-				<param name="quality" value="high" />
-			</object>
+			<embed height="@heightStr" width="@widthStr" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="http://static.hdslb.com/miniloader.swf" flashvars="aid=@pv.PVId&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" />
 			break;
 
 		case PVService.File:
