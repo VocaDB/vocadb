@@ -159,7 +159,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (contract.Series != null) {
 						var series = session.OfType<ReleaseEventSeries>().Load(contract.Series.Id);
-						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix);
+						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
+							contract.Name, contract.CustomName);
 						series.Events.Add(ev);
 					} else {
 						ev = new ReleaseEvent(contract.Description, contract.Date, contract.Name);
@@ -170,7 +171,7 @@ namespace VocaDb.Model.Database.Queries {
 					var archived = Archive(session, ev, new ReleaseEventDiff(), EntryEditEvent.Created);
 					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
 
-					session.AuditLogger.AuditLog("created " + ev);
+					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
 
 				} else {
 
@@ -257,7 +258,7 @@ namespace VocaDb.Model.Database.Queries {
 						session.Update(series);
 					}
 
-					AuditLog("created " + series, session);
+					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(series)), session);
 
 				} else {
 
@@ -270,7 +271,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.Update(series);
 
-					AuditLog("updated " + series, session);
+					AuditLog(string.Format("updated {0}", entryLinkFactory.CreateEntryLink(series)), session);
 
 				}
 

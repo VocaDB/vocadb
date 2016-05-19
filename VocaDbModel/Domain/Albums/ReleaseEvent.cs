@@ -46,7 +46,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public ReleaseEvent(string description, DateTime? date, ReleaseEventSeries series, int seriesNumber, string seriesSuffix)
+		public ReleaseEvent(string description, DateTime? date, ReleaseEventSeries series, int seriesNumber, string seriesSuffix,
+			string name, bool customName)
 			: this() {
 
 			ParamIs.NotNull(() => series);
@@ -56,6 +57,11 @@ namespace VocaDb.Model.Domain.Albums {
 			Series = series;
 			SeriesNumber = seriesNumber;
 			SeriesSuffix = seriesSuffix;
+			CustomName = customName;
+
+			if (!string.IsNullOrWhiteSpace(name)) {
+				Name = name;
+			}
 
 			UpdateNameFromSeries();
 
