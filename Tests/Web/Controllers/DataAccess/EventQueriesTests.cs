@@ -32,7 +32,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void SetUp() {
 
 			series = CreateEntry.EventSeries("M3");
-			existingEvent = new ReleaseEvent(string.Empty, null, series, 2013, "Spring");
+			existingEvent = new ReleaseEvent(string.Empty, null, series, 2013, "Spring", null, false);
 
 			repository = new FakeEventRepository();
 			repository.Save(series);
