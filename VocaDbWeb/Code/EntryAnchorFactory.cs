@@ -49,6 +49,14 @@ namespace VocaDb.Web.Code {
 					relative = string.Format("discussion/topics/{0}", id);
 					break;
 
+				case EntryType.ReleaseEvent:
+					relative = string.Format("Event/Details/{0}", id);
+					break;
+
+				case EntryType.ReleaseEventSeries:
+					relative = string.Format("Event/SeriesDetails/{0}", id);
+					break;
+
 				case EntryType.Song:
 					relative = string.Format("S/{0}", id);
 					break;
