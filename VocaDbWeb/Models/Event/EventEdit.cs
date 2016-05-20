@@ -14,7 +14,11 @@ namespace VocaDb.Web.Models.Event {
 		}
 
 		public EventEdit(ReleaseEventSeriesContract seriesContract)
-			: this() {}
+			: this() {
+
+			Series = seriesContract;
+
+		}
 
 		public EventEdit(ReleaseEventDetailsContract contract)
 			: this() {

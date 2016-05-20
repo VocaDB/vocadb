@@ -181,7 +181,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (contract.Id == 0) {
 
-					if (contract.Series != null) {
+					if (!contract.Series.IsNullOrDefault()) {
 						var series = session.OfType<ReleaseEventSeries>().Load(contract.Series.Id);
 						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
 							contract.Name, contract.CustomName);
