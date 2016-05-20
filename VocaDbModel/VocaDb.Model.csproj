@@ -735,6 +735,7 @@
     <Compile Include="Service\Helpers\FollowedArtistNotifier.cs" />
     <Compile Include="Service\Helpers\IUserMessageMailer.cs" />
     <Compile Include="Service\Helpers\MarkdownHelper.cs" />
+    <Compile Include="Service\QueryableExtenders\ReleaseEventSeriesQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongInListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\TagQueryableExtender.cs" />

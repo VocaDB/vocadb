@@ -4,6 +4,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Web.Models.Event;
 
@@ -76,7 +77,7 @@ namespace VocaDb.Web.Controllers
         {
 
 			// Either series or name must be specified. If series is specified, name is generated automatically.
-			if (string.IsNullOrEmpty(model.Name) && (!model.SeriesId.HasValue || model.CustomName)) {
+			if (string.IsNullOrEmpty(model.Name) && (model.Series.IsNullOrDefault() || model.CustomName)) {
 				ModelState.AddModelError("Name", "Name cannot be empty");
 			}
 

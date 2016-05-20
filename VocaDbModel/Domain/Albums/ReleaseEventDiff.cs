@@ -86,6 +86,15 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
+		public virtual bool Series {
+			get {
+				return IsChanged(ReleaseEventEditableFields.Series);
+			}
+			set {
+				Set(ReleaseEventEditableFields.Series, value);
+			}
+		}
+
 		public virtual bool SeriesNumber {
 			get {
 				return IsChanged(ReleaseEventEditableFields.SeriesNumber);

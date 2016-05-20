@@ -854,6 +854,7 @@
     <Compile Include="Code\WebApi\ObjectNotFoundExceptionFilterAttribute.cs" />
     <Compile Include="Code\WebApi\UnhandledExceptionLogger.cs" />
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
+    <Compile Include="Controllers\Api\ReleaseEventSeriesApiController.cs" />
     <Compile Include="Helpers\EnumTranslations.cs" />
     <Compile Include="Helpers\RazorHelper.cs" />
     <Compile Include="Helpers\UrlHelperExtender.cs" />
@@ -2444,6 +2445,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ParseInteger.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\qTip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ReleaseEventNameAutoComplete.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\ReleaseEventSeriesAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ScrollEnd.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Show.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\SlideVisible.ts" />
@@ -3376,6 +3378,7 @@
     <Content Include="App_GlobalResources\ReleaseEventEditableFieldNames.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ReleaseEventEditableFieldNames.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\EntryEditEventNames.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>

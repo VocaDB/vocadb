@@ -1,9 +1,10 @@
 ﻿using System;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
-	public class ReleaseEventContract {
+	public class ReleaseEventContract : IEntryWithIntId {
 
 		public ReleaseEventContract() {
 			Description = string.Empty;

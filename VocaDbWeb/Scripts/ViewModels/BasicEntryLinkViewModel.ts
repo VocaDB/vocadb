@@ -6,11 +6,11 @@ module vdb.viewModels {
 	// Works well with LockingAutoComplete.
 	export class BasicEntryLinkViewModel<TEntry extends vdb.models.IEntryWithIdAndName> {
 		
-		// entry: current entry reference (can be null).
+		// entry: current entry reference (can be null). Zero-like ID will be considered the same as null.
 		// entryFunc: function for loading the entry asynchronously by Id.
 		constructor(entry: TEntry, entryFunc: (entryId: number, callback: (entry: TEntry) => void) => void) {
 
-			this.entry = ko.observable(entry);
+			this.entry = ko.observable(entry && entry.id ? entry : null);
 			this.name = ko.computed(() => this.entry() ? this.entry().name : null);
 
 			this.id = ko.computed({
@@ -31,8 +31,11 @@ module vdb.viewModels {
 
 		}
 
+		public clear = () => this.entry(null);
+
 		public entry: KnockoutObservable<TEntry>;
 
+		// Read/write entry ID. Both null and zero will clear the entry.
 		public id: KnockoutComputed<number>;
 
 		public isEmpty: KnockoutComputed<boolean>;

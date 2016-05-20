@@ -41,6 +41,10 @@
 			return entry != null ? entry.Id : 0;
 		}
 
+		public static bool IsNullOrDefault(this IEntryWithIntId entry) {
+			return entry == null || entry.Id == 0;
+		}
+
 	}
 
 }

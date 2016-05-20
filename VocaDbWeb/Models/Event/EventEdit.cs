@@ -14,11 +14,7 @@ namespace VocaDb.Web.Models.Event {
 		}
 
 		public EventEdit(ReleaseEventSeriesContract seriesContract)
-			: this() {
-
-			CopyNonEditableProperties(seriesContract);
-
-		}
+			: this() {}
 
 		public EventEdit(ReleaseEventDetailsContract contract)
 			: this() {
@@ -30,10 +26,9 @@ namespace VocaDb.Web.Models.Event {
 			Description = contract.Description;
 			Id = contract.Id;
 			Name = OldName = contract.Name;
+			Series = contract.Series;
 			SeriesNumber = contract.SeriesNumber;
 			SeriesSuffix = contract.SeriesSuffix;
-
-			CopyNonEditableProperties(contract);
 
 		}
 
@@ -54,9 +49,8 @@ namespace VocaDb.Web.Models.Event {
 
 		public string OldName { get; set; }
 
-		public int? SeriesId { get; set; }
-
-		public string SeriesName { get; set; }
+		[FromJson]
+		public ReleaseEventSeriesContract Series { get; set; }
 
 		[Display(Name = "Series suffix")]
 		public string SeriesSuffix { get; set; }
@@ -68,19 +62,7 @@ namespace VocaDb.Web.Models.Event {
 
 			ParamIs.NotNull(() => contract);
 
-			AllSeries = contract.AllSeries;
 			OldName = contract.Name;
-
-			CopyNonEditableProperties(contract.Series);
-
-		}
-
-		public void CopyNonEditableProperties(ReleaseEventSeriesContract seriesContract) {
-
-			if (seriesContract != null) {
-				SeriesId = seriesContract.Id;
-				SeriesName = seriesContract.Name;
-			}
 
 		}
 
@@ -92,7 +74,7 @@ namespace VocaDb.Web.Models.Event {
 				Description = this.Description ?? string.Empty,
 				Id = this.Id,
 				Name = this.Name,
-				Series = (this.SeriesId != null ? new ReleaseEventSeriesContract { Id = this.SeriesId.Value, Name = this.SeriesName } : null), 
+				Series = this.Series, 
 				SeriesNumber = this.SeriesNumber,
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty
 			};

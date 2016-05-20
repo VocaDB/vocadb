@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 
@@ -126,6 +127,29 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public PartialFindResult<TResult> FindSeries<TResult>(Func<ReleaseEventSeries, TResult> fac, 
+			SearchTextQuery textQuery, PagingProperties paging) {
+
+			return HandleQuery(ctx => {
+
+				var q = ctx.Query<ReleaseEventSeries>()
+					.WhereHasName(textQuery)
+					.Paged(paging);
+
+				var entries = q
+					.OrderBy(s => s.Name)
+					.ToArray()
+					.Select(fac)
+					.ToArray();
+
+				var count = paging.GetTotalCount ? q.Count() : 0;
+
+				return PartialFindResult.Create(entries, count);
+
+			});
+
+		}
+
 		public ReleaseEventContract[] List(EventSortRule sortRule, bool includeSeries = false) {
 			
 			return repository.HandleQuery(ctx => ctx
@@ -187,6 +211,10 @@ namespace VocaDb.Model.Database.Queries {
 					if (ev.Name != contract.Name)
 						diff.Name = true;
 
+					if (!ev.Series.NullSafeIdEquals(contract.Series)) {
+						diff.Series = true;
+					}
+
 					if (ev.SeriesNumber != contract.SeriesNumber)
 						diff.SeriesNumber = true;
 
@@ -195,6 +223,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					var oldName = ev.Name;
 
+					ev.Series = session.OfType<ReleaseEventSeries>().NullSafeLoad(contract.Series);
 					ev.CustomName = contract.CustomName;
 					ev.Date = contract.Date;
 					ev.Description = contract.Description;

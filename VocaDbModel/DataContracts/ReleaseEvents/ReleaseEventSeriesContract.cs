@@ -6,7 +6,7 @@ using VocaDb.Model.Domain.Images;
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ReleaseEventSeriesContract : IEntryImageInformation {
+	public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntId {
 
 		EntryType IEntryImageInformation.EntryType {
 			get { return EntryType.ReleaseEventSeries; }

@@ -126,6 +126,9 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Series" xml:space="preserve">
+    <value>Series</value>
+  </data>
   <data name="SeriesNumber" xml:space="preserve">
     <value>Series number</value>
   </data>
