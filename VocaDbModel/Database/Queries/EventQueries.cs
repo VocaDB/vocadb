@@ -203,23 +203,23 @@ namespace VocaDb.Model.Database.Queries {
 					var diff = new ReleaseEventDiff();
 
 					if (!ev.Date.Equals(contract.Date))
-						diff.Date = true;
+						diff.Date.Set();
 
 					if (ev.Description != contract.Description)
-						diff.Description = true;
+						diff.Description.Set();
 
 					if (ev.Name != contract.Name)
-						diff.Name = true;
+						diff.Name.Set();
 
 					if (!ev.Series.NullSafeIdEquals(contract.Series)) {
-						diff.Series = true;
+						diff.Series.Set();
 					}
 
 					if (ev.SeriesNumber != contract.SeriesNumber)
-						diff.SeriesNumber = true;
+						diff.SeriesNumber.Set();
 
 					if (ev.SeriesSuffix != contract.SeriesSuffix)
-						diff.SeriesSuffix = true;
+						diff.SeriesSuffix.Set();
 
 					var oldName = ev.Name;
 

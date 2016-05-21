@@ -5,11 +5,16 @@ namespace VocaDb.Model.Domain.Versioning {
 
 	public abstract class EntryDiff<T> : IEntryDiff where T : struct, IConvertible {
 
+		protected EnumFieldAccessor<T> Field(T field) {
+			return new EnumFieldAccessor<T>(ChangedFields, field);
+		}
+
 		private bool IsDefault(T val) {
 			return val.Equals(default(T));
 		}
 
-		protected EntryDiff() {
+		protected EntryDiff(bool isSnapshot = false) {
+			IsSnapshot = isSnapshot;
 			ChangedFields = new EnumVal<T>();
 		} 
 
@@ -69,7 +74,7 @@ namespace VocaDb.Model.Domain.Versioning {
 	}
 
 	public struct EnumFieldAccessor<T> where T : struct, IConvertible {
-		
+
 		private readonly EnumVal<T> val; 
 		private readonly T field;
 

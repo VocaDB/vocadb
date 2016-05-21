@@ -10,7 +10,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ArchivedEventVersionContract(ArchivedReleaseEventVersion archivedVersion)
 			: base(archivedVersion) {
 
-			ChangedFields = archivedVersion.Diff.ChangedFields;
+			ChangedFields = archivedVersion.Diff.ChangedFields.Value;
 			Reason = archivedVersion.CommonEditEvent;
 
 		}
