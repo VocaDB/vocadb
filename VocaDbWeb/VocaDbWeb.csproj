@@ -858,6 +858,7 @@
     <Compile Include="Helpers\EnumTranslations.cs" />
     <Compile Include="Helpers\RazorHelper.cs" />
     <Compile Include="Helpers\UrlHelperExtender.cs" />
+    <Compile Include="Models\Event\Versions.cs" />
     <Compile Include="Models\Ext\EmbedSongViewModel.cs" />
     <Compile Include="Models\Shared\NamesEditorViewModel.cs" />
     <Compile Include="Models\Shared\Versions.cs" />

@@ -6,6 +6,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Event;
 
 namespace VocaDb.Web.Controllers
@@ -14,6 +15,7 @@ namespace VocaDb.Web.Controllers
     {
 
 		private readonly AlbumService albumService;
+		private readonly IEnumTranslations enumTranslations;
 		private readonly EventQueries queries;
 		private readonly ReleaseEventService service;
 
@@ -21,10 +23,11 @@ namespace VocaDb.Web.Controllers
 			get { return service; }
 		}
 
-		public EventController(EventQueries queries, ReleaseEventService service, AlbumService albumService) {
+		public EventController(EventQueries queries, ReleaseEventService service, AlbumService albumService, IEnumTranslations enumTranslations) {
 			this.queries = queries;
 			this.service = service;
 			this.albumService = albumService;
+			this.enumTranslations = enumTranslations;
 		}
 
 		[HttpPost]
@@ -212,9 +215,9 @@ namespace VocaDb.Web.Controllers
 
 			var contract = Service.GetReleaseEventWithArchivedVersions(id);
 
-			return View(contract);
+			return View(new Versions(contract, enumTranslations));
 
 		}
 
-    }
+	}
 }
