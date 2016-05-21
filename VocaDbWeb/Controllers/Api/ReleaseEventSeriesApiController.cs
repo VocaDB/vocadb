@@ -7,9 +7,13 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Web.Controllers.Api {
 
+	/// <summary>
+	/// API queries for album release event series.
+	/// </summary>
 	[RoutePrefix("api/releaseEventSeries")]
 	public class ReleaseEventSeriesApiController : ApiController {
 
+		private const int defaultMax = 10;
 		private readonly EventQueries queries;
 
 		public ReleaseEventSeriesApiController(EventQueries queries) {
@@ -17,9 +21,13 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("")]
-		public PartialFindResult<ReleaseEventSeriesContract> GetList(string query = "") {
+		public PartialFindResult<ReleaseEventSeriesContract> GetList(
+			string query = "", 
+			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			NameMatchMode nameMatchMode = NameMatchMode.Auto) {
 
-			return queries.FindSeries(s => new ReleaseEventSeriesContract(s), SearchTextQuery.Create(query), PagingProperties.CreateFromPage(0, 10, false));
+			return queries.FindSeries(s => new ReleaseEventSeriesContract(s), SearchTextQuery.Create(query, nameMatchMode), 
+				new PagingProperties(start, maxResults, getTotalCount));
 
 		}
 
