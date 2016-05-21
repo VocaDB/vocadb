@@ -59,11 +59,11 @@ namespace VocaDb.Model.Service.VideoServices {
 			try {				
 				result = JsonRequest.ReadObject<SoundCloudResult>(apiUrl, timeoutMs: 10000);
 			} catch (WebException x) {
-				var msg = string.Format("Unable to load SoundCloud URL {0}", url);
+				var msg = string.Format("Unable to load SoundCloud URL '{0}'", url);
 				log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			} catch (JsonSerializationException x) {
-				var msg = string.Format("Unable to load SoundCloud URL {0}", url);
+				var msg = string.Format("Unable to load SoundCloud URL '{0}'", url);
 				log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}

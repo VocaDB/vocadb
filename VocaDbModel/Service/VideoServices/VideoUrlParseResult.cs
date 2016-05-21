@@ -74,15 +74,13 @@ namespace VocaDb.Model.Service.VideoServices {
 		public string AuthorId { get; set; }
 
 		/// <summary>
-		/// Exception. Cannot be null or result type is anything but Ok.
+		/// Exception. Cannot be null if result type is anything but Ok.
 		/// </summary>
 		public VideoParseException Exception { get; set; }
 
 		public string Id { get; set; }
 
-		public bool IsOk {
-			get { return ResultType == VideoUrlParseResultType.Ok; }
-		}
+		public bool IsOk => ResultType == VideoUrlParseResultType.Ok;
 
 		public int? LengthSeconds { get; set; }
 
