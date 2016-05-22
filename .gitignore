@@ -22,4 +22,3 @@ VocaDbWeb/smtp.config
 VocaDb.Migrations/obj/
 VocaDb.Migrations/bin/
 *.vspx
-VocaDbModel/Resources/AlbumValidationErrors.es.resx
