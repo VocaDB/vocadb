@@ -14,6 +14,9 @@ namespace VocaDb.Tests.DatabaseTests {
 
 		public TResult RunTest<TResult>(Func<TTarget, TResult> func) {
 
+			// Make sure session factory is built outside of transaction
+			Container.Resolve<ISessionFactory>();
+
 			// Wrap inside transaction scope to make the test atomic
 			using (new TransactionScope())
 			using (var lifetimeScope = Container.BeginLifetimeScope()) {

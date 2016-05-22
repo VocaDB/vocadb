@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using VocaDb.Model.Service;
@@ -54,6 +55,8 @@ namespace VocaDb.Tests.TestSupport {
 			return;
 			#endif
 
+			bool writeOutput = false;
+
 			RunSql(connectionStringName, connection => {
 
 				// NH schema export does not correctly drop all constraints
@@ -63,8 +66,13 @@ namespace VocaDb.Tests.TestSupport {
 				", connection).ExecuteNonQuery();
 
 				var export = new SchemaExport(cfg);
-				//export.SetOutputFile(@"C:\Temp\vdb.sql");
-				export.Execute(false, true, false, connection, null);
+				if (writeOutput) {
+					using (var writer = new StreamWriter(@"C:\Temp\vdb.sql")) {
+						export.Execute(false, true, false, connection, writer);
+					}
+				} else {
+					export.Execute(false, true, false, connection, null);
+				}
 
 			});
 
