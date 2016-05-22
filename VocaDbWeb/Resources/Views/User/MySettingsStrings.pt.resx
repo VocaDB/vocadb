@@ -225,7 +225,7 @@ Mantenha a sua chave em segredo! Se suspeitar que alguém a descobriu, mude-a ra
     <value>Definições atualizadas</value>
   </data>
   <data name="UnableToSave" xml:space="preserve">
-    <value>Erro em gravar as definições. Por favor corrija os errors e tente outra vez.</value>
+    <value>Erro ao gravar as definições. Por favor corrija os errors e tente outra vez.</value>
   </data>
   <data name="UnreadNotificationsToKeep" xml:space="preserve">
     <value>Máximo número de mensagen por ler</value>

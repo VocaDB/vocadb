@@ -117,25 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Album" xml:space="preserve">
-    <value>Álbum que tem maioritariamente de músicas previamente não publicadas.</value>
+  <data name="License" xml:space="preserve">
+    <value>Licencia</value>
   </data>
-  <data name="Compilation" xml:space="preserve">
-    <value>Coleção de músicas previamente publicadas, recolhidas de um ou mais álbuns anteriores. Por exemplo, coleções "best of".</value>
-  </data>
-  <data name="EP" xml:space="preserve">
-    <value>Contém 3-4 músicas. Versões alternativas (instrumentais e remixes) normalmente não contam.</value>
-  </data>
-  <data name="Other" xml:space="preserve">
-    <value>Para álbuns que não pertençam a nenhuma categoria acima.</value>
-  </data>
-  <data name="Single" xml:space="preserve">
-    <value>Contém uma ou mais músicas individuais. Versões alternativas (instrumentais e remixes) normalmente não contam.</value>
-  </data>
-  <data name="SplitAlbum" xml:space="preserve">
-    <value>Colaboração de pelo menos dois artistas, onde todos os artistas têm o mesmo número de músicas.</value>
-  </data>
-  <data name="Video" xml:space="preserve">
-    <value>Disco contém principalmente videoclips, normalmente um DVD ou blu-ray.</value>
+  <data name="Discussions" xml:space="preserve">
+    <value>Discusiones</value>
   </data>
 </root>
