@@ -4,6 +4,8 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
@@ -17,9 +19,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private Album album;
 		private ReleaseEvent existingEvent;
+		private FakePermissionContext permissionContext;
 		private FakeEventRepository repository;
 		private EventQueries queries;
 		private ReleaseEventSeries series;
+		private User user;
 
 		private ReleaseEvent CallUpdate(ReleaseEventDetailsContract contract) {
 			
@@ -42,9 +46,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			album.OriginalReleaseEventName = "M3 2013 Spring";
 			repository.Save(album);
 
-			var user = CreateEntry.User();
+			user = CreateEntry.User(group: UserGroupId.Trusted);
 			repository.Save(user);
-			queries = new EventQueries(repository, new FakeEntryLinkFactory(), new FakePermissionContext(user), new InMemoryImagePersister());
+			permissionContext = new FakePermissionContext(user);
+			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister());
 
 		}
 
@@ -118,6 +123,49 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual("Fall", contract.SeriesSuffix, "SeriesSuffix");
 			Assert.AreEqual("M3 2013 Fall", result.Name, "Name");
 			Assert.AreEqual("M3 2013 Fall", album.OriginalReleaseEventName, "OriginalReleaseEventName for album");
+
+		}
+
+		[TestMethod]
+		public void UpdateSeries_Create() {
+
+			var contract = new ReleaseEventSeriesForEditContract { Name = "Comiket" };
+
+			var result = queries.UpdateSeries(contract, null);
+
+			var seriesFromRepo = repository.Load<ReleaseEventSeries>(result);
+
+			Assert.AreEqual(2, repository.List<ReleaseEventSeries>().Count, "Number of series in repo");
+			Assert.IsNotNull(seriesFromRepo, "Series was loaded successfully");
+			Assert.AreEqual("Comiket", seriesFromRepo.Name, "Name was updated");
+
+		}
+
+		[TestMethod]
+		public void UpdateSeries_Update() {
+
+			var contract = new ReleaseEventSeriesForEditContract(series);
+			contract.Name = "M3.9";
+
+			var result = queries.UpdateSeries(contract, null);
+
+			var seriesFromRepo = repository.Load<ReleaseEventSeries>(result);
+
+			Assert.AreEqual(1, repository.List<ReleaseEventSeries>().Count, "Number of series in repo");
+			Assert.IsNotNull(seriesFromRepo, "Series was loaded successfully");
+			Assert.AreEqual("M3.9", seriesFromRepo.Name, "Name was updated");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotAllowedException))]
+		public void UpdateSeries_NoPermission() {
+
+			user.GroupId = UserGroupId.Regular;
+			permissionContext.RefreshLoggedUser(repository);
+
+			var contract = new ReleaseEventSeriesForEditContract(series);
+			queries.UpdateSeries(contract, null);
 
 		}
 
