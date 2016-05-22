@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TagNameError" xml:space="preserve">
-    <value>Nome da tag só pode conter caractéres de palavras e não pode estar vazia.</value>
+  <data name="DuplicateArtist" xml:space="preserve">
+    <value>El mismo artista no se puede añadir dos veces. Por favor, elimine el duplicado y corrija los créditos.</value>
+  </data>
+  <data name="NeedReferences" xml:space="preserve">
+    <value>Música necesita notas, videos o links de referencia.</value>
   </data>
 </root>

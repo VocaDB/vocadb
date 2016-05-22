@@ -123,4 +123,7 @@
   <data name="NeedArtist" xml:space="preserve">
     <value>Album necesita</value>
   </data>
+  <data name="NeedReferences" xml:space="preserve">
+    <value>El disco necesita una descripción y links de referencia.</value>
+  </data>
 </root>
