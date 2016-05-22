@@ -37,12 +37,18 @@ namespace VocaDb.Model.Domain {
 			}
 		}
 
+		/// <summary>
+		/// ID of the entry that was deleted.
+		/// </summary>
 		public virtual int EntryId { get; set; }
 
 		public virtual EntryType EntryType { get; set; }
 
 		public virtual int Id { get; set; }
 
+		/// <summary>
+		/// Default name of the entry that was deleted. Cannot be null or empty.
+		/// </summary>
 		public virtual string Name {
 			get { return name; }
 			set {
@@ -51,6 +57,9 @@ namespace VocaDb.Model.Domain {
 			}
 		}
 
+		/// <summary>
+		/// User who deleted the entry. Cannot be null.
+		/// </summary>
 		public virtual User User {
 			get { return user; }
 			set {

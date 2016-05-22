@@ -44,6 +44,10 @@ namespace VocaDb.Tests.TestSupport {
 			return querySource.List<TEntity>().Contains(entity);
 		}
 
+		public int Count<TEntity>() {
+			return querySource.List<TEntity>().Count;
+		}
+
 		public virtual ListDatabaseContext<T> CreateContext() {
 			return new ListDatabaseContext<T>(querySource);
 		}

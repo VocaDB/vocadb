@@ -95,6 +95,35 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Delete() {
+
+			var oldCount = repository.Count<Tag>();
+
+			queries.Delete(tag.Id);
+
+			Assert.AreEqual(oldCount - 1, repository.Count<Tag>(), "One tag was removed");
+			Assert.IsFalse(repository.Contains(tag), "Tag was removed from repository");
+
+			Assert.AreEqual(1, repository.Count<TrashedEntry>(), "Trashed entry was created");
+			var trashed = repository.List<TrashedEntry>().First();
+			Assert.AreEqual(EntryType.Tag, trashed.EntryType, "Trashed entry type");
+			Assert.AreEqual(tag.Id, trashed.EntryId, "Trashed entry ID");
+			Assert.AreEqual(tag.DefaultName, trashed.Name, "Trashed entry name");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotAllowedException))]
+		public void Delete_NoPermission() {
+
+			user.GroupId = UserGroupId.Regular;
+			permissionContext.RefreshLoggedUser(repository);
+
+			queries.Delete(tag.Id);
+
+		}
+
+		[TestMethod]
 		public void GetTagsByCategories() {
 			
 			tag.CategoryName = "Animation";
@@ -123,6 +152,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Merge_MoveUsages() {
 
+			// Arrange
 			Action<Song, Tag> AddTag = (s, tag) => {
 				var u = s.AddTag(tag);
 				tag.AllSongTagUsages.Add(u.Result);
@@ -141,13 +171,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			AddTag(song2, target);
 			AddTag(song3, target);
 
+			// Act
 			queries.Merge(tag.Id, target.Id);
 
+			// Assert
 			Assert.AreEqual(3, target.UsageCount, "Tag's UsageCount");
 			Assert.AreEqual(3, target.AllSongTagUsages.Count, "Number of song tag usages");
+			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of usages for the first song");
+
 			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Song == song);
 			Assert.IsNotNull(usage, "Found usage");
 			Assert.AreEqual(1, usage.Votes.Count, "Number of votes");
+			Assert.IsTrue(song.Tags.Usages.Contains(usage), "Same usage was added to song");
 
 		}
 
