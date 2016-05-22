@@ -121,7 +121,7 @@
     <value>Log in</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
-    <value>Esqueceste-te da tua password?</value>
+    <value>Esqueceu-se da sua password?</value>
   </data>
   <data name="KeepMeLoggedIn" xml:space="preserve">
     <value>Manter-me logged in neste computador</value>
