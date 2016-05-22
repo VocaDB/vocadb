@@ -82,8 +82,11 @@ namespace VocaDb.Model.Domain.Artists {
 
 			// TODO: have to make a clone because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
 			Tag.AllArtistTagUsages.Remove(this);
+			Artist.Tags.Usages.Remove(this);
+
 			var newUsage = new ArtistTagUsage(Artist, target);
 			target.AllArtistTagUsages.Add(newUsage);
+			Artist.Tags.Usages.Add(newUsage);
 
 			return newUsage;
 
