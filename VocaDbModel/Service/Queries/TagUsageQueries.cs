@@ -94,7 +94,7 @@ namespace VocaDb.Model.Service.Queries {
 
 				ctx.AuditLogger.SysLog("finished tagging");
 
-				return tagFunc(entry).Usages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
+				return tagFunc(entry).ActiveUsages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
 
 			});
 

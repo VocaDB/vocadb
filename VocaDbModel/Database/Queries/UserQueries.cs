@@ -956,7 +956,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<AlbumTagUsage>().Where(a => a.Album.Id == albumId).ToArray();
+				var tagsInUse = session.Query<AlbumTagUsage>().Where(a => a.Album.Id == albumId && !a.Tag.Deleted).ToArray();
 				var tagVotes = session.Query<AlbumTagVote>().Where(a => a.User.Id == userId && a.Usage.Album.Id == albumId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
@@ -972,7 +972,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<ArtistTagUsage>().Where(a => a.Artist.Id == artistId).ToArray();
+				var tagsInUse = session.Query<ArtistTagUsage>().Where(a => a.Artist.Id == artistId && !a.Tag.Deleted).ToArray();
 				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Artist.Id == artistId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
@@ -988,7 +988,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<SongTagUsage>().Where(a => a.Song.Id == songId).ToArray();
+				var tagsInUse = session.Query<SongTagUsage>().Where(a => a.Song.Id == songId && !a.Tag.Deleted).ToArray();
 				var tagVotes = session.Query<SongTagVote>().Where(a => a.User.Id == userId && a.Usage.Song.Id == songId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
