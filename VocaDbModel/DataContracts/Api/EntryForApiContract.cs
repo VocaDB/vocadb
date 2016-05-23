@@ -77,7 +77,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Tags)) {
-				Tags = artist.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
+				Tags = artist.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
@@ -105,7 +105,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Tags)) {
-				Tags = album.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
+				Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
@@ -158,7 +158,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Tags)) {
-				Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
+				Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {

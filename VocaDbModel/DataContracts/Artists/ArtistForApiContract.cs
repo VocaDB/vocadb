@@ -52,7 +52,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 				Names = artist.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Tags))
-				Tags = artist.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
+				Tags = artist.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
 			if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && !string.IsNullOrEmpty(artist.PictureMime)) {
 				

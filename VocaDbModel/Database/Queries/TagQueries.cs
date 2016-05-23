@@ -352,7 +352,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(ctx => {
 
 				var tags = ctx.Query()
-					.Where(t => t.AliasedTo == null)
+					.Where(t => t.AliasedTo == null && !t.Deleted)
 					.OrderBy(t => t.CategoryName)
 					.ThenByEntryName(PermissionContext.LanguagePreference)
 					.GroupBy(t => t.CategoryName)
@@ -543,6 +543,24 @@ namespace VocaDb.Model.Database.Queries {
 				Archive(ctx, target, diff, EntryEditEvent.Updated, string.Format("Merged from {0}", source));
 
 				ctx.Update(target);
+
+			});
+
+		}
+
+		public void SoftDelete(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
+
+			repository.HandleTransaction(ctx => {
+
+				var tag = LoadTagById(ctx, id);
+
+				tag.Deleted = true;
+
+				ctx.AuditLogger.AuditLog(string.Format("soft deleted {0}", tag));
+
+				ctx.Update(tag);
 
 			});
 

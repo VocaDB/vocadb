@@ -188,12 +188,6 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<Album> WhereIsDeleted(this IQueryable<Album> query, bool deleted) {
-			
-			return query.Where(m => m.Deleted == deleted);
-
-		}
-
 		public static IQueryable<Album> WhereReleaseDateIsAfter(this IQueryable<Album> query, DateTime? beginDateNullable) {
 
 			if (!beginDateNullable.HasValue)

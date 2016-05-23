@@ -20,10 +20,6 @@ namespace VocaDb.Model.Domain.Tags {
 		IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName>, IWebLinkFactory<TagWebLink>,
 		IEntryWithVersions {
 
-		bool IDeletableEntry.Deleted {
-			get { return false; }
-		}
-
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		/// <summary>
@@ -199,6 +195,8 @@ namespace VocaDb.Model.Domain.Tags {
 				return TranslatedName.Default;
 			}
 		}
+
+		public virtual bool Deleted { get; set; }
 
 		/// <summary>
 		/// Tag description, may contain Markdown formatting.

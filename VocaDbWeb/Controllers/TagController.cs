@@ -44,6 +44,16 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult SoftDelete(int id) {
+
+			queries.SoftDelete(id);
+
+			TempData.SetStatusMessage("Tag disabled");
+
+			return RedirectToAction("DetailsById", new { id });
+
+		}
+
 		private ActionResult RenderDetails(TagDetailsContract contract) {
 
 			if (contract == null)

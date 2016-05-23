@@ -14,6 +14,8 @@ namespace VocaDb.Model.Domain.Tags {
 
 		private ISet<T> tags = new HashSet<T>();
 
+		public virtual IEnumerable<T> ActiveUsages => Usages.Where(t => !t.Tag.Deleted);
+
 		public virtual IEnumerable<Tag> Tags {
 			get {
 				return Usages.Select(t => t.Tag);

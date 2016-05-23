@@ -69,7 +69,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.Tags))
-				Tags = song.Tags.Usages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
+				Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.ThumbUrl))
 				ThumbUrl = song.GetThumbUrl();

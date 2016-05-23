@@ -21,6 +21,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			AliasedTo = tag.AliasedTo != null ? new TagBaseContract(tag.AliasedTo, languagePreference) : null;
 			CategoryName = tag.CategoryName;
 			CreateDate = tag.CreateDate;
+			Deleted = tag.Deleted;
 			Description = tag.Description.GetBestMatch(languagePreference);
 			Parent = tag.Parent != null ? new TagBaseContract(tag.Parent, languagePreference) : null;
 			Status = tag.Status;
@@ -40,6 +41,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		/// </summary>
 		[DataMember]
 		public DateTime CreateDate { get; set; }
+
+		public bool Deleted { get; set; }
 
 		[DataMember]
 		public string Description { get; set; }

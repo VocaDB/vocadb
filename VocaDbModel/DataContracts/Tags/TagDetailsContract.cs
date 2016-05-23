@@ -14,10 +14,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 	public class TagDetailsContract : TagContract, IEntryWithStatus {
 
-		bool IDeletableEntry.Deleted {
-			get { return false; }
-		}
-
 		string IEntryBase.DefaultName {
 			get { return Name; }
 		}

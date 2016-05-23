@@ -4,6 +4,15 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201605231800)]
+	public class TagSoftDeleted : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("Deleted").OnTable(TableNames.Tags).AsBoolean().NotNullable().WithDefaultValue(false);
+		}
+
+	}
+
 	[Migration(201605172100)]
 	public class EventCustomName : AutoReversingMigration {
 

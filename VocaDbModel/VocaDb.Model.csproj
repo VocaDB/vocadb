@@ -171,7 +171,6 @@
     <Compile Include="DataContracts\Tags\TagUsageForApiContract.cs" />
     <Compile Include="DataContracts\ArchivedEntryPictureFileContract.cs" />
     <Compile Include="DataContracts\Artists\ArtistForApiContract.cs" />
-    <Compile Include="DataContracts\Artists\ArtistForApiContractOld.cs" />
     <Compile Include="DataContracts\Artists\ComparedArtistsContract.cs" />
     <Compile Include="DataContracts\EntryBaseContract.cs" />
     <Compile Include="DataContracts\EntryPictureFileContract.cs" />
@@ -735,6 +734,7 @@
     <Compile Include="Service\Helpers\FollowedArtistNotifier.cs" />
     <Compile Include="Service\Helpers\IUserMessageMailer.cs" />
     <Compile Include="Service\Helpers\MarkdownHelper.cs" />
+    <Compile Include="Service\QueryableExtenders\OtherEntryQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\ReleaseEventSeriesQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongInListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongListQueryableExtender.cs" />

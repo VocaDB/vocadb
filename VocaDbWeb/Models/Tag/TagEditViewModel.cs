@@ -45,6 +45,8 @@ namespace VocaDb.Web.Models.Tag {
 
 		public string CurrentName { get; set; }
 
+		public bool Deleted { get; set; }
+
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[Display(Name = "Description")]
@@ -83,6 +85,7 @@ namespace VocaDb.Web.Models.Tag {
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
 			CurrentName = contract.Name;
+			Deleted = contract.Deleted;
 			Id = contract.Id;
 			IsEmpty = contract.IsEmpty;
 			Thumb = contract.Thumb;
