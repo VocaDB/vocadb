@@ -11,7 +11,7 @@
 		<div data-bind="foreach: selections">
 			<span class="tag" data-bind="attr: { title: tag.additionalNames }">
 				@* id is needed by jqButtonset. The binding also doesn't like ' in the id. *@
-				<input type="checkbox" data-bind="id: 'tagSelection' + tag.name.replace('\'', '_apos'), jqButtonset: selected" class="jqButton" />
+				<input type="checkbox" data-bind="id: 'tagSelection' + tag.name.replace(/\'/g, '_apos'), jqButtonset: selected" class="jqButton" />
 				<label>
 					<span data-bind="text: tag.name"></span>
 				</label>
