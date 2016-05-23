@@ -548,6 +548,24 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void Restore(int songId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
+
+			HandleTransaction(session => {
+
+				var tag = session.Load<Tag>(songId);
+
+				tag.Deleted = false;
+
+				Archive(session, tag, new TagDiff(false), EntryEditEvent.Updated);
+
+				AuditLog("restored " + entryLinkFactory.CreateEntryLink(tag), session);
+
+			});
+
+		}
+
 		public void SoftDelete(int id) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);

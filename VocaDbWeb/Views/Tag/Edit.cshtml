@@ -48,6 +48,8 @@
 	@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this tag?\");" })
 	if (!Model.Deleted) {
 		@Html.ActionLink("Disable", "SoftDelete", new { id = Model.Id }, new { id = "disableLink", onclick = "return confirm(\"Are you sure you want to disable this tag?\");" })
+	} else {
+		@Html.ActionLink("Restore", "Restore", new { id = Model.Id }, new { id = "restoreLink" })
 	}
 }
 @if (Login.CanMergeEntries) {
