@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using System.Text.RegularExpressions;
+using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code.Markdown;
@@ -84,6 +85,19 @@ namespace VocaDb.Tests.Web.Code {
 			var result = GetHtml("[Click me](javascript:alert(1))");
 
 			Assert.AreEqual("<p><a href=\"\">Click me</a></p>", result, "result");
+
+		}
+
+		private string StripWhitespace(string text) {
+			return Regex.Replace(text, @"\s", string.Empty);
+		}
+
+		[TestMethod]
+		public void GetHtml_BlockQuote() {
+
+			var result = GetHtml(@">Miku Miku!\n>by Miku\n\nThis needs to be encoded :>");
+
+			Assert.AreEqual(StripWhitespace("<blockquote><p>Miku Miku!<br />by Miku</p></blockquote><p>This needs to be encoded :&gt;</p>"), StripWhitespace(result), "result");
 
 		}
 

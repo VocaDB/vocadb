@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Caching;
+using System.Text.RegularExpressions;
 using System.Web;
 using MarkdownSharp;
 using VocaDb.Model.Domain.Caching;
@@ -11,14 +12,21 @@ namespace VocaDb.Web.Code.Markdown {
 	/// </summary>
 	public class MarkdownParser {
 
+		// Match "&gt;" at the beginning of each line
+		private static readonly Regex quoteRegex = new Regex("^&gt;", RegexOptions.Multiline);
+
 		private static string TranformMarkdown(string text) {
 
 			if (string.IsNullOrEmpty(text))
 				return text;
 
+			var encoded = HttpUtility.HtmlEncode(text);
+			encoded = quoteRegex.Replace(encoded, ">");
+
 			// StrictBoldItalic is needed because otherwise links with underscores won't work (links are more common on VDB).
 			// These settings roughtly correspond to GitHub-flavored Markdown (https://help.github.com/articles/github-flavored-markdown)
-			return new MarkdownSharp.Markdown(new MarkdownOptions { AutoHyperlink = true, AutoNewLines = true, StrictBoldItalic = true }).Transform(HttpUtility.HtmlEncode(text));
+			return new MarkdownSharp.Markdown(new MarkdownOptions { AutoHyperlink = true, AutoNewLines = true, StrictBoldItalic = true })
+				.Transform(encoded);
 
 		}
 
