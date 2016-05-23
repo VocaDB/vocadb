@@ -95,7 +95,7 @@ namespace VocaDb.Tests.Web.Code {
 		[TestMethod]
 		public void GetHtml_BlockQuote() {
 
-			var result = GetHtml(@">Miku Miku!\n>by Miku\n\nThis needs to be encoded :>");
+			var result = GetHtml(">Miku Miku!\n>by Miku\n\nThis needs to be encoded :>");
 
 			Assert.AreEqual(StripWhitespace("<blockquote><p>Miku Miku!<br />by Miku</p></blockquote><p>This needs to be encoded :&gt;</p>"), StripWhitespace(result), "result");
 
