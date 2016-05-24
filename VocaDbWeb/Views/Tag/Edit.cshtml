@@ -45,11 +45,15 @@
 
 @section Toolbar {
 @if (Login.CanDeleteEntries) {
-	@Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this tag?\");" })
 	if (!Model.Deleted) {
-		@Html.ActionLink("Disable", "SoftDelete", new { id = Model.Id }, new { id = "disableLink", onclick = "return confirm(\"Are you sure you want to disable this tag?\");" })
+		<span>
+			@Html.ActionLink("Delete", "SoftDelete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this tag?\");" })
+			@Html.ActionLink("Move to trash", "Delete", new { id = Model.Id }, new { id = "trashSplitLink", onclick = "return confirm(\"Are you sure you want to permanently delete this tag?\");" })
+		</span>
 	} else {
 		@Html.ActionLink("Restore", "Restore", new { id = Model.Id }, new { id = "restoreLink" })
+		@Html.Raw("&nbsp;")
+		@Html.ActionLink("Move to trash", "Delete", new { id = Model.Id }, new { id = "trashLink", onclick = "return confirm(\"Are you sure you want to permanently delete this tag?\");" })
 	}
 }
 @if (Login.CanMergeEntries) {

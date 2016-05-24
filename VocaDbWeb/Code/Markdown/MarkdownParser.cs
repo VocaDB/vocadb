@@ -12,7 +12,7 @@ namespace VocaDb.Web.Code.Markdown {
 	/// </summary>
 	public class MarkdownParser {
 
-		// Match "&gt;" at the beginning of each line
+		// Match "&gt;" at the beginning of each line, to fix markdown blockquotes
 		private static readonly Regex quoteRegex = new Regex("^&gt;", RegexOptions.Multiline);
 
 		private static string TranformMarkdown(string text) {
