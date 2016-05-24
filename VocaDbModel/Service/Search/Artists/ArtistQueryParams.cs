@@ -35,6 +35,8 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		}
 
+		public bool AllowBaseVoicebanks { get; set; }
+
 		public ArtistType[] ArtistTypes { get; set; }
 
 		public bool ChildTags { get; set; }

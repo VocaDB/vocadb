@@ -188,5 +188,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Artist> WhereAllowBaseVoicebanks(this IQueryable<Artist> query, bool allowed) {
+
+			if (allowed)
+				return query;
+
+			return query.Where(a => a.BaseVoicebank == null);
+
+		}
 	}
 }

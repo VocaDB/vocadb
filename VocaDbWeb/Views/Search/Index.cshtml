@@ -137,14 +137,6 @@
 					@ArtistHelpers.ArtistTypesDropdownKnockout("artistType")
 				</div>
 			</div>
-			<div class="control-group" data-bind="visible: loggedUserId">
-				<div class="controls">
-					<label class="checkbox">
-						<input type="checkbox" data-bind="checked: onlyFollowedByMe" />
-						@Res.OnlyMyFollowedArtists
-					</label>
-				</div>
-			</div>
 		</div>
 
 		<!-- Album search options -->
@@ -215,8 +207,20 @@
 			</div>
 		</div>
 
-		<div class="control-group" data-bind="visible: showDraftsFilter">
+		<div class="control-group">
 			<div class="controls">
+				
+				<div data-bind="visible: showArtistSearch, with: artistSearchViewModel">
+					<label class="checkbox" data-bind="visible: canHaveChildVoicebanks">
+						<input type="checkbox" data-bind="checked: onlyRootVoicebanks" />
+						Only voicebanks with no parents
+					</label>
+
+					<label class="checkbox" data-bind="visible: loggedUserId">
+						<input type="checkbox" data-bind="checked: onlyFollowedByMe" />
+						@Res.OnlyMyFollowedArtists
+					</label>
+				</div>
 
 				<div data-bind="visible: showSongSearch, with: songSearchViewModel">
 					<label class="checkbox">
@@ -230,7 +234,7 @@
 					</label>
 				</div>
 
-				<label class="checkbox">
+				<label class="checkbox" data-bind="visible: showDraftsFilter">
 					<input type="checkbox" data-bind="checked: draftsOnly" />
 					@ViewRes.EntryIndexStrings.OnlyDrafts
 				</label>

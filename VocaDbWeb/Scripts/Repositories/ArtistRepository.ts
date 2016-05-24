@@ -53,7 +53,9 @@ module vdb.repositories {
 		};
 
 		public getList = (paging: dc.PagingProperties, lang: string, query: string, sort: string,
-			artistTypes: string, tags: number[],
+			artistTypes: string,
+			allowBaseVoicebanks: boolean,
+			tags: number[],
 			childTags: boolean,
 			followedByUserId: number, fields: string, status: string, callback) => {
 
@@ -62,6 +64,7 @@ module vdb.repositories {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
 				artistTypes: artistTypes,
+				allowBaseVoicebanks: allowBaseVoicebanks,
 				tagId: tags,
 				childTags: childTags,
 				followedByUserId: followedByUserId,

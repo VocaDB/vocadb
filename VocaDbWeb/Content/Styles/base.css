@@ -137,6 +137,9 @@ body {
 .entry-field-label-col {
   min-width: 100px;
 }
+.entry-description {
+  margin-bottom: 10px;
+}
 .entry-description p:last-child {
   margin-bottom: 0;
 }

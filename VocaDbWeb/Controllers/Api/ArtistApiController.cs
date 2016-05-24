@@ -128,6 +128,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="query">Artist name query (optional).</param>
 		/// <param name="artistTypes">Filtered artist type (optional).</param>
+		/// <param name="allowBaseVoicebanks">Allow base voicebanks. If false, only root voicebanks will be allowed. Only affects voice synthesizers that can have base voicebanks.</param>
 		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
 		/// <param name="tagName">Filter by tag name (optional).</param>
 		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
@@ -152,6 +153,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<ArtistForApiContract> GetList(
 			string query = "", 
 			string artistTypes = null,
+			bool allowBaseVoicebanks = true,
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
@@ -171,7 +173,8 @@ namespace VocaDb.Web.Controllers.Api {
 				Tags = tagName,
 				TagIds = tagId,
 				ChildTags = childTags,
-				UserFollowerId = followedByUserId ?? 0
+				UserFollowerId = followedByUserId ?? 0,
+				AllowBaseVoicebanks = allowBaseVoicebanks
 			};
 			param.Common.EntryStatus = status;
 
