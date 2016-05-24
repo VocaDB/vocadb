@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using VocaDb.Model.Domain.Users;
 
@@ -12,9 +13,11 @@ namespace VocaDb.Model.Domain.Tags {
 
 		private Tag tag;
 
-		protected TagUsage() { }
+		protected TagUsage() {
+			Date = DateTime.Now;
+		}
 
-		protected TagUsage(Tag tag) {
+		protected TagUsage(Tag tag) : this() {
 			Tag = tag;
 		}
 
@@ -22,6 +25,8 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Number of votes.
 		/// </summary>
 		public virtual int Count { get; set; }
+
+		public virtual DateTime Date { get; set; }
 
 		/// <summary>
 		/// Attached entry. Cannot be null.

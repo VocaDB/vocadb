@@ -11,6 +11,8 @@ namespace VocaDb.Model.Mapping.Artists {
 			Id(m => m.Id);
 
 			Map(m => m.Count).Not.Nullable();
+			Map(m => m.Date).Not.Nullable();
+
 			References(m => m.Artist).Not.Nullable();
 			References(m => m.Tag).Not.Nullable();
 			HasMany(m => m.Votes).KeyColumn("[Usage]").Inverse().Cascade.AllDeleteOrphan();

@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201605242300)]
+	public class TagUsageDate : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("[Date]").OnTable(TableNames.AlbumTagUsages).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+			Create.Column("[Date]").OnTable(TableNames.ArtistTagUsages).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+			Create.Column("[Date]").OnTable(TableNames.SongTagUsages).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+		}
+
+	}
+
 	[Migration(201605231800)]
 	public class TagSoftDeleted : AutoReversingMigration {
 

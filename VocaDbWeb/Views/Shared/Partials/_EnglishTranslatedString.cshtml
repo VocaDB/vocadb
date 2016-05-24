@@ -4,7 +4,8 @@
 <!-- Viewmodel: EnglishTranslatedStringViewModel -->
  
 @helper Text(string str) {
-var maxLength = 400;
+	var maxLength = 500;
+	var summaryLength = 400;
 	if (str == null || str.Length <= maxLength) {
 		@HtmlHelpers.FormatMarkdown(str)	
 	} else {
@@ -12,7 +13,7 @@ var maxLength = 400;
 			@HtmlHelpers.FormatMarkdown(str)			
 		</div>
 		<div data-bind="visible: !isFullDescriptionShown()">
-			@HtmlHelpers.FormatMarkdown(str.Substring(0, maxLength) + "...")
+			@HtmlHelpers.FormatMarkdown(str.Substring(0, summaryLength) + "...")
 			<p><a href="" data-bind="click: showFullDescription">@Res.ShowFullDescription</a></p>
 		</div>
 	}
