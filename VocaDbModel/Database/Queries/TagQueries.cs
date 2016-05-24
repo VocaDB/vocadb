@@ -275,6 +275,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(session => {
 
 				var q = session.Query<TagName>()
+					.Where(t => !t.Entry.Deleted)
 					.WhereEntryNameIs(textQuery);
 
 				if (!allowAliases)

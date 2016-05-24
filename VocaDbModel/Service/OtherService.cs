@@ -342,6 +342,7 @@ namespace VocaDb.Model.Service {
 
 				var tagNames = session.Query<TagName>()
 					.WhereEntryNameIs(tagTextQuery)
+					.Where(a => !a.Entry.Deleted)
 					.Select(t => t.Value)
 					.OrderBy(t => t)
 					.Take(maxResults)
