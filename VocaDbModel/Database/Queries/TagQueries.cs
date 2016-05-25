@@ -522,6 +522,10 @@ namespace VocaDb.Model.Database.Queries {
 					diff.WebLinks = true;
 				}
 
+				// Create merge record
+				var mergeEntry = new TagMergeRecord(source, target);
+				ctx.Save(mergeEntry);
+
 				MergeTagUsages(source, target);
 
 				// Delete entry before copying names

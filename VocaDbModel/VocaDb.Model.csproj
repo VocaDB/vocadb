@@ -407,6 +407,7 @@
     <Compile Include="Domain\Tags\TagComment.cs" />
     <Compile Include="Domain\Tags\TagDiff.cs" />
     <Compile Include="Domain\Tags\TagEditableFields.cs" />
+    <Compile Include="Domain\Tags\TagMergeRecord.cs" />
     <Compile Include="Domain\Tags\TagName.cs" />
     <Compile Include="Domain\Tags\TagReport.cs" />
     <Compile Include="Domain\Tags\TagWebLink.cs" />
@@ -560,6 +561,7 @@
     <Compile Include="Mapping\Discussions\DiscussionFolderMap.cs" />
     <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
+    <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\WebLinkMap.cs" />
     <Compile Include="Mapping\MikuDb\MikuDbAlbumMap.cs" />
     <Compile Include="Mapping\Security\AuditLogEntryMap.cs" />

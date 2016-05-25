@@ -28,6 +28,7 @@
 		public const string SongTagUsages = "SongTagUsages";
 		public const string Tags = "Tags";
 		public const string TagComments = "TagComments";
+		public const string TagMergeRecords = "TagMergeRecords";
 		public const string TagNames = "TagNames";
 		public const string TagWebLinks = "TagWebLinks";
 		public const string TrashedEntries = "TrashedEntries";
