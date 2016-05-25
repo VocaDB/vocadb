@@ -10,7 +10,7 @@ namespace VocaDb.Migrations {
 		public override void Up() {
 			
 			Create.Table(TableNames.TagMergeRecords)
-				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey()
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Source").AsInt32().NotNullable()
 				.WithColumn("Target").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id");
 
