@@ -425,6 +425,35 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void GetRelatedSongs() {
+
+			var matchingArtist = Save(CreateEntry.Song());
+			Save(matchingArtist.AddArtist(song.Artists.First().Artist));
+
+			Save(song.AddTag(tag));
+			var matchingTag = Save(CreateEntry.Song());
+			Save(matchingTag.AddTag(tag));
+
+			Save(user.AddSongToFavorites(song, SongVoteRating.Like));
+			var matchingLike = Save(CreateEntry.Song());
+			Save(user.AddSongToFavorites(matchingLike, SongVoteRating.Like));
+
+			// Unrelated song
+			Save(CreateEntry.Song());
+
+			var result = queries.GetRelatedSongs(song.Id, SongOptionalFields.AdditionalNames);
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(1, result.ArtistMatches.Length, "Number of artist matches");
+			Assert.AreEqual(matchingArtist.Id, result.ArtistMatches.First().Id, "Matching artist");
+			Assert.AreEqual(1, result.TagMatches.Length, "Number of tag matches");
+			Assert.AreEqual(matchingTag.Id, result.TagMatches.First().Id, "Matching tag");
+			Assert.AreEqual(1, result.LikeMatches.Length, "Number of like matches");
+			Assert.AreEqual(matchingLike.Id, result.LikeMatches.First().Id, "Matching like");
+
+		}
+
+		[TestMethod]
 		public void Merge_ToEmpty() {
 
 			var song2 = new Song();
