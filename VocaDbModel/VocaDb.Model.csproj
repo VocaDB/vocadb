@@ -117,6 +117,7 @@
     <Compile Include="Database\Queries\EntryQueries.cs" />
     <Compile Include="Database\Queries\EntryReportQueries.cs" />
     <Compile Include="Database\Queries\EventQueries.cs" />
+    <Compile Include="Database\Queries\Partial\CreateMergeEntryQuery.cs" />
     <Compile Include="Database\Queries\SongAggregateQueries.cs" />
     <Compile Include="Database\Queries\SongListQueries.cs" />
     <Compile Include="Database\Queries\SongQueries.cs" />

@@ -147,6 +147,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual("Appearance Miku", target.Names.AllValues.FirstOrDefault(), "Name was copied");
 
+			var mergeRecord = repository.List<TagMergeRecord>().FirstOrDefault(m => m.Source == tag.Id);
+			Assert.IsNotNull(mergeRecord, "Merge record was created");
+			Assert.AreEqual(target, mergeRecord.Target, "Merge record target");
+
 		}
 
 		[TestMethod]
@@ -197,6 +201,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(target);
 
 			queries.Merge(tag.Id, target.Id);
+
+		}
+
+		[TestMethod]
+		public void Merge_TransitiveMergeRecord() {
+
+			var target = CreateAndSaveTag("target");
+			var newTarget = CreateAndSaveTag("newTarget");
+
+			queries.Merge(tag.Id, target.Id);
+			queries.Merge(target.Id, newTarget.Id);
+
+			Assert.AreEqual(2, repository.Count<TagMergeRecord>(), "Two merge records created");
+			var mergeRecord = repository.List<TagMergeRecord>().FirstOrDefault(m => m.Source == tag.Id);
+			Assert.IsNotNull(mergeRecord, "Found merge record");
+			Assert.AreEqual(newTarget.Id, mergeRecord.Target.Id, "Target was updated");
 
 		}
 

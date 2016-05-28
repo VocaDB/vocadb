@@ -6,7 +6,7 @@ namespace VocaDb.Tests.TestSupport {
 	public class FakeEntryLinkFactory : IEntryLinkFactory  {
 
 		public string CreateEntryLink(IEntryBase entry, string slug) {
-			return string.Empty;
+			return entry?.ToString();
 		}
 
 		public string CreateEntryLink(EntryType entryType, int id, string name, string slug) {

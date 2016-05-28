@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using NLog;
+using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
@@ -523,6 +524,8 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				// Create merge record
+				new CreateMergeEntryQuery().CreateMergeEntry<Tag, TagMergeRecord>(ctx, sourceId, target);
+
 				var mergeEntry = new TagMergeRecord(source, target);
 				ctx.Save(mergeEntry);
 
