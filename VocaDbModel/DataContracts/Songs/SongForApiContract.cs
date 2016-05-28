@@ -15,7 +15,11 @@ using VocaDb.Model.Service.VideoServices;
 namespace VocaDb.Model.DataContracts.Songs {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongForApiContract {
+	public class SongForApiContract : IEntryBase {
+
+		bool IDeletableEntry.Deleted => false;
+
+		EntryType IEntryBase.EntryType => EntryType.Song;
 
 		public SongForApiContract() { }
 

@@ -1,20 +1,21 @@
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace VocaDb.Model.DataContracts.Songs {
 
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public class RelatedSongsContract {
 
-		public bool Any {
-			get {
-				return ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
-			}
-		}
+		public bool Any => ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
 
-		public SongContract[] ArtistMatches { get; set; }
+		[DataMember]
+		public SongForApiContract[] ArtistMatches { get; set; }
 
-		public SongContract[] LikeMatches { get; set; }
+		[DataMember]
+		public SongForApiContract[] LikeMatches { get; set; }
 
-		public SongContract[] TagMatches { get; set; }
+		[DataMember]
+		public SongForApiContract[] TagMatches { get; set; }
 
 	}
 

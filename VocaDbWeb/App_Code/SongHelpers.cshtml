@@ -78,6 +78,12 @@
 	</a>		
 }
 
+@helper SongIconLink(SongForApiContract song) {
+	<a href="@Url.EntryDetails(song)">
+		<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
+	</a>
+}
+
 @helper SongLink(SongContract song, int? albumId = null) {
 	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song, albumId), new { title = song.AdditionalNames })
 }
@@ -123,6 +129,45 @@
 	</table>
 			
 }
+
+@helper SongGrid(IEnumerable<SongForApiContract> songs, int columns,
+	bool displayType = false, bool displayPublishDate = false) {
+
+	<table>
+		@{ int i = 0; }
+
+		@foreach (var song in songs) {
+			if (i % columns == 0) {
+				@Html.Raw("<tr>")
+			}
+			<td>
+				@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
+					@SongIconLink(song)
+				}
+			</td>
+			<td>
+				@Url.EntryDetails(song)
+				@if (displayType) {
+					@SongTypeLabel(song.SongType)
+				}
+				@if (displayPublishDate && song.PublishDate.HasValue) {
+					<i class="icon-calendar" title="Published: @song.PublishDate.Value.ToShortDateString()" data-bind="tooltip: { placement: 'right' }"></i>
+				}
+				<br />
+				<span class="extraInfo">@song.ArtistString</span>
+			</td>
+			{ i++; }
+			if (i % columns == 0) {
+				@Html.Raw("</tr>")
+			}
+		}
+		@if (i % columns != 0) {
+			@Html.Raw("</tr>")
+		}
+	</table>
+
+}
+
 
 @helper SongListsKnockout(string binding, bool groupByYear = false) {
 	

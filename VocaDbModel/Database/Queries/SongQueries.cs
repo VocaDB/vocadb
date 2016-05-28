@@ -580,7 +580,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public RelatedSongsContract GetRelatedSongs(int songId) {
+		public RelatedSongsContract GetRelatedSongs(int songId, 
+			SongOptionalFields fields,
+			ContentLanguagePreference? lang = null) {
+
+			var language = lang ?? permissionContext.LanguagePreference;
 
 			return repository.HandleQuery(ctx => {
 
@@ -589,15 +593,15 @@ namespace VocaDb.Model.Database.Queries {
 
 				return new RelatedSongsContract {
 					ArtistMatches = songs.ArtistMatches
-						.Select(a => new SongContract(a, permissionContext.LanguagePreference))
+						.Select(a => new SongForApiContract(a, null, language, fields))
 						.OrderBy(a => a.Name)
 						.ToArray(),
 					LikeMatches = songs.LikeMatches
-						.Select(a => new SongContract(a, permissionContext.LanguagePreference))
+						.Select(a => new SongForApiContract(a, null, language, fields))
 						.OrderBy(a => a.Name)
 						.ToArray(),
 					TagMatches = songs.TagMatches
-						.Select(a => new SongContract(a, permissionContext.LanguagePreference))
+						.Select(a => new SongForApiContract(a, null, language, fields))
 						.OrderBy(a => a.Name)
 						.ToArray()
 				};

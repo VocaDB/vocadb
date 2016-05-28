@@ -156,6 +156,20 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Gets related songs.
+		/// </summary>
+		/// <param name="id">Song whose related songs are to be queried.</param>
+		/// <param name="fields">Optional song fields.</param>
+		/// <param name="lang">Content language preference.</param>
+		/// <returns>Related songs.</returns>
+		[Route("{id:int}/related")]
+		public RelatedSongsContract GetRelated(int id, SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+
+			return queries.GetRelatedSongs(id, fields, lang);
+
+		}
+
+		/// <summary>
 		/// Find songs.
 		/// </summary>
 		/// <param name="query">Song name query (optional).</param>
