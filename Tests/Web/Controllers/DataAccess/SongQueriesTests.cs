@@ -430,7 +430,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var matchingArtist = Save(CreateEntry.Song());
 			Save(matchingArtist.AddArtist(song.Artists.First().Artist));
 
-			Save(song.AddTag(tag));
+			Save(song.AddTag(tag).Result);
 			var matchingTag = Save(CreateEntry.Song());
 			Save(matchingTag.AddTag(tag));
 
