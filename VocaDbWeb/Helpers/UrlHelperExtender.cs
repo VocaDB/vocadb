@@ -42,6 +42,14 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
+		public static string SongDetails(this UrlHelper urlHelper, IEntryBase song, int? albumId = null) {
+
+			ParamIs.NotNull(() => song);
+
+			return urlHelper.Action("Details", "Song", new { id = song.Id, albumId });
+
+		}
+
 		public static string UserDetails(this UrlHelper urlHelper, IUser user) {
 
 			ParamIs.NotNull(() => user);

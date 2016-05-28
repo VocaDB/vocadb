@@ -79,13 +79,19 @@
 }
 
 @helper SongIconLink(SongForApiContract song) {
-	<a href="@Url.EntryDetails(song)">
+	<a href="@Url.SongDetails(song)">
 		<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
 	</a>
 }
 
 @helper SongLink(SongContract song, int? albumId = null) {
 	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song, albumId), new { title = song.AdditionalNames })
+}
+
+@helper SongLink(SongForApiContract song, int? albumId = null) {
+	<a href="@Url.SongDetails(song, albumId)" title="@song.AdditionalNames">
+		@song.Name
+	</a>
 }
 
 @helper SongLinkKnockout(string binding, string extUrlBinding = null) {
@@ -146,7 +152,7 @@
 				}
 			</td>
 			<td>
-				@Url.EntryDetails(song)
+				@SongLink(song)				
 				@if (displayType) {
 					@SongTypeLabel(song.SongType)
 				}

@@ -458,7 +458,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var related = queries.GetRelatedSongs(id, SongOptionalFields.AdditionalNames, null);
+			var related = queries.GetRelatedSongs(id, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl, null);
 			return PartialView("RelatedSongs", related);
 
 		}
