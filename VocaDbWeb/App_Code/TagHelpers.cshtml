@@ -66,7 +66,7 @@
 						</td>
 					}
 					<td>
-						@(usage.Votes.Any() ? usage.Votes.Select(v => v.CreateDate).Min().ToShortDateString() : "")
+						@usage.Date.ToShortDateString()
 					</td>
 					<td>
 						@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {

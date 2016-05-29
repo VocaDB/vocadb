@@ -26,6 +26,9 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual int Count { get; set; }
 
+		/// <summary>
+		/// Date when this usage was first created.
+		/// </summary>
 		public virtual DateTime Date { get; set; }
 
 		/// <summary>
