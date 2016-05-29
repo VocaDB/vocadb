@@ -9,8 +9,13 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		public OldUsername(User user, string oldName) : this() {
+
+			ParamIs.NotNull(() => user);
+			ParamIs.NotNullOrEmpty(() => oldName);
+
 			User = user;
 			OldName = oldName;
+
 		}
 
 		public virtual DateTime Date { get; set; }

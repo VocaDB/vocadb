@@ -1272,7 +1272,7 @@ namespace VocaDb.Model.Database.Queries {
 						throw new UserNameAlreadyExistsException();
 					}
 
-					session.AuditLogger.AuditLog("changed username of " + user.Name + " to " + contract.Name);
+					session.AuditLogger.AuditLog(string.Format("changed username of {0} to '{1}'", EntryLinkFactory.CreateEntryLink(user), contract.Name));
 
 					var usernameEntry = new OldUsername(user, user.Name);
 					session.Save(usernameEntry);
