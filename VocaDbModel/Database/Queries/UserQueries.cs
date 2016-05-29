@@ -1273,6 +1273,10 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					session.AuditLogger.AuditLog("changed username of " + user.Name + " to " + contract.Name);
+
+					var usernameEntry = new OldUsername(user, user.Name);
+					session.Save(usernameEntry);
+
 					user.Name = contract.Name;
 					user.NameLC = contract.Name.ToLowerInvariant();
 

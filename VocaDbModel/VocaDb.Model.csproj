@@ -417,6 +417,7 @@
     <Compile Include="Domain\Users\IUser.cs" />
     <Compile Include="Domain\Users\IUserWithEmail.cs" />
     <Compile Include="Domain\Users\IUserWithIcon.cs" />
+    <Compile Include="Domain\Users\OldUsername.cs" />
     <Compile Include="Domain\Users\OwnedArtistForUser.cs" />
     <Compile Include="Domain\Users\PurchaseStatus.cs" />
     <Compile Include="Domain\Users\UserComment.cs" />
@@ -563,6 +564,7 @@
     <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
+    <Compile Include="Mapping\Users\OldUsernameMap.cs" />
     <Compile Include="Mapping\WebLinkMap.cs" />
     <Compile Include="Mapping\MikuDb\MikuDbAlbumMap.cs" />
     <Compile Include="Mapping\Security\AuditLogEntryMap.cs" />

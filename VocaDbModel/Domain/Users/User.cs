@@ -45,6 +45,7 @@ namespace VocaDb.Model.Domain.Users {
 		private IList<UserMessage> messages = new List<UserMessage>();
 		private string name;
 		private string nameLc;
+		private IList<OldUsername> oldUsernames = new List<OldUsername>();
 		private UserOptions options;
 		private IList<OwnedArtistForUser> ownedArtists = new List<OwnedArtistForUser>(); 
 		private string password;
@@ -365,6 +366,14 @@ namespace VocaDb.Model.Domain.Users {
 			set { optionsList = value; }
 		}
 		 */
+
+		public virtual IList<OldUsername> OldUsernames {
+			get { return oldUsernames; }
+			set {
+				ParamIs.NotNull(() => value);
+				oldUsernames = value;
+			}
+		}
 
 		/// <summary>
 		/// List of artists entries for which this user is a verified owner. Does not include deleted artists. Cannot be null.

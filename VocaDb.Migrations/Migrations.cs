@@ -4,6 +4,21 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201605291900)]
+	public class OldUserNames : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table(TableNames.OldUsernames)
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+				.WithColumn("[Date]").AsDateTime().NotNullable()
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id")
+				.WithColumn("OldName").AsString(400).NotNullable();
+
+		}
+
+	}
+
 	[Migration(201605252100)]
 	public class TagMergeRecords : AutoReversingMigration {
 

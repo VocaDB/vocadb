@@ -633,6 +633,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			LoggedUser.GroupId = UserGroupId.Admin;
 			permissionContext.RefreshLoggedUser(repository);
 
+			var oldName = userWithoutEmail.Name;
 			var contract = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
 			contract.Name = "HatsuneMiku";
 
@@ -641,6 +642,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var user = repository.Load(contract.Id);
 			Assert.AreEqual("HatsuneMiku", user.Name, "Name was updated");
 			Assert.AreEqual("hatsunemiku", user.NameLC, "Name was updated");
+
+			var oldNameEntry = repository.List<OldUsername>().FirstOrDefault(u => u.User.Id == userWithoutEmail.Id);
+			Assert.IsNotNull(oldNameEntry, "Old name entry was created");
+			Assert.AreEqual(oldName, oldNameEntry.Username, "Old name as expected");
 
 		}
 
