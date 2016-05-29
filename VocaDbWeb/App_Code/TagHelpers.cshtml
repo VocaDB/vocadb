@@ -49,6 +49,7 @@
 				@if (Login.CanManageUsers) { 
 					<th>Votes</th>
 				}
+				<th>Date</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -64,6 +65,9 @@
 							}
 						</td>
 					}
+					<td>
+						@(usage.Votes.Any() ? usage.Votes.Select(v => v.CreateDate).Min().ToShortDateString() : "")
+					</td>
 					<td>
 						@if (Login.Manager.HasPermission(PermissionToken.RemoveTagUsages)) {
 							@Html.ActionLink("Remove tag usage", "RemoveTagUsage", entryType.ToString(), new { id = usage.Id }, new { @class = "removeLink textLink", @onclick = "javascript: return confirm('Really delete?');" })
