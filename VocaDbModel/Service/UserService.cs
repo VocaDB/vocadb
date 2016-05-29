@@ -376,6 +376,13 @@ namespace VocaDb.Model.Service {
 
 	}
 
+	public class InvalidUserNameException : Exception {
+
+		public InvalidUserNameException()
+			: base("Specified username is invalid") { }
+
+	}
+
 	public class UserEmailAlreadyExistsException : Exception {
 
 		public UserEmailAlreadyExistsException()

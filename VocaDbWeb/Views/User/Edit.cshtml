@@ -18,7 +18,7 @@
 
 @using(Html.BeginForm()) {	
 	@Html.HiddenFor(m => m.Id)
-	
+
 	<fieldset>
 		<legend>Account settings</legend>
 		<p>
@@ -33,7 +33,10 @@
 			@Html.CheckBoxFor(m => m.Supporter)
 			Patreon supporter
 		</p>
-		
+
+		@Html.LabelFor(m => m.Name, "Username")
+		@Html.TextBoxFor(m => m.Name, new { maxlength = 100 })
+
 		@Html.LabelFor(m => m.Email, "Email")
 		@Html.TextBoxFor(m => m.Email, new { maxlength = 50 })
 
@@ -41,8 +44,8 @@
 		@Html.EnumDropDownListFor(m => m.GroupId, Model.EditableGroups)
 	</fieldset>
 
-    if (EntryPermissionManager.CanEditAdditionalPermissions(Login.Manager)) {
- 	
+	if (EntryPermissionManager.CanEditAdditionalPermissions(Login.Manager)) {
+
 	<fieldset>
 		<legend>Additional permissions</legend>
 		@foreach (var entry in Model.Permissions) {	 

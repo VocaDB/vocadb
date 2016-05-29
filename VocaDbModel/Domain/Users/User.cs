@@ -19,6 +19,8 @@ namespace VocaDb.Model.Domain.Users {
 
 	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink>, IEntryWithComments {
 
+		public const string NameRegex = "[a-zA-Z0-9_]+";
+
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		INameManager IEntryWithNames.Names {

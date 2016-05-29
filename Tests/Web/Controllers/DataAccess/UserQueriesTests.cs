@@ -628,6 +628,51 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void UpdateUser_Name() {
+
+			LoggedUser.GroupId = UserGroupId.Admin;
+			permissionContext.RefreshLoggedUser(repository);
+
+			var contract = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
+			contract.Name = "HatsuneMiku";
+
+			data.UpdateUser(contract);
+
+			var user = repository.Load(contract.Id);
+			Assert.AreEqual("HatsuneMiku", user.Name, "Name was updated");
+			Assert.AreEqual("hatsunemiku", user.NameLC, "Name was updated");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(UserNameAlreadyExistsException))]
+		public void UpdateUser_Name_AlreadyInUse() {
+
+			LoggedUser.GroupId = UserGroupId.Admin;
+			permissionContext.RefreshLoggedUser(repository);
+
+			var contract = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
+			contract.Name = userWithEmail.Name;
+
+			data.UpdateUser(contract);
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidUserNameException))]
+		public void UpdateUser_Name_InvalidCharacters() {
+
+			LoggedUser.GroupId = UserGroupId.Admin;
+			permissionContext.RefreshLoggedUser(repository);
+
+			var contract = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
+			contract.Name = "Miku!";
+
+			data.UpdateUser(contract);
+
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
 		public void UpdateUser_NotAllowed() {
 			

@@ -44,7 +44,7 @@ namespace VocaDb.Web.Models {
 		[Required(ErrorMessageResourceType = typeof(ViewRes.User.CreateStrings), ErrorMessageResourceName = "UsernameIsRequired")]
 		[Display(ResourceType = typeof(ViewRes.User.CreateStrings), Name = "Username")]
 		[StringLength(100, MinimumLength = 3)]
-		[RegularExpression("[a-zA-Z0-9_]+")]
+		[RegularExpression(Model.Domain.Users.User.NameRegex)]
 		public string UserName { get; set; }
 
 		[Required(ErrorMessageResourceType = typeof(ViewRes.User.CreateStrings), ErrorMessageResourceName = "PasswordIsRequired")]

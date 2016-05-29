@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.Caching;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 using NHibernate;
@@ -1257,6 +1258,24 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (EntryPermissionManager.CanEditAdditionalPermissions(PermissionContext)) {
 					user.AdditionalPermissions = new PermissionCollection(contract.AdditionalPermissions.Select(p => PermissionToken.GetById(p.Id)));
+				}
+
+				if (user.Name != contract.Name) {
+
+					if (!Regex.IsMatch(contract.Name, User.NameRegex)) {
+						throw new InvalidUserNameException();
+					}
+
+					var nameInUse = session.Query().Any(u => u.Name == contract.Name && u.Id != contract.Id);
+
+					if (nameInUse) {
+						throw new UserNameAlreadyExistsException();
+					}
+
+					session.AuditLogger.AuditLog("changed username of " + user.Name + " to " + contract.Name);
+					user.Name = contract.Name;
+					user.NameLC = contract.Name.ToLowerInvariant();
+
 				}
 
 				var diff = OwnedArtistForUser.Sync(user.AllOwnedArtists, contract.OwnedArtistEntries, a => user.AddOwnedArtist(session.Load<Artist>(a.Artist.Id)));
