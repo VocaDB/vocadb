@@ -645,7 +645,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var oldNameEntry = repository.List<OldUsername>().FirstOrDefault(u => u.User.Id == userWithoutEmail.Id);
 			Assert.IsNotNull(oldNameEntry, "Old name entry was created");
-			Assert.AreEqual(oldName, oldNameEntry.Username, "Old name as expected");
+			Assert.AreEqual(oldName, oldNameEntry.OldName, "Old name as expected");
 
 		}
 
