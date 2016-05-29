@@ -20,22 +20,22 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<Song> OrderBy(this IQueryable<Song> criteria, SongSortRule sortRule, ContentLanguagePreference languagePreference) {
+		public static IQueryable<Song> OrderBy(this IQueryable<Song> query, SongSortRule sortRule, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
 			
 			switch (sortRule) {
 				case SongSortRule.Name:
-					return criteria.OrderByEntryName(languagePreference);
+					return query.OrderByEntryName(languagePreference);
 				case SongSortRule.AdditionDate:
-					return criteria.OrderByDescending(a => a.CreateDate);
+					return query.OrderByDescending(a => a.CreateDate);
 				case SongSortRule.FavoritedTimes:
-					return criteria.OrderByDescending(a => a.FavoritedTimes);
+					return query.OrderByDescending(a => a.FavoritedTimes);
 				case SongSortRule.PublishDate:
-					return criteria.OrderByPublishDate(SortDirection.Descending);
+					return query.OrderByPublishDate(SortDirection.Descending);
 				case SongSortRule.RatingScore:
-					return criteria.OrderByDescending(a => a.RatingScore);
+					return query.OrderByDescending(a => a.RatingScore);
 			}
 
-			return criteria;
+			return query;
 
 		}
 

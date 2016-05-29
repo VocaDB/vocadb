@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Queries {
 
@@ -50,8 +51,7 @@ namespace VocaDb.Model.Service.Queries {
 							//&& (al.ArtistString.Default != ArtistHelper.VariousArtists)
 							&& !a.IsSupport 
 							&& mainArtistIds.Contains(a.Artist.Id)))
-					.OrderBy(a => a.RatingScore)
-					.Distinct()
+					.OrderBy(SongSortRule.RatingScore)
 					.Take(16)
 					.ToArray();
 
@@ -92,7 +92,7 @@ namespace VocaDb.Model.Service.Queries {
 						&& !loadedSongs.Contains(al.Id) 
 						&& !al.Deleted 
 						&& al.Tags.Usages.Any(t => tagIds.Contains(t.Tag.Id)))
-					.OrderBy(a => a.RatingScore)
+					.OrderBy(SongSortRule.RatingScore)
 					.Take(12)
 					.ToArray();
 
