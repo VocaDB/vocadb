@@ -44,10 +44,22 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ArtistCount = artistCount;
 
 			Description = tag.Description;
-			RelatedTags = tag.RelatedTags.Select(a => new TagBaseContract(a.LinkedTag, languagePreference, true)).OrderBy(t => t.Name).ToArray();
+			RelatedTags = tag.RelatedTags
+				.Select(a => new TagBaseContract(a.LinkedTag, languagePreference, true))
+				.OrderBy(t => t.Name)
+				.ToArray();
 
-			Children = tag.Children.Select(a => new TagBaseContract(a, languagePreference)).ToArray();
-			Siblings = tag.Parent != null ? tag.Parent.Children.Where(t => !t.Equals(tag)).Select(a => new TagBaseContract(a, languagePreference)).ToArray() : new TagBaseContract[0];
+			Children = tag.Children
+				.Select(a => new TagBaseContract(a, languagePreference))
+				.OrderBy(t => t.Name)
+				.ToArray();
+
+			Siblings = tag.Parent != null ? tag.Parent.Children
+				.Where(t => !t.Equals(tag))
+				.Select(a => new TagBaseContract(a, languagePreference))
+				.OrderBy(t => t.Name)
+				.ToArray() 
+				: new TagBaseContract[0];
 
 			Songs = songs.Select(a => new SongContract(a, languagePreference)).ToArray();
 			SongCount = songCount;
