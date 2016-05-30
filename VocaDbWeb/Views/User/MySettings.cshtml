@@ -40,15 +40,14 @@
 		<div id="accountSettings">
 			<div>
 				<div class="editor-label">
-					@R.MySettingsStrings.Username
+					@Helpers.HelpLabel(Res.Username, "If you want to change your username, contact a staff member")
 				</div>
 				<div class="editor-field">
 					@Html.DisplayFor(m => m.Username)
 				</div>
 
 				<div class="editor-label">
-					@R.MySettingsStrings.Email
-					@R.MySettingsStrings.EmailNote
+					@Helpers.HelpLabel(Res.Email, Res.EmailNote)
 				</div>
 				<div class="editor-field">
 					@Html.TextBoxForKnockout(m => m.Email, "value: email", maxLength: 50)

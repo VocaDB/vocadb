@@ -189,7 +189,7 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (not shown to other users, used by gravatar and password resets).
+        ///   Looks up a localized string similar to Not shown to other users, used by gravatar and password resets.
         /// </summary>
         public static string EmailNote {
             get {
