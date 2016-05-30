@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
@@ -20,6 +21,10 @@ namespace VocaDb.Model.DataContracts.Users {
 				MainPicture = iconFactory.GetIcons(user, ImageSizes.Thumb | ImageSizes.TinyThumb);
 			}
 
+			if (optionalFields.HasFlag(UserOptionalFields.OldUsernames)) {
+				OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
+			}
+
 		}
 
 		[DataMember]
@@ -37,6 +42,9 @@ namespace VocaDb.Model.DataContracts.Users {
 		[DataMember]
 		public DateTime MemberSince { get; set; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public OldUsernameContract[] OldUsernames { get; set; }
+
 		[DataMember]
 		public bool VerifiedArtist { get; set; }
 
@@ -47,6 +55,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		None = 0,
 		MainPicture = 1,
+		OldUsernames = 2
 
 	}
 
