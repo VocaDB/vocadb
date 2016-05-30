@@ -161,6 +161,14 @@
 			<h4 class="withMargin">@R.MemberSince</h4>
 			@Model.CreateDate.ToShortDateString()
 			
+			@if (Model.OldUsernames.Any()) {
+				<h4 class="withMargin">@R.OldUsernames</h4>
+				foreach (var oldName in Model.OldUsernames) {
+					@oldName.OldName@:
+					@(string.Format(R.OldNameUntil, oldName.Date.ToShortDateString()) + (oldName != Model.OldUsernames.Last() ? "," : ""))@:
+				}
+			}
+
 			@if (Model.Supporter) {
 				<div class="withMargin media">
 					<img class="pull-left" style="margin-top: 2px;" src="@Url.Content("~/Content/pixelart-miku.png")" />

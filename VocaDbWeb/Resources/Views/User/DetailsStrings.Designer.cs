@@ -286,6 +286,24 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (until {0}).
+        /// </summary>
+        public static string OldNameUntil {
+            get {
+                return ResourceManager.GetString("OldNameUntil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old usernames.
+        /// </summary>
+        public static string OldUsernames {
+            get {
+                return ResourceManager.GetString("OldUsernames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overview.
         /// </summary>
         public static string Overview {

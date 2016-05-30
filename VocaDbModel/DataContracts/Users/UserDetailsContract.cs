@@ -26,6 +26,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			LastLogin = user.LastLogin;
 			LastLoginAddress = user.Options.LastLoginAddress;
 			Location = user.Options.Location;
+			OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
 			Supporter = user.Options.Supporter;
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
@@ -64,6 +65,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public int Level { get; set; }
 
 		public string Location { get; set; }
+
+		public OldUsernameContract[] OldUsernames { get; set; }
 
 		public int Power { get; set; }
 

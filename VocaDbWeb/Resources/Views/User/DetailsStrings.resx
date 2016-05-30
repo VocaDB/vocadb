@@ -192,6 +192,12 @@
   <data name="MySettings" xml:space="preserve">
     <value>My settings</value>
   </data>
+  <data name="OldNameUntil" xml:space="preserve">
+    <value>(until {0})</value>
+  </data>
+  <data name="OldUsernames" xml:space="preserve">
+    <value>Old usernames</value>
+  </data>
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>
   </data>
