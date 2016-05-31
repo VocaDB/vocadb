@@ -196,13 +196,13 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public AlbumContract[] LatestAlbums { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public SongContract[] LatestSongs { get; set; }
+		public SongForApiContract[] LatestSongs { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public AlbumContract[] PopularAlbums { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public SongContract[] PopularSongs { get; set; }
+		public SongForApiContract[] PopularSongs { get; set; }
 
 	}
 

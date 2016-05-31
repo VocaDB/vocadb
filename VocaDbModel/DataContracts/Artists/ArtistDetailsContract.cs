@@ -28,13 +28,13 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Groups = artist.Groups.Select(g => new GroupForArtistContract(g, languagePreference)).OrderBy(g => g.Group.Name).ToArray();
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);
 			LatestAlbums = new AlbumContract[] {};
-			LatestSongs = new SongContract[] {};
+			LatestSongs = new SongForApiContract[] {};
 			Members = artist.Members.Select(m => new GroupForArtistContract(m, languagePreference)).OrderBy(a => a.Member.Name).ToArray();
 			OwnerUsers = artist.OwnerUsers.Select(u => new UserContract(u.User)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p)).ToArray();
 			Tags = artist.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TopAlbums = new AlbumContract[] {};
-			TopSongs = new SongContract[] {};
+			TopSongs = new SongForApiContract[] {};
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
@@ -91,7 +91,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public AlbumContract[] LatestAlbums { get; set; }
 
 		[DataMember]
-		public SongContract[] LatestSongs { get; set; }
+		public SongForApiContract[] LatestSongs { get; set; }
 
 		[DataMember]
 		public UserContract[] OwnerUsers { get; set; }
@@ -119,7 +119,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public AlbumContract[] TopAlbums { get; set; }
 
 		[DataMember]
-		public SongContract[] TopSongs { get; set; }
+		public SongForApiContract[] TopSongs { get; set; }
 
 		[DataMember]
 		public TranslatedStringContract TranslatedName { get; set; }

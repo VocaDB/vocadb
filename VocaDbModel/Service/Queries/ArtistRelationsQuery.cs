@@ -83,6 +83,8 @@ namespace VocaDb.Model.Service.Queries {
 				contract.PopularAlbums = GetTopAlbums(ctx, artist, latestAlbumIds);
 			}
 
+			var songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
+
 			if (fields.HasFlag(ArtistRelationsFields.LatestSongs)) {
 
 				contract.LatestSongs = ctx.OfType<ArtistForSong>().Query()
@@ -91,7 +93,7 @@ namespace VocaDb.Model.Service.Queries {
 					.Select(s => s.Song)
 					.OrderByPublishDate(SortDirection.Descending)
 					.Take(8).ToArray()
-					.Select(s => new SongContract(s, languagePreference))
+					.Select(s => new SongForApiContract(s, languagePreference, songFields))
 					.ToArray();
 				
 			}
@@ -106,7 +108,7 @@ namespace VocaDb.Model.Service.Queries {
 					.Select(s => s.Song)
 					.OrderByDescending(s => s.RatingScore)
 					.Take(8).ToArray()
-					.Select(s => new SongContract(s, languagePreference))
+					.Select(s => new SongForApiContract(s, languagePreference, songFields))
 					.ToArray();
 
 			}

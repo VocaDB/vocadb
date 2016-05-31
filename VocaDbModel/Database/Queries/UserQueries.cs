@@ -265,7 +265,7 @@ namespace VocaDb.Model.Database.Queries {
 				.Select(c => c.Song)
 				.Take(6)
 				.ToArray()
-				.Select(c => new SongContract(c, LanguagePreference))
+				.Select(c => new SongForApiContract(c, LanguagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
 				.ToArray();
 
 			// Correct cached stats if we can determine they're out of date

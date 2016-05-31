@@ -61,7 +61,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 				.ToArray() 
 				: new TagBaseContract[0];
 
-			Songs = songs.Select(a => new SongContract(a, languagePreference)).ToArray();
+			Songs = songs.Select(a => new SongForApiContract(a, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 			SongCount = songCount;
 
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
@@ -93,7 +93,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagBaseContract[] Siblings { get; set; }
 
-		public SongContract[] Songs { get; set; }
+		public SongForApiContract[] Songs { get; set; }
 
 		public int SongCount { get; set; }
 

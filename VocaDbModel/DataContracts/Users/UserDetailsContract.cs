@@ -60,7 +60,7 @@ namespace VocaDb.Model.DataContracts.Users {
 		[DataMember]
 		public CommentForApiContract[] LatestComments { get; set; }
 
-		public SongContract[] LatestRatedSongs { get; set; }
+		public SongForApiContract[] LatestRatedSongs { get; set; }
 
 		public int Level { get; set; }
 
