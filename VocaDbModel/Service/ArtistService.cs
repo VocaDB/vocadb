@@ -275,11 +275,7 @@ namespace VocaDb.Model.Service {
 					session.Update(u);
 				}
 
-				if (target.Description.Original == string.Empty)
-					target.Description.Original = source.Description.Original;
-
-				if (target.Description.English == string.Empty)
-					target.Description.English = source.Description.English;
+				target.Description.CopyIfEmpty(source.Description);
 
 				// Create merge record
 				var mergeEntry = new ArtistMergeRecord(source, target);

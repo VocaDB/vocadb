@@ -497,11 +497,7 @@ namespace VocaDb.Model.Database.Queries {
 					diff.CategoryName = true;
 				}
 
-				if (target.Description.IsEmpty && !source.Description.IsEmpty) {
-					target.Description.Original = source.Description.Original;
-					target.Description.English = source.Description.English;
-					diff.Description = true;
-				}
+				diff.Description = target.Description.CopyIfEmpty(source.Description);
 
 				// Parent tag
 				if (target.Parent == null && source.Parent != null) {

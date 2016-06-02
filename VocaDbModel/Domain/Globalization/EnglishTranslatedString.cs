@@ -64,6 +64,24 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
+		public virtual bool CopyIfEmpty(EnglishTranslatedString source) {
+
+			bool changed = false;
+
+			if (Original == string.Empty && Original != source.Original) {
+				Original = source.Original;
+				changed = true;
+			}
+
+			if (English == string.Empty && English != source.English) {
+				English = source.English;
+				changed = true;
+			}
+
+			return changed;
+
+		}
+
 		public virtual bool ShowEnglish(ContentLanguagePreference languagePreference) {
 			return (languagePreference == ContentLanguagePreference.English || languagePreference == ContentLanguagePreference.Romaji) && HasEnglish;
 		}

@@ -685,6 +685,8 @@ namespace VocaDb.Model.Database.Queries {
 					target.LengthSeconds = source.LengthSeconds;
 				}
 
+				target.Notes.CopyIfEmpty(source.Notes);
+
 				if (target.PublishDate.IsEmpty) {
 					target.PublishDate = source.PublishDate;
 				}

@@ -456,6 +456,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Merge_ToEmpty() {
 
+			song.Notes.Original = "Notes";
 			var song2 = new Song();
 			repository.Save(song2);
 
@@ -466,6 +467,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			AssertHasArtist(song2, producer);
 			AssertHasArtist(song2, vocalist);
 			Assert.AreEqual(song.LengthSeconds, song2.LengthSeconds, "LengthSeconds");
+			Assert.AreEqual(song.Notes.Original, song2.Notes.Original, "Notes were copied");
 
 			var mergeRecord = repository.List<SongMergeRecord>().FirstOrDefault();
 			Assert.IsNotNull(mergeRecord, "Merge record was created");
