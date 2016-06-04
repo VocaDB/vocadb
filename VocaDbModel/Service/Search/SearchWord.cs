@@ -55,6 +55,11 @@ namespace VocaDb.Model.Service.Search {
 				return ((propertyName != null ? propertyName.GetHashCode() : 0)*397) ^ (value != null ? value.GetHashCode() : 0);
 			}
 		}
+
+		public override string ToString() {
+			return !string.IsNullOrEmpty(PropertyName) ? PropertyName + ":" + Value : Value;
+		}
+
 	}
 
 }

@@ -4,19 +4,51 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Tests.Service.Search {
 
+	/// <summary>
+	/// Tests for <see cref="SearchParser"/>.
+	/// </summary>
 	[TestClass]
 	public class SearchParserTests {
 
+		private void AssertSearchWord(SearchWordCollection result, string propName, params string[] values) {
+
+			var words = result.TakeAll(propName);
+
+			Assert.AreEqual(values.Length, words.Length, "Number of words matches");
+
+			if (values.Length == 1 && words.Length == 1) {
+				Assert.AreEqual(values.First(), words.First().Value);
+			} else {
+
+				foreach (var value in values) {
+					Assert.IsTrue(words.Any(w => w.Value == value));
+				}
+
+			}
+
+
+		}
+
+		/// <summary>
+		/// Query with keywords (in this case artist-name)
+		/// </summary>
 		[TestMethod]
 		public void ParseQuery_QueryWithKeywords() {
 
 			var result = SearchParser.ParseQuery("artist-name:doriko Nostalgia");
 
-			var artistNames = result.TakeAll("artist-name");
-			Assert.AreEqual("doriko", artistNames.FirstOrDefault()?.Value, "Found artist name");
+			AssertSearchWord(result, "artist-name", "doriko");
+			AssertSearchWord(result, string.Empty, "Nostalgia");
 
-			var queryWords = result.TakeAll(string.Empty);
-			Assert.AreEqual("Nostalgia", queryWords.FirstOrDefault()?.Value, "Found query word");
+		}
+
+		[TestMethod]
+		public void ParseQuery_KeywordWithPhrase() {
+
+			var result = SearchParser.ParseQuery("artist-name:\"Hatsune Miku\" Nostalgia");
+
+			AssertSearchWord(result, "artist-name", "Hatsune Miku");
+			AssertSearchWord(result, string.Empty, "Nostalgia");
 
 		}
 
@@ -25,22 +57,25 @@ namespace VocaDb.Tests.Service.Search {
 
 			var result = SearchParser.ParseQuery("Romeo and Cinderella");
 
-			var queryWords = result.TakeAll(string.Empty);
-			Assert.AreEqual(3, queryWords.Length, "Found 3 words");
-			Assert.IsTrue(queryWords.Any(w => w.Value == "Romeo"), "Found the first word");
+			AssertSearchWord(result, string.Empty, "Romeo", "and", "Cinderella");
 
 		}
 
 		[TestMethod]
-		[Ignore]
 		public void ParseQuery_QueryWithPhrase() {
 
-			// TODO
 			var result = SearchParser.ParseQuery("\"Romeo and Cinderella\"");
 
-			var queryWords = result.TakeAll(string.Empty);
-			Assert.AreEqual(1, queryWords.Length, "Found one phrase");
-			Assert.IsTrue(queryWords.Any(w => w.Value == "Romeo and Cinderella"), "Found the phrase");
+			AssertSearchWord(result, string.Empty, "Romeo and Cinderella");
+
+		}
+
+		[TestMethod]
+		public void ParseQuery_WordsAndPhrase() {
+
+			var result = SearchParser.ParseQuery("\"Romeo and Cinderella\" Hatsune Miku");
+
+			AssertSearchWord(result, string.Empty, "Romeo and Cinderella", "Hatsune", "Miku");
 
 		}
 

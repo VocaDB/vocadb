@@ -2,29 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace VocaDb.Model.Service.Search {
 
 	public static class SearchParser {
 
-		private static SearchWord ParseWord(string word) {
-
-			var propPos = word.IndexOf(':');
-
-			if (propPos == -1)
-				return new SearchWord(word);
-
-			var propName = word.Substring(0, propPos);
-			var val = word.Substring(propPos + 1).TrimStart();
-
-			return new SearchWord(propName, val);
-
-		}
+		// prop-name:value
+		// prop-name is optional. value can be quoted. If quoted, it may contain whitespace
+		private static readonly Regex regex = new Regex(@"(?:([\w-]+):)?(?:(\w+)|""([\w ]+)"")");
 
 		public static SearchWordCollection ParseQuery(string query) {
 
-			var words = query.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-				.Select(ParseWord).Distinct();
+			var matches = regex.Matches(query);
+			var words = matches.Cast<Match>().Select(m => new SearchWord(m.Groups[1].Value, m.Groups[3].Success ? m.Groups[3].Value : m.Groups[2].Value));
 
 			return new SearchWordCollection(words);
 
