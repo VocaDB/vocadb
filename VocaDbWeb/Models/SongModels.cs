@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -27,7 +26,7 @@ namespace VocaDb.Web.Models {
 
 	public class SongDetails {
 
-		public SongDetails(SongDetailsContract contract) {
+		public SongDetails(SongDetailsContract contract, IUserPermissionContext permissionContext) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -36,7 +35,7 @@ namespace VocaDb.Web.Models {
 			Albums = contract.Albums;
 			AlternateVersions = contract.AlternateVersions.Where(a => a.SongType != SongType.Original).ToArray();
 			ArtistString = contract.ArtistString;
-			CanEdit = EntryPermissionManager.CanEdit(MvcApplication.LoginManager, contract.Song);
+			CanEdit = EntryPermissionManager.CanEdit(permissionContext, contract.Song);
 			CommentCount = contract.CommentCount;
 			CreateDate = contract.CreateDate;
 			DefaultLanguageSelection = contract.TranslatedName.DefaultLanguage;

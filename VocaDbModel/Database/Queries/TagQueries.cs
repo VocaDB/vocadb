@@ -209,6 +209,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tag = LoadTagById(ctx, id);
 
+				permissionContext.VerifyEntryEdit(tag);
+
 				tag.Deleted = true;
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", tag));
@@ -557,6 +559,8 @@ namespace VocaDb.Model.Database.Queries {
 			repository.HandleTransaction(ctx => {
 
 				var tag = LoadTagById(ctx, id);
+
+				permissionContext.VerifyEntryEdit(tag);
 
 				CreateTrashedEntry(ctx, tag, notes);
 

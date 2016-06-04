@@ -34,11 +34,7 @@ namespace VocaDb.Web.Controllers {
 			PageProperties.OpenGraph.Image = VocaUriBuilder.CreateAbsolute("/Content/vocaDB-title-large.png").ToString();			
 		}
 
-		protected string Hostname {
-			get {
-				return WebHelper.GetRealHost(Request);
-			}
-		}
+		protected string Hostname => WebHelper.GetRealHost(Request);
 
 		protected int LoggedUserId {
 			get {
@@ -50,15 +46,9 @@ namespace VocaDb.Web.Controllers {
 			}
 		}
 
-		protected PagePropertiesData PageProperties {
-			get {
-				return PagePropertiesData.Get(ViewBag);
-			}
-		}
+		protected PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
 
-		protected IUserPermissionContext PermissionContext {
-			get { return MvcApplication.LoginManager; }
-		}
+		protected IUserPermissionContext PermissionContext => MvcApplication.LoginManager;
 
 		protected string GetHostnameForValidHit() {
 			return WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty;
