@@ -120,6 +120,9 @@
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
   <data name="Updated" xml:space="preserve">
     <value>Updated</value>
   </data>

@@ -62,11 +62,16 @@ namespace VocaDb.Model.Domain.Activityfeed {
 		}
 	}
 
+	/// <summary>
+	/// Common entry edit events
+	/// </summary>
 	public enum EntryEditEvent {
 
 		Created = 1,
 
-		Updated = 2
+		Updated = 2,
+
+		Deleted = 3
 
 	}
 

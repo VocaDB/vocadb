@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201606041900)]
+	public class TrashedEntryNotes : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("Notes").OnTable(TableNames.TrashedEntries).AsString(200).NotNullable().WithDefaultValue(string.Empty);
+
+		}
+
+	}
+
 	[Migration(201605291900)]
 	public class OldUserNames : AutoReversingMigration {
 

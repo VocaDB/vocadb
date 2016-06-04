@@ -201,17 +201,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void DeleteActivityEntries(IDatabaseContext<Tag> ctx, int tagId) {
-
-			var ctxActivity = ctx.OfType<TagActivityEntry>();
-			var activityEntries = ctxActivity.Query().Where(t => t.Entry.Id == tagId).ToArray();
-
-			foreach (var activityEntry in activityEntries)
-				ctxActivity.Delete(activityEntry);
-
-		}
-
-		public void Delete(int id) {
+		public void Delete(int id, string notes) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
@@ -219,17 +209,25 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tag = LoadTagById(ctx, id);
 
-				CreateTrashedEntry(ctx, tag);
-
-				tag.Delete();
-
-				DeleteActivityEntries(ctx, id);
+				tag.Deleted = true;
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", tag));
 
-				ctx.Delete(tag);
+				Archive(ctx, tag, new TagDiff(false), EntryEditEvent.Deleted, notes);
+
+				ctx.Update(tag);
 
 			});
+
+		}
+
+		private void DeleteActivityEntries(IDatabaseContext<Tag> ctx, int tagId) {
+
+			var ctxActivity = ctx.OfType<TagActivityEntry>();
+			var activityEntries = ctxActivity.Query().Where(t => t.Entry.Id == tagId).ToArray();
+
+			foreach (var activityEntry in activityEntries)
+				ctxActivity.Delete(activityEntry);
 
 		}
 
@@ -552,6 +550,28 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void MoveToTrash(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
+
+			repository.HandleTransaction(ctx => {
+
+				var tag = LoadTagById(ctx, id);
+
+				CreateTrashedEntry(ctx, tag);
+
+				tag.Delete();
+
+				DeleteActivityEntries(ctx, id);
+
+				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", tag));
+
+				ctx.Delete(tag);
+
+			});
+
+		}
+
 		public void Restore(int songId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
@@ -565,24 +585,6 @@ namespace VocaDb.Model.Database.Queries {
 				Archive(session, tag, new TagDiff(false), EntryEditEvent.Updated);
 
 				AuditLog("restored " + entryLinkFactory.CreateEntryLink(tag), session);
-
-			});
-
-		}
-
-		public void SoftDelete(int id) {
-
-			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
-
-			repository.HandleTransaction(ctx => {
-
-				var tag = LoadTagById(ctx, id);
-
-				tag.Deleted = true;
-
-				ctx.AuditLogger.AuditLog(string.Format("soft deleted {0}", tag));
-
-				ctx.Update(tag);
 
 			});
 

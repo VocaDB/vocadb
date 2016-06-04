@@ -36,7 +36,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Delete(int id) {
 
-			queries.Delete(id);
+			queries.MoveToTrash(id);
 
 			TempData.SetStatusMessage("Tag deleted");
 
@@ -47,16 +47,6 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Restore(int id) {
 
 			queries.Restore(id);
-
-			return RedirectToAction("DetailsById", new { id });
-
-		}
-
-		public ActionResult SoftDelete(int id) {
-
-			queries.SoftDelete(id);
-
-			TempData.SetStatusMessage("Tag disabled");
 
 			return RedirectToAction("DetailsById", new { id });
 

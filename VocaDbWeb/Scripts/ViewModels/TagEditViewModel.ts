@@ -7,6 +7,7 @@ module vdb.viewModels {
 	export class TagEditViewModel {
 
 		constructor(
+			private urlMapper: vdb.UrlMapper,
 			userRepository: vdb.repositories.UserRepository,
 			contract: dc.TagApiContract) {
 
@@ -55,6 +56,14 @@ module vdb.viewModels {
 		public addRelatedTag = (tag: dc.TagBaseContract) => this.relatedTags.push(tag);		
 
 		public allowRelatedTag = (tag: dc.TagBaseContract) => this.denySelf(tag) && _.all(this.relatedTags(), t => t.id !== tag.id);
+
+		public deleteViewModel = new DeleteEntryViewModel(notes => {
+			$.ajax(this.urlMapper.mapRelative("api/tags/" + this.id + "?notes=" + encodeURIComponent(notes)), {
+				type: 'DELETE', success: () => {
+					window.location.href = vdb.utils.EntryUrlMapper.details_tag(this.id);
+				}
+			});
+		});
 
 		public denySelf = (tag: dc.TagBaseContract) => (tag && tag.id !== this.id);
 

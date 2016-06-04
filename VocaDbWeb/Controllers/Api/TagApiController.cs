@@ -34,6 +34,20 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Deletes a tag.
+		/// The entry is soft-deleted, meaning it can still be restored.
+		/// </summary>
+		/// <param name="tagId">ID of the tag to be deleted.</param>
+		/// <param name="notes">Notes (optional).</param>
+		[Route("{tagId:int}")]
+		[Authorize]
+		public void Delete(int tagId, string notes = "") {
+
+			queries.Delete(tagId, notes ?? string.Empty);
+
+		}
+
+		/// <summary>
 		/// Deletes a comment.
 		/// Normal users can delete their own comments, moderators can delete all comments.
 		/// Requires login.

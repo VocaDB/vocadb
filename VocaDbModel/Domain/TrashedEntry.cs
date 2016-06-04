@@ -8,10 +8,12 @@ namespace VocaDb.Model.Domain {
 
 		private XDocument data;
 		private string name;
+		private string notes;
 		private User user;
 
 		public TrashedEntry() {
 			Created = DateTime.Now;
+			Notes = string.Empty;
 		}
 
 		public TrashedEntry(IEntryBase entry, XDocument data, User user)
@@ -54,6 +56,14 @@ namespace VocaDb.Model.Domain {
 			set {
                 ParamIs.NotNullOrEmpty(() => value);
 			    name = value;
+			}
+		}
+
+		public virtual string Notes {
+			get { return notes; }
+			protected set {
+				ParamIs.NotNull(() => value);
+				notes = value;
 			}
 		}
 

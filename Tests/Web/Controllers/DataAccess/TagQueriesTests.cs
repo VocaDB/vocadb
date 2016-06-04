@@ -99,7 +99,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var oldCount = repository.Count<Tag>();
 
-			queries.Delete(tag.Id);
+			queries.MoveToTrash(tag.Id);
 
 			Assert.AreEqual(oldCount - 1, repository.Count<Tag>(), "One tag was removed");
 			Assert.IsFalse(repository.Contains(tag), "Tag was removed from repository");
@@ -119,7 +119,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user.GroupId = UserGroupId.Regular;
 			permissionContext.RefreshLoggedUser(repository);
 
-			queries.Delete(tag.Id);
+			queries.MoveToTrash(tag.Id);
 
 		}
 
