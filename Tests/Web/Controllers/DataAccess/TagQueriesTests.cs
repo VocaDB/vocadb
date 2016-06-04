@@ -114,12 +114,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void Delete_NoPermission() {
+		public void Delete_NoDeletePermission() {
 
 			user.GroupId = UserGroupId.Regular;
 			permissionContext.RefreshLoggedUser(repository);
 
-			queries.MoveToTrash(tag.Id, string.Empty);
+			queries.Delete(tag.Id, string.Empty);
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotAllowedException))]
+		public void Delete_NoEditPermission() {
+
+			tag.Status = EntryStatus.Locked;
+
+			queries.Delete(tag.Id, string.Empty);
 
 		}
 

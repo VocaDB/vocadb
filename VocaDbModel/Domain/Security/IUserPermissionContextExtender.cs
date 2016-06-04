@@ -11,6 +11,13 @@ namespace VocaDb.Model.Domain.Security {
 	/// </summary>
 	public static class IUserPermissionContextExtender {
 
+		public static void VerifyEntryDelete<TEntry>(this IUserPermissionContext permissionContext, TEntry entry)
+			where TEntry: class, IEntryWithVersions, IEntryWithStatus {
+
+			EntryPermissionManager.VerifyDelete(permissionContext, entry);
+
+		}
+
 		public static void VerifyEntryEdit(this IUserPermissionContext permissionContext, IEntryWithStatus entry) {
 
 			EntryPermissionManager.VerifyEdit(permissionContext, entry);

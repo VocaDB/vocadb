@@ -74,9 +74,14 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanDelete(IUserPermissionContext permissionContext, IEntryWithVersions entry) {
+		public static bool CanDelete<TEntry>(IUserPermissionContext permissionContext, TEntry entry)
+			where TEntry: IEntryWithVersions, IEntryWithStatus {
 			
 			if (!permissionContext.IsLoggedIn)
+				return false;
+
+			// Deleting requires edit permission
+			if (!CanEdit(permissionContext, entry))
 				return false;
 
 			if (permissionContext.HasPermission(PermissionToken.DeleteEntries))
@@ -175,7 +180,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static void VerifyDelete(IUserPermissionContext permissionContext, IEntryWithVersions entry) {
+		public static void VerifyDelete<TEntry>(IUserPermissionContext permissionContext, TEntry entry)
+			where TEntry: class, IEntryWithVersions, IEntryWithStatus {
 
 			VerifyAccess(permissionContext, entry, CanDelete);
 

@@ -209,7 +209,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tag = LoadTagById(ctx, id);
 
-				permissionContext.VerifyEntryEdit(tag);
+				permissionContext.VerifyEntryDelete(tag);
 
 				tag.Deleted = true;
 
@@ -560,7 +560,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tag = LoadTagById(ctx, id);
 
-				permissionContext.VerifyEntryEdit(tag);
+				permissionContext.VerifyEntryDelete(tag);
 
 				CreateTrashedEntry(ctx, tag, notes);
 
