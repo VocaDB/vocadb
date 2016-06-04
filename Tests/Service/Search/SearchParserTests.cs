@@ -79,6 +79,16 @@ namespace VocaDb.Tests.Service.Search {
 
 		}
 
+		[TestMethod]
+		public void ParseQuery_SpecialCharacters() {
+
+			var result = SearchParser.ParseQuery("\"Dancing☆Samurai\" artist-name:Gackpoid-V2");
+
+			AssertSearchWord(result, string.Empty, "Dancing☆Samurai");
+			AssertSearchWord(result, "artist-name", "Gackpoid-V2");
+
+		}
+
 	}
 
 }
