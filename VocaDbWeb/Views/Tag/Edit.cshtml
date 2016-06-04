@@ -47,13 +47,13 @@
 @if (Login.CanDeleteEntries) {
 	if (!Model.Deleted) {
 		<span>
-			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
-			@Html.ActionLink("Move to trash", "Delete", new { id = Model.Id }, new { id = "trashSplitLink", onclick = "return confirm(\"Are you sure you want to permanently delete this tag? This cannot be undone.\");", title = "Permanently removes the tag. This cannot be undone." })
+			<a href="#" id="deleteLink" data-bind="click: deleteViewModel.show">@ViewRes.SharedStrings.Delete</a>
+			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
 		</span>
 	} else {
 		@Html.ActionLink("Restore", "Restore", new { id = Model.Id }, new { id = "restoreLink" })
 		@Html.Raw("&nbsp;")
-		@Html.ActionLink("Move to trash", "Delete", new { id = Model.Id }, new { id = "trashLink", onclick = "return confirm(\"Are you sure you want to permanently delete this tag? This cannot be undone.\");", title = "Permanently removes the tag. This cannot be undone." })
+		<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
 	}
 }
 @if (Login.CanMergeEntries) {
@@ -181,4 +181,5 @@
 
 </form>
 
-@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@EntryDetailsHelpers.EntryDeletePopup(EditRes.ConfirmDelete)
+@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)

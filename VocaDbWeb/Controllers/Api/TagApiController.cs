@@ -35,15 +35,24 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Deletes a tag.
-		/// The entry is soft-deleted, meaning it can still be restored.
 		/// </summary>
 		/// <param name="tagId">ID of the tag to be deleted.</param>
 		/// <param name="notes">Notes (optional).</param>
+		/// <param name="hardDelete">
+		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
+		/// If false, the entry is soft deleted, meaning it can still be restored.
+		/// </param>
 		[Route("{tagId:int}")]
 		[Authorize]
-		public void Delete(int tagId, string notes = "") {
+		public void Delete(int tagId, string notes = "", bool hardDelete = false) {
 
-			queries.Delete(tagId, notes ?? string.Empty);
+			notes = notes ?? string.Empty;
+
+			if (hardDelete) {
+				queries.MoveToTrash(tagId, notes);
+			} else {
+				queries.Delete(tagId, notes);
+			}
 
 		}
 

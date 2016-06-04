@@ -14,6 +14,8 @@ module vdb.viewModels {
 
 		public notes = ko.observable("");
 
+		public show = () => this.dialogVisible(true);
+
 	}
 
 } 

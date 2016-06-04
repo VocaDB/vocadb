@@ -106,11 +106,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void CreateTrashedEntry(IDatabaseContext<Tag> ctx, Tag tag) {
+		private void CreateTrashedEntry(IDatabaseContext<Tag> ctx, Tag tag, string notes) {
 
 			var archived = new ArchivedTagContract(tag, new TagDiff(true));
 			var data = XmlHelper.SerializeToXml(archived);
-			var trashed = new TrashedEntry(tag, data, GetLoggedUser(ctx));
+			var trashed = new TrashedEntry(tag, data, GetLoggedUser(ctx), notes);
 
 			ctx.Save(trashed);
 
@@ -528,7 +528,7 @@ namespace VocaDb.Model.Database.Queries {
 				// Delete entry before copying names
 				var names = source.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 
-				CreateTrashedEntry(ctx, source);
+				CreateTrashedEntry(ctx, source, "Merged to " + target);
 				source.Delete();
 				DeleteActivityEntries(ctx, sourceId);
 
@@ -550,7 +550,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void MoveToTrash(int id) {
+		public void MoveToTrash(int id, string notes) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
@@ -558,7 +558,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tag = LoadTagById(ctx, id);
 
-				CreateTrashedEntry(ctx, tag);
+				CreateTrashedEntry(ctx, tag, notes);
 
 				tag.Delete();
 

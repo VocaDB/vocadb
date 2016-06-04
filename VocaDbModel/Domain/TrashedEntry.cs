@@ -16,7 +16,7 @@ namespace VocaDb.Model.Domain {
 			Notes = string.Empty;
 		}
 
-		public TrashedEntry(IEntryBase entry, XDocument data, User user)
+		public TrashedEntry(IEntryBase entry, XDocument data, User user, string notes = "")
 			: this() {
 
 			ParamIs.NotNull(() => entry);
@@ -26,6 +26,7 @@ namespace VocaDb.Model.Domain {
 			EntryType = entry.EntryType;
 			Name = entry.DefaultName;
 			User = user;
+			Notes = notes;
 
 		}
 

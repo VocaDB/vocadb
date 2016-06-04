@@ -19,9 +19,9 @@
 	</div>
 }
 
-@helper EntryDeletePopup(string confirmText, string viewModelBindingName = "deleteViewModel",  string deleteButtonId = "deleteLink") {
+@helper EntryDeletePopupBase(string confirmText, string viewModelBindingName,  string deleteButtonId, string title, string deleteButtonText) {
 
-	<div style="display:none;" title="@ViewRes.SharedStrings.Delete"
+	<div style="display:none;" title="@title"
 		data-bind="
 		dialog: {
 			autoOpen: false, width: 310, modal: true,
@@ -29,7 +29,7 @@
 		},
 		dialogVisible: @(viewModelBindingName).dialogVisible,
 		dialogButtons: [
-			{ text: '@ViewRes.SharedStrings.Delete', click: @(viewModelBindingName).deleteEntry }, 
+			{ text: '@deleteButtonText', click: @(viewModelBindingName).deleteEntry }, 
 			{ text: '@ViewRes.SharedStrings.Cancel', click: function() { @(viewModelBindingName).dialogVisible(false); } }
 		]
 		">
@@ -42,6 +42,14 @@
 
 	</div>
 
+}
+
+@helper EntryDeletePopup(string confirmText, string viewModelBindingName = "deleteViewModel", string deleteButtonId = "deleteLink") {
+	@EntryDeletePopupBase(confirmText, viewModelBindingName, deleteButtonId, ViewRes.SharedStrings.Delete, ViewRes.SharedStrings.Delete)	
+}
+
+@helper EntryTrashPopup(string confirmText, string viewModelBindingName = "trashViewModel",  string deleteButtonId = "trashLink") {
+	@EntryDeletePopupBase(confirmText, viewModelBindingName, deleteButtonId, ViewRes.EntryEditStrings.MoveToTrash, ViewRes.EntryEditStrings.MoveToTrash)
 }
 
 @helper ExternalLinksList(IEnumerable<WebLinkContract> webLinks, bool showCategory = false) {

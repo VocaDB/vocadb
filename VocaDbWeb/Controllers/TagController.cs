@@ -34,16 +34,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Delete(int id) {
-
-			queries.MoveToTrash(id);
-
-			TempData.SetStatusMessage("Tag deleted");
-
-			return RedirectToAction("Index");
-
-		}
-
 		public ActionResult Restore(int id) {
 
 			queries.Restore(id);

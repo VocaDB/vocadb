@@ -115,6 +115,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please confirm that you wish to permanently delete this entry. This cannot be undone. You may provide additional explanation below (optional)..
+        /// </summary>
+        public static string ConfirmMoveToTrash {
+            get {
+                return ResourceManager.GetString("ConfirmMoveToTrash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The language of the official default name for this entry. Usually this is the one that&apos;s used most commonly in official sources..
         /// </summary>
         public static string DefaultLanguageHelp {
@@ -154,6 +163,15 @@ namespace ViewRes {
         public static string Merge {
             get {
                 return ResourceManager.GetString("Merge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to trash.
+        /// </summary>
+        public static string MoveToTrash {
+            get {
+                return ResourceManager.GetString("MoveToTrash", resourceCulture);
             }
         }
         

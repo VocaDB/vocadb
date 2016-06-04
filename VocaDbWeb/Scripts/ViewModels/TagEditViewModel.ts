@@ -58,7 +58,7 @@ module vdb.viewModels {
 		public allowRelatedTag = (tag: dc.TagBaseContract) => this.denySelf(tag) && _.all(this.relatedTags(), t => t.id !== tag.id);
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
-			$.ajax(this.urlMapper.mapRelative("api/tags/" + this.id + "?notes=" + encodeURIComponent(notes)), {
+			$.ajax(this.urlMapper.mapRelative("api/tags/" + this.id + "?hardDelete=false&notes=" + encodeURIComponent(notes)), {
 				type: 'DELETE', success: () => {
 					window.location.href = vdb.utils.EntryUrlMapper.details_tag(this.id);
 				}
@@ -72,6 +72,13 @@ module vdb.viewModels {
 			return true;
 		}
 
+		public trashViewModel = new DeleteEntryViewModel(notes => {
+			$.ajax(this.urlMapper.mapRelative("api/tags/" + this.id + "?hardDelete=true&notes=" + encodeURIComponent(notes)), {
+				type: 'DELETE', success: () => {
+					window.location.href = this.urlMapper.mapRelative("/Tag");
+				}
+			});
+		});
 	}
 
 }

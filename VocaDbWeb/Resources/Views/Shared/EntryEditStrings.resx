@@ -135,6 +135,9 @@
   <data name="ConfirmDelete" xml:space="preserve">
     <value>Please confirm that you wish to delete this entry. You may provide additional explanation below (optional).</value>
   </data>
+  <data name="ConfirmMoveToTrash" xml:space="preserve">
+    <value>Please confirm that you wish to permanently delete this entry. This cannot be undone. You may provide additional explanation below (optional).</value>
+  </data>
   <data name="DefaultLanguageHelp" xml:space="preserve">
     <value>The language of the official default name for this entry. Usually this is the one that's used most commonly in official sources.</value>
   </data>
@@ -153,6 +156,9 @@ Other: for those that don't fit into anything above.&lt;br /&gt;</value>
   </data>
   <data name="Merge" xml:space="preserve">
     <value>Merge</value>
+  </data>
+  <data name="MoveToTrash" xml:space="preserve">
+    <value>Move to trash</value>
   </data>
   <data name="NameHelp" xml:space="preserve">
     <value>If the original name is non-English (for example Japanese), or if the language of the name is unknown, input that into the Non-English name field. If known, input the romanized name as well. If the official name of the entry is in English, or there is a known English translation, input that into the English name field.&lt;br /&gt;
