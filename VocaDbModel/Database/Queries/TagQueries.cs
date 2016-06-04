@@ -568,7 +568,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				DeleteActivityEntries(ctx, id);
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", tag));
+				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", tag));
 
 				ctx.Delete(tag);
 
