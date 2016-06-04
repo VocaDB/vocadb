@@ -14,16 +14,57 @@ namespace VocaDb.Tests.Domain.Security {
 	[TestClass]
 	public class EntryPermissionManagerTests {
 
-		private void TestCanEdit(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular) {
+		private Artist artist;
+		private User user;
 
-			var artist = CreateEntry.Artist(ArtistType.Producer);			
-			var user = CreateEntry.User();
+		private void TestCanDelete(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular) {
+
+			artist.Status = entryStatus;
+			user.GroupId = userGroup;
+
+			var result = EntryPermissionManager.CanDelete(new FakePermissionContext(user), artist);
+			Assert.AreEqual(expected, result, "result");
+
+		}
+
+		private void TestCanEdit(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular) {
 
 			artist.Status = entryStatus;
 			user.GroupId = userGroup;
 
 			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(user), artist);
 			Assert.AreEqual(expected, result, "result");
+
+		}
+
+		[TestInitialize]
+		public void SetUp() {
+
+			var anotherUser = CreateEntry.User(id: 2);
+			artist = CreateEntry.Artist(ArtistType.Producer);
+			ArchivedArtistVersion.Create(artist, new ArtistDiff(), new AgentLoginData(anotherUser), ArtistArchiveReason.Created, string.Empty);
+			user = CreateEntry.User(id: 1);
+
+		}
+
+		[TestMethod]
+		public void CanDelete_NormalUser() {
+
+			TestCanDelete(false, EntryStatus.Finished);
+
+		}
+
+		[TestMethod]
+		public void CanDelete_TrustedUser() {
+
+			TestCanDelete(true, EntryStatus.Finished, UserGroupId.Trusted);
+
+		}
+
+		[TestMethod]
+		public void CanDelete_TrustedUser_LockedEntry() {
+
+			TestCanDelete(false, EntryStatus.Locked, UserGroupId.Trusted);
 
 		}
 

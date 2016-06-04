@@ -26,7 +26,12 @@ namespace VocaDb.Model.Domain.Security {
 
 		private static bool IsVerifiedFor(IUserPermissionContext permissionContext, IEntryBase entry) {
 			
-			return permissionContext.LoggedUser.VerifiedArtist && permissionContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
+			return
+				entry != null 
+				&& entry.EntryType == EntryType.Artist
+				&& permissionContext.IsLoggedIn 
+				&& permissionContext.LoggedUser.VerifiedArtist 
+				&& permissionContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
 
 		}
 
@@ -58,12 +63,8 @@ namespace VocaDb.Model.Domain.Security {
 				return trustedStatusPermissions;
 
 			// Verified artists get trusted permissions for their own entry
-			if (entry != null && entry.EntryType == EntryType.Artist 
-				&& permissionContext.IsLoggedIn
-				&& IsVerifiedFor(permissionContext, entry)) {
-				
+			if (IsVerifiedFor(permissionContext, entry)) {				
 				return trustedStatusPermissions;
-
 			}
 
 			// Normal user permissions
@@ -85,6 +86,10 @@ namespace VocaDb.Model.Domain.Security {
 				return false;
 
 			if (permissionContext.HasPermission(PermissionToken.DeleteEntries))
+				return true;
+
+			// Verified artists can delete their entries
+			if (IsVerifiedFor(permissionContext, entry))
 				return true;
 
 			return entry.ArchivedVersionsManager.VersionsBase.All(v => v.Author != null && v.Author.Id == permissionContext.LoggedUserId);
