@@ -23,8 +23,8 @@ namespace VocaDb.Model.DataContracts.Users {
 			HighPriority = message.HighPriority;
 			Id = message.Id;
 			Read = message.Read;
-			Receiver = new UserWithIconContract(message.Receiver, iconFactory);
-			Sender = (message.Sender != null ? new UserWithIconContract(message.Sender, iconFactory) : null);
+			Receiver = new UserForApiContract(message.Receiver, iconFactory, UserOptionalFields.MainPicture);
+			Sender = (message.Sender != null ? new UserForApiContract(message.Sender, iconFactory, UserOptionalFields.MainPicture) : null);
 			Subject = message.Subject;
 
 		}
@@ -48,10 +48,10 @@ namespace VocaDb.Model.DataContracts.Users {
 		public bool Read { get; set; }
 
 		[DataMember]
-		public UserWithIconContract Receiver { get; set; }
+		public UserForApiContract Receiver { get; set; }
 
 		[DataMember]
-		public UserWithIconContract Sender { get; set; }
+		public UserForApiContract Sender { get; set; }
 
 		[DataMember]
 		public string Subject { get; set; }

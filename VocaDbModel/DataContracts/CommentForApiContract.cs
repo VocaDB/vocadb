@@ -14,7 +14,7 @@ namespace VocaDb.Model.DataContracts {
 			
 			ParamIs.NotNull(() => comment);
 
-			Author = comment.Author != null ? new UserWithIconContract(comment.Author, iconFactory) : null;
+			Author = comment.Author != null ? new UserForApiContract(comment.Author, iconFactory, UserOptionalFields.MainPicture) : null;
 			AuthorName = comment.AuthorName;
 			Created = comment.Created.ToUniversalTime();
 			Id = comment.Id;
@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts {
 		}
 
 		[DataMember]
-		public UserWithIconContract Author { get; set; }
+		public UserForApiContract Author { get; set; }
 
 		[DataMember]
 		public string AuthorName { get; set; }

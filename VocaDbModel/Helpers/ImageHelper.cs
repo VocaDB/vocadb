@@ -8,6 +8,7 @@ using System.Net.Mime;
 using System.Runtime.Serialization;
 using NLog;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Helpers {
 
@@ -20,6 +21,7 @@ namespace VocaDb.Model.Helpers {
 		public const int DefaultSmallThumbSize = 150;
 		public const int DefaultThumbSize = 250;
 		public const int DefaultTinyThumbSize = 70;
+		public const int UserThumbMax = 512;
 		public const int UserThumbSize = 80;
 		public const int UserSmallThumbSize = 40;
 		public const int UserTinyThumbSize = 20;
@@ -73,6 +75,24 @@ namespace VocaDb.Model.Helpers {
                 default:
 					return string.Empty;
 			}
+
+		}
+
+		public static int GetUserImageSizePx(ImageSize size) {
+
+			switch (size) {
+				case ImageSize.Original:
+					return UserThumbMax;
+
+				case ImageSize.Thumb:
+				case ImageSize.SmallThumb:
+					return UserThumbSize;
+
+				case ImageSize.TinyThumb:
+					return UserTinyThumbSize;
+			}
+
+			return UserThumbMax;
 
 		}
 

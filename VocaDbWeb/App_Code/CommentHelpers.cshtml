@@ -11,7 +11,7 @@
 	bool standalone = true, HelperResult body = null) {
 	<div class="comment media @(standalone ? "comment-large" : "")">
 		<a data-bind="attr: { href: '/User/Profile/' + author.name }" class="pull-left">
-			@UserHelpers.ProfileIconKnockout("author.iconUrl", 70)
+			@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: "author", size: 70)
 		</a>
 
 		<div class="media-body">

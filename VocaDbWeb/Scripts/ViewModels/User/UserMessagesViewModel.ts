@@ -193,11 +193,11 @@ module vdb.viewModels {
 
         read: KnockoutObservable<boolean>;
 
-        receiver: vdb.dataContracts.UserWithIconContract;
+        receiver: vdb.dataContracts.user.UserApiContract;
 
 		selected = ko.observable(false);
 
-		sender: vdb.dataContracts.UserWithIconContract;
+		sender: vdb.dataContracts.user.UserApiContract;
 
 		subject: string;
 

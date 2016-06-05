@@ -12,25 +12,14 @@ namespace VocaDb.Web.Code {
 	/// </summary>
 	public class GravatarUserIconFactory : IUserIconFactory {
 
-		private readonly int size;
 		private readonly bool ssl;
 
 		private string GetUrl(IUserWithEmail user, int sizePx) {
 			return Gravatar.GetUrl(user.Email, sizePx, scheme: ssl ? "https" : "http");
         }
 
-		public GravatarUserIconFactory(int size = ImageHelper.UserThumbSize, bool ssl = false) {
-			this.size = size;
+		public GravatarUserIconFactory(bool ssl = false) {
 			this.ssl = ssl;
-		}
-
-		public string GetIconUrl(IUserWithEmail user) {
-
-			if (string.IsNullOrEmpty(user.Email))
-				return string.Empty;
-
-			return GetUrl(user, size);
-
 		}
 
 		public EntryThumbForApiContract GetIcons(IUserWithEmail user, ImageSizes sizes = ImageSizes.All) {

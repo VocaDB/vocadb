@@ -72,7 +72,7 @@ module vdb.viewModels.discussions {
 
 		}
 
-		public author: dc.UserWithIconContract;
+		public author: dc.user.UserApiContract;
 
 		public content = ko.observable("");
 

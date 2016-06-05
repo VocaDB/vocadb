@@ -208,3 +208,6 @@ body {
 .song-lists-text-query input {
   margin-bottom: 0;
 }
+.razor-whitespace-fix {
+  margin-left: -3px;
+}

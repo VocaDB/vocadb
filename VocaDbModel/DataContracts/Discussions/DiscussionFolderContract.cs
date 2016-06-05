@@ -25,7 +25,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 				var lastTopic = folder.Topics.ToArray().MaxItem(t => t.Created);
 
-				LastTopicAuthor = new UserWithIconContract(lastTopic.Author, lastTopic.AuthorName, userIconFactory);
+				LastTopicAuthor = new UserForApiContract(lastTopic.Author, lastTopic.AuthorName, userIconFactory, UserOptionalFields.MainPicture);
 				LastTopicDate = folder.Topics.Max(t => t.Created).ToUniversalTime();
 
 			}
@@ -43,7 +43,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 		public int Id { get; set; }
 
 		[DataMember]
-		public UserWithIconContract LastTopicAuthor { get; set; }
+		public UserForApiContract LastTopicAuthor { get; set; }
 
 		/// <summary>
 		/// Date of the latest topic posted, in UTC.

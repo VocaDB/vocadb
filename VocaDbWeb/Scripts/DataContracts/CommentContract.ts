@@ -3,7 +3,7 @@ module vdb.dataContracts {
 	
 	export interface CommentContract {
 
-		author: UserWithIconContract;
+		author: user.UserApiContract;
 
 		authorName?: string;
 

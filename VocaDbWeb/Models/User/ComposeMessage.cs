@@ -37,8 +37,8 @@ namespace VocaDb.Web.Models.User {
 			return new UserMessageContract {
 				Body = this.Body,
 				HighPriority = this.HighPriority,
-				Receiver = new UserWithIconContract { Name = ReceiverName },
-				Sender = new UserWithIconContract { Id = senderId },
+				Receiver = new UserForApiContract { Name = ReceiverName },
+				Sender = new UserForApiContract { Id = senderId },
 				Subject = this.Subject
 			};
 

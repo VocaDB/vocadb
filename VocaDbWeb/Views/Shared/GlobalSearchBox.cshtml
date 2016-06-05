@@ -105,7 +105,7 @@
 						<div class="media">
 							<div class="pull-left media-image-usermessage" style="width: 40px; height: 40px;">
 								<!-- ko if: $data.sender -->
-								@UserHelpers.ProfileIconKnockout("sender.iconUrl", 40)
+								@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.SmallThumb, "sender", 40)
 								<!-- /ko -->
 								<!-- ko ifnot: $data.sender -->
 								<img src="@Url.Content("~/Content/vocadb_40.png")" alt="Notification" />

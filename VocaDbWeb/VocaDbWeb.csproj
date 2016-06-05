@@ -1974,7 +1974,6 @@
     <Content Include="Scripts\DataContracts\User\UserBaseContract.js">
       <DependentUpon>UserBaseContract.ts</DependentUpon>
     </Content>
-    <TypeScriptCompile Include="Scripts\DataContracts\User\UserWithIconContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserMessageSummaryContract.ts" />
     <Content Include="Scripts\Event\Edit.js" />
     <Content Include="Scripts\Event\SeriesEdit.js" />

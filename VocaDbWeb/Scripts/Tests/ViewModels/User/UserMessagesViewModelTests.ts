@@ -7,12 +7,12 @@ module vdb.tests.viewModels {
     import vm = vdb.viewModels;
     import sup = vdb.tests.testSupport;
 
-    var receiver: dc.UserWithIconContract;
+    var receiver: dc.user.UserApiContract;
     var data: dc.PartialFindResultContract<dc.UserMessageSummaryContract>;
-    var sender: dc.UserWithIconContract;
+    var sender: dc.user.UserApiContract;
     var repository: sup.FakeUserRepository;
 
-    var createMessage = (id: number, subject: string, sender?: dc.UserWithIconContract) => {
+    var createMessage = (id: number, subject: string, sender?: dc.user.UserApiContract) => {
         return { createdFormatted: "2039.3.9", highPriority: false, id: id, read: false, sender: sender, receiver: receiver, subject: subject }
     };
 

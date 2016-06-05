@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 			
 			ParamIs.NotNull(() => topic);
 
-			Author = new UserWithIconContract(topic.Author, userIconFactory);
+			Author = new UserForApiContract(topic.Author, userIconFactory, UserOptionalFields.MainPicture);
 			Created = topic.Created.ToUniversalTime();
 			FolderId = topic.Folder.Id;
 			Id = topic.Id;
@@ -42,7 +42,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 		}
 
 		[DataMember]
-		public UserWithIconContract Author { get; set; }
+		public UserForApiContract Author { get; set; }
 
 		[DataMember]
 		public int CommentCount { get; set; }

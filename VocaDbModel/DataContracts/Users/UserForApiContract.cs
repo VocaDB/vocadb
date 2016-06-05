@@ -9,16 +9,27 @@ namespace VocaDb.Model.DataContracts.Users {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class UserForApiContract : UserBaseContract {
 
+		public UserForApiContract() { }
+
+		public UserForApiContract(User user)
+			: this(user, null, null, UserOptionalFields.None) { }
+
 		public UserForApiContract(User user, IUserIconFactory iconFactory, UserOptionalFields optionalFields) 
-			: base(user) {
+			: this(user, null, iconFactory, optionalFields) {}
+
+		public UserForApiContract(User user, string fallbackName, IUserIconFactory iconFactory, UserOptionalFields optionalFields)
+			: base(user, fallbackName) {
+
+			if (user == null)
+				return;
 
 			Active = user.Active;
 			GroupId = user.GroupId;
 			MemberSince = user.CreateDate;
 			VerifiedArtist = user.VerifiedArtist;
 
-			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && !string.IsNullOrEmpty(user.Email)) {
-				MainPicture = iconFactory.GetIcons(user, ImageSizes.Thumb | ImageSizes.TinyThumb);
+			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && !string.IsNullOrEmpty(user.Email) && iconFactory != null) {
+				MainPicture = iconFactory.GetIcons(user, ImageSizes.All);
 			}
 
 			if (optionalFields.HasFlag(UserOptionalFields.OldUsernames)) {

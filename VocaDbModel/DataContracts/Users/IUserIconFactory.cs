@@ -14,8 +14,6 @@ namespace VocaDb.Model.DataContracts.Users {
 	/// </summary>
 	public interface IUserIconFactory {
 
-		string GetIconUrl(IUserWithEmail user);
-
 		/// <summary>
 		/// Get multiple icon sizes.
 		/// </summary>

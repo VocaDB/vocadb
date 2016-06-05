@@ -529,7 +529,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var receiver = CreateEntry.User(name: "receiver", email: "test@vocadb.net");
 			repository.Save(sender, receiver);
 			permissionContext.SetLoggedUser(sender);
-			var contract = new UserMessageContract { Sender = new UserWithIconContract(sender), Receiver = new UserWithIconContract(receiver), Subject = "Subject", Body = "Body" };
+			var contract = new UserMessageContract { Sender = new UserForApiContract(sender), Receiver = new UserForApiContract(receiver), Subject = "Subject", Body = "Body" };
 
 			data.SendMessage(contract, string.Empty, string.Empty);
 
@@ -568,7 +568,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var receiver = CreateEntry.User(name: "receiver");
 			repository.Save(sender, receiver);
 
-			var contract = new UserMessageContract { Sender = new UserWithIconContract(sender), Receiver = new UserWithIconContract(receiver), Subject = "Subject", Body = "Body" };
+			var contract = new UserMessageContract { Sender = new UserForApiContract(sender), Receiver = new UserForApiContract(receiver), Subject = "Subject", Body = "Body" };
 			data.SendMessage(contract, string.Empty, string.Empty);
 
 		}

@@ -57,7 +57,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		private CommentForApiContract CreateComment(int albumId, string message) {
-			var contract = new CommentForApiContract { Message = message, Author = new UserWithIconContract(user) };
+			var contract = new CommentForApiContract { Message = message, Author = new UserForApiContract(user, null, UserOptionalFields.None) };
 			return queries.CreateComment(albumId, contract);
 		}
 

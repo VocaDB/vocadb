@@ -17,7 +17,7 @@ module vdb.viewModels {
 			
 		}
 
-		public author: dc.UserWithIconContract;
+		public author: dc.user.UserApiContract;
 
 		public authorName: string;
 

@@ -1,23 +1,28 @@
-﻿
-<!-- binding context: UserMessageViewModel -->
+﻿<!-- binding context: UserMessageViewModel -->
 
 <div class="message ui-tabs ui-widget ui-widget-content ui-corner-all">
-	
+
 	<div class="messageTitle ui-widget-header ui-corner-all">
 		<div class="messageTitleText">
 			<span data-bind="text: subject"></span>
 			<br />
 			<span data-bind="text: created"></span>
-			<span data-bind="if: sender">
+			<span data-bind="with: sender">
 				<span>@ViewRes.User.MessagesStrings.From</span>
-				<span>@UserHelpers.IconAndNameKnockout("sender.iconUrl", "sender.name").</span>
+				<span>
+					@UserHelpers.IconAndNameLinkKnockout()
+					<span class="razor-whitespace-fix">.</span>
+				</span>
 			</span>
 			<span>@ViewRes.User.MessagesStrings.To</span>
-			<span>@UserHelpers.IconAndNameKnockout("receiver.iconUrl", "receiver.name").</span>
+			<span data-bind="with: receiver">
+				@UserHelpers.IconAndNameLinkKnockout()
+				<span class="razor-whitespace-fix">.</span>
+			</span>
 		</div>
 	</div>
 	<p class="messageContent" data-bind="markdown: $root.selectedMessageBody"></p>
-		
+
 	<a data-bind="visible: sender, jqButton: { icon: 'ui-icon-arrowreturnthick-1-w' }, click: $root.reply" id="replyMessage" href="#">@ViewRes.User.MessagesStrings.Reply</a>
 
 </div>

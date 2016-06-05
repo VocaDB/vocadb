@@ -36,7 +36,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateTopic() {
 			
-			var contract = new DiscussionTopicContract { Author = new UserWithIconContract(user), Name = "New topic", Content = "Content" };
+			var contract = new DiscussionTopicContract { Author = new UserForApiContract(user), Name = "New topic", Content = "Content" };
 			var result = queries.CreateTopic(folder.Id, contract);
 
 			Assert.AreNotEqual(0, result.Id, "Id was assigned");
@@ -57,7 +57,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(NotAllowedException))]
 		public void CreateTopic_NoPermission() {
 			
-			var contract = new DiscussionTopicContract { Author = new UserWithIconContract { Id = 2 }, Name = "New topic", Content = "Content" };
+			var contract = new DiscussionTopicContract { Author = new UserForApiContract { Id = 2 }, Name = "New topic", Content = "Content" };
 			queries.CreateTopic(folder.Id, contract);
 
 		}

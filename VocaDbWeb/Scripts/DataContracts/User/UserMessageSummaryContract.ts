@@ -1,4 +1,3 @@
-/// <reference path="UserWithIconContract.ts" />
 
 module vdb.dataContracts {
 
@@ -18,9 +17,9 @@ module vdb.dataContracts {
 
         read: boolean;
 
-        receiver: vdb.dataContracts.UserWithIconContract;
+        receiver: vdb.dataContracts.user.UserApiContract;
 
-        sender?: vdb.dataContracts.UserWithIconContract;
+        sender?: vdb.dataContracts.user.UserApiContract;
 
         subject: string;
 

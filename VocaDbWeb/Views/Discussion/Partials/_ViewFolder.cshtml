@@ -45,10 +45,10 @@
 					<span>{{name}}</span>
 				</td>
 				<td>
-					<a data-bind="attr: { href: '/User/Profile/' + author.name }">
-						@UserHelpers.ProfileIconKnockout("author.iconUrl", 18)
-						<span>{{author.name}}</span>
-					</a>
+					<span data-bind="with: author">
+						@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.TinyThumb, size: 18)
+						<span>{{name}}</span>
+					</span>
 				</td>
 				<td class="hidden-phone">
 					<span>{{commentCount}}</span>
