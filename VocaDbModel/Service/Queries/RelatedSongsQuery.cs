@@ -43,13 +43,11 @@ namespace VocaDb.Model.Service.Queries {
 
 				var mainArtistIds = mainArtists.Select(a => a.Id).ToArray();
 				var songsByMainArtists = ctx.Query()
-					.Where(al => 
-						al.Id != songId
-						&& !al.Deleted 
-						&& al.AllArtists.Any(a => 
-							!a.Artist.Deleted
-							//&& (al.ArtistString.Default != ArtistHelper.VariousArtists)
-							&& !a.IsSupport 
+					.Where(s =>
+						s.Id != songId
+						&& !s.Deleted 
+						&& s.AllArtists.Any(a => 
+							!a.IsSupport 
 							&& mainArtistIds.Contains(a.Artist.Id)))
 					.OrderBy(SongSortRule.RatingScore)
 					.Take(16)
@@ -70,9 +68,9 @@ namespace VocaDb.Model.Service.Queries {
 						&& !loadedSongs.Contains(f.Song.Id)
 						&& !f.Song.Deleted)
 					.GroupBy(f => f.Song.Id)
-					.Select(f => new { Song = f.Key, Ratings = f.Count() })
+					.Select(f => new { SongId = f.Key, Ratings = f.Count() })
 					.OrderByDescending(f => f.Ratings)
-					.Select(s => s.Song)
+					.Select(s => s.SongId)
 					.Take(12)
 					.ToArray();
 
@@ -87,11 +85,11 @@ namespace VocaDb.Model.Service.Queries {
 				var tagIds = song.Tags.Usages.OrderByDescending(u => u.Count).Take(5).Select(t => t.Tag.Id).ToArray();
 
 				var songsWithTags =
-					ctx.Query().Where(al => 
-						al.Id != songId
-						&& !loadedSongs.Contains(al.Id) 
-						&& !al.Deleted 
-						&& al.Tags.Usages.Any(t => tagIds.Contains(t.Tag.Id)))
+					ctx.Query().Where(s => 
+						s.Id != songId
+						&& !loadedSongs.Contains(s.Id) 
+						&& !s.Deleted 
+						&& s.Tags.Usages.Any(t => tagIds.Contains(t.Tag.Id)))
 					.OrderBy(SongSortRule.RatingScore)
 					.Take(12)
 					.ToArray();
