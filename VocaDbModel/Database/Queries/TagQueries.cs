@@ -506,7 +506,8 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				// Related tags
-				foreach (var relatedTag in source.RelatedTags.Select(r => r.LinkedTag).Where(r => !target.RelatedTags.Any(r2 => r.Equals(r2.LinkedTag)))) {
+				foreach (var relatedTag in source.RelatedTags.Select(r => r.LinkedTag)
+					.Where(r => !r.Equals(target) && !target.RelatedTags.Any(r2 => r.Equals(r2.LinkedTag)))) {
 					var link = target.AddRelatedTag(relatedTag);
 					ctx.Save(link);
 					diff.RelatedTags = true;

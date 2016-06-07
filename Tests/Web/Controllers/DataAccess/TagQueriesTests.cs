@@ -232,6 +232,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		// Merge target is in related tags. Tag cannot be related to itself, so this it's skipped.
+		[TestMethod]
+		public void Merge_TargetInRelatedTags() {
+
+			var target = repository.Save(new Tag());
+			tag.AddRelatedTag(target);
+			Assert.AreEqual(1, target.RelatedTags.Count, "Number of related tags");
+
+			queries.Merge(tag.Id, target.Id);
+
+			Assert.AreEqual(0, target.RelatedTags.Count, "Related tag (self) was not added");
+
+		}
+
 		[TestMethod]
 		public void Update_Description() {
 
