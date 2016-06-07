@@ -17,7 +17,12 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 	public class TagQueriesDatabaseTests {
 
 		private readonly DatabaseTestContext<ITagRepository> context = new DatabaseTestContext<ITagRepository>();
+		private readonly FakePermissionContext userContext;
 		private TestDatabase Db => TestContainerManager.TestDatabase;
+
+		public TagQueriesDatabaseTests() {
+			userContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+		}
 
 		private TagForApiContract Merge(int sourceId, int targetId) {
 
@@ -69,7 +74,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		[TestCategory(TestCategories.Database)]
 		public void Update_ReplaceName() {
 
-			var contract = new TagForEditContract(Db.Tag, false, ContentLanguagePreference.English);
+			var contract = new TagForEditContract(Db.Tag, false, userContext);
 			contract.Names[0] = new LocalizedStringWithIdContract {
 				Value = "electronic", Language = ContentLanguageSelection.Japanese
 			};
@@ -88,7 +93,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		[TestCategory(TestCategories.Database)]
 		public void Update_SwapNameTranslations() {
 
-			var contract = new TagForEditContract(Db.Tag2, false, ContentLanguagePreference.English);
+			var contract = new TagForEditContract(Db.Tag2, false, userContext);
 			contract.Names[0].Value = "ロック"; // Swap values
 			contract.Names[1].Value = "rock";
 

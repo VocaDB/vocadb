@@ -410,7 +410,7 @@ namespace VocaDb.Model.Database.Queries {
 					session.Query<AlbumTagUsage>().Any(a => a.Tag.Id == id && !a.Album.Deleted) ||
 					session.Query<SongTagUsage>().Any(a => a.Tag.Id == id && !a.Song.Deleted);
 
-				var contract = new TagForEditContract(LoadTagById(session, id), !inUse, LanguagePreference);
+				var contract = new TagForEditContract(LoadTagById(session, id), !inUse, PermissionContext);
 
 				return contract;
 
@@ -554,7 +554,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public void MoveToTrash(int id, string notes) {
 
-			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
+			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
 			repository.HandleTransaction(ctx => {
 

@@ -39,6 +39,8 @@ namespace VocaDb.Web.Models.Tag {
 		[FromJson]
 		public TagBaseContract AliasedTo { get; set; }
 
+		public bool CanDelete { get; set; }
+
 		[Display(Name = "Category")]
 		[StringLength(30)]
 		public string CategoryName { get; set; }
@@ -84,6 +86,7 @@ namespace VocaDb.Web.Models.Tag {
 		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext) {
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
+			CanDelete = contract.CanDelete;
 			CurrentName = contract.Name;
 			Deleted = contract.Deleted;
 			Id = contract.Id;

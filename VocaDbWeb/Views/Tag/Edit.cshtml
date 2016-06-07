@@ -44,15 +44,13 @@
 }
 
 @section Toolbar {
-@if (Login.CanDeleteEntries) {
+@if (Model.CanDelete) {
 	if (!Model.Deleted) {
-		<span>
-			<a href="#" id="deleteLink" data-bind="click: deleteViewModel.show">@ViewRes.SharedStrings.Delete</a>
-			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
-		</span>
+		<a href="#" id="deleteLink" data-bind="click: deleteViewModel.show">@ViewRes.SharedStrings.Delete</a>
 	} else {
 		@Html.ActionLink("Restore", "Restore", new { id = Model.Id }, new { id = "restoreLink" })
-		@Html.Raw("&nbsp;")
+	}
+	if (Login.CanMoveToTrash) {
 		<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
 	}
 }

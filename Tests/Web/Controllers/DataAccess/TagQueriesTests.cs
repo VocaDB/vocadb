@@ -65,7 +65,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			tag = CreateAndSaveTag("Appearance Miku");
 			tag2 = CreateAndSaveTag("MMD");
 
-			user = new User("User", "123", "test@test.com", 123) { GroupId = UserGroupId.Trusted };
+			user = new User("User", "123", "test@test.com", 123) { GroupId = UserGroupId.Moderator };
 			repository.Add(user);
 
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));
@@ -95,7 +95,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Delete() {
+		public void MoveToTrash() {
 
 			var oldCount = repository.Count<Tag>();
 
@@ -114,22 +114,24 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void Delete_NoDeletePermission() {
+		public void MoveToTrash_NoDeletePermission() {
 
 			user.GroupId = UserGroupId.Regular;
 			permissionContext.RefreshLoggedUser(repository);
 
-			queries.Delete(tag.Id, string.Empty);
+			queries.MoveToTrash(tag.Id, string.Empty);
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void Delete_NoEditPermission() {
+		public void MoveToTrash_NoEditPermission() {
 
+			user.GroupId = UserGroupId.Trusted;
+			permissionContext.RefreshLoggedUser(repository);
 			tag.Status = EntryStatus.Locked;
 
-			queries.Delete(tag.Id, string.Empty);
+			queries.MoveToTrash(tag.Id, string.Empty);
 
 		}
 
@@ -233,7 +235,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Description() {
 
-			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Description = new EnglishTranslatedStringContract { Original = "mikumikudance.wikia.com/wiki/Miku_Hatsune_Appearance_(Mamama)", English = string.Empty };
 
 			queries.Update(updated, null);
@@ -249,7 +251,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Image() {
 			
-			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(tag, false, permissionContext);
 			using (var stream = TestImage()) {
 				queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });			
 			}
@@ -267,7 +269,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Name() {
 
-			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Names[0].Value = "Api Miku";
 
 			queries.Update(updated, null);
@@ -284,7 +286,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_DuplicateWithAnotherTag() {
 
-			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Names[0].Value = "MMD";
 
 			queries.Update(updated, null);
@@ -295,7 +297,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_DuplicateTranslation() {
 
-			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Names = updated.Names.Concat(new[] { new LocalizedStringWithIdContract { Value = "Appearance Miku", Language = ContentLanguageSelection.Romaji } }).ToArray();
 
 			queries.Update(updated, null);
@@ -305,7 +307,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Parent() {
 			
-			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Parent = new TagBaseContract(tag2, ContentLanguagePreference.English);
 
 			queries.Update(updated, null);
@@ -322,7 +324,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Parent_IgnoreSelf() {
 			
-			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Parent = new TagBaseContract(tag, ContentLanguagePreference.English);
 
 			queries.Update(updated, null);
@@ -338,7 +340,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Parent_Renamed() {
 
-			var updated = new TagForEditContract(tag, false, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(tag, false, permissionContext);
 			tag2.TranslatedName.Default = "Api Miku";
 			updated.Parent = new TagBaseContract(tag2, ContentLanguagePreference.English);
 
