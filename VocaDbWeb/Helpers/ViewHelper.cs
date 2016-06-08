@@ -19,6 +19,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.BBCode;
+using VocaDb.Web.Code.Markdown;
 
 namespace VocaDb.Web.Helpers {
 
@@ -286,6 +287,10 @@ namespace VocaDb.Web.Helpers {
 
 			return htmlHelper.DropDownListFor(expression, CreateSongTypesList(selectedValue), htmlAttributes);
 
+		}
+
+		public static MvcHtmlString FormatMarkdown(this HtmlHelper htmlHelper, string markdown) {
+			return new MvcHtmlString(DependencyResolver.Current.GetService<MarkdownParser>().GetHtml(markdown));
 		}
 
 		public static string ParseBBCode(string bbCode) {

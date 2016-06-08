@@ -489,7 +489,7 @@ namespace VocaDb.Model.Database.Queries {
 				};
 
 				ctx.AuditLogger.AuditLog(string.Format("Merging {0} to {1}",
-					entryLinkFactory.CreateEntryLink(source), entryLinkFactory.CreateEntryLink(target)));
+					source, entryLinkFactory.CreateEntryLink(target)));
 
 				// Other properties
 				if (string.IsNullOrEmpty(target.CategoryName) && !string.IsNullOrEmpty(source.CategoryName)) {
