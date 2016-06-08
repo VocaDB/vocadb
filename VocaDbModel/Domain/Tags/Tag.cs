@@ -311,6 +311,9 @@ namespace VocaDb.Model.Domain.Tags {
 			while (RelatedTags.Any())
 				RelatedTags.First().Delete();
 
+			if (Parent != null)
+				Parent.Children.Remove(this);
+
 		}
 
 		public virtual bool Equals(Tag tag) {
