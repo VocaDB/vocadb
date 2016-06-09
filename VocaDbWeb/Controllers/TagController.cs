@@ -48,7 +48,7 @@ namespace VocaDb.Web.Controllers
 				return HttpNotFound();
 
 			PageProperties.GlobalSearchType = EntryType.Tag;
-			PageProperties.PageTitle = string.Format("{0} - {1}", DetailsStrings.TagDetails, contract.Name);
+			PageProperties.PageTitle = contract.Name;
 			PageProperties.Title = contract.Name;
 			PageProperties.Subtitle = DetailsStrings.Tag;
 			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.Tag, contract.Id, contract.UrlSlug);
