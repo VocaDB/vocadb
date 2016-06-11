@@ -126,4 +126,7 @@
   <data name="Suggestions" xml:space="preserve">
     <value>Suggestions:</value>
   </data>
+  <data name="Usages" xml:space="preserve">
+    <value>{0} usages</value>
+  </data>
 </root>

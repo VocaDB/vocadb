@@ -86,5 +86,14 @@ namespace ViewRes {
                 return ResourceManager.GetString("Suggestions", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} usages.
+        /// </summary>
+        public static string Usages {
+            get {
+                return ResourceManager.GetString("Usages", resourceCulture);
+            }
+        }
     }
 }
