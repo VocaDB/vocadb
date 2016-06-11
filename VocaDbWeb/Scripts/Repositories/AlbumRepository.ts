@@ -100,6 +100,10 @@ module vdb.repositories {
 
 		}
 
+		public getTagSuggestions = (albumId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
+			$.getJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/tagSuggestions"), callback);
+		}
+
 		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), contract, callback, 'json');

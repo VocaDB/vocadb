@@ -29,6 +29,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public const int MaxDisplayedTags = 4;
 
+		public const string CommonCategory_Animation = "Animation";
 		public const string CommonCategory_Distribution = "Distribution";
 		public const string CommonCategory_Genres = "Genres";
 		public const string CommonCategory_Lyrics = "Lyrics";

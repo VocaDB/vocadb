@@ -7,6 +7,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -215,6 +216,12 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			return service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
+		}
+
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[Route("{id:int}/tagSuggestions")]
+		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) {
+			return queries.GetTagSuggestions(id);
 		}
 
 		/// <summary>

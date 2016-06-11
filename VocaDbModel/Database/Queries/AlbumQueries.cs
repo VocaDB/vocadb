@@ -11,6 +11,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -22,6 +23,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -264,6 +266,31 @@ namespace VocaDb.Model.Database.Queries {
 						.OrderBy(a => a.Name)
 						.ToArray()
 					};
+
+			});
+
+		}
+
+		public TagUsageForApiContract[] GetTagSuggestions(int albumId) {
+
+			return repository.HandleQuery(ctx => {
+
+				var albumTags = ctx.Load<Album>(albumId).Tags.Tags.Select(t => t.Id);
+
+				var songUsages = ctx.Query<SongTagUsage>()
+					.Where(u => !albumTags.Contains(u.Tag.Id)
+						&& u.Tag.CategoryName != Tag.CommonCategory_Lyrics
+						&& u.Song.AllAlbums.Any(a => a.Album.Id == albumId))
+					.GroupBy(t => t.Tag.Id)
+					.Select(t => new { TagId = t.Key, Count = t.Count() })
+					.OrderByDescending(t => t.Count)
+					.Take(3)
+					.ToArray();
+
+				var tagIds = songUsages.Select(t => t.TagId).ToArray();
+				var tags = ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).ToDictionary(t => t.Id);
+
+				return songUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], tags.Count, LanguagePreference)).ToArray();
 
 			});
 
