@@ -290,7 +290,7 @@ namespace VocaDb.Model.Database.Queries {
 				var tagIds = songUsages.Select(t => t.TagId).ToArray();
 				var tags = ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).ToDictionary(t => t.Id);
 
-				return songUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], tags.Count, LanguagePreference)).ToArray();
+				return songUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], t.Count, LanguagePreference)).ToArray();
 
 			});
 
