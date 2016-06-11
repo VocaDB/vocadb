@@ -3,7 +3,7 @@ module vdb.viewModels.tags {
 	
 	export class TagsEditViewModel {
 
-		constructor(private repo: ITagSelectionsRepository) { }
+		constructor(private repo: ITagSelectionsRepository, private getSuggestions?: (callback: (result: dc.tags.TagUsageForApiContract[]) => void) => void) { }
 		
 		public addTag = () => {
 			
@@ -65,7 +65,13 @@ module vdb.viewModels.tags {
 				this.dialogVisible(true);
 			});
 
+			if (this.getSuggestions) {
+				this.getSuggestions(result => this.suggestions(result));
+			}
+
 		}
+
+		public suggestions = ko.observableArray<dc.tags.TagUsageForApiContract>();
 		
 	}
 

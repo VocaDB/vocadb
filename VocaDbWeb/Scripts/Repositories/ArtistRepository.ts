@@ -75,6 +75,12 @@ module vdb.repositories {
 
 		}
 
+		public getTagSuggestions = (artistId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/artists/" + artistId + "/tagSuggestions"), callback);
+
+		}
+
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
 

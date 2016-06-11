@@ -9,10 +9,12 @@ using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.ExtLinks;
@@ -20,6 +22,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -413,6 +416,48 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);
+
+			});
+
+		}
+
+		public TagUsageForApiContract[] GetTopTagsForSongsAndAlbums(int artistId) {
+
+			return repository.HandleQuery(ctx => {
+
+				var artistTags = ctx.Load<Artist>(artistId).Tags.Tags.Select(t => t.Id);
+
+				var albumUsages = ctx.Query<AlbumTagUsage>()
+					.Where(u => !artistTags.Contains(u.Tag.Id) 
+						&& u.Tag.CategoryName != Tag.CommonCategory_Lyrics 
+						&& u.Album.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+					.GroupBy(t => t.Tag.Id)
+					.Select(t => new { TagId = t.Key, Count = t.Count() })
+					.OrderByDescending(t => t.Count)
+					.Take(3)
+					.ToArray();
+
+				var songUsages = ctx.Query<SongTagUsage>()
+					.Where(u => !artistTags.Contains(u.Tag.Id) 
+						&& u.Tag.CategoryName != Tag.CommonCategory_Lyrics 
+						&& u.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+					.GroupBy(t => t.Tag.Id)
+					.Select(t => new { TagId = t.Key, Count = t.Count() })
+					.OrderByDescending(t => t.Count)
+					.Take(3)
+					.ToArray();
+
+				var topUsages = albumUsages.Concat(songUsages)
+					.GroupBy(t => t.TagId)
+					.Select(t => new { TagId = t.Key, Count = t.Sum(t2 => t2.Count) })
+					.OrderByDescending(t => t.Count)
+					.Take(3)
+					.ToArray();
+
+				var tagIds = topUsages.Select(t => t.TagId).ToArray();
+				var tags = ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).ToDictionary(t => t.Id);
+
+				return topUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], tags.Count, LanguagePreference)).ToArray();
 
 			});
 

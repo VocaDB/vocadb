@@ -18,6 +18,16 @@
 			</span>
 		</div>
 		<br />
+		
+		<div data-bind="visible: suggestions().length">
+			<p>@ViewRes.TagSelectionsStrings.Suggestions</p>
+			<div data-bind="foreach: suggestions">
+				<span class="tag">
+					<a href="#" data-bind="text: tag.name, click: function() { $parent.autoCompletedTag(tag); }, jqButton: { icon: 'ui-icon-plus' }"></a>
+				</span>
+			</div>
+			<br />
+		</div>
 
 		<div class="form-inline">
 			@ViewRes.TagSelectionsStrings.AddTag:

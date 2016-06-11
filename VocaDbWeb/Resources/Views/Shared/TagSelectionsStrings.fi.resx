@@ -123,4 +123,7 @@
   <data name="Info" xml:space="preserve">
     <value>Merkitse sopivat tägit tai lisää omia.</value>
   </data>
+  <data name="Suggestions" xml:space="preserve">
+    <value>Ehdotuksia:</value>
+  </data>
 </root>
