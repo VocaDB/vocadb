@@ -119,7 +119,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			var tags = ctx
 				.Query<Tag>()
-				.Where(t => t.CategoryName != Tag.CommonCategory_Lyrics && t.CategoryName != Tag.CommonCategory_Distribution)
+				.Where(t => t.CategoryName != TagCommonCategoryNames.Lyrics && t.CategoryName != TagCommonCategoryNames.Distribution)
 				.Select(t => new {
 					Id = t.Id,
 					Count = t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id))
@@ -876,7 +876,7 @@ namespace VocaDb.Model.Database.Queries {
 				var genres = ctx
 					.OfType<SongTagUsage>()
 					.Query()
-					.Where(u => u.Song.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == Tag.CommonCategory_Genres)
+					.Where(u => u.Song.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == TagCommonCategoryNames.Genres)
 					// NH doesn't support ? operator, instead casting ID to nullable works
 					.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id })
 					.Select(g => new {

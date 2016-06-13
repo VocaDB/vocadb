@@ -12,14 +12,14 @@ namespace VocaDb.Model.Helpers {
 
 			if (songInAlbum.Song != null) {
 
-				genres = songInAlbum.Song.Tags.TagsByVotes.Where(t => t.CategoryName == Tag.CommonCategory_Genres).ToArray();
+				genres = songInAlbum.Song.Tags.TagsByVotes.Where(t => t.CategoryName == TagCommonCategoryNames.Genres).ToArray();
 
 				if (genres.Any())
 					return genres.ToArray();
 				
 			}
 
-			genres = songInAlbum.Album.Tags.TagsByVotes.Where(t => t.CategoryName == Tag.CommonCategory_Genres).ToArray();
+			genres = songInAlbum.Album.Tags.TagsByVotes.Where(t => t.CategoryName == TagCommonCategoryNames.Genres).ToArray();
 			return genres.ToArray();
 
 		}

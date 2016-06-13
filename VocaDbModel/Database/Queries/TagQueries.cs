@@ -360,7 +360,7 @@ namespace VocaDb.Model.Database.Queries {
 					.GroupBy(t => t.CategoryName)
 					.ToArray();
 
-				var genres = tags.FirstOrDefault(c => c.Key == Tag.CommonCategory_Genres);
+				var genres = tags.FirstOrDefault(c => c.Key == TagCommonCategoryNames.Genres);
 				var empty = tags.FirstOrDefault(c => c.Key == string.Empty);
 
 				var tagsByCategories = 

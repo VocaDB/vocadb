@@ -406,6 +406,7 @@
     <Compile Include="Domain\Tags\RelatedTag.cs" />
     <Compile Include="Domain\Tags\SpecialTagType.cs" />
     <Compile Include="Domain\Tags\TagComment.cs" />
+    <Compile Include="Domain\Tags\TagCommonCategoryNames.cs" />
     <Compile Include="Domain\Tags\TagDiff.cs" />
     <Compile Include="Domain\Tags\TagEditableFields.cs" />
     <Compile Include="Domain\Tags\TagMergeRecord.cs" />
