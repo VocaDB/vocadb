@@ -421,7 +421,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagUsageForApiContract[] GetTopTagsForSongsAndAlbums(int artistId) {
+		public TagUsageForApiContract[] GetTagSuggestions(int artistId) {
 
 			return repository.HandleQuery(ctx => {
 
@@ -433,6 +433,7 @@ namespace VocaDb.Model.Database.Queries {
 						&& u.Album.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
+					.Where(t => t.Count > 1)
 					.OrderByDescending(t => t.Count)
 					.Take(3)
 					.ToArray();
@@ -443,6 +444,7 @@ namespace VocaDb.Model.Database.Queries {
 						&& u.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
+					.Where(t => t.Count > 1)
 					.OrderByDescending(t => t.Count)
 					.Take(3)
 					.ToArray();

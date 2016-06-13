@@ -217,7 +217,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("{id:int}/tagSuggestions")]
 		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) {
-			return queries.GetTopTagsForSongsAndAlbums(id);
+			return queries.GetTagSuggestions(id);
 		}
 
 		[Route("versions")]

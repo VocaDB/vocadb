@@ -283,6 +283,7 @@ namespace VocaDb.Model.Database.Queries {
 						&& u.Song.AllAlbums.Any(a => a.Album.Id == albumId))
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
+					.Where(t => t.Count > 1)
 					.OrderByDescending(t => t.Count)
 					.Take(3)
 					.ToArray();
