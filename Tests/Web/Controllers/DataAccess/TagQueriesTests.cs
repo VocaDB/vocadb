@@ -258,7 +258,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var archivedVersion = repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == tag.Id);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Description, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(TagEditableFields.Description, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 		}
 
@@ -276,7 +276,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var archivedVersion = GetArchivedVersion(tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Picture, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(TagEditableFields.Picture, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 		}
 
@@ -292,7 +292,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var archivedVersion = GetArchivedVersion(tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Names, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(TagEditableFields.Names, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 		}
 
@@ -331,7 +331,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var archivedVersion = GetArchivedVersion(tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Parent, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(TagEditableFields.Parent, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 		}
 
@@ -347,7 +347,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var archivedVersion = GetArchivedVersion(tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Nothing, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(TagEditableFields.Nothing, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 		}
 

@@ -24,6 +24,7 @@ namespace VocaDb.Web.Models.Tag {
 			CategoryName = contract.CategoryName;
 			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Description = contract.Description;
+			HideFromSuggestions = contract.HideFromSuggestions;
 			Name = contract.Name;
 			Parent = contract.Parent;
 			Status = contract.Status;
@@ -56,6 +57,8 @@ namespace VocaDb.Web.Models.Tag {
 		public EnglishTranslatedStringContract Description { get; set; }
 
 		public bool Draft => Status == EntryStatus.Draft;
+
+		public bool HideFromSuggestions { get; set; }
 
 		public int Id { get; set; }
 
@@ -106,6 +109,7 @@ namespace VocaDb.Web.Models.Tag {
 				CategoryName = this.CategoryName ?? string.Empty,
 				DefaultNameLanguage = DefaultNameLanguage,
 				Description = this.Description,
+				HideFromSuggestions = HideFromSuggestions,
 				Parent = this.Parent,
 				RelatedTags = RelatedTags,
 				Status = this.Status,

@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			ComparableVersions = archived.Tag.ArchivedVersionsManager
 				.GetPreviousVersions(archived)
-				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields, a.CommonEditEvent))
+				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.CommonEditEvent))
 				.ToArray();
 
 			Versions = ComparedTagsContract.Create(archived, comparedVersion);

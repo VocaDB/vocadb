@@ -429,7 +429,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var albumUsages = ctx.Query<AlbumTagUsage>()
 					.Where(u => !artistTags.Contains(u.Tag.Id) 
-						&& u.Tag.CategoryName != Tag.CommonCategory_Lyrics 
+						&& !u.Tag.HideFromSuggestions 
 						&& u.Album.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
@@ -440,7 +440,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var songUsages = ctx.Query<SongTagUsage>()
 					.Where(u => !artistTags.Contains(u.Tag.Id) 
-						&& u.Tag.CategoryName != Tag.CommonCategory_Lyrics 
+						&& !u.Tag.HideFromSuggestions
 						&& u.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })

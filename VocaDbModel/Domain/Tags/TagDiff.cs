@@ -1,181 +1,44 @@
-﻿using System;
-using System.Linq;
-using VocaDb.Model.Domain.Versioning;
+﻿using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Tags {
 
-	public class TagDiff : IEntryDiff {
-
-		private void Set(TagEditableFields field, bool val) {
-
-			if (val && !IsChanged(field))
-				ChangedFields |= field;
-			else if (!val && IsChanged(field))
-				ChangedFields -= field;
-
-		}
+	public class TagDiff : EntryDiff<TagEditableFields> {
 
 		public TagDiff() : this(true) {}
 
-		public TagDiff(bool isSnapShot) {
-			IsSnapshot = isSnapShot;
-		}
+		public TagDiff(bool isSnapShot) 
+			: base(isSnapShot) {}
 
-		public virtual bool AliasedTo {
-			get {
-				return IsChanged(TagEditableFields.AliasedTo);
-			}
-			set {
-				Set(TagEditableFields.AliasedTo, value);
-			}
-		}
+		public EnumFieldAccessor<TagEditableFields> AliasedTo => Field(TagEditableFields.AliasedTo);
 
-		public virtual bool CategoryName {
-			get {
-				return IsChanged(TagEditableFields.CategoryName);
-			}
-			set {
-				Set(TagEditableFields.CategoryName, value);
-			}
-		}
+		public EnumFieldAccessor<TagEditableFields> CategoryName => Field(TagEditableFields.CategoryName);
 
-		public virtual string[] ChangedFieldNames {
-			get {
+		public EnumFieldAccessor<TagEditableFields> Description => Field(TagEditableFields.Description);
 
-				var fieldNames = EnumVal<TagEditableFields>.Values
-					.Where(f => f != TagEditableFields.Nothing && IsChanged(f)).Select(f => f.ToString());
+		public EnumFieldAccessor<TagEditableFields> HideFromSuggestions => Field(TagEditableFields.HideFromSuggestions);
 
-				return fieldNames.ToArray();
+		public virtual bool IncludeDescription => IsSnapshot || Description.IsChanged;
 
-			}
-		}
+		public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;
 
-		public virtual string ChangedFieldsString {
-			get {
+		public virtual bool IncludeRelatedTags => IsSnapshot || RelatedTags.IsChanged;
 
-				var fieldNames = EnumVal<TagEditableFields>.Values.Where(f => f != TagEditableFields.Nothing && IsChanged(f));
-				return string.Join(",", fieldNames);
+		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks.IsChanged;
 
-			}
-			set {
+		public EnumFieldAccessor<TagEditableFields> Names => Field(TagEditableFields.Names);
 
-				ChangedFields = TagEditableFields.Nothing;
+		public EnumFieldAccessor<TagEditableFields> OriginalName => Field(TagEditableFields.OriginalName);
 
-				if (string.IsNullOrEmpty(value)) {
-					return;
-				}
+		public EnumFieldAccessor<TagEditableFields> Parent => Field(TagEditableFields.Parent);
 
-				var fieldNames = value.Split(',');
-				foreach (var name in fieldNames) {
-					TagEditableFields field;
-					if (Enum.TryParse(name, out field))
-						Set(field, true);
-				}
+		public EnumFieldAccessor<TagEditableFields> Picture => Field(TagEditableFields.Picture);
 
-			}
-		}
+		public EnumFieldAccessor<TagEditableFields> RelatedTags => Field(TagEditableFields.RelatedTags);
 
-		public virtual TagEditableFields ChangedFields { get; set; }
+		public EnumFieldAccessor<TagEditableFields> Status => Field(TagEditableFields.Status);
 
-		public virtual bool Description {
-			get {
-				return IsChanged(TagEditableFields.Description);
-			}
-			set {
-				Set(TagEditableFields.Description, value);
-			}		
-		}
+		public EnumFieldAccessor<TagEditableFields> WebLinks => Field(TagEditableFields.WebLinks);
 
-		public virtual bool IncludeDescription {
-			get {
-				return (IsSnapshot || Description);
-			}
-		}
 
-		public virtual bool IncludeNames => IsSnapshot || Names;
-
-		public virtual bool IncludeRelatedTags => IsSnapshot || RelatedTags;
-
-		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks;
-
-		public virtual bool IsSnapshot { get; set; }
-
-		public virtual bool Names {
-			get {
-				return IsChanged(TagEditableFields.Names);
-			}
-			set {
-				Set(TagEditableFields.Names, value);
-			}
-		}
-
-		public virtual bool OriginalName {
-			get {
-				return IsChanged(TagEditableFields.OriginalName);
-			}
-			set {
-				Set(TagEditableFields.OriginalName, value);
-			}
-		}
-
-		public virtual bool Parent {
-			get {
-				return IsChanged(TagEditableFields.Parent);
-			}
-			set {
-				Set(TagEditableFields.Parent, value);
-			}
-		}
-
-		public virtual bool Picture {
-			get {
-				return IsChanged(TagEditableFields.Picture);
-			}
-			set {
-				Set(TagEditableFields.Picture, value);
-			}
-		}
-
-		public virtual bool RelatedTags {
-			get {
-				return IsChanged(TagEditableFields.RelatedTags);
-			}
-			set {
-				Set(TagEditableFields.RelatedTags, value);
-			}
-		}
-
-		public virtual bool Status {
-			get {
-				return IsChanged(TagEditableFields.Status);
-			}
-			set {
-				Set(TagEditableFields.Status, value);
-			}
-		}
-
-		public virtual bool WebLinks {
-			get {
-				return IsChanged(TagEditableFields.WebLinks);
-			}
-			set {
-				Set(TagEditableFields.WebLinks, value);
-			}
-		}
-
-		/// <summary>
-		/// Checks whether a specific field changed in this diff.
-		/// </summary>
-		/// <param name="field">Field to be checked.</param>
-		/// <returns>True if the field was changed, otherwise false.</returns>
-		public bool IsChanged(TagEditableFields field) {
-			return ChangedFields.HasFlag(field);
-		}
-
-		public bool IsIncluded(TagEditableFields field) {
-
-			return IsSnapshot || IsChanged(field);
-
-		}
 	}
 }

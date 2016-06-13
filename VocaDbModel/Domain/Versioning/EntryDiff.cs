@@ -56,6 +56,10 @@ namespace VocaDb.Model.Domain.Versioning {
 			}
 		}
 
+		/// <summary>
+		/// Whether the current version is a snapshot.
+		/// Most fields are included with the snapshot.
+		/// </summary>
 		public virtual bool IsSnapshot { get; set; }
 
 		/// <summary>
@@ -65,6 +69,17 @@ namespace VocaDb.Model.Domain.Versioning {
 		/// <returns>True if the field was changed, otherwise false.</returns>
 		public bool IsChanged(T field) {
 			return ChangedFields.FlagIsSet(field);
+		}
+
+		/// <summary>
+		/// Whether a specific field is included in this diff.
+		/// Generally, for non-snapshot diffs, fields that are changed are included.
+		/// For snapshots most fields are included.
+		/// </summary>
+		/// <param name="field">Field to be tested.</param>
+		/// <returns>True if the field should be included in this diff.</returns>
+		public virtual bool IsIncluded(T field) {
+			return IsSnapshot || IsChanged(field);
 		}
 
 		public void SetChanged(T field) {
@@ -84,8 +99,13 @@ namespace VocaDb.Model.Domain.Versioning {
 			this.field = field;
 		}
 
-		public void Set() {
-			val.SetFlag(field, true);
+		public bool IsChanged {
+			get { return val.FlagIsSet(field); }
+			set { val.SetFlag(field, value); }
+		}
+
+		public void Set(bool value = true) {
+			val.SetFlag(field, value);
 		}
 
 	}

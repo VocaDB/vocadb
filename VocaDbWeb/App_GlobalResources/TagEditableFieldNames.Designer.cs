@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide from suggestions.
+        /// </summary>
+        internal static string HideFromSuggestions {
+            get {
+                return ResourceManager.GetString("HideFromSuggestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Names.
         /// </summary>
         internal static string Names {

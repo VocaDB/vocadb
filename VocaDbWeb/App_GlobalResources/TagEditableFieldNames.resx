@@ -126,6 +126,9 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="HideFromSuggestions" xml:space="preserve">
+    <value>Hide from suggestions</value>
+  </data>
   <data name="Names" xml:space="preserve">
     <value>Names</value>
   </data>

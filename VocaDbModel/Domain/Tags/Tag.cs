@@ -216,6 +216,8 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual GlobalEntryId GlobalId => new GlobalEntryId(EntryType.Tag, Id);
 
+		public virtual bool HideFromSuggestions { get; set; }
+
 		/// <summary>
 		/// Unique database ID, assigned by identity.
 		/// </summary>

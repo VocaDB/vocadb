@@ -28,6 +28,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			var thisVersion = version.Data != null ? xmlCache.Deserialize(version.Version, version.Data) : new ArchivedTagContract();
 
 			data.CategoryName = thisVersion.CategoryName;
+			data.HideFromSuggestions = thisVersion.HideFromSuggestions;
 			data.Id = thisVersion.Id;
 			data.TranslatedName = thisVersion.TranslatedName;
 
@@ -55,6 +56,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			CategoryName = tag.CategoryName;
 			Description = diff.IncludeDescription ? tag.Description.Original : null;
 			DescriptionEng = diff.IncludeDescription ? tag.Description.English : null;
+			HideFromSuggestions = tag.HideFromSuggestions;
 			Id = tag.Id;
 			Names = diff.IncludeNames ? tag.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			Parent = tag.Parent != null ? new ObjectRefContract(tag.Parent) : null;
@@ -76,6 +78,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string DescriptionEng { get; set; }
+
+		[DataMember]
+		public bool HideFromSuggestions { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

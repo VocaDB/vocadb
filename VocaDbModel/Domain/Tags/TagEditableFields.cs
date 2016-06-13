@@ -17,19 +17,21 @@ namespace VocaDb.Model.Domain.Tags {
 
 		Description		= 4,
 
-		Names			= 8,
+		HideFromSuggestions = 8,
 
-		OriginalName	= 16,
+		Names			= 16,
 
-		Parent			= 32,
+		OriginalName	= 32,
 
-		Picture			= 64,
+		Parent			= 64,
 
-		RelatedTags		= 128,
+		Picture			= 128,
 
-		Status			= 256,
+		RelatedTags		= 256,
 
-		WebLinks		= 512
+		Status			= 512,
+
+		WebLinks		= 1024
 
 	}
 

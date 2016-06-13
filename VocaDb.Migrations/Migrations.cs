@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201606132100)]
+	public class TagsHiddenFromSuggestions : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("HideFromSuggestions").OnTable(TableNames.Tags).AsBoolean().NotNullable().WithDefaultValue(false);
+
+		}
+
+	}
+
 	[Migration(201606041900)]
 	public class TrashedEntryNotes : AutoReversingMigration {
 

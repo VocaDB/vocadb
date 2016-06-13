@@ -484,9 +484,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				var source = ctx.Load(sourceId);
 				var target = ctx.Load(targetId);
-				var diff = new TagDiff(false) {
-					Names = true
-				};
+				var diff = new TagDiff(false);
+				diff.Names.Set();
 
 				ctx.AuditLogger.AuditLog(string.Format("Merging {0} to {1}",
 					source, entryLinkFactory.CreateEntryLink(target)));
@@ -494,15 +493,15 @@ namespace VocaDb.Model.Database.Queries {
 				// Other properties
 				if (string.IsNullOrEmpty(target.CategoryName) && !string.IsNullOrEmpty(source.CategoryName)) {
 					target.CategoryName = source.CategoryName;
-					diff.CategoryName = true;
+					diff.CategoryName.Set();
 				}
 
-				diff.Description = target.Description.CopyIfEmpty(source.Description);
+				diff.Description.Set(target.Description.CopyIfEmpty(source.Description));
 
 				// Parent tag
 				if (target.Parent == null && source.Parent != null) {
 					target.SetParent(source.Parent);
-					diff.Parent = true;
+					diff.Parent.Set();
 				}
 
 				// Related tags
@@ -510,14 +509,14 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(r => !r.Equals(target) && !target.RelatedTags.Any(r2 => r.Equals(r2.LinkedTag)))) {
 					var link = target.AddRelatedTag(relatedTag);
 					ctx.Save(link);
-					diff.RelatedTags = true;
+					diff.RelatedTags.Set();
 				}
 
 				// Weblinks
 				foreach (var w in source.WebLinks.Links.Where(w => !target.WebLinks.HasLink(w.Url))) {
 					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
 					ctx.Save(link);
-					diff.WebLinks = true;
+					diff.WebLinks.Set();
 				}
 
 				// Create merge record
@@ -658,24 +657,27 @@ namespace VocaDb.Model.Database.Queries {
 				var diff = new TagDiff();
 
 				if (!Tag.Equals(tag.AliasedTo, contract.AliasedTo)) {
-					diff.AliasedTo = true;
+					diff.AliasedTo.Set();
 					tag.AliasedTo = GetRealTag(ctx, contract.AliasedTo, tag);
 				}
 
 				if (tag.CategoryName != contract.CategoryName)
-					diff.CategoryName = true;
+					diff.CategoryName.Set();
 
-				diff.Description = tag.Description.CopyFrom(contract.Description);
+				diff.Description.Set(tag.Description.CopyFrom(contract.Description));
+
+				if (tag.HideFromSuggestions != contract.HideFromSuggestions)
+					diff.HideFromSuggestions.Set();
 
 				if (tag.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
 					tag.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
-					diff.OriginalName = true;
+					diff.OriginalName.Set();
 				}
 
 				var nameDiff = SyncNames(ctx.OfType<TagName>(), tag, contract.Names);
 
 				if (nameDiff.Changed) {					
-					diff.Names = true;
+					diff.Names.Set();
 				}
 
 				if (!Tag.Equals(tag.Parent, contract.Parent)) {
@@ -683,7 +685,7 @@ namespace VocaDb.Model.Database.Queries {
 					var newParent = GetRealTag(ctx, contract.Parent, tag);
 
 					if (!Equals(newParent, tag.Parent)) {
-						diff.Parent = true;
+						diff.Parent.Set();
 						tag.SetParent(newParent);						
 					}
 
@@ -691,23 +693,24 @@ namespace VocaDb.Model.Database.Queries {
 
 				var relatedTagsDiff = tag.SyncRelatedTags(contract.RelatedTags, tagId => ctx.Load(tagId));
 				ctx.Sync(relatedTagsDiff);
-				diff.RelatedTags = relatedTagsDiff.Changed;
+				diff.RelatedTags.Set(relatedTagsDiff.Changed);
 
 				var webLinkDiff = tag.WebLinks.Sync(contract.WebLinks, tag);
 				ctx.OfType<TagWebLink>().Sync(webLinkDiff);
 
 				if (webLinkDiff.Changed)
-					diff.WebLinks = true;
+					diff.WebLinks.Set();
 
 				if (tag.Status != contract.Status)
-					diff.Status = true;
+					diff.Status.Set();
 
 				tag.CategoryName = contract.CategoryName;
+				tag.HideFromSuggestions = contract.HideFromSuggestions;
 				tag.Status = contract.Status;
 
 				if (uploadedImage != null) {
 
-					diff.Picture = true;
+					diff.Picture.Set();
 
 					var thumb = new EntryThumb(tag, uploadedImage.Mime);
 					tag.Thumb = thumb;

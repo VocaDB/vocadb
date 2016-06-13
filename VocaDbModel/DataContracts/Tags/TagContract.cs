@@ -23,6 +23,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			CreateDate = tag.CreateDate;
 			Deleted = tag.Deleted;
 			Description = tag.Description.GetBestMatch(languagePreference);
+			HideFromSuggestions = tag.HideFromSuggestions;
 			Parent = tag.Parent != null ? new TagBaseContract(tag.Parent, languagePreference) : null;
 			Status = tag.Status;
 			Version = tag.Version;
@@ -46,6 +47,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public string Description { get; set; }
+
+		[DataMember]
+		public bool HideFromSuggestions { get; set; }
 
 		[DataMember]
 		public TagBaseContract Parent { get; set; }

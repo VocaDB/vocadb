@@ -9,7 +9,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public ArchivedTagVersionContract() { }
 
 		public ArchivedTagVersionContract(ArchivedTagVersion archivedVersion)
-			: base(archivedVersion, archivedVersion.Diff.ChangedFields, archivedVersion.CommonEditEvent) {}
+			: base(archivedVersion, archivedVersion.Diff.ChangedFields.Value, archivedVersion.CommonEditEvent) {}
 
 	}
 
