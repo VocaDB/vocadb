@@ -228,6 +228,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public TagBaseContract[] GetTopTags(string categoryName = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			return queries.Find(t => new TagBaseContract(t, lang), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
+				CategoryName = categoryName,
 				SortRule = TagSortRule.UsageCount
 			})
 			.Items.OrderBy(t => t.Name).ToArray();
