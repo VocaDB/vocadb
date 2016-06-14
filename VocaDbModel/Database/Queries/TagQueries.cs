@@ -540,6 +540,7 @@ namespace VocaDb.Model.Database.Queries {
 				CreateTrashedEntry(ctx, source, "Merged to " + target);
 				source.Delete();
 				DeleteActivityEntries(ctx, sourceId);
+				DeleteReports(ctx, sourceId);
 
 				ctx.Delete(source);
 				ctx.Flush();
