@@ -9,8 +9,12 @@ namespace VocaDb.Model.DataContracts.Globalization {
 		public EnglishTranslatedStringContract() { }
 
 		public EnglishTranslatedStringContract(EnglishTranslatedString str) {
+
+			ParamIs.NotNull(() => str);
+
 			English = str.English;
 			Original = str.Original;
+
 		}
 
 		[DataMember]

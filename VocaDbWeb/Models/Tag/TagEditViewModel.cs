@@ -8,6 +8,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
 
 namespace VocaDb.Web.Models.Tag {
 
@@ -85,6 +86,19 @@ namespace VocaDb.Web.Models.Tag {
 
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
+
+		public void CheckModel() {
+
+			if (Description == null)
+				throw new InvalidFormException("Description was null");
+
+			if (Names == null)
+				throw new InvalidFormException("Names list was null");
+
+			if (WebLinks == null)
+				throw new InvalidFormException("WebLinks list was null");
+
+		}
 
 		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext) {
 

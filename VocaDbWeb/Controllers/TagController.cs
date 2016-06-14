@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;
@@ -132,6 +133,12 @@ namespace VocaDb.Web.Controllers
 				CheckUploadedPicture(coverPicUpload, "thumbPicUpload");
 				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.InputStream };
 
+			}
+
+			try {
+				model.CheckModel();
+			} catch (InvalidFormException x) {
+				AddFormSubmissionError(x.Message);
 			}
 
 			if (!ModelState.IsValid) {
