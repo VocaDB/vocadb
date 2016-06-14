@@ -64,7 +64,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 				// Forbidden most likely means the artist has prevented API access to their tracks, http://stackoverflow.com/a/36529330
 				if (((HttpWebResponse)x.Response).StatusCode == HttpStatusCode.Forbidden) {
-					msg += "This track cannot be embedded.";
+					msg += " This track cannot be embedded.";
 				}
 
 				log.Warn(x, msg);

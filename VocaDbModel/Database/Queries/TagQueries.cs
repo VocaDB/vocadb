@@ -233,6 +233,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private void DeleteReports(IDatabaseContext<Tag> ctx, int tagId) {
+
+			var reports = ctx.Query<TagReport>().Where(t => t.Entry.Id == tagId).ToArray();
+			ctx.DeleteAll(reports);
+
+		}
+
 		public PartialFindResult<T> Find<T>(Func<Tag, T> fac, TagQueryParams queryParams, bool onlyMinimalFields = false)
 			where T : class {
 
@@ -567,6 +574,7 @@ namespace VocaDb.Model.Database.Queries {
 				tag.Delete();
 
 				DeleteActivityEntries(ctx, id);
+				DeleteReports(ctx, id);
 
 				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", tag));
 

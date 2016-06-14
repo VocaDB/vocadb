@@ -38,6 +38,15 @@ namespace VocaDb.Model.Database.Repositories {
 			ctx.OfType<T2>().Delete(obj);
 		}
 
+		public static void DeleteAll<T, T2>(this IDatabaseContext<T> ctx, IEnumerable<T2> objs) {
+
+			var ctxTyped = ctx.OfType<T2>();
+
+			foreach (var obj in objs)
+				ctxTyped.Delete(obj);
+
+		}
+
 		public static User GetLoggedUser(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext) {
 
 			permissionContext.VerifyLogin();

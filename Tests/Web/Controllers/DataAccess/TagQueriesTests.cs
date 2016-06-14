@@ -136,6 +136,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void MoveToTrash_DeleteRelatedEntries() {
+
+			repository.Save(new TagReport(tag, TagReportType.InvalidInfo, user, "test", "test", null));
+			repository.Save(new TagReport(tag2, TagReportType.InvalidInfo, user, "test", "test", null));
+
+			queries.MoveToTrash(tag.Id, "test");
+
+			Assert.AreEqual(1, repository.Count<TagReport>(), "Tag report was deleted");
+			Assert.AreEqual(tag2, repository.List<TagReport>().First().Entry, "Report for the other tag still exists");
+
+		}
+
+		[TestMethod]
 		public void GetTagsByCategories() {
 			
 			tag.CategoryName = "Animation";
