@@ -6,8 +6,10 @@ using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
@@ -24,14 +26,19 @@ namespace VocaDb.Web.Controllers
 
 		private readonly AlbumService albumService;
 		private readonly ArtistService artistService;
+		private readonly IEntryImagePersisterOld entryThumbPersister;
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly SongQueries songService;
+		private readonly TagQueries tagQueries;
 
-		public ExtController(IEntryUrlParser entryUrlParser, AlbumService albumService, ArtistService artistService, SongQueries songService) {
+		public ExtController(IEntryUrlParser entryUrlParser, IEntryImagePersisterOld entryThumbPersister, 
+			AlbumService albumService, ArtistService artistService, SongQueries songService, TagQueries tagQueries) {
 			this.entryUrlParser = entryUrlParser;
+			this.entryThumbPersister = entryThumbPersister;
 			this.albumService = albumService;
 			this.artistService = artistService;
 			this.songService = songService;
+			this.tagQueries = tagQueries;
 		}
 
 #if !DEBUG
@@ -89,6 +96,10 @@ namespace VocaDb.Web.Controllers
 					break;
 				case EntryType.Song:
 					data = RenderPartialViewToString("SongPopupContent", songService.GetSong(id));
+					break;
+				case EntryType.Tag:
+					data = RenderPartialViewToString("_TagPopupContent", tagQueries.GetTag(id, t => 
+						new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request), ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
 					break;
 			}
 

@@ -3083,6 +3083,7 @@
     <Content Include="Views\Shared\Partials\_PatreonLink.cshtml" />
     <Content Include="Views\Tag\Merge.cshtml" />
     <Content Include="Views\Help\Index.zh-Hans.cshtml" />
+    <Content Include="Views\Shared\_TagPopupContent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
