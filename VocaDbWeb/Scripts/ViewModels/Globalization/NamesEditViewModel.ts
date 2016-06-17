@@ -20,7 +20,7 @@ module vdb.viewModels.globalization {
 			this.aliases.remove(alias);
 		};
 
-		private getAllNames = () => {
+		public getAllNames = () => {
 			return _.filter(
 				this.getPrimaryNames().concat(this.aliases()),
 				name => name && name.value && name.value());

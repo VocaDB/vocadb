@@ -40,7 +40,6 @@ module vdb.viewModels {
 		public groups: KnockoutObservableArray<dc.artists.GroupForArtistContract>;
 
 		public groupSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams = {
-			allowCreateNew: false,
 			acceptSelection: this.addGroup,
 			extraQueryParams: { artistTypes: "Label,Circle,OtherGroup,Band" },
 			height: 300
@@ -81,7 +80,6 @@ module vdb.viewModels {
 				status: this.status(),
 				updateNotes: this.updateNotes(),
 				webLinks: this.webLinks.toContracts(),
-				additionalNames: "",
 				pictureMime: ""
 			};
 
@@ -98,6 +96,7 @@ module vdb.viewModels {
 		public validationExpanded = ko.observable(false);
 		public validationError_needReferences: KnockoutComputed<boolean>;
 		public validationError_needType: KnockoutComputed<boolean>;
+		public validationError_unnecessaryPName: KnockoutComputed<boolean>;
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
         public webLinks: WebLinksEditViewModel;
 
@@ -133,13 +132,23 @@ module vdb.viewModels {
 			});
 
 			this.validationError_needReferences = ko.computed(() => (this.description.original() == null || this.description.original().length) == 0 && this.webLinks.webLinks().length == 0);
-			this.validationError_needType = ko.computed(() => this.artistType() == cls.artists.ArtistType.Unknown);
+			this.validationError_needType = ko.computed(() => this.artistType() === cls.artists.ArtistType.Unknown);
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
+			this.validationError_unnecessaryPName = ko.computed(() => {
+				var allNames = this.names.getAllNames();
+				return _.some(allNames, n =>
+					_.some(allNames, n2 => n !== n2
+					&& (n.value() === n2.value() + "P"
+						|| n.value() === n2.value() + "-P"
+						|| n.value() === n2.value() + "p"
+						|| n.value() === n2.value() + "-p")));
+			});
 
 			this.hasValidationErrors = ko.computed(() =>
 				this.validationError_needReferences() ||
 				this.validationError_needType() ||
-				this.validationError_unspecifiedNames()
+				this.validationError_unspecifiedNames() ||
+				this.validationError_unnecessaryPName()
 			);
 			    
 			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Artist, data.id), 10000);			

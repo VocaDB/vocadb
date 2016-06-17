@@ -123,6 +123,9 @@
   <data name="NeedType" xml:space="preserve">
     <value>Artist type needs to be specified.</value>
   </data>
+  <data name="UnnecessaryPName" xml:space="preserve">
+    <value>There is no need to add artist name both with and without the P suffix.</value>
+  </data>
   <data name="UnspecifiedNames" xml:space="preserve">
     <value>Artist needs a primary name.</value>
   </data>

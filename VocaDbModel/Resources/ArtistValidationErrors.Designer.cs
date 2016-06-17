@@ -79,6 +79,15 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no need to add artist name both with and without the P suffix..
+        /// </summary>
+        public static string UnnecessaryPName {
+            get {
+                return ResourceManager.GetString("UnnecessaryPName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Artist needs a primary name..
         /// </summary>
         public static string UnspecifiedNames {
