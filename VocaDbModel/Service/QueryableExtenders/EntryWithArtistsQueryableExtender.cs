@@ -98,6 +98,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, string[] artistNames)
+			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistLink {
+
+			if (artistNames == null || artistNames.Length == 0)
+				return query;
+
+			return artistNames.Aggregate(query, (current, artistName) => current.Where(e => e.AllArtists.Any(a => a.Artist.Names.Names.Any(n => artistNames.Contains(n.Value)))));
+
+		}
+
 	}
 
 	public struct ArtistParticipationQueryParams<TEntry, TArtistLink> 

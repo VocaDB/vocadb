@@ -53,6 +53,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public int[] ArtistIds { get; set; }
 
+		public string[] ArtistNames { get; set; }
+
 		public ArtistAlbumParticipationStatus ArtistParticipationStatus { get; set; }
 
 		public bool ChildTags { get; set; }

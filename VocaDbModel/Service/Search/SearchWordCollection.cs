@@ -31,6 +31,10 @@ namespace VocaDb.Model.Service.Search {
 			return match;
 		}
 
+		public IEnumerable<string> GetValues(string name) {
+			return Words.Where(w => string.Equals(w.PropertyName, name, StringComparison.InvariantCultureIgnoreCase)).Select(w => w.Value);
+		}
+
 		public SearchWord TakeNext() {
 
 			if (!Words.Any())

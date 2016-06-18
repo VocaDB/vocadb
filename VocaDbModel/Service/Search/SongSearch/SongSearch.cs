@@ -30,10 +30,13 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				new SearchTextQuery(parsedQuery.Name.Query, nameMatchMode ?? parsedQuery.Name.MatchMode, parsedQuery.Name.OriginalQuery)
 				: SearchTextQuery.Empty;
 
+			textQuery = ProcessAdvancedSearch(textQuery, queryParams);
+
 			var query = Query<Song>()
 				.Where(s => !s.Deleted)
 				.WhereHasName(textQuery)
 				.WhereHasArtistParticipationStatus(new EntryIdsCollection(queryParams.ArtistIds), queryParams.ArtistParticipationStatus, queryParams.ChildVoicebanks, id => querySource.Load<Artist>(id))
+				.WhereHasArtists<Song, ArtistForSong>(queryParams.ArtistNames)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasType(queryParams.SongTypes)
 				.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
@@ -59,6 +62,27 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		private SearchWord GetTerm(string query, params string[] testTerms) {
 
 			return SearchWord.GetTerm(query, testTerms);
+
+		}
+
+		private SearchTextQuery ProcessAdvancedSearch(SearchTextQuery textQuery, SongQueryParams queryParams) {
+
+			if (textQuery.IsEmpty || textQuery.MatchMode == NameMatchMode.Exact || textQuery.MatchMode == NameMatchMode.StartsWith || !textQuery.OriginalQuery.StartsWith("!"))
+				return textQuery;
+
+			var parsed = SearchParser.ParseQuery(textQuery.OriginalQuery.Substring(1));
+
+			var artistNames = parsed.GetValues("artist");
+			queryParams.ArtistNames = artistNames.ToArray();
+
+			var words = parsed.GetValues("").ToArray();
+
+			if (words.Any()) {
+				queryParams.Common.TextQuery = new SearchTextQuery(textQuery.Query, NameMatchMode.Words, textQuery.OriginalQuery, words);
+				return queryParams.Common.TextQuery;
+			} else {
+				return textQuery;
+			}
 
 		}
 
