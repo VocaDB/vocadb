@@ -27,6 +27,9 @@
 @helper AlternateVersions(IEnumerable<SongContract> songs) {
 	foreach (var alternateVersion in songs) {
 		@SongHelpers.SongLink(alternateVersion)
+		if (alternateVersion.LengthSeconds > 0) {
+			@:(@VocaDb.Model.Helpers.DateTimeHelper.FormatMinSec(alternateVersion.LengthSeconds))
+		}
 		@SongHelpers.SongTypeLabel(alternateVersion.SongType)
 		<br />
 		@alternateVersion.ArtistString<br />

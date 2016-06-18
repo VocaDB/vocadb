@@ -72,8 +72,11 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			var parsed = SearchParser.ParseQuery(textQuery.OriginalQuery.Substring(1));
 
-			var artistNames = parsed.GetValues("artist");
-			queryParams.ArtistNames = artistNames.ToArray();
+			var artistNames = parsed.GetValues("artist").ToArray();
+
+			if (artistNames.Any()) {
+				queryParams.ArtistNames = artistNames;
+			}
 
 			var words = parsed.GetValues("").ToArray();
 
