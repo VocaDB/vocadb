@@ -429,6 +429,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var albumUsages = ctx.Query<AlbumTagUsage>()
 					.Where(u => !artistTags.Contains(u.Tag.Id) 
+						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions 
 						&& u.Album.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.GroupBy(t => t.Tag.Id)
