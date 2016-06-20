@@ -19,6 +19,10 @@
 
 }
 
+@section Toolbar {
+	<a href="@Url.Action("ArchivedVersionXml", new { id = Model.Entry.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
+}
+
 @if (Model.Entry.ComparableVersions.Any()) {
 	using (Html.BeginForm("ViewVersion", "Tag", FormMethod.Post, new { @class = "form form-inline" })) {
 		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.Entry.ComparableVersions, i => i.Id, i => i.Version + " (" + i.TranslateChangedFields(Model.EnumTranslations) + " by " + i.AgentName + ")", Model.Entry.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
@@ -32,3 +36,15 @@
 @TagHelpers.PrintArchivedTagData(Model.Entry.Versions)
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+
+@section BodyScripts {
+	<script type="text/javascript">
+
+		$(function () {
+
+            $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+
+        });
+
+	</script>
+}

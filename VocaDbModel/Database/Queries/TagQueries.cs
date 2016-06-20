@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Xml.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -447,6 +448,10 @@ namespace VocaDb.Model.Database.Queries {
 					comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
 					PermissionContext.LanguagePreference));
 
+		}
+
+		public XDocument GetVersionXml(int id) {
+			return HandleQuery(ctx => ctx.Load<ArchivedTagVersion>(id).Data);
 		}
 
 		/// <summary>

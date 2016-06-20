@@ -7,6 +7,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Translations;
@@ -32,6 +33,15 @@ namespace VocaDb.Web.Controllers
 			this.entryLinkFactory = entryLinkFactory;
 			this.enumTranslations = enumTranslations;
 			this.markdownParser = markdownParser;
+
+		}
+
+		public ActionResult ArchivedVersionXml(int id) {
+
+			var doc = queries.GetVersionXml(id);
+			var content = XmlHelper.SerializeToUTF8XmlString(doc);
+
+			return Xml(content);
 
 		}
 
