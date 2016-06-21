@@ -195,10 +195,11 @@ namespace VocaDb.Model.Service {
 		private Song[] GetHighlightedSongs(ISession session) {
 
 			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
-			var maxSongs = 100;
+			var maxSongs = 1000;
 			var songCount = 20;
 
-			var recentSongs =
+			// Load at most maxSongs songs for cutoff date
+			var recentSongIdAndScore =
 				session.Query<Song>()
 				.Where(s => !s.Deleted 
 					&& s.PVServices != PVServices.Nothing 
@@ -206,14 +207,29 @@ namespace VocaDb.Model.Service {
 				)
 				.OrderByDescending(s => s.CreateDate)
 				.Take(maxSongs)
+				.Select(s => new {
+					s.Id,
+					s.RatingScore
+				})
 				.ToArray();
 
+			// Get song Ids
+			var songIds = recentSongIdAndScore
+				.OrderByDescending(s => s.RatingScore)
+				.Take(songCount)
+				.Select(s => s.Id)
+				.ToArray();
+
+			// Load the songs
+			var recentSongs = session.Query<Song>()
+				.Where(s => songIds.Contains(s.Id))
+				.OrderBy(SongSortRule.RatingScore)
+				.ToArray();
+
+			// If there's enough songs for cutoff date, return them, otherwise load more songs.
 			if (recentSongs.Length >= songCount) {
-				
-				return recentSongs
-					.OrderByDescending(s => s.RatingScore)
-					.Take(songCount)
-					.ToArray();
+
+				return recentSongs;
 
 			}  else {
 
