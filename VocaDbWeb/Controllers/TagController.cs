@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Web.Mvc;
 using ViewRes.Tag;
 using VocaDb.Model.Database.Queries;
@@ -39,7 +38,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult ArchivedVersionXml(int id) {
 
 			var doc = queries.GetVersionXml(id);
-			var content = XmlHelper.SerializeToUTF8XmlString(doc);
+			var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(content);
 

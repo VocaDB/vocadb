@@ -33,6 +33,8 @@ namespace VocaDb.Model.Helpers {
 		/// <returns>Document serialized into XML string, in UTF-8 encoding.</returns>
 		public static string SerializeToUTF8XmlString(XDocument doc) {
 
+			ParamIs.NotNull(() => doc);
+
 			doc.Declaration = new XDeclaration("1.0", "utf-8", "yes");
 
 			using (var stream = new MemoryStream()) {
