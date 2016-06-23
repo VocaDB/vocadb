@@ -988,6 +988,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryReportStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\UserAccountStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
