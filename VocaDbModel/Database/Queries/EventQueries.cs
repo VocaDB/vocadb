@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -29,6 +30,16 @@ namespace VocaDb.Model.Database.Queries {
 			var archived = releaseEvent.CreateArchivedVersion(diff, agentLoginData, reason);
 			ctx.Save(archived);
 			return archived;
+
+		}
+
+		private void CheckDuplicateName(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent ev) {
+
+			var hasDuplicate = ctx.Query().Any(e => e.Id != ev.Id && e.Name == ev.Name);
+
+			if (hasDuplicate) {
+				throw new DuplicateEventNameException(ev.Name);
+			}
 
 		}
 
@@ -190,6 +201,8 @@ namespace VocaDb.Model.Database.Queries {
 						ev = new ReleaseEvent(contract.Description, contract.Date, contract.Name);
 					}
 
+					CheckDuplicateName(session, ev);
+
 					session.Save(ev);
 
 					var archived = Archive(session, ev, new ReleaseEventDiff(), EntryEditEvent.Created);
@@ -208,7 +221,7 @@ namespace VocaDb.Model.Database.Queries {
 					if (ev.Description != contract.Description)
 						diff.Description.Set();
 
-					if (ev.Name != contract.Name)
+					if (ev.Name != contract.Name && (contract.Series == null || contract.CustomName))
 						diff.Name.Set();
 
 					if (!ev.Series.NullSafeIdEquals(contract.Series)) {
@@ -231,6 +244,8 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SeriesNumber = contract.SeriesNumber;
 					ev.SeriesSuffix = contract.SeriesSuffix;
 					ev.UpdateNameFromSeries();
+
+					CheckDuplicateName(session, ev);
 
 					UpdateAllReleaseEventNames(session, oldName, ev.Name);
 

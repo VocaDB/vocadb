@@ -712,6 +712,7 @@
     <Compile Include="Service\EntryUrlParser.cs" />
     <Compile Include="Service\EntryValidators\ArtistValidator.cs" />
     <Compile Include="Service\EntryValidators\SongValidator.cs" />
+    <Compile Include="Service\Exceptions\DuplicateEventNameException.cs" />
     <Compile Include="Service\Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Service\Exceptions\InvalidEmailFormatException.cs" />
     <Compile Include="Service\Exceptions\NoPasswordException.cs" />

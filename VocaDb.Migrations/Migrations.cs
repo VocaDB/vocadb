@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201606232200)]
+	public class ReleaseEventNameUniqueIndex : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Index("IX_AlbumReleaseEvents_Name").OnTable(TableNames.AlbumReleaseEvents).OnColumn("[Name]").Unique();
+
+		}
+
+	}
+
 	[Migration(201606132100)]
 	public class TagsHiddenFromSuggestions : AutoReversingMigration {
 

@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
@@ -123,6 +124,54 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual("Fall", contract.SeriesSuffix, "SeriesSuffix");
 			Assert.AreEqual("M3 2013 Fall", result.Name, "Name");
 			Assert.AreEqual("M3 2013 Fall", album.OriginalReleaseEventName, "OriginalReleaseEventName for album");
+
+			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
+			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
+			Assert.AreEqual(ReleaseEventEditableFields.SeriesSuffix, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+
+		}
+
+		[TestMethod]
+		public void Update_ChangeName_CustomName() {
+
+			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default);
+			contract.CustomName = true;
+			contract.Name = "M3 2013 Fall X2";
+
+			var result = CallUpdate(contract);
+
+			Assert.AreEqual("M3 2013 Fall X2", result.Name, "Name was updated");
+
+			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
+			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
+			Assert.AreEqual(ReleaseEventEditableFields.Name, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+
+		}
+
+		[TestMethod]
+		public void Update_ChangeName_UseSeriesName() {
+
+			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default);
+			contract.Name = "New name";
+
+			var result = CallUpdate(contract);
+
+			Assert.AreEqual("M3 2013 Spring", result.Name, "Name was not updated");
+
+			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
+			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
+			Assert.AreEqual(ReleaseEventEditableFields.Nothing, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DuplicateEventNameException))]
+		public void Update_ChangeName_Duplicate() {
+
+			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default);
+			contract.Id = 0; // Simulate new event
+
+			queries.Update(contract);
 
 		}
 
