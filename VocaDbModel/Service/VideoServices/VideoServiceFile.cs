@@ -49,7 +49,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		public override bool IsAuthorized(IUserPermissionContext permissionContext) {
-			return permissionContext.HasPermission(PermissionToken.AddRawFileMedia);
+			return permissionContext != null && permissionContext.HasPermission(PermissionToken.AddRawFileMedia);
 		}
 
 		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {

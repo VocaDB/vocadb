@@ -245,6 +245,24 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> query, PVService? service, string pvId) {
+
+			if (service == null || pvId == null)
+				return query;
+
+			return query.Where(s => s.PVs.PVs.Any(pv => pv.Service == service && pv.PVId == pvId));
+
+		}
+
+		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> query, IPV pv) {
+
+			if (pv == null)
+				return query;
+
+			return WhereHasPV(query, pv.Service, pv.PVId);
+
+		}
+
 		public static IQueryable<Song> WhereHasScore(this IQueryable<Song> query, int minScore) {
 
 			if (minScore <= 0)

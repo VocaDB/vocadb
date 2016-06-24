@@ -156,7 +156,13 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public static VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext) {
 
-			var service = services.FirstOrDefault(s => s.IsAuthorized(permissionContext) && s.IsValidFor(url));
+			return ParseByUrl(url, getTitle, permissionContext, services);
+
+		}
+
+		public static VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices) {
+
+			var service = testServices.FirstOrDefault(s => s.IsAuthorized(permissionContext) && s.IsValidFor(url));
 
 			if (service == null) {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -45,6 +46,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereArtistHasTag(parsedQuery.ArtistTag)
 				.WhereArtistHasType(parsedQuery.ArtistType)
 				.WhereHasNicoId(parsedQuery.NicoId)
+				.WhereHasPV(parsedQuery.PV)
 				.WhereHasPVService(queryParams.PVServices)
 				.WhereIdIs(parsedQuery.Id)
 				.WhereIdNotIn(queryParams.IgnoredIds)
@@ -140,19 +142,34 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			if (term == null) {
 
 				// Optimization: check prefix, in most cases the user won't be searching by URL
-				if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase) 
-					|| trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
-
-					var nicoId = VideoService.NicoNicoDouga.GetIdByUrl(query);
-
-					if (!string.IsNullOrEmpty(nicoId))
-						return new ParsedSongQuery { NicoId = nicoId };
+				if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase)) {
 
 					var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
 
 					if (entryId.EntryType == EntryType.Song)
 						return new ParsedSongQuery { Id = entryId.Id };
 					
+				} else if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
+
+					// Test PV URL with services that don't require a web call
+					var videoParseResult = VideoServiceHelper.ParseByUrl(query, false, null, 
+						VideoService.NicoNicoDouga, VideoService.Youtube, VideoService.Bilibili, VideoService.File, VideoService.LocalFile, VideoService.Vimeo);
+
+					if (videoParseResult.IsOk) {
+
+						if (videoParseResult.Service == Domain.PVs.PVService.NicoNicoDouga) {
+							return new ParsedSongQuery { NicoId = videoParseResult.Id };
+						} else {
+							return new ParsedSongQuery { PV = new PVContract { PVId = videoParseResult.Id, Service = videoParseResult.Service } };
+						}
+
+					}
+
+					var entryId = entryUrlParser.Parse(trimmed, allowRelative: false);
+
+					if (entryId.EntryType == EntryType.Song)
+						return new ParsedSongQuery { Id = entryId.Id };
+
 				}
 
 			} else {
