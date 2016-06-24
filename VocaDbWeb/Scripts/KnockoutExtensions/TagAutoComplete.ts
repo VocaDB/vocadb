@@ -16,7 +16,7 @@ ko.bindingHandlers.tagAutoComplete = {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			fields: 'AdditionalNames',
+			fields: 'AdditionalNames,CategoryName',
 			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 20,
@@ -24,12 +24,12 @@ ko.bindingHandlers.tagAutoComplete = {
 			allowAliases: allowAliases
 		};
 
-		var params: vdb.EntryAutoCompleteParams<dc.TagBaseContract> = {
+		var params: vdb.EntryAutoCompleteParams<dc.TagApiContract> = {
 			acceptSelection: (id, term, itemType, item) => {
 				valueAccessor()(item);
 			},
 			createNewItem: null,
-			createOptionFirstRow: (item) => item.name,
+			createOptionFirstRow: (item) => item.name + (item.categoryName ? " (" + item.categoryName + ")" : ""),
 			createOptionSecondRow: null,
 			extraQueryParams: queryParams,
 			filter: tagFilter,
