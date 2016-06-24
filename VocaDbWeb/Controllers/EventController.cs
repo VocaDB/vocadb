@@ -59,6 +59,11 @@ namespace VocaDb.Web.Controllers
 		        return NoId();
 
 			var ev = Service.GetReleaseEventDetails(id);
+
+			PageProperties.PageTitle = string.Format("{0} ({1})", ev.Name, ViewRes.Event.DetailsStrings.Event);
+			PageProperties.Title = ev.Name;
+			PageProperties.Subtitle = ViewRes.Event.DetailsStrings.Event;
+
 			return View(ev);
 
 		}
