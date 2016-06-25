@@ -247,7 +247,7 @@
     <value>ボーカロイドやUTAUに関するクリエーターですか？ もしそうであれば、{0}をご覧下さい。</value>
   </data>
   <data name="ImportSongList" xml:space="preserve">
-    <value>Import from YouTube or NicoNicoDouga</value>
+    <value>ニコニコ動画やYouTubeから輸入</value>
   </data>
   <data name="SupporterTitle" xml:space="preserve">
     <value>ご支援ありがとうございます</value>

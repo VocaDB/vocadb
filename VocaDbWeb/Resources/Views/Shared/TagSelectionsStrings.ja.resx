@@ -123,4 +123,7 @@
   <data name="Info" xml:space="preserve">
     <value>タグを選択、または追加。</value>
   </data>
+  <data name="Suggestions" xml:space="preserve">
+    <value>おすすめタグ</value>
+  </data>
 </root>

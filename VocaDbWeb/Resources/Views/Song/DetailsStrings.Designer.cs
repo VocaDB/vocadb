@@ -475,6 +475,24 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Track #{0} on album {1}.
+        /// </summary>
+        public static string TrackOnAlbum {
+            get {
+                return ResourceManager.GetString("TrackOnAlbum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track #{0} on disc {1} on album {2}.
+        /// </summary>
+        public static string TrackOnAlbumDisc {
+            get {
+                return ResourceManager.GetString("TrackOnAlbumDisc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View all lists ({0}).
         /// </summary>
         public static string ViewAllLists {

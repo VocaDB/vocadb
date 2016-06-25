@@ -264,4 +264,10 @@
   <data name="ViewAllLists" xml:space="preserve">
     <value>View all lists ({0})</value>
   </data>
+  <data name="TrackOnAlbum" xml:space="preserve">
+    <value>Track #{0} on album {1}</value>
+  </data>
+  <data name="TrackOnAlbumDisc" xml:space="preserve">
+    <value>Track #{0} on disc {1} on album {2}</value>
+  </data>
 </root>

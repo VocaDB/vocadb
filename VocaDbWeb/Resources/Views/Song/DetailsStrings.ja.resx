@@ -268,4 +268,7 @@
   <data name="ListsTabPersonal" xml:space="preserve">
     <value>個人リスト</value>
   </data>
+  <data name="TrackOnAlbum" xml:space="preserve">
+    <value>アルバム「{1}」{0}曲目</value>
+  </data>
 </root>

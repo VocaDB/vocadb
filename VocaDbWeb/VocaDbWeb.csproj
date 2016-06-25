@@ -4004,6 +4004,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\Partials\EnglishTranslatedStringStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\EnglishTranslatedStringStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EnglishTranslatedStringStrings.Designer.cs</LastGenOutput>
@@ -4037,6 +4038,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TagSelectionsStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.de.resx" />

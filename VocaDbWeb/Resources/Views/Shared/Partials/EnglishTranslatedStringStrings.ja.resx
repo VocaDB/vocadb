@@ -117,29 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>同じアーティストを二度指定することはできません。重複を削除し役割を修正してください。</value>
-  </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>アルバムはアーティストが少なくとも１名必要です。</value>
-  </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>アルバムジャケットが必要です。</value>
-  </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>このアルバムには概要またはリンクが必要です。</value>
-  </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>アルバム公開年が必要です。</value>
-  </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>アルバムのトラックリストが必要です。</value>
-  </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>アルバムタイプが必要です。</value>
-  </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>アルバムの主なタイトルが必要です。</value>
-    <comment>主なタイトル＝別名じゃない</comment>
+  <data name="ShowFullDescription" xml:space="preserve">
+    <value>全文を読む</value>
   </data>
 </root>
