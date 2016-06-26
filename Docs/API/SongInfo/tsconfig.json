@@ -1,0 +1,15 @@
+{
+	"compileOnSave": true,
+	"compilerOptions": {
+		"noImplicitAny": true,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"outFile": "script.js"
+	},
+	"files": [
+		"typings/jquery.d.ts",
+		"typings/knockout.d.ts",
+		"typings/lodash.d.ts",
+		"script.ts"
+	]
+}

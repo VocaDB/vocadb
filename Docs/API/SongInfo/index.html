@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title>Song info</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<style>
+
+	</style>
+</head>
+
+<body>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<form class="form-inline">
+					<h1>VocaDB songinfo</h1>
+					<div class="form-group">
+						<input type="text" data-bind="textInput: url" class="form-control" id="url" placeholder="VocaDB URL">
+						<button type="submit" data-bind="click: loadUrl" class="btn btn-primary">Load</button>
+					</div>
+					<hr />
+				</form>
+				<form>
+					<div class="form-group">
+						<input type="text" data-bind="textInput: title" readonly />
+					</div>
+					<div>
+						<textarea data-bind="textInput: result" readonly cols="80" rows="10"></textarea>						
+					</div>
+				</form>
+			</div>
+		</div>		
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
