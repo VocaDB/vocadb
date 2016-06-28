@@ -173,7 +173,7 @@
 			@if (alwaysAllowDelete || (allowDelete && Login.CanDeleteComment(contract))) {
 				<text>-</text> <a href="#" id="deleteComment_@(contract.Id)" class="deleteComment">@ViewRes.SharedStrings.Delete</a>
 			}
-			<small class="pull-right extraInfo">
+			<small class="pull-right extraInfo" title="@contract.Created.ToUniversalTime() UTC">
 				@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
 			</small>		
 		</h3>
