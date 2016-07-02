@@ -181,12 +181,12 @@ namespace VocaDb.Web.Services {
 		}
 
 		[OperationContract]
-		public SongDetailsContract GetSongDetails(string term, ContentLanguagePreference? language = null) {
+		public SongDetailsContract GetSongDetails(string term, ContentLanguagePreference? language = null, NameMatchMode matchMode = NameMatchMode.Auto) {
 
 			if (language.HasValue)
 				userPermissionContext.LanguagePreferenceSetting.OverrideRequestValue(language.Value);
 
-			var song = songService.FindFirstDetails(SearchTextQuery.Create(term));
+			var song = songService.FindFirstDetails(SearchTextQuery.Create(term, matchMode));
 			return song;
 
 		}
