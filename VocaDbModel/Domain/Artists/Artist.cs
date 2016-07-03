@@ -465,6 +465,15 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
+		/// <summary>
+		/// Tests whether this artist has a specific artist as base voicebank.
+		/// </summary>
+		/// <param name="artist">Artist to be checked. Cannot be null.</param>
+		/// <returns>True if <paramref name="artist"/> is a base voicebank of this artist. Otherwise false.</returns>
+		public virtual bool HasBaseVoicebank(Artist artist) {
+			return BaseVoicebank != null && (BaseVoicebank.Equals(artist) || BaseVoicebank.HasBaseVoicebank(artist));
+		}
+
 		public virtual bool HasGroup(Artist grp) {
 
 			ParamIs.NotNull(() => grp);
