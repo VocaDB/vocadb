@@ -14,7 +14,7 @@ module vdb.viewModels {
 			
 			if (artistId) {
 				this.artistRepo.getOne(artistId, (artist: dc.ArtistContract) => {
-					this.groups.push({ id: 0, group: artist });
+					this.groups.push({ id: 0, parent: artist });
 				});
 			}
 
@@ -38,7 +38,7 @@ module vdb.viewModels {
 		});
 
 		public description: globalization.EnglishTranslatedStringEditViewModel;
-		public groups: KnockoutObservableArray<dc.artists.GroupForArtistContract>;
+		public groups: KnockoutObservableArray<dc.artists.ArtistForArtistContract>;
 
 		public groupSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams = {
 			acceptSelection: this.addGroup,
@@ -53,7 +53,7 @@ module vdb.viewModels {
 		public names: globalization.NamesEditViewModel;
 		public pictures: EntryPictureFileListEditViewModel;
 
-		public removeGroup = (group: dc.artists.GroupForArtistContract) => {
+		public removeGroup = (group: dc.artists.ArtistForArtistContract) => {
 			this.groups.remove(group);
 		}
 

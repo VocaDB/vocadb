@@ -11,7 +11,7 @@ module vdb.dataContracts.artists {
 
 		description: globalization.EnglishTranslatedStringContract;
 
-		groups: GroupForArtistContract[];
+		groups: ArtistForArtistContract[];
 
 		id: number;
 
