@@ -130,11 +130,7 @@ namespace VocaDb.Model.Domain.Artists {
 		/// In practice, only vocalists can have child voicebanks.
 		/// This is mostly a performance optimization thing, so that the child voicebanks list doesn't need to be loaded unless needed.
 		/// </summary>
-		public virtual bool CanHaveChildVoicebanks {
-			get {
-				return (ArtistHelper.VocalistTypes.Contains(ArtistType) || ArtistType == ArtistType.Unknown) && BaseVoicebank == null;
-			}
-		}
+		public virtual bool CanHaveChildVoicebanks => ArtistHelper.VocalistTypes.Contains(ArtistType) || ArtistType == ArtistType.Unknown;
 
 		public virtual IList<Artist> ChildVoicebanks {
 			get { return childVoicebanks; }
