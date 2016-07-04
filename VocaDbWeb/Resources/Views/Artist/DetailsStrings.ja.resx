@@ -192,4 +192,10 @@
   <data name="Members" xml:space="preserve">
     <value>メンバー</value>
   </data>
+  <data name="Illustrator" xml:space="preserve">
+    <value>イラストレーター</value>
+  </data>
+  <data name="VoiceProvider" xml:space="preserve">
+    <value>声優</value>
+  </data>
 </root>
