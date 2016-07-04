@@ -115,6 +115,15 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Character designs.
+        /// </summary>
+        public static string CharacterDesigns {
+            get {
+                return ResourceManager.GetString("CharacterDesigns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Derived voicebanks.
         /// </summary>
         public static string ChildVoicebanks {
@@ -183,6 +192,15 @@ namespace ViewRes.Artist {
         public static string GroupsHelp {
             get {
                 return ResourceManager.GetString("GroupsHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Illustrated by.
+        /// </summary>
+        public static string Illustrator {
+            get {
+                return ResourceManager.GetString("Illustrator", resourceCulture);
             }
         }
         
@@ -345,6 +363,24 @@ namespace ViewRes.Artist {
         public static string ViewModeTiles {
             get {
                 return ResourceManager.GetString("ViewModeTiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voice provider.
+        /// </summary>
+        public static string VoiceProvider {
+            get {
+                return ResourceManager.GetString("VoiceProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voice provider of.
+        /// </summary>
+        public static string VoiceProviderOf {
+            get {
+                return ResourceManager.GetString("VoiceProviderOf", resourceCulture);
             }
         }
         
