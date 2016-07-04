@@ -1513,6 +1513,7 @@
     <Content Include="Content\ExtIcons\vocallective.png" />
     <Content Include="Content\ExtIcons\vocastore.png" />
     <Content Include="Content\ExtIcons\vocawiki.png" />
+    <Content Include="Content\ExtIcons\weibo.png" />
     <Content Include="Content\ExtIcons\yesasia.png" />
     <Content Include="Content\Icons\accept.png" />
     <Content Include="Content\Icons\add.png" />

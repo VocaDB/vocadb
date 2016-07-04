@@ -69,6 +69,9 @@ a.extLink[href^="http://www.vocallective.net"] {
 a.extLink[href^="http://www.vocaloidotaku.net"] {
   background: url("/Content/ExtIcons/vo.png") no-repeat left 50%;
 }
+a.extLink[href^="http://weibo.com/"] {
+  background: url("/Content/ExtIcons/weibo.png") no-repeat left 50%;
+}
 a.extLink[href^="mailto:"] {
   background: url("/Content/Icons/email.png") no-repeat left 50%;
 }
