@@ -21,7 +21,9 @@ namespace VocaDb.Model.Database.Repositories {
 		public static void RestoreObjectRefs<TExisting, TEntry, TObjRef>(IDatabaseContext<TEntry> session, IList<string> warnings, IEnumerable<TExisting> existing,
 			IEnumerable<TObjRef> objRefs, Func<TExisting, TObjRef, bool> equality,
 			Func<TEntry, TObjRef, TExisting> createEntryFunc, Action<TExisting> deleteFunc)
-			where TObjRef : ObjectRefContract where TEntry : class where TExisting : class {
+			where TObjRef : ObjectRefContract 
+			where TEntry : class 
+			where TExisting : class {
 
 			if (objRefs == null)
 				objRefs = Enumerable.Empty<TObjRef>();

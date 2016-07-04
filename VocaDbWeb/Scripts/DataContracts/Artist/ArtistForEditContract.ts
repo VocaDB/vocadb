@@ -15,6 +15,8 @@ module vdb.dataContracts.artists {
 
 		id: number;
 
+		illustrator: ArtistContract;
+
 		names: globalization.LocalizedStringWithIdContract[];
 
 		pictureMime: string;
@@ -24,6 +26,8 @@ module vdb.dataContracts.artists {
 		status: string;
 
 		updateNotes: string;
+
+		voiceProvider: ArtistContract;
 
 		webLinks: vdb.dataContracts.WebLinkContract[];
 

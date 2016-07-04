@@ -86,6 +86,10 @@
 	}
 	@Html.ActionLink(name ?? artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
 }
+	
+@helper ArtistLinkList(IEnumerable<ArtistContract> artists, bool typeLabel = false) {
+	@Html.LinkList(artists, a => new MvcHtmlString(ArtistLink(a, typeLabel).ToString()))
+}
 
 @helper ArtistList(IEnumerable<ArtistForAlbumContract> artists, bool showRoles = false, bool showType = false) {
 	var ordered = artists.OrderBy(a => a.IsSupport).ToArray();

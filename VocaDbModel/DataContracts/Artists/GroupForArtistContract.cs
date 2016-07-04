@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 			Group = new ArtistContract(groupForArtist.Group, languagePreference);
 			Id = groupForArtist.Id;
+			LinkType = groupForArtist.LinkType;
 			Member = new ArtistContract(groupForArtist.Member, languagePreference);
 
 		}
@@ -24,6 +25,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public int Id { get; set; }
+
+		[DataMember]
+		public ArtistLinkType LinkType { get; set; }
 
 		[DataMember]
 		public ArtistContract Member { get; set; }

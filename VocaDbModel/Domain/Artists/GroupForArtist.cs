@@ -9,16 +9,13 @@ namespace VocaDb.Model.Domain.Artists {
 
 		public GroupForArtist() { }
 
-		public GroupForArtist(Artist group, Artist member) {
+		public GroupForArtist(Artist group, Artist member, ArtistLinkType linkType) {
 
 			Group = group;
 			Member = member;
+			LinkType = linkType;
 
 		}
-
-		//public DateTime? BeginDate { get; set; }
-
-		//public DateTime? EndDate { get; set; }
 
 		public virtual Artist Group {
 			get { return group; }
@@ -29,6 +26,8 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		public virtual int Id { get; set; }
+
+		public virtual ArtistLinkType LinkType { get; set; }
 
 		public virtual Artist Member {
 			get { return member; }

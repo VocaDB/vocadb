@@ -61,8 +61,8 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void GetMainCircle_HasCircle() {
 
-			producer.Artist.AddGroup(circle.Artist);
-			producer2.Artist.AddGroup(circle.Artist);
+			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
+			producer2.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
 
 			var result = ArtistHelper.GetMainCircle(new[] { producer, producer2, circle }, false);
 
@@ -82,7 +82,7 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void GetMainCircle_ProducerNotInCircle() {
 
-			producer.Artist.AddGroup(circle.Artist);
+			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
 
 			var result = ArtistHelper.GetMainCircle(new[] { producer, producer2, circle }, false);
 
@@ -93,8 +93,8 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void GetMainCircle_NoCircle() {
 
-			producer.Artist.AddGroup(circle.Artist);
-			producer2.Artist.AddGroup(circle.Artist);
+			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
+			producer2.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
 
 			var result = ArtistHelper.GetMainCircle(new[] { producer, producer2 }, false);
 

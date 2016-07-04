@@ -114,6 +114,7 @@ namespace VocaDb.Model.Mapping.Artists {
 			Table("GroupsForArtists");
 			Id(m => m.Id);
 
+			Map(m => m.LinkType).Not.Nullable();
 			References(m => m.Group).Not.Nullable();
 			References(m => m.Member).Not.Nullable();
 

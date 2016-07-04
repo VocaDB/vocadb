@@ -120,6 +120,10 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
+		public virtual IEnumerable<Artist> ArtistLinksOfType(ArtistLinkType linkType, bool parent) {
+			return (parent ? Groups : Members).Where(g => g.LinkType == linkType).Select(g => parent ? g.Group : g.Member);
+		}
+
 		public virtual ArtistType ArtistType { get; set; }
 
 		public virtual Artist BaseVoicebank { get; set; }
@@ -317,11 +321,11 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public virtual GroupForArtist AddGroup(Artist grp) {
+		public virtual GroupForArtist AddGroup(Artist grp, ArtistLinkType linkType) {
 
 			ParamIs.NotNull(() => grp);
 
-			var link = new GroupForArtist(grp, this);
+			var link = new GroupForArtist(grp, this, linkType);
 			AllGroups.Add(link);
 			grp.AllMembers.Add(link);
 
@@ -329,11 +333,11 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public virtual GroupForArtist AddMember(Artist member) {
+		public virtual GroupForArtist AddMember(Artist member, ArtistLinkType linkType) {
 
 			ParamIs.NotNull(() => member);
 
-			return member.AddGroup(this);
+			return member.AddGroup(this, linkType);
 
 		}
 

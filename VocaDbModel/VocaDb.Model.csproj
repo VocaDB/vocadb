@@ -149,6 +149,7 @@
     <Compile Include="DataContracts\Api\EntryForApiContract.cs" />
     <Compile Include="DataContracts\Api\EntryForApiContractFactory.cs" />
     <Compile Include="DataContracts\Artists\AdvancedArtistStatsContract.cs" />
+    <Compile Include="DataContracts\Artists\ArchivedArtistForArtistContract.cs" />
     <Compile Include="DataContracts\Artists\TranslatedArtistContract.cs" />
     <Compile Include="DataContracts\CommentForApiContract.cs" />
     <Compile Include="DataContracts\Comments\EntryWithCommentsContract.cs" />
@@ -317,6 +318,7 @@
     <Compile Include="Domain\Albums\ReleaseEventDiff.cs" />
     <Compile Include="Domain\Albums\ReleaseEventEditableFields.cs" />
     <Compile Include="Domain\Albums\TrackIndex.cs" />
+    <Compile Include="Domain\Artists\ArtistLinkType.cs" />
     <Compile Include="Domain\Artists\ArtistMergeRecord.cs" />
     <Compile Include="Domain\Artists\ArtistPictureFile.cs" />
     <Compile Include="Domain\Artists\ArtistCategories.cs" />

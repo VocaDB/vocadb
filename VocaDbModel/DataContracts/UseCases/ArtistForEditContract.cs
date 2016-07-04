@@ -19,10 +19,12 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			DefaultNameLanguage = artist.TranslatedName.DefaultLanguage;
 			Description = new EnglishTranslatedStringContract(artist.Description);
-			Groups = artist.Groups.Select(g => new GroupForArtistContract(g, languagePreference)).OrderBy(g => g.Group.Name).ToArray();
+			Groups = artist.Groups.Where(g => g.LinkType == ArtistLinkType.Group).Select(g => new GroupForArtistContract(g, languagePreference)).OrderBy(g => g.Group.Name).ToArray();
+			Illustrator = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, true).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 			Names = artist.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p)).ToList();
 			UpdateNotes = string.Empty;
+			VoiceProvider = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, true).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
@@ -40,6 +42,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public GroupForArtistContract[] Groups { get; set; }
 
 		[DataMember]
+		public ArtistContract Illustrator { get; set; }
+
+		[DataMember]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		[DataMember]
@@ -47,6 +52,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		[DataMember]
 		public string UpdateNotes { get; set; }
+
+		[DataMember]
+		public ArtistContract VoiceProvider { get; set; }
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }

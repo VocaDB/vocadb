@@ -60,7 +60,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Id = artist.Id;
 			Description = (diff.IncludeDescription ? artist.Description.Original : null);
 			DescriptionEng = (diff.IncludeDescription ? artist.Description.English : null);
-			Groups = artist.Groups.Select(g => new ObjectRefContract(g.Group)).ToArray();
+			Groups = artist.Groups.Select(g => new ArchivedArtistForArtistContract(g)).ToArray();
 			MainPictureMime = artist.PictureMime;
 			Members = artist.Members.Select(m => new ObjectRefContract(m.Member)).ToArray();
 			Names = (diff.IncludeNames ? artist.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null);
@@ -86,7 +86,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public string DescriptionEng { get; set; }
 
 		[DataMember]
-		public ObjectRefContract[] Groups { get; set; }
+		public ArchivedArtistForArtistContract[] Groups { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
