@@ -251,7 +251,7 @@
 						}
 						@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 							<p>
-								@Res.MostlyUses @ArtistHelpers.ArtistLinkList(Model.AdvancedStats.TopVocaloids.Select(a => a.Data)).
+								@Res.MostlyUses @ArtistHelpers.ArtistLinkList(Model.AdvancedStats.TopVocaloids.Select(a => a.Data), typeLabel: true).
 							</p>
 						}
 					</td>
