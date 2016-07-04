@@ -195,7 +195,13 @@
   <data name="Illustrator" xml:space="preserve">
     <value>イラストレーター</value>
   </data>
+  <data name="IllustratorOf" xml:space="preserve">
+    <value>ためのイラストレーター</value>
+  </data>
   <data name="VoiceProvider" xml:space="preserve">
     <value>声優</value>
+  </data>
+  <data name="VoiceProviderOf" xml:space="preserve">
+    <value>ための声優</value>
   </data>
 </root>
