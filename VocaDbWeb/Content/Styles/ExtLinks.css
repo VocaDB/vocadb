@@ -7,6 +7,12 @@ a.extLink[href^="http://about.me/"],
 a.extLink[href^="https://about.me/"] {
   background: url("/Content/ExtIcons/aboutme.png") no-repeat left 50%;
 }
+a.extLink[href^="http://www.amazon.co.jp/"],
+a.extLink[href^="https://www.amazon.co.jp/"],
+a.extLink[href^="http://www.amazon.com/"],
+a.extLink[href^="https://www.amazon.com/"] {
+  background: url("/Content/ExtIcons/amazon.png") no-repeat left 50%;
+}
 a.extLink[href^="http://www.animate-onlineshop.jp/"] {
   background: url("/Content/ExtIcons/animate.png") no-repeat left 50%;
 }
@@ -68,12 +74,6 @@ a.extLink[href^="mailto:"] {
 }
 a.extLink[href^="http://alice-books.com/"] {
   background: url("/Content/ExtIcons/alicebooks.png") no-repeat left 50%;
-}
-a.extLink[href^="http://www.amazon.co.jp/"] {
-  background: url("/Content/ExtIcons/amazon.png") no-repeat left 50%;
-}
-a.extLink[href^="http://www.amazon.com/"] {
-  background: url("/Content/ExtIcons/amazon.png") no-repeat left 50%;
 }
 a.extLink[href^="http://ameblo.jp/"] {
   background: url("/Content/ExtIcons/ameblo.png") no-repeat left 50%;
