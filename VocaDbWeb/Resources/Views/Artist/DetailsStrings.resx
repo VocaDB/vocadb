@@ -135,9 +135,6 @@
   <data name="BaseVoicebank" xml:space="preserve">
     <value>Base voicebank</value>
   </data>
-  <data name="CharacterDesigns" xml:space="preserve">
-    <value>Character designs</value>
-  </data>
   <data name="ChildVoicebanks" xml:space="preserve">
     <value>Derived voicebanks</value>
   </data>
@@ -164,6 +161,9 @@
   </data>
   <data name="Illustrator" xml:space="preserve">
     <value>Illustrated by</value>
+  </data>
+  <data name="IllustratorOf" xml:space="preserve">
+    <value>Illustrator of</value>
   </data>
   <data name="MainAlbums" xml:space="preserve">
     <value>Main albums</value>
