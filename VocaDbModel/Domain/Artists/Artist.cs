@@ -21,9 +21,7 @@ namespace VocaDb.Model.Domain.Artists {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
-		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
-			get { return ArchivedVersionsManager; }
-		}
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
@@ -34,9 +32,9 @@ namespace VocaDb.Model.Domain.Artists {
 		private IList<ArtistComment> comments = new List<ArtistComment>();
 		private User createdBy;
 		private EnglishTranslatedString description;
-		private IList<GroupForArtist> groups = new List<GroupForArtist>();
+		private IList<ArtistForArtist> groups = new List<ArtistForArtist>();
 		//private IList<AlbumHit> hits = new List<AlbumHit>();
-		private IList<GroupForArtist> members = new List<GroupForArtist>();
+		private IList<ArtistForArtist> members = new List<ArtistForArtist>();
 		private NameManager<ArtistName> names = new NameManager<ArtistName>();
 		private IList<OwnedArtistForUser> ownerUsers = new List<OwnedArtistForUser>();
 		private EntryPictureFileManager<ArtistPictureFile> pictureManager = new EntryPictureFileManager<ArtistPictureFile>();
@@ -88,7 +86,7 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
-		public virtual IList<GroupForArtist> AllGroups {
+		public virtual IList<ArtistForArtist> AllGroups {
 			get { return groups; }
 			set {
 				ParamIs.NotNull(() => value);
@@ -96,7 +94,7 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
-		public virtual IList<GroupForArtist> AllMembers {
+		public virtual IList<ArtistForArtist> AllMembers {
 			get { return members; }
 			set {
 				ParamIs.NotNull(() => value);
@@ -121,7 +119,7 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		public virtual IEnumerable<Artist> ArtistLinksOfType(ArtistLinkType linkType, bool parent) {
-			return (parent ? Groups : Members).Where(g => g.LinkType == linkType).Select(g => parent ? g.Group : g.Member);
+			return (parent ? Groups : Members).Where(g => g.LinkType == linkType).Select(g => parent ? g.Parent : g.Member);
 		}
 
 		public virtual ArtistType ArtistType { get; set; }
@@ -184,9 +182,9 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
-		public virtual IEnumerable<GroupForArtist> Groups {
+		public virtual IEnumerable<ArtistForArtist> Groups {
 			get {
-				return AllGroups.Where(g => !g.Group.Deleted);
+				return AllGroups.Where(g => !g.Parent.Deleted);
 			}
 		}
 
@@ -212,7 +210,7 @@ namespace VocaDb.Model.Domain.Artists {
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 
-		public virtual IEnumerable<GroupForArtist> Members {
+		public virtual IEnumerable<ArtistForArtist> Members {
 			get { return AllMembers.Where(m => !m.Member.Deleted); }
 		}
 
@@ -321,11 +319,11 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public virtual GroupForArtist AddGroup(Artist grp, ArtistLinkType linkType) {
+		public virtual ArtistForArtist AddGroup(Artist grp, ArtistLinkType linkType) {
 
 			ParamIs.NotNull(() => grp);
 
-			var link = new GroupForArtist(grp, this, linkType);
+			var link = new ArtistForArtist(grp, this, linkType);
 			AllGroups.Add(link);
 			grp.AllMembers.Add(link);
 
@@ -333,7 +331,7 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public virtual GroupForArtist AddMember(Artist member, ArtistLinkType linkType) {
+		public virtual ArtistForArtist AddMember(Artist member, ArtistLinkType linkType) {
 
 			ParamIs.NotNull(() => member);
 
@@ -476,7 +474,7 @@ namespace VocaDb.Model.Domain.Artists {
 
 			ParamIs.NotNull(() => grp);
 
-			return Groups.Any(a => a.Group.Equals(grp));
+			return Groups.Any(a => a.Parent.Equals(grp));
 
 		}
 

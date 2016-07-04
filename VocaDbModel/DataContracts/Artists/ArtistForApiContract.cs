@@ -43,7 +43,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 				Description = artist.Description[languagePreference];
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Groups))
-				Groups = artist.Groups.Select(g => new ArtistContract(g.Group, languagePreference)).ToArray();
+				Groups = artist.Groups.Select(g => new ArtistContract(g.Parent, languagePreference)).ToArray();
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Members))
 				Members = artist.Members.Select(m => new ArtistContract(m.Member, languagePreference)).ToArray();

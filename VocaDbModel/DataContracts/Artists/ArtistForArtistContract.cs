@@ -5,23 +5,20 @@ using VocaDb.Model.Domain.Globalization;
 namespace VocaDb.Model.DataContracts.Artists {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class GroupForArtistContract {
+	public class ArtistForArtistContract {
 
-		public GroupForArtistContract() {}
+		public ArtistForArtistContract() {}
 
-		public GroupForArtistContract(GroupForArtist groupForArtist, ContentLanguagePreference languagePreference) {
+		public ArtistForArtistContract(ArtistForArtist groupForArtist, ContentLanguagePreference languagePreference) {
 
 			ParamIs.NotNull(() => groupForArtist);
 
-			Group = new ArtistContract(groupForArtist.Group, languagePreference);
+			Parent = new ArtistContract(groupForArtist.Parent, languagePreference);
 			Id = groupForArtist.Id;
 			LinkType = groupForArtist.LinkType;
 			Member = new ArtistContract(groupForArtist.Member, languagePreference);
 
 		}
-
-		[DataMember]
-		public ArtistContract Group { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -31,6 +28,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public ArtistContract Member { get; set; }
+
+		[DataMember]
+		public ArtistContract Parent { get; set; }
 
 	}
 

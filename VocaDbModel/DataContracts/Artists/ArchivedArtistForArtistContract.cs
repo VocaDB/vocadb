@@ -6,8 +6,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		public ArchivedArtistForArtistContract() { }
 
-		public ArchivedArtistForArtistContract(GroupForArtist link) 
-			: base(link.Group) {
+		public ArchivedArtistForArtistContract(ArtistForArtist link) 
+			: base(link.Parent) {
 
 			LinkType = link.LinkType;
 

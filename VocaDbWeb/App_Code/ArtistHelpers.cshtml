@@ -159,7 +159,7 @@
 			@ArchivedEntryHelpers.DataRow("Artist type", comparedArtists, d => Translate.ArtistTypeName(d.ArtistType))
 			@ArchivedEntryHelpers.DataRowList("External links", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
 			@ArchivedEntryHelpers.DataRow("Base voicebank", comparedArtists, d => ArchivedEntryHelpers.ObjectRefInfo(d.BaseVoicebank))
-			@ArchivedEntryHelpers.ObjectRefList("Groups", comparedArtists, d => d.Groups)
+			@ArchivedEntryHelpers.ObjectRefList("Artist links", comparedArtists, d => d.Groups)
 			@ArchivedEntryHelpers.ObjectRefList("Members", comparedArtists, d => d.Members)
 			@ArchivedEntryHelpers.DataRowList("Pictures", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.Pictures, ArchivedEntryHelpers.PictureFileInfo))
 			@ArchivedEntryHelpers.ObjectRefList("Albums", comparedArtists, d => d.Albums)

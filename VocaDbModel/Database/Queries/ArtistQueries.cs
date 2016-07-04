@@ -529,7 +529,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				// Groups
 				DatabaseContextHelper.RestoreObjectRefs(
-					session, warnings, artist.AllGroups, fullProperties.Groups, (a1, a2) => (a1.Group.Id == a2.Id),
+					session, warnings, artist.AllGroups, fullProperties.Groups, (a1, a2) => (a1.Parent.Id == a2.Id),
 					(grp, grpRef) => (!artist.HasGroup(grp) ? artist.AddGroup(grp, grpRef.LinkType) : null),
 					groupForArtist => groupForArtist.Delete());
 
@@ -639,12 +639,12 @@ namespace VocaDb.Model.Database.Queries {
 				var newGroups = properties.Groups.ToList();
 
 				if (properties.Illustrator != null)
-					newGroups.Add(new GroupForArtistContract { Group = properties.Illustrator, LinkType = ArtistLinkType.Illustrator });
+					newGroups.Add(new ArtistForArtistContract { Parent = properties.Illustrator, LinkType = ArtistLinkType.Illustrator });
 
 				if (properties.VoiceProvider != null)
-					newGroups.Add(new GroupForArtistContract { Group = properties.VoiceProvider, LinkType = ArtistLinkType.VoiceProvider });
+					newGroups.Add(new ArtistForArtistContract { Parent = properties.VoiceProvider, LinkType = ArtistLinkType.VoiceProvider });
 
-				var groupsDiff = CollectionHelper.Diff(artist.Groups, newGroups, (i, i2) => (i.Group.Id == i2.Group.Id));
+				var groupsDiff = CollectionHelper.Diff(artist.Groups, newGroups, (i, i2) => (i.Parent.Id == i2.Parent.Id));
 
 				foreach (var grp in groupsDiff.Removed) {
 					grp.Delete();
@@ -652,7 +652,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				foreach (var grp in groupsDiff.Added) {
-					var link = artist.AddGroup(ctx.Load(grp.Group.Id), grp.LinkType);
+					var link = artist.AddGroup(ctx.Load(grp.Parent.Id), grp.LinkType);
 					ctx.Save(link);
 				}
 

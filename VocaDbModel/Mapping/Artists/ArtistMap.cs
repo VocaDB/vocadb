@@ -107,15 +107,15 @@ namespace VocaDb.Model.Mapping.Artists {
 
 	}
 
-	public class GroupForArtistMap : ClassMap<GroupForArtist> {
+	public class ArtistForArtistMap : ClassMap<ArtistForArtist> {
 		
-		public GroupForArtistMap() {
+		public ArtistForArtistMap() {
 			
 			Table("GroupsForArtists");
 			Id(m => m.Id);
 
 			Map(m => m.LinkType).Not.Nullable();
-			References(m => m.Group).Not.Nullable();
+			References(m => m.Parent).Column("[Group]").Not.Nullable();
 			References(m => m.Member).Not.Nullable();
 
 		}

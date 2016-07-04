@@ -2,26 +2,26 @@
 
 namespace VocaDb.Model.Domain.Artists {
 
-	public class GroupForArtist {
+	public class ArtistForArtist {
 
-		private Artist group;
+		private Artist parent;
 		private Artist member;
 
-		public GroupForArtist() { }
+		public ArtistForArtist() { }
 
-		public GroupForArtist(Artist group, Artist member, ArtistLinkType linkType) {
+		public ArtistForArtist(Artist group, Artist member, ArtistLinkType linkType) {
 
-			Group = group;
+			Parent = group;
 			Member = member;
 			LinkType = linkType;
 
 		}
 
-		public virtual Artist Group {
-			get { return group; }
+		public virtual Artist Parent {
+			get { return parent; }
 			set {
 				ParamIs.NotNull(() => value);
-				group = value;
+				parent = value;
 			}
 		}
 
@@ -39,12 +39,12 @@ namespace VocaDb.Model.Domain.Artists {
 
 		public virtual void Delete() {
 
-			Group.AllMembers.Remove(this);
+			Parent.AllMembers.Remove(this);
 			Member.AllGroups.Remove(this);
 
 		}
 
-		public virtual bool Equals(GroupForArtist another) {
+		public virtual bool Equals(ArtistForArtist another) {
 
 			if (another == null)
 				return false;
@@ -57,7 +57,7 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		public override bool Equals(object obj) {
-			return Equals(obj as GroupForArtist);
+			return Equals(obj as ArtistForArtist);
 		}
 
 		public override int GetHashCode() {
@@ -68,11 +68,11 @@ namespace VocaDb.Model.Domain.Artists {
 
 			ParamIs.NotNull(() => target);
 
-			if (target.Equals(Group))
+			if (target.Equals(Parent))
 				return;
 
-			Group.AllMembers.Remove(this);
-			Group = target;
+			Parent.AllMembers.Remove(this);
+			Parent = target;
 			target.AllMembers.Add(this);
 
 		}

@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			DefaultNameLanguage = artist.TranslatedName.DefaultLanguage;
 			Description = new EnglishTranslatedStringContract(artist.Description);
-			Groups = artist.Groups.Where(g => g.LinkType == ArtistLinkType.Group).Select(g => new GroupForArtistContract(g, languagePreference)).OrderBy(g => g.Group.Name).ToArray();
+			Groups = artist.Groups.Where(g => g.LinkType == ArtistLinkType.Group).Select(g => new ArtistForArtistContract(g, languagePreference)).OrderBy(g => g.Parent.Name).ToArray();
 			Illustrator = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, true).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 			Names = artist.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p)).ToList();
@@ -39,7 +39,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public EnglishTranslatedStringContract Description { get; set; }
 
 		[DataMember]
-		public GroupForArtistContract[] Groups { get; set; }
+		public ArtistForArtistContract[] Groups { get; set; }
 
 		[DataMember]
 		public ArtistContract Illustrator { get; set; }

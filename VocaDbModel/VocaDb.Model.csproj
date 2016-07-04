@@ -237,7 +237,7 @@
     <Compile Include="DataContracts\Artists\ArtistWithArchivedVersions.cs" />
     <Compile Include="DataContracts\Artists\ArtistWithPictureContract.cs" />
     <Compile Include="DataContracts\Artists\CreateArtistContract.cs" />
-    <Compile Include="DataContracts\Artists\GroupForArtistContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistForArtistContract.cs" />
     <Compile Include="DataContracts\CommentContract.cs" />
     <Compile Include="DataContracts\LocalizedStringContract.cs" />
     <Compile Include="DataContracts\LocalizedStringWithIdContract.cs" />
@@ -557,7 +557,7 @@
     <Compile Include="Mapping\Artists\ArtistTagUsageMap.cs" />
     <Compile Include="Mapping\Artists\ArtistTagVoteMap.cs" />
     <Compile Include="Mapping\Artists\ArtistWebLinkMap.cs" />
-    <Compile Include="Domain\Artists\GroupForArtist.cs" />
+    <Compile Include="Domain\Artists\ArtistForArtist.cs" />
     <Compile Include="Mapping\ClassConventions.cs" />
     <Compile Include="Mapping\CommentMap.cs" />
     <Compile Include="Mapping\CustomTypes\XDocumentType.cs" />
