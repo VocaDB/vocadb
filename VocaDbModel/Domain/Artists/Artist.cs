@@ -207,12 +207,10 @@ namespace VocaDb.Model.Domain.Artists {
 		/// <param name="artist"></param>
 		/// <returns></returns>
 		public virtual bool IsValidBaseVoicebank(Artist artist) {
-			return artist == null || (artist.BaseVoicebank == null && !this.Equals(artist));
+			return artist == null || (!artist.Equals(this) && !artist.HasBaseVoicebank(this));
 		}
 
-		public virtual TranslatedString TranslatedName {
-			get { return Names.SortNames; }
-		}
+		public virtual TranslatedString TranslatedName => Names.SortNames;
 
 		public virtual IEnumerable<GroupForArtist> Members {
 			get { return AllMembers.Where(m => !m.Member.Deleted); }
