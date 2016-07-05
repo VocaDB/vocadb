@@ -139,5 +139,6 @@
     <value>Se necesita que especifiques el tipo de grabación.</value>
   </data>
   <data name="UnspecifiedNames" xml:space="preserve">
+    <value>Se requiere el nombre principal del album.</value>
   </data>
 </root>

@@ -121,5 +121,6 @@
     <value>Utaites y otros artistas asociados con este album.</value>
   </data>
   <data name="NewAlbumInfo" xml:space="preserve">
+    <value>Este album necesita tener al menos una pista con un utaite registrado en UtaiteDB. Compilaciones no oficiales/fan-made (bootlegs) no están permitidas. Para mas información, vease la página de Ayuda.</value>
   </data>
 </root>
