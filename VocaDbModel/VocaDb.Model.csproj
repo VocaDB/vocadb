@@ -150,6 +150,7 @@
     <Compile Include="DataContracts\Api\EntryForApiContractFactory.cs" />
     <Compile Include="DataContracts\Artists\AdvancedArtistStatsContract.cs" />
     <Compile Include="DataContracts\Artists\ArchivedArtistForArtistContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistForArtistForApiContract.cs" />
     <Compile Include="DataContracts\Artists\TranslatedArtistContract.cs" />
     <Compile Include="DataContracts\CommentForApiContract.cs" />
     <Compile Include="DataContracts\Comments\EntryWithCommentsContract.cs" />

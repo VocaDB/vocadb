@@ -39,11 +39,11 @@ namespace VocaDb.Model.DataContracts.Artists {
 				AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
+			if (includedFields.HasFlag(ArtistOptionalFields.ArtistLinks))
+				ArtistLinks = artist.Groups.Select(g => new ArtistForArtistForApiContract(g, languagePreference)).ToArray();
+
 			if (includedFields.HasFlag(ArtistOptionalFields.Description))
 				Description = artist.Description[languagePreference];
-
-			if (includedFields.HasFlag(ArtistOptionalFields.Groups))
-				Groups = artist.Groups.Select(g => new ArtistContract(g.Parent, languagePreference)).ToArray();
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Members))
 				Members = artist.Members.Select(m => new ArtistContract(m.Member, languagePreference)).ToArray();
@@ -70,6 +70,12 @@ namespace VocaDb.Model.DataContracts.Artists {
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set;}
+
+		/// <summary>
+		/// List of groups this artist belongs in. Optional field.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public ArtistForArtistForApiContract[] ArtistLinks { get; set; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -104,12 +110,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }
-
-		/// <summary>
-		/// List of groups this artist belongs in. Optional field.
-		/// </summary>
-		[DataMember(EmitDefaultValue = false)]
-		public ArtistContract[] Groups { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -179,8 +179,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		None = 0,
 		AdditionalNames = 1,
-		Description = 2,
-		Groups = 4,
+		ArtistLinks = 2,
+		Description = 4,
 		MainPicture = 8,
 		Members = 16,
 		Names = 32,

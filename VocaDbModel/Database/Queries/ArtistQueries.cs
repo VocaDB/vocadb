@@ -644,7 +644,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (properties.VoiceProvider != null)
 					newGroups.Add(new ArtistForArtistContract { Parent = properties.VoiceProvider, LinkType = ArtistLinkType.VoiceProvider });
 
-				var groupsDiff = CollectionHelper.Diff(artist.Groups, newGroups, (i, i2) => (i.Parent.Id == i2.Parent.Id));
+				var groupsDiff = CollectionHelper.Diff(artist.Groups, newGroups, (i, i2) => (i.Parent.Id == i2.Parent.Id && i.LinkType == i2.LinkType));
 
 				foreach (var grp in groupsDiff.Removed) {
 					grp.Delete();
