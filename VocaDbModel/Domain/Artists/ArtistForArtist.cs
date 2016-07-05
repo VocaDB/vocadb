@@ -60,6 +60,10 @@ namespace VocaDb.Model.Domain.Artists {
 			return Equals(obj as ArtistForArtist);
 		}
 
+		public virtual Artist GetArtist(LinkDirection direction) {
+			return direction == LinkDirection.ManyToOne ? Parent : Member;
+		}
+
 		public override int GetHashCode() {
 			return base.GetHashCode();
 		}
@@ -91,4 +95,5 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 	}
+
 }

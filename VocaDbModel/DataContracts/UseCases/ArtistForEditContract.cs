@@ -20,11 +20,11 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			DefaultNameLanguage = artist.TranslatedName.DefaultLanguage;
 			Description = new EnglishTranslatedStringContract(artist.Description);
 			Groups = artist.Groups.Where(g => g.LinkType == ArtistLinkType.Group).Select(g => new ArtistForArtistContract(g, languagePreference)).OrderBy(g => g.Parent.Name).ToArray();
-			Illustrator = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, true).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
+			Illustrator = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, Domain.LinkDirection.ManyToOne).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 			Names = artist.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p)).ToList();
 			UpdateNotes = string.Empty;
-			VoiceProvider = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, true).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
+			VoiceProvider = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, Domain.LinkDirection.ManyToOne).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}

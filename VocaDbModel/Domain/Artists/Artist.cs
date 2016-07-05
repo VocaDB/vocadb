@@ -122,8 +122,12 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
-		public virtual IEnumerable<Artist> ArtistLinksOfType(ArtistLinkType linkType, bool parent) {
-			return (parent ? Groups : Members).Where(g => g.LinkType == linkType).Select(g => parent ? g.Parent : g.Member);
+		public virtual IEnumerable<Artist> ArtistLinksOfType(ArtistLinkType linkType, LinkDirection direction) {
+
+			return (direction == LinkDirection.ManyToOne ? Groups : Members)
+				.Where(g => g.LinkType == linkType)
+				.Select(g => g.GetArtist(direction));
+
 		}
 
 		public virtual ArtistType ArtistType { get; set; }

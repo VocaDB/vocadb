@@ -40,10 +40,10 @@ namespace VocaDb.Model.DataContracts.Artists {
 			}
 
 			if (includedFields.HasFlag(ArtistOptionalFields.ArtistLinks))
-				ArtistLinks = artist.Groups.Select(g => new ArtistForArtistForApiContract(g, languagePreference)).ToArray();
+				ArtistLinks = artist.Groups.Select(g => new ArtistForArtistForApiContract(g, LinkDirection.ManyToOne, languagePreference)).ToArray();
 
 			if (includedFields.HasFlag(ArtistOptionalFields.ArtistLinksReverse))
-				ArtistLinksReverse = artist.Members.Select(m => new ArtistForArtistForApiContract(m, languagePreference)).ToArray();
+				ArtistLinksReverse = artist.Members.Select(m => new ArtistForArtistForApiContract(m, LinkDirection.OneToMany, languagePreference)).ToArray();
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Description))
 				Description = artist.Description[languagePreference];

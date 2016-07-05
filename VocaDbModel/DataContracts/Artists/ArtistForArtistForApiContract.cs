@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
@@ -9,17 +10,16 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		public ArtistForArtistForApiContract() { }
 
-		public ArtistForArtistForApiContract(ArtistForArtist link, ContentLanguagePreference languagePreference) {
-			Parent = new ArtistContract(link.Parent, languagePreference);
+		public ArtistForArtistForApiContract(ArtistForArtist link, LinkDirection direction, ContentLanguagePreference languagePreference) {
+			Artist = new ArtistContract(link.GetArtist(direction), languagePreference);
 			LinkType = link.LinkType;
 		}
 
 		[DataMember]
-		public ArtistLinkType LinkType { get; set; }
+		public ArtistContract Artist { get; set; }
 
 		[DataMember]
-		public ArtistContract Parent { get; set; }
-
+		public ArtistLinkType LinkType { get; set; }
 
 	}
 
