@@ -102,6 +102,10 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
+		/// <summary>
+		/// List of all songs for this artist (including deleted). 
+		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// </summary>
 		public virtual IList<ArtistForSong> AllSongs {
 			get { return songs; }
 			set {
@@ -256,6 +260,10 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
+		/// <summary>
+		/// List of songs for this artist (not including deleted). 
+		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// </summary>
 		public virtual IEnumerable<ArtistForSong> Songs {
 			get {
 				return AllSongs.Where(s => !s.Song.Deleted);
