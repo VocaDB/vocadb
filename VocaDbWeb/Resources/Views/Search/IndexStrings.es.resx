@@ -117,28 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="AlbumDetails" xml:space="preserve">
+    <value>Detalles</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="AlbumTiles" xml:space="preserve">
+    <value>Títulos</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="AlbumType" xml:space="preserve">
+    <value>Tipo de album</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="ArtistType" xml:space="preserve">
+    <value>Tipo de artista</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="Category" xml:space="preserve">
+    <value>Categoría</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="EntryType" xml:space="preserve">
+    <value>Tipo</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="InMyCollection" xml:space="preserve">
+    <value>En mi colección</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="ItemsPerPage" xml:space="preserve">
+    <value>{0} objetos por página</value>
+  </data>
+  <data name="MoreFilters" xml:space="preserve">
+    <value>mas filtros</value>
+  </data>
+  <data name="MoreRecentThan" xml:space="preserve">
+    <value>Mas reciente que</value>
+  </data>
+  <data name="OnlyWithPVs" xml:space="preserve">
+    <value>Solo con PVs</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Previsualización</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Fecha de lanzamiento</value>
+  </data>
+  <data name="ShowTags" xml:space="preserve">
+    <value>Mostrar etiquetas</value>
+  </data>
+  <data name="SongType" xml:space="preserve">
+    <value>Tipo de canción</value>
+  </data>
+  <data name="TagCategory" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="TagInformation" xml:space="preserve">
+    <value>Información de la etiqueta</value>
+  </data>
+  <data name="Times" xml:space="preserve">
+    <value>veces</value>
+  </data>
+  <data name="TotalScore" xml:space="preserve">
+    <value>puntuación total</value>
+  </data>
+  <data name="TypeSomething" xml:space="preserve">
+    <value>Escribe algo...</value>
+  </data>
+  <data name="IncludeDerivedVoicebanks" xml:space="preserve">
+    <value>Incluir bancos de voz derivados</value>
+  </data>
+  <data name="MinScore" xml:space="preserve">
+    <value>puntuación de rating minima</value>
+  </data>
+  <data name="OnlyMyFollowedArtists" xml:space="preserve">
+    <value>Solo los artistas que sigo</value>
+  </data>
+  <data name="Playlist" xml:space="preserve">
+    <value>Lista de reproducción</value>
+  </data>
+  <data name="TopGenres" xml:space="preserve">
+    <value>Top de géneros</value>
+  </data>
+  <data name="ShowingItemsOf" xml:space="preserve">
+    <value>Mostrando {0} objetos de {1}</value>
+  </data>
+  <data name="TagUsages" xml:space="preserve">
+    <value>Usos</value>
+  </data>
+  <data name="ChildTags" xml:space="preserve">
+    <value>Incluir sub-etiquetas</value>
   </data>
 </root>

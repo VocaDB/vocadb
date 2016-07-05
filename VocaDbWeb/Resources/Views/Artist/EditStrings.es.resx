@@ -117,28 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="BaArtistType" xml:space="preserve">
+    <value>Tipo de artista</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="BaBaseVoicebank" xml:space="preserve">
+    <value>Banco de voz base</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="BaDescription" xml:space="preserve">
+    <value>Descripción</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="BaGroups" xml:space="preserve">
+    <value>Grupos y círculos productores</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="BaMainPicture" xml:space="preserve">
+    <value>Imagen principal</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="BaNames" xml:space="preserve">
+    <value>nombre principal (en uno o mas idiomas)</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="BaPictureInfo" xml:space="preserve">
+    <value>Tipos permitidos: {0}. El tamaño máximo de archivo es de {1} MB.</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="EditTitle" xml:space="preserve">
+    <value>Editar artista - {0}</value>
+  </data>
+  <data name="PiAdd" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="PiPictureDescription" xml:space="preserve">
+    <value>Descripción de imagen</value>
+  </data>
+  <data name="PiPicturesNote" xml:space="preserve">
+    <value>Por favor solo sube imágenes concerientes al artista, nada fuera de lugar.</value>
+  </data>
+  <data name="TabAdditionalPictures" xml:space="preserve">
+    <value>Imagenes adicionales</value>
   </data>
 </root>

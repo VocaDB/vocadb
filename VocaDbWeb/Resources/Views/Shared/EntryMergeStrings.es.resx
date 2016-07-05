@@ -117,28 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="MergeBtnText" xml:space="preserve">
+    <value>Fusionar</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="MergeInfo" xml:space="preserve">
+    <value>Selecciona la entrada que será fusionada. Todas las referencias seran dirigidas a la entrada resultante de la fusión, mientras que las procedentes serán eliminadas.
+Lo ideal es fusionar la entrada mas antigua hacia la mas reciente (partir de esta última).</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="MergeWarning" xml:space="preserve">
+    <value>¡Esta acción no puede ser revertida! Antes de proceder, por favor, aseguate que las entradas seleccionadas realmente necesitan ser fusionadas.</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="ValidationErrorTargetIsLessComplete" xml:space="preserve">
+    <value>La entrada seleccionada parece ser un borrador mientras que la otra no.
+Lo ideal es fusionar a partir de la entrada mas completa (comunmente la mas nueva).</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
-  </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
-  </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
-  </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="ValidationErrorTargetIsNewer" xml:space="preserve">
+    <value>La entrada seleccionada parece ser mas reciente que la procedente de la fusión.
+Lo ideal es fusionar a partir de la entrada mas reciente.</value>
   </data>
 </root>

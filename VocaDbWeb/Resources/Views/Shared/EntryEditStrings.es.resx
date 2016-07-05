@@ -117,28 +117,75 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Aliases" xml:space="preserve">
+    <value>Pseudonimos adicionales (opcional)</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="AliasesDesc" xml:space="preserve">
+    <value>Los pseudonimos son adicionales. La mayoría de veces no son traducciones del nombre principal, aún así las traducciones bien conocidas y correctas pueden incluirse como pseudonimos.</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="BasicInfo" xml:space="preserve">
+    <value>Información básica</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="ConcurrentEditWarning" xml:space="preserve">
+    <value>{0} tambien editó esta entrada hace {1} minuto(s).</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="ConcurrentEditWarningNow" xml:space="preserve">
+    <value>El usuario {0} está editando esta entrada ahora mismo.</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Por favor confirma que deseas eliminar esta entrada, y escribe una explicación del porque (opcional, pero recomendado).</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="ConfirmMoveToTrash" xml:space="preserve">
+    <value>Por favor confirma que deseas eliminar esta entrada permanentemente. Esta acción es irreversible. escribe una explicación del porque de la eliminación (opcional, pero recomendado).</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="DefaultLanguageHelp" xml:space="preserve">
+    <value>El idioma original del nombre de esta entrada, usualmente este es el mas usado por fuentes oficiales.</value>
+  </data>
+  <data name="DefaultLanguageSelection" xml:space="preserve">
+    <value>Idioma original</value>
+  </data>
+  <data name="ExternalLinksQuickHelp" xml:space="preserve">
+    <value>Links externos concernientes a esta entrada. Considera que links no originales (tales como descargas ilegales, reprints no autorizados, etcétera) no estan permitidos.&lt;br /&gt;
+&lt;br /&gt;
+Primero llena la casilla con la URL, si el dominio o procedencia de este resultan familiares para la base de datos, una descripción y categoría serán sugeridos automaticamente.&lt;br /&gt;
+&lt;br /&gt;
+Oficial: Sitio oficial del artista (usualmente son blogs, portafolios web, páginas de facebook, etc...).&lt;br /&gt;
+Comercial: Distribuiciones comerciales autorizadas, tales como la página de venta en Amazon, CDJapan, iTunes, etc.&lt;br /&gt;
+Referencial: Sitios colaborativos con inforamción oficial, tales como wikis.&lt;br /&gt;
+Otros: Para aquellos sitos que no encajan en ninguna de las categorías anteriores.&lt;br /&gt;</value>
+  </data>
+  <data name="Merge" xml:space="preserve">
+    <value>Fusionar</value>
+  </data>
+  <data name="MoveToTrash" xml:space="preserve">
+    <value>Desechar (Mover a la basura)</value>
+  </data>
+  <data name="NameHelp" xml:space="preserve">
+    <value>Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre no-inglés. Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada en en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.&lt;br /&gt;
+&lt;br /&gt;
+Nótese que no necesitas copiar los nombres sin específicar, el sistema va a sustituir esos cuando se requiera. Por ejemplo, cuando carecen de un nombre romanizado, casos en los que el sistema usará el nombre por defecto.&lt;br /&gt;
+&lt;br /&gt;
+Los nombres adicionales se pueden incluir como pseudonimos. Para mas información ver la guía.</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restaurar</value>
+  </data>
+  <data name="SaveWarning" xml:space="preserve">
+    <value>Esta entrada tiene advertencias pre-validación. ¿Estas seguro de que lo quieres guardar como terminada?</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="TranslatedStringAddEnglishTranslation" xml:space="preserve">
+    <value>Añadir una traducción en inglés</value>
+  </data>
+  <data name="TranslatedStringEnglishTranslation" xml:space="preserve">
+    <value>Traducción en inglés</value>
+  </data>
+  <data name="UpdateNotes" xml:space="preserve">
+    <value>Notas de actualización (opcional)</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>Links externos</value>
   </data>
 </root>

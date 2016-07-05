@@ -117,28 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Added" xml:space="preserve">
+    <value>añadido</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="DraftIconTitle" xml:space="preserve">
+    <value>Esta entradaes un borrador.</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="DraftMessage" xml:space="preserve">
+    <value>Esta entrada es un borrador. Puedes ayudar editando la entrada y añadiendo la información faltante.</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="EntryIsMissingInformation" xml:space="preserve">
+    <value>A esta entrada le falta la siguiente información:</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="EntryValidationNoErrors" xml:space="preserve">
+    <value>Esta entrada contiene toda la información básica requerida.</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="EntryValidationNoErrorsDraft" xml:space="preserve">
+    <value>Esta entrada contiene toda la información para considerarsele terminada (dejar de ser un borrador).</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="EntryValidationWarningDetails" xml:space="preserve">
+    <value>Detalles</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="GitHubMarkdown" xml:space="preserve">
+    <value>Markdown tipo GitHub (GitHub-flavored)</value>
+  </data>
+  <data name="IsSupportedForFormatting" xml:space="preserve">
+    <value>es aceptado para el formato</value>
+  </data>
+  <data name="NameLangTitle" xml:space="preserve">
+    <value>idioma</value>
+  </data>
+  <data name="NameNewRow" xml:space="preserve">
+    <value>Nueva fila</value>
+  </data>
+  <data name="NameValueTitle" xml:space="preserve">
+    <value>Nombre (requerido)</value>
+  </data>
+  <data name="ReturnWithoutSaving" xml:space="preserve">
+    <value>Regresar sin guardar</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Guardar cambios</value>
+  </data>
+  <data name="SeeGuide" xml:space="preserve">
+    <value>guía</value>
+  </data>
+  <data name="SeeGuidePost" xml:space="preserve">
+    <value>para mas información</value>
+  </data>
+  <data name="SeeGuidePre" xml:space="preserve">
+    <value>Ver la</value>
+  </data>
+  <data name="StatusDescriptionApproved" xml:space="preserve">
+    <value>Las entradas aprobadas han sido inspeccionadas y verificadas por una fuente de confianza. La edición en la entradas aprobadas es limitada.</value>
+  </data>
+  <data name="StatusDescriptionDraft" xml:space="preserve">
+    <value>Los borradores carecen de alguna información requerida indispensablemente.</value>
+  </data>
+  <data name="StatusDescriptionFinished" xml:space="preserve">
+    <value>Las entradas terminadas contienen toda la información requerida pero aún no han sido aprobadas.</value>
+  </data>
+  <data name="StatusDescriptionLocked" xml:space="preserve">
+    <value>Las entradas aseguradas solo pueden ser editadas por moderadores y/o miembros del staff.</value>
+  </data>
+  <data name="UploadPictureInfo" xml:space="preserve">
+    <value>Especificaciones permitidas: {0}. El tamaño máximo de archivo es de {1} MB. Favor de respetar las normas de copyright y hacer mención en formato de la fuente de la imágen en las notas/descripción de ser posible.</value>
+  </data>
+  <data name="WebLinkCategoryTitle" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="WebLinkDescriptionTitle" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="WebLinkNewRow" xml:space="preserve">
+    <value>Nueva fila</value>
+  </data>
+  <data name="WebLinkUrlTitle" xml:space="preserve">
+    <value>URL</value>
   </data>
 </root>

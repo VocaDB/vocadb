@@ -117,28 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Artists" xml:space="preserve">
+    <value>Artistas</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="Groups" xml:space="preserve">
+    <value>Grupos</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="Length" xml:space="preserve">
+    <value>Duración</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="Lyrics" xml:space="preserve">
+    <value>Letra</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="Names" xml:space="preserve">
+    <value>Nombres</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="Notes" xml:space="preserve">
+    <value>Notas</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nada</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="OriginalName" xml:space="preserve">
+    <value>Nombre original</value>
+  </data>
+  <data name="OriginalVersion" xml:space="preserve">
+    <value>Versión original</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Fecha de publicación</value>
+  </data>
+  <data name="PVs" xml:space="preserve">
+    <value>PVs</value>
+  </data>
+  <data name="SongType" xml:space="preserve">
+    <value>Tipo de canción</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="WebLinks" xml:space="preserve">
+    <value>Links externos</value>
   </data>
 </root>

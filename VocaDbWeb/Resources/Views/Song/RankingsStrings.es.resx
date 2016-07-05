@@ -117,28 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="ColName" xml:space="preserve">
+    <value>Nombre</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="ColPublished" xml:space="preserve">
+    <value>Publicado</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="ColRating" xml:space="preserve">
+    <value>Rating</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="ColTags" xml:space="preserve">
+    <value>Tags</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="DurationDaily" xml:space="preserve">
+    <value>Diariamente</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="DurationMonthly" xml:space="preserve">
+    <value>Mensual</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="DurationOverall" xml:space="preserve">
+    <value>Sobre todo</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="DurationWeekly" xml:space="preserve">
+    <value>Semanalmente</value>
+  </data>
+  <data name="FilterCreateDate" xml:space="preserve">
+    <value>Añadido recientemente</value>
+  </data>
+  <data name="FilterCreateDateDescription" xml:space="preserve">
+    <value>Canciones añadidas a VocaDB recientemente</value>
+  </data>
+  <data name="FilterPopularity" xml:space="preserve">
+    <value>Popularidad</value>
+  </data>
+  <data name="FilterPopularityDescription" xml:space="preserve">
+    <value>Canciones que se han popularizado recientemente</value>
+  </data>
+  <data name="FilterPublishDate" xml:space="preserve">
+    <value>Publicado recientemente</value>
+  </data>
+  <data name="FilterPublishDateDescription" xml:space="preserve">
+    <value>Canciones que se han publicado recientemente</value>
+  </data>
+  <data name="NoSongs" xml:space="preserve">
+    <value>No se encontraron canciones :(</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Previsualización</value>
+  </data>
+  <data name="TotalScore" xml:space="preserve">
+    <value>Puntuación total</value>
+  </data>
+  <data name="VocalistAll" xml:space="preserve">
+    <value>Todos los vocalistas</value>
+  </data>
+  <data name="VocalistOther" xml:space="preserve">
+    <value>Otros vocalistas</value>
+  </data>
+  <data name="VocalistUTAU" xml:space="preserve">
+    <value>Solo UTAU</value>
+  </data>
+  <data name="VocalistVocaloid" xml:space="preserve">
+    <value>Solo Vocaloid</value>
   </data>
 </root>

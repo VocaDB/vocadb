@@ -117,28 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="At" xml:space="preserve">
+    <value>a</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="CreatedNew" xml:space="preserve">
+    <value>Se ha creado un(a) nuev@ {0}</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="EntryAlbum" xml:space="preserve">
+    <value>album</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="EntryArtist" xml:space="preserve">
+    <value>artista</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="EntryReleaseEvent" xml:space="preserve">
+    <value>evento</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="EntrySong" xml:space="preserve">
+    <value>canción</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="EntrySongList" xml:space="preserve">
+    <value>lista de canciones</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="EntryTag" xml:space="preserve">
+    <value>etiqueta</value>
+  </data>
+  <data name="Someone" xml:space="preserve">
+    <value>contribuyente</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>actualizado {0}</value>
   </data>
 </root>

@@ -117,28 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>¿Estás seguro de que deseas borrar esta lista?</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="CreateTitle" xml:space="preserve">
+    <value>Crear una lista de canciones</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="Description" xml:space="preserve">
+    <value>Descripción</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="EditTitle" xml:space="preserve">
+    <value>Editar lista - {0}</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="EventDate" xml:space="preserve">
+    <value>Fecha de evento</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="EventDateHelp" xml:space="preserve">
+    <value>Si esta lista esta relacionada a un evento tal como un concierto o ranking, la fehca del evento se puede especificar aqui.</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="FeaturedCategory" xml:space="preserve">
+    <value>Categoría añadida</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado de la entrada</value>
+  </data>
+  <data name="TabProperties" xml:space="preserve">
+    <value>Propiedades</value>
+  </data>
+  <data name="TabSongs" xml:space="preserve">
+    <value>Canciones</value>
+  </data>
+  <data name="Thumbnail" xml:space="preserve">
+    <value>Miniatura</value>
   </data>
 </root>

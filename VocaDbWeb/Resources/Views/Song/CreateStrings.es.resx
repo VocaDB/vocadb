@@ -117,28 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="ArtistDesc" xml:space="preserve">
+    <value>Productores, vocalistas y vocaloids asociados con esta canción.</value>
+  </data>
+  <data name="ArtistHelp" xml:space="preserve">
+    <value>Si no encuentras al artista lo mas probable es que aún no este añadido en nuestra base de datos. Prueba con otras variaciones del nombre del artista, y si compruebas que efectivamente el artista no esta incluido en la base de datos, añadelo en la sección "Añadir un artista".</value>
+  </data>
+  <data name="ArtistsInfo" xml:space="preserve">
+    <value>Artista(s) (se requiere al menos uno)</value>
+  </data>
+  <data name="Draft" xml:space="preserve">
+    <value>Esta entrada es un borrador</value>
+  </data>
+  <data name="DuplicatePV" xml:space="preserve">
+    <value>Parece ser que este PV ya ha sido añadido a nuestra base de datos anteriormente.</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nombre (se requiere al menos uno)</value>
+  </data>
+  <data name="NameHelp" xml:space="preserve">
+    <value>Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre no-inglés. Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada es en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.</value>
   </data>
   <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+    <value>Se necesita al menos un artista.</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="NoArtistsToName" xml:space="preserve">
+    <value>No ingreses los nombres o pseudónimos del artista en la casilla de nombre. En su lugar, usa la lista de artistas.</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="OriginalPV" xml:space="preserve">
+    <value>URL del PV original (en NicoNicoDouga, YouTube, etc)</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="OriginalSuggestionsTitle" xml:space="preserve">
+    <value>¿Alguna de estas es la version original?</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="ReprintPV" xml:space="preserve">
+    <value>URL al reprint del PV (en NicoNicoDouga, YouTube, etc)</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="Select" xml:space="preserve">
+    <value>Selecciona</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="SongType" xml:space="preserve">
+    <value>Tipo de canción</value>
+  </data>
+  <data name="SubmitSong" xml:space="preserve">
+    <value>Añadir una nueva canción a la base de datos</value>
+  </data>
+  <data name="UnableToCreateSong" xml:space="preserve">
+    <value>No se puede generar la canción. Corrige los errores e intentalo de nuevo.</value>
   </data>
 </root>

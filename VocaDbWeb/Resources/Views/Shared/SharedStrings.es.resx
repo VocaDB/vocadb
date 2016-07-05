@@ -117,28 +117,116 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Actions" xml:space="preserve">
+    <value>Acciones</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="Add" xml:space="preserve">
+    <value>Añadir</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="Albums" xml:space="preserve">
+    <value>Albumes</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="Apply" xml:space="preserve">
+    <value>Aplicar</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="ArtistName" xml:space="preserve">
+    <value>Nombre</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="Artists" xml:space="preserve">
+    <value>Artistas</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="Clear" xml:space="preserve">
+    <value>Limpiar</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="Drafts" xml:space="preserve">
+    <value>Borradores</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Dirección de correo electrónico</value>
+  </data>
+  <data name="EntriesFound" xml:space="preserve">
+    <value>Entradas encontradas: {0}</value>
+  </data>
+  <data name="FeaturedSongLists" xml:space="preserve">
+    <value>Lista de canciones añadidas</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtro</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Cargando, por favor espere...</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Period" xml:space="preserve">
+    <value>.</value>
+    <comment>Este carácter se usa al final de las oraciones en determinados casos.</comment>
+  </data>
+  <data name="PVs" xml:space="preserve">
+    <value>PVs</value>
+  </data>
+  <data name="ReleaseEvents" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remover</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="SetToLimited" xml:space="preserve">
+    <value>Remove database editing permissions</value>
+  </data>
+  <data name="ShowMore" xml:space="preserve">
+    <value>Mostrar mas</value>
+  </data>
+  <data name="Songs" xml:space="preserve">
+    <value>Canciones</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Etiqueta</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Etiquetas</value>
+  </data>
+  <data name="TopFavoritedSongs" xml:space="preserve">
+    <value>Top de canciones mas valorados</value>
+  </data>
+  <data name="TopRatedAlbums" xml:space="preserve">
+    <value>Top de albumes mas valorados</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>total</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Unsorted" xml:space="preserve">
+    <value>Sin ordenar</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Usuarios</value>
   </data>
 </root>

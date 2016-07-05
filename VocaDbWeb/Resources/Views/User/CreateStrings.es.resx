@@ -117,28 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Captcha" xml:space="preserve">
+    <value>CAPTCHA</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="CaptchaInvalid" xml:space="preserve">
+    <value>el captcha es inválido.</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="DoRegister" xml:space="preserve">
+    <value>Registrarse</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="Email" xml:space="preserve">
+    <value>Correo electrónico (requerido obligatoriamente)</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="EmailIsRequired" xml:space="preserve">
+    <value>Se requiere que ingreses tu correo electrónico.</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="EmailNote" xml:space="preserve">
+    <value>Tu dirección de correo electrónicono será mostrada a otros usuarios, asegurate de que es válida. La necesitaras en caso de que llegues a olvidar tu contraseña. Dado que VocaDB utiliza gravatar para enlazar tu foto de perfil, el correo electrónico que utilices debe ser el mismo que tu cuenta de gravatar (si no tienes, crea una). Tambien puedes cambiar de dirección de correo electrónico posteriormente.</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="EmailTaken" xml:space="preserve">
+    <value>Esta dirección de correo electrónico ya está en uso. Si es tuya y sospechas que alguien mas la está usando puedes contactar a un miembro del staff, si ya tienes una cuenta registrada con este correo, puedes tratar reestableciendo tu constraseña, cualquier otro caso contacta a soporte.</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="LoginWithTwitter" xml:space="preserve">
+    <value>Iniciar sesión con twitter</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="PasswordIsRequired" xml:space="preserve">
+    <value>Se requiere la contraseña.</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
+  <data name="RegistrationUnsuccessful" xml:space="preserve">
+    <value>Ha habido un error al registrarte.</value>
+  </data>
+  <data name="TwitterNote" xml:space="preserve">
+    <value>De manera alternativa, puedes iniciar sesión con tu cuenta de twitter enlazandola.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="UsernameIsRequired" xml:space="preserve">
+    <value>Se requiere esepcificar un nombre de usuario</value>
+  </data>
+  <data name="UsernameNote" xml:space="preserve">
+    <value>El nombre de usuario debe contener al menos 3 caracteres, y solo puede componerse de letras, números y guiones bajos. Por otro lado la contraseña se debe componer de al menos 5 caracteres.</value>
+  </data>
+  <data name="UsernameTaken" xml:space="preserve">
+    <value>Ya existe una cuenta con ese nombre de usuario.</value>
   </data>
 </root>

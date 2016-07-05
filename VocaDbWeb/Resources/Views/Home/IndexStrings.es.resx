@@ -117,28 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="NewAlbums" xml:space="preserve">
+    <value>Albumes recientes o en camino</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="News" xml:space="preserve">
+    <value>Noticias</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="RecentActivity" xml:space="preserve">
+    <value>Actividad reciente</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="RecentEvents" xml:space="preserve">
+    <value>Pasando ahora mismo</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="RecentSongs" xml:space="preserve">
+    <value>Canciones recientes</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="SearchSite" xml:space="preserve">
+    <value>Busca algo dentro del sitio usando Google custom search</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="TopAlbums" xml:space="preserve">
+    <value>Albumes populares al azar</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
-    <value>Se requiere el nombre principal del album.</value>
+  <data name="ViewAll" xml:space="preserve">
+    <value>Ver todo</value>
+  </data>
+  <data name="ViewMore" xml:space="preserve">
+    <value>Ver mas</value>
+  </data>
+  <data name="ViewSongInfo" xml:space="preserve">
+    <value>Información de la canción</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>¡Bienvenido a la base de datos de Vocaloid!</value>
+  </data>
+  <data name="WelcomeSubtitle" xml:space="preserve">
+    <value>La base de datos colaborativa con artistas del medio Vocaloid, discografías, PVs y mas.</value>
   </data>
 </root>
