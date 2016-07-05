@@ -117,27 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="ArtistTitle" xml:space="preserve">
+    <value>Entrada del artista que soy y/o represento (requerido)</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="Info" xml:space="preserve">
+    <value>&lt;p&gt;
+			Si eres un productor, ilustrador, animador o cualquier tipo de productor de contenido artístico para música y videos Vocaloid,
+			o cabeza/representador de un círculo productor, favor de llenar este formato para solicitar tu verificación (la cual sera revisada posteriormente por alguien en el staff).
+		&lt;/p&gt;
+		&lt;p&gt;
+			Una vez realizada la verificación, tu nombre de usuario será mostrado en tu entrada de artista y viceversa.
+			Se requiere que nos proporciones una prueba para corruborar y legitimizar tu identidad como artista de la entrada correspondiente, de lo contrario no será tomada en cuenta.
+			Por ejemplo, publicar un link o una nota en tu twitter, blog o cualquier medio de presencia en linea referenciando/etiquetando a VocaDB es una forma valida para comprobar que eres quien dices ser.
+			Igualmente, deben existir al menos una o dos canciones de tu autoría y/o colaboración (Vocaloid o UTAU) registradas en nuestra base de datos - si no las hay las puedes subir tu mismo.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Despues de realizada tu verificación, podrás editar la entrada acerca de ti.
+			Por ahora la protección de la verificación se reserva a tu entrada como artista - las entradas de canciones y albumes incluidas en ese amparo.
+		&lt;/p&gt;
+		&lt;p&gt;
+			Considera que dependiendo las circunstancias nos reservamos el derecho de rechazar tu solicitud de verificación. Las razones pueden ser cualquiera de las antes mencionadas.
+			En el supuesto caso de que tu solicitud sea rechazada, y las razones de esta no sean tan evidentes, vamos a intentar contactarte para corregir y poner en orden cualquier detalle y de ser el caso repitas el proceso de verificación.
+		&lt;/p&gt;</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="Login" xml:space="preserve">
+    <value>Iniciar sesión</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="MessageTitle" xml:space="preserve">
+    <value>Solicitar mensaje (requerido)</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="NotLoggedInMessage" xml:space="preserve">
+    <value>Lo sentimos, necesitas {0} o {1} para utilizar esta función.</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Solicitar verificación de cuenta</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="Send" xml:space="preserve">
+    <value>Enviar solicitud</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="Signup" xml:space="preserve">
+    <value>Registrarse</value>
   </data>
 </root>

@@ -117,27 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Album" xml:space="preserve">
+    <value>Album</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="CollectionStatusAnything" xml:space="preserve">
+    <value>Cualquiera</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="CollectionWishedOrOrdered" xml:space="preserve">
+    <value>Deseado o ordenado</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="MediaType" xml:space="preserve">
+    <value>Tipo de multimedia</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="Rating" xml:space="preserve">
+    <value>Rating</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Fecha de lanzamiento</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Salida de evento</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="Status" xml:space="preserve">
+    <value>Estado de la colección</value>
   </data>
 </root>

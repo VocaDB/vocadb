@@ -117,27 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Circle" xml:space="preserve">
+    <value>Círculo productor</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="Label" xml:space="preserve">
+    <value>Sello discográfico</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="OtherVocalist" xml:space="preserve">
+    <value>Otro vocalista</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="Producer" xml:space="preserve">
+    <value>Productor musical</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="Unknown" xml:space="preserve">
+    <value>Sin especificar</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="UTAU" xml:space="preserve">
+    <value>UTAUloid</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="Vocaloid" xml:space="preserve">
+    <value>Vocaloid</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="OtherGroup" xml:space="preserve">
+    <value>Otro grupo</value>
+  </data>
+  <data name="Animator" xml:space="preserve">
+    <value>Productor de animación (Animador)</value>
+  </data>
+  <data name="OtherIndividual" xml:space="preserve">
+    <value>Otro individual</value>
+  </data>
+  <data name="Illustrator" xml:space="preserve">
+    <value>Ilustrador</value>
+  </data>
+  <data name="Lyricist" xml:space="preserve">
+    <value>Letrista</value>
+  </data>
+  <data name="OtherVoiceSynthesizer" xml:space="preserve">
+    <value>Otro sistetizador de voz</value>
+  </data>
+  <data name="Band" xml:space="preserve">
+    <value>Banda/grupo</value>
+  </data>
+  <data name="Utaite" xml:space="preserve">
+    <value>Utaite</value>
+  </data>
+  <data name="CeVIO" xml:space="preserve">
+    <value>CeVIO</value>
   </data>
 </root>

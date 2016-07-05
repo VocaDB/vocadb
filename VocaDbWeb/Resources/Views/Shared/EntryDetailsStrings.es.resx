@@ -117,27 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="AdditionDate" xml:space="preserve">
+    <value>Fecha de adición</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="AllPictures" xml:space="preserve">
+    <value>Todas las imágenes</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="BasicInfoTab" xml:space="preserve">
+    <value>Información básica</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="ConfirmDeleteComment" xml:space="preserve">
+    <value>Estas seguro de que deseas eliminar este comentario?</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="DiscussionTab" xml:space="preserve">
+    <value>Discusión</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="EditTags" xml:space="preserve">
+    <value>Editar etiquetas</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="ExternalLinks" xml:space="preserve">
+    <value>Links externos</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="Hits" xml:space="preserve">
+    <value>{0} hit(s)</value>
+  </data>
+  <data name="LatestComments" xml:space="preserve">
+    <value>Comentarios mas recientes</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="ManageTags" xml:space="preserve">
+    <value>Gestionar</value>
+  </data>
+  <data name="NoComments" xml:space="preserve">
+    <value>Nada aún</value>
+  </data>
+  <data name="NoMatches" xml:space="preserve">
+    <value>No se encontraron coincidencias :(</value>
+  </data>
+  <data name="NumTotal" xml:space="preserve">
+    <value>{0} total</value>
+  </data>
+  <data name="NumTotalParenthesis" xml:space="preserve">
+    <value>({0} total)</value>
+  </data>
+  <data name="OfficialLinks" xml:space="preserve">
+    <value>Links oficiales</value>
+  </data>
+  <data name="OtherLinks" xml:space="preserve">
+    <value>Links no oficiales</value>
+  </data>
+  <data name="PicturesTab" xml:space="preserve">
+    <value>Imágenes</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Publicado</value>
+  </data>
+  <data name="ReportAnError" xml:space="preserve">
+    <value>Reportar un error</value>
+  </data>
+  <data name="ReportArchivedVersionExplanation" xml:space="preserve">
+    <value>Reporta una equivoación en esta edición, el usuario editor será notificado.</value>
+  </data>
+  <data name="ReportArchivedVersionMessage" xml:space="preserve">
+    <value>Explica que es lo que está mal</value>
+  </data>
+  <data name="ReportNotes" xml:space="preserve">
+    <value>Notas</value>
+  </data>
+  <data name="ReportNotesRequired" xml:space="preserve">
+    <value>(requerido)</value>
+  </data>
+  <data name="ReportType" xml:space="preserve">
+    <value>Tipo de reporte</value>
+  </data>
+  <data name="Revisions" xml:space="preserve">
+    <value>Revisiones</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Compartir un link</value>
+  </data>
+  <data name="ShowAllTags" xml:space="preserve">
+    <value>Mostrar todo</value>
+  </data>
+  <data name="Social" xml:space="preserve">
+    <value>Social</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Estadísticas</value>
+  </data>
+  <data name="ViewAllComments" xml:space="preserve">
+    <value>Ver todos los comentarios</value>
+  </data>
+  <data name="ViewModifications" xml:space="preserve">
+    <value>Ver modificaciones</value>
   </data>
 </root>

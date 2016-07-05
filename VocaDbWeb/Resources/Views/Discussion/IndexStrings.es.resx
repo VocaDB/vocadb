@@ -117,27 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Author" xml:space="preserve">
+    <value>Autor</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="Comments" xml:space="preserve">
+    <value>Comentarios</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="Created" xml:space="preserve">
+    <value>Creado</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="Discussions" xml:space="preserve">
+    <value>Discusiones</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="DoPost" xml:space="preserve">
+    <value>Publicar</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="Folder" xml:space="preserve">
+    <value>Folder</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="LastComment" xml:space="preserve">
+    <value>Último comentario</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="LastTopic" xml:space="preserve">
+    <value>Último tema</value>
+  </data>
+  <data name="PostContent" xml:space="preserve">
+    <value>Contentido</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Previsualización</value>
+  </data>
+  <data name="RecentTopics" xml:space="preserve">
+    <value>Temas recientes</value>
+  </data>
+  <data name="Topic" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="Topics" xml:space="preserve">
+    <value>Temas</value>
+  </data>
+  <data name="WriteNewPost" xml:space="preserve">
+    <value>Escribir una nueva publicación</value>
   </data>
 </root>

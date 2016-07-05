@@ -117,27 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="AliasedTo" xml:space="preserve">
+    <value>Alias (pseudónimo) de </value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="Aliases" xml:space="preserve">
+    <value>Pseudonimos</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="AllAlbums" xml:space="preserve">
+    <value>Todos los albumes</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="AllArtists" xml:space="preserve">
+    <value>Todos los artistas</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="AllEntries" xml:space="preserve">
+    <value>Todas las entradas</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="AllSongs" xml:space="preserve">
+    <value>Todas las canciones</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="Category" xml:space="preserve">
+    <value>Categoria</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="Overview" xml:space="preserve">
+    <value>Vista superficial</value>
+  </data>
+  <data name="RelatedTags" xml:space="preserve">
+    <value>Etiquetas relacionadas</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Etiqueta</value>
+  </data>
+  <data name="TagDetails" xml:space="preserve">
+    <value>Detalles de la etiqueta</value>
+  </data>
+  <data name="TopAlbums" xml:space="preserve">
+    <value>Top de albumes</value>
+  </data>
+  <data name="TopArtists" xml:space="preserve">
+    <value>Top de artistas</value>
+  </data>
+  <data name="TopSongs" xml:space="preserve">
+    <value>Top de canciones</value>
+  </data>
+  <data name="Translations" xml:space="preserve">
+    <value>Traducciones</value>
   </data>
 </root>

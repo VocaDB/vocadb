@@ -117,27 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="DoLogin" xml:space="preserve">
+    <value>Iniciar sesión</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>¿Olvidaste tu constraseña?</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="KeepMeLoggedIn" xml:space="preserve">
+    <value>Mantener mi sesión abierta en este navegador/dispositivo.</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="Login" xml:space="preserve">
+    <value>Iniciar sesión</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="LoginUsingSSL" xml:space="preserve">
+    <value>Iniciar sesión usando protocolo SSL</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="LoginWithoutSSL" xml:space="preserve">
+    <value>Iniciar sesión via SSL (poco seguro)</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="LoginWithTwitter" xml:space="preserve">
+    <value>Iniciar sesión con Twitter</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="NoAccount" xml:space="preserve">
+    <value>¿No tienes una cuenta?</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="PasswordIsRequired" xml:space="preserve">
+    <value>Se requiere la constraseña.</value>
+  </data>
+  <data name="RegisterHere" xml:space="preserve">
+    <value>Registrate aquí</value>
+  </data>
+  <data name="ResetPass" xml:space="preserve">
+    <value>Resetea tu constraseña aqui</value>
+  </data>
+  <data name="UnableToLogin" xml:space="preserve">
+    <value>Ha habido un error al iniciar sesión.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nombre de usuario</value>
+  </data>
+  <data name="UsernameIsRequired" xml:space="preserve">
+    <value>Se requiere el nombre de usuario.</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>¡Bienvenido de nuevo, {0}!</value>
+  </data>
+  <data name="WrongPassword" xml:space="preserve">
+    <value>El nombre de usuario o contraseña no son correctos.</value>
   </data>
 </root>

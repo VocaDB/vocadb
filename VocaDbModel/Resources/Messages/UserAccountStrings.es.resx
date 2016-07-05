@@ -117,27 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="AccountCreatedSubject" xml:space="preserve">
+    <value>Bienvenido {0}, por favor verifica tu correo electrónico.</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="PasswordResetBody" xml:space="preserve">
+    <value>Tu (o alguien que conoce tu direción de correo electrónico) ha solicitado restablecer la contraseña de tu cuenta en VocaDB.
+Puedes realizar esta acción en {0}. Si tu no solicitaste este cambio de contraseña, puedes tan solo ignorar así eliminar este mensaje.</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="PasswordResetSubject" xml:space="preserve">
+    <value>Solicitud para restablecer contraseña.</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
-  </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
-  </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
-  </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
-  </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="VerifyEmailBody" xml:space="preserve">
+    <value>Haz clic en el link de abajo para verificar tu correo electrónico en {0}.
+{1}?token={2}</value>
   </data>
 </root>

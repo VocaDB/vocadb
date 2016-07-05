@@ -117,27 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Account" xml:space="preserve">
+    <value>Cuenta</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="AddAlbum" xml:space="preserve">
+    <value>Subir un album</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="AddArtist" xml:space="preserve">
+    <value>Añadir un artista</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="AddSong" xml:space="preserve">
+    <value>Subir una canción</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="BackgroundCredit" xml:space="preserve">
+    <value>Ilustración del fondo por {0}</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="Blog" xml:space="preserve">
+    <value>Blog</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="Discussions" xml:space="preserve">
+    <value>Discusiones</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="FollowUser" xml:space="preserve">
+    <value>Seguir usuario</value>
+  </data>
+  <data name="FreeAlbums" xml:space="preserve">
+    <value>Descarga gratuita</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Ayuda / Acerca de</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="IRCLink" xml:space="preserve">
+    <value>canal IRC en Rizon</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>Contenido bajo licencia de Creative Commons.</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Gestionar</value>
+  </data>
+  <data name="MikuDbAlbum" xml:space="preserve">
+    <value>Importación de album</value>
+  </data>
+  <data name="NewAlbums" xml:space="preserve">
+    <value>Nuevos albumes</value>
+  </data>
+  <data name="NewPVs" xml:space="preserve">
+    <value>PVs recientes</value>
+  </data>
+  <data name="OtherCredit" xml:space="preserve">
+    <value>Otros créditos y código fuente</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
+  <data name="RelatedSites" xml:space="preserve">
+    <value>Sitios relacionados</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Servicios</value>
+  </data>
+  <data name="SocialSites" xml:space="preserve">
+    <value>Comunidad</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Etiquetas / géneros</value>
+  </data>
+  <data name="UnreadMessages" xml:space="preserve">
+    <value>Tienes mensajes no leídos</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Bienvenido</value>
+  </data>
+  <data name="Wiki" xml:space="preserve">
+    <value>Wiki</value>
   </data>
 </root>

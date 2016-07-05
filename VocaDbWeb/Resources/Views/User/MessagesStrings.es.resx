@@ -117,27 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Body" xml:space="preserve">
+    <value>Cuerpo</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="ClickSubjectToView" xml:space="preserve">
+    <value>Haz clic sobre el título del mensaje para verlo.</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="Compose" xml:space="preserve">
+    <value>Redactar</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="Date" xml:space="preserve">
+    <value>Fecha</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="From" xml:space="preserve">
+    <value>De</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="FromLC" xml:space="preserve">
+    <value>de</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="HighPriority" xml:space="preserve">
+    <value>Alta prioridad</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="Messages" xml:space="preserve">
+    <value>Mensajes</value>
+  </data>
+  <data name="MessageSendError" xml:space="preserve">
+    <value>Ha habido un error al enviar el mensaje.</value>
+  </data>
+  <data name="MessageSent" xml:space="preserve">
+    <value>Se ha enviado el mensaje.</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Recibido</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>Responder</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="Sent" xml:space="preserve">
+    <value>Enviado</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Tema (título del mensaje)</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Para</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notificaciones</value>
+  </data>
+  <data name="DeleteSelected" xml:space="preserve">
+    <value>Borrar seleccionado(s)</value>
   </data>
 </root>

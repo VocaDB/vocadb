@@ -117,27 +117,120 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="AboutMe" xml:space="preserve">
+    <value>Acerca de mi</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="AccessKey" xml:space="preserve">
+    <value>Código de acceso</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="AccessKeyDescription" xml:space="preserve">
+    <value>El código de acceso lo puedes usar para iniciar sesión en tu cuenta de VocaDB desde otros servicios sin utilizar/revelar tu contraseña actual.
+				Puedes vover a generar un código de acceso cuando quieras (Considera que esto va a invalidar el código anterior).
+				¡Manten tu código de acceso en secreto! Si sospechas que alguien mas ha descubierto tu código de acceso, reestablecelo inmediatamente.</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="AccountSettings" xml:space="preserve">
+    <value>Configuración de cuenta</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="AnonymousActivity" xml:space="preserve">
+    <value>Permitir que mi nombre de usuario sea mostrado en la lista de actividad reciente.</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="Automatic" xml:space="preserve">
+    <value>(Automatico)</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Cambiar contraseña</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="ChangePasswordNotice" xml:space="preserve">
+    <value>Solo necesitas llenar los siguientes campos si quieres cambiar tu contraseña.</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Conectar</value>
+  </data>
+  <data name="Connectivity" xml:space="preserve">
+    <value>Conectividad</value>
+  </data>
+  <data name="CultureName" xml:space="preserve">
+    <value>Formato de fecha y número</value>
+  </data>
+  <data name="CurrentPass" xml:space="preserve">
+    <value>Contraseña actual</value>
+  </data>
+  <data name="DefaultLanguageSelection" xml:space="preserve">
+    <value>¿En que idioma prefieres que se te muestre VocaDB?</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="EmailNote" xml:space="preserve">
+    <value>No se muestra a otros usuarios, usadoúnicamente por gravatar y procesos de reestablecimiento de contraseña</value>
+  </data>
+  <data name="EmailOptions" xml:space="preserve">
+    <value>Mandar un mensaje a mi correo electrónico cuando reciba mensajes privados</value>
+  </data>
+  <data name="EmailTaken" xml:space="preserve">
+    <value>Esta dirección de correo electrónico esta asociada a otra cuenta de VocaDB. Si dicha dirección de correo es tuya y crees que otra persona la puede estar usando, contacta a un moderador.</value>
+  </data>
+  <data name="ExternalLinks" xml:space="preserve">
+    <value>Links externos</value>
+  </data>
+  <data name="Interface" xml:space="preserve">
+    <value>Interfaz</value>
+  </data>
+  <data name="InterfaceLanguageSelection" xml:space="preserve">
+    <value>Idioma de la interfaz</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Por favor checa el formato de la dirección de correo electrónico.</value>
+  </data>
+  <data name="LivePreview" xml:space="preserve">
+    <value>Previsualización en vivo</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Ubicación</value>
+  </data>
+  <data name="MySettingsTitle" xml:space="preserve">
+    <value>Mi configuración</value>
+  </data>
+  <data name="NewPass" xml:space="preserve">
+    <value>Escribe una nueva contraseña</value>
+  </data>
+  <data name="NewPassAgain" xml:space="preserve">
+    <value>Escribe tu nueva contraseña de nuevo</value>
+  </data>
+  <data name="PasswordsMustMatch" xml:space="preserve">
+    <value>Las contraseñas deben coincidir</value>
+  </data>
+  <data name="PreferredVideoService" xml:space="preserve">
+    <value>Servicio de streaming preferido</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Configuración de privacidad</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="PublicAlbumCollection" xml:space="preserve">
+    <value>Permitir que otros vean los albumes que tengo.</value>
+  </data>
+  <data name="PublicRatings" xml:space="preserve">
+    <value>Permitir que cualquiera vea las calificaciones que he hecho a canciones y albumes.</value>
+  </data>
+  <data name="ReallyReset" xml:space="preserve">
+    <value>¿Realmente deseas resetear el código?</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Resetear</value>
+  </data>
+  <data name="SettingsUpdated" xml:space="preserve">
+    <value>Configuración guardada</value>
+  </data>
+  <data name="UnableToSave" xml:space="preserve">
+    <value>Unable to save settings. Please correct the errors and try again.</value>
+  </data>
+  <data name="UnreadNotificationsToKeep" xml:space="preserve">
+    <value>Número máximo de notificaciones sin ver retenidas</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nombre de usuario</value>
   </data>
 </root>

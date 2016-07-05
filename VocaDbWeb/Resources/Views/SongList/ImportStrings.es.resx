@@ -117,27 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateArtist" xml:space="preserve">
-    <value>Un mismo artista no puede ser añadido dos veces en el mismo album. Por favor elimina el duplicado y edita los roles adecuadamente.</value>
+  <data name="Accept" xml:space="preserve">
+    <value>Aceptar</value>
   </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Se necesita que especifiques al/los artista(s) del album (mínimo uno).</value>
+  <data name="InvalidUrlError" xml:space="preserve">
+    <value>Verifica que la URL es valida y es la correcta hacia la NicoNico MyList correspondiente, lista de reproducción de YouTube o RSS.</value>
   </data>
-  <data name="NeedCover" xml:space="preserve">
-    <value>Se requiere la carátula del album.</value>
+  <data name="ItemsLoaded" xml:space="preserve">
+    <value>Cargado</value>
   </data>
-  <data name="NeedReferences" xml:space="preserve">
-    <value>El album necesita una descripción y/o uno o mas links de referencia.</value>
+  <data name="ListDescription" xml:space="preserve">
+    <value>Descripción</value>
   </data>
-  <data name="NeedReleaseYear" xml:space="preserve">
-    <value>Se necesita especificar el año de lanzamiento del album.</value>
+  <data name="ListName" xml:space="preserve">
+    <value>Nombre</value>
   </data>
-  <data name="NeedTracks" xml:space="preserve">
-    <value>Se requiere la lista de canciones del album.</value>
+  <data name="LoadMoreHelp" xml:space="preserve">
+    <value>(Haz clic en "mostrar mas" para cargar mas canciones de la lista.)</value>
   </data>
-  <data name="NeedType" xml:space="preserve">
-    <value>Se necesita que especifiques el tipo de grabación.</value>
+  <data name="MylistDescription" xml:space="preserve">
+    <value>Lista de propiedades</value>
   </data>
-  <data name="UnspecifiedNames" xml:space="preserve">
+  <data name="NicoPV" xml:space="preserve">
+    <value>PV importado</value>
+  </data>
+  <data name="OnlyRanked" xml:space="preserve">
+    <value>Incluir solo canciones en ranking (a partir de los rankings de NicoNicoDounga)</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Ordenar</value>
+  </data>
+  <data name="ParseAll" xml:space="preserve">
+    <value>Incluir todas las canciones en la lista (no solo las calificadas en ranking)</value>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>Proceso</value>
+  </data>
+  <data name="SongMissing" xml:space="preserve">
+    <value>FALTANTE</value>
+  </data>
+  <data name="SongsInList" xml:space="preserve">
+    <value>Canciones en la lista</value>
+  </data>
+  <data name="SongsMissingError" xml:space="preserve">
+    <value>Algunas de las canciones de la lista no se encuentran en VocaDB. Para que puedas crear esta lista, primero deberás añadir las canciones faltantes a la base de datos.</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Subir</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Crear una lista de canciones via NicoNicoDouga MyList o una lista de reproducción de YouTube</value>
+  </data>
+  <data name="TotalSongs" xml:space="preserve">
+    <value>Total de canciones</value>
+  </data>
+  <data name="UnableToParse" xml:space="preserve">
+    <value>No se ha podido analizar grámaticalmente ("parsear") la lista</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>Puede ser una lista de NicoNicoDouga MyList, por ejemplo http://www.nicovideo.jp/mylist/1234567, o una lista de reproducción de YouTube, por ejemplo https://www.youtube.com/playlist?list=MIKUMIKU3939</value>
+  </data>
+  <data name="UrlLabel" xml:space="preserve">
+    <value>URL de la Lista de reproducción YouTube/NND Mylist</value>
+  </data>
+  <data name="VocaDbEntry" xml:space="preserve">
+    <value>Entrada de canción en VocaDB</value>
   </data>
 </root>
