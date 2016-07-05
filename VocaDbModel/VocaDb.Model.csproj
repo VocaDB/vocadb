@@ -934,6 +934,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Albums\DiscTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\Albums\DiscTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\Albums\DiscTypeNames.fi.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>DiscTypeNames.fi.designer.cs</LastGenOutput>
@@ -953,6 +954,7 @@
       <LastGenOutput>DiscTypeNames.ru.designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AlbumValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\AlbumValidationErrors.es.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.resx">
@@ -961,6 +963,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AlbumValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\ArtistTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.fi.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.ja.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.pt.resx" />
@@ -972,6 +975,7 @@
     <EmbeddedResource Include="Resources\ArtistTypeNames.ru.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\ArtistValidationErrors.es.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.resx">
@@ -980,12 +984,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ArtistValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\ExtSites.de.resx" />
+    <EmbeddedResource Include="Resources\ExtSites.es.resx" />
     <EmbeddedResource Include="Resources\ExtSites.ja.resx" />
     <EmbeddedResource Include="Resources\ExtSites.pt.resx" />
     <EmbeddedResource Include="Resources\ExtSites.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExtSites.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\EntryReportStrings.es.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.pt.resx" />
@@ -993,6 +999,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryReportStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\UserAccountStrings.es.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.resx">
@@ -1000,6 +1007,7 @@
       <LastGenOutput>UserAccountStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.fi.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SongTypeNames.fi.designer.cs</LastGenOutput>
@@ -1020,6 +1028,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\SongValidationErrors.es.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.resx">
@@ -1030,6 +1039,7 @@
     <EmbeddedResource Include="Resources\SongValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\AlbumRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.pt.resx" />
@@ -1038,6 +1048,7 @@
       <LastGenOutput>AlbumRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\ArtistRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\ArtistRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.pt.resx" />
@@ -1046,6 +1057,7 @@
       <LastGenOutput>ArtistRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\HomeRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\HomeRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.pt.resx" />
@@ -1055,6 +1067,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\HomeRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\LayoutRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.pt.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1062,6 +1075,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\LayoutRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\SongRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.pt.resx" />
