@@ -42,11 +42,11 @@ namespace VocaDb.Model.DataContracts.Artists {
 			if (includedFields.HasFlag(ArtistOptionalFields.ArtistLinks))
 				ArtistLinks = artist.Groups.Select(g => new ArtistForArtistForApiContract(g, languagePreference)).ToArray();
 
+			if (includedFields.HasFlag(ArtistOptionalFields.ArtistLinksReverse))
+				ArtistLinksReverse = artist.Members.Select(m => new ArtistForArtistForApiContract(m, languagePreference)).ToArray();
+
 			if (includedFields.HasFlag(ArtistOptionalFields.Description))
 				Description = artist.Description[languagePreference];
-
-			if (includedFields.HasFlag(ArtistOptionalFields.Members))
-				Members = artist.Members.Select(m => new ArtistContract(m.Member, languagePreference)).ToArray();
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Names))
 				Names = artist.Names.Select(n => new LocalizedStringContract(n)).ToArray();
@@ -72,10 +72,18 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public string AdditionalNames { get; set;}
 
 		/// <summary>
-		/// List of groups this artist belongs in. Optional field.
+		/// List of artists linked to this artist, from child to parent. Optional field.
+		/// This includes groups, illustrators and voice providers.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public ArtistForArtistForApiContract[] ArtistLinks { get; set; }
+
+		/// <summary>
+		/// List of artists linked to this artist, from parent to child. Optional field.
+		/// This includes group members, illustrations and voicebanks provided by this artist.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public ArtistForArtistForApiContract[] ArtistLinksReverse { get; set; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -116,12 +124,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }
-
-		/// <summary>
-		/// If this artist is a group, list of members in this group.
-		/// </summary>
-		[DataMember(EmitDefaultValue = false)]
-		public ArtistContract[] Members { get; set; }
 
 		/// <summary>
 		/// Id of the entry this entry was merged to, if any.
@@ -180,9 +182,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 		None = 0,
 		AdditionalNames = 1,
 		ArtistLinks = 2,
-		Description = 4,
-		MainPicture = 8,
-		Members = 16,
+		ArtistLinksReverse = 4,
+		Description = 8,
+		MainPicture = 16,
 		Names = 32,
 		Tags = 64,
 		WebLinks = 128
