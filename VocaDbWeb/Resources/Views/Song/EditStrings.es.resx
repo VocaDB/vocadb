@@ -172,7 +172,7 @@
     <value>Fuente:</value>
   </data>
   <data name="PvAddMedia" xml:space="preserve">
-    <value>Añadir media</value>
+    <value>Añadir multimedia</value>
   </data>
   <data name="PvAuthor" xml:space="preserve">
     <value>Autor</value>
@@ -181,7 +181,7 @@
     <value>Fecha</value>
   </data>
   <data name="PvInstrumentalNote" xml:space="preserve">
-    <value>Nótese que las versiones instrumentales son añadidas en links externos en lugar de media.</value>
+    <value>Nótese que las versiones instrumentales son añadidas en links externos en lugar de multimedia.</value>
   </data>
   <data name="PvLength" xml:space="preserve">
     <value>Duración</value>
@@ -196,7 +196,7 @@
     <value>Servicio</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>Servicios soportados: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>
+    <value>Servicios de streaming soportados: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>
   </data>
   <data name="PvType" xml:space="preserve">
     <value>Tipo</value>
@@ -214,6 +214,6 @@
     <value>Letra</value>
   </data>
   <data name="TabMedia" xml:space="preserve">
-    <value>Media</value>
+    <value>Multimedia</value>
   </data>
 </root>

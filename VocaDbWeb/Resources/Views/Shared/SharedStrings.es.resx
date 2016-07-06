@@ -169,7 +169,7 @@
     <value>Cargando, por favor espere...</value>
   </data>
   <data name="Media" xml:space="preserve">
-    <value>Media</value>
+    <value>Multimedia</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nombre</value>
@@ -194,7 +194,7 @@
     <value>Buscar</value>
   </data>
   <data name="SetToLimited" xml:space="preserve">
-    <value>Remove database editing permissions</value>
+    <value>Remover permisos de edición de la base de datos</value>
   </data>
   <data name="ShowMore" xml:space="preserve">
     <value>Mostrar mas</value>
@@ -209,7 +209,7 @@
     <value>Etiquetas</value>
   </data>
   <data name="TopFavoritedSongs" xml:space="preserve">
-    <value>Top de canciones mas valorados</value>
+    <value>Top de canciones mas valoradas</value>
   </data>
   <data name="TopRatedAlbums" xml:space="preserve">
     <value>Top de albumes mas valorados</value>

@@ -124,7 +124,7 @@
     <value>Ordenado</value>
   </data>
   <data name="Owned" xml:space="preserve">
-    <value>Propiedad de</value>
+    <value>Adquirido por</value>
   </data>
   <data name="Wishlisted" xml:space="preserve">
     <value>Aprobado</value>

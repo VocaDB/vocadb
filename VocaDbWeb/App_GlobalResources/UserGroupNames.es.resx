@@ -133,6 +133,6 @@
     <value>Usuario regular</value>
   </data>
   <data name="Trusted" xml:space="preserve">
-    <value>Usuario fuente confiable</value>
+    <value>Usuario verificado como fuente confiable</value>
   </data>
 </root>

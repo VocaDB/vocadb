@@ -121,6 +121,6 @@
     <value>Cuenta de UtaiteDB</value>
   </data>
   <data name="NewArtistExternalLink" xml:space="preserve">
-    <value>Link externo (al sitio web del artista, Utaite wiki, NND MyList etcétera)</value>
+    <value>Link externo (al sitio web del artista, Utaite wiki, NND MyList, etcétera).</value>
   </data>
 </root>

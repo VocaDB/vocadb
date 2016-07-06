@@ -127,7 +127,7 @@
     <value>Detalles</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Exportar</value>
+    <value>Exportar en un archivo CSV</value>
   </data>
   <data name="Playlist" xml:space="preserve">
     <value>Lista de reproducción</value>

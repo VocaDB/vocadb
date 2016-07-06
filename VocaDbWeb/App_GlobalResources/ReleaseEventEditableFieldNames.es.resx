@@ -130,7 +130,7 @@
     <value>Serie</value>
   </data>
   <data name="SeriesNumber" xml:space="preserve">
-    <value>Número de serie</value>
+    <value>Edición</value>
   </data>
   <data name="SeriesSuffix" xml:space="preserve">
     <value>Sufijo de serie</value>

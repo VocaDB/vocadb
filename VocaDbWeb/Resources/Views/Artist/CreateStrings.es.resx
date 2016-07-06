@@ -133,13 +133,13 @@
     <value>Esta entrada es un borrador.</value>
   </data>
   <data name="ExternalLink" xml:space="preserve">
-    <value>Link externo (al sitio web del artista, Hatsune Miku wiki, NND MyList etc.)</value>
+    <value>Link referencial externo (al sitio web del artista, Hatsune Miku wiki, NND MyList, etcétera).</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nombre (necesita al menos uno)</value>
   </data>
   <data name="NameHelp" xml:space="preserve">
-    <value>Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre no-inglés. Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada en en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.</value>
+    <value>Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre original (no inglés). Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada es en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.</value>
   </data>
   <data name="NeedWebLinkOrDescription" xml:space="preserve">
     <value>Debes incluír una descripción o link externo.</value>
@@ -151,7 +151,7 @@
     <value>Imagen</value>
   </data>
   <data name="UnableToCreateArtist" xml:space="preserve">
-    <value>No se ha podido generar al artista. Corrige los errores e inténtalo de nuevo.</value>
+    <value>No se ha podido generar la entrada para este artista. Corrige los errores e inténtalo de nuevo.</value>
   </data>
   <data name="WebLinkCategory" xml:space="preserve">
     <value>Categoria</value>

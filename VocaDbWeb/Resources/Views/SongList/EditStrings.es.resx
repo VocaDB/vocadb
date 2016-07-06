@@ -133,7 +133,7 @@
     <value>Fecha de evento</value>
   </data>
   <data name="EventDateHelp" xml:space="preserve">
-    <value>Si esta lista esta relacionada a un evento tal como un concierto o ranking, la fehca del evento se puede especificar aqui.</value>
+    <value>Si esta lista esta relacionada a un evento tal como un concierto o ranking, la fecha del evento se puede especificar aqui.</value>
   </data>
   <data name="FeaturedCategory" xml:space="preserve">
     <value>Categoría añadida</value>

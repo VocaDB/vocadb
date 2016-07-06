@@ -161,7 +161,7 @@ Otros: Para aquellos sitos que no encajan en ninguna de las categorías anterior
     <value>Desechar (Mover a la basura)</value>
   </data>
   <data name="NameHelp" xml:space="preserve">
-    <value>Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre no-inglés. Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada en en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.&lt;br /&gt;
+    <value>Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre original (no inglés). Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada es en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.&lt;br /&gt;
 &lt;br /&gt;
 Nótese que no necesitas copiar los nombres sin específicar, el sistema va a sustituir esos cuando se requiera. Por ejemplo, cuando carecen de un nombre romanizado, casos en los que el sistema usará el nombre por defecto.&lt;br /&gt;
 &lt;br /&gt;

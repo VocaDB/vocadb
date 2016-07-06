@@ -127,7 +127,7 @@
     <value>Nombre (se requiere al menos uno)</value>
   </data>
   <data name="NameHelp" xml:space="preserve">
-    <value>Si el nombre original no está en inglés (por ejemplo, que esté en japonés) o en algún otro idioma sin identificarcolocalo en la casilla de nombre no-inglés. Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada en en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.</value>
+    <value>Si el nombre original no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin identificarcolocalo en la casilla de nombre original (no inglés). Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada es en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.</value>
   </data>
   <data name="NeedName" xml:space="preserve">
     <value>Se requiere al menos un nombre</value>
@@ -136,10 +136,10 @@
     <value>No coloques los nombres adicionales (pseudónimos) en la casilla de nombre, sino en la lista de archivos.</value>
   </data>
   <data name="NonEnglishName" xml:space="preserve">
-    <value>Nombre no-inglés</value>
+    <value>Nombre original (no inglés)</value>
   </data>
   <data name="PictureInfo" xml:space="preserve">
-    <value>Especificaciones permitidas: {0}. El tamaño máximo de archivo es de {1} MB.</value>
+    <value>Se admiten los formatos: {0}. El archivo no puede pesar mas de {1} MB para ser admitido en el sistema.</value>
   </data>
   <data name="RomajiName" xml:space="preserve">
     <value>Nombre romanizado (romaji)</value>

@@ -166,7 +166,7 @@
     <value>Canciones gustadas</value>
   </data>
   <data name="FavoriteTags" xml:space="preserve">
-    <value>Mis etiquetas favoritas</value>
+    <value>Mis etiquetas preferidas</value>
   </data>
   <data name="FollowedArtistsTab" xml:space="preserve">
     <value>Artistas seguidos</value>
@@ -190,7 +190,7 @@
     <value>Mensajes</value>
   </data>
   <data name="MySettings" xml:space="preserve">
-    <value>Mis ajustes</value>
+    <value>Mi configuración</value>
   </data>
   <data name="OldNameUntil" xml:space="preserve">
     <value>(hasta {0})</value>
@@ -209,7 +209,7 @@ Si es así, por favor ve el {0}.</value>
     <value>Poder</value>
   </data>
   <data name="SetAvatar" xml:space="preserve">
-    <value>Añade tu avatar via gravatar.com</value>
+    <value>Cambia tu avatar via gravatar.com</value>
   </data>
   <data name="SomeAlbumsILike" xml:space="preserve">
     <value>Algunos albumes que me han gustado</value>
@@ -233,7 +233,7 @@ Si es así, por favor ve el {0}.</value>
     <value>¡Gracias por tu apoyo {0}!</value>
   </data>
   <data name="TagVotes" xml:space="preserve">
-    <value>Votos de la etiqueta</value>
+    <value>Votos en etiquetas</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>{0} en total</value>

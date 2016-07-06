@@ -132,6 +132,6 @@ Aprobada = Esta entrada ha sido verificada y aprobada por una fuente confiable. 
     <value>Esta entrada esta asegurada, solo moderadores pueden editarla.</value>
   </data>
   <data name="NameLanguageHelp" xml:space="preserve">
-    <value>Escoge el idioma para este nombre. "Original" es el nombre en su idioma original (sin considerar al inglés) por ejemplo, en japonés. Si el nombre está originalmente en inglés, deja en blanco la casilla del nombre en idioma original.</value>
+    <value>Escoge el idioma para este nombre. "Original" es el nombre en su idioma nativo (sin considerar al inglés) por ejemplo, en japonés. Si el nombre está originalmente en inglés, deja en blanco la casilla del nombre en idioma original.</value>
   </data>
 </root>

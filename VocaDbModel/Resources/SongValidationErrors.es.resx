@@ -127,7 +127,7 @@
     <value>Las canciones derivadas necesitan que se especifique una version original de la que derivan, si esta ya se encuentra en la base de datos y/o que deba ser mencionada en las notas.</value>
   </data>
   <data name="NeedProducer" xml:space="preserve">
-    <value>La canción requiere que se especifique al menos un productor con su respectivo rol (compositor, arreglista o productor de animación).</value>
+    <value>La canción requiere que se especifique al menos un productor con su respectivo rol (compositor, arreglista, ilustrador, animador, etc).</value>
   </data>
   <data name="NeedReferences" xml:space="preserve">
     <value>Se requieren notas, PVs y/o links de referencia de la canción.</value>

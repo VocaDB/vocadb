@@ -142,10 +142,10 @@
     <value>Otro grupo</value>
   </data>
   <data name="Animator" xml:space="preserve">
-    <value>Productor de animación (Animador)</value>
+    <value>Productor de animación [Animador]</value>
   </data>
   <data name="OtherIndividual" xml:space="preserve">
-    <value>Otro individual</value>
+    <value>Otro tipo de artista</value>
   </data>
   <data name="Illustrator" xml:space="preserve">
     <value>Ilustrador</value>

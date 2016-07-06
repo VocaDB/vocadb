@@ -125,7 +125,7 @@
   </data>
   <data name="AccessKeyDescription" xml:space="preserve">
     <value>El código de acceso lo puedes usar para iniciar sesión en tu cuenta de VocaDB desde otros servicios sin utilizar/revelar tu contraseña actual.
-				Puedes vover a generar un código de acceso cuando quieras (Considera que esto va a invalidar el código anterior).
+				Puedes volver a generar un código de acceso cuando quieras (Considera que esto va a invalidar el código anterior).
 				¡Manten tu código de acceso en secreto! Si sospechas que alguien mas ha descubierto tu código de acceso, reestablecelo inmediatamente.</value>
   </data>
   <data name="AccountSettings" xml:space="preserve">
@@ -141,7 +141,7 @@
     <value>Cambiar contraseña</value>
   </data>
   <data name="ChangePasswordNotice" xml:space="preserve">
-    <value>Solo necesitas llenar los siguientes campos si quieres cambiar tu contraseña.</value>
+    <value>Llena los siguientes campos para cambiar tu contraseña y haz clic en el botón "guardar cambios".</value>
   </data>
   <data name="Connect" xml:space="preserve">
     <value>Conectar</value>
@@ -156,7 +156,7 @@
     <value>Contraseña actual</value>
   </data>
   <data name="DefaultLanguageSelection" xml:space="preserve">
-    <value>¿En que idioma prefieres que se te muestre VocaDB?</value>
+    <value>Idioma estándar para contenido</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Correo electrónico</value>
@@ -219,13 +219,13 @@
     <value>¿Realmente deseas resetear el código?</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Resetear</value>
+    <value>Reestablecer</value>
   </data>
   <data name="SettingsUpdated" xml:space="preserve">
     <value>Configuración guardada</value>
   </data>
   <data name="UnableToSave" xml:space="preserve">
-    <value>Unable to save settings. Please correct the errors and try again.</value>
+    <value>No se han podido guardar los cambios, corrige los errores e inténtalo de nuevo.</value>
   </data>
   <data name="UnreadNotificationsToKeep" xml:space="preserve">
     <value>Número máximo de notificaciones sin ver retenidas</value>

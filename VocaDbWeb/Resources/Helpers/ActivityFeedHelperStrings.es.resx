@@ -121,7 +121,7 @@
     <value>a</value>
   </data>
   <data name="CreatedNew" xml:space="preserve">
-    <value>Se ha creado un(a) nuev@ {0}</value>
+    <value>ha añadido un(a) nuev@ {0}</value>
   </data>
   <data name="EntryAlbum" xml:space="preserve">
     <value>album</value>
@@ -145,6 +145,6 @@
     <value>contribuyente</value>
   </data>
   <data name="Updated" xml:space="preserve">
-    <value>actualizado {0}</value>
+    <value>ha actualizado a un(a) {0}</value>
   </data>
 </root>
