@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201607061900)]
+	public class SongListDescriptionExtend : AutoReversingMigration {
+
+		public override void Up() {
+
+			Alter.Column("Description").OnTable(TableNames.SongLists).AsString(4000).NotNullable();
+
+		}
+
+	}
+
 	[Migration(201607041700)]
 	public class ArtistForArtistLinkType : AutoReversingMigration {
 
