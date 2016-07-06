@@ -61,11 +61,29 @@ namespace VocaDb.Web.Resources.Views.Shared.Partials {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original.
+        /// </summary>
+        public static string Original {
+            get {
+                return ResourceManager.GetString("Original", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show full description.
         /// </summary>
         public static string ShowFullDescription {
             get {
                 return ResourceManager.GetString("ShowFullDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translated.
+        /// </summary>
+        public static string Translated {
+            get {
+                return ResourceManager.GetString("Translated", resourceCulture);
             }
         }
     }
