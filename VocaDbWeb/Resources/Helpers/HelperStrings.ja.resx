@@ -171,4 +171,13 @@
   <data name="StatusDescriptionLocked" xml:space="preserve">
     <value>ロックされた項目はスタッフ以外編集できません。</value>
   </data>
+  <data name="WebLinkCategoryTitle" xml:space="preserve">
+    <value>カテゴリー</value>
+  </data>
+  <data name="WebLinkDescriptionTitle" xml:space="preserve">
+    <value>記述</value>
+  </data>
+  <data name="WebLinkNewRow" xml:space="preserve">
+    <value>もう一つの行</value>
+  </data>
 </root>

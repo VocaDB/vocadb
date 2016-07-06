@@ -22,11 +22,11 @@
 		<span data-bind="text: artistString" class="extraInfo"></span>
 	</td><td>
 		<input type="checkbox" data-bind="checked: isNextDisc" />
-		Next disc
+		@ViewRes.Album.EditStrings.TrNextDisc
 	</td><td>
 	    <span data-bind="if: songId">
-			<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Song', songId) }" href="#" target="_blank" title="Open for edit" class="iconLink editLink">Edit</a>			     
+			<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Song', songId) }" href="#" target="_blank" title="Open for edit" class="iconLink editLink">@ViewRes.SharedStrings.Edit</a>			     
 	    </span>     
-		<a data-bind="click: $parent.removeTrack" href="#" class="iconLink removeLink" title="Remove from album">Remove</a>
+		<a data-bind="click: $parent.removeTrack" href="#" class="iconLink removeLink" title="Remove from album">@ViewRes.SharedStrings.Remove</a>
 	</td>
 </tr>

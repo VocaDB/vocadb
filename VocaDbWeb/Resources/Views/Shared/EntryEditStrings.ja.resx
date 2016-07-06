@@ -170,4 +170,13 @@
   <data name="SaveWarning" xml:space="preserve">
     <value>この項目にはエラーが残っています。本当に完成版として保存してもよろしいですか？</value>
   </data>
+  <data name="TranslatedStringAddEnglishTranslation" xml:space="preserve">
+    <value>英語に翻訳します</value>
+  </data>
+  <data name="TranslatedStringEnglishTranslation" xml:space="preserve">
+    <value>英語の翻訳</value>
+  </data>
+  <data name="TranslatedStringOriginal" xml:space="preserve">
+    <value>原文</value>
+  </data>
 </root>

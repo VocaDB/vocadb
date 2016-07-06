@@ -246,4 +246,32 @@
   <data name="BaDiscTypeExplanation" xml:space="preserve">
     <value>If unsure of which type to use, try to find out how the artists themselves call the album. For more elaborate descriptions, please refer to Wikipedia, Discogs or Musicbrainz.</value>
   </data>
+  <data name="BaBarcode" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="DiAddRow" xml:space="preserve">
+    <value>Add row</value>
+  </data>
+  <data name="DiAudio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
+  <data name="DiName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="DiNote" xml:space="preserve">
+    <value>If the album contains multiple discs you may define extra properties for those discs here.
+				You may specify disc name and type. Name is optional - if not specified, the default "Disc #" will be used, where "#" is the disc number.</value>
+  </data>
+  <data name="DiscsTab" xml:space="preserve">
+    <value>Discs</value>
+  </data>
+  <data name="DiType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="DiVideo" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="TrNextDisc" xml:space="preserve">
+    <value>Next disc</value>
+  </data>
 </root>

@@ -120,4 +120,7 @@
   <data name="BaArtistType" xml:space="preserve">
     <value>アーティストタイプ</value>
   </data>
+  <data name="BaDescription" xml:space="preserve">
+    <value>概要</value>
+  </data>
 </root>

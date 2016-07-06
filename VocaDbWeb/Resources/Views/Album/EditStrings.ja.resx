@@ -246,4 +246,31 @@
   <data name="BaDiscTypeExplanation" xml:space="preserve">
     <value>レコードタイプが明確でない場合はアーティストがどのように指定しているか検索してください。違うタイプの詳細の説明はWikipedia、 Discogs、又は Musicbrainz を参照ください。</value>
   </data>
+  <data name="BaBarcode" xml:space="preserve">
+    <value>バーコード</value>
+  </data>
+  <data name="DiAddRow" xml:space="preserve">
+    <value>もう一つの行</value>
+  </data>
+  <data name="DiAudio" xml:space="preserve">
+    <value>オーディオ</value>
+  </data>
+  <data name="DiName" xml:space="preserve">
+    <value>名</value>
+  </data>
+  <data name="DiNote" xml:space="preserve">
+    <value>アルバムは複数のディスクがあれば、ここに余分な特色を特定してください。ディスクの名とタイプも特定していいです。ディスクの名は任意です。特定しなかった場合は、デフォルトの「ディスク＃」を使います。＃はディスクの番号を指します。</value>
+  </data>
+  <data name="DiscsTab" xml:space="preserve">
+    <value>ディスク</value>
+  </data>
+  <data name="DiType" xml:space="preserve">
+    <value>タイプ</value>
+  </data>
+  <data name="DiVideo" xml:space="preserve">
+    <value>ビデオ</value>
+  </data>
+  <data name="TrNextDisc" xml:space="preserve">
+    <value>次のディスク</value>
+  </data>
 </root>

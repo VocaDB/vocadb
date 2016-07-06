@@ -106,6 +106,15 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Barcode.
+        /// </summary>
+        public static string BaBarcode {
+            get {
+                return ResourceManager.GetString("BaBarcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Catalog number.
         /// </summary>
         public static string BaCatNum {
@@ -228,6 +237,70 @@ namespace ViewRes.Album {
         public static string ConfirmMoveToTrash {
             get {
                 return ResourceManager.GetString("ConfirmMoveToTrash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add row.
+        /// </summary>
+        public static string DiAddRow {
+            get {
+                return ResourceManager.GetString("DiAddRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio.
+        /// </summary>
+        public static string DiAudio {
+            get {
+                return ResourceManager.GetString("DiAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string DiName {
+            get {
+                return ResourceManager.GetString("DiName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the album contains multiple discs you may define extra properties for those discs here.
+        ///				You may specify disc name and type. Name is optional - if not specified, the default &quot;Disc #&quot; will be used, where &quot;#&quot; is the disc number..
+        /// </summary>
+        public static string DiNote {
+            get {
+                return ResourceManager.GetString("DiNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discs.
+        /// </summary>
+        public static string DiscsTab {
+            get {
+                return ResourceManager.GetString("DiscsTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string DiType {
+            get {
+                return ResourceManager.GetString("DiType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video.
+        /// </summary>
+        public static string DiVideo {
+            get {
+                return ResourceManager.GetString("DiVideo", resourceCulture);
             }
         }
         
@@ -408,6 +481,15 @@ namespace ViewRes.Album {
         public static string TrNameHead {
             get {
                 return ResourceManager.GetString("TrNameHead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next disc.
+        /// </summary>
+        public static string TrNextDisc {
+            get {
+                return ResourceManager.GetString("TrNextDisc", resourceCulture);
             }
         }
         

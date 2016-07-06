@@ -232,6 +232,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original.
+        /// </summary>
+        public static string TranslatedStringOriginal {
+            get {
+                return ResourceManager.GetString("TranslatedStringOriginal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update notes (optional).
         /// </summary>
         public static string UpdateNotes {
