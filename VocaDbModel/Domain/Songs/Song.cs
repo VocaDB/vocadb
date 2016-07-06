@@ -22,7 +22,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtists<ArtistForSong>, 
 		IEntryWithTags<SongTagUsage>,
-		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song>, IEntryWithComments {
+		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song>, IEntryWithComments, 
+		IEntryWithLinks<SongWebLink> {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
 			get { return ArchivedVersionsManager; }

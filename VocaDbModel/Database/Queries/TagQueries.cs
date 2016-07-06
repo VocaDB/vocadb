@@ -214,7 +214,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				tag.Deleted = true;
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", tag));
+				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entryLinkFactory.CreateEntryLink(tag)));
 
 				Archive(ctx, tag, new TagDiff(false), EntryEditEvent.Deleted, notes);
 

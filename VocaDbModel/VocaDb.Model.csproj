@@ -364,6 +364,7 @@
     <Compile Include="Domain\IDeletableEntry.cs" />
     <Compile Include="Domain\IEntryWithArtists.cs" />
     <Compile Include="Domain\IEntryWithIntId.cs" />
+    <Compile Include="Domain\IEntryWithLinks.cs" />
     <Compile Include="Domain\IEntryWithStatus.cs" />
     <Compile Include="Domain\IEntryWithTags.cs" />
     <Compile Include="Domain\IEntryWithVersions.cs" />
