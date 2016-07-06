@@ -95,6 +95,59 @@
 						</td>
 					</tr>
 				}
+								
+				@if (Model.Illustrator != null) {
+					<tr>
+						<td>
+							<span>
+								@Res.Illustrator
+							</span>
+						</td>
+						<td>
+							@ArtistHelpers.ArtistLink(Model.Illustrator)
+						</td>
+					</tr>
+				}
+
+				@if (Model.CharacterDesigns.Any()) {
+					<tr>
+						<td>
+							<span>
+								@Res.IllustratorOf
+							</span>
+						</td>
+						<td>
+							@ArtistHelpers.ArtistLinkList(Model.CharacterDesigns)
+						</td>
+					</tr>
+				}
+
+				@if (Model.VoiceProvider != null) {
+					<tr>
+						<td>
+							<span>
+								@Res.VoiceProvider
+							</span>
+						</td>
+						<td>
+							@ArtistHelpers.ArtistLink(Model.VoiceProvider)
+						</td>
+					</tr>
+				}
+
+				@if (Model.Voicebanks.Any()) {
+					<tr>
+						<td>
+							<span>
+								@Res.VoiceProviderOf
+							</span>
+						</td>
+						<td>
+							@ArtistHelpers.ArtistLinkList(Model.Voicebanks)
+						</td>
+					</tr>
+				}
+
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
@@ -131,7 +184,7 @@
 						</td>
 					</tr>
 				}
-
+				
 				@if (Model.BaseVoicebank != null) {
 					<tr>
 						<td>
@@ -172,7 +225,7 @@
 						</td>
 						<td id="groups">
 							@foreach (var grp in Model.Groups) {
-								@ArtistHelpers.ArtistLink(grp.Group)
+								@ArtistHelpers.ArtistLink(grp)
 								if (grp != Model.Groups.Last()) {
 									@(", ")
 								}
@@ -198,7 +251,7 @@
 						}
 						@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 							<p>
-								@Res.MostlyUses @Html.LinkList(Model.AdvancedStats.TopVocaloids, a => new MvcHtmlString(ArtistHelpers.ArtistLink(a.Data, typeLabel: true).ToString())).
+								@Res.MostlyUses @ArtistHelpers.ArtistLinkList(Model.AdvancedStats.TopVocaloids.Select(a => a.Data), typeLabel: true).
 							</p>
 						}
 					</td>
@@ -220,11 +273,11 @@
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.Members.Length))</small>
 			</h3>
 			<div data-bind="visible: !showAllMembers()">
-				@ArtistHelpers.ArtistGrid(Model.Members.Take(6).Select(g => g.Member), 3, true)
+				@ArtistHelpers.ArtistGrid(Model.Members.Take(6).Select(g => g), 3, true)
 			</div>
 			if (Model.Members.Length > 6) {
 				<div data-bind="visible: showAllMembers">
-					@ArtistHelpers.ArtistGrid(Model.Members.Select(g => g.Member), 3, true)
+					@ArtistHelpers.ArtistGrid(Model.Members.Select(g => g), 3, true)
 				</div>
 				<a href="#" data-bind="click: function() { showAllMembers(true); }, visible: !showAllMembers()">@ViewRes.SharedStrings.ShowMore</a>
 			}

@@ -37,6 +37,10 @@
 
 }
 
+@helper ArtistLockingAutoComplete(string binding, string artistTypes, int ignoreId = 0) {
+	@LockingAutoComplete("artistAutoComplete", "{ acceptSelection: " + binding + ".id, extraQueryParams: { artistTypes: '" + artistTypes + "' }, ignoreId: " + ignoreId + " }", textBinding: binding + ".name", valBinding: binding + ".id")
+}
+
 @helper CheckBoxButtons(Dictionary<string, string> options, string binding) {
 	<div style="display: inline-block;">
 		@foreach (var option in options) {
@@ -79,6 +83,7 @@
 		<li><a data-bind="click: function() { pageSize(10); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 10)</a></li>
 		<li><a data-bind="click: function() { pageSize(20); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 20)</a></li>
 		<li><a data-bind="click: function() { pageSize(40); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 40)</a></li>
+		<li><a data-bind="click: function() { pageSize(100); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 100)</a></li>
 	</ul>
 }
 

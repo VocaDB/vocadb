@@ -278,12 +278,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Names() {
 			
+			// Arrange
 			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English);
 
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated artist";
 
+			// Act
 			contract = CallUpdate(contract);
+
+			// Assert
 			Assert.AreEqual(artist.Id, contract.Id, "Update album Id as expected");
 
 			var artistFromRepo = repository.Load(contract.Id);
@@ -324,6 +328,59 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(ArtistEditableFields.Picture, archivedVersion.Diff.ChangedFields, "Changed fields");
+
+		}
+
+		[TestMethod]
+		public void Update_ArtistLinks() {
+
+			// Arrange
+			var group = repository.Save(CreateEntry.Artist(ArtistType.Circle));
+			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
+
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English) {
+				Groups = new[] {
+					new ArtistForArtistContract { Parent = new ArtistContract(group, ContentLanguagePreference.English)},
+				},
+				Illustrator = new ArtistContract(illustrator, ContentLanguagePreference.English)
+			};
+
+			// Act
+			CallUpdate(contract);
+
+			// Assert
+			var artistFromRepo = repository.Load(contract.Id);
+
+			Assert.AreEqual(2, artistFromRepo.AllGroups.Count, "Number of groups");
+			Assert.IsTrue(artistFromRepo.HasGroup(group), "Has group");
+			Assert.IsTrue(artistFromRepo.HasGroup(illustrator), "Has illustrator");
+			Assert.AreEqual(ArtistLinkType.Illustrator, artistFromRepo.Groups.First(g => g.Parent.Equals(illustrator)).LinkType, "Artist link type for illustrator");
+
+		}
+
+		[TestMethod]
+		public void Update_ArtistLinks_ChangeRole() {
+
+			// Arrange
+			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
+			artist.AddGroup(illustrator, ArtistLinkType.Illustrator);
+
+			// Change linked artist from illustrator to voice provider
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English) {
+				Illustrator = null,
+				VoiceProvider = new ArtistContract(illustrator, ContentLanguagePreference.English)
+			};
+
+			// Act
+			CallUpdate(contract);
+
+			artist = repository.Load(contract.Id);
+
+			Assert.AreEqual(1, artist.AllGroups.Count, "Number of linked artists");
+
+			var link = artist.AllGroups[0];
+			Assert.AreEqual(illustrator, link.Parent, "Linked artist as expected");
+			Assert.AreEqual(ArtistLinkType.VoiceProvider, link.LinkType, "Link type was updated");
 
 		}
 

@@ -107,6 +107,21 @@
 					@KnockoutHelpers.DropdownList(Model.AllArtistTypes, "artistTypeStr")
 					<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 				</div>
+				
+				<!-- ko if: canHaveRelatedArtists -->
+					<div class="editor-label">
+						<label>Illustrator</label>
+					</div>
+					<div class="editor-field">
+						@KnockoutHelpers.ArtistLockingAutoComplete("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")
+					</div>				
+					<div class="editor-label">
+						<label>Voice provider</label>
+					</div>
+					<div class="editor-field">
+						@KnockoutHelpers.ArtistLockingAutoComplete("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual")
+					</div>
+				<!-- /ko -->
 
 				<!-- ko if: canHaveCircles -->
 					<div class="editor-label">
@@ -118,7 +133,7 @@
 							<tbody data-bind="foreach: groups">
 								<tr>
 									<td>
-										<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', group.id) }, text: group.name, artistToolTip: group.id"></a>
+										<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', parent.id) }, text: parent.name, artistToolTip: parent.id"></a>
 									</td>
 									<td>
 										<a data-bind="click: $parent.removeGroup" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>

@@ -11,9 +11,11 @@ module vdb.dataContracts.artists {
 
 		description: globalization.EnglishTranslatedStringContract;
 
-		groups: GroupForArtistContract[];
+		groups: ArtistForArtistContract[];
 
 		id: number;
+
+		illustrator: ArtistContract;
 
 		names: globalization.LocalizedStringWithIdContract[];
 
@@ -24,6 +26,8 @@ module vdb.dataContracts.artists {
 		status: string;
 
 		updateNotes: string;
+
+		voiceProvider: ArtistContract;
 
 		webLinks: vdb.dataContracts.WebLinkContract[];
 

@@ -159,6 +159,12 @@
   <data name="GroupsHelp" xml:space="preserve">
     <value>Circles, labels and other groups</value>
   </data>
+  <data name="Illustrator" xml:space="preserve">
+    <value>Illustrated by</value>
+  </data>
+  <data name="IllustratorOf" xml:space="preserve">
+    <value>Illustrator of</value>
+  </data>
   <data name="MainAlbums" xml:space="preserve">
     <value>Main albums</value>
   </data>
@@ -212,6 +218,12 @@
   </data>
   <data name="ViewModeTiles" xml:space="preserve">
     <value>Tiles</value>
+  </data>
+  <data name="VoiceProvider" xml:space="preserve">
+    <value>Voice provider</value>
+  </data>
+  <data name="VoiceProviderOf" xml:space="preserve">
+    <value>Voice provider of</value>
   </data>
   <data name="YouHaveRatedSongs" xml:space="preserve">
     <value>You have rated {0} song(s) by this artist.</value>

@@ -106,7 +106,7 @@
       <HintPath>..\packages\NHibernate.Caches.SysCache2.4.0.0.4000\lib\net40\NHibernate.Caches.SysCache2.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
@@ -218,6 +218,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumArchiveReasonNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\AlbumArchiveReasonNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumArchiveReasonNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\AlbumArchiveReasonNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -227,6 +232,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumCollectionStatusNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\AlbumCollectionStatusNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumCollectionStatusNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\AlbumCollectionStatusNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -238,6 +248,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumEditableFieldNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\AlbumEditableFieldNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumEditableFieldNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\AlbumEditableFieldNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -247,6 +262,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumMediaTypeNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\AlbumMediaTypeNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumMediaTypeNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\AlbumMediaTypeNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -258,10 +278,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumDiscMediaTypeNames.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumDiscMediaTypeNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Albums\AlbumSortRuleNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumSortRuleNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Albums\AlbumSortRuleNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumSortRuleNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Albums\AlbumSortRuleNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -278,6 +308,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DiscTypeDescriptions.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Albums\DiscTypeDescriptions.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DiscTypeDescriptions.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Albums\DiscTypeDescriptions.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -287,6 +322,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistArchiveReasonNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ArtistArchiveReasonNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistArchiveReasonNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ArtistArchiveReasonNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -298,6 +338,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistEditableFieldNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ArtistEditableFieldNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistEditableFieldNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ArtistEditableFieldNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -307,6 +352,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistRoleNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ArtistRoleNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistRoleNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ArtistRoleNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -318,6 +368,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistSortRuleNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Artists\ArtistSortRuleNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistSortRuleNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Artists\ArtistSortRuleNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -327,6 +382,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonMessages.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\CommonMessages.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonMessages.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\CommonMessages.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -343,6 +403,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContentLanguageSelectionNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ContentLanguageSelectionNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContentLanguageSelectionNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ContentLanguageSelectionNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -358,10 +423,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryEditEventNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\EntryEditEventNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryEditEventNames.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EntryEditEventNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryEditEventNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\EntryStatusNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryStatusNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EntryStatusNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryStatusNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\EntryStatusNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -373,6 +453,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\EntryTypeNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryTypeNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\EntryTypeNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -383,15 +468,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PermissionFlagNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\PermissionFlagNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PermissionFlagNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\PermissionTokenNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PermissionTokenNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\PermissionTokenNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PermissionTokenNames.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PermissionTokenNames.ja.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PermissionTokenNames.ja.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\PVTypeDescriptions.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PVTypeDescriptions.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PVTypeDescriptions.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PVTypeDescriptions.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\PVTypeDescriptions.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -408,6 +513,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PVTypeNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\PVTypeNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PVTypeNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\PVTypeNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -417,6 +527,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReleaseEventEditableFieldNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ReleaseEventEditableFieldNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReleaseEventEditableFieldNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ReleaseEventEditableFieldNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -428,6 +543,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongArchiveReasonNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SongArchiveReasonNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongArchiveReasonNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\SongArchiveReasonNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -437,6 +557,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongEditableFieldNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SongEditableFieldNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongEditableFieldNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\SongEditableFieldNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -448,10 +573,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongListFeaturedCategoryNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SongListFeaturedCategoryNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongListFeaturedCategoryNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Songs\SongListEditableFieldNames.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongListEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Songs\SongListEditableFieldNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongListEditableFieldNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Songs\SongListEditableFieldNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -463,6 +598,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongSortRuleNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Songs\SongSortRuleNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongSortRuleNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Songs\SongSortRuleNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -472,6 +612,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongVoteRatingNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Songs\SongVoteRatingNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongVoteRatingNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Songs\SongVoteRatingNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -488,6 +633,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TagEditableFieldNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\TagEditableFieldNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TagEditableFieldNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\TagEditableFieldNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -497,6 +647,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UserEmailOptionsNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserEmailOptionsNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserEmailOptionsNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\UserEmailOptionsNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -508,6 +663,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UserGroupNames.de.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\UserGroupNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserGroupNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\UserGroupNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -518,10 +678,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RatedSongForUserSortRuleNames.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Users\RatedSongForUserSortRuleNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RatedSongForUserSortRuleNames.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\WebLinkCategoryNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WebLinkCategoryNames.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\WebLinkCategoryNames.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebLinkCategoryNames.es.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\WebLinkCategoryNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1513,6 +1683,7 @@
     <Content Include="Content\ExtIcons\vocallective.png" />
     <Content Include="Content\ExtIcons\vocastore.png" />
     <Content Include="Content\ExtIcons\vocawiki.png" />
+    <Content Include="Content\ExtIcons\weibo.png" />
     <Content Include="Content\ExtIcons\yesasia.png" />
     <Content Include="Content\Icons\accept.png" />
     <Content Include="Content\Icons\add.png" />
@@ -1892,18 +2063,166 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>WebLinkCategoryNames.pt.designer.cs</LastGenOutput>
     </Content>
+    <Content Include="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumDiscMediaTypeNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Albums\AlbumSortRuleNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumSortRuleNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Albums\DiscTypeDescriptions.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>DiscTypeDescriptions.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Artists\ArtistSortRuleNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistSortRuleNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Songs\SongListEditableFieldNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongListEditableFieldNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Songs\SongSortRuleNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongSortRuleNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Songs\SongVoteRatingNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongVoteRatingNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\AlbumArchiveReasonNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumArchiveReasonNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\AlbumCollectionStatusNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumCollectionStatusNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\AlbumEditableFieldNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumEditableFieldNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\AlbumMediaTypeNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumMediaTypeNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Users\RatedSongForUserSortRuleNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RatedSongForUserSortRuleNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ArtistArchiveReasonNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistArchiveReasonNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ArtistEditableFieldNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistEditableFieldNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ArtistRoleNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistRoleNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\CommonMessages.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>CommonMessages.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ContentLanguageSelectionNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ContentLanguageSelectionNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\EntryEditEventNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryEditEventNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\EntryEditEventNames.ja.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryEditEventNames.ja.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\EntryStatusNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryStatusNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\EntryTypeNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryTypeNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PermissionFlagNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PermissionFlagNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PermissionTokenNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PermissionTokenNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PermissionTokenNames.ja.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PermissionTokenNames.ja.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PVTypeDescriptions.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PVTypeDescriptions.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\PVTypeNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PVTypeNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\ReleaseEventEditableFieldNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ReleaseEventEditableFieldNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SongArchiveReasonNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongArchiveReasonNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SongEditableFieldNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongEditableFieldNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SongListFeaturedCategoryNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongListFeaturedCategoryNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\TagEditableFieldNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>TagEditableFieldNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\UserEmailOptionsNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserEmailOptionsNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\UserGroupNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserGroupNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\WebLinkCategoryNames.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>WebLinkCategoryNames.es.designer.cs</LastGenOutput>
+    </Content>
+    <EmbeddedResource Include="Resources\Ajax\AlbumStrings.es.resx" />
     <EmbeddedResource Include="Resources\Ajax\AlbumStrings.pt.resx" />
+    <EmbeddedResource Include="Resources\Ajax\EntryIndexStrings.es.resx" />
+    <EmbeddedResource Include="Resources\Ajax\EntryIndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Ajax\EntryIndexStrings.pt.resx" />
+    <EmbeddedResource Include="Resources\Ajax\SharedStrings.es.resx" />
     <EmbeddedResource Include="Resources\Ajax\SharedStrings.pt.resx" />
+    <EmbeddedResource Include="Resources\Ajax\SongStrings.es.resx" />
     <EmbeddedResource Include="Resources\Ajax\SongStrings.pt.resx" />
+    <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.es.resx" />
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.pt.resx" />
+    <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.pt.resx" />
+    <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.es.resx" />
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Helpers\AlbumHelpersStrings.es.resx" />
     <EmbeddedResource Include="Resources\Helpers\AlbumHelpersStrings.pt.resx" />
+    <EmbeddedResource Include="Resources\Helpers\HelperStrings.es.resx" />
     <EmbeddedResource Include="Resources\Helpers\HelperStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Helpers\HelperStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Helpers\SongHelpersStrings.es.resx" />
     <EmbeddedResource Include="Resources\Helpers\SongHelpersStrings.pt.resx" />
+    <EmbeddedResource Include="Resources\Other\PagedListStrings.es.resx" />
     <EmbeddedResource Include="Resources\Other\PagedListStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Other\PagedListStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Swagger\index.html" />
@@ -1921,7 +2240,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumReleaseContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForEditContract.ts" />
-    <TypeScriptCompile Include="Scripts\DataContracts\Artist\GroupForArtistContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForArtistContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Base\EntryWithTagUsagesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\CommentContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Discussion\DiscussionFolderContract.ts" />
@@ -3748,6 +4067,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Other\PagedListStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.resx">
@@ -3755,6 +4075,7 @@
       <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.pt.resx" />
@@ -3766,6 +4087,7 @@
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Album\ArtistForAlbumEditRowStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Album\CreateStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\CreateStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Album\CreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Album\CreateStrings.ja.resx">
       <SubType>Designer</SubType>
@@ -3779,6 +4101,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Album\CreateStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Album\DetailsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\DetailsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Album\DetailsStrings.fi.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -3792,6 +4115,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Album\DetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\EditStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.resx">
@@ -3803,6 +4127,7 @@
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Album\EditStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.pt.resx" />
@@ -3813,6 +4138,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Album\TopRatedStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\CreateStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Artist\CreateStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\CreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\CreateStrings.ja.resx">
       <SubType>Designer</SubType>
@@ -3826,6 +4152,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Artist\CreateStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\DetailsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Artist\DetailsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\DetailsStrings.fi.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -3839,6 +4166,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Artist\DetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\DetailsStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Artist\EditStrings.es.resx" />
+    <EmbeddedResource Include="Resources\Views\Artist\EditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\EditStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\EditStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3846,6 +4175,7 @@
       <CustomToolNamespace>ViewRes.Artist</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.pt.resx" />
@@ -3857,6 +4187,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Comment\IndexStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.resx">
@@ -3865,6 +4196,7 @@
       <CustomToolNamespace>ViewRes.Discussion</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.pt.resx" />
@@ -3875,6 +4207,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Event\DetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.pt.resx" />
@@ -3885,6 +4218,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Event\EventsBySeriesStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Event\FindStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.pt.resx" />
@@ -3895,6 +4229,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Home\IndexStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.ja.resx">
       <SubType>Designer</SubType>
@@ -3909,6 +4244,7 @@
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Search\IndexStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Search\IndexStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Search\IndexStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Search\IndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Search\IndexStrings.pt.resx" />
@@ -3920,6 +4256,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Search\IndexStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.pt.resx" />
@@ -3930,6 +4267,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\ArchivedObjectVersionsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.pt.resx" />
@@ -3942,6 +4280,7 @@
     <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\DiscussionContentStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.pt.resx" />
@@ -3953,6 +4292,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\EntryCreateStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.pt.resx" />
@@ -3965,6 +4305,7 @@
     <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryDetailsStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.resx">
@@ -3976,6 +4317,7 @@
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryEditStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.pt.resx" />
@@ -3987,6 +4329,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryIndexStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3994,6 +4337,7 @@
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.pt.resx" />
@@ -4004,12 +4348,14 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\Partials\EnglishTranslatedStringStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\EnglishTranslatedStringStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\EnglishTranslatedStringStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EnglishTranslatedStringStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\Partials\EnglishTranslatedStringStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\Partials\PlayListStrings.pt.resx" />
@@ -4019,6 +4365,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.pt.resx" />
@@ -4031,6 +4378,7 @@
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\SharedStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.pt.resx" />
@@ -4042,6 +4390,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\TagSelectionsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.pt.resx" />
@@ -4052,6 +4401,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\TimeStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.pt.resx" />
@@ -4062,6 +4412,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\TopBarStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\_LayoutStrings.ja.resx">
       <SubType>Designer</SubType>
@@ -4078,6 +4429,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.pt.resx" />
@@ -4087,6 +4439,7 @@
       <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\SongList\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\EditStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\EditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\EditStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\EditStrings.resx">
@@ -4094,6 +4447,7 @@
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\SongList\FeaturedStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\FeaturedStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\FeaturedStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -4101,12 +4455,14 @@
       <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\SongList\ImportStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\ImportStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\ImportStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\ImportStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ImportStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\SongList\SongListSortRuleNames.es.resx" />
     <EmbeddedResource Include="Resources\Views\SongList\SongListSortRuleNames.ja.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -4116,6 +4472,7 @@
       <LastGenOutput>SongListSortRuleNames.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\CreateStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Song\CreateStrings.pt.resx" />
@@ -4129,6 +4486,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\DetailsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\DetailsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Song\DetailsStrings.fi.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -4142,6 +4500,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\DetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\Song\DetailsStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\EditStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Song\EditStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Song\EditStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\Song\EditStrings.resx">
@@ -4151,6 +4510,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Song\EditStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.ja.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -4161,6 +4521,7 @@
       <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.pt.resx" />
@@ -4171,12 +4532,14 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Tag\DetailsStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Tag\EditStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\EditStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\Tag\EditStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.pt.resx" />
@@ -4189,6 +4552,7 @@
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\AlbumCollectionStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\CreateStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.pt.resx" />
@@ -4201,6 +4565,7 @@
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\CreateStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\DetailsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.pt.resx" />
@@ -4212,6 +4577,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\DetailsStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\User\FavoriteSongsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\FavoriteSongsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\FavoriteSongsStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\User\FavoriteSongsStrings.resx">
@@ -4220,6 +4586,7 @@
       <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\ForgotPasswordStrings.pt.resx" />
@@ -4229,6 +4596,7 @@
       <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\IndexStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\IndexStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\IndexStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\IndexStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\IndexStrings.pt.resx" />
@@ -4239,6 +4607,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\LoginStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\LoginStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginStrings.pt.resx" />
@@ -4251,6 +4620,7 @@
     <EmbeddedResource Include="Resources\Views\User\LoginStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.pt.resx" />
@@ -4261,6 +4631,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\LoginUsingAuthStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\MessagesStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\MessagesStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\MessagesStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\MessagesStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\MessagesStrings.pt.resx" />
@@ -4272,6 +4643,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\MessagesStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.pt.resx" />
@@ -4283,6 +4655,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.ru.resx" />
     <EmbeddedResource Include="Resources\Views\User\MySettingsStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.resx">
@@ -4290,6 +4663,7 @@
       <LastGenOutput>RatedSongsStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.resx">

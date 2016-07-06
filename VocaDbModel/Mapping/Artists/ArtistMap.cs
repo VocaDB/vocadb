@@ -23,7 +23,11 @@ namespace VocaDb.Model.Mapping.Artists {
 				.Inverse()
 				.Cascade.All()
 				.Cache.ReadWrite();
-			HasMany(m => m.AllGroups).Inverse().KeyColumn("[Member]").Cascade.All().Cache.ReadWrite();
+			HasMany(m => m.AllGroups)
+				.Inverse()
+				.KeyColumn("[Member]")
+				.Cascade.All()
+				.Cache.ReadWrite();
 			HasMany(m => m.AllSongs).Table("ArtistsForSongs")
 				.Inverse()
 				.Cascade.All()
@@ -107,14 +111,15 @@ namespace VocaDb.Model.Mapping.Artists {
 
 	}
 
-	public class GroupForArtistMap : ClassMap<GroupForArtist> {
+	public class ArtistForArtistMap : ClassMap<ArtistForArtist> {
 		
-		public GroupForArtistMap() {
+		public ArtistForArtistMap() {
 			
 			Table("GroupsForArtists");
 			Id(m => m.Id);
 
-			References(m => m.Group).Not.Nullable();
+			Map(m => m.LinkType).Not.Nullable();
+			References(m => m.Parent).Column("[Group]").Not.Nullable();
 			References(m => m.Member).Not.Nullable();
 
 		}

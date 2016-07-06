@@ -528,9 +528,9 @@ namespace VocaDb.Model.Database.Queries {
 				diff.Picture = !Equals(artist.ArchivedVersionsManager.GetLatestVersionWithField(ArtistEditableFields.Picture, artist.Version), versionWithPic);
 
 				// Groups
-				DatabaseContextHelper.RestoreObjectRefs<GroupForArtist, Artist>(
-					session, warnings, artist.AllGroups, fullProperties.Groups, (a1, a2) => (a1.Group.Id == a2.Id),
-					grp => (!artist.HasGroup(grp) ? artist.AddGroup(grp) : null),
+				DatabaseContextHelper.RestoreObjectRefs(
+					session, warnings, artist.AllGroups, fullProperties.Groups, (a1, a2) => (a1.Parent.Id == a2.Id),
+					(grp, grpRef) => (!artist.HasGroup(grp) ? artist.AddGroup(grp, grpRef.LinkType) : null),
 					groupForArtist => groupForArtist.Delete());
 
 				// Names
@@ -636,7 +636,15 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var groupsDiff = CollectionHelper.Diff(artist.Groups, properties.Groups, (i, i2) => (i.Id == i2.Id));
+				var newGroups = properties.Groups.ToList();
+
+				if (properties.Illustrator != null)
+					newGroups.Add(new ArtistForArtistContract { Parent = properties.Illustrator, LinkType = ArtistLinkType.Illustrator });
+
+				if (properties.VoiceProvider != null)
+					newGroups.Add(new ArtistForArtistContract { Parent = properties.VoiceProvider, LinkType = ArtistLinkType.VoiceProvider });
+
+				var groupsDiff = CollectionHelper.Diff(artist.Groups, newGroups, (i, i2) => (i.Parent.Id == i2.Parent.Id && i.LinkType == i2.LinkType));
 
 				foreach (var grp in groupsDiff.Removed) {
 					grp.Delete();
@@ -644,7 +652,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				foreach (var grp in groupsDiff.Added) {
-					var link = artist.AddGroup(ctx.Load(grp.Group.Id));
+					var link = artist.AddGroup(ctx.Load(grp.Parent.Id), grp.LinkType);
 					ctx.Save(link);
 				}
 

@@ -233,7 +233,7 @@ namespace VocaDb.Model.Service {
 					session.Save(link);
 				}
 
-				var groups = source.Groups.Where(g => !target.HasGroup(g.Group)).ToArray();
+				var groups = source.Groups.Where(g => !target.HasGroup(g.Parent)).ToArray();
 				foreach (var g in groups) {
 					g.MoveToMember(target);
 					session.Update(g);

@@ -70,7 +70,7 @@
       <HintPath>..\packages\NHibernate.Caches.SysCache2.4.0.0.4000\lib\net40\NHibernate.Caches.SysCache2.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PiaproClient, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -149,6 +149,8 @@
     <Compile Include="DataContracts\Api\EntryForApiContract.cs" />
     <Compile Include="DataContracts\Api\EntryForApiContractFactory.cs" />
     <Compile Include="DataContracts\Artists\AdvancedArtistStatsContract.cs" />
+    <Compile Include="DataContracts\Artists\ArchivedArtistForArtistContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistForArtistForApiContract.cs" />
     <Compile Include="DataContracts\Artists\TranslatedArtistContract.cs" />
     <Compile Include="DataContracts\CommentForApiContract.cs" />
     <Compile Include="DataContracts\Comments\EntryWithCommentsContract.cs" />
@@ -236,7 +238,7 @@
     <Compile Include="DataContracts\Artists\ArtistWithArchivedVersions.cs" />
     <Compile Include="DataContracts\Artists\ArtistWithPictureContract.cs" />
     <Compile Include="DataContracts\Artists\CreateArtistContract.cs" />
-    <Compile Include="DataContracts\Artists\GroupForArtistContract.cs" />
+    <Compile Include="DataContracts\Artists\ArtistForArtistContract.cs" />
     <Compile Include="DataContracts\CommentContract.cs" />
     <Compile Include="DataContracts\LocalizedStringContract.cs" />
     <Compile Include="DataContracts\LocalizedStringWithIdContract.cs" />
@@ -317,6 +319,7 @@
     <Compile Include="Domain\Albums\ReleaseEventDiff.cs" />
     <Compile Include="Domain\Albums\ReleaseEventEditableFields.cs" />
     <Compile Include="Domain\Albums\TrackIndex.cs" />
+    <Compile Include="Domain\Artists\ArtistLinkType.cs" />
     <Compile Include="Domain\Artists\ArtistMergeRecord.cs" />
     <Compile Include="Domain\Artists\ArtistPictureFile.cs" />
     <Compile Include="Domain\Artists\ArtistCategories.cs" />
@@ -374,6 +377,7 @@
     <Compile Include="Domain\Images\IEntryImagePersister.cs" />
     <Compile Include="Domain\Images\ServerEntryThumbPersister.cs" />
     <Compile Include="Domain\IOptionalDateTime.cs" />
+    <Compile Include="Domain\LinkDirection.cs" />
     <Compile Include="Domain\MergeRecord.cs" />
     <Compile Include="Domain\PVs\IEditablePV.cs" />
     <Compile Include="Domain\PVs\IPV.cs" />
@@ -555,7 +559,7 @@
     <Compile Include="Mapping\Artists\ArtistTagUsageMap.cs" />
     <Compile Include="Mapping\Artists\ArtistTagVoteMap.cs" />
     <Compile Include="Mapping\Artists\ArtistWebLinkMap.cs" />
-    <Compile Include="Domain\Artists\GroupForArtist.cs" />
+    <Compile Include="Domain\Artists\ArtistForArtist.cs" />
     <Compile Include="Mapping\ClassConventions.cs" />
     <Compile Include="Mapping\CommentMap.cs" />
     <Compile Include="Mapping\CustomTypes\XDocumentType.cs" />
@@ -930,6 +934,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Albums\DiscTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\Albums\DiscTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\Albums\DiscTypeNames.fi.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>DiscTypeNames.fi.designer.cs</LastGenOutput>
@@ -949,6 +954,7 @@
       <LastGenOutput>DiscTypeNames.ru.designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AlbumValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\AlbumValidationErrors.es.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\AlbumValidationErrors.resx">
@@ -957,6 +963,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AlbumValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\ArtistTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.fi.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.ja.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.pt.resx" />
@@ -968,6 +975,7 @@
     <EmbeddedResource Include="Resources\ArtistTypeNames.ru.resx" />
     <EmbeddedResource Include="Resources\ArtistTypeNames.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\ArtistValidationErrors.es.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\ArtistValidationErrors.resx">
@@ -976,12 +984,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ArtistValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\ExtSites.de.resx" />
+    <EmbeddedResource Include="Resources\ExtSites.es.resx" />
     <EmbeddedResource Include="Resources\ExtSites.ja.resx" />
     <EmbeddedResource Include="Resources\ExtSites.pt.resx" />
     <EmbeddedResource Include="Resources\ExtSites.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExtSites.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\EntryReportStrings.es.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.fi.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Messages\EntryReportStrings.pt.resx" />
@@ -989,6 +999,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryReportStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages\UserAccountStrings.es.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.ja.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Messages\UserAccountStrings.resx">
@@ -996,6 +1007,7 @@
       <LastGenOutput>UserAccountStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.de.resx" />
+    <EmbeddedResource Include="Resources\Songs\SongTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.fi.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SongTypeNames.fi.designer.cs</LastGenOutput>
@@ -1016,6 +1028,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Songs\SongTypeNames.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.de.resx" />
+    <EmbeddedResource Include="Resources\SongValidationErrors.es.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.ja.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.pt.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.resx">
@@ -1026,6 +1039,7 @@
     <EmbeddedResource Include="Resources\SongValidationErrors.ru.resx" />
     <EmbeddedResource Include="Resources\SongValidationErrors.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\AlbumRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\AlbumRes.pt.resx" />
@@ -1034,6 +1048,7 @@
       <LastGenOutput>AlbumRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\ArtistRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\ArtistRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\ArtistRes.pt.resx" />
@@ -1042,6 +1057,7 @@
       <LastGenOutput>ArtistRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\HomeRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\HomeRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\HomeRes.pt.resx" />
@@ -1051,6 +1067,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\HomeRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\LayoutRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.pt.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1058,6 +1075,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\LayoutRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.de.resx" />
+    <EmbeddedResource Include="Resources\Views\SongRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.fi.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.pt.resx" />

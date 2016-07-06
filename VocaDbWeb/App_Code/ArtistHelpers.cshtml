@@ -86,6 +86,10 @@
 	}
 	@Html.ActionLink(name ?? artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
 }
+	
+@helper ArtistLinkList(IEnumerable<ArtistContract> artists, bool typeLabel = false) {
+	@Html.LinkList(artists, a => new MvcHtmlString(ArtistLink(a, typeLabel).ToString()))
+}
 
 @helper ArtistList(IEnumerable<ArtistForAlbumContract> artists, bool showRoles = false, bool showType = false) {
 	var ordered = artists.OrderBy(a => a.IsSupport).ToArray();
@@ -155,7 +159,7 @@
 			@ArchivedEntryHelpers.DataRow("Artist type", comparedArtists, d => Translate.ArtistTypeName(d.ArtistType))
 			@ArchivedEntryHelpers.DataRowList("External links", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
 			@ArchivedEntryHelpers.DataRow("Base voicebank", comparedArtists, d => ArchivedEntryHelpers.ObjectRefInfo(d.BaseVoicebank))
-			@ArchivedEntryHelpers.ObjectRefList("Groups", comparedArtists, d => d.Groups)
+			@ArchivedEntryHelpers.ObjectRefList("Artist links", comparedArtists, d => d.Groups)
 			@ArchivedEntryHelpers.ObjectRefList("Members", comparedArtists, d => d.Members)
 			@ArchivedEntryHelpers.DataRowList("Pictures", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.Pictures, ArchivedEntryHelpers.PictureFileInfo))
 			@ArchivedEntryHelpers.ObjectRefList("Albums", comparedArtists, d => d.Albums)

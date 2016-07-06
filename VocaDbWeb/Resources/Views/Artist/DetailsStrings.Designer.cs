@@ -187,6 +187,24 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Illustrated by.
+        /// </summary>
+        public static string Illustrator {
+            get {
+                return ResourceManager.GetString("Illustrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Illustrator of.
+        /// </summary>
+        public static string IllustratorOf {
+            get {
+                return ResourceManager.GetString("IllustratorOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main albums.
         /// </summary>
         public static string MainAlbums {
@@ -345,6 +363,24 @@ namespace ViewRes.Artist {
         public static string ViewModeTiles {
             get {
                 return ResourceManager.GetString("ViewModeTiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voice provider.
+        /// </summary>
+        public static string VoiceProvider {
+            get {
+                return ResourceManager.GetString("VoiceProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voice provider of.
+        /// </summary>
+        public static string VoiceProviderOf {
+            get {
+                return ResourceManager.GetString("VoiceProviderOf", resourceCulture);
             }
         }
         
