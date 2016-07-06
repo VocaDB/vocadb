@@ -123,4 +123,13 @@
   <data name="BaDescription" xml:space="preserve">
     <value>概要</value>
   </data>
+  <data name="BaMainPicture" xml:space="preserve">
+    <value>主な絵</value>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>アーティスト編集 - {0}</value>
+  </data>
+  <data name="PiPicturesNote" xml:space="preserve">
+    <value>このアーティストに関連する絵だけアップロードしてください。</value>
+  </data>
 </root>
