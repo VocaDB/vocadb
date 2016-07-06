@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
-			CharacterDesigns = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, LinkDirection.OneToMany).Select(g => new ArtistContract(g, languagePreference)).ToArray();
+			CharacterDesigns = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, LinkDirection.OneToMany).Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
 			ChildVoicebanks = artist.CanHaveChildVoicebanks ? artist.ChildVoicebanks.Where(c => !c.Deleted).Select(c => new ArtistContract(c, languagePreference)).ToArray() : new ArtistContract[0];
 			CreateDate = artist.CreateDate;
 			Description =  artist.Description;
@@ -37,7 +37,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Tags = artist.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TopAlbums = new AlbumContract[] {};
 			TopSongs = new SongForApiContract[] {};
-			Voicebanks = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.OneToMany).Select(g => new ArtistContract(g, languagePreference)).ToArray();
+			Voicebanks = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.OneToMany).Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
 			VoiceProvider = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 

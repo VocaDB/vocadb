@@ -1,7 +1,7 @@
 ﻿namespace VocaDb.Model.Domain {
 
 	/// <summary>
-	/// Direction of a many-to-one bidirectional link between entities (usually child-parent relationship).
+	/// Direction of a many-to-one or many-to-many bidirectional link between entities (usually child-parent relationship).
 	/// </summary>
 	public enum LinkDirection {
 
