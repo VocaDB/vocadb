@@ -49,6 +49,13 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
+		public void GetMatchModeAndQueryForSearch_StartsWithWildCard() {
+
+			TestGetMatchModeAndQueryForSearch("*Hatsune Miku", "Hatsune Miku", NameMatchMode.Words);
+
+		}
+
+		[TestMethod]
 		public void GetMatchModeAndQueryForSearch_ShortQuery() {
 
 			TestGetMatchModeAndQueryForSearch("H", "H", NameMatchMode.StartsWith);

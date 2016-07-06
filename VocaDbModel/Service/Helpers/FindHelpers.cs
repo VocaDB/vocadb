@@ -118,6 +118,11 @@ namespace VocaDb.Model.Service.Helpers {
 			if (matchMode != NameMatchMode.Auto)
 				return query;
 
+			if (query.Length > 1 && query.StartsWith("*")) {
+				matchMode = NameMatchMode.Words;
+				return query.Substring(1);
+			}
+
 			if (query.Length > 1 && query.EndsWith("*")) {
 				matchMode = NameMatchMode.StartsWith;
 				return query.Substring(0, query.Length - 1);
