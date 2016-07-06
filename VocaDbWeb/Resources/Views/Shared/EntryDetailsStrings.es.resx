@@ -139,7 +139,7 @@
     <value>Links externos</value>
   </data>
   <data name="Hits" xml:space="preserve">
-    <value>{0} hit(s)</value>
+    <value>Cliqueado {0} veces</value>
   </data>
   <data name="LatestComments" xml:space="preserve">
     <value>Comentarios mas recientes</value>
@@ -151,7 +151,7 @@
     <value>Gestionar</value>
   </data>
   <data name="NoComments" xml:space="preserve">
-    <value>Nada aún</value>
+    <value>Aún no hay comentarios</value>
   </data>
   <data name="NoMatches" xml:space="preserve">
     <value>No se encontraron coincidencias :(</value>

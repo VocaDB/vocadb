@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Body" xml:space="preserve">
-    <value>Cuerpo</value>
+    <value>Escribe tu mensaje</value>
   </data>
   <data name="ClickSubjectToView" xml:space="preserve">
     <value>Haz clic sobre el título del mensaje para verlo.</value>
@@ -136,7 +136,7 @@
     <value>de</value>
   </data>
   <data name="HighPriority" xml:space="preserve">
-    <value>Alta prioridad</value>
+    <value>Mensaje urgente / de alta prioridad</value>
   </data>
   <data name="Messages" xml:space="preserve">
     <value>Mensajes</value>

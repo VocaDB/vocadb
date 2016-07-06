@@ -127,7 +127,7 @@
     <value>Por fecha</value>
   </data>
   <data name="ViewBySeries" xml:space="preserve">
-    <value>Por serie</value>
+    <value>Por serie de eventos</value>
   </data>
   <data name="ViewList" xml:space="preserve">
     <value>Lista</value>

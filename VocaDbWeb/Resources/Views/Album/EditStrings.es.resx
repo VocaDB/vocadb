@@ -139,7 +139,7 @@
     <value>nombre principal (en uno o mas idiomas)</value>
   </data>
   <data name="BaPictureInfo" xml:space="preserve">
-    <value>Especificaciones permitidas: {0}. El tamaño máximo de archivo es de {1} MB.</value>
+    <value>Se admiten los formatos: {0}. El archivo no puede pesar mas de {1} MB para ser admitido por el sistema.</value>
   </data>
   <data name="BaReleaseDate" xml:space="preserve">
     <value>Fecha de lanzamiento</value>
@@ -160,7 +160,7 @@
     <value>Pre-visualización de imagen</value>
   </data>
   <data name="MediaTab" xml:space="preserve">
-    <value>Media</value>
+    <value>Multimedia</value>
   </data>
   <data name="PicturesTab" xml:space="preserve">
     <value>Imágenes adicionales</value>
@@ -169,7 +169,7 @@
     <value>Pistas</value>
   </data>
   <data name="TrAddTrackHelp" xml:space="preserve">
-    <value>Nota: no escribas el nombre del artista o número de pista en el nombre de esta, esos detalles se especifican por separado posteriormente.</value>
+    <value>Nota: No escribas el nombre del artista o número de pista en el nombre de esta, esos detalles se especifican por separado posteriormente.</value>
   </data>
   <data name="TrDiscHead" xml:space="preserve">
     <value>Disco</value>
@@ -196,7 +196,7 @@
     <value>Los cambios en esta pestaña se guardaran inmediatamente.</value>
   </data>
   <data name="ConfirmMoveToTrash" xml:space="preserve">
-    <value>Estas seguro de que quieres mover este album a la basura?</value>
+    <value>¿Estas seguro de que quieres desechar este album?</value>
   </data>
   <data name="EditTitle" xml:space="preserve">
     <value>Editar album - {0}</value>
@@ -214,7 +214,7 @@
     <value>Crear nuevo</value>
   </data>
   <data name="PvAdd" xml:space="preserve">
-    <value>Añadir media</value>
+    <value>Añadir multimedia</value>
   </data>
   <data name="PvAuthor" xml:space="preserve">
     <value>Autor</value>
@@ -229,7 +229,7 @@
     <value>Servicio</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>Servicios soportados: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro y Bilibili.</value>
+    <value>Servicios de streaming soportados: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro y Bilibili.</value>
   </data>
   <data name="PvType" xml:space="preserve">
     <value>Tipo</value>

@@ -133,13 +133,13 @@
     <value>Publicar</value>
   </data>
   <data name="Folder" xml:space="preserve">
-    <value>Folder</value>
+    <value>Sección de tópicos</value>
   </data>
   <data name="LastComment" xml:space="preserve">
     <value>Último comentario</value>
   </data>
   <data name="LastTopic" xml:space="preserve">
-    <value>Último tema</value>
+    <value>Última discusión</value>
   </data>
   <data name="PostContent" xml:space="preserve">
     <value>Contentido</value>
@@ -148,13 +148,13 @@
     <value>Previsualización</value>
   </data>
   <data name="RecentTopics" xml:space="preserve">
-    <value>Temas recientes</value>
+    <value>Tópicos recientes</value>
   </data>
   <data name="Topic" xml:space="preserve">
-    <value>Tema</value>
+    <value>Tópico</value>
   </data>
   <data name="Topics" xml:space="preserve">
-    <value>Temas</value>
+    <value>Tópicos</value>
   </data>
   <data name="WriteNewPost" xml:space="preserve">
     <value>Escribir una nueva publicación</value>

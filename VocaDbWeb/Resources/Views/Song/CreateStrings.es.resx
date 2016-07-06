@@ -136,7 +136,7 @@
     <value>Nombre (se requiere al menos uno)</value>
   </data>
   <data name="NameHelp" xml:space="preserve">
-    <value>Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre no-inglés. Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada es en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.</value>
+    <value>Si la entrada tiene un nombre que no está en inglés (por ejemplo, en japonés) o en algún otro idioma sin específicar, colocalo en la casilla de nombre original (no inglés). Si conoces el nombre romanizado (en alfabeto latino, tambien llamado romaji) especifícalo igualmente. Si el nombre oficial de la entrada es en inglés, o tiene una traducción válida al inglés, escríbela en la casilla de nombre en inglés.</value>
   </data>
   <data name="NeedArtist" xml:space="preserve">
     <value>Se necesita al menos un artista.</value>

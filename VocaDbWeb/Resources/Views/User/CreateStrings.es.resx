@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Captcha" xml:space="preserve">
-    <value>CAPTCHA</value>
+    <value>Captcha</value>
   </data>
   <data name="CaptchaInvalid" xml:space="preserve">
     <value>el captcha es inválido.</value>
@@ -133,7 +133,7 @@
     <value>Se requiere que ingreses tu correo electrónico.</value>
   </data>
   <data name="EmailNote" xml:space="preserve">
-    <value>Tu dirección de correo electrónicono será mostrada a otros usuarios, asegurate de que es válida. La necesitaras en caso de que llegues a olvidar tu contraseña. Dado que VocaDB utiliza gravatar para enlazar tu foto de perfil, el correo electrónico que utilices debe ser el mismo que tu cuenta de gravatar (si no tienes, crea una). Tambien puedes cambiar de dirección de correo electrónico posteriormente.</value>
+    <value>Tu dirección de correo electrónicono no será mostrada a otros usuarios, asegurate de que es válida. La necesitaras en caso de que llegues a olvidar tu contraseña. Dado que VocaDB utiliza gravatar para enlazar tu foto de perfil, el correo electrónico que utilices debe ser el mismo que tu cuenta de gravatar (si no tienes, crea una). Tambien puedes cambiar de dirección de correo electrónico posteriormente.</value>
   </data>
   <data name="EmailTaken" xml:space="preserve">
     <value>Esta dirección de correo electrónico ya está en uso. Si es tuya y sospechas que alguien mas la está usando puedes contactar a un miembro del staff, si ya tienes una cuenta registrada con este correo, puedes tratar reestableciendo tu constraseña, cualquier otro caso contacta a soporte.</value>
@@ -148,7 +148,7 @@
     <value>Se requiere la contraseña.</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Registrarse</value>
+    <value>Registrate</value>
   </data>
   <data name="RegistrationUnsuccessful" xml:space="preserve">
     <value>Ha habido un error al registrarte.</value>

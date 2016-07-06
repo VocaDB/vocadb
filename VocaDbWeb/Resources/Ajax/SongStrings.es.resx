@@ -130,7 +130,7 @@
     <value>Mas reciente que {0}</value>
   </data>
   <data name="SongTypeFilter" xml:space="preserve">
-    <value>Tipo de canción '{0}'</value>
+    <value>Tipo de canción: {0}</value>
   </data>
   <data name="ThanksForRating" xml:space="preserve">
     <value>¡Gracias por tu calificación!</value>

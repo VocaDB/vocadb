@@ -121,7 +121,7 @@
     <value>días</value>
   </data>
   <data name="Hours" xml:space="preserve">
-    <value>houras</value>
+    <value>horas</value>
   </data>
   <data name="Minutes" xml:space="preserve">
     <value>minutos</value>
@@ -130,6 +130,6 @@
     <value>meses</value>
   </data>
   <data name="TimeAgo" xml:space="preserve">
-    <value>{0} hace {1}</value>
+    <value>hace {0} {1}</value>
   </data>
 </root>

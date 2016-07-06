@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddExtraArtist" xml:space="preserve">
-    <value>Añadir artista personalizado llamado '{0}'</value>
+    <value>Añadir como artista personalizado a '{0}'</value>
   </data>
   <data name="ReportSent" xml:space="preserve">
     <value>Reporte enviado, ¡Gracias por tu colaboración!</value>

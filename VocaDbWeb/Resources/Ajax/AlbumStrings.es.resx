@@ -124,12 +124,12 @@
     <value>Añadido a las pistas.</value>
   </data>
   <data name="RemoveFromTracks" xml:space="preserve">
-    <value>Removee de la pista</value>
+    <value>Remover de la lista</value>
   </data>
   <data name="AddNewSong" xml:space="preserve">
     <value>Añadir nueva canción '{0}'</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Descarga</value>
+    <value>Descargar</value>
   </data>
 </root>

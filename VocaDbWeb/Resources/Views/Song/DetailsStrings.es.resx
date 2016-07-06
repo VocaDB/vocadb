@@ -157,7 +157,7 @@
     <value>PV</value>
   </data>
   <data name="RemoveFromFavorites" xml:space="preserve">
-    <value>Limpiar mi calificación de rating</value>
+    <value>Ya no me gusta</value>
   </data>
   <data name="SongDetails" xml:space="preserve">
     <value>Canción</value>
@@ -175,19 +175,19 @@
     <value>Buscar en YouTube</value>
   </data>
   <data name="OriginalMedia" xml:space="preserve">
-    <value>Media original</value>
+    <value>Multimedia original</value>
   </data>
   <data name="OtherMedia" xml:space="preserve">
-    <value>Otra media</value>
+    <value>Otro tipo de multimedia</value>
   </data>
   <data name="Like" xml:space="preserve">
     <value>Me gusta</value>
   </data>
   <data name="Likes" xml:space="preserve">
-    <value>{0} me gusta</value>
+    <value>{0} veces gustado</value>
   </data>
   <data name="TotalScore" xml:space="preserve">
-    <value>{0} puntuación total</value>
+    <value>puntuación total de {0}</value>
   </data>
   <data name="FavoritedByTitle" xml:space="preserve">
     <value>Favoritizado por</value>
@@ -205,7 +205,7 @@
     <value>Duración</value>
   </data>
   <data name="NewListName" xml:space="preserve">
-    <value>Nueva lista de nombres</value>
+    <value>Nombre de la lista</value>
   </data>
   <data name="CustomLists" xml:space="preserve">
     <value>Listas personalizadas</value>
@@ -235,10 +235,10 @@
     <value>Artistas relacionados</value>
   </data>
   <data name="MatchingLikes" xml:space="preserve">
-    <value>'Me gusta' relacionados</value>
+    <value>Los usuarios tambien han votado</value>
   </data>
   <data name="MatchingTags" xml:space="preserve">
-    <value>Etiquetas relacionadas</value>
+    <value>Relacionados en base a etiquetas</value>
   </data>
   <data name="Band" xml:space="preserve">
     <value>Banda/grupo</value>

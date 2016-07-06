@@ -136,7 +136,7 @@
     <value>nombre principal (en uno o mas idiomas)</value>
   </data>
   <data name="BaPictureInfo" xml:space="preserve">
-    <value>Tipos permitidos: {0}. El tamaño máximo de archivo es de {1} MB.</value>
+    <value>Tipos permitidos: {0}. El archivo no puede pesar mas de {1} MB para ser admitido en el sistema.</value>
   </data>
   <data name="EditTitle" xml:space="preserve">
     <value>Editar artista - {0}</value>

@@ -121,6 +121,6 @@
     <value>Cuenta de VocaDB</value>
   </data>
   <data name="NewArtistExternalLink" xml:space="preserve">
-    <value>Link externo (al sitio web del artista, Hatsune Miku wiki, NND MyList etc.)</value>
+    <value>Link referencial externo (al sitio web del artista, Hatsune Miku wiki, NND MyList, etcétera).</value>
   </data>
 </root>

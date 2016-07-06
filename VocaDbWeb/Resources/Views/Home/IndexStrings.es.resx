@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NewAlbums" xml:space="preserve">
-    <value>Albumes recientes o en camino</value>
+    <value>Albumes lanzados recientemente o proximamente en ser lanzados</value>
   </data>
   <data name="News" xml:space="preserve">
     <value>Noticias</value>
@@ -127,7 +127,7 @@
     <value>Actividad reciente</value>
   </data>
   <data name="RecentEvents" xml:space="preserve">
-    <value>Pasando ahora mismo</value>
+    <value>Proximos eventos/pasando ahora mismo</value>
   </data>
   <data name="RecentSongs" xml:space="preserve">
     <value>Canciones recientes</value>
@@ -145,12 +145,12 @@
     <value>Ver mas</value>
   </data>
   <data name="ViewSongInfo" xml:space="preserve">
-    <value>Información de la canción</value>
+    <value>Ver información sobre esta canción</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>¡Bienvenido a la base de datos de Vocaloid!</value>
   </data>
   <data name="WelcomeSubtitle" xml:space="preserve">
-    <value>La base de datos colaborativa con artistas del medio Vocaloid, discografías, PVs y mas.</value>
+    <value>\r\nLa base de datos colaborativa con artistas de la escena Vocaloid, discografías, PVs y mas.</value>
   </data>
 </root>

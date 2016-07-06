@@ -121,7 +121,7 @@
     <value>¡Ya casi estas listo! Ahora debes escoger un nombre de usuario para VocaDB.</value>
   </data>
   <data name="AuthError" xml:space="preserve">
-    <value>Sorry - unable to process authentication. Please verify that cookies are enabled and try again.</value>
+    <value>Ha habido un error al procesar tu inicio de sesión, verifica que tienes las cookies de navegador activadas e intenta nuevamente.</value>
   </data>
   <data name="LoginUsingTwitter" xml:space="preserve">
     <value>Iniciar sesión con Twitter</value>
