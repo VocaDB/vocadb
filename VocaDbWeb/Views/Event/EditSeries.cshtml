@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
+@using EditRes = ViewRes.EntryEditStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.SeriesEdit>
 
 @{
@@ -86,6 +87,17 @@
 			</tr>
 		</table>
 	</div>
+	
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
+			@EditRes.WebLinks
+		</label>
+	</div>
+	<div class="editor-field" data-bind="with: webLinks">
+		@KnockoutHelpers.WebLinksEditViewKnockout(false)
+		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+	</div>
+
 	<br />
 	@Helpers.SaveAndBackBtn(backAction)
 
@@ -99,6 +111,7 @@
 
 	$(function () {
 
+		var webLinks = @ToJS(Model.WebLinks);
 		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel();
 		ko.applyBindings(vm);
 

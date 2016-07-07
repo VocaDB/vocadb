@@ -4,6 +4,29 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201607072100)]
+	public class ReleaseEventWebLinks : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table("ReleaseEventWebLinks")
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Category").AsAnsiString(20).NotNullable()
+				.WithColumn("Description").AsString(512).NotNullable()
+				.WithColumn("ReleaseEvent").AsInt32().NotNullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Url").AsString(512).NotNullable();
+
+			Create.Table("ReleaseEventSeriesWebLinks")
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Category").AsAnsiString(20).NotNullable()
+				.WithColumn("Description").AsString(512).NotNullable()
+				.WithColumn("ReleaseEventSeries").AsInt32().NotNullable().ForeignKey(TableNames.AlbumReleaseEventSeries, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Url").AsString(512).NotNullable();
+
+		}
+
+	}
+
 	[Migration(201607061900)]
 	public class SongListDescriptionExtend : AutoReversingMigration {
 

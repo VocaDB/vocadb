@@ -1,9 +1,11 @@
 ﻿
 module vdb.viewModels.releaseEvents {
-	
+
+	import dc = vdb.dataContracts;
+
 	export class ReleaseEventEditViewModel {
 
-		constructor(date: string, series: models.IEntryWithIdAndName) {
+		constructor(date: string, series: models.IEntryWithIdAndName, webLinks: dc.WebLinkContract[]) {
 
 			this.date = ko.observable(date ? moment(date).toDate() : null);
 			this.dateStr = ko.computed(() => (this.date() ? this.date().toISOString() : null));
@@ -20,6 +22,8 @@ module vdb.viewModels.releaseEvents {
 				if (!val)
 					this.series.clear();
 			});
+
+			this.webLinks = new WebLinksEditViewModel(webLinks);
 
 		}
 
@@ -43,6 +47,8 @@ module vdb.viewModels.releaseEvents {
 		}
 
 		public submitting = ko.observable(false);
+
+        public webLinks: WebLinksEditViewModel;
 
 	}
 

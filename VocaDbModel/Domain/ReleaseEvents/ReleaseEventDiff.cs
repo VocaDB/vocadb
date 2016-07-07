@@ -1,11 +1,12 @@
-﻿using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Versioning;
+﻿using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEventDiff : EntryDiff<ReleaseEventEditableFields> {
 
 		public ReleaseEventDiff() : base(true) {}
+
+		public ReleaseEventDiff(bool isSnapshot) : base(isSnapshot) { }
 
 		public EnumFieldAccessor<ReleaseEventEditableFields> Date => Field(ReleaseEventEditableFields.Date);
 
@@ -18,6 +19,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public EnumFieldAccessor<ReleaseEventEditableFields> SeriesNumber => Field(ReleaseEventEditableFields.SeriesNumber);
 
 		public EnumFieldAccessor<ReleaseEventEditableFields> SeriesSuffix => Field(ReleaseEventEditableFields.SeriesSuffix);
+
+		public EnumFieldAccessor<ReleaseEventEditableFields> WebLinks => Field(ReleaseEventEditableFields.WebLinks);
 
 	}
 

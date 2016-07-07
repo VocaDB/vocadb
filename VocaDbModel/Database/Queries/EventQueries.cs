@@ -7,6 +7,7 @@ using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
@@ -193,6 +194,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (contract.Id == 0) {
 
+					var diff = new ReleaseEventDiff();
+
 					if (!contract.Series.IsNullOrDefault()) {
 						var series = session.OfType<ReleaseEventSeries>().Load(contract.Series.Id);
 						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
@@ -200,6 +203,12 @@ namespace VocaDb.Model.Database.Queries {
 						series.Events.Add(ev);
 					} else {
 						ev = new ReleaseEvent(contract.Description, contract.Date, contract.Name);
+					}
+
+					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
+
+					if (weblinksDiff.Changed) {
+						diff.WebLinks.Set();
 					}
 
 					CheckDuplicateName(session, ev);
@@ -245,6 +254,13 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SeriesNumber = contract.SeriesNumber;
 					ev.SeriesSuffix = contract.SeriesSuffix;
 					ev.UpdateNameFromSeries();
+
+					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
+
+					if (weblinksDiff.Changed) {
+						diff.WebLinks.Set();
+						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
+					}
 
 					CheckDuplicateName(session, ev);
 
@@ -296,6 +312,12 @@ namespace VocaDb.Model.Database.Queries {
 
 					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Aliases);
 
+					var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
+
+					if (weblinksDiff.Changed) {
+						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
+					}
+
 					session.Save(series);
 
 					if (pictureData != null) {
@@ -313,6 +335,12 @@ namespace VocaDb.Model.Database.Queries {
 					series.Description = contract.Description;
 					series.UpdateAliases(contract.Aliases);
 					SaveImage(series, pictureData);
+
+					var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
+
+					if (weblinksDiff.Changed) {
+						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
+					}
 
 					session.Update(series);
 

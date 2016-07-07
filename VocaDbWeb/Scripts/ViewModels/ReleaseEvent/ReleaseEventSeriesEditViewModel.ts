@@ -2,6 +2,10 @@
 module vdb.viewModels.releaseEvents {
 
 	export class ReleaseEventSeriesEditViewModel {
+
+		constructor(webLinks: dc.WebLinkContract[]) {
+			this.webLinks = new WebLinksEditViewModel(webLinks);			
+		}
 		
 		public description = ko.observable<string>();
 
@@ -11,6 +15,8 @@ module vdb.viewModels.releaseEvents {
 		}
 
 		public submitting = ko.observable(false);
+
+        public webLinks: WebLinksEditViewModel;
 
 	}
 

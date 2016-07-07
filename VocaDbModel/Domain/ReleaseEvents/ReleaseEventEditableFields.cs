@@ -19,6 +19,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		SeriesSuffix	= 32,
 
+		WebLinks		= 64
+
 	}
 
 }

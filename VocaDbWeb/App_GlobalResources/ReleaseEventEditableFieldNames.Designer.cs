@@ -113,5 +113,14 @@ namespace Resources {
                 return ResourceManager.GetString("SeriesSuffix", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External links.
+        /// </summary>
+        internal static string WebLinks {
+            get {
+                return ResourceManager.GetString("WebLinks", resourceCulture);
+            }
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 
@@ -9,7 +8,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 	public class ReleaseEventDetailsContract : ReleaseEventContract {
 
-		public ReleaseEventDetailsContract() {}
+		public ReleaseEventDetailsContract() {
+			WebLinks = new WebLinkContract[0];
+		}
 
 		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference) 
 			: base(releaseEvent, true) {
@@ -19,6 +20,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Albums = releaseEvent.Albums.Where(a => !a.Deleted).Select(a => new AlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			SeriesNumber = releaseEvent.SeriesNumber;
 			SeriesSuffix = releaseEvent.SeriesSuffix;
+			WebLinks = releaseEvent.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
 
@@ -29,6 +31,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public int SeriesNumber { get; set; }
 
 		public string SeriesSuffix { get; set; }
+
+		public WebLinkContract[] WebLinks { get; set; }
 
 	}
 }

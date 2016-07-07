@@ -20,6 +20,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.Version).Not.Nullable();
 
 			HasMany(m => m.Albums).KeyColumn("[ReleaseEventName]").PropertyRef("Name").ForeignKeyConstraintName("[Name]").Inverse().ReadOnly();
+			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEvent]").Inverse().Cascade.All().Cache.ReadWrite();
 
 			References(m => m.Series).Nullable();
 
@@ -32,39 +33,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 	}
 
-	public class ReleaseEventSeriesMap : ClassMap<ReleaseEventSeries> {
-
-		public ReleaseEventSeriesMap() {
-
-			Table("AlbumReleaseEventSeries");
-			Cache.ReadWrite();
-			Id(m => m.Id);
-
-			Map(m => m.Description).Length(400).Not.Nullable();
-			Map(m => m.Name).Length(50).Not.Nullable();
-			Map(m => m.PictureMime).Length(32).Nullable();
-
-			HasMany(m => m.Aliases).KeyColumn("[Series]").Inverse().Cascade.All().Cache.ReadWrite();
-			HasMany(m => m.Events).OrderBy("[SeriesNumber]").KeyColumn("[Series]").Inverse().Cache.ReadWrite();
-
-		}
-
-	}
-
-	public class ReleaseEventSeriesAliasMap : ClassMap<ReleaseEventSeriesAlias> {
-
-		public ReleaseEventSeriesAliasMap() {
-
-			Table("AlbumReleaseEventSeriesAliases");
-			Cache.ReadWrite();
-			Id(m => m.Id);
-
-			Map(m => m.Name).Length(50).Not.Nullable();
-			References(m => m.Series).Column("[Series]").Not.Nullable();
-
-		}
-
-	}
+	public class ReleaseEventWebLinkMap : WebLinkMap<ReleaseEventWebLink, ReleaseEvent> { }
 
 	public class ArchivedReleaseEventVersionMap : ClassMap<ArchivedReleaseEventVersion> {
 

@@ -2,27 +2,20 @@
 using System.Collections.Generic;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ReleaseEvent : IEntryWithNames {
+	public class ReleaseEvent : IEntryWithNames, IWebLinkFactory<ReleaseEventWebLink> {
 
-		string IEntryBase.DefaultName {
-			get { return Name; }
-		}
+		string IEntryBase.DefaultName => Name;
 
-		bool IDeletableEntry.Deleted {
-			get { return false; }
-		}
+		bool IDeletableEntry.Deleted => false;
 
-		INameManager IEntryWithNames.Names {
-			get { 
-				return new SingleNameManager(Name); 
-			}
-		}
+		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
 
 		private IList<Album> albums = new List<Album>();
 		private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> archivedVersions
@@ -31,6 +24,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private string name;
 		private ReleaseEventSeries series;
 		private string seriesSuffix;
+		private IList<ReleaseEventWebLink> webLinks = new List<ReleaseEventWebLink>();
 
 		public ReleaseEvent() {
 			Description = SeriesSuffix = string.Empty;
@@ -96,9 +90,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
-		public virtual EntryType EntryType {
-			get { return EntryType.ReleaseEvent; }
-		}
+		public virtual EntryType EntryType => EntryType.ReleaseEvent;
 
 		public virtual int Id { get; set; }
 
@@ -127,6 +119,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual int Version { get; set; }
 
+		public virtual IList<ReleaseEventWebLink> WebLinks {
+			get { return webLinks; }
+			set {
+				ParamIs.NotNull(() => value);
+				webLinks = value;
+			}
+		}
+
 		public virtual ArchivedReleaseEventVersion CreateArchivedVersion(ReleaseEventDiff diff, AgentLoginData author, EntryEditEvent reason) {
 
 			var archived = new ArchivedReleaseEventVersion(this, diff, author, reason);
@@ -134,6 +134,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Version++;
 
 			return archived;
+
+		}
+
+		public virtual ReleaseEventWebLink CreateWebLink(string description, string url, WebLinkCategory category) {
+
+			ParamIs.NotNull(() => description);
+			ParamIs.NotNullOrEmpty(() => url);
+
+			var link = new ReleaseEventWebLink(this, description, url, category);
+			WebLinks.Add(link);
+
+			return link;
 
 		}
 

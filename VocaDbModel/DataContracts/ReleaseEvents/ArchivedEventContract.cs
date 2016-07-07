@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -10,7 +11,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ArchivedEventContract() { }
 
-		public ArchivedEventContract(ReleaseEvent ev) {
+		public ArchivedEventContract(ReleaseEvent ev, ReleaseEventDiff diff) {
 
 			ParamIs.NotNull(() => ev);
 
@@ -20,6 +21,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Name = ev.Name;
 			Series = (ev.Series != null ? new ObjectRefContract(ev.Series) : null);
 			SeriesNumber = ev.SeriesNumber;
+			WebLinks = diff.IsIncluded(ReleaseEventEditableFields.WebLinks) ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
 
@@ -40,6 +42,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public int SeriesNumber { get; set; }
+
+		[DataMember]
+		public ArchivedWebLinkContract[] WebLinks { get; set; }
 
 	}
 

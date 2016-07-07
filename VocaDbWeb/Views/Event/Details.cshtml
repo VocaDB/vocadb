@@ -42,6 +42,11 @@
 		@if (!string.IsNullOrEmpty(Model.Description)) {
 			<p>@Html.Raw(descriptionHtml)</p>
 		}
+		
+		@if (Model.WebLinks.Any()) {
+			@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
+			<br />
+		}
 
 	</div>
 </div>

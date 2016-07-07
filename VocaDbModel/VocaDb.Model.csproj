@@ -384,6 +384,8 @@
     <Compile Include="Domain\PVs\IPV.cs" />
     <Compile Include="Domain\PVs\IPVWithThumbnail.cs" />
     <Compile Include="Domain\PVs\PVManager.cs" />
+    <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesWebLink.cs" />
+    <Compile Include="Domain\ReleaseEvents\ReleaseEventWebLink.cs" />
     <Compile Include="Domain\Security\AuditLogCategory.cs" />
     <Compile Include="Domain\Security\EntryPermissionManager.cs" />
     <Compile Include="Domain\Security\IPRule.cs" />
@@ -568,6 +570,7 @@
     <Compile Include="Mapping\Discussions\DiscussionFolderMap.cs" />
     <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
+    <Compile Include="Mapping\ReleaseEvents\ReleaseEventSeriesMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\Users\OldUsernameMap.cs" />
     <Compile Include="Mapping\WebLinkMap.cs" />

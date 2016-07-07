@@ -40,6 +40,11 @@
 			<p>@Html.Raw(descriptionHtml)</p>
 		}
 	</div>
+	
+	@if (Model.WebLinks.Any()) {
+		@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
+		<br />
+	}
 </div>
 
 <h3>@ViewRes.SharedStrings.ReleaseEvents</h3>

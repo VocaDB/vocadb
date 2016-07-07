@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using VocaDb.Model;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Web.Code;
 
@@ -33,6 +34,7 @@ namespace VocaDb.Web.Models.Event {
 			Series = contract.Series;
 			SeriesNumber = contract.SeriesNumber;
 			SeriesSuffix = contract.SeriesSuffix;
+			WebLinks = contract.WebLinks;
 
 		}
 
@@ -62,6 +64,9 @@ namespace VocaDb.Web.Models.Event {
 		[Display(Name = "Series number")]
 		public int SeriesNumber { get; set; }
 
+		[FromJson]
+		public WebLinkContract[] WebLinks { get; set; }
+
 		public void CopyNonEditableProperties(ReleaseEventDetailsContract contract) {
 
 			ParamIs.NotNull(() => contract);
@@ -80,7 +85,8 @@ namespace VocaDb.Web.Models.Event {
 				Name = this.Name,
 				Series = this.Series, 
 				SeriesNumber = this.SeriesNumber,
-				SeriesSuffix = this.SeriesSuffix ?? string.Empty
+				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
+				WebLinks = this.WebLinks
 			};
 
 		}

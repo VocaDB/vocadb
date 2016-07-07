@@ -144,7 +144,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
 
-
 	}
 
 }
