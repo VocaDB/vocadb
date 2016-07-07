@@ -112,7 +112,7 @@
 	$(function () {
 
 		var webLinks = @ToJS(Model.WebLinks);
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel();
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel(webLinks);
 		ko.applyBindings(vm);
 
 		initPage();
