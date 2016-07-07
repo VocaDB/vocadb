@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.DataContracts.PVs;
@@ -18,6 +19,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			
 			ParamIs.NotNull(() => song);
 
+			AlbumReleaseDate = song.FirstAlbumDate;
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			DefaultNameLanguage = song.TranslatedName.DefaultLanguage;
 			HasAlbums = song.Albums.Any();
@@ -31,6 +33,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
+
+		[DataMember]
+		public DateTime? AlbumReleaseDate { get; set; }
 
 		[DataMember]
 		public ArtistForSongContract[] Artists { get; set; }

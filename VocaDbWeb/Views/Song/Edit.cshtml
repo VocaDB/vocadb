@@ -131,7 +131,12 @@
 				</label>
 			</div>
 			<div class="editor-field">
-				<input type="text" data-bind="datepicker: { value: publishDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
+				<div class="input-append">
+					<input type="text" data-bind="datepicker: { value: publishDate, dateFormat: 'yy-mm-dd' }" maxlength="10" />
+					<button class="btn" data-bind="visible: !publishDate() && albumReleaseDate, click: function() { publishDate(albumReleaseDate ? albumReleaseDate.toDate() : null); }">
+						Use album release date <span data-bind="text: albumReleaseDate ? albumReleaseDate.format('L') : null"></span>
+					</button>					
+				</div>
 			</div>
 
 			<div class="editor-label">

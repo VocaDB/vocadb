@@ -44,6 +44,14 @@ namespace VocaDb.Model.Helpers {
 			}
         }
 
+		public static T? MinOrNull<T>(this IEnumerable<T> source) where T : struct {
+			try {
+				return source.Min();
+			} catch (InvalidOperationException) {
+				return null;
+			}
+		}
+
 		public static Dictionary<T, T2> ToDictionaryWithEmpty<TSource, T, T2>(this IEnumerable<TSource> source, T emptyKey, T2 emptyVal, Func<TSource, T> keySelector, Func<TSource, T2> valueSelector) {
 
 			var vals = new Dictionary<T, T2>();

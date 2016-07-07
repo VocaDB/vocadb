@@ -12,6 +12,7 @@ module vdb.viewModels {
 
     export class SongEditViewModel {
 
+		public albumReleaseDate: moment.Moment;
         // List of artist links for this song.
         public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
 		artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
@@ -161,6 +162,7 @@ module vdb.viewModels {
 			private dialogService: ui_dialog.IDialogService,
 			private instrumentalTagId: number) {
 
+			this.albumReleaseDate = data.albumReleaseDate ? moment(data.albumReleaseDate) : null;
 			this.artistLinks = ko.observableArray(_.map(data.artists, artist => new ArtistForAlbumEditViewModel(null, artist)));
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
 			this.deleted = data.deleted;

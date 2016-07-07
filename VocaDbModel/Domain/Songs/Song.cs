@@ -190,6 +190,24 @@ namespace VocaDb.Model.Domain.Songs {
 		public virtual int FavoritedTimes { get; set; }
 
 		/// <summary>
+		/// Release date of the earliest album.
+		/// </summary>
+		public virtual DateTime? FirstAlbumDate {
+			get {
+
+				// Sanity check
+				var minDateLimit = new DateTime(2000, 1, 1);
+
+				return Albums
+					.Where(a => a.Album != null && a.Album.OriginalReleaseDate.IsFullDate)
+					.Select(a => a.Album.OriginalReleaseDate.ToDateTime())
+					.Where(d => d > minDateLimit)
+					.MinOrNull();
+
+			}
+		}
+
+		/// <summary>
 		/// Tests whether this song has an original version specified.
 		/// This method also tests that the song type isn't "Original", because original songs aren't supposed to have parent songs.
 		/// </summary>
@@ -798,13 +816,9 @@ namespace VocaDb.Model.Domain.Songs {
 			// Lowest published (original) PV
 			var minPvDate = pvsWithDate.Any() ? pvsWithDate.Min(p => p.PublishDate) : null;
 
-			var minAlbumDate = Albums
-				.Where(a => a.Album != null && a.Album.OriginalReleaseDate.IsFullDate)
-				.Select(a => a.Album.OriginalReleaseDate.ToDateTime())
-				.Where(d => d > minDateLimit)
-				.MinOrDefault();
+			var minAlbumDate = FirstAlbumDate;
 
-			var minDate = minAlbumDate > minDateLimit && minAlbumDate < minPvDate ? minAlbumDate : minPvDate;
+			var minDate = minAlbumDate.HasValue && minAlbumDate > minDateLimit && minAlbumDate < minPvDate ? minAlbumDate : minPvDate;
 
 			PublishDate = minDate;
 
