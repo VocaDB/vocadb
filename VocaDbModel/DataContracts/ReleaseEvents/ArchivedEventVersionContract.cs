@@ -1,6 +1,7 @@
 ﻿using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 

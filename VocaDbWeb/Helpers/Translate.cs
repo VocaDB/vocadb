@@ -16,6 +16,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 

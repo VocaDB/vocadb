@@ -16,6 +16,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Service.DataSharing {
 

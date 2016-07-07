@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 

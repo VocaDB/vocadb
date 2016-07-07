@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Search;
 using VocaDb.Tests.TestSupport;
 

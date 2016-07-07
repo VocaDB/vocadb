@@ -1,7 +1,8 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.Mapping.Albums {
+namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 	public class ReleaseEventMap : ClassMap<ReleaseEvent> {
 

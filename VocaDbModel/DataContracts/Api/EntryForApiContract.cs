@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.VideoServices;

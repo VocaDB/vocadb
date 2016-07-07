@@ -6,6 +6,7 @@ using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service {

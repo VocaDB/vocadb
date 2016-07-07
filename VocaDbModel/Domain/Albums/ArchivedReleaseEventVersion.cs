@@ -1,5 +1,6 @@
 ﻿using System;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
 

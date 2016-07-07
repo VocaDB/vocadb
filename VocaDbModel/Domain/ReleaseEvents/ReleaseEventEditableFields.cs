@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	[Flags]
 	public enum ReleaseEventEditableFields {

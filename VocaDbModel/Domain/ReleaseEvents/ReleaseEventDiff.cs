@@ -1,6 +1,7 @@
-﻿using VocaDb.Model.Domain.Versioning;
+﻿using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEventDiff : EntryDiff<ReleaseEventEditableFields> {
 

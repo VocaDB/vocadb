@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using VocaDb.Model.Domain.Activityfeed;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEvent : IEntryWithNames {
 

@@ -19,6 +19,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;

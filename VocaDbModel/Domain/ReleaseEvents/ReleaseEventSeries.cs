@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEventSeries : IEntryBase, IEquatable<ReleaseEventSeries> {
 

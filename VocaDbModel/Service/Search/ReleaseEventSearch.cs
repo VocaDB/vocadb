@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Service.Search {
 
