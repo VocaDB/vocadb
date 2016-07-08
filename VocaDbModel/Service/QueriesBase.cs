@@ -97,6 +97,15 @@ namespace VocaDb.Model.Service {
 			session.AuditLogger.AuditLog(doingWhat, user, category);
 		}
 
+		protected bool DoSnapshot(IEntryWithVersions entry, IDatabaseContext ctx) {
+
+			var latestVersion = entry.ArchivedVersionsManager.GetLatestVersion();
+			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+
+			return DoSnapshot(latestVersion, user);
+
+		}
+
 		protected bool DoSnapshot(ArchivedObjectVersion latestVersion, User user) {
 
 			if (latestVersion == null)

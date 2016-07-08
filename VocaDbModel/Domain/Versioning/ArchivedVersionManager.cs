@@ -6,11 +6,14 @@ namespace VocaDb.Model.Domain.Versioning {
 
 	public interface IArchivedVersionsManager {
 
-		IEnumerable<ArchivedObjectVersion> VersionsBase { get; } 
+		IEnumerable<ArchivedObjectVersion> VersionsBase { get; }
+
+		ArchivedObjectVersion GetLatestVersion();
 
 	}
 
-	public class ArchivedVersionManager<TVersion, TField> : IArchivedVersionsManager
+	public class ArchivedVersionManager<TVersion, TField> : 
+		IArchivedVersionsManager
 		where TVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<TField> 
 		where TField : struct, IConvertible {
 
@@ -24,9 +27,7 @@ namespace VocaDb.Model.Domain.Versioning {
 			}
 		}
 
-		public IEnumerable<ArchivedObjectVersion> VersionsBase {
-			get { return Versions; }
-		}
+		public IEnumerable<ArchivedObjectVersion> VersionsBase => Versions;
 
 		public virtual TVersion Add(TVersion newVersion) {
 
@@ -39,6 +40,10 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		public virtual void Clear() {
 			Versions.Clear();
+		}
+
+		ArchivedObjectVersion IArchivedVersionsManager.GetLatestVersion() {
+			return GetLatestVersion();
 		}
 
 		public virtual TVersion GetLatestVersion() {

@@ -9,7 +9,9 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ReleaseEvent : IEntryWithNames, IWebLinkFactory<ReleaseEventWebLink> {
+	public class ReleaseEvent : IEntryWithNames, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink> {
+
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		string IEntryBase.DefaultName => Name;
 

@@ -215,7 +215,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.Save(ev);
 
-					var archived = Archive(session, ev, new ReleaseEventDiff(), EntryEditEvent.Created);
+					var archived = Archive(session, ev, diff, EntryEditEvent.Created);
 					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
 
 					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
@@ -223,7 +223,7 @@ namespace VocaDb.Model.Database.Queries {
 				} else {
 
 					ev = session.Load(contract.Id);
-					var diff = new ReleaseEventDiff();
+					var diff = new ReleaseEventDiff(DoSnapshot(ev, session));
 
 					if (!ev.Date.Equals(contract.Date))
 						diff.Date.Set();
