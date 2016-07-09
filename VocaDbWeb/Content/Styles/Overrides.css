@@ -75,7 +75,7 @@ body .ui-widget button {
 }
 .navbar-inverse .navbar-search .search-query {
   background-color: #005B5B;
-  color: -webkit-input-placeholder(#0dc69b);
+  color: -webkit-input-placeholder(#0DC69B);
   border-radius: 3px;
 }
 .navbar-inverse .navbar-search .search-query::-webkit-input-placeholder {
@@ -84,11 +84,11 @@ body .ui-widget button {
 .navbar .navbar-inner,
 .navbar-inverse .navbar-inner {
   background-color: #0D2B35;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#133d4c), to(#081a21));
-  background-image: -webkit-linear-gradient(top, #133d4c, #081a21);
-  background-image: -o-linear-gradient(top, #133d4c, #081a21);
-  background-image: -moz-linear-gradient(center top, #133d4c, #081a21);
-  background-image: linear-gradient(top, #133d4c, #081a21);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#133D4C), to(#081A21));
+  background-image: -webkit-linear-gradient(top, #133D4C, #081A21);
+  background-image: -o-linear-gradient(top, #133D4C, #081A21);
+  background-image: -moz-linear-gradient(center top, #133D4C, #081A21);
+  background-image: linear-gradient(top, #133D4C, #081A21);
 }
 .navbar-form .navbar-searchBox {
   margin-top: 0;
@@ -130,6 +130,9 @@ form.form-noBottomMargin {
 }
 ul {
   padding-left: 3px;
+}
+ol {
+  margin-left: 22px;
 }
 .dropdown-menu li > a:hover {
   color: white !important;

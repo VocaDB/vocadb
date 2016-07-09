@@ -1735,6 +1735,9 @@
     <Content Include="Content\Styles\Overrides.css">
       <DependentUpon>Overrides.less</DependentUpon>
     </Content>
+    <Content Include="Content\Styles\Overrides.min.css">
+      <DependentUpon>Overrides.css</DependentUpon>
+    </Content>
     <Content Include="Content\Styles\Pager.css" />
     <Content Include="Content\Styles\PVViewer_Black.css">
       <DependentUpon>PVViewer_Black.less</DependentUpon>

@@ -33,9 +33,16 @@
       "enabled": false
     }
   },
+  {
+    "outputFile": "Content/Styles/PVViewer_Black.css",
+    "inputFile": "Content/Styles/PVViewer_Black.less",
+    "minify": {
+      "enabled": false
+    }
+  },
 	{
-		"outputFile": "Content/Styles/PVViewer_Black.css",
-		"inputFile": "Content/Styles/PVViewer_Black.less",
+		"outputFile": "Content/Styles/Overrides.css",
+		"inputFile": "Content/Styles/Overrides.less",
 		"minify": {
 			"enabled": false
 		}
