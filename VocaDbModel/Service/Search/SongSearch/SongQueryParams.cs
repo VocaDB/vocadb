@@ -51,6 +51,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
+		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+
 		public int[] ArtistIds { get; set; }
 
 		public string[] ArtistNames { get; set; }

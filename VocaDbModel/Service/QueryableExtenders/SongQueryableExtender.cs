@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using VocaDb.Model.Domain;
@@ -111,6 +112,29 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && !a.IsSupport && ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) && a.Song.ArtistString.Default != various),
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && (a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Song.ArtistString.Default == various))
 			));
+
+		}
+
+		public static IQueryable<Song> WhereMatchFilter(this IQueryable<Song> query, AdvancedSearchFilter filter) {
+
+			switch (filter.FilterType) {
+				case AdvancedFilterType.ArtistType: {
+					var param = EnumVal<ArtistType>.Parse(filter.Param);
+					return WhereArtistHasType(query, param);					
+				}
+				case AdvancedFilterType.Lyrics: {
+					var param = EnumVal<ContentLanguageSelection>.ParseMultiple(filter.Param);
+					return WhereHasLyrics(query, param);					
+				}
+			}
+
+			return query;
+
+		}
+
+		public static IQueryable<Song> WhereMatchFilters(this IQueryable<Song> query, IEnumerable<AdvancedSearchFilter> filters) {
+
+			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 
 		}
 
