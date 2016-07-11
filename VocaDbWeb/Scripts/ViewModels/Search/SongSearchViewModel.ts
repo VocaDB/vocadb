@@ -62,6 +62,7 @@ module vdb.viewModels.search {
 			this.since = ko.observable(since);
 			this.viewMode = ko.observable(viewMode || "Details");
 
+			this.advancedFilters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
@@ -105,7 +106,9 @@ module vdb.viewModels.search {
 						this.minScore(),
 						this.onlyRatedSongs() ? this.loggedUserId : null,
 						this.fields(),
-						status, result => {
+						status,
+						this.advancedFilters(),
+						result => {
 
 							_.each(result.items, (song: ISongSearchItem) => {
 
@@ -128,6 +131,7 @@ module vdb.viewModels.search {
 
 		}
 
+		public advancedFilters = ko.observableArray<AdvancedSearchFilter>();
 		public artistFilters: ArtistFilters;
 		public minScore: KnockoutObservable<number>;
 		public onlyRatedSongs = ko.observable(false);
@@ -142,7 +146,16 @@ module vdb.viewModels.search {
 		public sortName: KnockoutComputed<string>;
 		public viewMode: KnockoutObservable<string>;
 
+		public addAdvancedFilter = (filter: string, param: string, description: string) => {
+			this.advancedFilters.push({ filterType: filter, param: param, description: description });
+		}
+
 		public fields = ko.computed(() => this.showTags() ? "AdditionalNames,ThumbUrl,Tags" : "AdditionalNames,ThumbUrl");
+
+		public hasAdvancedFilter = (filterType: string, param: string) => {
+			var result = _.some(this.advancedFilters(), f => f.filterType === filterType && f.param === param);
+			return result;
+		}
 
 		public getPVServiceIcons = (services: string) => {
 			return this.pvServiceIcons.getIconUrls(services);

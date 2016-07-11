@@ -46,9 +46,7 @@ module vdb.knockoutExtensions {
 				createOptionSecondRow: (item: dc.AlbumContract) => (item.artistString),
 				extraQueryParams: queryParams,
 				filter: filter,
-				height: properties.height,
-				termParamName: 'query',
-				method: 'GET'
+				termParamName: 'query'
 			});
 
 

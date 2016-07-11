@@ -2912,6 +2912,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\ReleaseEvent\ReleaseEventEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ReleaseEvent\ReleaseEventSeriesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ReportEntryViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\AdvancedSearchFilter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AlbumSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AnythingSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistFilter.ts" />
@@ -3406,6 +3407,7 @@
     <Content Include="Views\Tag\Merge.cshtml" />
     <Content Include="Views\Help\Index.zh-Hans.cshtml" />
     <Content Include="Views\Shared\_TagPopupContent.cshtml" />
+    <Content Include="Views\Search\Partials\_SongSearchOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -4678,7 +4680,7 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <TypeScriptToolsVersion Condition="'$(TypeScriptToolsVersion)'==''">1.4</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion Condition="'$(TypeScriptToolsVersion)'==''">1.8</TypeScriptToolsVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

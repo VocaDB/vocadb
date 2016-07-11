@@ -50,9 +50,7 @@ module vdb.knockoutExtensions {
 				createOptionSecondRow: (item: dc.SongContract) => (item.artistString),
 				extraQueryParams: queryParams,
 				filter: filter,
-				height: properties.height,
 				termParamName: 'query',
-				method: 'GET',
 				onQuery: (searchQueryParams: rep.SongQueryParams, term: string) => {
 					// Increase the number of results for wildcard queries
 					searchQueryParams.maxResults = helpers.SearchTextQueryHelper.isWildcardQuery(term) ? 30 : 15;

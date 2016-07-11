@@ -820,6 +820,8 @@
     <Compile Include="Database\Repositories\NHibernate\SongListNHibernateRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\UserMessageNHibernateRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\UserNHibernateRepository.cs" />
+    <Compile Include="Service\Search\AdvancedFilterType.cs" />
+    <Compile Include="Service\Search\AdvancedSearchFilter.cs" />
     <Compile Include="Service\Search\AlbumSearch\AlbumSearchSort.cs" />
     <Compile Include="Service\Search\AlbumSearch\ArtistAlbumParticipationStatus.cs" />
     <Compile Include="Service\Search\AlbumSearch\ParsedAlbumQuery.cs" />

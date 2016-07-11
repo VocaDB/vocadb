@@ -44,7 +44,7 @@ ko.bindingHandlers.datepicker = {
 
 		if (ko.isWriteableObservable(options.value)) {
 			var origOnSelect = $(element).datepicker('option', 'onSelect');
-			$(element).datepicker('option', 'onSelect', (selectedText: string) => {
+			$(element).datepicker('option', 'onSelect', function(selectedText: string) {
 
 				selectDate(selectedText);
 

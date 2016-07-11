@@ -156,46 +156,7 @@
 			</div>
 		</div>
 
-		<!-- Song search options -->
-		<div data-bind="visible: showSongSearch, with: songSearchViewModel">
-			<div class="control-group">
-				<div class="control-label">@Res.SongType</div>
-				<div class="controls">
-					@SongHelpers.SongTypesDropdownKnockout("songType")
-				</div>
-			</div>
-
-			<div class="control-group">
-				<div class="control-label">@EntryTypeNames.Artist</div>
-				<div class="controls" data-bind="with: artistFilters">					
-					@KnockoutHelpers.ArtistFilters(artistParticipationStatus: true)
-				</div>
-			</div>
-
-			<div class="control-group">
-				<div class="control-label">@Res.MoreRecentThan</div>
-				<div class="controls">
-					<select data-bind="value: since">
-						<option value="">(Show all)</option>
-						<option value="24">1 day</option>
-						<option value="48">2 days</option>
-						<option value="168">7 days</option>
-						<option value="336">2 weeks</option>
-						<option value="720">1 month</option>
-						<option value="4320">6 months</option>
-						<option value="8760">1 year</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="control-group">
-				<div class="control-label">@Res.MinScore</div>
-				<div class="controls">
-					<input type="number" data-bind="textInput: minScore" maxlength="10" min="0" class="input-small" />
-				</div>
-			</div>
-
-		</div>
+		@{ Html.RenderPartial("Partials/_SongSearchOptions"); }
 
 		<!-- Tag search options -->
 		<div class="control-group" data-bind="visible: showTagSearch, with: tagSearchViewModel">

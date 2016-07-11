@@ -40,9 +40,16 @@
       "enabled": false
     }
   },
+  {
+    "outputFile": "Content/Styles/Overrides.css",
+    "inputFile": "Content/Styles/Overrides.less",
+    "minify": {
+      "enabled": false
+    }
+  },
 	{
-		"outputFile": "Content/Styles/Overrides.css",
-		"inputFile": "Content/Styles/Overrides.less",
+		"outputFile": "Content/Styles/Search.css",
+		"inputFile": "Content/Styles/Search.less",
 		"minify": {
 			"enabled": false
 		}

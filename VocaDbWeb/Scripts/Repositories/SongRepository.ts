@@ -83,6 +83,7 @@ module vdb.repositories {
 			userCollectionId: number,
 			fields: string,
 			status: string,
+			advancedFilters: viewModels.search.AdvancedSearchFilter[],
 			callback) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs");
@@ -100,7 +101,8 @@ module vdb.repositories {
 				since: since,
 				minScore: minScore,
 				userCollectionId: userCollectionId,
-				status: status
+				status: status,
+				advancedFilters: advancedFilters
 			};
 
 			$.getJSON(url, data, callback);

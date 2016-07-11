@@ -44,6 +44,7 @@ module vdb.viewModels.songs {
 				this.onlyRatedSongs() ? this.userCollectionId : null,
 				this.fields(),
 				this.draftsOnly() ? "Draft" : null,
+				null,
 				(result: dc.PartialFindResultContract<dc.SongApiContract>) => {
 
 				var mapped = _.map(result.items, (song, idx) => {
