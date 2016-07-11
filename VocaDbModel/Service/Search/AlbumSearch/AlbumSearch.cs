@@ -36,7 +36,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 				.WhereHasTag(parsedQuery.TagName)
 				.WhereReleaseDateIsAfter(queryParams.ReleaseDateAfter)
 				.WhereReleaseDateIsBefore(queryParams.ReleaseDateBefore)
-				.WhereSortBy(queryParams.SortRule);
+				.WhereSortBy(queryParams.SortRule)
+				.WhereMatchFilters(queryParams.AdvancedFilters);
 
 			return query;
 

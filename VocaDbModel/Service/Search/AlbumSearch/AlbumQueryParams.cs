@@ -29,6 +29,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
+		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+
 		/// <summary>
 		/// Album type that should be searched for. Cannot be null.
 		/// If Unknown, all album types are included.

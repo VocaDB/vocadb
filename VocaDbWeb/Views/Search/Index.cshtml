@@ -139,22 +139,7 @@
 			</div>
 		</div>
 
-		<!-- Album search options -->
-		<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
-			<div class="control-group">
-				<div class="control-label">@Res.AlbumType</div>
-				<div class="controls">
-					@AlbumHelpers.DiscTypesDropdownKnockout("albumType")
-				</div>
-			</div>
-
-			<div class="control-group">
-				<div class="control-label">@EntryTypeNames.Artist</div>
-				<div class="controls" data-bind="with: artistFilters">
-					@KnockoutHelpers.ArtistFilters(artistParticipationStatus: true)
-				</div>
-			</div>
-		</div>
+		@{ Html.RenderPartial("Partials/_AlbumSearchOptions"); }
 
 		@{ Html.RenderPartial("Partials/_SongSearchOptions"); }
 

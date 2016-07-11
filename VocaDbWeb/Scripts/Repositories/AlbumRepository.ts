@@ -80,6 +80,7 @@ module vdb.repositories {
 			fields: string,
 			status: string,
 			deleted: boolean,
+			advancedFilters: viewModels.search.AdvancedSearchFilter[],
 			callback: (result: dc.PartialFindResultContract<dc.AlbumContract>) => void) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums");
@@ -93,7 +94,8 @@ module vdb.repositories {
 				artistParticipationStatus: artistParticipationStatus,
 				childVoicebanks: childVoicebanks,
 				status: status,
-				deleted: deleted
+				deleted: deleted,
+				advancedFilters: advancedFilters
 			};
 
 			$.getJSON(url, data, callback);

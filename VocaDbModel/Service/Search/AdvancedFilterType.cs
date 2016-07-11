@@ -16,7 +16,12 @@
 		/// <summary>
 		/// Song has lyrics in content language specified by param.
 		/// </summary>
-		Lyrics
+		Lyrics,
+
+		/// <summary>
+		/// Album with no cover picture
+		/// </summary>
+		NoCoverPicture
 
 	}
 

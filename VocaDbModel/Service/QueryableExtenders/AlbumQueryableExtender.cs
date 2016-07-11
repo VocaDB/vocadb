@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using VocaDb.Model.Domain;
@@ -64,6 +65,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			return query;
 
+		}
+
+		public static IQueryable<Album> WhereArtistHasType(this IQueryable<Album> query, ArtistType artistType) {
+			return query.WhereArtistHasType<Album, ArtistForAlbum>(artistType);
 		}
 
 		public static IQueryable<Album> WhereDraftsOnly(this IQueryable<Album> query, bool draftsOnly) {
@@ -185,6 +190,28 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			return query.Where(m => m.DiscType == albumType);
+
+		}
+
+		public static IQueryable<Album> WhereMatchFilter(this IQueryable<Album> query, AdvancedSearchFilter filter) {
+
+			switch (filter.FilterType) {
+				case AdvancedFilterType.ArtistType: {
+					var param = EnumVal<ArtistType>.Parse(filter.Param);
+					return WhereArtistHasType(query, param);
+				}
+				case AdvancedFilterType.NoCoverPicture: {
+					return query.Where(a => a.CoverPictureMime == null || a.CoverPictureMime == string.Empty);
+				}
+			}
+
+			return query;
+
+		}
+
+		public static IQueryable<Album> WhereMatchFilters(this IQueryable<Album> query, IEnumerable<AdvancedSearchFilter> filters) {
+
+			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 
 		}
 

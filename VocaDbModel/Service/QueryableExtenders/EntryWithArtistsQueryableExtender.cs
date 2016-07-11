@@ -10,6 +10,17 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class EntryWithArtistsQueryableExtender {
 
+		public static IQueryable<TEntry> WhereArtistHasType<TEntry, TArtistLink>(this IQueryable<TEntry> query, ArtistType artistType)
+			where TEntry : IEntryWithArtists<TArtistLink>
+			where TArtistLink : IArtistLink {
+
+			if (artistType == ArtistType.Unknown)
+				return query;
+
+			return query.Where(s => s.AllArtists.Any(a => a.Artist.ArtistType == artistType));
+
+		}
+
 		/// <summary>
 		/// Filters an entry query by a single artist Id.
 		/// </summary>
@@ -18,7 +29,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <param name="childVoicebanks">Whether child voicebanks of possible voice synthesizer are included.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<TEntry> WhereHasArtist<TEntry, TArtistLink>(this IQueryable<TEntry> query, int artistId, bool childVoicebanks)
-			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistLink {
+			where TEntry : IEntryWithArtists<TArtistLink> 
+			where TArtistLink : IArtistLink {
 
 			if (artistId == 0)
 				return query;

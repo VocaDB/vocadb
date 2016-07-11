@@ -64,12 +64,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 		public static IQueryable<Song> WhereArtistHasType(this IQueryable<Song> query, ArtistType artistType) {
-
-			if (artistType == ArtistType.Unknown)
-				return query;
-
-			return query.Where(s => s.AllArtists.Any(a => a.Artist.ArtistType == artistType));
-
+			return query.WhereArtistHasType<Song, ArtistForSong>(artistType);
 		}
 
 		public static IQueryable<Song> WhereDraftsOnly(this IQueryable<Song> query, bool draftsOnly) {
@@ -112,29 +107,6 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && !a.IsSupport && ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) && a.Song.ArtistString.Default != various),
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && (a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Song.ArtistString.Default == various))
 			));
-
-		}
-
-		public static IQueryable<Song> WhereMatchFilter(this IQueryable<Song> query, AdvancedSearchFilter filter) {
-
-			switch (filter.FilterType) {
-				case AdvancedFilterType.ArtistType: {
-					var param = EnumVal<ArtistType>.Parse(filter.Param);
-					return WhereArtistHasType(query, param);					
-				}
-				case AdvancedFilterType.Lyrics: {
-					var param = EnumVal<ContentLanguageSelection>.ParseMultiple(filter.Param);
-					return WhereHasLyrics(query, param);					
-				}
-			}
-
-			return query;
-
-		}
-
-		public static IQueryable<Song> WhereMatchFilters(this IQueryable<Song> query, IEnumerable<AdvancedSearchFilter> filters) {
-
-			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 
 		}
 
@@ -364,6 +336,29 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			query = query.Where(s => s.UserFavorites.Any(a => a.User.Id == userId));
 
 			return query;
+
+		}
+
+		public static IQueryable<Song> WhereMatchFilter(this IQueryable<Song> query, AdvancedSearchFilter filter) {
+
+			switch (filter.FilterType) {
+				case AdvancedFilterType.ArtistType: {
+					var param = EnumVal<ArtistType>.Parse(filter.Param);
+					return WhereArtistHasType(query, param);
+				}
+				case AdvancedFilterType.Lyrics: {
+					var param = EnumVal<ContentLanguageSelection>.ParseMultiple(filter.Param);
+					return WhereHasLyrics(query, param);
+				}
+			}
+
+			return query;
+
+		}
+
+		public static IQueryable<Song> WhereMatchFilters(this IQueryable<Song> query, IEnumerable<AdvancedSearchFilter> filters) {
+
+			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 
 		}
 
