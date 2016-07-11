@@ -1,0 +1,30 @@
+﻿@using VocaDb.Model.Service.Search
+@inherits VocaDb.Web.Code.HelperPage
+	
+@helper AdvancedFilter(string description, AdvancedFilterType filterType, string param) {
+	<li data-bind="visible: !hasAdvancedFilter('@filterType.ToString()', '@param')">
+		<a href="#" data-bind="click: function() { addAdvancedFilter('@filterType.ToString()', '@param', '@description'); }">
+			@description
+		</a>
+	</li>
+}
+
+@helper AdvancedFilters(IEnumerable<Tuple<string, AdvancedFilterType, string>> filters) {
+	<div class="btn-group">
+		<button class="btn dropdown-toggle" data-toggle="dropdown">
+			Advanced filters
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			@foreach (var filter in filters) {
+				@AdvancedFilter(filter.Item1, filter.Item2, filter.Item3)
+			}
+		</ul>
+	</div>
+	<div data-bind="foreach: advancedFilters" class="search-advanced-filters-list">
+		<div class="label label-info" data-bind="click: function() { $parent.advancedFilters.remove($data); }">
+			<button type="button" class="close">×</button>
+			<span data-bind="text: description"></span>
+		</div>
+	</div>
+}

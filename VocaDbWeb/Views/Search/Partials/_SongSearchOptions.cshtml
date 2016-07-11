@@ -2,12 +2,17 @@
 @using VocaDb.Model.Service.Search
 @using Res = ViewRes.Search.IndexStrings;
 
-@helper AdvancedFilter(string description, AdvancedFilterType filterType, string param) {
-	<li data-bind="visible: !hasAdvancedFilter('@filterType.ToString()', '@param')">
-		<a href="#" data-bind="click: function() { addAdvancedFilter('@filterType.ToString()', '@param', '@description'); }">
-			@description
-		</a>
-	</li>
+@{
+	var advancedFilters = new[] {
+		Tuple.Create("Artist type: Vocaloid", AdvancedFilterType.ArtistType, "Vocaloid"),
+		Tuple.Create("Artist type: UTAU", AdvancedFilterType.ArtistType, "UTAU"),
+		Tuple.Create("Artist type: CeVIO", AdvancedFilterType.ArtistType, "CeVIO"),
+		Tuple.Create("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, "OtherVoiceSynthesizer"),
+		Tuple.Create("Lyrics: Any language", AdvancedFilterType.Lyrics, "Japanese,Romaji,English"),
+		Tuple.Create("Lyrics: Non-English", AdvancedFilterType.Lyrics, "Japanese"),
+		Tuple.Create("Lyrics: Romanized", AdvancedFilterType.Lyrics, "Romaji"),
+		Tuple.Create("Lyrics: English", AdvancedFilterType.Lyrics, "English")
+	};
 }
 
 <!-- Song search options -->
@@ -52,28 +57,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			<div class="btn-group">
-				<button class="btn dropdown-toggle" data-toggle="dropdown">
-					Advanced filters
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					@AdvancedFilter("Artist type: Vocaloid", AdvancedFilterType.ArtistType, "Vocaloid")
-					@AdvancedFilter("Artist type: UTAU", AdvancedFilterType.ArtistType, "UTAU")
-					@AdvancedFilter("Artist type: CeVIO", AdvancedFilterType.ArtistType, "CeVIO")
-					@AdvancedFilter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, "OtherVoiceSynthesizer")
-					@AdvancedFilter("Lyrics: Any language", AdvancedFilterType.Lyrics, "Japanese,Romaji,English")
-					@AdvancedFilter("Lyrics: Non-English", AdvancedFilterType.Lyrics, "Japanese")
-					@AdvancedFilter("Lyrics: Romanized", AdvancedFilterType.Lyrics, "Romaji")
-					@AdvancedFilter("Lyrics: English", AdvancedFilterType.Lyrics, "English")
-				</ul>
-			</div>
-			<div data-bind="foreach: advancedFilters" class="search-advanced-filters-list">
-				<div class="label label-info" data-bind="click: function() { $parent.advancedFilters.remove($data); }">
-					<button type="button" class="close">×</button>
-					<span data-bind="text: description"></span>
-				</div>
-			</div>
+			@SearchHelpers.AdvancedFilters(advancedFilters)
 		</div>
 	</div>
 </div>
