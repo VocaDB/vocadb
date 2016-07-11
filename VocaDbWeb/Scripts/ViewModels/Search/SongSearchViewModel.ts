@@ -81,7 +81,7 @@ module vdb.viewModels.search {
 				this.tagIds, this.childTags,
 				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus, this.artistFilters.childVoicebanks, this.pvsOnly, this.since,
 				this.minScore,
-				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly);
+				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly, this.advancedFilters);
 
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[lang]);

@@ -21,7 +21,8 @@ module vdb.viewModels.songs {
 			private onlyRatedSongs: KnockoutObservable<boolean>,
 			private userCollectionId: number,
 			private fields: KnockoutObservable<string>,
-			private draftsOnly: KnockoutObservable<boolean>) { }
+			private draftsOnly: KnockoutObservable<boolean>,
+			private advancedFilters: KnockoutObservableArray<search.AdvancedSearchFilter>) { }
 
 		public getSongs = (
 			pvServices: string,
@@ -44,7 +45,7 @@ module vdb.viewModels.songs {
 				this.onlyRatedSongs() ? this.userCollectionId : null,
 				this.fields(),
 				this.draftsOnly() ? "Draft" : null,
-				null,
+				this.advancedFilters ? this.advancedFilters() : null,
 				(result: dc.PartialFindResultContract<dc.SongApiContract>) => {
 
 				var mapped = _.map(result.items, (song, idx) => {
