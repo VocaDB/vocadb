@@ -129,15 +129,7 @@
 			</div>
 		</div>
 
-		<!-- Artist search options -->
-		<div data-bind="visible: showArtistSearch, with: artistSearchViewModel">
-			<div class="control-group">
-				<div class="control-label">@Res.ArtistType</div>
-				<div class="controls">
-					@ArtistHelpers.ArtistTypesDropdownKnockout("artistType")
-				</div>
-			</div>
-		</div>
+		@{ Html.RenderPartial("Partials/_ArtistSearchOptions"); }
 
 		@{ Html.RenderPartial("Partials/_AlbumSearchOptions"); }
 

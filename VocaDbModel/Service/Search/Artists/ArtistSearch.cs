@@ -37,7 +37,8 @@ namespace VocaDb.Model.Service.Search.Artists {
 				.WhereHasTags(queryParams.Tags)
 				.WhereIdIs(parsedQuery.Id)
 				.WhereIsFollowedByUser(queryParams.UserFollowerId)
-				.WhereAllowBaseVoicebanks(queryParams.AllowBaseVoicebanks);
+				.WhereAllowBaseVoicebanks(queryParams.AllowBaseVoicebanks)
+				.WhereMatchFilters(queryParams.AdvancedFilters);
 
 			return query;
 

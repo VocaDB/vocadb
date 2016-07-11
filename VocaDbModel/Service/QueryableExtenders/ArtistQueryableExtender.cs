@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
@@ -194,6 +197,27 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			return query.Where(a => a.BaseVoicebank == null);
+
+		}
+
+		public static IQueryable<Artist> WhereMatchFilter(this IQueryable<Artist> query, AdvancedSearchFilter filter) {
+
+			switch (filter.FilterType) {
+				case AdvancedFilterType.VoiceProvider: {
+					var param = EnumVal<ArtistType>.ParseSafe(filter.Param, ArtistType.Unknown);
+					return param == ArtistType.Unknown ? 
+						query.Where(a => a.AllMembers.Any(m => m.LinkType == ArtistLinkType.VoiceProvider)) :
+						query.Where(a => a.AllMembers.Any(m => m.LinkType == ArtistLinkType.VoiceProvider && m.Member.ArtistType == param));
+				}
+			}
+
+			return query;
+
+		}
+
+		public static IQueryable<Artist> WhereMatchFilters(this IQueryable<Artist> query, IEnumerable<AdvancedSearchFilter> filters) {
+
+			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 
 		}
 	}

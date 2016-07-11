@@ -1,0 +1,29 @@
+﻿@using VocaDb.Model.Domain.Artists
+@using VocaDb.Model.Service.Search
+@using Res = ViewRes.Search.IndexStrings
+
+@{
+	var advancedFilters = new[] {
+		Tuple.Create("Voice provider of: Vocaloid", AdvancedFilterType.VoiceProvider, ArtistType.Vocaloid.ToString()),
+		Tuple.Create("Voice provider of: UTAU", AdvancedFilterType.VoiceProvider, ArtistType.UTAU.ToString()),
+		Tuple.Create("Voice provider of: CeVIO", AdvancedFilterType.VoiceProvider, ArtistType.CeVIO.ToString()),
+		Tuple.Create("Voice provider of: other voice synthesizer", AdvancedFilterType.VoiceProvider, ArtistType.OtherVoiceSynthesizer.ToString()),
+	};
+}
+
+<!-- Artist search options -->
+<div data-bind="visible: showArtistSearch, with: artistSearchViewModel">
+	<div class="control-group">
+		<div class="control-label">@Res.ArtistType</div>
+		<div class="controls">
+			@ArtistHelpers.ArtistTypesDropdownKnockout("artistType")
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label"></div>
+		<div class="controls">
+			@SearchHelpers.AdvancedFilters(advancedFilters)
+		</div>
+	</div>
+</div>

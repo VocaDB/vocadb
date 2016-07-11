@@ -57,7 +57,9 @@ module vdb.repositories {
 			allowBaseVoicebanks: boolean,
 			tags: number[],
 			childTags: boolean,
-			followedByUserId: number, fields: string, status: string, callback) => {
+			followedByUserId: number, fields: string, status: string,
+			advancedFilters: viewModels.search.AdvancedSearchFilter[],
+			callback) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists");
 			var data = {
@@ -68,7 +70,8 @@ module vdb.repositories {
 				tagId: tags,
 				childTags: childTags,
 				followedByUserId: followedByUserId,
-				status: status
+				status: status,
+				advancedFilters: advancedFilters
 			};
 
 			$.getJSON(url, data, callback);

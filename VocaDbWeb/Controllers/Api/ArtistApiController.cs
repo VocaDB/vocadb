@@ -16,6 +16,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Helpers;
 
@@ -135,6 +136,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="followedByUserId">Filter by user following the artists. By default there is no filtering.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
+		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -160,6 +162,7 @@ namespace VocaDb.Web.Controllers.Api {
 			bool childTags = false,
 			int? followedByUserId = null,
 			EntryStatus? status = null,
+			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			ArtistSortRule sort = ArtistSortRule.Name,
 			bool preferAccurateMatches = false,
@@ -175,7 +178,8 @@ namespace VocaDb.Web.Controllers.Api {
 				TagIds = tagId,
 				ChildTags = childTags,
 				UserFollowerId = followedByUserId ?? 0,
-				AllowBaseVoicebanks = allowBaseVoicebanks
+				AllowBaseVoicebanks = allowBaseVoicebanks,
+				AdvancedFilters = advancedFilters
 			};
 			param.Common.EntryStatus = status;
 

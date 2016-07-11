@@ -3410,6 +3410,7 @@
     <Content Include="Views\Shared\_TagPopupContent.cshtml" />
     <Content Include="Views\Search\Partials\_SongSearchOptions.cshtml" />
     <Content Include="Views\Search\Partials\_AlbumSearchOptions.cshtml" />
+    <Content Include="Views\Search\Partials\_ArtistSearchOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
