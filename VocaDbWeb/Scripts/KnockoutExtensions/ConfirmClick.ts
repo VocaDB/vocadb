@@ -15,7 +15,7 @@ ko.bindingHandlers.confirmClick = {
 		var message: string = ko.unwrap(value.message);
 		var click = value.click;
 		ko.applyBindingsToNode(element, {
-			click: () => {
+			click: function() {
 				if (confirm(message))
 					return click.apply(this, Array.prototype.slice.apply(arguments));
 			}

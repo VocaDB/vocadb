@@ -13,9 +13,7 @@ module vdb.viewModels.user {
 			initialize = true) {
 
 			this.artistSearchParams = {
-				allowCreateNew: false,
-				acceptSelection: this.selectArtist,
-				height: 300
+				acceptSelection: this.selectArtist
 			};
 
 			this.artistId.subscribe(this.updateResultsWithTotalCount);

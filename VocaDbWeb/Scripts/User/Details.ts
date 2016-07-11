@@ -8,7 +8,7 @@ function initPage(confirmDisableStr: string) {
 	$("#editUserLink").button({ icons: { primary: 'ui-icon-wrench' } });
 	$("#disableUserLink").button({ icons: { primary: 'ui-icon-close' } });
 	$("#setToLimitedLink").button({ icons: { primary: 'ui-icon-close' } });
-	$("#avatar").tooltip({ placement: "bottom" });
+	$("#avatar").tooltip(<any>{ placement: "bottom" });
 
 	$("#disableUserLink").click(function () {
 
@@ -16,7 +16,7 @@ function initPage(confirmDisableStr: string) {
 
 	});
 
-	$("#sfsCheckDialog").dialog({ autoOpen: false, model: true });
+	$("#sfsCheckDialog").dialog(<any>{ autoOpen: false, model: true });
 	$("#favoriteAlbums img").vdbAlbumToolTip();
 
 }

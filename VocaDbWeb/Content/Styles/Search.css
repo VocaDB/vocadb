@@ -8,3 +8,10 @@
     width: 340px;
   }
 }
+.search-advanced-filters-list {
+  margin-top: 5px;
+}
+.search-advanced-filters-list span {
+  line-height: 22px;
+  margin-right: 5px;
+}

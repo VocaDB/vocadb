@@ -276,6 +276,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Search/ArtistFilters.js",
 				"~/Scripts/ViewModels/Search/TagFilter.js",
 				"~/Scripts/ViewModels/Search/TagFilters.js",
+				"~/Scripts/ViewModels/Search/AdvancedSearchFilter.js",
 				"~/Scripts/ViewModels/Search/SearchViewModel.js",
 				"~/Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js",
 				"~/Scripts/ViewModels/Search/AnythingSearchViewModel.js",

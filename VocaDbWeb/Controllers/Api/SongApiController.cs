@@ -229,6 +229,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[EnumArrayBinder] ContentLanguageSelection[] lyrics = null,
 			int? userCollectionId = null,
 			EntryStatus? status = null,
+			[FromUri]  AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule sort = SongSortRule.Name,
 			bool preferAccurateMatches = false,
@@ -251,7 +252,8 @@ namespace VocaDb.Web.Controllers.Api {
 				LyricsLanguages = lyrics,
 				MinScore = minScore ?? 0,
 				PVServices = pvServices,
-				UserCollectionId = userCollectionId ?? 0
+				UserCollectionId = userCollectionId ?? 0,
+				AdvancedFilters = advancedFilters
 			};
 			param.Common.EntryStatus = status;
 
