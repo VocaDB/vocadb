@@ -28,7 +28,7 @@ module vdb.viewModels.pvs {
 			this.player = new YT.Player(this.playerElementId, {
 				width: 560,
 				height: 315,
-				events: <any>{
+				events: {
 					'onStateChange': (event: YT.EventArgs) => {
 
 						// This will still be fired once if the user disabled autoplay mode.
