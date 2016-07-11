@@ -192,9 +192,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="pvServices">Filter by one or more PV services (separated by commas). The song will pass the filter if it has a PV for any of the matched services.</param>
 		/// <param name="since">Allow only entries that have been created at most this many hours ago. By default there is no filtering.</param>
 		/// <param name="minScore">Minimum rating score. Optional.</param>
-		/// <param name="lyrics">Filter by lyrics in the specified language. By default there is no filtering.</param>
 		/// <param name="userCollectionId">Filter by user's rated songs. By default there is no filtering.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
+		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -226,10 +226,9 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] PVServices? pvServices = null,
 			int? since = null,
 			int? minScore = null,
-			[EnumArrayBinder] ContentLanguageSelection[] lyrics = null,
 			int? userCollectionId = null,
 			EntryStatus? status = null,
-			[FromUri]  AdvancedSearchFilter[] advancedFilters = null,
+			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule sort = SongSortRule.Name,
 			bool preferAccurateMatches = false,
@@ -249,7 +248,6 @@ namespace VocaDb.Web.Controllers.Api {
 				ArtistParticipationStatus = artistParticipationStatus,
 				ChildVoicebanks = childVoicebanks,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,
-				LyricsLanguages = lyrics,
 				MinScore = minScore ?? 0,
 				PVServices = pvServices,
 				UserCollectionId = userCollectionId ?? 0,
