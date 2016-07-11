@@ -11,7 +11,12 @@
 		/// <summary>
 		/// Song or album has artist with type specified by param.
 		/// </summary>
-		ArtistType,		
+		ArtistType,
+
+		/// <summary>
+		/// Artist has verified user account on VocaDB
+		/// </summary>
+		HasUserAccount,
 
 		/// <summary>
 		/// Song has lyrics in content language specified by param.
