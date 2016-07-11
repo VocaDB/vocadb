@@ -311,8 +311,11 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestCategory(TestCategories.Database)]
 		public void QueryLyrics_SingleLanguage() {
 			
-			queryParams.LyricsLanguages = ContentLanguageSelections.English.ToIndividualSelections().ToArray();
-
+			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
+				FilterType = AdvancedFilterType.Lyrics,
+				Param = string.Join(",", ContentLanguageSelections.English.ToIndividualSelections())
+			} };
+		
 			var result = CallFind();
 
 			Assert.AreEqual(1, result.TotalCount, "Total result count");
@@ -323,8 +326,11 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
 		public void QueryLyrics_AnyLanguage() {
-			
-			queryParams.LyricsLanguages = ContentLanguageSelections.All.ToIndividualSelections().ToArray();
+
+			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
+				FilterType = AdvancedFilterType.Lyrics,
+				Param = string.Join(",", ContentLanguageSelections.All.ToIndividualSelections())
+			} };
 
 			var result = CallFind();
 
