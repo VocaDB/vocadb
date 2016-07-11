@@ -49,9 +49,6 @@
   },
 	{
 		"outputFile": "Content/Styles/Search.css",
-		"inputFile": "Content/Styles/Search.less",
-		"minify": {
-			"enabled": false
-		}
+		"inputFile": "Content/Styles/Search.less"
 	}
 ]
