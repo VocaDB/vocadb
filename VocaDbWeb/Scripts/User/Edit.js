@@ -21,7 +21,7 @@ $(document).ready(function () {
 	var artistAddName = $("input#ownedArtistAddName");
 	var artistAddBtn = $("#ownedArtistAddAcceptBtn");
 
-	vdb.initEntrySearch(artistAddName, "Artist", "../../api/artists",
+	vdb.initEntrySearch(artistAddName, "../../api/artists",
 		{
 			acceptBtnElem: artistAddBtn,
 			acceptSelection: acceptArtistSelection,

@@ -29,14 +29,15 @@ ko.bindingHandlers.tagAutoComplete = {
 				valueAccessor()(item);
 			},
 			createNewItem: null,
-			createOptionFirstRow: (item) => item.name + (item.categoryName ? " (" + item.categoryName + ")" : ""),
-			createOptionSecondRow: null,
+			createOptionFirstRow: (item) => item.name,
+			createOptionSecondRow: (item) => (item.categoryName ? "(" + item.categoryName + ")" : null),
 			extraQueryParams: queryParams,
 			filter: tagFilter,
-			termParamName: 'query'
+			termParamName: 'query',
+			singleRow: true
 		};
 
-		vdb.initEntrySearch(element, "Tag", vdb.functions.mapAbsoluteUrl("/api/tags"), params);
+		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/tags"), params);
 
 	}
 }

@@ -41,7 +41,7 @@ module vdb.knockoutExtensions {
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		vdb.initEntrySearch(element, "Song", vdb.functions.mapAbsoluteUrl("/api/songs"),
+		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/songs"),
 			{
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,

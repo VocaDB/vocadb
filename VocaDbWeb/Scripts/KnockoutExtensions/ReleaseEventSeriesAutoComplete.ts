@@ -32,7 +32,7 @@ ko.bindingHandlers.releaseEventSeriesAutoComplete = {
 			termParamName: 'query'
 		};
 
-		vdb.initEntrySearch(element, "ReleaseEventSeries", vdb.functions.mapAbsoluteUrl("/api/releaseEventSeries"), params);
+		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/releaseEventSeries"), params);
 
 	}
 }

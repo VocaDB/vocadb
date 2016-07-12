@@ -52,7 +52,7 @@ module vdb.knockoutExtensions {
 			termParamName: 'query'
 		};
 
-		vdb.initEntrySearch(element, "Artist", vdb.functions.mapAbsoluteUrl("/api/artists"), params);
+		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/artists"), params);
 
 	}
 }

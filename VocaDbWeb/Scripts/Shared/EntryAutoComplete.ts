@@ -25,6 +25,8 @@
 		// term: query term
 		onQuery?: (queryParams: any, term: string) => void;
 
+		singleRow?: boolean;
+
 		termParamName?: string;
 
 	}
@@ -43,7 +45,7 @@
 
 	}
 
-	export function initEntrySearch<TContract extends vdb.dataContracts.EntryWithTagUsagesContract>(nameBoxElem: HTMLElement, entityName: string, searchUrl: string, params: EntryAutoCompleteParams<TContract>) {
+	export function initEntrySearch<TContract extends vdb.dataContracts.EntryWithTagUsagesContract>(nameBoxElem: HTMLElement, searchUrl: string, params: EntryAutoCompleteParams<TContract>) {
 
 		if (!params)
 			throw Error("params cannot be null");
@@ -77,8 +79,13 @@
 			if (createOptionFirstRow && createOptionSecondRow) {
 				firstRow = createOptionFirstRow(data);
 				var secondRow = createOptionSecondRow(data);
-				if (firstRow)
-					html = "<a><div>" + bold(firstRow, term) + "</div><div><small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";
+				if (firstRow) {
+					if (params.singleRow) {
+						html = "<a><div>" + bold(firstRow, term) + " <small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";																	
+					} else {
+						html = "<a><div>" + bold(firstRow, term) + "</div><div><small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";											
+					}
+				}
 			} else if (createOptionFirstRow) {
 				firstRow = createOptionFirstRow(data);
 				if (firstRow)
