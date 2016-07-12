@@ -20,6 +20,10 @@ namespace VocaDb.Web.Code {
 
 		public static string RequestUrlScheme => WebHelper.IsSSL(Request) ? "https" : "http";
 
+		public static IHtmlString ToJS(bool val) {
+			return new HtmlString(val ? "true" : "false");
+		}
+
 		public static IHtmlString ToJS(string str) {
 			return new HtmlString(JsonHelpers.Serialize(str));
 		}

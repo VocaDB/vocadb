@@ -7,6 +7,8 @@ namespace vdb.viewModels.search {
 
 		filterType: string;
 
+		negate?: boolean;
+
 		param: string;
 
 	}

@@ -4,12 +4,14 @@
 
 @{
 	var advancedFilters = new[] {
-		Tuple.Create("Voice provider of: any voicebank", AdvancedFilterType.VoiceProvider, string.Empty),
-		Tuple.Create("Voice provider of: Vocaloid", AdvancedFilterType.VoiceProvider, ArtistType.Vocaloid.ToString()),
-		Tuple.Create("Voice provider of: UTAU", AdvancedFilterType.VoiceProvider, ArtistType.UTAU.ToString()),
-		Tuple.Create("Voice provider of: CeVIO", AdvancedFilterType.VoiceProvider, ArtistType.CeVIO.ToString()),
-		Tuple.Create("Voice provider of: other voice synthesizer", AdvancedFilterType.VoiceProvider, ArtistType.OtherVoiceSynthesizer.ToString()),
-		Tuple.Create("User account on VocaDB", AdvancedFilterType.HasUserAccount, string.Empty)
+		SearchHelpers.Filter("Voice provider of: any voicebank", AdvancedFilterType.VoiceProvider),
+		SearchHelpers.Filter("Voice provider of: Vocaloid", AdvancedFilterType.VoiceProvider, ArtistType.Vocaloid.ToString()),
+		SearchHelpers.Filter("Voice provider of: UTAU", AdvancedFilterType.VoiceProvider, ArtistType.UTAU.ToString()),
+		SearchHelpers.Filter("Voice provider of: CeVIO", AdvancedFilterType.VoiceProvider, ArtistType.CeVIO.ToString()),
+		SearchHelpers.Filter("Voice provider of: other voice synthesizer", AdvancedFilterType.VoiceProvider, ArtistType.OtherVoiceSynthesizer.ToString()),
+		SearchHelpers.Filter("Root voicebank (no parent)", AdvancedFilterType.RootVoicebank),
+		SearchHelpers.Filter("Derived voicebank", AdvancedFilterType.RootVoicebank, negate: true),
+		SearchHelpers.Filter("User account on VocaDB", AdvancedFilterType.HasUserAccount)
 	};
 }
 

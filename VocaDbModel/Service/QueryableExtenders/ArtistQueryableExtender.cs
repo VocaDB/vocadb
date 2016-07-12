@@ -4,6 +4,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
@@ -205,6 +206,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			switch (filter.FilterType) {
 				case AdvancedFilterType.HasUserAccount: {
 					return query.Where(a => a.OwnerUsers.Any());
+				}
+				case AdvancedFilterType.RootVoicebank: {
+					return filter.Negate ? query.Where(a => a.BaseVoicebank != null) : query.Where(a => ArtistHelper.VoiceSynthesizerTypes.Contains(a.ArtistType) && a.BaseVoicebank == null);
 				}
 				case AdvancedFilterType.VoiceProvider: {
 					var param = EnumVal<ArtistType>.ParseSafe(filter.Param, ArtistType.Unknown);

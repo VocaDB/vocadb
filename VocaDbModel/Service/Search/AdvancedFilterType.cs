@@ -8,30 +8,40 @@
 
 		Nothing,
 
+		// Common
+
 		/// <summary>
 		/// Song or album has artist with type specified by param.
 		/// </summary>
 		ArtistType,
+
+		// Artist
 
 		/// <summary>
 		/// Artist has verified user account on VocaDB
 		/// </summary>
 		HasUserAccount,
 
+		RootVoicebank,
+
 		/// <summary>
-		/// Song has lyrics in content language specified by param.
+		/// Artist is voice provider of a voicebank whose type is specified by param.
 		/// </summary>
-		Lyrics,
+		VoiceProvider,
+
+		// Album
 
 		/// <summary>
 		/// Album with no cover picture
 		/// </summary>
 		NoCoverPicture,
 
+		// Song
+
 		/// <summary>
-		/// Artist is voice provider of a voicebank whose type is specified by param.
+		/// Song has lyrics in content language specified by param.
 		/// </summary>
-		VoiceProvider
+		Lyrics,
 
 	}
 

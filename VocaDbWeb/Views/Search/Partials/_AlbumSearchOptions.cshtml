@@ -5,11 +5,11 @@
 
 @{
 	var advancedFilters = new[] {
-		Tuple.Create("Artist type: Vocaloid", AdvancedFilterType.ArtistType, ArtistType.Vocaloid.ToString()),
-		Tuple.Create("Artist type: UTAU", AdvancedFilterType.ArtistType, ArtistType.UTAU.ToString()),
-		Tuple.Create("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
-		Tuple.Create("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
-		Tuple.Create("No cover picture", AdvancedFilterType.NoCoverPicture, string.Empty),
+		SearchHelpers.Filter("Artist type: Vocaloid", AdvancedFilterType.ArtistType, ArtistType.Vocaloid.ToString()),
+		SearchHelpers.Filter("Artist type: UTAU", AdvancedFilterType.ArtistType, ArtistType.UTAU.ToString()),
+		SearchHelpers.Filter("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
+		SearchHelpers.Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
+		SearchHelpers.Filter("No cover picture", AdvancedFilterType.NoCoverPicture),
 	};
 }
 

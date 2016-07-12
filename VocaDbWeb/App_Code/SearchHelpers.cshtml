@@ -1,15 +1,21 @@
 ﻿@using VocaDb.Model.Service.Search
 @inherits VocaDb.Web.Code.HelperPage
 	
-@helper AdvancedFilter(string description, AdvancedFilterType filterType, string param) {
+@functions {
+	public static Tuple<string, AdvancedFilterType, string, bool> Filter(string description, AdvancedFilterType filterType, string param = "", bool negate = false) {
+		return Tuple.Create(description, filterType, param, negate);
+	}
+}
+
+@helper AdvancedFilter(string description, AdvancedFilterType filterType, string param, bool negate) {
 	<li data-bind="visible: !hasAdvancedFilter('@filterType.ToString()', '@param')">
-		<a href="#" data-bind="click: function() { addAdvancedFilter('@filterType.ToString()', '@param', '@description'); }">
+		<a href="#" data-bind="click: function() { addAdvancedFilter('@filterType.ToString()', '@param', '@description', @ToJS(negate)); }">
 			@description
 		</a>
 	</li>
 }
 
-@helper AdvancedFilters(IEnumerable<Tuple<string, AdvancedFilterType, string>> filters) {
+@helper AdvancedFilters(IEnumerable<Tuple<string, AdvancedFilterType, string, bool>> filters) {
 	<div class="btn-group">
 		<button class="btn dropdown-toggle" data-toggle="dropdown">
 			Advanced filters
@@ -17,7 +23,7 @@
 		</button>
 		<ul class="dropdown-menu">
 			@foreach (var filter in filters) {
-				@AdvancedFilter(filter.Item1, filter.Item2, filter.Item3)
+				@AdvancedFilter(filter.Item1, filter.Item2, filter.Item3, filter.Item4)
 			}
 		</ul>
 	</div>

@@ -149,11 +149,6 @@
 			<div class="controls">
 				
 				<div data-bind="visible: showArtistSearch, with: artistSearchViewModel">
-					<label class="checkbox" data-bind="visible: canHaveChildVoicebanks">
-						<input type="checkbox" data-bind="checked: onlyRootVoicebanks" />
-						Only voicebanks with no parents
-					</label>
-
 					<label class="checkbox" data-bind="visible: loggedUserId">
 						<input type="checkbox" data-bind="checked: onlyFollowedByMe" />
 						@Res.OnlyMyFollowedArtists

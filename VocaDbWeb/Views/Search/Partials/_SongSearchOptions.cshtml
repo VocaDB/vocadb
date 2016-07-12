@@ -6,14 +6,14 @@
 
 @{
 	var advancedFilters = new[] {
-		Tuple.Create("Artist type: Vocaloid", AdvancedFilterType.ArtistType, ArtistType.Vocaloid.ToString()),
-		Tuple.Create("Artist type: UTAU", AdvancedFilterType.ArtistType, ArtistType.UTAU.ToString()),
-		Tuple.Create("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
-		Tuple.Create("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
-		Tuple.Create("Lyrics: Any language", AdvancedFilterType.Lyrics, "Japanese,Romaji,English"),
-		Tuple.Create("Lyrics: Non-English", AdvancedFilterType.Lyrics, ContentLanguageSelection.Japanese.ToString()),
-		Tuple.Create("Lyrics: Romanized", AdvancedFilterType.Lyrics, ContentLanguageSelection.Romaji.ToString()),
-		Tuple.Create("Lyrics: English", AdvancedFilterType.Lyrics, ContentLanguageSelection.English.ToString())
+		SearchHelpers.Filter("Artist type: Vocaloid", AdvancedFilterType.ArtistType, ArtistType.Vocaloid.ToString()),
+		SearchHelpers.Filter("Artist type: UTAU", AdvancedFilterType.ArtistType, ArtistType.UTAU.ToString()),
+		SearchHelpers.Filter("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
+		SearchHelpers.Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
+		SearchHelpers.Filter("Lyrics: Any language", AdvancedFilterType.Lyrics, "Japanese,Romaji,English"),
+		SearchHelpers.Filter("Lyrics: Non-English", AdvancedFilterType.Lyrics, ContentLanguageSelection.Japanese.ToString()),
+		SearchHelpers.Filter("Lyrics: Romanized", AdvancedFilterType.Lyrics, ContentLanguageSelection.Romaji.ToString()),
+		SearchHelpers.Filter("Lyrics: English", AdvancedFilterType.Lyrics, ContentLanguageSelection.English.ToString())
 	};
 }
 

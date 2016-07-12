@@ -95,6 +95,10 @@ namespace VocaDb.Model.Helpers {
 			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite
 		};
 
+		public static readonly ArtistType[] VoiceSynthesizerTypes = {
+			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer
+		};
+
 		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistWithSupport> artists, bool isAnimation) {
 
 			return new ArtistStringFactory().GetArtistString(artists, isAnimation);

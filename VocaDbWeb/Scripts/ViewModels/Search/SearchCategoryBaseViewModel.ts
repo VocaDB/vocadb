@@ -44,8 +44,8 @@ module vdb.viewModels.search {
 
 		}
 
-		public addAdvancedFilter = (filter: string, param: string, description: string) => {
-			this.advancedFilters.push({ filterType: filter, param: param, description: description });
+		public addAdvancedFilter = (filter: string, param: string, description: string, negate?: boolean) => {
+			this.advancedFilters.push({ filterType: filter, param: param, description: description, negate: negate });
 		}
 
 		public advancedFilters = ko.observableArray<AdvancedSearchFilter>();
