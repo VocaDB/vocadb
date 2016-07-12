@@ -12,12 +12,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		public static IQueryable<TEntry> WhereArtistHasType<TEntry, TArtistLink>(this IQueryable<TEntry> query, ArtistType artistType)
 			where TEntry : IEntryWithArtists<TArtistLink>
-			where TArtistLink : IArtistLink {
+			where TArtistLink : IArtistWithSupport {
 
 			if (artistType == ArtistType.Unknown)
 				return query;
 
-			return query.Where(s => s.AllArtists.Any(a => a.Artist.ArtistType == artistType));
+			return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == artistType));
 
 		}
 
