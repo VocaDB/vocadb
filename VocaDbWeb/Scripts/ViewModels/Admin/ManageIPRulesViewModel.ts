@@ -10,7 +10,7 @@ module vdb.viewModels {
 			if (!this.newAddress())
 				return;
 
-            this.rules.push(new IPRule({ address: this.newAddress(), notes: "", created: new Date() }));
+            this.rules.unshift(new IPRule({ address: this.newAddress(), notes: "", created: new Date() }));
 			this.newAddress("");
 
         }
@@ -32,7 +32,8 @@ module vdb.viewModels {
 
         constructor(data: IPRuleContract[]) {
 
-            this.rules = ko.observableArray(_.map(data, (item) => new IPRule(item)));
+			var rules = _.chain(data).sortBy('created').reverse().map(r => new IPRule(r)).value();
+            this.rules = ko.observableArray(rules);
 
             $.getJSON(vdb.functions.mapAbsoluteUrl("/Admin/BannedIPs"), null, (result: string[]) => {
                 this.bannedIPs(result);
@@ -64,8 +65,6 @@ module vdb.viewModels {
 
         created: Date;
 
-        createdFormatted: string;
-
         id: number;
 
         notes: KnockoutObservable<string>;
@@ -74,10 +73,6 @@ module vdb.viewModels {
 
             this.address = ko.observable(data.address);
             this.created = data.created;
-
-            if (data.created)
-                this.createdFormatted = data.created.toDateString() + " " + this.padStr(data.created.getHours()) + ":" + this.padStr(data.created.getMinutes());
-
             this.id = data.id;
             this.notes = ko.observable(data.notes);
 
