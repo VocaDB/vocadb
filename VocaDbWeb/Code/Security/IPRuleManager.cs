@@ -21,11 +21,7 @@ namespace VocaDb.Web.Code.Security {
 		/// <summary>
 		/// Temporarily banned IPs. These are persisted in memory and are cleared on application restart.
 		/// </summary>
-		public HostCollection TempBannedIPs {
-			get {
-				return tempBannedIPs;
-			}
-		}
+		public HostCollection TempBannedIPs => tempBannedIPs;
 
 		public bool IsAllowed(string hostAddress) {
 

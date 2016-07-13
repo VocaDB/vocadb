@@ -283,13 +283,9 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-        //
-        // POST: /Session/Create
-
         [HttpPost]
 		[RestrictBannedIP]
-		public ActionResult Login(LoginModel model)
-        {
+		public ActionResult Login(LoginModel model) {
 
 			if (ModelState.IsValid) {
 
@@ -533,6 +529,7 @@ namespace VocaDb.Web.Controllers
 				return View(model);
 
 			if (!ipRuleManager.IsAllowed(Hostname)) {
+				log.Warn("Restricting blocked IP {0}.", Hostname);
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
 			}
