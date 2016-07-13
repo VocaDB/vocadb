@@ -11,16 +11,18 @@
 <form id="manageRules" data-bind="submit: save, show" class="js-cloak">
     
 	@Helpers.SaveBtn()
+	
+	<button class="btn" data-bind="click: deleteOldRules">Delete rules older than 1 year</button>
     
-	<table>
-		<tr>
-			<td colspan="2">New address</td>
-		</tr>
-		<tr>
-			<td><input type="text" maxlength="40" data-bind="textInput: newAddress" /></td>
-			<td><a href="#" class="textLink addLink" data-bind="click: add">@ViewRes.SharedStrings.Add</a></td>
-		</tr>
-	</table>
+	<div class="editor-label">
+		<label>
+			New address
+		</label>
+	</div>
+	<div class="editor-field">
+		<input type="text" maxlength="40" data-bind="textInput: newAddress" />
+		<a href="#" class="textLink addLink" data-bind="click: add">@ViewRes.SharedStrings.Add</a>
+	</div>
 
 	<table>
 		<thead>

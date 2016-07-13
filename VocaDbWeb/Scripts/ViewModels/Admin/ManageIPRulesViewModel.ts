@@ -17,6 +17,15 @@ module vdb.viewModels {
 
         public bannedIPs = ko.observableArray<string>();
 
+		public deleteOldRules = () => {
+
+			var cutOff = moment().subtract(1, "years").toDate();
+
+			var toBeRemoved = _.filter(this.rules(), r => r.created < cutOff);
+			this.rules.removeAll(toBeRemoved);
+
+		}
+
         public newAddress = ko.observable("");
 
         public remove = (rule: IPRule) => {
