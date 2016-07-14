@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.DataContracts.Songs {
 
@@ -15,7 +16,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongDetailsContract() {}
 
 		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
-			SongListBaseContract[] pools, int changedLyricsTagId) {
+			SongListBaseContract[] pools, ISpecialTags specialTags) {
 
 			Song = new SongContract(song, languagePreference);
 
@@ -27,7 +28,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
-			LyricsFromParents = song.GetLyricsFromParents(changedLyricsTagId).Select(l => new LyricsForSongContract(l)).ToArray();
+			LyricsFromParents = song.GetLyricsFromParents(specialTags).Select(l => new LyricsForSongContract(l)).ToArray();
 			Notes = song.Notes;
 			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? 
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);

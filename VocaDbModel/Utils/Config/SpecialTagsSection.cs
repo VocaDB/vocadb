@@ -3,7 +3,7 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Utils.Config {
 
-	public class SpecialTagsSection : ConfigurationSection {
+	public class SpecialTagsSection : ConfigurationSection, ISpecialTags {
 
 		private int TagId(string name) {
 			return this.Properties.Contains(name) ? (int)this[name] : 0;
@@ -45,6 +45,11 @@ namespace VocaDb.Model.Utils.Config {
 
 		}
 
+	}
+
+	public interface ISpecialTags {
+		int ChangedLyrics { get; }
+		int Instrumental { get; }
 	}
 
 }

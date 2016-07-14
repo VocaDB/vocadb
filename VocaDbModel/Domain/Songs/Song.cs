@@ -17,6 +17,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -248,10 +249,23 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <summary>
 		/// Lyrics for this song, either from the song entry itself, or its original version.
 		/// </summary>
-		public virtual IList<LyricsForSong> GetLyricsFromParents(int changedLyricsTagId) {
+		/// <param name="specialTags">Special tags. Can be null, which will cause no lyrics to be inherited.</param>
+		/// <param name="allowInstrumental">
+		/// Whether to allow inheriting lyrics for instrumental songs.
+		/// This is mostly the case when the instrumental version is in the middle, for example original -> instrumental -> cover (with lyrics)
+		/// </param>
+		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, bool allowInstrumental = false) {
 
-			if (SongType != SongType.Instrumental && HasOriginalVersion && !Lyrics.Any() && OriginalVersion.Lyrics.Any() && !Tags.HasTag(changedLyricsTagId))
-				return OriginalVersion.Lyrics;
+			if (specialTags != null 
+				&& (allowInstrumental || SongType != SongType.Instrumental)
+				&& HasOriginalVersion 
+				&& !Lyrics.Any()
+				&& !Tags.HasTag(specialTags.ChangedLyrics)
+				&& (allowInstrumental || !Tags.HasTag(specialTags.Instrumental))) {
+
+				return OriginalVersion.GetLyricsFromParents(specialTags, true);
+
+			}
 
 			return Lyrics;
 
