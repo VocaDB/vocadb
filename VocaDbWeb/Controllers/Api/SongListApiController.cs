@@ -144,6 +144,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
 		/// <param name="artistId">Filter by artist Id.</param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
+		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -161,6 +162,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] int[] tagId = null,
 			[FromUri] int[] artistId = null,
 			bool childVoicebanks = false,
+			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -179,7 +181,8 @@ namespace VocaDb.Web.Controllers.Api {
 					ArtistIds = artistId,
 					ChildVoicebanks = childVoicebanks,
 					TagIds = tagId,
-					SortRule = sort
+					SortRule = sort,
+					AdvancedFilters = advancedFilters
 				}, 
 				songInList => new SongInListForApiContract(songInList, lang, fields));
 

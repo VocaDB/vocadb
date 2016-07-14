@@ -5,6 +5,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 	public class SongListQueryParams {
 
+		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+
 		public int[] ArtistIds { get; set; }
 
 		public bool ChildVoicebanks { get; set; }

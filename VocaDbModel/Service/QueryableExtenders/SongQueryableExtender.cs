@@ -341,6 +341,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		public static IQueryable<Song> WhereMatchFilter(this IQueryable<Song> query, AdvancedSearchFilter filter) {
 
+			if (filter == null)
+				return query;
+
 			switch (filter.FilterType) {
 				case AdvancedFilterType.ArtistType: {
 					var param = EnumVal<ArtistType>.Parse(filter.Param);

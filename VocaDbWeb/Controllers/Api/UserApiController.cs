@@ -324,6 +324,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="songListId">Filter songs by song list (optional).</param>
 		/// <param name="groupByRating">Group results by rating so that highest rated are first.</param>
 		/// <param name="pvServices">Filter by one or more PV services (separated by commas). The song will pass the filter if it has a PV for any of the matched services.</param>
+		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -346,6 +347,7 @@ namespace VocaDb.Web.Controllers.Api {
 			int? songListId = null,
 			bool groupByRating = true,
 			[FromUri] PVServices? pvServices = null,
+			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			RatedSongForUserSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto, 
@@ -365,7 +367,8 @@ namespace VocaDb.Web.Controllers.Api {
 				PVServices = pvServices,
 				SonglistId = songListId ?? 0,
 				TagIds = tagId,
-                TagName = tagName
+                TagName = tagName,
+				AdvancedFilters = advancedFilters
 			};
 
 			var songs = queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));

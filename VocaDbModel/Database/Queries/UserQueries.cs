@@ -834,7 +834,8 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereSongIsInList(queryParams.SonglistId)
 					.WhereSongHasTags(queryParams.TagIds)
 					.WhereSongHasTag(queryParams.TagName)
-					.WhereSongHasPVService(queryParams.PVServices);
+					.WhereSongHasPVService(queryParams.PVServices)
+					.WhereMatchFilters(queryParams.AdvancedFilters);
 
 				var queryWithSort = q;
 

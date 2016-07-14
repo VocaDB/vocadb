@@ -67,7 +67,8 @@ namespace VocaDb.Model.Database.Queries {
 				.WhereChildHasName(queryParams.TextQuery)
 				.WhereSongHasPVService(queryParams.PVServices)
 				.WhereSongHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks)
-				.WhereSongHasTags(queryParams.TagIds);
+				.WhereSongHasTags(queryParams.TagIds)
+				.WhereMatchFilters(queryParams.AdvancedFilters);
 
 			IQueryable<SongInList> resultQ = q.OrderBy(queryParams.SortRule, PermissionContext.LanguagePreference);
 			resultQ = resultQ.Paged(queryParams.Paging);

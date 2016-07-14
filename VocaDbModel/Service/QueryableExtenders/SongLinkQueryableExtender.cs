@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
@@ -68,6 +70,39 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<T> WhereSongHasArtistWithType<T>(this IQueryable<T> query, ArtistType artistType)
+			where T : ISongLink {
+
+			if (artistType == ArtistType.Unknown)
+				return query;
+
+			return query.Where(s => s.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == artistType));
+
+		}
+
+		public static IQueryable<T> WhereSongHasLyrics<T>(this IQueryable<T> query, ContentLanguageSelection[] languages)
+			where T : ISongLink {
+
+			if (languages == null || !languages.Any())
+				return query;
+
+			if (languages.Length == 1) {
+				var lang = languages.First();
+				return query.Where(s => s.Song.Lyrics.Any(l => l.Language == lang));
+			} else {
+
+				var allLanguages = EnumVal<ContentLanguageSelection>.Values.All(languages.Contains);
+
+				if (allLanguages) {
+					// Has lyrics in any language
+					return query.Where(s => s.Song.Lyrics.Any());
+				} else {
+					return query.Where(s => s.Song.Lyrics.Any(l => languages.Contains(l.Language)));
+				}
+
+			}
+
+		}
 		public static IQueryable<T> WhereSongIsInList<T>(this IQueryable<T> query, int listId)
 			where T : ISongLink {
 			
@@ -123,6 +158,34 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			return tagIds.Aggregate(query, WhereSongHasTag);
+
+		}
+
+		public static IQueryable<T> WhereMatchFilter<T>(this IQueryable<T> query, AdvancedSearchFilter filter)
+			where T : ISongLink {
+
+			if (filter == null)
+				return query;
+
+			switch (filter.FilterType) {
+				case AdvancedFilterType.ArtistType: {
+					var param = EnumVal<ArtistType>.Parse(filter.Param);
+					return WhereSongHasArtistWithType(query, param);
+				}
+				case AdvancedFilterType.Lyrics: {
+					var param = EnumVal<ContentLanguageSelection>.ParseMultiple(filter.Param);
+					return WhereSongHasLyrics(query, param);
+				}
+			}
+
+			return query;
+
+		}
+
+		public static IQueryable<T> WhereMatchFilters<T>(this IQueryable<T> query, IEnumerable<AdvancedSearchFilter> filters)
+			where T : ISongLink {
+
+			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 
 		}
 

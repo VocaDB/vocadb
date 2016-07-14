@@ -24,6 +24,8 @@ namespace VocaDb.Model.Service.Search.User {
 
 		}
 
+		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+
 		public int[] ArtistIds { get; set; }
 
 		public bool ChildVoicebanks { get; set; }
