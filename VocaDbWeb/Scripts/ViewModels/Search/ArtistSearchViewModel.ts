@@ -17,7 +17,7 @@ module vdb.viewModels.search {
 			if (artistType)
 				this.artistType(artistType);
 
-			this.advancedFilters.subscribe(this.updateResultsWithTotalCount);
+			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.artistType.subscribe(this.updateResultsWithTotalCount);
 			this.onlyFollowedByMe.subscribe(this.updateResultsWithTotalCount);
@@ -30,7 +30,7 @@ module vdb.viewModels.search {
 					!this.onlyRootVoicebanks(),
 					tags, childTags,
 					this.onlyFollowedByMe() ? this.loggedUserId : null,
-					this.fields(), status, this.advancedFilters(),
+					this.fields(), status, this.advancedFilters.filters(),
 					callback);
 
 			}

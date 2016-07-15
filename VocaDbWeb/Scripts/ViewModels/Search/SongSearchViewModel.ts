@@ -62,7 +62,7 @@ module vdb.viewModels.search {
 			this.since = ko.observable(since);
 			this.viewMode = ko.observable(viewMode || "Details");
 
-			this.advancedFilters.subscribe(this.updateResultsWithTotalCount);
+			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
@@ -81,7 +81,7 @@ module vdb.viewModels.search {
 				this.tagIds, this.childTags,
 				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus, this.artistFilters.childVoicebanks, this.pvsOnly, this.since,
 				this.minScore,
-				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly, this.advancedFilters);
+				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly, this.advancedFilters.filters);
 
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[lang]);
@@ -107,7 +107,7 @@ module vdb.viewModels.search {
 						this.onlyRatedSongs() ? this.loggedUserId : null,
 						this.fields(),
 						status,
-						this.advancedFilters(),
+						this.advancedFilters.filters(),
 						result => {
 
 							_.each(result.items, (song: ISongSearchItem) => {

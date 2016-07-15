@@ -8,8 +8,8 @@
 }
 
 @helper AdvancedFilter(string description, AdvancedFilterType filterType, string param, bool negate) {
-	<li data-bind="visible: !hasAdvancedFilter('@filterType.ToString()', '@param')">
-		<a href="#" data-bind="click: function() { addAdvancedFilter('@filterType.ToString()', '@param', '@description', @ToJS(negate)); }">
+	<li data-bind="visible: !advancedFilters.hasFilter('@filterType.ToString()', '@param')">
+		<a href="#" data-bind="click: function() { advancedFilters.add('@filterType.ToString()', '@param', '@description', @ToJS(negate)); }">
 			@description
 		</a>
 	</li>
@@ -27,8 +27,8 @@
 			}
 		</ul>
 	</div>
-	<div data-bind="foreach: advancedFilters" class="search-advanced-filters-list">
-		<div class="label label-info" data-bind="click: function() { $parent.advancedFilters.remove($data); }">
+	<div data-bind="foreach: advancedFilters.filters" class="search-advanced-filters-list">
+		<div class="label label-info" data-bind="click: function() { $parent.advancedFilters.filters.remove($data); }">
 			<button type="button" class="close">×</button>
 			<span data-bind="text: description"></span>
 		</div>

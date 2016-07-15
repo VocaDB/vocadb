@@ -2914,6 +2914,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\ReleaseEvent\ReleaseEventSeriesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ReportEntryViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AdvancedSearchFilter.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\AdvancedSearchFilters.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AlbumSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\AnythingSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistFilter.ts" />

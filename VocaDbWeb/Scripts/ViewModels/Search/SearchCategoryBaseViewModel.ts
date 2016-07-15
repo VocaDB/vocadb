@@ -44,20 +44,11 @@ module vdb.viewModels.search {
 
 		}
 
-		public addAdvancedFilter = (filter: string, param: string, description: string, negate?: boolean) => {
-			this.advancedFilters.push({ filterType: filter, param: param, description: description, negate: negate });
-		}
-
-		public advancedFilters = ko.observableArray<AdvancedSearchFilter>();
+		public advancedFilters = new AdvancedSearchFilters();
 
 		public childTags = ko.observable(false);
 
 		public draftsOnly: KnockoutObservable<boolean>;
-
-		public hasAdvancedFilter = (filterType: string, param: string) => {
-			var result = _.some(this.advancedFilters(), f => f.filterType === filterType && f.param === param);
-			return result;
-		}
 
 		// Method for loading a page of results.
 		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tags: number[],
