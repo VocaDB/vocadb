@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Web.Helpers
 @using Resources
+@using VocaDb.Model.Service.Search
 @using SharedRes = ViewRes.SharedStrings
 @using SearchRes = ViewRes.Search.IndexStrings
 @using Res = ViewRes.User.RatedSongsStrings
@@ -80,7 +81,13 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<div class="control-group">
+		<div class="control-label"></div>
+		<div class="controls">
+			@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.SongFilters)
+		</div>
+	</div>
 </div>
 
 <div data-bind="visible: true" style="display: none;">

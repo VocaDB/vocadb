@@ -1,12 +1,6 @@
 ﻿@using VocaDb.Model.Service.Search
 @inherits VocaDb.Web.Code.HelperPage
 	
-@functions {
-	public static Tuple<string, AdvancedFilterType, string, bool> Filter(string description, AdvancedFilterType filterType, string param = "", bool negate = false) {
-		return Tuple.Create(description, filterType, param, negate);
-	}
-}
-
 @helper AdvancedFilter(string description, AdvancedFilterType filterType, string param, bool negate) {
 	<li data-bind="visible: !advancedFilters.hasFilter('@filterType.ToString()', '@param')">
 		<a href="#" data-bind="click: function() { advancedFilters.add('@filterType.ToString()', '@param', '@description', @ToJS(negate)); }">

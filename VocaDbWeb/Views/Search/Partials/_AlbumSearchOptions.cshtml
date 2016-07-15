@@ -1,17 +1,6 @@
 ﻿@using Resources
-@using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Service.Search
 @using Res = ViewRes.Search.IndexStrings
-
-@{
-	var advancedFilters = new[] {
-		SearchHelpers.Filter("Artist type: Vocaloid", AdvancedFilterType.ArtistType, ArtistType.Vocaloid.ToString()),
-		SearchHelpers.Filter("Artist type: UTAU", AdvancedFilterType.ArtistType, ArtistType.UTAU.ToString()),
-		SearchHelpers.Filter("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
-		SearchHelpers.Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
-		SearchHelpers.Filter("No cover picture", AdvancedFilterType.NoCoverPicture),
-	};
-}
 
 <!-- Album search options -->
 <div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
@@ -32,7 +21,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@SearchHelpers.AdvancedFilters(advancedFilters)
+			@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.AlbumFilters)
 		</div>
 	</div>
 </div>

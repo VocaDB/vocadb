@@ -35,6 +35,7 @@ module vdb.viewModels.user {
 
 			this.tagFilters = new viewModels.search.TagFilters(tagRepo, languageSelection);
 
+			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
 			this.groupByRating.subscribe(this.updateResultsWithoutTotalCount);
@@ -51,7 +52,7 @@ module vdb.viewModels.user {
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForRatedSongsAdapter(userRepo, loggedUserId, this.searchTerm, this.sort,
 				this.tagFilters.tagIds, this.artistFilters.artistIds, this.artistFilters.childVoicebanks,
-				this.rating, this.songListId, this.groupByRating, ko.observable("AdditionalNames,ThumbUrl"));
+				this.rating, this.songListId, this.advancedFilters.filters, this.groupByRating, ko.observable("AdditionalNames,ThumbUrl"));
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[languageSelection]);
 
@@ -60,6 +61,7 @@ module vdb.viewModels.user {
 
 		}
 
+		public advancedFilters = new viewModels.search.AdvancedSearchFilters;
 		public artistFilters: viewModels.search.ArtistFilters;
 		public groupByRating = ko.observable(true);
 		public isInit = false;
@@ -134,7 +136,9 @@ module vdb.viewModels.user {
 				this.tagFilters.tagIds(),
 				this.artistFilters.artistIds(),
 				this.artistFilters.childVoicebanks(),
-				this.rating(), this.songListId(),
+				this.rating(),
+				this.songListId(),
+				this.advancedFilters.filters(),
 				this.groupByRating(),
 				null,
 				this.fields(),

@@ -1,21 +1,6 @@
 ﻿@using Resources
-@using VocaDb.Model.Domain.Artists
-@using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Service.Search
 @using Res = ViewRes.Search.IndexStrings;
-
-@{
-	var advancedFilters = new[] {
-		SearchHelpers.Filter("Artist type: Vocaloid", AdvancedFilterType.ArtistType, ArtistType.Vocaloid.ToString()),
-		SearchHelpers.Filter("Artist type: UTAU", AdvancedFilterType.ArtistType, ArtistType.UTAU.ToString()),
-		SearchHelpers.Filter("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
-		SearchHelpers.Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
-		SearchHelpers.Filter("Lyrics: Any language", AdvancedFilterType.Lyrics, "Japanese,Romaji,English"),
-		SearchHelpers.Filter("Lyrics: Non-English", AdvancedFilterType.Lyrics, ContentLanguageSelection.Japanese.ToString()),
-		SearchHelpers.Filter("Lyrics: Romanized", AdvancedFilterType.Lyrics, ContentLanguageSelection.Romaji.ToString()),
-		SearchHelpers.Filter("Lyrics: English", AdvancedFilterType.Lyrics, ContentLanguageSelection.English.ToString())
-	};
-}
 
 <!-- Song search options -->
 <div data-bind="visible: showSongSearch, with: songSearchViewModel">
@@ -59,7 +44,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@SearchHelpers.AdvancedFilters(advancedFilters)
+			@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.SongFilters)
 		</div>
 	</div>
 </div>

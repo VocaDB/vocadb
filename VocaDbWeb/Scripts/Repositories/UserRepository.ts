@@ -140,6 +140,7 @@ module vdb.repositories {
 			childVoicebanks: boolean,
 			rating: string,
 			songListId: number,
+			advancedFilters: viewModels.search.AdvancedSearchFilter[],
 			groupByRating: boolean,
 			pvServices: string,
 			fields: string,
@@ -152,7 +153,9 @@ module vdb.repositories {
 				query: query, tagId: tagIds,
 				artistId: artistIds,
 				childVoicebanks: childVoicebanks,
-				rating: rating, songListId: songListId,
+				rating: rating,
+				songListId: songListId,
+				advancedFilters: advancedFilters,
 				groupByRating: groupByRating,
 				pvServices: pvServices,
 				fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort

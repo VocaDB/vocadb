@@ -15,6 +15,7 @@ module vdb.viewModels.songs {
 			private childVoicebanks: KnockoutObservable<boolean>,
 			private rating: KnockoutObservable<string>,
 			private songListId: KnockoutObservable<number>,
+			private advancedFilters: KnockoutObservableArray<vdb.viewModels.search.AdvancedSearchFilter>,
 			private groupByRating: KnockoutObservable<boolean>,
 			private fields: KnockoutObservable<string>) { }
 
@@ -32,6 +33,7 @@ module vdb.viewModels.songs {
 				this.childVoicebanks(),
 				this.rating(),
 				this.songListId(),
+				this.advancedFilters(),
 				this.groupByRating(),
 				pvServices,
 				"ThumbUrl",

@@ -1,19 +1,5 @@
-﻿@using VocaDb.Model.Domain.Artists
-@using VocaDb.Model.Service.Search
+﻿@using VocaDb.Model.Service.Search
 @using Res = ViewRes.Search.IndexStrings
-
-@{
-	var advancedFilters = new[] {
-		SearchHelpers.Filter("Voice provider of: any voicebank", AdvancedFilterType.VoiceProvider),
-		SearchHelpers.Filter("Voice provider of: Vocaloid", AdvancedFilterType.VoiceProvider, ArtistType.Vocaloid.ToString()),
-		SearchHelpers.Filter("Voice provider of: UTAU", AdvancedFilterType.VoiceProvider, ArtistType.UTAU.ToString()),
-		SearchHelpers.Filter("Voice provider of: CeVIO", AdvancedFilterType.VoiceProvider, ArtistType.CeVIO.ToString()),
-		SearchHelpers.Filter("Voice provider of: other voice synthesizer", AdvancedFilterType.VoiceProvider, ArtistType.OtherVoiceSynthesizer.ToString()),
-		SearchHelpers.Filter("Root voicebank (no base)", AdvancedFilterType.RootVoicebank),
-		SearchHelpers.Filter("Derived voicebank", AdvancedFilterType.RootVoicebank, negate: true),
-		SearchHelpers.Filter("User account on VocaDB", AdvancedFilterType.HasUserAccount)
-	};
-}
 
 <!-- Artist search options -->
 <div data-bind="visible: showArtistSearch, with: artistSearchViewModel">
@@ -27,7 +13,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@SearchHelpers.AdvancedFilters(advancedFilters)
+			@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.ArtistFilters)
 		</div>
 	</div>
 </div>

@@ -452,6 +452,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
+				"~/Scripts/ViewModels/Search/AdvancedSearchFilter.js",
+				"~/Scripts/ViewModels/Search/AdvancedSearchFilters.js",
 				"~/Scripts/ViewModels/Search/ArtistFilter.js",
 				"~/Scripts/ViewModels/Search/ArtistFilters.js",
 				"~/Scripts/ViewModels/Search/TagFilter.js",
