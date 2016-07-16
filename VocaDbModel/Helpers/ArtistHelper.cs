@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Utils;
@@ -71,6 +72,10 @@ namespace VocaDb.Model.Helpers {
 			ArtistType.Utaite, ArtistType.Band, ArtistType.Unknown
 		};
 
+		public static readonly ArtistType[] GroupTypes = {
+			ArtistType.Label, ArtistType.Circle, ArtistType.OtherGroup, ArtistType.Band
+		};
+
 		/// <summary>
 		/// List of roles that can be assigned to artist added to songs and albums.
 		/// The list should be in the correct order.
@@ -98,6 +103,19 @@ namespace VocaDb.Model.Helpers {
 		public static readonly ArtistType[] VoiceSynthesizerTypes = {
 			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer
 		};
+
+		public static bool CanHaveRelatedArtists(ArtistType artistType, ArtistLinkType linkType, LinkDirection direction) {
+
+			if (artistType == ArtistType.Unknown)
+				return true;
+
+			if (linkType == ArtistLinkType.Group) {
+				return direction == LinkDirection.ManyToOne || GroupTypes.Contains(artistType);
+			}
+
+			return direction == LinkDirection.ManyToOne ? VocalistTypes.Contains(artistType) : !VocalistTypes.Contains(artistType);
+
+		}
 
 		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistWithSupport> artists, bool isAnimation) {
 

@@ -122,11 +122,20 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
-		public virtual IEnumerable<Artist> ArtistLinksOfType(ArtistLinkType linkType, LinkDirection direction) {
+		public virtual IEnumerable<Artist> ArtistLinksOfType(ArtistLinkType linkType, LinkDirection direction, bool allowInheritance = false) {
 
-			return (direction == LinkDirection.ManyToOne ? Groups : Members)
+			if (!ArtistHelper.CanHaveRelatedArtists(ArtistType, linkType, direction))
+				return Enumerable.Empty<Artist>();
+
+			var result = (direction == LinkDirection.ManyToOne ? Groups : Members)
 				.Where(g => g.LinkType == linkType)
 				.Select(g => g.GetArtist(direction));
+
+			// ReSharper disable PossibleMultipleEnumeration
+			return allowInheritance && BaseVoicebank != null && !result.Any()
+				? BaseVoicebank.ArtistLinksOfType(linkType, direction, true) 
+				: result;
+			// ReSharper restore PossibleMultipleEnumeration
 
 		}
 
