@@ -50,9 +50,11 @@ namespace VocaDb.Model.Service.Queries {
 				.GroupBy(f => f.Song.Id)
 				.Select(f => new {
 					SongId = f.Key,
-					Ratings = f.Sum(r => (int)r.Rating)
+					Ratings = f.Sum(r => (int)r.Rating),
+					SongScore = f.Sum(r => r.Song.RatingScore)
 				})
 				.OrderByDescending(f => f.Ratings)
+				.ThenByDescending(f => f.SongScore)
 				.Select(s => s.SongId)
 				.Take(count)
 				.ToArray();
