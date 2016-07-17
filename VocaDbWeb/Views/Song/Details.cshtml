@@ -329,10 +329,10 @@
 		</table>
 		
 		@if (Model.Suggestions.Any()) {
-			<h3 class="withMargin">Users who liked this also liked</h3>
+			<h3 class="withMargin">@Res.SuggestionsTitle</h3>
 			@SongHelpers.SongGrid(Model.Suggestions, 2, true, true)
 			<p>
-				<a href="#" id="viewRelatedLink">See more related songs</a>
+				<a href="#" id="viewRelatedLink">@Res.SeeRelatedSongs</a>
 			</p>
 		}
 

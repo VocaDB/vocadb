@@ -270,4 +270,10 @@
   <data name="TrackOnAlbumDisc" xml:space="preserve">
     <value>Track #{0} on disc {1} on album {2}</value>
   </data>
+  <data name="SeeRelatedSongs" xml:space="preserve">
+    <value>See more related songs</value>
+  </data>
+  <data name="SuggestionsTitle" xml:space="preserve">
+    <value>Users who liked this also liked</value>
+  </data>
 </root>
