@@ -64,8 +64,9 @@ namespace VocaDb.Model.Service.Queries {
 			}
 
 			if (fields.HasFlag(SongRelationsFields.LikeMatches) && song.RatingScore > 0) {
-				
-				var userIds = song.UserFavorites.Select(u => u.User.Id).ToArray();
+
+				// N users who rated this song the highest
+				var userIds = song.UserFavorites.OrderByDescending(r => r.Rating).Take(20).Select(u => u.User.Id).ToArray();
 				var likeMatches = ctx.OfType<FavoriteSongForUser>()
 					.Query()
 					.Where(f => 
