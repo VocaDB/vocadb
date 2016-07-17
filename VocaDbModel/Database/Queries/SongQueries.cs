@@ -151,10 +151,8 @@ namespace VocaDb.Model.Database.Queries {
 			var cacheKey = string.Format("GetSongSuggestions.{0}", song.Id);
 
 			var songIds = cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () => {
-
-				var related = new RelatedSongsQuery(ctx).GetRelatedSongs(song, SongRelationsFields.LikeMatches, 4);
-				return related.LikeMatches.Select(s => s.Id).ToArray();
-
+				var related = new RelatedSongsQuery(ctx).GetLikeMatches(song, new[] { song.Id }, 4);
+				return related;
 			});
 
 			if (!songIds.Any())

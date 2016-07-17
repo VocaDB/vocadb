@@ -28,6 +28,34 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
+		public int[] GetLikeMatches(Song song, IList<int> ignoreIds, int count) {
+
+			if (song.RatingScore <= 0) {
+				return new int[0];
+			}
+
+			// N users who rated this song the highest
+			var userIds = song.UserFavorites
+				.OrderByDescending(r => r.Rating)
+				.Take(20)
+				.Select(u => u.User.Id)
+				.ToArray();
+
+			return ctx.OfType<FavoriteSongForUser>()
+				.Query()
+				.Where(f =>
+					userIds.Contains(f.User.Id)
+					&& !ignoreIds.Contains(f.Song.Id)
+					&& !f.Song.Deleted)
+				.GroupBy(f => f.Song.Id)
+				.Select(f => new { SongId = f.Key, Ratings = f.Sum(r => (int)r.Rating) })
+				.OrderByDescending(f => f.Ratings)
+				.Select(s => s.SongId)
+				.Take(count)
+				.ToArray();
+
+		}
+
 		public RelatedSongs GetRelatedSongs(Song song, SongRelationsFields fields = SongRelationsFields.All, int count = 12) {
 
 			ParamIs.NotNull(() => song);
@@ -65,20 +93,7 @@ namespace VocaDb.Model.Service.Queries {
 
 			if (fields.HasFlag(SongRelationsFields.LikeMatches) && song.RatingScore > 0) {
 
-				// N users who rated this song the highest
-				var userIds = song.UserFavorites.OrderByDescending(r => r.Rating).Take(20).Select(u => u.User.Id).ToArray();
-				var likeMatches = ctx.OfType<FavoriteSongForUser>()
-					.Query()
-					.Where(f => 
-						userIds.Contains(f.User.Id) 
-						&& !loadedSongs.Contains(f.Song.Id)
-						&& !f.Song.Deleted)
-					.GroupBy(f => f.Song.Id)
-					.Select(f => new { SongId = f.Key, Ratings = f.Sum(r => (int)r.Rating) })
-					.OrderByDescending(f => f.Ratings)
-					.Select(s => s.SongId)
-					.Take(count)
-					.ToArray();
+				var likeMatches = GetLikeMatches(song, loadedSongs, count);
 
 				songs.LikeMatches = ctx.Query().Where(s => likeMatches.Contains(s.Id)).ToArray();
 				loadedSongs.AddRange(likeMatches);
