@@ -10,6 +10,11 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 		$("#tabs").tabs("option", "active", index);
 		return false;
 	});
+	$("#viewRelatedLink").click(function () {
+		var index = $('#tabs ul [data-tab="Related"]').index();
+		$("#tabs").tabs("option", "active", index);
+		return false;
+	});
 
 	$("#tabs").tabs({
 		load: function (event, ui) {

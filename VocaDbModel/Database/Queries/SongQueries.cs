@@ -146,6 +146,26 @@ namespace VocaDb.Model.Database.Queries {
 			return session.Query<SongMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
+		private Song[] GetSongSuggestions(IDatabaseContext<Song> ctx, Song song) {
+
+			var cacheKey = string.Format("GetSongSuggestions.{0}", song.Id);
+
+			var songIds = cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () => {
+
+				var related = new RelatedSongsQuery(ctx).GetRelatedSongs(song, SongRelationsFields.LikeMatches, 4);
+				return related.LikeMatches.Select(s => s.Id).ToArray();
+
+			});
+
+			if (!songIds.Any())
+				return new Song[0];
+
+			return ctx.Query()
+				.Where(s => songIds.Contains(s.Id))
+				.ToArray();
+
+		}
+
 		private SongListBaseContract[] GetSongPools(IDatabaseContext<Song> ctx, int songId) {
 
 			var cacheKey = string.Format("GetSongPools.{0}", songId);
@@ -387,6 +407,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
 				contract.Hits = session.Query<SongHit>().Count(h => h.Song.Id == songId);
 				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
+				contract.Suggestions = GetSongSuggestions(session, song).Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 
 				if (albumId != 0) {
 

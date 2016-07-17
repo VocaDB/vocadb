@@ -105,7 +105,9 @@
 		<li data-tab="Discussion">
 			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
 		</li>
-		<li><a href="@Url.Action("Related", "Song", new { id = Model.Id })">@R.DetailsStrings.RelatedSongs</a></li>
+		<li data-tab="Related">
+			<a href="@Url.Action("Related", "Song", new { id = Model.Id })">@R.DetailsStrings.RelatedSongs</a>
+		</li>
 		<li><a href="#shareTab">@R.DetailsStrings.Share</a></li>
 	</ul>
 
@@ -326,6 +328,14 @@
 
 		</table>
 		
+		@if (Model.Suggestions.Any()) {
+			<h3 class="withMargin">Users who liked this also liked</h3>
+			@SongHelpers.SongGrid(Model.Suggestions, 2, true, true)
+			<p>
+				<a href="#" id="viewRelatedLink">See more related songs</a>
+			</p>
+		}
+
 		@CommentHelpers.LatestCommentsKnockout()
 		
 		<p>

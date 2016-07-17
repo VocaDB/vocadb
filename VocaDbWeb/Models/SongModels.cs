@@ -60,6 +60,7 @@ namespace VocaDb.Web.Models {
 			RatingScore = contract.Song.RatingScore;
 			SongType = contract.Song.SongType;
 			Status = contract.Song.Status;
+			Suggestions = contract.Suggestions;
 			Tags = contract.Tags;
 			UserRating = contract.UserRating;
 			WebLinks = contract.WebLinks.ToList();
@@ -185,6 +186,8 @@ namespace VocaDb.Web.Models {
 		public SongType SongType { get; set; }
 
 		public EntryStatus Status { get; set; }
+
+		public SongForApiContract[] Suggestions { get; set; }
 
 		public TagUsageForApiContract[] Tags { get; set; }
 

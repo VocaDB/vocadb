@@ -123,6 +123,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongContract Song { get; set; }
 
 		[DataMember]
+		public SongForApiContract[] Suggestions { get; set; }
+
+		[DataMember]
 		public TagUsageForApiContract[] Tags { get; set; }
 
 		[DataMember]
