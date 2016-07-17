@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Web.Mvc;
 using NHibernate;
 using VocaDb.Model.DataContracts.Songs;
@@ -69,6 +70,21 @@ namespace VocaDb.Web.Controllers
 				return new EmptyResult();
 
 			return PartialView("Partials/_SFSCheckResponse", result);
+
+		}
+
+		[Authorize]
+		public ActionResult ClearCaches() {
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			var cache = MemoryCache.Default;
+
+			foreach (var item in cache) {
+				cache.Remove(item.Key);
+			}
+
+			return RedirectToAction("Index");
 
 		}
 

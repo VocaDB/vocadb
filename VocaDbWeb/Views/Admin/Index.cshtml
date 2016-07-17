@@ -34,42 +34,48 @@
 @if (UserContext.HasPermission(PermissionToken.Admin)) {
 <h3>Database maintenance tasks</h3>
 <p>
-@Html.ActionLink("Cleanup old log entries", "CleanupOldLogEntries")
-</p>
-<p>
-@Html.ActionLink("Missing thumbs", "CreateMissingThumbs")
+	@Html.ActionLink("Create XML dump", "CreateXmlDump")
 </p>	
 <p>
-@Html.ActionLink("Create XML dump", "CreateXmlDump")
-</p>	
-<p>
-@Html.ActionLink("Refresh NHibernate cache", "RefreshDbCache")
+	@Html.ActionLink("Refresh NHibernate 2nd level cache", "RefreshDbCache")
 </p>
 <p>
-@Html.ActionLink("Generate image thumbnails", "GeneratePictureThumbs")
+	@Html.ActionLink("Refresh .NET memory cache", "ClearCaches")
 </p>
-<p>
-@Html.ActionLink("Update entry sort names", "UpdateAdditionalNames")
-</p>
-<p>
-@Html.ActionLink("Update NicoIDs", "UpdateNicoIds")
-</p>
-<p>
-@Html.ActionLink("Update all artist strings", "UpdateArtistStrings")
-</p>
-<p>
-@Html.ActionLink("Update album ratings", "UpdateAlbumRatingTotals")
-</p>
-<p>
-@Html.ActionLink("Update link categories", "UpdateLinkCategories")
-</p>    
-<p>
-@Html.ActionLink("Update PV Icons", "UpdatePVIcons")
-</p>
-<p>
-@Html.ActionLink("Update favorited song counts", "UpdateSongFavoritedTimes")
-</p>
-<p>
-@Html.ActionLink("Update tag vote counts", "UpdateTagVoteCounts")
-</p>	
-}
+
+@*
+	<p>
+		@Html.ActionLink("Cleanup old log entries", "CleanupOldLogEntries")
+	</p>
+	<p>
+		@Html.ActionLink("Missing thumbs", "CreateMissingThumbs")
+	</p>
+	<p>
+	@Html.ActionLink("Generate image thumbnails", "GeneratePictureThumbs")
+	</p>
+	<p>
+	@Html.ActionLink("Update entry sort names", "UpdateAdditionalNames")
+	</p>
+	<p>
+	@Html.ActionLink("Update NicoIDs", "UpdateNicoIds")
+	</p>
+	<p>
+	@Html.ActionLink("Update all artist strings", "UpdateArtistStrings")
+	</p>
+	<p>
+	@Html.ActionLink("Update album ratings", "UpdateAlbumRatingTotals")
+	</p>
+	<p>
+	@Html.ActionLink("Update link categories", "UpdateLinkCategories")
+	</p>
+	<p>
+	@Html.ActionLink("Update PV Icons", "UpdatePVIcons")
+	</p>
+	<p>
+	@Html.ActionLink("Update favorited song counts", "UpdateSongFavoritedTimes")
+	</p>
+	<p>
+	@Html.ActionLink("Update tag vote counts", "UpdateTagVoteCounts")
+	</p>
+	}
+*@
