@@ -41,14 +41,17 @@ namespace VocaDb.Model.Service.Queries {
 				.Select(u => u.User.Id)
 				.ToArray();
 
-			return ctx.OfType<FavoriteSongForUser>()
-				.Query()
+			return ctx
+				.Query<FavoriteSongForUser>()
 				.Where(f =>
 					userIds.Contains(f.User.Id)
 					&& !ignoreIds.Contains(f.Song.Id)
 					&& !f.Song.Deleted)
 				.GroupBy(f => f.Song.Id)
-				.Select(f => new { SongId = f.Key, Ratings = f.Sum(r => (int)r.Rating) })
+				.Select(f => new {
+					SongId = f.Key,
+					Ratings = f.Sum(r => (int)r.Rating)
+				})
 				.OrderByDescending(f => f.Ratings)
 				.Select(s => s.SongId)
 				.Take(count)
