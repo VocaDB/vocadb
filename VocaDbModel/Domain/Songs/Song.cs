@@ -250,21 +250,39 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Whether to allow inheriting lyrics for instrumental songs.
 		/// This is mostly the case when the instrumental version is in the middle, for example original -> instrumental -> cover (with lyrics)
 		/// </param>
-		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, bool allowInstrumental = false) {
+		/// <param name="levels">Current level of traversing the parent chain.</param>
+		private IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, bool allowInstrumental, int levels) {
+
+			int maxLevels = 10;
 
 			if (specialTags != null 
 				&& (allowInstrumental || SongType != SongType.Instrumental)
 				&& HasOriginalVersion 
-				//&& !OriginalVersion.Deleted
+				&& !OriginalVersion.Deleted
 				&& !Lyrics.Any()
 				&& !Tags.HasTag(specialTags.ChangedLyrics)
-				&& (allowInstrumental || !Tags.HasTag(specialTags.Instrumental))) {
+				&& (allowInstrumental || !Tags.HasTag(specialTags.Instrumental))
+				&& levels < maxLevels) {
 
-				return OriginalVersion.GetLyricsFromParents(specialTags, true);
+				return OriginalVersion.GetLyricsFromParents(specialTags, true, levels + 1);
 
 			}
 
 			return Lyrics;
+
+		}
+
+		/// <summary>
+		/// Lyrics for this song, either from the song entry itself, or its original version.
+		/// </summary>
+		/// <param name="specialTags">Special tags. Can be null, which will cause no lyrics to be inherited.</param>
+		/// <param name="allowInstrumental">
+		/// Whether to allow inheriting lyrics for instrumental songs.
+		/// This is mostly the case when the instrumental version is in the middle, for example original -> instrumental -> cover (with lyrics)
+		/// </param>
+		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags) {
+
+			return GetLyricsFromParents(specialTags, false, 0);
 
 		}
 

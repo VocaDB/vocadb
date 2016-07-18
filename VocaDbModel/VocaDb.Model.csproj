@@ -531,6 +531,7 @@
     <Compile Include="Helpers\LocalizedStringHelper.cs" />
     <Compile Include="Helpers\NameHelper.cs" />
     <Compile Include="EmbeddedResources\EmbeddedResourceHelper.cs" />
+    <Compile Include="Helpers\OtherHelper.cs" />
     <Compile Include="Helpers\PrimitiveParseHelper.cs" />
     <Compile Include="Helpers\ReCaptcha2.cs" />
     <Compile Include="Helpers\SongHelper.cs" />
