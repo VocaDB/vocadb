@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CaptchaInvalid" xml:space="preserve">
     <value>CAPTCHA ist ungültig.</value>
@@ -157,7 +157,7 @@
     <value>Benutzername wird benötigt.</value>
   </data>
   <data name="UsernameNote" xml:space="preserve">
-    <value>Der Benutzername muss aus mindestens 3 Zeichen bestehen und darf nur das englische Alphabet, Zahlen und Unterstriche enthalten. Das Passwort muss aus mindestens 5 Zeichen bestehen.</value>
+    <value>Der Benutzername muss aus mindestens 3 Zeichen bestehen und darf nur das englische Alphabet, Zahlen und Unterstriche enthalten. Das Passwort muss aus mindestens {0} Zeichen bestehen.</value>
   </data>
   <data name="UsernameTaken" xml:space="preserve">
     <value>Der Benutzername existiert bereits.</value>

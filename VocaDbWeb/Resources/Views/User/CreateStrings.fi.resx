@@ -157,7 +157,7 @@
     <value>Käyttäjätunnus on pakollinen.</value>
   </data>
   <data name="UsernameNote" xml:space="preserve">
-    <value>Käyttäjätunnuksen on oltava vähintään 3 merkkiä pitkä ja se saa sisältää vain aakkosia A-Z, numeroita ja alaviivoja. Salasanan on oltava vähintään 5 merkkiä.</value>
+    <value>Käyttäjätunnuksen on oltava vähintään 3 merkkiä pitkä ja se saa sisältää vain aakkosia A-Z, numeroita ja alaviivoja. Salasanan on oltava vähintään {0} merkkiä.</value>
   </data>
   <data name="UsernameTaken" xml:space="preserve">
     <value>Käyttäjätunnus on jo varattu.</value>

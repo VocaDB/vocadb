@@ -163,7 +163,7 @@
     <value>Username is required.</value>
   </data>
   <data name="UsernameNote" xml:space="preserve">
-    <value>Username needs to be at least 3 characters, and may contain only English alphabet, numbers and underscores. Password needs to be at least 5 characters.</value>
+    <value>Username needs to be at least 3 characters, and may contain only English alphabet, numbers and underscores. Password needs to be at least {0} characters.</value>
   </data>
   <data name="UsernameTaken" xml:space="preserve">
     <value>Username is already taken.</value>

@@ -50,7 +50,7 @@ namespace VocaDb.Web.Models {
 		[Required(ErrorMessageResourceType = typeof(ViewRes.User.CreateStrings), ErrorMessageResourceName = "PasswordIsRequired")]
 		[DataType(DataType.Password)]
 		[Display(ResourceType = typeof(ViewRes.User.CreateStrings), Name = "Password")]
-		[StringLength(100, MinimumLength = 5)]
+		[StringLength(100, MinimumLength = 8)]
 		public string Password { get; set; }
 
 	}

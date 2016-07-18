@@ -196,7 +196,7 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username needs to be at least 3 characters, and may contain only English alphabet, numbers and underscores. Password needs to be at least 5 characters..
+        ///   Looks up a localized string similar to Username needs to be at least 3 characters, and may contain only English alphabet, numbers and underscores. Password needs to be at least {0} characters..
         /// </summary>
         public static string UsernameNote {
             get {

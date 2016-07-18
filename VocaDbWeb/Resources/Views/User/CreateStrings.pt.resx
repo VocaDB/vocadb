@@ -160,7 +160,7 @@
     <value>Utilizador é obrigatório.</value>
   </data>
   <data name="UsernameNote" xml:space="preserve">
-    <value>Utilizador precisa de ter pelo menos 3 caractéres, e só pode conter o alfabeto inglês, números e underscores. Password precisa de pelo menos 5 caractéres.</value>
+    <value>Utilizador precisa de ter pelo menos 3 caractéres, e só pode conter o alfabeto inglês, números e underscores. Password precisa de pelo menos {0} caractéres.</value>
   </data>
   <data name="UsernameTaken" xml:space="preserve">
     <value>Este utilizador já existe.</value>

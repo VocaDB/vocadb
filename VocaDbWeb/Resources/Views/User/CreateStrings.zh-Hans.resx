@@ -163,7 +163,7 @@
     <value>Username is required.</value>
   </data>
   <data name="UsernameNote" xml:space="preserve">
-    <value>用户名必须至少3个字符，只能包含英文字母、数字和下划线。密码必须至少5个字符。</value>
+    <value>用户名必须至少3个字符，只能包含英文字母、数字和下划线。密码必须至少{0}个字符。</value>
   </data>
   <data name="UsernameTaken" xml:space="preserve">
     <value>Username is already taken.</value>
