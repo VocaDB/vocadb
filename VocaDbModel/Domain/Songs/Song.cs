@@ -212,11 +212,7 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Tests whether this song has an original version specified.
 		/// This method also tests that the song type isn't "Original", because original songs aren't supposed to have parent songs.
 		/// </summary>
-		public virtual bool HasOriginalVersion {
-			get {
-				return SongType != SongType.Original && OriginalVersion != null;
-			}
-		}
+		public virtual bool HasOriginalVersion => SongType != SongType.Original && OriginalVersion != null;
 
 		public virtual IList<SongHit> Hits {
 			get { return hits; }
@@ -259,6 +255,7 @@ namespace VocaDb.Model.Domain.Songs {
 			if (specialTags != null 
 				&& (allowInstrumental || SongType != SongType.Instrumental)
 				&& HasOriginalVersion 
+				//&& !OriginalVersion.Deleted
 				&& !Lyrics.Any()
 				&& !Tags.HasTag(specialTags.ChangedLyrics)
 				&& (allowInstrumental || !Tags.HasTag(specialTags.Instrumental))) {
