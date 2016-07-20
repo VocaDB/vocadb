@@ -44,13 +44,7 @@ namespace VocaDb.Web.Code {
 
 			if (config == null || config.BigBanners == null) {
 
-				BigBanners = new [] {
-					new Link("UtaiteDB", "http://utaitedb.net", "utaitedb.png"), 
-					new Link("Project DIVA wiki", "http://projectdiva.wikispaces.com/", "pjd-wiki.png"),
-					new Link("Mikufan.com", "http://www.mikufan.com", "mikufan_bannertest.png"),
-					new Link("Vocaloidism", "http://vocaloidism.com", "vocaloidism-180px.png"),			
-					new Link("Vocallective", "http://www.vocallective.net", "vocallective.png"),			
-				};
+				BigBanners = new Link[0];
 
 			} else {
 				
@@ -61,9 +55,14 @@ namespace VocaDb.Web.Code {
 			if (config == null || config.SmallBanners == null) {
 
 				SmallBanners = new[] {
-					new Link("VocaloidOtaku", "http://vocaloidotaku.net", "vo_small.png"),
+					new Link("UtaiteDB", "http://utaitedb.net", "utaitedb_small.png"),
+					new Link("Mikufan.com", "http://www.mikufan.com", "mikufan_small.png"),
+					new Link("Project DIVA wiki", "http://projectdiva.wikispaces.com/", "pjd-wiki_small.png"),
 					new Link("r/vocaloid", "http://www.reddit.com/r/vocaloid", "rvocaloid_small2.png"),
+					new Link("Vocallective", "http://www.vocallective.net", "vocallective_small.jpg"),
 					new Link("Vocaloid News Network", "https://www.vocaloidnews.net/", "vnn.png"),
+					new Link("VocaloidOtaku", "http://vocaloidotaku.net", "vo_small.png"),
+					new Link("Vocaloidism", "http://vocaloidism.com", "vocaloidism_small.png"),
 				};
 
 			} else {
