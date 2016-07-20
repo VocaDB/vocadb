@@ -1,4 +1,5 @@
 ﻿using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.SongSearch {
@@ -23,6 +24,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// Song sort rule. If null, Order field will be used.
 		/// </summary>
 		public SongSortRule? SortRule { get; set; }
+
+		public SongType[] SongTypes { get; set; }
 
 		public int[] TagIds { get; set; }
 

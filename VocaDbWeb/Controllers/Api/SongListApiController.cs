@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.SongImport;
@@ -140,6 +141,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="listId">ID of the song list.</param>
 		/// <param name="query">Song name query (optional).</param>
+		/// <param name="songTypes">
+		/// Filtered song types (optional). 
+		/// </param>
 		/// <param name="pvServices">Filter by one or more PV services (separated by commas). The song will pass the filter if it has a PV for any of the matched services.</param>
 		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
 		/// <param name="artistId">Filter by artist Id.</param>
@@ -157,7 +161,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Page of songs.</returns>
 		[Route("{listId:int}/songs")]
 		public PartialFindResult<SongInListForApiContract> GetSongs(int listId,
-			string query = "", 
+			string query = "",
+			string songTypes = null,
 			[FromUri] PVServices? pvServices = null,
 			[FromUri] int[] tagId = null,
 			[FromUri] int[] artistId = null,
@@ -171,6 +176,7 @@ namespace VocaDb.Web.Controllers.Api {
 			) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
+			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			return queries.GetSongsInList(
 				new SongListQueryParams {
@@ -182,7 +188,8 @@ namespace VocaDb.Web.Controllers.Api {
 					ChildVoicebanks = childVoicebanks,
 					TagIds = tagId,
 					SortRule = sort,
-					AdvancedFilters = advancedFilters
+					AdvancedFilters = advancedFilters,
+					SongTypes = types
 				}, 
 				songInList => new SongInListForApiContract(songInList, lang, fields));
 

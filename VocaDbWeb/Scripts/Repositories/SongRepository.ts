@@ -69,9 +69,11 @@ module vdb.repositories {
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);         
 		}
 
-		public getList = (paging: dc.PagingProperties, lang: string, query: string,
-			sort: string, songTypes: string,
-			tags: number[],
+		public getList = (paging: dc.PagingProperties, lang: string,
+			query: string,
+			sort: string,
+			songTypes: string,
+			tagIds: number[],
 			childTags: boolean,
 			artistIds: number[],
 			artistParticipationStatus: string,
@@ -91,7 +93,7 @@ module vdb.repositories {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
 				songTypes: songTypes,
-				tagId: tags,
+				tagId: tagIds,
 				childTags: childTags,
 				artistId: artistIds,
 				artistParticipationStatus: artistParticipationStatus,

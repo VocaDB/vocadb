@@ -1,12 +1,14 @@
 ﻿@using System.Web.Optimization
+@using Resources
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Service.Search
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.SongList.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
-		   
+
 @{
-	
+
 	if (!Model.IsFeatured) {
 		ViewBag.Parents = new[] {
 			Html.ActionLink(Model.SongList.Author.Name, "Details", "User", new {id = Model.SongList.Author.Id}, null)
@@ -15,73 +17,34 @@
 		var categoryName = Translate.SongListFeaturedCategoryNames[Model.SongList.FeaturedCategory];
 		ViewBag.Parents = new[] {
 			Html.ActionLink(categoryName, "Featured", "SongList")
-		};		
+		};
 	}
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.SongList.Description);
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.SongList.Description);
 
 	PageProperties.Description = descriptionStripped;
-	
+
 	var url = PageProperties.CanonicalUrl;
-	
+
 }
 
 @section Head {
 	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
-	<link rel="canonical" href="@url" />	
+	<link rel="canonical" href="@url" />
 }
 
-@section Toolbar {	
-@if (Model.SongList.CanEdit) {
-	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
-	@:
-	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
-	@:
+@section Toolbar {
+	@if (Model.SongList.CanEdit) {
+		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
+		@:
+		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
+		@:
 }
-@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
-@if (Model.IsFeatured) {
-	@Helpers.EntryStatusMessage(Model.SongList.Status)
-}
-}
-
-@section BodyScripts {
-<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
-<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
-@Scripts.Render("~/bundles/SongList/Details")
-<script type="text/javascript">
-
-	$(document).ready(function () {
-
-		$("#editListLink").button({ icons: { primary: 'ui-icon-wrench' } });
-		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
-		$("#export").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
-
-		var languageSelection = '@LanguagePreferenceInt';
-		var listId = @Model.SongList.Id;
-
-		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
-		var userRepo = repoFactory.userRepository();
-		var songRepo = repoFactory.songRepository();
-		var songListRepo = repoFactory.songListRepository();
-		var resourceRepo = repoFactory.resourceRepository();
-		var defaultSortRuleName = @ToJS(Res.DefaultSortRule);
-		var cultureCode = '@UICulture';
-		var pvPlayerElem = $("#pv-player-wrapper")[0];
-		var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
-		var latestComments = @ToJS(Model.SongList.LatestComments);
-		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-
-		var vm = new vdb.viewModels.songList.SongListViewModel(urlMapper, songListRepo, songRepo, userRepo, 
-			resourceRepo, defaultSortRuleName, latestComments, @UserContext.LoggedUserId, languageSelection, cultureCode, listId, pvPlayersFactory,
-			canDeleteAllComments);
-		ko.applyBindings(vm);
-
-	});
-
-</script>
+	@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
+	@if (Model.IsFeatured) {
+		@Helpers.EntryStatusMessage(Model.SongList.Status)
+	}
 }
 
 @if (Model.IsFeatured && Model.SongList.Status == EntryStatus.Draft) {
@@ -91,8 +54,8 @@
 <div class="media">
 	@if (!string.IsNullOrEmpty(Model.SmallThumbUrl)) {
 		<a class="pull-left" href="@Model.ThumbUrl">
-			<img class="media-object" src="@Model.SmallThumbUrl" alt="Thumb" />				
-		</a>		
+			<img class="media-object" src="@Model.SmallThumbUrl" alt="Thumb" />
+		</a>
 	}
 	<div class="media-body">
 		@if (Model.SongList.EventDate.HasValue) {
@@ -104,7 +67,7 @@
 	</div>
 </div>
 
-<div class="clearfix">
+<div class="clearfix well well-transparent">
 	<div class="btn-group songlist-mode-selection pull-left">
 		<a data-bind="click: function() { playlistMode(false); }, css: { active: playlistMode() == false }" class="btn" href="#">
 			<i class="icon-th-list noMargin"></i>
@@ -127,6 +90,41 @@
 	<div class="pull-left songlist-text-query">
 		<i class="icon-search"></i>
 		<input type="text" data-bind="textInput: query" placeholder="@ViewRes.SharedStrings.Search" maxlength="200" />
+	</div>
+	&nbsp;
+	<button class="btn" data-bind="click: function() { showAdvancedFilters(!showAdvancedFilters()); }, css: { active: showAdvancedFilters }">
+		More filters
+		<span class="caret"></span>
+	</button>
+
+	<div class="form-horizontal withMargin" data-bind="visible: showAdvancedFilters" style="display: none;">
+		<div class="control-group">
+			<div class="control-label">Song type</div>
+			<div class="controls">
+				@SongHelpers.SongTypesDropdownKnockout("songType")
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="control-label">@EntryTypeNames.Artist</div>
+			<div class="controls" data-bind="with: artistFilters">
+				@KnockoutHelpers.ArtistFilters(artistParticipationStatus: true)
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<div class="control-label">Tag</div>
+			<div class="controls">
+				@KnockoutHelpers.TagFilters()
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="control-label"></div>
+			<div class="controls">
+				@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.SongFilters)
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -156,10 +154,10 @@
 							@Res.Preview
 						</a>
 					</div>
-					
+
 					<span data-bind="text: order"></span>.
 					<a data-bind="text: song.name, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
-					
+
 					<span data-bind="visible: notes">
 						(<span data-bind="text: notes"></span>)
 					</span>
@@ -170,7 +168,7 @@
 					<!-- /ko -->
 
 					@KnockoutHelpers.DraftIcon("status")
-					
+
 					<br />
 					<small class="extraInfo" data-bind="text: song.artistString"></small>
 
@@ -185,7 +183,7 @@
 						<!-- ko foreach: song.tags -->
 						<a href="#" data-bind="text: tag.name, attr: { href: $parents[1].mapTagUrl($data), title: tag.additionalNames }"></a><span data-bind="visible: $data != _.last($parent.song.tags)">,</span>
 						<!-- /ko -->
-					</div>					
+					</div>
 				</td>
 				<!-- /ko -->
 			</tr>
@@ -205,3 +203,43 @@
 </div>
 
 @CommentHelpers.LatestCommentsKnockout()
+
+@section BodyScripts {
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+	@Scripts.Render("~/bundles/SongList/Details")
+	<script type="text/javascript">
+
+		$(function () {
+
+			$("#editListLink").button({ icons: { primary: 'ui-icon-wrench' } });
+			$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+			$("#export").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+
+			var languageSelection = '@LanguagePreferenceInt';
+			var listId = @Model.SongList.Id;
+
+			var rootPath = '@RootPath';
+			var urlMapper = new vdb.UrlMapper(rootPath);
+			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
+			var userRepo = repoFactory.userRepository();
+			var songRepo = repoFactory.songRepository();
+			var artistRepo = repoFactory.artistRepository();
+			var songListRepo = repoFactory.songListRepository();
+			var resourceRepo = repoFactory.resourceRepository();
+			var defaultSortRuleName = @ToJS(Res.DefaultSortRule);
+			var cultureCode = '@UICulture';
+			var pvPlayerElem = $("#pv-player-wrapper")[0];
+			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
+			var latestComments = @ToJS(Model.SongList.LatestComments);
+			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+
+			var vm = new vdb.viewModels.songList.SongListViewModel(urlMapper, songListRepo, songRepo, userRepo, artistRepo,
+				resourceRepo, defaultSortRuleName, latestComments, @UserContext.LoggedUserId, languageSelection, cultureCode, listId, pvPlayersFactory,
+				canDeleteAllComments);
+			ko.applyBindings(vm);
+
+		});
+
+	</script>
+}

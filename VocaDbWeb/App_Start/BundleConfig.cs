@@ -55,6 +55,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ToggleClick.js",
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
+				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",
 				"~/Scripts/Models/SongVoteRating.js",				// Referred by UserRepository
@@ -177,7 +178,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
-				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Models/Aggregate/TimeUnit.js",
 				"~/Scripts/Helpers/ArtistHelper.js",
@@ -250,7 +250,6 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Search/Index").Include(
 				"~/Scripts/soundcloud-api.js",				
-				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
@@ -290,7 +289,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Create").Include(
-				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/Helpers/SongHelper.js",
 				"~/Scripts/ViewModels/SongCreateViewModel.js"
 			));
@@ -312,7 +310,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/Models/Artists/ArtistRoles.js",
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
-				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/Models/Tags/Tag.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/Helpers/ArtistHelper.js",
@@ -351,11 +348,20 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/soundcloud-api.js",				
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
+				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
+				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/SongListRepository.js",
 				"~/Scripts/Models/ResourcesManager.js",
+				"~/Scripts/ViewModels/Search/ArtistFilter.js",
+				"~/Scripts/ViewModels/Search/ArtistFilters.js",
+				"~/Scripts/ViewModels/Search/TagFilter.js",
+				"~/Scripts/ViewModels/Search/TagFilters.js",
+				"~/Scripts/ViewModels/Search/AdvancedSearchFilter.js",
+				"~/Scripts/ViewModels/Search/AdvancedSearchFilters.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",

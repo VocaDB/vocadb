@@ -161,6 +161,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<T> WhereSongHasType<T>(this IQueryable<T> query, SongType[] songTypes)
+			where T: ISongLink {
+
+			if (songTypes == null || !songTypes.Any())
+				return query;
+
+			return query.Where(m => songTypes.Contains(m.Song.SongType));
+
+		}
+
 		public static IQueryable<T> WhereMatchFilter<T>(this IQueryable<T> query, AdvancedSearchFilter filter)
 			where T : ISongLink {
 

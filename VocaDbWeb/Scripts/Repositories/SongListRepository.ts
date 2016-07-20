@@ -33,6 +33,13 @@ module vdb.repositories {
 		public getSongs = (
 			listId: number,
 			query: string,
+			songTypes: string,
+			tagIds: number[],
+			childTags: boolean,
+			artistIds: number[],
+			artistParticipationStatus: string,
+			childVoicebanks: boolean,
+			advancedFilters: viewModels.search.AdvancedSearchFilter[],
 			pvServices: string,
 			paging: dc.PagingProperties,
 			fields: cls.SongOptionalFields,
@@ -43,6 +50,13 @@ module vdb.repositories {
 			var url = this.urlMapper.mapRelative("/api/songLists/" + listId + "/songs");
 			var data = {
 				query: query,
+				songTypes: songTypes,
+				tagId: tagIds,
+				childTags: childTags,
+				artistId: artistIds,
+				artistParticipationStatus: artistParticipationStatus,
+				childVoicebanks: childVoicebanks,
+				advancedFilters: advancedFilters,
 				pvServices: pvServices,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				fields: fields.fields, 

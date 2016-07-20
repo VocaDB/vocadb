@@ -11,7 +11,8 @@ module vdb.viewModels.songList {
 			urlMapper: UrlMapper,
 			private songListRepo: rep.SongListRepository,
 			private songRepo: rep.SongRepository,
-			private userRepo: rep.UserRepository, 
+			private userRepo: rep.UserRepository,
+			private artistRepo: rep.ArtistRepository,
 			resourceRepo: rep.ResourceRepository,
 			defaultSortRuleName: string,
 			latestComments: dc.CommentContract[],
@@ -22,6 +23,7 @@ module vdb.viewModels.songList {
 			pvPlayersFactory: pvs.PVPlayersFactory,
 			canDeleteAllComments: boolean) {
 
+			this.artistFilters = new vdb.viewModels.search.ArtistFilters(this.artistRepo, false);
 			this.comments = new EditableCommentsViewModel(songListRepo.getComments(), listId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
 
 			this.resourceManager = new cls.ResourcesManager(resourceRepo, cultureCode);
@@ -35,15 +37,27 @@ module vdb.viewModels.songList {
 
 			});
 
+			this.tagIds = ko.computed(() => _.map(this.tags(), t => t.id));
+
 			// TODO
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
-			var playListRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongListAdapter(songListRepo, listId, this.query, this.sort);
+			var playListRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongListAdapter(songListRepo, listId,
+				this.query, this.songType, this.tagIds, this.childTags, this.artistFilters.artistIds,
+				this.artistFilters.artistParticipationStatus, this.artistFilters.childVoicebanks, this.advancedFilters.filters,
+				this.sort);
 			this.playlistViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, playListRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel, languageSelection);
 			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
 
+			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
+			this.childTags.subscribe(this.updateResultsWithTotalCount);
 			this.showTags.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
+			this.songType.subscribe(this.updateResultsWithTotalCount);
+			this.tags.subscribe(this.updateResultsWithTotalCount);
 
 			this.sort.subscribe(() => this.updateCurrentMode(true));
 			this.playlistMode.subscribe(() => this.updateCurrentMode(true));
@@ -53,6 +67,11 @@ module vdb.viewModels.songList {
 
 		}
 
+		public addTag = (tag: dc.TagBaseContract) => this.tags.push(new viewModels.search.TagFilter(tag.id, tag.name, tag.urlSlug));
+
+		public advancedFilters = new viewModels.search.AdvancedSearchFilters();
+		public artistFilters: vdb.viewModels.search.ArtistFilters;
+		public childTags = ko.observable(false);
 		public comments: EditableCommentsViewModel;
 
 		public loading = ko.observable(true); // Currently loading for data
@@ -70,9 +89,13 @@ module vdb.viewModels.songList {
 		public pvServiceIcons: vdb.models.PVServiceIcons;
 		public query = ko.observable("");
 		private resourceManager: cls.ResourcesManager;
+		public showAdvancedFilters = ko.observable(false);
 		public showTags = ko.observable(false);
 		public sort = ko.observable("");
 		public sortName: KnockoutComputed<string>;
+		public songType = ko.observable(models.songs.SongType[models.songs.SongType.Unspecified]);
+		public tags = ko.observableArray<viewModels.search.TagFilter>();
+		public tagIds: KnockoutComputed<number[]>;
 
 		public updateResultsWithTotalCount = () => this.updateResults(true);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);
@@ -106,7 +129,15 @@ module vdb.viewModels.songList {
 			if (this.showTags())
 				fields.push(cls.SongOptionalField.Tags);
 
-			this.songListRepo.getSongs(this.listId, this.query(), null, pagingProperties,
+			this.songListRepo.getSongs(this.listId, this.query(),
+				this.songType() !== cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+				this.tagIds(),
+				this.childTags(),
+				this.artistFilters.artistIds(),
+				this.artistFilters.artistParticipationStatus(),
+				this.artistFilters.childVoicebanks(),
+				this.advancedFilters.filters(),
+				null, pagingProperties,
 				new cls.SongOptionalFields(fields),
 				this.sort(),
 				this.languageSelection,
