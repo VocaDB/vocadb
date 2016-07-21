@@ -5,6 +5,7 @@
 @using VocaDb.Model.Service.Search
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.SongList.DetailsStrings;
+@using SearchRes = ViewRes.Search.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
 
 @{
@@ -93,13 +94,13 @@
 	</div>
 	&nbsp;
 	<button class="btn" data-bind="click: function() { showAdvancedFilters(!showAdvancedFilters()); }, css: { active: showAdvancedFilters }">
-		More filters
+		@SearchRes.MoreFilters
 		<span class="caret"></span>
 	</button>
 
 	<div class="form-horizontal withMargin" data-bind="visible: showAdvancedFilters" style="display: none;">
 		<div class="control-group">
-			<div class="control-label">Song type</div>
+			<div class="control-label">@SearchRes.SongType</div>
 			<div class="controls">
 				@SongHelpers.SongTypesDropdownKnockout("songType")
 			</div>
@@ -113,7 +114,7 @@
 		</div>
 		
 		<div class="control-group">
-			<div class="control-label">Tag</div>
+			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 			<div class="controls">
 				@KnockoutHelpers.TagFilters()
 			</div>
