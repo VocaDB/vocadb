@@ -66,7 +66,7 @@ class ViewModel {
 					}
 
 					if (ytChannel) {
-						artistRow += "\n[YouTube](" + ytChannel.url + ")";						
+						artistRow += "\n[YouTube](" + ytChannel.url + "),";						
 					}
 
 					artistRow += "\n[VocaDB](" + artistVocaDB + ")";
