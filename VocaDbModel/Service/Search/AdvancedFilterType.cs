@@ -32,6 +32,11 @@
 		// Album
 
 		/// <summary>
+		/// Album has store (commercial) link
+		/// </summary>
+		HasStoreLink,
+
+		/// <summary>
 		/// Album with no cover picture
 		/// </summary>
 		NoCoverPicture,

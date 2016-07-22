@@ -16,6 +16,7 @@ namespace VocaDb.Model.Service.Search {
 			Filter("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
 			Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
 			Filter("No cover picture", AdvancedFilterType.NoCoverPicture),
+			Filter("With store link", AdvancedFilterType.HasStoreLink),
 		};
 
 		public static Tuple<string, AdvancedFilterType, string, bool>[] ArtistFilters { get; } = {

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
@@ -106,6 +107,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Album> WhereHasLinkWithCategory(this IQueryable<Album> query, WebLinkCategory category) {
+
+			return query.Where(m => m.WebLinks.Any(l => l.Category == category));
+
+		}
+
 		/// <summary>
 		/// Filters an artist query by a name query.
 		/// </summary>
@@ -203,6 +210,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case AdvancedFilterType.NoCoverPicture: {
 					return query.Where(a => a.CoverPictureMime == null || a.CoverPictureMime == string.Empty);
 				}
+				case AdvancedFilterType.HasStoreLink: {
+					return query.WhereHasLinkWithCategory(WebLinkCategory.Commercial);
+				}
+
 			}
 
 			return query;
