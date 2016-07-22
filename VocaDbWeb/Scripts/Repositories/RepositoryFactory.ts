@@ -30,6 +30,10 @@ module vdb.repositories {
 			return new EntryRepository(this.urlMapper.baseUrl);
 		}
 
+		public eventRepository = () => {
+			return new ReleaseEventRepository(this.urlMapper);
+		}
+
 		public pvRepository = () => {
 			return new PVRepository(this.urlMapper);
 		}

@@ -107,6 +107,8 @@ module vdb.viewModels {
         // State for the song being edited in the properties dialog.
         public editedSong: KnockoutObservable<TrackPropertiesViewModel>;
 
+		public eventDate = ko.observable<moment.Moment>(null);
+
         // Gets an artist for album link view model by Id.
         public getArtistLink: (artistForAlbumId: number) => ArtistForAlbumEditViewModel;
 
@@ -119,6 +121,8 @@ module vdb.viewModels {
 		public names: globalization.NamesEditViewModel;
 
 		public newIdentifier = ko.observable("");
+
+		public releaseDate: KnockoutComputed<moment.Moment>;
 
 		public releaseDay: KnockoutObservable<number>;
 
@@ -232,6 +236,7 @@ module vdb.viewModels {
 			private artistRepository: rep.ArtistRepository,
 			pvRepository: rep.PVRepository,
 			userRepository: rep.UserRepository,
+			eventRepository: rep.ReleaseEventRepository,
 			private urlMapper: vdb.UrlMapper,
 			artistRoleNames: { [key: string]: string; },
 			webLinkCategories: dc.TranslatedEnumField[],
@@ -468,6 +473,27 @@ module vdb.viewModels {
 				this.validationError_needType() ||
 				this.validationError_unspecifiedNames()
 			);
+
+			ko.computed(() => {
+				if (this.releaseEventName()) {
+					eventRepository.getOneByName(this.releaseEventName(), event => {
+						this.eventDate(event && event.date ? moment(event.date) : null);
+					});
+				} else {
+					this.eventDate(null);
+				}
+			}).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+
+			this.releaseDate = ko.computed({
+				read: () => {
+					return this.releaseYear() && this.releaseMonth() && this.releaseDay() ? moment([this.releaseYear(), this.releaseMonth(), this.releaseDay()]) : null;
+				},
+				write: (val: moment.Moment) => {
+					this.releaseYear(val.year());
+					this.releaseMonth(val.month() + 1);
+					this.releaseDay(val.date());
+				}
+			});
 
 			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Album, data.id), 10000);			
 

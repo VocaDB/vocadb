@@ -65,8 +65,9 @@
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/Album/Edit")
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(function() {
 
+		moment.locale('@Culture');
 		ko.punches.enableAll();
 
 		vdb.resources.entryEdit = {
@@ -83,6 +84,7 @@
 		var artistRepo = repoFactory.artistRepository();
 		var pvRepo = repoFactory.pvRepository();
 		var userRepo = repoFactory.userRepository();
+		var eventRepo = repoFactory.eventRepository();
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
 		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false));
 		var allowCustomTracks = @ToJS(VocaDb.Model.Utils.AppConfig.AllowCustomTracks);
@@ -91,7 +93,7 @@
 
 		if (editedModel) {
 
-			viewModel = new vdb.viewModels.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, urlMapper,
+			viewModel = new vdb.viewModels.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
 				artistRoleJson, webLinkCategoryJson, editedModel, allowCustomTracks, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
 
 			ko.applyBindings(viewModel);
@@ -100,7 +102,7 @@
 
 			repo.getForEdit(@Model.Id, function (model) {
 
-				viewModel = new vdb.viewModels.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, urlMapper,
+				viewModel = new vdb.viewModels.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
 					artistRoleJson, webLinkCategoryJson, model, allowCustomTracks, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
 
 				ko.applyBindings(viewModel);
@@ -216,6 +218,10 @@
 					</div>				
 				</td>
 			</tr></table>
+			
+			<button class="btn" data-bind="visible: !releaseDate() && eventDate(), click: function() { releaseDate(eventDate()); }">
+				Use event release date <span data-bind="text: eventDate() ? eventDate().format('L') : null"></span>
+			</button>
 
 			<div class="editor-label">
 				@Helpers.HelpLabel(R.EditStrings.BaCatNum, "Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.")

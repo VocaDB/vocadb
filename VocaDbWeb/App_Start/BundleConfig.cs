@@ -136,6 +136,7 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Album/Edit").Include(
+				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/ParseInteger.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/KnockoutExtensions/ReleaseEventNameAutoComplete.js",
@@ -146,6 +147,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/Repositories/PVRepository.js",
+				"~/Scripts/Repositories/ReleaseEventRepository.js",
 				"~/Scripts/ViewModels/BasicListEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",

@@ -88,7 +88,7 @@ module vdb.tests.viewModels {
     });
 
     function createViewModel() {
-        return new vm.AlbumEditViewModel(rep, songRep, artistRep, pvRep, userRepo, urlMapper, roles, categories, data, true, false, null);
+        return new vm.AlbumEditViewModel(rep, songRep, artistRep, pvRep, userRepo, null, urlMapper, roles, categories, data, true, false, null);
     }
 
     function createTrackPropertiesViewModel() {
