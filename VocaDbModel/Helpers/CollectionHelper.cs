@@ -73,6 +73,34 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		/// <summary>
+		/// Randomly sort a list.
+		/// This generates a copy of the list!
+		/// </summary>
+		/// <typeparam name="T">Item type.</typeparam>
+		/// <param name="source">List to be sorted. Cannot be null.</param>
+		/// <returns>Randomly sorted list.</returns>
+		/// <remarks>
+		/// Adapted from http://stackoverflow.com/a/1262619
+		/// </remarks>
+		public static IEnumerable<T> RandomSort<T>(this IEnumerable<T> source) {
+
+			var list = source.ToList();
+
+			var rng = new Random();
+			int n = list.Count;
+			while (n > 1) {
+				n--;
+				int k = rng.Next(n + 1);
+				var value = list[k];
+				list[k] = list[n];
+				list[n] = value;
+			}
+
+			return list;
+
+		}
+
 		public static void RemoveAll<T>(IList<T> list, Func<T, bool> pred) {
 
 			bool changed = true;

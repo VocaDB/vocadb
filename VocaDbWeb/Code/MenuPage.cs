@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Utils;
 
@@ -48,7 +49,7 @@ namespace VocaDb.Web.Code {
 
 			} else {
 				
-				BigBanners = config.BigBanners.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).ToArray();
+				BigBanners = config.BigBanners.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).RandomSort().ToArray();
 
 			}
 
@@ -63,11 +64,11 @@ namespace VocaDb.Web.Code {
 					new Link("Vocaloid News Network", "https://www.vocaloidnews.net/", "vnn.png"),
 					new Link("VocaloidOtaku", "http://vocaloidotaku.net", "vo_small.png"),
 					new Link("Vocaloidism", "http://vocaloidism.com", "vocaloidism_small.png"),
-				};
+				}.RandomSort().ToArray();
 
 			} else {
 				
-				SmallBanners = config.SmallBanners.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).ToArray();
+				SmallBanners = config.SmallBanners.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).RandomSort().ToArray();
 
 			}
 
