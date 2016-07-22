@@ -116,7 +116,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (artistNames == null || artistNames.Length == 0)
 				return query;
 
-			return artistNames.Aggregate(query, (current, artistName) => current.Where(e => e.AllArtists.Any(a => a.Artist.Names.Names.Any(n => artistNames.Contains(n.Value)))));
+			return artistNames.Aggregate(query, (current, artistName) => current.Where(e => e.AllArtists.Any(a => a.Artist.Names.Names.Any(n => n.Value == artistName))));
 
 		}
 
