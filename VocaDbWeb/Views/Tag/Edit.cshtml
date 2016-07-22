@@ -172,7 +172,7 @@
 		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
 	</div>
 	<div class="editor-field">
-		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetTranslatedFields(Model.AllowedEntryStatuses))
+		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
 	</div>
 	
 	<br />
