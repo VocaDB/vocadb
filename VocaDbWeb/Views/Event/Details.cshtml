@@ -52,10 +52,15 @@
 </div>
 
 @if (Model.Albums.Any()) {
-	<br />
+	<h3>Albums</h3>
 	@AlbumHelpers.AlbumGrid(Model.Albums, 2, false, false, true)
 }
-	
+
+@if (Model.Songs.Any()) {
+	<h3 class="withMargin">Songs</h3>
+	@SongHelpers.SongGrid(Model.Songs, 2, true, false)
+}
+
 @section BodyScripts {
 <script type="text/javascript">
 

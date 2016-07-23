@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
@@ -26,6 +27,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private string name;
 		private ReleaseEventSeries series;
 		private string seriesSuffix;
+		private IList<Song> songs = new List<Song>();
 		private IList<ReleaseEventWebLink> webLinks = new List<ReleaseEventWebLink>();
 
 		public ReleaseEvent() {
@@ -116,6 +118,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			set {
 				ParamIs.NotNull(() => value);
 				seriesSuffix = value;
+			}
+		}
+
+		public virtual IList<Song> Songs {
+			get { return songs; }
+			set {
+				ParamIs.NotNull(() => value);
+				songs = value;
 			}
 		}
 
