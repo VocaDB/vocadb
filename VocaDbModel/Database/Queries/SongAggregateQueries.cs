@@ -51,13 +51,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private CountPerDayContract[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where) {
+		private CountPerDayContract[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null) {
 
 			var query = ctx.Query<Song>()
 				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
 
 			if (where != null)
 				query = query.Where(where);
+
+			if (after != null)
+				query = query.Where(s => s.PublishDate.DateTime >= after);
 
 			return query
 				.OrderBy(a => a.PublishDate.DateTime.Value.Year) // Need to order by part of publish date because we're grouping
@@ -78,13 +81,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private CountPerDayContract[] SongsPerMonth(IDatabaseContext ctx, Expression<Func<Song, bool>> where) {
+		private CountPerDayContract[] SongsPerMonth(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null) {
 
 			var query = ctx.Query<Song>()
 				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
 
 			if (where != null)
 				query = query.Where(where);
+
+			if (after != null)
+				query = query.Where(s => s.PublishDate.DateTime >= after);
 
 			return query
 				.OrderBy(a => a.PublishDate.DateTime.Value.Year)
@@ -111,12 +117,12 @@ namespace VocaDb.Model.Database.Queries {
 		/// </param>
 		/// <param name="filters">Additional filters for songs. One result will be produced per filter. Cannot be null.</param>
 		/// <returns>Results. One result per filter.</returns>
-		public CountPerDayContract[][] SongsOverTime(TimeUnit timeUnit, bool addZeros, params Expression<Func<Song, bool>>[] filters) {
+		public CountPerDayContract[][] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, params Expression<Func<Song, bool>>[] filters) {
 
 			return repository.HandleQuery(ctx => {
 
 				var results = filters
-					.Select(f => AddZeros(timeUnit == TimeUnit.Month ? SongsPerMonth(ctx, f) : SongsPerDay(ctx, f), addZeros, timeUnit))
+					.Select(f => AddZeros(timeUnit == TimeUnit.Month ? SongsPerMonth(ctx, f, after) : SongsPerDay(ctx, f, after), addZeros, timeUnit))
 					.ToArray();
 
 				return results;

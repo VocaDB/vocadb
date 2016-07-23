@@ -371,7 +371,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult AlbumSongsOverTime() {
 
-			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, a => a.AllAlbums.Any(), a => a.AllAlbums.Count == 0);
+			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, null, a => a.AllAlbums.Any(), a => a.AllAlbums.Count == 0);
 
 			return AreaChart("Album songs over time",
 				new Series("Album songs", Series.DateData(data[0])),
@@ -410,9 +410,9 @@ namespace VocaDb.Web.Controllers {
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec)]
-		public ActionResult CumulativeSongsPublished() {
+		public ActionResult CumulativeSongsPublished(DateTime? cutoff) {
 
-			var values = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0).First();
+			var values = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, cutoff, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0).First();
 
 			var points = values.CumulativeSum();
 
@@ -550,9 +550,9 @@ namespace VocaDb.Web.Controllers {
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "unit")]
-		public ActionResult SongsPublishedPerDay(TimeUnit unit = TimeUnit.Day) {
+		public ActionResult SongsPublishedPerDay(DateTime? cutoff = null, TimeUnit unit = TimeUnit.Day) {
 			
-			var values = songAggregateQueries.SongsOverTime(unit, false, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
+			var values = songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
 
@@ -612,7 +612,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult SongsWithoutPVOverTime() {
 
-			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0);
+			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, null, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0);
 
 			return AreaChart("Songs with and without PV over time",
 				new Series("Songs with a PV", Series.DateData(data[0])),
