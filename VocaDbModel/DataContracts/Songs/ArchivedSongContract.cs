@@ -96,6 +96,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			OriginalVersion = (song.OriginalVersion != null ? new ObjectRefContract(song.OriginalVersion) : null);
 			PublishDate = song.PublishDate;
 			PVs = (diff.IncludePVs ? song.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null);
+			ReleaseEvent = song.ReleaseEvent != null ? new ObjectRefContract(song.ReleaseEvent) : null;
 			SongType = song.SongType;
 			TranslatedName = new ArchivedTranslatedStringContract(song.TranslatedName);
 			WebLinks = (diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
@@ -134,6 +135,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public ArchivedPVContract[] PVs { get; set; }
+
+		[DataMember]
+		public ObjectRefContract ReleaseEvent { get; set; }
 
 		[DataMember]
 		public SongType SongType { get; set; }
