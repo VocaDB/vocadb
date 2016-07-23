@@ -19,6 +19,7 @@ module vdb.viewModels {
 		public canHaveOriginalVersion: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public deleted: boolean;
+		public eventDate: KnockoutComputed<moment.Moment>;
 		public id: number;
         public length: KnockoutObservable<number>;
 		public lengthFormatted: KnockoutComputed<string>;
@@ -275,6 +276,8 @@ module vdb.viewModels {
 				this.validationError_nonInstrumentalSongNeedsVocalists() ||
 				this.validationError_unspecifiedNames()
 			);
+		
+			this.eventDate = ko.computed(() => (this.releaseEvent.entry() && this.releaseEvent.entry().date ? moment(this.releaseEvent.entry().date) : null));
 
 			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Song, data.id), 10000);
 

@@ -124,6 +124,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("{id:int}")]
+		public ReleaseEventForApiContract GetOne(int id, ReleaseEventOptionalFields fields) {
+
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), fields));
+
+		}
+
 	}
 
 }
