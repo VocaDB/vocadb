@@ -43,6 +43,8 @@
 
 		// Song
 
+		HasMultipleVoicebanks,
+
 		/// <summary>
 		/// Song has lyrics in content language specified by param.
 		/// </summary>

@@ -35,6 +35,7 @@ namespace VocaDb.Model.Service.Search {
 			Filter("Artist type: UTAU", AdvancedFilterType.ArtistType, ArtistType.UTAU.ToString()),
 			Filter("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
 			Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
+			Filter("Multiple voicebanks", AdvancedFilterType.HasMultipleVoicebanks),
 			Filter("Lyrics: Any language", AdvancedFilterType.Lyrics, "Japanese,Romaji,English"),
 			Filter("Lyrics: Non-English", AdvancedFilterType.Lyrics, ContentLanguageSelection.Japanese.ToString()),
 			Filter("Lyrics: Romanized", AdvancedFilterType.Lyrics, ContentLanguageSelection.Romaji.ToString()),
