@@ -159,4 +159,7 @@
   <data name="WebLinks" xml:space="preserve">
     <value>External links</value>
   </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Release event</value>
+  </data>
 </root>

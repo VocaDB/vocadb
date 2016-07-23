@@ -14,7 +14,7 @@
 
 		// Creates the content for the second row of the autocomplete item (optional).
 		// HTML is escaped.
-		createOptionSecondRow: (entry: TContract) => string;
+		createOptionSecondRow?: (entry: TContract) => string;
 
 		extraQueryParams: any;
 

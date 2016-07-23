@@ -126,6 +126,15 @@
 			</div>
 			
 			<div class="editor-label">
+				<label>
+					Release event
+				</label>
+			</div>
+			<div class="editor-field">
+				@KnockoutHelpers.LockingAutoComplete("releaseEventAutoComplete", "releaseEvent.entry", "releaseEvent.name", "releaseEvent.id")
+			</div>
+
+			<div class="editor-label">
 				<label class="helpTip" data-bind="qTip: null" title="@Res.BaPublishDateHelp">
 					@Res.BaPublishDate
 				</label>
@@ -138,7 +147,7 @@
 					</button>					
 				</div>
 			</div>
-
+			
 			<div class="editor-label">
 				<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
 				    @EditRes.WebLinks

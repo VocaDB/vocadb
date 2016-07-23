@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
@@ -28,6 +29,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			Notes = new EnglishTranslatedStringContract(song.Notes);
 			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? new SongContract(song.OriginalVersion, languagePreference) : null);
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
+			ReleaseEvent = song.ReleaseEvent != null ? new ReleaseEventContract(song.ReleaseEvent) : null;
 			Tags = song.Tags.Tags.Select(t => t.Id).ToArray();
 			UpdateNotes = string.Empty;
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
@@ -63,6 +65,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		[DataMember(Name = "pvs")]
 		public PVContract[] PVs { get; set; }
+
+		[DataMember]
+		public ReleaseEventContract ReleaseEvent { get; set; }
 
 		// Required here for validation
 		[DataMember]

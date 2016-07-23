@@ -177,6 +177,15 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual bool ReleaseEvent {
+			get {
+				return IsChanged(SongEditableFields.ReleaseEvent);
+			}
+			set {
+				Set(SongEditableFields.ReleaseEvent, value);
+			}
+		}
+
 		public virtual bool SongType {
 			get {
 				return IsChanged(SongEditableFields.SongType);

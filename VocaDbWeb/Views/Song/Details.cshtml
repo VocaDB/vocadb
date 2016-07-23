@@ -286,6 +286,15 @@
 					@string.Format(Res.TotalScore, Model.RatingScore).
 				</td>
 			</tr>
+			
+			@if (Model.ReleaseEvent != null) {
+				<tr>
+					<td>Release event</td>
+					<td>
+						<a href="@Url.Action("Details", "Event", new { id = Model.ReleaseEvent.Id })">@Model.ReleaseEvent.Name</a>
+					</td>
+				</tr>
+			}
 
 			@if (Model.PublishDate.HasValue) {
 			<tr>

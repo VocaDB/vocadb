@@ -26,6 +26,7 @@ namespace VocaDb.Model.Mapping.Songs {
 			Map(m => m.Version).Not.Nullable();
 
 			References(m => m.OriginalVersion).Nullable();
+			References(m => m.ReleaseEvent).Nullable();
 
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Song]").Inverse().Cascade.All().OrderBy("Created DESC"));

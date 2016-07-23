@@ -30,6 +30,8 @@ module vdb.dataContracts.songs {
 
 		pvs: pvs.PVContract[];
 
+		releaseEvent?: ReleaseEventContract;
+
 		songType: string;
 
 		status: string;

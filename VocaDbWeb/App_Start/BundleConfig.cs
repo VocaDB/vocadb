@@ -310,6 +310,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 				"~/Scripts/Models/Artists/ArtistRoles.js",
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Models/Tags/Tag.js",

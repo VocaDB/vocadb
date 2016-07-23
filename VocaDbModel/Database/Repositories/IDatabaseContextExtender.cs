@@ -88,6 +88,10 @@ namespace VocaDb.Model.Database.Repositories {
 			return id != 0 ? ctx.Load(id) : default(T);
 		}
 
+		public static T NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithIntId entry) {
+			return entry != null && entry.Id != 0 ? ctx.Load<T>(entry.Id) : default(T);
+		}
+
 		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff) {
 
 			ParamIs.NotNull(() => ctx);

@@ -20,6 +20,7 @@ using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -850,6 +851,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (artistsDiff.Changed)
 					diff.Artists = true;
+
+				if (!song.ReleaseEvent.NullSafeIdEquals(properties.ReleaseEvent)) {
+					diff.ReleaseEvent = true;
+					song.ReleaseEvent = ctx.NullSafeLoad<ReleaseEvent>(properties.ReleaseEvent);
+				}
 
 				if (!song.PublishDate.Equals(properties.PublishDate)) {
 					song.PublishDate = properties.PublishDate;

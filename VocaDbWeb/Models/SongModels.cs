@@ -9,6 +9,7 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
@@ -58,6 +59,7 @@ namespace VocaDb.Web.Models {
 			Pools = contract.Pools;
 			PublishDate = contract.Song.PublishDate;
 			RatingScore = contract.Song.RatingScore;
+			ReleaseEvent = contract.ReleaseEvent;
 			SongType = contract.Song.SongType;
 			Status = contract.Song.Status;
 			Suggestions = contract.Suggestions;
@@ -182,6 +184,8 @@ namespace VocaDb.Web.Models {
 		public DateTime? PublishDate { get; set; }
 
 		public int RatingScore { get; set; }
+
+		public ReleaseEventForApiContract ReleaseEvent { get; set; }
 
 		public SongType SongType { get; set; }
 

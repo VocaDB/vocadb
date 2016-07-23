@@ -16,6 +16,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils.Config;
 
@@ -345,6 +346,8 @@ namespace VocaDb.Model.Domain.Songs {
 		public virtual PVServices PVServices { get; set; }
 
 		public virtual int RatingScore { get; set; }
+
+		public virtual ReleaseEvent ReleaseEvent { get; set; }
 
 		public virtual SongType SongType { get; set; }
 

@@ -29,6 +29,7 @@ module vdb.viewModels {
 		public originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
 		public publishDate: KnockoutObservable<Date>;
 		public pvs: pvs.PVListEditViewModel;
+		public releaseEvent: BasicEntryLinkViewModel<dc.ReleaseEventContract>;
 		public songType: KnockoutComputed<cls.songs.SongType>;
 		public songTypeStr: KnockoutObservable<string>;
 		public status: KnockoutObservable<string>;
@@ -121,6 +122,7 @@ module vdb.viewModels {
 				originalVersion: this.originalVersion.entry(),
 				publishDate: (this.publishDate() ? this.publishDate().toISOString() : null),
 				pvs: this.pvs.toContracts(),
+				releaseEvent: this.releaseEvent.entry(),
 				songType: this.songTypeStr(),
 				status: this.status(),
 				tags: this.tags,
@@ -174,6 +176,7 @@ module vdb.viewModels {
 			this.originalVersion = new BasicEntryLinkViewModel<dc.SongContract>(data.originalVersion, songRepository.getOne);
 			this.publishDate = ko.observable(data.publishDate ? moment(data.publishDate).toDate() : null); // Assume server date is UTC
 			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, true);
+			this.releaseEvent = new BasicEntryLinkViewModel<dc.ReleaseEventContract>(data.releaseEvent, null);
 			this.songTypeStr = ko.observable(data.songType);
 			this.songType = ko.computed(() => cls.songs.SongType[this.songTypeStr()]);
 			this.status = ko.observable(data.status);
