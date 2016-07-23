@@ -19,8 +19,8 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.SeriesSuffix).Length(50).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 
-			HasMany(m => m.Albums).KeyColumn("[ReleaseEventName]").PropertyRef("Name").ForeignKeyConstraintName("[Name]").Inverse().ReadOnly();
-			HasMany(m => m.Songs).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
+			HasMany(m => m.AllAlbums).KeyColumn("[ReleaseEventName]").PropertyRef("Name").ForeignKeyConstraintName("[Name]").Inverse().ReadOnly();
+			HasMany(m => m.AllSongs).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEvent]").Inverse().Cascade.All().Cache.ReadWrite();
 
 			References(m => m.Series).Nullable();

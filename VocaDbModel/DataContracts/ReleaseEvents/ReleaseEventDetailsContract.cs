@@ -18,13 +18,16 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => releaseEvent);
 
-			Albums = releaseEvent.Albums.Where(a => !a.Deleted).Select(a => new AlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			SeriesNumber = releaseEvent.SeriesNumber;
 			SeriesSuffix = releaseEvent.SeriesSuffix;
 			WebLinks = releaseEvent.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
+			Albums = releaseEvent.Albums
+				.Select(a => new AlbumContract(a, languagePreference))
+				.OrderBy(a => a.Name)
+				.ToArray();
+
 			Songs = releaseEvent.Songs
-				.Where(s => !s.Deleted)
 				.Select(s => new SongForApiContract(s, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
 				.OrderBy(s => s.Name)
 				.ToArray();

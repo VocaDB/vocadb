@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.ExtLinks;
@@ -66,11 +67,21 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual IList<Album> Albums {
+		public virtual IEnumerable<Album> Albums => AllAlbums.Where(a => !a.Deleted);
+
+		public virtual IList<Album> AllAlbums {
 			get { return albums; }
 			set {
 				ParamIs.NotNull(() => value);
 				albums = value; 
+			}
+		}
+
+		public virtual IList<Song> AllSongs {
+			get { return songs; }
+			set {
+				ParamIs.NotNull(() => value);
+				songs = value;
 			}
 		}
 
@@ -121,13 +132,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
-		public virtual IList<Song> Songs {
-			get { return songs; }
-			set {
-				ParamIs.NotNull(() => value);
-				songs = value;
-			}
-		}
+		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
 		public virtual int Version { get; set; }
 

@@ -88,6 +88,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.SysLog(string.Format("deleting {0}", entry));
 
+				foreach (var song in entry.AllSongs) {
+					song.ReleaseEvent = null;
+				}
+
 				var ctxActivity = ctx.OfType<ReleaseEventActivityEntry>();
 				var activityEntries = ctxActivity.Query().Where(a => a.Entry.Id == eventId).ToArray();
 
