@@ -34,6 +34,7 @@ module vdb.viewModels.search {
 
 			this.resourcesManager = new vdb.models.ResourcesManager(resourceRepo, cultureCode);
 			this.resources = this.resourcesManager.resources;
+			this.tagFilters = new TagFilters(tagRepo, languageSelection);
 
 			if (searchTerm)
 				this.searchTerm(searchTerm);
@@ -78,15 +79,14 @@ module vdb.viewModels.search {
 				this.searchType(searchType);
 
 			if (tagIds)
-				this.addTags(tagIds, tagRepo);
+				this.tagFilters.addTags(tagIds);
 
 			if (pageSize)
 				this.pageSize(pageSize);
 
 			this.pageSize.subscribe(this.updateResults);
 			this.searchTerm.subscribe(this.updateResults);
-			this.tags.subscribe(this.updateResults);
-			this.childTags.subscribe(this.updateResults);
+			this.tagFilters.filters.subscribe(this.updateResults);
 			this.draftsOnly.subscribe(this.updateResults);
 			this.showTags.subscribe(this.updateResults);
 
@@ -119,7 +119,6 @@ module vdb.viewModels.search {
 		public songSearchViewModel: SongSearchViewModel;
 		public tagSearchViewModel: TagSearchViewModel;
 
-		public childTags = ko.observable(false);
 		private currentSearchType = ko.observable(SearchType.Anything);
 		public draftsOnly = ko.observable(false);
 		public genreTags = ko.observableArray<dc.TagBaseContract>();
@@ -129,7 +128,7 @@ module vdb.viewModels.search {
 		public showAdvancedFilters = ko.observable(false);
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public searchType = ko.observable(SearchType.Anything);
-		public tags = ko.observableArray<TagFilter>([]);
+		public tagFilters: TagFilters;
 
 		public showAnythingSearch: KnockoutComputed<boolean>;
 		public showArtistSearch: KnockoutComputed<boolean>;
@@ -141,34 +140,6 @@ module vdb.viewModels.search {
 		public showDraftsFilter = ko.computed(() => this.searchType() !== SearchType.Tag);
 
 		public isUniversalSearch = ko.computed(() => this.searchType() === SearchType.Anything);
-
-		public addTag = (tag: dc.TagBaseContract) => this.tags.push(new TagFilter(tag.id, tag.name, tag.urlSlug));
-
-		public addTags = (
-			selectedTagIds: number[],
-			tagRepo: rep.TagRepository) => {
-
-			if (!selectedTagIds)
-				return;
-
-			var filters = _.map(selectedTagIds, a => new TagFilter(a));
-			ko.utils.arrayPushAll(this.tags, filters);
-
-			if (!tagRepo)
-				return;
-
-			_.forEach(filters, newTag => {
-
-				var selectedTagId = newTag.id;
-
-				tagRepo.getById(selectedTagId, null, this.languageSelection, tag => {
-					newTag.name(tag.name);
-					newTag.urlSlug(tag.urlSlug);
-				});
-
-			});
-
-		};
 
 		public currentCategoryViewModel = (): ISearchCategoryBaseViewModel => {
 			

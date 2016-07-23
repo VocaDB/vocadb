@@ -17,11 +17,12 @@ module vdb.viewModels.search {
 		constructor(public searchViewModel: SearchViewModel) {
 
 			if (searchViewModel) {
-				this.childTags = searchViewModel.childTags;
+				this.childTags = searchViewModel.tagFilters.childTags;
 				this.draftsOnly = searchViewModel.draftsOnly;
 				this.searchTerm = searchViewModel.searchTerm;
 				this.showTags = searchViewModel.showTags;
-				this.tags = searchViewModel.tags;
+				this.tags = searchViewModel.tagFilters.tags;
+				this.tagIds = searchViewModel.tagFilters.tagIds;
 				searchViewModel.pageSize.subscribe(pageSize => this.paging.pageSize(pageSize));				
 				this.paging.pageSize.subscribe(pageSize => searchViewModel.pageSize(pageSize));
 			} else {
@@ -35,10 +36,9 @@ module vdb.viewModels.search {
 				this.searchTerm.subscribe(this.updateResultsWithTotalCount);
 				this.showTags.subscribe(this.updateResultsWithoutTotalCount);
 				this.tags.subscribe(this.updateResultsWithTotalCount);
+				this.tagIds = ko.computed(() => _.map(this.tags(), t => t.id));
 				this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 			}
-
-			this.tagIds = ko.computed(() => _.map(this.tags(), t => t.id));
 
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 

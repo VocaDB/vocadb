@@ -36,8 +36,7 @@ module vdb.viewModels.user {
 			this.tagFilters = new viewModels.search.TagFilters(tagRepo, languageSelection);
 
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
-			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
-			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.groupByRating.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);

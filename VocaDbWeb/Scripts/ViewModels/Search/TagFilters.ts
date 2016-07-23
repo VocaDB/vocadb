@@ -11,14 +11,19 @@ module vdb.viewModels.search {
 			
 			this.tags = (tags || ko.observableArray<TagFilter>());
 			this.tagIds = ko.computed(() => _.map(this.tags(), t => t.id));
+			this.childTags = ko.observable(false);
+
+			this.filters = ko.computed(() => {
+				this.tags();
+				this.childTags();
+			}).extend({ notify: 'always' });
 
 		}
 
 		public addTag = (tag: dc.TagBaseContract) => this.tags.push(new TagFilter(tag.id, tag.name, tag.urlSlug));
 
 		public addTags = (
-			selectedTagIds: number[],
-			tagRepo: rep.TagRepository) => {
+			selectedTagIds: number[]) => {
 
 			if (!selectedTagIds)
 				return;
@@ -26,14 +31,14 @@ module vdb.viewModels.search {
 			var filters = _.map(selectedTagIds, a => new TagFilter(a));
 			ko.utils.arrayPushAll(this.tags, filters);
 
-			if (!tagRepo)
+			if (!this.tagRepo)
 				return;
 
 			_.forEach(filters, newTag => {
 
 				var selectedTagId = newTag.id;
 
-				tagRepo.getById(selectedTagId, null, this.languageSelection, tag => {
+				this.tagRepo.getById(selectedTagId, null, this.languageSelection, tag => {
 					newTag.name(tag.name);
 					newTag.urlSlug(tag.urlSlug);
 				});
@@ -41,6 +46,11 @@ module vdb.viewModels.search {
 			});
 
 		};
+
+		public childTags: KnockoutObservable<boolean>;
+
+		// Fired when any of the tag filters is changed
+		public filters: KnockoutComputed<void>;
 
 		public tags: KnockoutObservableArray<TagFilter>;
 		public tagIds: KnockoutComputed<number[]>;

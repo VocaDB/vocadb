@@ -235,7 +235,7 @@
 				@ViewRes.Search.IndexStrings.TopGenres
 				<span class="caret"></span>
 			</button>
-			<ul data-bind="foreach: genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+			<ul data-bind="foreach: $parent.genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 				<li>
 					<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag_contract($data) }, text: name, click: function(selectedTag) { $parent.addTag(selectedTag); }"></a>
 				</li>

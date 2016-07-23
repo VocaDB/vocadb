@@ -63,9 +63,7 @@ module vdb.viewModels.search {
 			this.viewMode = ko.observable(viewMode || "Details");
 
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
-			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
-			this.artistFilters.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
-			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.minScore.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory, autoplay, shuffle);

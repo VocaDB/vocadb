@@ -86,7 +86,7 @@
 		<!-- Tag filtering with top genres -->
 		<div class="control-group" data-bind="visible: showTagFilter">
 			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
-			<div class="controls">
+			<div class="controls" data-bind="with: tagFilters">
 				@KnockoutHelpers.TagFilters(true)
 			</div>
 		</div>

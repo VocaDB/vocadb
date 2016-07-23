@@ -38,9 +38,7 @@ module vdb.viewModels.search {
 
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.albumType.subscribe(this.updateResultsWithTotalCount);
-			this.artistFilters.artists.subscribe(this.updateResultsWithTotalCount);
-			this.artistFilters.artistParticipationStatus.subscribe(this.updateResultsWithTotalCount);
-			this.artistFilters.childVoicebanks.subscribe(this.updateResultsWithTotalCount);
+			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
 
 			this.sortName = ko.computed(() => {
 				return this.resourceManager.resources().albumSortRuleNames != null ? this.resourceManager.resources().albumSortRuleNames[this.sort()] : "";

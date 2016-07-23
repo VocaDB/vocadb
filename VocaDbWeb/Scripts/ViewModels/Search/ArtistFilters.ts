@@ -11,6 +11,12 @@ module vdb.viewModels.search {
 
 			this.childVoicebanks = ko.observable(childVoicebanks || false);
 
+			this.filters = ko.computed(() => {
+				this.artists();
+				this.artistParticipationStatus();
+				this.childVoicebanks();
+			}).extend({ notify: 'always' });
+
 			this.showChildVoicebanks = ko.computed(() => this.hasSingleArtist() && helpers.ArtistHelper.canHaveChildVoicebanks(this.artists()[0].artistType()));			
 
 		}
@@ -21,6 +27,8 @@ module vdb.viewModels.search {
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 
 		public childVoicebanks: KnockoutObservable<boolean>;
+
+		public filters: KnockoutComputed<void>;
 
 		public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
 
