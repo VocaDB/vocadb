@@ -1035,6 +1035,11 @@
     <Compile Include="Models\Shared\ViewVersion.cs" />
     <Compile Include="Models\SongLists\SongListDetailsViewModel.cs" />
     <Compile Include="Models\Tag\Versions.cs" />
+    <Compile Include="Resources\Domain\Artists\ArtistLinkTypeNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistLinkTypeNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Domain\EntryReportTypeNames.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2213,6 +2218,10 @@
     <EmbeddedResource Include="Resources\Ajax\SongStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.es.resx" />
     <EmbeddedResource Include="Resources\Controllers\TagControllerStrings.pt.resx" />
+    <EmbeddedResource Include="Resources\Domain\Artists\ArtistLinkTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArtistLinkTypeNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.pt.resx" />
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.es.resx" />

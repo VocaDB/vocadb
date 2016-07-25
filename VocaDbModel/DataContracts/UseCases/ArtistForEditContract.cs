@@ -27,7 +27,15 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			VoiceProvider = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, Domain.LinkDirection.ManyToOne).Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
+			AssociatedArtists = artist.Groups
+				.Where(a => a.LinkType != ArtistLinkType.Group && a.Parent.Id != Illustrator?.Id && a.Parent.Id != VoiceProvider?.Id)
+				.Select(g => new ArtistForArtistContract(g, languagePreference))
+				.ToArray();
+
 		}
+
+		[DataMember]
+		public ArtistForArtistContract[] AssociatedArtists { get; set;}
 
 		[DataMember]
 		public ArtistContract BaseVoicebank { get; set; }

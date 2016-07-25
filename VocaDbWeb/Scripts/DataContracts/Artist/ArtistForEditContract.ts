@@ -5,6 +5,8 @@ module vdb.dataContracts.artists {
 
 		artistType: string;
 
+		associatedArtists: ArtistForArtistContract[];
+
 		baseVoicebank: ArtistContract;
 
 		defaultNameLanguage: string;

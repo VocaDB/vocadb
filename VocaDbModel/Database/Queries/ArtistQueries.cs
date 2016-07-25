@@ -636,13 +636,14 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var newGroups = properties.Groups.ToList();
-
-				if (properties.Illustrator != null)
-					newGroups.Add(new ArtistForArtistContract { Parent = properties.Illustrator, LinkType = ArtistLinkType.Illustrator });
-
-				if (properties.VoiceProvider != null)
-					newGroups.Add(new ArtistForArtistContract { Parent = properties.VoiceProvider, LinkType = ArtistLinkType.VoiceProvider });
+				var newGroups = properties.Groups
+					.Concat(new[] {
+						new ArtistForArtistContract { Parent = properties.Illustrator, LinkType = ArtistLinkType.Illustrator },
+						new ArtistForArtistContract { Parent = properties.VoiceProvider, LinkType = ArtistLinkType.VoiceProvider }
+					})
+					.Concat(properties.AssociatedArtists)
+					.Where(a => a.Parent != null)
+					.ToArray();
 
 				var groupsDiff = CollectionHelper.Diff(artist.Groups, newGroups, (i, i2) => (i.Parent.Id == i2.Parent.Id && i.LinkType == i2.LinkType));
 

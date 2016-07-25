@@ -30,13 +30,30 @@
 		<a data-bind="click: customizeSubscriptionDialog.show" href="#" id="customizeSubscription">@R.DetailsStrings.Customize</a>
 	</span>
 
-	@Html.ActionLink(@ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editArtistLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
+	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editArtistLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 
 	@Helpers.EntryStatusMessage(Model.Status)
+}
+
+@helper DataRow(string label, HelperResult content) {
+	if (content != null) {
+		<tr>
+			<td>@label</td>
+			<td>@content</td>
+		</tr>
+	}
+}
+
+@helper ArtistListRow(string label, ArtistContract[] artists, bool typeLabel) {
+	@DataRow(label, artists.Any() ? ArtistHelpers.ArtistLinkList(artists, typeLabel: typeLabel) : null)
+}
+
+@helper ArtistRow(string label, ArtistContract artist, bool typeLabel) {
+	@DataRow(label, artist != null ? ArtistHelpers.ArtistLink(artist, typeLabel: typeLabel) : null)
 }
 
 @if (Model.Deleted) {
@@ -96,57 +113,12 @@
 					</tr>
 				}
 								
-				@if (Model.Illustrator != null) {
-					<tr>
-						<td>
-							<span>
-								@Res.Illustrator
-							</span>
-						</td>
-						<td>
-							@ArtistHelpers.ArtistLink(Model.Illustrator)
-						</td>
-					</tr>
-				}
-
-				@if (Model.CharacterDesigns.Any()) {
-					<tr>
-						<td>
-							<span>
-								@Res.IllustratorOf
-							</span>
-						</td>
-						<td>
-							@ArtistHelpers.ArtistLinkList(Model.CharacterDesigns, typeLabel: true)
-						</td>
-					</tr>
-				}
-
-				@if (Model.VoiceProvider != null) {
-					<tr>
-						<td>
-							<span>
-								@Res.VoiceProvider
-							</span>
-						</td>
-						<td>
-							@ArtistHelpers.ArtistLink(Model.VoiceProvider)
-						</td>
-					</tr>
-				}
-
-				@if (Model.Voicebanks.Any()) {
-					<tr>
-						<td>
-							<span>
-								@Res.VoiceProviderOf
-							</span>
-						</td>
-						<td>
-							@ArtistHelpers.ArtistLinkList(Model.Voicebanks, typeLabel: true)
-						</td>
-					</tr>
-				}
+				@ArtistListRow(Res.Illustrator, Model.Illustrators, false)
+				@ArtistListRow(Res.IllustratorOf, Model.IllustratorOf, true)
+				@ArtistRow(Res.VoiceProvider, Model.VoiceProvider, false)
+				@ArtistListRow(Res.VoiceProviderOf, Model.Voicebanks, true)
+				@ArtistRow("Managed by", Model.Manager, false)
+				@ArtistRow("Character designer", Model.CharacterDesigner, false)
 
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>

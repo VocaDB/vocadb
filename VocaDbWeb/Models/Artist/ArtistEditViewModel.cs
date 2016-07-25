@@ -4,6 +4,7 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
@@ -40,6 +41,10 @@ namespace VocaDb.Web.Models.Artist {
 		public ArtistContract Artist { get; set; }
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
+
+		private IEnumerable<ArtistLinkType> AllowedLinkTypes => EnumVal<ArtistLinkType>.Values.Where(t => t != ArtistLinkType.Group && t != ArtistLinkType.VoiceProvider);
+
+		public Dictionary<string, string> AssociatedArtistTypes => Translate.ArtistLinkTypeNames.GetValuesAndNamesStrings(AllowedLinkTypes);
 
 		public bool CanDelete { get; set; }
 

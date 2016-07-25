@@ -33,8 +33,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 			TopSongs = new SongForApiContract[] {};
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
-			CharacterDesigns = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, LinkDirection.OneToMany)
-				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
+			CharacterDesigner = artist.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.ManyToOne, allowInheritance: true)
+				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
+
 
 			ChildVoicebanks = artist.CanHaveChildVoicebanks ? artist.ChildVoicebanks.Where(c => !c.Deleted)
 				.Select(c => new ArtistContract(c, languagePreference)).ToArray() : new ArtistContract[0];
@@ -42,7 +43,13 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Groups = artist.ArtistLinksOfType(ArtistLinkType.Group, LinkDirection.ManyToOne)
 				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(g => g.Name).ToArray();
 
-			Illustrator = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, LinkDirection.ManyToOne, allowInheritance: true)
+			Illustrators = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, LinkDirection.ManyToOne, allowInheritance: true)
+				.Select(g => new ArtistContract(g, languagePreference)).ToArray();
+
+			IllustratorOf = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, LinkDirection.OneToMany)
+				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
+
+			Manager = artist.ArtistLinksOfType(ArtistLinkType.Manager, LinkDirection.ManyToOne, allowInheritance: true)
 				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 
 			Members = artist.ArtistLinksOfType(ArtistLinkType.Group, LinkDirection.OneToMany)
@@ -70,7 +77,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public ArtistContract BaseVoicebank { get; set; }
 
 		[DataMember]
-		public ArtistContract[] CharacterDesigns { get; set; }
+		public ArtistContract CharacterDesigner { get; set; }
 
 		[DataMember]
 		public ArtistContract[] ChildVoicebanks { get; set; }
@@ -103,10 +110,16 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public bool IsAdded { get; set; }
 
 		[DataMember]
-		public ArtistContract Illustrator { get; set; }
+		public ArtistContract[] Illustrators { get; set; }
+
+		[DataMember]
+		public ArtistContract[] IllustratorOf { get; set; }
 
 		[DataMember]
 		public CommentForApiContract[] LatestComments { get; set; }
+
+		[DataMember]
+		public ArtistContract Manager { get; set; }
 
 		[DataMember]
 		public ArtistContract[] Members { get; set; }

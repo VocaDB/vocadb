@@ -10,6 +10,17 @@ module vdb.viewModels {
 
     export class ArtistEditViewModel {
 
+		public addAssociatedArtist = () => {
+
+			if (this.newAssociatedArtist.isEmpty())
+				return;
+
+			this.associatedArtists.push(new ArtistForArtistEditViewModel({ parent: this.newAssociatedArtist.entry(), linkType: this.newAssociatedArtistType() }));
+
+			this.newAssociatedArtist.clear();
+
+		}
+
 		private addGroup = (artistId: number) => {
 			
 			if (artistId) {
@@ -23,6 +34,7 @@ module vdb.viewModels {
 		public artistType: KnockoutComputed<cls.artists.ArtistType>;
 		public artistTypeStr: KnockoutObservable<string>;
 		public allowBaseVoicebank: KnockoutComputed<boolean>;
+		public associatedArtists: KnockoutObservableArray<ArtistForArtistEditViewModel>;
 		public baseVoicebank: BasicEntryLinkViewModel<dc.ArtistContract>;
 		public baseVoicebankSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public canHaveCircles: KnockoutComputed<boolean>;
@@ -51,6 +63,8 @@ module vdb.viewModels {
 		public illustrator: BasicEntryLinkViewModel<dc.ArtistContract>;
 
 		public names: globalization.NamesEditViewModel;
+		public newAssociatedArtist: BasicEntryLinkViewModel<dc.ArtistContract>;
+		public newAssociatedArtistType = ko.observable<string>();
 		public pictures: EntryPictureFileListEditViewModel;
 
 		public removeGroup = (group: dc.artists.ArtistForArtistContract) => {
@@ -72,6 +86,7 @@ module vdb.viewModels {
 
 			var submittedModel: dc.artists.ArtistForEditContract = {
 				artistType: this.artistTypeStr(),
+				associatedArtists: _.map(this.associatedArtists(), a => a.toContract()),
 				baseVoicebank: this.baseVoicebank.entry(),
 				defaultNameLanguage: this.defaultNameLanguage(),
 				description: this.description.toContract(),
@@ -116,6 +131,7 @@ module vdb.viewModels {
 			this.artistTypeStr = ko.observable(data.artistType);
 			this.artistType = ko.computed(() => cls.artists.ArtistType[this.artistTypeStr()]);
 			this.allowBaseVoicebank = ko.computed(() => helpers.ArtistHelper.isVocalistType(this.artistType()) || this.artistType() == cls.artists.ArtistType.OtherIndividual);
+			this.associatedArtists = ko.observableArray(_.map(data.associatedArtists, a => new ArtistForArtistEditViewModel(a)));
 			this.baseVoicebank = new BasicEntryLinkViewModel(data.baseVoicebank, artistRepo.getOne);
 			this.description = new globalization.EnglishTranslatedStringEditViewModel(data.description);
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
@@ -123,6 +139,7 @@ module vdb.viewModels {
 			this.id = data.id;
 			this.illustrator = new BasicEntryLinkViewModel(data.illustrator, artistRepo.getOne);
 			this.names = globalization.NamesEditViewModel.fromContracts(data.names);
+			this.newAssociatedArtist = new BasicEntryLinkViewModel(null, artistRepo.getOne);
 			this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
 			this.status = ko.observable(data.status);
 			this.voiceProvider = new BasicEntryLinkViewModel(data.voiceProvider, artistRepo.getOne);
@@ -141,6 +158,8 @@ module vdb.viewModels {
 			this.canHaveRelatedArtists = ko.computed(() => {
 				return helpers.ArtistHelper.isVocalistType(this.artistType());
 			});
+
+			this.newAssociatedArtist.entry.subscribe(this.addAssociatedArtist);
 
 			this.validationError_needReferences = ko.computed(() => (this.description.original() == null || this.description.original().length) == 0 && this.webLinks.webLinks().length == 0);
 			this.validationError_needType = ko.computed(() => this.artistType() === cls.artists.ArtistType.Unknown);
@@ -167,5 +186,24 @@ module vdb.viewModels {
         }
 
     }
+
+	export class ArtistForArtistEditViewModel {
+
+		constructor(link: dc.artists.ArtistForArtistContract) {
+			this.linkType = ko.observable(link.linkType);
+			this.parent = link.parent;
+		}
+
+		public linkType: KnockoutObservable<string>;
+
+		public parent: dc.ArtistContract;
+
+		public toContract = () => {
+			return {
+				linkType: this.linkType(), parent: this.parent
+			} as dc.artists.ArtistForArtistContract;
+		}
+
+	}
 
 }

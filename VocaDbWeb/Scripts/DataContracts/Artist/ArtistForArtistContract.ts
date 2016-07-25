@@ -6,7 +6,9 @@ module vdb.dataContracts.artists {
 		parent: ArtistContract;
 
 		// Link ID
-		id: number;
+		id?: number;
+
+		linkType?: string;
 
 	}
 

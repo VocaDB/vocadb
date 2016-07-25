@@ -13,7 +13,6 @@ namespace VocaDb.Model.Service.Translations {
 		where TEnum : struct, IConvertible {
 
 		private readonly Func<ResourceManager> resourceManager;
-		private readonly TEnum[] values;
 
 		internal ResourceManager ResourceManager => resourceManager();
 
@@ -35,19 +34,19 @@ namespace VocaDb.Model.Service.Translations {
 
 		public TranslateableEnum(Func<ResourceManager> resourceManager) {
 			this.resourceManager = resourceManager;
-			this.values = EnumVal<TEnum>.Values;
+			this.Values = EnumVal<TEnum>.Values;
 		}
 
 		public TranslateableEnum(Func<ResourceManager> resourceManager, IEnumerable<TEnum> values) {
 			this.resourceManager = resourceManager;
-			this.values = values.ToArray();
+			this.Values = values.ToArray();
 		}
 
 		public string this[TEnum val] => GetName(val);
 
 		public IEnumerable<TranslateableEnumField<TEnum>> AllFields {
 			get {
-				return values.Select(v => new TranslateableEnumField<TEnum>(v, GetName(v)));
+				return Values.Select(v => new TranslateableEnumField<TEnum>(v, GetName(v)));
 			}
 		}
 
@@ -57,9 +56,7 @@ namespace VocaDb.Model.Service.Translations {
 			}
 		}
 
-		public TEnum[] Values {
-			get { return values; }
-		}
+		public TEnum[] Values { get; }
 
 		public string GetAllNameNames(TEnum flags, params TEnum[] except) {
 
@@ -95,7 +92,7 @@ namespace VocaDb.Model.Service.Translations {
 			return values.ToDictionary(t => t, t => GetName(t, res));
 		}
 
-		public Dictionary<string, string> GetValuesAndNamesStrings(TEnum[] values) {
+		public Dictionary<string, string> GetValuesAndNamesStrings(IEnumerable<TEnum> values) {
 			var res = ResourceManager;
 			return values.ToDictionary(t => t.ToString(), t => GetName(t, res));
 		}
