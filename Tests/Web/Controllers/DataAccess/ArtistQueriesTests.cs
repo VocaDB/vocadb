@@ -362,6 +362,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_ArtistLinks_ChangeRole() {
 
 			// Arrange
+			artist.ArtistType = ArtistType.Vocaloid;
 			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
 			artist.AddGroup(illustrator, ArtistLinkType.Illustrator);
 
