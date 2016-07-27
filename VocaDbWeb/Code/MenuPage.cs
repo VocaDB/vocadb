@@ -64,6 +64,7 @@ namespace VocaDb.Web.Code {
 					new Link("Vocaloid News Network", "https://www.vocaloidnews.net/", "vnn.png"),
 					new Link("VocaloidOtaku", "http://vocaloidotaku.net", "vo_small.png"),
 					new Link("Vocaloidism", "http://vocaloidism.com", "vocaloidism_small.png"),
+					new Link("VocaEuro", "https://vocaeuro.wordpress.com/", "vocaeuro.jpg"),
 				}.RandomSort().ToArray();
 
 			} else {
