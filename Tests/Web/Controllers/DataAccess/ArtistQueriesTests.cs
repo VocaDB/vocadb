@@ -335,12 +335,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_ArtistLinks() {
 
 			// Arrange
-			var group = repository.Save(CreateEntry.Artist(ArtistType.Circle));
+			var circle = repository.Save(CreateEntry.Artist(ArtistType.Circle));
 			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
 
 			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English) {
 				Groups = new[] {
-					new ArtistForArtistContract { Parent = new ArtistContract(group, ContentLanguagePreference.English)},
+					new ArtistForArtistContract { Parent = new ArtistContract(circle, ContentLanguagePreference.English)},
 				},
 				Illustrator = new ArtistContract(illustrator, ContentLanguagePreference.English)
 			};
@@ -352,8 +352,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var artistFromRepo = repository.Load(contract.Id);
 
 			Assert.AreEqual(2, artistFromRepo.AllGroups.Count, "Number of groups");
-			Assert.IsTrue(artistFromRepo.HasGroup(group), "Has group");
+			Assert.IsTrue(artistFromRepo.HasGroup(circle), "Has group");
 			Assert.IsTrue(artistFromRepo.HasGroup(illustrator), "Has illustrator");
+			Assert.AreEqual(ArtistLinkType.Group, artistFromRepo.Groups.First(g => g.Parent.Equals(circle)).LinkType, "Artist link type for circle");
 			Assert.AreEqual(ArtistLinkType.Illustrator, artistFromRepo.Groups.First(g => g.Parent.Equals(illustrator)).LinkType, "Artist link type for illustrator");
 
 		}

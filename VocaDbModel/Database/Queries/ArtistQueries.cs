@@ -637,6 +637,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var newGroups = properties.Groups
+					.Select(g => new ArtistForArtistContract { Parent = g.Parent, LinkType = ArtistLinkType.Group })
 					.Concat(new[] {
 						new ArtistForArtistContract { Parent = properties.Illustrator, LinkType = ArtistLinkType.Illustrator },
 						new ArtistForArtistContract { Parent = properties.VoiceProvider, LinkType = ArtistLinkType.VoiceProvider }
