@@ -34,6 +34,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private ArtistQueries queries;
 		private FakeArtistRepository repository;
 		private User user;
+		private Artist vocalist;
 
 		private ArtistForEditContract CallUpdate(ArtistForEditContract contract) {
 			contract.Id = queries.Update(contract, null, permissionContext);
@@ -52,13 +53,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void SetUp() {
 
 			artist = CreateEntry.Producer(name: "Tripshots");
-			repository = new FakeArtistRepository(artist);
+			vocalist = CreateEntry.Vocalist(name: "Hatsune Miku");
+			repository = new FakeArtistRepository(artist, vocalist);
 			var weblink = new ArtistWebLink(artist, "Website", "http://tripshots.net", WebLinkCategory.Official);
 			artist.WebLinks.Add(weblink);
 			repository.Save(weblink);
-
-			foreach (var name in artist.Names)
-				repository.Save(name);
+			repository.SaveNames(artist, vocalist);
 
 			user = CreateEntry.User(name: "Miku", group: UserGroupId.Moderator);
 			repository.Save(user);
@@ -335,10 +335,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_ArtistLinks() {
 
 			// Arrange
-			var circle = repository.Save(CreateEntry.Artist(ArtistType.Circle));
+			var circle = repository.Save(CreateEntry.Circle());
 			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
 
-			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English) {
+			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English) {
 				Groups = new[] {
 					new ArtistForArtistContract { Parent = new ArtistContract(circle, ContentLanguagePreference.English)},
 				},
@@ -363,12 +363,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_ArtistLinks_ChangeRole() {
 
 			// Arrange
-			artist.ArtistType = ArtistType.Vocaloid;
 			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
-			artist.AddGroup(illustrator, ArtistLinkType.Illustrator);
+			vocalist.AddGroup(illustrator, ArtistLinkType.Illustrator);
 
 			// Change linked artist from illustrator to voice provider
-			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English) {
+			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English) {
 				Illustrator = null,
 				VoiceProvider = new ArtistContract(illustrator, ContentLanguagePreference.English)
 			};
@@ -376,13 +375,40 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			// Act
 			CallUpdate(contract);
 
-			artist = repository.Load(contract.Id);
+			// Assert
+			vocalist = repository.Load(contract.Id);
 
-			Assert.AreEqual(1, artist.AllGroups.Count, "Number of linked artists");
+			Assert.AreEqual(1, vocalist.AllGroups.Count, "Number of linked artists");
 
-			var link = artist.AllGroups[0];
+			var link = vocalist.AllGroups[0];
 			Assert.AreEqual(illustrator, link.Parent, "Linked artist as expected");
 			Assert.AreEqual(ArtistLinkType.VoiceProvider, link.LinkType, "Link type was updated");
+
+		}
+
+		[TestMethod]
+		public void Update_ArtistLinks_IgnoreInvalid() {
+
+			// Arrange
+			var circle = repository.Save(CreateEntry.Circle());
+			var circle2 = repository.Save(CreateEntry.Circle());
+
+			// Cannot add character designer for producer
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English) {
+				AssociatedArtists = new[] {
+					new ArtistForArtistContract(new ArtistForArtist(circle, artist, ArtistLinkType.CharacterDesigner), ContentLanguagePreference.English),
+				},
+				Groups = new[] {
+					new ArtistForArtistContract(new ArtistForArtist(circle2, artist, ArtistLinkType.Group), ContentLanguagePreference.English)
+				}
+			};
+
+			// Act
+			CallUpdate(contract);
+
+			// Assert
+			Assert.AreEqual(1, artist.AllGroups.Count, "Number of linked artists");
+			Assert.IsFalse(artist.HasGroup(circle), "Character designer was not added");
 
 		}
 

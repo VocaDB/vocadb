@@ -643,7 +643,7 @@ namespace VocaDb.Model.Database.Queries {
 						new ArtistForArtistContract { Parent = properties.VoiceProvider, LinkType = ArtistLinkType.VoiceProvider }
 					})
 					.Concat(properties.AssociatedArtists)
-					.Where(a => a.Parent != null)
+					.Where(a => a.Parent != null && ArtistHelper.CanHaveRelatedArtists(artist.ArtistType, a.LinkType, LinkDirection.ManyToOne))
 					.ToArray();
 
 				var groupsDiff = CollectionHelper.Diff(artist.Groups, newGroups, (i, i2) => (i.Parent.Id == i2.Parent.Id && i.LinkType == i2.LinkType));

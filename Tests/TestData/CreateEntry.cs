@@ -27,6 +27,10 @@ namespace VocaDb.Tests.TestData {
 			return new Artist(TranslatedString.Create(name)) { Id = id, ArtistType = artistType };
 		}
 
+		public static Artist Circle(int id = 0, string name = "S.C.X.") {
+			return new Artist(TranslatedString.Create(name ?? "S.C.X.")) { Id = id, ArtistType = ArtistType.Circle };
+		}
+
 		public static ReleaseEventSeries EventSeries(string name) {
 			return new ReleaseEventSeries(name, string.Empty, new string[0]);
 		}
