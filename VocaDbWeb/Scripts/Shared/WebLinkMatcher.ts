@@ -69,6 +69,7 @@ module vdb.utils {
 			{ url: "vocadb.net/", desc: "VocaDB", cat: c.WebLinkCategory.Reference },
             { url: "vocaloiders.com/", desc: "Vocaloiders", cat: c.WebLinkCategory.Reference },
             { url: "vocaloid.wikia.com/wiki/", desc: "Vocaloid Wiki", cat: c.WebLinkCategory.Reference },
+			{ url: "vocalotracks.ssw.co.jp/", desc: "Vocalotracks", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.vocallective.net/", desc: "Vocallective", cat: c.WebLinkCategory.Official },
 			{ url: "weibo.com/", desc: "Weibo", cat: c.WebLinkCategory.Official },
 			{ url: "en.wikipedia.org/wiki/", desc: "Wikipedia (EN)", cat: c.WebLinkCategory.Reference },
