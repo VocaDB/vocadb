@@ -110,7 +110,8 @@
 				
 				<!-- ko if: canHaveRelatedArtists -->
 					<div class="editor-label">
-						<label>Associated artists</label>
+						@Helpers.HelpLabel("Associated artists", "Artists related to this voicebank. These are inherited to derived voicebanks. " +
+							"Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider.")
 					</div>
 					<div class="editor-field">
 						<table>

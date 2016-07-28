@@ -139,11 +139,14 @@
 	@DropdownList(Translate.ContentLanguageSelectionNames.ValuesAndNamesStrings, valueBinding)
 }
 
+@* 
+	Autocomplete box that allows selection of one item. When an item is selected, "clear" button will be displayed.
+*@
 @helper LockingAutoComplete(string bindingHandler, string binding, string textBinding = null, string valBinding = null, string extraBindings = null) {
 	<input type="text" class="input-large" data-bind="@bindingHandler: @binding, visible: !@(valBinding ?? binding)()@(!string.IsNullOrEmpty(extraBindings) ? ", " + extraBindings : "")" placeholder="@ViewRes.SharedStrings.Search" />
 	<div class="input-append" data-bind="visible: @(valBinding ?? binding)()" style="display: none;">
 		<input type="text" class="input-large" readonly data-bind="value: @(textBinding ?? binding)" />
-		<button type="button" class="btn btn-danger" data-bind="click: function() { @(valBinding ?? binding)(null); }">Clear</button>
+		<button type="button" class="btn btn-danger" data-bind="click: function() { @(valBinding ?? binding)(null); }">@ViewRes.SharedStrings.Clear</button>
 	</div>
 }
 
