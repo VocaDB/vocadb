@@ -1,0 +1,15 @@
+﻿@using R = ViewRes.User.DetailsStrings;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserDetailsContract>
+	
+@{ var ownProfile = UserContext.IsLoggedIn && UserContext.LoggedUserId == Model.Id && UserContext.LoggedUser.Active; }
+
+@{ Html.RenderPartial("Partials/_SongListsFilters"); }
+
+@SongHelpers.SongListsKnockout("items", true)
+	
+<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
+
+@if (ownProfile) {
+	<a href="@Url.Action("Edit", "SongList")" class="textLink addLink">@R.CreateNewList</a>
+	<a href="@Url.Action("Import", "SongList")" class="textLink wandIcon">@R.ImportSongList</a>
+}

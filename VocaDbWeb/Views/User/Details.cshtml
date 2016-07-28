@@ -356,17 +356,7 @@
 </div>
 
 <div data-bind="visible: view() == 'CustomLists', with: songLists">
-	
-	@{ Html.RenderPartial("Partials/_SongListsFilters"); }
-
-	@SongHelpers.SongListsKnockout("items", true)
-	
-	<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
-
-	@if (ownProfile) {
-		<a href="@Url.Action("Edit", "SongList")" class="textLink addLink">@R.CreateNewList</a>
-		<a href="@Url.Action("Import", "SongList")" class="textLink wandIcon">@R.ImportSongList</a>
-	}
+	@{ Html.RenderPartial("Partials/_SongLists"); }
 </div>
 
 <div data-bind="visible: view() == 'Comments'" class="well well-transparent">
