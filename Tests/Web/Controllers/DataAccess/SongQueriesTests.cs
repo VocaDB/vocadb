@@ -5,6 +5,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Activityfeed;
@@ -12,6 +13,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -41,6 +43,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private FakePVParser pvParser;
 		private FakeSongRepository repository;
 		private SongQueries queries;
+		private ReleaseEvent releaseEvent;
 		private Song song;
 		private Tag tag;
 		private User user;
@@ -57,6 +60,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			return queries.FindDuplicates(anyName ?? new string[0], anyPv ?? new string[0], artistIds ?? new int[0], getPvInfo);
 
+		}
+
+		private SongForEditContract EditContract() {
+			return new SongForEditContract(song, ContentLanguagePreference.English);
 		}
 
 		private void AssertHasArtist(Song song, Artist artist, ArtistRoles? roles = null) {
@@ -100,6 +107,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			tag = new Tag("vocarock");
 			repository.Add(tag, new Tag("vocaloud"));
+
+			releaseEvent = repository.Save(new ReleaseEvent { Name = "Comiket 39" });
 
 			permissionContext = new FakePermissionContext(user);
 			entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
@@ -646,6 +655,33 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			contract = queries.UpdateBasicProperties(contract);
 			var songFromRepo = repository.Load(contract.Id);
 			Assert.AreEqual(0, songFromRepo.WebLinks.Count, "Number of weblinks");
+
+		}
+
+		[TestMethod]
+		public void Update_ReleaseEvent_ExistingEvent() {
+
+			var contract = EditContract();
+			contract.ReleaseEvent = new ReleaseEventContract(releaseEvent);
+
+			queries.UpdateBasicProperties(contract);
+
+			Assert.AreSame(releaseEvent, song.ReleaseEvent, "ReleaseEvent");
+
+		}
+
+		[TestMethod]
+		public void Update_ReleaseEvent_NewEvent() {
+
+			var contract = EditContract();
+			contract.ReleaseEvent = new ReleaseEventContract { Name = "Comiket 40" };
+
+			queries.UpdateBasicProperties(contract);
+
+			Assert.IsNotNull(song.ReleaseEvent, "ReleaseEvent");
+			Assert.AreSame("Comiket 40", song.ReleaseEvent.Name, "ReleaseEvent.Name");
+
+			Assert.AreEqual(1, song.ReleaseEvent.ArchivedVersionsManager.Versions.Count, "New release event was archived");
 
 		}
 

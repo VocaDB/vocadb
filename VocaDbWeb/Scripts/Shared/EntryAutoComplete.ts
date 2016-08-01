@@ -6,6 +6,9 @@
 
 		createCustomItem?: string;
 
+		// Label template for creating a new item. 
+		// {0} will be replaced with the searched item, for example "Create new song named {0}". 
+		// If empty or undefined, no new entries can be created this way.
 		createNewItem?: string;
 
 		// Creates the content for the first row of the autocomplete item.

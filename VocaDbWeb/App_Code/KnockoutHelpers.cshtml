@@ -150,6 +150,14 @@
 	</div>
 }
 
+@helper BasicEntryLinkLockingAutoComplete(string bindingHandler, string binding, string extraBindings = null) {
+	<input type="text" class="input-large" data-bind="@bindingHandler: @(binding).entry, visible: @(binding).isEmpty()@(!string.IsNullOrEmpty(extraBindings) ? ", " + extraBindings : "")" placeholder="@ViewRes.SharedStrings.Search" />
+	<div class="input-append" data-bind="visible: !@(binding).isEmpty()" style="display: none;">
+		<input type="text" class="input-large" readonly data-bind="value: @(binding).name()" />
+		<button type="button" class="btn btn-danger" data-bind="click: @(binding).clear">@ViewRes.SharedStrings.Clear</button>
+	</div>
+}
+
 @helper SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
 	<div data-bind="visible: @visibleBinding, with: @viewModel" class="inline-block search-sort-menu">
 		@ViewRes.EntryIndexStrings.SortBy

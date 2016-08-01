@@ -1,9 +1,9 @@
 ﻿
 namespace vdb.dataContracts {
 
-	export class ReleaseEventContract {
+	export interface ReleaseEventContract {
 
-		date: string;
+		date?: string;
 
 		id: number;
 

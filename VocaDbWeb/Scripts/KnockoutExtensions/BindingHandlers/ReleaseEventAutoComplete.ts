@@ -5,7 +5,7 @@ interface KnockoutBindingHandlers {
 
 // Tag autocomplete search box.
 ko.bindingHandlers.releaseEventAutoComplete = {
-	init: (element: HTMLElement, valueAccessor: () => any, allBindingsAccessor: () => any) => {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<dc.ReleaseEventContract>, allBindingsAccessor: () => any) => {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
@@ -13,13 +13,14 @@ ko.bindingHandlers.releaseEventAutoComplete = {
 			preferAccurateMatches: true,
 			maxResults: 20,
 			sort: 'Name'
-		};
+		};	
 
 		var params: vdb.EntryAutoCompleteParams<dc.ReleaseEventContract> = {
 			acceptSelection: (id, term, itemType, item) => {
-				valueAccessor()(item);
+				valueAccessor()(item || { id: id, name: term });
 			},
 			createOptionFirstRow: (item) => item.name,
+			createNewItem: allBindingsAccessor().createNewItem,
 			extraQueryParams: queryParams
 		};
 
