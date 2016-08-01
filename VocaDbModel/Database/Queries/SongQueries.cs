@@ -867,7 +867,7 @@ namespace VocaDb.Model.Database.Queries {
 					song.ReleaseEvent = ctx.NullSafeLoad<ReleaseEvent>(properties.ReleaseEvent);
 				}
 
-				if (properties.ReleaseEvent.Id == 0 && !string.IsNullOrWhiteSpace(properties.ReleaseEvent.Name)) {
+				if (properties.ReleaseEvent != null && properties.ReleaseEvent.Id == 0 && !string.IsNullOrWhiteSpace(properties.ReleaseEvent.Name)) {
 					diff.ReleaseEvent = true;
 					song.ReleaseEvent = CreateReleaseEvent(ctx, properties.ReleaseEvent.Name);
 				}
