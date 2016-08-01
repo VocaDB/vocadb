@@ -16,7 +16,12 @@ namespace VocaDb.Model.Domain.Versioning {
 		protected EntryDiff(bool isSnapshot = false) {
 			IsSnapshot = isSnapshot;
 			ChangedFields = new EnumVal<T>();
-		} 
+		}
+
+		protected EntryDiff(T changedFields) {
+			ChangedFields = new EnumVal<T>(changedFields);
+			IsSnapshot = false;
+		}
 
 		public virtual EnumVal<T> ChangedFields { get; set; }
 

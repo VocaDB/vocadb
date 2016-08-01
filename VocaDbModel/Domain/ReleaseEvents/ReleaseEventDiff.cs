@@ -8,6 +8,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public ReleaseEventDiff(bool isSnapshot) : base(isSnapshot) { }
 
+		public ReleaseEventDiff(ReleaseEventEditableFields changedFields) : base(changedFields) { }
+
 		public EnumFieldAccessor<ReleaseEventEditableFields> Date => Field(ReleaseEventEditableFields.Date);
 
 		public EnumFieldAccessor<ReleaseEventEditableFields> Description => Field(ReleaseEventEditableFields.Description);

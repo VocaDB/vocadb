@@ -789,7 +789,7 @@ namespace VocaDb.Model.Database.Queries {
 		private ReleaseEvent CreateReleaseEvent(IDatabaseContext<Song> ctx, string name) {
 			var releaseEvent = new ReleaseEvent(string.Empty, null, name);
 			ctx.Save(releaseEvent);
-			var eventDiff = new ReleaseEventDiff();
+			var eventDiff = new ReleaseEventDiff(ReleaseEventEditableFields.Name);
 			eventDiff.Name.Set();
 			releaseEvent.CreateArchivedVersion(eventDiff, ctx.OfType<User>().CreateAgentLoginData(PermissionContext),
 				EntryEditEvent.Created);
