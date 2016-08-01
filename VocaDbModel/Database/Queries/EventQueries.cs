@@ -315,6 +315,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (contract.Id == 0) {
 
 					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Aliases);
+					session.Save(series);
 
 					var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
 
@@ -322,12 +323,12 @@ namespace VocaDb.Model.Database.Queries {
 						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
 					}
 
-					session.Save(series);
-
 					if (pictureData != null) {
 						SaveImage(series, pictureData);
 						session.Update(series);
 					}
+
+					session.Update(series);
 
 					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(series)), session);
 
