@@ -26,10 +26,10 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryThumbPersister imagePersister;
 
-		private ArchivedReleaseEventVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason) {
+		private ArchivedReleaseEventVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason, string notes) {
 
 			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(permissionContext);
-			var archived = releaseEvent.CreateArchivedVersion(diff, agentLoginData, reason);
+			var archived = ArchivedReleaseEventVersion.Create(releaseEvent, diff, agentLoginData, reason, notes);
 			ctx.Save(archived);
 			return archived;
 
@@ -219,7 +219,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.Save(ev);
 
-					var archived = Archive(session, ev, diff, EntryEditEvent.Created);
+					var archived = Archive(session, ev, diff, EntryEditEvent.Created, string.Empty);
 					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
 
 					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
@@ -272,7 +272,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.Update(ev);
 
-					var archived = Archive(session, ev, diff, EntryEditEvent.Updated);
+					var archived = Archive(session, ev, diff, EntryEditEvent.Updated, string.Empty);
 					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
 
 					var logStr = string.Format("updated properties for {0} ({1})", entryLinkFactory.CreateEntryLink(ev), diff.ChangedFieldsString);

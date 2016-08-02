@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
@@ -14,6 +13,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ArchivedEventContract(ReleaseEvent ev, ReleaseEventDiff diff) {
 
 			ParamIs.NotNull(() => ev);
+			ParamIs.NotNull(() => diff);
 
 			Date = ev.Date;
 			Description = ev.Description;

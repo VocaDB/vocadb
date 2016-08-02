@@ -1,12 +1,24 @@
 ﻿using System;
+using System.Xml.Linq;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Albums {
 
 	public class ArchivedReleaseEventVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<ReleaseEventEditableFields> {
+
+		public static ArchivedReleaseEventVersion Create(ReleaseEvent releaseEvent, ReleaseEventDiff diff, AgentLoginData author, EntryEditEvent commonEditEvent, string notes) {
+
+			var contract = new ArchivedEventContract(releaseEvent, diff);
+			var data = XmlHelper.SerializeToXml(contract);
+
+			return releaseEvent.CreateArchivedVersion(data, diff, author, commonEditEvent, notes);
+
+		}
 
 		private string description;
 		private ReleaseEventDiff diff;
@@ -17,9 +29,9 @@ namespace VocaDb.Model.Domain.Albums {
 			Status = EntryStatus.Finished;
 		}
 
-		public ArchivedReleaseEventVersion(ReleaseEvent releaseEvent, ReleaseEventDiff diff, AgentLoginData author,
-			EntryEditEvent commonEditEvent)
-			: base(null, author, releaseEvent.Version, EntryStatus.Finished, string.Empty) {
+		public ArchivedReleaseEventVersion(ReleaseEvent releaseEvent, XDocument data, ReleaseEventDiff diff, AgentLoginData author,
+			EntryEditEvent commonEditEvent, string notes)
+			: base(data, author, releaseEvent.Version, EntryStatus.Finished, notes) {
 
 			ParamIs.NotNull(() => diff);
 

@@ -806,14 +806,18 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private ReleaseEvent CreateReleaseEvent(IDatabaseContext<Song> ctx, string name) {
+		private ReleaseEvent CreateReleaseEvent(IDatabaseContext<Song> ctx, string name, Song song) {
+
 			var releaseEvent = new ReleaseEvent(string.Empty, null, name);
 			ctx.Save(releaseEvent);
 			var eventDiff = new ReleaseEventDiff(ReleaseEventEditableFields.Name);
 			eventDiff.Name.Set();
-			releaseEvent.CreateArchivedVersion(eventDiff, ctx.OfType<User>().CreateAgentLoginData(PermissionContext),
-				EntryEditEvent.Created);
+
+			var archivedVersion = ArchivedReleaseEventVersion.Create(releaseEvent, eventDiff, ctx.OfType<User>().CreateAgentLoginData(PermissionContext), EntryEditEvent.Created, "Created for " + song);
+			ctx.Save(archivedVersion);
+
 			return releaseEvent;
+
 		}
 
 		public SongForEditContract UpdateBasicProperties(SongForEditContract properties) {
@@ -889,7 +893,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (properties.ReleaseEvent != null && properties.ReleaseEvent.Id == 0 && !string.IsNullOrWhiteSpace(properties.ReleaseEvent.Name)) {
 					diff.ReleaseEvent = true;
-					song.ReleaseEvent = CreateReleaseEvent(ctx, properties.ReleaseEvent.Name);
+					song.ReleaseEvent = CreateReleaseEvent(ctx, properties.ReleaseEvent.Name, song);
 				}
 
 				if (!song.PublishDate.Equals(properties.PublishDate)) {

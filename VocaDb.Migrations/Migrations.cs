@@ -4,6 +4,18 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201608022200)]
+	public class ArchivedReleaseEventNotesAndData : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("[Data]").OnTable(TableNames.ArchivedEventVersions).AsXml().Nullable();
+			Create.Column("Notes").OnTable(TableNames.ArchivedEventVersions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
+				
+		}
+
+	}
+
 	[Migration(201607231900)]
 	public class ReleaseEventsForSongs : AutoReversingMigration {
 
