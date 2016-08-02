@@ -8,7 +8,7 @@ namespace VocaDb.Model.Service.VideoServices {
 	public class NicoTitleParseResult {
 
 		public NicoTitleParseResult(string title)
-			: this(title, new List<Artist>(), SongType.Original) { }
+			: this(title, new List<Artist>(), SongType.Unspecified) { }
 
 		public NicoTitleParseResult(string title, List<Artist> artistNames, SongType songType) {
 			Artists = artistNames;

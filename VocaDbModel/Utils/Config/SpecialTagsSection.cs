@@ -10,10 +10,15 @@ namespace VocaDb.Model.Utils.Config {
 		}
 
 		[ConfigurationProperty("changedLyrics")]
-		public int ChangedLyrics
-		{
+		public int ChangedLyrics {
 			get { return TagId("changedLyrics"); }
 			set { this["changedLyrics"] = value; }
+		}
+
+		[ConfigurationProperty("cover")]
+		public int Cover {
+			get { return TagId("cover"); }
+			set { this["cover"] = value; }
 		}
 
 		[ConfigurationProperty("free")]

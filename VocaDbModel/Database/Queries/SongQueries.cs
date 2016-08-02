@@ -101,6 +101,10 @@ namespace VocaDb.Model.Database.Queries {
 			var tags = GetTags(ctx.OfType<Tag>(), pvResult.Tags);
 
 			foreach (var tag in tags) {
+
+				if (song.SongType == SongType.Cover && tag.Id == config.SpecialTags.Cover) {
+					continue;
+				}
 							
 				var usage = song.AddTag(tag.ActualTag);
 
@@ -190,15 +194,31 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private bool HasTag(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res) {
+
+			if (config.SpecialTags.Cover == 0)
+				return false;
+
+			var coverTag = ctx.Load<Tag>(config.SpecialTags.Cover);
+			return res.Tags.Any(t => coverTag.Names.AllValues.Contains(t));
+
+		}
+
 		private NicoTitleParseResult ParseNicoPV(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res) {
 
 			if (res == null || !res.IsOk)
 				return null;
 
 			var titleParseResult = NicoHelper.ParseTitle(res.Title, a => GetArtist(a, ctx, AppConfig.PreferredNicoArtistTypes));
-
+			
 			if (!string.IsNullOrEmpty(titleParseResult.Title))
 				titleParseResult.TitleLanguage = languageDetector.Detect(titleParseResult.Title, ContentLanguageSelection.Unspecified);
+
+			if (titleParseResult.SongType == SongType.Unspecified && HasTag(ctx, res)) {
+				titleParseResult.SongType = SongType.Cover;
+			} else {
+				titleParseResult.SongType = SongType.Original;
+			}
 
 			if (!string.IsNullOrEmpty(res.AuthorId)) {
 
