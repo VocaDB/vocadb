@@ -39,7 +39,7 @@ namespace VocaDb.Tests.TestData {
 			return new Artist(TranslatedString.Create(name ?? "Tripshots")) { Id = id, ArtistType = ArtistType.Producer };
 		}
 
-		public static PVContract PVContract(int id = 0, string pvId = null, PVType pvType = PVType.Original, DateTime? publishDate = null) {
+		public static PVContract PVContract(int id = 0, string pvId = "mikumikumiku", PVType pvType = PVType.Original, DateTime? publishDate = null) {
 			return new PVContract { Id = id, Service = PVService.Youtube, PVId = pvId, Name = "Nebula", PVType = pvType, PublishDate = publishDate };
 		}
 

@@ -685,5 +685,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		[TestMethod]
+		public void Update_SendNotificationsForNewPVs() {
+
+			song.PVs.PVs.Clear();
+			song.CreateDate = DateTime.Now - TimeSpan.FromDays(30);
+			repository.Save(user2.AddArtist(producer));
+			var contract = EditContract();
+			contract.PVs = new[] { CreateEntry.PVContract() };
+
+			queries.UpdateBasicProperties(contract);
+
+			var notifications = repository.List<UserMessage>();
+			Assert.AreEqual(1, notifications.Count, "Notification was sent");
+			var notification = notifications.First();
+			Assert.AreEqual(user2, notification.User, "Notification was sent to user");
+
+		}
+
 	}
 }

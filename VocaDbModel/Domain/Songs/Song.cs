@@ -140,6 +140,9 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		/// <summary>
+		/// List of artists for this song. Does not include deleted artists.
+		/// </summary>
 		public virtual IEnumerable<Artist> ArtistList {
 			get {
 				return Artists
