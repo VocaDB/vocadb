@@ -74,7 +74,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PiaproClient, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PiaproClient.1.1.1.0\lib\net45\PiaproClient.dll</HintPath>
+      <HintPath>..\packages\PiaproClient.1.1.2.0\lib\net45\PiaproClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
