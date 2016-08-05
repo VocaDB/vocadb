@@ -253,14 +253,14 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Posts a new comment.
 		/// </summary>
-		/// <param name="songId">ID of the song for which to create the comment.</param>
+		/// <param name="listId">ID of the song list for which to create the comment.</param>
 		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
-		[System.Web.Http.Route("{songId:int}/comments")]
-		[System.Web.Http.Authorize]
-		public CommentForApiContract PostNewComment(int songId, CommentForApiContract contract) {
+		[Route("{listId:int}/comments")]
+		[Authorize]
+		public CommentForApiContract PostNewComment(int listId, CommentForApiContract contract) {
 
-			return queries.CreateComment(songId, contract);
+			return queries.CreateComment(listId, contract);
 
 		}
 

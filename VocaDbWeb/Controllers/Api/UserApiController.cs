@@ -426,7 +426,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/ratedSongs/{songId:int}")]
 		[Authorize]
 		[EnableCors(origins: "*", headers: "*", methods: "get", SupportsCredentials = true)]
-		public SongVoteRating GetSongRating(int songId) {
+		public SongVoteRating GetSongRatingForCurrent(int songId) {
 			
 			return GetSongRating(permissionContext.LoggedUserId, songId);
 
