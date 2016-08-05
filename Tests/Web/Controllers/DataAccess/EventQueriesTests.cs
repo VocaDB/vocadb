@@ -45,7 +45,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(existingEvent);
 
 			album = CreateEntry.Album(name: "Day's Footsteps");
-			album.OriginalReleaseEvent = new ReleaseEvent(string.Empty, null, "M3 2013 Spring");
+			album.OriginalReleaseEvent = existingEvent;
 			repository.Save(album);
 
 			user = CreateEntry.User(group: UserGroupId.Trusted);

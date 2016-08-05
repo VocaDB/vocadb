@@ -5,9 +5,6 @@ namespace VocaDb.Model.Domain.Albums {
 
 	public class AlbumRelease : IAlbumRelease {
 
-		int IAlbumRelease.EventId => ReleaseEvent?.Id ?? 0;
-		string IAlbumRelease.EventName => ReleaseEvent?.Name;
-
 		private string catNum;
 
 		public AlbumRelease() {}

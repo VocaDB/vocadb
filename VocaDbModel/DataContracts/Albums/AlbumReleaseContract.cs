@@ -8,9 +8,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class AlbumReleaseContract : IAlbumRelease {
 
-		int IAlbumRelease.EventId => ReleaseEvent?.Id ?? 0;
-		string IAlbumRelease.EventName => ReleaseEvent?.Name;
-
 		public AlbumReleaseContract() {}
 
 		public AlbumReleaseContract(AlbumRelease release) {

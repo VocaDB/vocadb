@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 
@@ -7,9 +6,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedAlbumReleaseContract : IAlbumRelease {
-
-		int IAlbumRelease.EventId => ReleaseEvent?.Id ?? 0;
-		string IAlbumRelease.EventName => ReleaseEvent?.NameHint;
 
 		public ArchivedAlbumReleaseContract() { }
 
