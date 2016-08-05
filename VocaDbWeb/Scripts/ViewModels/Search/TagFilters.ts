@@ -20,7 +20,7 @@ module vdb.viewModels.search {
 
 		}
 
-		public addTag = (tag: dc.TagBaseContract) => this.tags.push(new TagFilter(tag.id, tag.name, tag.urlSlug));
+		public addTag = (tag: dc.TagBaseContract) => this.tags.push(TagFilter.fromContract(tag));
 
 		public addTags = (
 			selectedTagIds: number[]) => {
@@ -51,6 +51,10 @@ module vdb.viewModels.search {
 
 		// Fired when any of the tag filters is changed
 		public filters: KnockoutComputed<void>;
+
+		public selectTag = (tag: dc.TagBaseContract) => {
+			this.tags([ TagFilter.fromContract(tag) ]);
+		}
 
 		public tags: KnockoutObservableArray<TagFilter>;
 		public tagIds: KnockoutComputed<number[]>;

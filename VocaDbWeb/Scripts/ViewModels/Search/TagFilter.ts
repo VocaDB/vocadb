@@ -3,6 +3,10 @@ module vdb.viewModels.search {
 
 	export class TagFilter {
 
+		public static fromContract = (tag: dc.TagBaseContract) => {
+			return new TagFilter(tag.id, tag.name, tag.urlSlug);
+		}
+
 		constructor(public id: number, name?: string, urlSlug?: string) {
 			this.name(name);
 			this.urlSlug(urlSlug);
