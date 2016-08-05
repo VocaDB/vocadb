@@ -453,35 +453,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void UpdateAllReleaseEventNames(string old, string newName) {
-
-			ParamIs.NotNullOrWhiteSpace(() => old);
-			ParamIs.NotNullOrWhiteSpace(() => newName);
-
-			old = old.Trim();
-			newName = newName.Trim();
-
-			if (old.Equals(newName))
-				return;
-
-			VerifyManageDatabase();
-
-			HandleTransaction(session => {
-
-				AuditLog("replacing release event name '" + old + "' with '" + newName + "'", session);
-
-				var albums = session.Query<Album>().Where(a => a.OriginalRelease.EventName == old).ToArray();
-
-				foreach (var a in albums) {
-					a.OriginalRelease.EventName = newName;
-					NHibernateUtil.Initialize(a.CoverPictureData);
-					session.Update(a);
-				}
-
-			});
-
-		}
-
 		public void UpdateArtistForAlbumIsSupport(int artistForAlbumId, bool isSupport) {
 
 			VerifyManageDatabase();

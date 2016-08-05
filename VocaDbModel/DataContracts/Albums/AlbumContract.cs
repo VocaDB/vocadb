@@ -4,6 +4,7 @@ using VocaDb.Model.Domain.Globalization;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 
@@ -49,7 +50,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			RatingAverage = album.RatingAverage;
 			RatingCount = album.RatingCount;
 			ReleaseDate = new OptionalDateTimeContract(album.OriginalReleaseDate);
-			ReleaseEvent = album.OriginalReleaseEventName;
+			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, ReleaseEventOptionalFields.None) : null;
 			Status = album.Status;
 			Version = album.Version;
 
@@ -111,7 +112,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public OptionalDateTimeContract ReleaseDate { get; set; }
 
 		[DataMember]
-		public string ReleaseEvent { get; set; }
+		public ReleaseEventForApiContract ReleaseEvent { get; set; }
 
 		[DataMember]
 		public EntryStatus Status { get; set; }

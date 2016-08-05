@@ -4,7 +4,11 @@ using VocaDb.Model.Domain;
 namespace VocaDb.Model.DataContracts {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ObjectRefContract {
+	public class ObjectRefContract : IEntryWithIntId {
+
+		public static ObjectRefContract Create(IEntryBase entry) {
+			return entry != null ? new ObjectRefContract(entry) : null;
+		}
 
 		public ObjectRefContract() {}
 

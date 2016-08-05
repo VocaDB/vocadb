@@ -21,6 +21,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -365,8 +366,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (string.IsNullOrEmpty(target.OriginalRelease.CatNum) && source.OriginalRelease != null)
 					target.OriginalRelease.CatNum = source.OriginalRelease.CatNum;
 
-				if (string.IsNullOrEmpty(target.OriginalRelease.EventName) && source.OriginalRelease != null)
-					target.OriginalRelease.EventName = source.OriginalRelease.EventName;
+				if (target.OriginalRelease.ReleaseEvent == null && source.OriginalRelease != null)
+					target.OriginalRelease.ReleaseEvent = source.OriginalRelease.ReleaseEvent;
 
 				if (target.OriginalRelease.ReleaseDate == null)
 					target.OriginalRelease.ReleaseDate = new OptionalDateTime();
@@ -489,7 +490,7 @@ namespace VocaDb.Model.Database.Queries {
 				diff.Cover = !Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic);
 
 				// Original release
-				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease) : null);
+				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent)) : null);
 
 				// Artists
 				DatabaseContextHelper.RestoreObjectRefs<ArtistForAlbum, Artist, ArchivedArtistForAlbumContract>(
@@ -594,7 +595,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (webLinkDiff.Changed)
 					diff.WebLinks = true;
 
-				var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease) : new AlbumRelease());
+				var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(properties.OriginalRelease.ReleaseEvent)) : new AlbumRelease());
 
 				if (album.OriginalRelease == null)
 					album.OriginalRelease = new AlbumRelease();

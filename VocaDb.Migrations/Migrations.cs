@@ -4,6 +4,28 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201608052200)]
+	public class AlbumReleaseEventId : Migration {
+
+		public override void Up() {
+
+			Create.Column("ReleaseEvent").OnTable(TableNames.Albums).AsInt32().Nullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.SetNull);
+
+			Execute.Sql(string.Format("UPDATE {0} SET {0}.ReleaseEvent = re.Id FROM {0} INNER JOIN {1} re ON ({0}.ReleaseEventName = re.Name)", 
+				TableNames.Albums, TableNames.AlbumReleaseEvents));
+
+			Delete.Column("ReleaseEventName").FromTable(TableNames.Albums);
+
+		}
+
+		public override void Down() {
+
+			Create.Column("ReleaseEventName").OnTable(TableNames.Albums).AsString(50).Nullable().ForeignKey(TableNames.AlbumReleaseEvents, "Name");
+			Delete.Column("ReleaseEvent").FromTable(TableNames.Albums);
+
+		}
+	}
+
 	[Migration(201608022200)]
 	public class ArchivedReleaseEventNotesAndData : AutoReversingMigration {
 

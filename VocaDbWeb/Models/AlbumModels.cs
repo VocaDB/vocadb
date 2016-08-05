@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
@@ -80,7 +81,7 @@ namespace VocaDb.Web.Models {
 
 			if (contract.OriginalRelease != null) {
 				CatNum = contract.OriginalRelease.CatNum;
-				ReleaseEvent = contract.OriginalRelease.EventName;
+				ReleaseEvent = contract.OriginalRelease.ReleaseEvent;
 				ReleaseDate = contract.OriginalRelease.ReleaseDate;
 				FullReleaseDate = ReleaseDate.Year.HasValue && ReleaseDate.Month.HasValue && ReleaseDate.Day.HasValue ? (DateTime?)new DateTime(ReleaseDate.Year.Value, ReleaseDate.Month.Value, ReleaseDate.Day.Value) : null;
 			}
@@ -166,7 +167,7 @@ namespace VocaDb.Web.Models {
 
 		public int RatingCount { get; set; }
 
-		public string ReleaseEvent { get; set; }
+		public ReleaseEventForApiContract ReleaseEvent { get; set; }
 
 		public OptionalDateTimeContract ReleaseDate { get; set; }
 

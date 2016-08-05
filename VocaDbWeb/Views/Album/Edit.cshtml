@@ -192,7 +192,7 @@
 				<label>@Res.BaReleaseEvent</label>
 			</div>
 			<div class="editor-field">
-				<input type="text" data-bind="textInput: releaseEventName, releaseEventNameAutoComplete: releaseEventName, clearValue: false" size="30" id="releaseEvent" />
+				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''")
 			</div>
 
 			<table><tr>

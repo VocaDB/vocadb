@@ -45,7 +45,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(existingEvent);
 
 			album = CreateEntry.Album(name: "Day's Footsteps");
-			album.OriginalReleaseEventName = "M3 2013 Spring";
+			album.OriginalReleaseEvent = new ReleaseEvent(string.Empty, null, "M3 2013 Spring");
 			repository.Save(album);
 
 			user = CreateEntry.User(group: UserGroupId.Trusted);
@@ -124,7 +124,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(2013, contract.SeriesNumber, "SeriesNumber");
 			Assert.AreEqual("Fall", contract.SeriesSuffix, "SeriesSuffix");
 			Assert.AreEqual("M3 2013 Fall", result.Name, "Name");
-			Assert.AreEqual("M3 2013 Fall", album.OriginalReleaseEventName, "OriginalReleaseEventName for album");
+			Assert.AreEqual("M3 2013 Fall", album.OriginalReleaseEvent?.Name, "OriginalReleaseEventName for album");
 
 			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
 			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Search;
@@ -184,12 +185,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		[Obsolete]
 		public static IQueryable<AlbumForUser> WhereHasReleaseEventName(this IQueryable<AlbumForUser> query, string releaseEventName) {
 
 			if (string.IsNullOrEmpty(releaseEventName))
 				return query;
 
-			return query.Where(s => s.Album.OriginalRelease.EventName == releaseEventName);
+			return query.Where(s => s.Album.OriginalRelease.ReleaseEvent.Name == releaseEventName);
 
 		}
 

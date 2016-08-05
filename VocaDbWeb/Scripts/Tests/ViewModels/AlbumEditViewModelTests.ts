@@ -74,7 +74,7 @@ module vdb.tests.viewModels {
 				names: [],
 				originalRelease: {
 					catNum: '',
-					eventName: '',
+					releaseEvent: null,
 					releaseDate: {}
 				},
 				pictures: [],

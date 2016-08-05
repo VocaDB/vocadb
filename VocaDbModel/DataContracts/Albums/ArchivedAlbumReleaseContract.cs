@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 
@@ -6,6 +7,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedAlbumReleaseContract : IAlbumRelease {
+
+		int IAlbumRelease.EventId => ReleaseEvent?.Id ?? 0;
+		string IAlbumRelease.EventName => ReleaseEvent?.NameHint;
 
 		public ArchivedAlbumReleaseContract() { }
 
@@ -19,7 +23,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			if (ReleaseDate != null)
 				ReleaseDate.Formatted = string.Empty;
 
-			EventName = release.EventName;
+			ReleaseEvent = ObjectRefContract.Create(release.ReleaseEvent);
 
 		}
 
@@ -29,12 +33,10 @@ namespace VocaDb.Model.DataContracts.Albums {
 		[DataMember]
 		public OptionalDateTimeContract ReleaseDate { get; set; }
 
-		IOptionalDateTime IAlbumRelease.ReleaseDate {
-			get { return ReleaseDate; }
-		}
+		IOptionalDateTime IAlbumRelease.ReleaseDate => ReleaseDate;
 
 		[DataMember]
-		public string EventName { get; set; }
+		public ObjectRefContract ReleaseEvent { get; set; }
 
 	}
 

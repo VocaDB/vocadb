@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Service.Search {
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Service.Search {
 			if (string.IsNullOrEmpty(query))
 				return new ReleaseEventFindResultContract();
 
-			query = query.Trim();
+			query = query.Trim().Normalize(NormalizationForm.FormKC);   // Replaces fullwidth characters with ASCII
 
 			// Attempt to match exact name
 			var ev = Query<ReleaseEvent>().FirstOrDefault(e => e.Name == query);

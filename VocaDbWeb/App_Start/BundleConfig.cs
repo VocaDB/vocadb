@@ -139,7 +139,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/ParseInteger.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
-				"~/Scripts/KnockoutExtensions/ReleaseEventNameAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 				"~/Scripts/Models/Albums/AlbumType.js",
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Models/Artists/ArtistRoles.js",

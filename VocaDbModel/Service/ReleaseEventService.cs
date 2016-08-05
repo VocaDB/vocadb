@@ -1,13 +1,9 @@
 ﻿using System.Linq;
-using System.Text;
 using NHibernate;
 using NHibernate.Linq;
-using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service {
 
@@ -19,21 +15,6 @@ namespace VocaDb.Model.Service {
 		public void DeleteSeries(int id) {
 
 			DeleteEntity<ReleaseEventSeries>(id, PermissionToken.ManageEventSeries);
-
-		}
-
-		public ReleaseEventFindResultContract Find(string query) {
-
-			if (string.IsNullOrEmpty(query))
-				return new ReleaseEventFindResultContract();
-
-			query = query.Trim().Normalize(NormalizationForm.FormKC);	// Replaces fullwidth characters with ASCII
-
-			return HandleQuery(session => {
-
-				return new ReleaseEventSearch(new NHibernateDatabaseContext(session, PermissionContext)).Find(query);
-
-			});
 
 		}
 
