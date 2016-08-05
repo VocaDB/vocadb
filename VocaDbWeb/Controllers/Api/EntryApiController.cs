@@ -60,7 +60,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <example>http://vocadb.net/api/entries?query=164&amp;fields=MainPicture</example>
 		[Route("")]
 		public PartialFindResult<EntryForApiContract> GetList(
-			string query,
+			string query = "",
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
