@@ -70,13 +70,13 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Deletes a song.
 		/// </summary>
-		/// <param name="songId">ID of the song to be deleted.</param>
+		/// <param name="id">ID of the song to be deleted.</param>
 		/// <param name="notes">Notes.</param>
-		[System.Web.Http.Route("{songId:int}")]
-		[System.Web.Http.Authorize]
-		public void Delete(int songId, string notes = "") {
+		[Route("{id:int}")]
+		[Authorize]
+		public void Delete(int id, string notes = "") {
 			
-			service.Delete(songId, notes ?? string.Empty);
+			service.Delete(id, notes ?? string.Empty);
 
 		}
 
