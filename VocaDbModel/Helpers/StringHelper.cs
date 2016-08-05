@@ -11,7 +11,7 @@ namespace VocaDb.Model.Helpers {
 		/// See http://en.wikipedia.org/w/index.php?title=C0_and_C1_control_codes for more info.
 		/// </summary>
 		public static string CleanInvalidXmlChars(string text) {
-			var re = @"(&#x1;)|(&#x2;)|(&#x10)";
+			var re = @"(&#x1;)|(&#x2;)|(&#x8;)|(&#x10)";
 			return Regex.Replace(text, re, "");
 		}
 
