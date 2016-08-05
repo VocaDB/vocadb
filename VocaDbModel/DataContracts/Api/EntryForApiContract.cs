@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -105,6 +106,10 @@ namespace VocaDb.Model.DataContracts.Api {
 				Names = album.Names.Select(n => new LocalizedStringContract(n)).ToArray();				
 			}
 
+			if (includedFields.HasFlag(EntryOptionalFields.PVs)) {
+				PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
+			}
+
 			if (includedFields.HasFlag(EntryOptionalFields.Tags)) {
 				Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
 			}
@@ -156,6 +161,10 @@ namespace VocaDb.Model.DataContracts.Api {
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
 				Names = song.Names.Select(n => new LocalizedStringContract(n)).ToArray();				
+			}
+
+			if (includedFields.HasFlag(EntryOptionalFields.PVs)) {
+				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Tags)) {
@@ -251,6 +260,12 @@ namespace VocaDb.Model.DataContracts.Api {
 		[DataMember(EmitDefaultValue = false)]
 		public LocalizedStringContract[] Names { get; set; }
 
+		/// <summary>
+		/// List of PVs, for songs and albums. Optional field.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public PVContract[] PVs { get; set; }
+
 		[DataMember(EmitDefaultValue = false)]
 		public SongListFeaturedCategory? SongListFeaturedCategory { get; set; }
 
@@ -288,8 +303,14 @@ namespace VocaDb.Model.DataContracts.Api {
 		Description = 2,
 		MainPicture = 4,
 		Names = 8,
-		Tags = 16,
-		WebLinks = 32
+
+		/// <summary>
+		/// List of PVs, for songs and albums
+		/// </summary>
+		PVs = 16,
+
+		Tags = 32,
+		WebLinks = 64
 
 	}
 
