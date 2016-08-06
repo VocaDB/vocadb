@@ -16,6 +16,7 @@ using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Domain.Albums {
 
@@ -257,13 +258,13 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
-		public virtual string OriginalReleaseEventName {
+		public virtual ReleaseEvent OriginalReleaseEvent {
 			get {
 
 				if (OriginalRelease == null)
-					return string.Empty;
+					return null;
 
-				return OriginalRelease.EventName;
+				return OriginalRelease.ReleaseEvent;
 
 			}
 			set {
@@ -271,7 +272,7 @@ namespace VocaDb.Model.Domain.Albums {
 				if (OriginalRelease == null)
 					OriginalRelease = new AlbumRelease();
 
-				OriginalRelease.EventName = value;
+				OriginalRelease.ReleaseEvent = value;
 
 			}
 		}

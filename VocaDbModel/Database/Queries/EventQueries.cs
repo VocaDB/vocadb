@@ -45,32 +45,6 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void UpdateAllReleaseEventNames(IDatabaseContext<ReleaseEvent> ctx, string old, string newName) {
-
-			ParamIs.NotNullOrWhiteSpace(() => old);
-			ParamIs.NotNullOrWhiteSpace(() => newName);
-
-			old = old.Trim();
-			newName = newName.Trim();
-
-			if (old.Equals(newName))
-				return;
-
-			ctx.AuditLogger.AuditLog(string.Format("replacing release event name '{0}' with '{1}'", old, newName));
-
-			var albums = ctx.OfType<Album>()
-				.Query()
-				.Where(a => a.OriginalRelease.EventName == old)
-				.ToArray();
-
-			foreach (var a in albums) {
-				NHibernateUtil.Initialize(a.CoverPictureData);
-				a.OriginalRelease.EventName = newName;
-				ctx.Update(a);
-			}
-
-		}
-
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
 			IEntryThumbPersister imagePersister)
 			: base(eventRepository, permissionContext) {
@@ -267,8 +241,6 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					CheckDuplicateName(session, ev);
-
-					UpdateAllReleaseEventNames(session, oldName, ev.Name);
 
 					session.Update(ev);
 

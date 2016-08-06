@@ -62,7 +62,7 @@
 				<span data-bind="text: releaseDate ? releaseDate.formatted : ''"></span>
 				<span data-bind="visible: $data.releaseEvent">
 					<br />
-					<a data-bind="text: $data.releaseEvent, attr: { href: '/Event/Find?query=' + encodeURIComponent($data.releaseEvent) }" href="#"></a>
+					<a data-bind="text: $data.releaseEvent ? $data.releaseEvent.name : '', attr: { href: vdb.utils.EntryUrlMapper.details('ReleaseEvent', $data.releaseEvent ? $data.releaseEvent.id : 0) }" href="#"></a>
 				</span>
 			</td>
 			<td style="width: 150px">

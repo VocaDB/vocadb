@@ -12,7 +12,7 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ReleaseEvent : IEntryWithNames, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink> {
+	public class ReleaseEvent : IEntryWithNames, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
@@ -203,4 +203,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 	}
+
+	public interface IReleaseEvent : IEntryWithIntId {
+		string Name { get; }
+	}
+
 }

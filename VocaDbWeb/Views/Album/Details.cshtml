@@ -216,11 +216,11 @@
 					</tr>
 				}
 
-				@if (!string.IsNullOrEmpty(Model.ReleaseEvent)) {
+				@if (Model.ReleaseEvent != null) {
 					<tr>
 						<td>@ViewRes.Album.DetailsStrings.ReleaseEvent</td>
 						<td>
-							@Html.ActionLink(Model.ReleaseEvent, "Find", "Event", new { query = Model.ReleaseEvent }, null)<br />
+							@Html.ActionLink(Model.ReleaseEvent.Name, "Details", "Event", new { id = Model.ReleaseEvent.Id }, null)<br />
 						</td>
 					</tr>
 				}

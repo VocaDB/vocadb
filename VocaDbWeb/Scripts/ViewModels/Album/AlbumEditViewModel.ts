@@ -126,7 +126,7 @@ module vdb.viewModels {
 
 		public releaseDay: KnockoutObservable<number>;
 
-		public releaseEventName: KnockoutObservable<string>;
+		public releaseEvent: BasicEntryLinkViewModel<dc.ReleaseEventContract>;
 
 		public releaseMonth: KnockoutObservable<number>;
 
@@ -177,7 +177,7 @@ module vdb.viewModels {
 						month: this.releaseMonth(),
 						year: this.releaseYear()
 					},
-					eventName: this.releaseEventName()
+					releaseEvent: this.releaseEvent.entry()
 				},
 				pictures: this.pictures.toContracts(),
 				pvs: this.pvs.toContracts(),
@@ -255,7 +255,7 @@ module vdb.viewModels {
 			this.releaseDay = ko.observable(data.originalRelease.releaseDate.day).extend({ parseInteger: {} });
 			this.releaseMonth = ko.observable(data.originalRelease.releaseDate.month).extend({ parseInteger: {} });
 			this.releaseYear = ko.observable(data.originalRelease.releaseDate.year).extend({ parseInteger: {} });
-			this.releaseEventName = ko.observable(data.originalRelease.eventName);
+			this.releaseEvent = new BasicEntryLinkViewModel<dc.ReleaseEventContract>(data.originalRelease.releaseEvent, null);
 			this.status = ko.observable(data.status);
 
 			this.artistSearchParams = {
@@ -474,15 +474,7 @@ module vdb.viewModels {
 				this.validationError_unspecifiedNames()
 			);
 
-			ko.computed(() => {
-				if (this.releaseEventName()) {
-					eventRepository.getOneByName(this.releaseEventName(), event => {
-						this.eventDate(event && event.date ? moment(event.date) : null);
-					});
-				} else {
-					this.eventDate(null);
-				}
-			}).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+			this.eventDate = ko.computed(() => (this.releaseEvent.entry() && this.releaseEvent.entry().date ? moment(this.releaseEvent.entry().date) : null));
 
 			this.releaseDate = ko.computed({
 				read: () => {

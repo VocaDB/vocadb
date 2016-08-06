@@ -4,8 +4,6 @@
 
 		string CatNum { get; }
 
-		string EventName { get; }
-
 		IOptionalDateTime ReleaseDate { get; }
 
 	}

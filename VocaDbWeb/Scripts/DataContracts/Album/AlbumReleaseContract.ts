@@ -5,9 +5,9 @@ module vdb.dataContracts.albums {
 
 		catNum: string;
 
-		eventName: string;
-
 		releaseDate: OptionalDateTimeContract;
+
+		releaseEvent?: ReleaseEventContract;
 
 	}
 

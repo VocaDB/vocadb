@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.TagFormatting {
 					return track.Album.OriginalReleaseDate.Year.ToString();
 
 				case "releaseevent":
-					return album.OriginalReleaseEventName;
+					return album.OriginalReleaseEvent?.Name;
 
 				// Song title
 				case "title":			

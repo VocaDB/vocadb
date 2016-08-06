@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			if (ReleaseDate != null)
 				ReleaseDate.Formatted = string.Empty;
 
-			EventName = release.EventName;
+			ReleaseEvent = ObjectRefContract.Create(release.ReleaseEvent);
 
 		}
 
@@ -29,12 +29,10 @@ namespace VocaDb.Model.DataContracts.Albums {
 		[DataMember]
 		public OptionalDateTimeContract ReleaseDate { get; set; }
 
-		IOptionalDateTime IAlbumRelease.ReleaseDate {
-			get { return ReleaseDate; }
-		}
+		IOptionalDateTime IAlbumRelease.ReleaseDate => ReleaseDate;
 
 		[DataMember]
-		public string EventName { get; set; }
+		public ObjectRefContract ReleaseEvent { get; set; }
 
 	}
 

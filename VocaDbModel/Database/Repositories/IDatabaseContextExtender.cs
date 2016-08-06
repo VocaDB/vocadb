@@ -136,6 +136,10 @@ namespace VocaDb.Model.Database.Repositories {
 			ctx.OfType<T2>().Save(obj);
 		}
 
+		public static void Save<T>(this IDatabaseContext ctx, T obj) {
+			ctx.OfType<T>().Save(obj);
+		}
+
 		public static void Update<T>(this IDatabaseContext ctx, T obj) {
 			ctx.OfType<T>().Update(obj);
 		}

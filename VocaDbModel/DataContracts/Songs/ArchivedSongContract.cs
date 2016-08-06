@@ -93,10 +93,10 @@ namespace VocaDb.Model.DataContracts.Songs {
 			NicoId = song.NicoId;
 			Notes = song.Notes.Original;
 			NotesEng = song.Notes.English;
-			OriginalVersion = (song.OriginalVersion != null ? new ObjectRefContract(song.OriginalVersion) : null);
+			OriginalVersion = ObjectRefContract.Create(song.OriginalVersion);
 			PublishDate = song.PublishDate;
 			PVs = (diff.IncludePVs ? song.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null);
-			ReleaseEvent = song.ReleaseEvent != null ? new ObjectRefContract(song.ReleaseEvent) : null;
+			ReleaseEvent = ObjectRefContract.Create(song.ReleaseEvent);
 			SongType = song.SongType;
 			TranslatedName = new ArchivedTranslatedStringContract(song.TranslatedName);
 			WebLinks = (diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);

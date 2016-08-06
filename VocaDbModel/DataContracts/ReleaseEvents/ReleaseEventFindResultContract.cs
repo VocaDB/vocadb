@@ -1,8 +1,11 @@
-﻿using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.ReleaseEvents;
+﻿using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
+	/// <summary>
+	/// Result of attempting to find <see cref="ReleaseEvent"/> based on name.
+	/// May include the exact event or event series with intelligent guess of series number and suffix.
+	/// </summary>
 	public class ReleaseEventFindResultContract {
 
 		public ReleaseEventFindResultContract() { }
@@ -35,11 +38,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public string EventName { get; set; }
 
-		public bool IsKnownEvent {
-			get {
-				return EventId != 0;
-			}
-		}
+		public bool IsKnownEvent => EventId != 0;
 
 		public ReleaseEventSeriesContract Series { get; set; }
 

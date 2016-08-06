@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Security;
@@ -141,54 +142,6 @@ namespace VocaDb.Web.Controllers
 
 			var events = Service.GetReleaseEventsBySeries();
 			return View(events);
-
-		}
-
-		public ActionResult Find(string query) {
-
-			var result = Service.Find(query);
-
-			if (result.EventId != 0) {
-
-				if (result.EventName != query && PermissionContext.HasPermission(PermissionToken.ManageDatabase))
-					albumService.UpdateAllReleaseEventNames(query, result.EventName);
-
-				return RedirectToAction("Details", new { id = result.EventId });
-
-			}
-
-			return View(result);
-
-		}
-
-		[HttpPost]
-		public ActionResult Find(ReleaseEventFindResultContract model, string query, string EventTarget) {
-
-			bool skipSeries = false;
-
-			if (EventTarget != "Series") {
-
-				skipSeries = true;
-
-				if (string.IsNullOrEmpty(model.EventName))
-					ModelState.AddModelError("EventName", "Name must be specified");
-
-			}
-
-			if (!ModelState.IsValid) {
-				return View(model);
-			}
-
-			var contract = new ReleaseEventDetailsContract {
-				Name = model.EventName, 
-				Series = (skipSeries ? null : model.Series), 
-				SeriesNumber = model.SeriesNumber,
-				SeriesSuffix = string.Empty	// TODO: add support for entering this
-			};
-
-			var ev = queries.Update(contract);
-
-			return RedirectToAction("Edit", new { id = ev.Id });
 
 		}
 

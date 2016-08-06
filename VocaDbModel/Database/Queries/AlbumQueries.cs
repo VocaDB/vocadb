@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using NHibernate;
+using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
@@ -21,6 +22,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -365,8 +367,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (string.IsNullOrEmpty(target.OriginalRelease.CatNum) && source.OriginalRelease != null)
 					target.OriginalRelease.CatNum = source.OriginalRelease.CatNum;
 
-				if (string.IsNullOrEmpty(target.OriginalRelease.EventName) && source.OriginalRelease != null)
-					target.OriginalRelease.EventName = source.OriginalRelease.EventName;
+				if (target.OriginalRelease.ReleaseEvent == null && source.OriginalRelease != null)
+					target.OriginalRelease.ReleaseEvent = source.OriginalRelease.ReleaseEvent;
 
 				if (target.OriginalRelease.ReleaseDate == null)
 					target.OriginalRelease.ReleaseDate = new OptionalDateTime();
@@ -489,7 +491,7 @@ namespace VocaDb.Model.Database.Queries {
 				diff.Cover = !Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic);
 
 				// Original release
-				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease) : null);
+				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent)) : null);
 
 				// Artists
 				DatabaseContextHelper.RestoreObjectRefs<ArtistForAlbum, Artist, ArchivedArtistForAlbumContract>(
@@ -594,7 +596,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (webLinkDiff.Changed)
 					diff.WebLinks = true;
 
-				var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease) : new AlbumRelease());
+				var newEvent = new CreateEventQuery().FindOrCreate(session, PermissionContext, properties.OriginalRelease.ReleaseEvent, album);
+				var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease, newEvent) : new AlbumRelease());
 
 				if (album.OriginalRelease == null)
 					album.OriginalRelease = new AlbumRelease();
