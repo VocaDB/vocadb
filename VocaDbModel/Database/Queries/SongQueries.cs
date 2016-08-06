@@ -6,9 +6,11 @@ using System.Runtime.Caching;
 using System.Web;
 using NHibernate;
 using NLog;
+using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
@@ -806,20 +808,6 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private ReleaseEvent CreateReleaseEvent(IDatabaseContext<Song> ctx, string name, Song song) {
-
-			var releaseEvent = new ReleaseEvent(string.Empty, null, name);
-			ctx.Save(releaseEvent);
-			var eventDiff = new ReleaseEventDiff(ReleaseEventEditableFields.Name);
-			eventDiff.Name.Set();
-
-			var archivedVersion = ArchivedReleaseEventVersion.Create(releaseEvent, eventDiff, ctx.OfType<User>().CreateAgentLoginData(PermissionContext), EntryEditEvent.Created, "Created for " + song);
-			ctx.Save(archivedVersion);
-
-			return releaseEvent;
-
-		}
-
 		public SongForEditContract UpdateBasicProperties(SongForEditContract properties) {
 
 			ParamIs.NotNull(() => properties);
@@ -887,14 +875,10 @@ namespace VocaDb.Model.Database.Queries {
 				if (artistsDiff.Changed)
 					diff.Artists = true;
 
-				if (!song.ReleaseEvent.NullSafeIdEquals(properties.ReleaseEvent)) {
+				var newEvent = new CreateEventQuery().FindOrCreate(ctx, PermissionContext, properties.ReleaseEvent, song);
+				if (!song.ReleaseEvent.NullSafeIdEquals(newEvent)) {
 					diff.ReleaseEvent = true;
-					song.ReleaseEvent = ctx.NullSafeLoad<ReleaseEvent>(properties.ReleaseEvent);
-				}
-
-				if (properties.ReleaseEvent != null && properties.ReleaseEvent.Id == 0 && !string.IsNullOrWhiteSpace(properties.ReleaseEvent.Name)) {
-					diff.ReleaseEvent = true;
-					song.ReleaseEvent = CreateReleaseEvent(ctx, properties.ReleaseEvent.Name, song);
+					song.ReleaseEvent = newEvent;
 				}
 
 				if (!song.PublishDate.Equals(properties.PublishDate)) {

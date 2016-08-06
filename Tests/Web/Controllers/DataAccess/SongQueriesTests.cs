@@ -671,7 +671,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_ReleaseEvent_NewEvent() {
+		public void Update_ReleaseEvent_NewEvent_Standalone() {
 
 			var contract = EditContract();
 			contract.ReleaseEvent = new ReleaseEventContract { Name = "Comiket 40" };
@@ -682,6 +682,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreSame("Comiket 40", song.ReleaseEvent.Name, "ReleaseEvent.Name");
 
 			Assert.AreEqual(1, song.ReleaseEvent.ArchivedVersionsManager.Versions.Count, "New release event was archived");
+
+		}
+
+		[TestMethod]
+		public void Update_ReleaseEvent_NewEvent_SeriesEvent() {
+
+			var series = repository.Save(CreateEntry.EventSeries("Comiket"));
+			var contract = EditContract();
+			contract.ReleaseEvent = new ReleaseEventContract { Name = "Comiket 40" };
+
+			queries.UpdateBasicProperties(contract);
+
+			Assert.IsNotNull(song.ReleaseEvent, "ReleaseEvent");
+			Assert.AreEqual(series, song.ReleaseEvent.Series, "Series");
+			Assert.AreEqual(40, song.ReleaseEvent.SeriesNumber, "SeriesNumber");
 
 		}
 

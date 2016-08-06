@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using NHibernate;
+using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
@@ -595,7 +596,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (webLinkDiff.Changed)
 					diff.WebLinks = true;
 
-				var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(properties.OriginalRelease.ReleaseEvent)) : new AlbumRelease());
+				var newEvent = new CreateEventQuery().FindOrCreate(session, PermissionContext, properties.OriginalRelease.ReleaseEvent, album);
+				var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease, newEvent) : new AlbumRelease());
 
 				if (album.OriginalRelease == null)
 					album.OriginalRelease = new AlbumRelease();
