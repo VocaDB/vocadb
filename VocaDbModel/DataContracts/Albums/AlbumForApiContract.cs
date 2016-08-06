@@ -25,16 +25,32 @@ namespace VocaDb.Model.DataContracts.Albums {
 			IEntryThumbPersister thumbPersister,
 			bool ssl,
 			AlbumOptionalFields fields,
-			SongOptionalFields songFields) 
-			: this(album, mergeRecord, languagePreference, 
-				fields.HasFlag(AlbumOptionalFields.Artists), 
-				fields.HasFlag(AlbumOptionalFields.Names), 
-				fields.HasFlag(AlbumOptionalFields.PVs), 
-				fields.HasFlag(AlbumOptionalFields.Tags), 
-				fields.HasFlag(AlbumOptionalFields.WebLinks)) {
+			SongOptionalFields songFields) {
+
+			ArtistString = album.ArtistString[languagePreference];
+			CatalogNumber = album.OriginalRelease != null ? album.OriginalRelease.CatNum : null;
+			CreateDate = album.CreateDate;
+			DefaultName = album.DefaultName;
+			DefaultNameLanguage = album.Names.SortNames.DefaultLanguage;
+			DiscType = album.DiscType;
+			Id = album.Id;
+			Name = album.Names.SortNames[languagePreference];
+			RatingAverage = album.RatingAverage;
+			RatingCount = album.RatingCount;
+			ReleaseDate = new OptionalDateTimeContract(album.OriginalReleaseDate);
+			Status = album.Status;
+			Version = album.Version;
 
 			if (fields.HasFlag(AlbumOptionalFields.AdditionalNames)) {
 				AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.Artists)) {
+				Artists = album.Artists.Select(a => new ArtistForAlbumForApiContract(a, languagePreference)).ToArray();
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.Description)) {
+				Description = album.Description[languagePreference];
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.Discs)) {
@@ -51,44 +67,29 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			}
 
+			if (fields.HasFlag(AlbumOptionalFields.Names)) {
+				Names = album.Names.Select(n => new LocalizedStringContract(n)).ToArray();
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.PVs)) {
+				PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {
+				ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, ReleaseEventOptionalFields.None) : null;
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.Tags)) {
+				Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
+			}
+
 			if (fields.HasFlag(AlbumOptionalFields.Tracks)) {
 				Tracks = album.Songs.Select(s => new SongInAlbumForApiContract(s, languagePreference, songFields)).ToArray();
 			}
 
-		}
-
-		public AlbumForApiContract(Album album, AlbumMergeRecord mergeRecord, ContentLanguagePreference languagePreference, 
-			bool artists = true, bool names = true, bool pvs = false, bool tags = true, bool webLinks = false) {
-
-			ArtistString = album.ArtistString[languagePreference];
-			CatalogNumber = album.OriginalRelease != null ? album.OriginalRelease.CatNum : null;
-			CreateDate = album.CreateDate;
-			DefaultName = album.DefaultName;
-			DefaultNameLanguage = album.Names.SortNames.DefaultLanguage;
-			DiscType = album.DiscType;
-			Id = album.Id;
-			Name = album.Names.SortNames[languagePreference];				
-			RatingAverage = album.RatingAverage;
-			RatingCount = album.RatingCount;
-			ReleaseDate = new OptionalDateTimeContract(album.OriginalReleaseDate);
-			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, ReleaseEventOptionalFields.None) : null;
-			Status = album.Status;
-			Version = album.Version;
-
-			if (artists)
-				Artists = album.Artists.Select(a => new ArtistForAlbumForApiContract(a, languagePreference)).ToArray();
-
-			if (names)
-				Names = album.Names.Select(n => new LocalizedStringContract(n)).ToArray();
-
-			if (pvs)
-				PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
-
-			if (tags)
-				Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
-
-			if (webLinks)
+			if (fields.HasFlag(AlbumOptionalFields.WebLinks)) {
 				WebLinks = album.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
+			}
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
@@ -136,6 +137,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// </summary>
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public string Description { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public AlbumDiscPropertiesContract[] Discs { get; set; }
@@ -236,14 +240,16 @@ namespace VocaDb.Model.DataContracts.Albums {
 		None = 0,
 		AdditionalNames = 1,
 		Artists = 2,
-		Discs = 4,
-		Identifiers = 8,
-		MainPicture = 16,
-		Names = 32,
-		PVs = 64,
-		Tags = 128,
-		Tracks = 256,
-		WebLinks = 512
+		Description = 4,
+		Discs = 8,
+		Identifiers = 16,
+		MainPicture = 32,
+		Names = 64,
+		PVs = 128,
+		ReleaseEvent = 256,
+		Tags = 512,
+		Tracks = 1024,
+		WebLinks = 2048
 
 	}
 
