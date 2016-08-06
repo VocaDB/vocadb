@@ -56,7 +56,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 			Albums = (diff.IncludeAlbums ? artist.Albums.Select(a => new ObjectRefContract(a.Album)).ToArray() : null);
 			ArtistType = artist.ArtistType;
-			BaseVoicebank = artist.BaseVoicebank != null ? new ObjectRefContract(artist.BaseVoicebank) : null;
+			BaseVoicebank = ObjectRefContract.Create(artist.BaseVoicebank);
 			Id = artist.Id;
 			Description = (diff.IncludeDescription ? artist.Description.Original : null);
 			DescriptionEng = (diff.IncludeDescription ? artist.Description.English : null);

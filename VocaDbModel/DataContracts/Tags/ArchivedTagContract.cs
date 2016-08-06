@@ -32,7 +32,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 			data.Id = thisVersion.Id;
 			data.TranslatedName = thisVersion.TranslatedName;
 
-			DoIfExists(version, TagEditableFields.AliasedTo, xmlCache, v => data.AliasedTo = v.AliasedTo);
 			DoIfExists(version, TagEditableFields.Description, xmlCache, v => {
 				data.Description = v.Description;
 				data.DescriptionEng = v.DescriptionEng;
@@ -52,23 +51,19 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			ParamIs.NotNull(() => tag);
 
-			AliasedTo = tag.AliasedTo != null ? new ObjectRefContract(tag.AliasedTo) : null;
 			CategoryName = tag.CategoryName;
 			Description = diff.IncludeDescription ? tag.Description.Original : null;
 			DescriptionEng = diff.IncludeDescription ? tag.Description.English : null;
 			HideFromSuggestions = tag.HideFromSuggestions;
 			Id = tag.Id;
 			Names = diff.IncludeNames ? tag.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
-			Parent = tag.Parent != null ? new ObjectRefContract(tag.Parent) : null;
+			Parent = ObjectRefContract.Create(tag.Parent);
 			RelatedTags = diff.IncludeRelatedTags ? tag.RelatedTags.Select(t => new ObjectRefContract(t.LinkedTag)).ToArray() : null;
 			ThumbMime = tag.Thumb != null ? tag.Thumb.Mime : null;
 			TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? tag.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
-
-		[DataMember]
-		public ObjectRefContract AliasedTo { get; set; }
 
 		[DataMember]
 		public string CategoryName { get; set; }

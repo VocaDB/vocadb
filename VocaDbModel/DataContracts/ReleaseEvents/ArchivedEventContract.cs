@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = ev.Description;
 			Id = ev.Id;
 			Name = ev.Name;
-			Series = (ev.Series != null ? new ObjectRefContract(ev.Series) : null);
+			Series = ObjectRefContract.Create(ev.Series);
 			SeriesNumber = ev.SeriesNumber;
 			WebLinks = diff.IsIncluded(ReleaseEventEditableFields.WebLinks) ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
