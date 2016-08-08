@@ -1,5 +1,4 @@
-﻿using System;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
@@ -19,9 +18,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		private string description;
 		private ReleaseEventDiff diff;
-		private string name;
 		private ReleaseEvent releaseEvent;
 
 		public ArchivedReleaseEventVersion() {
@@ -37,29 +34,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			ReleaseEvent = releaseEvent;
 			Diff = diff;
 			CommonEditEvent = commonEditEvent;
-			Date = releaseEvent.Date;
-			Description = releaseEvent.Description;
-			Name = releaseEvent.Name;
-			SeriesNumber = releaseEvent.SeriesNumber;
 			Status = EntryStatus.Finished;
 
 		}
 
 		public virtual EntryEditEvent CommonEditEvent { get; set; }
 
-		public virtual DateTime? Date { get; set; }
-
-		public virtual string Description {
-			get { return description; }
-			set { 
-				ParamIs.NotNull(() => value);
-				description = value; 
-			}
-		}
-
-		public override IEntryDiff DiffBase {
-			get { return Diff; }
-		}
+		public override IEntryDiff DiffBase => Diff;
 
 		public virtual ReleaseEventDiff Diff {
 			get { return diff; }
@@ -69,21 +50,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
-		public override EntryEditEvent EditEvent {
-			get { return CommonEditEvent; }
-		}
+		public override EntryEditEvent EditEvent => CommonEditEvent;
 
-		public override IEntryWithNames EntryBase {
-			get { return ReleaseEvent; }
-		}
-
-		public virtual string Name {
-			get { return name; }
-			set { 
-				ParamIs.NotNull(() => value);
-				name = value; 
-			}
-		}
+		public override IEntryWithNames EntryBase => ReleaseEvent;
 
 		public virtual ReleaseEvent ReleaseEvent {
 			get { return releaseEvent; }
@@ -92,8 +61,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				releaseEvent = value; 
 			}
 		}
-
-		public virtual int SeriesNumber { get; set; }
 
 		public virtual bool IsIncluded(ReleaseEventEditableFields field) {
 			return true;

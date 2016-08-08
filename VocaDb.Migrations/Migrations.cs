@@ -4,6 +4,24 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201608082300)]
+	public class ArchivedReleaseEventRemoveRedundantFields : Migration {
+
+		public override void Up() {
+			Delete.Column("Date").FromTable(TableNames.ArchivedEventVersions);
+			Delete.Column("Description").FromTable(TableNames.ArchivedEventVersions);
+			Delete.Column("Name").FromTable(TableNames.ArchivedEventVersions);
+			Delete.ForeignKey("FK_ArchivedEventVersions_AlbumReleaseEventSeries").OnTable(TableNames.ArchivedEventVersions);
+			Delete.Column("Series").FromTable(TableNames.ArchivedEventVersions);
+			Delete.Column("SeriesNumber").FromTable(TableNames.ArchivedEventVersions);
+		}
+
+		public override void Down() {
+			
+		}
+
+	}
+
 	[Migration(201608082200)]
 	public class ReleaseEventSeriesVersionHistory : AutoReversingMigration {
 
