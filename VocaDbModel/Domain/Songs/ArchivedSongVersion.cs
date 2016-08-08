@@ -40,9 +40,7 @@ namespace VocaDb.Model.Domain.Songs {
 			protected set { diff = value; }
 		}
 
-		public override IEntryDiff DiffBase {
-			get { return Diff; }
-		}
+		public override IEntryDiff DiffBase => Diff;
 
 		public override EntryEditEvent EditEvent {
 			get {
@@ -51,9 +49,7 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
-		public override IEntryWithNames EntryBase {
-			get { return Song; }
-		}
+		public override IEntryWithNames EntryBase => Song;
 
 		public virtual SongArchiveReason Reason { get; set; }
 

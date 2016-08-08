@@ -313,7 +313,8 @@
     <Compile Include="Domain\Albums\AlbumReport.cs" />
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
-    <Compile Include="Domain\Albums\ArchivedReleaseEventVersion.cs" />
+    <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventSeriesVersion.cs" />
+    <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventVersion.cs" />
     <Compile Include="Domain\Albums\IAlbumLink.cs" />
     <Compile Include="Domain\Albums\IAlbumRelease.cs" />
     <Compile Include="Domain\Albums\OtherArtistForAlbum.cs" />
@@ -385,6 +386,8 @@
     <Compile Include="Domain\PVs\IPV.cs" />
     <Compile Include="Domain\PVs\IPVWithThumbnail.cs" />
     <Compile Include="Domain\PVs\PVManager.cs" />
+    <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesDiff.cs" />
+    <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesEditableFields.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesWebLink.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventWebLink.cs" />
     <Compile Include="Domain\Security\AuditLogCategory.cs" />
@@ -555,6 +558,7 @@
     <Compile Include="Domain\Albums\DiscType.cs" />
     <Compile Include="Mapping\Albums\OtherArtistForAlbumMap.cs" />
     <Compile Include="Mapping\Albums\PVForAlbumMap.cs" />
+    <Compile Include="Mapping\ReleaseEvents\ArchivedReleaseEventSeriesVersionMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventMap.cs" />
     <Compile Include="Mapping\Artists\ArtistMergeRecordMap.cs" />
     <Compile Include="Mapping\Artists\ArtistPictureFileMap.cs" />

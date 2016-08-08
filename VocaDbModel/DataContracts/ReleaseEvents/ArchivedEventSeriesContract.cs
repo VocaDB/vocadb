@@ -9,7 +9,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ArchivedEventSeriesContract() { }
 
-		public ArchivedEventSeriesContract(ReleaseEventSeries series) {
+		public ArchivedEventSeriesContract(ReleaseEventSeries series, ReleaseEventSeriesDiff diff) {
 
 			ParamIs.NotNull(() => series);
 
@@ -17,6 +17,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = series.Description;
 			Id = series.Id;
 			Name = series.Name;
+			WebLinks = diff.IsIncluded(ReleaseEventSeriesEditableFields.WebLinks) ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
 
@@ -31,6 +32,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public string Name { get; set; }
+
+		[DataMember]
+		public ArchivedWebLinkContract[] WebLinks { get; set; }
 
 	}
 

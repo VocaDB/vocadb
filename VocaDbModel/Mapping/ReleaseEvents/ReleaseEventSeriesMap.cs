@@ -16,6 +16,10 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.PictureMime).Length(32).Nullable();
 
 			HasMany(m => m.Aliases).KeyColumn("[Series]").Inverse().Cascade.All().Cache.ReadWrite();
+
+			Component(m => m.ArchivedVersionsManager,
+				c => c.HasMany(m => m.Versions).KeyColumn("[Series]").Inverse().Cascade.All());
+
 			HasMany(m => m.Events).OrderBy("[SeriesNumber]").KeyColumn("[Series]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEventSeries]").Inverse().Cascade.All().Cache.ReadWrite();
 

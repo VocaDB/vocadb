@@ -35,6 +35,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private ArchivedReleaseEventSeriesVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEventSeries releaseEvent, ReleaseEventSeriesDiff diff, EntryEditEvent reason, string notes) {
+
+			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(permissionContext);
+			var archived = ArchivedReleaseEventSeriesVersion.Create(releaseEvent, diff, agentLoginData, reason, notes);
+			ctx.Save(archived);
+			return archived;
+
+		}
+
 		private void CheckDuplicateName(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent ev) {
 
 			var hasDuplicate = ctx.Query().Any(e => e.Id != ev.Id && e.Name == ev.Name);
@@ -289,37 +298,64 @@ namespace VocaDb.Model.Database.Queries {
 					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Aliases);
 					session.Save(series);
 
+					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Name);
+
+					diff.Description.Set(!string.IsNullOrEmpty(contract.Description));
+					diff.Names.Set(contract.Aliases.Any());
+
 					var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
 
 					if (weblinksDiff.Changed) {
+						diff.WebLinks.Set();
 						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
 					}
 
 					if (pictureData != null) {
+						diff.Picture.Set();
 						SaveImage(series, pictureData);
 						session.Update(series);
 					}
 
 					session.Update(series);
 
+					Archive(session, series, diff, EntryEditEvent.Created, string.Empty);
+
 					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(series)), session);
 
 				} else {
 
 					series = session.Load<ReleaseEventSeries>(contract.Id);
+					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Name);
 
-					series.Name = contract.Name;
-					series.Description = contract.Description;
-					series.UpdateAliases(contract.Aliases);
-					SaveImage(series, pictureData);
+					if (series.Name != contract.Name) {
+						diff.Name.Set();
+						series.Name = contract.Name;
+					}
+
+					if (series.Description != contract.Description) {
+						diff.Description.Set();
+						series.Description = contract.Description;
+					}
+
+					if (series.UpdateAliases(contract.Aliases)) {
+						diff.Names.Set();
+					}
+
+					if (pictureData != null) {
+						diff.Picture.Set();
+						SaveImage(series, pictureData);
+					}
 
 					var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
 
 					if (weblinksDiff.Changed) {
+						diff.WebLinks.Set();
 						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
 					}
 
 					session.Update(series);
+
+					Archive(session, series, diff, EntryEditEvent.Updated, string.Empty);
 
 					AuditLog(string.Format("updated {0}", entryLinkFactory.CreateEntryLink(series)), session);
 

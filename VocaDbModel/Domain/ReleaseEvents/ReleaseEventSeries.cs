@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ReleaseEventSeries : IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink> {
+	public class ReleaseEventSeries : IEntryWithNames, IEntryWithVersions, IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink> {
 
 		string IEntryBase.DefaultName => Name;
 
 		bool IDeletableEntry.Deleted => false;
 
-		int IEntryBase.Version => 0;
-
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
+		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
+
 		private IList<ReleaseEventSeriesAlias> aliases = new List<ReleaseEventSeriesAlias>();
+		private ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> archivedVersions
+			= new ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>();
 		private string description;
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
 		private string name;
@@ -44,6 +51,16 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			set {
 				ParamIs.NotNull(() => value);
 				aliases = value; 
+			}
+		}
+
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
+
+		public virtual ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> ArchivedVersionsManager {
+			get { return archivedVersions; }
+			set {
+				ParamIs.NotNull(() => value);
+				archivedVersions = value;
 			}
 		}
 
@@ -77,6 +94,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual string PictureMime { get; set; }
 
+		public virtual int Version { get; set; }
+
 		public virtual IList<ReleaseEventSeriesWebLink> WebLinks {
 			get { return webLinks; }
 			set {
@@ -91,6 +110,16 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Aliases.Add(a);
 
 			return a;
+
+		}
+
+		public virtual ArchivedReleaseEventSeriesVersion CreateArchivedVersion(XDocument data, ReleaseEventSeriesDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
+
+			var archived = new ArchivedReleaseEventSeriesVersion(this, data, diff, author, reason, notes);
+			ArchivedVersionsManager.Add(archived);
+			Version++;
+
+			return archived;
 
 		}
 
@@ -143,7 +172,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			return string.Format("release event series '{0}' [{1}]", Name, Id);
 		}
 
-		public virtual void UpdateAliases(IEnumerable<string> aliases) {
+		public virtual bool UpdateAliases(IEnumerable<string> aliases) {
 
 			ParamIs.NotNull(() => aliases);
 
@@ -154,6 +183,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 			foreach (var removed in diff.Removed)
 				Aliases.Remove(removed);
+
+			return diff.Changed;
 
 		}
 

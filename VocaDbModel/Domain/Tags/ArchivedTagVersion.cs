@@ -39,9 +39,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual EntryEditEvent CommonEditEvent { get; set; }
 
-		public override IEntryDiff DiffBase {
-			get { return Diff; }
-		}
+		public override IEntryDiff DiffBase => Diff;
 
 		public virtual TagDiff Diff {
 			get { return diff; }
@@ -51,13 +49,9 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
-		public override EntryEditEvent EditEvent {
-			get { return CommonEditEvent; }
-		}
+		public override EntryEditEvent EditEvent => CommonEditEvent;
 
-		public override IEntryWithNames EntryBase {
-			get { return Tag; }
-		}
+		public override IEntryWithNames EntryBase => Tag;
 
 		public virtual Tag Tag {
 			get { return tag; }

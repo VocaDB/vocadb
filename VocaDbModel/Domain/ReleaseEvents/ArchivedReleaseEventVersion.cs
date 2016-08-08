@@ -2,12 +2,11 @@
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Activityfeed;
-using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ArchivedReleaseEventVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<ReleaseEventEditableFields> {
 
