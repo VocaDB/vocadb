@@ -11,7 +11,9 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ReleaseEventSeries : IEntryWithNames, IEntryWithVersions, IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink> {
+	public class ReleaseEventSeries : 
+		IEntryWithNames, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>, 
+		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink> {
 
 		string IEntryBase.DefaultName => Name;
 

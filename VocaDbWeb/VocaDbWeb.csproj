@@ -1310,6 +1310,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TagControllerStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Domain\ReleaseEvents\ReleaseEventSeriesEditableFieldNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReleaseEventSeriesEditableFieldNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Helpers\ActivityFeedHelperStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2224,6 +2229,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.es.resx" />
     <EmbeddedResource Include="Resources\Domain\EntryReportTypeNames.pt.resx" />
+    <EmbeddedResource Include="Resources\Domain\ReleaseEvents\ReleaseEventSeriesEditableFieldNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReleaseEventSeriesEditableFieldNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.es.resx" />
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.zh-Hans.resx" />
@@ -3423,6 +3432,7 @@
     <Content Include="Views\Search\Partials\_AlbumSearchOptions.cshtml" />
     <Content Include="Views\Search\Partials\_ArtistSearchOptions.cshtml" />
     <Content Include="Views\User\Partials\_SongLists.cshtml" />
+    <Content Include="Views\Event\SeriesVersions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

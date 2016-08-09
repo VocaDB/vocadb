@@ -9,6 +9,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Event;
+using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Controllers
 {
@@ -163,6 +164,17 @@ namespace VocaDb.Web.Controllers
 
 			var series = Service.GetReleaseEventSeriesDetails(id);
 			return View(series);
+
+		}
+
+		public ActionResult SeriesVersions(int id = invalidId) {
+
+			if (id == invalidId)
+				return NoId();
+
+			var contract = Service.GetReleaseEventSeriesWithArchivedVersions(id);
+
+			return View(new Versions<ReleaseEventSeriesContract>(contract, enumTranslations));
 
 		}
 

@@ -5,7 +5,9 @@ using VocaDb.Model.Service.Translations;
 namespace VocaDb.Model.DataContracts.Versioning {
 
 	public class ArchivedObjectVersionWithFieldsContract<TFields, TReason>
-		: ArchivedObjectVersionContract where TFields : struct, IConvertible where TReason : struct, IConvertible {
+		: ArchivedObjectVersionContract 
+		where TFields : struct, IConvertible 
+		where TReason : struct, IConvertible {
 
 		private TFields DefaultField => default(TFields);
 

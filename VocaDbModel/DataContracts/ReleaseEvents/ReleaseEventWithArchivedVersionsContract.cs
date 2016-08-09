@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {

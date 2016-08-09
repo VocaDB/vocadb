@@ -3,6 +3,7 @@ using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Service {
@@ -56,6 +57,15 @@ namespace VocaDb.Model.Service {
 
 			return HandleQuery(session =>
 				new ReleaseEventWithArchivedVersionsContract(session.Load<ReleaseEvent>(id)));
+
+		}
+
+		public EntryWithArchivedVersionsContract<ReleaseEventSeriesContract, ArchivedEventSeriesVersionContract> GetReleaseEventSeriesWithArchivedVersions(int id) {
+
+			return HandleQuery(session => {
+				var series = session.Load<ReleaseEventSeries>(id);
+				return EntryWithArchivedVersionsContract.Create(new ReleaseEventSeriesContract(series), series.ArchivedVersionsManager.Versions.Select(v => new ArchivedEventSeriesVersionContract(v)).ToArray());
+			});
 
 		}
 

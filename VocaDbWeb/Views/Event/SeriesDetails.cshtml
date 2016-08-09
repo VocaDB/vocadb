@@ -23,6 +23,7 @@
 @section Toolbar {
 	@if (Login.CanManageEventSeries) {
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "EditSeries", new { id = Model.Id }, new { id = "editEventLink" })
+		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "SeriesVersions", new { id = Model.Id }, new { id = "viewVersions" })
 	}
 	@if (Login.CanManageDb) {
 		<a href="@Url.Action("Edit", new { seriesId = Model.Id != 0 ? (int?)Model.Id : null })" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
@@ -61,11 +62,10 @@
 
 @section BodyScripts {
 <script type="text/javascript">
-
-	$(document).ready(function () {
+	$(function () {
 		$("#editEventLink").button({ icons: { primary: 'ui-icon-wrench'} });
 		$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
+		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
 	});
-
 </script>
 }
