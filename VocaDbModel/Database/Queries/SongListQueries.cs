@@ -47,7 +47,7 @@ namespace VocaDb.Model.Database.Queries {
 					var pv = session.Query<PVForSong>()
 						.FirstOrDefault(p => p.Service == entry.PVService && p.PVId == entry.PVId && !p.Song.Deleted);
 
-					var song = pv != null ? new SongForApiContract(pv.Song, null, LanguagePreference) : null;
+					var song = pv != null ? new SongForApiContract(pv.Song, null, LanguagePreference, SongOptionalFields.None) : null;
 
 					entry.MatchedSong = song;
 
