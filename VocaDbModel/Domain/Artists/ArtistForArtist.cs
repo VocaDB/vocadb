@@ -94,6 +94,10 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
+		public override string ToString() {
+			return Parent + " for " + Member + " (" + LinkType + ")";
+		}
+
 	}
 
 }

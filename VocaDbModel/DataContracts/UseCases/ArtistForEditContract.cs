@@ -28,7 +28,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 			AssociatedArtists = artist.Groups
-				.Where(a => a.LinkType != ArtistLinkType.Group && a.Parent.Id != Illustrator?.Id && a.Parent.Id != VoiceProvider?.Id)
+				.Where(a => a.LinkType != ArtistLinkType.Group 
+					&& (a.Parent.Id != Illustrator?.Id || a.LinkType != ArtistLinkType.Illustrator) 
+					&& (a.Parent.Id != VoiceProvider?.Id || a.LinkType != ArtistLinkType.VoiceProvider))
 				.Select(g => new ArtistForArtistContract(g, languagePreference))
 				.ToArray();
 
