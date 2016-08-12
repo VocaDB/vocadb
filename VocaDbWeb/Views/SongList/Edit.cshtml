@@ -44,7 +44,7 @@
 </script>
 }
 
-@Helpers.ValidationSymmaryPanel("Unable to save properties.")
+@Helpers.ValidationSymmaryPanel(Res.UnableToSave)
 
 <form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
@@ -64,7 +64,7 @@
 				@Res.Name
 			</div>
 			<div class="editor-field">
-				<input type="text" data-bind="value: name" class="required input-xlarge" size="40" required />
+				<input type="text" data-bind="value: name" class="required input-xxlarge" size="200" required />
 			</div>
 
 			<div class="editor-label">
@@ -75,7 +75,7 @@
 				<textarea data-bind="textInput: description" rows="6" cols="60" maxlength="3000" class="input-xxlarge"></textarea>
 				
 				<div>
-					Live preview
+					@ViewRes.EntryEditStrings.LivePreview
 					<div data-bind="markdown: description"></div>
 				</div>
 			</div>
@@ -137,10 +137,10 @@
 							<span class="extraInfo" data-bind="text: song.artistString"></span>
 						</td>
 						<td>
-							<input type="text" data-bind="value: notes" />
+							<input type="text" data-bind="value: notes" maxlength="200" />
 						</td>
 						<td>
-							<a href="#" class="iconLink removeLink" title="Remove from list" data-bind="click: $parent.removeSong">@ViewRes.SharedStrings.Remove</a>
+							<a href="#" class="iconLink removeLink" title="@Res.RemoveFromList" data-bind="click: $parent.removeSong">@ViewRes.SharedStrings.Remove</a>
 						</td>
 					</tr>
 				</tbody>
@@ -148,7 +148,7 @@
 
 			<br />
 
-			<h4>Add new</h4>
+			<h4>@Res.AddSong</h4>
 			<input type="text" data-bind="songAutoComplete: songSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
 
 		</div>

@@ -61,6 +61,15 @@ namespace ViewRes.SongList {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add song.
+        /// </summary>
+        public static string AddSong {
+            get {
+                return ResourceManager.GetString("AddSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this list?.
         /// </summary>
         public static string ConfirmDelete {
@@ -133,6 +142,15 @@ namespace ViewRes.SongList {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove from list.
+        /// </summary>
+        public static string RemoveFromList {
+            get {
+                return ResourceManager.GetString("RemoveFromList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entry status.
         /// </summary>
         public static string Status {
@@ -165,6 +183,15 @@ namespace ViewRes.SongList {
         public static string Thumbnail {
             get {
                 return ResourceManager.GetString("Thumbnail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to save list.
+        /// </summary>
+        public static string UnableToSave {
+            get {
+                return ResourceManager.GetString("UnableToSave", resourceCulture);
             }
         }
     }

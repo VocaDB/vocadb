@@ -154,6 +154,10 @@ Commercial: authorized sales such as Amazon and CDJapan.&lt;br /&gt;
 Reference: fansites with useful information such as wikis.&lt;br /&gt;
 Other: for those that don't fit into anything above.&lt;br /&gt;</value>
   </data>
+  <data name="LivePreview" xml:space="preserve">
+    <value>Live preview</value>
+    <comment>For Markdown live rendering</comment>
+  </data>
   <data name="Merge" xml:space="preserve">
     <value>Merge</value>
   </data>

@@ -158,6 +158,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live preview.
+        /// </summary>
+        public static string LivePreview {
+            get {
+                return ResourceManager.GetString("LivePreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Merge.
         /// </summary>
         public static string Merge {
