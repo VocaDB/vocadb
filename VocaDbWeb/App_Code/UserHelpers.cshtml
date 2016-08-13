@@ -49,7 +49,7 @@ if (user != null) {
 }
 
 @helper IconNameAndTypeLinkKnockout(string groupResources, int iconSize = 20) {
-	<a href="#" data-bind="attr: { href: '/User/Profile/' + name, title: @(groupResources + "[groupId] + '\\nJoined: ' + memberSince") }">
+	<a href="#" data-bind="attr: { href: '/Profile/' + name, title: @(groupResources + "[groupId] + '\\nJoined: ' + memberSince") }">
 		@ProfileIconKnockout("$data.mainPicture ? mainPicture.urlThumb : null", iconSize)
 		<span data-bind="text: name"></span>
 	</a>
