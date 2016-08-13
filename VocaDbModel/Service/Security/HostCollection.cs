@@ -1,28 +1,65 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace VocaDb.Model.Service.Security {
 
-	public class HostCollection : IEnumerable<string> {
+	/// <summary>
+	/// Thread-safe collection of hostnames.
+	/// </summary>
+	public class HostCollection {
 
-		private readonly HashSet<string> bannedIPs = new HashSet<string>();
- 
+		private HashSet<string> ips;
+		private readonly ReaderWriterLockSlim readerWriterLock = new ReaderWriterLockSlim();
+
+		public HostCollection() {
+			ips = new HashSet<string>();
+		}
+
+		public HostCollection(IEnumerable<string> ips) {
+			this.ips = new HashSet<string>(ips);
+		}
+
 		public void Add(string host) {
-			lock (bannedIPs) {
-				bannedIPs.Add(host);
+
+			readerWriterLock.EnterWriteLock();
+			try {
+				ips.Add(host);
+			} finally {
+				readerWriterLock.ExitWriteLock();
 			}
+
+		}
+
+		public void Reset(IEnumerable<string> ips) {
+
+			readerWriterLock.EnterWriteLock();
+			try {
+				this.ips = new HashSet<string>(ips);
+			} finally {
+				readerWriterLock.ExitWriteLock();
+			}
+
 		}
 
 		public bool Contains(string host) {
-			return bannedIPs.Contains(host);
+			readerWriterLock.EnterReadLock();
+			try {
+				return ips.Contains(host);
+			} finally {
+				readerWriterLock.ExitReadLock();
+			}
 		}
 
-		public IEnumerator<string> GetEnumerator() {
-			return bannedIPs.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator() {
-			return GetEnumerator();
+		public string[] Hosts {
+			get {
+				readerWriterLock.EnterReadLock();
+				try {
+					return ips.ToArray();
+				} finally {
+					readerWriterLock.ExitReadLock();
+				}
+			}
 		}
 
 	}

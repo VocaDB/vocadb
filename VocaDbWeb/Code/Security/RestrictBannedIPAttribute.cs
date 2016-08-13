@@ -18,7 +18,7 @@ namespace VocaDb.Web.Code.Security {
 
 			var host = filterContext.HttpContext.Request.UserHostAddress;
 
-			if (IPRules.TempBannedIPs.Contains(host)) {
+			if (!IPRules.IsAllowed(host)) {
 
 				log.Warn("Restricting banned host '{0}' for '{1}'.", host, filterContext.HttpContext.Request.Url);
 				filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.Forbidden, 

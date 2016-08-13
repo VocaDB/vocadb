@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Web.Code.Security {
@@ -10,12 +9,11 @@ namespace VocaDb.Web.Code.Security {
 	/// </summary>
 	public class IPRuleManager {
 
-		private HashSet<string> ips;
-		private readonly ReaderWriterLockSlim readerWriterLock = new ReaderWriterLockSlim();
+		private readonly HostCollection permBannedIPs;
 		private readonly HostCollection tempBannedIPs = new HostCollection();
 
 		public IPRuleManager(IEnumerable<string> ips) {
-			this.ips = new HashSet<string>(ips);
+			this.permBannedIPs = new HostCollection(ips);
 		}
 
 		/// <summary>
@@ -23,26 +21,18 @@ namespace VocaDb.Web.Code.Security {
 		/// </summary>
 		public HostCollection TempBannedIPs => tempBannedIPs;
 
+		/// <summary>
+		/// Tests whether a host address is allowed.
+		/// Both permanent and temporary rules are checked.
+		/// </summary>
+		/// <param name="hostAddress">Host address (IP).</param>
+		/// <returns>True if the host is allowed access (not banned).</returns>
 		public bool IsAllowed(string hostAddress) {
-
-			readerWriterLock.EnterReadLock();
-			try {
-				return !ips.Contains(hostAddress);
-			} finally {
-				readerWriterLock.ExitReadLock();
-			}
-
+			return !permBannedIPs.Contains(hostAddress) && !TempBannedIPs.Contains(hostAddress);
 		}
 
 		public void Reset(IEnumerable<string> ips) {
-
-			readerWriterLock.EnterWriteLock();
-			try {
-				this.ips = new HashSet<string>(ips);
-			} finally {
-				readerWriterLock.ExitWriteLock();
-			}
-
+			permBannedIPs.Reset(ips);
 		}
 
 	}
