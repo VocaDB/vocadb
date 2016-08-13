@@ -50,16 +50,6 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult BannedIPs() {
-
-			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
-
-			var hosts = ipRuleManager.TempBannedIPs.Hosts;
-			return Json(hosts);
-
-		}
-
-		[Authorize]
 		public ActionResult CheckSFS(string ip) {
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);

@@ -237,14 +237,14 @@
 			{
 				<h4>@R.LastLogin</h4>
 				@Helpers.UniversalTimeLabel(Model.LastLogin)
-				if (Login.CanManageUsers)
-				{
-					@:(<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>@Model.LastLoginAddress</a>)
-					<a data-bind="click: function() { checkSFS('@Model.LastLoginAddress'); }" href='#'>StopForumSpam</a>
+				if (Login.CanManageUsers) {
+					@:(@Model.LastLoginAddress)
+					<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>GeoIpTool</a>
+					<a data-bind="click: checkSFS" href='#'>StopForumSpam</a>
+					<a data-bind="click: addBan" href='#'>Add to banned IPs</a>
 				}
 
-				if (Model.AdditionalPermissions.Any())
-				{
+				if (Model.AdditionalPermissions.Any()) {
 					<h4 class="withMargin">@R.AdditionalPermissions</h4>
 					@Translate.AllPermissionTokenNames(Model.AdditionalPermissions)
 				}
@@ -390,6 +390,7 @@
 			moment.locale(@ToJS(Culture));
 
 			var languageSelection = '@UserContext.LanguagePreference';
+			var lastLoginAddress = '@(UserContext.HasPermission(PermissionToken.ManageIPRules) ? Model.LastLoginAddress : "")';
 			var userId = @Model.Id;
 			var canDeleteComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 			var loggedUserId = @ToJS(UserContext.LoggedUserId);
@@ -420,7 +421,7 @@
 				languageSelection, userId, cultureCode,
 				sort, groupByRating, pvPlayersFactory, false, artistId, childVoicebanks);
 
-			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, canDeleteComments, urlMapper, 
+			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, lastLoginAddress, canDeleteComments, urlMapper, 
 				userRepo, adminRepo, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
 			ko.applyBindings(viewModel);
 

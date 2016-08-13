@@ -10,9 +10,21 @@ module vdb.viewModels.user {
 
 		private static overview = "Overview";
 
-        public checkSFS = (ip: string) => {
+		public addBan = () => {
 
-            this.adminRepo.checkSFS(ip, html => {
+			this.adminRepo.addIpToBanList({ address: this.lastLoginAddress, notes: this.name }, result => {
+				if (result) {
+					vdb.ui.showSuccessMessage("Added to ban list");
+				} else {
+					vdb.ui.showErrorMessage("Already in the ban list");
+				}
+			});
+
+		}
+
+        public checkSFS = () => {
+
+            this.adminRepo.checkSFS(this.lastLoginAddress, html => {
 
                 $("#sfsCheckDialog").html(html);
                 $("#sfsCheckDialog").dialog("open");
@@ -29,6 +41,7 @@ module vdb.viewModels.user {
 
 		};
 
+		private name: string;
 		public ratingsByGenreChart = ko.observable<HighchartsOptions>(null);
 
 		public view = ko.observable(UserDetailsViewModel.overview);
@@ -80,6 +93,7 @@ module vdb.viewModels.user {
 		constructor(
 			private userId: number,
 			private loggedUserId: number,
+			private lastLoginAddress: string,
 			private canEditAllComments: boolean,
 			private urlMapper: UrlMapper,
 			private userRepo: rep.UserRepository,
@@ -101,6 +115,10 @@ module vdb.viewModels.user {
 
 			userRepo.getRatingsByGenre(userId, data => {
 				this.ratingsByGenreChart(vdb.helpers.HighchartsHelper.simplePieChart(null, "Songs", data));
+			});
+
+			userRepo.getOne(userId, data => {
+				this.name = data.name;
 			});
 
         }

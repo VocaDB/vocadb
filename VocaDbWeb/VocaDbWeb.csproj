@@ -1024,6 +1024,7 @@
     <Compile Include="Code\WebApi\ObjectNotFoundExceptionFilterAttribute.cs" />
     <Compile Include="Code\WebApi\UnhandledExceptionLogger.cs" />
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />
+    <Compile Include="Controllers\Api\AdminApiController.cs" />
     <Compile Include="Controllers\Api\ReleaseEventSeriesApiController.cs" />
     <Compile Include="Helpers\EnumTranslations.cs" />
     <Compile Include="Helpers\RazorHelper.cs" />

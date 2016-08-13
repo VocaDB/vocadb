@@ -69,8 +69,10 @@
 		ko.punches.enableAll();
 
     	var rules = @Html.Raw(JsonHelpers.Serialize(Model, true, true));
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var repo = new vdb.repositories.AdminRepository(urlMapper);
 
-    	var viewModel = new vdb.viewModels.ManageIPRulesViewModel(rules);
+    	var viewModel = new vdb.viewModels.ManageIPRulesViewModel(rules, repo);
     	ko.applyBindings(viewModel);
 
 	});

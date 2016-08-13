@@ -39,14 +39,12 @@ module vdb.viewModels {
             ko.utils.postJson(location.href, json, null);
         };
 
-        constructor(data: IPRuleContract[]) {
+        constructor(data: IPRuleContract[], repo: rep.AdminRepository) {
 
 			var rules = _.chain(data).sortBy('created').reverse().map(r => new IPRule(r)).value();
             this.rules = ko.observableArray(rules);
 
-            $.getJSON(vdb.functions.mapAbsoluteUrl("/Admin/BannedIPs"), null, (result: string[]) => {
-                this.bannedIPs(result);
-            });
+			repo.getTempBannedIps(result => this.bannedIPs(result));
 
         }
 

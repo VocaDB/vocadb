@@ -214,6 +214,17 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Gets user by ID.
+		/// </summary>
+		/// <param name="id">User ID.</param>
+		/// <param name="fields">Optional fields.</param>
+		/// <returns>User properties.</returns>
+		[Route("{id:int}")]
+		public UserForApiContract GetOne(int id, UserOptionalFields fields = UserOptionalFields.None) {
+			return queries.HandleQuery(ctx => new UserForApiContract(ctx.Load(id), userIconFactory, fields));
+		}
+
+		/// <summary>
 		/// Gets a user message.
 		/// The message will be marked as read.
 		/// User can only load messages from their own inbox.
