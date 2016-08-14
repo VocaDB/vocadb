@@ -52,6 +52,16 @@ namespace VocaDb.Web.Controllers
 
         }
 
+		public ActionResult IPForbidden(bool? redirect) {
+
+			if (redirect.HasValue && redirect.Value == false)
+				ErrorLogger.LogHttpError(Request, ErrorLogger.Code_Forbidden);
+
+			Response.StatusCode = ErrorLogger.Code_Forbidden;
+			return View("IPForbidden");
+
+		}
+
 		public ActionResult NotFound(bool? redirect) {
 
 			if (redirect.HasValue && redirect.Value == false)

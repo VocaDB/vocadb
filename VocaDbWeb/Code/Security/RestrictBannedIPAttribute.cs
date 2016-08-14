@@ -21,8 +21,7 @@ namespace VocaDb.Web.Code.Security {
 			if (!IPRules.IsAllowed(host)) {
 
 				log.Warn("Restricting banned host '{0}' for '{1}'.", host, filterContext.HttpContext.Request.Url);
-				filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.Forbidden, 
-					"Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.");
+				filterContext.Result = new RedirectResult("/Error/IPForbidden");
 
 			}
 
