@@ -434,6 +434,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void FindDuplicates_CoverInSongTitle_CoverType() {
+
+			pvParser.MatchedPVs.Add("http://www.nicovideo.jp/watch/sm27114783",
+				VideoUrlParseResult.CreateOk("http://www.nicovideo.jp/watch/sm27114783", PVService.NicoNicoDouga, "123456567",
+				VideoTitleParseResult.CreateSuccess("【GUMI】 光(宇多田ヒカル) 【アレンジカバー】", string.Empty, "testimg2.jpg", 33)));
+
+			var result = CallFindDuplicates(anyPv: new[] { "http://www.nicovideo.jp/watch/sm27114783" });
+
+			Assert.AreEqual(SongType.Cover, result.SongType, "SongType is cover because of the 'cover' in title");
+
+		}
+
+		[TestMethod]
 		public void GetRelatedSongs() {
 
 			var matchingArtist = Save(CreateEntry.Song());

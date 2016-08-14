@@ -196,7 +196,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private bool HasTag(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res) {
+		private bool HasCoverTag(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res) {
 
 			if (config.SpecialTags.Cover == 0)
 				return false;
@@ -216,10 +216,8 @@ namespace VocaDb.Model.Database.Queries {
 			if (!string.IsNullOrEmpty(titleParseResult.Title))
 				titleParseResult.TitleLanguage = languageDetector.Detect(titleParseResult.Title, ContentLanguageSelection.Unspecified);
 
-			if (titleParseResult.SongType == SongType.Unspecified && HasTag(ctx, res)) {
-				titleParseResult.SongType = SongType.Cover;
-			} else {
-				titleParseResult.SongType = SongType.Original;
+			if (titleParseResult.SongType == SongType.Unspecified) {
+				titleParseResult.SongType = HasCoverTag(ctx, res) ? SongType.Cover : SongType.Original;
 			}
 
 			if (!string.IsNullOrEmpty(res.AuthorId)) {
