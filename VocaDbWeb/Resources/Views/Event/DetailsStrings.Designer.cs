@@ -61,6 +61,15 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Albums.
+        /// </summary>
+        public static string Albums {
+            get {
+                return ResourceManager.GetString("Albums", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event.
         /// </summary>
         public static string Event {
@@ -84,6 +93,15 @@ namespace ViewRes.Event {
         public static string Series {
             get {
                 return ResourceManager.GetString("Series", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs.
+        /// </summary>
+        public static string Songs {
+            get {
+                return ResourceManager.GetString("Songs", resourceCulture);
             }
         }
     }

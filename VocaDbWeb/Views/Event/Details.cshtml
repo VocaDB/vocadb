@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Web.Helpers;
 @using Res = ViewRes.Event.DetailsStrings;
+@using EntryRes = ViewRes.EntryDetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
 
 @{
@@ -52,12 +53,18 @@
 </div>
 
 @if (Model.Albums.Any()) {
-	<h3>Albums</h3>
+	<h3>
+		@Res.Albums
+		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Albums.Length)</small>
+	</h3>
 	@AlbumHelpers.AlbumGrid(Model.Albums, 2, false, false, true)
 }
 
 @if (Model.Songs.Any()) {
-	<h3 class="withMargin">Songs</h3>
+	<h3 class="withMargin">
+		@Res.Songs
+		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Songs.Length)</small>
+	</h3>
 	@SongHelpers.SongGrid(Model.Songs, 2, true, false)
 }
 
