@@ -57,7 +57,9 @@ namespace VocaDb.Web.Controllers
 			if (redirect.HasValue && redirect.Value == false)
 				ErrorLogger.LogHttpError(Request, ErrorLogger.Code_Forbidden);
 
+			// 403.6: IP address of the client has been rejected.
 			Response.StatusCode = ErrorLogger.Code_Forbidden;
+			Response.SubStatusCode = 6;
 			return View("IPForbidden");
 
 		}
