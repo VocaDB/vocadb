@@ -12,6 +12,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
@@ -243,6 +244,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="notes">Notes. Optional.</param>
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{tagId:int}/reports")]
+		[RestrictBannedIP]
 		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) {
 
 			queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
