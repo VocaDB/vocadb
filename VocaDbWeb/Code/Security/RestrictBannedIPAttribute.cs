@@ -21,7 +21,12 @@ namespace VocaDb.Web.Code.Security {
 			if (!IPRules.IsAllowed(host)) {
 
 				log.Warn("Restricting banned host '{0}' for '{1}'.", host, filterContext.HttpContext.Request.Url);
-				filterContext.Result = new RedirectResult("/Error/IPForbidden");
+
+				if (filterContext.HttpContext.Request.IsAjaxRequest()) {
+					filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+				} else {
+					filterContext.Result = new RedirectResult("/Error/IPForbidden");
+				}
 
 			}
 
