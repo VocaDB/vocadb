@@ -28,6 +28,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
+using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers
@@ -87,6 +88,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
+		[RestrictBannedIP]
 		public void CreateReport(int songId, SongReportType reportType, string notes, int? versionNumber) {
 
 			queries.CreateReport(songId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
