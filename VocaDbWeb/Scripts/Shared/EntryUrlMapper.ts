@@ -12,11 +12,15 @@ module vdb.utils {
         // URL to details view.
         // typeName: entry type name.
         // id: entry Id.
-		public static details(typeName: string, id: number, urlFriendlyName?: string) {
+		public static details(typeName: string | cls.EntryType, id: number, urlFriendlyName?: string) {
 
 			var prefix;
 
-			switch (cls.EntryType[typeName]) {
+			if (typeof typeName  === "string") {
+				typeName = cls.EntryType[typeName];
+			}
+
+			switch (typeName) {
 				case cls.EntryType.Album:
 					prefix = vdb.functions.mapAbsoluteUrl("/Al/" + id);
 					break;
@@ -51,11 +55,11 @@ module vdb.utils {
 		}
 
 		public static details_song(entry: dc.SongApiContract) {
-			return EntryUrlMapper.details("Song", entry.id, entry.urlFriendlyName);
+			return EntryUrlMapper.details(cls.EntryType.Song, entry.id, entry.urlFriendlyName);
 		}
 
 		public static details_tag(id: number, slug?: string) {
-			return EntryUrlMapper.details('Tag', id, slug);
+			return EntryUrlMapper.details(cls.EntryType.Tag, id, slug);
 		}
 
 		public static details_tag_contract(tag: dc.TagBaseContract) {
@@ -66,7 +70,7 @@ module vdb.utils {
 			if (!tag.id)
 				return "/Tag/Details/" + tag.name; // Legacy URL, this will be removed
 
-			return EntryUrlMapper.details('Tag', tag.id, tag.urlSlug);
+			return EntryUrlMapper.details(cls.EntryType.Tag, tag.id, tag.urlSlug);
 
 		}
     

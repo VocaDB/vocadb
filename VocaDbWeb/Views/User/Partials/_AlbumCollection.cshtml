@@ -76,10 +76,10 @@
 		<div class="control-label">@Res.ReleaseEvent</div>
 		<div class="controls">
 			<div style="display: inline-block;" class="input-append input-prepend">
-				<a href="#" class="btn btn-nomargin" data-bind="visible: releaseEventName, attr: { href: '/Event/Find?query=' + encodeURIComponent(releaseEventName()) }" title="Release event information">
+				<a href="#" class="btn btn-nomargin" data-bind="visible: !releaseEvent.isEmpty(), attr: { href: releaseEventUrl() }" title="Release event information">
 					<i class="icon icon-info-sign"></i>
 				</a>
-				@KnockoutHelpers.LockingAutoComplete("releaseEventNameAutoComplete", "releaseEventName")
+				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent")
 			</div>
 		</div>
 	</div>

@@ -431,7 +431,7 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/User/AlbumCollection").Include(
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-				"~/Scripts/KnockoutExtensions/ReleaseEventNameAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/ViewModels/User/AlbumCollectionViewModel.js"
@@ -443,7 +443,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-				"~/Scripts/KnockoutExtensions/ReleaseEventNameAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/Highcharts.js",				
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
@@ -454,6 +454,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/TagRepository.js",
+				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",

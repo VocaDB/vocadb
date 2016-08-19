@@ -736,7 +736,7 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereHasName(queryParams.TextQuery)
 					.WhereHasCollectionStatus(queryParams.FilterByStatus)
 					.WhereHasArtist(queryParams.ArtistId)
-					.WhereHasReleaseEventName(queryParams.ReleaseEventName)
+					.WhereHasReleaseEvent(queryParams.ReleaseEventId)
 					.WhereAlbumHasTag(queryParams.TagId)
 					.WhereAlbumHasTag(queryParams.Tag);
 

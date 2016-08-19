@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.Search.User {
 		/// </summary>
 		public PagingProperties Paging { get; set; }
 
-		public string ReleaseEventName { get; set; }
+		public int ReleaseEventId { get; set; }
 
 		public AlbumSortRule Sort { get; set; }
 

@@ -185,13 +185,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		[Obsolete]
-		public static IQueryable<AlbumForUser> WhereHasReleaseEventName(this IQueryable<AlbumForUser> query, string releaseEventName) {
+		public static IQueryable<AlbumForUser> WhereHasReleaseEvent(this IQueryable<AlbumForUser> query, int releaseEventId) {
 
-			if (string.IsNullOrEmpty(releaseEventName))
+			if (releaseEventId == 0)
 				return query;
 
-			return query.Where(s => s.Album.OriginalRelease.ReleaseEvent.Name == releaseEventName);
+			return query.Where(s => s.Album.OriginalRelease.ReleaseEvent.Id == releaseEventId);
 
 		}
 

@@ -1,5 +1,5 @@
 ﻿
-module vdb.viewModels.user {
+namespace vdb.viewModels.user {
 	
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
@@ -20,7 +20,7 @@ module vdb.viewModels.user {
 			this.collectionStatus.subscribe(this.updateResultsWithTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
-			this.releaseEventName.subscribe(this.updateResultsWithTotalCount);
+			this.releaseEvent.id.subscribe(this.updateResultsWithTotalCount);
 			this.searchTerm.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithoutTotalCount);
 			this.tag.subscribe(this.updateResultsWithTotalCount);
@@ -39,7 +39,7 @@ module vdb.viewModels.user {
 		public page = ko.observableArray<dc.RatedSongForUserForApiContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
-		public releaseEventName = ko.observable<string>(null);
+		public releaseEvent = new BasicEntryLinkViewModel<dc.ReleaseEventContract>(null, null);
 		public resources = ko.observable<dc.ResourcesContract>();
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public sort = ko.observable("Name");
@@ -49,6 +49,10 @@ module vdb.viewModels.user {
 		public tagName = ko.computed(() => this.tag() ? this.tag().name : null);
 		public tagUrl = ko.computed(() => utils.EntryUrlMapper.details_tag_contract(this.tag()));
 		public viewMode = ko.observable("Details");
+
+		public releaseEventUrl = ko.computed(() => {
+			return utils.EntryUrlMapper.details(models.EntryType.ReleaseEvent, this.releaseEvent.id());
+		});
 
 		public init = () => {
 
@@ -96,7 +100,7 @@ module vdb.viewModels.user {
 			this.userRepo.getAlbumCollectionList(this.loggedUserId, pagingProperties, this.languageSelection, this.searchTerm(),
 				this.tagId(),
 				this.artistId(),
-				this.collectionStatus(), this.releaseEventName(), this.sort(),
+				this.collectionStatus(), this.releaseEvent.id(), this.sort(),
 				(result: any) => {
 
 					this.pauseNotifications = false;

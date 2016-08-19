@@ -43,7 +43,7 @@ module vdb.repositories {
 			tag: number,
 			artistId: number,
 			purchaseStatuses: string,
-			releaseEventName: string,
+			releaseEventId: number,
 			sort: string,
 			callback) => {
 
@@ -54,7 +54,7 @@ module vdb.repositories {
 				tagId: tag,
 				artistId: artistId,
 				purchaseStatuses: purchaseStatuses,
-				releaseEventName: releaseEventName,
+				releaseEventId: releaseEventId || undefined,
 				fields: "AdditionalNames,MainPicture",
 				lang: lang,
 				nameMatchMode: 'Auto',
