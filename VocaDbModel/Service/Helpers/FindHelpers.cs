@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using NHibernate;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain;
@@ -52,30 +53,26 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		public static IOrderedQueryable<T> AddNameOrder<T>(IQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames {
-
+		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames {
 			switch (languagePreference) {
 				case ContentLanguagePreference.Japanese:
-					return criteria.OrderBy(e => e.Names.SortNames.Japanese);
+					return e => e.Names.SortNames.Japanese;
 				case ContentLanguagePreference.English:
-					return criteria.OrderBy(e => e.Names.SortNames.English);
+					return e => e.Names.SortNames.English;
+				case ContentLanguagePreference.Romaji:
+					return e => e.Names.SortNames.Romaji;
 				default:
-					return criteria.OrderBy(e => e.Names.SortNames.Romaji);
+					// Note: the Default name field is not mapped to database so we're selecting it here dynamically. There is some small performance penalty.
+					return e => e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.English ? e.Names.SortNames.English : (e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.Romaji ? e.Names.SortNames.Romaji : e.Names.SortNames.Japanese);
 			}
+		}
 
+		public static IOrderedQueryable<T> AddNameOrder<T>(IQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames {
+			return criteria.OrderBy(OrderByExpression<T>(languagePreference));
 		}
 
 		public static IOrderedQueryable<T> AddNameOrder<T>(IOrderedQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames {
-
-			switch (languagePreference) {
-				case ContentLanguagePreference.Japanese:
-					return criteria.ThenBy(e => e.Names.SortNames.Japanese);
-				case ContentLanguagePreference.English:
-					return criteria.ThenBy(e => e.Names.SortNames.English);
-				default:
-					return criteria.ThenBy(e => e.Names.SortNames.Romaji);
-			}
-
+			return criteria.ThenBy(OrderByExpression<T>(languagePreference));
 		}
 
 		/// <summary>
