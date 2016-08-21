@@ -61,7 +61,7 @@ namespace VocaDb.Model.Service {
 
 				session.Update(user);
 
-				AuditLog(string.Format("added {0} for {1}", artist, user), session, user);
+				AuditLog(string.Format("followed {0}", artist), session, user);
 
 			});
 
