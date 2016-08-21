@@ -438,6 +438,14 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// Add album to user collection.
+		/// </summary>
+		/// <param name="album">Album to be added. Cannot be null.</param>
+		/// <param name="status">Purchase status.</param>
+		/// <param name="mediaType">Media type.</param>
+		/// <param name="rating">Rating.</param>
+		/// <returns>Album link. Cannot be null.</returns>
 		public virtual AlbumForUser AddAlbum(Album album, PurchaseStatus status, MediaType mediaType, int rating) {
 
 			ParamIs.NotNull(() => album);

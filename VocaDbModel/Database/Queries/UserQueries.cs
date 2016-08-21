@@ -1311,8 +1311,8 @@ namespace VocaDb.Model.Database.Queries {
 				// Delete
 				if (albumForUser != null && status == PurchaseStatus.Nothing && rating == 0) {
 
-					session.AuditLogger.AuditLog(string.Format("deleting {0} for {1}", 
-						entryLinkFactory.CreateEntryLink(albumForUser.Album), albumForUser.User));
+					session.AuditLogger.AuditLog(string.Format("deleting {0} from collection", 
+						entryLinkFactory.CreateEntryLink(albumForUser.Album)));
 
 					NHibernateUtil.Initialize(albumForUser.Album.CoverPictureData);
 
@@ -1331,7 +1331,7 @@ namespace VocaDb.Model.Database.Queries {
 					session.Save(albumForUser);
 					session.Update(album);
 
-					session.AuditLogger.AuditLog(string.Format("added {0} for {1}", entryLinkFactory.CreateEntryLink(album), user));
+					session.AuditLogger.AuditLog(string.Format("added {0} to collection", entryLinkFactory.CreateEntryLink(album)));
 
 				// Update
 				} else if (albumForUser != null) {
@@ -1347,8 +1347,8 @@ namespace VocaDb.Model.Database.Queries {
 						session.Update(albumForUser.Album);
 					}
 
-					session.AuditLogger.AuditLog(string.Format("updated {0} for {1}", 
-						entryLinkFactory.CreateEntryLink(albumForUser.Album), albumForUser.User));
+					session.AuditLogger.AuditLog(string.Format("updated {0} in collection", 
+						entryLinkFactory.CreateEntryLink(albumForUser.Album)));
 
 				}
 
