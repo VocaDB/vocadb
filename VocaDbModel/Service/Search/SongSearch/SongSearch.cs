@@ -273,11 +273,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			}
 
-			var songs = SortByIds(
-				querySource
-					.Query<Song>()
-					.Where(s => ids.Contains(s.Id))
-					.ToArray(), ids);
+			var songs = querySource
+				.LoadMultiple<Song>(ids)
+				.ToArray()
+				.OrderByIds(ids);
 
 			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
 

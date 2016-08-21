@@ -163,6 +163,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Exact).</param>
 		/// <param name="sort">Sort rule (optional, by default tags are sorted by name).Possible values are Name and UsageCount.</param>
+		/// <param name="preferAccurateMatches">
+		/// Whether the search should prefer accurate matches. 
+		/// If this is true, entries that match by prefix will be moved first, instead of being sorted alphabetically.
+		/// Requires a text query. Does not support pagination.
+		/// This is mostly useful for autocomplete boxes.
+		/// </param>
 		/// <param name="fields">List of optional fields (optional).</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of tags.</returns>
@@ -176,12 +182,13 @@ namespace VocaDb.Web.Controllers.Api {
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			TagSortRule? sort = null,
+			bool preferAccurateMatches = false,
 			TagOptionalFields fields = TagOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? absoluteMax : int.MaxValue);
 			var ssl = WebHelper.IsSSL(Request);
-			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, false),
+			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, preferAccurateMatches),
 				new PagingProperties(start, maxResults, getTotalCount)) {
 					AllowAliases = allowAliases,
 					AllowChildren = allowChildren,

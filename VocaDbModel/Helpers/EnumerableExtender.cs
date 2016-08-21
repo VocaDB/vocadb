@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Helpers {
 
@@ -50,6 +51,10 @@ namespace VocaDb.Model.Helpers {
 			} catch (InvalidOperationException) {
 				return null;
 			}
+		}
+
+		public static T[] OrderByIds<T>(this IEnumerable<T> entries, int[] idList) where T : IEntryWithIntId {
+			return CollectionHelper.SortByIds(entries, idList);
 		}
 
 		public static Dictionary<T, T2> ToDictionaryWithEmpty<TSource, T, T2>(this IEnumerable<TSource> source, T emptyKey, T2 emptyVal, Func<TSource, T> keySelector, Func<TSource, T2> valueSelector) {

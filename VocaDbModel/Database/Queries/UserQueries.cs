@@ -1451,7 +1451,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.Update(user);
 
-				ctx.AuditLogger.AuditLog(string.Format("updated settings for {0}", EntryLinkFactory.CreateEntryLink(user)));
+				ctx.AuditLogger.AuditLog("updated settings");
 
 				return new UserWithPermissionsContract(user, PermissionContext.LanguagePreference);
 
