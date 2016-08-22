@@ -2270,6 +2270,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Discussion\DiscussionTopicContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\EntryPictureFileContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\EnglishTranslatedStringContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringWithIdContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PartialFindResultContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PVs\PVContract.ts" />

@@ -1,15 +1,8 @@
 ﻿
-module vdb.dataContracts.globalization {
+namespace vdb.dataContracts.globalization {
 
-	import cls = vdb.models;
-
-	export interface LocalizedStringWithIdContract {
-
+	export interface LocalizedStringWithIdContract extends LocalizedStringContract {
 		id: number;
-		language: string;
-		value: string;
-
-
 	}
 
 }
