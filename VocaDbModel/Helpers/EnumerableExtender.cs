@@ -71,13 +71,8 @@ namespace VocaDb.Model.Helpers {
 
 		public static IEnumerable<KeyValuePair<T, T2>> ToKeyValuePairsWithEmpty<TSource, T, T2>(this IEnumerable<TSource> source, T emptyKey, T2 emptyVal, Func<TSource, T> keySelector, Func<TSource, T2> valueSelector) {
 
-			var vals = new List<KeyValuePair<T, T2>>();
-			vals.Add(new KeyValuePair<T, T2>(emptyKey, emptyVal));
-
-			foreach (var item in source)
-				vals.Add(new KeyValuePair<T, T2>(keySelector(item), valueSelector(item)));
-
-			return vals;
+			return Enumerable.Repeat(new KeyValuePair<T, T2>(emptyKey, emptyVal), 1)
+				.Concat(source.Select(item => new KeyValuePair<T, T2>(keySelector(item), valueSelector(item))));
 
 		}
 
