@@ -130,7 +130,7 @@
 			</div>
 			<div class="editor-field">
 				@Html.DropDownListFor(m => m.InterfaceLanguageSelection,
-					new SelectList(Model.AllInterfaceLanguages, "Key", "Value", Model.InterfaceLanguageSelection), 
+					new SelectList(Model.AllInterfaceLanguages, "Code", "DisplayName", Model.InterfaceLanguageSelection), 
 					new { @class = "input-xlarge" })
 			</div>
 
@@ -141,7 +141,7 @@
 			</div>
 			<div class="editor-field">
 				@Html.DropDownListFor(m => m.CultureSelection,
-					new SelectList(Model.AllInterfaceLanguages, "Key", "Value", Model.CultureSelection),
+					new SelectList(Model.AllInterfaceLanguages, "Code", "DisplayName", Model.CultureSelection),
 					new { @class = "input-xlarge" })
 			</div>
 			

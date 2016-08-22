@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Security;
@@ -108,13 +109,20 @@ namespace VocaDb.Web.Models {
 	[PropertyModelBinder]
 	public class MySettingsModel {
 
+		private LanguageCodeAndName[] Languages(IEnumerable<CultureInfo> cultures, string defaultName) {
+
+			return Enumerable
+				.Repeat(new LanguageCodeAndName(string.Empty, defaultName), 1)
+				.Concat(cultures.Select(c => new LanguageCodeAndName(c.Name, c.NativeName + " (" + c.EnglishName + ")")))
+				.OrderBy(k => k.DisplayName)
+				.ToArray();
+
+		}
+
 		public MySettingsModel() {
 
 			AboutMe = string.Empty;
-			AllInterfaceLanguages = InterfaceLanguage.Cultures
-				.ToKeyValuePairsWithEmpty(string.Empty, ViewRes.User.MySettingsStrings.Automatic, c => c.Name, c => c.NativeName + " (" + c.EnglishName + ")")
-				.OrderBy(k => k.Value)
-				.ToArray();
+			AllInterfaceLanguages = Languages(InterfaceLanguage.Cultures, ViewRes.User.MySettingsStrings.Automatic);
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
@@ -156,7 +164,7 @@ namespace VocaDb.Web.Models {
 
 		public string AccessKey { get; set; }
 
-		public KeyValuePair<string, string>[] AllInterfaceLanguages { get; set; }
+		public LanguageCodeAndName[] AllInterfaceLanguages { get; set; }
 
 		public Dictionary<ContentLanguagePreference, string> AllLanguages { get; set; }
 

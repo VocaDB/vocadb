@@ -315,6 +315,7 @@
     <Compile Include="Domain\Albums\AlbumReport.cs" />
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
+    <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventSeriesVersion.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventVersion.cs" />
     <Compile Include="Domain\Albums\IAlbumLink.cs" />
@@ -434,6 +435,7 @@
     <Compile Include="Domain\Users\OwnedArtistForUser.cs" />
     <Compile Include="Domain\Users\PurchaseStatus.cs" />
     <Compile Include="Domain\Users\UserComment.cs" />
+    <Compile Include="Domain\Users\UserKnownLanguage.cs" />
     <Compile Include="Domain\Users\UserReport.cs" />
     <Compile Include="Domain\Users\UserOptions.cs" />
     <Compile Include="Domain\Users\UserWebLink.cs" />

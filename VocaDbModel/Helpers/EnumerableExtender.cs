@@ -69,13 +69,6 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static IEnumerable<KeyValuePair<T, T2>> ToKeyValuePairsWithEmpty<TSource, T, T2>(this IEnumerable<TSource> source, T emptyKey, T2 emptyVal, Func<TSource, T> keySelector, Func<TSource, T2> valueSelector) {
-
-			return Enumerable.Repeat(new KeyValuePair<T, T2>(emptyKey, emptyVal), 1)
-				.Concat(source.Select(item => new KeyValuePair<T, T2>(keySelector(item), valueSelector(item))));
-
-		}
-
 	}
 
 	public class DistinctPropertyEqualityComparer<T, T2> : IEqualityComparer<T> {
