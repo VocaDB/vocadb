@@ -1,7 +1,7 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" />
 /// <reference path="../WebLinksEditViewModel.ts" />
 
-module vdb.viewModels {
+namespace vdb.viewModels {
 
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
@@ -36,13 +36,6 @@ module vdb.viewModels {
 
 			// TODO: support showing the verification button by saving email immediately after it's changed
 			this.canVerifyEmail = ko.computed(() => email && !emailVerified && !this.emailVerificationSent());
-
-			/*
-			this.canVerifyEmail = ko.computed(() => this.email() && !this.emailVerified());
-
-			this.email.subscribe(() => {
-				this.emailVerified(false);
-			});*/
 
 		}
 
