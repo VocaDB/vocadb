@@ -295,6 +295,7 @@
     <Compile Include="DataContracts\Users\UpdateUserSettingsContract.cs" />
     <Compile Include="DataContracts\Users\UserForApiContract.cs" />
     <Compile Include="DataContracts\Users\UserForMySettingsContract.cs" />
+    <Compile Include="DataContracts\Users\UserKnownLanguageContract.cs" />
     <Compile Include="DataContracts\Users\UserMessageContract.cs" />
     <Compile Include="DataContracts\Users\UserWithEmailContract.cs" />
     <Compile Include="DataContracts\Users\UserWithPermissionsContract.cs" />
@@ -583,6 +584,7 @@
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventSeriesMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\Users\OldUsernameMap.cs" />
+    <Compile Include="Mapping\Users\UserKnownLanguageMap.cs" />
     <Compile Include="Mapping\WebLinkMap.cs" />
     <Compile Include="Mapping\MikuDb\MikuDbAlbumMap.cs" />
     <Compile Include="Mapping\Security\AuditLogEntryMap.cs" />

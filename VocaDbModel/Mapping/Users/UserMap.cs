@@ -55,6 +55,7 @@ namespace VocaDb.Model.Mapping.Users {
 			HasMany(m => m.AllOwnedArtists).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.Comments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
 			HasMany(m => m.FavoriteSongs).Inverse().Cascade.All().Cache.ReadWrite();
+			HasMany(m => m.KnownLanguages).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.Messages).KeyColumn("[User]").OrderBy("Created DESC").Inverse().Cascade.All();
 			HasMany(m => m.OldUsernames).KeyColumn("[User]").OrderBy("[Date] DESC").Inverse().Cascade.All();
 			HasMany(m => m.ReceivedMessages).KeyColumn("[Receiver]").Inverse();

@@ -1449,6 +1449,9 @@ namespace VocaDb.Model.Database.Queries {
 				var webLinkDiff = WebLink.Sync(user.WebLinks, validWebLinks, user);
 				ctx.OfType<UserWebLink>().Sync(webLinkDiff);
 
+				var knownLanguagesDiff = CollectionHelper.Sync(user.KnownLanguages, contract.KnownLanguages, (l, l2) => l.CultureCode == l2.CultureCode, l => user.AddKnownLanguage(l.CultureCode, l.Proficiency));
+				ctx.Sync(knownLanguagesDiff);
+
 				ctx.Update(user);
 
 				ctx.AuditLogger.AuditLog("updated settings");

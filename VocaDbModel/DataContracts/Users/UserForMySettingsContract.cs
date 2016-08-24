@@ -19,6 +19,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			HashedAccessKey = LoginManager.GetHashedAccessKey(user.AccessKey);
 			HasPassword = !string.IsNullOrEmpty(user.Password);
 			HasTwitterToken = !string.IsNullOrEmpty(user.Options.TwitterOAuthToken);
+			KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
 			Location = user.Options.Location;
 			PublicRatings = user.Options.PublicRatings;
 			ShowChatbox = user.Options.ShowChatbox;
@@ -38,6 +39,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public bool HasPassword { get; set; }
 
 		public bool HasTwitterToken { get; set; }
+
+		public UserKnownLanguageContract[] KnownLanguages { get; set; }
 
 		public string Location { get; set; }
 

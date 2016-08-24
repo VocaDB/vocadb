@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Globalization {
 		};
 
 		public static readonly string[] UserLanguageCodes = {
-			"de-DE", "en-GB", "en-US", "es", "fi-Fi", "fil-PH", "fr-FR", "id-ID", "it-IT", "ko-KR", "nl-NL", "nn-NO", "pl-PL", "pt", "ru-RU", "sv-SE", "ja-JP", "zh-Hans"
+			"de", "en", "es", "fi", "fil", "fr", "id", "it", "ko", "nl", "no", "pl", "pt", "ru", "sv", "ja", "zh"
 		};
 
 		public static IEnumerable<CultureInfo> UserLanguageCultures => UserLanguageCodes.Select(CultureInfo.GetCultureInfo);

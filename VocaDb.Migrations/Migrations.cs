@@ -4,6 +4,21 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201608231900)]
+	public class UserKnownLanguages : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table("UserKnownLanguages")
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("CultureCode").AsString(10).NotNullable()
+				.WithColumn("Proficiency").AsString(15).NotNullable()
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
+				
+		}
+
+	}
+
 	[Migration(201608082300)]
 	public class ArchivedReleaseEventRemoveRedundantFields : Migration {
 

@@ -14,6 +14,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 			AboutMe = user.Options.AboutMe;
 			Location = user.Options.Location;
+			KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
 			PublicRatings = user.Options.PublicRatings;
 			ShowChatbox = user.Options.ShowChatbox;
 			UnreadNotificationsToKeep = user.Options.UnreadNotificationsToKeep;
@@ -24,6 +25,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public string AboutMe { get; set; }
 
 		public string Location { get; set; }
+
+		public UserKnownLanguageContract[] KnownLanguages { get; set; }
 
 		public string NewPass { get; set; }
 

@@ -1,4 +1,5 @@
-﻿namespace VocaDb.Model.Domain.Globalization {
+﻿
+namespace VocaDb.Model.Domain.Globalization {
 
 	public struct LanguageCodeAndName {
 

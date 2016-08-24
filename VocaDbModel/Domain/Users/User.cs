@@ -42,6 +42,7 @@ namespace VocaDb.Model.Domain.Users {
 		private string email;
 		private IList<FavoriteSongForUser> favoriteSongs = new List<FavoriteSongForUser>();
 		private string language;
+		private IList<UserKnownLanguage> knownLanguages = new List<UserKnownLanguage>();
 		private IList<UserMessage> messages = new List<UserMessage>();
 		private string name;
 		private string nameLc;
@@ -272,6 +273,14 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		public virtual IList<UserKnownLanguage> KnownLanguages {
+			get { return knownLanguages; }
+			set {
+				ParamIs.NotNull(() => value);
+				knownLanguages = value;
+			}
+		}
+
 		/// <summary>
 		/// User's language setting. This is an ISO culture code, for example "en-US".
 		/// Determine's user interface language.
@@ -473,6 +482,14 @@ namespace VocaDb.Model.Domain.Users {
 			artist.Users.Add(link);
 
 			return link;
+
+		}
+
+		public virtual UserKnownLanguage AddKnownLanguage(string cultureCode, UserLanguageProficiency proficiency) {
+
+			var lang = new UserKnownLanguage(this, cultureCode, proficiency);
+			KnownLanguages.Add(lang);
+			return lang;
 
 		}
 
