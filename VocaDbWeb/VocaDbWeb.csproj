@@ -1317,6 +1317,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReleaseEventSeriesEditableFieldNames.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Domain\Users\UserLanguageProficiencyNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserLanguageProficiencyNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Helpers\ActivityFeedHelperStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2235,6 +2240,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReleaseEventSeriesEditableFieldNames.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Domain\Users\UserLanguageProficiencyNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserLanguageProficiencyNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.es.resx" />
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.pt.resx" />
     <EmbeddedResource Include="Resources\Helpers\ActivityFeedHelperStrings.zh-Hans.resx" />
@@ -2290,6 +2299,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagSelectionContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagUsageForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserApiContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\User\UserKnownLanguageContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Versioning\ArchivedVersionContract.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\AjaxHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\ArtistHelper.ts" />

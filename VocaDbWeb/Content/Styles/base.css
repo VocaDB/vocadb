@@ -173,6 +173,10 @@ body {
   font-size: 20px;
   margin-bottom: 20px;
 }
+.user-known-languages {
+  list-style: none;
+  margin-left: 0;
+}
 .comment-with-entry {
   width: auto;
 }

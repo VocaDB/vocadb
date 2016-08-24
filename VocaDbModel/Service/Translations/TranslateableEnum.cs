@@ -50,11 +50,7 @@ namespace VocaDb.Model.Service.Translations {
 			}
 		}
 
-		public Dictionary<string, string> ValuesAndNamesStrings {
-			get {
-				return GetValuesAndNamesStrings(Values);
-			}
-		}
+		public Dictionary<string, string> ValuesAndNamesStrings => GetValuesAndNamesStrings(Values);
 
 		public TEnum[] Values { get; }
 

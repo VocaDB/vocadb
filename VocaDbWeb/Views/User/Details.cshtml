@@ -1,5 +1,7 @@
-﻿@using System.Web.Optimization
+﻿@using System.Globalization
+@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Users;
+@using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.Users
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
@@ -21,6 +23,13 @@
 
 	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = Model.Name })).ToString();
 
+}
+
+@functions {
+	public string GetLanguageName(UserKnownLanguageContract lang) {
+		var culture = CultureInfo.GetCultureInfo(lang.CultureCode);
+		return culture.NativeName + " - " + culture.EnglishName;
+	}
 }
 
 @helper AvatarImg() {
@@ -187,6 +196,21 @@
 				@HtmlHelpers.FormatMarkdown(Model.AboutMe)
 				<br />
 			}
+			
+			@if (Model.KnownLanguages.Any()) {
+				<h4>Languages I know</h4>
+				<ul class="user-known-languages">
+				@foreach (var lang in Model.KnownLanguages) {
+					<li>
+						<img src="@Url.StaticResource("/img/languageFlags/" + lang.CultureCode + ".png")" alt="@lang.CultureCode" title="@lang.CultureCode" />
+						@GetLanguageName(lang) 
+						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
+							@:(@Translate.UserLanguageProficiencyNames[lang.Proficiency])
+						}
+					</li>
+				}
+				</ul>
+			}
 
 			@if (Model.VerifiedArtist)
 			{
@@ -197,7 +221,7 @@
 
 			@if (Model.WebLinks.Any())
 			{
-				<h4>@ViewRes.EntryDetailsStrings.ExternalLinks</h4>
+				<h4 class="withMargin">@ViewRes.EntryDetailsStrings.ExternalLinks</h4>
 				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks)
 				<br />
 			}

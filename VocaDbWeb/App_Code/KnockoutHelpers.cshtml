@@ -67,8 +67,8 @@
 	</div>
 }
 
-@helper DropdownList(Dictionary<string, string> items, string valueBinding) {
-	<select data-bind="value: @valueBinding">
+@helper DropdownList(Dictionary<string, string> items, string valueBinding, string cssClass = null) {
+	<select data-bind="value: @valueBinding" class="@cssClass">
 		@foreach (var item in items) {
 			<option value="@item.Key">@item.Value</option>
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Security;
@@ -108,14 +109,22 @@ namespace VocaDb.Web.Models {
 	[PropertyModelBinder]
 	public class MySettingsModel {
 
+		private LanguageCodeAndName[] Languages(IEnumerable<CultureInfo> cultures, string defaultName = null) {
+
+			return Enumerable
+				.Repeat(new LanguageCodeAndName(string.Empty, defaultName), !string.IsNullOrEmpty(defaultName) ? 1 : 0)
+				.Concat(cultures.Select(c => new LanguageCodeAndName(c.Name, c.NativeName + " (" + c.EnglishName + ")")))
+				.OrderBy(k => k.DisplayName)
+				.ToArray();
+
+		}
+
 		public MySettingsModel() {
 
 			AboutMe = string.Empty;
-			AllInterfaceLanguages = InterfaceLanguage.Cultures
-				.ToKeyValuePairsWithEmpty(string.Empty, ViewRes.User.MySettingsStrings.Automatic, c => c.Name, c => c.NativeName + " (" + c.EnglishName + ")")
-				.OrderBy(k => k.Value)
-				.ToArray();
+			AllInterfaceLanguages = Languages(InterfaceLanguage.Cultures, ViewRes.User.MySettingsStrings.Automatic);
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
+			AllUserKnownLanguages = Languages(InterfaceLanguage.UserLanguageCultures);
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
 			WebLinks = new List<WebLinkDisplay>();
@@ -139,6 +148,7 @@ namespace VocaDb.Web.Models {
 			Id = user.Id;
 			InterfaceLanguageSelection = user.Language;
 			Location = user.Location;
+			KnownLanguages = user.KnownLanguages;
 			PreferredVideoService = user.PreferredVideoService;
 			PublicAlbumCollection = user.PublicAlbumCollection;
 			PublicRatings = user.PublicRatings;
@@ -156,9 +166,11 @@ namespace VocaDb.Web.Models {
 
 		public string AccessKey { get; set; }
 
-		public KeyValuePair<string, string>[] AllInterfaceLanguages { get; set; }
+		public LanguageCodeAndName[] AllInterfaceLanguages { get; set; }
 
 		public Dictionary<ContentLanguagePreference, string> AllLanguages { get; set; }
+
+		public LanguageCodeAndName[] AllUserKnownLanguages { get; set; }
 
 		public PVService[] AllVideoServices { get; set; }
 
@@ -179,6 +191,9 @@ namespace VocaDb.Web.Models {
 
 		[Display(Name = "Interface language")]
 		public string InterfaceLanguageSelection { get; set; }
+
+		[FromJson]
+		public UserKnownLanguageContract[] KnownLanguages { get; set; }
 
 		[StringLength(50)]
 		public string Location { get; set; }
@@ -244,6 +259,7 @@ namespace VocaDb.Web.Models {
 				EmailOptions = this.EmailOptions,
 				Language = this.InterfaceLanguageSelection ?? string.Empty,
 				Location = this.Location ?? string.Empty,
+				KnownLanguages = KnownLanguages ?? new UserKnownLanguageContract[0],
 				OldPass = this.OldPass,
 				PreferredVideoService = this.PreferredVideoService,
 				PublicAlbumCollection = this.PublicAlbumCollection,

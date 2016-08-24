@@ -130,7 +130,7 @@
 			</div>
 			<div class="editor-field">
 				@Html.DropDownListFor(m => m.InterfaceLanguageSelection,
-					new SelectList(Model.AllInterfaceLanguages, "Key", "Value", Model.InterfaceLanguageSelection), 
+					new SelectList(Model.AllInterfaceLanguages, "Code", "DisplayName", Model.InterfaceLanguageSelection), 
 					new { @class = "input-xlarge" })
 			</div>
 
@@ -141,7 +141,7 @@
 			</div>
 			<div class="editor-field">
 				@Html.DropDownListFor(m => m.CultureSelection,
-					new SelectList(Model.AllInterfaceLanguages, "Key", "Value", Model.CultureSelection),
+					new SelectList(Model.AllInterfaceLanguages, "Code", "DisplayName", Model.CultureSelection),
 					new { @class = "input-xlarge" })
 			</div>
 			
@@ -188,6 +188,31 @@
 				@Res.LivePreview
 				<div data-bind="markdown: aboutMe"></div>
 				<br />
+			</div>
+
+ 			<div class="editor-label">
+				Languages I know
+			</div>
+			<div class="editor-field">
+				<table>
+					<tbody>
+						<!-- ko foreach: knownLanguages -->
+							<tr>
+								<td>
+									@KnockoutHelpers.DropdownList(Model.AllUserKnownLanguages.ToDictionary(l => l.Code, l => l.DisplayName), "cultureCode", cssClass: "input-xlarge")
+								</td>
+								<td>
+									@KnockoutHelpers.DropdownList(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency")
+								</td>
+								<td>								
+									<a href="#" class="textLink deleteLink" data-bind="click: function() { $parent.knownLanguages.remove($data); }">Remove</a>
+								</td>
+							</tr>
+						<!-- /ko -->	
+					</tbody>				
+				</table>
+				<a href="#" class="textLink addLink" data-bind="click: addKnownLanguage">Add row</a>
+				<input type="hidden" name="knownLanguages" data-bind="value: ko.toJSON(knownLanguages)" />
 			</div>
            
  			<div class="editor-label">
@@ -258,10 +283,10 @@
 			var repository = new vdb.repositories.UserRepository(urlMapper);
 
 			@* Can't encode about me text here because textarea needs unencoded. It's user's own content anyway. *@
-			@{ var data = new { Model.AboutMe, Model.Email, Model.EmailVerified, Model.WebLinks };	}
+			@{ var data = new { Model.AboutMe, Model.Email, Model.EmailVerified, Model.KnownLanguages, Model.WebLinks };	}
 			var model = @Html.Raw(JsonHelpers.Serialize(data));
 
-			var viewModel = new vdb.viewModels.MySettingsViewModel(repository, model.aboutMe, model.email, model.emailVerified, model.webLinks);
+			var viewModel = new vdb.viewModels.MySettingsViewModel(repository, model.aboutMe, model.email, model.emailVerified, model.webLinks, model.knownLanguages);
 			ko.applyBindings(viewModel);
 
 		});
