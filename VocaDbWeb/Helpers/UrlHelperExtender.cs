@@ -3,6 +3,7 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Helpers {
 
@@ -48,6 +49,10 @@ namespace VocaDb.Web.Helpers {
 
 			return urlHelper.Action("Details", "Song", new { id = song.Id, albumId });
 
+		}
+
+		public static string StaticResource(this UrlHelper urlHelper, string url) {
+			return VocaUriBuilder.StaticResource(url);
 		}
 
 		public static string UserDetails(this UrlHelper urlHelper, IUser user) {
