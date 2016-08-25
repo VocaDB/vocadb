@@ -131,6 +131,9 @@
   <data name="AccountSettings" xml:space="preserve">
     <value>Account settings</value>
   </data>
+  <data name="AddKnownLanguage" xml:space="preserve">
+    <value>Add row</value>
+  </data>
   <data name="AnonymousActivity" xml:space="preserve">
     <value>Allow my username to be shown in the recent activity list.</value>
   </data>

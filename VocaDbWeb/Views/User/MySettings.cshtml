@@ -4,6 +4,7 @@
 @using VocaDb.Web.Helpers
 @using R = ViewRes.User;
 @using Res = ViewRes.User.MySettingsStrings
+@using DetailsRes = ViewRes.User.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage<MySettingsModel>
 
 @{
@@ -191,7 +192,7 @@
 			</div>
 
  			<div class="editor-label">
-				Languages I know
+				@DetailsRes.LanguagesIKnow
 			</div>
 			<div class="editor-field">
 				<table>
@@ -205,13 +206,13 @@
 									@KnockoutHelpers.DropdownList(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency")
 								</td>
 								<td>								
-									<a href="#" class="textLink deleteLink" data-bind="click: function() { $parent.knownLanguages.remove($data); }">Remove</a>
+									<a href="#" class="textLink deleteLink" data-bind="click: function() { $parent.knownLanguages.remove($data); }">@ViewRes.SharedStrings.Delete</a>
 								</td>
 							</tr>
 						<!-- /ko -->	
 					</tbody>				
 				</table>
-				<a href="#" class="textLink addLink" data-bind="click: addKnownLanguage">Add row</a>
+				<a href="#" class="textLink addLink" data-bind="click: addKnownLanguage">@Res.AddKnownLanguage</a>
 				<input type="hidden" name="knownLanguages" data-bind="value: ko.toJSON(knownLanguages)" />
 			</div>
            

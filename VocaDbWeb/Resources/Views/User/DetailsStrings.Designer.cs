@@ -232,6 +232,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Languages I know.
+        /// </summary>
+        public static string LanguagesIKnow {
+            get {
+                return ResourceManager.GetString("LanguagesIKnow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last login.
         /// </summary>
         public static string LastLogin {

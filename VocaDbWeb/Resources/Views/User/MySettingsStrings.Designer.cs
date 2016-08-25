@@ -99,6 +99,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add row.
+        /// </summary>
+        public static string AddKnownLanguage {
+            get {
+                return ResourceManager.GetString("AddKnownLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow my username to be shown in the recent activity list..
         /// </summary>
         public static string AnonymousActivity {

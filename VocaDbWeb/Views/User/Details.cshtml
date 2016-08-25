@@ -198,7 +198,7 @@
 			}
 			
 			@if (Model.KnownLanguages.Any()) {
-				<h4>Languages I know</h4>
+				<h4>@Res.LanguagesIKnow</h4>
 				<ul class="user-known-languages">
 				@foreach (var lang in Model.KnownLanguages) {
 					<li>

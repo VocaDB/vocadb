@@ -117,120 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultLanguageSelection" xml:space="preserve">
-    <value>優先言語</value>
+  <data name="Advanced" xml:space="preserve">
+    <value>上級</value>
   </data>
-  <data name="MySettingsTitle" xml:space="preserve">
-    <value>アカウント設定</value>
+  <data name="Basics" xml:space="preserve">
+    <value>初級</value>
   </data>
-  <data name="Profile" xml:space="preserve">
-    <value>プロフィール</value>
+  <data name="Intermediate" xml:space="preserve">
+    <value>中級</value>
   </data>
-  <data name="AboutMe" xml:space="preserve">
-    <value>私について</value>
-  </data>
-  <data name="AccessKey" xml:space="preserve">
-    <value>アクセスキー</value>
-  </data>
-  <data name="AccountSettings" xml:space="preserve">
-    <value>アカウント設定</value>
-  </data>
-  <data name="AnonymousActivity" xml:space="preserve">
-    <value>「最近の活動」にユーザー名の表示を許可する</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>メール</value>
-  </data>
-  <data name="Automatic" xml:space="preserve">
-    <value>（自動）</value>
-  </data>
-  <data name="Connect" xml:space="preserve">
-    <value>接続</value>
-  </data>
-  <data name="Connectivity" xml:space="preserve">
-    <value>接続性</value>
-  </data>
-  <data name="CultureName" xml:space="preserve">
-    <value>日付/時刻書式</value>
-  </data>
-  <data name="CurrentPass" xml:space="preserve">
-    <value>現在のパスワード</value>
-  </data>
-  <data name="RequiredForChangingPassword" xml:space="preserve">
-    <value>（パスワード変更の際必要です。）</value>
-  </data>
-  <data name="NewPass" xml:space="preserve">
-    <value>新しいパスワード</value>
-  </data>
-  <data name="NewPassAgain" xml:space="preserve">
-    <value>新しいパスワードの確認入力</value>
-  </data>
-  <data name="PasswordsMustMatch" xml:space="preserve">
-    <value>パスワードが一致してません。</value>
-  </data>
-  <data name="Privacy" xml:space="preserve">
-    <value>プライバシー設定</value>
-  </data>
-  <data name="Reset" xml:space="preserve">
-    <value>リセット</value>
-  </data>
-  <data name="SettingsUpdated" xml:space="preserve">
-    <value>設定が更新されました</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>ユーザー名</value>
-  </data>
-  <data name="ExternalLinks" xml:space="preserve">
-    <value>外部リンク</value>
-  </data>
-  <data name="Interface" xml:space="preserve">
-    <value>インターフェース</value>
-  </data>
-  <data name="InterfaceLanguageSelection" xml:space="preserve">
-    <value>インターフェース言語</value>
-  </data>
-  <data name="InvalidEmail" xml:space="preserve">
-    <value>メールアドレスのフォーマットを確認してください。</value>
-  </data>
-  <data name="LivePreview" xml:space="preserve">
-    <value>ライブプレビュー</value>
-  </data>
-  <data name="Location" xml:space="preserve">
-    <value>現在地</value>
-  </data>
-  <data name="PreferredVideoService" xml:space="preserve">
-    <value>優先ストリームサービス</value>
-  </data>
-  <data name="PublicAlbumCollection" xml:space="preserve">
-    <value>アルバムコレクションを公開表示</value>
-  </data>
-  <data name="PublicRatings" xml:space="preserve">
-    <value>曲・アルバム評価を公開表示</value>
-  </data>
-  <data name="ReallyReset" xml:space="preserve">
-    <value>キーを本当にリセットしますか？</value>
-  </data>
-  <data name="UnableToSave" xml:space="preserve">
-    <value>設定保存ができませんでした。エラーを修正し再実行してください。</value>
-  </data>
-  <data name="EmailNote" xml:space="preserve">
-    <value>他のユーザーには公開されません。パスワードリセットとGravatarに使われます。）</value>
-  </data>
-  <data name="EmailOptions" xml:space="preserve">
-    <value>プライベートメッセージ受信の電子メール通知</value>
-  </data>
-  <data name="EmailTaken" xml:space="preserve">
-    <value>このメールアドレスは既に使用されています。アドレスの登録者であれば、サポートに連絡してください。</value>
-  </data>
-  <data name="FillIfChangingPassword" xml:space="preserve">
-    <value>（パスワードの変更を行う際記入）</value>
-  </data>
-  <data name="AccessKeyDescription" xml:space="preserve">
-    <value>アクセスキーはVocaDBのアカウントでさまざまなサービスにパスワードを使わずログインできます。
-アクセスキーはいつでも再発行することができます。その際は古いキーは無効となります。
-キーは大事に守ってください。キーが漏れた恐れがあった場合、すぐに再発行してください。</value>
-  </data>
-  <data name="AddKnownLanguage" xml:space="preserve">
-    <value>もう一つの行</value>
+  <data name="Native" xml:space="preserve">
+    <value>ネイティブ</value>
   </data>
 </root>

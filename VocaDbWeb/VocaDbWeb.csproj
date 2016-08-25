@@ -2240,6 +2240,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReleaseEventSeriesEditableFieldNames.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Domain\Users\UserLanguageProficiencyNames.ja.resx" />
     <EmbeddedResource Include="Resources\Domain\Users\UserLanguageProficiencyNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UserLanguageProficiencyNames.Designer.cs</LastGenOutput>

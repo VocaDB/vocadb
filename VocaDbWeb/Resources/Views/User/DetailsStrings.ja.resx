@@ -255,4 +255,7 @@
   <data name="CommentsMade" xml:space="preserve">
     <value>コメント</value>
   </data>
+  <data name="LanguagesIKnow" xml:space="preserve">
+    <value>話せる言語</value>
+  </data>
 </root>
