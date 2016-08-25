@@ -62,7 +62,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("UserName", ViewRes.User.CreateStrings.UsernameTaken);
 				return false;
 			} else {
-				FormsAuthentication.SetAuthCookie(user.Name, false);
+				FormsAuthentication.SetAuthCookie(user.Name, true);
 				return true;
 			}
 
