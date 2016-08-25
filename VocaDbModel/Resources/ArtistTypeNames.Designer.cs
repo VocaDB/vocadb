@@ -187,7 +187,7 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UTAUloid.
+        ///   Looks up a localized string similar to UTAU.
         /// </summary>
         public static string UTAU {
             get {
