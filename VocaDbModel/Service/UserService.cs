@@ -110,8 +110,7 @@ namespace VocaDb.Model.Service {
 
 			return HandleTransaction(session => {
 
-				var user = session.Query<UserOptions>().Where(u => u.TwitterOAuthToken == accessToken)
-					.Select(a => a.User).FirstOrDefault();
+				var user = session.Query<User>().FirstOrDefault(u => u.Active && u.Options.TwitterOAuthToken == accessToken);
 
 				if (user == null)
 					return null;

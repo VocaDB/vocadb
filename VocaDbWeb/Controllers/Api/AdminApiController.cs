@@ -48,6 +48,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			repo.HandleTransaction(ctx => {
 				ctx.Save(rule);
+				ctx.AuditLogger.SysLog("added " + rule.Address + " to banned IPs");
 			});
 
 			return true;
