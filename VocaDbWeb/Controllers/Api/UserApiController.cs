@@ -192,6 +192,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="sort">Sort rule.</param>
 		/// <param name="includeDisabled">Whether to include disabled user accounts.</param>
 		/// <param name="onlyVerified">Whether to only include verified artists.</param>
+		/// <param name="knowsLanguage">Filter by known language (optional). This is the ISO 639-1 language code, for example "en" or "zh".</param>
 		/// <param name="fields">Optional fields. Possible values are None and MainPicture. Optional.</param>
 		/// <returns>Partial result of users.</returns>
 		/// <example>http://vocadb.net/api/users?query=Shiro&amp;groups=Trusted</example>
@@ -206,9 +207,10 @@ namespace VocaDb.Web.Controllers.Api {
 			UserSortRule? sort = null,
 			bool includeDisabled = false,
 			bool onlyVerified = false,
+			string knowsLanguage = null,
 			UserOptionalFields fields = UserOptionalFields.None) {
 
-			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, sort ?? UserSortRule.Name, 
+			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, knowsLanguage, sort ?? UserSortRule.Name, 
 				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, userIconFactory, fields));
 			
 		}

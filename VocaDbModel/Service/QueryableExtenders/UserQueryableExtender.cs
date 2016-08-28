@@ -26,6 +26,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<User> WhereKnowsLanguage(this IQueryable<User> query, string langCode) {
+
+			if (string.IsNullOrEmpty(langCode))
+				return query;
+
+			return query.Where(u => u.KnownLanguages.Any(l => l.CultureCode == langCode));
+
+		}
 
 	}
 

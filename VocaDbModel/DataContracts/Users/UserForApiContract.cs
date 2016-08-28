@@ -28,6 +28,10 @@ namespace VocaDb.Model.DataContracts.Users {
 			MemberSince = user.CreateDate;
 			VerifiedArtist = user.VerifiedArtist;
 
+			if (optionalFields.HasFlag(UserOptionalFields.KnownLanguages)) {
+				KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
+			}
+
 			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && !string.IsNullOrEmpty(user.Email) && iconFactory != null) {
 				MainPicture = iconFactory.GetIcons(user, ImageSizes.All);
 			}
@@ -43,6 +47,9 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public UserGroupId GroupId { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public UserKnownLanguageContract[] KnownLanguages { get; set; }
 
 		/// <summary>
 		/// Can be null.
@@ -65,8 +72,9 @@ namespace VocaDb.Model.DataContracts.Users {
 	public enum UserOptionalFields {
 
 		None = 0,
-		MainPicture = 1,
-		OldUsernames = 2
+		KnownLanguages = 1,
+		MainPicture = 2,
+		OldUsernames = 4
 
 	}
 

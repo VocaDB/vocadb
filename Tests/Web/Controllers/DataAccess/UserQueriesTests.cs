@@ -67,7 +67,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		private PartialFindResult<UserContract> CallGetUsers(UserGroupId groupId = UserGroupId.Nothing, string name = null, bool disabled = false, bool verifiedArtists = false, UserSortRule sortRule = UserSortRule.Name, PagingProperties paging = null) {
-			return data.GetUsers(SearchTextQuery.Create(name), groupId, disabled, verifiedArtists, sortRule, paging ?? new PagingProperties(0, 10, true), u => new UserContract(u));
+			return data.GetUsers(SearchTextQuery.Create(name), groupId, disabled, verifiedArtists, null, 
+				sortRule, paging ?? new PagingProperties(0, 10, true), u => new UserContract(u));
 		}
 
 		private User GetUserFromRepo(string username) {

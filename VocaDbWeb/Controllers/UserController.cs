@@ -216,7 +216,8 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(filter)) {
 
-				var result = Data.GetUsers(SearchTextQuery.Create(filter), UserGroupId.Nothing, false, false, UserSortRule.Name, new PagingProperties(0, 1, true), u => u.Name);
+				var result = Data.GetUsers(SearchTextQuery.Create(filter), UserGroupId.Nothing, false, false, null, 
+					UserSortRule.Name, new PagingProperties(0, 1, true), u => u.Name);
 
 				if (result.TotalCount == 1 && result.Items.Length == 1) {
 					return RedirectToAction("Profile", new { id = result.Items[0] });

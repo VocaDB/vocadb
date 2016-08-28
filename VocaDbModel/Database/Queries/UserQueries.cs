@@ -1028,13 +1028,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<T> GetUsers<T>(SearchTextQuery textQuery, UserGroupId groupId, bool disabled, bool verifiedArtists, UserSortRule sortRule, PagingProperties paging,
+		public PartialFindResult<T> GetUsers<T>(SearchTextQuery textQuery, UserGroupId groupId, bool disabled, bool verifiedArtists, string knowsLanguage, 
+			UserSortRule sortRule, PagingProperties paging,
 			Func<User, T> fac) {
 
 			return repository.HandleQuery(ctx => {
 
 				var usersQuery = ctx.Query()
-					.WhereHasName(textQuery);
+					.WhereHasName(textQuery)
+					.WhereKnowsLanguage(knowsLanguage);
 
 				if (groupId != UserGroupId.Nothing) {
 					usersQuery = usersQuery.Where(u => u.GroupId == groupId);
