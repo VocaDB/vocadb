@@ -268,7 +268,7 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A member since.
+        ///   Looks up a localized string similar to Member since.
         /// </summary>
         public static string MemberSince {
             get {
