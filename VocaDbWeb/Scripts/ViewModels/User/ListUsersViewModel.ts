@@ -18,6 +18,7 @@ module vdb.viewModels.user {
 
 			this.disabledUsers.subscribe(this.updateResultsWithTotalCount);
 			this.group.subscribe(this.updateResultsWithTotalCount);
+			this.knowsLanguage.subscribe(this.updateResultsWithTotalCount);
 			this.onlyVerifiedArtists.subscribe(this.updateResultsWithTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
@@ -31,6 +32,7 @@ module vdb.viewModels.user {
 		public disabledUsers = ko.observable(false);
 		public group = ko.observable("Nothing");
 		public loading = ko.observable(false);
+		public knowsLanguage = ko.observable("");
 		public onlyVerifiedArtists = ko.observable(false);
 		public page = ko.observableArray<dc.user.UserApiContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
@@ -59,7 +61,7 @@ module vdb.viewModels.user {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 			this.repo.getList(pagingProperties, this.searchTerm(), this.sort(), this.group(), this.disabledUsers(),
-				this.onlyVerifiedArtists(), "MainPicture", result => {
+				this.onlyVerifiedArtists(), this.knowsLanguage(), "MainPicture", result => {
 
 				this.pauseNotifications = false;
 

@@ -61,6 +61,24 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        public static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Knows language.
+        /// </summary>
+        public static string KnowsLanguage {
+            get {
+                return ResourceManager.GetString("KnowsLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show disabled accounts.
         /// </summary>
         public static string ShowDisabledUsers {

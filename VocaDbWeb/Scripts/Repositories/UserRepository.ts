@@ -100,6 +100,7 @@ module vdb.repositories {
 			groups: string,
 			includeDisabled: boolean,
 			onlyVerified: boolean,
+			knowsLanguage: string,
 			fields: string,
 			callback: (result: dc.PartialFindResultContract<dc.user.UserApiContract>) => void) => {
 
@@ -109,6 +110,7 @@ module vdb.repositories {
 				query: query, nameMatchMode: 'Auto', sort: sort,
 				includeDisabled: includeDisabled,
 				onlyVerified: onlyVerified,
+				knowsLanguage: knowsLanguage,
 				groups: groups,
 				fields: fields
 			};

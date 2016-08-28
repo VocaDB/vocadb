@@ -109,22 +109,12 @@ namespace VocaDb.Web.Models {
 	[PropertyModelBinder]
 	public class MySettingsModel {
 
-		private LanguageCodeAndName[] Languages(IEnumerable<CultureInfo> cultures, string defaultName = null) {
-
-			return Enumerable
-				.Repeat(new LanguageCodeAndName(string.Empty, defaultName), !string.IsNullOrEmpty(defaultName) ? 1 : 0)
-				.Concat(cultures.Select(c => new LanguageCodeAndName(c.Name, c.NativeName + " (" + c.EnglishName + ")")))
-				.OrderBy(k => k.DisplayName)
-				.ToArray();
-
-		}
-
 		public MySettingsModel() {
 
 			AboutMe = string.Empty;
-			AllInterfaceLanguages = Languages(InterfaceLanguage.Cultures, ViewRes.User.MySettingsStrings.Automatic);
+			AllInterfaceLanguages = LanguageCodeAndName.Languages(InterfaceLanguage.Cultures, ViewRes.User.MySettingsStrings.Automatic);
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
-			AllUserKnownLanguages = Languages(InterfaceLanguage.UserLanguageCultures);
+			AllUserKnownLanguages = LanguageCodeAndName.Languages(InterfaceLanguage.UserLanguageCultures);
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
 			WebLinks = new List<WebLinkDisplay>();
