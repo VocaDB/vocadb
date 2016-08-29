@@ -4,6 +4,20 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201608292120)]
+	public class TagDescriptionLength : Migration {
+
+		public override void Up() {
+			Delete.DefaultConstraint().OnTable(TableNames.Tags).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.Tags).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+			Delete.DefaultConstraint().OnTable(TableNames.Tags).OnColumn("DescriptionEng");
+			Alter.Column("DescriptionEng").OnTable(TableNames.Tags).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+		public override void Down() {}
+
+	}
+
 	[Migration(201608231900)]
 	public class UserKnownLanguages : AutoReversingMigration {
 
