@@ -106,6 +106,7 @@ namespace VocaDb.Model.Service {
 			if (importedAlbum.CoverPicture != null && album.CoverPictureData == null) {
 
 				album.CoverPictureData = importedAlbum.CoverPicture;
+				album.CoverPictureMime = importedAlbum.CoverPictureMime;
 
 				// TODO: should generate thumbnail as well
 

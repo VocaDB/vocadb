@@ -27,9 +27,7 @@ namespace VocaDb.Model.Domain.Songs {
 		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song>, IEntryWithComments, 
 		IEntryWithLinks<SongWebLink> {
 
-		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
-			get { return ArchivedVersionsManager; }
-		}
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 

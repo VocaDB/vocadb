@@ -23,15 +23,9 @@ namespace VocaDb.Model.Domain.Users {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
-		INameManager IEntryWithNames.Names {
-			get {
-				return new SingleNameManager(Name);
-			}
-		}
+		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
 
-		int IEntryBase.Version {
-			get { return 0; }
-		}
+		int IEntryBase.Version => 0;
 
 		private string accessKey;
 		private PermissionCollection additionalPermissions = new PermissionCollection();
