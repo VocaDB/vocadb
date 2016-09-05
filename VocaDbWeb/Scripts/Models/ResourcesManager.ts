@@ -1,5 +1,5 @@
 ﻿
-module vdb.models {
+namespace vdb.models {
 
 	import dc = vdb.dataContracts;
 
@@ -81,6 +81,7 @@ module vdb.models {
 		public static tag = new ResourceSetFolderTag();
 
 		public static artistTypeNames = "artistTypeNames";
+		public static contentLanguageSelectionNames = "contentLanguageSelectionNames";
 		public static discTypeNames = "discTypeNames";
 		public static songTypeNames = "songTypeNames";
 		public static userGroupNames = "userGroupNames";

@@ -229,9 +229,9 @@
 
 		<div id="lyricsTab" data-bind="with: lyrics">
 			
-			<!-- ko foreach: items -->
-			@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }
-			<!-- /ko -->
+			<div class="accordion" id="lyricsAccordion" data-bind="foreach: items">
+				@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }
+			</div>
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@Res.LyAddRow</a>
 

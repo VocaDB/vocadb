@@ -49,6 +49,7 @@ namespace VocaDb.Web.Controllers.Api {
 			{ "albumSortRuleNames", global::Resources.AlbumSortRuleNames.ResourceManager },
 			{ "artistSortRuleNames", global::Resources.ArtistSortRuleNames.ResourceManager },
 			{ "artistTypeNames", Model.Resources.ArtistTypeNames.ResourceManager },
+			{ "contentLanguageSelectionNames", global::Resources.ContentLanguageSelectionNames.ResourceManager },
 			{ "discTypeNames", Model.Resources.Albums.DiscTypeNames.ResourceManager },
 			{ "entryTypeNames", global::Resources.EntryTypeNames.ResourceManager },
 			{ "songSortRuleNames", global::Resources.SongSortRuleNames.ResourceManager },

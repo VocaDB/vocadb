@@ -1,5 +1,5 @@
 ﻿
-module vdb.viewModels.songs {
+namespace vdb.viewModels.songs {
 
 	import dc = vdb.dataContracts;
 
@@ -18,9 +18,18 @@ module vdb.viewModels.songs {
 				this.value = ko.observable("");
 			}
 
+			this.isNew = contract == null;
+
+		}
+
+		public toggleAccordion = (vm, event: JQueryEventObject) => {
+			var elem = $(event.target).closest(".accordion-group").find(".accordion-body") as any;
+			elem.collapse('toggle');
 		}
 
 		public id: number;
+
+		public isNew: boolean;
 
 		public language: KnockoutObservable<string>;
 
@@ -31,7 +40,7 @@ module vdb.viewModels.songs {
 	}
 
 	export class LyricsForSongListEditViewModel extends BasicListEditViewModel<LyricsForSongEditViewModel, dc.songs.LyricsForSongContract> {
-		
+
 		constructor(contracts: dc.songs.LyricsForSongContract[]) {
 			super(LyricsForSongEditViewModel, contracts);
 		}

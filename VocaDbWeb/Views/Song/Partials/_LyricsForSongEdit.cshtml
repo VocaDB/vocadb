@@ -1,23 +1,34 @@
-﻿
+﻿@using VocaDb.Web.Helpers
+
 <!-- LyricsForSongEditViewModel -->
 
-<div>
+<div class="accordion-group">
+	<div class="accordion-heading">
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#lyricsAccordion" data-bind="click: toggleAccordion">
+			<i class="icon icon-chevron-down"></i>
+			@foreach (var cls in Translate.ContentLanguageSelectionNames) {
+				<span data-bind="visible: language() == '@cls.Id'">@cls.Name</span>
+			}
+			<span data-bind="visible: source(), text: '(' + source() + ')'"></span>
+		</a>
+	</div>
+	<div class="accordion-body collapse" data-bind="css: { in: isNew }">
+		<div class="accordion-inner">
+			<p>			
+				<label>
+					@ViewRes.Song.EditStrings.LyLanguage
+					@KnockoutHelpers.LanguageSelectionDropDown("language")
+				</label>
+				<label>
+					@ViewRes.Song.EditStrings.LySource
+					<input type="text" data-bind="textInput: source" class="input-xlarge" size="45" maxlength="255" />
+				</label>
+			</p>
 
-	<p>			
-		<label>
-			@ViewRes.Song.EditStrings.LyLanguage
-			@KnockoutHelpers.LanguageSelectionDropDown("language")
-		</label>
-		<label>
-			@ViewRes.Song.EditStrings.LySource
-			<input type="text" data-bind="textInput: source" class="input-xlarge" size="45" maxlength="255" />
-		</label>
-	</p>
+			<textarea data-bind="value: value" cols="65" rows="30" class="input-xxlarge"></textarea>
+			<br />
 
-	<textarea data-bind="value: value" cols="65" rows="30" class="input-xxlarge"></textarea>
-	<br />
-
-	<a data-bind="click: $parent.remove" href="#" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
-	<hr />
-
+			<a data-bind="click: $parent.remove" href="#" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+		</div>
+	</div>
 </div>
