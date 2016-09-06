@@ -9,15 +9,20 @@ namespace vdb.viewModels.songs {
 			
 			if (contract) {
 				this.id = contract.id;
+				this.cultureCode = ko.observable(contract.cultureCode);
 				this.language = ko.observable(contract.language);
 				this.source = ko.observable(contract.source);
+				this.translationType = ko.observable(contract.translationType);
 				this.value = ko.observable(contract.value);
 			} else {
+				this.cultureCode = ko.observable("");
 				this.language = ko.observable(vdb.models.globalization.ContentLanguageSelection[vdb.models.globalization.ContentLanguageSelection.Unspecified]);
 				this.source = ko.observable("");
+				this.translationType = ko.observable("Translation");
 				this.value = ko.observable("");
 			}
 
+			this.translationType("Translation");
 			this.isNew = contract == null;
 
 		}
@@ -27,6 +32,8 @@ namespace vdb.viewModels.songs {
 			elem.collapse('toggle');
 		}
 
+		public cultureCode: KnockoutObservable<string>;
+
 		public id: number;
 
 		public isNew: boolean;
@@ -34,6 +41,8 @@ namespace vdb.viewModels.songs {
 		public language: KnockoutObservable<string>;
 
 		public source: KnockoutObservable<string>;
+
+		public translationType: KnockoutObservable<string>;
 
 		public value: KnockoutObservable<string>;
 
@@ -43,7 +52,14 @@ namespace vdb.viewModels.songs {
 
 		constructor(contracts: dc.songs.LyricsForSongContract[]) {
 			super(LyricsForSongEditViewModel, contracts);
+			this.original = new LyricsForSongEditViewModel();
+			this.original.translationType('Original');
+			this.romanized = new LyricsForSongEditViewModel();
+			this.romanized.translationType('Romanized');
 		}
+
+		public original: LyricsForSongEditViewModel;
+		public romanized: LyricsForSongEditViewModel;
 
 	}
 

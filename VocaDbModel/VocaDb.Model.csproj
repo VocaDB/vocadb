@@ -317,6 +317,7 @@
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
+    <Compile Include="Domain\Globalization\TranslationType.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventSeriesVersion.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventVersion.cs" />
     <Compile Include="Domain\Albums\IAlbumLink.cs" />
