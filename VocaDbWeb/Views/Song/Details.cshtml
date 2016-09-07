@@ -1,6 +1,8 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<SongDetails>
+@using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Songs
+@using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Models;
@@ -356,10 +358,18 @@
 	@if (Model.Lyrics.Any()) {
 		<div id="lyricsTab" style="height: 400px; overflow: auto">
 			<ul class="nav nav-pills">
-				@foreach (var lyrics in Model.Lyrics) {
+				@foreach (var lyrics in Model.Lyrics.OrderBy(l => l.TranslationType)) {
 					<li data-bind="css: { active: selectedLyricsId() == @lyrics.Id }">
 						<a href="#" data-bind="click: function() { selectedLyricsId(@lyrics.Id); }">
-							@Translate.ContentLanguageSelectionName(lyrics.Language)							
+							@{ var lyricsName = !string.IsNullOrEmpty(lyrics.CultureCode) ? CultureInfo.GetCultureInfo(lyrics.CultureCode).NativeName : "Other"; }
+							@if (lyrics.TranslationType == TranslationType.Romanized) {
+								@:Romanized
+							} else {
+								@lyricsName	
+							}
+							@if (lyrics.TranslationType == TranslationType.Original) {
+								@:(Original)
+							}
 						</a>
 					</li>
 				}
