@@ -313,6 +313,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 				"~/Scripts/Models/Artists/ArtistRoles.js",
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
+				"~/Scripts/Models/Globalization/TranslationType.js",
 				"~/Scripts/Models/Tags/Tag.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/Helpers/ArtistHelper.js",

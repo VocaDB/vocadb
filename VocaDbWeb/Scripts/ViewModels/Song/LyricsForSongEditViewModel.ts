@@ -1,6 +1,7 @@
 ﻿
 namespace vdb.viewModels.songs {
 
+	import cls = models;
 	import dc = vdb.dataContracts;
 
 	export class LyricsForSongEditViewModel {
@@ -12,13 +13,13 @@ namespace vdb.viewModels.songs {
 				this.cultureCode = ko.observable(contract.cultureCode);
 				this.language = ko.observable(contract.language);
 				this.source = ko.observable(contract.source);
-				this.translationType = ko.observable(contract.translationType);
+				this.translationType = contract.translationType;
 				this.value = ko.observable(contract.value);
 			} else {
 				this.cultureCode = ko.observable("");
 				this.language = ko.observable(vdb.models.globalization.ContentLanguageSelection[vdb.models.globalization.ContentLanguageSelection.Unspecified]);
 				this.source = ko.observable("");
-				this.translationType = ko.observable("Translation");
+				this.translationType = cls.globalization.TranslationType[cls.globalization.TranslationType.Translation];
 				this.value = ko.observable("");
 			}
 
@@ -39,9 +40,11 @@ namespace vdb.viewModels.songs {
 
 		public language: KnockoutObservable<string>;
 
+		public showLanguageSelection = () => this.translationType !== cls.globalization.TranslationType[cls.globalization.TranslationType.Romanized];
+
 		public source: KnockoutObservable<string>;
 
-		public translationType: KnockoutObservable<string>;
+		public translationType: string;
 
 		public value: KnockoutObservable<string>;
 
@@ -50,7 +53,7 @@ namespace vdb.viewModels.songs {
 	export class LyricsForSongListEditViewModel extends BasicListEditViewModel<LyricsForSongEditViewModel, dc.songs.LyricsForSongContract> {
 
 		private find = (translationType: string) => {
-			var vm = _.find(this.items(), i => i.translationType() === translationType);
+			var vm = _.find(this.items(), i => i.translationType === translationType);
 			if (vm)
 				_.remove(this.items(), vm);
 			else {

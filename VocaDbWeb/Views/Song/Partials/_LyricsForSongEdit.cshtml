@@ -11,15 +11,15 @@
 	<div class="accordion-heading">
 		<a class="accordion-toggle" data-toggle="collapse" data-parent="#lyricsAccordion" data-bind="click: toggleAccordion">
 			<i class="icon icon-chevron-down"></i>
-			<span data-bind="text: translationType()"></span>
-			<span data-bind="visible: translationType() !== 'Romanized', text: '(' + $parents[1].languageNames[cultureCode()] + ')'"></span>
+			<span data-bind="text: translationType"></span>
+			<span data-bind="visible: showLanguageSelection, text: '(' + $parents[1].languageNames[cultureCode()] + ')'"></span>
 			<span data-bind="visible: source(), text: 'from ' + source()"></span>
 		</a>
 	</div>
 	<div class="accordion-body collapse" data-bind="css: { in: isNew }">
 		<div class="accordion-inner">
 			<p>
-				<label data-bind="visible: translationType() !== 'Romanized'">
+				<label data-bind="visible: showLanguageSelection">
 					@ViewRes.Song.EditStrings.LyLanguage
 					@KnockoutHelpers.DropdownList(languages.ToDictionary(l => l.Code, l => l.DisplayName), "cultureCode")					
 				</label>
