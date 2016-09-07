@@ -475,12 +475,12 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual LyricsForSong CreateLyrics(ContentLanguageSelection language, string val, string source) {
+		public virtual LyricsForSong CreateLyrics(string val, string source, TranslationType translationType, string cultureCode) {
 			
 			ParamIs.NotNullOrEmpty(() => val);
 			ParamIs.NotNull(() => source);
 
-			var entry = new LyricsForSong(this, language, val, source);
+			var entry = new LyricsForSong(this, val, source, translationType, cultureCode);
 			Lyrics.Add(entry);
 
 			return entry;
@@ -761,7 +761,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 			foreach (var newEntry in diff.Added) {
 
-				var l = CreateLyrics(newEntry.Language, newEntry.Value, newEntry.Source);
+				var l = CreateLyrics(newEntry.Value, newEntry.Source, newEntry.TranslationType, newEntry.CultureCode);
 				created.Add(l);
 
 			}
@@ -772,9 +772,11 @@ namespace VocaDb.Model.Domain.Songs {
 				var newEntry = newLyrics.First(e => e.Id == entry.Id);
 
 				if (!entry.ContentEquals(newEntry)) {
-					linkEntry.Language = newEntry.Language;
+					linkEntry.CultureCode = newEntry.CultureCode;
 					linkEntry.Source = newEntry.Source;
+					linkEntry.TranslationType = newEntry.TranslationType;
 					linkEntry.Value = newEntry.Value;
+					linkEntry.UpdateContentLanguage();
 					edited.Add(linkEntry);
 				}
 

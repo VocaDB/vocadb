@@ -15,12 +15,17 @@ namespace VocaDb.Model.DataContracts.Songs {
 			
 			ParamIs.NotNull(() => lyrics);
 
+			CultureCode = lyrics.CultureCode;
 			Id = lyrics.Id;
 			Language = lyrics.Language;
 			Source = lyrics.Source;
+			TranslationType = lyrics.TranslationType;
 			Value = lyrics.Value;
 
 		}
+
+		[DataMember]
+		public string CultureCode { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -31,6 +36,10 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public string Source { get; set; }
+
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public TranslationType TranslationType { get; set; }
 
 		[DataMember]
 		public string Value { get; set; }

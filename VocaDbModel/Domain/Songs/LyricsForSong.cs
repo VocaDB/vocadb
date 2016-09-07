@@ -11,27 +11,16 @@ namespace VocaDb.Model.Domain.Songs {
 		private Song song;
 		private string source;
 
-		private void UpdateContentLanguage() {
-			switch (TranslationType) {
-				case TranslationType.Original:
-					Language = CultureCode == "en" ? ContentLanguageSelection.English : ContentLanguageSelection.Japanese;
-					break;
-				case TranslationType.Romanized:
-					Language = ContentLanguageSelection.Romaji;
-					break;
-				case TranslationType.Translation:
-					Language = CultureCode == "en" ? ContentLanguageSelection.English : ContentLanguageSelection.Unspecified;
-					break;
-			}
-		}
-
 		public LyricsForSong() {}
 
-		public LyricsForSong(Song song, ContentLanguageSelection language, string val, string source)
-			: base(val, language) {
+		public LyricsForSong(Song song, string val, string source, TranslationType translationType, string cultureCode)
+			: base(val, ContentLanguageSelection.Unspecified) {
 
 			Song = song;
 			Source = source;
+			TranslationType = translationType;
+			CultureCode = cultureCode;
+			UpdateContentLanguage();
 
 		}
 
@@ -76,7 +65,10 @@ namespace VocaDb.Model.Domain.Songs {
 			if (contract == null)
 				return false;
 
-			return (Language == contract.Language && Source == contract.Source && Value == contract.Value);
+			return (TranslationType == contract.TranslationType 
+				&& CultureCode == contract.CultureCode 
+				&& Source == contract.Source 
+				&& Value == contract.Value);
 
 		}
 
@@ -103,10 +95,18 @@ namespace VocaDb.Model.Domain.Songs {
 			return base.GetHashCode();
 		}
 
-		public virtual void SetTranslationAndCulture(TranslationType translationType, string cultureCode) {
-			TranslationType = translationType;
-			CultureCode = cultureCode;
-			UpdateContentLanguage();
+		public virtual void UpdateContentLanguage() {
+			switch (TranslationType) {
+				case TranslationType.Original:
+					Language = CultureCode == "en" ? ContentLanguageSelection.English : ContentLanguageSelection.Japanese;
+					break;
+				case TranslationType.Romanized:
+					Language = ContentLanguageSelection.Romaji;
+					break;
+				case TranslationType.Translation:
+					Language = CultureCode == "en" ? ContentLanguageSelection.English : ContentLanguageSelection.Unspecified;
+					break;
+			}
 		}
 
 	}

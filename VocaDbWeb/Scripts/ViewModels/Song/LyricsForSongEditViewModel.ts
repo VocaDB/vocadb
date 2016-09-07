@@ -22,7 +22,6 @@ namespace vdb.viewModels.songs {
 				this.value = ko.observable("");
 			}
 
-			this.translationType("Translation");
 			this.isNew = contract == null;
 
 		}
@@ -50,16 +49,29 @@ namespace vdb.viewModels.songs {
 
 	export class LyricsForSongListEditViewModel extends BasicListEditViewModel<LyricsForSongEditViewModel, dc.songs.LyricsForSongContract> {
 
+		private find = (translationType: string) => {
+			var vm = _.find(this.items(), i => i.translationType() === translationType);
+			if (vm)
+				_.remove(this.items(), vm);
+			else {
+				vm = new LyricsForSongEditViewModel({ translationType: translationType });
+			}
+			return vm;
+		}
+
 		constructor(contracts: dc.songs.LyricsForSongContract[]) {
 			super(LyricsForSongEditViewModel, contracts);
-			this.original = new LyricsForSongEditViewModel();
-			this.original.translationType('Original');
-			this.romanized = new LyricsForSongEditViewModel();
-			this.romanized.translationType('Romanized');
+			this.original = this.find("Original");
+			this.romanized = this.find("Romanized");
 		}
 
 		public original: LyricsForSongEditViewModel;
 		public romanized: LyricsForSongEditViewModel;
+
+		public toContracts: () => dc.songs.LyricsForSongContract[] = () => {
+			var result = ko.toJS(_.chain([this.original, this.romanized]).concat(this.items()).filter(i => i.value()).value());
+			return result;
+		}
 
 	}
 

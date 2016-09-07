@@ -3,17 +3,17 @@ module vdb.dataContracts.songs {
 	
 	export interface LyricsForSongContract {
 
-		cultureCode: string;
+		cultureCode?: string;
 
-		id: number;
+		id?: number;
 
-		language: string;
+		language?: string;
 
-		source: string;
+		source?: string;
 
 		translationType: string;
 
-		value: string;
+		value?: string;
 
 	}
 

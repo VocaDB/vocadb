@@ -163,7 +163,8 @@ module vdb.viewModels {
 			data: dc.songs.SongForEditContract,
 			canBulkDeletePVs: boolean,
 			private dialogService: ui_dialog.IDialogService,
-			private instrumentalTagId: number) {
+			private instrumentalTagId: number,
+			public languageNames) {
 
 			this.albumReleaseDate = data.albumReleaseDate ? moment(data.albumReleaseDate) : null;
 			this.artistLinks = ko.observableArray(_.map(data.artists, artist => new ArtistForAlbumEditViewModel(null, artist)));

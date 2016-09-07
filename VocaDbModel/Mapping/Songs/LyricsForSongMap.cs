@@ -12,8 +12,10 @@ namespace VocaDb.Model.Mapping.Songs {
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
+			Map(m => m.CultureCode).Length(10).Not.Nullable();
 			Map(m => m.Language).Not.Nullable();
 			Map(m => m.Source).Length(255).Not.Nullable();
+			Map(m => m.TranslationType).Not.Nullable();
 			Map(m => m.Value).Column("Text").Length(int.MaxValue).Not.Nullable();
 			References(m => m.Song).Not.Nullable();
 
