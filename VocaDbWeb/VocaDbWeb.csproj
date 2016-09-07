@@ -2837,6 +2837,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\CommonEntryContract.ts" />
     <TypeScriptCompile Include="Scripts\Models\EntryStatus.ts" />
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguagePreference.ts" />
+    <TypeScriptCompile Include="Scripts\Models\Globalization\TranslationType.ts" />
     <TypeScriptCompile Include="Scripts\Models\IEntryWithIdAndName.ts" />
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguageSelection.ts" />
     <TypeScriptCompile Include="Scripts\Models\NameMatchMode.ts" />

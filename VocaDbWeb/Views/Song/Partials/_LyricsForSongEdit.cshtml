@@ -1,4 +1,9 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.Domain.Globalization
+@using VocaDb.Web.Helpers
+
+@{
+	var languages = LanguageCodeAndName.Languages(InterfaceLanguage.UserLanguageCultures, "Other/Unknown");
+}
 
 <!-- LyricsForSongEditViewModel -->
 
@@ -6,18 +11,17 @@
 	<div class="accordion-heading">
 		<a class="accordion-toggle" data-toggle="collapse" data-parent="#lyricsAccordion" data-bind="click: toggleAccordion">
 			<i class="icon icon-chevron-down"></i>
-			@foreach (var cls in Translate.ContentLanguageSelectionNames) {
-				<span data-bind="visible: language() == '@cls.Id'">@cls.Name</span>
-			}
-			<span data-bind="visible: source(), text: '(' + source() + ')'"></span>
+			<span data-bind="text: translationType"></span>
+			<span data-bind="visible: showLanguageSelection, text: '(' + $parents[1].languageNames[cultureCode()] + ')'"></span>
+			<span data-bind="visible: source(), text: 'from ' + source()"></span>
 		</a>
 	</div>
 	<div class="accordion-body collapse" data-bind="css: { in: isNew }">
 		<div class="accordion-inner">
-			<p>			
-				<label>
+			<p>
+				<label data-bind="visible: showLanguageSelection">
 					@ViewRes.Song.EditStrings.LyLanguage
-					@KnockoutHelpers.LanguageSelectionDropDown("language")
+					@KnockoutHelpers.DropdownList(languages.ToDictionary(l => l.Code, l => l.DisplayName), "cultureCode")					
 				</label>
 				<label>
 					@ViewRes.Song.EditStrings.LySource

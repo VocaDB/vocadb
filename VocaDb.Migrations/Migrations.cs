@@ -4,6 +4,28 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201609071900)]
+	public class LyricsLanguage : Migration {
+
+		public override void Up() {
+
+			Alter.Table(TableNames.LyricsForSongs).AddColumn("CultureCode").AsString(10).NotNullable().WithDefaultValue(string.Empty);
+			Alter.Table(TableNames.LyricsForSongs).AddColumn("TranslationType").AsString(20).NotNullable().WithDefaultValue(string.Empty);
+
+			Execute.SqlFormat("UPDATE {0} SET CultureCode = 'en' WHERE Language = 'English'",
+				TableNames.LyricsForSongs);
+
+			Execute.SqlFormat("UPDATE {0} SET TranslationType = CASE WHEN Language = 'Japanese' THEN 'Original' WHEN Language = 'Romaji' THEN 'Romanized' ELSE 'Translation' END",
+				TableNames.LyricsForSongs);
+
+		}
+
+		public override void Down() {
+			
+		}
+
+	}
+
 	[Migration(201608292120)]
 	public class TagDescriptionLength : Migration {
 

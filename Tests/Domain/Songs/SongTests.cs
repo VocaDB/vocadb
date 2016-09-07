@@ -49,7 +49,7 @@ namespace VocaDb.Tests.Domain.Songs {
 
 			artist = new Artist(TranslatedString.Create("Minato")) { Id = 1, ArtistType = ArtistType.Producer };
 			song = new Song(new LocalizedString("Soar", ContentLanguageSelection.English));
-			lyrics = song.CreateLyrics(ContentLanguageSelection.Japanese, "Miku!", "miku");
+			lyrics = song.CreateLyrics("Miku!", "miku", TranslationType.Original, "ja");
 			instrumentalTag = CreateEntry.Tag("instrumental", 1);
 			changedLyricsTag = CreateEntry.Tag("changed lyrics", 2);
 			specialTags = new SpecialTags {
