@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Globalization;
@@ -25,6 +26,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 		}
 
 		[DataMember]
+		[DefaultValue("")]
+		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
 		public string CultureCode { get; set; }
 
 		[DataMember]
@@ -35,6 +38,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public ContentLanguageSelection Language { get; set; }
 
 		[DataMember]
+		[DefaultValue("")]
+		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
 		public string Source { get; set; }
 
 		[DataMember]
