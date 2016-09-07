@@ -32,7 +32,10 @@
 			<textarea data-bind="value: value" cols="65" rows="30" class="input-xxlarge"></textarea>
 			<br />
 
-			<a data-bind="click: $parent.remove" href="#" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+			<a data-bind="click: $parent.remove, visible: translationType() === 'Translation'" href="#" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+
+			<a data-bind="click: $parent.changeToOriginal, visible: translationType() === 'Translation' && id() && !$parent.original.id()" href="#" class="textLink editLink">Change to original</a>
+			<a data-bind="click: $parent.changeToTranslation, visible: translationType() === 'Original' && id()" href="#" class="textLink editLink">Change to translation</a>
 		</div>
 	</div>
 </div>
