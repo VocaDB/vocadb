@@ -163,7 +163,7 @@
     <value>Edit song {0}</value>
   </data>
   <data name="LyAddRow" xml:space="preserve">
-    <value>Add row</value>
+    <value>Add translation</value>
   </data>
   <data name="LyLanguage" xml:space="preserve">
     <value>Language:</value>

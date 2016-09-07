@@ -196,7 +196,7 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add row.
+        ///   Looks up a localized string similar to Add translation.
         /// </summary>
         public static string LyAddRow {
             get {
