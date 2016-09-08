@@ -83,11 +83,6 @@ namespace VocaDb.Web.Models {
 			ThumbUrl = VideoServiceHelper.GetThumbUrlPreferNotNico(pvs);
 			ThumbUrlMaxSize = VideoServiceHelper.GetMaxSizeThumbUrl(pvs) ?? ThumbUrl;
 
-			/*var nicoMimiUrl = GetNicoMimiUrl(contract);
-			if (!string.IsNullOrEmpty(nicoMimiUrl)) {
-				WebLinks.Add(new WebLinkContract(nicoMimiUrl, ViewRes.Song.DetailsStrings.NicoMimiDownload, WebLinkCategory.Other));
-			}*/
-
 			if (PrimaryPV == null && !string.IsNullOrEmpty(NicoId))
 				PrimaryPV = new PVContract { PVId = NicoId, Service = PVService.NicoNicoDouga };
 
@@ -144,11 +139,7 @@ namespace VocaDb.Web.Models {
 
 		public int ListCount { get; set; }
 
-		public string Json {
-			get {
-				return JsonHelpers.Serialize(new SongDetailsAjax(this));
-			}
-		}
+		public string Json => JsonHelpers.Serialize(new SongDetailsAjax(this));
 
 		public CommentForApiContract[] LatestComments { get; set; }
 

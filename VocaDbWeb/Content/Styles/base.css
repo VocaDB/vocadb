@@ -212,6 +212,9 @@ body {
 .song-lists-text-query input {
   margin-bottom: 0;
 }
+.song-lyrics {
+  white-space: pre-line;
+}
 .razor-whitespace-fix {
   margin-left: -3px;
 }
