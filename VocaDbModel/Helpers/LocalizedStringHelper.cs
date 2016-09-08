@@ -28,7 +28,8 @@ namespace VocaDb.Model.Helpers {
 			if (strings == null || !strings.Any())
 				return null;
 
-			var match = strings.FirstOrDefault(s => s.Language == (ContentLanguageSelection)languagePreference);
+			var languagePreferenceAsSelection = languagePreference == ContentLanguagePreference.Default ? primaryLanguageSelection : (ContentLanguageSelection)languagePreference;
+			var match = strings.FirstOrDefault(s => s.Language == languagePreferenceAsSelection);
 
 			if (match != null)
 				return match;

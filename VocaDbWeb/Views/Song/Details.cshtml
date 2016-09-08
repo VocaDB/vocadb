@@ -13,17 +13,26 @@
 @using Res = ViewRes.Song.DetailsStrings;
 
 @{	
-	
+
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null) };
 
 	var showAlternateVersions = 3;
-	
-	var lyricsLanguages = string.Join(", ", Model.Lyrics.Select(l => l.Language).Distinct().Select(l => Translate.ContentLanguageSelectionName(l)));
+
+	var lyricsLanguageNames = Model.Lyrics
+		.OrderBy(l => l.TranslationType)
+		.Where(l => !string.IsNullOrEmpty(l.CultureCode) || l.TranslationType == TranslationType.Romanized)
+		.Select(l => l.TranslationType != TranslationType.Romanized ? CultureInfo.GetCultureInfo(l.CultureCode).NativeName : "Romanized")
+		.Take(3)
+		.ToArray();
+
+	var additionalLyrics = lyricsLanguageNames.Length == 3 ? Model.Lyrics.Length - lyricsLanguageNames.Length : 0;
+
+	var lyricsLanguages = lyricsLanguageNames.Any() ? string.Join(", ", lyricsLanguageNames) + (additionalLyrics > 0 ? " + " + additionalLyrics + " other(s)" : "") : "";
 
 	var url = PageProperties.CanonicalUrl;
 	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
 	var favoriteText = eeLoveIt ? "Love It!" : Res.AddToFavorites;
-	
+
 }
 
 @helper AlternateVersions(IEnumerable<SongContract> songs) {
