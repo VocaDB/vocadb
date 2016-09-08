@@ -1,4 +1,5 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
+@using System.Globalization
 @using System.Web.Mvc;
 @using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Songs;
@@ -21,7 +22,10 @@
 }
 
 @helper LyricsInfo(LyricsForSongContract lyrics) {
-	@:@lyrics.Language
+	@:@lyrics.TranslationType
+	if (!string.IsNullOrEmpty(lyrics.CultureCode)) {
+		@:(@CultureInfo.GetCultureInfo(lyrics.CultureCode).EnglishName)
+	}
 	if (!string.IsNullOrEmpty(lyrics.Source)) {
 		@:(@lyrics.Source)
 	}
