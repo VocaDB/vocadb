@@ -25,9 +25,9 @@
 		.Take(3)
 		.ToArray();
 
-	var additionalLyrics = lyricsLanguageNames.Length == 3 ? Model.Lyrics.Length - lyricsLanguageNames.Length : 0;
+	var additionalLyrics = lyricsLanguageNames.Any() ? Model.Lyrics.Length - lyricsLanguageNames.Length : 0;
 
-	var lyricsLanguages = lyricsLanguageNames.Any() ? string.Join(", ", lyricsLanguageNames) + (additionalLyrics > 0 ? " + " + additionalLyrics + " other(s)" : "") : "";
+	var lyricsLanguages = lyricsLanguageNames.Any() ? "(" + string.Join(", ", lyricsLanguageNames) + (additionalLyrics > 0 ? " + " + additionalLyrics + " other(s)" : "") + ")" : "";
 
 	var url = PageProperties.CanonicalUrl;
 	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
@@ -111,7 +111,7 @@
 	<ul>
 		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
 		@if (Model.Lyrics.Any()) {
-			<li><a href="#lyricsTab">@ViewRes.Song.DetailsStrings.Lyrics (@lyricsLanguages)</a></li>			
+			<li><a href="#lyricsTab">@ViewRes.Song.DetailsStrings.Lyrics @lyricsLanguages</a></li>			
 		}
 		<li data-tab="Discussion">
 			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
