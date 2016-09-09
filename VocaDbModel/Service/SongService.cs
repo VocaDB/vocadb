@@ -524,7 +524,8 @@ namespace VocaDb.Model.Service {
 
 						var newLyrics = fullProperties.Lyrics.First(l => l.Id == lyrics.Id);
 
-						lyrics.Language = newLyrics.Language;
+						lyrics.CultureCode = newLyrics.CultureCode;
+						lyrics.TranslationType = newLyrics.TranslationType;
 						lyrics.Source = newLyrics.Source;
 						lyrics.Value = newLyrics.Value;
 						session.Update(lyrics);

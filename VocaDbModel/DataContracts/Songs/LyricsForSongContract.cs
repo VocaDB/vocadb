@@ -8,7 +8,7 @@ using VocaDb.Model.Domain.Songs;
 namespace VocaDb.Model.DataContracts.Songs {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class LyricsForSongContract : ILocalizedString {
+	public class LyricsForSongContract {
 
 		public LyricsForSongContract() { }
 
@@ -18,7 +18,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			CultureCode = lyrics.CultureCode;
 			Id = lyrics.Id;
-			Language = lyrics.Language;
 			Source = lyrics.Source;
 			TranslationType = lyrics.TranslationType;
 			Value = lyrics.Value;
@@ -32,10 +31,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public int Id { get; set; }
-
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public ContentLanguageSelection Language { get; set; }
 
 		[DataMember]
 		[DefaultValue("")]

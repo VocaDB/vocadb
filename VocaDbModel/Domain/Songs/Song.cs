@@ -777,7 +777,6 @@ namespace VocaDb.Model.Domain.Songs {
 					linkEntry.Source = newEntry.Source;
 					linkEntry.TranslationType = newEntry.TranslationType;
 					linkEntry.Value = newEntry.Value;
-					linkEntry.UpdateContentLanguage();
 					edited.Add(linkEntry);
 				}
 

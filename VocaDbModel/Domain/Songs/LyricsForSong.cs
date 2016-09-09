@@ -4,23 +4,22 @@ using VocaDb.Model.DataContracts.Songs;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class LyricsForSong : LocalizedString, IEquatable<LyricsForSong> {
+	public class LyricsForSong : IEquatable<LyricsForSong> {
 
 		private string cultureCode;
 		private string notes;
 		private Song song;
 		private string source;
+		private string value;
 
 		public LyricsForSong() {}
 
-		public LyricsForSong(Song song, string val, string source, TranslationType translationType, string cultureCode)
-			: base(val, ContentLanguageSelection.Unspecified) {
+		public LyricsForSong(Song song, string val, string source, TranslationType translationType, string cultureCode) {
 
 			Song = song;
 			Source = source;
 			TranslationType = translationType;
 			CultureCode = cultureCode;
-			UpdateContentLanguage();
 
 		}
 
@@ -60,6 +59,14 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual TranslationType TranslationType { get; set; }
 
+		public virtual string Value {
+			get { return value; }
+			set {
+				ParamIs.NotNull(() => value);
+				this.value = value;
+			}
+		}
+
 		public virtual bool ContentEquals(LyricsForSongContract contract) {
 
 			if (contract == null)
@@ -92,21 +99,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public override int GetHashCode() {
-			return base.GetHashCode();
-		}
-
-		public virtual void UpdateContentLanguage() {
-			switch (TranslationType) {
-				case TranslationType.Original:
-					Language = CultureCode == "en" ? ContentLanguageSelection.English : ContentLanguageSelection.Japanese;
-					break;
-				case TranslationType.Romanized:
-					Language = ContentLanguageSelection.Romaji;
-					break;
-				case TranslationType.Translation:
-					Language = CultureCode == "en" ? ContentLanguageSelection.English : ContentLanguageSelection.Unspecified;
-					break;
-			}
+			return Id.GetHashCode();
 		}
 
 	}

@@ -46,7 +46,6 @@ namespace VocaDb.Web.Models {
 			Hits = contract.Hits;
 			Id = contract.Song.Id;
 			IsFavorited = contract.UserRating != SongVoteRating.Nothing;
-			Json = JsonHelpers.Serialize(new SongDetailsAjax(this, contract.PreferredLyrics));
 			LatestComments = contract.LatestComments;
 			Length = contract.Song.LengthSeconds;
 			LikedTimes = contract.LikeCount;
@@ -98,6 +97,8 @@ namespace VocaDb.Web.Models {
 					ViewRes.Song.DetailsStrings.SearchYoutube, WebLinkCategory.Other));
 
 			}
+
+			Json = JsonHelpers.Serialize(new SongDetailsAjax(this, contract.PreferredLyrics));
 
 		}
 

@@ -112,8 +112,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 		public static IQueryable<Song> WhereHasLyrics(this IQueryable<Song> query, ContentLanguageSelection[] languages) {
-			
-			if (languages == null || !languages.Any())
+
+			// TODO
+			return query;
+			/*if (languages == null || !languages.Any())
 				return query;
 
 			if (languages.Length == 1) {
@@ -130,7 +132,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.Where(s => s.Lyrics.Any(l => languages.Contains(l.Language)));									
 				}
 
-			}
+			}*/
 
 		} 
 

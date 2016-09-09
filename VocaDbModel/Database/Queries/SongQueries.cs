@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web;
@@ -429,7 +430,7 @@ namespace VocaDb.Model.Database.Queries {
 				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
 				contract.Suggestions = GetSongSuggestions(session, song).Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 
-				contract.PreferredLyrics = LyricsHelper.GetDefaultLyrics(contract.LyricsFromParents, permissionContext.LoggedUser?.Language, userLanguages, 
+				contract.PreferredLyrics = LyricsHelper.GetDefaultLyrics(contract.LyricsFromParents, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, userLanguages, 
 					new Lazy<IEnumerable<UserKnownLanguage>>(() => session.OfType<User>().GetLoggedUserOrNull(permissionContext)?.KnownLanguages, false));
 
 				if (albumId != 0) {
