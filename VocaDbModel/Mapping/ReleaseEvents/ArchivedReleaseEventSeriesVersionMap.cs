@@ -17,7 +17,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.Version).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();
-			References(m => m.Entry).Column("Series").Not.Nullable();
+			References(m => m.Entry).Column("[Series]").Not.Nullable();
 
 			Component(m => m.Diff, c => {
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();

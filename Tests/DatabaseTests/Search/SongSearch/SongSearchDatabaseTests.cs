@@ -313,7 +313,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 			
 			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
 				FilterType = AdvancedFilterType.Lyrics,
-				Param = string.Join(",", ContentLanguageSelections.English.ToIndividualSelections())
+				Param = "en"
 			} };
 		
 			var result = CallFind();
@@ -329,7 +329,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 
 			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
 				FilterType = AdvancedFilterType.Lyrics,
-				Param = string.Join(",", ContentLanguageSelections.All.ToIndividualSelections())
+				Param = AdvancedSearchFilter.Any
 			} };
 
 			var result = CallFind();
