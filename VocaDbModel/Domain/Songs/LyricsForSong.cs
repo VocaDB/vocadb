@@ -20,6 +20,7 @@ namespace VocaDb.Model.Domain.Songs {
 			Source = source;
 			TranslationType = translationType;
 			CultureCode = cultureCode;
+			Value = val;
 
 		}
 
