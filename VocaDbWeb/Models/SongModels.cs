@@ -27,7 +27,7 @@ namespace VocaDb.Web.Models {
 
 	public class SongDetails {
 
-		public SongDetails(SongDetailsContract contract, IUserPermissionContext permissionContext) {
+		public SongDetails(SongDetailsContract contract, IUserPermissionContext userContext) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -36,7 +36,7 @@ namespace VocaDb.Web.Models {
 			Albums = contract.Albums;
 			AlternateVersions = contract.AlternateVersions.Where(a => a.SongType != SongType.Original).ToArray();
 			ArtistString = contract.ArtistString;
-			CanEdit = EntryPermissionManager.CanEdit(permissionContext, contract.Song);
+			CanEdit = EntryPermissionManager.CanEdit(userContext, contract.Song);
 			CommentCount = contract.CommentCount;
 			CreateDate = contract.CreateDate;
 			DefaultLanguageSelection = contract.TranslatedName.DefaultLanguage;
@@ -46,6 +46,7 @@ namespace VocaDb.Web.Models {
 			Hits = contract.Hits;
 			Id = contract.Song.Id;
 			IsFavorited = contract.UserRating != SongVoteRating.Nothing;
+			Json = JsonHelpers.Serialize(new SongDetailsAjax(this, contract.PreferredLyrics));
 			LatestComments = contract.LatestComments;
 			Length = contract.Song.LengthSeconds;
 			LikedTimes = contract.LikeCount;
@@ -139,7 +140,7 @@ namespace VocaDb.Web.Models {
 
 		public int ListCount { get; set; }
 
-		public string Json => JsonHelpers.Serialize(new SongDetailsAjax(this));
+		public string Json { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
 
@@ -198,14 +199,13 @@ namespace VocaDb.Web.Models {
 
 	public class SongDetailsAjax {
 
-		public SongDetailsAjax(SongDetails model) {
+		public SongDetailsAjax(SongDetails model, LyricsForSongContract preferredLyrics) {
 
 			Id = model.Id;
 			UserRating = model.UserRating;
 			LatestComments = model.LatestComments;
 			OriginalVersion = model.OriginalVersion;
 
-			var preferredLyrics = LocalizedStringHelper.GetBestMatch(model.Lyrics, Login.Manager.LanguagePreference, model.DefaultLanguageSelection);
 			SelectedLyricsId = preferredLyrics != null ? preferredLyrics.Id : 0;
 			SelectedPvId = model.PrimaryPV != null ? model.PrimaryPV.Id : 0;
 			SongType = model.SongType;

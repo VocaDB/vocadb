@@ -539,6 +539,7 @@
     <Compile Include="Helpers\JsonRequest.cs" />
     <Compile Include="Helpers\LambdaComparer.cs" />
     <Compile Include="Helpers\LocalizedStringHelper.cs" />
+    <Compile Include="Helpers\LyricsHelper.cs" />
     <Compile Include="Helpers\NameHelper.cs" />
     <Compile Include="EmbeddedResources\EmbeddedResourceHelper.cs" />
     <Compile Include="Helpers\OtherHelper.cs" />

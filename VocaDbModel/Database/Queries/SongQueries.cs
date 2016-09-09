@@ -400,7 +400,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public SongDetailsContract GetSongDetails(int songId, int albumId, string hostname, ContentLanguagePreference? languagePreference) {
+		public SongDetailsContract GetSongDetails(int songId, int albumId, string hostname, ContentLanguagePreference? languagePreference,
+			IEnumerable<string> userLanguages) {
 
 			return HandleQuery(session => {
 
@@ -427,6 +428,9 @@ namespace VocaDb.Model.Database.Queries {
 				contract.Hits = session.Query<SongHit>().Count(h => h.Song.Id == songId);
 				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
 				contract.Suggestions = GetSongSuggestions(session, song).Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
+
+				contract.PreferredLyrics = LyricsHelper.GetDefaultLyrics(contract.LyricsFromParents, permissionContext.LoggedUser?.Language, userLanguages, 
+					new Lazy<IEnumerable<UserKnownLanguage>>(() => session.OfType<User>().GetLoggedUserOrNull(permissionContext)?.KnownLanguages, false));
 
 				if (albumId != 0) {
 

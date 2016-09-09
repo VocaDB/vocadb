@@ -111,6 +111,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember]
 		public SongListBaseContract[] Pools { get; set; }
 
+		public LyricsForSongContract PreferredLyrics { get; set; }
+
 		/// <summary>
 		/// Previous song on the album being browsed (identified by AlbumId).
 		/// Can be null.

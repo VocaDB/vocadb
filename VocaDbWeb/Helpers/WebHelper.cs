@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -21,6 +22,10 @@ namespace VocaDb.Web.Helpers {
 			"Googlebot", "bingbot"
 		};
 
+		public static IEnumerable<string> GetUserLanguageCodes(HttpRequestBase request) {
+			return request.UserLanguages?.Select(l => l.Split(';')[0]); // en-US;q=0.8 -> en-US
+		}
+
 		/// <summary>
 		/// Gets the user interface culture name from the current request, as specified by the client.
 		/// The first culture, if any, that matches one of the available user interface languages is returned.
@@ -34,9 +39,7 @@ namespace VocaDb.Web.Helpers {
 
 			var allowedCultures = InterfaceLanguage.Cultures.ToArray();
 
-			foreach (var lang in request.UserLanguages) {
-
-				var parsed = lang.Split(';')[0]; // en-US;q=0.8 -> en-US
+			foreach (var parsed in GetUserLanguageCodes(request)) {
 
 				try {
 					var cultureInfo = CultureInfo.GetCultureInfo(parsed);

@@ -134,7 +134,7 @@ namespace VocaDb.Web.Controllers
 
 			WebHelper.VerifyUserAgent(Request);
 
-			var contract = queries.GetSongDetails(id, albumId, GetHostnameForValidHit(), null);
+			var contract = queries.GetSongDetails(id, albumId, GetHostnameForValidHit(), null, WebHelper.GetUserLanguageCodes(Request));
 			var model = new SongDetails(contract, PermissionContext);
 
 			var hasDescription = !model.Notes.IsEmpty;

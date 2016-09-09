@@ -168,7 +168,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public SongDetailsContract GetSongById(int id, ContentLanguagePreference? language) {
 
-			var song = songQueries.GetSongDetails(id, 0, null, language);
+			var song = songQueries.GetSongDetails(id, 0, null, language, null);
 			return song;
 
 		}
