@@ -506,6 +506,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public SongForEditContract GetSongForEdit(int songId) {
+
+			return HandleQuery(session => new SongForEditContract(session.Load<Song>(songId), PermissionContext.LanguagePreference));
+
+		}
+
 		public T GetSongWithMergeRecord<T>(int id, Func<Song, SongMergeRecord, T> fac) {
 
 			return HandleQuery(session => {

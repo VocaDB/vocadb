@@ -132,7 +132,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[ApiExplorerSettings(IgnoreApi=true)]
 		public SongForEditContract GetForEdit(int id) {
 			
-			return service.GetSongForEdit(id);
+			return queries.GetSongForEdit(id);
 
 		}
 

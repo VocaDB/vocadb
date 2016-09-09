@@ -316,12 +316,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongForEditContract GetSongForEdit(int songId) {
-
-			return HandleQuery(session => new SongForEditContract(session.Load<Song>(songId), PermissionContext.LanguagePreference));
-
-		}
-
 		public SongListBaseContract[] GetSongListsForCurrentUser(int ignoreSongId) {
 
 			PermissionContext.VerifyLogin();
