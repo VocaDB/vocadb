@@ -4,6 +4,19 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201609092300)]
+	public class RemoveLanguageFromLyrics : Migration {
+
+		public override void Up() {
+			Delete.Column("Language").FromTable(TableNames.LyricsForSongs);
+		}
+
+		public override void Down() {
+			Create.Column("Language").OnTable(TableNames.LyricsForSongs).AsString(20).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+	}
+
 	[Migration(201609071900)]
 	public class LyricsLanguage : Migration {
 
