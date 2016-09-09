@@ -36,10 +36,9 @@ namespace VocaDb.Model.Service.Search {
 			Filter("Artist type: CeVIO", AdvancedFilterType.ArtistType, ArtistType.CeVIO.ToString()),
 			Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
 			Filter("Multiple voicebanks", AdvancedFilterType.HasMultipleVoicebanks),
-			Filter("Lyrics: Any language", AdvancedFilterType.Lyrics, "Japanese,Romaji,English"),
-			Filter("Lyrics: Non-English", AdvancedFilterType.Lyrics, ContentLanguageSelection.Japanese.ToString()),
-			Filter("Lyrics: Romanized", AdvancedFilterType.Lyrics, ContentLanguageSelection.Romaji.ToString()),
-			Filter("Lyrics: English", AdvancedFilterType.Lyrics, ContentLanguageSelection.English.ToString())
+			Filter("Lyrics: Any language", AdvancedFilterType.Lyrics, AdvancedSearchFilter.Any),
+			Filter("Lyrics: Japanese", AdvancedFilterType.Lyrics, "ja"),
+			Filter("Lyrics: English", AdvancedFilterType.Lyrics, "en")
 		};
 
 	}

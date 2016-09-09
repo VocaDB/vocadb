@@ -111,28 +111,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<Song> WhereHasLyrics(this IQueryable<Song> query, ContentLanguageSelection[] languages) {
+		public static IQueryable<Song> WhereHasLyrics(this IQueryable<Song> query, string[] languageCodes, bool any) {
 
-			// TODO
-			return query;
-			/*if (languages == null || !languages.Any())
-				return query;
-
-			if (languages.Length == 1) {
-				var lang = languages.First();
-				return query.Where(s => s.Lyrics.Any(l => l.Language == lang));				
+			if (any) {
+				return query.Where(s => s.Lyrics.Any());
+			} else if (languageCodes != null && languageCodes.Any()) {
+				return query.Where(s => s.Lyrics.Any(l => languageCodes.Contains(l.CultureCode)));
 			} else {
-
-				var allLanguages = EnumVal<ContentLanguageSelection>.Values.All(languages.Contains);
-
-				if (allLanguages) {
-					// Has lyrics in any language
-					return query.Where(s => s.Lyrics.Any());									
-				} else {
-					return query.Where(s => s.Lyrics.Any(l => languages.Contains(l.Language)));									
-				}
-
-			}*/
+				return query;
+			}
 
 		} 
 
@@ -356,8 +343,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.Where(s => s.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1);	
 				}
 				case AdvancedFilterType.Lyrics: {
-					var param = EnumVal<ContentLanguageSelection>.ParseMultiple(filter.Param);
-					return WhereHasLyrics(query, param);
+					var any = filter.Param == AdvancedSearchFilter.Any;
+					var languageCodes = !any ? filter.Param?.Split(',') : null;
+					return WhereHasLyrics(query, languageCodes, any);
 				}
 			}
 

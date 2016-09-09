@@ -5,6 +5,8 @@
 	/// </summary>
 	public class AdvancedSearchFilter {
 
+		public const string Any = "*";
+
 		public AdvancedFilterType FilterType { get; set; }
 
 		/// <summary>
