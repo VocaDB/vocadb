@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 	public class LyricsForSong : IEquatable<LyricsForSong> {
 
-		private string cultureCode;
+		private OptionalCultureCode cultureCode;
 		private string notes;
 		private Song song;
 		private string source;
@@ -19,16 +19,15 @@ namespace VocaDb.Model.Domain.Songs {
 			Song = song;
 			Source = source;
 			TranslationType = translationType;
-			CultureCode = cultureCode;
+			CultureCode = new OptionalCultureCode(cultureCode);
 			Value = val;
 
 		}
 
-		public virtual string CultureCode {
-			get { return cultureCode; }
+		public virtual OptionalCultureCode CultureCode {
+			get { return cultureCode ?? (cultureCode = OptionalCultureCode.Empty); }
 			set {
-				ParamIs.NotNull(() => value);
-				cultureCode = value;
+				cultureCode = value ?? OptionalCultureCode.Empty;
 			}
 		}
 
@@ -74,7 +73,7 @@ namespace VocaDb.Model.Domain.Songs {
 				return false;
 
 			return (TranslationType == contract.TranslationType 
-				&& CultureCode == contract.CultureCode 
+				&& CultureCode.CultureCode == contract.CultureCode 
 				&& Source == contract.Source 
 				&& Value == contract.Value);
 

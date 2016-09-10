@@ -626,6 +626,24 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Update_Lyrics() {
+
+			var contract = EditContract();
+			contract.Lyrics = new[] {
+				new LyricsForSongContract {
+					CultureCode = OptionalCultureCode.LanguageCode_English, TranslationType = TranslationType.Original, Source = string.Empty, Value = "Miku Miku"
+				}
+			};
+
+			queries.UpdateBasicProperties(contract);
+
+			Assert.AreEqual(1, song.Lyrics.Count, "Lyrics were added");
+			var lyrics = song.Lyrics.First();
+			Assert.AreEqual("Miku Miku", lyrics.Value, "Lyrics text");
+
+		}
+
+		[TestMethod]
 		public void Update_PublishDate_From_PVs() {
 			
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);

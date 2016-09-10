@@ -14,7 +14,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 			ParamIs.NotNull(() => userKnownLanguage);
 
-			CultureCode = userKnownLanguage.CultureCode;
+			CultureCode = userKnownLanguage.CultureCode.CultureCode;
 			Proficiency = userKnownLanguage.Proficiency;
 
 		}

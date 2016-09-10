@@ -13,6 +13,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -518,7 +519,7 @@ namespace VocaDb.Model.Service {
 
 						var newLyrics = fullProperties.Lyrics.First(l => l.Id == lyrics.Id);
 
-						lyrics.CultureCode = newLyrics.CultureCode;
+						lyrics.CultureCode = new OptionalCultureCode(newLyrics.CultureCode);
 						lyrics.TranslationType = newLyrics.TranslationType;
 						lyrics.Source = newLyrics.Source;
 						lyrics.Value = newLyrics.Value;

@@ -37,8 +37,8 @@ namespace VocaDb.Model.Service.Search {
 			Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
 			Filter("Multiple voicebanks", AdvancedFilterType.HasMultipleVoicebanks),
 			Filter("Lyrics: Any language", AdvancedFilterType.Lyrics, AdvancedSearchFilter.Any),
-			Filter("Lyrics: Japanese", AdvancedFilterType.Lyrics, "ja"),
-			Filter("Lyrics: English", AdvancedFilterType.Lyrics, "en")
+			Filter("Lyrics: Japanese", AdvancedFilterType.Lyrics, OptionalCultureCode.LanguageCode_Japanese),
+			Filter("Lyrics: English", AdvancedFilterType.Lyrics, OptionalCultureCode.LanguageCode_English)
 		};
 
 	}

@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			
 			ParamIs.NotNull(() => lyrics);
 
-			CultureCode = lyrics.CultureCode;
+			CultureCode = lyrics.CultureCode.CultureCode;
 			Id = lyrics.Id;
 			Source = lyrics.Source;
 			TranslationType = lyrics.TranslationType;

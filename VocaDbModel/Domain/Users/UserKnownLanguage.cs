@@ -1,16 +1,22 @@
-﻿namespace VocaDb.Model.Domain.Users {
+﻿using VocaDb.Model.Domain.Globalization;
+
+namespace VocaDb.Model.Domain.Users {
 
 	public class UserKnownLanguage : IEntryWithIntId {
+		private OptionalCultureCode cultureCode;
 
 		public UserKnownLanguage() { }
 
 		public UserKnownLanguage(User user, string cultureCode, UserLanguageProficiency proficiency) {
 			User = user;
-			CultureCode = cultureCode;
+			CultureCode = new OptionalCultureCode(cultureCode);
 			Proficiency = proficiency;
 		}
 
-		public virtual string CultureCode { get; set; }
+		public virtual OptionalCultureCode CultureCode {
+			get { return cultureCode ?? (cultureCode = OptionalCultureCode.Empty); }
+			set { cultureCode = value ?? OptionalCultureCode.Empty; }
+		}
 
 		public virtual int Id { get; set; }
 

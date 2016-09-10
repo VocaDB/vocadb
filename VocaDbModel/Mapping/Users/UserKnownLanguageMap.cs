@@ -9,9 +9,12 @@ namespace VocaDb.Model.Mapping.Users {
 
 			Id(m => m.Id);
 
-			Map(m => m.CultureCode).Not.Nullable();
 			Map(m => m.Proficiency).Not.Nullable();
 			References(m => m.User).Not.Nullable();
+
+			Component(m => m.CultureCode, c => {
+				c.Map(m => m.CultureCode).Column("[CultureCode]").Length(20).Not.Nullable();
+			});
 
 		}
 

@@ -22,8 +22,8 @@ namespace VocaDb.Web.Helpers {
 			"Googlebot", "bingbot"
 		};
 
-		public static IEnumerable<string> GetUserLanguageCodes(HttpRequestBase request) {
-			return request.UserLanguages?.Select(l => l.Split(';')[0]); // en-US;q=0.8 -> en-US
+		public static IEnumerable<OptionalCultureCode> GetUserLanguageCodes(HttpRequestBase request) {
+			return request.UserLanguages?.Select(l => new OptionalCultureCode(l.Split(';')[0])); // en-US;q=0.8 -> en-US
 		}
 
 		/// <summary>
@@ -39,17 +39,10 @@ namespace VocaDb.Web.Helpers {
 
 			var allowedCultures = InterfaceLanguage.Cultures.ToArray();
 
-			foreach (var parsed in GetUserLanguageCodes(request)) {
-
-				try {
-					var cultureInfo = CultureInfo.GetCultureInfo(parsed);
-					if (allowedCultures.Any(c => c.TwoLetterISOLanguageName == cultureInfo.TwoLetterISOLanguageName))
-						return cultureInfo.Name;
-				} catch (CultureNotFoundException) {}
-
-			}
-
-			return string.Empty;
+			return GetUserLanguageCodes(request).Select(l => l.GetCultureInfoSafe())
+				.Where(l => l != null && allowedCultures.Any(c => c.TwoLetterISOLanguageName == l.TwoLetterISOLanguageName))
+				.Select(l => l.Name)
+				.FirstOrDefault() ?? string.Empty;
 
 		}
 

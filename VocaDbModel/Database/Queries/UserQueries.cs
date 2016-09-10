@@ -22,6 +22,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -1438,7 +1439,7 @@ namespace VocaDb.Model.Database.Queries {
 				user.Culture = contract.Culture;
 				user.DefaultLanguageSelection = contract.DefaultLanguageSelection;
 				user.EmailOptions = contract.EmailOptions;
-				user.Language = contract.Language;
+				user.Language = new OptionalCultureCode(contract.Language);
 				user.Options.Location = contract.Location;
 				user.PreferredVideoService = contract.PreferredVideoService;
 				user.Options.PublicAlbumCollection = contract.PublicAlbumCollection;
@@ -1451,7 +1452,7 @@ namespace VocaDb.Model.Database.Queries {
 				var webLinkDiff = WebLink.Sync(user.WebLinks, validWebLinks, user);
 				ctx.OfType<UserWebLink>().Sync(webLinkDiff);
 
-				var knownLanguagesDiff = CollectionHelper.Sync(user.KnownLanguages, contract.KnownLanguages.Distinct(l => l.CultureCode), (l, l2) => l.CultureCode == l2.CultureCode && l.Proficiency == l2.Proficiency, l => user.AddKnownLanguage(l.CultureCode, l.Proficiency));
+				var knownLanguagesDiff = CollectionHelper.Sync(user.KnownLanguages, contract.KnownLanguages.Distinct(l => l.CultureCode), (l, l2) => l.CultureCode.Equals(l2.CultureCode) && l.Proficiency == l2.Proficiency, l => user.AddKnownLanguage(l.CultureCode, l.Proficiency));
 				ctx.Sync(knownLanguagesDiff);
 
 				ctx.Update(user);

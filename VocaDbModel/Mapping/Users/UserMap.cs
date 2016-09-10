@@ -20,7 +20,6 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.Email).Length(50).Not.Nullable();
 			Map(m => m.EmailOptions).CustomType(typeof(UserEmailOptions)).Not.Nullable();
 			Map(m => m.GroupId).Column("[UserGroup]").Not.Nullable();
-			Map(m => m.Language).Not.Nullable();
 			Map(m => m.LastLogin).Not.Nullable();
 			Map(m => m.Name).Length(100).Not.Nullable();
 			Map(m => m.NameLC).Length(100).Not.Nullable();
@@ -37,6 +36,10 @@ namespace VocaDb.Model.Mapping.Users {
 					.Component(a => a.Map(m => m.Id)
 						.Column("[PermissionId]"))
 					.Cache.ReadWrite();
+			});
+
+			Component(m => m.Language, c => {
+				c.Map(m => m.CultureCode).Column("[Language]").Length(20).Not.Nullable();
 			});
 
 			/*	
@@ -80,7 +83,6 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.AlbumFormatString).Length(200).Not.Nullable();
 			Map(m => m.EmailVerified).Not.Nullable();
 			Map(m => m.LastLoginAddress).Length(20).Not.Nullable();
-			Map(m => m.LastLoginCulture).Length(20).Not.Nullable();
 			Map(m => m.Location).Length(50).Not.Nullable();
 			Map(m => m.Poisoned).Not.Nullable();
 			Map(m => m.PublicAlbumCollection).Not.Nullable();
@@ -92,6 +94,10 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.TwitterOAuthToken).Length(70).Not.Nullable();
 			Map(m => m.TwitterOAuthTokenSecret).Not.Nullable();
 			Map(m => m.UnreadNotificationsToKeep).Not.Nullable();
+
+			Component(m => m.LastLoginCulture, c => {
+				c.Map(m => m.CultureCode).Column("[LastLoginCulture]").Length(20).Not.Nullable();
+			});
 
 		}
 

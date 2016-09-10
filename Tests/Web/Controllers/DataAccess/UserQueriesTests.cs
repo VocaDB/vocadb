@@ -330,7 +330,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(name, user.Name, "Name");
 			Assert.AreEqual("mikumiku@crypton.jp", user.Email, "Email");
 			Assert.AreEqual(UserGroupId.Regular, user.GroupId, "GroupId");
-			Assert.AreEqual("ja-JP", user.Options.LastLoginCulture, "LastLoginCulture");
+			Assert.AreEqual("ja-JP", user.Options.LastLoginCulture.CultureCode, "LastLoginCulture");
 
 			Assert.AreEqual("auth_token", user.Options.TwitterOAuthToken, "TwitterOAuthToken");
 			Assert.AreEqual(39, user.Options.TwitterId, "TwitterId");

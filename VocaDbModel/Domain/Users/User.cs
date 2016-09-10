@@ -35,7 +35,7 @@ namespace VocaDb.Model.Domain.Users {
 		private string culture;
 		private string email;
 		private IList<FavoriteSongForUser> favoriteSongs = new List<FavoriteSongForUser>();
-		private string language;
+		private OptionalCultureCode language;
 		private IList<UserKnownLanguage> knownLanguages = new List<UserKnownLanguage>();
 		private IList<UserMessage> messages = new List<UserMessage>();
 		private string name;
@@ -70,7 +70,7 @@ namespace VocaDb.Model.Domain.Users {
 			Email = string.Empty;
 			EmailOptions = UserEmailOptions.PrivateMessagesFromAll;
 			GroupId = UserGroupId.Regular;
-			Language = string.Empty;
+			Language = OptionalCultureCode.Empty;
 			LastLogin = DateTime.Now;
 			Options = new UserOptions(this);
 			PreferredVideoService = PVService.Youtube;
@@ -281,11 +281,10 @@ namespace VocaDb.Model.Domain.Users {
 		/// Cannot be null.
 		/// Can be empty, in which case the language is determined automatically.
 		/// </summary>
-		public virtual string Language {
-			get { return language; }
+		public virtual OptionalCultureCode Language {
+			get { return language ?? (language = new OptionalCultureCode()); }
 			set {
-				ParamIs.NotNull(() => value);
-				language = value;
+				language = value ?? OptionalCultureCode.Empty;
 			}
 		}
 
@@ -293,13 +292,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// User's language setting or last login culture if language is not set (automatic).
 		/// Can be empty if neither is set.
 		/// </summary>
-		public virtual string LanguageOrLastLoginCulture {
-			get {
-				
-				return !string.IsNullOrEmpty(Language) ? Language : Options.LastLoginCulture;
-
-			}
-		}
+		public virtual OptionalCultureCode LanguageOrLastLoginCulture => !Language.IsEmpty ? Language : Options.LastLoginCulture;
 
 		public virtual DateTime LastLogin { get; set; }
 
@@ -632,7 +625,7 @@ namespace VocaDb.Model.Domain.Users {
 		public virtual void UpdateLastLogin(string host, string culture) {
 			LastLogin = DateTime.Now;
 			Options.LastLoginAddress = host;
-			Options.LastLoginCulture = culture;
+			Options.LastLoginCulture = new OptionalCultureCode(culture);
 		}
 
 	}

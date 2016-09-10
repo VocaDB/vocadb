@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (string.IsNullOrEmpty(langCode))
 				return query;
 
-			return query.Where(u => u.KnownLanguages.Any(l => l.CultureCode == langCode));
+			return query.Where(u => u.KnownLanguages.Any(l => l.CultureCode.CultureCode == langCode));
 
 		}
 

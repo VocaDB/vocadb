@@ -773,7 +773,7 @@ namespace VocaDb.Model.Domain.Songs {
 				var newEntry = newLyrics.First(e => e.Id == entry.Id);
 
 				if (!entry.ContentEquals(newEntry)) {
-					linkEntry.CultureCode = newEntry.CultureCode;
+					linkEntry.CultureCode = new OptionalCultureCode(newEntry.CultureCode);
 					linkEntry.Source = newEntry.Source;
 					linkEntry.TranslationType = newEntry.TranslationType;
 					linkEntry.Value = newEntry.Value;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
@@ -10,16 +9,8 @@ namespace VocaDb.Model.Helpers {
 
 	public static class LyricsHelper {
 
-		private static CultureInfo GetCultureOrNull(string code) {
-			try {
-				return CultureInfo.GetCultureInfo(code);
-			} catch (CultureNotFoundException) {
-				return null;
-			}
-		}
-
-		public static LyricsForSongContract GetDefaultLyrics(LyricsForSongContract[] lyrics, string uiCultureCode, 
-			IEnumerable<string> userLanguages, 
+		public static LyricsForSongContract GetDefaultLyrics(LyricsForSongContract[] lyrics, OptionalCultureCode uiCultureCode, 
+			IEnumerable<OptionalCultureCode> userLanguages, 
 			Lazy<IEnumerable<UserKnownLanguage>> knownLanguages) {
 
 			if (!lyrics.Any())
@@ -27,12 +18,12 @@ namespace VocaDb.Model.Helpers {
 
 			var dict = lyrics.Where(l => !string.IsNullOrEmpty(l.CultureCode)).Distinct(l => l.CultureCode).ToDictionary(l => l.CultureCode);
 
-			var uiCulture = !string.IsNullOrEmpty(uiCultureCode) ? CultureInfo.GetCultureInfo(uiCultureCode) : null;
+			var uiCulture = uiCultureCode.CultureInfo;
 			if (uiCulture != null && dict.ContainsKey(uiCulture.TwoLetterISOLanguageName)) {
 				return dict[uiCulture.TwoLetterISOLanguageName];
 			}
 
-			var userLang = userLanguages?.Select(GetCultureOrNull)
+			var userLang = userLanguages?.Select(c => c.GetCultureInfoSafe())
 				.Where(c => c != null)
 				.Select(l => l.TwoLetterISOLanguageName)
 				.FirstOrDefault(l => dict.ContainsKey(l));
@@ -41,10 +32,13 @@ namespace VocaDb.Model.Helpers {
 				return dict[userLang];
 			}
 
-			var lang = knownLanguages.Value?.OrderByDescending(l => l.Proficiency).FirstOrDefault(l => dict.ContainsKey(l.CultureCode));
+			var lang = knownLanguages.Value?
+				.OrderByDescending(l => l.Proficiency)
+				.Select(l => l.CultureCode.CultureCode)
+				.FirstOrDefault(l => dict.ContainsKey(l));
 
 			if (lang != null) {
-				return dict[lang.CultureCode];
+				return dict[lang];
 			}
 
 			var original = lyrics.FirstOrDefault(l => l.TranslationType == TranslationType.Original);

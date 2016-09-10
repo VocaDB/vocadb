@@ -29,7 +29,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			DefaultLanguageSelection = user.DefaultLanguageSelection;
 			EmailOptions = user.EmailOptions;
 			GroupId = user.GroupId;
-			Language = user.Language;
+			Language = user.Language.CultureCode;
 			PreferredVideoService = user.PreferredVideoService;
 			VerifiedArtist = user.VerifiedArtist;
 

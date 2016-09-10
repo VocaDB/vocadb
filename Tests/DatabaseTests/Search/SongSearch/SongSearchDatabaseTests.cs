@@ -313,7 +313,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 			
 			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
 				FilterType = AdvancedFilterType.Lyrics,
-				Param = "en"
+				Param = OptionalCultureCode.LanguageCode_English
 			} };
 		
 			var result = CallFind();

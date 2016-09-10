@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Helpers {
 
@@ -9,18 +10,11 @@ namespace VocaDb.Model.Helpers {
 		/// <summary>
 		/// Gets the culture with the specific name, or the application default culture (English basically).
 		/// </summary>
-		/// <param name="cultureName">Culture name, for example "en-US".</param>
+		/// <param name="culture">Culture name, for example "en-US".</param>
 		/// <returns>The specified culture, or application default culture. Cannot be null.</returns>
-		public static CultureInfo GetCultureOrDefault(string cultureName) {
-			
-			if (string.IsNullOrEmpty(cultureName))
-				return Default;
+		public static CultureInfo GetCultureOrDefault(OptionalCultureCode culture) {
 
-			try {
-				return CultureInfo.GetCultureInfo(cultureName);
-			} catch (CultureNotFoundException) {
-				return Default;
-			}
+			return culture.GetCultureInfoSafe() ?? Default;
 
 		}
 

@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Users {
+﻿using VocaDb.Model.Domain.Globalization;
+
+namespace VocaDb.Model.Domain.Users {
 
 	/// <summary>
 	/// Various additional properties for user that are not needed in most cases.
@@ -15,12 +17,11 @@
 		private string realname;
 		private string twitterName;
 		private User user;
-		private string lastLoginCulture;
+		private OptionalCultureCode lastLoginCulture;
 
 		public UserOptions() {		
 	 
 			LastLoginAddress 
-				= LastLoginCulture
 				= AboutMe
 				= AlbumFormatString
 				= Location
@@ -28,6 +29,7 @@
 				= TwitterName = TwitterOAuthToken = TwitterOAuthTokenSecret 
 				= string.Empty;
 
+			LastLoginCulture = OptionalCultureCode.Empty;
 			PublicAlbumCollection = true;
 			PublicRatings = true;
 			ShowChatbox = true;
@@ -63,11 +65,10 @@
 
 		public virtual int Id { get; set; }
 
-		public virtual string LastLoginCulture {
-			get { return lastLoginCulture; }
+		public virtual OptionalCultureCode LastLoginCulture {
+			get { return lastLoginCulture ?? (lastLoginCulture = new OptionalCultureCode()); }
 			set {
-				ParamIs.NotNull(() => value);
-				lastLoginCulture = value;
+				lastLoginCulture = value ?? OptionalCultureCode.Empty;
 			}
 		}
 

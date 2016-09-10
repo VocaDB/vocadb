@@ -116,7 +116,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (any) {
 				return query.Where(s => s.Lyrics.Any());
 			} else if (languageCodes != null && languageCodes.Any()) {
-				return query.Where(s => s.Lyrics.Any(l => languageCodes.Contains(l.CultureCode)));
+				return query.Where(s => s.Lyrics.Any(l => languageCodes.Contains(l.CultureCode.CultureCode)));
 			} else {
 				return query;
 			}
