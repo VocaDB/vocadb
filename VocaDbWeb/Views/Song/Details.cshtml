@@ -21,13 +21,13 @@
 	var lyricsLanguageNames = Model.Lyrics
 		.OrderBy(l => l.TranslationType)
 		.Where(l => !string.IsNullOrEmpty(l.CultureCode) || l.TranslationType == TranslationType.Romanized)
-		.Select(l => l.TranslationType != TranslationType.Romanized ? CultureInfo.GetCultureInfo(l.CultureCode).NativeName : "Romanized")
+		.Select(l => l.TranslationType != TranslationType.Romanized ? CultureInfo.GetCultureInfo(l.CultureCode).NativeName : VocaDb.Web.Resources.Domain.Globalization.TranslationTypeNames.Romanized)
 		.Take(3)
 		.ToArray();
 
 	var additionalLyrics = lyricsLanguageNames.Any() ? Model.Lyrics.Length - lyricsLanguageNames.Length : 0;
 
-	var lyricsLanguages = lyricsLanguageNames.Any() ? "(" + string.Join(", ", lyricsLanguageNames) + (additionalLyrics > 0 ? " + " + additionalLyrics + " other(s)" : "") + ")" : "";
+	var lyricsLanguages = lyricsLanguageNames.Any() ? "(" + string.Join(", ", lyricsLanguageNames) + (additionalLyrics > 0 ? " " + string.Format(Res.LyricsPlusOthers, additionalLyrics) : "") + ")" : "";
 
 	var url = PageProperties.CanonicalUrl;
 	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
@@ -370,14 +370,14 @@
 				@foreach (var lyrics in Model.Lyrics.OrderBy(l => l.TranslationType)) {
 					<li data-bind="css: { active: selectedLyricsId() == @lyrics.Id }">
 						<a href="#" data-bind="click: function() { selectedLyricsId(@lyrics.Id); }">
-							@{ var lyricsName = !string.IsNullOrEmpty(lyrics.CultureCode) ? CultureInfo.GetCultureInfo(lyrics.CultureCode).NativeName : "Other"; }
+							@{ var lyricsName = !string.IsNullOrEmpty(lyrics.CultureCode) ? CultureInfo.GetCultureInfo(lyrics.CultureCode).NativeName : Res.LyricsLanguageOther; }
 							@if (lyrics.TranslationType == TranslationType.Romanized) {
 								@:Romanized
 							} else {
 								@lyricsName	
 							}
 							@if (lyrics.TranslationType == TranslationType.Original) {
-								@:(Original)
+								@:(@VocaDb.Web.Resources.Domain.Globalization.TranslationTypeNames.Original)
 							}
 						</a>
 					</li>

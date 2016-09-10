@@ -250,11 +250,29 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string LyricsLanguageOther {
+            get {
+                return ResourceManager.GetString("LyricsLanguageOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to lyrics.
         /// </summary>
         public static string LyricsLC {
             get {
                 return ResourceManager.GetString("LyricsLC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to + {0} other(s).
+        /// </summary>
+        public static string LyricsPlusOthers {
+            get {
+                return ResourceManager.GetString("LyricsPlusOthers", resourceCulture);
             }
         }
         
