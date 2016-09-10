@@ -27,6 +27,11 @@ namespace VocaDb.Tests.Web.Helpers {
 		}
 
 		[TestMethod]
+		public void GetInterfaceCultureName_OnlyLanguage() {
+			TestGetInterfaceCultureName("en", "no", "en");
+		}
+
+		[TestMethod]
 		public void GetInterfaceCultureName_NoMatch() {
 			
 			TestGetInterfaceCultureName(string.Empty, "no-NO");
