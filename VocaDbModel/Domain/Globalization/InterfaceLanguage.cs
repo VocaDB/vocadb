@@ -10,10 +10,10 @@ namespace VocaDb.Model.Domain.Globalization {
 		private static readonly ImmutableHashSet<string> twoLetterLanguageCodes;
 
 		static InterfaceLanguage() {
-			twoLetterLanguageCodes = ImmutableHashSet.CreateRange(Cultures.Select(c => c.TwoLetterISOLanguageName));
+			twoLetterLanguageCodes = ImmutableHashSet.CreateRange(Cultures.Cultures.Select(c => c.TwoLetterISOLanguageName));
 		}
 
-		public static IEnumerable<CultureInfo> Cultures => LanguageCodes.Select(CultureInfo.GetCultureInfo);
+		public static CultureCollection Cultures => new CultureCollection(LanguageCodes);
 
 		/// <summary>
 		/// Gets the ISO 639-1 two letter language code matching a culture,
@@ -22,10 +22,10 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// <param name="culture">Culture to be tested. Cannot be null.</param>
 		/// <returns>Language code matching the culture. If there was no match, this returns an empty string.</returns>
 		public static string GetAvailableLanguageCode(CultureInfo culture) {
-			return IsValidCulture(culture) ? culture.TwoLetterISOLanguageName : string.Empty;
+			return IsValidUserInterfaceCulture(culture) ? culture.TwoLetterISOLanguageName : string.Empty;
 		}
 
-		private static bool IsValidCulture(CultureInfo culture) {
+		public static bool IsValidUserInterfaceCulture(CultureInfo culture) {
 			return twoLetterLanguageCodes.Contains(culture.TwoLetterISOLanguageName);
 		}
 
@@ -33,11 +33,11 @@ namespace VocaDb.Model.Domain.Globalization {
 			"en-US", "de-DE", "es", "fi-Fi", "pt", "ru-RU", "ja-JP", "zh-Hans"
 		};
 
-		public static readonly string[] UserLanguageCodes = {
+		private static readonly string[] UserLanguageCodes = {
 			"de", "en", "es", "fi", "fil", "fr", "id", "it", "ko", "nl", "no", "pl", "pt", "ru", "sv", "ja", "zh"
 		};
 
-		public static IEnumerable<CultureInfo> UserLanguageCultures => UserLanguageCodes.Select(CultureInfo.GetCultureInfo);
+		public static CultureCollection UserLanguageCultures => new CultureCollection(UserLanguageCodes);
 
 	}
 }

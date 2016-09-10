@@ -112,9 +112,9 @@ namespace VocaDb.Web.Models {
 		public MySettingsModel() {
 
 			AboutMe = string.Empty;
-			AllInterfaceLanguages = LanguageCodeAndName.Languages(InterfaceLanguage.Cultures, ViewRes.User.MySettingsStrings.Automatic);
+			AllInterfaceLanguages = InterfaceLanguage.Cultures;
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
-			AllUserKnownLanguages = LanguageCodeAndName.Languages(InterfaceLanguage.UserLanguageCultures);
+			AllUserKnownLanguages = InterfaceLanguage.UserLanguageCultures;
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
 			WebLinks = new List<WebLinkDisplay>();
@@ -156,11 +156,11 @@ namespace VocaDb.Web.Models {
 
 		public string AccessKey { get; set; }
 
-		public LanguageCodeAndName[] AllInterfaceLanguages { get; set; }
+		public CultureCollection AllInterfaceLanguages { get; set; }
 
 		public Dictionary<ContentLanguagePreference, string> AllLanguages { get; set; }
 
-		public LanguageCodeAndName[] AllUserKnownLanguages { get; set; }
+		public CultureCollection AllUserKnownLanguages { get; set; }
 
 		public PVService[] AllVideoServices { get; set; }
 

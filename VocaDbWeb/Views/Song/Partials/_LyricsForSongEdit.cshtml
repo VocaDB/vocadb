@@ -1,9 +1,4 @@
 ﻿@using VocaDb.Model.Domain.Globalization
-@using VocaDb.Web.Helpers
-
-@{
-	var languages = LanguageCodeAndName.Languages(InterfaceLanguage.UserLanguageCultures, "Other/Unknown");
-}
 
 <!-- LyricsForSongEditViewModel -->
 
@@ -21,7 +16,7 @@
 			<p>
 				<label data-bind="visible: showLanguageSelection()">
 					@ViewRes.Song.EditStrings.LyLanguage
-					@KnockoutHelpers.DropdownList(languages.ToDictionary(l => l.Code, l => l.DisplayName), "cultureCode")					
+					@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Other/Unknown"), "cultureCode")					
 				</label>
 				<label>
 					@ViewRes.Song.EditStrings.LySource

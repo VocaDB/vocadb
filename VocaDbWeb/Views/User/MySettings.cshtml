@@ -131,7 +131,7 @@
 			</div>
 			<div class="editor-field">
 				@Html.DropDownListFor(m => m.InterfaceLanguageSelection,
-					new SelectList(Model.AllInterfaceLanguages, "Code", "DisplayName", Model.InterfaceLanguageSelection), 
+					new SelectList(Model.AllInterfaceLanguages.ToDictionaryFull(Res.Automatic), "Key", "Value", Model.InterfaceLanguageSelection), 
 					new { @class = "input-xlarge" })
 			</div>
 
@@ -142,7 +142,7 @@
 			</div>
 			<div class="editor-field">
 				@Html.DropDownListFor(m => m.CultureSelection,
-					new SelectList(Model.AllInterfaceLanguages, "Code", "DisplayName", Model.CultureSelection),
+					new SelectList(Model.AllInterfaceLanguages.ToDictionaryFull(Res.Automatic), "Key", "Value", Model.CultureSelection),
 					new { @class = "input-xlarge" })
 			</div>
 			
@@ -200,7 +200,7 @@
 						<!-- ko foreach: knownLanguages -->
 							<tr>
 								<td>
-									@KnockoutHelpers.DropdownList(Model.AllUserKnownLanguages.ToDictionary(l => l.Code, l => l.DisplayName), "cultureCode", cssClass: "input-xlarge")
+									@KnockoutHelpers.DropdownList(Model.AllUserKnownLanguages.ToDictionaryFull(), "cultureCode", cssClass: "input-xlarge")
 								</td>
 								<td>
 									@KnockoutHelpers.DropdownList(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency")

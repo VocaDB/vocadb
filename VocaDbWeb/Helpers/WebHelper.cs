@@ -37,10 +37,9 @@ namespace VocaDb.Web.Helpers {
 			if (request.UserLanguages == null || !request.UserLanguages.Any())
 				return string.Empty;
 
-			var allowedCultures = InterfaceLanguage.Cultures.ToArray();
-
-			return GetUserLanguageCodes(request).Select(l => l.GetCultureInfoSafe())
-				.Where(l => l != null && allowedCultures.Any(c => c.TwoLetterISOLanguageName == l.TwoLetterISOLanguageName))
+			return GetUserLanguageCodes(request)
+				.Select(l => l.GetCultureInfoSafe())
+				.Where(l => l != null && InterfaceLanguage.IsValidUserInterfaceCulture(l))
 				.Select(l => l.Name)
 				.FirstOrDefault() ?? string.Empty;
 

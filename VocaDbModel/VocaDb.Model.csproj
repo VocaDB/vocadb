@@ -316,6 +316,7 @@
     <Compile Include="Domain\Albums\AlbumReport.cs" />
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
+    <Compile Include="Domain\Globalization\CultureCollection.cs" />
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
     <Compile Include="Domain\Globalization\OptionalCultureCode.cs" />
     <Compile Include="Domain\Globalization\TranslationType.cs" />
