@@ -738,7 +738,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			song.CreateDate = DateTime.Now - TimeSpan.FromDays(30);
 			repository.Save(user2.AddArtist(producer));
 			var contract = EditContract();
-			contract.PVs = new[] { CreateEntry.PVContract() };
+			contract.PVs = new[] { CreateEntry.PVContract(pvType: PVType.Original) };
 
 			queries.UpdateBasicProperties(contract);
 
@@ -746,6 +746,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(1, notifications.Count, "Notification was sent");
 			var notification = notifications.First();
 			Assert.AreEqual(user2, notification.User, "Notification was sent to user");
+
+		}
+
+		[TestMethod]
+		public void Update_DoNotSendNotificationsForReprints() {
+
+			song.PVs.PVs.Clear();
+			song.CreateDate = DateTime.Now - TimeSpan.FromDays(30);
+			repository.Save(user2.AddArtist(producer));
+			var contract = EditContract();
+			contract.PVs = new[] { CreateEntry.PVContract(pvType: PVType.Reprint) };
+
+			queries.UpdateBasicProperties(contract);
+
+			Assert.AreEqual(0, repository.Count<UserMessage>(), "No notification was sent");
 
 		}
 

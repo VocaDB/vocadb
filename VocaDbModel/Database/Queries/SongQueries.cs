@@ -833,7 +833,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.SysLog(string.Format("updating properties for {0}", song));
 
-				var oldPvCount = song.PVs.PVs.Count;
+				var oldPvCount = song.PVs.OfType(PVType.Original).Count();
 				diff.Notes = song.Notes.CopyFrom(properties.Notes);
 
 				var newOriginalVersion = (properties.OriginalVersion != null && properties.OriginalVersion.Id != 0 ? ctx.Load(properties.OriginalVersion.Id) : null);
@@ -914,7 +914,7 @@ namespace VocaDb.Model.Database.Queries {
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
 
 				var newPVCutoff = TimeSpan.FromDays(7);
-				if (oldPvCount == 0 && song.PVs.PVs.Count > 0 && song.CreateDate <= DateTime.Now - newPVCutoff) {
+				if (oldPvCount == 0 && song.PVs.OfType(PVType.Original).Any() && song.CreateDate <= DateTime.Now - newPVCutoff) {
 					new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer);
 				}
 

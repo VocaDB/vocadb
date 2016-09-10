@@ -37,6 +37,10 @@ namespace VocaDb.Model.Domain.PVs {
 			return PVs.GetEnumerator();
 		}
 
+		public virtual IEnumerable<T> OfType(PVType pvType) {
+			return PVs.Where(p => p.PVType == pvType);
+		}
+
 		public virtual void Remove(T pv) {
 			PVs.Remove(pv);
 		}
