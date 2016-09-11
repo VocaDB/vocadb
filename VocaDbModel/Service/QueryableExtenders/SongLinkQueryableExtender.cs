@@ -178,7 +178,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					}
 				case AdvancedFilterType.Lyrics: {
 					var any = filter.Param == AdvancedSearchFilter.Any;
-					var languageCodes = !any ? filter.Param?.Split(',') : null;
+					var languageCodes = !any ? (filter.Param ?? string.Empty).Split(',') : null;
 					return WhereSongHasLyrics(query, languageCodes, any);
 				}
 			}
