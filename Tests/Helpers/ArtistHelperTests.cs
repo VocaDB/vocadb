@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -29,6 +30,41 @@ namespace VocaDb.Tests.Helpers {
 			producer = CreateArtist(ArtistType.Producer, "devilishP");
 			producer2 = CreateArtist(ArtistType.Producer, "40mP");
 
+		}
+
+		[TestMethod]
+		public void CanHaveRelatedArtists_ProductCannotHaveVoiceProvider() {
+			Assert.IsFalse(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
+		}
+
+		[TestMethod]
+		public void CanHaveRelatedArtists_ProductCanHaveGroup() {
+			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.Group, LinkDirection.ManyToOne));
+		}
+
+		[TestMethod]
+		public void CanHaveRelatedArtists_VocaloidCanHaveVoiceProvider() {
+			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Vocaloid, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
+		}
+
+		[TestMethod]
+		public void CanHaveRelatedArtists_OtherVocalistCanHaveVoiceProvider() {
+			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.OtherVocalist, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
+		}
+
+		[TestMethod]
+		public void CanHaveRelatedArtists_ProducerCanHaveVoicesProvided() {
+			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
+		}
+
+		[TestMethod]
+		public void CanHaveRelatedArtists_VocaloidCannotHaveVoicesProvided() {
+			Assert.IsFalse(ArtistHelper.CanHaveRelatedArtists(ArtistType.Vocaloid, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
+		}
+
+		[TestMethod]
+		public void CanHaveRelatedArtists_OtherVocalistCanHaveVoicesProvided() {
+			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.OtherVocalist, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
 		}
 
 		[TestMethod]

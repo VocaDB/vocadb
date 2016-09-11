@@ -104,6 +104,13 @@ namespace VocaDb.Model.Helpers {
 			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer
 		};
 
+		/// <summary>
+		/// Whether artist type can have artist links of a specified type and direction.
+		/// </summary>
+		/// <param name="artistType">Artist type to be tested.</param>
+		/// <param name="linkType">Link type.</param>
+		/// <param name="direction">Link direction.</param>
+		/// <returns>True if the artist type can have artist links, otherwise false.</returns>
 		public static bool CanHaveRelatedArtists(ArtistType artistType, ArtistLinkType linkType, LinkDirection direction) {
 
 			if (artistType == ArtistType.Unknown)
@@ -113,7 +120,7 @@ namespace VocaDb.Model.Helpers {
 				return direction == LinkDirection.ManyToOne || GroupTypes.Contains(artistType);
 			}
 
-			return direction == LinkDirection.ManyToOne ? VocalistTypes.Contains(artistType) : !VocalistTypes.Contains(artistType);
+			return direction == LinkDirection.ManyToOne ? VocalistTypes.Contains(artistType) : !VocalistTypes.Contains(artistType) || artistType == ArtistType.OtherVocalist;
 
 		}
 
