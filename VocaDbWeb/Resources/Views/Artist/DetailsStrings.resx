@@ -135,6 +135,9 @@
   <data name="BaseVoicebank" xml:space="preserve">
     <value>Base voicebank</value>
   </data>
+  <data name="CharacterDesigner" xml:space="preserve">
+    <value>Character designer</value>
+  </data>
   <data name="ChildVoicebanks" xml:space="preserve">
     <value>Derived voicebanks</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="MainAlbums" xml:space="preserve">
     <value>Main albums</value>
+  </data>
+  <data name="ManagedBy" xml:space="preserve">
+    <value>Managed by</value>
   </data>
   <data name="Members" xml:space="preserve">
     <value>Members</value>

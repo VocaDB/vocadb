@@ -115,6 +115,15 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Character designer.
+        /// </summary>
+        public static string CharacterDesigner {
+            get {
+                return ResourceManager.GetString("CharacterDesigner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Derived voicebanks.
         /// </summary>
         public static string ChildVoicebanks {
@@ -210,6 +219,15 @@ namespace ViewRes.Artist {
         public static string MainAlbums {
             get {
                 return ResourceManager.GetString("MainAlbums", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Managed by.
+        /// </summary>
+        public static string ManagedBy {
+            get {
+                return ResourceManager.GetString("ManagedBy", resourceCulture);
             }
         }
         
