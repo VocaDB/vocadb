@@ -29,7 +29,7 @@
 	<div class="control-group">
 		<div class="control-label">@Res.KnowsLanguage</div>
 		<div class="controls">
-			@KnockoutHelpers.DropdownList(LanguageCodeAndName.Languages(InterfaceLanguage.UserLanguageCultures, string.Empty).ToDictionary(l => l.Code, l => l.DisplayName), "knowsLanguage")
+			@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(string.Empty), "knowsLanguage")
 		</div>
 	</div>
 
