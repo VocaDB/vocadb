@@ -45,6 +45,14 @@ module vdb.viewModels {
 
 		public id: number;
 
+		public initLyrics = () => {
+
+			if (!this.selectedLyrics() && this.selectedLyricsId()) {
+				this.selectedLyricsId.notifySubscribers(this.selectedLyricsId());
+			}
+
+		}
+
 		public originalVersion: KnockoutObservable<SongLinkWithUrl>;
 
 		public reportViewModel: ReportEntryViewModel;
@@ -80,7 +88,7 @@ module vdb.viewModels {
         public userRating: PVRatingButtonsViewModel;
 
         constructor(
-            repository: rep.SongRepository,
+            private repository: rep.SongRepository,
             userRepository: rep.UserRepository,
             resources: SongDetailsResources,
 			showTranslatedDescription: boolean,
@@ -141,12 +149,9 @@ module vdb.viewModels {
 			}
 
 			this.selectedLyricsId.subscribe(id => {
+				this.selectedLyrics(null);
 				repository.getLyrics(id, lyrics => this.selectedLyrics(lyrics));
 			});
-
-			if (this.selectedLyricsId()) {
-				this.selectedLyricsId.notifySubscribers(this.selectedLyricsId());
-			}
         
         }
     

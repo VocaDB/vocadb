@@ -111,7 +111,7 @@
 	<ul>
 		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
 		@if (Model.Lyrics.Any()) {
-			<li><a href="#lyricsTab">@ViewRes.Song.DetailsStrings.Lyrics @lyricsLanguages</a></li>			
+			<li><a href="#lyricsTab" data-bind="click: initLyrics">@Res.Lyrics @lyricsLanguages</a></li>			
 		}
 		<li data-tab="Discussion">
 			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
@@ -119,7 +119,7 @@
 		<li data-tab="Related">
 			<a href="@Url.Action("Related", "Song", new { id = Model.Id })">@R.DetailsStrings.RelatedSongs</a>
 		</li>
-		<li><a href="#shareTab">@R.DetailsStrings.Share</a></li>
+		<li><a href="#shareTab">@Res.Share</a></li>
 	</ul>
 
 	<div id="basicInfoTab">
