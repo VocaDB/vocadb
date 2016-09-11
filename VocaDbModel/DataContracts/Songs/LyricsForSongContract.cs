@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		public LyricsForSongContract() { }
 
-		public LyricsForSongContract(LyricsForSong lyrics) {
+		public LyricsForSongContract(LyricsForSong lyrics, bool includeValue = true) {
 			
 			ParamIs.NotNull(() => lyrics);
 
@@ -20,7 +20,10 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Id = lyrics.Id;
 			Source = lyrics.Source;
 			TranslationType = lyrics.TranslationType;
-			Value = lyrics.Value;
+
+			if (includeValue) {
+				Value = lyrics.Value;
+			}
 
 		}
 
@@ -41,7 +44,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[JsonConverter(typeof(StringEnumConverter))]
 		public TranslationType TranslationType { get; set; }
 
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public string Value { get; set; }
 
 	}

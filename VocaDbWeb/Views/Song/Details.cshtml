@@ -389,7 +389,7 @@
 					@if (!string.IsNullOrEmpty(lyrics.Source)) {
 						<p>(@Res.LyricsFrom @Html.Raw(ViewHelper.ParseBBCode(lyrics.Source)))</p>
 					}
-					<p class="song-lyrics">@lyrics.Value</p>
+					<p class="song-lyrics" data-bind="text: selectedLyrics() ? selectedLyrics().value : null"></p>
 				</div>
 			}
 		</div>

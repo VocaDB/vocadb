@@ -29,7 +29,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
-			LyricsFromParents = song.GetLyricsFromParents(specialTags).Select(l => new LyricsForSongContract(l)).ToArray();
+			LyricsFromParents = song.GetLyricsFromParents(specialTags).Select(l => new LyricsForSongContract(l, false)).ToArray();
 			Notes = song.Notes;
 			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? 
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);

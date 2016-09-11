@@ -49,6 +49,8 @@ module vdb.viewModels {
 
 		public reportViewModel: ReportEntryViewModel;
 
+		public selectedLyrics = ko.observable<dc.songs.LyricsForSongContract>();
+
 		public selectedLyricsId: KnockoutObservable<number>;
 
 		public selectedPvId: KnockoutObservable<number>;
@@ -136,6 +138,14 @@ module vdb.viewModels {
 
 			if (data.songType !== 'Original' && this.originalVersion().entry == null) {
 				this.getOriginal(data.linkedPages);
+			}
+
+			this.selectedLyricsId.subscribe(id => {
+				repository.getLyrics(id, lyrics => this.selectedLyrics(lyrics));
+			});
+
+			if (this.selectedLyricsId()) {
+				this.selectedLyricsId.notifySubscribers(this.selectedLyricsId());
 			}
         
         }

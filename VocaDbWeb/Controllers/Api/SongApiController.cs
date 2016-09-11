@@ -261,6 +261,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("lyrics/{lyricsId:int}")]
+		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
+		public LyricsForSongContract GetLyrics(int lyricsId) {
+			return queries.GetLyrics(lyricsId);
+		}
+
 		/// <summary>
 		/// Gets a list of song names. Ideal for autocomplete boxes.
 		/// </summary>

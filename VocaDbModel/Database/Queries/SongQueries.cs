@@ -394,6 +394,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public LyricsForSongContract GetLyrics(int lyricsId) {
+			return HandleQuery(ctx => new LyricsForSongContract(ctx.Load<LyricsForSong>(lyricsId)));
+		}
+
 		public SongContract GetSong(int id) {
 
 			return HandleQuery(
