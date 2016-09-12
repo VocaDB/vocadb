@@ -631,7 +631,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var contract = EditContract();
 			contract.Lyrics = new[] {
 				new LyricsForSongContract {
-					CultureCode = OptionalCultureCode.LanguageCode_English, TranslationType = TranslationType.Original, Source = string.Empty, Value = "Miku Miku"
+					CultureCode = OptionalCultureCode.LanguageCode_English, TranslationType = TranslationType.Original, Source = string.Empty, URL = string.Empty, Value = "Miku Miku"
 				}
 			};
 

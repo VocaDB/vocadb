@@ -41,7 +41,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 				var contract = new SongForEditContract(Db.Song2, ContentLanguagePreference.English);
 
 				contract.Lyrics = new[] {
-					new LyricsForSongContract { TranslationType = TranslationType.Original, CultureCode = "ja-JP", Source = string.Empty, Value = "Miku!" }
+					new LyricsForSongContract { TranslationType = TranslationType.Original, CultureCode = "ja-JP", Source = string.Empty, URL = string.Empty, Value = "Miku!" }
 				};
 
 				var updated = queries.UpdateBasicProperties(contract);
