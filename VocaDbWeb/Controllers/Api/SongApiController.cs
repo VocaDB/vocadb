@@ -261,6 +261,11 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets lyrics by ID.
+		/// </summary>
+		/// <param name="lyricsId">Lyrics ID.</param>
+		/// <returns>Lyrics information.</returns>
 		[Route("lyrics/{lyricsId:int}")]
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
 		public LyricsForSongContract GetLyrics(int lyricsId) {
