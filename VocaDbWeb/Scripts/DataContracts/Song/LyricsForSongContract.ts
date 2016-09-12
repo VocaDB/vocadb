@@ -13,6 +13,8 @@ module vdb.dataContracts.songs {
 
 		translationType: string;
 
+		url?: string;
+
 		value?: string;
 
 	}

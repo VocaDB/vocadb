@@ -14,6 +14,7 @@ namespace vdb.viewModels.songs {
 				this.language = ko.observable(contract.language);
 				this.source = ko.observable(contract.source);
 				this.translationType = ko.observable(contract.translationType);
+				this.url = ko.observable(contract.url);
 				this.value = ko.observable(contract.value);
 			} else {
 				this.id = ko.observable(0);
@@ -21,6 +22,7 @@ namespace vdb.viewModels.songs {
 				this.language = ko.observable(vdb.models.globalization.ContentLanguageSelection[vdb.models.globalization.ContentLanguageSelection.Unspecified]);
 				this.source = ko.observable("");
 				this.translationType = ko.observable(cls.globalization.TranslationType[cls.globalization.TranslationType.Translation]);
+				this.url = ko.observable("");
 				this.value = ko.observable("");
 			}
 
@@ -46,6 +48,8 @@ namespace vdb.viewModels.songs {
 		public source: KnockoutObservable<string>;
 
 		public translationType: KnockoutObservable<string>;
+
+		public url: KnockoutObservable<string>;
 
 		public value: KnockoutObservable<string>;
 
@@ -74,6 +78,7 @@ namespace vdb.viewModels.songs {
 			this.original.value(lyrics.value());
 			this.original.cultureCode(lyrics.cultureCode());
 			this.original.source(lyrics.source());
+			this.original.url(lyrics.url());
 			this.items.remove(lyrics);
 		}
 
@@ -82,7 +87,9 @@ namespace vdb.viewModels.songs {
 			if (lyrics === this.original) {
 
 				var newLyrics = new LyricsForSongEditViewModel({
-					id: this.original.id(), cultureCode: this.original.cultureCode(), source: this.original.source(),
+					id: this.original.id(), cultureCode: this.original.cultureCode(),
+					source: this.original.source(),
+					url: this.original.url(),
 					value: this.original.value(),
 					translationType: cls.globalization.TranslationType[cls.globalization.TranslationType.Translation]
 				});
@@ -93,6 +100,7 @@ namespace vdb.viewModels.songs {
 				this.original.value("");
 				this.original.cultureCode("");
 				this.original.source("");
+				this.original.url("");
 
 			} else {
 				lyrics.translationType(cls.globalization.TranslationType[cls.globalization.TranslationType.Translation]);

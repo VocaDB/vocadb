@@ -4,6 +4,24 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201609122300)]
+	public class LyricsURL : Migration {
+
+		public override void Up() {
+
+			Create.Column("URL").OnTable(TableNames.LyricsForSongs).AsString(255).NotNullable().WithDefaultValue(string.Empty);
+
+			Execute.SqlFormat("UPDATE {0} SET URL = [Source] WHERE [Source] LIKE 'http%' OR [Source] LIKE 'www%'", TableNames.LyricsForSongs);
+			Execute.SqlFormat("UPDATE {0} SET [Source] = '' WHERE [Source] LIKE 'http%' OR [Source] LIKE 'www%'", TableNames.LyricsForSongs);
+
+		}
+
+		public override void Down() {
+			Delete.Column("URL").FromTable(TableNames.LyricsForSongs);
+		}
+
+	}
+
 	[Migration(201609092300)]
 	public class RemoveLanguageFromLyrics : Migration {
 

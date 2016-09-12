@@ -11,13 +11,15 @@ namespace VocaDb.Model.Domain.Songs {
 		private Song song;
 		private string source;
 		private string value;
+		private string url;
 
 		public LyricsForSong() {}
 
-		public LyricsForSong(Song song, string val, string source, TranslationType translationType, string cultureCode) {
+		public LyricsForSong(Song song, string val, string source, string url, TranslationType translationType, string cultureCode) {
 
 			Song = song;
 			Source = source;
+			URL = url;
 			TranslationType = translationType;
 			CultureCode = new OptionalCultureCode(cultureCode);
 			Value = val;
@@ -58,6 +60,14 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual TranslationType TranslationType { get; set; }
+
+		public virtual string URL {
+			get { return url; }
+			set {
+				ParamIs.NotNull(() => value);
+				url = value;
+			}
+		}
 
 		public virtual string Value {
 			get { return value; }

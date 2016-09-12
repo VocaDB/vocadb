@@ -14,6 +14,7 @@ namespace VocaDb.Model.Mapping.Songs {
 
 			Map(m => m.Source).Length(255).Not.Nullable();
 			Map(m => m.TranslationType).Not.Nullable();
+			Map(m => m.URL).Length(255).Not.Nullable();
 			Map(m => m.Value).Column("Text").Length(int.MaxValue).Not.Nullable();
 			References(m => m.Song).Not.Nullable();
 

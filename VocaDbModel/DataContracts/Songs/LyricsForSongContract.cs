@@ -20,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Id = lyrics.Id;
 			Source = lyrics.Source;
 			TranslationType = lyrics.TranslationType;
+			URL = lyrics.URL;
 
 			if (includeValue) {
 				Value = lyrics.Value;
@@ -43,6 +44,11 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public TranslationType TranslationType { get; set; }
+
+		[DataMember]
+		[DefaultValue("")]
+		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
+		public string URL { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public string Value { get; set; }

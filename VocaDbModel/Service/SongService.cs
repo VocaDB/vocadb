@@ -507,7 +507,7 @@ namespace VocaDb.Model.Service {
 					var lyricsDiff = CollectionHelper.Diff(song.Lyrics, fullProperties.Lyrics, (p1, p2) => (p1.Id == p2.Id));
 
 					foreach (var lyrics in lyricsDiff.Added) {
-						session.Save(song.CreateLyrics(lyrics.Value, lyrics.Source, lyrics.TranslationType, lyrics.CultureCode));
+						session.Save(song.CreateLyrics(lyrics.Value, lyrics.Source, lyrics.URL, lyrics.TranslationType, lyrics.CultureCode));
 					}
 
 					foreach (var lyrics in lyricsDiff.Removed) {
