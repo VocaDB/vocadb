@@ -11,6 +11,7 @@ using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Utils.Config;
+using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
 
@@ -40,9 +41,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 				var contract = new SongForEditContract(Db.Song2, ContentLanguagePreference.English);
 
-				contract.Lyrics = new[] {
-					new LyricsForSongContract { TranslationType = TranslationType.Original, CultureCode = "ja-JP", Source = string.Empty, URL = string.Empty, Value = "Miku!" }
-				};
+				contract.Lyrics = new[] { CreateEntry.LyricsForSongContract(TranslationType.Original) };
 
 				var updated = queries.UpdateBasicProperties(contract);
 
