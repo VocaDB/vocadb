@@ -150,7 +150,7 @@ module vdb.viewModels {
 
 			this.selectedLyricsId.subscribe(id => {
 				this.selectedLyrics(null);
-				repository.getLyrics(id, lyrics => this.selectedLyrics(lyrics));
+				repository.getLyrics(id, data.version, lyrics => this.selectedLyrics(lyrics));
 			});
         
         }
@@ -274,6 +274,8 @@ module vdb.viewModels {
 		tagUsages: dc.tags.TagUsageForApiContract[];
 
         userRating: string;
+
+		version: number;
     
     }
 

@@ -383,22 +383,17 @@
 					</li>
 				}
 			</ul>
+			
+			<div data-bind="with: selectedLyrics">
+				<p data-bind="visible: source || url">
+					(@Res.LyricsFrom
+					<span data-bind="visible: url"><a data-bind="text: source || url, attr: { href: url }"></a>)</span>					
+					<span data-bind="visible: !url, text: source + ')'"></span>
+				</p>
 
-			@foreach (var lyrics in Model.Lyrics) {
-				<div data-bind="visible: selectedLyricsId() == @lyrics.Id">
-					@if (!string.IsNullOrEmpty(lyrics.Source) || !string.IsNullOrEmpty(lyrics.URL)) {
-						<p>
-							(@Res.LyricsFrom
-							@if (!string.IsNullOrEmpty(lyrics.URL)) {
-								<a href="@VocaDb.Model.Service.Helpers.UrlHelper.MakeLink(lyrics.URL)">@(!string.IsNullOrEmpty(lyrics.Source) ? lyrics.Source : lyrics.URL)</a>@:)
-							} else {
-								@lyrics.Source@:)
-							}
-						</p>
-					}
-					<p class="song-lyrics" data-bind="text: selectedLyrics() ? selectedLyrics().value : null"></p>
-				</div>
-			}
+				<p class="song-lyrics" data-bind="text: value"></p>				
+			</div>
+
 		</div>
 	 }
 	 

@@ -57,8 +57,8 @@ module vdb.repositories {
 
 		}
 
-		public getLyrics = (lyricsId: number, callback: (contract: dc.songs.LyricsForSongContract) => void) => {
-			$.getJSON(this.urlMapper.mapRelative("/api/songs/lyrics/" + lyricsId), callback);
+		public getLyrics = (lyricsId: number, songVersion: number, callback: (contract: dc.songs.LyricsForSongContract) => void) => {
+			$.getJSON(this.urlMapper.mapRelative("/api/songs/lyrics/" + lyricsId + "?v=" + songVersion), callback);
 		}
 
         private getJSON: (relative: string, params: any, callback: any) => void;

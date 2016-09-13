@@ -98,7 +98,7 @@ namespace VocaDb.Web.Models {
 
 			}
 
-			Json = JsonHelpers.Serialize(new SongDetailsAjax(this, contract.PreferredLyrics));
+			Json = JsonHelpers.Serialize(new SongDetailsAjax(this, contract.PreferredLyrics, contract.Song.Version));
 
 		}
 
@@ -200,12 +200,13 @@ namespace VocaDb.Web.Models {
 
 	public class SongDetailsAjax {
 
-		public SongDetailsAjax(SongDetails model, LyricsForSongContract preferredLyrics) {
+		public SongDetailsAjax(SongDetails model, LyricsForSongContract preferredLyrics, int version) {
 
 			Id = model.Id;
 			UserRating = model.UserRating;
 			LatestComments = model.LatestComments;
 			OriginalVersion = model.OriginalVersion;
+			Version = version;
 
 			SelectedLyricsId = preferredLyrics != null ? preferredLyrics.Id : 0;
 			SelectedPvId = model.PrimaryPV != null ? model.PrimaryPV.Id : 0;
@@ -236,6 +237,8 @@ namespace VocaDb.Web.Models {
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongVoteRating UserRating { get; set; }
+
+		public int Version { get; set; }
 
 	}
 
