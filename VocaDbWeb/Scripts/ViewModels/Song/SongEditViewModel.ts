@@ -20,6 +20,7 @@ module vdb.viewModels {
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public deleted: boolean;
 		public eventDate: KnockoutComputed<moment.Moment>;
+		public firstPvDate: KnockoutComputed<moment.Moment>;
 		public id: number;
         public length: KnockoutObservable<number>;
 		public lengthFormatted: KnockoutComputed<string>;
@@ -279,6 +280,13 @@ module vdb.viewModels {
 			);
 		
 			this.eventDate = ko.computed(() => (this.releaseEvent.entry() && this.releaseEvent.entry().date ? moment(this.releaseEvent.entry().date) : null));
+
+			this.firstPvDate = ko.computed(() =>
+				(_.chain(this.pvs.pvs())
+				.filter(pv => pv.publishDate && pv.pvType === models.pvs.PVType[models.pvs.PVType.Original])
+				.map(pv => moment(pv.publishDate))
+				.max() as any)
+				.value());
 
 			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Song, data.id), 10000);
 

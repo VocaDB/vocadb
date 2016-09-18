@@ -2851,6 +2851,7 @@
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguageSelection.ts" />
     <TypeScriptCompile Include="Scripts\Models\NameMatchMode.ts" />
     <TypeScriptCompile Include="Scripts\Models\PVs\PVService.ts" />
+    <TypeScriptCompile Include="Scripts\Models\PVs\PVType.ts" />
     <TypeScriptCompile Include="Scripts\Models\ResourcesManager.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\BaseRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\DiscussionRepository.ts" />
