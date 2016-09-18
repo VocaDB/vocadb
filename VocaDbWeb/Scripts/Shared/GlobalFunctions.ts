@@ -48,7 +48,7 @@ module vdb.functions {
 
 	export function trackOutboundLink(event: Event) {
 
-		if (!window["ga"] || !event.target)
+		if (typeof ga !== "function" || !event.target || !navigator.sendBeacon)
 			return;
 
 		const href = (event.target as HTMLAnchorElement).href;
@@ -57,10 +57,14 @@ module vdb.functions {
 			return;
 
 		// Do not wait for response
-		window["ga"]('send', 'event', 'outbound', 'click', href, {
+		ga('send', 'event', 'outbound', 'click', href, {
 			'transport': 'beacon'
 		});
 
 	}
 
+}
+
+interface Navigator {
+	sendBeacon: Function;
 }
