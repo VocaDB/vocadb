@@ -46,9 +46,11 @@ module vdb.functions {
 
     }
 
-	export function trackOutboundLink(event: Event) {
+	export function trackOutboundLink(event: MouseEvent) {
 
-		if (typeof ga !== "function" || !event.target || !navigator.sendBeacon)
+		// Skip tracking if ga not present, sendBeacon is not supported, or mouse button is right-click
+		const mright = 2;
+		if (typeof ga !== "function" || !event || !event.target || !navigator.sendBeacon || event.button === mright)
 			return;
 
 		const href = (event.target as HTMLAnchorElement).href;

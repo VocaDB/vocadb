@@ -491,7 +491,7 @@
 		</a>
 		if (VideoServiceHelper.ShowExternalSiteLink(pv.Service)) {
 			@Html.Raw("&nbsp;")
-			@("(")<a href="@pv.Url">@ViewRes.Song.DetailsStrings.ViewExternal</a>@(")")			 
+			@("(")<a href="@pv.Url" onclick="vdb.functions.trackOutboundLink(event)">@Res.ViewExternal</a>@(")")			 
 		}
 		<br />
 	}
