@@ -84,7 +84,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 			return (TranslationType == contract.TranslationType 
 				&& CultureCode.CultureCode == contract.CultureCode 
-				&& Source == contract.Source 
+				&& Source == contract.Source
+				&& URL == contract.URL 
 				&& Value == contract.Value);
 
 		}

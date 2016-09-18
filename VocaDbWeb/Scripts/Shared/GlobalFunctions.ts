@@ -56,7 +56,8 @@ module vdb.functions {
 		if (!href)
 			return;
 
-		// Do not wait for response
+		// Beacon transport doesn't require waiting for response
+		// https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#specifying_different_transport_mechanisms
 		ga('send', 'event', 'outbound', 'click', href, {
 			'transport': 'beacon'
 		});

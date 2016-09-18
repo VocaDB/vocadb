@@ -387,7 +387,7 @@
 			<div data-bind="with: selectedLyrics">
 				<p data-bind="visible: source || url">
 					(@Res.LyricsFrom
-					<span data-bind="visible: url"><a data-bind="text: source || url, attr: { href: url }"></a>)</span>					
+					<span data-bind="visible: url"><a class="extLink" data-bind="text: source || url, attr: { href: url, onclick: 'vdb.functions.trackOutboundLink(event)' }"></a>)</span>					
 					<span data-bind="visible: !url, text: source + ')'"></span>
 				</p>
 
