@@ -144,9 +144,9 @@
 				<input type="text" data-bind="datepicker: { value: publishDate, dateFormat: 'yy-mm-dd' }" maxlength="10" />
 				<div>
 					@* TODO: show only earliest of these *@
-					<button class="btn" data-bind="visible: !publishDate() && firstPvDate(), click: function() { publishDate(firstPvDate() ? firstPvDate().toDate() : null); }">
+					@*<button class="btn" data-bind="visible: !publishDate() && firstPvDate(), click: function() { publishDate(firstPvDate() ? firstPvDate().toDate() : null); }">
 						Use PV date <span data-bind="text: firstPvDate() ? firstPvDate().format('L') : null"></span>
-					</button>
+					</button>*@
 					<button class="btn" data-bind="visible: !publishDate() && eventDate(), click: function() { publishDate(eventDate() ? eventDate().toDate() : null); }">
 						Use event date <span data-bind="text: eventDate() ? eventDate().format('L') : null"></span>
 					</button>
