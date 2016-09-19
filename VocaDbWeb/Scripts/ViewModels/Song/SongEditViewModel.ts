@@ -283,11 +283,11 @@ module vdb.viewModels {
 
 			this.firstPvDate = ko.computed(() => {
 
-				var val = (_.chain(this.pvs.pvs())
+				var val = _.chain(this.pvs.pvs())
 					.filter(pv => pv.publishDate && pv.pvType === models.pvs.PVType[models.pvs.PVType.Original])
 					.map(pv => moment(pv.publishDate))
 					.sortBy(p => p)
-					.head() as any) // Note: lodash typedef is wrong - head doesn't terminate
+					.head<_.LoDashExplicitObjectWrapper<moment.Moment>>() 
 					.value();
 
 				return val;
