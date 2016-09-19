@@ -297,7 +297,7 @@ module vdb.viewModels {
             this.addArtistsToSelectedTracks = () => {
 
                 _.forEach(_.filter(this.tracks(), s => s.selected()), song => {
-                    var added = _.map(_.filter(this.editedSong().artistSelections, a => a.selected() && _.all(song.artists(), a2 => a.artist.id != a2.id)), a3 => a3.artist);
+                    var added = _.map(_.filter(this.editedSong().artistSelections, a => a.selected() && _.every(song.artists(), a2 => a.artist.id != a2.id)), a3 => a3.artist);
                     song.artists.push.apply(song.artists, added);
                 });
                  
@@ -316,7 +316,7 @@ module vdb.viewModels {
 
             this.artistsForTracks = () => {
                 var notAllowedTypes = ['Label'];
-                return _.map(_.filter(this.artistLinks(), a => a.artist != null && !_.contains(notAllowedTypes, a.artist.artistType)), a => a.artist);
+                return _.map(_.filter(this.artistLinks(), a => a.artist != null && !_.includes(notAllowedTypes, a.artist.artistType)), a => a.artist);
             };
 
             this.artistLinks = ko.observableArray(_.map(data.artistLinks, artist => new ArtistForAlbumEditViewModel(repository, artist)));

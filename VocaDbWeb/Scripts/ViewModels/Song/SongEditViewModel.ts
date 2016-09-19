@@ -243,7 +243,7 @@ module vdb.viewModels {
 				var derivedTypes = [songType.Remaster, songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix];
 				return (this.notes.original() === null || this.notes.original() === "")
 					&& this.originalVersion.entry() == null
-					&& _.contains(derivedTypes, this.songType());
+					&& _.includes(derivedTypes, this.songType());
 
 			});
 
@@ -281,12 +281,18 @@ module vdb.viewModels {
 		
 			this.eventDate = ko.computed(() => (this.releaseEvent.entry() && this.releaseEvent.entry().date ? moment(this.releaseEvent.entry().date) : null));
 
-			this.firstPvDate = ko.computed(() =>
-				(_.chain(this.pvs.pvs())
-				.filter(pv => pv.publishDate && pv.pvType === models.pvs.PVType[models.pvs.PVType.Original])
-				.map(pv => moment(pv.publishDate))
-				.max() as any)
-				.value());
+			this.firstPvDate = ko.computed(() => {
+
+				var val = (_.chain(this.pvs.pvs())
+					.filter(pv => pv.publishDate && pv.pvType === models.pvs.PVType[models.pvs.PVType.Original])
+					.map(pv => moment(pv.publishDate))
+					.sortBy(p => p)
+					.head() as any) // Note: lodash typedef is wrong - head doesn't terminate
+					.value();
+
+				return val;
+
+			});
 
 			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Song, data.id), 10000);
 

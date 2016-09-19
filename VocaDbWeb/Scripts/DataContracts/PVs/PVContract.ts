@@ -3,25 +3,25 @@ module vdb.dataContracts.pvs {
 	
 	export interface PVContract {
 
-		author: string;
+		author?: string;
 
-		id: number;
+		id?: number;
 
-		length: number;
+		length?: number;
 
-		name: string;
+		name?: string;
 
 		pvId: string;
 
 		service: string;
 
-		publishDate: string;
+		publishDate?: string;
 
 		pvType: string;
 
-		thumbUrl: string;
+		thumbUrl?: string;
 
-		url: string;
+		url?: string;
 
 	}
 

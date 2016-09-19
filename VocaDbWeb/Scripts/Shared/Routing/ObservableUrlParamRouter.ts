@@ -41,7 +41,7 @@ module vdb.routing {
 				// History state includes the query string as key/value pairs separated by "&"
 				var datas: string = event.state || "";
 				var params = _.map(datas.split("&"), z => z.split("=").map(v => decodeURIComponent(v)));
-				var dict = _.zipObject(params);
+				var dict = _.fromPairs(params);
 				
 				_.each(this.paramDatas, paramData => {
 

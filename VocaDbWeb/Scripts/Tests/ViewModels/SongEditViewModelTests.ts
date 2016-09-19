@@ -71,6 +71,30 @@ module vdb.tests.viewModels {
 
     });
 
+	QUnit.test("firstPvDate no PV", () => {
+
+        var target = createViewModel();
+
+		QUnit.equal(target.firstPvDate(), null, "firstPvDate");
+
+	});
+
+	QUnit.test("firstPvDate with PVs", () => {
+
+		data.pvs = [
+			{ pvType: 'Original', pvId: '3', service: 'YouTube' },
+			{ publishDate: '2039-3-8', pvType: 'Reprint', pvId: '39', service: 'YouTube' },
+			{ publishDate: '2039-3-9', pvType: 'Original', pvId: '3939', service: 'YouTube' },
+			{ publishDate: '2039-3-10', pvType: 'Original', pvId: '3939', service: 'YouTube' }
+		];
+
+        var target = createViewModel();
+
+		QUnit.ok(target.firstPvDate(), "firstPvDate");
+		QUnit.equal(target.firstPvDate().toISOString(), moment('2039-3-9').toISOString(), "firstPvDate");
+
+	});
+
 	QUnit.test("validationError_duplicateArtist", () => {
 
         var target = createViewModel();

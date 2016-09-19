@@ -2830,6 +2830,8 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\StopBinding.ts" />
     <Content Include="Scripts\knockout.punches.min.js" />
     <Content Include="Scripts\Libraries\qunit-1.19.0.js" />
+    <Content Include="Scripts\lodash.core.js" />
+    <Content Include="Scripts\lodash.core.min.js" />
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\marked.js" />

@@ -43,7 +43,7 @@ module vdb.viewModels.artists {
 		public show = (artist: IEditableArtistWithSupport) => {
 			
 			_.forEach(this.roleSelections, r => {
-				r.selected(artist && _.contains(artist.rolesArray(), r.id));
+				r.selected(artist && _.includes(artist.rolesArray(), r.id));
 			});
 
 			this.selectedArtist(artist);

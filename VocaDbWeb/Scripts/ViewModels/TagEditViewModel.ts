@@ -55,7 +55,7 @@ module vdb.viewModels {
 
 		public addRelatedTag = (tag: dc.TagBaseContract) => this.relatedTags.push(tag);		
 
-		public allowRelatedTag = (tag: dc.TagBaseContract) => this.denySelf(tag) && _.all(this.relatedTags(), t => t.id !== tag.id);
+		public allowRelatedTag = (tag: dc.TagBaseContract) => this.denySelf(tag) && _.every(this.relatedTags(), t => t.id !== tag.id);
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
 			$.ajax(this.urlMapper.mapRelative("api/tags/" + this.id + "?hardDelete=false&notes=" + encodeURIComponent(notes)), {

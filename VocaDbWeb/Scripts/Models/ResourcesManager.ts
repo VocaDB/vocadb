@@ -9,7 +9,7 @@ namespace vdb.models {
 			private cultureCode: string) { }
 
 		private setsToLoad = (setNames: string[]) => {
-			var missing = _.where(setNames, setName => this.resources[setName] == null);
+			var missing = _.filter(setNames, setName => this.resources[setName] == null);
 			return missing;
 		}
 

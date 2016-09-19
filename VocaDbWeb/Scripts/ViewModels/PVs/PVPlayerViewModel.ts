@@ -144,11 +144,11 @@ module vdb.viewModels.pvs {
 		}
 
 		private songHasPVService = (song: IPVPlayerSong, service: serv) => {
-			return _.contains(song.song.pvServicesArray, service);
+			return _.includes(song.song.pvServicesArray, service);
 		}
 
 		public songIsValid = (song: IPVPlayerSong) => {
-			return !this.autoplay() || this.autoplayServices.some(s => _.contains(song.song.pvServicesArray, s));
+			return !this.autoplay() || this.autoplayServices.some(s => _.includes(song.song.pvServicesArray, s));
 		}
 
 	}

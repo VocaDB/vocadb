@@ -34,7 +34,7 @@ module vdb.helpers {
 		// Whether the roles for an artist type can be customized
 		public static isCustomizable(at: cls.artists.ArtistType) {
 
-			return _.contains(ArtistHelper.customizableTypes, at);
+			return _.includes(ArtistHelper.customizableTypes, at);
 
 		}
 
@@ -46,12 +46,12 @@ module vdb.helpers {
 			}
 
 			var res =
-				_.contains(roles, cls.artists.ArtistRoles[ArtistRoles.Arranger]) ||
-				_.contains(roles, cls.artists.ArtistRoles[ArtistRoles.Composer]) ||
-				_.contains(roles, cls.artists.ArtistRoles[ArtistRoles.VoiceManipulator]);
+				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Arranger]) ||
+				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Composer]) ||
+				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.VoiceManipulator]);
 
 			if (isAnimation)
-				res = res || _.contains(roles, cls.artists.ArtistRoles[ArtistRoles.Animator]);
+				res = res || _.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Animator]);
 
 			return res;
 
@@ -80,8 +80,8 @@ module vdb.helpers {
 			}
 
 			var res =
-				_.contains(roles, cls.artists.ArtistRoles[ArtistRoles.Vocalist]) ||
-				_.contains(roles, cls.artists.ArtistRoles[ArtistRoles.Chorus]);
+				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Vocalist]) ||
+				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Chorus]);
 
 			return res;
 
@@ -95,7 +95,7 @@ module vdb.helpers {
 
 		static isVocalistType(artistType: cls.artists.ArtistType) {
 
-			return _.contains(ArtistHelper.vocalistTypes, artistType);
+			return _.includes(ArtistHelper.vocalistTypes, artistType);
 
 		}
 
