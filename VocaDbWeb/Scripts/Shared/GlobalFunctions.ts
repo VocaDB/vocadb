@@ -44,7 +44,13 @@ module vdb.functions {
         
         return base + "/" + relative;
 
-    }
+	}
+
+	export function getUrlDomain(url: string) {
+		// http://stackoverflow.com/a/8498629
+		const matches = url ? url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i) : null;
+		return matches && matches[1];  // domain will be null if no match is found		
+	}
 
 	export function trackOutboundLink(event: MouseEvent) {
 
@@ -58,10 +64,13 @@ module vdb.functions {
 		if (!href)
 			return;
 
+		const domain = getUrlDomain(href);
+
 		// Beacon transport doesn't require waiting for response
 		// https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#specifying_different_transport_mechanisms
 		ga('send', 'event', 'outbound', 'click', href, {
-			'transport': 'beacon'
+			'transport': 'beacon',
+			'dimension1': domain
 		});
 
 	}
