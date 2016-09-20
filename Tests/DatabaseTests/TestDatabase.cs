@@ -3,6 +3,7 @@ using NHibernate;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
@@ -20,6 +21,9 @@ namespace VocaDb.Tests.DatabaseTests {
 		public Artist Producer { get; private set; }
 		public Artist Producer2 { get; private set; }
 		public Artist Producer3 { get; private set; }
+
+		public ReleaseEvent ReleaseEvent { get; private set; }
+
 		public Song Song { get; private set; }
 		public Song Song2 { get; private set; }
 		public Song Song3 { get; private set; } // Song for Producer
@@ -112,6 +116,12 @@ namespace VocaDb.Tests.DatabaseTests {
 					CreateDate = new DateTime(2011, 1, 1)
 				};
 				session.Save(SongWithSpecialChars);
+
+				ReleaseEvent = CreateEntry.ReleaseEvent("Miku's birthday");
+				session.Save(ReleaseEvent);
+				Song.ReleaseEvent = ReleaseEvent;
+				ReleaseEvent.AllSongs.Add(Song);
+				session.Update(Song);
 
 				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", 3939) { GroupId = UserGroupId.Trusted };
 				session.Save(UserWithEditPermissions);

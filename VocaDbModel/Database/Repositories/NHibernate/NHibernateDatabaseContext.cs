@@ -65,8 +65,9 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			return Session.Query<T>();
 		}
 
-		public void Save(T obj) {
+		public T Save(T obj) {
 			Session.Save(obj);
+			return obj;
 		}
 
 		public void Update(T obj) {

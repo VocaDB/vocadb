@@ -79,7 +79,7 @@ namespace VocaDb.Model.Database.Repositories {
 		/// Persists a new entity in the repository.
 		/// </summary>
 		/// <param name="obj">Entity to be saved. Cannot be null.</param>
-		void Save(T obj);
+		T Save(T obj);
 
 		/// <summary>
 		/// Updates an existing entity in the repository.

@@ -891,7 +891,7 @@ namespace VocaDb.Model.Database.Queries {
 				var newEvent = new CreateEventQuery().FindOrCreate(ctx, PermissionContext, properties.ReleaseEvent, song);
 				if (!song.ReleaseEvent.NullSafeIdEquals(newEvent)) {
 					diff.ReleaseEvent = true;
-					song.ReleaseEvent = newEvent;
+					song.SetReleaseEvent(newEvent);
 				}
 
 				if (!song.PublishDate.Equals(properties.PublishDate)) {

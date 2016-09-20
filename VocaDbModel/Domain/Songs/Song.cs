@@ -669,6 +669,18 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
+		public virtual void SetReleaseEvent(ReleaseEvent releaseEvent) {
+			
+			if (Equals(ReleaseEvent, releaseEvent)) {
+				return;
+			}
+
+			ReleaseEvent?.AllSongs.Remove(this);
+			ReleaseEvent = releaseEvent;
+			ReleaseEvent?.AllSongs.Add(this);
+
+		}
+
 		public virtual CollectionDiff<ArtistForSong, ArtistForSong> SyncArtists(IEnumerable<ArtistContract> newArtists, Func<ArtistContract[], Artist[]> artistGetter) {
 
 			var realArtists = Artists.Where(a => a.Artist != null).ToArray();

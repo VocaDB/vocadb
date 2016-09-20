@@ -12,6 +12,25 @@ namespace VocaDb.Tests.DatabaseTests {
 
 		private IContainer Container => TestContainerManager.Container;
 
+		public void RunTest(Action<TTarget> func) {
+
+			// Make sure session factory is built outside of transaction
+			Container.Resolve<ISessionFactory>();
+
+			// Wrap inside transaction scope to make the test atomic
+			using (new TransactionScope())
+			using (var lifetimeScope = Container.BeginLifetimeScope()) {
+
+				var target = lifetimeScope.Resolve<TTarget>();
+
+				func(target);
+
+				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
+
+			}
+
+		}
+
 		public TResult RunTest<TResult>(Func<TTarget, TResult> func) {
 
 			// Make sure session factory is built outside of transaction

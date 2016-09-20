@@ -253,13 +253,14 @@ namespace VocaDb.Tests.TestSupport {
 			return OfType<T2>().Query();
 		}
 
-		public void Save(T obj) {
+		public T Save(T obj) {
 
 			if (IsEntityWithId) {
 				AssignNewId(obj);
 			}
 
 			querySource.Add(obj);
+			return obj;
 
 		}
 
