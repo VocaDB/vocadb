@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Tests.TestSupport;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.DatabaseTests.Queries {
 
@@ -26,6 +19,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		}
 
 		[TestMethod]
+		[TestCategory(TestCategories.Database)]
 		public void Delete() {
 
 			context.RunTest(repository => {

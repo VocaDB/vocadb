@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
@@ -53,6 +47,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		}
 
 		[TestMethod]
+		[TestCategory(TestCategories.Database)]
 		public void Update_ReleaseEvent_Remove() {
 
 			// Preconditions (arrange)
@@ -80,6 +75,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		}
 
 		[TestMethod]
+		[TestCategory(TestCategories.Database)]
 		public void Update_ReleaseEvent_Change() {
 
 			context.RunTest(repository => {
@@ -105,6 +101,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		}
 
 		[TestMethod]
+		[TestCategory(TestCategories.Database)]
 		public void Update_Lyrics() {
 
 			var contract = new SongForEditContract(Db.Song2, ContentLanguagePreference.English) {
