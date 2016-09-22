@@ -29,7 +29,8 @@ module vdb.viewModels {
 					name: 'Producers', reports: [
 						{ name: 'Songs by producer', url: 'songsPerProducer' },
 						{ name: 'Albums by producer', url: 'albumsPerProducer' },
-						{ name: 'Followers by producer', url: 'followersPerProducer' }
+						{ name: 'Followers by producer', url: 'followersPerProducer' },
+						{ name: 'Artists per month', url: 'artistsPerMonth' }
 					]
 				},
 				{

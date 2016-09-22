@@ -41,6 +41,9 @@ namespace VocaDb.Web.Controllers {
 			}).ToArray();
 		}
 
+		public static Tuple<DateTime, int>[] ToDatePoints(this IEnumerable<CountPerDayContract> sequence) {
+			return sequence.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
+		}
 	}
 
 	public class StatsController : ControllerBase {
@@ -377,6 +380,44 @@ namespace VocaDb.Web.Controllers {
 				new Series("Album songs", Series.DateData(data[0])),
 				new Series("Independent songs", Series.DateData(data[1]))
 			);
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult ArtistsPerMonth() {
+
+			var values = repository.HandleQuery(ctx => {
+
+				return ctx.Query<ArtistForSong>()
+					.Where(a => a.Artist.ArtistType == ArtistType.Producer && !a.Song.Deleted && a.Song.PublishDate.DateTime != null)
+					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
+					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
+					.GroupBy(a => new {
+						Year = a.Song.PublishDate.DateTime.Value.Year,
+						Month = a.Song.PublishDate.DateTime.Value.Month,
+						Artist = a.Artist.Id
+					})
+					.Select(a => new {
+						Year = a.Key.Year,
+						Month = a.Key.Month,
+						Artist = a.Key.Artist
+					})
+					.ToArray()
+					.GroupBy(a => new {
+						Year = a.Year,
+						Month = a.Month
+					})
+					.Select(a => new CountPerDayContract {
+						Year = a.Key.Year,
+						Month = a.Key.Month,
+						Count = a.Count()
+					});
+
+			});
+
+			var points = values.ToDatePoints();
+
+			return DateLineChartWithAverage("Active artists per month", "Artists", "Number of artists", points, true);
 
 		}
 
