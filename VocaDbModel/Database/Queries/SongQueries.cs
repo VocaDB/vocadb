@@ -635,6 +635,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public RatedSongForUserForApiContract[] GetRatings(int songId, ContentLanguagePreference lang) {
+
+			return repository.HandleQuery(ctx => ctx.Load<Song>(songId).UserFavorites.Select(r => new RatedSongForUserForApiContract(r, lang, userIconFactory)).ToArray());
+
+		}
+
 		public RelatedSongsContract GetRelatedSongs(int songId, 
 			SongOptionalFields fields,
 			ContentLanguagePreference? lang = null) {

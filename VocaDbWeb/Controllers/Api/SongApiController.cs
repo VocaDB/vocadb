@@ -10,6 +10,7 @@ using VocaDb.Model.DataContracts.Aggregate;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -152,6 +153,21 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			var song = queries.GetSongForApi(id, fields, lang);
 			return song;
+
+		}
+
+		/// <summary>
+		/// Get ratings for a song.
+		/// The result includes ratings and user information.
+		/// For users who have requested not to make their ratings public, the user will be empty.
+		/// </summary>
+		/// <param name="id">Song ID.</param>
+		/// <param name="lang">Content language preference.</param>
+		/// <returns>List of ratings.</returns>
+		[Route("{id:int}/ratings")]
+		public IEnumerable<RatedSongForUserForApiContract> GetRatings(int id, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+
+			return queries.GetRatings(id, lang);
 
 		}
 

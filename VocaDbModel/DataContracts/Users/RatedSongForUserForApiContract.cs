@@ -11,6 +11,15 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public RatedSongForUserForApiContract() { }
 
+		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory) {
+
+			this.Rating = ratedSong.Rating;
+			if (ratedSong.User.Options.PublicRatings) {
+				User = new UserForApiContract(ratedSong.User, userIconFactory, UserOptionalFields.MainPicture);
+			}
+
+		}
+
 		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields) {
 			
 			this.Rating = ratedSong.Rating;
@@ -21,8 +30,11 @@ namespace VocaDb.Model.DataContracts.Users {
 		[DataMember]
 		public SongVoteRating Rating { get; set; }
 
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public SongForApiContract Song { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public UserForApiContract User { get; set; }
 
 	}
 
