@@ -417,15 +417,9 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public FavoriteSongForUserContract[] GetUsersWithSongRating(int songId) {
+		public UsersWithSongRatingContract GetUsersWithSongRating(int songId) {
 
-			return HandleQuery(session =>
-
-				session.Load<Song>(songId)
-					.UserFavorites
-					.Where(a => a.User.Options.PublicRatings)
-					.OrderBy(u => u.User.Name)
-					.Select(u => new FavoriteSongForUserContract(u, LanguagePreference)).ToArray());
+			return HandleQuery(session => new UsersWithSongRatingContract(session.Load<Song>(songId).UserFavorites, LanguagePreference));
 
 		}
 

@@ -1,21 +1,17 @@
-﻿@using VocaDb.Model.Domain.Songs
-@model VocaDb.Model.DataContracts.Users.FavoriteSongForUserContract[]
+﻿@model VocaDb.Model.DataContracts.UseCases.UsersWithSongRatingContract
 
-@{
+@if (Model.FavoritedBy.Any()) {
+	<h4>@ViewRes.Song.DetailsStrings.FavoritedByTitle @string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.FavoritedBy.Length)</h4>
 
-	var favorited = Model.Where(u => u.Rating == SongVoteRating.Favorite).Select(u => u.User).ToArray();
-	var liked = Model.Where(u => u.Rating == SongVoteRating.Like).Select(u => u.User).ToArray();
-	
+	@UserHelpers.UserGrid(Model.FavoritedBy.Take(20), 2)
 }
 
-@if (favorited.Any()) {
-	<h4>@ViewRes.Song.DetailsStrings.FavoritedByTitle</h4>
+@if (Model.LikedBy.Any()) {
+	<h4>@ViewRes.Song.DetailsStrings.LikedByTitle @string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.LikedBy.Length)</h4>
 
-	@UserHelpers.UserGrid(favorited, 2)
+	@UserHelpers.UserGrid(Model.LikedBy.Take(20), 2)
 }
 
-@if (liked.Any()) {
-	<h4>@ViewRes.Song.DetailsStrings.LikedByTitle</h4>
-
-	@UserHelpers.UserGrid(liked, 2)
+@if (Model.HiddenRatingCount > 0) {
+	<h4>@Model.HiddenRatingCount hidden ratings</h4>
 }

@@ -265,6 +265,7 @@
     <Compile Include="DataContracts\UseCases\FrontPageContract.cs" />
     <Compile Include="DataContracts\UseCases\NewSongCheckResultContract.cs" />
     <Compile Include="DataContracts\UseCases\TrackPropertiesContract.cs" />
+    <Compile Include="DataContracts\UseCases\UsersWithSongRatingContract.cs" />
     <Compile Include="DataContracts\Users\AlbumForUserContract.cs" />
     <Compile Include="DataContracts\Users\AlbumForUserForApiContract.cs" />
     <Compile Include="DataContracts\Users\ArtistForUserContract.cs" />
