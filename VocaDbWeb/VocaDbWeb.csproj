@@ -3392,7 +3392,7 @@
     <Content Include="Views\User\FavoriteSongs.cshtml" />
     <Content Include="Views\User\AlbumCollection.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
-    <Content Include="Views\Song\UsersWithSongRating.cshtml" />
+    <Content Include="Views\Song\Partials\_UsersWithSongRating.cshtml" />
     <Content Include="Views\Home\Wiki.cshtml" />
     <Content Include="Views\Shared\SongPopupContent.cshtml" />
     <Content Include="Views\Shared\Partials\_PVRatingButtonsForIndex.cshtml" />

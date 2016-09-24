@@ -1,0 +1,20 @@
+﻿
+<!-- RatingsViewModel -->
+
+<div data-bind="visible: favoritesCount">
+	<h4>
+		@ViewRes.Song.DetailsStrings.FavoritedByTitle
+		<span data-bind="text: '@(ViewRes.EntryDetailsStrings.NumTotalParenthesis)'.replace('{0}', favoritesCount())"></span>
+	</h4>
+	TODO: user grid
+</div>
+
+<div data-bind="visible: likesCount">
+	<h4>
+		@ViewRes.Song.DetailsStrings.LikedByTitle
+		<span data-bind="text: '@(ViewRes.EntryDetailsStrings.NumTotalParenthesis)'.replace('{0}', likesCount())"></span>
+	</h4>
+	TODO: user grid
+</div>
+
+<h4 data-bind="visible: hiddenRatingsCount, text: hiddenRatingsCount() + ' hidden ratings'"></h4>

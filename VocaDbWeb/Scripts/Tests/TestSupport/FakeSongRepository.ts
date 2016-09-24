@@ -44,11 +44,6 @@ module vdb.tests.testSupport {
                 if (callback)
                     callback(this.songLists);
             }
-
-            this.usersWithSongRating = (id, callback) => {
-                if (callback)
-                    callback("");
-            }
         
         }
 

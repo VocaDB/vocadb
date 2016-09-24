@@ -431,9 +431,11 @@
 
 @{ Html.RenderPartial("Partials/_AddToListDialog"); }
 
-<div data-bind="dialog: {autoOpen: false, modal: true, width: 400, position: { my: 'left top', at: 'left bottom', of: $('#statsLink') } }, dialogVisible: $root.usersPopupVisible" title="@R.DetailsStrings.SongRatings" style="display:none;">
+<div data-bind="dialog: {autoOpen: false, modal: true, width: 400, position: { my: 'left top', at: 'left bottom', of: $('#statsLink') } }, dialogVisible: $root.ratingsDialogViewModel.popupVisible" title="@R.DetailsStrings.SongRatings" style="display:none;">
 	
-	<div data-bind="html: usersContent"></div>
+	<div data-bind="with: ratingsDialogViewModel">
+		@{Html.RenderPartial("Partials/_UsersWithSongRating"); }
+	</div>
 
 </div>
 

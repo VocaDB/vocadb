@@ -6,6 +6,7 @@
 
 module vdb.viewModels {
 
+	import cls = models;
     import dc = vdb.dataContracts;
     import rep = vdb.repositories;
 
@@ -81,9 +82,7 @@ module vdb.viewModels {
 
 		}
 
-        public usersContent: KnockoutObservable<string>;
-
-        public usersPopupVisible: KnockoutObservable<boolean>;
+        public ratingsDialogViewModel = new RatingsViewModel();
 
         public userRating: PVRatingButtonsViewModel;
 
@@ -107,9 +106,9 @@ module vdb.viewModels {
 			this.comments = new EditableCommentsViewModel(repository, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, data.latestComments, true);
 
             this.getUsers = () => {
-                repository.usersWithSongRating(this.id, result => {
-                    this.usersContent(result);
-                    this.usersPopupVisible(true);
+                repository.getRatings(this.id, result => {
+                    this.ratingsDialogViewModel.ratings(result);
+                    this.ratingsDialogViewModel.popupVisible(true);
                 });
             };
 
@@ -139,10 +138,6 @@ module vdb.viewModels {
 			});
 
 			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
-
-            this.usersContent = ko.observable<string>();
-
-            this.usersPopupVisible = ko.observable(false);
 
 			if (data.songType !== 'Original' && this.originalVersion().entry == null) {
 				this.getOriginal(data.linkedPages);
@@ -254,6 +249,57 @@ module vdb.viewModels {
         }
     
     }
+
+	export class RatingsViewModel {
+
+		constructor() {
+
+			const fav = cls.SongVoteRating[cls.SongVoteRating.Favorite];
+			const like = cls.SongVoteRating[cls.SongVoteRating.Like];
+
+			this.favorites = ko.computed(() => _
+				.chain(this.ratings())
+				.filter(r => r.rating === fav)
+				.take(20)
+				.map(r => r.user)
+				.value());
+
+			this.favoritesCount = ko.computed(() => _
+				.chain(this.ratings())
+				.filter(r => r.rating === fav)
+				.size()
+				.value());
+
+			this.likes = ko.computed(() => _
+				.chain(this.ratings())
+				.filter(r => r.rating === like)
+				.take(20)
+				.map(r => r.user)
+				.value());
+
+			this.likesCount = ko.computed(() => _
+				.chain(this.ratings())
+				.filter(r => r.rating === like)
+				.size()
+				.value());
+
+		}
+
+		public favorites: KnockoutComputed<dc.user.UserApiContract[]>;
+
+		public favoritesCount: KnockoutComputed<number>;
+
+		public hiddenRatingsCount: KnockoutComputed<number>;
+
+		public likes: KnockoutComputed<dc.user.UserApiContract[]>;
+
+		public likesCount: KnockoutComputed<number>;
+
+		public popupVisible = ko.observable(false);
+
+		public ratings = ko.observableArray<dc.RatedSongForUserForApiContract>();
+
+	}
 
     export interface SongDetailsAjax {
         

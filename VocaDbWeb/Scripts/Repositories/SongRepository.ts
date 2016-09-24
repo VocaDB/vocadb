@@ -156,8 +156,6 @@ module vdb.repositories {
 
 		private urlMapper: UrlMapper;
 
-        public usersWithSongRating: (id: number, callback: (result: string) => void) => void;
-
         constructor(baseUrl: string, languagePreference = cls.globalization.ContentLanguagePreference.Default) {
 
 			super(baseUrl, languagePreference);
@@ -194,10 +192,6 @@ module vdb.repositories {
 
             this.songListsForUser = (ignoreSongId, callback) => {                
                 this.post("/SongListsForUser", { ignoreSongId: ignoreSongId }, callback);
-            }
-
-            this.usersWithSongRating = (id, callback: (result: string) => void ) => {
-                this.post("/UsersWithSongRating", { songId: id }, callback);
             }
 
         }
