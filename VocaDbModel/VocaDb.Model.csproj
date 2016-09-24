@@ -269,7 +269,6 @@
     <Compile Include="DataContracts\Users\AlbumForUserForApiContract.cs" />
     <Compile Include="DataContracts\Users\ArtistForUserContract.cs" />
     <Compile Include="DataContracts\Users\ArtistForUserForApiContract.cs" />
-    <Compile Include="DataContracts\Users\FavoriteSongForUserContract.cs" />
     <Compile Include="DataContracts\Users\IUserIconFactory.cs" />
     <Compile Include="DataContracts\Users\OldUsernameContract.cs" />
     <Compile Include="DataContracts\Users\RatedSongForUserForApiContract.cs" />

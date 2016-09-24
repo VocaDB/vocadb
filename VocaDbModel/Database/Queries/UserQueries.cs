@@ -816,10 +816,6 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<FavoriteSongForUserContract> GetRatedSongs(RatedSongQueryParams queryParams) {
-			return GetRatedSongs(queryParams, ratedSong => new FavoriteSongForUserContract(ratedSong, PermissionContext.LanguagePreference));
-		}
-
 		public PartialFindResult<T> GetRatedSongs<T>(RatedSongQueryParams queryParams, Func<FavoriteSongForUser, T> fac) {
 
 			ParamIs.NotNull(() => queryParams);
