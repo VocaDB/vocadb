@@ -262,6 +262,7 @@ module vdb.viewModels {
 				.filter(r => r.user && r.rating === fav)
 				.take(20)
 				.map(r => r.user)
+				.sortBy(u => u.name)
 				.value());
 
 			this.favoritesCount = ko.computed(() => _
@@ -275,6 +276,7 @@ module vdb.viewModels {
 				.filter(r => r.user && r.rating === like)
 				.take(20)
 				.map(r => r.user)
+				.sortBy(u => u.name)
 				.value());
 
 			this.likesCount = ko.computed(() => _
