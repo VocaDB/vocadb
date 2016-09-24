@@ -125,6 +125,10 @@ module vdb.repositories {
 			return $.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/pvs"), { service: cls.pvs.PVService[pvService] }, callback);			
 		}
 
+		public getRatings = (songId: number, callback: (ratings: dc.RatedSongForUserForApiContract[]) => void) => {
+			return $.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings"), { userFields: 'MainPicture' }, callback);			
+		}
+
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
 
