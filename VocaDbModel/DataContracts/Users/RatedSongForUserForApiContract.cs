@@ -11,11 +11,11 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public RatedSongForUserForApiContract() { }
 
-		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory) {
+		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields) {
 
 			this.Rating = ratedSong.Rating;
 			if (ratedSong.User.Options.PublicRatings) {
-				User = new UserForApiContract(ratedSong.User, userIconFactory, UserOptionalFields.MainPicture);
+				User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
 			}
 
 		}

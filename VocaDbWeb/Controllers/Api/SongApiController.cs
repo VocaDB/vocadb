@@ -162,12 +162,14 @@ namespace VocaDb.Web.Controllers.Api {
 		/// For users who have requested not to make their ratings public, the user will be empty.
 		/// </summary>
 		/// <param name="id">Song ID.</param>
+		/// <param name="userFields">Optional fields for the users.</param>
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of ratings.</returns>
 		[Route("{id:int}/ratings")]
-		public IEnumerable<RatedSongForUserForApiContract> GetRatings(int id, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public IEnumerable<RatedSongForUserForApiContract> GetRatings(int id, UserOptionalFields userFields, 
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.GetRatings(id, lang);
+			return queries.GetRatings(id, userFields, lang);
 
 		}
 
