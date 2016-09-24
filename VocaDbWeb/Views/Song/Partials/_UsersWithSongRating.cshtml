@@ -6,15 +6,23 @@
 		@ViewRes.Song.DetailsStrings.FavoritedByTitle
 		<span data-bind="text: '@(ViewRes.EntryDetailsStrings.NumTotalParenthesis)'.replace('{0}', favoritesCount())"></span>
 	</h4>
-	TODO: user grid
+	<ul class="link-list" data-bind="foreach: favorites">
+		<li class="link-item user-with-rating">
+			@UserHelpers.IconAndNameLinkKnockout()
+		</li>
+	</ul>
 </div>
 
-<div data-bind="visible: likesCount">
+<div data-bind="visible: likesCount" class="withMargin">
 	<h4>
 		@ViewRes.Song.DetailsStrings.LikedByTitle
 		<span data-bind="text: '@(ViewRes.EntryDetailsStrings.NumTotalParenthesis)'.replace('{0}', likesCount())"></span>
 	</h4>
-	TODO: user grid
+	<ul class="link-list" data-bind="foreach: likes">
+		<li class="link-item user-with-rating">
+			@UserHelpers.IconAndNameLinkKnockout()			
+		</li>
+	</ul>
 </div>
 
-<h4 data-bind="visible: hiddenRatingsCount, text: hiddenRatingsCount() + ' hidden ratings'"></h4>
+<h4 data-bind="visible: hiddenRatingsCount, text: hiddenRatingsCount() + ' hidden ratings'" class="withMargin"></h4>

@@ -417,12 +417,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public UsersWithSongRatingContract GetUsersWithSongRating(int songId) {
-
-			return HandleQuery(session => new UsersWithSongRatingContract(session.Load<Song>(songId).UserFavorites, LanguagePreference));
-
-		}
-
 		public ArchivedSongVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
 			return HandleQuery(session =>

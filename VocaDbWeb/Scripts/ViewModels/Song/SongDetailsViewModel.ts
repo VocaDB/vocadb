@@ -259,27 +259,33 @@ module vdb.viewModels {
 
 			this.favorites = ko.computed(() => _
 				.chain(this.ratings())
-				.filter(r => r.rating === fav)
+				.filter(r => r.user && r.rating === fav)
 				.take(20)
 				.map(r => r.user)
 				.value());
 
 			this.favoritesCount = ko.computed(() => _
 				.chain(this.ratings())
-				.filter(r => r.rating === fav)
+				.filter(r => r.user && r.rating === fav)
 				.size()
 				.value());
 
 			this.likes = ko.computed(() => _
 				.chain(this.ratings())
-				.filter(r => r.rating === like)
+				.filter(r => r.user && r.rating === like)
 				.take(20)
 				.map(r => r.user)
 				.value());
 
 			this.likesCount = ko.computed(() => _
 				.chain(this.ratings())
-				.filter(r => r.rating === like)
+				.filter(r => r.user && r.rating === like)
+				.size()
+				.value());
+
+			this.hiddenRatingsCount = ko.computed(() => _
+				.chain(this.ratings())
+				.filter(r => !r.user)
 				.size()
 				.value());
 

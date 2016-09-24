@@ -10,3 +10,6 @@
   width: 100%;
   width: calc(100% - 12px);
 }
+.user-with-rating {
+  padding-top: 5px;
+}

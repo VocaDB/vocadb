@@ -45,7 +45,7 @@ if (user != null) {
 
 @helper IconAndNameLinkKnockout(int iconSize = 20) {
 	@* Has to be one line because of Razor *@
-	<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout("mainPicture.urlThumb", iconSize)<span data-bind="text: name"></span></a>
+	<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout("$data.mainPicture != null ? $data.mainPicture.urlThumb : null", iconSize)<span data-bind="text: name"></span></a>
 }
 
 @helper IconNameAndTypeLinkKnockout(string groupResources, int iconSize = 20) {
@@ -91,33 +91,6 @@ if (user != null) {
 		<i class="icon-heart"></i>
 		@SongVoteRatingNames.Favorite
 	</button>
-}
-
-@helper UserGrid(IEnumerable<IUserWithEmail> users, int columns) {
-
-	<table>
-		@{ int i = 0; }
-
-		@foreach (var user in users) {
-			if (i % columns == 0) {
-				@Html.Raw("<tr>")
-			}
-			<td>
-				@ProfileIcon(user, 20)
-			</td>
-			<td>
-				@UserLink(user)
-			</td>
-			{ i++; }
-			if (i % columns == 0) {
-				@Html.Raw("</tr>")
-			}
-		}
-		@if (i % columns != 0) {
-			@Html.Raw("</tr>")
-		}
-	</table>
-
 }
 
 @helper UserIconLink(IUserWithEmail user, int size = ImageHelper.UserTinyThumbSize) {
