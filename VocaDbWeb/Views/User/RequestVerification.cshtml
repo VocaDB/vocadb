@@ -23,7 +23,7 @@
 			</label>
 			<div data-bind="if: selectedArtist, visible: selectedArtist" style="display: none;">
 				<a data-bind="text: selectedArtist().name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selectedArtist().id) }" href="#"></a>
-				<button data-bind="click: clearArtist" class="btn btn-mini btn-danger">Clear</button>
+				<button data-bind="click: clearArtist" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Clear</button>
 			</div>
 			<div data-bind="ifnot: selectedArtist">
 				<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />				
