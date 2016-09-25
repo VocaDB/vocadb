@@ -142,13 +142,18 @@
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: publishDate, dateFormat: 'yy-mm-dd' }" maxlength="10" />
-				<div data-bind="if: !publishDate() && suggestedPublishDate()">
-					<div data-bind="with: suggestedPublishDate">
+				<div data-bind="if: !publishDate() && (suggestedPublishDate() || eventDate())">
+					<div data-bind="with: suggestedPublishDate" class="inline-block">
 						<button class="btn" data-bind="click: function() { $parent.publishDate(date.toDate()); }">
 							<span data-bind="visible: source === 'PV'">Use PV date</span>
-							<span data-bind="visible: source === 'Event'">Use event date</span>
 							<span data-bind="visible: source === 'Album'">Use album release date</span>						
 							<span data-bind="text: date.format('L')"></span>
+						</button>				
+					</div>
+					<div data-bind="with: eventDate, visible: eventDate() && (!suggestedPublishDate() || eventDate() < suggestedPublishDate().date)" class="inline-block">
+						<button class="btn" data-bind="click: function() { $parent.publishDate($data.toDate()); }">
+							Use event date		
+							<span data-bind="text: $data.format('L')"></span>
 						</button>				
 					</div>
 				</div>

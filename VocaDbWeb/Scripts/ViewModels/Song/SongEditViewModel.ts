@@ -298,8 +298,7 @@ module vdb.viewModels {
 			this.suggestedPublishDate = ko.computed(() => _
 				.chain([
 					{ date: this.albumReleaseDate, source: 'Album' },
-					{ date: this.firstPvDate(), source: 'PV' },
-					{ date: this.eventDate(), source: 'Event' }
+					{ date: this.firstPvDate(), source: 'PV' }
 				])
 				.filter(d => d.date != null)
 				.sortBy(d => d.date)
