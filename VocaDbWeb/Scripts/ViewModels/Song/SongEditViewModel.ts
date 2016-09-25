@@ -37,6 +37,7 @@ module vdb.viewModels {
 		public status: KnockoutObservable<string>;
 		public submittedJson = ko.observable("");
 		public submitting = ko.observable(false);
+		public suggestedPublishDate: KnockoutComputed<PotentialDate>;
 		private tags: number[];
 		public updateNotes = ko.observable("");
 		public validationExpanded = ko.observable(false);
@@ -294,10 +295,26 @@ module vdb.viewModels {
 
 			});
 
+			this.suggestedPublishDate = ko.computed(() => _
+				.chain([
+					{ date: this.albumReleaseDate, source: 'Album' },
+					{ date: this.firstPvDate(), source: 'PV' },
+					{ date: this.eventDate(), source: 'Event' }
+				])
+				.filter(d => d.date != null)
+				.sortBy(d => d.date)
+				.head<_.LoDashExplicitObjectWrapper<PotentialDate>>()
+				.value());
+
 			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Song, data.id), 10000);
 
         }
 
-    }
+	}
+
+	export interface PotentialDate {
+		date: moment.Moment;
+		source: string;
+	}
 
 }
