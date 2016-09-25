@@ -10,21 +10,25 @@ module vdb.tests.viewModels {
 
 	var categories: dc.TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
 	var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
-	var data: dc.songs.SongForEditContract = {
-		artists: [], defaultNameLanguage: 'English', deleted: false, id: 0, lengthSeconds: 39,
-		hasAlbums: false,
-		lyrics: [], names: [],
-		notes: { original: '', english: '' },
-		originalVersion: null, pvs: [], songType: 'Original',
-		status: 'Draft', tags: [], webLinks: [webLinkData]
-	};
+	var data: dc.songs.SongForEditContract;
 	var songRepo = new sup.FakeSongRepository();
 	var artistRepo = new sup.FakeArtistRepository();
 	var pvRepo = null;
 	var userRepo = new sup.FakeUserRepository();
 	resources.song = { addExtraArtist: 'Add extra artist' };
 
-    QUnit.module("SongEditViewModelTests");
+	QUnit.module("SongEditViewModelTests", {
+		setup: () => {
+			data = {
+				artists: [], defaultNameLanguage: 'English', deleted: false, id: 0, lengthSeconds: 39,
+				hasAlbums: false,
+				lyrics: [], names: [],
+				notes: { original: '', english: '' },
+				originalVersion: null, pvs: [], songType: 'Original',
+				status: 'Draft', tags: [], webLinks: [webLinkData]
+			};			
+		}
+    });
 
     function createViewModel() {
 		return new vm.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, new vdb.UrlMapper(''), {}, categories, data, false, null, 0, null);
@@ -92,6 +96,24 @@ module vdb.tests.viewModels {
 
 		QUnit.ok(target.firstPvDate(), "firstPvDate");
 		QUnit.equal(target.firstPvDate().toISOString(), moment('2039-3-9').toISOString(), "firstPvDate");
+
+	});
+
+	QUnit.test("suggestedPublishDate no date", () => {
+
+		var target = createViewModel();
+		QUnit.equal(target.suggestedPublishDate(), null, "suggestedPublishDate");
+
+	});
+
+	QUnit.test("suggestedPublishDate with album date", () => {
+
+		data.albumReleaseDate = '2039-3-9';
+
+		var target = createViewModel();
+
+		QUnit.ok(target.suggestedPublishDate(), "suggestedPublishDate");
+		QUnit.equal(target.suggestedPublishDate().date.toISOString(), moment('2039-3-9').toISOString(), "suggestedPublishDate");
 
 	});
 
