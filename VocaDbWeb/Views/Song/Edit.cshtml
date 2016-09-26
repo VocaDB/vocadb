@@ -142,6 +142,8 @@
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: publishDate, dateFormat: 'yy-mm-dd' }" maxlength="10" />
+				
+				@* Suggest publish date based on PV date, album release date or event date. Show only earlier of PV and album dates, if present. *@
 				<div data-bind="if: !publishDate() && (suggestedPublishDate() || eventDate())">
 					<div data-bind="with: suggestedPublishDate" class="inline-block">
 						<button class="btn" data-bind="click: function() { $parent.publishDate(date.toDate()); }">
