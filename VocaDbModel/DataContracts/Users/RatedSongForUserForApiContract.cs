@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
@@ -13,6 +14,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields) {
 
+			this.Date = ratedSong.Date;
 			this.Rating = ratedSong.Rating;
 			if (ratedSong.User.Options.PublicRatings) {
 				User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
@@ -21,11 +23,15 @@ namespace VocaDb.Model.DataContracts.Users {
 		}
 
 		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields) {
-			
+
+			this.Date = ratedSong.Date;
 			this.Rating = ratedSong.Rating;
 			this.Song = new SongForApiContract(ratedSong.Song, null, languagePreference, fields);
 
 		}
+
+		[DataMember]
+		public DateTime Date { get; set; }
 
 		[DataMember]
 		public SongVoteRating Rating { get; set; }
