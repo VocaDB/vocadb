@@ -70,7 +70,7 @@ namespace VocaDb.Tests.TestData {
 		}
 
 		public static User User(int id = 0, string name = "Miku", UserGroupId group = UserGroupId.Regular, string email = "") {
-			return new User(name, "123", email, 0) { GroupId = group, Id = id };
+			return new User(name, "123", email, "0") { GroupId = group, Id = id };
 		}
 
 		public static UserMessage UserMessageReceived(int id = 0, User sender = null, User receiver = null, 

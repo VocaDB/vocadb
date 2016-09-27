@@ -46,7 +46,8 @@ namespace VocaDb.Model.Service.Security {
 
 		}
 
-		public static string GetHashedPass(string name, string pass, int salt) {
+		[Obsolete]
+		public static string GetHashedPass(string name, string pass, string salt) {
 
 			return CryptoHelper.HashSHA1(name + pass + salt);
 

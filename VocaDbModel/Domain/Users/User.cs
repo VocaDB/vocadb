@@ -14,6 +14,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.Domain.Users {
 
@@ -77,7 +78,7 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public User(string name, string pass, string email, int salt)
+		public User(string name, string pass, string email, string salt)
 			: this() {
 
 			Name = name;
@@ -391,6 +392,8 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		public virtual PasswordHashAlgorithmType PasswordHashAlgorithm { get; set; }
+
 		public virtual PVService PreferredVideoService { get; set; }
 
 		public virtual IList<UserMessage> ReceivedMessages {
@@ -406,7 +409,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// <summary>
 		/// Per-user password salt. Applied to password hash.
 		/// </summary>
-		public virtual int Salt { get; set; }
+		public virtual string Salt { get; set; }
 
 		public virtual IList<UserMessage> SentMessages {
 			get { return sentMessages; }

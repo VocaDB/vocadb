@@ -21,7 +21,7 @@ namespace VocaDb.Tests.Helpers {
             
             entryRef = new EntryRef(EntryType.Artist, 39);
 			manager = new ConcurrentEntryEditManager();
-            miku = new User("Miku", "3939", "miku@vocadb.net", 39) { Id = 1 };
+            miku = new User("Miku", "3939", "miku@vocadb.net", "39") { Id = 1 };
 
         }
 
@@ -43,7 +43,7 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void CheckConcurrentEdits_PreviousEditor() {
 
-			var rin = new User("Rin", "222", "rin@vocadb.net", 2) { Id = 2 };
+			var rin = new User("Rin", "222", "rin@vocadb.net", "2") { Id = 2 };
 			manager.CheckConcurrentEditsInst(entryRef, rin);
 			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
 
@@ -57,7 +57,7 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void CheckConcurrentEdits_PreviousEditorExpired() {
 
-			var rin = new User("Rin", "222", "rin@vocadb.net", 2) { Id = 2 };
+			var rin = new User("Rin", "222", "rin@vocadb.net", "2") { Id = 2 };
 			manager.CheckConcurrentEditsInst(entryRef, rin);
 			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
 			result.Time = DateTime.MinValue;

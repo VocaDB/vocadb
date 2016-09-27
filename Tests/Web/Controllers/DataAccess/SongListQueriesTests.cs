@@ -40,7 +40,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void SetUp() {
 			
 			repository = new FakeSongListRepository();
-			userWithSongList = new User("User with songlist", "123", "test@test.com", 123);
+			userWithSongList = new User("User with songlist", "123", "test@test.com", "123");
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithSongList, ContentLanguagePreference.Default));
 
 			imagePersister = new InMemoryImagePersister();

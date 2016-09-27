@@ -123,7 +123,7 @@ namespace VocaDb.Tests.DatabaseTests {
 				ReleaseEvent.AllSongs.Add(Song);
 				session.Update(Song);
 
-				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", 3939) { GroupId = UserGroupId.Trusted };
+				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", "3939") { GroupId = UserGroupId.Trusted };
 				session.Save(UserWithEditPermissions);
 
 				tx.Commit();

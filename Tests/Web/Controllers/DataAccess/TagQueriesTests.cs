@@ -65,7 +65,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			tag = CreateAndSaveTag("Appearance Miku");
 			tag2 = CreateAndSaveTag("MMD");
 
-			user = new User("User", "123", "test@test.com", 123) { GroupId = UserGroupId.Moderator };
+			user = new User("User", "123", "test@test.com", "123") { GroupId = UserGroupId.Moderator };
 			repository.Add(user);
 
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));

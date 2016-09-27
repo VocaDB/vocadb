@@ -82,9 +82,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestInitialize]
 		public void SetUp() {
 
-			var hashedPass = LoginManager.GetHashedPass("already_exists", "123", 0);
-			userWithEmail = new User("already_exists", hashedPass, "already_in_use@vocadb.net", 0) { Id = 123 };
-			userWithoutEmail = new User("no_email", "222", string.Empty, 321) { Id = 321 };
+			var hashedPass = LoginManager.GetHashedPass("already_exists", "123", "0");
+			userWithEmail = new User("already_exists", hashedPass, "already_in_use@vocadb.net", "0") { Id = 123 };
+			userWithoutEmail = new User("no_email", "222", string.Empty, "321") { Id = 321 };
 			repository = new FakeUserRepository(userWithEmail, userWithoutEmail);
 			repository.Add(userWithEmail.Options);
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithEmail, ContentLanguagePreference.Default));
@@ -516,7 +516,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			data.ResetPassword(request.Id, "123");
 
-			var hashed = LoginManager.GetHashedPass(request.User.NameLC, "123", request.User.Salt);
+			var hashed = PasswordHashAlgorithms.Default.HashPassword("123", request.User.Salt, request.User.NameLC);
 
 			Assert.AreEqual(hashed, userWithEmail.Password, "Hashed password");
 			Assert.AreEqual(0, repository.List<PasswordResetRequest>().Count, "Number of requests");
