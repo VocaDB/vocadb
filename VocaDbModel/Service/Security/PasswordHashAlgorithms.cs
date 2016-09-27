@@ -9,7 +9,7 @@
 				case PasswordHashAlgorithmType.SHA1:
 					return new SHA1PasswordHashAlgorithm();
 				case PasswordHashAlgorithmType.HMACSHA1:
-					return new HMACSHA1PasswordHashAlgorithm();
+					return new HMICSHA1PasswordHashAlgorithm();
 			}
 			return null;
 		}

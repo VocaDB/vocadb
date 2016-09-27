@@ -3,12 +3,12 @@ using System.Security.Cryptography;
 
 namespace VocaDb.Model.Service.Security {
 
-	public class HMACSHA1PasswordHashAlgorithm : IPasswordHashAlgorithm {
+	public class HMICSHA1PasswordHashAlgorithm : IPasswordHashAlgorithm {
 
 		public PasswordHashAlgorithmType AlgorithmType => PasswordHashAlgorithmType.HMACSHA1;
 
 		public string GenerateSalt() {
-			var bytes = new byte[32];
+			var bytes = new byte[39];
 			new RNGCryptoServiceProvider().GetBytes(bytes);
 			return Convert.ToBase64String(bytes);
 		}
