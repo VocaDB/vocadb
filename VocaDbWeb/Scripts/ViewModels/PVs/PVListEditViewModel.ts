@@ -94,6 +94,10 @@ module vdb.viewModels.pvs {
 				type: 'POST',
 				success: (result) => {
 					this.pvs.push(new PVEditViewModel(result, 'Original'));
+				},
+				error: (result) => {
+					var text = result.status === 404 ? "File too large" : result.statusText;
+					alert("Unable to post file: " + text);
 				}
 			});
 
