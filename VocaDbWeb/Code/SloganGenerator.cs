@@ -11,7 +11,8 @@ namespace VocaDb.Web.Code {
 			"Use the search, Luka!",
 			"shu-t up and enjoy",
 			"Now with 39% more Miku",
-			"Our site uses Micookies"
+			"Our site uses Micookies",
+			"Passwords secured with HMIC"
 		};
 
 		public static string Generate() {
