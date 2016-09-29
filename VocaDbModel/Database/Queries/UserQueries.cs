@@ -401,12 +401,11 @@ namespace VocaDb.Model.Database.Queries {
 						Thread.Sleep(2000);
 					return LoginResult.CreateError(LoginError.InvalidPassword);
 				}
-
-				// TODO: update password algorithm if needed
-
+				
 				// Login attempt successful.
 				ctx.AuditLogger.AuditLog(string.Format("logged in from {0} with '{1}'.", MakeGeoIpToolLink(hostname), name), user);
 
+				user.UpdatePassword(pass, PasswordHashAlgorithms.Default);
 				user.UpdateLastLogin(hostname, culture);
 				ctx.Update(user);
 
@@ -596,10 +595,7 @@ namespace VocaDb.Model.Database.Queries {
 				var sfsCheckResult = sfsClient.CallApi(hostname);
 				var sfsStr = GetSFSCheckStr(sfsCheckResult);
 
-				var passwordAlgorithm = PasswordHashAlgorithms.Default;
-				var salt = passwordAlgorithm.GenerateSalt();
-				var hashed = passwordAlgorithm.HashPassword(pass, salt, lc);
-				var user = new User(name, hashed, email, salt);
+				var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
 				user.UpdateLastLogin(hostname, culture);
 				ctx.Save(user);
 
@@ -667,9 +663,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var passwordHashAlgorithm = PasswordHashAlgorithms.Default;
-				var salt = passwordHashAlgorithm.GenerateSalt();
-				var user = new User(name, string.Empty, email, salt);
+				var user = new User(name, string.Empty, email, PasswordHashAlgorithms.Default);
 				user.Options.TwitterId = twitterId;
 				user.Options.TwitterName = twitterName;
 				user.Options.TwitterOAuthToken = authToken;
@@ -1135,13 +1129,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.AuditLog("resetting password", user);
 
-				var algorithm = PasswordHashAlgorithms.Default;
-
-				var newSalt = algorithm.GenerateSalt(); // Salt needs to be regenerated too because its length may change
-				var newHashed = algorithm.HashPassword(password, newSalt, user.NameLC);
-				user.Password = newHashed;
-				user.PasswordHashAlgorithm = algorithm.AlgorithmType;
-				user.Salt = newSalt;
+				user.UpdatePassword(password, PasswordHashAlgorithms.Default);
 
 				ctx.Update(user);
 
@@ -1424,12 +1412,7 @@ namespace VocaDb.Model.Database.Queries {
 					if (user.Password != oldHashed)
 						throw new InvalidPasswordException();
 
-					var newAlgorithm = PasswordHashAlgorithms.Default;
-					var newSalt = newAlgorithm.GenerateSalt();
-					var newHashed = newAlgorithm.HashPassword(contract.NewPass, newSalt, user.NameLC);
-					user.Password = newHashed;
-					user.PasswordHashAlgorithm = newAlgorithm.AlgorithmType;
-					user.Salt = newSalt;
+					user.UpdatePassword(contract.NewPass, PasswordHashAlgorithms.Default);
 
 				}
 

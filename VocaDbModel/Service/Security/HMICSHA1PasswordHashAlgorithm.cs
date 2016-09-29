@@ -13,14 +13,18 @@ namespace VocaDb.Model.Service.Security {
 			return Convert.ToBase64String(bytes);
 		}
 
-		public string HashPassword(string password, string salt, string username) {
+		public string HashPassword(string password, string salt) {
 
 			var saltBytes = Convert.FromBase64String(salt);
-			var algo = new Rfc2898DeriveBytes(password, saltBytes);
+			var algo = new Rfc2898DeriveBytes(password, saltBytes, 3939);
 			var hashed = algo.GetBytes(20);
 
 			return Convert.ToBase64String(hashed);
 
+		}
+
+		public string HashPassword(string password, string salt, string username) {
+			return HashPassword(password, salt);
 		}
 
 	}

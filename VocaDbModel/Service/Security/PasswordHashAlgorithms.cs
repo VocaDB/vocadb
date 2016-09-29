@@ -2,6 +2,10 @@
 
 	public static class PasswordHashAlgorithms {
 
+		/// <summary>
+		/// Default (recommended) password hashing algorithm.
+		/// To be used for all new passwords.
+		/// </summary>
 		public static IPasswordHashAlgorithm Default => Get(PasswordHashAlgorithmType.HMACSHA1);
 
 		public static IPasswordHashAlgorithm Get(PasswordHashAlgorithmType algorithm) {
@@ -17,6 +21,7 @@
 	}
 
 	public enum PasswordHashAlgorithmType {
+		Nothing,
 		SHA1,
 		HMACSHA1
 	}

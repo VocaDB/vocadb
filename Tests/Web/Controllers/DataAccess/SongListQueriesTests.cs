@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
@@ -40,7 +41,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void SetUp() {
 			
 			repository = new FakeSongListRepository();
-			userWithSongList = new User("User with songlist", "123", "test@test.com", "123");
+			userWithSongList = new User("User with songlist", "123", "test@test.com", PasswordHashAlgorithms.Default);
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithSongList, ContentLanguagePreference.Default));
 
 			imagePersister = new InMemoryImagePersister();

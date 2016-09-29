@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using System.Collections.Generic;
+using NLog;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -20,6 +21,7 @@ namespace VocaDb.Model.Domain.Users {
 
 	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink>, IEntryWithComments {
 
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public const string NameRegex = "[a-zA-Z0-9_]+";
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
@@ -78,14 +80,23 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public User(string name, string pass, string email, string salt)
+		/// <summary>
+		/// Initializes user.
+		/// </summary>
+		/// <param name="name">Username, for example "Miku".</param>
+		/// <param name="pass">Plaintext password. Will be hashed. For example "MikuMiku39".</param>
+		/// <param name="email">Email address. For example "miku@vocadb.net".</param>
+		/// <param name="passwordHashAlgorithm">Password hashing algorithm. Cannot be null.</param>
+		public User(string name, string pass, string email, IPasswordHashAlgorithm passwordHashAlgorithm)
 			: this() {
+
+			ParamIs.NotNull(() => passwordHashAlgorithm);
 
 			Name = name;
 			NameLC = name.ToLowerInvariant();
-			Password = pass;
 			Email = email;
-			Salt = salt;
+
+			UpdatePassword(pass, passwordHashAlgorithm);
 
 			GenerateAccessKey();
 
@@ -382,7 +393,8 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		/// <summary>
-		/// Password SHA-1 hash.
+		/// Hashed and salted password.
+		/// Cannot be null, but can be empty if not set (for Twitter login for example).
 		/// </summary>
 		public virtual string Password {
 			get { return password; }
@@ -629,6 +641,24 @@ namespace VocaDb.Model.Domain.Users {
 			LastLogin = DateTime.Now;
 			Options.LastLoginAddress = host;
 			Options.LastLoginCulture = new OptionalCultureCode(culture);
+		}
+
+		public virtual void UpdatePassword(string password, IPasswordHashAlgorithm algorithm) {
+
+			ParamIs.NotNull(() => algorithm);
+
+			if (PasswordHashAlgorithm != algorithm.AlgorithmType) {
+
+				log.Info("Updating password hash algorithm to {0}", algorithm.AlgorithmType);
+
+				PasswordHashAlgorithm = algorithm.AlgorithmType;
+				Salt = algorithm.GenerateSalt(); // Salt needs to be regenerated too because its length may change
+
+			}
+			 
+			var newHashed = !string.IsNullOrEmpty(password) ? algorithm.HashPassword(password, Salt, NameLC) : string.Empty;
+			Password = newHashed;
+
 		}
 
 	}
