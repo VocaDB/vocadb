@@ -718,6 +718,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(InvalidPasswordException))]
+		public void UpdateUserSettings_Password_InvalidOldPassword() {
+
+			var contract = new UpdateUserSettingsContract(userWithEmail) {
+				OldPass = "393",
+				NewPass = "3939"
+			};
+
+			data.UpdateUserSettings(contract);
+
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
 		public void UpdateUserSettings_NoPermission() {
 
