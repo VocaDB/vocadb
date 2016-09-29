@@ -3,6 +3,12 @@ using System.Security.Cryptography;
 
 namespace VocaDb.Model.Service.Security {
 
+	/// <summary>
+	/// Password hashing using HMAC-SHA1.
+	/// </summary>
+	/// <remarks>
+	/// HMIC = HMAC with 3939 iterations.
+	/// </remarks>
 	public class HMICSHA1PasswordHashAlgorithm : IPasswordHashAlgorithm {
 
 		public PasswordHashAlgorithmType AlgorithmType => PasswordHashAlgorithmType.HMACSHA1;

@@ -857,7 +857,7 @@
     <Compile Include="Service\Security\IPasswordHashAlgorithm.cs" />
     <Compile Include="Service\Security\PasswordHashAlgorithms.cs" />
     <Compile Include="Service\Security\HMICSHA1PasswordHashAlgorithm.cs" />
-    <Compile Include="Service\Security\Sha1PasswordHashAlgorithm.cs" />
+    <Compile Include="Service\Security\SHA1PasswordHashAlgorithm.cs" />
     <Compile Include="Service\Security\StopForumSpam\IStopForumSpamClient.cs" />
     <Compile Include="Service\Security\StopForumSpam\SFSCheckResultType.cs" />
     <Compile Include="Service\Security\StopForumSpam\SFSResponseContract.cs" />

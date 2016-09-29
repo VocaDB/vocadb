@@ -2,6 +2,9 @@
 
 namespace VocaDb.Model.Service.Security {
 
+	/// <summary>
+	/// Legacy password hashing using SHA1.
+	/// </summary>
 	public class SHA1PasswordHashAlgorithm : IPasswordHashAlgorithm {
 
 		public PasswordHashAlgorithmType AlgorithmType => PasswordHashAlgorithmType.SHA1;
