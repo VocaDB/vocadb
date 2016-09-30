@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestData;
 
 namespace VocaDb.Tests.DatabaseTests {
@@ -123,7 +124,7 @@ namespace VocaDb.Tests.DatabaseTests {
 				ReleaseEvent.AllSongs.Add(Song);
 				session.Update(Song);
 
-				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", 3939) { GroupId = UserGroupId.Trusted };
+				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };
 				session.Save(UserWithEditPermissions);
 
 				tx.Commit();

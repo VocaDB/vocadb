@@ -82,9 +82,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestInitialize]
 		public void SetUp() {
 
-			var hashedPass = LoginManager.GetHashedPass("already_exists", "123", 0);
-			userWithEmail = new User("already_exists", hashedPass, "already_in_use@vocadb.net", 0) { Id = 123 };
-			userWithoutEmail = new User("no_email", "222", string.Empty, 321) { Id = 321 };
+			userWithEmail = new User("already_exists", "123", "already_in_use@vocadb.net", PasswordHashAlgorithms.Default) { Id = 123 };
+			userWithoutEmail = new User("no_email", "222", string.Empty, PasswordHashAlgorithms.Default) { Id = 321 };
 			repository = new FakeUserRepository(userWithEmail, userWithoutEmail);
 			repository.Add(userWithEmail.Options);
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithEmail, ContentLanguagePreference.Default));
@@ -516,7 +515,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			data.ResetPassword(request.Id, "123");
 
-			var hashed = LoginManager.GetHashedPass(request.User.NameLC, "123", request.User.Salt);
+			var hashed = PasswordHashAlgorithms.Default.HashPassword("123", request.User.Salt, request.User.NameLC);
 
 			Assert.AreEqual(hashed, userWithEmail.Password, "Hashed password");
 			Assert.AreEqual(0, repository.List<PasswordResetRequest>().Count, "Number of requests");
@@ -699,6 +698,35 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNotNull(user, "User was found in repository");
 			Assert.AreEqual("new_email@vocadb.net", user.Email, "Email");
 			Assert.IsFalse(user.Options.EmailVerified, "EmailVerified"); // Cancel verification
+
+		}
+
+		[TestMethod]
+		public void UpdateUserSettings_Password() {
+
+			var algo = new HMICSHA1PasswordHashAlgorithm();
+
+			var contract = new UpdateUserSettingsContract(userWithEmail) {
+				OldPass = "123",
+				NewPass = "3939"
+			};
+
+			data.UpdateUserSettings(contract);
+
+			Assert.AreEqual(algo.HashPassword("3939", userWithEmail.Salt), userWithEmail.Password, "Password was updated");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidPasswordException))]
+		public void UpdateUserSettings_Password_InvalidOldPassword() {
+
+			var contract = new UpdateUserSettingsContract(userWithEmail) {
+				OldPass = "393",
+				NewPass = "3939"
+			};
+
+			data.UpdateUserSettings(contract);
 
 		}
 

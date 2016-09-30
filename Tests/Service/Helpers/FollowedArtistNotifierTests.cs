@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.Helpers {
@@ -47,8 +48,8 @@ namespace VocaDb.Tests.Service.Helpers {
 			album = Save(new Album(new LocalizedString("New Album", ContentLanguageSelection.English)));
 			producer = Save(new Artist(TranslatedString.Create("Tripshots")) { Id = 1, ArtistType = ArtistType.Producer });
 			vocalist = Save(new Artist(TranslatedString.Create("Hatsune Miku")) { Id = 2, ArtistType = ArtistType.Vocaloid });
-			user = Save(new User("Miku", "123", string.Empty, 0) { Id = 1});
-			creator = Save(new User("Rin", "123", string.Empty, 0) { Id = 2 });
+			user = Save(new User("Miku", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 1});
+			creator = Save(new User("Rin", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 2 });
 
 			Save(user.AddArtist(producer));
 

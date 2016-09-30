@@ -16,6 +16,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
@@ -65,7 +66,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			tag = CreateAndSaveTag("Appearance Miku");
 			tag2 = CreateAndSaveTag("MMD");
 
-			user = new User("User", "123", "test@test.com", 123) { GroupId = UserGroupId.Moderator };
+			user = new User("User", "123", "test@test.com", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Moderator };
 			repository.Add(user);
 
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));

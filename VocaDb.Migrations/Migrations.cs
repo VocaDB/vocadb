@@ -4,6 +4,24 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201609272100)]
+	public class UserNewCryptoAlgo : Migration {
+
+		public override void Up() {
+
+			Alter.Table(TableNames.Users).AlterColumn("Salt").AsString(100).NotNullable();
+			Create.Column("PasswordHashAlgorithm").OnTable(TableNames.Users).AsString(20).NotNullable().WithDefaultValue("SHA1");
+
+		}
+
+		public override void Down() {
+
+			Alter.Table(TableNames.Users).AlterColumn("Salt").AsInt32().NotNullable();
+
+		}
+
+	}
+
 	[Migration(201609122300)]
 	public class LyricsURL : Migration {
 

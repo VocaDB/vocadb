@@ -46,12 +46,6 @@ namespace VocaDb.Model.Service.Security {
 
 		}
 
-		public static string GetHashedPass(string name, string pass, int salt) {
-
-			return CryptoHelper.HashSHA1(name + pass + salt);
-
-		}
-
 		public static string GetHashedAccessKey(string key) {
 
 			var salt = ConfigurationManager.AppSettings["AccessKeySalt"] ?? string.Empty;
