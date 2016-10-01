@@ -125,16 +125,18 @@ namespace VocaDb.Web.Helpers {
 		/// <param name="id">ID attribute. Can be null or empty, in which case this attribute is not specified.</param>
 		/// <param name="maxLength">Max length attribute. Can be null, in which case this attribute is not specified.</param>
 		/// <param name="size">Size attribute. Can be null, in which case this attribute is not specified.</param>
+		/// <param name="placeholder">Placeholder attribute. Can be null.</param>
 		/// <returns></returns>
 		public static MvcHtmlString TextBoxForKnockout<TModel, TProperty>(
 			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, 
-			string binding, string cssClass = null, string id = null, int? maxLength = null, int? size = null) {
+			string binding, string cssClass = null, string id = null, int? maxLength = null, int? size = null,
+			string placeholder = null) {
 
 			ParamIs.NotNull(() => htmlHelper);
 			ParamIs.NotNull(() => expression);
 			ParamIs.NotNull(() => binding);
 
-			var htmlAttributes = new Dictionary<string, object> { { "data-bind", binding } };
+			var htmlAttributes = new Dictionary<string, object>(3) { { "data-bind", binding } };
 
 			if (!string.IsNullOrEmpty(cssClass))
 				htmlAttributes.Add("class", cssClass);
@@ -147,6 +149,9 @@ namespace VocaDb.Web.Helpers {
 
 			if (size.HasValue)
 				htmlAttributes.Add("size", size.Value);
+
+			if (!string.IsNullOrEmpty(placeholder))
+				htmlAttributes.Add("placeholder", placeholder);
 
 			return htmlHelper.TextBoxFor(expression, htmlAttributes);
 

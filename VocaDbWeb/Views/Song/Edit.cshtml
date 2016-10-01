@@ -214,11 +214,7 @@
 			</p>
 			<p>
 				@Res.PvNewType
-				<select class="input-xlarge" data-bind="value: newPvType">
-					@foreach (var pvType in Translate.PVTypeDescriptions.ValuesAndNamesStrings) {
-						<option value="@pvType.Key">@pvType.Value</option>
-					}
-				</select>
+				@KnockoutHelpers.DropdownList(Translate.PVTypeDescriptions.ValuesAndNamesStrings, "newPvType", "input-xlarge")
 			</p>
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>

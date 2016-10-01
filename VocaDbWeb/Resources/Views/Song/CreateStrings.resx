@@ -124,7 +124,7 @@
     <value>If the artist cannot be found it probably hasn't been added yet. Check other possible spellings of that artist's name, and if you're confident there's no entry yet, please create one using the "Add an artist" menu. You can do this after the song has already been created. You can't create the artist on this page.</value>
   </data>
   <data name="ArtistsInfo" xml:space="preserve">
-    <value>Artists (need at least 1)</value>
+    <value>Artists (need at least one)</value>
   </data>
   <data name="Draft" xml:space="preserve">
     <value>This entry is a draft</value>

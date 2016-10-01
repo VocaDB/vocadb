@@ -79,7 +79,7 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Artists (need at least 1).
+        ///   Looks up a localized string similar to Artists (need at least one).
         /// </summary>
         public static string ArtistsInfo {
             get {
