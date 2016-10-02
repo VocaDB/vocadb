@@ -717,11 +717,9 @@ namespace VocaDb.Web.Controllers {
 
 				// Note: the same song may be included multiple times for different artists
 				var vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
-				var artists = ctx.Query<Artist>().Where(a => vocalistTypes.Contains(a.ArtistType)).OrderByDescending(a => a.AllSongs.Count).Take(20).ToDictionary(a => a.Id);
-				var artistIds = artists.Select(a => a.Key);
 
 				var points = ctx.Query<ArtistForSong>()
-					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && artistIds.Contains(s.Artist.Id))
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && vocalistTypes.Contains(s.Artist.ArtistType))
 					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
 					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
 					.GroupBy(s => new {
@@ -741,7 +739,14 @@ namespace VocaDb.Web.Controllers {
 
 				points = SumToBaseVoicebanks(ctx, points);
 
-				var byArtist = points.GroupBy(p => p.ArtistId).Select(a => Tuple.Create(artists[a.Key], a.ToArray()));
+				var artists = ctx.Query<Artist>().Where(a => vocalistTypes.Contains(a.ArtistType)).ToDictionary(a => a.Id);
+
+				// Group by artist, select artists with top 20 most songs (as counted for the root VB)
+				// Note: we're filtering artists only after summing to root VBs, because otherwise appends would be ignored
+				var byArtist = points.GroupBy(p => p.ArtistId)
+					.OrderByDescending(byArtist2 => byArtist2.Select(p2 => p2.Count).Sum())
+					.Take(20)
+					.Select(a => Tuple.Create(artists[a.Key], a.ToArray()));
 				return byArtist;
 
 			});
