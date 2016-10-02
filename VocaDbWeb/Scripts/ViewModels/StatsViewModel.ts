@@ -36,7 +36,8 @@ module vdb.viewModels {
 				{
 					name: 'Vocaloids', reports: [
 						{ name: 'Songs by Vocaloid', url: 'songsPerVocaloid', allowTimespan: true },
-						{ name: 'Albums by Vocaloid', url: 'albumsPerVocaloid', allowTimespan: true }
+						{ name: 'Albums by Vocaloid', url: 'albumsPerVocaloid', allowTimespan: true },
+						{ name: 'Songs by voicebank over time', url: 'songsPerVocaloidOverTime', allowTimespan: false },
 					]
 				},
 				{

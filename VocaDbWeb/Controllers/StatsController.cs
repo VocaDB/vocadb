@@ -46,6 +46,24 @@ namespace VocaDb.Web.Controllers {
 		}
 	}
 
+	class SongsPerArtistPerDate {
+
+		public SongsPerArtistPerDate() {}
+
+		public SongsPerArtistPerDate(DateTime date, int artistId, int count) {
+			Date = date;
+			ArtistId = artistId;
+			Count = count;
+		}
+
+		public DateTime Date { get; set; }
+
+		public int ArtistId { get; set; }
+
+		public int Count { get; set; }
+
+	}
+
 	public class StatsController : ControllerBase {
 
 		private const int clientCacheDurationSec = 86400;
@@ -67,6 +85,48 @@ namespace VocaDb.Web.Controllers {
 			
 			var name = ControllerContext.RouteData.Values["action"];
 			context.Cache.Add("report_" + name, data, null, Cache.NoAbsoluteExpiration, TimeSpan.FromDays(1), CacheItemPriority.Default, null);
+
+		}
+
+		private int GetRootVb(int vb, Dictionary<int, int> voicebankMap) {
+
+			int loops = 0;
+			while (loops++ <= 10) {
+				if (!voicebankMap.ContainsKey(vb))
+					return vb;
+				vb = voicebankMap[vb];
+			}
+
+			return vb;
+
+		}
+
+		private SongsPerArtistPerDate[] SumToBaseVoicebanks(IDatabaseContext ctx, SongsPerArtistPerDate[] data) {
+
+			var baseVoicebankMap = ctx.Query<Artist>().Where(a => a.BaseVoicebank != null).ToDictionary(a => a.Id, a => a.BaseVoicebank.Id);
+
+			var changed = true;
+			while (changed) {
+				changed = false;
+				foreach (var vb in baseVoicebankMap) {
+					var rootVb = GetRootVb(vb.Value, baseVoicebankMap);
+					if (vb.Value != rootVb) {
+						baseVoicebankMap[vb.Key] = rootVb;
+						changed = true;
+						break;
+					}
+				}
+			}
+
+			var dataDict = data
+				.GroupBy(d => d.Date)
+				.ToDictionary(byDate => byDate.Key, byDate => byDate
+					.GroupBy(byDate2 => baseVoicebankMap.ContainsKey(byDate2.ArtistId) ? baseVoicebankMap[byDate2.ArtistId] : byDate2.ArtistId)
+					.ToDictionary(byArtist => byArtist.Key, byArtist => byArtist
+						.Select(d3 => d3.Count)
+						.Sum()));
+
+			return dataDict.SelectMany(d => d.Value.Select(d2 => new SongsPerArtistPerDate(d.Key, d2.Key, d2.Value))).ToArray();
 
 		}
 
@@ -386,13 +446,14 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult ArtistsPerMonth() {
 
+			// TODO: report not verified
 			var values = repository.HandleQuery(ctx => {
 
 				return ctx.Query<ArtistForSong>()
 					.Where(a => a.Artist.ArtistType == ArtistType.Producer && !a.Song.Deleted && a.Song.PublishDate.DateTime != null)
 					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
 					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
-					.GroupBy(a => new {
+					.GroupBy(a => new { // Note: we want to do count distinct here, but it's not supported by NHibernate LINQ, so doing a second group by in memory
 						Year = a.Song.PublishDate.DateTime.Value.Year,
 						Month = a.Song.PublishDate.DateTime.Value.Month,
 						Artist = a.Artist.Id
@@ -647,6 +708,50 @@ namespace VocaDb.Web.Controllers {
 						Value = a.AllSongs.AsQueryable().Where(dateFilter)
 							.Count(s => !s.IsSupport && !s.Song.Deleted)
 					}), "Songs by Vocaloid/UTAU", "Songs");
+
+		}
+
+		public ActionResult SongsPerVocaloidOverTime() {
+
+			var data = repository.HandleQuery(ctx => {
+
+				// Note: the same song may be included multiple times for different artists
+				var vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
+				var artists = ctx.Query<Artist>().Where(a => vocalistTypes.Contains(a.ArtistType)).OrderByDescending(a => a.AllSongs.Count).Take(20).ToDictionary(a => a.Id);
+				var artistIds = artists.Select(a => a.Key);
+
+				var points = ctx.Query<ArtistForSong>()
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && artistIds.Contains(s.Artist.Id))
+					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
+					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
+					.GroupBy(s => new {
+						s.Song.PublishDate.DateTime.Value.Year,
+						s.Song.PublishDate.DateTime.Value.Month,
+						ArtistId = s.Artist.Id,
+					})
+					.Select(s => new {
+						s.Key.Year,
+						s.Key.Month,
+						s.Key.ArtistId,
+						Count = s.Count()
+					})
+					.ToArray()
+					.Select(s => new SongsPerArtistPerDate(new DateTime(s.Year, s.Month, 1), s.ArtistId, s.Count))
+					.ToArray();
+
+				points = SumToBaseVoicebanks(ctx, points);
+
+				var byArtist = points.GroupBy(p => p.ArtistId).Select(a => Tuple.Create(artists[a.Key], a.ToArray()));
+				return byArtist;
+
+			});
+
+			var dataSeries = data.Select(ser => new Series {
+				Name = ser.Item1.Names.SortNames.English,
+				Data = Series.DateData(ser.Item2, p => p.Date, p => p.Count)
+			}).ToArray();
+
+			return AreaChart("Songs per voicebank over time", dataSeries);
 
 		}
 

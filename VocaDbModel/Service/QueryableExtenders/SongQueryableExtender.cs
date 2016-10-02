@@ -206,6 +206,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> WhereHasPublishDate(this IQueryable<Song> query, bool hasPublishDate) {
+
+			return hasPublishDate ? query.Where(s => s.PublishDate.DateTime != null) : query.Where(s => s.PublishDate.DateTime == null);
+
+		}
+
 		/// <summary>
 		/// Filter query by PV services bit array.
 		/// Song will pass the filter if ANY of the specified PV services matches.
@@ -341,6 +347,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				}
 				case AdvancedFilterType.HasMultipleVoicebanks: {
 					return query.Where(s => s.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1);	
+				}
+				case AdvancedFilterType.HasPublishDate: {
+					return query.WhereHasPublishDate(!filter.Negate);
 				}
 				case AdvancedFilterType.Lyrics: {
 					var any = filter.Param == AdvancedSearchFilter.Any;

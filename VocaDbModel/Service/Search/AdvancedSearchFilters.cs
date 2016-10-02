@@ -39,7 +39,8 @@ namespace VocaDb.Model.Service.Search {
 			Filter("Lyrics: Any language", AdvancedFilterType.Lyrics, AdvancedSearchFilter.Any),
 			Filter("Lyrics: Japanese", AdvancedFilterType.Lyrics, OptionalCultureCode.LanguageCode_Japanese),
 			Filter("Lyrics: English", AdvancedFilterType.Lyrics, OptionalCultureCode.LanguageCode_English),
-			Filter("Lyrics: Other/unspecified language", AdvancedFilterType.Lyrics, string.Empty)
+			Filter("Lyrics: Other/unspecified language", AdvancedFilterType.Lyrics, string.Empty),
+			Filter("Has publish date", AdvancedFilterType.HasPublishDate),
 		};
 
 	}

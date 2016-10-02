@@ -94,6 +94,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<T> WhereSongHasPublishDate<T>(this IQueryable<T> query, bool hasPublishDate) where T : ISongLink {
+
+			return hasPublishDate ? query.Where(s => s.Song.PublishDate.DateTime != null) : query.Where(s => s.Song.PublishDate.DateTime == null);
+
+		}
+
 		public static IQueryable<T> WhereSongIsInList<T>(this IQueryable<T> query, int listId)
 			where T : ISongLink {
 			
@@ -174,8 +180,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return WhereSongHasArtistWithType(query, param);
 				}
 				case AdvancedFilterType.HasMultipleVoicebanks: {
-						return query.Where(s => s.Song.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1);
-					}
+					return query.Where(s => s.Song.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1);
+				}
+				case AdvancedFilterType.HasPublishDate: {
+					return query.WhereSongHasPublishDate(!filter.Negate);
+				}
 				case AdvancedFilterType.Lyrics: {
 					var any = filter.Param == AdvancedSearchFilter.Any;
 					var languageCodes = !any ? (filter.Param ?? string.Empty).Split(',') : null;
