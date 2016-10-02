@@ -336,23 +336,20 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual void SetParent(Tag newParent) {
 
+			// New parent is current parent, no change
 			if (Equals(Parent, newParent)) {
 				return;
 			}
 
-			if (Equals(Parent, this)) {
+			if (Equals(this, newParent)) {
 				throw new ArgumentException("Tag can't be a parent of itself!");
 			}
 
-			if (Parent != null) {
-				Parent.Children.Remove(this);
-			}
+			Parent?.Children.Remove(this);
 
 			Parent = newParent;
 
-			if (newParent != null) {
-				newParent.Children.Add(this);
-			}
+			newParent?.Children.Add(this);
 
 		}
 

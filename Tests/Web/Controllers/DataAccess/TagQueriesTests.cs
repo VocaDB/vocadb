@@ -265,6 +265,31 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Merge_Parent() {
+
+			var parent = repository.Save(new Tag("parent"));
+			var target = repository.Save(new Tag("target"));
+			tag.SetParent(parent);
+
+			queries.Merge(tag.Id, target.Id);
+
+			Assert.AreEqual(parent, target.Parent, "Parent was set");
+
+		}
+
+		[TestMethod]
+		public void Merge_Parent_IgnoreSelf() {
+
+			var target = repository.Save(new Tag("target"));
+			tag.SetParent(target);
+
+			queries.Merge(tag.Id, target.Id);
+
+			Assert.IsNull(target.Parent, "Parent was not set");
+
+		}
+
+		[TestMethod]
 		public void Update_Description() {
 
 			var updated = new TagForEditContract(tag, false, permissionContext);
