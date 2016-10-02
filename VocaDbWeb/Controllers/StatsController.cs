@@ -101,23 +101,26 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
+		private Dictionary<int, int> GetRootVoicebanksMap(IDatabaseContext ctx) {
+
+			// Map from child voicebank to base voicebank
+			var baseVoicebankMap = ctx.Query<Artist>()
+				.Where(a => a.BaseVoicebank != null)
+				.ToDictionary(a => a.Id, a => a.BaseVoicebank.Id);
+
+			// Map from child voicebank to root voicebank (A -> B, B -> C to A -> C, B -> C)
+			var rootVoicebankMap = baseVoicebankMap
+				.ToDictionary(a => a.Key, a => GetRootVb(a.Value, baseVoicebankMap));
+
+			return rootVoicebankMap;
+
+		}
+
 		private SongsPerArtistPerDate[] SumToBaseVoicebanks(IDatabaseContext ctx, SongsPerArtistPerDate[] data) {
 
-			var baseVoicebankMap = ctx.Query<Artist>().Where(a => a.BaseVoicebank != null).ToDictionary(a => a.Id, a => a.BaseVoicebank.Id);
+			var baseVoicebankMap = GetRootVoicebanksMap(ctx);
 
-			var changed = true;
-			while (changed) {
-				changed = false;
-				foreach (var vb in baseVoicebankMap) {
-					var rootVb = GetRootVb(vb.Value, baseVoicebankMap);
-					if (vb.Value != rootVb) {
-						baseVoicebankMap[vb.Key] = rootVb;
-						changed = true;
-						break;
-					}
-				}
-			}
-
+			// Group by date, then by root artist
 			var dataDict = data
 				.GroupBy(d => d.Date)
 				.ToDictionary(byDate => byDate.Key, byDate => byDate
@@ -126,6 +129,7 @@ namespace VocaDb.Web.Controllers {
 						.Select(d3 => d3.Count)
 						.Sum()));
 
+			// Select new dictionary with songs grouped by root artists and dates
 			return dataDict.SelectMany(d => d.Value.Select(d2 => new SongsPerArtistPerDate(d.Key, d2.Key, d2.Value))).ToArray();
 
 		}

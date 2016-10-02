@@ -173,7 +173,7 @@ namespace VocaDb.Model.Database.Queries {
 				var factory = new TagFactoryRepository(ctx, ctx.CreateAgentLoginData(PermissionContext));
 				var tag = factory.CreateTag(name);
 
-				ctx.AuditLogger.AuditLog(string.Format("created {0}", tag));
+				ctx.AuditLogger.AuditLog(string.Format("created tag {0}", entryLinkFactory.CreateEntryLink(tag)));
 
 				return new TagBaseContract(tag, PermissionContext.LanguagePreference);
 
