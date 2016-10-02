@@ -713,28 +713,27 @@ namespace VocaDb.Web.Controllers {
 
 		public ActionResult SongsPerVocaloidOverTime() {
 
+			var startYear = 2007;
+
 			var data = repository.HandleQuery(ctx => {
 
 				// Note: the same song may be included multiple times for different artists
 				var vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
 
 				var points = ctx.Query<ArtistForSong>()
-					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && vocalistTypes.Contains(s.Artist.ArtistType))
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
 					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
-					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
 					.GroupBy(s => new {
 						s.Song.PublishDate.DateTime.Value.Year,
-						s.Song.PublishDate.DateTime.Value.Month,
 						ArtistId = s.Artist.Id,
 					})
 					.Select(s => new {
 						s.Key.Year,
-						s.Key.Month,
 						s.Key.ArtistId,
 						Count = s.Count()
 					})
 					.ToArray()
-					.Select(s => new SongsPerArtistPerDate(new DateTime(s.Year, s.Month, 1), s.ArtistId, s.Count))
+					.Select(s => new SongsPerArtistPerDate(new DateTime(s.Year, 1, 1), s.ArtistId, s.Count))
 					.ToArray();
 
 				points = SumToBaseVoicebanks(ctx, points);
