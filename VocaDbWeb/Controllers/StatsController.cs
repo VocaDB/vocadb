@@ -745,7 +745,7 @@ namespace VocaDb.Web.Controllers {
 				// Note: we're filtering artists only after summing to root VBs, because otherwise appends would be ignored
 				var byArtist = points.GroupBy(p => p.ArtistId)
 					.OrderByDescending(byArtist2 => byArtist2.Select(p2 => p2.Count).Sum())
-					.Take(20)
+					.Take(15)
 					.Select(a => Tuple.Create(artists[a.Key], a.ToArray()));
 				return byArtist;
 
