@@ -715,15 +715,14 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult SongsPerVocaloidOverTime() {
+		public ActionResult SongsPerVocaloidOverTime(ArtistType[] vocalistTypes = null, int startYear = 2007) {
 
-			var startYear = 2007;
+			if (vocalistTypes == null)
+				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
 
 			var data = repository.HandleQuery(ctx => {
 
 				// Note: the same song may be included multiple times for different artists
-				var vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
-
 				var points = ctx.Query<ArtistForSong>()
 					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
 					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
