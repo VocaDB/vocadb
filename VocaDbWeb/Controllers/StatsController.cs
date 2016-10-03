@@ -715,7 +715,7 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult SongsPerVocaloidOverTime(ArtistType[] vocalistTypes = null, int startYear = 2007) {
+		public ActionResult SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007) {
 
 			if (vocalistTypes == null)
 				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
@@ -725,6 +725,7 @@ namespace VocaDb.Web.Controllers {
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<ArtistForSong>()
 					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
+					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
 					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
 					.GroupBy(s => new {
 						s.Song.PublishDate.DateTime.Value.Year,
