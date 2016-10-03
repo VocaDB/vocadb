@@ -109,7 +109,7 @@ namespace VocaDb.Model.Database.Queries {
 					continue;
 				}
 							
-				var usage = song.AddTag(tag.ActualTag);
+				var usage = song.AddTag(tag);
 
 				// Only add the vote if the tag usage isn't added yet.
 				if (usage.IsNew) {
@@ -193,7 +193,7 @@ namespace VocaDb.Model.Database.Queries {
 		private Tag[] GetTags(IDatabaseContext<Tag> session, string[] tagNames) {
 
 			var direct = session.Query().WhereHasName(tagNames).ToArray();
-			return direct.Union(direct.Where(t => t.AliasedTo != null).Select(t => t.AliasedTo)).ToArray();
+			return direct;
 
 		}
 

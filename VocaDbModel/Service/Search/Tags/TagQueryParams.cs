@@ -12,8 +12,6 @@ namespace VocaDb.Model.Service.Search.Tags {
 			Paging = paging;
 		}
 
-		public bool AllowAliases { get; set; }
-
 		public bool AllowChildren { get; set; }
 
 		public string CategoryName { get; set; }

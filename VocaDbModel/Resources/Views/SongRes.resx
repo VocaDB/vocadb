@@ -118,8 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NewSongInfo" xml:space="preserve">
-    <value>Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.&lt;br /&gt;&lt;br /&gt;
-Please note that songs without Vocaloid vocals are allowed only if they're on an album together with Vocaloid songs. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not.</value>
+    <value>Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.
+
+Please note that a song without Vocaloid vocals is allowed only if it's released on an album together with Vocaloid songs, or there's multiple Vocaloid covers of that song. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not.</value>
   </data>
   <data name="RankingsTitle" xml:space="preserve">
     <value>VocaDB song rankings</value>

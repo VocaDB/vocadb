@@ -134,6 +134,9 @@ body {
   margin-bottom: 10px;
   font-size: 24px;
 }
+.pre-line {
+  white-space: pre-line;
+}
 .entry-field-label-col {
   min-width: 100px;
 }

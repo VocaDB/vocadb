@@ -44,10 +44,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 				AdditionalNames = tag.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.AliasedTo) && tag.AliasedTo != null) {
-				AliasedTo = new TagBaseContract(tag.AliasedTo, languagePreference, includeAdditionalNames);
-			}
-
 			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
 				Description = tag.Description[languagePreference];
 			}

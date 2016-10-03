@@ -37,15 +37,6 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<Tag> WhereAllowAliases(this IQueryable<Tag> query, bool allowAliases = true) {
-
-			if (allowAliases)
-				return query;
-
-			return query.Where(t => t.AliasedTo == null);
-
-		}
-
 		public static IQueryable<Tag> WhereAllowChildren(this IQueryable<Tag> query, bool allowChildren = true) {
 
 			if (allowChildren)

@@ -9,8 +9,6 @@ namespace VocaDb.Model.Domain.Tags {
 		public TagDiff(bool isSnapShot) 
 			: base(isSnapShot) {}
 
-		public EnumFieldAccessor<TagEditableFields> AliasedTo => Field(TagEditableFields.AliasedTo);
-
 		public EnumFieldAccessor<TagEditableFields> CategoryName => Field(TagEditableFields.CategoryName);
 
 		public EnumFieldAccessor<TagEditableFields> Description => Field(TagEditableFields.Description);

@@ -30,7 +30,6 @@ namespace VocaDb.Tests.Domain.Tags {
 
 		}
 
-		private Tag aliasedTag;
 		private TagManager<SongTagUsage> manager; 
 		private Tag tag;
 		private TagFactory tagFactory;
@@ -45,29 +44,8 @@ namespace VocaDb.Tests.Domain.Tags {
 			
 			tagFactory = new TagFactory();
 			tag = new Tag("drumnbass");
-			aliasedTag = new Tag("Drum_and_bass") { AliasedTo = tag };
 			manager = new TagManager<SongTagUsage>();
 			user = new User();
-
-		}
-
-		[TestMethod]
-		public void Sync_ReplaceWithAlias() {
-
-			SyncVotes(aliasedTag);
-
-			Assert.AreEqual(1, manager.Tags.Count(), "one tag");
-			Assert.AreEqual(tag, manager.Tags.First(), "tag is the actual one");
-
-		}
-
-		[TestMethod]
-		public void Sync_BothAliasAndActual() {
-
-			SyncVotes(tag, aliasedTag);
-
-			Assert.AreEqual(1, manager.Tags.Count(), "one tag");
-			Assert.AreEqual(tag, manager.Tags.First(), "tag is the actual one");
 
 		}
 

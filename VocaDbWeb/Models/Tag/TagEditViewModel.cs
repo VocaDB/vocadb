@@ -21,7 +21,6 @@ namespace VocaDb.Web.Models.Tag {
 
 			ParamIs.NotNull(() => contract);
 
-			AliasedTo = contract.AliasedTo;
 			CategoryName = contract.CategoryName;
 			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Description = contract.Description;
@@ -37,9 +36,6 @@ namespace VocaDb.Web.Models.Tag {
 		}
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
-
-		[FromJson]
-		public TagBaseContract AliasedTo { get; set; }
 
 		public bool CanDelete { get; set; }
 
@@ -119,7 +115,6 @@ namespace VocaDb.Web.Models.Tag {
 				Id = this.Id,
 				Name = this.Name,
 				Names = Names,
-				AliasedTo = this.AliasedTo,
 				CategoryName = this.CategoryName ?? string.Empty,
 				DefaultNameLanguage = DefaultNameLanguage,
 				Description = this.Description,

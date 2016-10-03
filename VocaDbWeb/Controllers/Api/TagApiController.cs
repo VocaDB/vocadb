@@ -155,7 +155,6 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Find tags.
 		/// </summary>
 		/// <param name="query">Tag name query (optional).</param>
-		/// <param name="allowAliases">Whether to allow tag alises. If this is false, alises will not be included.</param>
 		/// <param name="allowChildren">Whether to allow child tags. If this is false, only root tags (that aren't children of any other tag) will be included.</param>
 		/// <param name="categoryName">Filter tags by category (optional). If specified, this must be an exact match (case insensitive).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
@@ -176,7 +175,6 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("")]
 		public PartialFindResult<TagForApiContract> GetList(
 			string query = "",
-			bool allowAliases = false,
 			bool allowChildren = true,
 			string categoryName = "",
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -190,7 +188,6 @@ namespace VocaDb.Web.Controllers.Api {
 			var ssl = WebHelper.IsSSL(Request);
 			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, preferAccurateMatches),
 				new PagingProperties(start, maxResults, getTotalCount)) {
-					AllowAliases = allowAliases,
 					AllowChildren = allowChildren,
 					CategoryName = categoryName,
 					SortRule = sort ?? TagSortRule.Name

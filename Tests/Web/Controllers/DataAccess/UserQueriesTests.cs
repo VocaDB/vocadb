@@ -398,9 +398,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var fakeTagMock = new Mock<Tag>();
 			var fakeTag = fakeTagMock.Object; 
-			var vocarock = new Tag("Vocarock", TagCommonCategoryNames.Genres) { Parent = fakeTag, AliasedTo = fakeTag };
-			var electronic = new Tag("Electronic", TagCommonCategoryNames.Genres) { Parent = fakeTag, AliasedTo = fakeTag };
-			var trance = new Tag("Trance", TagCommonCategoryNames.Genres) { Parent = electronic, AliasedTo = fakeTag };
+			var vocarock = new Tag("Vocarock", TagCommonCategoryNames.Genres) { Parent = fakeTag };
+			var electronic = new Tag("Electronic", TagCommonCategoryNames.Genres) { Parent = fakeTag };
+			var trance = new Tag("Trance", TagCommonCategoryNames.Genres) { Parent = electronic };
 			repository.Save(vocarock, electronic, trance);
 			repository.SaveNames(vocarock, electronic, trance);
 

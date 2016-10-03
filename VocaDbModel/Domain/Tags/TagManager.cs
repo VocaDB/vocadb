@@ -76,7 +76,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual Tag[] SyncVotes(User user, Tag[] tags, ITagUsageFactory<T> tagUsageFactory,
 			bool onlyAdd = false) {
 
-			var actualTags = tags.Select(t => t.ActualTag).Distinct().ToArray();
+			var actualTags = tags.Distinct().ToArray();
 			var tagUsagesDiff = CollectionHelper.Diff(Usages, actualTags, (t1, t2) => t1.Tag.Equals(t2));
 			var modifiedTags = new List<Tag>(tagUsagesDiff.Added.Length + tagUsagesDiff.Removed.Length + tagUsagesDiff.Unchanged.Length);
 

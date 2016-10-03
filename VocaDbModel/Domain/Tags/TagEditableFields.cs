@@ -11,6 +11,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		Nothing			= 0,
 
+		[Obsolete]
 		AliasedTo		= 1,
 
 		CategoryName	= 2,

@@ -115,20 +115,9 @@
 				<p>@Res.Translations: @Model.Translations</p>
 			}
 
-			@if (Model.AliasedTo != null) {
-				<p>@Res.AliasedTo @Html.ActionLink(Model.AliasedTo.Name, "DetailsById", new { id = Model.AliasedTo.Id, slug = Model.AliasedTo.UrlSlug })</p>
-			}
-
-			@if (Model.Aliases.Any() || !string.IsNullOrEmpty(Model.AdditionalNames)) {
+			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
 				<p>
-					@Res.Aliases:
-					@Html.LinkList(Model.Aliases, alias => Html.ActionLink(alias.Name, "DetailsById", new { id = alias.Id, slug = alias.UrlSlug }))
-					@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
-						if (Model.Aliases.Any()) {
-							@:, 
-						}
-						@Model.AdditionalNames
-					}
+					@Res.Aliases: @Model.AdditionalNames
 				</p>
 			}
 

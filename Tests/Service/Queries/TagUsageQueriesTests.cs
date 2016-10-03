@@ -108,25 +108,6 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		/// <summary>
-		/// Add (base) tag based on alias.
-		/// </summary>
-		[TestMethod]
-		public void AddAlias() {
-
-			var parentTag = repository.Save(CreateEntry.Tag("vocarock"));
-			var aliasTag = repository.Save(CreateEntry.Tag("rock"));
-			aliasTag.AliasedTo = parentTag;
-
-			// rock is aliased to vocarock, so vocarock gets added instead
-			AddTags(entry.Id, Contract(aliasTag.Id));
-
-			var entryTags = entry.Tags.Tags.ToArray();
-			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "vocarock"), "vocarock tag is added");
-
-		}
-
-		/// <summary>
 		/// Add renamed tag by name
 		/// </summary>
 		[TestMethod]

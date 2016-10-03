@@ -35,7 +35,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			AdditionalNames = tag.Names.AdditionalNamesString;
 			Translations = tag.Names.GetTranslationsString(languagePreference);
-			Aliases = tag.Aliases.Select(a => new TagBaseContract(a, languagePreference)).ToArray();
 
 			Albums = albums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
 			AlbumCount = albumCount;
@@ -74,8 +73,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public int AlbumCount { get; set; }
 
 		public int ArtistCount { get; set; }
-
-		public TagBaseContract[] Aliases { get; set; }
 
 		public AlbumContract[] Albums { get; set; }
 

@@ -5,8 +5,6 @@ module vdb.dataContracts {
 
 		additionalNames?: string;
 
-		aliasedTo: TagBaseContract;
-
 		categoryName: string;
 
 		defaultNameLanguage: string;

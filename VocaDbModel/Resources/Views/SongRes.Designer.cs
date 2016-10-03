@@ -61,8 +61,9 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please make sure the song you&apos;re about to submit hasn&apos;t been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.&lt;br /&gt;&lt;br /&gt;
-        ///Please note that songs without Vocaloid vocals are allowed only if they&apos;re on an album together with Vocaloid songs. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not..
+        ///   Looks up a localized string similar to Please make sure the song you&apos;re about to submit hasn&apos;t been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.
+        ///
+        ///Please note that a song without Vocaloid vocals is allowed only if it&apos;s released on an album together with Vocaloid songs, or there&apos;s multiple Vocaloid covers of that song. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not..
         /// </summary>
         internal static string NewSongInfo {
             get {

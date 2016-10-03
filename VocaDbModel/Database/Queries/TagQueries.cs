@@ -82,7 +82,7 @@ namespace VocaDb.Model.Database.Queries {
 			if (ignoreSelf != null && Tag.Equals(ignoreSelf, tag))
 				return null;
 
-			return ctx.Query().FirstOrDefault(t => t.AliasedTo == null && t.Id == tag.Id);
+			return ctx.Get(tag.Id);
 
 		}
 
@@ -287,9 +287,6 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(t => !t.Entry.Deleted)
 					.WhereEntryNameIs(textQuery);
 
-				if (!allowAliases)
-					q = q.Where(t => t.Entry.AliasedTo == null);
-
 				var tags = q
 					.Select(t => t.Value)
 					.OrderBy(t => t)
@@ -362,7 +359,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(ctx => {
 
 				var tags = ctx.Query()
-					.Where(t => t.AliasedTo == null && !t.Deleted)
+					.Where(t => !t.Deleted)
 					.OrderBy(t => t.CategoryName)
 					.ThenByEntryName(PermissionContext.LanguagePreference)
 					.GroupBy(t => t.CategoryName)
@@ -669,11 +666,6 @@ namespace VocaDb.Model.Database.Queries {
 				permissionContext.VerifyEntryEdit(tag);
 
 				var diff = new TagDiff();
-
-				if (!Tag.Equals(tag.AliasedTo, contract.AliasedTo)) {
-					diff.AliasedTo.Set();
-					tag.AliasedTo = GetRealTag(ctx, contract.AliasedTo, tag);
-				}
 
 				if (tag.CategoryName != contract.CategoryName)
 					diff.CategoryName.Set();

@@ -19,10 +19,8 @@ namespace VocaDb.Model.Mapping.Tags {
 			Map(m => m.UsageCount).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 
-			References(m => m.AliasedTo).Nullable();
 			References(m => m.Parent).Nullable();
 
-			HasMany(m => m.Aliases).KeyColumn("[AliasedTo]").Inverse();
 			HasMany(m => m.AllAlbumTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllArtistTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllSongTagUsages).Cascade.AllDeleteOrphan().Inverse();

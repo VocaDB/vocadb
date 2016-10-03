@@ -69,27 +69,6 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		/// <summary>
-		/// Actual tag to be used for this tag name.
-		/// If this tag has been aliased to some other tag, that tag name will be used.
-		/// </summary>
-		[Obsolete("Tag aliases are now just names")]
-		public virtual Tag ActualTag {
-			get { return AliasedTo ?? this; }
-		}
-
-		[Obsolete("Tag aliases are now just names")]
-		public virtual Tag AliasedTo { get; set; }
-
-		[Obsolete("Tag aliases are now just names")]
-		public virtual ISet<Tag> Aliases {
-			get { return aliases; }
-			set {
-				ParamIs.NotNull(() => value);
-				aliases = value;
-			}
-		}
-
-		/// <summary>
 		/// List of all album tag usages (including deleted albums) for this tag.
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
@@ -300,10 +279,6 @@ namespace VocaDb.Model.Domain.Tags {
 
 			foreach (var child in Children) {
 				child.Parent = null;
-			}
-
-			foreach (var alias in Aliases) {
-				alias.AliasedTo = null;
 			}
 
 			while (RelatedTags.Any())

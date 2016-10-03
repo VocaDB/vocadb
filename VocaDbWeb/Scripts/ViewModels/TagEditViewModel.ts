@@ -11,7 +11,6 @@ module vdb.viewModels {
 			userRepository: vdb.repositories.UserRepository,
 			contract: dc.TagApiContract) {
 
-			this.aliasedTo = ko.observable(contract.aliasedTo);
 			this.categoryName = ko.observable(contract.categoryName);
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
 			this.description = new globalization.EnglishTranslatedStringEditViewModel(contract.translatedDescription);
@@ -26,7 +25,6 @@ module vdb.viewModels {
 				_.isEmpty(this.webLinks.webLinks())
 			);
 
-			this.aliasedToName = ko.computed(() => this.aliasedTo() ? this.aliasedTo().name : null);
 			this.parentName = ko.computed(() => this.parent() ? this.parent().name : null);
 
 			this.hasValidationErrors = ko.computed(() =>
@@ -37,8 +35,6 @@ module vdb.viewModels {
 
 		}
 
-		public aliasedTo: KnockoutObservable<dc.TagBaseContract>;
-		public aliasedToName: KnockoutComputed<string>;
 		public categoryName: KnockoutObservable<string>;
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public description: globalization.EnglishTranslatedStringEditViewModel;

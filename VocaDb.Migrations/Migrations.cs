@@ -4,6 +4,20 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201610032100)]
+	public class TagRemoveAliasedTo : Migration {
+
+		public override void Up() {
+			Delete.ForeignKey("FK_Tags_Tags").OnTable(TableNames.Tags);
+			Delete.Column("AliasedTo").FromTable(TableNames.Tags);
+		}
+
+		public override void Down() {
+			Create.Column("AliasedTo").OnTable(TableNames.Tags).AsInt32().Nullable().ForeignKey(TableNames.Tags, "Id");
+		}
+
+	}
+
 	[Migration(201609272100)]
 	public class UserNewCryptoAlgo : Migration {
 

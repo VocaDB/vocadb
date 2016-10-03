@@ -10,7 +10,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 	public class TagContract : TagBaseContract {
 
 		public TagContract() {
-			AliasedTo = null;
 		}
 
 		public TagContract(Tag tag, ContentLanguagePreference languagePreference, bool includeAdditionalNames = false)
@@ -18,7 +17,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			ParamIs.NotNull(() => tag);
 
-			AliasedTo = tag.AliasedTo != null ? new TagBaseContract(tag.AliasedTo, languagePreference) : null;
 			CategoryName = tag.CategoryName;
 			CreateDate = tag.CreateDate;
 			Deleted = tag.Deleted;
@@ -29,10 +27,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Version = tag.Version;
 
 		}
-
-		[DataMember]
-		[Obsolete("Tag aliases are now just names")]
-		public TagBaseContract AliasedTo { get; set; }
 
 		[DataMember]
 		public string CategoryName { get; set; }
