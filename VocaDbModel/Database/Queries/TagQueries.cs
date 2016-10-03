@@ -511,7 +511,7 @@ namespace VocaDb.Model.Database.Queries {
 				diff.Description.Set(target.Description.CopyIfEmpty(source.Description));
 
 				// Parent tag
-				if (target.Parent == null && source.Parent != null && !Tag.Equals(source.Parent, target)) {
+				if (target.Parent == null && source.Parent != null && target.IsValidParent(source.Parent)) {
 					target.SetParent(source.Parent);
 					diff.Parent.Set();
 				}

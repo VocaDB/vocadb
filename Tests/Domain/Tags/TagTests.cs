@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Tests.TestData;
@@ -12,11 +13,16 @@ namespace VocaDb.Tests.Domain.Tags {
 	[TestClass]
 	public class TagTests {
 
+		private readonly Tag tag;
+		private readonly Tag tag2;
+
+		public TagTests() {
+			tag = CreateEntry.Tag("rock");
+			tag2 = CreateEntry.Tag("metal");
+		}
+
 		[TestMethod]
 		public void AddRelatedTag() {
-
-			var tag = CreateEntry.Tag("rock");
-			var tag2 = CreateEntry.Tag("metal");
 
 			tag.AddRelatedTag(tag2);
 
@@ -28,8 +34,7 @@ namespace VocaDb.Tests.Domain.Tags {
 		[TestMethod]
 		public void Delete() {
 
-			var tag = CreateEntry.Tag("rock");
-			var relatedTag = CreateEntry.Tag("metal");
+			var relatedTag = tag2;
 			tag.AddRelatedTag(relatedTag);
 
 			tag.Delete();
@@ -39,22 +44,43 @@ namespace VocaDb.Tests.Domain.Tags {
 		}
 
 		[TestMethod]
+		public void SetParent() {
+
+			tag.SetParent(tag2);
+
+			Assert.AreEqual(tag2, tag.Parent, "Parent");
+			Assert.IsTrue(tag2.Children.Contains(tag), "Child tag was added for parent tag");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public void SetParent_Self() {
+			tag.SetParent(tag);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public void SetParent_Ancestor() {
+			tag.SetParent(tag2);
+			tag2.SetParent(tag); // Circular parenthood not allowed
+		}
+
+		[TestMethod]
 		public void SyncRelatedTags() {
 
-			var tag1 = CreateEntry.Tag("rock");
-			var tag2 = CreateEntry.Tag("metal");
 			var tag3 = CreateEntry.Tag("power metal");
-			var repository = new FakeTagRepository(tag1, tag2, tag3);
+			var repository = new FakeTagRepository(tag, tag2, tag3);
 
-			tag1.AddRelatedTag(tag2);
+			tag.AddRelatedTag(tag2);
 
-			var result = tag1.SyncRelatedTags(new[] { tag2, tag3 }, repository.Load);
+			var result = tag.SyncRelatedTags(new[] { tag2, tag3 }, repository.Load);
 
 			Assert.AreEqual(1, result.Added.Length, "Number of added items");
 			Assert.AreEqual(1, result.Unchanged.Length, "Number of unchanged items");
 			Assert.AreEqual(0, result.Removed.Length, "Number of removed items");
 
-			Assert.AreEqual(2, tag1.RelatedTags.Count, "Number of related tags for tag1");
+			Assert.AreEqual(2, tag.RelatedTags.Count, "Number of related tags for tag1");
 			Assert.AreEqual(1, tag2.RelatedTags.Count, "Number of related tags for tag2");
 
 		}

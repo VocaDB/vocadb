@@ -334,6 +334,18 @@ namespace VocaDb.Model.Domain.Tags {
 			return Id.GetHashCode();
 		}
 
+		public virtual bool HasAncestorTag(Tag tag) {
+			return Parent != null && (Parent.Equals(tag) || Parent.HasAncestorTag(tag));
+		}
+
+		/// <summary>
+		/// Tests whether a tag is a valid parent for this tag.
+		/// </summary>
+		public virtual bool IsValidParent(Tag tag) {
+			return tag == null || (!tag.Equals(this) && !tag.HasAncestorTag(this));
+
+		}
+
 		public virtual void SetParent(Tag newParent) {
 
 			// New parent is current parent, no change
@@ -341,7 +353,7 @@ namespace VocaDb.Model.Domain.Tags {
 				return;
 			}
 
-			if (Equals(this, newParent)) {
+			if (!IsValidParent(newParent)) {
 				throw new ArgumentException("Tag can't be a parent of itself!");
 			}
 
