@@ -86,6 +86,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Filter by a comma-separated list of purchase statuses (optional). Possible values are Nothing, Wishlisted, Ordered, Owned, and all combinations of these.
 		/// </param>
 		/// <param name="releaseEventId">Filter by release event. Optional.</param>
+		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -105,6 +106,7 @@ namespace VocaDb.Web.Controllers.Api {
 			int? artistId = null,
 			[FromUri] PurchaseStatuses? purchaseStatuses = null,
 			int releaseEventId = 0,
+			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, 
 			int maxResults = defaultMax,
 			bool getTotalCount = false, 
@@ -124,7 +126,8 @@ namespace VocaDb.Web.Controllers.Api {
 				ReleaseEventId = releaseEventId,
 				Sort = sort ?? AlbumSortRule.Name,
 				TagId = tagId ?? 0,
-				Tag = tag
+				Tag = tag,
+				AdvancedFilters = advancedFilters
 			};
 
 			var albums = queries.GetAlbumCollection(queryParams, (afu, shouldShowCollectionStatus) => 

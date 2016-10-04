@@ -739,7 +739,8 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereHasArtist(queryParams.ArtistId)
 					.WhereHasReleaseEvent(queryParams.ReleaseEventId)
 					.WhereAlbumHasTag(queryParams.TagId)
-					.WhereAlbumHasTag(queryParams.Tag);
+					.WhereAlbumHasTag(queryParams.Tag)
+					.WhereAlbumMatchFilters(queryParams.AdvancedFilters);
 
 				var albums = query
 					.OrderBy(queryParams.Sort, PermissionContext.LanguagePreference)

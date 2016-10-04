@@ -44,6 +44,7 @@ module vdb.repositories {
 			artistId: number,
 			purchaseStatuses: string,
 			releaseEventId: number,
+			advancedFilters: viewModels.search.AdvancedSearchFilter[],
 			sort: string,
 			callback) => {
 
@@ -58,7 +59,8 @@ module vdb.repositories {
 				fields: "AdditionalNames,MainPicture",
 				lang: lang,
 				nameMatchMode: 'Auto',
-				sort: sort
+				sort: sort,
+				advancedFilters: advancedFilters
 			};
 
 			$.getJSON(url, data, callback);

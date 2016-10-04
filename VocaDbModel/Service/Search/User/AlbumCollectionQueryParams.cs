@@ -18,6 +18,8 @@ namespace VocaDb.Model.Service.Search.User {
 
 		}
 
+		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+
 		public int ArtistId { get; set; }
 
 		public PurchaseStatus[] FilterByStatus { get; set; }

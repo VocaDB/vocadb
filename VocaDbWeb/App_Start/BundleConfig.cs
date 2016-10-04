@@ -436,6 +436,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
+				"~/Scripts/ViewModels/Search/AdvancedSearchFilter.js",
+				"~/Scripts/ViewModels/Search/AdvancedSearchFilters.js",
 				"~/Scripts/ViewModels/User/AlbumCollectionViewModel.js"
 			));
 
