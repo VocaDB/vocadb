@@ -14,17 +14,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 	public class TagDetailsContract : TagContract, IEntryWithStatus {
 
-		string IEntryBase.DefaultName {
-			get { return Name; }
-		}
+		string IEntryBase.DefaultName => Name;
 
-		EntryType IEntryBase.EntryType {
-			get { return EntryType.Tag; }
-		}
-
-		int IEntryBase.Version {
-			get { return 0; }
-		}
+		EntryType IEntryBase.EntryType => EntryType.Tag;
 
 		public TagDetailsContract() { }
 
@@ -68,8 +60,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		}
 
-		public string AdditionalNames { get; set; }
-
 		public int AlbumCount { get; set; }
 
 		public int ArtistCount { get; set; }
@@ -82,7 +72,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public int CommentCount { get; set; }
 
-		public EnglishTranslatedString Description { get; set; }
+		public new EnglishTranslatedString Description { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
 

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
-using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
@@ -30,7 +28,6 @@ namespace VocaDb.Model.DataContracts.Users {
 			Location = user.Options.Location;
 			KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
 			OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
-			Supporter = user.Options.Supporter;
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 
@@ -84,8 +81,6 @@ namespace VocaDb.Model.DataContracts.Users {
 		public SongListContract[] SongLists { get; set; }
 
 		public int SubmitCount { get; set; }
-
-		public bool Supporter { get; set; }
 
 		public int TagVotes { get; set; }
 

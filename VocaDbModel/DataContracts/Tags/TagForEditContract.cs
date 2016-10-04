@@ -36,7 +36,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[DataMember]
-		public EnglishTranslatedStringContract Description { get; set; }
+		public new EnglishTranslatedStringContract Description { get; set; }
 
 		[DataMember]
 		public bool IsEmpty { get; set; }
