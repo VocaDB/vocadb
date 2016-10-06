@@ -13,7 +13,7 @@ module vdb.tests.viewModels {
     var repository: sup.FakeUserRepository;
 
     var createMessage = (id: number, subject: string, sender?: dc.user.UserApiContract) => {
-        return { createdFormatted: "2039.3.9", highPriority: false, id: id, read: false, sender: sender, receiver: receiver, subject: subject }
+		return { createdFormatted: "2039.3.9", highPriority: false, id: id, inbox: 'Received', read: false, sender: sender, receiver: receiver, subject: subject }
     };
 
     var createViewModel = () => {
@@ -34,7 +34,7 @@ module vdb.tests.viewModels {
             };
 
             repository = new sup.FakeUserRepository();
-            repository.message = { body: "Message body", createdFormatted: null, highPriority: false, id: 39, read: false, receiver: null, sender: null, subject: 'New message' };
+            repository.message = { body: "Message body", createdFormatted: null, highPriority: false, id: 39, inbox: 'Received', read: false, receiver: null, sender: null, subject: 'New message' };
 			repository.messages = data.items;
 
         }

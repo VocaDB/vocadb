@@ -20,8 +20,8 @@ module vdb.tests.viewModels {
             entryReportRepo.entryReportCount = 39;
             userRepo = new sup.FakeUserRepository();
             userRepo.messages = [
-				{ createdFormatted: "2039.3.9", highPriority: false, id: 39, read: false, receiver: null, subject: "New message!" },
-				{ createdFormatted: "2039.3.9", highPriority: false, id: 40, read: false, receiver: null, subject: "Another message" }
+				{ createdFormatted: "2039.3.9", highPriority: false, id: 39, inbox: 'Received', read: false, receiver: null, subject: "New message!" },
+				{ createdFormatted: "2039.3.9", highPriority: false, id: 40, inbox: 'Received', read: false, receiver: null, subject: "Another message" }
 			];
 
         }
