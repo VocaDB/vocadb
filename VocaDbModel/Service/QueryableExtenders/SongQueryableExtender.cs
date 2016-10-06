@@ -123,6 +123,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		} 
 
+		public static IQueryable<Song> WhereHasLyricsContent(this IQueryable<Song> query, string text) {
+
+			if (string.IsNullOrEmpty(text))
+				return query;
+
+			return query.Where(s => s.Lyrics.Any(l => l.Value.Contains(text)));
+
+		}
+
 		/// <summary>
 		/// Filters a song query by a name query.
 		/// </summary>
@@ -355,6 +364,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					var any = filter.Param == AdvancedSearchFilter.Any;
 					var languageCodes = !any ? (filter.Param ?? string.Empty).Split(',') : null;
 					return WhereHasLyrics(query, languageCodes, any);
+				}
+				case AdvancedFilterType.LyricsContent: {
+					return query.WhereHasLyricsContent(filter.Param);
 				}
 			}
 

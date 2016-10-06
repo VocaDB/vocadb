@@ -52,6 +52,8 @@
 		/// </summary>
 		Lyrics,
 
+		LyricsContent
+
 	}
 
 }
