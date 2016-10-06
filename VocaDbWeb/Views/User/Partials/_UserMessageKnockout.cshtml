@@ -23,6 +23,6 @@
 	</div>
 	<p class="messageContent" data-bind="markdown: $root.selectedMessageBody"></p>
 
-	<a data-bind="visible: sender, jqButton: { icon: 'ui-icon-arrowreturnthick-1-w' }, click: $root.reply" id="replyMessage" href="#">@ViewRes.User.MessagesStrings.Reply</a>
+	<a data-bind="visible: sender && inbox !== 'Sent', jqButton: { icon: 'ui-icon-arrowreturnthick-1-w' }, click: $root.reply" id="replyMessage" href="#">@ViewRes.User.MessagesStrings.Reply</a>
 
 </div>

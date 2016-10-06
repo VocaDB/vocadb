@@ -176,7 +176,8 @@ module vdb.viewModels {
 		constructor(data: dc.UserMessageSummaryContract) {
             this.created = data.createdFormatted;
             this.highPriority = data.highPriority;
-            this.id = data.id;
+			this.id = data.id;
+			this.inbox = data.inbox;
             this.read = ko.observable(data.read);
             this.receiver = data.receiver;
 			this.sender = data.sender;
@@ -190,6 +191,8 @@ module vdb.viewModels {
         highPriority: boolean;
 
 		id: number;
+
+		inbox: string;
 
         read: KnockoutObservable<boolean>;
 

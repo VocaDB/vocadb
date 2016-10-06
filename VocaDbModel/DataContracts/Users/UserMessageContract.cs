@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users {
@@ -22,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			CreatedFormatted = Created.ToUniversalTime().ToString("g");
 			HighPriority = message.HighPriority;
 			Id = message.Id;
+			Inbox = message.Inbox;
 			Read = message.Read;
 			Receiver = new UserForApiContract(message.Receiver, iconFactory, UserOptionalFields.MainPicture);
 			Sender = (message.Sender != null ? new UserForApiContract(message.Sender, iconFactory, UserOptionalFields.MainPicture) : null);
@@ -43,6 +46,10 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public int Id { get; set; }
+
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public UserInboxType Inbox { get; set; }
 
 		[DataMember]
 		public bool Read { get; set; }

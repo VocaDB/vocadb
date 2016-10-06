@@ -13,7 +13,9 @@ module vdb.dataContracts {
 
         highPriority: boolean;
 
-        id: number;
+		id: number;
+
+		inbox: string;
 
         read: boolean;
 
