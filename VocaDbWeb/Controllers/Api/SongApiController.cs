@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
@@ -474,6 +475,17 @@ namespace VocaDb.Web.Controllers.Api {
 		public CommentForApiContract PostNewComment(int songId, CommentForApiContract contract) {
 			
 			return queries.CreateComment(songId, contract);
+
+		}
+
+		[Route("")]
+		[Authorize]
+		[HttpPost]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[EnableCors(origins: "*", headers: "*", methods: "post", SupportsCredentials = true)]
+		public SongContract PostNewSong(CreateSongContract contract) {
+
+			return queries.Create(contract);
 
 		}
 
