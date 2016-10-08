@@ -138,6 +138,20 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Gets information about the currently logged in user.
+		/// </summary>
+		/// <param name="fields">Optional fields.</param>
+		/// <returns>User details.</returns>
+		[Route("current")]
+		[Authorize]
+		[EnableCors(origins: "*", headers: "*", methods: "get", SupportsCredentials = true)]
+		public UserForApiContract GetCurrent(UserOptionalFields fields = UserOptionalFields.None) {
+
+			return queries.GetUser(permissionContext.LoggedUserId, fields);
+
+		}
+
+		/// <summary>
 		/// Gets a list of artists followed by a user.
 		/// </summary>
 		/// <param name="query">Artist name query (optional).</param>

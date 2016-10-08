@@ -1000,6 +1000,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public UserForApiContract GetUser(int id, UserOptionalFields fields) {
+			return HandleQuery(ctx => new UserForApiContract(ctx.Load<User>(id), userIconFactory, fields));
+		}
+
 		public UserDetailsContract GetUserByNameNonSensitive(string name) {
 
 			if (string.IsNullOrEmpty(name))
