@@ -25,6 +25,7 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Highcharts;
+using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
@@ -482,7 +483,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Authorize]
 		[HttpPost]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		[EnableCors(origins: "*", headers: "*", methods: "post", SupportsCredentials = true)]
+		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
 		public SongContract PostNewSong(CreateSongContract contract) {
 
 			return queries.Create(contract);
