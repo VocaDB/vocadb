@@ -19,7 +19,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public string ReprintPVUrl { get; set; }
 
 		public SongType SongType { get; set; }
-		
+
+		public string UpdateNotes { get; set; }
+
 	}
 
 }

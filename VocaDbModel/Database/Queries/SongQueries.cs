@@ -353,7 +353,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				song.UpdateArtistString();
 
-				var archived = Archive(ctx, song, diff, SongArchiveReason.Created);
+				var archived = Archive(ctx, song, diff, SongArchiveReason.Created, contract.UpdateNotes ?? string.Empty);
 				ctx.Update(song);
 
 				ctx.AuditLogger.AuditLog(string.Format("created song {0} ({1})", entryLinkFactory.CreateEntryLink(song), song.SongType));
