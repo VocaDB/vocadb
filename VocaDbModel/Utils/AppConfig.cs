@@ -62,6 +62,8 @@ namespace VocaDb.Model.Utils {
 
 		public static bool AllowCustomTracks => Val("AllowCustomTracks", false);
 
+		public static string AllowedCorsOrigins => Val("AllowedCorsOrigins") ?? string.Empty;
+
 		/// <summary>
 		/// Allow repeating producer as performer.
 		/// This means, if a person appears in both producing and performing (vocalist) roles, they will be duplicated.

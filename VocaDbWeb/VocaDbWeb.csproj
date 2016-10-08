@@ -1021,6 +1021,7 @@
     <Compile Include="Code\Highcharts\Series.cs" />
     <Compile Include="Code\Highcharts\SeriesType.cs" />
     <Compile Include="Code\Highcharts\Title.cs" />
+    <Compile Include="Code\WebApi\AuthenticateCorsApi.cs" />
     <Compile Include="Code\WebApi\ObjectNotFoundExceptionFilterAttribute.cs" />
     <Compile Include="Code\WebApi\RestrictBannedIPAttribute.cs" />
     <Compile Include="Code\WebApi\UnhandledExceptionLogger.cs" />

@@ -28,6 +28,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Code.Exceptions;
+using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
@@ -142,9 +143,13 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="fields">Optional fields.</param>
 		/// <returns>User details.</returns>
+		/// <remarks>
+		/// Requires login information.
+		/// This API supports CORS, and is restricted to specific origins.
+		/// </remarks>
 		[Route("current")]
 		[Authorize]
-		[EnableCors(origins: "*", headers: "*", methods: "get", SupportsCredentials = true)]
+		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Get)]
 		public UserForApiContract GetCurrent(UserOptionalFields fields = UserOptionalFields.None) {
 
 			return queries.GetUser(permissionContext.LoggedUserId, fields);
