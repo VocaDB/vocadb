@@ -399,11 +399,12 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual ArtistForSong AddArtist(Artist artist) {
+			return AddArtist(artist, false, ArtistRoles.Default);
+		}
 
+		public virtual ArtistForSong AddArtist(Artist artist, bool support, ArtistRoles roles) {
 			ParamIs.NotNull(() => artist);
-
-			return artist.AddSong(this);
-
+			return artist.AddSong(this, support, roles);
 		}
 
 		public virtual ArtistForSong AddArtist(string name, bool isSupport, ArtistRoles roles) {

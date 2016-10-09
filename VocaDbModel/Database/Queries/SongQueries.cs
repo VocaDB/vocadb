@@ -324,9 +324,15 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.Save(song);
 
 				foreach (var artistContract in contract.Artists) {
-					var artist = ctx.OfType<Artist>().Load(artistContract.Id);
-					if (!song.HasArtist(artist))
-						ctx.OfType<ArtistForSong>().Save(song.AddArtist(artist));
+
+					if (artistContract.Artist != null) {
+						var artist = ctx.OfType<Artist>().Load(artistContract.Artist.Id);
+						if (!song.HasArtist(artist))
+							ctx.OfType<ArtistForSong>().Save(song.AddArtist(artist, artistContract.IsSupport, artistContract.Roles));
+					} else {
+						ctx.OfType<ArtistForSong>().Save(song.AddArtist(artistContract.Name, artistContract.IsSupport, artistContract.Roles));
+					}
+
 				}
 
 				diff.Artists = contract.Artists.Any();

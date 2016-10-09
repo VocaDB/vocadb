@@ -119,8 +119,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 					new LocalizedStringContract("Resistance", ContentLanguageSelection.English)
 				},
 				Artists = new[] {
-					new ArtistContract(producer, ContentLanguagePreference.Default),
-					new ArtistContract(vocalist, ContentLanguagePreference.Default), 
+					new ArtistForSongContract { Artist = new ArtistContract(producer, ContentLanguagePreference.Default) },
+					new ArtistForSongContract { Artist = new ArtistContract(vocalist, ContentLanguagePreference.Default) }, 
 				},
 				PVUrl = "http://test.vocadb.net/"
 			};

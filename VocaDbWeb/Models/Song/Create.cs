@@ -16,18 +16,15 @@ namespace VocaDb.Web.Models.Song {
 	public class Create {
 
 		public Create() {
-			Artists = new List<ArtistContract>();
-			Draft = false;
-			SongType = SongType.Original;
 			NameEnglish = NameOriginal = NameRomaji = PVUrl = ReprintPVUrl = string.Empty;
 		}
 
 		[Display(ResourceType = typeof(SharedStrings), Name = "Artists")]
 		[FromJson]
-		public IList<ArtistContract> Artists { get; set; }
+		public IList<ArtistForSongContract> Artists { get; set; } = new List<ArtistForSongContract>();
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "Draft")]
-		public bool Draft { get; set; }
+		public bool Draft { get; set; } = false;
 
 		[Display(ResourceType = typeof(EntryCreateStrings), Name = "EnglishName")]
 		[StringLength(255)]
@@ -53,7 +50,7 @@ namespace VocaDb.Web.Models.Song {
 		public string ReprintPVUrl { get; set; }
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "SongType")]
-		public SongType SongType { get; set; }
+		public SongType SongType { get; set; } = SongType.Original;
 
 		public CreateSongContract ToContract() {
 

@@ -10,8 +10,12 @@ module vdb.viewModels {
         addArtist: (artistId: number) => void;
 
         artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
-        
-        artists = ko.observableArray<dc.ArtistContract>([]);
+
+		artists = ko.observableArray<dc.ArtistContract>([]);
+
+		public artistsWithRoles: KnockoutComputed<dc.ArtistForAlbumContract[]> = ko.computed(() => _.map(this.artists(), a => {
+			return { artist: a, roles: cls.artists.ArtistRoles[cls.artists.ArtistRoles.Default] }
+		}));
 
 		private getArtistIds = () => {
 			return _.map(this.artists(), a => a.id);
