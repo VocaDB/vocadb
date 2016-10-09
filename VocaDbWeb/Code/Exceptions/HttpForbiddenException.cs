@@ -1,11 +1,11 @@
 ﻿using System.Net;
-using System.Web.Http;
 
 namespace VocaDb.Web.Code.Exceptions {
 
-	public class HttpForbiddenException : HttpResponseException {
+	public class HttpForbiddenException : HttpStatusCodeException {
 
-		public HttpForbiddenException() : base(HttpStatusCode.Forbidden) { }
+		public HttpForbiddenException(string reason = null) 
+			: base(HttpStatusCode.Forbidden, reason) { }
 
 	}
 

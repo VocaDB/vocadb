@@ -154,6 +154,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current")]
 		[Authorize]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Get)]
+		[RequireSsl]
 		public UserForApiContract GetCurrent(UserOptionalFields fields = UserOptionalFields.None) {
 
 			return queries.GetUser(permissionContext.LoggedUserId, fields);

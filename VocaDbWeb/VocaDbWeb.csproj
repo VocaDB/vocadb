@@ -1011,6 +1011,7 @@
     </Compile>
     <Compile Include="Code\Exceptions\HttpBadRequestException.cs" />
     <Compile Include="Code\Exceptions\HttpForbiddenException.cs" />
+    <Compile Include="Code\Exceptions\HttpStatusCodeException.cs" />
     <Compile Include="Code\Filters\DisableWapFilter.cs" />
     <Compile Include="Code\Highcharts\Axis.cs" />
     <Compile Include="Code\Highcharts\CamelCaseStringEnumConverter.cs" />
@@ -1021,8 +1022,9 @@
     <Compile Include="Code\Highcharts\Series.cs" />
     <Compile Include="Code\Highcharts\SeriesType.cs" />
     <Compile Include="Code\Highcharts\Title.cs" />
-    <Compile Include="Code\WebApi\AuthenticateCorsApi.cs" />
+    <Compile Include="Code\WebApi\AuthenticatedCorsApiAttribute.cs" />
     <Compile Include="Code\WebApi\ObjectNotFoundExceptionFilterAttribute.cs" />
+    <Compile Include="Code\WebApi\RequireSslAttribute.cs" />
     <Compile Include="Code\WebApi\RestrictBannedIPAttribute.cs" />
     <Compile Include="Code\WebApi\UnhandledExceptionLogger.cs" />
     <Compile Include="Controllers\Api\ActivityEntryApiController.cs" />

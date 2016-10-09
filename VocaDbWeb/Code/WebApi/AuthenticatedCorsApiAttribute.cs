@@ -13,11 +13,11 @@ namespace VocaDb.Web.Code.WebApi {
 	/// CORS policy for APIs that require authentication. Origins are restricted.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
-	public class AuthenticatedCorsApi : Attribute, ICorsPolicyProvider {
+	public class AuthenticatedCorsApiAttribute : Attribute, ICorsPolicyProvider {
 
 		private readonly CorsPolicy _policy;
 
-		public AuthenticatedCorsApi(HttpVerbs verbs) {
+		public AuthenticatedCorsApiAttribute(HttpVerbs verbs) {
 
 			_policy = new CorsPolicy {
 				AllowAnyHeader = true,
