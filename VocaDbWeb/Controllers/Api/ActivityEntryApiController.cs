@@ -38,8 +38,6 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Gets a list of recent activity entries.
-		/// Entries are always returned sorted from newest to oldest.
-		/// Activity for deleted entries is not returned.
 		/// </summary>
 		/// <param name="before">Filter to return activity entries only before this date. Optional, by default no filter.</param>
 		/// <param name="since">Filter to return activity entries only after this date. Optional, by default no filter.</param>
@@ -51,6 +49,10 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="entryFields">Optional fields for entries.</param>
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of activity entries.</returns>
+		/// <remarks>
+		/// Entries are always returned sorted from newest to oldest.
+		/// Activity for deleted entries is not returned.
+		/// </remarks>
 		[Route("")]
 		public PartialFindResult<ActivityEntryForApiContract> GetList(
 			DateTime? before = null,

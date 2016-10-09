@@ -47,10 +47,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Deletes a comment.
-		/// Normal users can delete their own comments, moderators can delete all comments.
-		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be deleted.</param>
+		/// <remarks>
+		/// Normal users can delete their own comments, moderators can delete all comments.
+		/// Requires login.
+		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
 		public void DeleteComment(int commentId) {
@@ -237,11 +239,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Updates a comment.
-		/// Normal users can edit their own comments, moderators can edit all comments.
-		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be edited.</param>
 		/// <param name="contract">New comment data. Only message can be edited.</param>
+		/// <remarks>
+		/// Normal users can edit their own comments, moderators can edit all comments.
+		/// Requires login.
+		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) {

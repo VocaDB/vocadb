@@ -61,10 +61,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Deletes a comment.
-		/// Normal users can delete their own comments, moderators can delete all comments.
-		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be deleted.</param>
+		/// <remarks>
+		/// Normal users can delete their own comments, moderators can delete all comments.
+		/// Requires login.
+		/// </remarks>
 		[Route("profileComments/{commentId:int}")]
 		[Authorize]
 		public void DeleteProfileComment(int commentId) {
@@ -75,10 +77,8 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Gets a list of albums in a user's collection.
-		/// This includes albums that have been rated by the user as well as albums that the user has bought or wishlisted.
-		/// Note that the user might have set his album ownership status and media type as private, in which case those properties are not included.
 		/// </summary>
-		/// <param name="userId">ID of the user whose albums are to be browsed.</param>
+		/// <param name="id">ID of the user whose albums are to be browsed.</param>
 		/// <param name="query">Album name query (optional).</param>
 		/// <param name="tagId">Filter by tag Id (optional).</param>
 		/// <param name="tag">Filter by tag (optional).</param>
@@ -98,9 +98,13 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of albums with collection properties.</returns>
-		[Route("{userId:int}/albums")]
+		/// <remarks>
+		/// This includes albums that have been rated by the user as well as albums that the user has bought or wishlisted.
+		/// Note that the user might have set his album ownership status and media type as private, in which case those properties are not included.
+		/// </remarks>
+		[Route("{id:int}/albums")]
 		public PartialFindResult<AlbumForUserForApiContract> GetAlbumCollection(
-			int userId,
+			int id,
 			string query = "",
 			int? tagId = null,
 			string tag = null,
@@ -120,7 +124,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var ssl = WebHelper.IsSSL(Request);
 
-			var queryParams = new AlbumCollectionQueryParams(userId, new PagingProperties(start, maxResults, getTotalCount)) {
+			var queryParams = new AlbumCollectionQueryParams(id, new PagingProperties(start, maxResults, getTotalCount)) {
 				ArtistId = artistId ?? 0,
 				FilterByStatus = purchaseStatuses != null ? purchaseStatuses.Value.ToIndividualSelections().ToArray() : null,
 				TextQuery = textQuery,
@@ -160,7 +164,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a list of artists followed by a user.
 		/// </summary>
 		/// <param name="query">Artist name query (optional).</param>
-		/// <param name="userId">ID of the user whose followed artists are to be browsed.</param>
+		/// <param name="id">ID of the user whose followed artists are to be browsed.</param>
 		/// <param name="artistType">Filter by artist type.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
@@ -170,9 +174,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="fields">List of optional fields (optional). Possible values are Description, Groups, Members, Names, Tags, WebLinks.</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of artists.</returns>
-		[Route("{userId:int}/followedArtists")]
+		[Route("{id:int}/followedArtists")]
 		public PartialFindResult<ArtistForUserForApiContract> GetFollowedArtists(
-			int userId,
+			int id,
 			string query = "",
 			ArtistType artistType = ArtistType.Unknown,
 			int start = 0, 
@@ -188,7 +192,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new FollowedArtistQueryParams {
-				UserId = userId,
+				UserId = id,
 				ArtistType = artistType,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
 				SortRule = sort,
@@ -250,11 +254,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Gets a user message.
-		/// The message will be marked as read.
-		/// User can only load messages from their own inbox.
 		/// </summary>
 		/// <param name="messageId">ID of the message.</param>
 		/// <returns>Message details.</returns>
+		/// <remarks>
+		/// The message will be marked as read.
+		/// User can only load messages from their own inbox.
+		/// </remarks>
 		[Route("messages/{messageId:int}")]
 		[Authorize]
 		[CacheOutput(ClientTimeSpan = Constants.SecondsInADay)]
@@ -267,24 +273,24 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of messages.
 		/// </summary>
-		/// <param name="userId">User ID. Must be the currently logged in user (loading messages for another user is not allowed).</param>
+		/// <param name="id">User ID. Must be the currently logged in user (loading messages for another user is not allowed).</param>
 		/// <param name="inbox">Type of inbox. Possible values are Nothing (load all, default), Received, Sent, Notifications.</param>
 		/// <param name="unread">Whether to only load unread messages. Loading unread messages is only possible for received messages and notifications (not sent messages).</param>
 		/// <param name="start">Index of the first entry to be loaded.</param>
 		/// <param name="maxResults">Maximum number of results to be loaded.</param>
 		/// <param name="getTotalCount">Whether to get total number of results.</param>
 		/// <returns>List of messages.</returns>
-		[Route("{userId:int}/messages")]
+		[Route("{id:int}/messages")]
 		[Authorize]
 		public PartialFindResult<UserMessageContract> GetMessages(
-			int userId, 
+			int id, 
 			UserInboxType? inbox = null, 
 			bool unread = false,
 			int start = 0,
 			int maxResults = 10,
 			bool getTotalCount = false) {
 
-			if (userId != permissionContext.LoggedUserId) {
+			if (id != permissionContext.LoggedUserId) {
 				throw new HttpForbiddenException();
 			}
 
@@ -296,18 +302,18 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Deletes a list of user messages.
 		/// </summary>
-		/// <param name="userId">ID of the user whose messages to delete.</param>
+		/// <param name="id">ID of the user whose messages to delete.</param>
 		/// <param name="messageId">IDs of messages.</param>
-		[Route("{userId:int}/messages")]
+		[Route("{id:int}/messages")]
 		[Authorize]
-		public void DeleteMessages(int userId, [FromUri] int[] messageId) {
+		public void DeleteMessages(int id, [FromUri] int[] messageId) {
 
-			if (userId != permissionContext.LoggedUserId) {
+			if (id != permissionContext.LoggedUserId) {
 				throw new HttpForbiddenException();
 			}
 
-			foreach (var id in messageId)
-				messageQueries.Delete(id);
+			foreach (var mid in messageId)
+				messageQueries.Delete(mid);
 
 		}
 
@@ -328,19 +334,19 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of comments posted on user's profile.
 		/// </summary>
-		/// <param name="userId">ID of the user whose comments are to be retrieved.</param>
+		/// <param name="id">ID of the user whose comments are to be retrieved.</param>
 		/// <param name="start">Index of the first comment to be loaded.</param>
 		/// <param name="maxResults">Maximum number of comments to load.</param>
 		/// <param name="getTotalCount">Whether to load the total number of comments.</param>
 		/// <returns>Page of comments.</returns>
-		[Route("{userId:int}/profileComments")]
+		[Route("{id:int}/profileComments")]
 		public PartialFindResult<CommentForApiContract> GetProfileComments(
-			int userId,
+			int id,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false
 			) {
 			
 			var paging = new PagingProperties(start, maxResults, getTotalCount);
-			var result = queries.GetProfileComments(userId, paging);
+			var result = queries.GetProfileComments(id, paging);
 
 			return result;
 
@@ -349,7 +355,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of songs rated by a user.
 		/// </summary>
-		/// <param name="userId">ID of the user whose songs are to be browsed.</param>
+		/// <param name="id">ID of the user whose songs are to be browsed.</param>
 		/// <param name="query">Song name query (optional).</param>
 		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
 		/// <param name="tagName">Filter by tag name (optional).</param>
@@ -370,9 +376,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of songs with ratings.</returns>
-		[Route("{userId:int}/ratedSongs")]
+		[Route("{id:int}/ratedSongs")]
 		public PartialFindResult<RatedSongForUserForApiContract> GetRatedSongs(
-			int userId,
+			int id,
 			string query = "",
 			string tagName = null,
 			[FromUri] int[] tagId = null,
@@ -392,7 +398,7 @@ namespace VocaDb.Web.Controllers.Api {
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			var queryParams = new RatedSongQueryParams(userId, new PagingProperties(start, maxResults, getTotalCount)) {
+			var queryParams = new RatedSongQueryParams(id, new PagingProperties(start, maxResults, getTotalCount)) {
 				TextQuery = textQuery,
 				SortRule = sort ?? RatedSongForUserSortRule.Name,
 				ArtistIds = artistId,
@@ -414,7 +420,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of song lists for a user.
 		/// </summary>
-		/// <param name="userId">User whose song lists are to be loaded.</param>
+		/// <param name="id">User whose song lists are to be loaded.</param>
 		/// <param name="query">Song list name query (optional).</param>
 		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Auto).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
@@ -423,9 +429,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="sort">Sort option for the song lists. Possible values are None, Name, Date, CreateDate. Default is Name.</param>
 		/// <param name="fields">List of optional fields.</param>
 		/// <returns>List of song lists.</returns>
-		[Route("{userId:int}/songLists")]
+		[Route("{id:int}/songLists")]
 		public PartialFindResult<SongListForApiContract> GetSongLists(
-			int userId,
+			int id,
 			string query = "",
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -434,7 +440,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			return queries.GetCustomSongLists(userId, textQuery, WebHelper.IsSSL(Request), sort, 
+			return queries.GetCustomSongLists(id, textQuery, WebHelper.IsSSL(Request), sort, 
 				new PagingProperties(start, maxResults, getTotalCount), fields ?? SongListOptionalFields.None);
 
 		}
@@ -442,22 +448,24 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a specific user's rating for a song.
 		/// </summary>
-		/// <param name="userId">User whose rating is to be checked.</param>
+		/// <param name="id">User whose rating is to be checked.</param>
 		/// <param name="songId">ID of the song whose rating is to be checked.</param>
 		/// <returns>Specified user's rating for the specified song. If the song is not rated by the user, this will be Nothing.</returns>
-		[Route("{userId:int}/ratedSongs/{songId:int}")]
-		public SongVoteRating GetSongRating(int userId, int songId) {
+		[Route("{id:int}/ratedSongs/{songId:int}")]
+		public SongVoteRating GetSongRating(int id, int songId) {
 			
-			return queries.GetSongRating(userId, songId);
+			return queries.GetSongRating(id, songId);
 
 		}
 
 		/// <summary>
 		/// Gets currently logged in user's rating for a song.
-		/// Requires authentication.
 		/// </summary>
 		/// <param name="songId">ID of the song whose rating is to be checked.</param>
 		/// <returns>Currently logged in user's rating for the specified song. If the song is not rated by the current user, this will be Nothing.</returns>
+		/// <remarks>
+		/// Requires authentication.
+		/// </remarks>
 		[Route("current/ratedSongs/{songId:int}")]
 		[Authorize]
 		[EnableCors(origins: "*", headers: "*", methods: "get", SupportsCredentials = true)]
@@ -520,14 +528,16 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Add or update collection status, media type and rating for a specific album, for the currently logged in user.
-		/// If the user has already rated the album, any previous rating is replaced.
-		/// Authorization cookie must be included.
 		/// </summary>
 		/// <param name="albumId">ID of the album to be rated.</param>
 		/// <param name="collectionStatus">Collection status. Possible values are Nothing, Wishlisted, Ordered and Owned.</param>
 		/// <param name="mediaType">Album media type. Possible values are PhysicalDisc, DigitalDownload and Other.</param>
 		/// <param name="rating">Rating to be given. Possible values are between 0 and 5.</param>
 		/// <returns>The string "OK" if successful.</returns>
+		/// <remarks>
+		/// If the user has already rated the album, any previous rating is replaced.
+		/// Authorization cookie must be included.
+		/// </remarks>
 		[Route("current/albums/{albumId:int}")]
 		[Authorize]
 		public string PostAlbumStatus(int albumId, PurchaseStatus collectionStatus, MediaType mediaType, int rating) {
@@ -539,11 +549,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Updates a comment.
-		/// Normal users can edit their own comments, moderators can edit all comments.
-		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be edited.</param>
 		/// <param name="contract">New comment data. Only message can be edited.</param>
+		/// <remarks>
+		/// Normal users can edit their own comments, moderators can edit all comments.
+		/// Requires login.
+		/// </remarks>
 		[Route("profileComments/{commentId:int}")]
 		[Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) {
@@ -552,6 +564,11 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Refresh entry edit status, indicating that the current user is still editing that entry.
+		/// </summary>
+		/// <param name="entryType">Type of entry.</param>
+		/// <param name="entryId">Entry ID.</param>
 		[Route("current/refreshEntryEdit")]
 		[Authorize]
 		public void PostRefreshEntryEdit(EntryType entryType, int entryId) {
@@ -562,13 +579,15 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Add or update rating for a specific song, for the currently logged in user.
-		/// If the user has already rated the song, any previous rating is replaced.
-		/// Authorization cookie must be included.
-		/// This API supports CORS.
 		/// </summary>
 		/// <param name="songId">ID of the song to be rated.</param>
 		/// <param name="rating">Rating to be given. Possible values are Nothing, Like, Favorite.</param>
 		/// <returns>The string "OK" if successful.</returns>
+		/// <remarks>
+		/// If the user has already rated the song, any previous rating is replaced.
+		/// Authorization cookie must be included.
+		/// This API supports CORS.
+		/// </remarks>
 		[Route("current/ratedSongs/{songId:int}")]
 		[Authorize]
 		[EnableCors(origins: "*", headers: "*", methods: "post", SupportsCredentials = true)]
@@ -611,15 +630,17 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Appends tags for a song, by the currently logged in user.
-		/// This can only be used to add tags - existing tags will not be removed. 
-		/// Nothing will be done for tags that are already applied by the current user for the song.
-		/// Authorization cookie is required.
 		/// </summary>
 		/// <param name="songId">ID of the song to be tagged.</param>
 		/// <param name="tags">List of tags to be appended.</param>
+		/// <remarks>
+		/// This can only be used to add tags - existing tags will not be removed. 
+		/// Nothing will be done for tags that are already applied by the current user for the song.
+		/// Authorization cookie is required.
+		/// </remarks>
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
-		[EnableCors(origins: "*", headers: "*", methods: "post", SupportsCredentials = true)]
+		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
 		public void PostSongTags(int songId, TagBaseContract[] tags) {
 			
 			if (tags == null)
@@ -644,27 +665,27 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Posts a new comment.
 		/// </summary>
-		/// <param name="userId">ID of the user for whom to create the comment.</param>
+		/// <param name="id">ID of the user for whom to create the comment.</param>
 		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
-		[Route("{userId:int}/profileComments")]
+		[Route("{id:int}/profileComments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int userId, CommentForApiContract contract) {
+		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) {
 			
-			return queries.CreateComment(userId, contract.Message);
+			return queries.CreateComment(id, contract.Message);
 
 		}
 
 		/// <summary>
 		/// Updates user setting.
 		/// </summary>
-		/// <param name="userId">ID of the user to be updated. This must match the current user OR be unspecified (or 0) if the user is not logged in.</param>
+		/// <param name="id">ID of the user to be updated. This must match the current user OR be unspecified (or 0) if the user is not logged in.</param>
 		/// <param name="settingName">Name of the setting to be updated, for example 'showChatBox'.</param>
 		/// <param name="settingValue">Setting value, for example 'false'.</param>
-		[Route("{userId:int}/settings/{settingName}")]
-		public void PostSetting(int userId, string settingName, [FromBody] string settingValue) {
+		[Route("{id:int}/settings/{settingName}")]
+		public void PostSetting(int id, string settingName, [FromBody] string settingValue) {
 			
-			if (userId != 0 && userId != permissionContext.LoggedUserId)
+			if (id != 0 && id != permissionContext.LoggedUserId)
 				throw new HttpForbiddenException();
 
 			IUserSetting setting = null;
