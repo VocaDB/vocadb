@@ -58,10 +58,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Deletes a comment.
-		/// Normal users can delete their own comments, moderators can delete all comments.
-		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be deleted.</param>
+		/// <remarks>
+		/// Normal users can delete their own comments, moderators can delete all comments.
+		/// Requires login.
+		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
 		public void DeleteComment(int commentId) {
@@ -85,14 +87,16 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Gets a list of comments for a song.
-		/// Note: pagination and sorting might be added later.
 		/// </summary>
-		/// <param name="songId">ID of the song whose comments to load.</param>
+		/// <param name="id">ID of the song whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
-		[System.Web.Http.Route("{songId:int}/comments")]
-		public IEnumerable<CommentForApiContract> GetComments(int songId) {
+		/// <remarks>
+		/// Pagination and sorting might be added later.
+		/// </remarks>
+		[System.Web.Http.Route("{id:int}/comments")]
+		public IEnumerable<CommentForApiContract> GetComments(int id) {
 			
-			return queries.GetComments(songId);
+			return queries.GetComments(id);
 
 		}
 
@@ -112,7 +116,6 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Gets derived (alternate versions) of a song.
-		/// Note: pagination and sorting might be added later.
 		/// </summary>
 		/// <param name="id">Song Id (required).</param>
 		/// <param name="fields">
@@ -122,6 +125,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <example>http://vocadb.net/api/songs/121/derived</example>
 		/// <returns>List of derived songs.</returns>
+		/// <remarks>
+		/// Pagination and sorting might be added later.
+		/// </remarks>
 		[System.Web.Http.Route("{id:int}/derived")]
 		public IEnumerable<SongForApiContract> GetDerived(int id, SongOptionalFields fields = SongOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
@@ -160,13 +166,15 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Get ratings for a song.
-		/// The result includes ratings and user information.
-		/// For users who have requested not to make their ratings public, the user will be empty.
 		/// </summary>
 		/// <param name="id">Song ID.</param>
 		/// <param name="userFields">Optional fields for the users.</param>
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of ratings.</returns>
+		/// <remarks>
+		/// The result includes ratings and user information.
+		/// For users who have requested not to make their ratings public, the user will be empty.
+		/// </remarks>
 		[Route("{id:int}/ratings")]
 		public IEnumerable<RatedSongForUserForApiContract> GetRatings(int id, UserOptionalFields userFields, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
@@ -350,11 +358,11 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
-		[System.Web.Http.Route("{songId:int}/pvs")]
+		[System.Web.Http.Route("{id:int}/pvs")]
 		[ApiExplorerSettings(IgnoreApi=true)]
-		public string GetPVId(int songId, PVService service) {
+		public string GetPVId(int id, PVService service) {
 			
-			var pv = queries.PVForSongAndService(songId, service);
+			var pv = queries.PVForSongAndService(id, service);
 			return pv.PVId;
 
 		}
@@ -452,11 +460,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Updates a comment.
-		/// Normal users can edit their own comments, moderators can edit all comments.
-		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be edited.</param>
 		/// <param name="contract">New comment data. Only message can be edited.</param>
+		/// <remarks>
+		/// Normal users can edit their own comments, moderators can edit all comments.
+		/// Requires login.
+		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) {
@@ -468,14 +478,14 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Posts a new comment.
 		/// </summary>
-		/// <param name="songId">ID of the song for which to create the comment.</param>
+		/// <param name="id">ID of the song for which to create the comment.</param>
 		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
-		[System.Web.Http.Route("{songId:int}/comments")]
+		[System.Web.Http.Route("{id:int}/comments")]
 		[System.Web.Http.Authorize]
-		public CommentForApiContract PostNewComment(int songId, CommentForApiContract contract) {
+		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) {
 			
-			return queries.CreateComment(songId, contract);
+			return queries.CreateComment(id, contract);
 
 		}
 
@@ -490,14 +500,14 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
-		[System.Web.Http.Route("{songId:int}/pvs")]
+		[System.Web.Http.Route("{id:int}/pvs")]
 		[System.Web.Http.Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public void PostPVs(int songId, PVContract[] pvs) {
+		public void PostPVs(int id, PVContract[] pvs) {
 
 			queries.HandleTransaction(ctx => {
 
-				var song = ctx.Load(songId);
+				var song = ctx.Load(id);
 
 				EntryPermissionManager.VerifyEdit(userPermissionContext, song);
 

@@ -71,10 +71,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Deletes a comment.
-		/// Normal users can delete their own comments, moderators can delete all comments.
-		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be deleted.</param>
+		/// <remarks>
+		/// Normal users can delete their own comments, moderators can delete all comments.
+		/// Requires login.
+		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
 		public void DeleteComment(int commentId) {
@@ -85,14 +87,16 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Gets a list of comments for an artist.
-		/// Note: pagination and sorting might be added later.
 		/// </summary>
-		/// <param name="artistId">ID of the artist whose comments to load.</param>
+		/// <param name="id">ID of the artist whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
-		[Route("{artistId:int}/comments")]
-		public IEnumerable<CommentForApiContract> GetComments(int artistId) {
+		/// <remarks>
+		/// Pagination and sorting might be added later.
+		/// </remarks>
+		[Route("{id:int}/comments")]
+		public IEnumerable<CommentForApiContract> GetComments(int id) {
 			
-			return queries.GetComments(artistId);
+			return queries.GetComments(id);
 
 		}
 
@@ -240,11 +244,13 @@ namespace VocaDb.Web.Controllers.Api {
 
 		/// <summary>
 		/// Updates a comment.
-		/// Normal users can edit their own comments, moderators can edit all comments.
-		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be edited.</param>
 		/// <param name="contract">New comment data. Only message can be edited.</param>
+		/// <remarks>
+		/// Normal users can edit their own comments, moderators can edit all comments.
+		/// Requires login.
+		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) {
@@ -256,14 +262,14 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Posts a new comment.
 		/// </summary>
-		/// <param name="artistId">ID of the artist for which to create the comment.</param>
+		/// <param name="id">ID of the artist for which to create the comment.</param>
 		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
-		[Route("{artistId:int}/comments")]
+		[Route("{id:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int artistId, CommentForApiContract contract) {
+		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) {
 			
-			return queries.CreateComment(artistId, contract);
+			return queries.CreateComment(id, contract);
 
 		}
 
