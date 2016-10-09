@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
@@ -23,10 +22,9 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
-using VocaDb.Web.Code;
-using VocaDb.Web.Code.Highcharts;
+using VocaDb.Model.Service.VideoServices;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
-using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -496,7 +494,13 @@ namespace VocaDb.Web.Controllers.Api {
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
 		public SongContract PostNewSong(CreateSongContract contract) {
 
-			return queries.Create(contract);
+			try {
+				return queries.Create(contract);
+			} catch (VideoParseException x) {
+				throw new HttpBadRequestException(x.Message);
+			} catch (ArgumentException x) {
+				throw new HttpBadRequestException(x.Message);
+			}
 
 		}
 
