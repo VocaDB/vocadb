@@ -24,19 +24,27 @@ namespace VocaDb.Web.Code.WebApi {
 				SupportsCredentials = true
 			};
 
+			// It seems that for normal requests the casing doesn't matter, but for OPTIONS request it does.
 			if (verbs.HasFlag(HttpVerbs.Get)) {
-				_policy.Methods.Add("get");
+				_policy.Methods.Add("GET");
 			}
 			if (verbs.HasFlag(HttpVerbs.Post)) {
-				_policy.Methods.Add("post");
+				_policy.Methods.Add("POST");
 			}
 			if (verbs.HasFlag(HttpVerbs.Put)) {
-				_policy.Methods.Add("put");
+				_policy.Methods.Add("PUT");
+			}
+			if (verbs.HasFlag(HttpVerbs.Options)) {
+				_policy.Methods.Add("OPTIONS");
 			}
 
 			var origins = AppConfig.AllowedCorsOrigins;
 			if (!string.IsNullOrEmpty(origins)) {
-				Array.ForEach(origins.Split(','), _policy.Origins.Add);
+				if (origins != "*") {
+					Array.ForEach(origins.Split(','), _policy.Origins.Add);
+				} else {
+					_policy.AllowAnyOrigin = true;
+				}
 			}
 			
 		}

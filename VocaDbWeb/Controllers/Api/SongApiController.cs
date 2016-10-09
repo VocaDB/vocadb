@@ -494,6 +494,9 @@ namespace VocaDb.Web.Controllers.Api {
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
 		public SongContract PostNewSong(CreateSongContract contract) {
 
+			if (contract == null)
+				throw new HttpBadRequestException("Message was empty");
+
 			try {
 				return queries.Create(contract);
 			} catch (VideoParseException x) {
