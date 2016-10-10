@@ -15,6 +15,11 @@
 		/// </summary>
 		ArtistType,
 
+		/// <summary>
+		/// Entry has external link
+		/// </summary>
+		WebLink,
+
 		// Artist
 
 		/// <summary>

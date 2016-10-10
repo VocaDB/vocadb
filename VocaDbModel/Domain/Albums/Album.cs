@@ -22,7 +22,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 	public class Album : IEntryBase, IEntryWithNames<AlbumName>, IEntryWithVersions, IEntryWithStatus,
 		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtists<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage>,
-		IEntryWithComments {
+		IEntryWithLinks<AlbumWebLink>, IEntryWithComments {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
 			get { return ArchivedVersionsManager; }

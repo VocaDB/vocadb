@@ -17,7 +17,7 @@ using VocaDb.Model.Helpers;
 namespace VocaDb.Model.Domain.Artists {
 
 	public class Artist : IEntryBase, IEntryWithNames<ArtistName>, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, 
-		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments {
+		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments, IEntryWithLinks<ArtistWebLink> {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 

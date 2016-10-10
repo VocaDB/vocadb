@@ -216,6 +216,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 						query.Where(a => a.AllMembers.Any(m => m.LinkType == ArtistLinkType.VoiceProvider)) :
 						query.Where(a => a.AllMembers.Any(m => m.LinkType == ArtistLinkType.VoiceProvider && m.Member.ArtistType == param));
 				}
+				case AdvancedFilterType.WebLink: {
+					return query.WhereHasLink<Artist, ArtistWebLink>(filter.Param);
+				}
 			}
 
 			return query;
