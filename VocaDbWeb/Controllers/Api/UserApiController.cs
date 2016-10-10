@@ -469,7 +469,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("current/ratedSongs/{songId:int}")]
 		[Authorize]
-		[EnableCors(origins: "*", headers: "*", methods: "get", SupportsCredentials = true)]
+		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Get)]
 		public SongVoteRating GetSongRatingForCurrent(int songId) {
 			
 			return GetSongRating(permissionContext.LoggedUserId, songId);
@@ -591,7 +591,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("current/ratedSongs/{songId:int}")]
 		[Authorize]
-		[EnableCors(origins: "*", headers: "*", methods: "post", SupportsCredentials = true)]
+		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
 		public string PostSongRating(int songId, SongVoteRating rating) {
 			
 			service.UpdateSongRating(permissionContext.LoggedUserId, songId, rating);
