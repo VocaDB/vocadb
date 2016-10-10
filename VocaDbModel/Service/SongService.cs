@@ -277,7 +277,9 @@ namespace VocaDb.Model.Service {
 
 				var songContract = Find(session, new SongQueryParams(SearchTextQuery.Create(query), 
 					new SongType[] {}, 0, 10, false, 
-					SongSortRule.Name, false, true, null)).Items;
+					SongSortRule.Name, false, true, null) {
+					AdvancedFilters = new[] { new AdvancedSearchFilter { FilterType = AdvancedFilterType.Lyrics, Param = AdvancedSearchFilter.Any } }
+				}).Items;
 
 				if (!songContract.Any())
 					return null;
