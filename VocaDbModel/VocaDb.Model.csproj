@@ -746,6 +746,7 @@
     <Compile Include="Service\ExtSites\ArtistDescriptionGenerator.cs" />
     <Compile Include="Service\ExtSites\SongDescriptionGenerator.cs" />
     <Compile Include="Service\Helpers\EntryReportNotifier.cs" />
+    <Compile Include="Service\NameMatchMode.cs" />
     <Compile Include="Service\PredicateBuilder.cs" />
     <Compile Include="Service\QueriesBase.cs" />
     <Compile Include="Service\Queries\ActivityEntryQueries.cs" />
