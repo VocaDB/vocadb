@@ -321,6 +321,16 @@ namespace VocaDb.Model.Database.Queries {
 
 				song.Names.Init(contract.Names, song);
 
+				if (contract.WebLinks != null) {
+					var weblinksDiff = ctx.Sync(WebLink.Sync(song.WebLinks, contract.WebLinks, song));
+					diff.WebLinks = weblinksDiff.Changed;
+				}
+				
+				if (contract.Lyrics != null && contract.Lyrics.Any()) {
+					contract.Lyrics.ForEach(song.CreateLyrics);
+					diff.Lyrics = true;
+				}
+
 				ctx.Save(song);
 
 				foreach (var artistContract in contract.Artists) {

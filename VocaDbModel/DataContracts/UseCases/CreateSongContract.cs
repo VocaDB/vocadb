@@ -9,6 +9,8 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		public bool Draft { get; set; }
 
+		public LyricsForSongContract[] Lyrics { get; set; }
+
 		public LocalizedStringContract[] Names { get; set; }
 
 		public SongContract OriginalVersion { get; set; }
@@ -20,6 +22,8 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public SongType SongType { get; set; }
 
 		public string UpdateNotes { get; set; }
+
+		public WebLinkContract[] WebLinks { get; set; }
 
 	}
 

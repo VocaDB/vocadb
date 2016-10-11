@@ -477,6 +477,11 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
+		public virtual LyricsForSong CreateLyrics(LyricsForSongContract lyrics) {
+			ParamIs.NotNull(() => lyrics);
+			return CreateLyrics(lyrics.Value, lyrics.Source, lyrics.URL, lyrics.TranslationType, lyrics.CultureCode);
+		}
+
 		public virtual LyricsForSong CreateLyrics(string val, string source, string url, TranslationType translationType, string cultureCode) {
 			
 			ParamIs.NotNullOrEmpty(() => val);

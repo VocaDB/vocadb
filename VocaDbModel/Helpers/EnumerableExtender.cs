@@ -17,6 +17,12 @@ namespace VocaDb.Model.Helpers {
 			return source.Distinct(comparer);
 		}
 
+		public static void ForEach<T, T2>(this IEnumerable<T> source, Func<T, T2> func) {
+			// Note: if you need the return value, just use Select
+			foreach (var item in source)
+				func(item);
+		}
+
 		public static IEnumerable<T> Insert<T>(this IEnumerable<T> source, T element) {
 			return Enumerable.Repeat(element, 1).Concat(source);
 		}
