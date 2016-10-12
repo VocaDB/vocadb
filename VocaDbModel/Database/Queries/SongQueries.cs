@@ -321,16 +321,6 @@ namespace VocaDb.Model.Database.Queries {
 
 				song.Names.Init(contract.Names, song);
 
-				if (contract.WebLinks != null) {
-					var weblinksDiff = ctx.Sync(WebLink.Sync(song.WebLinks, contract.WebLinks, song));
-					diff.WebLinks = weblinksDiff.Changed;
-				}
-				
-				if (contract.Lyrics != null && contract.Lyrics.Any()) {
-					contract.Lyrics.ForEach(song.CreateLyrics);
-					diff.Lyrics = true;
-				}
-
 				ctx.Save(song);
 
 				foreach (var artistContract in contract.Artists) {
@@ -364,6 +354,16 @@ namespace VocaDb.Model.Database.Queries {
 				var pvDiff = song.SyncPVs(pvs);
 				ctx.OfType<PVForSong>().Sync(pvDiff);
 				diff.PVs = pvs.Any();
+
+				if (contract.WebLinks != null) {
+					var weblinksDiff = ctx.Sync(WebLink.Sync(song.WebLinks, contract.WebLinks, song));
+					diff.WebLinks = weblinksDiff.Changed;
+				}
+
+				if (contract.Lyrics != null && contract.Lyrics.Any()) {
+					contract.Lyrics.ForEach(song.CreateLyrics);
+					diff.Lyrics = true;
+				}
 
 				song.Status = (contract.Draft || !(new SongValidator().IsValid(song, config.SpecialTags.Instrumental))) ? EntryStatus.Draft : EntryStatus.Finished;
 
