@@ -60,6 +60,7 @@ module vdb.utils {
             { url: "tumblr.com/", desc: "Tumblr", cat: c.WebLinkCategory.Official },
             { url: "twitter.com/", desc: "Twitter", cat: c.WebLinkCategory.Official },
 			{ url: "utaitedb.net/", desc: "UtaiteDB", cat: c.WebLinkCategory.Reference },
+			{ url: "utaulyrics.wikia.com/wiki/", desc: "UTAU Lyrics Wiki", cat: c.WebLinkCategory.Reference },
             { url: "www24.atwiki.jp/utauuuta/", desc: "UTAU wiki (JP)", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.wikia.com/wiki/", desc: "UTAU wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.wikidot.com/", desc: "UTAU wiki 2.0", cat: c.WebLinkCategory.Reference },
