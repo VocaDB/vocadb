@@ -24,7 +24,7 @@ namespace VocaDb.Web.Code.WebApi {
 				SupportsCredentials = true
 			};
 
-			// It seems that for normal requests the casing doesn't matter, but for OPTIONS request it does.
+			// Verbs are case sensitive
 			if (verbs.HasFlag(HttpVerbs.Get)) {
 				_policy.Methods.Add("GET");
 			}

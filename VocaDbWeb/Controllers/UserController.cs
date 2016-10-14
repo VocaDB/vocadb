@@ -812,6 +812,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
+		[Obsolete]
 		public void AddSongToFavorites(int songId, SongVoteRating rating = SongVoteRating.Favorite) {
 
 			Service.UpdateSongRating(LoggedUserId, songId, rating);

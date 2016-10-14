@@ -274,7 +274,12 @@ module vdb.repositories {
         // songId: Id of the song to be updated.
         // rating: Song rating.
         // callback: Callback function to be executed when the operation is complete.
-        public updateSongRating: (songId: number, rating: vdb.models.SongVoteRating, callback: any) => void;
+        public updateSongRating = (songId: number, rating: vdb.models.SongVoteRating, callback: () => void) => {
+
+			var url = this.urlMapper.mapRelative("/api/users/current/ratedSongs/" + songId);
+			$.post(url, { rating: vdb.models.SongVoteRating[rating] }, callback);
+
+        }
 
         public updateSongTags = (songId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
 
@@ -301,12 +306,6 @@ module vdb.repositories {
             this.mapUrl = (relative: string) => {
                 return urlMapper.mapRelative("/User") + relative;
             };
-
-			this.updateSongRating = (songId: number, rating: cls.SongVoteRating, callback: any) => {
-
-				$.post(this.mapUrl("/AddSongToFavorites"), { songId: songId, rating: vdb.models.SongVoteRating[rating] }, callback);
-
-			};
 
         }
 

@@ -578,12 +578,16 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		// This is the standard way of providing value in body. Alternatively, a custom model binder.
+		public class PostSongRatingParams {
+			public SongVoteRating Rating { get; set; }
+		}
+
 		/// <summary>
 		/// Add or update rating for a specific song, for the currently logged in user.
 		/// </summary>
 		/// <param name="songId">ID of the song to be rated.</param>
 		/// <param name="rating">Rating to be given. Possible values are Nothing, Like, Favorite.</param>
-		/// <returns>The string "OK" if successful.</returns>
 		/// <remarks>
 		/// If the user has already rated the song, any previous rating is replaced.
 		/// Authorization cookie must be included.
@@ -592,10 +596,9 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/ratedSongs/{songId:int}")]
 		[Authorize]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
-		public string PostSongRating(int songId, SongVoteRating rating) {
+		public void PostSongRating(int songId, PostSongRatingParams rating) {
 			
-			service.UpdateSongRating(permissionContext.LoggedUserId, songId, rating);
-			return "OK";
+			service.UpdateSongRating(permissionContext.LoggedUserId, songId, rating.Rating);
 
 		}
 
