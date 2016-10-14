@@ -21,7 +21,7 @@ $(document).ready(function () {
 
         var songId = $("#songPreview").find(".js-songId").val();
 
-        $.post("../User/AddSongToFavorites", { songId: songId, rating: rating }, callback);
+        $.post("/api/users/current/ratedSongs/" + songId, { rating: rating }, callback);
 
     }
 
