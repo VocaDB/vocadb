@@ -154,6 +154,13 @@ module vdb.repositories {
 
 		}
 
+		public updateSongRating = (songId: number, rating: vdb.models.SongVoteRating, callback: () => void) => {
+
+			var url = this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings");
+			$.post(url, { rating: vdb.models.SongVoteRating[rating] }, callback);
+
+		}
+
 		private urlMapper: UrlMapper;
 
         constructor(baseUrl: string, languagePreference = cls.globalization.ContentLanguagePreference.Default) {

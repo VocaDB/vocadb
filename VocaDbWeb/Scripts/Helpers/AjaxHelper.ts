@@ -29,7 +29,7 @@ module vdb.helpers {
 		// Issues a PUT request with JSON-formatted body.
 		public static putJSON = (url: string, data?: any, success?: any) => {
 		
-			$.ajax(url, {
+			return $.ajax(url, {
 				type: 'PUT',
 				contentType: 'application/json; charset=utf-8',
 				success: success,

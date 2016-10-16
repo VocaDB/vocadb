@@ -41,14 +41,17 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly SongQueries queries;
 		private readonly SongService service;
 		private readonly SongAggregateQueries songAggregateQueries;
+		private readonly UserService userService;
 		private readonly IUserPermissionContext userPermissionContext;
 
 		/// <summary>
 		/// Initializes controller.
 		/// </summary>
-		public SongApiController(SongService service, SongQueries queries, SongAggregateQueries songAggregateQueries, IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext) {
+		public SongApiController(SongService service, SongQueries queries, SongAggregateQueries songAggregateQueries, 
+			IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext, UserService userService) {
 			this.service = service;
 			this.queries = queries;
+			this.userService = userService;
 			this.songAggregateQueries = songAggregateQueries;
 			this.entryLinkFactory = entryLinkFactory;
 			this.userPermissionContext = userPermissionContext;
@@ -178,6 +181,25 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			return queries.GetRatings(id, userFields, lang);
+
+		}
+
+		/// <summary>
+		/// Add or update rating for a specific song, for the currently logged in user.
+		/// </summary>
+		/// <param name="id">ID of the song to be rated.</param>
+		/// <param name="rating">Rating to be given. Possible values are Nothing, Like, Favorite.</param>
+		/// <remarks>
+		/// If the user has already rated the song, any previous rating is replaced.
+		/// Authorization cookie must be included.
+		/// This API supports CORS.
+		/// </remarks>
+		[Route("{id:int}/ratings")]
+		[Authorize]
+		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
+		public void PostRating(int id, SongRatingContract rating) {
+
+			userService.UpdateSongRating(userPermissionContext.LoggedUserId, id, rating.Rating);
 
 		}
 

@@ -596,9 +596,12 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/ratedSongs/{songId:int}")]
 		[Authorize]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
-		public void PostSongRating(int songId, PostSongRatingParams rating) {
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[Obsolete]
+		public string PostSongRating(int songId, SongVoteRating rating) {
 			
-			service.UpdateSongRating(permissionContext.LoggedUserId, songId, rating.Rating);
+			service.UpdateSongRating(permissionContext.LoggedUserId, songId, rating);
+			return "OK";
 
 		}
 

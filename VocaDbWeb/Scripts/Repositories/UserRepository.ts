@@ -276,7 +276,7 @@ module vdb.repositories {
         // callback: Callback function to be executed when the operation is complete.
         public updateSongRating = (songId: number, rating: vdb.models.SongVoteRating, callback: () => void) => {
 
-			var url = this.urlMapper.mapRelative("/api/users/current/ratedSongs/" + songId);
+			var url = this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings");
 			$.post(url, { rating: vdb.models.SongVoteRating[rating] }, callback);
 
         }

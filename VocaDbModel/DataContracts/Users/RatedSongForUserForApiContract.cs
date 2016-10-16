@@ -8,7 +8,7 @@ using VocaDb.Model.Domain.Users;
 namespace VocaDb.Model.DataContracts.Users {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class RatedSongForUserForApiContract {
+	public class RatedSongForUserForApiContract : SongRatingContract {
 
 		public RatedSongForUserForApiContract() { }
 
@@ -33,14 +33,19 @@ namespace VocaDb.Model.DataContracts.Users {
 		[DataMember]
 		public DateTime Date { get; set; }
 
-		[DataMember]
-		public SongVoteRating Rating { get; set; }
-
 		[DataMember(EmitDefaultValue = false)]
 		public SongForApiContract Song { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public UserForApiContract User { get; set; }
+
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	public class SongRatingContract {
+
+		[DataMember]
+		public SongVoteRating Rating { get; set; }
 
 	}
 
