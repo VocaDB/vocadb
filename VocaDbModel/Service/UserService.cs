@@ -377,8 +377,11 @@ namespace VocaDb.Model.Service {
 
 	public class InvalidUserNameException : Exception {
 
-		public InvalidUserNameException()
+		public InvalidUserNameException() 
 			: base("Specified username is invalid") { }
+
+		public InvalidUserNameException(string name)
+			: base(string.Format("Specified username is invalid: '{0}'", name)) { }
 
 	}
 
