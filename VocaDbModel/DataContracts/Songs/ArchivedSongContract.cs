@@ -65,6 +65,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			data.NotesEng = thisVersion.NotesEng;
 			data.OriginalVersion = thisVersion.OriginalVersion;
 			data.PublishDate = thisVersion.PublishDate;
+			data.ReleaseEvent = thisVersion.ReleaseEvent;
 			data.SongType = thisVersion.SongType;
 			data.TranslatedName = thisVersion.TranslatedName;
 
