@@ -73,10 +73,10 @@
 		<span data-bind="visible: isRatingFavorite" style="display: none;" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
 		<span data-bind="visible: isRatingLike" style="display: none;" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>        
 		<span data-bind="visible: isRated() == false" style="display: none;" class="js-ratingButtons">
-			<a href="#" data-bind="click: setRating_like, jqButton: { icon: 'ui-icon-plus' }">@ViewRes.Song.DetailsStrings.Like</a>
-			<a href="#" data-bind="click: setRating_favorite, jqButton: { icon: 'ui-icon-heart' }">@favoriteText</a>
+			<a href="#" data-bind="click: setRating_like, jqButton: { icon: 'ui-icon-plus' }, disable: ratingInProgress">@ViewRes.Song.DetailsStrings.Like</a>
+			<a href="#" data-bind="click: setRating_favorite, jqButton: { icon: 'ui-icon-heart' }, disable: ratingInProgress">@favoriteText</a>
 		</span>
-		<a href="#" data-bind="visible: isRated, click: setRating_nothing, jqButton: { icon: 'ui-icon-close' }" style="display: none;">@ViewRes.Song.DetailsStrings.RemoveFromFavorites</a>			
+		<a href="#" data-bind="visible: isRated, click: setRating_nothing, jqButton: { icon: 'ui-icon-close' }, disable: ratingInProgress" style="display: none;">@ViewRes.Song.DetailsStrings.RemoveFromFavorites</a>			
 	</span>
 	<a data-bind="click: songListDialog.showSongLists, jqButton: { icon: 'ui-icon-star' }" href="#" id="addToListLink">@ViewRes.Song.DetailsStrings.AddToCustomList</a>
 } else {

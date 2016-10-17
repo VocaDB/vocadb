@@ -12,7 +12,10 @@ module vdb.viewModels {
 
         public isRatingLike: KnockoutComputed<boolean>;
 
-        public rating: KnockoutObservable<cls.SongVoteRating>;
+		public rating: KnockoutObservable<cls.SongVoteRating>;
+
+		// Rating operation is in progress. Prevents racing conditions.
+		public ratingInProgress = ko.observable(false);
 
         public setRating_favorite: () => void;
 
@@ -28,12 +31,19 @@ module vdb.viewModels {
             this.isRatingFavorite = ko.computed(() => this.rating() === cls.SongVoteRating.Favorite);
             this.isRatingLike = ko.computed(() => this.rating() === cls.SongVoteRating.Like);
 
-            var setRating = (rating: cls.SongVoteRating) => {
-                this.rating(rating);
+			var setRating = (rating: cls.SongVoteRating) => {
+
+				if (this.ratingInProgress())
+					return;
+
+				this.ratingInProgress(true);
+				this.rating(rating);
+
                 repository.updateSongRating(songId, rating, () => {
                     if (rating !== cls.SongVoteRating.Nothing && ratingCallback)
-                        ratingCallback();
-                });
+						ratingCallback();
+				}).always(() => this.ratingInProgress(false));
+
             }
 
             this.setRating_favorite = () => setRating(cls.SongVoteRating.Favorite);

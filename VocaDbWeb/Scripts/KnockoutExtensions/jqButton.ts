@@ -17,11 +17,22 @@ interface jqButtonParams {
 }
 
 ko.bindingHandlers.jqButton = {
-    init: (element, valueAccessor) => {
+	init: (element: HTMLElement, valueAccessor: () => jqButtonParams, allBindingsAccessor: () => any) => {
 
-        var params: jqButtonParams = ko.utils.unwrapObservable(valueAccessor()) || {};
+		var params: jqButtonParams = ko.unwrap(valueAccessor()) || {};
+		var allBindings = allBindingsAccessor();
+		var disable = ko.unwrap(allBindings.disable) || params.disabled;
 
-        $(element).button({ disabled: params.disabled, icons: { primary: params.icon } });
+		$(element).button({ disabled: disable, icons: { primary: params.icon } });
 
-    }
+	},
+	update: (element: HTMLElement, valueAccessor: () => jqButtonParams, allBindingsAccessor: () => any) => {
+
+		var params: jqButtonParams = ko.unwrap(valueAccessor()) || {};
+		var allBindings = allBindingsAccessor();
+		var disable = ko.unwrap(allBindings.disable) || params.disabled;
+
+		$(element).button("option", "disabled", disable);
+			
+	}
 }

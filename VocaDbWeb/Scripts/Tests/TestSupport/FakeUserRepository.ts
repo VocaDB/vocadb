@@ -37,7 +37,9 @@ module vdb.tests.testSupport {
                 this.rating = rating;
 
                 if (callback)
-                    callback();
+					callback();
+
+				return $.Deferred().resolve();
 
             };
 
