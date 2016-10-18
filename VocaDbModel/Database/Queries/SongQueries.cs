@@ -372,7 +372,11 @@ namespace VocaDb.Model.Database.Queries {
 				var archived = Archive(ctx, song, diff, SongArchiveReason.Created, contract.UpdateNotes ?? string.Empty);
 				ctx.Update(song);
 
-				ctx.AuditLogger.AuditLog(string.Format("created song {0} ({1})", entryLinkFactory.CreateEntryLink(song), song.SongType));
+				var logStr = string.Format("created song {0} of type {1} ({2})", entryLinkFactory.CreateEntryLink(song), song.SongType, diff.ChangedFieldsString)
+					+ (!string.IsNullOrEmpty(contract.UpdateNotes) ? " " + HttpUtility.HtmlEncode(contract.UpdateNotes) : string.Empty)
+					.Truncate(400);
+
+				ctx.AuditLogger.AuditLog(logStr);
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
 				new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer);
