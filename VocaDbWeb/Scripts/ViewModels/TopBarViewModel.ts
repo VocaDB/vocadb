@@ -15,7 +15,7 @@ module vdb.viewModels {
             if (this.isLoaded())
                 return;
 
-            this.userRepository.getMessageSummaries(null, null, { maxEntries: 3, start: 0, getTotalCount: false }, true, 40,
+            this.userRepository.getMessageSummaries(null, null, { maxEntries: 3, start: 0, getTotalCount: false }, true, 40, null,
 				(messages: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => {
 
                 this.unreadMessages(messages.items);

@@ -23,7 +23,7 @@ module vdb.tests.testSupport {
 
             };
 
-            this.getMessageSummaries = (userId: number, inbox: repositories.UserInboxType, maxCount?, unread?, iconSize?,
+            this.getMessageSummaries = (userId: number, inbox: repositories.UserInboxType, maxCount?, unread?, anotherUserId?, iconSize?,
 				callback?: (result: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => void) => {
 
                 if (callback)

@@ -31,7 +31,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		private PartialFindResult<UserMessageContract> CallGetList(UserInboxType inboxType, bool unread = false) {
-			return queries.GetList(receiver.Id, new PagingProperties(0, 10, true), inboxType, unread, new FakeUserIconFactory());
+			return queries.GetList(receiver.Id, new PagingProperties(0, 10, true), inboxType, unread, null, new FakeUserIconFactory());
 		}
 
 		[TestInitialize]
