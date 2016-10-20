@@ -5,7 +5,7 @@ module vdb.models {
 
 		id: number;
 
-		name: string;
+		name?: string;
 
 	}
 

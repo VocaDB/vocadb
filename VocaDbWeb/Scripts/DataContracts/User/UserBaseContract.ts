@@ -1,7 +1,7 @@
 
 module vdb.dataContracts {
 
-    export interface UserBaseContract {
+	export interface UserBaseContract extends vdb.models.IEntryWithIdAndName {
         
         id: number;
 

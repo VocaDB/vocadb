@@ -64,7 +64,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<UserMessageContract> GetList(int id, PagingProperties paging, UserInboxType inboxType, bool unread, IUserIconFactory iconFactory) {
+		public PartialFindResult<UserMessageContract> GetList(int id, PagingProperties paging, UserInboxType inboxType, 
+			bool unread, int? anotherUserId, IUserIconFactory iconFactory) {
 
 			PermissionContext.VerifyResourceAccess(new[] { id });
 
@@ -74,6 +75,15 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => u.User.Id == id)
 					.WhereInboxIs(inboxType, unread)
 					.WhereIsUnread(unread);
+
+				if (anotherUserId.HasValue) {					
+					if (inboxType == UserInboxType.Received) {
+						query = query.Where(m => m.Sender.Id == anotherUserId);
+					} else if (inboxType == UserInboxType.Sent) {
+						query = query.Where(m => m.Receiver.Id == anotherUserId);
+					}
+				}
+
 
 				var messages = query
 					.OrderByDescending(m => m.Created)

@@ -277,6 +277,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="id">User ID. Must be the currently logged in user (loading messages for another user is not allowed).</param>
 		/// <param name="inbox">Type of inbox. Possible values are Nothing (load all, default), Received, Sent, Notifications.</param>
 		/// <param name="unread">Whether to only load unread messages. Loading unread messages is only possible for received messages and notifications (not sent messages).</param>
+		/// <param name="anotherUserId">Filter by id of the other user (either sender or receiver).</param>
 		/// <param name="start">Index of the first entry to be loaded.</param>
 		/// <param name="maxResults">Maximum number of results to be loaded.</param>
 		/// <param name="getTotalCount">Whether to get total number of results.</param>
@@ -287,6 +288,7 @@ namespace VocaDb.Web.Controllers.Api {
 			int id, 
 			UserInboxType? inbox = null, 
 			bool unread = false,
+			int? anotherUserId = null,
 			int start = 0,
 			int maxResults = 10,
 			bool getTotalCount = false) {
@@ -296,7 +298,7 @@ namespace VocaDb.Web.Controllers.Api {
 			}
 
 			return messageQueries.GetList(permissionContext.LoggedUserId, new PagingProperties(start, maxResults, getTotalCount), 
-				inbox ?? UserInboxType.Nothing, unread, userIconFactory);
+				inbox ?? UserInboxType.Nothing, unread, anotherUserId, userIconFactory);
 
 		}
 

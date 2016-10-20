@@ -488,7 +488,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/User/Messages").Include(
-				"~/Scripts/KnockoutExtensions/BindingHandlers/UsernameAutocomplete.js",				
+				"~/Scripts/KnockoutExtensions/BindingHandlers/UsernameAutocomplete.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/UserAutocomplete.js",
 				"~/Scripts/ViewModels/User/UserMessagesViewModel.js"
 			));
 

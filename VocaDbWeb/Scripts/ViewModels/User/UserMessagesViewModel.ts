@@ -117,7 +117,7 @@ module vdb.viewModels {
             });
 
 			if (getMessageCount) {
-				this.userRepo.getMessageSummaries(userId, inbox, { start: 0, maxEntries: 0, getTotalCount: true }, true, null,
+				this.userRepo.getMessageSummaries(userId, inbox, { start: 0, maxEntries: 0, getTotalCount: true }, true, null, null,
 					result => this.unreadOnServer(result.totalCount));
 			}
 
@@ -125,7 +125,14 @@ module vdb.viewModels {
 				_.forEach(this.items(), m => m.checked(selected));
 			});
 
-        }
+			this.anotherUser = new BasicEntryLinkViewModel<dc.user.UserApiContract>(null, null);
+			this.anotherUser.id.subscribe(this.clear);
+
+		}
+
+		public anotherUser: BasicEntryLinkViewModel<dc.user.UserApiContract>;
+
+		public canFilterByUser = () => this.inbox === rep.UserInboxType.Received || this.inbox === rep.UserInboxType.Sent;
 
         private deleteMessage = (message: UserMessageViewModel) => {
 
@@ -148,7 +155,7 @@ module vdb.viewModels {
 		}
 
 		public loadMoreItems = (callback) => {
-			this.userRepo.getMessageSummaries(this.userId, this.inbox, { start: this.start, maxEntries: 100, getTotalCount: true }, false, 40, (result) => {
+			this.userRepo.getMessageSummaries(this.userId, this.inbox, { start: this.start, maxEntries: 100, getTotalCount: true }, false, this.anotherUser.id(), 40, (result) => {
 				var messageViewModels = _.map(result.items, msg => new UserMessageViewModel(msg));
 				callback({ items: messageViewModels, totalCount: result.totalCount });
 			});

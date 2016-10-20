@@ -1,6 +1,7 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
 @using VocaDb.Web.Helpers
 @using System.Web.Optimization
+@using VocaDb.Model.Domain.Users
 @using Res = ViewRes.User.MessagesStrings;
 
 @{
@@ -12,7 +13,17 @@
 }
 
 @helper MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
+	<!-- UserMessageFolderViewModel -->
 	<div id="@id" data-bind="with: @binding">
+		<div class="form-horizontal pull-left" data-bind="visible: canFilterByUser()">
+			<div class="control-group">
+				<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Received)">@Res.From</label>
+				<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Sent)">@Res.To</label>
+				<div class="controls">
+					@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("userAutocomplete", "anotherUser")									
+				</div>
+			</div>
+		</div>
 		<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">@Res.DeleteSelected</button>
 
 		<table class="table messages" data-bind="if: items().length">
