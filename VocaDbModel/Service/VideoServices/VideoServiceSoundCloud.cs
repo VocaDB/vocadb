@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				var msg = string.Format("Unable to load SoundCloud URL '{0}'.", url);
 
 				// Forbidden most likely means the artist has prevented API access to their tracks, http://stackoverflow.com/a/36529330
-				if (((HttpWebResponse)x.Response).StatusCode == HttpStatusCode.Forbidden) {
+				if (x.Response != null && ((HttpWebResponse)x.Response).StatusCode == HttpStatusCode.Forbidden) {
 					msg += " This track cannot be embedded.";
 				}
 

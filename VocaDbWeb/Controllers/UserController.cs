@@ -601,8 +601,6 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Messages(int? messageId, string receiverName) {
 
 			var user = PermissionContext.LoggedUser;
-			RestoreErrorsFromTempData();
-
 			var inbox = UserInboxType.Received;
 
 			if (messageId.HasValue) {
