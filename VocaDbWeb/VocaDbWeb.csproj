@@ -1254,7 +1254,6 @@
     <Compile Include="Models\Tag\TagEditViewModel.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\User\AlbumCollection.cs" />
-    <Compile Include="Models\User\ComposeMessage.cs" />
     <Compile Include="Models\User\ForgotPassword.cs" />
     <Compile Include="Models\User\FavoriteSongs.cs" />
     <Compile Include="Models\User\Messages.cs" />

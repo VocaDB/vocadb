@@ -6,7 +6,7 @@ module vdb.viewModels {
 
 	export class UserMessagesViewModel {
 
-        constructor(private userRepository: vdb.repositories.UserRepository, userId: number, inboxType: rep.UserInboxType, selectedMessageId?: number) {
+        constructor(private userRepository: vdb.repositories.UserRepository, private userId: number, inboxType: rep.UserInboxType, selectedMessageId?: number) {
 
             this.notifications = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Notifications, userId, inboxType !== rep.UserInboxType.Notifications);
             this.receivedMessages = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Received, userId, inboxType !== rep.UserInboxType.Received);
@@ -40,6 +40,8 @@ module vdb.viewModels {
 		}
 
 		private inboxes: UserMessageFolderViewModel[];
+
+		public messageSent: () => void = null;
 
 		newMessageViewModel = new NewMessageViewModel();
 
@@ -101,7 +103,26 @@ module vdb.viewModels {
         selectTab = (tabName: string) => {
             var index = $('#tabs > ul > li > a').index($(tabName));
             $("#tabs").tabs("option", "active", index);
-        };
+		};
+
+		public sendMessage = () => {
+
+			if (this.newMessageViewModel.receiver.isEmpty()) {
+				this.newMessageViewModel.isReceiverInvalid(true);
+				return;
+			}
+
+			this.newMessageViewModel.isSending(true);
+			var message = this.newMessageViewModel.toContract(this.userId);
+			this.userRepository.createMessage(this.userId, message, () => {
+				this.newMessageViewModel.clear();
+				this.sentMessages.clear();
+				this.selectInbox(rep.UserInboxType.Sent);
+				if (this.messageSent)
+					this.messageSent();
+			}).always(() => this.newMessageViewModel.isSending(false));
+
+		}
 
     }
 
@@ -215,7 +236,39 @@ module vdb.viewModels {
 
 	export class NewMessageViewModel {
 
-		body = ko.observable<string>();
+		constructor() {
+			this.receiver.id.subscribe(() => this.isReceiverInvalid(false));
+		}
+
+		body = ko.observable<string>("");
+
+		highPriority = ko.observable(false);
+
+		isReceiverInvalid = ko.observable(false);
+
+		isSending = ko.observable(false);
+
+		receiver = new BasicEntryLinkViewModel<dc.user.UserApiContract>();
+
+		subject = ko.observable<string>("");
+
+		public clear = () => {
+			this.body("");
+			this.highPriority(false);
+			this.receiver.clear();
+			this.subject("");
+		}
+
+		public toContract = (senderId: number) => {
+			return {
+				body: this.body(),
+				highPriority: this.highPriority(),
+				receiver: this.receiver.entry(),
+				sender: { id: senderId } as dc.user.UserApiContract,
+				subject: this.subject(),
+				id: null
+			} as dc.user.UserApiContract;
+		};
 
 	}
 

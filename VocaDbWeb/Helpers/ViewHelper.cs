@@ -60,6 +60,16 @@ namespace VocaDb.Web.Helpers {
 			}
 		}
 
+		public static IHtmlString ConditionalAttribute(this HtmlHelper html, bool condition, string attributeName, string value) {
+			
+			if (condition) {
+				return new MvcHtmlString(!string.IsNullOrEmpty(value) ? attributeName + "=\"" + html.Encode(value) + "\"" : attributeName);
+			}
+
+			return MvcHtmlString.Empty;
+
+		}
+
 		public static string ConvertNewlinesToBreaks(this HtmlHelper html, string text) {
 
 			return text.Replace(Environment.NewLine, "<br />").Replace("\n", "<br />");

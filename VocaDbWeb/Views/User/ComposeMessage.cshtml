@@ -1,46 +1,46 @@
-﻿@using VocaDb.Web.Helpers
-@model VocaDb.Web.Models.User.ComposeMessage
+﻿@using Res = ViewRes.User.MessagesStrings;
 
-@using (Html.BeginForm("ComposeMessage", "User")) {
-
-	<div class="editor-label">
-		@Html.LabelFor(m => m.ReceiverName)
-	</div>
-	<div class="editor-field">
-		@Html.TextBoxForKnockout(m => m.ReceiverName, "usernameAutocomplete", id: "receiverName", size: 30)<br />
-		@Html.ValidationMessageFor(m => m.ReceiverName)
-	</div>
+<!-- NewMessageViewModel -->
+<form data-bind="with: newMessageViewModel, submit: sendMessage">
 
 	<div class="editor-label">
-		@Html.LabelFor(m => m.Subject)
+		@Res.To
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxFor(m => m.Subject, new { id = "newMessageSubject", size = 40, @class = "span3" })<br />
-		@Html.ValidationMessageFor(m => m.Subject)
+		@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("userAutocomplete", "receiver")
+		<div class="alert alert-danger" data-bind="visible: isReceiverInvalid">
+			Receiver must be selected.
+		</div>
+	</div>
+
+	<div class="editor-label">
+		@Res.Subject
+	</div>
+	<div class="editor-field">
+		<input type="text" size="40" class="span3" data-bind="textInput: subject" maxlength="200" required /><br />
 
 		<label class="checkbox">
-			@Html.CheckBoxFor(m => m.HighPriority)
-			@ViewRes.User.MessagesStrings.HighPriority
+			<input type="checkbox" data-bind="checked: highPriority" />
+			@Res.HighPriority
 		</label>
 	</div>
 
 	<div class="editor-label">
-		@Html.LabelFor(m => m.Body)
+		@Res.Body
 		@Helpers.MarkdownNotice()
 	</div>
 	<div class="editor-field">
-		@Html.TextAreaForKnockout(m => m.Body, binding: "textInput: newMessageViewModel.body", cssClass: "span5", rows: 10, cols: 60)
+		<textarea data-bind="textInput: body" class="span5" rows="10" cols="60" maxlength="10000" required></textarea>
 		<br />
-		@Html.ValidationMessageFor(m => m.Body)
 		
 		Live preview
-		<div data-bind="markdown: newMessageViewModel.body"></div>
+		<div data-bind="markdown: body"></div>
 	</div>
 	<br />
 
-	<button type="submit" class="btn btn-primary">
+	<button type="submit" class="btn btn-primary" data-bind="disable: isSending">
 		<i class="icon-envelope icon-white"></i>
-		&nbsp;@ViewRes.User.MessagesStrings.Send
+		&nbsp;@Res.Send
 	</button>
 
-}
+</form>

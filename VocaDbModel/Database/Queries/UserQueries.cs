@@ -1173,13 +1173,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
+		public UserMessageContract SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
 
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			HandleTransaction(session => {
+			return HandleTransaction(session => {
 
 				var receiver = session.Query().FirstOrDefault(u => u.Name.Equals(contract.Receiver.Name));
 
@@ -1204,6 +1204,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				session.Save(messages.Item1);
 				session.Save(messages.Item2);
+
+				return new UserMessageContract(messages.Item1, userIconFactory);
 
 			});
 

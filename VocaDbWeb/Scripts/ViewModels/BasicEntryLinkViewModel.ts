@@ -8,7 +8,7 @@ module vdb.viewModels {
 		
 		// entry: current entry reference (can be null). Zero-like ID will be considered the same as null.
 		// entryFunc: function for loading the entry asynchronously by Id.
-		constructor(entry: TEntry, entryFunc: (entryId: number, callback: (entry: TEntry) => void) => void) {
+		constructor(entry?: TEntry, entryFunc?: (entryId: number, callback: (entry: TEntry) => void) => void) {
 
 			this.entry = ko.observable(entry && entry.id ? entry : null);
 			this.name = ko.computed(() => this.entry() ? this.entry().name : null);

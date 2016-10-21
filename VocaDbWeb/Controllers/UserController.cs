@@ -464,32 +464,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		[HttpPost]
-		public ActionResult ComposeMessage(ComposeMessage model) {
-
-			if (!ModelState.IsValid) {
-				SaveErrorsToTempData();
-				return RedirectToAction("Messages");
-			}
-
-			var contract = model.ToContract(LoggedUserId);
-			var mySettingsUrl = VocaUriBuilder.CreateAbsolute(Url.Action("MySettings", "User")).ToString();
-			var messagesUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Messages", "User")).ToString();
-
-			try {
-				Data.SendMessage(contract, mySettingsUrl, messagesUrl);
-			} catch (UserNotFoundException x) {
-				ModelState.AddModelError("ReceiverName", x.Message);
-				SaveErrorsToTempData();
-				return RedirectToAction("Messages");
-			}
-
-			TempData.SetStatusMessage(ViewRes.User.MessagesStrings.MessageSent);
-
-			return RedirectToAction("Messages");
-
-		}
-
         //
         // GET: /User/Create
 

@@ -27,6 +27,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
@@ -564,6 +565,23 @@ namespace VocaDb.Web.Controllers.Api {
 		public void PostEditComment(int commentId, CommentForApiContract contract) {
 			
 			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
+
+		}
+
+		/// <summary>
+		/// Creates a new message.
+		/// </summary>
+		/// <param name="id">User ID. Must be logged in user.</param>
+		/// <param name="contract">Message data.</param>
+		/// <returns>Message data.</returns>
+		[Route("{id:int}/messages")]
+		[Authorize]
+		public UserMessageContract PostNewMessage(int id, UserMessageContract contract) {
+
+			var mySettingsUrl = VocaUriBuilder.CreateAbsolute("User/MySettings").ToString();
+			var messagesUrl = VocaUriBuilder.CreateAbsolute("User/Messages").ToString();
+
+			return queries.SendMessage(contract, mySettingsUrl, messagesUrl);
 
 		}
 

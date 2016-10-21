@@ -112,7 +112,7 @@
 	@MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true)
 
 	<div id="composeTab">
-		@{ Html.RenderPartial("ComposeMessage", new VocaDb.Web.Models.User.ComposeMessage(Model.ReceiverName)); }
+		@{ Html.RenderPartial("ComposeMessage"); }
 	</div>
 
 </div>
@@ -128,6 +128,9 @@
 			var urlMapper = new vdb.UrlMapper('@RootPath');
 			var repository = new vdb.repositories.UserRepository(urlMapper);
 			var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @((int)Model.Inbox), @ToJS(Model.SelectedMessageId));
+			viewModel.messageSent = function () {
+				vdb.ui.showSuccessMessage(@ToJS(Res.MessageSent));
+			};
 			ko.applyBindings(viewModel);
 
 		});

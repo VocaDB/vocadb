@@ -17,6 +17,12 @@ module vdb.repositories {
 
 		}
 
+		public createMessage = (userId: number, contract: dc.user.UserApiContract, callback: (result: dc.UserMessageSummaryContract) => void) => {
+
+			return $.post(this.urlMapper.mapRelative("/api/users/" + userId + "/messages"), contract, callback, 'json');
+			
+		}
+
 		public deleteComment = (commentId: number, callback: () => void) => {
 			
 			$.ajax(this.urlMapper.mapRelative("/api/users/profileComments/" + commentId), { type: 'DELETE', success: callback });
