@@ -5,7 +5,10 @@ module vdb.values {
     export var baseAddress: string;
 
     // URL including the scheme and site path, for example "http://vocadb.net/"
-    export var hostAddress: string;
+	export var hostAddress: string;
+
+	// Whether the user is logged in.
+	export var isLoggedIn: boolean;
 
 	export var languagePreference: number;
 

@@ -6,14 +6,14 @@ interface JQuery {
 $(() => {
 
 	function initRatingButtons() {
-		const urlMapper = new vdb.UrlMapper('');
+		const urlMapper = new vdb.UrlMapper(vdb.values.baseAddress);
 		const repo = new vdb.repositories.UserRepository(urlMapper);
 		const ratingBar = $("#rating-bar");
 		const songId = ratingBar.data('song-id');
 		const rating = ratingBar.data('rating');
 		const viewModel = new vdb.viewModels.PVRatingButtonsViewModel(repo, { id: songId, vote: rating }, () => {
 			vdb.ui.showSuccessMessage(vdb.resources.song.thanksForRating);				
-		});
+		}, vdb.values.isLoggedIn);
 		ko.applyBindings(viewModel, ratingBar[0]);		
 	}
 

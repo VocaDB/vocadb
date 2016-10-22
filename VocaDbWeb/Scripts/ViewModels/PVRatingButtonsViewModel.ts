@@ -17,13 +17,13 @@ module vdb.viewModels {
 		// Rating operation is in progress. Prevents racing conditions.
 		public ratingInProgress = ko.observable(false);
 
-        public setRating_favorite: () => void;
+		private setRating: (rating: cls.SongVoteRating) => void;
+		public setRating_favorite = () => this.setRating(cls.SongVoteRating.Favorite);
+		public setRating_like = () => this.setRating(cls.SongVoteRating.Like);
+		public setRating_nothing = () => this.setRating(cls.SongVoteRating.Nothing);
 
-        public setRating_like: () => void;
-
-        public setRating_nothing: () => void;
-
-        constructor(repository: vdb.repositories.UserRepository, songWithVoteContract: SongWithVoteContract, ratingCallback: () => void) {
+		constructor(repository: vdb.repositories.UserRepository, songWithVoteContract: SongWithVoteContract, ratingCallback: () => void,
+			isLoggedIn = true) {
 
             var songId = songWithVoteContract.id;
             this.rating = ko.observable(cls.parseSongVoteRating(songWithVoteContract.vote));
@@ -31,9 +31,9 @@ module vdb.viewModels {
             this.isRatingFavorite = ko.computed(() => this.rating() === cls.SongVoteRating.Favorite);
             this.isRatingLike = ko.computed(() => this.rating() === cls.SongVoteRating.Like);
 
-			var setRating = (rating: cls.SongVoteRating) => {
+			this.setRating = (rating: cls.SongVoteRating) => {
 
-				if (this.ratingInProgress())
+				if (this.ratingInProgress() || !isLoggedIn)
 					return;
 
 				this.ratingInProgress(true);
@@ -45,10 +45,6 @@ module vdb.viewModels {
 				}).always(() => this.ratingInProgress(false));
 
             }
-
-            this.setRating_favorite = () => setRating(cls.SongVoteRating.Favorite);
-            this.setRating_like = () => setRating(cls.SongVoteRating.Like);
-            this.setRating_nothing = () => setRating(cls.SongVoteRating.Nothing);
 
         }
 
