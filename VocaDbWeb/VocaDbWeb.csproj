@@ -2733,7 +2733,6 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\Datepicker.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\ReleaseEventAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\UserAutoComplete.ts" />
-    <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\UsernameAutocomplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Bootstrap\Tooltip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ConfirmClick.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatDateFilter.ts" />
