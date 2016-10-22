@@ -1268,7 +1268,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (user.Name != contract.Name) {
 
-					if (!Regex.IsMatch(contract.Name, "^" + User.NameRegex + "$")) {
+					if (!User.IsValidName(contract.Name)) {
 						throw new InvalidUserNameException(contract.Name);
 					}
 

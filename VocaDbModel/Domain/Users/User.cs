@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using NLog;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
@@ -23,6 +24,10 @@ namespace VocaDb.Model.Domain.Users {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public const string NameRegex = "[a-zA-Z0-9_]+";
+
+		public static bool IsValidName(string name) {
+			return Regex.IsMatch(name, "^" + NameRegex + "$");
+		}
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
