@@ -61,7 +61,7 @@ module vdb.viewModels.user {
 
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 			this.repo.getList(pagingProperties, this.searchTerm(), this.sort(), this.group(), this.disabledUsers(),
-				this.onlyVerifiedArtists(), this.knowsLanguage(), "MainPicture", result => {
+				this.onlyVerifiedArtists(), this.knowsLanguage(), "Auto", "MainPicture", result => {
 
 				this.pauseNotifications = false;
 

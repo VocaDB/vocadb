@@ -6,7 +6,8 @@ module vdb.viewModels {
 
 	export class UserMessagesViewModel {
 
-		constructor(private userRepository: vdb.repositories.UserRepository, private userId: number, inboxType: rep.UserInboxType, selectedMessageId?: number) {
+		constructor(private userRepository: vdb.repositories.UserRepository, private userId: number, inboxType: rep.UserInboxType, selectedMessageId?: number,
+			receiverName?: string) {
 
             this.notifications = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Notifications, userId, inboxType !== rep.UserInboxType.Notifications);
             this.receivedMessages = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Received, userId, inboxType !== rep.UserInboxType.Received);
@@ -21,6 +22,14 @@ module vdb.viewModels {
 					this.selectMessageById(selectedMessageId, inbox);
 				}
 			});
+
+			if (receiverName) {
+				userRepository.getList({}, receiverName, null, null, false, false, null, "Exact", null, result => {
+					if (result.items.length === 1) {
+						this.newMessageViewModel.receiver.entry(result.items[0]);
+					}
+				});
+			}
 
         }
 

@@ -109,18 +109,19 @@ module vdb.repositories {
 			includeDisabled: boolean,
 			onlyVerified: boolean,
 			knowsLanguage: string,
+			nameMatchMode: string,
 			fields: string,
 			callback: (result: dc.PartialFindResultContract<dc.user.UserApiContract>) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				query: query, nameMatchMode: 'Auto', sort: sort,
+				query: query, nameMatchMode: nameMatchMode, sort: sort,
 				includeDisabled: includeDisabled,
 				onlyVerified: onlyVerified,
 				knowsLanguage: knowsLanguage,
-				groups: groups,
-				fields: fields
+				groups: groups || undefined,
+				fields: fields || undefined
 			};
 
 			$.getJSON(url, data, callback);
