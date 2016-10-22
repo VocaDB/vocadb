@@ -2389,7 +2389,6 @@
     <Content Include="Scripts\highcharts\4.2.0\themes\grid.js" />
     <Content Include="Scripts\highcharts\4.2.0\themes\sand-signika.js" />
     <Content Include="Scripts\highcharts\4.2.0\themes\skies.js" />
-    <Content Include="Scripts\Home\Index.js" />
     <Content Include="App_Code\CommentHelpers.cshtml" />
     <Content Include="Content\Styles\ExtLinks.less" />
     <Content Include="Content\Styles\Overrides.less" />
@@ -2728,6 +2727,7 @@
     <TypeScriptCompile Include="Scripts\Helpers\PVHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\SearchTextQueryHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\SongHelper.ts" />
+    <TypeScriptCompile Include="Scripts\Home\Index.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\AlbumAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Artist\ArtistTypeLabel.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\Datepicker.ts" />
