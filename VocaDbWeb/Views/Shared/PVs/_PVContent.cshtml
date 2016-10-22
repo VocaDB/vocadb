@@ -1,6 +1,5 @@
-﻿@using VocaDb.Model.Domain.Songs
-@using VocaDb.Web.Helpers
-@model VocaDb.Model.DataContracts.Songs.SongWithPVAndVoteContract
+﻿@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.SongWithPVAndVoteContract>
 
 <input type="hidden" class="js-songId" value="@Model.Id" />
 <h4 class="pvViewer-title">
@@ -14,11 +13,16 @@
 	</small>
 </h4>
 <span class="pvViewer-translatedNames">@Model.AdditionalNames</span>
-<span id="ratingButtons" class="ratingButtons pull-right" style="@((Model.Vote != SongVoteRating.Nothing ? "display: none;" : ""))">
-    <a href="#" id="addLikeLink" class="btn btn-inverse @(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Song.DetailsStrings.Like</a>
-	<a href="#" id="addFavoriteLink" class="btn btn-inverse @(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Song.DetailsStrings.AddToFavorites</a>
-</span>
-<a href="#" id="removeFavoriteLink" class="btn btn-inverse ratingButtons pull-right @(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@((Model.Vote != SongVoteRating.Nothing ? "" : "display: none;"))">@ViewRes.Song.DetailsStrings.RemoveFromFavorites</a>	
+<!-- PVRatingButtonsViewModel -->
+<div class="pull-right js-cloak" id="rating-bar" data-song-id="@Model.Id" data-rating="@Model.Vote" data-bind="show">
+	<span class="ratingButtons" data-bind="visible: !isRated()">
+		<a href="#" data-bind="click: setRating_like, css: { disabled: @ToJS(!UserContext.IsLoggedIn) || ratingInProgress }" class="btn btn-inverse">@ViewRes.Song.DetailsStrings.Like</a>
+		<a href="#" data-bind="click: setRating_favorite, css: { disabled: @ToJS(!UserContext.IsLoggedIn) || ratingInProgress }" class="btn btn-inverse">@ViewRes.Song.DetailsStrings.AddToFavorites</a>
+	</span>
+	<a href="#" data-bind="click: setRating_nothing, visible: isRated, css: { disabled: @ToJS(!UserContext.IsLoggedIn) || ratingInProgress }" class="btn btn-inverse ratingButtons">
+		@ViewRes.Song.DetailsStrings.RemoveFromFavorites
+	</a>	
+</div> 
 <div class="pv-embed-wrapper">
 	@Helpers.EmbedPVDynamic(PVHelper.PrimaryPV(Model.PVs), 0, 0)
 </div>

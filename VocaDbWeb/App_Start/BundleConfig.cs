@@ -25,7 +25,7 @@ namespace VocaDb.Web.App_Start {
 			// Legacy common scripts - should be phased out
 			bundles.Add(new ScriptBundle("~/bundles/VocaDB").Include("~/Scripts/VocaDB.js"));
 
-			// Included on all pages
+			// Included on all pages (including front page)
 			// Generally the references go from viewmodels -> repositories -> models -> support classes
 			bundles.Add(new ScriptBundle("~/bundles/shared/common").Include(
 				"~/Scripts/Shared/TopBar.js", 
@@ -34,9 +34,12 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Shared/UrlMapper.js",
 				"~/Scripts/Helpers/AjaxHelper.js", 
 				"~/Scripts/KnockoutExtensions/StopBinding.js",
+				"~/Scripts/KnockoutExtensions/Show.js",
 				"~/Scripts/Repositories/EntryReportRepository.js",
 				"~/Scripts/Repositories/UserRepository.js",
-				"~/Scripts/ViewModels/TopBarViewModel.js"
+				"~/Scripts/Models/SongVoteRating.js",               // Referred by UserRepository
+				"~/Scripts/ViewModels/TopBarViewModel.js",
+				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js"
 			));
 
 			// Included on all pages except the front page (to optimize front page load time).
@@ -51,14 +54,12 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/jqButton.js",
 				"~/Scripts/KnockoutExtensions/jqButtonset.js",
 				"~/Scripts/KnockoutExtensions/Markdown.js",
-				"~/Scripts/KnockoutExtensions/Show.js",
 				"~/Scripts/KnockoutExtensions/ToggleClick.js",
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
 				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",
-				"~/Scripts/Models/SongVoteRating.js",				// Referred by UserRepository
 				"~/Scripts/Models/PVs/PVService.js",
 				"~/Scripts/Models/PVServiceIcons.js",				
 				"~/Scripts/Models/Globalization/ContentLanguagePreference.js",
@@ -73,7 +74,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/PagedItemsViewModel.js",
 				"~/Scripts/ViewModels/ServerSidePagingViewModel.js",
-				"~/Scripts/ViewModels/PVRatingButtonsViewModel.js",
 				"~/Scripts/ViewModels/ReportEntryViewModel.js",
 				"~/Scripts/ViewModels/Globalization/EnglishTranslatedStringViewModel.js"
 			));

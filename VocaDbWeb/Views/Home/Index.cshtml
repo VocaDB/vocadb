@@ -37,7 +37,7 @@
 		<a class="next scrollable-browse-down"></a>    
 	</div>
 
-	<div id="songPreview" class="pvViewerContent">
+	<div id="songPreview" class="pvViewerContent" data-bind="stopBinding">
 		@{ Html.RenderPartial("PVs/_PVContent", Model.FirstSong); }
 	</div>
 </div>
