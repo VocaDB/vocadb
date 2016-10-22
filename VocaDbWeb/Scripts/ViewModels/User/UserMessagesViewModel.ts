@@ -6,7 +6,7 @@ module vdb.viewModels {
 
 	export class UserMessagesViewModel {
 
-        constructor(private userRepository: vdb.repositories.UserRepository, private userId: number, inboxType: rep.UserInboxType, selectedMessageId?: number) {
+		constructor(private userRepository: vdb.repositories.UserRepository, private userId: number, inboxType: rep.UserInboxType, selectedMessageId?: number) {
 
             this.notifications = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Notifications, userId, inboxType !== rep.UserInboxType.Notifications);
             this.receivedMessages = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Received, userId, inboxType !== rep.UserInboxType.Received);
@@ -57,9 +57,8 @@ module vdb.viewModels {
 				throw Error("No message selected");
 
 			var msg = this.selectedMessage();
-			$("#receiverName").val(msg.sender.name);
-
-			$("#newMessageSubject").val(msg.subject && msg.subject.indexOf("Re:") === 0 ? msg.subject : "Re: " + msg.subject);
+			this.newMessageViewModel.receiver.entry(msg.sender);
+			this.newMessageViewModel.subject(msg.subject && msg.subject.indexOf("Re:") === 0 ? msg.subject : "Re: " + msg.subject);
 
             this.selectTab("#composeTab");
 
