@@ -775,6 +775,50 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void UpdateUserSettings_ChangeName() {
+
+			userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
+			var contract = new UpdateUserSettingsContract(userWithEmail) { Name = "mikumiku" };
+
+			data.UpdateUserSettings(contract);
+
+			Assert.AreEqual("mikumiku", userWithEmail.Name, "Name was changed");
+			Assert.AreEqual(1, userWithEmail.OldUsernames.Count, "Old username was added");
+			Assert.AreEqual("already_exists", userWithEmail.OldUsernames[0].OldName, "Old name was recorded");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidUserNameException))]
+		public void UpdateUserSettings_ChangeName_Invalid() {
+
+			userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
+			var contract = new UpdateUserSettingsContract(userWithEmail) { Name = "miku miku" };
+			data.UpdateUserSettings(contract);
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(UserNameAlreadyExistsException))]
+		public void UpdateUserSettings_ChangeName_AlreadyInUse() {
+
+			userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
+			var contract = new UpdateUserSettingsContract(userWithEmail) { Name = userWithoutEmail.Name };
+			data.UpdateUserSettings(contract);
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(UserNameTooSoonException))]
+		public void UpdateUserSettings_ChangeName_TooSoon() {
+
+			userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(39);
+			var contract = new UpdateUserSettingsContract(userWithEmail) { Name = "mikumiku" };
+			data.UpdateUserSettings(contract);
+
+		}
+
+		[TestMethod]
 		public void VerifyEmail() {
 			
 			Assert.IsFalse(userWithEmail.Options.EmailVerified, "EmailVerified");

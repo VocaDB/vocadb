@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			: base(user, true) {
 
 			AboutMe = user.Options.AboutMe;
+			CanChangeName = user.CanChangeName;
 			EmailVerified = user.Options.EmailVerified;
 			HashedAccessKey = LoginManager.GetHashedAccessKey(user.AccessKey);
 			HasPassword = !string.IsNullOrEmpty(user.Password);
@@ -31,6 +32,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		}
 
 		public string AboutMe { get; set; }
+
+		public bool CanChangeName { get; set; }
 
 		public bool EmailVerified { get; set; }
 

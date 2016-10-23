@@ -20,11 +20,11 @@
 @using (Html.BeginForm("MySettings", "User", FormMethod.Post)) {
     
 	@Html.HiddenFor(m => m.Id)
-    @Html.HiddenFor(m => m.Username)
     @Html.HiddenFor(m => m.HasPassword)
     @Html.HiddenFor(m => m.HasTwitterToken)
     @Html.HiddenFor(m => m.AccessKey)
     @Html.HiddenFor(m => m.TwitterName)
+	@Html.HiddenFor(m => m.CanChangeName)
 
 	@Helpers.SaveBtn()
 	
@@ -41,10 +41,15 @@
 		<div id="accountSettings">
 			<div>
 				<div class="editor-label">
-					@Helpers.HelpLabel(Res.Username, "If you want to change your username, contact a staff member")
+					@Helpers.HelpLabel(Res.Username, "Username can be changed once per year. Username may contain alphanumeric characters and underscores. Contact staff member if necessary.")
 				</div>
 				<div class="editor-field">
-					@Html.DisplayFor(m => m.Username)
+					@if (Model.CanChangeName) {
+						@Html.TextBoxFor(m => m.Username)
+					} else {
+						@Html.HiddenFor(m => m.Username)
+						@Html.DisplayFor(m => m.Username)
+					}
 				</div>
 
 				<div class="editor-label">

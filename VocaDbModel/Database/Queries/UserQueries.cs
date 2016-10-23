@@ -332,6 +332,20 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private void ValidateUsername(IDatabaseContext<User> session, string name, int id) {
+
+			if (!User.IsValidName(name)) {
+				throw new InvalidUserNameException(name);
+			}
+
+			var nameInUse = session.Query().Any(u => u.Name == name && u.Id != id);
+
+			if (nameInUse) {
+				throw new UserNameAlreadyExistsException();
+			}
+
+		}
+
 		public UserQueries(IUserRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IStopForumSpamClient sfsClient,
 			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister, ObjectCache cache, 
 			BrandableStringsManager brandableStringsManager)
@@ -1250,6 +1264,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Updates user, including permissions, by admin/moderator.
+		/// </summary>
+		/// <param name="contract">User data. Cannot be null.</param>
+		/// <exception cref="InvalidUserNameException">If the new username contains invalid characters.</exception>
+		/// <exception cref="UserNameAlreadyExistsException">If the username is already in use by another user.</exception>
+		/// <remarks>
+		/// Requires the <see cref="PermissionToken.ManageUserPermissions"/> right.
+		/// </remarks>
 		public void UpdateUser(UserWithPermissionsContract contract) {
 
 			ParamIs.NotNull(() => contract);
@@ -1267,25 +1290,8 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				if (user.Name != contract.Name) {
-
-					if (!User.IsValidName(contract.Name)) {
-						throw new InvalidUserNameException(contract.Name);
-					}
-
-					var nameInUse = session.Query().Any(u => u.Name == contract.Name && u.Id != contract.Id);
-
-					if (nameInUse) {
-						throw new UserNameAlreadyExistsException();
-					}
-
-					session.AuditLogger.AuditLog(string.Format("changed username of {0} to '{1}'", EntryLinkFactory.CreateEntryLink(user), contract.Name));
-
-					var usernameEntry = new OldUsername(user, user.Name);
-					session.Save(usernameEntry);
-
-					user.Name = contract.Name;
-					user.NameLC = contract.Name.ToLowerInvariant();
-
+					ValidateUsername(session, contract.Name, contract.Id);
+					SetUsername(session, user, contract.Name);
 				}
 
 				var diff = OwnedArtistForUser.Sync(user.AllOwnedArtists, contract.OwnedArtistEntries, a => user.AddOwnedArtist(session.Load<Artist>(a.Artist.Id)));
@@ -1300,6 +1306,20 @@ namespace VocaDb.Model.Database.Queries {
 				session.AuditLogger.AuditLog(string.Format("updated user {0}", EntryLinkFactory.CreateEntryLink(user)));
 
 			}, PermissionToken.ManageUserPermissions, PermissionContext, skipLog: true);
+
+		}
+
+		private void SetUsername(IDatabaseContext<User> session, User user, string newName) {
+
+			session.AuditLogger.AuditLog(string.Format("changed username of {0} to '{1}'", EntryLinkFactory.CreateEntryLink(user),
+				newName));
+
+			var usernameEntry = new OldUsername(user, user.Name);
+			session.Save(usernameEntry);
+			user.OldUsernames.Add(usernameEntry);
+
+			user.Name = newName;
+			user.NameLC = newName.ToLowerInvariant();
 
 		}
 
@@ -1390,12 +1410,15 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		/// <summary>
-		/// Updates user's settings (from my settings page).
+		/// Updates user's settings (usually by the user themselves from my settings page).
 		/// </summary>
 		/// <param name="contract">New properties. Cannot be null.</param>
 		/// <returns>Updated user data. Cannot be null.</returns>
 		/// <exception cref="InvalidEmailFormatException">If the email format was invalid.</exception>
 		/// <exception cref="InvalidPasswordException">If password change was attempted and the old password was incorrect.</exception>
+		/// <exception cref="InvalidUserNameException">If the new username is invalid.</exception>
+		/// <exception cref="UserNameAlreadyExistsException">If the username was already taken by another user.</exception>
+		/// <exception cref="UserNameTooSoonException">If the cooldown for changing username has not expired.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken by another user.</exception>
 		public UserWithPermissionsContract UpdateUserSettings(UpdateUserSettingsContract contract) {
 
@@ -1420,6 +1443,18 @@ namespace VocaDb.Model.Database.Queries {
 						throw new InvalidPasswordException();
 
 					user.UpdatePassword(contract.NewPass, PasswordHashAlgorithms.Default);
+
+				}
+
+				if (!string.IsNullOrEmpty(contract.Name) && !string.Equals(contract.Name, user.Name, StringComparison.InvariantCultureIgnoreCase)) {
+
+					ValidateUsername(ctx, contract.Name, contract.Id);
+
+					if (!user.CanChangeName) {
+						throw new UserNameTooSoonException();
+					}
+
+					SetUsername(ctx, user, contract.Name);
 
 				}
 

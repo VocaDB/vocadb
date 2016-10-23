@@ -641,8 +641,10 @@ namespace VocaDb.Web.Controllers
 			if (!ModelState.IsValid)
 				return View(new MySettingsModel(GetUserForMySettings()));
 
+			UserWithPermissionsContract newUser;
+
 			try {
-				var newUser = Data.UpdateUserSettings(model.ToContract());
+				newUser = Data.UpdateUserSettings(model.ToContract());
 				LoginManager.SetLoggedUser(newUser);
 				PermissionContext.LanguagePreferenceSetting.Value = model.DefaultLanguageSelection;
 			} catch (InvalidPasswordException x) {
@@ -654,11 +656,20 @@ namespace VocaDb.Web.Controllers
 			} catch (InvalidEmailFormatException) {
 				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
 				return View(model);
+			} catch (InvalidUserNameException) {
+				ModelState.AddModelError("Username", "Username is invalid. Username may contain alphanumeric characters and underscores.");
+				return View(model);
+			} catch (UserNameAlreadyExistsException) {
+				ModelState.AddModelError("Username", "Username is already in use.");
+				return View(model);
+			} catch (UserNameTooSoonException) {
+				ModelState.AddModelError("Username", "Username may only be changed once per year. If necessary, contact a staff member.");
+				return View(model);
 			}
 
 			TempData.SetSuccessMessage(ViewRes.User.MySettingsStrings.SettingsUpdated);
 
-			return RedirectToAction("Profile", new { id = user.Name });
+			return RedirectToAction("Profile", new { id = newUser.Name });
 
 		}
 

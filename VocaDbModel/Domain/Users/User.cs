@@ -23,10 +23,11 @@ namespace VocaDb.Model.Domain.Users {
 	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink>, IEntryWithComments {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		public const string NameRegex = "[a-zA-Z0-9_]+";
+		public const string NameRegex = "^[a-zA-Z0-9_]+$";
+		public static readonly TimeSpan UsernameCooldown = TimeSpan.FromDays(365);
 
 		public static bool IsValidName(string name) {
-			return Regex.IsMatch(name, "^" + NameRegex + "$");
+			return Regex.IsMatch(name, NameRegex);
 		}
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
@@ -181,6 +182,13 @@ namespace VocaDb.Model.Domain.Users {
 
 				return !EffectivePermissions.Has(PermissionToken.DisableUsers);
 
+			}
+		}
+
+		public virtual bool CanChangeName {
+			get {
+				var lastNameDate = OldUsernames.Any() ? OldUsernames.OrderByDescending(n => n.Date).Select(n => n.Date).First() : CreateDate;
+				return DateTime.Now - lastNameDate >= User.UsernameCooldown;
 			}
 		}
 

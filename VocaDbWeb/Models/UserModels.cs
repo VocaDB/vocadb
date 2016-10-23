@@ -128,6 +128,7 @@ namespace VocaDb.Web.Models {
 
 			AboutMe = user.AboutMe;
 			ShowActivity = !user.AnonymousActivity;
+			CanChangeName = user.CanChangeName;
 			CultureSelection = user.Culture;
 			DefaultLanguageSelection = user.DefaultLanguageSelection;
 			Email = user.Email;
@@ -166,6 +167,8 @@ namespace VocaDb.Web.Models {
 
 		[Display(Name= "Do not show my name in the recent activity list")]
 		public bool ShowActivity { get; set; }
+
+		public bool CanChangeName { get; set; }
 
 		public string CultureSelection { get; set; }
 
@@ -207,6 +210,8 @@ namespace VocaDb.Web.Models {
 		public int Id { get; set; }
 
 		[Display(Name = "Username")]
+		[RegularExpression(Model.Domain.Users.User.NameRegex)]
+		[Required]
 		public string Username { get; set; }
 
 		[FromJson]

@@ -385,6 +385,13 @@ namespace VocaDb.Model.Service {
 
 	}
 
+	public class UserNameTooSoonException : Exception {
+
+		public UserNameTooSoonException() 
+			: base("Username cannot be changed yet") { }
+
+	}
+
 	public class UserEmailAlreadyExistsException : Exception {
 
 		public UserEmailAlreadyExistsException()
