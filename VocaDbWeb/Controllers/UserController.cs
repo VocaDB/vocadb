@@ -667,6 +667,11 @@ namespace VocaDb.Web.Controllers
 				return View(model);
 			}
 
+			// Updating username currently requires signing in again
+			if (newUser.Name != user.Name) {
+				FormsAuthentication.SignOut();
+			}
+
 			TempData.SetSuccessMessage(ViewRes.User.MySettingsStrings.SettingsUpdated);
 
 			return RedirectToAction("Profile", new { id = newUser.Name });
