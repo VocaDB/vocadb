@@ -94,7 +94,7 @@ module vdb.viewModels {
 			this.artistRolesEditViewModel.show(artist);
 		}
 
-		private hasAlbums: boolean;
+		public hasAlbums: boolean;
 
 		// Removes an artist from this album.
 		public removeArtist = (artist: ArtistForAlbumEditViewModel) => {

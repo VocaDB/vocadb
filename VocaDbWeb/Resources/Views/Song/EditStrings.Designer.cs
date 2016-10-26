@@ -115,6 +115,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vocaloids, UTAUs and other singing synthesizer voicebanks are added as artists as well..
+        /// </summary>
+        public static string ArVocaloidsNote {
+            get {
+                return ResourceManager.GetString("ArVocaloidsNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duration (minutes and seconds).
         /// </summary>
         public static string BaDuration {
