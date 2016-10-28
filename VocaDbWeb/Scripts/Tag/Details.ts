@@ -44,7 +44,7 @@ function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBase
 
 					if (parent) {
 
-						ren.label("Parent tag:<br/>" + tagLink(parent), 10, y)
+						var parentLab = ren.label("Parent tag:<br/>" + tagLink(parent), 10, y)
 							.attr({
 								fill: colors[0],
 								stroke: 'white',
@@ -71,7 +71,7 @@ function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBase
 
 							// Arrow from parent to siblings
 							ren.path(rightAndDownArrow)
-								.translate(100, y + 20)
+								.translate(parentLab.getBBox().x + parentLab.getBBox().width + 20, y + 20)
 								.attr({
 									'stroke-width': 2,
 									stroke: colors[3]
