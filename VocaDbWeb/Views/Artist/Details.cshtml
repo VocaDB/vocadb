@@ -427,7 +427,7 @@
 			var tagUsages = @Html.Raw(JsonHelpers.Serialize(Model.Tags));
 			var latestComments = @ToJS(Model.LatestComments);
 
-			var reportTypes = @ToJS(Translate.ArtistReportTypeNames.Select(r => new {
+			var reportTypes = @ToJS(Translate.ArtistReportTypeNames.Where(r => r.Id != ArtistReportType.OwnershipClaim).Select(r => new {
 				r.Id,
 				r.Name,
 				NotesRequired = ArtistReport.ReportTypesWithRequiredNotes.Contains(r.Id)
