@@ -17,15 +17,6 @@ namespace VocaDb.Tests.Web.Controllers {
 			controller = new SongController(null, null, null, null);
 		}
 
-		[TestMethod]
-		public void PVEmbedNND_NoId() {
-
-			var result = controller.PVEmbedNicoIFrame();
-
-			Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
-
-		}
-
 	}
 
 }

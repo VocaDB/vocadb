@@ -2,7 +2,7 @@
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper EmbedNico(string pvId, string widthStr, string heightStr) {
-	<script type="text/javascript" src="@(string.Format("http://ext.nicovideo.jp/thumb_watch/{0}?w={1}&h={2}", pvId, widthStr, heightStr))"></script>
+	<iframe width="@widthStr" height="@heightStr" style="border: none;" src="http://embed.nicovideo.jp/watch/@pvId?oldScript=1&noRelatedVideo=0&autoplay=0&defaultNoComment=0&noLinkToNiconico=0&noController=0&noHeader=0&noTags=0&noShare=0"></iframe>	
 }
 
 @helper EmbedPV(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 560, int height = 315, bool autoplay = false, bool enableApi = false, string id = null) {
@@ -50,14 +50,4 @@
 			break;
 	}
 
-}
-
-@helper EmbedPVDynamic(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 560, int height = 315, bool autoplay = false, bool enableApi = false, string id = null) {
-	@* Embeds a PV that can be loaded dynamically by JavaScript. For NicoNico, wrapping the actual embed inside an iframe is necessary. *@
-
-	if (pv.Service == PVService.NicoNicoDouga) {
-		<iframe width="@width" height="@height" frameborder="0" scrolling="no" src="@Url.Action("PVEmbedNicoIFrame", "Song", new { pvId = pv.Id })"></iframe>
-	} else {
-		@EmbedPV(pv, width, height)
-	}
 }
