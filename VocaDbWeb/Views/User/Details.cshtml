@@ -93,6 +93,12 @@
 	</div>
 }
 
+@if (ownProfile && !Model.KnownLanguages.Any()) {
+	<div class="alert alert-info">
+		@Html.Raw(string.Format(Res.KnownLanguagesMessage, "/User/MySettings#profile"))
+	</div>
+}
+
 <ul class="nav nav-pills">
 	<li data-bind="css: { active: view() == 'Overview' }">
 		<a href="#" data-bind="click: function() { setOverview(); }">@R.Overview</a>

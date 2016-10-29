@@ -232,6 +232,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please let us know which languages you are familiar with. You can enter this information under &lt;a href=&quot;{0}&quot;&gt;&quot;My settings&quot;, &quot;Profile&quot;&lt;/a&gt;, &quot;Languages I know&quot;. We can use this information to determine how to contact you when needed..
+        /// </summary>
+        public static string KnownLanguagesMessage {
+            get {
+                return ResourceManager.GetString("KnownLanguagesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Languages I know.
         /// </summary>
         public static string LanguagesIKnow {
