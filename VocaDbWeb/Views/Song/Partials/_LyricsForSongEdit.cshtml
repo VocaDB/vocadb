@@ -16,7 +16,7 @@
 			<div>
 				<p data-bind="visible: showLanguageSelection()">
 					@Helpers.HelpLabel(ViewRes.Song.EditStrings.LyLanguage, "If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'.")
-					@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Other/Unknown"), "cultureCode")					
+					@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode")					
 				</p>
 				<div>
 					@Helpers.HelpLabel("Source", "You can fill either label, URL or both")

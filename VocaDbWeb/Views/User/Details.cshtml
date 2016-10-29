@@ -27,8 +27,12 @@
 
 @functions {
 	public string GetLanguageName(UserKnownLanguageContract lang) {
-		var culture = CultureInfo.GetCultureInfo(lang.CultureCode);
-		return culture.NativeName + " - " + culture.EnglishName;
+		if (!string.IsNullOrEmpty(lang.CultureCode)) {
+			var culture = CultureInfo.GetCultureInfo(lang.CultureCode);
+			return culture.NativeName + " - " + culture.EnglishName;
+		} else {
+			return VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other;
+		}
 	}
 }
 
@@ -208,7 +212,9 @@
 				<ul class="user-known-languages">
 				@foreach (var lang in Model.KnownLanguages) {
 					<li>
-						<img src="@Url.StaticResource("/img/languageFlags/" + lang.CultureCode + ".png")" alt="@lang.CultureCode" title="@lang.CultureCode" />
+						@if (!string.IsNullOrEmpty(lang.CultureCode)) {
+							<img src="@Url.StaticResource("/img/languageFlags/" + lang.CultureCode + ".png")" alt="@lang.CultureCode" title="@lang.CultureCode" />
+						}
 						@GetLanguageName(lang) 
 						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
 							@:(@Translate.UserLanguageProficiencyNames[lang.Proficiency])

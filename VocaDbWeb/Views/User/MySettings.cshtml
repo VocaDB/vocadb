@@ -205,7 +205,7 @@
 						<!-- ko foreach: knownLanguages -->
 							<tr>
 								<td>
-									@KnockoutHelpers.DropdownList(Model.AllUserKnownLanguages.ToDictionaryFull(), "cultureCode", cssClass: "input-xlarge")
+									@KnockoutHelpers.DropdownList(Model.AllUserKnownLanguages.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode", cssClass: "input-xlarge")
 								</td>
 								<td>
 									@KnockoutHelpers.DropdownList(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency")
