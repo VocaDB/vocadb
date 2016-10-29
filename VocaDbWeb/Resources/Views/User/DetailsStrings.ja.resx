@@ -258,4 +258,7 @@
   <data name="LanguagesIKnow" xml:space="preserve">
     <value>話せる言語</value>
   </data>
+  <data name="KnownLanguagesMessage" xml:space="preserve">
+    <value>&lt;a href="{0}"&gt;アカウント設定 、プロフィール&lt;/a&gt;の「話せる言語」に理解できる言語を記入してください。連絡する際参考になります。</value>
+  </data>
 </root>
