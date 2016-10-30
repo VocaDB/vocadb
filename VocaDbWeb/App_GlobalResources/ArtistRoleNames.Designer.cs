@@ -187,6 +187,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vocal data provider.
+        /// </summary>
+        internal static string VocalDataProvider {
+            get {
+                return ResourceManager.GetString("VocalDataProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vocalist.
         /// </summary>
         internal static string Vocalist {

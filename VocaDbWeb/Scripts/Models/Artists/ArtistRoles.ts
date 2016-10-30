@@ -61,7 +61,9 @@ module vdb.models.artists {
 		/// <summary>
 		/// For UtaiteDB.
 		/// </summary>
-		Encoder				= 16384
+		Encoder				= 16384,
+
+		VocalDataProvider	= 32768
 
 	}
 
