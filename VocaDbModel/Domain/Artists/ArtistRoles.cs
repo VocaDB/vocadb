@@ -68,7 +68,9 @@ namespace VocaDb.Model.Domain.Artists {
 		/// <summary>
 		/// For UtaiteDB.
 		/// </summary>
-		Encoder				= 16384
+		Encoder				= 16384,
+
+		VocalDataProvider	= 32768
 
 	}
 }
