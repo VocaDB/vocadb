@@ -6,6 +6,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Utils
+@using VocaDb.Web.Resources.Domain.Globalization
 @using R = ViewRes.User.DetailsStrings;
 @using Res = ViewRes.User.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<UserDetailsContract>
@@ -31,7 +32,7 @@
 			var culture = CultureInfo.GetCultureInfo(lang.CultureCode);
 			return culture.NativeName + " - " + culture.EnglishName;
 		} else {
-			return VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other;
+			return InterfaceLanguageStrings.Other;
 		}
 	}
 }
@@ -214,6 +215,8 @@
 					<li>
 						@if (!string.IsNullOrEmpty(lang.CultureCode)) {
 							<img src="@Url.StaticResource("/img/languageFlags/" + lang.CultureCode + ".png")" alt="@lang.CultureCode" title="@lang.CultureCode" />
+						} else {
+							<img src="@Url.StaticResource("/img/languageFlags/unknown.png")" alt="@InterfaceLanguageStrings.Other" title="@InterfaceLanguageStrings.Other" />
 						}
 						@GetLanguageName(lang) 
 						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
