@@ -159,6 +159,9 @@
   <data name="Publisher" xml:space="preserve">
     <value>Publisher</value>
   </data>
+  <data name="VocalDataProvider" xml:space="preserve">
+    <value>Vocal data provider</value>
+  </data>
   <data name="Vocalist" xml:space="preserve">
     <value>Vocalist</value>
   </data>

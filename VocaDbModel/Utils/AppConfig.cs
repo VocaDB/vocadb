@@ -29,6 +29,7 @@ namespace VocaDb.Model.Utils {
 			Domain.Artists.ArtistRoles.Publisher,
 			Domain.Artists.ArtistRoles.Vocalist,
 			Domain.Artists.ArtistRoles.VoiceManipulator,
+			Domain.Artists.ArtistRoles.VocalDataProvider,
 			Domain.Artists.ArtistRoles.Other
 		};
 
