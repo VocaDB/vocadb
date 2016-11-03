@@ -26,7 +26,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			LastLogin = user.LastLogin;
 			LastLoginAddress = user.Options.LastLoginAddress;
 			Location = user.Options.Location;
-			KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
+			KnownLanguages = user.KnownLanguages.OrderByDescending(l => l.Proficiency).Select(l => new UserKnownLanguageContract(l)).ToArray();
 			OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
