@@ -98,8 +98,11 @@ namespace VocaDb.Model.Domain {
 		public virtual int? Month { get; set; }
 
 		/// <summary>
-		/// Sortable datetime for database (not currently in use).
+		/// Sortable datetime which is never empty.
 		/// </summary>
+		/// <remarks>
+		/// If the date is empty this will be minimal date.
+		/// </remarks>
 		public virtual DateTime SortableDateTime {
 			get {
 				return new DateTime(Year ?? 1970, Month ?? 1, Day ?? 1);

@@ -108,6 +108,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 		[DataMember]
 		public int RatingCount { get; set; }
 
+		/// <summary>
+		/// Release date. Cannot be null (but can be empty).
+		/// </summary>
 		[DataMember]
 		public OptionalDateTimeContract ReleaseDate { get; set; }
 
