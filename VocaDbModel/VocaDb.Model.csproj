@@ -912,7 +912,6 @@
     <Compile Include="Service\VideoServices\IVideoServiceParser.cs" />
     <Compile Include="Service\VideoServices\LocalFileManager.cs" />
     <Compile Include="Service\VideoServices\NicoParser.cs" />
-    <Compile Include="Service\VideoServices\NicoTagMappingFactory.cs" />
     <Compile Include="Service\VideoServices\NicoTitleParseResult.cs" />
     <Compile Include="Service\VideoServices\RegexLinkMatcher.cs" />
     <Compile Include="Service\Helpers\SessionHelper.cs" />

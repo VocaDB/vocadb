@@ -747,13 +747,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		public void UpdateMappings(TagMappingContract[] mappings) {
 
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
 			HandleTransaction(ctx => {
 
 				ctx.AuditLogger.AuditLog("updating tag mappings");
 
-				var existing = ctx.Query<TagMapping>().ToArray();
+				var existing = ctx.Query<TagMapping>().ToList();
 				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.SourceTag == m2.SourceTag && m.Tag.IdEquals(m2.Tag), 
-					create: t => new TagMapping(ctx.NullSafeLoad(t.Tag), t.SourceTag));
+					create: t => new TagMapping(ctx.NullSafeLoad(t.Tag), t.SourceTag), remove: t => ctx.Delete(t));
 
 				ctx.Sync(diff);
 

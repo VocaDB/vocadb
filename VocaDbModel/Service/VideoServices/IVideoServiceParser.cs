@@ -66,8 +66,11 @@ namespace VocaDb.Model.Service.VideoServices {
 		public bool Success { get; set; }
 
 		/// <summary>
-		/// List of tags. Cannot be null.
+		/// List of tags in the source system. Cannot be null.
 		/// </summary>
+		/// <remarks>
+		/// These are tag names for example on NND.
+		/// </remarks>
 		public string[] Tags { get; set; }
 
 		/// <summary>

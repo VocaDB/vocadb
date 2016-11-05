@@ -12,9 +12,9 @@
 		private Tag tag;
 		private string sourceTag;
 
-		public int Id { get; set; }
+		public virtual int Id { get; set; }
 
-		public string SourceTag {
+		public virtual string SourceTag {
 			get { return sourceTag; }
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
@@ -22,7 +22,7 @@
 			}
 		}
 
-		public Tag Tag {
+		public virtual Tag Tag {
 			get { return tag; }
 			set {
 				ParamIs.NotNull(() => value);

@@ -2287,6 +2287,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVAndVoteContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagBaseContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagMappingContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagSelectionContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagUsageForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserApiContract.ts" />
@@ -2836,6 +2837,7 @@
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
     <TypeScriptCompile Include="Scripts\User\Details.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ActivityEntry\ActivityEntryListViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Admin\ManageTagMappingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumDiscPropertiesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\ArchivedAlbumViewModel.ts" />

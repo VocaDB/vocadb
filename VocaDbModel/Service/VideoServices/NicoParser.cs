@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Runtime.Caching;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -29,7 +27,6 @@ namespace VocaDb.Model.Service.VideoServices {
 	public static class NicoHelper {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly NicoTagMappingFactory nicoTagMappingFactory = new NicoTagMappingFactory(MemoryCache.Default);
 
 		private static string GetUserName(Stream htmlStream, Encoding encoding) {
 
@@ -101,15 +98,9 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (string.IsNullOrEmpty(author))
 				author = GetUserName(userId);
 
-			var tagMapping = nicoTagMappingFactory.GetMappings();
-			var matchedTags = nicoResponse.Thumb.Tags
-				.Where(e => tagMapping.ContainsKey(e))
-				.Select(e => tagMapping[e])
-				.ToArray();
-
 			var result = VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: publishDate);
 			result.AuthorId = userId;
-			result.Tags = matchedTags;
+			result.Tags = nicoResponse.Thumb.Tags;
 
 			return result;
 

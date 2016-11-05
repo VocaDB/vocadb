@@ -14,6 +14,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
@@ -309,6 +310,10 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public void PutMappings(IEnumerable<TagMappingContract> mappings) {
+
+			if (mappings == null) {
+				throw new HttpBadRequestException("Mappings cannot be null");
+			}
 
 			queries.UpdateMappings(mappings.ToArray());
 
