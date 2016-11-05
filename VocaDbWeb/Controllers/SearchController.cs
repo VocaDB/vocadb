@@ -125,7 +125,7 @@ namespace VocaDb.Web.Controllers
 					return RedirectToAction("Featured", "SongList");
 
 				case EntryType.Tag:
-					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, true, true), PagingProperties.FirstPage(2)),
+					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, true, true), PagingProperties.FirstPage(2)) { AllowChildren = true },
 						TagOptionalFields.None, WebHelper.IsSSL(Request), permissionContext.LanguagePreference);
 					if (tags.Items.Length == 1) {
 						return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);
