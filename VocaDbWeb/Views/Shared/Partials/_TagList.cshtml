@@ -2,8 +2,8 @@
 <!-- binding context: TagListViewModel -->
 
 <ul data-bind="foreach: displayedTagUsages" class="link-list">
-	<li class="link-item">		
-		<a data-bind="text: tag.name + ' (' + count + ')', attr: { href: $parent.getTagUrl($data), title: tag.additionalNames }"></a>
+	<li class="link-item">
+		<span><a data-bind="text: tag.name, attr: { href: $parent.getTagUrl($data), title: tag.additionalNames }"></a><small class="muted" data-bind="text: ' (' + count + ')'"></small></span>
 	</li>
 </ul>
 <span data-bind="visible: !expanded()">
