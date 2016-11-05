@@ -14,6 +14,8 @@
 <p>@Html.ActionLink("View audit log", "ViewAuditLog")</p>
 }
 
+<p>@Html.ActionLink("Manage tag mappings", "ManageTagMappings")</p>
+
 @if (UserContext.HasPermission(PermissionToken.ManageEntryReports)) {
 <p>@Html.ActionLink("Manage entry reports", "ViewEntryReports")</p>	
 }

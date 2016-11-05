@@ -4,6 +4,29 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201611052100)]
+	public class TagMapping : Migration {
+
+		public override void Up() {
+
+			Create.Table(TableNames.TagMappings)
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id")
+				.WithColumn("SourceTag").AsString(200).NotNullable();
+
+			Create.Index("IX_TagMappings_Tag_SourceTag").OnTable(TableNames.TagMappings)
+				.OnColumn("Tag").Ascending()
+				.OnColumn("SourceTag").Ascending()
+				.WithOptions().Unique();
+
+		}
+
+		public override void Down() {
+			Delete.Table(TableNames.TagMappings);
+		}
+
+	}
+
 	[Migration(201610032100)]
 	public class TagRemoveAliasedTo : Migration {
 

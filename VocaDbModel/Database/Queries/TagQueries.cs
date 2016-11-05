@@ -329,6 +329,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public TagMappingContract[] GetMappings() {
+
+			return HandleQuery(ctx => ctx.Query<TagMapping>().ToArray().Select(t => new TagMappingContract(t, LanguagePreference)).ToArray());
+
+		}
+
 		/// <summary>
 		/// Get tag by (exact) name. Returns null if the tag does not exist.
 		/// </summary>
@@ -739,6 +745,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void UpdateMappings(TagMappingContract[] mappings) {
+
+			HandleTransaction(ctx => {
+
+				ctx.AuditLogger.AuditLog("updating tag mappings");
+
+				var existing = ctx.Query<TagMapping>().ToArray();
+				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.SourceTag == m2.SourceTag && m.Tag.IdEquals(m2.Tag), 
+					create: t => new TagMapping(ctx.NullSafeLoad(t.Tag), t.SourceTag));
+
+				ctx.Sync(diff);
+
+			});
+
+		}
 
 	}
 

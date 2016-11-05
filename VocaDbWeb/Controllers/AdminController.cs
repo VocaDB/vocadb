@@ -178,6 +178,13 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[Authorize]
+		public ActionResult ManageTagMappings() {
+
+			return View();
+
+		}
+
 		public ActionResult PVAuthorNames(string term) {
 
 			var authors = Service.FindPVAuthorNames(term);

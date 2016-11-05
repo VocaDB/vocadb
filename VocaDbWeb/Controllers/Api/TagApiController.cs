@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
@@ -199,6 +201,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public IEnumerable<TagMappingContract> GetMappings() {
+			return queries.GetMappings();
+		}
+
 		/// <summary>
 		/// Find tag names by a part of name.
 		/// 
@@ -294,6 +302,15 @@ namespace VocaDb.Web.Controllers.Api {
 		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) {
 
 			return queries.CreateComment(tagId, contract);
+
+		}
+
+		[Authorize]
+		[Route("mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PutMappings(IEnumerable<TagMappingContract> mappings) {
+
+			queries.UpdateMappings(mappings.ToArray());
 
 		}
 

@@ -3316,6 +3316,7 @@
     <Content Include="Views\Discussion\Partials\_ViewFolders.cshtml" />
     <Content Include="Scripts\jquery-2.2.1.min.map" />
     <Content Include="Views\Error\IPForbidden.cshtml" />
+    <Content Include="Views\Admin\ManageTagMappings.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\AliasForSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
