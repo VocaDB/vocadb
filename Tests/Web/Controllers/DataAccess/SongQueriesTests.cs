@@ -230,8 +230,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		public void Create_Tags() {
-		
-			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "vocarock"});
+
+			repository.Save(new TagMapping(tag, "VOCAROCK"));
+			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "VOCAROCK" });
 				
 			CallCreate();
 

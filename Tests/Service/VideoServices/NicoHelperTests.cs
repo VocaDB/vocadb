@@ -79,8 +79,8 @@ namespace VocaDb.Tests.Service.VideoServices {
 			Assert.AreEqual(178, result.LengthSeconds, "LengthSeconds");
 			Assert.AreEqual("14270239", result.AuthorId, "AuthorId");
 			Assert.AreEqual("ProjectDIVAチャンネル", result.Author, "Author");
-			Assert.AreEqual(1, result.Tags.Length, "Tags.Length");
-			Assert.AreEqual("rock", result.Tags.First(), "Tag name");
+			Assert.AreEqual(11, result.Tags.Length, "Tags.Length");
+			Assert.IsTrue(result.Tags.Contains("VOCALOID"), "Found tag");
 
 		}
 

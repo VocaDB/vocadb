@@ -747,7 +747,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public void UpdateMappings(TagMappingContract[] mappings) {
 
-			PermissionContext.VerifyPermission(PermissionToken.Admin);
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
 			HandleTransaction(ctx => {
 
