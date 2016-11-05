@@ -38,10 +38,10 @@
 	@Scripts.Render("~/bundles/Tag/Details")
 	<script type="text/javascript">
 
-		$(document).ready(function () {
+		$(function () {
 
 			var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
-			var jsonModel = @Html.Raw(JsonHelpers.Serialize(new { Model.Name, Model.Parent, Model.Children, Model.Siblings }));
+			var jsonModel = @ToJS(new { Model.Name, Model.Parent, Model.Children, Model.Siblings });
 			var vm;
 
 			$("#tabs").tabs({
