@@ -8,7 +8,7 @@ namespace vdb.viewModels.admin {
 		constructor(private urlMapper: vdb.UrlMapper) {
 
 			$.getJSON(urlMapper.mapRelative("/api/tags/mappings"), result => {
-				this.mappings(_.sortBy(result, (r: dc.tags.TagMappingContract) => r.tag.name));
+				this.mappings(_.sortBy(result, (r: dc.tags.TagMappingContract) => r.tag.name.toLowerCase()));
 			});
 
 		}

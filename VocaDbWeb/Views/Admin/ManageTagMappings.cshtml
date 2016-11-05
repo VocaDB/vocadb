@@ -2,7 +2,7 @@
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
-    PageProperties.Title = "Manage tag mappings";
+    PageProperties.Title = "Manage NicoNicoDouga tag mappings";
     ViewBag.Parents = new[] { 
 		Html.ActionLink("Manage", "Index"), 
 	};    
@@ -14,8 +14,8 @@
 	
 	<table>
 		<tr>
-			<th>Source</th>
-			<th>Target</th>
+			<th>Source (NND)</th>
+			<th>Target (VocaDB)</th>
 			<th></th>
 		</tr>
 		<tbody data-bind="foreach: mappings">
@@ -27,7 +27,7 @@
 					<a href="{{$parent.getTagUrl($data)}}">{{tag.name}}</a>
 				</td>
 				<td>
-					<button class="btn btn-danger" data-bind="click: $parent.mappings.remove">Delete</button>
+					<button class="btn btn-small btn-danger" data-bind="click: $parent.mappings.remove">Delete</button>
 				</td>
 			</tr>
 		</tbody>
@@ -39,7 +39,7 @@
 				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("tagAutoComplete", "newTargetTag")
 			</td>
 			<td>
-				<button type="button" class="btn btn-danger" data-bind="click: addMapping">Add</button>				
+				<button type="button" class="btn btn-small btn-danger" data-bind="click: addMapping">Add</button>				
 			</td>
 		</tr>
 	</table>
