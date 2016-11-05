@@ -124,6 +124,15 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Children.
+        /// </summary>
+        public static string Children {
+            get {
+                return ResourceManager.GetString("Children", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overview.
         /// </summary>
         public static string Overview {
@@ -138,6 +147,15 @@ namespace ViewRes.Tag {
         public static string RelatedTags {
             get {
                 return ResourceManager.GetString("RelatedTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siblings.
+        /// </summary>
+        public static string Siblings {
+            get {
+                return ResourceManager.GetString("Siblings", resourceCulture);
             }
         }
         

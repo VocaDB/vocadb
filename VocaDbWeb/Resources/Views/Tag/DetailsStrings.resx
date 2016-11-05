@@ -138,11 +138,17 @@
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="Children" xml:space="preserve">
+    <value>Children</value>
+  </data>
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>
   </data>
   <data name="RelatedTags" xml:space="preserve">
     <value>Related tags</value>
+  </data>
+  <data name="Siblings" xml:space="preserve">
+    <value>Siblings</value>
   </data>
   <data name="Tag" xml:space="preserve">
     <value>Tag</value>

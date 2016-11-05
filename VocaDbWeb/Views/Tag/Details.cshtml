@@ -123,6 +123,7 @@
 
 			@if (related.Any()) {
 				<div id="hierarchyContainer" style='width: 1000px; height: @((75 + (Model.Parent != null ? 125 : 0) + (Model.Children.Any() ? 125 : 0)) + "px")'></div>
+				<br />
 			}
 			
 			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Helpers.UniversalTimeLabel(Model.CreateDate)</p>
@@ -191,6 +192,17 @@
 			</a>
 		</h3>
 		@SongHelpers.SongGrid(Model.Songs.Select(s => s), 2, true)
+	</div>
+}
+
+@if (related.Any()) {
+	<div class="well well-transparent">
+		@if (Model.Siblings.Any()) {
+			<p>@Res.Siblings: @TagHelpers.TagList(Model.Siblings)</p>
+		}
+		@if (Model.Children.Any()) {
+			<p>@Res.Children: @TagHelpers.TagList(Model.Children)</p>
+		}
 	</div>
 }
 
