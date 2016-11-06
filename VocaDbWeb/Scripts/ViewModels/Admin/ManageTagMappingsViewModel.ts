@@ -29,7 +29,7 @@ namespace vdb.viewModels.admin {
 		}
 
 		public getTagUrl = (tag: dc.tags.TagMappingContract) => {
-			return vdb.utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
+			return vdb.functions.mapFullUrl(utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		public mappings = ko.observableArray<dc.tags.TagMappingContract>();
