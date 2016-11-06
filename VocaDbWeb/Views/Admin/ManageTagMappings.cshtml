@@ -18,6 +18,7 @@
     
 	@Helpers.SaveBtn()
 	
+	<br />
 	<table>
 		<tr>
 			<th>Source (NND)</th>
@@ -39,7 +40,7 @@
 		</tbody>
 		<tr>
 			<td>
-				<input type="text" maxlength="200" textInput="{{newSourceName}}" />
+				<input type="text" maxlength="200" textInput="{{newSourceName}}" placeholder="Source tag name" />
 			</td>
 			<td>
 				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("tagAutoComplete", "newTargetTag")
@@ -49,6 +50,7 @@
 			</td>
 		</tr>
 	</table>
+	<br />
 
 	@Helpers.SaveBtn()
 	
