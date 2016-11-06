@@ -6,11 +6,7 @@ namespace vdb.viewModels.admin {
 	export class ManageTagMappingsViewModel {
 
 		constructor(private urlMapper: vdb.UrlMapper) {
-
-			$.getJSON(urlMapper.mapRelative("/api/tags/mappings"), result => {
-				this.mappings(_.sortBy(result, (r: dc.tags.TagMappingContract) => r.tag.name.toLowerCase()));
-			});
-
+			this.loadMappings();
 		}
 
 		public addMapping = () => {
@@ -18,7 +14,12 @@ namespace vdb.viewModels.admin {
 			if (!this.newSourceName || this.newTargetTag.isEmpty())
 				return;
 
-			this.mappings.push({ tag: this.newTargetTag.entry(), sourceTag: this.newSourceName() });
+			if (_.some(this.mappings(), m => m.sourceTag.toLowerCase() === this.newSourceName().toLowerCase())) {
+				ui.showErrorMessage("Mapping already exists for source tag " + this.newSourceName());
+				return;
+			}
+
+			this.mappings.push({ tag: this.newTargetTag.entry(), sourceTag: this.newSourceName(), isNew: true });
 			this.newSourceName("");
 			this.newTargetTag.clear();
 
@@ -30,6 +31,14 @@ namespace vdb.viewModels.admin {
 
 		public getTagUrl = (tag: dc.tags.TagMappingContract) => {
 			return vdb.functions.mapFullUrl(utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
+		}
+
+		private loadMappings = () => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/tags/mappings"), result => {
+				this.mappings(result);
+			});
+
 		}
 
 		public mappings = ko.observableArray<dc.tags.TagMappingContract>();
@@ -45,6 +54,8 @@ namespace vdb.viewModels.admin {
 			});
 
 		}
+
+		public sortedMappings = ko.computed(() => _.sortBy(this.mappings(), m => m.tag.name.toLowerCase()));
 
 	}
 

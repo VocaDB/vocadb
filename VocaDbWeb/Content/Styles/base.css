@@ -163,6 +163,9 @@ body {
 .entry-field-inline-warning {
   margin-left: 20px;
 }
+.row-new {
+  background-color: rgba(128, 255, 128, 0.4);
+}
 .artist-details-page .entry-main-picture {
   padding-right: 7px;
 }

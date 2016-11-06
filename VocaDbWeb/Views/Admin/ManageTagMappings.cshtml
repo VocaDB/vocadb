@@ -2,10 +2,10 @@
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
-    PageProperties.Title = "Manage NicoNicoDouga tag mappings";
-    ViewBag.Parents = new[] { 
-		Html.ActionLink("Manage", "Index"), 
-	};    
+	PageProperties.Title = "Manage NicoNicoDouga tag mappings";
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Manage", "Index"),
+	};
 }
 
 <div class="alert alert-info">
@@ -14,21 +14,48 @@
 	Multiple tags from the source system may be mapped to a single tag on VocaDB, but one source tag can be mapped to only one target tag (additional mappings are ignored).
 </div>
 
+<form class="form-horizontal">
+	<h3>New mapping</h3>
+	<div class="control-group">
+		<label class="control-label" for="newSourceName">Source tag name</label>
+		<div class="controls">
+			<input type="text" id="newSourceName" maxlength="200" textInput="{{newSourceName}}" placeholder="Tag name" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">Target tag</label>
+		<div class="controls">
+			@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("tagAutoComplete", "newTargetTag")
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="button" class="btn btn-primary" data-bind="click: addMapping">Add</button>
+		</div>
+	</div>
+</form>
+
+<hr />
+
 <form data-bind="submit: save, show" class="js-cloak">
-    
-	@Helpers.SaveBtn()
 	
+	<h3>Mappings</h3>
+
+	@Helpers.SaveBtn()
+
 	<br />
 	<table>
-		<tr>
-			<th>Source (NND)</th>
-			<th>Target (VocaDB)</th>
-			<th></th>
-		</tr>
-		<tbody data-bind="foreach: mappings">
+		<thead>
 			<tr>
+				<th>Source (NND)</th>
+				<th>Target (VocaDB)</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: sortedMappings">
+			<tr data-bind="css: { 'row-new': $data.isNew }">
 				<td>
-					<a class="extLink" href="{{$parent.getSourceTagUrl($data)}}" target="_blank">{{sourceTag}}</a>					
+					<a class="extLink" href="{{$parent.getSourceTagUrl($data)}}" target="_blank">{{sourceTag}}</a>
 				</td>
 				<td>
 					<a class="extLink" href="{{$parent.getTagUrl($data)}}" target="_blank">{{tag.name}}</a>
@@ -38,22 +65,11 @@
 				</td>
 			</tr>
 		</tbody>
-		<tr>
-			<td>
-				<input type="text" maxlength="200" textInput="{{newSourceName}}" placeholder="Source tag name" />
-			</td>
-			<td>
-				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("tagAutoComplete", "newTargetTag")
-			</td>
-			<td>
-				<button type="button" class="btn btn-small btn-danger" data-bind="click: addMapping">Add</button>				
-			</td>
-		</tr>
 	</table>
 	<br />
 
 	@Helpers.SaveBtn()
-	
+
 </form>
 
 @section BodyScripts {
@@ -61,15 +77,15 @@
 	<script type="text/javascript" src="@Url.Content("~/Scripts/KnockoutExtensions/TagAutoComplete.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Admin/ManageTagMappingsViewModel.js")"></script>
 	<script type="text/javascript">
-	$(function () {
+		$(function () {
 
-		ko.punches.enableAll();
+			ko.punches.enableAll();
 
-		var urlMapper = new vdb.UrlMapper('@RootPath');
+			var urlMapper = new vdb.UrlMapper('@RootPath');
 
-		var viewModel = new vdb.viewModels.admin.ManageTagMappingsViewModel(urlMapper);
-    	ko.applyBindings(viewModel);
+			var viewModel = new vdb.viewModels.admin.ManageTagMappingsViewModel(urlMapper);
+			ko.applyBindings(viewModel);
 
-	});
+		});
 	</script>
 }
