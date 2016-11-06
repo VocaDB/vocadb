@@ -749,6 +749,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
+			mappings = mappings.Distinct(m => m.SourceTag).ToArray();
+
 			HandleTransaction(ctx => {
 
 				ctx.AuditLogger.AuditLog("updating tag mappings");
