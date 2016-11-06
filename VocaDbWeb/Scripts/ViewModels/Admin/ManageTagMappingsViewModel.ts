@@ -24,6 +24,10 @@ namespace vdb.viewModels.admin {
 
 		}
 
+		public getSourceTagUrl = (tag: dc.tags.TagMappingContract) => {
+			return "http://www.nicovideo.jp/tag/" + encodeURIComponent(tag.sourceTag);
+		}
+
 		public getTagUrl = (tag: dc.tags.TagMappingContract) => {
 			return vdb.utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 		}
