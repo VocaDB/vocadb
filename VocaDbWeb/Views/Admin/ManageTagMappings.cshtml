@@ -1,0 +1,73 @@
+﻿@using System.Web.Optimization
+@inherits VocaDb.Web.Code.VocaDbPage
+
+@{
+    PageProperties.Title = "Manage NicoNicoDouga tag mappings";
+    ViewBag.Parents = new[] { 
+		Html.ActionLink("Manage", "Index"), 
+	};    
+}
+
+<div class="alert alert-info">
+	These mappings will be used to automatically add tags from external video streaming service. Currently only NicoNicoDouga is supported.
+	Tags will be mapped from the source system (NND) to target tag on VocaDB.
+	Multiple tags from the source system may be mapped to a single tag on VocaDB, but one source tag can be mapped to only one target tag (additional mappings are ignored).
+</div>
+
+<form data-bind="submit: save, show" class="js-cloak">
+    
+	@Helpers.SaveBtn()
+	
+	<table>
+		<tr>
+			<th>Source (NND)</th>
+			<th>Target (VocaDB)</th>
+			<th></th>
+		</tr>
+		<tbody data-bind="foreach: mappings">
+			<tr>
+				<td>
+					{{sourceTag}}
+				</td>
+				<td>
+					<a href="{{$parent.getTagUrl($data)}}">{{tag.name}}</a>
+				</td>
+				<td>
+					<button class="btn btn-small btn-danger" data-bind="click: $parent.mappings.remove">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+		<tr>
+			<td>
+				<input type="text" maxlength="200" textInput="{{newSourceName}}" />
+			</td>
+			<td>
+				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("tagAutoComplete", "newTargetTag")
+			</td>
+			<td>
+				<button type="button" class="btn btn-small btn-danger" data-bind="click: addMapping">Add</button>				
+			</td>
+		</tr>
+	</table>
+
+	@Helpers.SaveBtn()
+	
+</form>
+
+@section BodyScripts {
+	@Scripts.Render("~/bundles/shared/edit")
+	<script type="text/javascript" src="@Url.Content("~/Scripts/KnockoutExtensions/TagAutoComplete.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Admin/ManageTagMappingsViewModel.js")"></script>
+	<script type="text/javascript">
+	$(function () {
+
+		ko.punches.enableAll();
+
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+
+		var viewModel = new vdb.viewModels.admin.ManageTagMappingsViewModel(urlMapper);
+    	ko.applyBindings(viewModel);
+
+	});
+	</script>
+}

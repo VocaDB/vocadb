@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
@@ -12,6 +14,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
@@ -199,6 +202,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public IEnumerable<TagMappingContract> GetMappings() {
+			return queries.GetMappings();
+		}
+
 		/// <summary>
 		/// Find tag names by a part of name.
 		/// 
@@ -294,6 +303,19 @@ namespace VocaDb.Web.Controllers.Api {
 		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) {
 
 			return queries.CreateComment(tagId, contract);
+
+		}
+
+		[Authorize]
+		[Route("mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PutMappings(IEnumerable<TagMappingContract> mappings) {
+
+			if (mappings == null) {
+				throw new HttpBadRequestException("Mappings cannot be null");
+			}
+
+			queries.UpdateMappings(mappings.ToArray());
 
 		}
 

@@ -2287,6 +2287,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVAndVoteContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagBaseContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagMappingContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagSelectionContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagUsageForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserApiContract.ts" />
@@ -2836,6 +2837,7 @@
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
     <TypeScriptCompile Include="Scripts\User\Details.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ActivityEntry\ActivityEntryListViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Admin\ManageTagMappingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumDiscPropertiesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\ArchivedAlbumViewModel.ts" />
@@ -3316,6 +3318,7 @@
     <Content Include="Views\Discussion\Partials\_ViewFolders.cshtml" />
     <Content Include="Scripts\jquery-2.2.1.min.map" />
     <Content Include="Views\Error\IPForbidden.cshtml" />
+    <Content Include="Views\Admin\ManageTagMappings.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\AliasForSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />

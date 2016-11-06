@@ -101,7 +101,7 @@ namespace VocaDb.Model.Database.Queries {
 				return;
 						
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
-			var tags = GetTags(ctx.OfType<Tag>(), pvResult.Tags);
+			var tags = MapTags(ctx, pvResult.Tags);
 
 			foreach (var tag in tags) {
 
@@ -197,13 +197,20 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {
+
+			var tagMappings = ctx.Query<TagMapping>().ToArray().ToDictionary(t => t.SourceTag, t => t.Tag, StringComparer.InvariantCultureIgnoreCase);
+			return nicoTags.Where(t => tagMappings.ContainsKey(t)).Select(t => tagMappings[t]).ToArray();
+
+		}
+
 		private bool HasCoverTag(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res) {
 
 			if (config.SpecialTags.Cover == 0)
 				return false;
 
-			var coverTag = ctx.Load<Tag>(config.SpecialTags.Cover);
-			return res.Tags.Any(t => coverTag.Names.AllValues.Contains(t));
+			var coverSourceTag = ctx.Query<TagMapping>().FirstOrDefault(t => t.Tag.Id == config.SpecialTags.Cover)?.SourceTag;
+			return coverSourceTag != null && res.Tags.Contains(coverSourceTag, StringComparer.InvariantCultureIgnoreCase);
 
 		}
 
