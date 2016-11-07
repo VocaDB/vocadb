@@ -762,6 +762,7 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.Sync(diff);
 
 				ctx.AuditLogger.AuditLog(string.Format("updated tag mappings ({0} additions, {1} deletions)", diff.Added.Length, diff.Removed.Length));
+				ctx.AuditLogger.SysLog(string.Format("added [{0}], deleted [{1}]", string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName)), string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))));
 
 			});
 

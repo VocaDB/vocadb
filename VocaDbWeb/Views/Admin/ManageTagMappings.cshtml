@@ -53,7 +53,7 @@
 			</tr>
 		</thead>
 		<tbody data-bind="foreach: sortedMappings">
-			<tr data-bind="css: { 'row-new': $data.isNew }">
+			<tr data-bind="css: { 'row-new': $data.isNew, 'row-deleted': $data.isDeleted }">
 				<td>
 					<a class="extLink" href="{{$parent.getSourceTagUrl($data)}}" target="_blank">{{sourceTag}}</a>
 				</td>
@@ -61,7 +61,7 @@
 					<a class="extLink" href="{{$parent.getTagUrl($data)}}" target="_blank">{{tag.name}}</a>
 				</td>
 				<td>
-					<button class="btn btn-small btn-danger" data-bind="click: $parent.mappings.remove">Delete</button>
+					<button class="btn btn-small btn-danger" data-bind="click: deleteMapping, disable: isDeleted">Delete</button>
 				</td>
 			</tr>
 		</tbody>

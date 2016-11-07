@@ -19,29 +19,35 @@ namespace vdb.viewModels.admin {
 				return;
 			}
 
-			this.mappings.push({ tag: this.newTargetTag.entry(), sourceTag: this.newSourceName(), isNew: true });
+			this.mappings.push(new EditTagMappingViewModel({ tag: this.newTargetTag.entry(), sourceTag: this.newSourceName() }, true));
 			this.newSourceName("");
 			this.newTargetTag.clear();
 
 		}
 
-		public getSourceTagUrl = (tag: dc.tags.TagMappingContract) => {
+		public deleteMapping = (mapping: EditTagMappingViewModel) => {
+			mapping.isDeleted(true);
+		}
+
+		public getSourceTagUrl = (tag: EditTagMappingViewModel) => {
 			return "http://www.nicovideo.jp/tag/" + encodeURIComponent(tag.sourceTag);
 		}
 
-		public getTagUrl = (tag: dc.tags.TagMappingContract) => {
+		public getTagUrl = (tag: EditTagMappingViewModel) => {
 			return vdb.functions.mapFullUrl(utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		private loadMappings = () => {
 
-			$.getJSON(this.urlMapper.mapRelative("/api/tags/mappings"), result => {
-				this.mappings(result);
+			$.getJSON(this.urlMapper.mapRelative("/api/tags/mappings"), (result: dc.tags.TagMappingContract[]) => {
+				this.mappings(_.map(result, t => new EditTagMappingViewModel(t)));
 			});
 
 		}
 
-		public mappings = ko.observableArray<dc.tags.TagMappingContract>();
+		public mappings = ko.observableArray<EditTagMappingViewModel>();
+
+		public activeMappings = ko.computed(() => _.filter(this.mappings(), m => !m.isDeleted()));
 
 		public newSourceName = ko.observable("");
 		public newTargetTag = new BasicEntryLinkViewModel<dc.TagBaseContract>();
@@ -49,13 +55,31 @@ namespace vdb.viewModels.admin {
 		public save = () => {
 
 			var url = this.urlMapper.mapRelative("/api/tags/mappings");
-			helpers.AjaxHelper.putJSON(url, this.mappings(), () => {
+			var mappings = ko.toJS(this.activeMappings());
+			helpers.AjaxHelper.putJSON(url, mappings, () => {
 				ui.showSuccessMessage("Saved");
 			});
 
 		}
 
 		public sortedMappings = ko.computed(() => _.sortBy(this.mappings(), m => m.tag.name.toLowerCase()));
+
+	}
+
+	export class EditTagMappingViewModel {
+
+		constructor(mapping: dc.tags.TagMappingContract, isNew: boolean = false) {
+			this.sourceTag = mapping.sourceTag;
+			this.tag = mapping.tag;
+			this.isNew = isNew;
+		}
+
+		isDeleted = ko.observable(false);
+		isNew: boolean;
+		sourceTag: string;
+		tag: dc.TagBaseContract;
+
+		public deleteMapping = () => this.isDeleted(true);
 
 	}
 

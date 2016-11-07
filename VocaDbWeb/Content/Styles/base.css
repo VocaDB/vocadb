@@ -166,6 +166,10 @@ body {
 .row-new {
   background-color: rgba(128, 255, 128, 0.4);
 }
+.row-deleted {
+  background-color: rgba(255, 128, 128, 0.4);
+  text-decoration: line-through;
+}
 .artist-details-page .entry-main-picture {
   padding-right: 7px;
 }
