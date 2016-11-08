@@ -372,11 +372,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual EntryStatus Status { get; set; }
 
-		public virtual string UrlSlug {
-			get {
-				return Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
-			}
-		}
+		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
 
 		/// <summary>
 		/// Number of tag usages.

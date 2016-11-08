@@ -36,6 +36,8 @@ namespace VocaDb.Web.Code {
 			string relative;
 			slug = slug ?? string.Empty;
 
+			var slashForSlug = slug != string.Empty ? "/" : string.Empty;
+
 			switch (entryType) {
 				case EntryType.Album:
 					relative = string.Format("Al/{0}", id);
@@ -50,7 +52,7 @@ namespace VocaDb.Web.Code {
 					break;
 
 				case EntryType.ReleaseEvent:
-					relative = string.Format("Event/Details/{0}", id);
+					relative = string.Format("E/{0}{1}{2}", id, slashForSlug, slug);
 					break;
 
 				case EntryType.ReleaseEventSeries:
@@ -62,7 +64,7 @@ namespace VocaDb.Web.Code {
 					break;
 
 				case EntryType.Tag:
-					relative = string.Format("T/{0}{1}{2}", id, slug != string.Empty ? "/" : string.Empty, slug);
+					relative = string.Format("T/{0}{1}{2}", id, slashForSlug, slug);
 					break;
 
 				default:

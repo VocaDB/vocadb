@@ -25,6 +25,7 @@ namespace VocaDb.Web.App_Start {
 			// Action routes
 			routes.MapRoute("Album", "Al/{id}/{friendlyName}", new { controller = "Album", action = "Details", friendlyName = UrlParameter.Optional }, new { id = numeric });
 			routes.MapRoute("Artist", "Ar/{id}/{friendlyName}", new { controller = "Artist", action = "Details", friendlyName = UrlParameter.Optional }, new { id = numeric });
+			routes.MapRoute("ReleaseEvent", "E/{id}/{slug}", new { controller = "Event", action = "Details", slug = UrlParameter.Optional }, new { id = numeric });
 
 			// Song shortcut, for example /S/393939
 			routes.MapRoute("Song", "S/{id}/{friendlyName}", new { controller = "Song", action = "Details", friendlyName = UrlParameter.Optional }, new { id = numeric });

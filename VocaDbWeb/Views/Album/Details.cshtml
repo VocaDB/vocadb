@@ -220,7 +220,7 @@
 					<tr>
 						<td>@ViewRes.Album.DetailsStrings.ReleaseEvent</td>
 						<td>
-							@Html.ActionLink(Model.ReleaseEvent.Name, "Details", "Event", new { id = Model.ReleaseEvent.Id }, null)<br />
+							@Html.ActionLink(Model.ReleaseEvent.Name, "Details", "Event", new { id = Model.ReleaseEvent.Id, slug = Model.ReleaseEvent.UrlSlug }, null)<br />
 						</td>
 					</tr>
 				}

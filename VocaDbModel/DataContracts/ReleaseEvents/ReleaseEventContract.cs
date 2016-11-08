@@ -19,6 +19,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = ev.Description;
 			Id = ev.Id;
 			Name = ev.Name;
+			UrlSlug = ev.UrlSlug;
 
 			if (includeSeries && ev.Series != null)
 				Series = new ReleaseEventSeriesContract(ev.Series);
@@ -36,6 +37,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string Name { get; set; }
 
 		public ReleaseEventSeriesContract Series { get; set; }
+
+		public string UrlSlug { get; set; }
 
 	}
 

@@ -17,6 +17,7 @@ namespace VocaDb.Model.Service {
 			{ "Album/Details", EntryType.Album },
 			{ "Ar", EntryType.Artist },
 			{ "Artist/Details", EntryType.Artist },
+			{ "E", EntryType.ReleaseEvent },
 			{ "S", EntryType.Song },
 			{ "Song/Details", EntryType.Song },
 			{ "L", EntryType.SongList },
@@ -34,7 +35,7 @@ namespace VocaDb.Model.Service {
 			// Host addresses http and https
 			var hostAddresses = VocaUriBuilder.RemoveTrailingSlash(hostAddress) + "|" + VocaUriBuilder.RemoveTrailingSlash(hostAddressSecure);
 
-			var entryUrlRegexTemplate = @"^(?:{0}){1}/(Al|Ar|S|L|T|Album/Details|Artist/Details|Song/Details)/(\d+)";
+			var entryUrlRegexTemplate = @"^(?:{0}){1}/(Al|Ar|E|S|L|T|Album/Details|Artist/Details|Song/Details)/(\d+)";
 
 			entryUrlRegex = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, string.Empty), RegexOptions.IgnoreCase);
 

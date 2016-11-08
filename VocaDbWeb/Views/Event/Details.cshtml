@@ -19,6 +19,11 @@
 
 }
 
+@section Head {
+	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
+	<link rel="canonical" href="@PageProperties.CanonicalUrl" />
+}
+
 @section Toolbar {
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editEventLink", @class = (Login.CanManageDb ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })

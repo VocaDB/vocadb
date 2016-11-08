@@ -18,6 +18,7 @@ namespace VocaDb.Web.Controllers
 
 		private readonly AlbumService albumService;
 		private readonly IEnumTranslations enumTranslations;
+		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly EventQueries queries;
 		private readonly ReleaseEventService service;
 
@@ -25,11 +26,12 @@ namespace VocaDb.Web.Controllers
 			get { return service; }
 		}
 
-		public EventController(EventQueries queries, ReleaseEventService service, AlbumService albumService, IEnumTranslations enumTranslations) {
+		public EventController(EventQueries queries, ReleaseEventService service, AlbumService albumService, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory) {
 			this.queries = queries;
 			this.service = service;
 			this.albumService = albumService;
 			this.enumTranslations = enumTranslations;
+			this.entryLinkFactory = entryLinkFactory;
 		}
 
 		[HttpPost]
@@ -55,16 +57,21 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Details(int id = invalidId) {
+		public ActionResult Details(int id = invalidId, string slug = null) {
 
 		    if (id == invalidId)
 		        return NoId();
 
 			var ev = Service.GetReleaseEventDetails(id);
 
+			if (slug != ev.UrlSlug) {
+				return RedirectToActionPermanent("Details", new { id, slug = ev.UrlSlug });
+			}
+
 			PageProperties.PageTitle = string.Format("{0} ({1})", ev.Name, ViewRes.Event.DetailsStrings.Event);
 			PageProperties.Title = ev.Name;
 			PageProperties.Subtitle = ViewRes.Event.DetailsStrings.Event;
+			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
 
 			return View(ev);
 

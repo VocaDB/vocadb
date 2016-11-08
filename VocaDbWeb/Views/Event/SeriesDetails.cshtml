@@ -52,7 +52,7 @@
 <ul>
 	@foreach (var ev in Model.Events) {
 		<li>
-			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id })
+			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })
 			@if (ev.Date != null) {
 				<small>(@ev.Date.Value.ToString("d"))</small>
 			}

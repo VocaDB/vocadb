@@ -16,6 +16,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Name = rel.Name;
 			SeriesNumber = rel.SeriesNumber;
 			SeriesSuffix = rel.SeriesSuffix;
+			UrlSlug = rel.UrlSlug;
 
 			if (rel.Series != null) {
 				SeriesId = rel.Series.Id;
@@ -54,6 +55,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public string SeriesSuffix { get; set; }
+
+		[DataMember]
+		public string UrlSlug { get; set; }
 
 	}
 
