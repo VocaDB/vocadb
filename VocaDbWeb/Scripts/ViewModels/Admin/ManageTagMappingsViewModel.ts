@@ -58,6 +58,7 @@ namespace vdb.viewModels.admin {
 			var mappings = ko.toJS(this.activeMappings());
 			helpers.AjaxHelper.putJSON(url, mappings, () => {
 				ui.showSuccessMessage("Saved");
+				this.loadMappings();
 			});
 
 		}
