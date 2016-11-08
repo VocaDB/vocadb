@@ -52,7 +52,7 @@
 	@foreach (var ev in Model) {
 		<tr>
 			<td>@(ev.Date != null ? ev.Date.Value.ToShortDateString() : string.Empty)</td>
-			<td>@Html.ActionLink(ev.Name, "Details", new { id = ev.Id})</td>
+			<td>@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })</td>
 			<td>
 				@if (ev.Series != null) {
 					@Html.ActionLink(ev.Series.Name, "SeriesDetails", new { id = ev.Series.Id })

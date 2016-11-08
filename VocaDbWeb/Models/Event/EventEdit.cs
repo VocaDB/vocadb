@@ -36,6 +36,8 @@ namespace VocaDb.Web.Models.Event {
 			SeriesSuffix = contract.SeriesSuffix;
 			WebLinks = contract.WebLinks;
 
+			CopyNonEditableProperties(contract);
+
 		}
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
@@ -64,6 +66,8 @@ namespace VocaDb.Web.Models.Event {
 		[Display(Name = "Series number")]
 		public int SeriesNumber { get; set; }
 
+		public string UrlSlug { get; set; }
+
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
 
@@ -72,6 +76,7 @@ namespace VocaDb.Web.Models.Event {
 			ParamIs.NotNull(() => contract);
 
 			OldName = contract.Name;
+			UrlSlug = contract.UrlSlug;
 
 		}
 

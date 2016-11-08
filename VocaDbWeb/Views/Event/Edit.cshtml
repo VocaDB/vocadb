@@ -10,10 +10,10 @@
 
 	if (!isNew) {
 		PageProperties.Title = "Edit event - " + Model.OldName;
-		backAction = Url.Action("Details", new { id = Model.Id });
+		backAction = Url.Action("Details", new { id = Model.Id, slug = Model.UrlSlug });
 		ViewBag.Parents = new[] {
 			Html.ActionLink("Events", "EventsBySeries"),
-			Html.ActionLink(Model.OldName, "Details", new { id = Model.Id })
+			Html.ActionLink(Model.OldName, "Details", new { id = Model.Id, slug = Model.UrlSlug })
 		};
 	} else {
 		PageProperties.Title = "Create a new event";

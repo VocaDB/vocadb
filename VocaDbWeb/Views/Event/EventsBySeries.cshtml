@@ -51,7 +51,7 @@
 	<ul>
 	@foreach (var ev in series.Events) {
 		<li>
-			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id })
+			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })
 		</li>
 	}
 	</ul>

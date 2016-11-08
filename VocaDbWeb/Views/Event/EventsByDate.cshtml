@@ -35,7 +35,7 @@
 			<tr><td>
 				@ev.Date.Value.ToString("m")
 			</td><td>
-				<a href="@Url.Action("Details", new { id = ev.Id })">
+				<a href="@Url.Action("Details", new { id = ev.Id, slug = ev.UrlSlug })">
 					@ev.Name
 				</a>
 			</td></tr>
