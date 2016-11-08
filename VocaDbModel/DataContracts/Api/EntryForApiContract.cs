@@ -125,6 +125,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 			ActivityDate = releaseEvent.Date.DateTime;
 			ReleaseEventSeriesName = releaseEvent.Series != null ? releaseEvent.Series.Name : null;
+			UrlSlug = releaseEvent.UrlSlug;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && releaseEvent.Series != null && !string.IsNullOrEmpty(releaseEvent.Series.PictureMime)) {
 				MainPicture = new EntryThumbForApiContract(new EntryThumb(releaseEvent.Series, releaseEvent.Series.PictureMime), thumbPersister, ssl);

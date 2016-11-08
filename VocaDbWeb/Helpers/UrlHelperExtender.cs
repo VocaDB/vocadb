@@ -16,7 +16,7 @@ namespace VocaDb.Web.Helpers {
 					return urlHelper.Action("Index", "Discussion", new { clientPath = string.Format("topics/{0}", id) });
 
 				case EntryType.ReleaseEvent:
-					return urlHelper.Action("Details", "Event", new { id });
+					return urlHelper.Action("Details", "Event", new { id, slug = urlSlug });
 
 				case EntryType.Tag:
 					return urlHelper.Action("DetailsById", "Tag", new { id, slug = urlSlug });
