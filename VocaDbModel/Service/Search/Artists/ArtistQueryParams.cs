@@ -37,7 +37,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
 
-		public bool AllowBaseVoicebanks { get; set; }
+		public bool AllowBaseVoicebanks { get; set; } = true;
 
 		public ArtistType[] ArtistTypes { get; set; }
 
