@@ -25,7 +25,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 			ArtistOptionalFields includedFields) {
 
 			ArtistType = artist.ArtistType;
-			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			CreateDate = artist.CreateDate;
 			DefaultName = artist.DefaultName;
 			DefaultNameLanguage = artist.Names.SortNames.DefaultLanguage;
@@ -44,6 +43,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 			if (includedFields.HasFlag(ArtistOptionalFields.ArtistLinksReverse))
 				ArtistLinksReverse = artist.Members.Select(m => new ArtistForArtistForApiContract(m, LinkDirection.OneToMany, languagePreference)).ToArray();
+
+			if (includedFields.HasFlag(ArtistOptionalFields.BaseVoicebank))
+				BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 
 			if (includedFields.HasFlag(ArtistOptionalFields.Description))
 				Description = artist.Description[languagePreference];
@@ -92,7 +94,10 @@ namespace VocaDb.Model.DataContracts.Artists {
 		/// <summary>
 		/// Base voicebank, if applicable and specified.
 		/// </summary>
-		[DataMember]
+		/// <remarks>
+		/// The field is optional to avoid loading the whole hierarchy when not needed.
+		/// </remarks>
+		[DataMember(EmitDefaultValue = false)]
 		public ArtistContract BaseVoicebank { get; set; }
 
 		/// <summary>
@@ -183,11 +188,12 @@ namespace VocaDb.Model.DataContracts.Artists {
 		AdditionalNames = 1,
 		ArtistLinks = 2,
 		ArtistLinksReverse = 4,
-		Description = 8,
-		MainPicture = 16,
-		Names = 32,
-		Tags = 64,
-		WebLinks = 128
+		BaseVoicebank = 8,
+		Description = 16,
+		MainPicture = 32,
+		Names = 64,
+		Tags = 128,
+		WebLinks = 256
 
 	}
 

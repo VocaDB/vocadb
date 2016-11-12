@@ -78,7 +78,7 @@ namespace VocaDb.Model {
 
 			foreach (var name in values) {
 				T field;
-				if (Enum.TryParse(name, out field))
+				if (Enum.TryParse(name, true, out field))
 					list.Add(field);
 			}
 
