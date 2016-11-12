@@ -28,7 +28,7 @@ namespace VocaDb.Web.Controllers.Api {
 	[RoutePrefix("api/artists")]
 	public class ArtistApiController : ApiController {
 
-		private const int absoluteMax = 50;
+		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly ArtistQueries queries;
 		private readonly ArtistService service;
@@ -142,7 +142,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="status">Filter by entry status (optional).</param>
 		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
-		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
+		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 100).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="sort">Sort rule (optional, defaults to Name). Possible values are None, Name, AdditionDate, AdditionDateAsc.</param>
 		/// <param name="preferAccurateMatches">
