@@ -133,6 +133,12 @@ module vdb.repositories {
 			$.getJSON(url, callback);
 		}
 
+		public getOneByName = (username: string, callback: (result: dc.user.UserApiContract) => void) => {
+			this.getList({}, username, null, null, false, false, null, "Exact", null, result => {
+				callback(result.items.length === 1 ? result.items[0] : null);
+			});
+		}
+
         public getMessage = (messageId: number, callback?: (result: dc.UserMessageSummaryContract) => void) => {
 
             var url = this.urlMapper.mapRelative("/api/users/messages/" + messageId);

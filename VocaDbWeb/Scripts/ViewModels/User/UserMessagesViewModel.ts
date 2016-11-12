@@ -24,11 +24,7 @@ module vdb.viewModels {
 			});
 
 			if (receiverName) {
-				userRepository.getList({}, receiverName, null, null, false, false, null, "Exact", null, result => {
-					if (result.items.length === 1) {
-						this.newMessageViewModel.receiver.entry(result.items[0]);
-					}
-				});
+				userRepository.getOneByName(receiverName, result => this.newMessageViewModel.receiver.entry(result));
 			}
 
         }
