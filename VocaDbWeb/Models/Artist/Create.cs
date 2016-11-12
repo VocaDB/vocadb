@@ -21,7 +21,7 @@ namespace VocaDb.Web.Models.Artist {
 		}
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "Description")]
-		[StringLength(1000)]
+		[StringLength(4000)]
 		public string Description { get; set; }
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "ArtistType")]
