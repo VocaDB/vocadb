@@ -18,7 +18,6 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
-using VocaDb.Web.Code.BBCode;
 using VocaDb.Web.Code.Markdown;
 
 namespace VocaDb.Web.Helpers {
@@ -67,12 +66,6 @@ namespace VocaDb.Web.Helpers {
 			}
 
 			return MvcHtmlString.Empty;
-
-		}
-
-		public static string ConvertNewlinesToBreaks(this HtmlHelper html, string text) {
-
-			return text.Replace(Environment.NewLine, "<br />").Replace("\n", "<br />");
 
 		}
 
@@ -301,12 +294,6 @@ namespace VocaDb.Web.Helpers {
 
 		public static MvcHtmlString FormatMarkdown(this HtmlHelper htmlHelper, string markdown) {
 			return new MvcHtmlString(DependencyResolver.Current.GetService<MarkdownParser>().GetHtml(markdown));
-		}
-
-		public static string ParseBBCode(string bbCode) {
-
-			return new BBCodeCache(BBCodeConverters.Default()).GetHtml(bbCode);
-
 		}
 
 		public static string VideoServiceLinkUrl(this HtmlHelper htmlHelper, PVService service) {

@@ -1135,9 +1135,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Api\SampleObjects.cs" />
-    <Compile Include="Code\BBCode\BBCodeCache.cs" />
-    <Compile Include="Code\BBCode\BBCodeConverters.cs" />
-    <Compile Include="Code\BBCode\EntryPropertyHtmlCache.cs" />
     <Compile Include="Code\EntryAnchorFactory.cs" />
     <Compile Include="Code\EnumArrayModelBinder.cs" />
     <Compile Include="Code\ErrorLogger.cs" />
@@ -4337,6 +4334,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryMergeStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Shared\MiscStrings.es.resx" />

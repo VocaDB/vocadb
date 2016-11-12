@@ -812,7 +812,6 @@
     <Compile Include="Service\ExtSites\AffiliateLinkGenerator.cs" />
     <Compile Include="Service\AlbumService.cs" />
     <Compile Include="Service\ArtistService.cs" />
-    <Compile Include="Service\BBCode\AutoLinkTransformer.cs" />
     <Compile Include="Service\BBCode\BBCodeConverter.cs" />
     <Compile Include="Service\BBCode\IBBCodeElementTransformer.cs" />
     <Compile Include="Service\DatabaseConfiguration.cs" />

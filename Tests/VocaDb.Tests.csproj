@@ -211,8 +211,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AlbumImport\KarenTAlbumImporterTests.cs" />
     <Compile Include="Service\ArtistQueryableExtenderTests.cs" />
-    <Compile Include="Service\BBCode\AutoLinkTransformerTests.cs" />
-    <Compile Include="Service\BBCode\BBCodeConverterTests.cs" />
     <Compile Include="Service\BBCode\EntryLinkTransformerTests.cs" />
     <Compile Include="Service\EntryValidators\SongValidatorTests.cs" />
     <Compile Include="Service\Helpers\UrlHelperTests.cs" />
