@@ -121,7 +121,8 @@ namespace VocaDb.Model.Domain.Users {
 		public virtual User User { get; set; }
 
 		public override string ToString() {
-			return string.Format("User message '{0}' [{1}]", Subject, Id);
+			// Note: no message contents in ToString because personal information might be logged
+			return string.Format("User message [{0}]", Id);
 		}
 
 	}
