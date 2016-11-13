@@ -286,6 +286,15 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Release date.
+        /// </summary>
+        public static string ReleaseDate {
+            get {
+                return ResourceManager.GetString("ReleaseDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Share.
         /// </summary>
         public static string Share {

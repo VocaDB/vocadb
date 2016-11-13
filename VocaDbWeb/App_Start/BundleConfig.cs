@@ -214,9 +214,11 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Edit").Include(
+				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 				"~/Scripts/ViewModels/EntryPictureFileEditViewModel.js",

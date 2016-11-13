@@ -66,6 +66,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			EntryOptionalFields includedFields)
 			: this(artist, languagePreference, includedFields) {
 
+			ActivityDate = artist.ReleaseDate;
 			ArtistType = artist.ArtistType;			
 			CreateDate = artist.CreateDate;
 			Status = artist.Status;

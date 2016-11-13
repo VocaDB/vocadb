@@ -6,6 +6,7 @@ namespace VocaDb.Model.Domain {
 	/// <summary>
 	/// Date object without time or timezone.
 	/// Dates are considered equal as long as day, month and year are the same, even if timezones were different.
+	/// Null date is allowed.
 	/// </summary>
 	/// <remarks>
 	/// For example, normally midnight 2015/03/09 00:00 in Japan time would be 2015/03/08 in the US because of timezones.

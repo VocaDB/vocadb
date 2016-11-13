@@ -138,6 +138,9 @@
   <data name="BaPictureInfo" xml:space="preserve">
     <value>Allowed types: {0}. Maximum size is {1} MB.</value>
   </data>
+  <data name="BaReleaseDate" xml:space="preserve">
+    <value>Voicebank release date</value>
+  </data>
   <data name="EditTitle" xml:space="preserve">
     <value>Edit artist - {0}</value>
   </data>

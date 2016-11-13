@@ -112,7 +112,16 @@
 						</td>
 					</tr>
 				}
-								
+						
+				@if (Model.ReleaseDate.HasValue) {
+				<tr>
+					<td>@Res.ReleaseDate</td>
+					<td>
+						@Model.ReleaseDate.Value.ToShortDateString()
+					</td>
+				</tr>				
+				}
+									
 				@ArtistListRow(Res.Illustrator, Model.Illustrators, false)
 				@ArtistListRow(Res.IllustratorOf, Model.IllustratorOf, true)
 				@ArtistRow(Res.VoiceProvider, Model.VoiceProvider, false)

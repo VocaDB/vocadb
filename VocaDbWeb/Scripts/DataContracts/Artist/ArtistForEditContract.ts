@@ -25,6 +25,8 @@ module vdb.dataContracts.artists {
 
 		pictures: EntryPictureFileContract[];
 
+		releaseDate?: string;
+
 		status: string;
 
 		updateNotes: string;

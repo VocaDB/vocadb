@@ -192,6 +192,9 @@
   <data name="RecentSongs" xml:space="preserve">
     <value>Recent songs / PVs</value>
   </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Release date</value>
+  </data>
   <data name="Share" xml:space="preserve">
     <value>Share</value>
   </data>

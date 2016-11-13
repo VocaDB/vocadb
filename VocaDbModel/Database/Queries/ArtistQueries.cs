@@ -621,6 +621,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
+				if (!artist.ReleaseDate.Equals(properties.ReleaseDate)) {
+					artist.ReleaseDate = properties.ReleaseDate;
+					diff.ReleaseDate = true;
+				}
+
 				var webLinkDiff = WebLink.Sync(artist.WebLinks, properties.WebLinks, artist);
 				ctx.OfType<ArtistWebLink>().Sync(webLinkDiff);
 

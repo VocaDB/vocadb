@@ -31,6 +31,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Id = artist.Id;
 			Name = artist.Names.SortNames[languagePreference];				
 			PictureMime = artist.PictureMime;
+			ReleaseDate = artist.ReleaseDate.DateTime;
 			Status = artist.Status;
 			Version = artist.Version;
 
@@ -159,6 +160,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public ArtistRelationsForApi Relations { get; set; }
+
+		[DataMember]
+		public DateTime? ReleaseDate { get; set; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

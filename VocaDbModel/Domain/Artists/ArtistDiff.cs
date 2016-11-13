@@ -184,6 +184,16 @@ namespace VocaDb.Model.Domain.Artists {
 				Set(ArtistEditableFields.Pictures, value);
 			}
 		}
+
+		public virtual bool ReleaseDate {
+			get {
+				return IsChanged(ArtistEditableFields.ReleaseDate);
+			}
+			set {
+				Set(ArtistEditableFields.ReleaseDate, value);
+			}
+		}
+
 		public virtual bool Status {
 			get {
 				return IsChanged(ArtistEditableFields.Status);

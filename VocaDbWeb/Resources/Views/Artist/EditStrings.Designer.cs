@@ -124,6 +124,15 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Voicebank release date.
+        /// </summary>
+        public static string BaReleaseDate {
+            get {
+                return ResourceManager.GetString("BaReleaseDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit artist - {0}.
         /// </summary>
         public static string EditTitle {

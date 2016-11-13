@@ -273,6 +273,8 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
+		public virtual Date ReleaseDate { get; set; }
+
 		/// <summary>
 		/// List of songs for this artist (not including deleted). 
 		/// Warning: this list can be huge! Avoid traversing the list if possible.

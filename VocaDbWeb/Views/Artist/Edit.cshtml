@@ -197,6 +197,17 @@
 					</div>
 				</div>		
 				<!-- /ko -->		
+				
+				<!-- ko if: canHaveReleaseDate -->	
+				<div class="editor-label">
+					<label>
+						@Res.BaReleaseDate
+					</label>
+				</div>
+				<div class="editor-field">
+					<input type="text" data-bind="datepicker: { value: releaseDate, dateFormat: 'yy-mm-dd' }" maxlength="10" />
+				</div>
+				<!-- /ko -->		
 
 				<div class="editor-label">
 					@Helpers.HelpLabel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp)

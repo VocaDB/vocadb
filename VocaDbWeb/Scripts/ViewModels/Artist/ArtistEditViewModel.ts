@@ -39,6 +39,7 @@ module vdb.viewModels {
 		public baseVoicebankSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public canHaveCircles: KnockoutComputed<boolean>;
 		public canHaveRelatedArtists: KnockoutComputed<boolean>;
+		public canHaveReleaseDate: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
@@ -66,6 +67,7 @@ module vdb.viewModels {
 		public newAssociatedArtist: BasicEntryLinkViewModel<dc.ArtistContract>;
 		public newAssociatedArtistType = ko.observable<string>();
 		public pictures: EntryPictureFileListEditViewModel;
+		public releaseDate: KnockoutObservable<Date>;
 
 		public removeGroup = (group: dc.artists.ArtistForArtistContract) => {
 			this.groups.remove(group);
@@ -95,6 +97,7 @@ module vdb.viewModels {
 				illustrator: this.illustrator.entry(),
 				names: this.names.toContracts(),
 				pictures: this.pictures.toContracts(),
+				releaseDate: (this.releaseDate() ? this.releaseDate().toISOString() : null),
 				status: this.status(),
 				updateNotes: this.updateNotes(),
 				voiceProvider: this.voiceProvider.entry(),
@@ -141,6 +144,7 @@ module vdb.viewModels {
 			this.names = globalization.NamesEditViewModel.fromContracts(data.names);
 			this.newAssociatedArtist = new BasicEntryLinkViewModel(null, artistRepo.getOne);
 			this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
+			this.releaseDate = ko.observable(data.releaseDate ? moment(data.releaseDate).toDate() : null); // Assume server date is UTC
 			this.status = ko.observable(data.status);
 			this.voiceProvider = new BasicEntryLinkViewModel(data.voiceProvider, artistRepo.getOne);
             this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
@@ -157,6 +161,11 @@ module vdb.viewModels {
 
 			this.canHaveRelatedArtists = ko.computed(() => {
 				return helpers.ArtistHelper.isVocalistType(this.artistType());
+			});
+
+			this.canHaveReleaseDate = ko.computed(() => {
+				const vocaloidTypes = [cls.artists.ArtistType.Vocaloid, cls.artists.ArtistType.UTAU, cls.artists.ArtistType.CeVIO, cls.artists.ArtistType.OtherVoiceSynthesizer];
+				return _.includes(vocaloidTypes, this.artistType());
 			});
 
 			this.newAssociatedArtist.entry.subscribe(this.addAssociatedArtist);

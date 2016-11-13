@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -11,21 +12,13 @@ namespace VocaDb.Model.DataContracts.Artists {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistContract : IEntryWithStatus, IEntryImageInformation {
 
-		string IEntryBase.DefaultName {
-			get { return Name; }
-		}
+		string IEntryBase.DefaultName => Name;
 
-		EntryType IEntryBase.EntryType {
-			get { return EntryType.Artist; }
-		}
+		EntryType IEntryBase.EntryType => EntryType.Artist;
 
-		EntryType IEntryImageInformation.EntryType {
-			get { return EntryType.Artist; }
-		}
+		EntryType IEntryImageInformation.EntryType => EntryType.Artist;
 
-		string IEntryImageInformation.Mime {
-			get { return PictureMime; }
-		}
+		string IEntryImageInformation.Mime => PictureMime;
 
 		public ArtistContract() {}
 
@@ -39,6 +32,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Id = artist.Id;
 			Name = artist.TranslatedName[preference];
 			PictureMime = artist.PictureMime;
+			ReleaseDate = artist.ReleaseDate.DateTime;
 			Status = artist.Status;
 			Version = artist.Version;
 
@@ -54,6 +48,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Id = artist.Id;
 			Name = artist.Names.SortNames[preference];
 			PictureMime = artist.PictureMime;
+			ReleaseDate = artist.ReleaseDate;
 			Status = artist.Status;
 			Version = artist.Version;
 
@@ -77,6 +72,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public string PictureMime { get; set;}
+
+		[DataMember]
+		public DateTime? ReleaseDate { get; set; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

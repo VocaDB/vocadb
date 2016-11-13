@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201611131900)]
+	public class VoicebankReleaseDate : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("ReleaseDate").OnTable(TableNames.Artists).AsDate().Nullable();
+				
+		}
+
+	}
+
 	[Migration(201611052100)]
 	public class TagMapping : Migration {
 

@@ -33,6 +33,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			data.Id = thisVersion.Id;
 			data.MainPictureMime = thisVersion.MainPictureMime;
 			data.Members = thisVersion.Members;
+			data.ReleaseDate = thisVersion.ReleaseDate;
 			data.TranslatedName = thisVersion.TranslatedName;
 
 			DoIfExists(version, ArtistEditableFields.Albums, xmlCache, v => data.Albums = v.Albums);
@@ -65,6 +66,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Members = artist.Members.Select(m => new ObjectRefContract(m.Member)).ToArray();
 			Names = (diff.IncludeNames ? artist.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null);
 			Pictures = (diff.IncludePictures ? artist.Pictures.Select(p => new ArchivedEntryPictureFileContract(p)).ToArray() : null);
+			ReleaseDate = artist.ReleaseDate;
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);
 			WebLinks = (diff.IncludeWebLinks ? artist.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
 
@@ -102,6 +104,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public ArchivedEntryPictureFileContract[] Pictures { get; set; }
+
+		[DataMember]
+		public DateTime? ReleaseDate { get; set; }
 
 		[DataMember]
 		public TranslatedStringContract TranslatedName { get; set; }
