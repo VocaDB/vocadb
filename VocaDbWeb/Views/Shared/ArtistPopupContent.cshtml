@@ -17,3 +17,9 @@
 <p>
     @Translate.ArtistTypeName(Model.ArtistType)<br />
 </p>    
+
+@if (Model.ReleaseDate.HasValue) {
+	<p>
+		@ViewRes.Artist.DetailsStrings.ReleaseDate @Model.ReleaseDate.Value.ToShortDateString()		
+	</p>
+}
