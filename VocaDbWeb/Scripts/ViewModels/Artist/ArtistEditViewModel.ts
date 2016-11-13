@@ -164,7 +164,10 @@ module vdb.viewModels {
 			});
 
 			this.canHaveReleaseDate = ko.computed(() => {
-				const vocaloidTypes = [cls.artists.ArtistType.Vocaloid, cls.artists.ArtistType.UTAU, cls.artists.ArtistType.CeVIO, cls.artists.ArtistType.OtherVoiceSynthesizer];
+				const vocaloidTypes = [
+					cls.artists.ArtistType.Vocaloid, cls.artists.ArtistType.UTAU,
+					cls.artists.ArtistType.CeVIO, cls.artists.ArtistType.OtherVoiceSynthesizer
+				];
 				return _.includes(vocaloidTypes, this.artistType());
 			});
 

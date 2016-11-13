@@ -36,9 +36,23 @@ namespace VocaDb.Model.DataContracts.Artists {
 			CharacterDesigner = artist.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.ManyToOne, allowInheritance: true)
 				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 
+			if (artist.CanHaveChildVoicebanks) {
 
-			ChildVoicebanks = artist.CanHaveChildVoicebanks ? artist.ChildVoicebanks.Where(c => !c.Deleted)
-				.Select(c => new ArtistContract(c, languagePreference)).ToArray() : new ArtistContract[0];
+				var children = artist.ChildVoicebanks
+					.Where(c => !c.Deleted)
+					.Select(c => new ArtistContract(c, languagePreference))
+					.ToArray();
+
+				// Show child voicebanks with release date first
+				ChildVoicebanks = children
+					.Where(c => c.ReleaseDate.HasValue)
+					.OrderBy(c => c.ReleaseDate)
+					.Concat(children.Where(c => !c.ReleaseDate.HasValue))
+					.ToArray();
+
+			} else {
+				ChildVoicebanks = new ArtistContract[0];
+			}
 
 			Groups = artist.ArtistLinksOfType(ArtistLinkType.Group, LinkDirection.ManyToOne)
 				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(g => g.Name).ToArray();
