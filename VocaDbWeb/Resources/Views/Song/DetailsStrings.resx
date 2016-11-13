@@ -282,4 +282,7 @@
   <data name="LyricsPlusOthers" xml:space="preserve">
     <value>+ {0} other(s)</value>
   </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Release event</value>
+  </data>
 </root>

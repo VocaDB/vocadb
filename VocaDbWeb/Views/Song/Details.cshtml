@@ -284,7 +284,7 @@
 			
 			@if (!Model.Notes.IsEmpty) {
 			<tr>
-				<td>@ViewRes.Song.DetailsStrings.Notes</td>
+				<td>@Res.Notes</td>
 				<td class="entry-description" data-bind="with: description">
 					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Notes); }
 				</td>	
@@ -305,7 +305,7 @@
 			
 			@if (Model.ReleaseEvent != null) {
 				<tr>
-					<td>Release event</td>
+					<td>@Res.ReleaseEvent</td>
 					<td>
 						<a href="@Url.Action("Details", "Event", new { id = Model.ReleaseEvent.Id, slug = Model.ReleaseEvent.UrlSlug })">@Model.ReleaseEvent.Name</a>
 					</td>

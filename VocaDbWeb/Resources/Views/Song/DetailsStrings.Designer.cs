@@ -421,6 +421,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Release event.
+        /// </summary>
+        public static string ReleaseEvent {
+            get {
+                return ResourceManager.GetString("ReleaseEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear my rating.
         /// </summary>
         public static string RemoveFromFavorites {
