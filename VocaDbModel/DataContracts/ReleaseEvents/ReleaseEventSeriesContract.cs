@@ -8,17 +8,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntId {
 
-		EntryType IEntryImageInformation.EntryType {
-			get { return EntryType.ReleaseEventSeries; }
-		}
+		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEventSeries;
 
-		string IEntryImageInformation.Mime {
-			get { return PictureMime; }
-		}
-
-		int IEntryImageInformation.Version {
-			get { return 0; }
-		}
+		string IEntryImageInformation.Mime => PictureMime;
 
 		public ReleaseEventSeriesContract() {
 			Description = string.Empty;
@@ -33,6 +25,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Id = series.Id;
 			Name = series.Name;
 			PictureMime = series.PictureMime;
+			Version = series.Version;
 
 		}
 
@@ -47,6 +40,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public string PictureMime { get; set; }
+
+		[DataMember]
+		public int Version { get; set; }
 
 		public override string ToString() {
 			return string.Format("release event series {0} [{1}]", Name, Id);
