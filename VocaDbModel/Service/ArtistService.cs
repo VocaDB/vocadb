@@ -341,6 +341,11 @@ namespace VocaDb.Model.Service {
 		/// </summary>
 		AdditionDateAsc,
 
+		/// <summary>
+		/// Release date (only for voicebanks)
+		/// </summary>
+		ReleaseDate,
+
 		SongCount,
 
 		SongRating,

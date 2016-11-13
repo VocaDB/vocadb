@@ -18,6 +18,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return criteria.OrderByDescending(a => a.Artist.CreateDate);
 				case ArtistSortRule.AdditionDateAsc:
 					return criteria.OrderBy(a => a.Artist.CreateDate);
+				case ArtistSortRule.ReleaseDate:
+					return criteria.OrderBy(a => a.Artist.ReleaseDate.DateTime);
 				case ArtistSortRule.SongCount:
 					return criteria.OrderByDescending(a => a.Artist.AllSongs.Count());
 				case ArtistSortRule.SongRating:

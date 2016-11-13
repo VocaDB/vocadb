@@ -129,6 +129,9 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Voicebank release date</value>
+  </data>
   <data name="SongCount" xml:space="preserve">
     <value>Number of songs</value>
   </data>
