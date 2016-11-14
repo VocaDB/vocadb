@@ -84,6 +84,15 @@ module vdb.viewModels {
 
 		public artistRolesEditViewModel: artists.ArtistRolesEditViewModel;
 
+		// Clears fields that are not valid for the selected song type.
+		private clearInvalidData = () => {
+
+			if (!this.canHaveOriginalVersion()) {
+				this.originalVersion.clear();
+			}
+				
+		}
+
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
 			$.ajax(this.urlMapper.mapRelative("api/songs/" + this.id + "?notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: () => {
 				window.location.href = this.urlMapper.mapRelative("/Song/Details/" + this.id);
@@ -109,6 +118,8 @@ module vdb.viewModels {
 				return false;
 
 			}
+
+			this.clearInvalidData();
 
 			this.submitting(true);
 
