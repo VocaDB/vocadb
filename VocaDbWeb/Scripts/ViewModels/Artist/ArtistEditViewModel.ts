@@ -38,8 +38,31 @@ module vdb.viewModels {
 		public baseVoicebank: BasicEntryLinkViewModel<dc.ArtistContract>;
 		public baseVoicebankSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
 		public canHaveCircles: KnockoutComputed<boolean>;
+		// Can have related artists (associatedArtists) such as voice provider and illustrator
 		public canHaveRelatedArtists: KnockoutComputed<boolean>;
 		public canHaveReleaseDate: KnockoutComputed<boolean>;
+
+		// Clears fields that are not valid for the selected artist type.
+		private clearInvalidData = () => {
+
+			if (!this.canHaveReleaseDate()) {
+				this.releaseDate(null);				
+			}
+
+			if (!this.canHaveRelatedArtists()) {
+				this.associatedArtists([]);
+			}
+
+			if (!this.allowBaseVoicebank()) {
+				this.baseVoicebank.clear();
+			}
+
+			if (!this.canHaveCircles()) {
+				this.groups([]);
+			}
+
+		}
+
 		public defaultNameLanguage: KnockoutObservable<string>;
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
@@ -83,6 +106,8 @@ module vdb.viewModels {
 				return false;
 
 			}
+
+			this.clearInvalidData();
 
 			this.submitting(true);
 
