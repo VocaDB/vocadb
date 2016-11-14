@@ -51,6 +51,11 @@ namespace VocaDb.Web.Code.Markdown {
 
 		}
 
+		/// <summary>
+		/// Gets plain text from markdown-formatted text (strips markdown).
+		/// </summary>
+		/// <param name="markdownText">Markdown-formatted text, for example "**Miku**".</param>
+		/// <returns>Text without markdown formatting, for example "Miku".</returns>
 		public string GetPlainText(string markdownText) {
 			
 			if (string.IsNullOrEmpty(markdownText))
