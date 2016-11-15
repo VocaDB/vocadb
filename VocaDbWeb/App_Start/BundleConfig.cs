@@ -44,6 +44,7 @@ namespace VocaDb.Web.App_Start {
 
 			// Included on all pages except the front page (to optimize front page load time).
 			bundles.Add(new ScriptBundle("~/bundles/shared/main").Include(
+				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Helpers/HtmlHelper.js", 
 				"~/Scripts/Models/EntryType.js",
 				"~/Scripts/Shared/EntryUrlMapper.js",
@@ -111,7 +112,6 @@ namespace VocaDb.Web.App_Start {
 
 			// VIEW-SPECIFIC BUNDLES
 			bundles.Add(new ScriptBundle("~/bundles/ActivityEntry/Index").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/Models/ActivityEntries/EntryEditEvent.js",
 				"~/Scripts/Models/ResourcesManager.js",
@@ -126,7 +126,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Album/Details").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
@@ -137,7 +136,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Album/Edit").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/ParseInteger.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
@@ -164,7 +162,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Album/Merge").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
 				"~/Scripts/KnockoutExtensions/AlbumAutoComplete.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
@@ -177,7 +174,6 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Details").Include(
 				"~/Scripts/soundcloud-api.js",				
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Models/ResourcesManager.js",
@@ -214,7 +210,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Edit").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
@@ -228,14 +223,12 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Merge").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/ViewModels/Artist/ArtistMergeViewModel.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Discussion/Index").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/page.js",
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
@@ -245,7 +238,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/ReleaseEvent/Edit").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/KnockoutExtensions/ReleaseEventSeriesAutoComplete.js",
 				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventEditViewModel.js",
@@ -298,7 +290,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Details").Include(				
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
@@ -308,7 +299,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Edit").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
@@ -335,13 +325,11 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Merge").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
 				"~/Scripts/ViewModels/Song/SongMergeViewModel.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/TopRated").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/url.js",
 				"~/Scripts/Shared/Routing/ObservableUrlParamRouter.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
@@ -380,7 +368,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Edit").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/Repositories/SongListRepository.js",
 				"~/Scripts/ViewModels/SongList/SongListEditViewModel.js",
@@ -388,7 +375,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Featured").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Repositories/SongListRepository.js",
 				"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
@@ -400,7 +386,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Details").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/ViewModels/Tag/TagDetailsViewModel.js",
@@ -425,7 +410,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Merge").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/Repositories/TagRepository.js",
@@ -444,7 +428,6 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/User/Details").Include(
 				"~/Scripts/soundcloud-api.js",				
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
@@ -483,7 +466,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/User/Index").Include(
-				"~/Scripts/moment-with-locales.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/ViewModels/User/ListUsersViewModel.js"
