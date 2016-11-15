@@ -165,6 +165,7 @@
 
 		$(function () {
 
+			moment.locale('@Culture');
 			var cultureCode = '@UICulture';
 			var languageSelection = '@UserContext.LanguagePreference';
 			var query = @Html.Raw(JsonHelpers.Serialize(Model.Filter));

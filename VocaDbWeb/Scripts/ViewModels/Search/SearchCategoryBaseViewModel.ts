@@ -51,7 +51,7 @@ module vdb.viewModels.search {
 		public draftsOnly: KnockoutObservable<boolean>;
 
 		public formatDate = (dateStr: string) => {
-			return new Date(dateStr).toLocaleDateString();
+			return moment(dateStr).format('l');
 		}
 
 		// Method for loading a page of results.
