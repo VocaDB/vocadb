@@ -204,4 +204,7 @@
   <data name="ChildTags" xml:space="preserve">
     <value>Include child tags</value>
   </data>
+  <data name="VoicebankReleaseDate" xml:space="preserve">
+    <value>Released:</value>
+  </data>
 </root>

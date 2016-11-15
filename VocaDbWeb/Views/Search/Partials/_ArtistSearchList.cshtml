@@ -18,6 +18,7 @@
 						<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
 					</a>
 				</th>
+				<th></th>
 				<th data-bind="if: $parent.showTags">
 					@SharedRes.Tags
 				</th>
@@ -37,6 +38,11 @@
 					@KnockoutHelpers.DraftIcon("status")
 					<br />
 					<small class="extraInfo" data-bind="text: $data.additionalNames"></small>
+				</td>
+				<td>
+					<span data-bind="visible: $data.releaseDate">
+						@ViewRes.Search.IndexStrings.VoicebankReleaseDate <span data-bind="text: $parent.formatDate($data.releaseDate)"></span>
+					</span>
 				</td>
 				<td data-bind="if: $parents[1].showTags() && $data.tags" class="search-tags-column">
 					<div data-bind="visible: tags.length">

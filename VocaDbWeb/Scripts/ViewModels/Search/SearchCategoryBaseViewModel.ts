@@ -50,6 +50,10 @@ module vdb.viewModels.search {
 
 		public draftsOnly: KnockoutObservable<boolean>;
 
+		public formatDate = (dateStr: string) => {
+			return new Date(dateStr).toLocaleDateString();
+		}
+
 		// Method for loading a page of results.
 		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tags: number[],
 			childTags: boolean, status: string, callback: (result: any) => void) => void;

@@ -320,5 +320,14 @@ namespace ViewRes.Search {
                 return ResourceManager.GetString("TypeSomething", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Released:.
+        /// </summary>
+        public static string VoicebankReleaseDate {
+            get {
+                return ResourceManager.GetString("VoicebankReleaseDate", resourceCulture);
+            }
+        }
     }
 }

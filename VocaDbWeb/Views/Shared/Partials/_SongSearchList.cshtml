@@ -59,7 +59,7 @@
 				
 				@KnockoutHelpers.DraftIcon("status")
 				
-				<i class="icon-calendar" data-bind="visible: $data.publishDate, attr: { title: ($data.publishDate ? 'Published: ' + new Date($data.publishDate).toLocaleDateString() : '') }, tooltip: { placement: 'right' }"></i>
+				<i class="icon-calendar" data-bind="visible: $data.publishDate, attr: { title: ($data.publishDate ? 'Published: ' + $parent.formatDate($data.publishDate) : '') }, tooltip: { placement: 'right' }"></i>
 
 				<br />
 				<small class="extraInfo" data-bind="text: artistString"></small>
