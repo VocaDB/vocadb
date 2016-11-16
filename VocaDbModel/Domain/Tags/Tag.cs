@@ -34,7 +34,6 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		private ISet<AlbumTagUsage> albumTagUsages = new HashSet<AlbumTagUsage>();
-		private ISet<Tag> aliases = new HashSet<Tag>();
 		private ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> archivedVersions
 			= new ArchivedVersionManager<ArchivedTagVersion, TagEditableFields>();		
 		private ISet<ArtistTagUsage> artistTagUsages = new HashSet<ArtistTagUsage>();
@@ -165,11 +164,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		public virtual string DefaultName {
-			get {
-				return TranslatedName.Default;
-			}
-		}
+		public virtual string DefaultName => TranslatedName.Default;
 
 		public virtual bool Deleted { get; set; }
 
@@ -184,9 +179,7 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
-		public virtual EntryType EntryType {
-			get { return EntryType.Tag; }
-		}
+		public virtual EntryType EntryType => EntryType.Tag;
 
 		public virtual GlobalEntryId GlobalId => new GlobalEntryId(EntryType.Tag, Id);
 
@@ -205,13 +198,9 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
-		INameManager<TagName> IEntryWithNames<TagName>.Names{
-			get { return Names; }
-		}
+		INameManager<TagName> IEntryWithNames<TagName>.Names => Names;
 
-		INameManager IEntryWithNames.Names {
-			get { return Names; }
-		}
+		INameManager IEntryWithNames.Names => Names;
 
 		/// <summary>
 		/// Parent tag, if any. Can be null.
