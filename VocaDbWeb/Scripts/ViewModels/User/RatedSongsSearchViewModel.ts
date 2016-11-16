@@ -87,6 +87,10 @@ module vdb.viewModels.user {
 			return "AdditionalNames,ThumbUrl" + (this.showTags() ? ",Tags" : "");
 		});
 
+		public formatDate = (dateStr: string) => {
+			return moment(dateStr).format('l');
+		}
+
 		public getPVServiceIcons = (services: string) => {
 			return this.pvServiceIcons.getIconUrls(services);
 		}

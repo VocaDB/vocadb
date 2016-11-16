@@ -19,8 +19,9 @@
 
 	<script type="text/javascript">
 
-		$(document).ready(function () {
+		$(function () {
 
+			moment.locale('@Culture');
 			var cultureCode = '@UICulture';
 			var languageSelection = '@UserContext.LanguagePreference';
 			var loggedUserId = @Model.User.Id;
