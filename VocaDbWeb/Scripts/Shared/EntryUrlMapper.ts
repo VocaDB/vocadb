@@ -75,7 +75,7 @@ module vdb.utils {
 		}
     
 		public static details_user_byName(name: string) {
-			return vdb.functions.mapAbsoluteUrl("/User/Profile/" + name);
+			return vdb.functions.mapAbsoluteUrl("/Profile/" + name);
 		}
     }
 

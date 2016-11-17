@@ -31,7 +31,7 @@
 				<!-- /ko -->
 			</div>
 			<h3 class="media-heading comment-large-header">
-				<a data-bind="attr: { href: '/User/Profile/' + author.name }, text: author.name"></a>
+				<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(author.name) }, text: author.name"></a>
 			</h3>
 			@(body ?? CommentBodyKnockout(messageBinding))
 		</div>
