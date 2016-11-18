@@ -36,7 +36,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 			data.ReleaseDate = thisVersion.ReleaseDate;
 			data.TranslatedName = thisVersion.TranslatedName;
 
-			DoIfExists(version, ArtistEditableFields.Albums, xmlCache, v => data.Albums = v.Albums);
 			DoIfExists(version, ArtistEditableFields.Description, xmlCache, v => {
 				data.Description = v.Description;
 				data.DescriptionEng = v.DescriptionEng;
@@ -55,7 +54,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 			
 			ParamIs.NotNull(() => artist);
 
-			Albums = (diff.IncludeAlbums ? artist.Albums.Select(a => new ObjectRefContract(a.Album)).ToArray() : null);
 			ArtistType = artist.ArtistType;
 			BaseVoicebank = ObjectRefContract.Create(artist.BaseVoicebank);
 			Id = artist.Id;
@@ -71,9 +69,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 			WebLinks = (diff.IncludeWebLinks ? artist.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
 
 		}
-
-		[DataMember]
-		public ObjectRefContract[] Albums { get; set; }
 
 		[DataMember]
 		public ArtistType ArtistType { get; set; }

@@ -203,7 +203,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
 			Assert.IsNotNull(lastVersion, "Last version is available");
 			Assert.AreEqual(ArtistArchiveReason.Reverted, lastVersion.Reason, "Last version archive reason");
-			Assert.IsFalse(lastVersion.Diff.Picture, "Picture was not changed");
+			Assert.IsFalse(lastVersion.Diff.Picture.IsChanged, "Picture was not changed");
 
 		}
 
@@ -226,7 +226,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNotNull(lastVersion, "Last version is available");
 			Assert.AreEqual(2, lastVersion.Version, "Last version number");
 			Assert.AreEqual(ArtistArchiveReason.Reverted, lastVersion.Reason, "Last version archive reason");
-			Assert.IsTrue(lastVersion.Diff.Picture, "Picture was changed");
+			Assert.IsTrue(lastVersion.Diff.Picture.IsChanged, "Picture was changed");
 
 		}
 
@@ -259,7 +259,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
 			Assert.IsNotNull(lastVersion, "Last version is available");
 			Assert.AreEqual(ArtistArchiveReason.Reverted, lastVersion.Reason, "Last version archive reason");
-			Assert.IsTrue(lastVersion.Diff.Picture, "Picture was changed");
+			Assert.IsTrue(lastVersion.Diff.Picture.IsChanged, "Picture was changed");
 
 		}
 
@@ -299,7 +299,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(artist, archivedVersion.Artist, "Archived version album");
 			Assert.AreEqual(ArtistArchiveReason.PropertiesUpdated, archivedVersion.Reason, "Archived version reason");
-			Assert.AreEqual(ArtistEditableFields.Names, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(ArtistEditableFields.Names, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 			var activityEntry = repository.List<ActivityEntry>().FirstOrDefault();
 
@@ -327,7 +327,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var archivedVersion = repository.List<ArchivedArtistVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(ArtistEditableFields.Picture, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(ArtistEditableFields.Picture, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 		}
 

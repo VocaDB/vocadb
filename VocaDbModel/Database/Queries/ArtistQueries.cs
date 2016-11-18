@@ -208,7 +208,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			VerifyManageDatabase();
 
-			var diff = new ArtistDiff { Names = true };
+			var diff = new ArtistDiff();
+			diff.Names.Set();
 
 			return repository.HandleTransaction(ctx => {
 
@@ -223,7 +224,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (contract.WebLink != null) {
 					artist.CreateWebLink(contract.WebLink.Description, contract.WebLink.Url, contract.WebLink.Category);
-					diff.WebLinks = true;
+					diff.WebLinks.Set();
 				}
 
 				artist.Status = (contract.Draft || !(new ArtistValidator().IsValid(artist))) ? EntryStatus.Draft : EntryStatus.Finished;
@@ -242,7 +243,7 @@ namespace VocaDb.Model.Database.Queries {
 					var thumbGenerator = new ImageThumbGenerator(imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 
-					diff.Picture = true;
+					diff.Picture.Set();
 
 				}
 
@@ -526,7 +527,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
-				diff.Picture = !Equals(artist.ArchivedVersionsManager.GetLatestVersionWithField(ArtistEditableFields.Picture, artist.Version), versionWithPic);
+				diff.Picture.Set(!Equals(artist.ArchivedVersionsManager.GetLatestVersionWithField(ArtistEditableFields.Picture, artist.Version), versionWithPic));
 
 				// Groups
 				DatabaseContextHelper.RestoreObjectRefs(
@@ -572,14 +573,14 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (artist.ArtistType != properties.ArtistType) {
 					artist.ArtistType = properties.ArtistType;
-					diff.ArtistType = true;
+					diff.ArtistType.Set();
 				}
 
-				diff.Description = artist.Description.CopyFrom(properties.Description);
+				diff.Description.Set(artist.Description.CopyFrom(properties.Description));
 
 				if (artist.TranslatedName.DefaultLanguage != properties.DefaultNameLanguage) {
 					artist.TranslatedName.DefaultLanguage = properties.DefaultNameLanguage;
-					diff.OriginalName = true;
+					diff.OriginalName.Set();
 				}
 
 				// Required because of a bug in NHibernate
@@ -596,27 +597,27 @@ namespace VocaDb.Model.Database.Queries {
 					var thumbGenerator = new ImageThumbGenerator(imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 
-					diff.Picture = true;
+					diff.Picture.Set();
 
 				}
 
 				if (artist.Status != properties.Status) {
 					artist.Status = properties.Status;
-					diff.Status = true;
+					diff.Status.Set();
 				}
 
 				var nameDiff = artist.Names.Sync(properties.Names, artist);
 				ctx.OfType<ArtistName>().Sync(nameDiff);
 
 				if (nameDiff.Changed)
-					diff.Names = true;
+					diff.Names.Set();
 
 				if (!artist.BaseVoicebank.NullSafeIdEquals(properties.BaseVoicebank)) {
 					
 					var newBase = ctx.NullSafeLoad(properties.BaseVoicebank);
 
 					if (artist.IsValidBaseVoicebank(newBase)) {
-						diff.BaseVoicebank = true;
+						diff.BaseVoicebank.Set();
 						artist.SetBaseVoicebank(ctx.NullSafeLoad(properties.BaseVoicebank));
 					}
 
@@ -624,16 +625,16 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (!artist.ReleaseDate.Equals(properties.ReleaseDate)) {
 					artist.ReleaseDate = properties.ReleaseDate;
-					diff.ReleaseDate = true;
+					diff.ReleaseDate.Set();
 				}
 
 				var webLinkDiff = WebLink.Sync(artist.WebLinks, properties.WebLinks, artist);
 				ctx.OfType<ArtistWebLink>().Sync(webLinkDiff);
 
 				if (webLinkDiff.Changed)
-					diff.WebLinks = true;
+					diff.WebLinks.Set();
 
-				if (diff.ArtistType || diff.Names) {
+				if (diff.ArtistType.IsChanged || diff.Names.IsChanged) {
 
 					foreach (var song in artist.Songs) {
 						song.Song.UpdateArtistString();
@@ -665,7 +666,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				if (groupsDiff.Changed)
-					diff.Groups = true;
+					diff.Groups.Set();
 
 				var picsDiff = artist.Pictures.SyncPictures(properties.Pictures, ctx.OfType<User>().GetLoggedUser(permissionContext), artist.CreatePicture);
 				ctx.OfType<ArtistPictureFile>().Sync(picsDiff);
@@ -673,7 +674,7 @@ namespace VocaDb.Model.Database.Queries {
 				artist.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
 				if (picsDiff.Changed)
-					diff.Pictures = true;
+					diff.Pictures.Set();
 
 				var logStr = string.Format("updated properties for artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), diff.ChangedFieldsString)
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
