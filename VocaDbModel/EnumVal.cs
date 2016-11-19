@@ -8,7 +8,7 @@ namespace VocaDb.Model {
 	/// Type-safe enum
 	/// </summary>
 	/// <typeparam name="T">Enum type</typeparam>
-	public class EnumVal<T> where T : struct, IConvertible {
+	public class EnumVal<T> : IEquatable<EnumVal<T>>, IEquatable<T> where T : struct, IConvertible {
 
 		private T val;
 
@@ -118,11 +118,7 @@ namespace VocaDb.Model {
 			this.val = flags;
 		}
 
-		public bool IsDefaultVal {
-			get {
-				return val.Equals(default(T));
-			}
-		}
+		public bool IsDefaultVal => val.Equals(default(T));
 
 		/// <summary>
 		/// Gets or sets the current value
@@ -140,6 +136,18 @@ namespace VocaDb.Model {
 			Value = default(T);
 		}
 
+		public override bool Equals(object obj) {
+			return Equals(obj as EnumVal<T>);
+		}
+
+		public bool Equals(EnumVal<T> other) {
+			return other != null && Value.Equals(other.Value);
+		}
+
+		public bool Equals(T other) {
+			return Value.Equals(other);
+		}
+
 		/// <summary>
 		/// Checks whether a flag has been set.
 		/// </summary>
@@ -147,6 +155,10 @@ namespace VocaDb.Model {
 		/// <returns>True if the flag is set.</returns>
 		public bool FlagIsSet(T flag) {
 			return (ValInt & Convert.ToInt32(flag)) == Convert.ToInt32(flag);
+		}
+
+		public override int GetHashCode() {
+			return Value.GetHashCode();
 		}
 
 		public void RemoveFlag(T flag) {
