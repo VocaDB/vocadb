@@ -73,11 +73,9 @@ namespace VocaDb.Model.Service.Queries {
 
 			var cacheKey = string.Format("ArtistRelationsQuery.GetLatestSongs.{0}", artist.Id);
 
-			var songIds = cache.Get(cacheKey) as int[];
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () => {
 
-			if (songIds == null) {
-
-				songIds = ctx.OfType<ArtistForSong>().Query()
+				return ctx.OfType<ArtistForSong>().Query()
 					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport)
 					.WhereIsMainSong(artist.ArtistType)
 					.OrderByPublishDate(SortDirection.Descending)
@@ -85,11 +83,7 @@ namespace VocaDb.Model.Service.Queries {
 					.Take(8)
 					.ToArray();
 
-				cache.Set(cacheKey, songIds, CachePolicy.AbsoluteExpiration(1));
-
-			}
-
-			return songIds;
+			});
 
 		}
 
@@ -98,6 +92,36 @@ namespace VocaDb.Model.Service.Queries {
 			return ctx
 				.LoadMultiple<Song>(GetLatestSongIds(ctx, artist))
 				.OrderByPublishDate(SortDirection.Descending)
+				.ToArray()
+				.Select(s => new SongForApiContract(s, languagePreference, songFields))
+				.ToArray();
+
+		}
+
+		private int[] GetTopSongIds(IDatabaseContext ctx, Artist artist, SongForApiContract[] latestSongs) {
+
+			var cacheKey = string.Format("ArtistRelationsQuery.GetTopSongs.{0}", artist.Id);
+
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () => {
+
+				var latestSongIds = latestSongs != null ? latestSongs.Select(s => s.Id).ToArray() : new int[0];
+
+				return ctx.OfType<ArtistForSong>().Query()
+					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport
+						&& s.Song.RatingScore > 0 && !latestSongIds.Contains(s.Song.Id))
+					.OrderBy(SongSortRule.RatingScore, languagePreference)
+					.Select(s => s.Song.Id)
+					.Take(8)
+					.ToArray();
+
+			});
+
+		}
+
+		private SongForApiContract[] GetTopSongs(IDatabaseContext ctx, Artist artist, SongForApiContract[] latestSongs) {
+
+			return ctx.LoadMultiple<Song>(GetTopSongIds(ctx, artist, latestSongs))
+				.OrderByDescending(s => s.RatingScore)
 				.ToArray()
 				.Select(s => new SongForApiContract(s, languagePreference, songFields))
 				.ToArray();
@@ -128,18 +152,7 @@ namespace VocaDb.Model.Service.Queries {
 			}
 
 			if (fields.HasFlag(ArtistRelationsFields.PopularSongs)) {
-				
-				var latestSongIds = contract.LatestSongs != null ? contract.LatestSongs.Select(s => s.Id).ToArray() : new int[0];
-
-				contract.PopularSongs = ctx.OfType<ArtistForSong>().Query()
-					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport 
-						&& s.Song.RatingScore > 0 && !latestSongIds.Contains(s.Song.Id))
-					.Select(s => s.Song)
-					.OrderByDescending(s => s.RatingScore)
-					.Take(8).ToArray()
-					.Select(s => new SongForApiContract(s, languagePreference, songFields))
-					.ToArray();
-
+				contract.PopularSongs = GetTopSongs(ctx, artist, contract.LatestSongs);
 			}
 
 			return contract;
