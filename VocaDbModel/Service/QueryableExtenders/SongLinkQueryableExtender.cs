@@ -14,6 +14,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 	/// </summary>
 	public static class SongLinkQueryableExtender {
 
+		public static IQueryable<T> OrderByPublishDate<T>(this IQueryable<T> criteria, SortDirection direction) where T : ISongLink {
+
+			return criteria.OrderBy(a => a.Song.PublishDate, direction)
+				.ThenBy(a => a.Song.CreateDate, direction);
+
+		}
+
 		public static IOrderedQueryable<T> OrderBySongName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
 			where T : ISongLink {
 

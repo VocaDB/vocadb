@@ -364,7 +364,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var relations = (new ArtistRelationsQuery(session, LanguagePreference)).GetRelations(artist, ArtistRelationsFields.All);
+				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache)).GetRelations(artist, ArtistRelationsFields.All);
 				contract.LatestAlbums = relations.LatestAlbums;
 				contract.TopAlbums = relations.PopularAlbums;
 				contract.LatestSongs = relations.LatestSongs;

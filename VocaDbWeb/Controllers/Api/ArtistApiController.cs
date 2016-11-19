@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model;
@@ -30,14 +31,16 @@ namespace VocaDb.Web.Controllers.Api {
 
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
+		private readonly ObjectCache cache;
 		private readonly ArtistQueries queries;
 		private readonly ArtistService service;
 		private readonly IEntryThumbPersister thumbPersister;
 
-		public ArtistApiController(ArtistQueries queries, ArtistService service, IEntryThumbPersister thumbPersister) {
+		public ArtistApiController(ArtistQueries queries, ArtistService service, IEntryThumbPersister thumbPersister, ObjectCache cache) {
 			this.queries = queries;
 			this.service = service;
 			this.thumbPersister = thumbPersister;
+			this.cache = cache;
 		}
 
 		private ArtistForApiContract GetArtist(Artist a, ArtistMergeRecord m, 
@@ -49,7 +52,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var contract = new ArtistForApiContract(a, lang, thumbPersister, WebHelper.IsSSL(Request), fields);
 
 			if (relations != ArtistRelationsFields.None) {
-				contract.Relations = new ArtistRelationsQuery(ctx, lang).GetRelations(a, relations);
+				contract.Relations = new ArtistRelationsQuery(ctx, lang, cache).GetRelations(a, relations);
 			}
 
 			return contract;

@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using System.Runtime.Caching;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -14,6 +16,8 @@ namespace VocaDb.Model.Service.Queries {
 
 	public class ArtistRelationsQuery {
 
+		private static readonly SongOptionalFields songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
+		private readonly ObjectCache cache;
 		private readonly IDatabaseContext<Artist> ctx;
 		private readonly ContentLanguagePreference languagePreference;
 
@@ -65,9 +69,45 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public ArtistRelationsQuery(IDatabaseContext<Artist> ctx, ContentLanguagePreference languagePreference) {
+		private int[] GetLatestSongIds(IDatabaseContext ctx, Artist artist) {
+
+			var cacheKey = string.Format("ArtistRelationsQuery.GetLatestSongs.{0}", artist.Id);
+
+			var songIds = cache.Get(cacheKey) as int[];
+
+			if (songIds == null) {
+
+				songIds = ctx.OfType<ArtistForSong>().Query()
+					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport)
+					.WhereIsMainSong(artist.ArtistType)
+					.OrderByPublishDate(SortDirection.Descending)
+					.Select(s => s.Song.Id)
+					.Take(8)
+					.ToArray();
+
+				cache.Set(cacheKey, songIds, CachePolicy.AbsoluteExpiration(1));
+
+			}
+
+			return songIds;
+
+		}
+
+		private SongForApiContract[] GetLatestSongs(IDatabaseContext ctx, Artist artist) {
+
+			return ctx
+				.LoadMultiple<Song>(GetLatestSongIds(ctx, artist))
+				.OrderByPublishDate(SortDirection.Descending)
+				.ToArray()
+				.Select(s => new SongForApiContract(s, languagePreference, songFields))
+				.ToArray();
+
+		}
+
+		public ArtistRelationsQuery(IDatabaseContext<Artist> ctx, ContentLanguagePreference languagePreference, ObjectCache cache) {
 			this.ctx = ctx;
 			this.languagePreference = languagePreference;
+			this.cache = cache;
 		}
 
 		public ArtistRelationsForApi GetRelations(Artist artist, ArtistRelationsFields fields) {
@@ -83,19 +123,8 @@ namespace VocaDb.Model.Service.Queries {
 				contract.PopularAlbums = GetTopAlbums(ctx, artist, latestAlbumIds);
 			}
 
-			var songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
-
 			if (fields.HasFlag(ArtistRelationsFields.LatestSongs)) {
-
-				contract.LatestSongs = ctx.OfType<ArtistForSong>().Query()
-					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport)
-					.WhereIsMainSong(artist.ArtistType)
-					.Select(s => s.Song)
-					.OrderByPublishDate(SortDirection.Descending)
-					.Take(8).ToArray()
-					.Select(s => new SongForApiContract(s, languagePreference, songFields))
-					.ToArray();
-				
+				contract.LatestSongs = GetLatestSongs(ctx, artist);				
 			}
 
 			if (fields.HasFlag(ArtistRelationsFields.PopularSongs)) {
