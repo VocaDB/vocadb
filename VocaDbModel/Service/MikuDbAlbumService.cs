@@ -156,7 +156,7 @@ namespace VocaDb.Model.Service {
 				song = new Song(new LocalizedString(inspectedTrack.ImportedTrack.Title, languageSelection));
 				session.Save(song);
 				album.AddSong(song, inspectedTrack.ImportedTrack.TrackNum, inspectedTrack.ImportedTrack.DiscNum);
-				diff.Names = true;
+				diff.Names.Set();
 
 			} else if (selectedSongIds.Contains(inspectedTrack.ExistingSong.Id)) {
 
@@ -169,7 +169,7 @@ namespace VocaDb.Model.Service {
 
 				if (!song.Names.HasName(newName) && !song.Names.HasNameForLanguage(languageSelection)) {
 					song.CreateName(new LocalizedString(newName, languageSelection));
-					diff.Names = true;
+					diff.Names.Set();
 				}
 
 			}
@@ -179,19 +179,19 @@ namespace VocaDb.Model.Service {
 				if (inspectedTrack.ImportedTrack != null) {
 					foreach (var artistName in inspectedTrack.ImportedTrack.ArtistNames) {
 						if (CreateArtist(session, song, artistName, ArtistRoles.Composer))
-							diff.Artists = true;
+							diff.Artists.Set();
 					}
 
 					foreach (var artistName in inspectedTrack.ImportedTrack.VocalistNames) {
 						if (CreateArtist(session, song, artistName, ArtistRoles.Vocalist))
-							diff.Artists = true;
+							diff.Artists.Set();
 					}
 
 					song.UpdateArtistString();
 
 				}
 
-				if (diff.ChangedFields != SongEditableFields.Nothing) {
+				if (diff.ChangedFields.Value != SongEditableFields.Nothing) {
 					
 					var importerName = importer != null ? importer.ServiceName : "(unknown)";
 

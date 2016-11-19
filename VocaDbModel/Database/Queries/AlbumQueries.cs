@@ -103,7 +103,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			if (artistDiff.Changed) {
 
-				var diff = new SongDiff(DoSnapshot(song.GetLatestVersion(), ctx.OfType<User>().GetLoggedUser(PermissionContext))) { Artists = true };
+				var diff = new SongDiff(DoSnapshot(song.GetLatestVersion(), ctx.OfType<User>().GetLoggedUser(PermissionContext)));
+				diff.Artists.Set();
 
 				song.UpdateArtistString();
 				var archived = ArchiveSong(ctx.OfType<Song>(), song, diff, SongArchiveReason.PropertiesUpdated);
@@ -656,12 +657,13 @@ namespace VocaDb.Model.Database.Queries {
 						var song = new Song(new LocalizedString(contract.SongName, ContentLanguageSelection.Unspecified));
 						session.Save(song);
 
-						var songDiff = new SongDiff { Names = true };
+						var songDiff = new SongDiff();
+						songDiff.Names.Set();
 						var songArtistDiff = song.SyncArtists(contract.Artists, 
 							addedArtistContracts => GetArtists(session, addedArtistContracts));
 
 						if (songArtistDiff.Changed) {
-							songDiff.Artists = true;
+							songDiff.Artists.Set();
 							session.Update(song);
 						}
 

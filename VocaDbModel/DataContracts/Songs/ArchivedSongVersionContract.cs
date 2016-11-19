@@ -9,7 +9,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public ArchivedSongVersionContract(ArchivedSongVersion archivedVersion)
 			: base(archivedVersion) {
 
-			ChangedFields = (archivedVersion.Diff != null ? archivedVersion.Diff.ChangedFields : SongEditableFields.Nothing);
+			ChangedFields = (archivedVersion.Diff != null ? archivedVersion.Diff.ChangedFields.Value : SongEditableFields.Nothing);
 			Reason = archivedVersion.Reason;
 
 		}

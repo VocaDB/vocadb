@@ -318,12 +318,13 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
 
-				var diff = new SongDiff { Names = true };
+				var diff = new SongDiff();
+				diff.Names.Set();
 				var song = new Song { SongType = contract.SongType };
 
 				if (contract.OriginalVersion != null && contract.OriginalVersion.Id != 0) {
 					song.OriginalVersion = ctx.Load(contract.OriginalVersion.Id);
-					diff.OriginalVersion = true;
+					diff.OriginalVersion.Set();
 				}
 
 				song.Names.Init(contract.Names, song);
@@ -342,7 +343,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				diff.Artists = contract.Artists.Any();
+				diff.Artists.Set(contract.Artists.Any());
 
 				var pvs = new List<PVContract>();
 
@@ -360,16 +361,16 @@ namespace VocaDb.Model.Database.Queries {
 
 				var pvDiff = song.SyncPVs(pvs);
 				ctx.OfType<PVForSong>().Sync(pvDiff);
-				diff.PVs = pvs.Any();
+				diff.PVs.Set(pvs.Any());
 
 				if (contract.WebLinks != null) {
 					var weblinksDiff = ctx.Sync(WebLink.Sync(song.WebLinks, contract.WebLinks, song));
-					diff.WebLinks = weblinksDiff.Changed;
+					diff.WebLinks.Set(weblinksDiff.Changed);
 				}
 
 				if (contract.Lyrics != null && contract.Lyrics.Any()) {
 					contract.Lyrics.ForEach(song.CreateLyrics);
-					diff.Lyrics = true;
+					diff.Lyrics.Set();
 				}
 
 				song.Status = (contract.Draft || !(new SongValidator().IsValid(song, config.SpecialTags.Instrumental))) ? EntryStatus.Draft : EntryStatus.Finished;
@@ -844,10 +845,10 @@ namespace VocaDb.Model.Database.Queries {
 			ctx.OfType<PVForSong>().Sync(pvDiff);
 
 			if (pvDiff.Changed)
-				diff.PVs = true;
+				diff.PVs.Set();
 
 			if (pvDiff.Changed && !oldPublishDate.Equals(song.PublishDate)) {
-				diff.PublishDate = true;
+				diff.PublishDate.Set();
 			}
 
 			return pvDiff;
@@ -871,45 +872,45 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.SysLog(string.Format("updating properties for {0}", song));
 
 				var oldPvCount = song.PVs.OfType(PVType.Original).Count();
-				diff.Notes = song.Notes.CopyFrom(properties.Notes);
+				diff.Notes.Set(song.Notes.CopyFrom(properties.Notes));
 
 				var newOriginalVersion = (properties.OriginalVersion != null && properties.OriginalVersion.Id != 0 ? ctx.Load(properties.OriginalVersion.Id) : null);
 
 				if (!Equals(song.OriginalVersion, newOriginalVersion)) {
 					song.OriginalVersion = newOriginalVersion;
-					diff.OriginalVersion = true;
+					diff.OriginalVersion.Set();
 				}
 
 				if (song.SongType != properties.SongType) {
-					diff.SongType = true;
+					diff.SongType.Set();
 					song.SongType = properties.SongType;
 				}
 
 				if (song.LengthSeconds != properties.LengthSeconds) {
-					diff.Length = true;
+					diff.Length.Set();
 					song.LengthSeconds = properties.LengthSeconds;
 				}
 
 				if (song.TranslatedName.DefaultLanguage != properties.DefaultNameLanguage) {
 					song.TranslatedName.DefaultLanguage = properties.DefaultNameLanguage;
-					diff.OriginalName = true;
+					diff.OriginalName.Set();
 				}
 
 				var nameDiff = song.Names.Sync(properties.Names, song);
 				ctx.OfType<SongName>().Sync(nameDiff);
 
 				if (nameDiff.Changed)
-					diff.Names = true;
+					diff.Names.Set();
 
 				var webLinkDiff = WebLink.Sync(song.WebLinks, properties.WebLinks, song);
 				ctx.OfType<SongWebLink>().Sync(webLinkDiff);
 
 				if (webLinkDiff.Changed)
-					diff.WebLinks = true;
+					diff.WebLinks.Set();
 
 				if (song.Status != properties.Status) {
 					song.Status = properties.Status;
-					diff.Status = true;
+					diff.Status.Set();
 				}
 
 				var artistGetter = new Func<ArtistForSongContract, Artist>(artistForSong => 
@@ -919,17 +920,17 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.OfType<ArtistForSong>().Sync(artistsDiff);
 
 				if (artistsDiff.Changed)
-					diff.Artists = true;
+					diff.Artists.Set();
 
 				var newEvent = new CreateEventQuery().FindOrCreate(ctx, PermissionContext, properties.ReleaseEvent, song);
 				if (!song.ReleaseEvent.NullSafeIdEquals(newEvent)) {
-					diff.ReleaseEvent = true;
+					diff.ReleaseEvent.Set();
 					song.SetReleaseEvent(newEvent);
 				}
 
 				if (!song.PublishDate.Equals(properties.PublishDate)) {
 					song.PublishDate = properties.PublishDate;
-					diff.PublishDate = true;
+					diff.PublishDate.Set();
 				}
 
 				UpdatePVs(ctx, song, diff, properties.PVs);
@@ -938,7 +939,7 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.OfType<LyricsForSong>().Sync(lyricsDiff);
 
 				if (lyricsDiff.Changed)
-					diff.Lyrics = true;
+					diff.Lyrics.Set();
 
 				var logStr = string.Format("updated properties for song {0} ({1})", entryLinkFactory.CreateEntryLink(song), diff.ChangedFieldsString)
 					+ (properties.UpdateNotes != string.Empty ? " " + HttpUtility.HtmlEncode(properties.UpdateNotes) : string.Empty)

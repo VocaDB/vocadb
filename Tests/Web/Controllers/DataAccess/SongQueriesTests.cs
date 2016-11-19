@@ -549,7 +549,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(song, archivedVersion.Song, "Archived version song");
 			Assert.AreEqual(SongArchiveReason.PropertiesUpdated, archivedVersion.Reason, "Archived version reason");
-			Assert.AreEqual(SongEditableFields.Names, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(SongEditableFields.Names, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 			var activityEntry = repository.List<ActivityEntry>().FirstOrDefault();
 
@@ -589,7 +589,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var archivedVersion = repository.List<ArchivedSongVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(SongEditableFields.Artists, archivedVersion.Diff.ChangedFields, "Changed fields");
+			Assert.AreEqual(SongEditableFields.Artists, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
 		}
 
