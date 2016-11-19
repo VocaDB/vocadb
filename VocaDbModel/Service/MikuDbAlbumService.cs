@@ -59,7 +59,7 @@ namespace VocaDb.Model.Service {
 					album.Names.SortNames.DefaultLanguage = languageSelection;
 
 				album.DiscType = DiscType.Unknown;
-				diff.Names = true;
+				diff.Names.Set();
 				session.Save(album);
 
 			} else {
@@ -68,7 +68,7 @@ namespace VocaDb.Model.Service {
 
 				if (!album.Names.HasName(acceptedAlbum.ImportedAlbum.Title)) {
 					album.CreateName(acceptedAlbum.ImportedAlbum.Title, languageSelection);
-					diff.Names = true;
+					diff.Names.Set();
 				}
 
 			}
@@ -81,12 +81,12 @@ namespace VocaDb.Model.Service {
 
 					if (!artist.HasAlbum(album)) {
 						session.Save(artist.AddAlbum(album));
-						diff.Artists = true;
+						diff.Artists.Set();
 					}
 
 				} else {
 					album.AddArtist(inspectedArtist.Name, false, ArtistRoles.Default);
-					diff.Artists = true;
+					diff.Artists.Set();
 				}
 
 			}
@@ -95,7 +95,7 @@ namespace VocaDb.Model.Service {
 
 				foreach (var inspectedTrack in acceptedAlbum.Tracks) {
 					if (AcceptImportedSong(session, importer, album, inspectedTrack, languageSelection, selectedSongIds))
-						diff.Tracks = true;
+						diff.Tracks.Set();
 				}
 
 			}
@@ -110,12 +110,12 @@ namespace VocaDb.Model.Service {
 
 				// TODO: should generate thumbnail as well
 
-				diff.Cover = true;
+				diff.Cover.Set();
 			}
 
 			if (acceptedAlbum.ImportedAlbum.Data.ReleaseYear != null && album.OriginalReleaseDate.Year == null) {
 				album.OriginalReleaseDate.Year = acceptedAlbum.ImportedAlbum.Data.ReleaseYear;
-				diff.OriginalRelease = true;
+				diff.OriginalRelease.Set();
 			}
 
 			// Add link if not already added a link to that service
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Service {
 
 				if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url))) {
 					album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference);
-					diff.WebLinks = true;
+					diff.WebLinks.Set();
 				}
 				
 			}

@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			ComparableVersions = archived.Album.ArchivedVersionsManager
 				.GetPreviousVersions(archived)
-				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields, a.Reason))
+				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.Reason))
 				.ToArray();
 
 			Versions = ComparedAlbumsContract.Create(archived, comparedVersion);

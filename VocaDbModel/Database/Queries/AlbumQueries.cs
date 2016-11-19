@@ -489,7 +489,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				// Assume picture was changed if there's a version between the current version and the restored version where the picture was changed.
-				diff.Cover = !Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic);
+				diff.Cover.Set(!Equals(album.ArchivedVersionsManager.GetLatestVersionWithField(AlbumEditableFields.Cover, album.Version), versionWithPic));
 
 				// Original release
 				album.OriginalRelease = (fullProperties.OriginalRelease != null ? new AlbumRelease(fullProperties.OriginalRelease, session.NullSafeLoad<ReleaseEvent>(fullProperties.OriginalRelease.ReleaseEvent)) : null);
@@ -565,21 +565,21 @@ namespace VocaDb.Model.Database.Queries {
 				if (album.DiscType != properties.DiscType) {
 					album.DiscType = properties.DiscType;
 					album.UpdateArtistString();
-					diff.DiscType = true;
+					diff.DiscType.Set();
 				}
 
-				diff.Description = album.Description.CopyFrom(properties.Description);
+				diff.Description.Set(album.Description.CopyFrom(properties.Description));
 
 				var parsedBarcodes = properties.Identifiers.Select(Album.ParseBarcode).ToArray();
 				var barcodeDiff = album.SyncIdentifiers(parsedBarcodes);
 				session.Sync(barcodeDiff);
 				if (barcodeDiff.Changed) {
-					diff.Identifiers = true;
+					diff.Identifiers.Set();
 				}
 
 				if (album.TranslatedName.DefaultLanguage != properties.DefaultNameLanguage) {
 					album.TranslatedName.DefaultLanguage = properties.DefaultNameLanguage;
-					diff.OriginalName = true;
+					diff.OriginalName.Set();
 				}
 
 				var validNames = properties.Names;
@@ -589,13 +589,13 @@ namespace VocaDb.Model.Database.Queries {
 				album.Names.UpdateSortNames();
 
 				if (nameDiff.Changed)
-					diff.Names = true;
+					diff.Names.Set();
 
 				var webLinkDiff = WebLink.Sync(album.WebLinks, properties.WebLinks, album);
 				session.OfType<AlbumWebLink>().Sync(webLinkDiff);
 
 				if (webLinkDiff.Changed)
-					diff.WebLinks = true;
+					diff.WebLinks.Set();
 
 				var newEvent = new CreateEventQuery().FindOrCreate(session, PermissionContext, properties.OriginalRelease.ReleaseEvent, album);
 				var newOriginalRelease = (properties.OriginalRelease != null ? new AlbumRelease(properties.OriginalRelease, newEvent) : new AlbumRelease());
@@ -605,7 +605,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (!album.OriginalRelease.Equals(newOriginalRelease)) {
 					album.OriginalRelease = newOriginalRelease;
-					diff.OriginalRelease = true;
+					diff.OriginalRelease.Set();
 				}
 
 				// Required because of a bug in NHibernate
@@ -622,13 +622,13 @@ namespace VocaDb.Model.Database.Queries {
 					var thumbGenerator = new ImageThumbGenerator(imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 
-					diff.Cover = true;
+					diff.Cover.Set();
 
 				}
 
 				if (album.Status != properties.Status) {
 					album.Status = properties.Status;
-					diff.Status = true;
+					diff.Status.Set();
 				}
 
 				var artistGetter = new Func<ArtistContract, Artist>(artist => 
@@ -638,13 +638,13 @@ namespace VocaDb.Model.Database.Queries {
 				session.OfType<ArtistForAlbum>().Sync(artistsDiff);
 
 				if (artistsDiff.Changed)
-					diff.Artists = true;
+					diff.Artists.Set();
 
 				var discsDiff = album.SyncDiscs(properties.Discs);
 				session.OfType<AlbumDiscProperties>().Sync(discsDiff);
 
 				if (discsDiff.Changed)
-					diff.Discs = true;
+					diff.Discs.Set();
 
 				var songGetter = new Func<SongInAlbumEditContract, Song>(contract => {
 
@@ -698,7 +698,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.AuditLogger.AuditLog(str);
 
-					diff.Tracks = true;
+					diff.Tracks.Set();
 
 				}
 
@@ -708,13 +708,13 @@ namespace VocaDb.Model.Database.Queries {
 				album.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
 				if (picsDiff.Changed)
-					diff.Pictures = true;
+					diff.Pictures.Set();
 
 				var pvDiff = album.SyncPVs(properties.PVs);
 				session.OfType<PVForAlbum>().Sync(pvDiff);
 
 				if (pvDiff.Changed)
-					diff.PVs = true;
+					diff.PVs.Set();
 
 				var logStr = string.Format("updated properties for album {0} ({1})", 
 					entryLinkFactory.CreateEntryLink(album), diff.ChangedFieldsString)

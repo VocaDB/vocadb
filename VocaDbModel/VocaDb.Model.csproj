@@ -474,7 +474,6 @@
     <Compile Include="Domain\Users\UserMessage.cs" />
     <Compile Include="DataContracts\WebLinkContract.cs" />
     <Compile Include="Domain\Albums\AlbumComment.cs" />
-    <Compile Include="DataContracts\Albums\AlbumDiffContract.cs" />
     <Compile Include="Domain\Albums\AlbumRelease.cs" />
     <Compile Include="Domain\Albums\AlbumWebLink.cs" />
     <Compile Include="Domain\Albums\ArchivedAlbumVersion.cs" />
