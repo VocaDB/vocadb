@@ -17,7 +17,9 @@ using VocaDb.Model.Helpers;
 namespace VocaDb.Model.Domain.Artists {
 
 	public class Artist : IEntryBase, IEntryWithNames<ArtistName>, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, 
-		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments, IEntryWithLinks<ArtistWebLink> {
+		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments, 
+		IEntryWithLinks<ArtistWebLink>, 
+		IEntryWithArtists {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
@@ -138,6 +140,8 @@ namespace VocaDb.Model.Domain.Artists {
 			// ReSharper restore PossibleMultipleEnumeration
 
 		}
+
+		public virtual IEnumerable<Artist> ArtistList => Enumerable.Repeat(this, 1);
 
 		public virtual ArtistType ArtistType { get; set; }
 

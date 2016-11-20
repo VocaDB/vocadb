@@ -102,13 +102,13 @@ namespace VocaDb.Model.Service.Queries {
 
 		public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository) where TUsage : TagUsage {
 
-			permissionContext.VerifyPermission(PermissionToken.RemoveTagUsages);
-
 			return repository.HandleTransaction(ctx => {
 
 				ctx.AuditLogger.SysLog(string.Format("deleting tag usage with Id {0}", tagUsageId));
 
 				var tagUsage = ctx.Load<TUsage>(tagUsageId);
+
+				EntryPermissionManager.VerifyAccess(permissionContext, tagUsage.Entry, EntryPermissionManager.CanRemoveTagUsages);
 
 				ctx.AuditLogger.AuditLog(string.Format("removing {0}", tagUsage));
 

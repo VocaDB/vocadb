@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils.Config;
 
@@ -17,7 +18,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongDetailsContract() {}
 
 		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
-			SongListBaseContract[] pools, ISpecialTags specialTags) {
+			SongListBaseContract[] pools, ISpecialTags specialTags, IUserPermissionContext userContext) {
 
 			Song = new SongContract(song, languagePreference);
 
@@ -26,6 +27,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			AlternateVersions = song.AlternateVersions.Select(s => new SongContract(s, languagePreference)).ToArray();
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			ArtistString = song.ArtistString[languagePreference];
+			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, song);
 			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
@@ -67,6 +69,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public string ArtistString { get; set; }
+
+		public bool CanRemoveTagUsages { get; set; }
 
 		[DataMember]
 		public int CommentCount { get; set; }

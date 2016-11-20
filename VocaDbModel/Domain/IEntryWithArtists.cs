@@ -3,9 +3,12 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Domain {
 
-	public interface IEntryWithArtists<TArtistLink> where TArtistLink : IArtistLink {
+	/// <summary>
+	/// Entry with associated artists (possibly through link object).
+	/// </summary>
+	public interface IEntryWithArtists {
 
-		IList<TArtistLink> AllArtists { get; }
+		IEnumerable<Artist> ArtistList { get; }
 
 	}
 

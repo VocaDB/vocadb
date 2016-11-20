@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Artists {
 
@@ -16,11 +17,12 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		public ArtistDetailsContract() {}
 
-		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference)
+		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext)
 			: base(artist, languagePreference) {
 
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
+			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, artist);
 			CreateDate = artist.CreateDate;
 			Description =  artist.Description;
 			Draft = artist.Status == EntryStatus.Draft;
@@ -89,6 +91,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public ArtistContract BaseVoicebank { get; set; }
+
+		public bool CanRemoveTagUsages { get; set; }
 
 		[DataMember]
 		public ArtistContract CharacterDesigner { get; set; }

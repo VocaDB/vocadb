@@ -268,7 +268,7 @@ namespace VocaDb.Model.Service {
 				if (stats == null)
 					throw new ObjectNotFoundException(id, typeof(Album));
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference) {
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext) {
 					OwnedCount = stats.OwnedCount,
 					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,
@@ -386,7 +386,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => { 
 				
 				var album = session.Load<Album>(albumId);
-				return new EntryWithTagUsagesContract(album, album.Tags.ActiveUsages, LanguagePreference);
+				return new EntryWithTagUsagesContract(album, album.Tags.ActiveUsages, LanguagePreference, PermissionContext);
 
 			});
 

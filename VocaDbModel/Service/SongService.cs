@@ -169,7 +169,8 @@ namespace VocaDb.Model.Service {
 
 		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery) {
 
-			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0], config.SpecialTags), new[]{ textQuery.Query }, textQuery.MatchMode);
+			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0], config.SpecialTags, PermissionContext), 
+				new[]{ textQuery.Query }, textQuery.MatchMode);
 
 		}
 
@@ -265,7 +266,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				var song = session.Load<Song>(songId);
-				return new EntryWithTagUsagesContract(song, song.Tags.ActiveUsages, LanguagePreference);
+				return new EntryWithTagUsagesContract(song, song.Tags.ActiveUsages, LanguagePreference, PermissionContext);
 
 			});
 
@@ -585,7 +586,7 @@ namespace VocaDb.Model.Service {
 					matches = matches.Where(s => s.Albums.Any(a => albums.Contains(a.Album))).ToArray();
 
 				if (matches.Length == 1)
-					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0], null);
+					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0], null, PermissionContext);
 
 				if (matches.Length == 0)
 					return null;
@@ -602,7 +603,7 @@ namespace VocaDb.Model.Service {
 					matches = matches.Where(s => s.Albums.Any(a => albums.Contains(a.Album))).ToArray();
 
 				if (matches.Length == 1)
-					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0], null);
+					return new SongDetailsContract(matches.First(), PermissionContext.LanguagePreference, new SongListBaseContract[0], null, PermissionContext);
 
 				return null;
 

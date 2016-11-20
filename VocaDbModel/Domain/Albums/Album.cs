@@ -21,8 +21,8 @@ using VocaDb.Model.Domain.ReleaseEvents;
 namespace VocaDb.Model.Domain.Albums {
 
 	public class Album : IEntryBase, IEntryWithNames<AlbumName>, IEntryWithVersions, IEntryWithStatus,
-		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtists<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage>,
-		IEntryWithLinks<AlbumWebLink>, IEntryWithComments {
+		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtistLinks<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage>,
+		IEntryWithLinks<AlbumWebLink>, IEntryWithComments, IEntryWithArtists {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
 			get { return ArchivedVersionsManager; }

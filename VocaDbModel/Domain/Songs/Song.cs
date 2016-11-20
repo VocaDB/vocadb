@@ -23,10 +23,10 @@ using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtists<ArtistForSong>, 
+	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtistLinks<ArtistForSong>, 
 		IEntryWithTags<SongTagUsage>,
 		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song>, IEntryWithComments, 
-		IEntryWithLinks<SongWebLink> {
+		IEntryWithLinks<SongWebLink>, IEntryWithArtists {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 

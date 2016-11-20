@@ -41,6 +41,7 @@ namespace VocaDb.Web.Models {
 			AdditionalNames = contract.AdditionalNames;
 			ArtistString = contract.ArtistString;
 			CanEdit = EntryPermissionManager.CanEdit(permissionContext, contract);
+			CanRemoveTagUsages = contract.CanRemoveTagUsages;
 			CommentCount = contract.CommentCount;
 			CreateDate = contract.CreateDate;
 			Description = contract.Description;
@@ -110,6 +111,8 @@ namespace VocaDb.Web.Models {
 		public ArtistForAlbumContract[] Bands { get; set; }
 
 		public bool CanEdit { get; set; }
+
+		public bool CanRemoveTagUsages { get; set; }
 
 		public string CatNum { get; set; }
 

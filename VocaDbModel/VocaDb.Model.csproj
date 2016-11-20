@@ -320,6 +320,7 @@
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
     <Compile Include="Domain\Globalization\OptionalCultureCode.cs" />
     <Compile Include="Domain\Globalization\TranslationType.cs" />
+    <Compile Include="Domain\IEntryWithArtists.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventSeriesVersion.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventVersion.cs" />
     <Compile Include="Domain\Albums\IAlbumLink.cs" />
@@ -371,7 +372,7 @@
     <Compile Include="Domain\Globalization\SingleNameManager.cs" />
     <Compile Include="Domain\Globalization\TranslatedStringWithDefault.cs" />
     <Compile Include="Domain\IDeletableEntry.cs" />
-    <Compile Include="Domain\IEntryWithArtists.cs" />
+    <Compile Include="Domain\IEntryWithArtistLinks.cs" />
     <Compile Include="Domain\IEntryWithIntId.cs" />
     <Compile Include="Domain\IEntryWithLinks.cs" />
     <Compile Include="Domain\IEntryWithStatus.cs" />

@@ -11,7 +11,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 	public static class EntryWithArtistsQueryableExtender {
 
 		public static IQueryable<TEntry> WhereArtistHasType<TEntry, TArtistLink>(this IQueryable<TEntry> query, ArtistType artistType)
-			where TEntry : IEntryWithArtists<TArtistLink>
+			where TEntry : IEntryWithArtistLinks<TArtistLink>
 			where TArtistLink : IArtistWithSupport {
 
 			if (artistType == ArtistType.Unknown)
@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <param name="childVoicebanks">Whether child voicebanks of possible voice synthesizer are included.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<TEntry> WhereHasArtist<TEntry, TArtistLink>(this IQueryable<TEntry> query, int artistId, bool childVoicebanks)
-			where TEntry : IEntryWithArtists<TArtistLink> 
+			where TEntry : IEntryWithArtistLinks<TArtistLink> 
 			where TArtistLink : IArtistLink {
 
 			if (artistId == 0)
@@ -51,7 +51,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <param name="childVoicebanks">Whether child voicebanks of possible voice synthesizer are included.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, EntryIdsCollection artistIds, bool childVoicebanks)
-			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistLink {
+			where TEntry : IEntryWithArtistLinks<TArtistLink> where TArtistLink : IArtistLink {
 
 			if (!artistIds.HasAny)
 				return query;
@@ -62,7 +62,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		public static IQueryable<TEntry> WhereHasArtistParticipationStatus<TEntry, TArtistLink>(
 			ArtistParticipationQueryParams<TEntry, TArtistLink> queryParams)
-			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistWithSupport {
+			where TEntry : IEntryWithArtistLinks<TArtistLink> where TArtistLink : IArtistWithSupport {
 
 			var query = queryParams.Query;
 			var childVoicebanks = queryParams.ChildVoicebanks;
@@ -112,7 +112,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, string[] artistNames)
-			where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistLink {
+			where TEntry : IEntryWithArtistLinks<TArtistLink> where TArtistLink : IArtistLink {
 
 			if (artistNames == null || artistNames.Length == 0)
 				return query;
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 	}
 
 	public struct ArtistParticipationQueryParams<TEntry, TArtistLink> 
-		where TEntry : IEntryWithArtists<TArtistLink> where TArtistLink : IArtistWithSupport {
+		where TEntry : IEntryWithArtistLinks<TArtistLink> where TArtistLink : IArtistWithSupport {
 		
 		public ArtistParticipationQueryParams(IQueryable<TEntry> query, EntryIdsCollection artistIds, ArtistAlbumParticipationStatus participation, 
 			bool childVoicebanks,

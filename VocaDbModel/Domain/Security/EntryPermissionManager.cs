@@ -176,6 +176,23 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		public static bool CanRemoveTagUsages(IUserPermissionContext permissionContext, IEntryBase entry) {
+
+			if (!permissionContext.IsLoggedIn)
+				return false;
+
+			if (permissionContext.HasPermission(PermissionToken.RemoveTagUsages))
+				return true;
+
+			var entryWithArtists = entry as IEntryWithArtists;
+			if (entryWithArtists != null) {
+				return entryWithArtists.ArtistList.Any(a => IsVerifiedFor(permissionContext, a));
+			}
+
+			return false;
+
+		}
+
 		public static void VerifyAccess<T>(IUserPermissionContext permissionContext, T entry, Func<IUserPermissionContext, T, bool> accessCheck) where T : class {
 
 			ParamIs.NotNull(() => entry);

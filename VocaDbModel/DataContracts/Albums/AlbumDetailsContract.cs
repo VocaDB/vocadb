@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Albums {
 
@@ -16,10 +17,11 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		public AlbumDetailsContract() { }
 
-		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference)
+		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext)
 			: base(album, languagePreference) {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
+			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, album);
 			Description = album.Description;
 			Discs = album.Songs.Any(s => s.DiscNumber > 1) ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToDictionary(a => a.DiscNumber) : new Dictionary<int, AlbumDiscPropertiesContract>(0);
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease) : null);
@@ -40,6 +42,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public ArtistForAlbumContract[] ArtistLinks { get; set; }
+
+		public bool CanRemoveTagUsages { get; set; }
 
 		[DataMember]
 		public int CommentCount { get; set; }

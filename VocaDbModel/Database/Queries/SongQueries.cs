@@ -441,7 +441,7 @@ namespace VocaDb.Model.Database.Queries {
 				var lang = languagePreference ?? PermissionContext.LanguagePreference;
 				var song = session.Load<Song>(songId);
 				var contract = new SongDetailsContract(song, lang, GetSongPools(session, songId), 
-					config.SpecialTags);
+					config.SpecialTags, PermissionContext);
 				var user = PermissionContext.LoggedUser;
 
 				if (user != null) {
