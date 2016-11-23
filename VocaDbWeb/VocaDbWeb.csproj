@@ -1023,6 +1023,7 @@
     <Compile Include="Code\Highcharts\SeriesType.cs" />
     <Compile Include="Code\Highcharts\Title.cs" />
     <Compile Include="Code\WebApi\AuthenticatedCorsApiAttribute.cs" />
+    <Compile Include="Code\WebApi\CsvMediaTypeFormatter.cs" />
     <Compile Include="Code\WebApi\ObjectNotFoundExceptionFilterAttribute.cs" />
     <Compile Include="Code\WebApi\RequireSslAttribute.cs" />
     <Compile Include="Code\WebApi\RestrictBannedIPAttribute.cs" />

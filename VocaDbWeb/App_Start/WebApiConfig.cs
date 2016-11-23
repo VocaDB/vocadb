@@ -20,7 +20,8 @@ namespace VocaDb.Web.App_Start {
 			json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // All properties in camel case
 			json.SerializerSettings.Converters.Add(new StringEnumConverter());	// All enums as strings by default
 			json.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-			
+
+			config.Formatters.Add(new CsvMediaTypeFormatter());
 			config.AddJsonpFormatter(json);
 
 			var cors = new EnableCorsAttribute(origins: "*", headers: "*", methods: "get");
