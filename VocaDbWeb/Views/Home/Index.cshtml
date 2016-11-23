@@ -86,7 +86,9 @@
 
         @foreach (var entry in Model.ActivityEntries) {
 	        @ActivityfeedHelpers.ActivityEntry(entry, false)
-        }            
+        }
+		
+		@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry")
     </div>
     <div class="span5">
         <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(Res.ViewMore, "Index", "Comment"))</h3>
@@ -94,6 +96,8 @@
         @foreach (var comment in Model.RecentComments) {
 			@CommentHelpers.CommentWithEntryVertical(comment, 400)
         }
+		
+		@Html.ActionLink(Res.ViewMore, "Index", "Comment")
     </div>
 </div>
 
