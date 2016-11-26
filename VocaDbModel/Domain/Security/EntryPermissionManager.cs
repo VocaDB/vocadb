@@ -112,7 +112,7 @@ namespace VocaDb.Model.Domain.Security {
 				return true;
 
 			// Verified artists can delete their entries
-			if (IsDirectlyVerifiedFor(permissionContext, entry))
+			if (IsVerifiedFor(permissionContext, entry))
 				return true;
 
 			return entry.ArchivedVersionsManager.VersionsBase.All(v => v.Author != null && v.Author.Id == permissionContext.LoggedUserId);
