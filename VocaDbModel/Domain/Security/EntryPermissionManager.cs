@@ -24,14 +24,37 @@ namespace VocaDb.Model.Domain.Security {
 		// Entry statuses allowed for trusted users
 		private static readonly ImmutableSortedSet<EntryStatus> trustedStatusPermissions = Set(EntryStatus.Draft, EntryStatus.Finished, EntryStatus.Approved);
 
-		private static bool IsVerifiedFor(IUserPermissionContext permissionContext, IEntryBase entry) {
+		/// <summary>
+		/// Tests that the logged in user is directly verified as an owner of an artist entry.
+		/// </summary>
+		/// <param name="userContext">User context. Cannot be null.</param>
+		/// <param name="entry">Entry to be checked. Can be null.</param>
+		/// <returns>True if <paramref name="entry"/> is an artist entry and <paramref name="userContext"/> is a verified owner of that entry.</returns>
+		private static bool IsDirectlyVerifiedFor(IUserPermissionContext userContext, IEntryBase entry) {
 			
 			return
 				entry != null 
 				&& entry.EntryType == EntryType.Artist
-				&& permissionContext.IsLoggedIn 
-				&& permissionContext.LoggedUser.VerifiedArtist 
-				&& permissionContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
+				&& userContext.IsLoggedIn 
+				&& userContext.LoggedUser.VerifiedArtist 
+				&& userContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
+
+		}
+
+		/// <summary>
+		/// Tests that the logged in user is a (transitive) verified owner of an entry.
+		/// </summary>
+		/// <param name="userContext">User context. Cannot be null.</param>
+		/// <param name="entry">Entry to be checked. Can be null.</param>
+		/// <returns>True if <paramref name="userContext"/> is the verified owner of <paramref name="entry"/>.</returns>
+		/// <remarks>
+		/// The user is considered to be the owner of the entry if the entry is an artist entry and the user is directly connected to that artist entry
+		/// or if the entry is a song or album and the user is the owner of one of the artists for that song/album.
+		/// </remarks>
+		private static bool IsVerifiedFor(IUserPermissionContext userContext, IEntryBase entry) {
+
+			var entryWithArtists = entry as IEntryWithArtists;
+			return entryWithArtists != null && entryWithArtists.ArtistList.Any(a => IsDirectlyVerifiedFor(userContext, a));
 
 		}
 
@@ -63,7 +86,7 @@ namespace VocaDb.Model.Domain.Security {
 				return trustedStatusPermissions;
 
 			// Verified artists get trusted permissions for their own entry
-			if (IsVerifiedFor(permissionContext, entry)) {				
+			if (IsDirectlyVerifiedFor(permissionContext, entry)) {				
 				return trustedStatusPermissions;
 			}
 
@@ -89,7 +112,7 @@ namespace VocaDb.Model.Domain.Security {
 				return true;
 
 			// Verified artists can delete their entries
-			if (IsVerifiedFor(permissionContext, entry))
+			if (IsDirectlyVerifiedFor(permissionContext, entry))
 				return true;
 
 			return entry.ArchivedVersionsManager.VersionsBase.All(v => v.Author != null && v.Author.Id == permissionContext.LoggedUserId);
@@ -184,12 +207,7 @@ namespace VocaDb.Model.Domain.Security {
 			if (permissionContext.HasPermission(PermissionToken.RemoveTagUsages))
 				return true;
 
-			var entryWithArtists = entry as IEntryWithArtists;
-			if (entryWithArtists != null) {
-				return entryWithArtists.ArtistList.Any(a => IsVerifiedFor(permissionContext, a));
-			}
-
-			return false;
+			return IsVerifiedFor(permissionContext, entry);
 
 		}
 
