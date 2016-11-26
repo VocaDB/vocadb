@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Security {
 
@@ -23,6 +24,14 @@ namespace VocaDb.Model.Domain.Security {
 
 		// Entry statuses allowed for trusted users
 		private static readonly ImmutableSortedSet<EntryStatus> trustedStatusPermissions = Set(EntryStatus.Draft, EntryStatus.Finished, EntryStatus.Approved);
+
+		/* DIRECT OWNERSHIP:
+		 * User is a direct owner of an entry if the user is marked as a verified owner of the entry. This only applies to artist entries.
+		 * 
+		 * TRANSITIVE OWNERSHIP:
+		 * User is a transitive owner of an entry if the user is marked as verified owner of one of the artists credited for the album or song.
+		 * Songs made using user's (UTAU) voicebanks do not count, only direct involvement in song making.
+		 */
 
 		/// <summary>
 		/// Tests that the logged in user is directly verified as an owner of an artist entry.
@@ -53,8 +62,14 @@ namespace VocaDb.Model.Domain.Security {
 		/// </remarks>
 		private static bool IsVerifiedFor(IUserPermissionContext userContext, IEntryBase entry) {
 
+			if (entry == null || !userContext.IsLoggedIn || !userContext.LoggedUser.VerifiedArtist)
+				return false;
+
+			if (IsDirectlyVerifiedFor(userContext, entry))
+				return true;
+
 			var entryWithArtists = entry as IEntryWithArtists;
-			return entryWithArtists != null && entryWithArtists.ArtistList.Any(a => IsDirectlyVerifiedFor(userContext, a));
+			return entryWithArtists != null && entryWithArtists.ArtistList.Any(a => !ArtistHelper.IsVoiceSynthesizer(a.ArtistType) && IsDirectlyVerifiedFor(userContext, a));
 
 		}
 

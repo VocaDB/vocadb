@@ -275,6 +275,10 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		public static bool IsVoiceSynthesizer(ArtistType artistType) {
+			return VoiceSynthesizerTypes.Contains(artistType);
+		}
+
 	}
 
 }
