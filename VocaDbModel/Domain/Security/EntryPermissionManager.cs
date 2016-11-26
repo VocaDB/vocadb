@@ -130,7 +130,8 @@ namespace VocaDb.Model.Domain.Security {
 			if (IsVerifiedFor(permissionContext, entry))
 				return true;
 
-			return entry.ArchivedVersionsManager.VersionsBase.All(v => v.Author != null && v.Author.Id == permissionContext.LoggedUserId);
+			var archivedVersions = entry.ArchivedVersionsManager;
+			return archivedVersions.HasAny() && archivedVersions.VersionsBase.All(v => v.Author != null && v.Author.Id == permissionContext.LoggedUserId);
 
 		}
 

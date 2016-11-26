@@ -10,6 +10,8 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		ArchivedObjectVersion GetLatestVersion();
 
+		bool HasAny();
+
 	}
 
 	public class ArchivedVersionManager<TVersion, TField> : 
@@ -95,6 +97,10 @@ namespace VocaDb.Model.Domain.Versioning {
 
 			return Versions.FirstOrDefault(v => v.Version == ver);
 
+		}
+
+		public virtual bool HasAny() {
+			return Versions.Any();
 		}
 
 	}
