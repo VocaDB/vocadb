@@ -62,7 +62,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb {
 
 		public async Task<PartialFindResult<TagBaseContract>> GetTags() {
 			log.Info("Getting tags");
-			return await GetEntries<PartialFindResult<TagBaseContract>>(string.Format("{0}api/tags?maxResults=100000&allowAliases=false", apiRoot));
+			return await GetEntries<PartialFindResult<TagBaseContract>>(string.Format("{0}api/tags?maxResults=100000", apiRoot));
 		}
 
 	}
