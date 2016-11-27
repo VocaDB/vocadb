@@ -10,7 +10,7 @@
 @helper CommentKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
 	bool standalone = true, HelperResult body = null) {
 	<div class="comment media @(standalone ? "comment-large" : "")">
-		<a data-bind="attr: { href: '/User/Profile/' + author.name }" class="pull-left">
+		<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(author.name) }" class="pull-left">
 			@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: "author", size: 70)
 		</a>
 

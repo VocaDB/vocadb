@@ -83,12 +83,11 @@ module vdb.utils {
 
         public static matchWebLink(url: string): WebLinkMatcher {
 
-            return _.find(WebLinkMatcher.matchers, item => (url.indexOf(item.url) != -1));
+            return _.find(WebLinkMatcher.matchers, item => (url.indexOf(item.url) !== -1));
 
         }
 
-        constructor(public url: string, public desc: string, public cat: vdb.models.WebLinkCategory) {
-        }
+        constructor(public url: string, public desc: string, public cat: vdb.models.WebLinkCategory) {}
     
     }
 
