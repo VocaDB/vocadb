@@ -11,6 +11,11 @@ namespace VocaDb.Tests.Helpers {
 			Assert.AreEqual(expected, actual);
 		}
 
+		private void TestTrimIfNotWhitespace(string expected, string input) {
+			var actual = StringHelper.TrimIfNotWhitespace(input);
+			Assert.AreEqual(expected, actual);
+		}
+
 		[TestMethod]
 		public void RemoveControlCharacter() {
 			TestRemoveControlChars("Invisible", "\x10Invisible");
@@ -29,6 +34,16 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void RemoveControlCharsKeepNonAscii() {
 			TestRemoveControlChars("初音ミク", "初音ミク");
+		}
+
+		[TestMethod]
+		public void TrimIfNotWhitespace_Trim() {
+			TestTrimIfNotWhitespace("Miku", "    Miku");
+		}
+
+		[TestMethod]
+		public void TrimIfNotWhitespace_Whitespace() {
+			TestTrimIfNotWhitespace(" ", " ");
 		}
 
 	}

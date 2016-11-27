@@ -652,9 +652,11 @@ namespace VocaDb.Model.Database.Queries {
 						return session.Load<Album, Song>(contract.SongId);
 					else {
 
-						session.AuditLogger.SysLog(string.Format("creating a new song '{0}' to {1}", contract.SongName, album));
+						var songName = StringHelper.TrimIfNotWhitespace(contract.SongName);
 
-						var song = new Song(new LocalizedString(contract.SongName, ContentLanguageSelection.Unspecified));
+						session.AuditLogger.SysLog(string.Format("creating a new song '{0}' to {1}", songName, album));
+
+						var song = new Song(new LocalizedString(songName, ContentLanguageSelection.Unspecified));
 						session.Save(song);
 
 						var songDiff = new SongDiff();

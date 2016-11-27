@@ -32,6 +32,17 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		/// <summary>
+		/// Trims string if it's not completely whitespace.
+		/// </summary>
+		/// <remarks>
+		/// There are songs and albums where the name is completely whitespace, so this must be supported.
+		/// However, whitespace in the beginning or end is assumed to be an error.
+		/// </remarks>
+		public static string TrimIfNotWhitespace(string text) {
+			return string.IsNullOrWhiteSpace(text) ? text : text.Trim();
+		}
+
 	}
 
 }

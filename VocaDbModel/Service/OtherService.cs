@@ -180,14 +180,13 @@ namespace VocaDb.Model.Service {
 		private EntryWithCommentsContract[] GetRecentComments(ISession session, bool ssl) {
 			
 			var cacheKey = string.Format("OtherService.RecentComments.{0}.{1}", LanguagePreference, ssl);
-			var cache = MemoryCache.Default;
 			var item = (EntryWithCommentsContract[])cache.Get(cacheKey);
 
 			if (item != null)
 				return item;
 
 			item = GetRecentComments(session, 9, ssl);
-			cache.Add(cacheKey, item, DateTime.Now + TimeSpan.FromMinutes(5));
+			cache.Add(cacheKey, item, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)));
 
 			return item;
 
