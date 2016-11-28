@@ -11,6 +11,9 @@ namespace VocaDb.Model.Domain.Security {
 
 	using StatusSet = ImmutableSortedSet<EntryStatus>;
 
+	/// <summary>
+	/// Manages entry-specific permissions that differ from global permissions.
+	/// </summary>
 	public static class EntryPermissionManager {
 
 		private static StatusSet Set(params EntryStatus[] vals) {

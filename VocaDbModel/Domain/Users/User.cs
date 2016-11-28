@@ -452,6 +452,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// User is verified as the owner of at least one artist entry.
+		/// </summary>
 		public virtual bool VerifiedArtist { get; set; }
 
 		public virtual IList<UserWebLink> WebLinks {

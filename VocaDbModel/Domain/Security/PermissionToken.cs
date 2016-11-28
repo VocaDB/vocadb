@@ -5,6 +5,9 @@ using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Model.Domain.Security {
 
+	/// <summary>
+	/// Permission tokens are immutable objects that represent global permissions.
+	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public struct PermissionToken : IEquatable<PermissionToken>, IPermissionToken {
 
