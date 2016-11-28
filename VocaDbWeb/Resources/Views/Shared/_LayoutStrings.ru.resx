@@ -145,7 +145,7 @@
     <value>Управление</value>
   </data>
   <data name="MikuDbAlbum" xml:space="preserve">
-    <value>Альбомы с MikuDB</value>
+    <value>Импорт альбомов</value>
   </data>
   <data name="NewAlbums" xml:space="preserve">
     <value>Новые альбомы</value>
