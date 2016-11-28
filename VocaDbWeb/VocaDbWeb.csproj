@@ -463,16 +463,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.zh-Hans.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\PermissionFlagNames.de.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PermissionFlagNames.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\PermissionFlagNames.es.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PermissionFlagNames.es.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\PermissionTokenNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -899,11 +889,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.ru.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\PermissionFlagNames.ru.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PermissionFlagNames.ru.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\PermissionTokenNames.designer.cs">
       <DependentUpon>PermissionTokenNames.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -913,11 +898,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryStatusNames.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\PermissionFlagNames.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PermissionFlagNames.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\PermissionTokenNames.fi.designer.cs">
       <AutoGen>True</AutoGen>
@@ -2015,10 +1995,6 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.pt.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\PermissionFlagNames.pt.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>PermissionFlagNames.pt.designer.cs</LastGenOutput>
-    </Content>
     <Content Include="App_GlobalResources\PermissionTokenNames.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>PermissionTokenNames.pt.designer.cs</LastGenOutput>
@@ -2146,10 +2122,6 @@
     <Content Include="App_GlobalResources\EntryTypeNames.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.es.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\PermissionFlagNames.es.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>PermissionFlagNames.es.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\PermissionTokenNames.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -3476,12 +3448,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\PermissionFlagNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>PermissionFlagNames.Designer.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_GlobalResources\PVTypeNames.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>PVTypeNames.Designer.cs</LastGenOutput>
@@ -3618,10 +3584,6 @@
     <Content Include="App_GlobalResources\EntryTypeNames.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.ru.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\PermissionFlagNames.ru.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>PermissionFlagNames.ru.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\AlbumArchiveReasonNames.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -3857,10 +3819,6 @@
     <Content Include="App_GlobalResources\EntryTypeNames.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.de.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\PermissionFlagNames.de.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>PermissionFlagNames.de.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\PVTypeDescriptions.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>

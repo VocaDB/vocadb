@@ -172,7 +172,7 @@
     <value>Объединение записей</value>
   </data>
   <data name="MikuDbImport" xml:space="preserve">
-    <value>Импорт из MikuDB</value>
+    <value>Импорт альбомов</value>
   </data>
   <data name="MoveToTrash" xml:space="preserve">
     <value>Отправить в мусор</value>

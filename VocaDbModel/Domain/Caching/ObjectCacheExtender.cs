@@ -30,6 +30,9 @@ namespace VocaDb.Model.Domain.Caching {
 			return AbsoluteExpiration(TimeSpan.FromHours(hours));
 		}
 
+		/// <summary>
+		/// Cache never expires.
+		/// </summary>
 		public static CacheItemPolicy Never() {
 			return new CacheItemPolicy();
 		}
