@@ -380,18 +380,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		[OutputCache(Duration = 600, VaryByParam = "pvId")]
-		[Obsolete("Not needed for NND anymore")]
-		public ActionResult PVEmbedNicoIFrame(int pvId = invalidId) {
-
-		    if (pvId == invalidId)
-		        return NoId();
-
-			var pv = queries.PVForSong(pvId);
-			return PartialView("PVs/_PVEmbedNicoIFrame", pv);
-
-		}
-
 		/// <summary>
 		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
 		/// </summary>

@@ -3294,7 +3294,6 @@
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\SeriesDetails.cshtml" />
     <Content Include="Views\Shared\PVs\_PVEmbedDynamic.cshtml" />
-    <Content Include="Views\Shared\PVs\_PVEmbedNicoIFrame.cshtml" />
     <Content Include="Views\Song\SongItem.cshtml" />
     <Content Include="Views\User\LoginTwitterComplete.cshtml" />
     <Content Include="Views\Tag\Versions.cshtml" />
