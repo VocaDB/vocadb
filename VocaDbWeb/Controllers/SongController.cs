@@ -21,7 +21,6 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
-using System.Globalization;
 using System.Web;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Security;
@@ -42,11 +41,9 @@ namespace VocaDb.Web.Controllers
 	    private readonly SongService service;
 	    private readonly SongListQueries songListQueries;
 
-		private SongService Service {
-			get { return service; }
-		}
+		private SongService Service => service;
 
-		public SongController(SongService service, SongQueries queries, SongListQueries songListQueries, MarkdownParser markdownParser) {
+	    public SongController(SongService service, SongQueries queries, SongListQueries songListQueries, MarkdownParser markdownParser) {
 			this.service = service;
 			this.queries = queries;
 			this.songListQueries = songListQueries;
@@ -423,6 +420,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[Obsolete("Will be removed")]
 		public ActionResult PVRedirect(PVService service, string pvId) {
 
 			var song = Service.GetSongWithPV(service, pvId);
