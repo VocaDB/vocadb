@@ -24,12 +24,6 @@ module vdb.viewModels {
 
 		public tagUsages: tags.TagListViewModel;
 
-		private tagsUpdated = (usages: dc.tags.TagUsageForApiContract[]) => {
-
-			this.tagUsages.tagUsages(_.sortBy(usages, u => -u.count));
-
-		}
-
         public usersContent = ko.observable<string>();
 
         public getUsers = () => {
@@ -62,7 +56,7 @@ module vdb.viewModels {
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepo.getAlbumTagSelections(this.id, callback),
-				saveTagSelections: tags => userRepo.updateAlbumTags(this.id, tags, this.tagsUpdated)
+				saveTagSelections: tags => userRepo.updateAlbumTags(this.id, tags, this.tagUsages.updateTagUsages)
 			}, callback => repo.getTagSuggestions(this.id, callback));
 
 			this.tagUsages = new tags.TagListViewModel(data.tagUsages);

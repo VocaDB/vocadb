@@ -38,7 +38,7 @@ module vdb.viewModels {
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepository.getArtistTagSelections(artistId, callback),
-				saveTagSelections: tags => userRepository.updateArtistTags(artistId, tags, this.tagsUpdated)
+				saveTagSelections: tags => userRepository.updateArtistTags(artistId, tags, this.tagUsages.updateTagUsages)
 			}, callback => repo.getTagSuggestions(this.artistId, callback));
 
 			this.tagUsages = new tags.TagListViewModel(tagUsages);
@@ -96,12 +96,6 @@ module vdb.viewModels {
 		public tagsEditViewModel: tags.TagsEditViewModel;
 
 		public tagUsages: tags.TagListViewModel;
-
-		private tagsUpdated = (usages: dc.tags.TagUsageForApiContract[]) => {
-
-			this.tagUsages.tagUsages(_.sortBy(usages, u => -u.count));
-
-		}
 
 		public initMainAlbums = () => {
 			

@@ -76,12 +76,6 @@ module vdb.viewModels {
 
 		public tagUsages: tags.TagListViewModel;
 
-		private tagsUpdated = (usages: dc.tags.TagUsageForApiContract[]) => {
-			
-			this.tagUsages.tagUsages(_.sortBy(usages, u => -u.count));
-
-		}
-
         public ratingsDialogViewModel = new RatingsViewModel();
 
         public userRating: PVRatingButtonsViewModel;
@@ -134,7 +128,7 @@ module vdb.viewModels {
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepository.getSongTagSelections(this.id, callback),
-				saveTagSelections: tags => userRepository.updateSongTags(this.id, tags, this.tagsUpdated)
+				saveTagSelections: tags => userRepository.updateSongTags(this.id, tags, this.tagUsages.updateTagUsages)
 			});
 
 			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
