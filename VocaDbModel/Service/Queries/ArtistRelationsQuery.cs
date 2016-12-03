@@ -19,10 +19,10 @@ namespace VocaDb.Model.Service.Queries {
 
 		private static readonly SongOptionalFields songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
 		private readonly ObjectCache cache;
-		private readonly IDatabaseContext<Artist> ctx;
+		private readonly IDatabaseContext ctx;
 		private readonly ContentLanguagePreference languagePreference;
 
-		private AlbumContract[] GetLatestAlbums(IDatabaseContext<Artist> session, Artist artist) {
+		private AlbumContract[] GetLatestAlbums(IDatabaseContext session, Artist artist) {
 			
 			var id = artist.Id;
 
@@ -45,7 +45,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		private AlbumContract[] GetTopAlbums(IDatabaseContext<Artist> session, Artist artist, int[] latestAlbumIds) {
+		private AlbumContract[] GetTopAlbums(IDatabaseContext session, Artist artist, int[] latestAlbumIds) {
 			
 			var id = artist.Id;
 
@@ -133,7 +133,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public ArtistRelationsQuery(IDatabaseContext<Artist> ctx, ContentLanguagePreference languagePreference, ObjectCache cache) {
+		public ArtistRelationsQuery(IDatabaseContext ctx, ContentLanguagePreference languagePreference, ObjectCache cache) {
 			this.ctx = ctx;
 			this.languagePreference = languagePreference;
 			this.cache = cache;
