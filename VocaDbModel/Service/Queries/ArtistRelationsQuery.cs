@@ -110,6 +110,7 @@ namespace VocaDb.Model.Service.Queries {
 				return ctx.OfType<ArtistForSong>().Query()
 					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport
 						&& s.Song.RatingScore > 0 && !latestSongIds.Contains(s.Song.Id))
+					.WhereDoesNotHaveRole(ArtistRoles.VocalDataProvider)
 					.OrderBy(SongSortRule.RatingScore, languagePreference)
 					.Select(s => s.Song.Id)
 					.Take(8)
