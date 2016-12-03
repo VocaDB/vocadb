@@ -175,6 +175,7 @@
     <Compile Include="Service\Helpers\FindHelpersTests.cs" />
     <Compile Include="Service\Helpers\FollowedArtistNotifierTests.cs" />
     <Compile Include="Service\Helpers\UserCommentNotifierTests.cs" />
+    <Compile Include="Service\Queries\ArtistRelationsQueryTests.cs" />
     <Compile Include="Service\Queries\TagUsageQueriesTests.cs" />
     <Compile Include="Service\QueryableExtenders\GenericQueryableExtenderTests.cs" />
     <Compile Include="Service\Search\SearchParserTests.cs" />
