@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		private readonly IDatabaseContext<Album> ctx;
 
-		private Artist[] GetMainArtists(Album album, IList<IArtistWithSupport> creditableArtists) {
+		private Artist[] GetMainArtists(Album album, IList<IArtistLinkWithRoles> creditableArtists) {
 
 			// "Various artists" albums will be treated as collaboration albums where only the circle/label is searched.
 			if (album.ArtistString.Default == ArtistHelper.VariousArtists) {

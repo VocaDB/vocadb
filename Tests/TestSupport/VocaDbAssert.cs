@@ -10,7 +10,7 @@ namespace VocaDb.Tests.TestSupport {
 
 	public static class VocaDbAssert {
 
-		public static void ContainsArtists(IEnumerable<IArtistWithSupport> artistLinks, params string[] artistNames) {
+		public static void ContainsArtists(IEnumerable<IArtistLinkWithRoles> artistLinks, params string[] artistNames) {
 
 			foreach (var artistName in artistNames) {
 				Assert.IsTrue(artistLinks.Any(a => a.Artist != null && artistName.Equals(a.Artist.DefaultName)), 

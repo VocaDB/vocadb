@@ -12,13 +12,13 @@ namespace VocaDb.Model.Helpers {
 
 		public const string VariousArtists = "Various artists";
 
-		public static TranslatedString GetTranslatedName(IArtistWithSupport link) {
+		public static TranslatedString GetTranslatedName(IArtistLinkWithRoles link) {
 
 			return (link.Artist != null ? link.Artist.TranslatedName : TranslatedString.Create(link.Name));
 
 		}
 
-		public static bool IsProducerRole(IArtistWithSupport link, bool isAnimation) {
+		public static bool IsProducerRole(IArtistLinkWithRoles link, bool isAnimation) {
 
 			return IsProducerRole(GetCategories(link), isAnimation);
 
@@ -33,7 +33,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static bool IsValidCreditableArtist(IArtistWithSupport artist) {
+		public static bool IsValidCreditableArtist(IArtistLinkWithRoles artist) {
 
 			if (artist.IsSupport)
 				return false;
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistWithSupport> artists, bool isAnimation) {
+		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation) {
 
 			return new ArtistStringFactory().GetArtistString(artists, isAnimation);
 
@@ -147,7 +147,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static ArtistCategories GetCategories(IArtistWithSupport artist) {
+		public static ArtistCategories GetCategories(IArtistLinkWithRoles artist) {
 
 			ParamIs.NotNull(() => artist);
 
@@ -213,7 +213,7 @@ namespace VocaDb.Model.Helpers {
 		/// <param name="artists">List of artists. Cannot be null.</param>
 		/// <param name="isAnimation">Whether animation producers should be considered as well.</param>
 		/// <returns>The main circle, or null if there is none.</returns>
-		public static Artist GetMainCircle(IList<IArtistWithSupport> artists, bool isAnimation) {
+		public static Artist GetMainCircle(IList<IArtistLinkWithRoles> artists, bool isAnimation) {
 
 			var producers = GetProducers(artists.Where(a => !a.IsSupport), isAnimation).ToArray();
 
@@ -241,11 +241,11 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static IEnumerable<IArtistWithSupport> GetProducers(IEnumerable<IArtistWithSupport> artists, bool isAnimation) {
+		public static IEnumerable<IArtistLinkWithRoles> GetProducers(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation) {
 			return artists.Where(a => IsProducerRole(a, isAnimation));
 		}
 
-		public static string[] GetProducerNames(IEnumerable<IArtistWithSupport> artists, bool isAnimation, ContentLanguagePreference languagePreference) {
+		public static string[] GetProducerNames(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation, ContentLanguagePreference languagePreference) {
 
 			var matched = artists.Where(IsValidCreditableArtist).ToArray();
 			var producers = matched.Where(a => IsProducerRole(a, isAnimation)).ToArray();
@@ -255,7 +255,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static string[] GetVocalistNames(IEnumerable<IArtistWithSupport> artists, ContentLanguagePreference languagePreference) {
+		public static string[] GetVocalistNames(IEnumerable<IArtistLinkWithRoles> artists, ContentLanguagePreference languagePreference) {
 
 			var matched = artists.Where(IsValidCreditableArtist).ToArray();
 			var vocalists = GetVocalists(matched);
@@ -265,7 +265,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static IEnumerable<IArtistWithSupport> GetVocalists(IList<IArtistWithSupport> artists) {
+		public static IEnumerable<IArtistLinkWithRoles> GetVocalists(IList<IArtistLinkWithRoles> artists) {
 			return artists.Where(a => GetCategories(a).HasFlag(ArtistCategories.Vocalist));
 		}
 

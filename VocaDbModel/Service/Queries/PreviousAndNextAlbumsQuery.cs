@@ -54,7 +54,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		} 
 
-		private Artist[] GetMainArtists(Album album, IEnumerable<IArtistWithSupport> creditableArtists) {
+		private Artist[] GetMainArtists(Album album, IEnumerable<IArtistLinkWithRoles> creditableArtists) {
 
 			if (album.ArtistString.Default == ArtistHelper.VariousArtists)
 				return null;

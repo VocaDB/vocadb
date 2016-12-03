@@ -17,7 +17,7 @@ namespace VocaDb.Model.Domain.Artists {
 		/// <param name="artistLink">Artist link. Cannot be null.</param>
 		/// <param name="isAnimation">Whether the album is animation (video).</param>
 		/// <returns>Sort order, 0-based.</returns>
-		private int GetSortOrderForArtistString(IArtistWithSupport artistLink, bool isAnimation) {
+		private int GetSortOrderForArtistString(IArtistLinkWithRoles artistLink, bool isAnimation) {
 
 			var categories = ArtistHelper.GetCategories(artistLink);
 
@@ -48,7 +48,7 @@ namespace VocaDb.Model.Domain.Artists {
 			this.allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
 		}
 
-		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistWithSupport> artists, bool isAnimation) {
+		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation) {
 
 			ParamIs.NotNull(() => artists);
 

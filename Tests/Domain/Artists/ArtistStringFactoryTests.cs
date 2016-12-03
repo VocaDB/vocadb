@@ -11,18 +11,18 @@ namespace VocaDb.Tests.Domain.Artists {
 	public class ArtistStringFactoryTests {
 
 		private ArtistStringFactory artistStringFactory;
-		private IArtistWithSupport animator;
-		private IArtistWithSupport circle;
-		private IArtistWithSupport[] producers;
-		private IArtistWithSupport[] vocalists;
+		private IArtistLinkWithRoles animator;
+		private IArtistLinkWithRoles circle;
+		private IArtistLinkWithRoles[] producers;
+		private IArtistLinkWithRoles[] vocalists;
 		private ArtistForAlbum producer;
-		private IArtistWithSupport producer2;
-		private IArtistWithSupport producer3;
-		private IArtistWithSupport producer4;
-		private IArtistWithSupport vocalist;
-		private IArtistWithSupport vocalist2;
-		private IArtistWithSupport vocalist3;
-		private IArtistWithSupport vocalist4;
+		private IArtistLinkWithRoles producer2;
+		private IArtistLinkWithRoles producer3;
+		private IArtistLinkWithRoles producer4;
+		private IArtistLinkWithRoles vocalist;
+		private IArtistLinkWithRoles vocalist2;
+		private IArtistLinkWithRoles vocalist3;
+		private IArtistLinkWithRoles vocalist4;
 
 		private ArtistForAlbum CreateArtist(ArtistType artistType, string name) {
 
@@ -32,11 +32,11 @@ namespace VocaDb.Tests.Domain.Artists {
 
 		}
 
-		private string GetNames(params IArtistWithSupport[] artists) {
+		private string GetNames(params IArtistLinkWithRoles[] artists) {
 			return string.Join(", ", artists.Select(a => a.Artist.DefaultName));
 		}
 
-		private string GetArtistString(params IArtistWithSupport[] artists) {
+		private string GetArtistString(params IArtistLinkWithRoles[] artists) {
 			return artistStringFactory.GetArtistString(artists, false).Default;
         }
 

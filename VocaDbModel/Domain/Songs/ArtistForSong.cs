@@ -5,7 +5,7 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class ArtistForSong : IEquatable<ArtistForSong>, IArtistWithSupport, ISongLink, IEntryWithIntId {
+	public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, ISongLink, IEntryWithIntId {
 
 		private string notes;
 		private Song song;

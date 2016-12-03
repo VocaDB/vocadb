@@ -342,7 +342,7 @@
     <Compile Include="Domain\Artists\ArtistStringFactory.cs" />
     <Compile Include="Domain\Artists\CustomArtist.cs" />
     <Compile Include="Domain\Artists\IArtistLink.cs" />
-    <Compile Include="Domain\Artists\IArtistWithSupport.cs" />
+    <Compile Include="Domain\Artists\IArtistLinkWithRoles.cs" />
     <Compile Include="Domain\Caching\ObjectCacheExtender.cs" />
     <Compile Include="Domain\Comments\GenericComment.cs" />
     <Compile Include="Domain\Comments\IEntryWithComments.cs" />
@@ -759,7 +759,7 @@
     <Compile Include="Service\QueryableExtenders\ArtistForAlbumQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\ArtistForSongQueryableExtender.cs" />
     <Compile Include="Service\Helpers\ArtistExternalUrlParser.cs" />
-    <Compile Include="Service\QueryableExtenders\ArtistWithSupportQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\ArtistLinkWithRolesQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithArtistsQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithLinksQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithNamesQueryableExtender.cs" />

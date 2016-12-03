@@ -10,11 +10,11 @@ namespace VocaDb.Tests.Helpers {
 	[TestClass]
 	public class ArtistHelperTests {
 
-		private IArtistWithSupport circle;
-		private IArtistWithSupport producer;
-		private IArtistWithSupport producer2;
+		private IArtistLinkWithRoles circle;
+		private IArtistLinkWithRoles producer;
+		private IArtistLinkWithRoles producer2;
 
-		private IArtistWithSupport CreateArtist(ArtistType artistType, string name) {
+		private IArtistLinkWithRoles CreateArtist(ArtistType artistType, string name) {
 
 			var p = new Artist { ArtistType = artistType };
 			p.Names.Add(new ArtistName(p, new LocalizedString(name, ContentLanguageSelection.English)));

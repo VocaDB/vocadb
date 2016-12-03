@@ -14,7 +14,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		private readonly IDatabaseContext<Song> ctx;
 
-		private Artist[] GetMainArtists(Song song, IList<IArtistWithSupport> creditableArtists) {
+		private Artist[] GetMainArtists(Song song, IList<IArtistLinkWithRoles> creditableArtists) {
 
 			return ArtistHelper.GetProducers(creditableArtists, SongHelper.IsAnimation(song.SongType)).Select(a => a.Artist).ToArray();
 
