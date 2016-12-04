@@ -100,6 +100,9 @@ namespace VocaDb.Model.Helpers {
 			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite
 		};
 
+		/// <summary>
+		/// Voice synthesizer artist types, including "other voice synthesizer".
+		/// </summary>
 		public static readonly ArtistType[] VoiceSynthesizerTypes = {
 			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer
 		};

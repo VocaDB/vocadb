@@ -5,6 +5,9 @@
 	/// </summary>
 	public class AdvancedArtistStatsContract {
 
+		/// <summary>
+		/// "Mostly uses"
+		/// </summary>
 		public TopStatContract<ArtistContract>[] TopVocaloids { get; set; }
 
 	}

@@ -62,11 +62,13 @@ namespace VocaDb.Model.Database.Queries {
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
 
-				var types = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
+				var types = ArtistHelper.VoiceSynthesizerTypes;
+				var roles = ArtistRoles.Arranger | ArtistRoles.Composer | ArtistRoles.Other | ArtistRoles.VoiceManipulator;
 
 				var topVocaloidIdsAndCounts = ctx
 					.Query<ArtistForSong>()
-					.Where(a => types.Contains(a.Artist.ArtistType) && !a.Song.Deleted && a.Song.AllArtists.Any(ar => !ar.IsSupport && ar.Artist.Id == artist.Id))
+					.Where(a => types.Contains(a.Artist.ArtistType) && !a.Song.Deleted 
+						&& a.Song.AllArtists.Any(ar => !ar.IsSupport && ar.Artist.Id == artist.Id && (ar.Roles == ArtistRoles.Default || (ar.Roles & roles) != ArtistRoles.Default)))
 					.GroupBy(a => a.Artist.Id)
 					.Select(a => new {
 						ArtistId = a.Key,
