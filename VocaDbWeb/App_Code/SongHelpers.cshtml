@@ -89,8 +89,8 @@
 	</a>
 }
 
-@helper SongLink(SongContract song, int? albumId = null) {
-	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song, albumId), new { title = song.AdditionalNames })
+@helper SongLink(SongContract song, int? albumId = null, bool addTitle = true) {
+	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song, albumId), new { title = addTitle ? song.AdditionalNames : null })
 }
 
 @helper SongLink(SongForApiContract song, int? albumId = null) {
