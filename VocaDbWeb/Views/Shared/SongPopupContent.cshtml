@@ -22,3 +22,9 @@
 	@Model.ArtistString<br />
 	@Translate.SongTypeNames[Model.SongType]<br />
 </p>    
+
+@if (Model.PublishDate.HasValue) {
+	<p>
+		@ViewRes.EntryDetailsStrings.PublishDate @Model.PublishDate.Value.ToShortDateString()		
+	</p>
+}

@@ -7,11 +7,12 @@ interface KnockoutBindingHandlers {
 	albumToolTip: KnockoutBindingHandler;
     artistToolTip: KnockoutBindingHandler;
     entryToolTip: KnockoutBindingHandler;
+	songToolTip: KnockoutBindingHandler;
 }
 
 module vdb.knockoutExtensions {
 
-    export function initToolTip(element, relativeUrl: string, id: number) {
+	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number) {
         
         $(element).qtip({
             content: {
@@ -35,9 +36,9 @@ module vdb.knockoutExtensions {
 }
 
 ko.bindingHandlers.entryToolTip = {
-	init: function (element, valueAccessor: () => KnockoutObservable<vdb.dataContracts.EntryRefContract>) {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<vdb.dataContracts.EntryRefContract>) => {
 
-		var value: vdb.dataContracts.EntryRefContract = ko.utils.unwrapObservable(valueAccessor());
+		var value: vdb.dataContracts.EntryRefContract = ko.unwrap(valueAccessor());
 
 		switch (value.entryType) {
 			case "Album":
@@ -52,19 +53,19 @@ ko.bindingHandlers.entryToolTip = {
 };
 
 ko.bindingHandlers.albumToolTip = {
-	init: function (element, valueAccessor: () => KnockoutObservable<number>) {
-
-		var id = ko.utils.unwrapObservable(valueAccessor());
-		vdb.knockoutExtensions.initToolTip(element, '/Album/PopupContent', id);
-
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
+		vdb.knockoutExtensions.initToolTip(element, '/Album/PopupContent', ko.unwrap(valueAccessor()));
 	}
 };
 
 ko.bindingHandlers.artistToolTip = {
-    init: function (element, valueAccessor: () => KnockoutObservable<number>) {
-
-        var id = ko.utils.unwrapObservable(valueAccessor());
-        vdb.knockoutExtensions.initToolTip(element, '/Artist/PopupContent', id);
-
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
+		vdb.knockoutExtensions.initToolTip(element, '/Artist/PopupContent', ko.unwrap(valueAccessor()));
     }
+}
+
+ko.bindingHandlers.songToolTip = {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
+		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContent', ko.unwrap(valueAccessor()));
+	}
 }

@@ -277,6 +277,16 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult PopupContent(int id = invalidId) {
+
+			if (id == invalidId)
+				return HttpNotFound();
+
+			var song = queries.GetSong(id);
+			return PartialView("SongPopupContent", song);
+
+		}
+
 		public FeedResult Feed(IndexRouteParams indexParams) {
 
 			WebHelper.VerifyUserAgent(Request);
