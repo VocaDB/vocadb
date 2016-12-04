@@ -62,32 +62,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
 
-				var types = ArtistHelper.VoiceSynthesizerTypes;
-				var roles = ArtistRoles.Arranger | ArtistRoles.Composer | ArtistRoles.Other | ArtistRoles.VoiceManipulator;
-
-				var topVocaloidIdsAndCounts = ctx
-					.Query<ArtistForSong>()
-					.Where(a => types.Contains(a.Artist.ArtistType) && !a.Song.Deleted 
-						&& a.Song.AllArtists.Any(ar => !ar.IsSupport && ar.Artist.Id == artist.Id && (ar.Roles == ArtistRoles.Default || (ar.Roles & roles) != ArtistRoles.Default)))
-					.GroupBy(a => a.Artist.Id)
-					.Select(a => new {
-						ArtistId = a.Key,
-						Count = a.Count()
-					})
-					.OrderByDescending(a => a.Count)
-					.Take(3)
-					.ToDictionary(a => a.ArtistId, a => a.Count);
-
-				var topVocaloidIds = topVocaloidIdsAndCounts.Select(i => i.Key).ToArray();
-					
-				var topVocaloids = ctx.Query().Where(a => topVocaloidIds.Contains(a.Id))
-					.ToArray()
-					.Select(a => new TopStatContract<TranslatedArtistContract> {
-						Data = new TranslatedArtistContract(a),
-						Count = topVocaloidIdsAndCounts[a.Id]
-					})
-					.OrderByDescending(d => d.Count)
-					.ToArray();
+				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache).GetTopVoicebanks(artist);
 
 				return new CachedAdvancedArtistStatsContract {
 					TopVocaloids = topVocaloids

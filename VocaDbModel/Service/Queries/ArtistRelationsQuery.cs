@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
@@ -161,6 +162,39 @@ namespace VocaDb.Model.Service.Queries {
 			}
 
 			return contract;
+
+		}
+
+		public TopStatContract<TranslatedArtistContract>[] GetTopVoicebanks(Artist artist) {
+
+			var types = ArtistHelper.VoiceSynthesizerTypes;
+			var roles = ArtistRoles.Arranger | ArtistRoles.Composer | ArtistRoles.Other | ArtistRoles.VoiceManipulator;
+
+			var topVocaloidIdsAndCounts = ctx
+				.Query<ArtistForSong>()
+				.Where(a => types.Contains(a.Artist.ArtistType) && !a.Song.Deleted
+					&& a.Song.AllArtists.Any(ar => !ar.IsSupport && ar.Artist.Id == artist.Id && (ar.Roles == ArtistRoles.Default || (ar.Roles & roles) != ArtistRoles.Default)))
+				.GroupBy(a => a.Artist.Id)
+				.Select(a => new {
+					ArtistId = a.Key,
+					Count = a.Count()
+				})
+				.OrderByDescending(a => a.Count)
+				.Take(3)
+				.ToDictionary(a => a.ArtistId, a => a.Count);
+
+			var topVocaloidIds = topVocaloidIdsAndCounts.Select(i => i.Key).ToArray();
+
+			var topVocaloids = ctx.Query<Artist>().Where(a => topVocaloidIds.Contains(a.Id))
+				.ToArray()
+				.Select(a => new TopStatContract<TranslatedArtistContract> {
+					Data = new TranslatedArtistContract(a),
+					Count = topVocaloidIdsAndCounts[a.Id]
+				})
+				.OrderByDescending(d => d.Count)
+				.ToArray();
+
+			return topVocaloids;
 
 		}
 
