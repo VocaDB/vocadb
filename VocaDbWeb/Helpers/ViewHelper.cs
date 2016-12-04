@@ -10,6 +10,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using System.Collections.Generic;
 using System.Web;
+using System.Web.Routing;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
@@ -210,6 +211,10 @@ namespace VocaDb.Web.Helpers {
 		public static object GetRouteParams(SongContract contract, int? albumId = null) {
 			return new { id = contract.Id, albumId };
 			//return new { id = contract.Id, friendlyName = VocaUrlHelper.GetUrlFriendlyName(contract.TranslatedName) };
+		}
+
+		public static RouteValueDictionary GetRouteValueDictionary(SongContract contract, int? albumId = null) {
+			return new RouteValueDictionary { { "id", contract.Id }, { "albumId", albumId } };
 		}
 
 		/// <summary>

@@ -287,9 +287,7 @@
 							</div>
 							<div class="tracklist-trackTitle">
 								@if (song.Song != null) {
-									<span data-bind="songToolTip: @song.Song.Id">
-										@SongHelpers.SongLink(song.Song, Model.Id, addTitle: false)
-									</span>
+									@SongHelpers.SongLink(song.Song, Model.Id, tooltip: true)
 									if (song.Song.LengthSeconds > 0) {
 										@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
 									}

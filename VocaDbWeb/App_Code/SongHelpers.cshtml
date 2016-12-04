@@ -89,8 +89,8 @@
 	</a>
 }
 
-@helper SongLink(SongContract song, int? albumId = null, bool addTitle = true) {
-	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteParams(song, albumId), new { title = addTitle ? song.AdditionalNames : null })
+@helper SongLink(SongContract song, int? albumId = null, bool tooltip = false) {
+	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteValueDictionary(song, albumId), new Dictionary<string, object> { { "title", song.AdditionalNames }, { "data-bind", tooltip ? "songToolTip: " + song.Id : null } })
 }
 
 @helper SongLink(SongForApiContract song, int? albumId = null) {
