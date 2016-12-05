@@ -277,6 +277,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
 		public ActionResult PopupContent(int id = invalidId) {
 
 			if (id == invalidId)
