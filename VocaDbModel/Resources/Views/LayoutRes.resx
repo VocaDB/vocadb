@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Keywords" xml:space="preserve">
-    <value>Vocaloid, VocaDB, Vocaloid database, Hatsune Miku</value>
+    <value>Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU</value>
   </data>
   <data name="PaypalDonateTitle" xml:space="preserve">
     <value>VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.</value>

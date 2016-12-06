@@ -124,6 +124,6 @@
     <value>Welcome to the Vocaloid Database!</value>
   </data>
   <data name="WelcomeSubtitle" xml:space="preserve">
-    <value>The collaborative database with Vocaloid artists, discography, PVs and more.</value>
+    <value>The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more.</value>
   </data>
 </root>

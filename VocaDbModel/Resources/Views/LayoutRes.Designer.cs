@@ -61,7 +61,7 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vocaloid, VocaDB, Vocaloid database, Hatsune Miku.
+        ///   Looks up a localized string similar to Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU.
         /// </summary>
         internal static string Keywords {
             get {

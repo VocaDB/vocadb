@@ -79,7 +79,7 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The collaborative database with Vocaloid artists, discography, PVs and more..
+        ///   Looks up a localized string similar to The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more..
         /// </summary>
         internal static string WelcomeSubtitle {
             get {
