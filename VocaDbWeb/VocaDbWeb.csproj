@@ -2910,6 +2910,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\page.js" />
+    <Content Include="Scripts\qTip\jquery.qtip.js" />
     <Content Include="Scripts\SongList\Edit.js" />
     <Content Include="Scripts\Song\Details.js" />
     <Content Include="Scripts\Song\Edit.js" />
@@ -3374,7 +3375,6 @@
     <Content Include="Views\Search\Partials\_ArtistSearchOptions.cshtml" />
     <Content Include="Views\User\Partials\_SongLists.cshtml" />
     <Content Include="Views\Event\SeriesVersions.cshtml" />
-    <Content Include="Views\Shared\Partials\_TagPopupContent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

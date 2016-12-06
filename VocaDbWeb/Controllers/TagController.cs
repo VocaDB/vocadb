@@ -25,13 +25,16 @@ namespace VocaDb.Web.Controllers
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly MarkdownParser markdownParser;
 		private readonly TagQueries queries;
+		private readonly IEntryImagePersisterOld entryThumbPersister;
 
-		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser) {
+		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
+			IEntryImagePersisterOld entryThumbPersister) {
 
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
 			this.enumTranslations = enumTranslations;
 			this.markdownParser = markdownParser;
+			this.entryThumbPersister = entryThumbPersister;
 
 		}
 
@@ -204,6 +207,18 @@ namespace VocaDb.Web.Controllers
 			queries.Merge(id, targetTagId.Value);
 
 			return RedirectToAction("Edit", new { id = targetTagId.Value });
+
+		}
+
+		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
+		public ActionResult PopupContent(int id = invalidId) {
+
+			if (id == invalidId)
+				return HttpNotFound();
+
+			var tag = queries.GetTag(id, t => new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request), 
+				PermissionContext.LanguagePreference, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
+			return PartialView("_TagPopupContent", tag);
 
 		}
 

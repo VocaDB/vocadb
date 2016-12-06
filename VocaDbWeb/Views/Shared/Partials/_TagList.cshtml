@@ -3,7 +3,7 @@
 
 <ul data-bind="foreach: displayedTagUsages" class="link-list">
 	<li class="link-item">
-		<span><a data-bind="text: tag.name, attr: { href: $parent.getTagUrl($data), title: tag.additionalNames }"></a><small class="muted" data-bind="text: ' (' + count + ')'"></small></span>
+		<span><a data-bind="text: tag.name, attr: { href: $parent.getTagUrl($data), title: tag.additionalNames }, tagToolTip: tag.id"></a><small class="muted" data-bind="text: ' (' + count + ')'"></small></span>
 	</li>
 </ul>
 <span data-bind="visible: !expanded()">

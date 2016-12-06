@@ -8,6 +8,7 @@ interface KnockoutBindingHandlers {
     artistToolTip: KnockoutBindingHandler;
     entryToolTip: KnockoutBindingHandler;
 	songToolTip: KnockoutBindingHandler;
+	tagToolTip: KnockoutBindingHandler;
 }
 
 module vdb.knockoutExtensions {
@@ -67,5 +68,11 @@ ko.bindingHandlers.artistToolTip = {
 ko.bindingHandlers.songToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
 		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContent', ko.unwrap(valueAccessor()));
+	}
+}
+
+ko.bindingHandlers.tagToolTip = {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
+		vdb.knockoutExtensions.initToolTip(element, '/Tag/PopupContent', ko.unwrap(valueAccessor()));
 	}
 }

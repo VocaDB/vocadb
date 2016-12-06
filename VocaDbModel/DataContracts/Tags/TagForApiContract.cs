@@ -48,7 +48,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 				Description = tag.Description[languagePreference];
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.MainPicture) && tag.Thumb != null) {
+			if (optionalFields.HasFlag(TagOptionalFields.MainPicture) && tag.Thumb != null && thumbPersister != null) {
 				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl);
 			}
 
