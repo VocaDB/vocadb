@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
 	jQuery("a[href^='http://vocadb.net/']").each(function() {
 	
 		var elem = this;
-		var regex = /http:\/\/vocadb\.net\/((Artist|Album|Song)\/Details|(Ar|Al|S))\/(\d+)/g;
+		var regex = /http:\/\/vocadb\.net\/((Artist|Album|Song)\/Details|(Ar|Al|S|T))\/(\d+)/g;
 		var href = jQuery(elem).attr("href");
 		var match = regex.test(href);
 		
