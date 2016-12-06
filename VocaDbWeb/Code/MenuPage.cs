@@ -58,7 +58,7 @@ namespace VocaDb.Web.Code {
 				SmallBanners = new[] {
 					new Link("UtaiteDB", "http://utaitedb.net", "utaitedb_small.png"),
 					new Link("Mikufan.com", "http://www.mikufan.com", "mikufan_small.png"),
-					new Link("Project DIVA wiki", "http://projectdiva.wikispaces.com/", "pjd-wiki_small.png"),
+					new Link("Project DIVA wiki", "http://projectdiva.wiki/", "pjd-wiki_small.png"),
 					new Link("r/vocaloid", "http://www.reddit.com/r/vocaloid", "rvocaloid_small2.png"),
 					new Link("Vocallective", "http://www.vocallective.net", "vocallective_small.jpg"),
 					new Link("Vocaloid News Network", "https://www.vocaloidnews.net/", "vnn.png"),
