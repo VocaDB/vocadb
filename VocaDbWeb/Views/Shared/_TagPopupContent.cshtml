@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Model.Helpers
+@using VocaDb.Web.Helpers
 @model VocaDb.Model.DataContracts.Tags.TagForApiContract
 
 <style type="text/css">
@@ -29,6 +30,6 @@
 
 @if (!string.IsNullOrEmpty(Model.Description)) {
 <p>
-	@Model.Description.TruncateWithEllipsis(100)		
+	@Html.StripMarkdown(Model.Description).TruncateWithEllipsis(100)	
 </p>
 }

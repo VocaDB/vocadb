@@ -301,6 +301,10 @@ namespace VocaDb.Web.Helpers {
 			return new MvcHtmlString(DependencyResolver.Current.GetService<MarkdownParser>().GetHtml(markdown));
 		}
 
+		public static string StripMarkdown(this HtmlHelper htmlHelper, string markdown) {
+			return DependencyResolver.Current.GetService<MarkdownParser>().GetPlainText(markdown);
+		}
+
 		public static string VideoServiceLinkUrl(this HtmlHelper htmlHelper, PVService service) {
 
 			switch (service) {
