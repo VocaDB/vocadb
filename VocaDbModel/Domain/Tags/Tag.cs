@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 	public class Tag : 
 		IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName>, IWebLinkFactory<TagWebLink>,
-		IEntryWithVersions {
+		IEntryWithVersions, IDeletableEntry {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
