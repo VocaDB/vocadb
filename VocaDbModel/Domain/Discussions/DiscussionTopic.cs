@@ -11,19 +11,11 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
-		string IEntryBase.DefaultName {
-			get { return Name; }
-		}
+		string IEntryBase.DefaultName => Name;
 
-		INameManager IEntryWithNames.Names {
-			get {
-				return new SingleNameManager(Name);
-			}
-		}
+		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
 
-		int IEntryBase.Version {
-			get { return 0; }
-		}
+		int IEntryBase.Version => 0;
 
 		private string authorName;
 		private IList<DiscussionComment> comments = new List<DiscussionComment>();

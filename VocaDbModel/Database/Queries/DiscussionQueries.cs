@@ -31,7 +31,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		public CommentForApiContract CreateComment(int topicId, CommentForApiContract contract) {
 			
-			return repository.HandleTransaction(ctx => Comments(ctx).Create(topicId, contract));
+			return repository.HandleTransaction(ctx => {
+
+				var topic = ctx.Load<DiscussionTopic>(topicId);
+
+				if (topic.Locked)
+					throw new NotAllowedException("Topic is locked");
+
+				return Comments(ctx).Create(topicId, contract);
+
+			});
 
 		}
 
@@ -145,6 +154,7 @@ namespace VocaDb.Model.Database.Queries {
 					MoveTopic(ctx, topic, contract.FolderId);
 				}
 
+				topic.Locked = contract.Locked;
 				topic.Name = contract.Name;
 				topic.Content = contract.Content;
 

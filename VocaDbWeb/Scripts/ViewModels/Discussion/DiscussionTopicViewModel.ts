@@ -67,6 +67,7 @@ module vdb.viewModels.discussions {
 				this.author = contract.author;
 				this.content(contract.content);
 				this.folderId(contract.folderId);
+				this.locked(contract.locked);
 				this.name(contract.name);
 			}
 
@@ -77,6 +78,8 @@ module vdb.viewModels.discussions {
 		public content = ko.observable("");
 
 		public folderId = ko.observable(null);
+
+		public locked = ko.observable(false);
 
 		public name = ko.observable("");
 

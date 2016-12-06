@@ -23,6 +23,8 @@ module vdb.dataContracts.discussions {
 
 		lastCommentDate: Date;
 
+		locked: boolean;
+
 		name: string;
 
 	}

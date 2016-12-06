@@ -20,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 			Created = topic.Created.ToUniversalTime();
 			FolderId = topic.Folder.Id;
 			Id = topic.Id;
+			Locked = topic.Locked;
 			Name = topic.Name;
 
 			if (fields.HasFlag(DiscussionTopicOptionalFields.Comments)) {
@@ -67,6 +68,9 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 		[DataMember]
 		public CommentForApiContract LastComment { get; set; }
+
+		[DataMember]
+		public bool Locked { get; set; }
 
 		[DataMember]
 		public string Name { get; set; }
