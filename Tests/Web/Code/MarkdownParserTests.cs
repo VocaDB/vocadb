@@ -9,8 +9,15 @@ namespace VocaDb.Tests.Web.Code {
 	[TestClass]
 	public class MarkdownParserTests {
 
+		private readonly MarkdownParser parser = new MarkdownParser(new FakeObjectCache());
+
 		private string GetHtml(string markdownText) {
-			return new MarkdownParser(new FakeObjectCache()).GetHtml(markdownText);
+			return parser.GetHtml(markdownText);
+		}
+
+		private void TestGetPlainText(string expected, string input) {
+			var result = parser.GetPlainText(input)?.Trim();
+			Assert.AreEqual(expected, result, input);
 		}
 
 		private HtmlDocument GetHtmlDocument(string markdownText) {
@@ -99,6 +106,26 @@ namespace VocaDb.Tests.Web.Code {
 
 			Assert.AreEqual(StripWhitespace("<blockquote><p>Miku Miku!<br />by Miku</p></blockquote><p>This needs to be encoded :&gt;</p>"), StripWhitespace(result), "result");
 
+		}
+
+		[TestMethod]
+		public void GetPlainText_PlainText() {
+			TestGetPlainText("Miku Miku!", "Miku Miku!");
+		}
+
+		[TestMethod]
+		public void GetPlainText_Markdown() {
+			TestGetPlainText("Miku Miku!", "*Miku Miku!*");
+		}
+
+		[TestMethod]
+		public void GetPlainText_Html() {
+			TestGetPlainText("Hack! &lt;script&gt;alert(1)&lt;/script&gt;", "Hack! <script>alert(1)</script>");
+		}
+
+		[TestMethod]
+		public void GetPlainText_Apostrophe() {
+			TestGetPlainText("'Miku Miku!'", "'Miku Miku!'");
 		}
 
 	}

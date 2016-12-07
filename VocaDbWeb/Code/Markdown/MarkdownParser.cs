@@ -61,8 +61,12 @@ namespace VocaDb.Web.Code.Markdown {
 			if (string.IsNullOrEmpty(markdownText))
 				return markdownText;
 
-			return HtmlHelperFunctions.StripHtml(GetHtml(markdownText));
+			return HtmlHelperFunctions.StripHtml(ReplaceHtmlEntities(GetHtml(markdownText)));
 
+		}
+
+		private string ReplaceHtmlEntities(string text) {
+			return text.Replace("&#39;", "'");
 		}
 
 	}
