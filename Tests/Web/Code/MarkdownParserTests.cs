@@ -15,6 +15,11 @@ namespace VocaDb.Tests.Web.Code {
 			return parser.GetHtml(markdownText);
 		}
 
+		private void TestGetHtml(string expected, string markdownText) {
+			var result = GetHtml(markdownText)?.Trim();
+			Assert.AreEqual(expected, result, markdownText);
+		}
+
 		private void TestGetPlainText(string expected, string input) {
 			var result = parser.GetPlainText(input)?.Trim();
 			Assert.AreEqual(expected, result, input);
@@ -28,12 +33,8 @@ namespace VocaDb.Tests.Web.Code {
 
 		// Test plain text (no markup).
 		[TestMethod]
-		public void GetHtml_PlainText() {
-			
-			var result = GetHtml("Miku Miku!").Trim();
-
-			Assert.AreEqual("<p>Miku Miku!</p>", result, "result");
-
+		public void GetHtml_PlainText() {			
+			TestGetHtml("<p>Miku Miku!</p>", "Miku Miku!");
 		}
 
 		// Test automatic hyperlink generation.
@@ -55,21 +56,15 @@ namespace VocaDb.Tests.Web.Code {
 
 		// Test automatic newlines
 		[TestMethod]
-		public void GetHtml_AutoNewline() {
-			
-			var result = GetHtml("Miku\nLuka").Trim();
-
-			Assert.AreEqual("<p>Miku<br />\nLuka</p>", result, "result");
-
+		public void GetHtml_AutoNewline() {	
+			TestGetHtml("<p>Miku<br />\nLuka</p>", "Miku\nLuka");
 		}
 
 		[TestMethod]
 		public void GetHtml_StrictBoldItalic() {
 			
 			// _Vocaloids_ gets transformed, but _Luka_ doesn't
-			var result = GetHtml("_Vocaloids_ Miku_Luka_Rin").Trim();
-
-			Assert.AreEqual("<p><em>Vocaloids</em> Miku_Luka_Rin</p>", result, "result");
+			TestGetHtml("<p><em>Vocaloids</em> Miku_Luka_Rin</p>", "_Vocaloids_ Miku_Luka_Rin");
 
 		}
 
@@ -77,9 +72,7 @@ namespace VocaDb.Tests.Web.Code {
 		[TestMethod]
 		public void GetHtml_HtmlElement() {
 		
-			var result = GetHtml("Hack! <script>alert(1)</script>").Trim();
-
-			Assert.AreEqual("<p>Hack! &lt;script&gt;alert(1)&lt;/script&gt;</p>", result, "result");
+			TestGetHtml("<p>Hack! &lt;script&gt;alert(1)&lt;/script&gt;</p>", "Hack! <script>alert(1)</script>");
 
 		}
 
@@ -88,10 +81,8 @@ namespace VocaDb.Tests.Web.Code {
 		[TestMethod]
 		[Ignore]
 		public void GetHtml_HtmlAttribute() {
-			
-			var result = GetHtml("[Click me](javascript:alert(1))");
 
-			Assert.AreEqual("<p><a href=\"\">Click me</a></p>", result, "result");
+			TestGetHtml("<p><a href=\"\">Click me</a></p>", "[Click me](javascript:alert(1))");
 
 		}
 
