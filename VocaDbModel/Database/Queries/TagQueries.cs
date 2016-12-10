@@ -88,13 +88,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private Tag GetTagByName(IDatabaseContext<Tag> ctx, string name) {
 
-			var tag = ctx.Query().WhereHasName(TagSearchTextQuery.Create(name, NameMatchMode.Exact)).FirstOrDefault();
-
-			if (tag == null) {
-				log.Warn("Tag not found: {0}", name);
-			}
-
-			return tag;
+			return ctx.Query().WhereHasName(TagSearchTextQuery.Create(name, NameMatchMode.Exact)).FirstOrDefault();
 
 		}
 

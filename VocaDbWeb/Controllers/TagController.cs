@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using NLog;
 using ViewRes.Tag;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -21,6 +22,7 @@ namespace VocaDb.Web.Controllers
 {
     public class TagController : ControllerBase {
 
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly MarkdownParser markdownParser;
@@ -80,8 +82,10 @@ namespace VocaDb.Web.Controllers
 
 			var tagId = queries.GetTagByName(id, t => t.Id, invalidId);
 
-			if (tagId == invalidId)
+			if (tagId == invalidId) {
+				log.Info("Tag not found: {0}, referrer {1}", id, Request.UrlReferrer);
 				return HttpNotFound();
+			}
 
 			return RedirectToActionPermanent("DetailsById", new { id = tagId, slug = id });
 
