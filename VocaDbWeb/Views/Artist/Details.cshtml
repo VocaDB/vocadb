@@ -227,8 +227,7 @@
 							@:@string.Format(Res.AverageAlbumRating, Model.SharedStats.AlbumRatingAverage)
 						}
 						@if (Model.PersonalStats != null && Model.PersonalStats.SongRatingCount > 0) {
-							@Html.ActionLink(string.Format(Res.YouHaveRatedSongs, Model.PersonalStats.SongRatingCount), "Index", "Search",
-								new VocaDb.Model.Utils.Search.SearchRouteParams(EntryType.Song) { artistId = Model.Id, onlyRatedSongs = true }, null);
+							<a href="@Url.Action("Profile", "User", new { id = UserContext.LoggedUser.Name, artistId = Model.Id })#Songs">@string.Format(Res.YouHaveRatedSongs, Model.PersonalStats.SongRatingCount)</a>
 						}
 						@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 							<p>
