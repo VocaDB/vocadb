@@ -258,7 +258,7 @@
 			@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
 			
 			<tr data-bind="if: originalVersion().entry">
-				<td>@ViewRes.Song.DetailsStrings.OriginalVersion</td>
+				<td>@Res.OriginalVersion</td>
 				<td>
 					@SongHelpers.SongLinkKnockout("originalVersion().entry", "originalVersion().url")
 					<span data-bind="songTypeLabel: originalVersion().entry.songType"></span>
@@ -269,11 +269,11 @@
 
 			@if (Model.AlternateVersions.Any()) {
 			<tr>
-				<td>@ViewRes.Song.DetailsStrings.AlternateVersions</td>
+				<td>@Res.AlternateVersions</td>
 				<td>
 					@AlternateVersions(Model.AlternateVersions.Take(showAlternateVersions))
 					@if (Model.AlternateVersions.Length > showAlternateVersions) {
-						<a href="#" data-bind="visible: !allVersionsVisible(), click: showAllVersions">@R.DetailsStrings.ShowAllVersions (@Model.AlternateVersions.Length)</a>
+						<a href="#" data-bind="visible: !allVersionsVisible(), click: showAllVersions">@Res.ShowAllVersions (@Model.AlternateVersions.Length)</a>
 						<div style="display: none;" data-bind="visible: allVersionsVisible">
 							@AlternateVersions(Model.AlternateVersions.Skip(showAlternateVersions))
 						</div>

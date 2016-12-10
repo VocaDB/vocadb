@@ -124,7 +124,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Possible values are Albums, Artists, Names, PVs, Tags, ThumbUrl, WebLinks.
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
-		/// <example>http://vocadb.net/api/songs/121/derived</example>
+		/// <example>https://vocadb.net/api/songs/121/derived</example>
 		/// <returns>List of derived songs.</returns>
 		/// <remarks>
 		/// Pagination and sorting might be added later.
