@@ -131,6 +131,22 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public CountPerDayContract[] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, int artistId, int tagId) {
+
+			Expression<Func<Song, bool>> query = (s => s.PublishDate.DateTime <= DateTime.Now);
+
+			if (artistId != 0) {
+				query = query.And(s => s.AllArtists.Any(a => a.Artist.Id == artistId));
+			}
+
+			if (tagId != 0) {
+				query = query.And(s => s.Tags.Usages.Any(a => a.Tag.Id == tagId));
+			}
+
+			return SongsOverTime(timeUnit, addZeros, after, query)[0];
+
+		}
+
 	}
 
 	public enum TimeUnit {

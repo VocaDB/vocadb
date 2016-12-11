@@ -390,9 +390,9 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("over-time")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
-		public CountPerDayContract[] GetSongsOverTime(TimeUnit timeUnit, int artistId) {
+		public CountPerDayContract[] GetSongsOverTime(TimeUnit timeUnit, int artistId = 0, int tagId = 0) {
 
-			return songAggregateQueries.SongsOverTime(timeUnit, true, null, s => s.PublishDate.DateTime <= DateTime.Now && s.AllArtists.Any(a => a.Artist.Id == artistId))[0];
+			return songAggregateQueries.SongsOverTime(timeUnit, true, null, artistId, tagId);
 
 		}
 
