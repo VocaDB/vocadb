@@ -877,7 +877,7 @@ namespace VocaDb.Model.Database.Queries {
 				var newOriginalVersion = (properties.OriginalVersion != null && properties.OriginalVersion.Id != 0 ? ctx.Load(properties.OriginalVersion.Id) : null);
 
 				if (!Equals(song.OriginalVersion, newOriginalVersion)) {
-					song.OriginalVersion = newOriginalVersion;
+					song.SetOriginalVersion(newOriginalVersion);
 					diff.OriginalVersion.Set();
 				}
 

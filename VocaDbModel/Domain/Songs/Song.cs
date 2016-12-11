@@ -675,6 +675,14 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
+		public virtual void SetOriginalVersion(Song original) {
+
+			OriginalVersion?.AllAlternateVersions.Remove(this);
+			OriginalVersion = original;
+			original?.AllAlternateVersions.Add(this);
+
+		}
+
 		public virtual void SetReleaseEvent(ReleaseEvent releaseEvent) {
 			
 			if (Equals(ReleaseEvent, releaseEvent)) {

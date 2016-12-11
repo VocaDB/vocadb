@@ -65,7 +65,7 @@ namespace VocaDb.Model.Mapping.Songs {
 			});
 
 			HasMany(m => m.AllAlbums).Table("SongsInAlbums").Inverse().Cascade.All().Cache.ReadWrite();
-			HasMany(m => m.AllAlternateVersions).KeyColumn("[OriginalVersion]").Inverse();
+			HasMany(m => m.AllAlternateVersions).KeyColumn("[OriginalVersion]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.AllArtists).Table("ArtistsForSongs").Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.Comments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
 			HasMany(m => m.Hits).Inverse();
