@@ -235,6 +235,10 @@
 
 		<div id="lyricsTab" data-bind="with: lyrics">
 			
+			<div class="alert alert-info" data-bind="visible: $parent.showLyricsNote">
+				@Res.LyInheritanceNote
+			</div>
+			
 			<div class="accordion" id="lyricsAccordion">
 				<div data-bind="with: original">
 					@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }					

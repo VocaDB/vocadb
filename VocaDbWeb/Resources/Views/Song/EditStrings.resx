@@ -168,6 +168,9 @@
   <data name="LyAddRow" xml:space="preserve">
     <value>Add translation</value>
   </data>
+  <data name="LyInheritanceNote" xml:space="preserve">
+    <value>Lyrics are by default inherited from the original version. They do not need to be specified for the derived versions unless they are different.</value>
+  </data>
   <data name="LyLanguage" xml:space="preserve">
     <value>Language:</value>
   </data>

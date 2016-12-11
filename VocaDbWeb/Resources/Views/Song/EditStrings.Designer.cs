@@ -214,6 +214,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lyrics are by default inherited from the original version. They do not need to be specified for the derived versions unless they are different..
+        /// </summary>
+        public static string LyInheritanceNote {
+            get {
+                return ResourceManager.GetString("LyInheritanceNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language:.
         /// </summary>
         public static string LyLanguage {

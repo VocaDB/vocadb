@@ -32,6 +32,7 @@ module vdb.viewModels {
 		public publishDate: KnockoutObservable<Date>;
 		public pvs: pvs.PVListEditViewModel;
 		public releaseEvent: BasicEntryLinkViewModel<dc.ReleaseEventContract>;
+		public showLyricsNote: KnockoutComputed<boolean>;
 		public songType: KnockoutComputed<cls.songs.SongType>;
 		public songTypeStr: KnockoutObservable<string>;
 		public status: KnockoutObservable<string>;
@@ -242,6 +243,8 @@ module vdb.viewModels {
 					&& this.songType() !== models.songs.SongType.Instrumental
 					&& !_.some(this.tags, t => t === this.instrumentalTagId);
 			});
+
+			this.showLyricsNote = ko.computed(() => this.songType() !== cls.songs.SongType.Instrumental && !this.originalVersion.isEmpty());
 
 			this.validationError_duplicateArtist = ko.computed(() => {
 				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport()), a => a.length > 1);
