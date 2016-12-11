@@ -69,7 +69,8 @@ module vdb.viewModels {
 				},
 				{
 					name: 'User', reports: [
-						{ name: 'Edits per user', url: 'editsPerUser', allowTimespan: true }
+						{ name: 'Edits per user', url: 'editsPerUser', allowTimespan: true },
+						{ name: 'Users per language', url: 'usersPerLanguage' }
 					]
 				},
 				{

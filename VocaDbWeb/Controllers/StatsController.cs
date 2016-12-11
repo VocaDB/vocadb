@@ -16,6 +16,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Web.Code.Highcharts;
 using VocaDb.Web.Helpers;
@@ -874,6 +875,20 @@ namespace VocaDb.Web.Controllers {
 			var data = values.Select(p => p.Value).ToArray();
 
 			return SimpleBarChart("Hits per song", "Hits", categories, data);
+
+		}
+
+		public ActionResult UsersPerLanguage() {
+
+			return SimpleBarChart<UserKnownLanguage>(q => q
+					.Where(u => u.CultureCode.CultureCode != null && u.CultureCode.CultureCode != string.Empty)
+					.GroupBy(u => u.CultureCode)
+					.ToArray()
+					.Select(u => new LocalizedValue {
+						Name = TranslatedString.Create(u.Key.CultureCode),
+						Value = u.Count(),
+					}).AsQueryable(), 
+				"Users per language", "Users");
 
 		}
 
