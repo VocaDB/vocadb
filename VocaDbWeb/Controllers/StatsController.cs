@@ -885,7 +885,7 @@ namespace VocaDb.Web.Controllers {
 					.GroupBy(u => u.CultureCode)
 					.ToArray()
 					.Select(u => new LocalizedValue {
-						Name = TranslatedString.Create(u.Key.CultureCode),
+						Name = TranslatedString.Create(u.Key.CultureInfo.Name),
 						Value = u.Count(),
 					}).AsQueryable(), 
 				"Users per language", "Users");

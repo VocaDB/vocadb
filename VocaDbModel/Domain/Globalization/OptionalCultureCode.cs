@@ -25,6 +25,9 @@ namespace VocaDb.Model.Domain.Globalization {
 			CultureCode = onlyLanguage ? culture?.TwoLetterISOLanguageName : culture?.Name;
 		}
 
+		/// <summary>
+		/// .NET culture associated with this code. Can be null.
+		/// </summary>
 		public virtual CultureInfo CultureInfo => GetCultureInfo(CultureCode);
 
 		public virtual string CultureCode {
