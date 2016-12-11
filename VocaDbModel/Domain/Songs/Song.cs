@@ -91,11 +91,7 @@ namespace VocaDb.Model.Domain.Songs {
 		/// This list does not include deleted albums.
 		/// Cannot be null.
 		/// </summary>
-		public virtual IEnumerable<SongInAlbum> Albums {
-			get { 
-				return AllAlbums.Where(a => !a.Album.Deleted); 
-			}
-		}
+		public virtual IEnumerable<SongInAlbum> Albums => AllAlbums.Where(a => !a.Album.Deleted);
 
 		public virtual IList<SongInAlbum> AllAlbums {
 			get { return albums; }
@@ -113,9 +109,7 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
-		public virtual IEnumerable<string> AllNames {
-			get { return Names.AllValues; }
-		}
+		public virtual IEnumerable<string> AllNames => Names.AllValues;
 
 		public virtual IList<ArtistForSong> AllArtists {
 			get { return artists; }
@@ -125,11 +119,10 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
-		public virtual IEnumerable<Song> AlternateVersions {
-			get {
-				return AllAlternateVersions.Where(a => !a.Deleted);
-			}
-		}
+		/// <summary>
+		/// List of alternate (derived) song versions. Does not include deleted songs.
+		/// </summary>
+		public virtual IEnumerable<Song> AlternateVersions => AllAlternateVersions.Where(a => !a.Deleted);
 
 		public virtual ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> ArchivedVersionsManager {
 			get { return archivedVersions; }
@@ -150,11 +143,7 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
-		public virtual IEnumerable<ArtistForSong> Artists {
-			get {
-				return AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
-			}
-		}
+		public virtual IEnumerable<ArtistForSong> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 
 		public virtual TranslatedStringWithDefault ArtistString {
 			get { return artistString; }
@@ -177,19 +166,11 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual DateTime CreateDate { get; set; }
 
-		public virtual string DefaultName {
-			get {
-				return TranslatedName.Default;
-			}
-		}
+		public virtual string DefaultName => TranslatedName.Default;
 
 		public virtual bool Deleted { get; set; }
 
-		public virtual EntryType EntryType {
-			get {
-				return EntryType.Song;
-			}
-		}
+		public virtual EntryType EntryType => EntryType.Song;
 
 		public virtual int FavoritedTimes { get; set; }
 
@@ -293,13 +274,9 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
-		INameManager<SongName> IEntryWithNames<SongName>.Names {
-			get { return Names; }
-		}
+		INameManager<SongName> IEntryWithNames<SongName>.Names => Names;
 
-		INameManager IEntryWithNames.Names {
-			get { return Names; }
-		}
+		INameManager IEntryWithNames.Names => Names;
 
 		public virtual EnglishTranslatedString Notes {
 			get { return notes; }
@@ -314,11 +291,7 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Duplicates are removed. Does not include deleted albums.
 		/// Cannot be null.
 		/// </summary>
-		public virtual IEnumerable<Album> OnAlbums {
-			get {
-				return Albums.Select(a => a.Album).Distinct();
-			}
-		}
+		public virtual IEnumerable<Album> OnAlbums => Albums.Select(a => a.Album).Distinct();
 
 		/// <summary>
 		/// Id of the original (parent) version of this song.
