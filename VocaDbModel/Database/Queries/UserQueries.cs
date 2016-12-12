@@ -332,6 +332,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Validates username.
+		/// </summary>
+		/// <param name="session">DB context.</param>
+		/// <param name="name">Desired username.</param>
+		/// <param name="id">ID of the user requesting the name.</param>
+		/// <exception cref="InvalidUserNameException">Username is not valid: either it's empty or contains invalid characters.</exception>
+		/// <exception cref="UserNameAlreadyExistsException">Username is already in use by another user.</exception>
 		private void ValidateUsername(IDatabaseContext<User> session, string name, int id) {
 
 			if (!User.IsValidName(name)) {

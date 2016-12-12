@@ -209,8 +209,8 @@ namespace VocaDb.Web.Models {
 
 		public int Id { get; set; }
 
+		// Note: no validation here because of legacy usernames
 		[Display(Name = "Username")]
-		[RegularExpression(Model.Domain.Users.User.NameRegex)]
 		[Required]
 		public string Username { get; set; }
 
