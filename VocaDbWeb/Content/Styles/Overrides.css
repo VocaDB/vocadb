@@ -6,6 +6,9 @@ ul.ui-autocomplete {
   overflow-x: hidden;
   z-index: 1050;
 }
+ul.ui-autocomplete > .ui-menu-item > .ui-state-active {
+  font-weight: normal !important;
+}
 .ui-autocomplete-loading {
   background: white url('ajax-loader.gif') right center no-repeat;
 }

@@ -1739,6 +1739,15 @@
     </Content>
     <Content Include="Content\teto.jpg" />
     <Content Include="Content\tetoDB-title.png" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_55_fbec88_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -1756,14 +1765,21 @@
     <Content Include="Content\themes\base\images\ui-icons_217bc0_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
     <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
@@ -1778,6 +1794,7 @@
     <Content Include="Content\themes\base\jquery.ui.slider.css" />
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\menu.css" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -1806,6 +1823,16 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\themes\blitzer\images\animated-overlay.gif" />
     <Content Include="Content\themes\blitzer\images\ui-bg_diagonals-thick_75_f3d8d8_40x40.png" />
     <Content Include="Content\themes\blitzer\images\ui-bg_dots-small_65_a6a6a6_2x2.png" />
@@ -1837,8 +1864,10 @@
     <Content Include="Content\themes\redmond\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\redmond\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="Content\themes\redmond\images\ui-icons_f9bd01_256x240.png" />
-    <Content Include="Content\themes\redmond\jquery-ui-1.10.1.custom.css" />
-    <Content Include="Content\themes\redmond\jquery-ui-1.10.1.custom.min.css" />
+    <Content Include="Content\themes\redmond\jquery-ui.css" />
+    <Content Include="Content\themes\redmond\jquery-ui.min.css" />
+    <Content Include="Content\themes\redmond\jquery-ui.theme.css" />
+    <Content Include="Content\themes\redmond\jquery-ui.theme.min.css" />
     <Content Include="Content\unknown.png" />
     <Content Include="Content\vert_large.png" />
     <Content Include="Content\vocaDB-title-large.png" />
@@ -2395,8 +2424,8 @@
     </None>
     <Content Include="Scripts\jquery-2.2.1.js" />
     <Content Include="Scripts\jquery-2.2.1.min.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.tools.min.js" />
     <Content Include="Scripts\jqwidgets27\globalization\globalize.js" />
     <Content Include="Scripts\jqwidgets27\globalization\jquery.glob.cs-CZ.js" />

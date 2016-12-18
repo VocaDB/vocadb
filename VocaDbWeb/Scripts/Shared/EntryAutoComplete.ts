@@ -72,7 +72,7 @@
 			var data = item.data;
 
 			if (!data) {
-				return "<a><div>" + item.label + "</div></a>";
+				return "<div>" + item.label + "</div>";
 			}
 
 			var html: string = null;
@@ -84,15 +84,15 @@
 				var secondRow = createOptionSecondRow(data);
 				if (firstRow) {
 					if (params.singleRow) {
-						html = "<a><div>" + bold(firstRow, term) + " <small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";																	
+						html = "<div>" + bold(firstRow, term) + " <small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div>";																	
 					} else {
-						html = "<a><div>" + bold(firstRow, term) + "</div><div><small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";											
+						html = "<div>" + bold(firstRow, term) + "<br /><small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div>";											
 					}
 				}
 			} else if (createOptionFirstRow) {
 				firstRow = createOptionFirstRow(data);
 				if (firstRow)
-					html = "<a><div>" + bold(firstRow, term) + "</div></a>";
+					html = "<div>" + bold(firstRow, term) + "</div>";
 			}
 
 			return html;
