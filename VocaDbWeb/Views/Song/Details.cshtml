@@ -70,7 +70,7 @@
 @section Toolbar {
 @if (Model.OriginalPVs.Any() || Model.OtherPVs.Any()) {
 	<div id="pvPlayer" class="song-pv-player">
-		@Helpers.EmbedPV(Model.PrimaryPV)
+		@PVHelpers.EmbedPV(Model.PrimaryPV)
 	</div>
 }
 

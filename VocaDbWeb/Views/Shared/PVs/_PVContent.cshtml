@@ -24,7 +24,7 @@
 	</a>	
 </div> 
 <div class="pv-embed-wrapper">
-	@Helpers.EmbedPV(PVHelper.PrimaryPV(Model.PVs), 0, 0)
+	@PVHelpers.EmbedPV(PVHelper.PrimaryPV(Model.PVs), 0, 0)
 </div>
 <a class="btn btn-info songInfoButton pull-right" href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(Model))">
 	<i class="icon icon-info-sign"></i>

@@ -45,10 +45,6 @@
 	@Html.ActionLink(entry.DefaultName, "Details", entry.EntryType.ToString(), new { id = entry.Id }, null)	
 }
 
-@helper EmbedPV(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 560, int height = 315, bool autoplay = false, bool enableApi = false, string id = null) {
-	@PVHelpers.EmbedPV(pv, width, height, autoplay, enableApi, id)
-}
-
 @helper EmbedPVThumb(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 340, int height = 200) {	
     if (pv != null) {
         switch (pv.Service) {
@@ -62,7 +58,7 @@
                 break;
 				
 			default:
-				@EmbedPV(pv, width, height)
+				@PVHelpers.EmbedPV(pv, width, height)
 				break; 
         }
     }
