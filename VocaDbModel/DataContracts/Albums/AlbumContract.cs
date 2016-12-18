@@ -13,25 +13,15 @@ namespace VocaDb.Model.DataContracts.Albums {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntryImageInformation {
 
-		string IEntryBase.DefaultName {
-			get { return Name; }
-		}
+		string IEntryBase.DefaultName => Name;
 
-		bool IDeletableEntry.Deleted {
-			get { return false; }
-		}
+		bool IDeletableEntry.Deleted => false;
 
-		EntryType IEntryBase.EntryType {
-			get { return EntryType.Album; }
-		}
+		EntryType IEntryBase.EntryType => EntryType.Album;
 
-		EntryType IEntryImageInformation.EntryType {
-			get { return EntryType.Album; }
-		}
+		EntryType IEntryImageInformation.EntryType => EntryType.Album;
 
-		string IEntryImageInformation.Mime {
-			get { return CoverPictureMime; }
-		}
+		string IEntryImageInformation.Mime => CoverPictureMime;
 
 		public AlbumContract() { }
 
