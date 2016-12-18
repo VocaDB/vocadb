@@ -35,6 +35,9 @@
 @if (!Model.ReleaseDate.IsEmpty) {
 <p>
     @HelperRes.AlbumHelpersStrings.Released @Model.ReleaseDate.Formatted
+	@if (Model.ReleaseEvent != null) {
+		@:(@Model.ReleaseEvent.Name)
+	}
 </p>
 }
 @if (Model.RatingCount > 0) {
