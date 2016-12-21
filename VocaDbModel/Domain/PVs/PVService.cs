@@ -26,7 +26,9 @@ namespace VocaDb.Model.Domain.PVs {
 
 		File			= 64,
 
-		LocalFile		= 128
+		LocalFile		= 128,
+
+		Creofuga		= 256
 
 	}
 
@@ -55,7 +57,9 @@ namespace VocaDb.Model.Domain.PVs {
 
 		File			= PVService.File,
 
-		LocalFile		= PVService.LocalFile
+		LocalFile		= PVService.LocalFile,
+
+		Creofuga        = PVService.Creofuga,
 
 	}
 

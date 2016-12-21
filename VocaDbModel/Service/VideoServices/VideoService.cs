@@ -38,6 +38,11 @@ namespace VocaDb.Model.Service.VideoServices {
 				new RegexLinkMatcher("vimeo.com/{0}", @"vimeo.com/(\d+)"),
 			});
 
+		public static readonly VideoService Creofuga =
+			new VideoService(PVService.Creofuga, null, new[] {
+				new RegexLinkMatcher("creofuga.net/audios/{0}", @"creofuga.net/audios/(\d+)"),
+			});
+
 		public static readonly VideoServiceFile File =
 			new VideoServiceFile();
 
@@ -118,7 +123,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		protected virtual VideoUrlParseResult ParseById(string id, string url, bool getMeta) {
 
-			var meta = (getMeta ? GetVideoTitle(id) : VideoTitleParseResult.Empty);
+			var meta = (getMeta ? GetVideoTitle(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;
 
 			//if (!meta.Success) {
 			//	return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, meta.Error);

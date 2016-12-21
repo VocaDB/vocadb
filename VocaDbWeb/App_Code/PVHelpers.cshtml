@@ -38,16 +38,20 @@
 				<iframe id="@id" width="@width" height="@Math.Min(height, 166)" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F@(scId.TrackId)&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
 				break;
 
-			case PVService.Youtube:
-				var apParam = (autoplay ? 1 : 0);
-				var apiParam = (enableApi ? 1 : 0);
-				var originParam = (enableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress() : string.Empty);
-				<iframe id="@id" width="@widthStr" height="@heightStr" src="https://www.youtube.com/embed/@(pv.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
-				break;
-
-			case PVService.Vimeo:
-				<iframe src="https://player.vimeo.com/video/@pv.PVId" width="@width" height="@height" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+		case PVService.Youtube:
+			var apParam = (autoplay ? 1 : 0);
+			var apiParam = (enableApi ? 1 : 0);
+			var originParam = (enableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress() : string.Empty);
+			<iframe id="@id" width="@widthStr" height="@heightStr" src="https://www.youtube.com/embed/@(pv.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
 			break;
+
+		case PVService.Vimeo:
+			<iframe src="https://player.vimeo.com/video/@pv.PVId" width="@width" height="@height" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+		break;
+
+		case PVService.Creofuga:
+			<iframe width="@widthStr" height="@heightStr" scrolling="no" frameborder="no" src="https://creofuga.net/audios/player?color=black&id=@pv.PVId"></iframe>
+		break;
 	}
 
 }
