@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			});
 
 		public static readonly VideoService Creofuga =
-			new VideoService(PVService.Creofuga, null, new[] {
+			new VideoService(PVService.Creofuga, new CreofugaParser(), new[] {
 				new RegexLinkMatcher("creofuga.net/audios/{0}", @"creofuga.net/audios/(\d+)"),
 			});
 

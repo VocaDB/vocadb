@@ -918,6 +918,7 @@
     <Compile Include="Service\VideoServices\VideoParseException.cs" />
     <Compile Include="Service\VideoServices\VideoService.cs" />
     <Compile Include="Service\VideoServices\VideoServiceBilibili.cs" />
+    <Compile Include="Service\VideoServices\CreofugaParser.cs" />
     <Compile Include="Service\VideoServices\VideoServiceHelper.cs" />
     <Compile Include="Service\OtherService.cs" />
     <Compile Include="Domain\Security\IUserPermissionContext.cs" />
