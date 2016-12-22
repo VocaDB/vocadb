@@ -1618,6 +1618,7 @@
     <Content Include="Content\ExtIcons\booth.png" />
     <Content Include="Content\ExtIcons\cdjapan.png" />
     <Content Include="Content\ExtIcons\cfm.png" />
+    <Content Include="Content\ExtIcons\creofuga.png" />
     <Content Include="Content\ExtIcons\dA.png" />
     <Content Include="Content\ExtIcons\discogs.png" />
     <Content Include="Content\ExtIcons\dstage.png" />
