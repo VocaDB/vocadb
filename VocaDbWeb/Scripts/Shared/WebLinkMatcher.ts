@@ -21,6 +21,7 @@ module vdb.utils {
 			{ url: "booth.pm/", desc: "Booth", cat: c.WebLinkCategory.Commercial },
             { url: "www.cdjapan.co.jp/detailview.html", desc: "CDJapan", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.cdjapan.co.jp/product/", desc: "CDJapan", cat: c.WebLinkCategory.Commercial },
+			{ url: "creofuga.net/", desc: "Creofuga", cat: c.WebLinkCategory.Official },
 			{ url: "d-stage.com/shop/", desc: "D-Stage", cat: c.WebLinkCategory.Commercial },
             { url: "deviantart.com/", desc: "DeviantArt", cat: c.WebLinkCategory.Official },
             { url: "www.discogs.com/", desc: "Discogs", cat: c.WebLinkCategory.Reference },
