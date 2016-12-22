@@ -17,7 +17,9 @@ module vdb.models.pvs {
 
 		File			= 64,
 
-		LocalFile		= 128
+		LocalFile		= 128,
+
+		Creofuga		= 256
 
 	}
 
