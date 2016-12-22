@@ -323,6 +323,8 @@ namespace VocaDb.Web.Helpers {
 					return UrlHelper.GenerateContentUrl("~/Content/youtube.png", new HttpContextWrapper(HttpContext.Current));
 				case PVService.Vimeo:
 					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/vimeo.png", new HttpContextWrapper(HttpContext.Current));
+				case PVService.Creofuga:
+					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/creofuga.png", new HttpContextWrapper(HttpContext.Current));
 				default:
 					return string.Empty;
 			}

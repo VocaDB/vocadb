@@ -17,6 +17,7 @@ module vdb.models {
 				Vimeo: urlMapper.mapRelative("/Content/ExtIcons/vimeo.png"),
 				Piapro: urlMapper.mapRelative("/Content/ExtIcons/piapro.png"),
 				Bilibili: urlMapper.mapRelative("/Content/ExtIcons/bilibili.png"),
+				Creofuga: urlMapper.mapRelative("/Content/ExtIcons/creofuga.png")
 			};
 
 		}
