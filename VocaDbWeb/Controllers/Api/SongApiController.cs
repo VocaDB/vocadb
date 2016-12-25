@@ -299,7 +299,8 @@ namespace VocaDb.Web.Controllers.Api {
 				MinScore = minScore ?? 0,
 				PVServices = pvServices,
 				UserCollectionId = userCollectionId ?? 0,
-				AdvancedFilters = advancedFilters
+				AdvancedFilters = advancedFilters,
+				LanguagePreference = lang
 			};
 			param.Common.EntryStatus = status;
 

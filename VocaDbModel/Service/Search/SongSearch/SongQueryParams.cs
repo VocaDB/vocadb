@@ -77,6 +77,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			}
 		}
 
+		public ContentLanguagePreference LanguagePreference { get; set; }
+
 		public int MinScore { get; set; }
 
 		public bool OnlyWithPVs { get; set; }

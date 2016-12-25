@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service {
 		private readonly IEntryUrlParser entryUrlParser;
 
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams) {
-			return new SongSearch(new NHibernateDatabaseContext(session, PermissionContext), LanguagePreference, entryUrlParser).Find(queryParams);
+			return new SongSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference, entryUrlParser).Find(queryParams);
 		}
 
 		private ArtistForSong RestoreArtistRef(Song song, Artist artist, ArchivedArtistForSongContract albumRef) {
@@ -153,6 +153,7 @@ namespace VocaDb.Model.Service {
 								TextQuery = SearchTextQuery.Create(q, nameMatchMode),
 								OnlyByName = true, MoveExactToTop = true
 							},
+							LanguagePreference = LanguagePreference,
 							Paging = new PagingProperties(0, 30, false)
 						});
 
