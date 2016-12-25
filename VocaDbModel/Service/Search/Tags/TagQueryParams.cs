@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Service.Paging;
+﻿using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.Tags {
@@ -17,6 +18,8 @@ namespace VocaDb.Model.Service.Search.Tags {
 		public string CategoryName { get; set; }
 
 		public CommonSearchParams Common { get; set; }
+
+		public ContentLanguagePreference LanguagePreference { get; set; }
 
 		public PagingProperties Paging { get; set; }
 

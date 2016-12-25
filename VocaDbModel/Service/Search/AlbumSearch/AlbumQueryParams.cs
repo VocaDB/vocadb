@@ -1,5 +1,6 @@
 ﻿using System;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
@@ -50,6 +51,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 		public CommonSearchParams Common { get; set; }
 
 		public bool Deleted { get; set; }
+
+		public ContentLanguagePreference LanguagePreference { get; set; }
 
 		public PagingProperties Paging { get; set; }
 

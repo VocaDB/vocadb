@@ -35,7 +35,7 @@ namespace VocaDb.Model.Service {
 
 		private PartialFindResult<Album> Find(ISession session, AlbumQueryParams queryParams) {
 
-			return new AlbumSearch(new NHibernateDatabaseContext(session, PermissionContext), LanguagePreference).Find(queryParams);
+			return new AlbumSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference).Find(queryParams);
 
 		}
 

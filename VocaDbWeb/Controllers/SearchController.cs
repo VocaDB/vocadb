@@ -90,14 +90,18 @@ namespace VocaDb.Web.Controllers
 				break;
 
 				case EntryType.Artist:
-					var artist = artistService.FindArtists(new ArtistQueryParams(artistTextQuery, null, 0, 2, false, ArtistSortRule.None, false));
+					var artist = artistService.FindArtists(new ArtistQueryParams(artistTextQuery, null, 0, 2, false, ArtistSortRule.None, false) {
+						LanguagePreference = PermissionContext.LanguagePreference
+					});
 					if (artist.Items.Length == 1) {
 						return RedirectToArtist(artist.Items[0].Id);
 					}
 					break;
 
 				case EntryType.Album:
-					var album = albumService.Find(new AlbumQueryParams(textQuery, DiscType.Unknown, 0, 2, false, AlbumSortRule.None, false));
+					var album = albumService.Find(new AlbumQueryParams(textQuery, DiscType.Unknown, 0, 2, false, AlbumSortRule.None, false) {
+						LanguagePreference = PermissionContext.LanguagePreference
+					});
 					if (album.Items.Length == 1) {
 						return RedirectToAlbum(album.Items[0].Id);
 					}
@@ -127,8 +131,10 @@ namespace VocaDb.Web.Controllers
 					return RedirectToAction("Featured", "SongList");
 
 				case EntryType.Tag:
-					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, true, true), PagingProperties.FirstPage(2)) { AllowChildren = true },
-						TagOptionalFields.None, WebHelper.IsSSL(Request), permissionContext.LanguagePreference);
+					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, true, true), PagingProperties.FirstPage(2)) {
+						AllowChildren = true,
+						LanguagePreference = PermissionContext.LanguagePreference
+					}, TagOptionalFields.None, WebHelper.IsSSL(Request), permissionContext.LanguagePreference);
 					if (tags.Items.Length == 1) {
 						return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);
 					}

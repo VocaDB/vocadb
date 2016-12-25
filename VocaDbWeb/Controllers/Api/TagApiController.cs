@@ -193,7 +193,8 @@ namespace VocaDb.Web.Controllers.Api {
 				new PagingProperties(start, maxResults, getTotalCount)) {
 					AllowChildren = allowChildren,
 					CategoryName = categoryName,
-					SortRule = sort ?? TagSortRule.Name
+					SortRule = sort ?? TagSortRule.Name,
+					LanguagePreference = lang
 			};
 
 			var tags = queries.Find(queryParams, fields, ssl, lang);
@@ -243,7 +244,8 @@ namespace VocaDb.Web.Controllers.Api {
 
 			return queries.Find(t => new TagBaseContract(t, lang), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
 				CategoryName = categoryName,
-				SortRule = TagSortRule.UsageCount
+				SortRule = TagSortRule.UsageCount,
+				LanguagePreference = lang
 			})
 			.Items.OrderBy(t => t.Name).ToArray();
 

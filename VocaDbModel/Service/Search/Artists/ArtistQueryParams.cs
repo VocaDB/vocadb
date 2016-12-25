@@ -1,4 +1,5 @@
 ﻿using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.Artists {
@@ -44,6 +45,8 @@ namespace VocaDb.Model.Service.Search.Artists {
 		public bool ChildTags { get; set; }
 
 		public CommonSearchParams<ArtistSearchTextQuery> Common { get; set; }
+
+		public ContentLanguagePreference LanguagePreference { get; set; }
 
 		public PagingProperties Paging { get; set; }
 

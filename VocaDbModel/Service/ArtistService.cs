@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service {
 		public PartialFindResult<Artist> Find(ISession session, ArtistQueryParams queryParams) {
 
 			var context = new NHibernateDatabaseContext<Artist>(session, PermissionContext);
-			return new ArtistSearch(LanguagePreference, context, entryUrlParser).Find(queryParams);
+			return new ArtistSearch(queryParams.LanguagePreference, context, entryUrlParser).Find(queryParams);
 
 		}
 
