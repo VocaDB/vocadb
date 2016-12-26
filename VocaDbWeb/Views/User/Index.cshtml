@@ -18,7 +18,7 @@
 			var uiCultureCode = '@UICulture';
 			moment.locale(cultureCode);
 
-			var filter = '@ViewBag.Filter';
+			var filter = @ToJS(ViewBag.Filter);
 			var urlMapper = new vdb.UrlMapper('@RootPath');
 			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper);
 			var repo = repoFactory.userRepository();

@@ -721,15 +721,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public string[] FindNames(SearchTextQuery textQuery, int maxResults) {
+		public string[] FindNames(SearchTextQuery textQuery, int maxResults, bool allowDisabled) {
 
 			if (textQuery.IsEmpty)
 				return new string[] { };
 
 			return HandleQuery(session => {
 
-				var names = session.Query<User>()
-					.WhereHasName(textQuery)
+				var query = session.Query<User>()
+					.WhereHasName(textQuery);
+
+				if (!allowDisabled) {
+					query = query.Where(u => u.Active);
+				}
+
+				var names = query
 					.Select(n => n.Name)
 					.OrderBy(n => n)
 					.Take(maxResults)

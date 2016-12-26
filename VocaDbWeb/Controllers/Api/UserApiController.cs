@@ -327,11 +327,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="query">Text query.</param>
 		/// <param name="nameMatchMode">Name match mode. Words is treated the same as Partial.</param>
 		/// <param name="maxResults">Maximum number of results.</param>
+		/// <param name="includeDisabled">Whether to include disabled user accounts. If false, disabled accounts are excluded.</param>
 		/// <returns>List of user names.</returns>
 		[Route("names")]
-		public IEnumerable<string> GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) {
+		public IEnumerable<string> GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10, bool includeDisabled = false) {
 			
-			return queries.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
+			return queries.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults, includeDisabled);
 
 		}
 
