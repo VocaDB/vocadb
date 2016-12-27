@@ -19,6 +19,7 @@ module vdb.viewModels.search {
 			tagIds: number[],
 			sort: string,
 			artistId: number[],
+			childTags: boolean,
 			childVoicebanks: boolean,
 			artistType: string,
 			albumType: string, songType: string,
@@ -80,6 +81,9 @@ module vdb.viewModels.search {
 
 			if (tagIds)
 				this.tagFilters.addTags(tagIds);
+
+			if (tagIds && childTags)
+				this.tagFilters.childTags(childTags);
 
 			if (pageSize)
 				this.pageSize(pageSize);

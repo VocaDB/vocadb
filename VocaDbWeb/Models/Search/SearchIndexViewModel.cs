@@ -24,6 +24,8 @@ namespace VocaDb.Web.Models.Search {
 
 		public bool? Autoplay { get; set; }
 
+		public bool? ChildTags { get; set; }
+
 		public bool? ChildVoicebanks { get; set; }
 
 		public DiscType? DiscType { get; set; }

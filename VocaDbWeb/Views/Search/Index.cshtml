@@ -173,6 +173,7 @@
 			var searchType = '@Model.SearchTypeName';
 			var sort = '@Model.Sort';
 			var artistId = @ToJS(Model.ArtistId);
+			var childTags = @ToJS(Model.ChildTags);
 			var childVoicebanks = @ToJS(Model.ChildVoicebanks);
 			var artistType = '@Model.ArtistType';
 			var discType = '@Model.DiscType';
@@ -206,6 +207,7 @@
 				unknownPictureUrl,
 				languageSelection, loggedUserId, cultureCode, searchType, query, tagIds, sort,
 				artistId,
+				childTags,
 				childVoicebanks,
 				artistType, discType, songType,
 				onlyWithPVs,
