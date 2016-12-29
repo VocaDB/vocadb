@@ -214,6 +214,8 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Index(string filter = null) {
 
+			var vm = new Index { Filter = filter };
+
 			if (!string.IsNullOrEmpty(filter)) {
 
 				var result = Data.GetUsers(SearchTextQuery.Create(filter), UserGroupId.Nothing, false, false, null, 
@@ -222,12 +224,10 @@ namespace VocaDb.Web.Controllers
 				if (result.TotalCount == 1 && result.Items.Length == 1) {
 					return RedirectToAction("Profile", new { id = result.Items[0] });
 				}
-
-				ViewBag.Filter = filter;
 				
 			}
 
-			return View();
+			return View(vm);
 
         }
 

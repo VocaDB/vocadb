@@ -1021,6 +1021,7 @@
     <Compile Include="Models\Shared\ViewVersion.cs" />
     <Compile Include="Models\SongLists\SongListDetailsViewModel.cs" />
     <Compile Include="Models\Tag\Versions.cs" />
+    <Compile Include="Models\User\Index.cs" />
     <Compile Include="Resources\Domain\Artists\ArtistLinkTypeNames.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
