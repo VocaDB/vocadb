@@ -11,6 +11,7 @@ namespace VocaDb.Web.Code {
 	/// </summary>
 	/// <remarks>
 	/// This version uses reflection to call the correct parsing method based on parameter type. 
+	/// Unlike bitfields, the default value is also supported because the result is an array.
 	/// More straightforward to use, but possibly slower.
 	/// </remarks>
 	public class EnumArrayModelBinder : IModelBinder {
@@ -23,7 +24,7 @@ namespace VocaDb.Web.Code {
             var val = bindingContext.ValueProvider.GetValue(key);
 
 			// Value is empty, skip evaluation
-			if (val == null || string.IsNullOrEmpty(val.AttemptedValue))
+			if (string.IsNullOrEmpty(val?.AttemptedValue))
 				return false;
 
 			// Get parameter type (should be an array)
