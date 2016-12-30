@@ -120,8 +120,10 @@ namespace VocaDb.Web.Helpers {
 				return fullUrl ? VocaUriBuilder.Absolute(dynamicUrl, ssl) : dynamicUrl;
 			}
 
-			if (!shouldExist)
-				return GetUnknownImageUrl(urlHelper, imageInfo);
+			if (!shouldExist) {
+				var unknown = GetUnknownImageUrl(urlHelper, imageInfo);
+				return fullUrl ? VocaUriBuilder.Absolute(unknown, ssl) : unknown;
+			}
 
 			// For all other cases use the static file
 			return imagePersister.GetUrlAbsolute(imageInfo, size, ssl);
