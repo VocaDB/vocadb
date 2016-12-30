@@ -18,7 +18,7 @@ namespace VocaDb.Web.Code {
 			return Gravatar.GetUrl(user.Email, sizePx, scheme: ssl ? "https" : "http");
         }
 
-		public GravatarUserIconFactory(bool ssl = false) {
+		public GravatarUserIconFactory(bool ssl = true) {
 			this.ssl = ssl;
 		}
 
