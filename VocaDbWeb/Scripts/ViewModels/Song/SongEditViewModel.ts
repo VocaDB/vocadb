@@ -12,6 +12,7 @@ module vdb.viewModels {
 
     export class SongEditViewModel {
 
+		private albumEventId: number;
 		public albumReleaseDate: moment.Moment;
         // List of artist links for this song.
         public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
@@ -164,6 +165,7 @@ module vdb.viewModels {
 		public validationError_needReferences: KnockoutComputed<boolean>;
 		public validationError_needType: KnockoutComputed<boolean>;
 		public validationError_nonInstrumentalSongNeedsVocalists: KnockoutComputed<boolean>;
+		public validationError_redundantEvent: KnockoutComputed<boolean>;
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
 
 		constructor(
@@ -180,6 +182,7 @@ module vdb.viewModels {
 			private instrumentalTagId: number,
 			public languageNames) {
 
+			this.albumEventId = data.albumEventId;
 			this.albumReleaseDate = data.albumReleaseDate ? moment(data.albumReleaseDate) : null;
 			this.artistLinks = ko.observableArray(_.map(data.artists, artist => new ArtistForAlbumEditViewModel(null, artist)));
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
@@ -281,6 +284,8 @@ module vdb.viewModels {
 
 			});
 
+			this.validationError_redundantEvent = ko.computed(() => this.albumEventId && !this.releaseEvent.isEmpty() && this.releaseEvent.id() === this.albumEventId);
+
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 
 			this.hasValidationErrors = ko.computed(() =>
@@ -291,6 +296,7 @@ module vdb.viewModels {
 				this.validationError_needReferences() ||
 				this.validationError_needType() ||
 				this.validationError_nonInstrumentalSongNeedsVocalists() ||
+				this.validationError_redundantEvent() ||
 				this.validationError_unspecifiedNames()
 			);
 		

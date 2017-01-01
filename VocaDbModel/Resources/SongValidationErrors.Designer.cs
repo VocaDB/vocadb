@@ -124,6 +124,15 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The same release event does not need to be specified for both the song and album..
+        /// </summary>
+        public static string RedundantEvent {
+            get {
+                return ResourceManager.GetString("RedundantEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Song needs a primary name..
         /// </summary>
         public static string UnspecifiedNames {

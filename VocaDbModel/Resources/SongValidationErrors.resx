@@ -138,6 +138,9 @@
   <data name="NonInstrumentalSongNeedsVocalists" xml:space="preserve">
     <value>This song has no vocalists. Original instrumental songs need to be tagged with the 'instrumental' tag. Instrumental (karaoke) versions of existing songs should use the 'Instrumental' song type. Otherwise, add vocalists.</value>
   </data>
+  <data name="RedundantEvent" xml:space="preserve">
+    <value>The same release event does not need to be specified for both the song and album.</value>
+  </data>
   <data name="UnspecifiedNames" xml:space="preserve">
     <value>Song needs a primary name.</value>
   </data>

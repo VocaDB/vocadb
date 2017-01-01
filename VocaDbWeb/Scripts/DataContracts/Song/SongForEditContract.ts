@@ -3,6 +3,8 @@ module vdb.dataContracts.songs {
 	
 	export interface SongForEditContract {
 
+		albumEventId?: number;
+
 		albumReleaseDate?: string;
 
 		artists: ArtistForAlbumContract[];

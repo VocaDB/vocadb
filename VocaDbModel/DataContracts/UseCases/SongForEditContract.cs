@@ -20,6 +20,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			
 			ParamIs.NotNull(() => song);
 
+			var firstAlbum = song.Albums.Where(a => a.Album.OriginalReleaseDate.IsFullDate).OrderBy(a => a.Album.OriginalReleaseDate).FirstOrDefault();
+
+			AlbumEventId = firstAlbum?.Album.OriginalReleaseEvent?.Id;
 			AlbumReleaseDate = song.FirstAlbumDate;
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			DefaultNameLanguage = song.TranslatedName.DefaultLanguage;
@@ -35,6 +38,13 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
+
+		/// <summary>
+		/// ID of the first album's release event.
+		/// Used for validation warnings.
+		/// </summary>
+		[DataMember]
+		public int? AlbumEventId { get; set; }
 
 		[DataMember]
 		public DateTime? AlbumReleaseDate { get; set; }
