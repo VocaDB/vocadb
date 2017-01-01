@@ -9,12 +9,23 @@ namespace VocaDb.Tests.Domain {
 	[TestClass]
 	public class OptionalDateTimeTests {
 
+		private OptionalDateTime Date(int? year = null, int? month = null, int? day = null) {
+			return new OptionalDateTime(year, month, day);
+		}
+
+		private void TestCompareTo(int expected,
+			OptionalDateTime first, OptionalDateTime second) {
+
+			Assert.AreEqual(expected, first.CompareTo(second), "Comparing " + first + " to " + second);
+
+		}
+
 		private void TestEquals(bool equals, 
 			int? firstYear = null, int? firstMonth = null, int? firstDay = null, 
 			int? secondYear = null, int? secondMonth = null, int? secondDay = null) {
 			
-			var first = new OptionalDateTime(firstYear, firstMonth, firstDay);
-			var second = new OptionalDateTime(secondYear, secondMonth, secondDay);
+			var first = Date(firstYear, firstMonth, firstDay);
+			var second = Date(secondYear, secondMonth, secondDay);
 
 			if (equals)
 				Assert.AreEqual(first, second, "Dates are equal");
@@ -74,6 +85,26 @@ namespace VocaDb.Tests.Domain {
 			
 			TestEquals(true, firstDay: 31);
 
+		}
+
+		[TestMethod]
+		public void CompareTo_Full_Equal() {
+			TestCompareTo(0, Date(2017, 1, 1), Date(2017, 1, 1));
+		}
+
+		[TestMethod]
+		public void CompareTo_Full_LessThan() {
+			TestCompareTo(-1, Date(2017, 1, 1), Date(2017, 8, 31));
+		}
+
+		[TestMethod]
+		public void CompareTo_Full_GreaterThan() {
+			TestCompareTo(1, Date(2017, 8, 31), Date(2017, 1, 1));
+		}
+
+		[TestMethod]
+		public void CompareTo_Null() {
+			TestCompareTo(0, Date(), Date());
 		}
 
 	}

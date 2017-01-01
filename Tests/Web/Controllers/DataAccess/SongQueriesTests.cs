@@ -484,10 +484,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			album.OriginalRelease.ReleaseDate = new OptionalDateTime(2007, 8, 31);
 			var relEvent = repository.Save(new ReleaseEvent(string.Empty, new DateTime(2007, 8, 31), "Miku's birthday"));
 			album.OriginalRelease.ReleaseEvent = relEvent;
+			album.AddSong(song, 1, 1);
 
 			var album2 = repository.Save(CreateEntry.Album());
 			album2.OriginalRelease.ReleaseDate = new OptionalDateTime(2017, 8, 31);
-			album.AddSong(song, 1, 1);
 			album2.AddSong(song, 1, 2);
 
 			var result = queries.GetSongForEdit(song.Id);
