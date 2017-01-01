@@ -24,6 +24,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Model.Service.Search.User;
 
 namespace VocaDb.Web.Services {
 
@@ -220,8 +221,12 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public UserContract GetUserInfo(string name) {
 
-			var users = userQueries.GetUsers(SearchTextQuery.Create(name, NameMatchMode.Exact), UserGroupId.Nothing, false, false, null,
-				UserSortRule.Name, new PagingProperties(0, 1, false), u => new UserContract(u));
+			var queryParams = new UserQueryParams {
+				Common = new CommonSearchParams(SearchTextQuery.Create(name, NameMatchMode.Exact), false, false),
+				Paging = new PagingProperties(0, 1, false)
+			};
+
+			var users = userQueries.GetUsers(queryParams, u => new UserContract(u));
 			return users.Items.FirstOrDefault();
 
 		}

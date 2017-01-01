@@ -213,6 +213,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="query">User name query (optional).</param>
 		/// <param name="groups">Filter by user group. Only one value supported for now. Optional.</param>
+		/// <param name="joinDateAfter">Filter by users who joined after this date (inclusive).</param>
+		/// <param name="joinDateBefore">Filter by users who joined before this date (exclusive).</param>
 		/// <param name="nameMatchMode">Name match mode.</param>
 		/// <param name="start">Index of the first entry to be loaded.</param>
 		/// <param name="maxResults">Maximum number of results to be loaded.</param>
@@ -228,6 +230,8 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<UserForApiContract> GetList(
 			string query = "", 
 			UserGroupId groups = UserGroupId.Nothing,
+			DateTime? joinDateAfter = null,
+			DateTime? joinDateBefore = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto, 
 			int start = 0, 
 			int maxResults = 10,
@@ -238,8 +242,19 @@ namespace VocaDb.Web.Controllers.Api {
 			string knowsLanguage = null,
 			UserOptionalFields fields = UserOptionalFields.None) {
 
-			return queries.GetUsers(SearchTextQuery.Create(query, nameMatchMode), groups, includeDisabled, onlyVerified, knowsLanguage, sort ?? UserSortRule.Name, 
-				new PagingProperties(start, maxResults, getTotalCount), user => new UserForApiContract(user, userIconFactory, fields));
+			var queryParams = new UserQueryParams {
+				Common = new CommonSearchParams(SearchTextQuery.Create(query, nameMatchMode), false, false),
+				Group = groups,
+				IncludeDisabled = includeDisabled,
+				OnlyVerifiedArtists = onlyVerified,
+				KnowsLanguage = knowsLanguage,
+				JoinDateAfter = joinDateAfter,
+				JoinDateBefore = joinDateBefore,
+				Sort = sort ?? UserSortRule.Name,
+				Paging = new PagingProperties(start, maxResults, getTotalCount)
+			};
+
+			return queries.GetUsers(queryParams, user => new UserForApiContract(user, userIconFactory, fields));
 			
 		}
 

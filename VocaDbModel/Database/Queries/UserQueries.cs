@@ -1058,33 +1058,40 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<T> GetUsers<T>(SearchTextQuery textQuery, UserGroupId groupId, bool disabled, bool verifiedArtists, string knowsLanguage, 
-			UserSortRule sortRule, PagingProperties paging,
+		public PartialFindResult<T> GetUsers<T>(UserQueryParams queryParams,
 			Func<User, T> fac) {
 
 			return repository.HandleQuery(ctx => {
 
 				var usersQuery = ctx.Query()
-					.WhereHasName(textQuery)
-					.WhereKnowsLanguage(knowsLanguage);
+					.WhereHasName(queryParams.Common.TextQuery)
+					.WhereKnowsLanguage(queryParams.KnowsLanguage);
 
-				if (groupId != UserGroupId.Nothing) {
-					usersQuery = usersQuery.Where(u => u.GroupId == groupId);
+				if (queryParams.Group != UserGroupId.Nothing) {
+					usersQuery = usersQuery.Where(u => u.GroupId == queryParams.Group);
 				}
 
-				if (!disabled) {
+				if (!queryParams.IncludeDisabled) {
 					usersQuery = usersQuery.Where(u => u.Active);
 				}
 
-				if (verifiedArtists) {
+				if (queryParams.OnlyVerifiedArtists) {
 					usersQuery = usersQuery.Where(u => u.VerifiedArtist);
 				}
 
-				var users = AddOrder(usersQuery, sortRule)
-					.Paged(paging)
+				if (queryParams.JoinDateAfter.HasValue) {
+					usersQuery = usersQuery.Where(u => u.CreateDate >= queryParams.JoinDateAfter);
+				}
+
+				if (queryParams.JoinDateBefore.HasValue) {
+					usersQuery = usersQuery.Where(u => u.CreateDate < queryParams.JoinDateBefore);
+				}
+
+				var users = AddOrder(usersQuery, queryParams.Sort)
+					.Paged(queryParams.Paging)
 					.ToArray();
 
-				var count = paging.GetTotalCount ? usersQuery.Count() : 0;
+				var count = queryParams.Paging.GetTotalCount ? usersQuery.Count() : 0;
 				var contracts = users.Select(fac).ToArray();
 
 				return new PartialFindResult<T>(contracts, count);

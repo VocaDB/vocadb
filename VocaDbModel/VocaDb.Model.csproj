@@ -858,6 +858,7 @@
     <Compile Include="Service\Search\Tags\TagSearch.cs" />
     <Compile Include="Service\Search\Tags\TagSearchTextQuery.cs" />
     <Compile Include="Service\Search\User\FollowedArtistQueryParams.cs" />
+    <Compile Include="Service\Search\User\UserQueryParams.cs" />
     <Compile Include="Service\Security\HostCollection.cs" />
     <Compile Include="Service\Security\IPasswordHashAlgorithm.cs" />
     <Compile Include="Service\Security\PasswordHashAlgorithms.cs" />

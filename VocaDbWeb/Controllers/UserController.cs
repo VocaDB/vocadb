@@ -21,6 +21,7 @@ using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
@@ -218,8 +219,12 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(filter)) {
 
-				var result = Data.GetUsers(SearchTextQuery.Create(filter), UserGroupId.Nothing, false, false, null, 
-					UserSortRule.Name, new PagingProperties(0, 1, true), u => u.Name);
+				var queryParams = new UserQueryParams {
+					Common = new CommonSearchParams(SearchTextQuery.Create(filter), false, false),
+					Paging = new PagingProperties(0, 1, true)
+				};
+
+				var result = Data.GetUsers(queryParams, u => u.Name);
 
 				if (result.TotalCount == 1 && result.Items.Length == 1) {
 					return RedirectToAction("Profile", new { id = result.Items[0] });
