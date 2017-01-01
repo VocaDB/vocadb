@@ -41,6 +41,10 @@ namespace VocaDb.Model.Domain {
 			return (EntryType.ToString() + "_" + Id).GetHashCode();
 		}
 
+		public override string ToString() {
+			return string.Format("Entry of type {0}, ID {1}", EntryType, Id);
+		}
+
 	}
 
 }

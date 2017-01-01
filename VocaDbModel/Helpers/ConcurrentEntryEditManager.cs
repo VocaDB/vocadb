@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Users;
 
@@ -11,6 +12,7 @@ namespace VocaDb.Model.Helpers {
 	/// </summary>
 	public class ConcurrentEntryEditManager {
 
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly ConcurrentEntryEditManager staticInstance = new ConcurrentEntryEditManager();
 
 		public static readonly EntryEditData Nothing = new EntryEditData();
@@ -73,8 +75,10 @@ namespace VocaDb.Model.Helpers {
 
 				if (editors.ContainsKey(entry))
 					editors[entry].Refresh(user);
-				else
+				else {
+					log.Debug("{0} starting to edit {1}", user, entry);
 					editors.Add(entry, CreateEntryEditData(user));
+				}
 
 			}
 
