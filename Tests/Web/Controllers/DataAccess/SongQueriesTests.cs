@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
@@ -473,6 +474,26 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(matchingTag.Id, result.TagMatches.First().Id, "Matching tag");
 			Assert.AreEqual(1, result.LikeMatches.Length, "Number of like matches");
 			Assert.AreEqual(matchingLike.Id, result.LikeMatches.First().Id, "Matching like");
+
+		}
+
+		[TestMethod]
+		public void GetSongForEdit() {
+
+			var album = repository.Save(CreateEntry.Album());
+			album.OriginalRelease.ReleaseDate = new OptionalDateTime(2007, 8, 31);
+			var relEvent = repository.Save(new ReleaseEvent(string.Empty, new DateTime(2007, 8, 31), "Miku's birthday"));
+			album.OriginalRelease.ReleaseEvent = relEvent;
+
+			var album2 = repository.Save(CreateEntry.Album());
+			album2.OriginalRelease.ReleaseDate = new OptionalDateTime(2017, 8, 31);
+			album.AddSong(song, 1, 1);
+			album2.AddSong(song, 1, 2);
+
+			var result = queries.GetSongForEdit(song.Id);
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(relEvent.Id, result.AlbumEventId, "AlbumEventId");
 
 		}
 
