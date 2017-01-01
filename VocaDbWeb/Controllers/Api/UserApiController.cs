@@ -331,8 +331,7 @@ namespace VocaDb.Web.Controllers.Api {
 				throw new HttpForbiddenException();
 			}
 
-			foreach (var mid in messageId)
-				messageQueries.Delete(mid);
+			messageQueries.Delete(messageId);
 
 		}
 

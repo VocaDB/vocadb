@@ -17,6 +17,16 @@ namespace VocaDb.Model.Database.Queries {
 		public UserMessageQueries(IUserMessageRepository repository, IUserPermissionContext permissionContext) 
 			: base(repository, permissionContext) {}
 
+		private void DoDelete(IDatabaseContext ctx, UserMessage msg) {
+
+			VerifyResourceAccess(msg.User);
+
+			msg.Sender?.SentMessages.Remove(msg);
+			msg.Receiver.ReceivedMessages.Remove(msg);
+			ctx.Delete(msg);
+
+		}
+
 		/// <summary>
 		/// Permanently deletes a message by Id.
 		/// </summary>
@@ -29,15 +39,36 @@ namespace VocaDb.Model.Database.Queries {
 
 				var msg = ctx.Load(messageId);
 
-				VerifyResourceAccess(msg.User);
-
-				if (msg.Sender != null)
-					msg.Sender.SentMessages.Remove(msg);
-
-				msg.Receiver.ReceivedMessages.Remove(msg);
-				ctx.Delete(msg);
+				DoDelete(ctx, msg);
 
 				ctx.AuditLogger.SysLog(string.Format("deleted {0}", msg));
+
+			});
+
+		}
+
+		/// <summary>
+		/// Permanently deletes multiple messages by ID.
+		/// </summary>
+		/// <param name="messageIds">List of IDs of the messages to be deleted.</param>
+		public void Delete(int[] messageIds) {
+
+			if (messageIds.Length == 1) {
+				Delete(messageIds.First());
+				return;
+			}
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			repository.HandleTransaction(ctx => {
+
+				var messages = ctx.LoadMultiple<UserMessage>(messageIds);
+
+				foreach (var msg in messages) {
+					DoDelete(ctx, msg);
+				}
+
+				ctx.AuditLogger.SysLog(string.Format("deleted {0} messages", messageIds.Length));
 
 			});
 
