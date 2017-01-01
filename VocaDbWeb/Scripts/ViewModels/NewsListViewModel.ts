@@ -21,7 +21,12 @@ module vdb.viewModels {
                     if (post.content.length > 400) {
                         post.content = post.content.substring(0, 400) + "...";
                         post.date = new Date(post.date).toLocaleString();
-                    }
+					}
+
+					if (post.author && post.author.avatar_URL) {
+						// Is there a way to get HTTPS URLs by default?
+						post.author.avatar_URL = post.author.avatar_URL.replace("http://", "https://");
+					}
 
                 });
 
