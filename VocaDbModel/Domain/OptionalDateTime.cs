@@ -2,7 +2,7 @@
 using System.Globalization;
 namespace VocaDb.Model.Domain {
 
-	public class OptionalDateTime : IOptionalDateTime {
+	public class OptionalDateTime : IOptionalDateTime, IComparable<OptionalDateTime> {
 
 		public static bool operator ==(OptionalDateTime p1, OptionalDateTime p2) {
 
@@ -113,6 +113,10 @@ namespace VocaDb.Model.Domain {
 		}
 
 		public virtual int? Year { get; set; }
+
+		public int CompareTo(OptionalDateTime other) {
+			return SortableDateTime.CompareTo(other.SortableDateTime);
+		}
 
 		/// <summary>
 		/// Tests this date with equality with another.
