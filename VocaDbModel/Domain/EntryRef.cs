@@ -42,7 +42,7 @@ namespace VocaDb.Model.Domain {
 		}
 
 		public override string ToString() {
-			return string.Format("Entry of type {0}, ID {1}", EntryType, Id);
+			return string.Format("entry of type {0}, ID {1}", EntryType, Id);
 		}
 
 	}

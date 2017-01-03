@@ -146,7 +146,7 @@ namespace VocaDb.Model.Service {
 				user.Options.TwitterOAuthToken = authToken;
 				session.Update(user);
 
-				AuditLog(string.Format("connected to twitter from {0}.", MakeGeoIpToolLink(hostname)), session, user);
+				AuditLog(string.Format("connected to Twitter account '{0}' from {1}.", twitterName, MakeGeoIpToolLink(hostname)), session, user);
 
 				return true;
 
