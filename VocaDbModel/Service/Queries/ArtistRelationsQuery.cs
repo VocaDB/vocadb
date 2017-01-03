@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.Queries {
 			
 			var id = artist.Id;
 
-			var queryWithoutMain = session.OfType<ArtistForAlbum>().Query()
+			var queryWithoutMain = session.Query<ArtistForAlbum>()
 				.Where(s => !s.Album.Deleted && s.Artist.Id == id && !s.IsSupport);
 
 			var query = queryWithoutMain
@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service.Queries {
 			
 			var id = artist.Id;
 
-			var queryWithoutMain = session.OfType<ArtistForAlbum>().Query()
+			var queryWithoutMain = session.Query<ArtistForAlbum>()
 				.Where(s => !s.Album.Deleted && s.Artist.Id == id && !s.IsSupport 
 					&& s.Album.RatingAverageInt > 0 && !latestAlbumIds.Contains(s.Album.Id));
 
@@ -77,7 +77,7 @@ namespace VocaDb.Model.Service.Queries {
 
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), () => {
 
-				return ctx.OfType<ArtistForSong>().Query()
+				return ctx.Query<ArtistForSong>()
 					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport)
 					.WhereIsMainSong(artist.ArtistType)
 					.OrderByPublishDate(SortDirection.Descending)
@@ -108,7 +108,7 @@ namespace VocaDb.Model.Service.Queries {
 
 				var latestSongIds = latestSongs != null ? latestSongs.Select(s => s.Id).ToArray() : new int[0];
 
-				return ctx.OfType<ArtistForSong>().Query()
+				return ctx.Query<ArtistForSong>()
 					.Where(s => !s.Song.Deleted 
 						&& s.Artist.Id == artist.Id 
 						&& !s.IsSupport
@@ -185,7 +185,8 @@ namespace VocaDb.Model.Service.Queries {
 
 			var topVocaloidIds = topVocaloidIdsAndCounts.Select(i => i.Key).ToArray();
 
-			var topVocaloids = ctx.Query<Artist>().Where(a => topVocaloidIds.Contains(a.Id))
+			var topVocaloids = ctx.Query<Artist>()
+				.Where(a => topVocaloidIds.Contains(a.Id))
 				.ToArray()
 				.Select(a => new TopStatContract<TranslatedArtistContract> {
 					Data = new TranslatedArtistContract(a),
