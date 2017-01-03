@@ -23,8 +23,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (artistType == ArtistType.Producer) {
 
 				return query
-					.Where(q => (q.Song.SongType != SongType.MusicPV || (q.Roles & ArtistRoles.Animator) != ArtistRoles.Default)
-						&& q.Roles != ArtistRoles.VocalDataProvider);
+					.Where(artistForSong => (artistForSong.Song.SongType != SongType.MusicPV || (artistForSong.Roles & ArtistRoles.Animator) != ArtistRoles.Default)
+						&& artistForSong.Roles != ArtistRoles.VocalDataProvider);
 
 			}
 
