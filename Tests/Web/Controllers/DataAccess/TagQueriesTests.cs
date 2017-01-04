@@ -290,6 +290,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Merge_FollowedTags() {
+
+			var user2 = repository.Save(CreateEntry.User());
+			var target = repository.Save(new Tag("target"));
+			user.AddTag(tag);
+			user2.AddTag(target);
+
+			queries.Merge(tag.Id, target.Id);
+
+			Assert.AreEqual(2, target.TagsForUsers.Count, "Followed tags were migrated");
+			Assert.IsTrue(target.TagsForUsers.Any(t => t.User == user), "Follow was migrated");
+
+		}
+
+		[TestMethod]
 		public void Update_Description() {
 
 			var updated = new TagForEditContract(tag, false, permissionContext);

@@ -530,6 +530,11 @@ namespace VocaDb.Model.Database.Queries {
 					diff.WebLinks.Set();
 				}
 
+				foreach (var user in source.TagsForUsers.Select(r => r.User).Where(u => !target.TagsForUsers.Any(r2 => r2.User.Equals(u)))) {
+					var link = user.AddTag(target);
+					ctx.Save(link);
+				}
+
 				// Create merge record
 				new CreateMergeEntryQuery().CreateMergeEntry<Tag, TagMergeRecord>(ctx, sourceId, target);
 

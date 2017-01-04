@@ -552,6 +552,7 @@ namespace VocaDb.Model.Domain.Users {
 			ParamIs.NotNull(() => tag);
 
 			var link = new TagForUser(this, tag);
+			tag.TagsForUsers.Add(link);
 			return link;
 
 		}

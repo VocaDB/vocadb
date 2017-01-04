@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
@@ -44,6 +45,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
+		private IList<TagForUser> tagsForUsers = new List<TagForUser>();
 		private WebLinkManager<TagWebLink> webLinks = new WebLinkManager<TagWebLink>();
 
 		public Tag() {
@@ -276,6 +278,8 @@ namespace VocaDb.Model.Domain.Tags {
 			if (Parent != null)
 				Parent.Children.Remove(this);
 
+			TagsForUsers.Clear();
+
 		}
 
 		public virtual bool Equals(Tag tag) {
@@ -360,6 +364,14 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public virtual EntryStatus Status { get; set; }
+
+		public virtual IList<TagForUser> TagsForUsers {
+			get { return tagsForUsers; }
+			set {
+				ParamIs.NotNull(() => value);
+				tagsForUsers = value;
+			}
+		}
 
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
 
