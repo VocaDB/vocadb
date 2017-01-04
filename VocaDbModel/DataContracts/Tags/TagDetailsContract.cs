@@ -74,6 +74,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public new EnglishTranslatedString Description { get; set; }
 
+		public bool IsFollowing { get; set; }
+
 		public CommentForApiContract[] LatestComments { get; set; }
 
 		public TagBaseContract[] RelatedTags { get; set; }

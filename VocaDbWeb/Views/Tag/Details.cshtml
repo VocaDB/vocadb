@@ -58,12 +58,13 @@
 			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children);
 
 			var repo = new vdb.repositories.TagRepository('@RootPath');
+			var userRepo = new vdb.repositories.UserRepository(urlMapper);
 			var latestComments = @ToJS(Model.LatestComments);
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 			var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.TagReportTypeNames, TagReport.ReportTypesWithRequiredNotes));
 
-			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
-				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
+			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, userRepo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
+				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)), @ToJS(Model.IsFollowing));
 			ko.applyBindings(vm);
 
 		});
@@ -72,6 +73,9 @@
 }
 
 @section Toolbar {
+	<a href="#" data-bind="click: followTag, jqButton: { icon: 'ui-icon-plus' }, visible: !isFollowed(), disable: !isLoggedIn">Follow tag</a>
+	<a href="#" data-bind="click: unfollowTag, jqButton: { icon: 'ui-icon-close' }, visible: isFollowed()">Unfollow tag</a>
+
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editTagLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>

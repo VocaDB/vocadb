@@ -375,6 +375,28 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void AddFollowedTag(int userId, int tagId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			HandleTransaction(ctx => {
+
+				var exists = ctx.Query<TagForUser>().Any(u => u.User.Id == userId && u.Tag.Id == tagId);
+
+				if (exists)
+					return;
+
+				var user = ctx.Load<User>(userId);
+				var tag = ctx.Load<Tag>(tagId);
+
+				ctx.Save(user.AddTag(tag));
+
+				AuditLog(string.Format("followed {0}", tag), ctx, user);
+
+			});
+
+		}
+
 		public CommentQueries<UserComment, User> Comments(IDatabaseContext<User> ctx) {
 			return new CommentQueries<UserComment, User>(ctx.OfType<UserComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
@@ -1095,6 +1117,25 @@ namespace VocaDb.Model.Database.Queries {
 				var contracts = users.Select(fac).ToArray();
 
 				return new PartialFindResult<T>(contracts, count);
+
+			});
+
+		}
+
+		public void RemoveFollowedTag(int userId, int tagId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			HandleTransaction(session => {
+
+				var link = session.Query<TagForUser>()
+					.FirstOrDefault(a => a.Tag.Id == tagId && a.User.Id == userId);
+
+				AuditLog(string.Format("removing {0}", link), session);
+
+				if (link != null) {
+					session.Delete(link);
+				}
 
 			});
 

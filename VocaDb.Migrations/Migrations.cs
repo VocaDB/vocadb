@@ -4,6 +4,21 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201701041900)]
+	public class TagForUser : AutoReversingMigration {
+		public override void Up() {
+
+			Create.Table(TableNames.TagsForUsers)
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id")
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
+
+			Create.UniqueConstraint("UX_TagsForUsers_Tag_User").OnTable(TableNames.TagsForUsers)
+				.Columns("Tag", "[User]");
+
+		}
+	}
+
 	[Migration(201611131900)]
 	public class VoicebankReleaseDate : AutoReversingMigration {
 

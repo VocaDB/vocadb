@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
@@ -316,7 +317,8 @@ namespace VocaDb.Model.Database.Queries {
 					songs.TopUsages, songs.TotalCount,
 					PermissionContext.LanguagePreference) {
 					CommentCount = Comments(session).GetCount(tag.Id),
-					LatestComments = latestComments
+					LatestComments = latestComments,
+					IsFollowing = permissionContext.IsLoggedIn && session.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId)
 				};
 				
 			});

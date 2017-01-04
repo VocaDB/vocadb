@@ -6,13 +6,16 @@ module vdb.viewModels.tags {
 
 	export class TagDetailsViewModel {
 		
-		constructor(repo: rep.TagRepository,
+		constructor(
+			repo: rep.TagRepository,
+			private userRepo: rep.UserRepository,
 			latestComments: dc.CommentContract[],
 			reportTypes: IEntryReportType[],
 			loggedUserId: number,
-			tagId: number,
+			private tagId: number,
 			canDeleteAllComments: boolean,
-			showTranslatedDescription: boolean) {
+			showTranslatedDescription: boolean,
+			isFollowed: boolean) {
 			
 			this.comments = new EditableCommentsViewModel(repo.getComments(), tagId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
 
@@ -25,10 +28,28 @@ module vdb.viewModels.tags {
 			});
 
 			this.description = new globalization.EnglishTranslatedStringViewModel(showTranslatedDescription);
+			this.isFollowed = ko.observable(isFollowed);
+			this.isLoggedIn = !!loggedUserId;
 
 		}
 
 		public comments: EditableCommentsViewModel;
+
+		public followTag = () => {
+			if (!this.isLoggedIn)
+				return;
+			this.userRepo.addFollowedTag(this.tagId);
+			this.isFollowed(true);
+		}
+
+		public unfollowTag = () => {
+			this.userRepo.deleteFollowedTag(this.tagId);
+			this.isFollowed(false);			
+		}
+
+		public isFollowed: KnockoutObservable<boolean>;
+
+		public isLoggedIn: boolean;
 
 		public reportViewModel: ReportEntryViewModel;
 

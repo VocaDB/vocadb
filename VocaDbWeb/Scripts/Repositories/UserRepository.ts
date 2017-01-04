@@ -9,7 +9,11 @@ module vdb.repositories {
 
     // Repository for managing users and related objects.
     // Corresponds to the UserController class.
-    export class UserRepository implements ICommentRepository {
+	export class UserRepository implements ICommentRepository {
+
+		public addFollowedTag = (tagId: number, callback?: () => void) => {
+			$.post(this.urlMapper.mapRelative("/api/users/current/followedTags/" + tagId), callback);
+		}
 
 		public createComment = (userId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
 
@@ -27,6 +31,10 @@ module vdb.repositories {
 			
 			$.ajax(this.urlMapper.mapRelative("/api/users/profileComments/" + commentId), { type: 'DELETE', success: callback });
 
+		}
+
+		public deleteFollowedTag = (tagId: number, callback?: () => void) => {
+			$.ajax(this.urlMapper.mapRelative("/api/users/current/followedTags/" + tagId), { type: 'DELETE', success: callback });
 		}
 
 		public deleteMessage = (messageId: number) => {

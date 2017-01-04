@@ -60,6 +60,12 @@ namespace VocaDb.Web.Controllers.Api {
 			this.userIconFactory = userIconFactory;
 		}
 
+		[Route("current/followedTags/{tagId:int}")]
+		[Authorize]
+		public void DeleteFollowedTag(int tagId) {
+			queries.RemoveFollowedTag(permissionContext.LoggedUserId, tagId);
+		}
+
 		/// <summary>
 		/// Deletes a comment.
 		/// </summary>
@@ -611,6 +617,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 			ConcurrentEntryEditManager.CheckConcurrentEdits(new EntryRef(entryType, entryId), permissionContext.LoggedUser);
 
+		}
+
+		[Route("current/followedTags/{tagId:int}")]
+		[Authorize]
+		public void PostFollowedTag(int tagId) {
+			queries.AddFollowedTag(permissionContext.LoggedUserId, tagId);
 		}
 
 		// This is the standard way of providing value in body. Alternatively, a custom model binder.

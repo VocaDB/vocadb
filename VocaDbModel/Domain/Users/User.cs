@@ -15,6 +15,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Security;
 
@@ -542,6 +543,15 @@ namespace VocaDb.Model.Domain.Users {
 
 			song.RatingScore += FavoriteSongForUser.GetRatingScore(rating);
 
+			return link;
+
+		}
+
+		public virtual TagForUser AddTag(Tag tag) {
+
+			ParamIs.NotNull(() => tag);
+
+			var link = new TagForUser(this, tag);
 			return link;
 
 		}

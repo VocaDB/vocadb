@@ -440,6 +440,7 @@
     <Compile Include="Domain\Users\OldUsername.cs" />
     <Compile Include="Domain\Users\OwnedArtistForUser.cs" />
     <Compile Include="Domain\Users\PurchaseStatus.cs" />
+    <Compile Include="Domain\Users\TagForUser.cs" />
     <Compile Include="Domain\Users\UserComment.cs" />
     <Compile Include="Domain\Users\UserKnownLanguage.cs" />
     <Compile Include="Domain\Users\UserReport.cs" />
@@ -590,6 +591,7 @@
     <Compile Include="Mapping\Tags\TagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\Users\OldUsernameMap.cs" />
+    <Compile Include="Mapping\Users\TagForUserMap.cs" />
     <Compile Include="Mapping\Users\UserKnownLanguageMap.cs" />
     <Compile Include="Mapping\WebLinkMap.cs" />
     <Compile Include="Mapping\MikuDb\MikuDbAlbumMap.cs" />
