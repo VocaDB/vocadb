@@ -387,7 +387,7 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.AuditLog(logStr);
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
-				new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer);
+				new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);
 
 				return new SongContract(song, PermissionContext.LanguagePreference);
 
@@ -953,7 +953,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var newPVCutoff = TimeSpan.FromDays(7);
 				if (oldPvCount == 0 && song.PVs.OfType(PVType.Original).Any() && song.CreateDate <= DateTime.Now - newPVCutoff) {
-					new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer);
+					new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);
 				}
 
 				var newSongCutoff = TimeSpan.FromHours(1);
@@ -962,7 +962,7 @@ namespace VocaDb.Model.Database.Queries {
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 					if (addedArtists.Any()) {
-						new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer);											
+						new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), song, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);											
 					}
 
 				}

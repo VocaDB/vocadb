@@ -448,12 +448,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryStatusNames.zh-Hans.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryTypeNames.de.designer.cs">
+    <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryTypeNames.es.designer.cs">
+    <Compile Include="Resources\Domain\EntryTypeNames.es.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.es.resx</DependentUpon>
@@ -869,22 +869,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryStatusNames.ru.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryTypeNames.Designer.cs">
+    <Compile Include="Resources\Domain\EntryTypeNames.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryTypeNames.fi.designer.cs">
+    <Compile Include="Resources\Domain\EntryTypeNames.fi.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.fi.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryTypeNames.ja.designer.cs">
+    <Compile Include="Resources\Domain\EntryTypeNames.ja.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.ja.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\EntryTypeNames.ru.designer.cs">
+    <Compile Include="Resources\Domain\EntryTypeNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryTypeNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Domain\EntryTypeNames.ru.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryTypeNames.ru.resx</DependentUpon>
@@ -1993,10 +1998,10 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.pt.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\EntryTypeNames.pt.resx">
+    <EmbeddedResource Include="Resources\Domain\EntryTypeNames.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.pt.designer.cs</LastGenOutput>
-    </Content>
+    </EmbeddedResource>
     <Content Include="App_GlobalResources\PermissionTokenNames.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>PermissionTokenNames.pt.designer.cs</LastGenOutput>
@@ -2121,10 +2126,10 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.es.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\EntryTypeNames.es.resx">
+    <EmbeddedResource Include="Resources\Domain\EntryTypeNames.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.es.designer.cs</LastGenOutput>
-    </Content>
+    </EmbeddedResource>
     <Content Include="App_GlobalResources\PermissionTokenNames.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>PermissionTokenNames.es.designer.cs</LastGenOutput>
@@ -3484,15 +3489,15 @@
       <LastGenOutput>PermissionTokenNames.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_GlobalResources\EntryTypeNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+    <EmbeddedResource Include="Resources\Domain\EntryTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryTypeNames.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_GlobalResources\EntryTypeNames.fi.resx">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Domain\EntryTypeNames.fi.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.fi.designer.cs</LastGenOutput>
-    </Content>
+    </EmbeddedResource>
     <Content Include="App_GlobalResources\EntryStatusNames.ja.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.ja.designer.cs</LastGenOutput>
@@ -3583,10 +3588,10 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.ru.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\EntryTypeNames.ru.resx">
+    <EmbeddedResource Include="Resources\Domain\EntryTypeNames.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.ru.designer.cs</LastGenOutput>
-    </Content>
+    </EmbeddedResource>
     <Content Include="App_GlobalResources\AlbumArchiveReasonNames.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>AlbumArchiveReasonNames.ru.designer.cs</LastGenOutput>
@@ -3634,10 +3639,10 @@
       <LastGenOutput>PVTypeNames.ja.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_GlobalResources\EntryTypeNames.ja.resx">
+    <EmbeddedResource Include="Resources\Domain\EntryTypeNames.ja.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.ja.designer.cs</LastGenOutput>
-    </Content>
+    </EmbeddedResource>
     <Content Include="App_GlobalResources\AlbumMediaTypeNames.ja.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>AlbumMediaTypeNames.ja.designer.cs</LastGenOutput>
@@ -3818,10 +3823,10 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.de.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\EntryTypeNames.de.resx">
+    <EmbeddedResource Include="Resources\Domain\EntryTypeNames.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.de.designer.cs</LastGenOutput>
-    </Content>
+    </EmbeddedResource>
     <Content Include="App_GlobalResources\PVTypeDescriptions.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>PVTypeDescriptions.de.designer.cs</LastGenOutput>

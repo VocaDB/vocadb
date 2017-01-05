@@ -108,7 +108,7 @@ namespace VocaDb.Web.Helpers {
 			new TranslateableEnum<EntryStatus>(() => global::Resources.EntryStatusNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EntryType> EntryTypeNames =
-			new TranslateableEnum<EntryType>(() => global::Resources.EntryTypeNames.ResourceManager);
+			new TranslateableEnum<EntryType>(() => Resources.Domain.EntryTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<PVType> PVTypeDescriptions =
 			new TranslateableEnum<PVType>(() => global::Resources.PVTypeDescriptions.ResourceManager);

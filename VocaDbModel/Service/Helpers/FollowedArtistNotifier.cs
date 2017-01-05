@@ -4,6 +4,7 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -15,9 +16,9 @@ namespace VocaDb.Model.Service.Helpers {
 	/// </summary>
 	public class FollowedArtistNotifier {
 
-		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown) {
+		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown, TranslateableEnum<EntryType> entryTypeNames) {
 			
-			var entryTypeName = entry.EntryType.ToString().ToLowerInvariant();
+			var entryTypeName = entryTypeNames[entry.EntryType].ToLowerInvariant();
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
 			var url = entryLinkFactory.GetFullEntryUrl(entry);
 
@@ -59,7 +60,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="mailer">Mailer for user email messages. Cannot be null.</param>
 		public void SendNotifications(IDatabaseContext<UserMessage> ctx, IEntryWithNames entry, 
 			IEnumerable<Artist> artists, IUser creator, IEntryLinkFactory entryLinkFactory,
-			IUserMessageMailer mailer) {
+			IUserMessageMailer mailer, IEnumTranslations enumTranslations) {
 
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
@@ -71,7 +72,7 @@ namespace VocaDb.Model.Service.Helpers {
 			var coll = artists.ToArray();
 			var artistIds = coll.Select(a => a.Id).ToArray();
 
-			// Get users with 3 or less unread messages, following any of the artists
+			// Get users with less than maximum number of unread messages, following any of the artists
 			var usersWithArtists = ctx.OfType<ArtistForUser>()
 				.Query()
 				.Where(afu => 
@@ -92,6 +93,7 @@ namespace VocaDb.Model.Service.Helpers {
 			if (!userIds.Any())
 				return;
 
+			var entryTypeNames = enumTranslations.Translations<EntryType>();
 			var users = ctx.OfType<User>().Query().Where(u => userIds.Contains(u.Id)).ToArray();
 
 			foreach (var user in users) {
@@ -104,8 +106,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 				string title;
 
-				var entryTypeName = entry.EntryType.ToString().ToLowerInvariant();
-				var msg = CreateMessageBody(followedArtists, user, entry, entryLinkFactory, true);
+				var entryTypeName = entryTypeNames[entry.EntryType].ToLowerInvariant();
+				var msg = CreateMessageBody(followedArtists, user, entry, entryLinkFactory, true, entryTypeNames);
 
 				if (followedArtists.Length == 1) {
 
@@ -125,7 +127,7 @@ namespace VocaDb.Model.Service.Helpers {
 				if (user.EmailOptions != UserEmailOptions.NoEmail && !string.IsNullOrEmpty(user.Email) 
 					&& followedArtists.Any(a => a.Users.Any(u => u.User.Equals(user) && u.EmailNotifications))) {
 					
-					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, entryLinkFactory, false));
+					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, entryLinkFactory, false, entryTypeNames));
 
 				}
 

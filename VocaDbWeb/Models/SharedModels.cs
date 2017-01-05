@@ -1,6 +1,7 @@
 ﻿using Resources;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Web.Resources.Domain;
 
 namespace VocaDb.Web.Models {
 

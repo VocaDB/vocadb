@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Service.Helpers {
 
@@ -29,7 +30,7 @@ namespace VocaDb.Tests.Service.Helpers {
 		private void CallSendNotifications(IUser creator) {
 
 			repository.HandleTransaction(ctx => {
-				new FollowedArtistNotifier().SendNotifications(ctx, album, new[] { producer, vocalist }, creator, entryLinkFactory, mailer);
+				new FollowedArtistNotifier().SendNotifications(ctx, album, new[] { producer, vocalist }, creator, entryLinkFactory, mailer, new EnumTranslations());
 			});
 
 		}

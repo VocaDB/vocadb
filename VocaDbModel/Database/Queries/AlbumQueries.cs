@@ -183,7 +183,7 @@ namespace VocaDb.Model.Database.Queries {
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
 				new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), album, album.ArtistList, PermissionContext.LoggedUser, 
-					entryLinkFactory, mailer);
+					entryLinkFactory, mailer, enumTranslations);
 
 				return new AlbumContract(album, PermissionContext.LanguagePreference);
 
@@ -736,7 +736,7 @@ namespace VocaDb.Model.Database.Queries {
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 					if (addedArtists.Any()) {
-						new FollowedArtistNotifier().SendNotifications(session.OfType<UserMessage>(), album, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer);											
+						new FollowedArtistNotifier().SendNotifications(session.OfType<UserMessage>(), album, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);											
 					}
 
 				}
