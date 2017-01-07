@@ -219,6 +219,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Create_NotificationForTags() {
+
+			repository.Save(user2.AddTag(tag));
+			repository.Save(new TagMapping(tag, "VOCAROCK"));
+			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "VOCAROCK" });
+
+			CallCreate();
+
+			var notification = repository.List<UserMessage>().FirstOrDefault();
+			Assert.IsNotNull(notification, "Notification was created");
+			Assert.AreEqual(user2, notification.User, "Notified user");
+
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
 		public void Create_NoPermission() {
 
