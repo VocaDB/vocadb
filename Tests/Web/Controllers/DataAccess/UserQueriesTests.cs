@@ -21,6 +21,7 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Security.StopForumSpam;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
@@ -98,7 +99,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			stopForumSpamClient = new FakeStopForumSpamClient();
 			mailer = new FakeUserMessageMailer();
 			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer, 
-				new FakeUserIconFactory(), null, new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager());
+				new FakeUserIconFactory(), null, new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager(), new EnumTranslations());
 			softBannedIPs = new HostCollection();
 
 			request = new PasswordResetRequest(userWithEmail) { Id = Guid.NewGuid() };

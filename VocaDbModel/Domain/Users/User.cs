@@ -512,6 +512,15 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
+		public virtual UserMessage CreateNotification(string subject, string body) {
+
+			log.Debug("Creating notification for {0} with subject '{1}'", this, subject);
+
+			var msg = new UserMessage(this, subject, body, false);
+			Messages.Add(msg);
+			return msg;
+		}
+
 		public virtual OwnedArtistForUser AddOwnedArtist(Artist artist) {
 
 			ParamIs.NotNull(() => artist);

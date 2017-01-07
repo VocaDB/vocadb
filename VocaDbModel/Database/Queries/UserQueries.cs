@@ -41,6 +41,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Security.StopForumSpam;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Database.Queries {
 
@@ -85,6 +86,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryImagePersisterOld entryImagePersister;
+		private readonly IEnumTranslations enumTranslations;
 		private readonly IUserMessageMailer mailer;
 		private readonly IStopForumSpamClient sfsClient;
 		private readonly IUserIconFactory userIconFactory;
@@ -356,7 +358,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public UserQueries(IUserRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IStopForumSpamClient sfsClient,
 			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister, ObjectCache cache, 
-			BrandableStringsManager brandableStringsManager)
+			BrandableStringsManager brandableStringsManager, IEnumTranslations enumTranslations)
 			: base(repository, permissionContext) {
 
 			ParamIs.NotNull(() => repository);
@@ -372,6 +374,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.entryImagePersister = entryImagePersister;
 			this.cache = cache;
 			this.brandableStringsManager = brandableStringsManager;
+			this.enumTranslations = enumTranslations;
 
 		}
 
@@ -1225,7 +1228,7 @@ namespace VocaDb.Model.Database.Queries {
 		public TagUsageForApiContract[] SaveAlbumTags(int albumId, TagBaseContract[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries(PermissionContext).AddTags<Album, AlbumTagUsage>(
-				albumId, tags, onlyAdd, repository, entryLinkFactory,
+				albumId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				album => album.Tags, 
 				(album, ctx) => new AlbumTagUsageFactory(ctx, album));
 
@@ -1234,7 +1237,7 @@ namespace VocaDb.Model.Database.Queries {
 		public TagUsageForApiContract[] SaveArtistTags(int artistId, TagBaseContract[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries(PermissionContext).AddTags<Artist, ArtistTagUsage>(
-				artistId, tags, onlyAdd, repository, entryLinkFactory,
+				artistId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				artist => artist.Tags, 
 				(artist, ctx) => new ArtistTagUsageFactory(ctx, artist));
 
@@ -1243,7 +1246,7 @@ namespace VocaDb.Model.Database.Queries {
 		public TagUsageForApiContract[] SaveSongTags(int songId, TagBaseContract[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries(PermissionContext).AddTags<Song, SongTagUsage>(
-				songId, tags, onlyAdd, repository, entryLinkFactory,
+				songId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				song => song.Tags, 
 				(song, ctx) => new SongTagUsageFactory(ctx, song));
 

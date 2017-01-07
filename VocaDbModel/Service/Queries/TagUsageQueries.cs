@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Queries {
 
@@ -42,9 +43,10 @@ namespace VocaDb.Model.Service.Queries {
 			bool onlyAdd,
 			IRepository<User> repository,
 			IEntryLinkFactory entryLinkFactory,
+			IEnumTranslations enumTranslations,
 			Func<TEntry, TagManager<TTag>> tagFunc,
 			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory) 
-			where TEntry : IEntryBase where TTag : TagUsage {
+			where TEntry : IEntryWithNames, IEntryWithTags where TTag : TagUsage {
 			
 			ParamIs.NotNull(() => tags);
 
@@ -83,6 +85,9 @@ namespace VocaDb.Model.Service.Queries {
 				var tagNames = appliedTags.Select(t => t.DefaultName);
 				ctx.AuditLogger.AuditLog(string.Format("tagging {0} with {1}",
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
+
+				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
+				new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
 
 				var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
 				var tagCtx = ctx.OfType<Tag>();

@@ -9,6 +9,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Service.Queries {
 
@@ -22,8 +23,8 @@ namespace VocaDb.Tests.Service.Queries {
 
 		private void AddTags(int entryId, params TagBaseContract[] tags) {
 
-			queries.AddTags<Song, SongTagUsage>(entryId, tags, false, repository,
-				new FakeEntryLinkFactory(), song => song.Tags, (song, ctx) => new SongTagUsageFactory(ctx, song));
+			queries.AddTags<Song, SongTagUsage>(entryId, tags, false, repository, new FakeEntryLinkFactory(), new EnumTranslations(),
+				song => song.Tags, (song, ctx) => new SongTagUsageFactory(ctx, song));
 
 		}
 
@@ -202,6 +203,33 @@ namespace VocaDb.Tests.Service.Queries {
 			Assert.AreEqual(1, entry.Tags.Usages.Count, "Number of tag usages for entry");
 			Assert.AreEqual(0, tag.UsageCount, "Number of usages for tag");
 			Assert.IsFalse(entry.Tags.HasTag(tag), "Tag was removed from entry");
+
+		}
+
+		[TestMethod]
+		public void AddTag_SendNotifications() {
+
+			var followingUser = repository.Save(CreateEntry.User(name: "Rin"));
+			var tag = repository.Save(CreateEntry.Tag("rock"));
+			repository.Save(followingUser.AddTag(tag));
+
+			AddTags(entry.Id, Contract(tag.Id));
+
+			var message = repository.List<UserMessage>().FirstOrDefault();
+			Assert.IsNotNull("message", "Message was sent");
+			Assert.AreEqual(followingUser, message?.User, "User as expected");
+
+		}
+
+		[TestMethod]
+		public void AddTag_SendNotifications_IgnoreSelf() {
+
+			var tag = repository.Save(CreateEntry.Tag("rock"));
+			repository.Save(user.AddTag(tag));
+
+			AddTags(entry.Id, Contract(tag.Id));
+
+			Assert.AreEqual(0, repository.List<UserMessage>().Count, "No message was sent");
 
 		}
 

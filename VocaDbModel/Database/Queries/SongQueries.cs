@@ -95,10 +95,10 @@ namespace VocaDb.Model.Database.Queries {
 			}
 
 		}
-		private void AddTagsFromPV(VideoUrlParseResult pvResult, Song song, IDatabaseContext<Song> ctx) {
+		private Tag[] AddTagsFromPV(VideoUrlParseResult pvResult, Song song, IDatabaseContext<Song> ctx) {
 			
 			if (pvResult.Tags == null || !pvResult.Tags.Any())
-				return;
+				return new Tag[0];
 						
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var tags = MapTags(ctx, pvResult.Tags);
@@ -124,6 +124,8 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 			}
+
+			return tags;
 
 		}
 
@@ -346,12 +348,13 @@ namespace VocaDb.Model.Database.Queries {
 				diff.Artists.Set(contract.Artists.Any());
 
 				var pvs = new List<PVContract>();
+				Tag[] addedTags = null;
 
 				if (pvResult != null) {
 
 					pvs.Add(new PVContract(pvResult, PVType.Original));
 
-					AddTagsFromPV(pvResult, song, ctx);
+					addedTags = AddTagsFromPV(pvResult, song, ctx);
 
 				}
 
@@ -387,7 +390,11 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.AuditLog(logStr);
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
-				new FollowedArtistNotifier().SendNotifications(ctx, song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);
+				var user = PermissionContext.LoggedUser;
+
+				// Send notifications. Avoid sending notification to the same users twice.
+				var notifiedUsers = new FollowedArtistNotifier().SendNotifications(ctx, song, song.ArtistList, user, entryLinkFactory, mailer, enumTranslations);
+				new FollowedTagNotifier().SendNotifications(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);
 
 				return new SongContract(song, PermissionContext.LanguagePreference);
 
