@@ -58,7 +58,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
 		/// <param name="entryLinkFactory">Factory for creating links to entries. Cannot be null.</param>
 		/// <param name="mailer">Mailer for user email messages. Cannot be null.</param>
-		public void SendNotifications(IDatabaseContext<UserMessage> ctx, IEntryWithNames entry, 
+		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, 
 			IEnumerable<Artist> artists, IUser creator, IEntryLinkFactory entryLinkFactory,
 			IUserMessageMailer mailer, IEnumTranslations enumTranslations) {
 
@@ -91,7 +91,7 @@ namespace VocaDb.Model.Service.Helpers {
 			var userIds = usersWithArtists.Keys;
 
 			if (!userIds.Any())
-				return;
+				return new User[0];
 
 			var entryTypeNames = enumTranslations.Translations<EntryType>();
 			var users = ctx.OfType<User>().Query().Where(u => userIds.Contains(u.Id)).ToArray();
@@ -132,6 +132,8 @@ namespace VocaDb.Model.Service.Helpers {
 				}
 
 			}
+
+			return users;
 
 		}
 

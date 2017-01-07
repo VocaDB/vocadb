@@ -182,7 +182,7 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.AuditLog(string.Format("created album {0} ({1})", entryLinkFactory.CreateEntryLink(album), album.DiscType));
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
-				new FollowedArtistNotifier().SendNotifications(ctx.OfType<UserMessage>(), album, album.ArtistList, PermissionContext.LoggedUser, 
+				new FollowedArtistNotifier().SendNotifications(ctx, album, album.ArtistList, PermissionContext.LoggedUser, 
 					entryLinkFactory, mailer, enumTranslations);
 
 				return new AlbumContract(album, PermissionContext.LanguagePreference);
@@ -736,7 +736,7 @@ namespace VocaDb.Model.Database.Queries {
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 					if (addedArtists.Any()) {
-						new FollowedArtistNotifier().SendNotifications(session.OfType<UserMessage>(), album, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);											
+						new FollowedArtistNotifier().SendNotifications(session, album, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);											
 					}
 
 				}
