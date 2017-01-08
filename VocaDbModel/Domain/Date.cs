@@ -37,6 +37,8 @@ namespace VocaDb.Model.Domain {
 			DateTime = dateTimeOffset.HasValue ? (DateTime?)dateTimeOffset.Value.Date : null;
 		}
 
+		public Date(int year, int month, int day) : this(new DateTime(year, month, day)) { }
+
 		/// <summary>
 		/// Internal DateTime instance. Can be null.
 		/// </summary>

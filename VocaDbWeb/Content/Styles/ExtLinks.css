@@ -67,6 +67,10 @@ a.extLink[href^="https://utaitedb.net/"] {
 a.extLink[href^="http://utaite.wikia.com/wiki/"] {
   background: url("/Content/ExtIcons/utaitewikia.png") no-repeat left 50%;
 }
+a.extLink[href^="http://vk.com/"],
+a.extLink[href^="https://vk.com/"] {
+  background: url("/Content/ExtIcons/vk.png") no-repeat left 50%;
+}
 a.extLink[href^="http://www.vocallective.net"] {
   background: url("/Content/ExtIcons/vocallective.png") no-repeat left 50%;
 }
