@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			var firstAlbum = song.Albums.Where(a => a.Album.OriginalReleaseDate.IsFullDate).OrderBy(a => a.Album.OriginalReleaseDate).FirstOrDefault();
 
 			AlbumEventId = firstAlbum?.Album.OriginalReleaseEvent?.Id;
-			AlbumReleaseDate = song.FirstAlbumDate;
+			AlbumReleaseDate = song.FirstAlbumDate != null ? (DateTime?)DateTime.SpecifyKind(song.FirstAlbumDate.Value, DateTimeKind.Utc) : null;
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			DefaultNameLanguage = song.TranslatedName.DefaultLanguage;
 			HasAlbums = song.Albums.Any();
