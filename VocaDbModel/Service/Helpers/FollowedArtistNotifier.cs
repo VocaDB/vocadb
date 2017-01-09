@@ -4,6 +4,7 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -16,9 +17,9 @@ namespace VocaDb.Model.Service.Helpers {
 	/// </summary>
 	public class FollowedArtistNotifier {
 
-		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown, TranslateableEnum<EntryType> entryTypeNames) {
+		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown, 
+			string entryTypeName) {
 			
-			var entryTypeName = entryTypeNames[entry.EntryType].ToLowerInvariant();
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
 			var url = entryLinkFactory.GetFullEntryUrl(entry);
 
@@ -106,8 +107,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 				string title;
 
-				var entryTypeName = entryTypeNames[entry.EntryType].ToLowerInvariant();
-				var msg = CreateMessageBody(followedArtists, user, entry, entryLinkFactory, true, entryTypeNames);
+				var entryTypeName = entryTypeNames.GetName(entry.EntryType, CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture)).ToLowerInvariant();
+				var msg = CreateMessageBody(followedArtists, user, entry, entryLinkFactory, true, entryTypeName);
 
 				if (followedArtists.Length == 1) {
 
@@ -127,7 +128,7 @@ namespace VocaDb.Model.Service.Helpers {
 				if (user.EmailOptions != UserEmailOptions.NoEmail && !string.IsNullOrEmpty(user.Email) 
 					&& followedArtists.Any(a => a.Users.Any(u => u.User.Equals(user) && u.EmailNotifications))) {
 					
-					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, entryLinkFactory, false, entryTypeNames));
+					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, entryLinkFactory, false, entryTypeName));
 
 				}
 
