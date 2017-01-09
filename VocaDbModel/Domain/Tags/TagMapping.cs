@@ -1,5 +1,8 @@
 ﻿namespace VocaDb.Model.Domain.Tags {
 
+	/// <summary>
+	/// Defines tag mapping from an external source system such as NicoNicoDouga to VocaDB.
+	/// </summary>
 	public class TagMapping {
 
 		public TagMapping() { }
@@ -14,6 +17,10 @@
 
 		public virtual int Id { get; set; }
 
+		/// <summary>
+		/// Tag name in the source system.
+		/// For example "VOCAROCK".
+		/// </summary>
 		public virtual string SourceTag {
 			get { return sourceTag; }
 			set {
@@ -22,6 +29,9 @@
 			}
 		}
 
+		/// <summary>
+		/// VocaDB tag. Cannot be null.
+		/// </summary>
 		public virtual Tag Tag {
 			get { return tag; }
 			set {

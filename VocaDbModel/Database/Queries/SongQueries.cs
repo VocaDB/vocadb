@@ -201,8 +201,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		private Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {
 
-			var tagMappings = ctx.Query<TagMapping>().ToArray().ToDictionary(t => t.SourceTag, t => t.Tag, StringComparer.InvariantCultureIgnoreCase);
-			return nicoTags.Where(t => tagMappings.ContainsKey(t)).Select(t => tagMappings[t]).ToArray();
+			var tagMappings = ctx
+				.Query<TagMapping>()
+				.ToArray()
+				.ToDictionary(t => t.SourceTag, t => t.Tag, StringComparer.InvariantCultureIgnoreCase);
+
+			return nicoTags
+				.Where(t => tagMappings.ContainsKey(t))
+				.Select(t => tagMappings[t])
+				.ToArray();
 
 		}
 
