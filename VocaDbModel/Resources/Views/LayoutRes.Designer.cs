@@ -22,7 +22,7 @@ namespace VocaDb.Model.Resources.Views {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LayoutRes {
+    public class LayoutRes {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace VocaDb.Model.Resources.Views {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VocaDb.Model.Resources.Views.LayoutRes", typeof(LayoutRes).Assembly);
@@ -51,7 +51,7 @@ namespace VocaDb.Model.Resources.Views {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace VocaDb.Model.Resources.Views {
         /// <summary>
         ///   Looks up a localized string similar to Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU.
         /// </summary>
-        internal static string Keywords {
+        public static string Keywords {
             get {
                 return ResourceManager.GetString("Keywords", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace VocaDb.Model.Resources.Views {
         /// <summary>
         ///   Looks up a localized string similar to VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses..
         /// </summary>
-        internal static string PaypalDonateTitle {
+        public static string PaypalDonateTitle {
             get {
                 return ResourceManager.GetString("PaypalDonateTitle", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace VocaDb.Model.Resources.Views {
         /// <summary>
         ///   Looks up a localized string similar to VocaDB.
         /// </summary>
-        internal static string SiteName {
+        public static string SiteName {
             get {
                 return ResourceManager.GetString("SiteName", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace VocaDb.Model.Resources.Views {
         /// <summary>
         ///   Looks up a localized string similar to Vocaloid Database.
         /// </summary>
-        internal static string SiteTitle {
+        public static string SiteTitle {
             get {
                 return ResourceManager.GetString("SiteTitle", resourceCulture);
             }

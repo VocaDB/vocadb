@@ -1105,8 +1105,9 @@
     <EmbeddedResource Include="Resources\Views\LayoutRes.es.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.pt.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LayoutRes.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\LayoutRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\SongRes.de.resx" />
