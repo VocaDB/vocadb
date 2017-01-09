@@ -1,18 +1,15 @@
 ﻿using System.Resources;
+using VocaDb.Model.Resources.Views;
 
 namespace VocaDb.Model.Service.BrandableStrings.Collections {
 
-	public class ArtistStrings {
+	public class ArtistStrings : ResStringCollection {
 
-		public ArtistStrings(ResourceManager resourceMan) {
-			ResourceManager = resourceMan;
-		}
+		public ArtistStrings(ResourceManager resourceMan) : base(resourceMan) {}
 
-		public ResourceManager ResourceManager { get; }
+		public string AuthoredBy => GetString(nameof(ArtistRes.AuthoredBy));
+		public string NewArtistExternalLink => GetString(nameof(ArtistRes.NewArtistExternalLink));
 
-		public string AuthoredBy => ResourceManager.GetString("AuthoredBy");
-
-		public string NewArtistExternalLink => ResourceManager.GetString("NewArtistExternalLink");
 	}
 
 }

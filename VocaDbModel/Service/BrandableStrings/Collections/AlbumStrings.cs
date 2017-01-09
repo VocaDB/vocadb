@@ -1,22 +1,14 @@
 ﻿using System.Resources;
+using VocaDb.Model.Resources.Views;
 
 namespace VocaDb.Model.Service.BrandableStrings.Collections {
 
-	public class AlbumStrings {
+	public class AlbumStrings : ResStringCollection {
 
-		public AlbumStrings(ResourceManager resourceMan) {
-			ResourceManager = resourceMan;
-		}
+		public AlbumStrings(ResourceManager resourceMan) : base(resourceMan) {}
 
-		public ResourceManager ResourceManager { get; private set; }
-
-		public string NewAlbumArtistDesc {
-			get { return ResourceManager.GetString("NewAlbumArtistDesc"); }
-		}
-
-		public string NewAlbumInfo {
-			get { return ResourceManager.GetString("NewAlbumInfo"); }
-		}
+		public string NewAlbumArtistDesc => GetString(nameof(AlbumRes.NewAlbumArtistDesc));
+		public string NewAlbumInfo => GetString(nameof(AlbumRes.NewAlbumInfo));
 
 	}
 

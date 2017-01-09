@@ -525,7 +525,6 @@
     <Compile Include="Domain\Songs\SongName.cs" />
     <Compile Include="Domain\Songs\SongWebLink.cs" />
     <Compile Include="Domain\ExtLinks\WebLink.cs" />
-    <Compile Include="EmbeddedResources\EmbeddedResourceManager.cs" />
     <Compile Include="EnumVal.cs" />
     <Compile Include="Helpers\AlbumHelper.cs" />
     <Compile Include="Helpers\AlphaPassGenerator.cs" />
@@ -545,7 +544,6 @@
     <Compile Include="Helpers\LocalizedStringHelper.cs" />
     <Compile Include="Helpers\LyricsHelper.cs" />
     <Compile Include="Helpers\NameHelper.cs" />
-    <Compile Include="EmbeddedResources\EmbeddedResourceHelper.cs" />
     <Compile Include="Helpers\OtherHelper.cs" />
     <Compile Include="Helpers\PrimitiveParseHelper.cs" />
     <Compile Include="Helpers\ReCaptcha2.cs" />
@@ -962,7 +960,6 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <EmbeddedResource Include="EmbeddedResources\nicoTagMapping.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -1099,6 +1096,7 @@
     <EmbeddedResource Include="Resources\Views\HomeRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeRes.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\HomeRes.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\LayoutRes.de.resx" />
