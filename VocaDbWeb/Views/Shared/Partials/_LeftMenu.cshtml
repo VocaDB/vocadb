@@ -7,16 +7,20 @@
 @using VocaDb.Model.Utils.Search
 @inherits MenuPage
 
+@helper BannerLink(string title, string url, string img) {
+	<a href="@url" onclick="vdb.functions.trackOutboundLink(event)"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a>
+}
+
 @helper Banner(string title, string url, string img) {
-    <li><a href="@url"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a></li>
+    <li>@BannerLink(title, url, img)</li>
 }
 
 @helper SmallBanner(string title, string url, string img) {
-    <div><a href="@url"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a></div>
+    <div>@BannerLink(title, url, img)</div>
 }
 
 @helper SocialLink(string title, string url, string img ){
-    <a href="@url"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a>
+    @BannerLink(title, url, img)
 }
 
 <div class="span2 menu">
