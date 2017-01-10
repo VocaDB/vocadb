@@ -36,17 +36,19 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			Description = tag.Description;
 			RelatedTags = tag.RelatedTags
+				.Where(t => !t.LinkedTag.Deleted)
 				.Select(a => new TagBaseContract(a.LinkedTag, languagePreference, true))
 				.OrderBy(t => t.Name)
 				.ToArray();
 
 			Children = tag.Children
+				.Where(t => !t.Deleted)
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
 				.ToArray();
 
 			Siblings = tag.Parent != null ? tag.Parent.Children
-				.Where(t => !t.Equals(tag))
+				.Where(t => !t.Equals(tag) && !t.Deleted)
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
 				.ToArray() 
