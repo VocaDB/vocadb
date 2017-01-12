@@ -35,7 +35,7 @@ namespace VocaDb.Model.Domain.Artists {
 		private User createdBy;
 		private EnglishTranslatedString description;
 		private IList<ArtistForArtist> groups = new List<ArtistForArtist>();
-		//private IList<AlbumHit> hits = new List<AlbumHit>();
+		private IList<ArtistHit> hits = new List<ArtistHit>();
 		private IList<ArtistForArtist> members = new List<ArtistForArtist>();
 		private NameManager<ArtistName> names = new NameManager<ArtistName>();
 		private IList<OwnedArtistForUser> ownerUsers = new List<OwnedArtistForUser>();
@@ -215,6 +215,14 @@ namespace VocaDb.Model.Domain.Artists {
 		}*/
 
 		public virtual int Id { get; set; }
+
+		public virtual IList<ArtistHit> Hits {
+			get { return hits; }
+			set {
+				ParamIs.NotNull(() => value);
+				hits = value;
+			}
+		}
 
 		/// <summary>
 		/// Tests whether an artist is a valid base voicebank for this artist.

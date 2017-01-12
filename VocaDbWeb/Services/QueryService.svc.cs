@@ -147,14 +147,14 @@ namespace VocaDb.Web.Services {
 			if (!artists.Items.Any())
 				return null;
 
-			return artistQueries.GetDetails(artists.Items[0].Id);
+			return artistQueries.GetDetails(artists.Items[0].Id, null);
 
 		}
 
 		[OperationContract]
 		public ArtistDetailsContract GetArtistById(int id) {
 
-			var artist = artistQueries.GetDetails(id);
+			var artist = artistQueries.GetDetails(id, null);
 			return artist;
 
 		}

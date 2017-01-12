@@ -27,4 +27,22 @@ namespace VocaDb.Model.Domain {
 
 	}
 
+	public class GenericEntryHit<TEntry> : EntryHit where TEntry: class {
+		private TEntry entry;
+
+		public GenericEntryHit() {}
+		public GenericEntryHit(TEntry entry, int agent) : base(agent) {
+			Entry = entry;
+		}
+
+		public virtual TEntry Entry {
+			get { return entry; }
+			set {
+				ParamIs.NotNull(() => value);
+				entry = value;
+			}
+		}
+
+	}
+
 }

@@ -38,6 +38,7 @@ namespace VocaDb.Model.Mapping.Artists {
 				.KeyColumn("[BaseVoicebank]")
 				.Cache.ReadWrite();
 			HasMany(m => m.Comments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
+			HasMany(m => m.Hits).Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.WebLinks).Table("ArtistWebLinks").Inverse().Cascade.All().Cache.ReadWrite();
 
 			Component(m => m.ArchivedVersionsManager, 
@@ -127,5 +128,7 @@ namespace VocaDb.Model.Mapping.Artists {
 		}
 
 	}
+
+	public class ArtistHitMap : EntryHitMap<ArtistHit, Artist> { }
 
 }

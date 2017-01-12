@@ -4,6 +4,23 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201701122000)]
+	public class ArtistHit : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table("ArtistHits")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Artist").AsInt32().NotNullable().ForeignKey(TableNames.Artists, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Agent").AsInt32().NotNullable()
+				.WithColumn("[Date]").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+
+			Create.UniqueConstraint("UX_Artist_Agent").OnTable("ArtistHits").Columns("Artist", "Agent");
+
+		}
+
+	}
+
 	[Migration(201701041900)]
 	public class TagForUser : AutoReversingMigration {
 		public override void Up() {

@@ -131,7 +131,7 @@ namespace VocaDb.Web.Controllers
 
 			WebHelper.VerifyUserAgent(Request);
 
-			var model = queries.GetDetails(id);
+			var model = queries.GetDetails(id, GetHostnameForValidHit());
 
 			var hasDescription = !model.Description.IsEmpty;
 			var prop = PageProperties;

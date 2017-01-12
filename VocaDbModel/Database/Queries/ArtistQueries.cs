@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using NHibernate;
 using NLog;
+using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Artists;
@@ -304,7 +305,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ArtistDetailsContract GetDetails(int id) {
+		public ArtistDetailsContract GetDetails(int id, string hostname) {
 
 			return HandleQuery(session => {
 
@@ -357,6 +358,8 @@ namespace VocaDb.Model.Database.Queries {
 					var mergeEntry = GetMergeRecord(session, id);
 					contract.MergedTo = (mergeEntry != null ? new ArtistContract(mergeEntry.Target, LanguagePreference) : null);
 				}
+
+				new CreateEntryHitQuery().CreateHit(session, artist, hostname, PermissionContext, (a, agent) => new ArtistHit(a, agent));
 
 				return contract;
 

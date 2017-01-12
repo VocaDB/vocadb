@@ -117,6 +117,7 @@
     <Compile Include="Database\Queries\EntryQueries.cs" />
     <Compile Include="Database\Queries\EntryReportQueries.cs" />
     <Compile Include="Database\Queries\EventQueries.cs" />
+    <Compile Include="Database\Queries\Partial\CreateEntryHitQuery.cs" />
     <Compile Include="Database\Queries\Partial\CreateEventQuery.cs" />
     <Compile Include="Database\Queries\Partial\CreateMergeEntryQuery.cs" />
     <Compile Include="Database\Queries\SongAggregateQueries.cs" />
@@ -316,6 +317,7 @@
     <Compile Include="Domain\Albums\AlbumReport.cs" />
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
+    <Compile Include="Domain\Artists\ArtistHit.cs" />
     <Compile Include="Domain\Globalization\CultureCollection.cs" />
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
     <Compile Include="Domain\Globalization\OptionalCultureCode.cs" />
@@ -567,6 +569,7 @@
     <Compile Include="Domain\Albums\DiscType.cs" />
     <Compile Include="Mapping\Albums\OtherArtistForAlbumMap.cs" />
     <Compile Include="Mapping\Albums\PVForAlbumMap.cs" />
+    <Compile Include="Mapping\EntryHitMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ArchivedReleaseEventSeriesVersionMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventMap.cs" />
     <Compile Include="Mapping\Artists\ArtistMergeRecordMap.cs" />
