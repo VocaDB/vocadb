@@ -227,7 +227,7 @@
 				</ul>
 			}
 
-			@if (Model.VerifiedArtist)
+			@if (Model.OwnedArtistEntries.Any())
 			{
 				<h4>@R.VerifiedOwner</h4>
 				@ArtistHelpers.ArtistGrid(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true)
