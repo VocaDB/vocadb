@@ -42,17 +42,14 @@ namespace VocaDb.Model.DataContracts.Tags {
 				.ToArray();
 
 			Children = tag.Children
-				.Where(t => !t.Deleted)
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
 				.ToArray();
 
-			Siblings = tag.Parent != null ? tag.Parent.Children
-				.Where(t => !t.Equals(tag) && !t.Deleted)
+			Siblings = tag.Siblings
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
-				.ToArray() 
-				: new TagBaseContract[0];
+				.ToArray();
 
 			Songs = songs.Select(a => new SongForApiContract(a, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 			SongCount = songCount;

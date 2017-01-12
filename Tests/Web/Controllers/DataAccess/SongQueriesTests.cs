@@ -260,6 +260,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Create_NoPV() {
+
+			newSongContract.PVUrl = null;
+
+			var result = CallCreate();
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(PVServices.Nothing, result.PVServices, "PVServices");
+
+		}
+
+		[TestMethod]
 		public void CreateReport() {
 			
 			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);

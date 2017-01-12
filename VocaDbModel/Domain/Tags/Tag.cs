@@ -103,6 +103,17 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		/// <summary>
+		/// List of child tags. Includes deleted tags.
+		/// </summary>
+		public virtual ISet<Tag> AllChildren {
+			get { return children; }
+			set {
+				ParamIs.NotNull(() => value);
+				children = value;
+			}
+		}
+
 		public virtual IEnumerable<TagUsage> AllTagUsages => AllAlbumTagUsages.Cast<TagUsage>().Concat(AllArtistTagUsages).Concat(AllSongTagUsages);
 
 		public virtual ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> ArchivedVersionsManager {
@@ -133,13 +144,10 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
-		public virtual ISet<Tag> Children {
-			get { return children; }
-			set {
-				ParamIs.NotNull(() => value);
-				children = value;
-			}
-		}
+		/// <summary>
+		/// List of child tags. Does not include deleted tags.
+		/// </summary>
+		public virtual IEnumerable<Tag> Children => AllChildren.Where(t => !t.Deleted);
 
 		public virtual IList<TagComment> Comments {
 			get { return comments; }
@@ -210,6 +218,12 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual Tag Parent { get; set; }
 
 		/// <summary>
+		/// List of sibling tags (children of the same parent excluding this one). 
+		/// Does not include deleted tags.
+		/// </summary>
+		public virtual IEnumerable<Tag> Siblings => Parent != null ? Parent.Children.Where(t => !t.Equals(this)) : Enumerable.Empty<Tag>();
+
+		/// <summary>
 		/// Entry thumbnail picture. Can be null.
 		/// </summary>
 		public virtual EntryThumb Thumb { get; set; }
@@ -268,7 +282,7 @@ namespace VocaDb.Model.Domain.Tags {
 			while (AllSongTagUsages.Any())
 				AllSongTagUsages.First().Delete();
 
-			foreach (var child in Children) {
+			foreach (var child in AllChildren) {
 				child.Parent = null;
 			}
 
@@ -276,7 +290,7 @@ namespace VocaDb.Model.Domain.Tags {
 				RelatedTags.First().Delete();
 
 			if (Parent != null)
-				Parent.Children.Remove(this);
+				Parent.AllChildren.Remove(this);
 
 			TagsForUsers.Clear();
 
@@ -325,11 +339,11 @@ namespace VocaDb.Model.Domain.Tags {
 				throw new ArgumentException("Tag can't be a parent of itself!");
 			}
 
-			Parent?.Children.Remove(this);
+			Parent?.AllChildren.Remove(this);
 
 			Parent = newParent;
 
-			newParent?.Children.Add(this);
+			newParent?.AllChildren.Add(this);
 
 		}
 

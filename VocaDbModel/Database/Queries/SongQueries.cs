@@ -201,14 +201,17 @@ namespace VocaDb.Model.Database.Queries {
 
 		private Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {
 
+			// Construct tag mappings (many to many)
 			var tagMappings = ctx
 				.Query<TagMapping>()
+				.Where(t => nicoTags.Contains(t.SourceTag))
 				.ToArray()
-				.ToDictionary(t => t.SourceTag, t => t.Tag, StringComparer.InvariantCultureIgnoreCase);
+				.GroupBy(map => map.SourceTag, StringComparer.InvariantCultureIgnoreCase)
+				.ToDictionary(grp => grp.Key, grp => grp.Select(map => map.Tag), StringComparer.InvariantCultureIgnoreCase);
 
 			return nicoTags
 				.Where(t => tagMappings.ContainsKey(t))
-				.Select(t => tagMappings[t])
+				.SelectMany(t => tagMappings[t])
 				.ToArray();
 
 		}
@@ -401,7 +404,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				// Send notifications. Avoid sending notification to the same users twice.
 				var notifiedUsers = new FollowedArtistNotifier().SendNotifications(ctx, song, song.ArtistList, user, entryLinkFactory, mailer, enumTranslations);
-				new FollowedTagNotifier().SendNotifications(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);
+
+				if (addedTags != null && addedTags.Length > 0) {
+					new FollowedTagNotifier().SendNotifications(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);
+				}
 
 				return new SongContract(song, PermissionContext.LanguagePreference);
 

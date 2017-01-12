@@ -24,7 +24,7 @@ namespace VocaDb.Model.Mapping.Tags {
 			HasMany(m => m.AllAlbumTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllArtistTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllSongTagUsages).Cascade.AllDeleteOrphan().Inverse();
-			HasMany(m => m.Children).KeyColumn("[Parent]").Inverse().Cache.ReadWrite();
+			HasMany(m => m.AllChildren).KeyColumn("[Parent]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.Comments).Inverse().KeyColumn("[Tag]").Cascade.AllDeleteOrphan();
 			HasMany(m => m.RelatedTags).Inverse().KeyColumn("[OwnerTag]").Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.TagsForUsers).Cascade.AllDeleteOrphan().Inverse();

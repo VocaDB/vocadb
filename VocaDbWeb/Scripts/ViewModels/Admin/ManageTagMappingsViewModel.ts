@@ -14,7 +14,7 @@ namespace vdb.viewModels.admin {
 			if (!this.newSourceName || this.newTargetTag.isEmpty())
 				return;
 
-			if (_.some(this.mappings(), m => m.sourceTag.toLowerCase() === this.newSourceName().toLowerCase())) {
+			if (_.some(this.mappings(), m => m.tag.id === this.newTargetTag.id() && m.sourceTag.toLowerCase() === this.newSourceName().toLowerCase())) {
 				ui.showErrorMessage("Mapping already exists for source tag " + this.newSourceName());
 				return;
 			}
