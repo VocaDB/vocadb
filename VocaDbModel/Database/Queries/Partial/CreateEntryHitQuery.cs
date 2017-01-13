@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using NHibernate;
+using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
@@ -31,13 +32,18 @@ namespace VocaDb.Model.Database.Queries.Partial {
 
 				if (!isHit) {
 					var hit = factory(entry, agentNum);
-					ctx.Save(hit);
+					try {
+						ctx.Save(hit);
+					} catch (GenericADOException x) {
+						// This can happen if the uniqueness constraint is violated. We could use pessimistic locking, but it's not important enough here.
+						log.Warn(x, "Unable to save hit for {0}", entry);
+					}
 				}
 
 				try {
 					tx.Commit();
 				} catch (TransactionException x) {
-					log.Error(x, "Unable to save hit for {0}", entry);
+					log.Warn(x, "Unable to save hit for {0}", entry);
 				}
 
 			}
