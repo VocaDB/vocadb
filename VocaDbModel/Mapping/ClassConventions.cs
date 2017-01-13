@@ -5,7 +5,7 @@ namespace VocaDb.Model.Mapping {
 
 	public class ClassConventions : IClassConvention, IIdConvention, IReferenceConvention, IPropertyConvention, IHasManyConvention {
 
-		private string EscapeColumn(string col) {
+		public static string EscapeColumn(string col) {
 			return string.Format("[{0}]", col);
 		}
 

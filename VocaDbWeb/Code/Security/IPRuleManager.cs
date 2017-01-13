@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NLog;
 using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Web.Code.Security {
@@ -8,6 +9,8 @@ namespace VocaDb.Web.Code.Security {
 	/// Currently this means IPs banned through the admin or automatically.
 	/// </summary>
 	public class IPRuleManager {
+
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public IPRuleManager(IEnumerable<string> ips) {
 			PermBannedIPs = new HostCollection(ips);
@@ -19,6 +22,11 @@ namespace VocaDb.Web.Code.Security {
 		/// Temporarily banned IPs. These are persisted in memory and are cleared on application restart.
 		/// </summary>
 		public HostCollection TempBannedIPs { get; } = new HostCollection();
+
+		public void AddTempBannedIP(string host, string reason) {
+			log.Info("Adding temp banned IP {0}. Reason: {1}", host, reason);
+			TempBannedIPs.Add(host);
+		}
 
 		/// <summary>
 		/// Tests whether a host address is allowed.

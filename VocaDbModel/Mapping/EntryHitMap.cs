@@ -12,7 +12,7 @@ namespace VocaDb.Model.Mapping {
 
 			Map(m => m.Agent).Not.Nullable();
 			Map(m => m.Date).Not.Nullable().Generated.Always(); ;
-			References(m => m.Entry).Not.Nullable().Column(typeof(TEntry).Name);
+			References(m => m.Entry).Not.Nullable().Column(ClassConventions.EscapeColumn(typeof(TEntry).Name));
 
 		}
 

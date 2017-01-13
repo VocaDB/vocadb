@@ -304,7 +304,7 @@ namespace VocaDb.Web.Controllers
 					ModelState.AddModelError("", ViewRes.User.LoginStrings.WrongPassword);
 					
 					if (result.Error == LoginError.AccountPoisoned)
-						ipRuleManager.TempBannedIPs.Add(host);
+						ipRuleManager.AddTempBannedIP(host, "Account poisoned");
 
 				} else {
 
@@ -488,7 +488,7 @@ namespace VocaDb.Web.Controllers
 
 			if (!ModelState.IsValidField("Extra")) {
 				log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
-				ipRuleManager.TempBannedIPs.Add(Hostname);
+				ipRuleManager.AddTempBannedIP(Hostname, "Attempt to fill the bot decoy field");
 				return View(model);				
 			}
 
