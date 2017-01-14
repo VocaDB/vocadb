@@ -179,6 +179,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void GetDetails() {
+
+			var result = queries.GetDetails(artist.Id, "39.39.39.39");
+
+			Assert.AreEqual("Tripshots", result.Name, "Name");
+
+			var hit = repository.List<ArtistHit>().FirstOrDefault(a => a.Entry.Equals(artist));
+			Assert.IsNotNull(hit, "Hit was created");
+			Assert.AreEqual(user.Id, hit.Agent, "Hit creator");
+
+		}
+
+		[TestMethod]
 		public void Revert() {
 
 			// Arrange
