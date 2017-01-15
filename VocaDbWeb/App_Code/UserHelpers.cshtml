@@ -97,12 +97,14 @@ if (user != null) {
 	<a href="@Url.UserDetails(user)">@ProfileIcon(user, size)<span>@(user != null ? user.Name : "")</span></a>
 }
 
-@helper UserIconLink(UserContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false) {
-	<a href="@Url.UserDetails(user)" title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.CreateDate.ToShortDateString()) : "")'>@ProfileIcon(user, size)<span>@(user != null ? user.Name : "")</span></a>
+@helper UserIconLink(UserContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false) {
+	<a href="@Url.UserDetails(user)" @Html.ConditionalAttribute(tooltip && user != null, "data-bind", "userToolTip: " + (user != null ? user.Id : 0)) 
+	   title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.CreateDate.ToShortDateString()) : "")'>@ProfileIcon(user, size)<span>@(user != null ? user.Name : "")</span></a>
 }
 
-@helper UserIconLink(UserForApiContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false) {
-	<a href="@Url.UserDetails(user)" title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.MemberSince.ToShortDateString()) : "")'>
+@helper UserIconLink(UserForApiContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false) {
+	<a href="@Url.UserDetails(user)" @Html.ConditionalAttribute(tooltip && user != null, "data-bind", "userToolTip: " + (user != null ? user.Id : 0)) 
+	   title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.MemberSince.ToShortDateString()) : "")'>
 		@ProfileIcon(user != null && user.MainPicture != null ? user.MainPicture.GetSmallestThumb(ImageSize.TinyThumb) : null, size)
 		<span>@(user != null ? user.Name : "")</span>
 	</a>

@@ -159,7 +159,7 @@
 						</td>
 						<td>
 							@foreach (var user in Model.OwnerUsers) {
-								@UserHelpers.UserIconLink(user)
+								@UserHelpers.UserIconLink(user, tooltip: true)
 								<br />
 							}
 						</td>

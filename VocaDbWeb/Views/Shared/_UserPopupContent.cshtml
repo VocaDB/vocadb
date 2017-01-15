@@ -17,6 +17,12 @@
 	@Translate.UserGroups[Model.GroupId]
 </p>
 
+@if (Model.VerifiedArtist) {
+	<p>
+	@ViewRes.User.DetailsStrings.VerifiedAccount
+	</p>
+}
+
 <p>
 	Joined @Model.CreateDate.ToShortDateString()
 </p>
