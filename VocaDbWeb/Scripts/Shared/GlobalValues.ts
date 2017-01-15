@@ -12,4 +12,7 @@ module vdb.values {
 
 	export var languagePreference: number;
 
+	// UI language code, for example "en"
+	export var uiLanguage: string;
+
 }

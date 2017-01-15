@@ -6,6 +6,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -214,8 +215,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
-		public ActionResult PopupContent(int id = invalidId) {
+		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
+		public ActionResult PopupContent(int id = invalidId, string culture = InterfaceLanguage.DefaultCultureCode) {
 
 			if (id == invalidId)
 				return HttpNotFound();

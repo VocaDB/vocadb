@@ -43,6 +43,10 @@ namespace VocaDb.Model.Domain {
 			}
 		}
 
+		public override string ToString() {
+			return "Hit for " + Entry + " by " + Agent;
+		}
+
 	}
 
 }

@@ -14,6 +14,8 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 		public static CultureCollection Cultures => new CultureCollection(LanguageCodes);
+		public const string DefaultCultureCode = "en-US";
+		public const string DefaultLanguageCode = "en";
 
 		/// <summary>
 		/// Gets the ISO 639-1 two letter language code matching a culture,

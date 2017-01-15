@@ -12,6 +12,7 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -257,6 +258,13 @@ namespace VocaDb.Web.Controllers
 
 			return PartialView(ownedArtist);
 
+		}
+
+		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
+		public PartialViewResult PopupContent(int id, string culture = InterfaceLanguage.DefaultCultureCode) {
+			
+			var user = Service.GetUser(id);
+			return PartialView("_UserPopupContent", user);
 		}
 
 		public new ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null) {
