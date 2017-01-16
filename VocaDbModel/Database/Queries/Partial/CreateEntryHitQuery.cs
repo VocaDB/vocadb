@@ -34,9 +34,9 @@ namespace VocaDb.Model.Database.Queries.Partial {
 					var hit = factory(entry, agentNum);
 					try {
 						ctx.Save(hit);
-					} catch (GenericADOException x) {
+					} catch (GenericADOException) {
 						// This can happen if the uniqueness constraint is violated. We could use pessimistic locking, but it's not important enough here.
-						log.Warn(x, "Unable to save hit for {0}", entry);
+						log.Warn("Unable to save hit for {0}", entry);
 						return;
 					}
 
