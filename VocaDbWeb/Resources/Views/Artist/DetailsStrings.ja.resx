@@ -196,12 +196,12 @@
     <value>イラストレーター</value>
   </data>
   <data name="IllustratorOf" xml:space="preserve">
-    <value>ためのイラストレーター</value>
+    <value>イラスト提供</value>
   </data>
   <data name="VoiceProvider" xml:space="preserve">
     <value>声優</value>
   </data>
   <data name="VoiceProviderOf" xml:space="preserve">
-    <value>ための声優</value>
+    <value>音声提供</value>
   </data>
 </root>
