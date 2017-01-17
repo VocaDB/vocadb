@@ -127,8 +127,8 @@
     <value>さんが新しくアーティストを登録しました</value>
   </data>
   <data name="CreatedNew" xml:space="preserve">
-    <value>{0}を樹立された</value>
-  <comment>not used for jp</comment></data>
+    <value>さんが新しい{0}を登録しました</value>
+  <comment>fallback</comment></data>
   <data name="CreatedSong" xml:space="preserve">
     <value>さんが新しい曲を登録しました</value>
   </data>
