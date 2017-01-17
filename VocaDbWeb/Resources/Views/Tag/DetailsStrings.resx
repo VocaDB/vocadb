@@ -141,6 +141,9 @@
   <data name="Children" xml:space="preserve">
     <value>Children</value>
   </data>
+  <data name="FollowTag" xml:space="preserve">
+    <value>Follow tag</value>
+  </data>
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>
   </data>
@@ -167,5 +170,8 @@
   </data>
   <data name="Translations" xml:space="preserve">
     <value>Translations</value>
+  </data>
+  <data name="UnfollowTag" xml:space="preserve">
+    <value>Unfollow tag</value>
   </data>
 </root>

@@ -73,8 +73,8 @@
 }
 
 @section Toolbar {
-	<a href="#" data-bind="click: followTag, jqButton: { icon: 'ui-icon-plus' }, visible: !isFollowed(), disable: !isLoggedIn">Follow tag</a>
-	<a href="#" data-bind="click: unfollowTag, jqButton: { icon: 'ui-icon-close' }, visible: isFollowed()">Unfollow tag</a>
+	<a href="#" data-bind="click: followTag, jqButton: { icon: 'ui-icon-plus' }, visible: !isFollowed(), disable: !isLoggedIn">@Res.FollowTag</a>
+	<a href="#" data-bind="click: unfollowTag, jqButton: { icon: 'ui-icon-close' }, visible: isFollowed()">@Res.UnfollowTag</a>
 
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editTagLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })

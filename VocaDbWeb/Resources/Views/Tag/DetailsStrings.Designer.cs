@@ -133,6 +133,15 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Follow tag.
+        /// </summary>
+        public static string FollowTag {
+            get {
+                return ResourceManager.GetString("FollowTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overview.
         /// </summary>
         public static string Overview {
@@ -210,6 +219,15 @@ namespace ViewRes.Tag {
         public static string Translations {
             get {
                 return ResourceManager.GetString("Translations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unfollow tag.
+        /// </summary>
+        public static string UnfollowTag {
+            get {
+                return ResourceManager.GetString("UnfollowTag", resourceCulture);
             }
         }
     }
