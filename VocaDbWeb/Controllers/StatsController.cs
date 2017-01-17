@@ -798,7 +798,7 @@ namespace VocaDb.Web.Controllers {
 				
 				var idsAndHits = ctx.OfType<AlbumHit>().Query()
 					.FilterIfNotNull(cutoff, s => s.Date > cutoff)
-					.GroupBy(h => h.Album.Id)
+					.GroupBy(h => h.Entry.Id)
 					.Select(h => new {
 						Id = h.Key,
 						Count = h.Count()
@@ -841,7 +841,7 @@ namespace VocaDb.Web.Controllers {
 				
 				var idsAndHits = ctx.OfType<SongHit>().Query()
 					.FilterIfNotNull(cutoff, s => s.Date > cutoff)
-					.GroupBy(h => h.Song.Id)
+					.GroupBy(h => h.Entry.Id)
 					.Select(h => new {
 						Id = h.Key,
 						Count = h.Count()

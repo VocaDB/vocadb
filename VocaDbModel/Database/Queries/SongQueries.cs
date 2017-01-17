@@ -68,33 +68,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		private void AddSongHit(IDatabaseContext<Song> session, Song song, string hostname) {
 
-			if (!PermissionContext.IsLoggedIn && string.IsNullOrEmpty(hostname))
-				return;
-
-			var agentNum = PermissionContext.IsLoggedIn ? PermissionContext.LoggedUserId : hostname.GetHashCode();
-
-			if (agentNum == 0)
-				return;
-
-			using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted)) {
-
-				var songId = song.Id;
-				var isHit = session.Query<SongHit>().Any(h => h.Song.Id == songId && h.Agent == agentNum);
-
-				if (!isHit) {
-					var hit = new SongHit(song, agentNum);
-					session.Save(hit);
-				}
-
-				try {
-					tx.Commit();
-				} catch (TransactionException x) {
-					log.Error(x, "Unable to save song hit");
-				}
-
-			}
+			new CreateEntryHitQuery().CreateHit(session, song, hostname, PermissionContext, (s, agent) => new SongHit(s, agent));
 
 		}
+
 		private Tag[] AddTagsFromPV(VideoUrlParseResult pvResult, Song song, IDatabaseContext<Song> ctx) {
 			
 			if (pvResult.Tags == null || !pvResult.Tags.Any())
@@ -478,7 +455,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(c => c.EntryForComment.Id == songId)
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
 					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
-				contract.Hits = session.Query<SongHit>().Count(h => h.Song.Id == songId);
+				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
 				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
 				contract.Suggestions = GetSongSuggestions(session, song).Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 

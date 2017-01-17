@@ -1,23 +1,7 @@
-﻿using FluentNHibernate.Mapping;
-using VocaDb.Model.Domain.Albums;
+﻿using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Mapping.Albums {
 
-	public class AlbumHitMap : ClassMap<AlbumHit> {
-
-		public AlbumHitMap() {
-
-			Cache.NonStrictReadWrite();
-			Id(m => m.Id);
-			ReadOnly();
-
-			Map(m => m.Agent).Not.Nullable();
-			Map(m => m.Date).Not.Nullable().Generated.Always();
-
-			References(m => m.Album).Not.Nullable();
-
-		}
-
-	}
+	public class AlbumHitMap : EntryHitMap<AlbumHit, Album> {}
 
 }

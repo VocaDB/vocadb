@@ -305,7 +305,7 @@ namespace VocaDb.Model.Service {
 
 					using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted)) {
 
-						var isHit = session.Query<AlbumHit>().Any(h => h.Album.Id == id && h.Agent == agentNum);
+						var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
 
 						if (!isHit) {
 
