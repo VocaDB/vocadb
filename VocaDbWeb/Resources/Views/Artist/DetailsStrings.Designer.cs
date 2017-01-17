@@ -268,6 +268,15 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} rated songs total.
+        /// </summary>
+        public static string RatedSongsTotal {
+            get {
+                return ResourceManager.GetString("RatedSongsTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recent albums.
         /// </summary>
         public static string RecentAlbums {
@@ -300,6 +309,15 @@ namespace ViewRes.Artist {
         public static string Share {
             get {
                 return ResourceManager.GetString("Share", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs per month.
+        /// </summary>
+        public static string SongsPerMonth {
+            get {
+                return ResourceManager.GetString("SongsPerMonth", resourceCulture);
             }
         }
         

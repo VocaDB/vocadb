@@ -170,7 +170,7 @@
 					<tr>
 						<td>
 							<span>
-								@ViewRes.Artist.DetailsStrings.BaseVoicebank
+								@Res.BaseVoicebank
 							</span>
 						</td>
 						<td id="baseVoicebank">
@@ -200,8 +200,8 @@
 				@if (Model.Groups.Any()) {
 					<tr>
 						<td>
-							<span title="@ViewRes.Artist.DetailsStrings.GroupsHelp">
-								@ViewRes.Artist.DetailsStrings.Groups
+							<span title="@Res.GroupsHelp">
+								@Res.Groups
 							</span>
 						</td>
 						<td id="groups">
@@ -249,7 +249,7 @@
 
 		@if (Model.Members.Any()) {
 			<h3>
-				@ViewRes.Artist.DetailsStrings.Members
+				@Res.Members
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.Members.Length))</small>
 			</h3>
 			<div data-bind="visible: !showAllMembers()">
@@ -265,7 +265,7 @@
 
 		@if (Model.LatestAlbums.Any()) {
 			<h3 class="withMargin">
-				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.AdditionDate }, null)
+				@Html.ActionLink(Res.RecentAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.AdditionDate }, null)
 				<small>@string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.SharedStats.AlbumCount)</small>
 			</h3>
 			<div id="newAlbums">
@@ -275,8 +275,8 @@
 
 		@if (Model.TopAlbums.Any()) {
 			<h3 class="withMargin">
-				@Html.ActionLink(ViewRes.Artist.DetailsStrings.TopAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.RatingTotal }, null)
-				<small>(@string.Format("{0} rated albums total", Model.SharedStats.RatedAlbumCount))</small>
+				@Html.ActionLink(Res.TopAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.RatingTotal }, null)
+				<small>(@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount))</small>
 			</h3>
 			<div id="topAlbums">
 				@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
@@ -287,7 +287,7 @@
 		@if (Model.LatestSongs.Any()) {
 			<br />
 			<h3>
-				@Html.ActionLink(ViewRes.Artist.DetailsStrings.RecentSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.PublishDate), null)
+				@Html.ActionLink(Res.RecentSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.PublishDate), null)
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.SongCount))</small>
 			</h3>
 			@SongHelpers.SongGrid(Model.LatestSongs, 2, true, true)
@@ -296,14 +296,14 @@
 		@if (Model.TopSongs.Any()) {
 			<br />
 			<h3>
-				@Html.ActionLink(ViewRes.Artist.DetailsStrings.TopSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.RatingScore), null)
-				<small>(@string.Format("{0} rated songs total", Model.SharedStats.RatedSongCount))</small>
+				@Html.ActionLink(Res.TopSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.RatingScore), null)
+				<small>(@string.Format(Res.RatedSongsTotal, Model.SharedStats.RatedSongCount))</small>
 			</h3>
 			@SongHelpers.SongGrid(Model.TopSongs, 2, true, true)
 		}
 		
 		<div data-bind="visible: songsOverTimeChart">
-			<h3 class="withMargin">Songs per month</h3>
+			<h3 class="withMargin">@Res.SongsPerMonth</h3>
 			<div style="width: 100%; max-width: 800px; height: 300px;" data-bind="highcharts: songsOverTimeChart"></div>
 		</div>
 

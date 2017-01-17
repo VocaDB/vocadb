@@ -186,6 +186,9 @@
   <data name="RatedSongs" xml:space="preserve">
     <value>{0} rated song(s).</value>
   </data>
+  <data name="RatedSongsTotal" xml:space="preserve">
+    <value>{0} rated songs total</value>
+  </data>
   <data name="RecentAlbums" xml:space="preserve">
     <value>Recent albums</value>
   </data>
@@ -197,6 +200,9 @@
   </data>
   <data name="Share" xml:space="preserve">
     <value>Share</value>
+  </data>
+  <data name="SongsPerMonth" xml:space="preserve">
+    <value>Songs per month</value>
   </data>
   <data name="SubscriptionEmail" xml:space="preserve">
     <value>Notify me both on-site and by email.</value>
