@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.Messaging;
@@ -321,7 +322,13 @@ namespace VocaDb.Web.Controllers
 					TempData.SetSuccessMessage(string.Format(ViewRes.User.LoginStrings.Welcome, user.Name));
 					FormsAuthentication.SetAuthCookie(user.Name, model.KeepLoggedIn);
 
-					var redirectUrl = FormsAuthentication.GetRedirectUrl(model.UserName, true);
+					string redirectUrl = null;
+					try {
+						redirectUrl = FormsAuthentication.GetRedirectUrl(model.UserName, true);
+					} catch (HttpException x) {
+						log.Warn(x, "Unable to get redirect URL");
+					}
+
 					string targetUrl;
 
 					// TODO: should not allow redirection to URLs outside the site
