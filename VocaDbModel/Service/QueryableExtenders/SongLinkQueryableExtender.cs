@@ -64,7 +64,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (!childVoicebanks)
 				return query.Where(s => s.Song.AllArtists.Any(a => a.Artist.Id == artistId));
 			else
-				return query.Where(s => s.Song.AllArtists.Any(a => a.Artist.Id == artistId || a.Artist.BaseVoicebank.Id == artistId));
+				return query.Where(s => s.Song.AllArtists.Any(a => a.Artist.Id == artistId 
+					|| a.Artist.BaseVoicebank.Id == artistId || a.Artist.BaseVoicebank.BaseVoicebank.Id == artistId 
+					|| a.Artist.BaseVoicebank.BaseVoicebank.BaseVoicebank.Id == artistId));
 
 		}
 
