@@ -68,6 +68,7 @@ module vdb.utils {
 			{ url: "utaite.wikia.com/", desc: "Utaite Wiki", cat: c.WebLinkCategory.Reference }, /* UtaiteDB */
             { url: "vgmdb.net/", desc: "VGMdb", cat: c.WebLinkCategory.Reference },
             { url: "vimeo.com/", desc: "Vimeo", cat: c.WebLinkCategory.Official },
+			{ url: "://vk.com/", desc: "VK", cat: c.WebLinkCategory.Official },
 			{ url: "vocadb.net/", desc: "VocaDB", cat: c.WebLinkCategory.Reference },
             { url: "vocaloiders.com/", desc: "Vocaloiders", cat: c.WebLinkCategory.Reference },
 			{ url: "vocaloidlyrics.wikia.com/wiki/", desc: "Vocaloid Lyrics Wiki", cat: c.WebLinkCategory.Reference },
