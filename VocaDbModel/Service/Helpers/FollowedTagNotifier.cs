@@ -62,7 +62,7 @@ namespace VocaDb.Model.Service.Helpers {
 			ParamIs.NotNull(() => ignoreUsers);
 			ParamIs.NotNull(() => entryLinkFactory);
 
-			var coll = tags.ToArray();
+			var coll = tags.Distinct().ToArray();
 			var tagIds = coll.Select(a => a.Id).ToArray();
 
 			// Get users with less than maximum number of unread messages, following any of the tags

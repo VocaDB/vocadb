@@ -189,6 +189,7 @@ namespace VocaDb.Model.Database.Queries {
 			return nicoTags
 				.Where(t => tagMappings.ContainsKey(t))
 				.SelectMany(t => tagMappings[t])
+				.Distinct()
 				.ToArray();
 
 		}

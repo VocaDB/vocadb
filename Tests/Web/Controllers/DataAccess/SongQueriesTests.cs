@@ -260,6 +260,29 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Create_Tags_IgnoreDuplicates() {
+
+			repository.Save(user2.AddTag(tag));
+			repository.Save(new TagMapping(tag, "VOCAROCK"));
+			repository.Save(new TagMapping(tag, "rock"));
+			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "VOCAROCK", "rock" });
+
+			CallCreate();
+
+			song = repository.HandleQuery(q => q.Query().FirstOrDefault(a => a.DefaultName == "Resistance"));
+
+			Assert.AreEqual(1, song.Tags.Tags.Count(), "Tags.Count");
+			Assert.IsTrue(song.Tags.HasTag(tag), "Has vocarock tag");
+			Assert.AreEqual(1, song.Tags.GetTagUsage(tag).Count, "Tag vote count");
+			var messages = repository.List<UserMessage>().Where(u => u.User.Equals(user2)).ToArray();
+			Assert.AreEqual(1, messages.Length, "Notification was sent");
+			var message = messages[0];
+			Assert.AreEqual(user2, message.Receiver, "Message receiver");
+			Assert.AreEqual("New song tagged with vocarock", message.Subject, "Message subject"); // Test subject to make sure it's for one tag
+
+		}
+
+		[TestMethod]
 		public void Create_NoPV() {
 
 			newSongContract.PVUrl = null;
