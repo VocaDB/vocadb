@@ -161,6 +161,9 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.DeleteAll(archivedVersions);
 				list.ArchivedVersionsManager.Versions.Clear();
 
+				var activityEntries = ctx.Query<SongListActivityEntry>().Where(a => a.Entry.Id == listId).ToArray();
+				ctx.DeleteAll(activityEntries);
+
 				ctx.Delete(list);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", list.ToString()), user);

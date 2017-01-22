@@ -221,11 +221,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		private void DeleteActivityEntries(IDatabaseContext<Tag> ctx, int tagId) {
 
-			var ctxActivity = ctx.OfType<TagActivityEntry>();
-			var activityEntries = ctxActivity.Query().Where(t => t.Entry.Id == tagId).ToArray();
-
-			foreach (var activityEntry in activityEntries)
-				ctxActivity.Delete(activityEntry);
+			var activityEntries = ctx.Query<TagActivityEntry>().Where(t => t.Entry.Id == tagId).ToArray();
+			ctx.DeleteAll(activityEntries);
 
 		}
 
