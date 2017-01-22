@@ -21,21 +21,15 @@ namespace VocaDb.Web.Controllers
 		public const int SongsPerPage = 50;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly SongListQueries queries;
-	    private readonly SongService service;
 
-		private SongService Service {
-			get { return service; }
-		}
-
-		public SongListController(SongService service, SongListQueries queries, IEntryLinkFactory entryLinkFactory) {
-			this.service = service;
+		public SongListController(SongListQueries queries, IEntryLinkFactory entryLinkFactory) {
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
 		}
 
 		public ActionResult Delete(int id) {
 
-			Service.DeleteSongList(id);
+			queries.DeleteSongList(id);
 
 			return RedirectToAction("Profile", "User", new { id = PermissionContext.LoggedUser.Name });
 

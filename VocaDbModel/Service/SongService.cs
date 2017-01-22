@@ -121,25 +121,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void DeleteSongList(int listId) {
-
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
-
-			HandleTransaction(session => {
-
-				var user = GetLoggedUser(session);
-				var list = session.Load<SongList>(listId);
-
-				EntryPermissionManager.VerifyEdit(PermissionContext, list);
-
-				session.Delete(list);
-
-				AuditLog(string.Format("deleted {0}", list.ToString()), session, user);
-
-			});
-
-		}
-
 		public T FindFirst<T>(Func<Song, ISession, T> fac, string[] query, NameMatchMode nameMatchMode)
 			where T : class {
 

@@ -144,6 +144,25 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void DeleteSongList(int listId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			HandleTransaction(ctx => {
+
+				var user = GetLoggedUser(ctx);
+				var list = ctx.Load<SongList>(listId);
+
+				EntryPermissionManager.VerifyEdit(PermissionContext, list);
+
+				ctx.Delete(list);
+
+				AuditLog(string.Format("deleted {0}", list.ToString()), ctx, user);
+
+			});
+
+		}
+
 		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SearchTextQuery textQuery, SongListFeaturedCategory? featuredCategory,
 			int start, int maxResults, bool getTotalCount, SongListSortRule sort) {
 
