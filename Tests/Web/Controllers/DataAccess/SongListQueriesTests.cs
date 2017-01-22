@@ -7,10 +7,12 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestSupport;
 
@@ -74,6 +76,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(2, songList.AllSongs.Count, "Number of songs");
 			Assert.AreEqual("Project Diva desu.", songList.AllSongs[0].Song.DefaultName, "First song as expected");
 			Assert.AreEqual("World is Mine", songList.AllSongs[1].Song.DefaultName, "Second song as expected");
+
+		}
+
+		[TestMethod]
+		public void Delete() {
+
+			var list = repository.Save(new SongList("Mikulist", userWithSongList));
+			repository.Save(list.CreateArchivedVersion(new SongListDiff(), new AgentLoginData(userWithSongList), EntryEditEvent.Created, string.Empty));
+
+			queries.DeleteSongList(list.Id);
+
+			Assert.AreEqual(0, repository.Count<SongList>(), "Song list was removed");
+			Assert.AreEqual(0, repository.Count<ArchivedSongListVersion>(), "Song list archived version was removed");
 
 		}
 

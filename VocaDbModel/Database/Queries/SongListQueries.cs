@@ -155,6 +155,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				EntryPermissionManager.VerifyEdit(PermissionContext, list);
 
+				var archivedVersions = list.ArchivedVersionsManager.Versions;
+				ctx.DeleteAll(archivedVersions);
+				list.ArchivedVersionsManager.Versions.Clear();
+
 				ctx.Delete(list);
 
 				AuditLog(string.Format("deleted {0}", list.ToString()), ctx, user);
