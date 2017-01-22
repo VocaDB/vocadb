@@ -153,6 +153,8 @@ namespace VocaDb.Model.Database.Queries {
 				var user = GetLoggedUser(ctx);
 				var list = ctx.Load<SongList>(listId);
 
+				ctx.AuditLogger.SysLog(string.Format("deleting {0}", list.ToString()));
+
 				EntryPermissionManager.VerifyEdit(PermissionContext, list);
 
 				var archivedVersions = list.ArchivedVersionsManager.Versions;
@@ -161,7 +163,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.Delete(list);
 
-				AuditLog(string.Format("deleted {0}", list.ToString()), ctx, user);
+				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", list.ToString()), user);
 
 			});
 
