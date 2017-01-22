@@ -35,6 +35,7 @@ module vdb.viewModels {
 			var id = parseInt(match[2]);
 
 			var repo = new rep.SongRepository(siteUrl, this.languagePreference);
+			// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 			repo.getOneWithComponents(id, 'Nothing', null, song => {
 				if (song.songType === "Original")
 					this.originalVersion({ entry: song, url: page });
