@@ -17,6 +17,7 @@ module vdb.utils {
             { url: "anidb.net/", desc: "AniDB", cat: c.WebLinkCategory.Reference },
             { url: "www.animate-onlineshop.jp/", desc: "Animate Online Shop", cat: c.WebLinkCategory.Commercial },
             { url: "bandcamp.com", desc: "Bandcamp", cat: c.WebLinkCategory.Commercial },
+			{ url: "bilibili.com/", desc: "Bilibili", cat: c.WebLinkCategory.Official },
             { url: "bilibili.tv/", desc: "Bilibili", cat: c.WebLinkCategory.Official },
 			{ url: "booth.pm/", desc: "Booth", cat: c.WebLinkCategory.Commercial },
             { url: "www.cdjapan.co.jp/detailview.html", desc: "CDJapan", cat: c.WebLinkCategory.Commercial },
