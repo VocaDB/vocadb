@@ -14,8 +14,11 @@ namespace VocaDb.Model.Domain.Caching {
 		/// <param name="cacheItemPolicy">Cache item policy. Cannot be null.</param>
 		/// <param name="func">Factory function for getting the data to cache if it doesn't exist.</param>
 		/// <param name="allowCaching">
-		/// Function for testing whether the new data should be cached. If this is null or it returns true, the new data is cached. If the function is not null and it returns false, the new data is NOT cached.
-		/// This can be used to ignore cache for example when the number of items is small.
+		/// Function for testing whether the new data should be cached. 
+		/// Can be null.
+		/// If this is null or it returns true, the new data is cached. 
+		/// If the function is not null and it returns false, the new data is NOT cached.
+		/// This can be used for conditional caching for example when the number of items is small.
 		/// </param>
 		/// <returns>Data from the cache or factory function.</returns>
 		/// <remarks>
