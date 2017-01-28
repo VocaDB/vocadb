@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Translations;
@@ -49,6 +50,8 @@ namespace VocaDb.Model.Domain {
 		}
 
 		public abstract string TranslatedReportTypeName(IEnumTranslations enumTranslations);
+
+		public abstract string TranslatedReportTypeName(IEnumTranslations enumTranslations, CultureInfo culture);
 
 		public virtual User User { get; set; }
 

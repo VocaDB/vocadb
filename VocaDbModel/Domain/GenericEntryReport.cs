@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Translations;
 
@@ -36,6 +37,10 @@ namespace VocaDb.Model.Domain {
 
 		public override string TranslatedReportTypeName(IEnumTranslations enumTranslations) {
 			return enumTranslations.Translation(ReportType);
+		}
+
+		public override string TranslatedReportTypeName(IEnumTranslations enumTranslations, CultureInfo culture) {
+			return enumTranslations.Translation(ReportType, culture);
 		}
 
 	}

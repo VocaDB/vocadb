@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using NHibernate;
@@ -213,10 +214,13 @@ namespace VocaDb.Model.Service {
 
 				var reports = session.Query<EntryReport>().Where(r => reportIds.Contains(r.Id)).ToArray();
 
-				foreach (var report in reports)
+				foreach (var report in reports) {
+					AuditLog(string.Format("deleted entry report {0}{1} for {2}", 
+						report.TranslatedReportTypeName(enumTranslations, CultureInfo.DefaultThreadCurrentCulture), 
+						!string.IsNullOrEmpty(report.Notes) ? " (" + report.Notes + ")" : string.Empty, 
+						EntryLinkFactory.CreateEntryLink(report.EntryBase)), session);
 					session.Delete(report);
-
-				AuditLog(string.Format("deleted reports: {0}", string.Join(", ", reports.Select(r => r.ToString()))), session);
+				}
 
 			});
 
