@@ -85,7 +85,7 @@ namespace VocaDb.Model.Service.Queries {
 					.Take(8)
 					.ToArray();
 
-			});
+			}, allowCaching: ids => ids.Length >= 8);
 
 		}
 
