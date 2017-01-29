@@ -49,7 +49,10 @@ module vdb.viewModels.search {
 				var artistIds = this.artistFilters.artistIds();
 
 				this.albumRepo.getList(pagingProperties, lang, searchTerm, this.sort(), this.albumType(), tags, childTags, artistIds,
-					this.artistFilters.artistParticipationStatus(), this.artistFilters.childVoicebanks(), this.fields(), status, false,
+					this.artistFilters.artistParticipationStatus(),
+					this.artistFilters.childVoicebanks(),
+					this.artistFilters.includeMembers(),
+					this.fields(), status, false,
 					this.advancedFilters.filters(), callback);
 
 			}

@@ -77,6 +77,7 @@ module vdb.repositories {
 			childTags: boolean,
 			artistIds: number[], artistParticipationStatus: string,
 			childVoicebanks: boolean,
+			includeMembers: boolean,
 			fields: string,
 			status: string,
 			deleted: boolean,
@@ -93,6 +94,7 @@ module vdb.repositories {
 				artistId: artistIds,
 				artistParticipationStatus: artistParticipationStatus,
 				childVoicebanks: childVoicebanks,
+				includeMembers: includeMembers || undefined,
 				status: status,
 				deleted: deleted,
 				advancedFilters: advancedFilters
