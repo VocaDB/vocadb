@@ -14,6 +14,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Web.Helpers;
@@ -135,6 +136,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// OnlyCollaborations: Show only collaborations by that artist.
 		/// </param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
+		/// <param name="includeMembers">Include members of groups. This applies if <paramref name="artistId"/> is a group.</param>
 		/// <param name="barcode">Filter by album barcode (optional).</param>
 		/// <param name="releaseDateAfter">Filter by albums whose release date is after this date (inclusive).</param>
 		/// <param name="releaseDateBefore">Filter by albums whose release date is before this date (exclusive).</param>
@@ -171,6 +173,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
+			bool includeMembers = false,
 			string barcode = null,
 			EntryStatus? status = null,
 			DateTime? releaseDateAfter = null,
@@ -189,12 +192,15 @@ namespace VocaDb.Web.Controllers.Api {
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches) {
+				ArtistParticipation = {
+					ArtistIds = artistId,
+					Participation = artistParticipationStatus,
+					ChildVoicebanks = childVoicebanks,
+					IncludeMembers = includeMembers
+				},
 				Tags = tagName,
 				TagIds = tagId,
 				ChildTags = childTags,
-				ArtistIds = artistId,
-				ArtistParticipationStatus = artistParticipationStatus,
-				ChildVoicebanks = childVoicebanks,
 				Barcode = barcode,
 				Deleted = deleted,
 				ReleaseDateAfter = releaseDateAfter,

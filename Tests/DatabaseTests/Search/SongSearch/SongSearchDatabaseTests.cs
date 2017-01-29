@@ -264,7 +264,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestCategory(TestCategories.Database)]
 		public void QueryArtist() {
 
-			queryParams.ArtistIds = new [] { Db.Producer.Id };
+			queryParams.ArtistParticipation.ArtistIds = new [] { Db.Producer.Id };
 
 			var result = CallFind();
 
@@ -279,7 +279,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		[TestCategory(TestCategories.Database)]
 		public void QueryArtistAndName() {
 			
-			queryParams.ArtistIds = new [] { Db.Producer.Id };
+			queryParams.ArtistParticipation.ArtistIds = new [] { Db.Producer.Id };
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Azalea");
 
 			var result = CallFind();

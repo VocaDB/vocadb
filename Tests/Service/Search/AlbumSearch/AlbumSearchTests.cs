@@ -224,7 +224,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		[TestMethod]
 		public void QueryArtist() {
 
-			queryParams.ArtistIds = new [] { artist.Id };
+			queryParams.ArtistParticipation.ArtistIds = new [] { artist.Id };
 
 			var result = Find();
 
@@ -238,8 +238,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		public void QueryArtistParticipationStatus_FoundMain() {
 			
 			album.AddArtist(artist, true, ArtistRoles.Default);
-			queryParams.ArtistIds = new [] { artist.Id };
-			queryParams.ArtistParticipationStatus = ArtistAlbumParticipationStatus.OnlyMainAlbums;
+			queryParams.ArtistParticipation.ArtistIds = new [] { artist.Id };
+			queryParams.ArtistParticipation.Participation = ArtistAlbumParticipationStatus.OnlyMainAlbums;
 
 			var result = Find();
 
@@ -253,8 +253,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		public void QueryArtistParticipationStatus_FoundCollab() {
 			
 			album.AddArtist(artist, true, ArtistRoles.Default);
-			queryParams.ArtistIds = new [] { artist.Id };
-			queryParams.ArtistParticipationStatus = ArtistAlbumParticipationStatus.OnlyCollaborations;
+			queryParams.ArtistParticipation.ArtistIds = new [] { artist.Id };
+			queryParams.ArtistParticipation.Participation = ArtistAlbumParticipationStatus.OnlyCollaborations;
 
 			var result = Find();
 

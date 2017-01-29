@@ -2,6 +2,7 @@
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
 
@@ -13,7 +14,6 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 		public AlbumQueryParams() {
 
 			AlbumType = DiscType.Unknown;
-			ArtistParticipationStatus = ArtistAlbumParticipationStatus.Everything;
 			Common = new CommonSearchParams();
 			Paging = new PagingProperties(0, 30, true);
 
@@ -38,15 +38,11 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 		/// </summary>
 		public DiscType AlbumType { get; set; }
 
-		public int[] ArtistIds { get; set; }
-
-		public ArtistAlbumParticipationStatus ArtistParticipationStatus { get; set; }
+		public ArtistParticipationQueryParams ArtistParticipation { get; set; } = new ArtistParticipationQueryParams();
 
 		public string Barcode { get; set; }
 
 		public bool ChildTags { get; set; }
-
-		public bool ChildVoicebanks { get; set; }
 
 		public CommonSearchParams Common { get; set; }
 

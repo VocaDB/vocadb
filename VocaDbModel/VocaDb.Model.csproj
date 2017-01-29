@@ -764,6 +764,7 @@
     <Compile Include="Service\QueryableExtenders\ArtistForSongQueryableExtender.cs" />
     <Compile Include="Service\Helpers\ArtistExternalUrlParser.cs" />
     <Compile Include="Service\QueryableExtenders\ArtistLinkWithRolesQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\ArtistParticipationQueryParams.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithArtistsQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithLinksQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithNamesQueryableExtender.cs" />

@@ -305,10 +305,11 @@ namespace VocaDb.Web.Controllers
 			var queryParams = new SongQueryParams(textQuery,
 				songType != SongType.Unspecified ? new[] { songType } : new SongType[] { },
 				0, pageSize, false, sortRule, false, false, null) {
-
+					ArtistParticipation = {
+						ArtistIds = !indexParams.artistId.HasValue || indexParams.artistId.Value == 0 ? null : new [] { indexParams.artistId.Value }
+					},
 					TimeFilter = timeFilter,
 					OnlyWithPVs = onlyWithPVs,
-					ArtistIds = !indexParams.artistId.HasValue || indexParams.artistId.Value == 0 ? null : new [] { indexParams.artistId.Value },
 					MinScore = minScore,
 				};
 

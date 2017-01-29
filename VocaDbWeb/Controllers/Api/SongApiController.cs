@@ -236,6 +236,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// OnlyCollaborations: Show only collaborations by that artist.
 		/// </param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
+		/// <param name="includeMembers">Include members of groups. This applies if <paramref name="artistId"/> is a group.</param>
 		/// <param name="onlyWithPvs">Whether to only include songs with at least one PV.</param>
 		/// <param name="pvServices">Filter by one or more PV services (separated by commas). The song will pass the filter if it has a PV for any of the matched services.</param>
 		/// <param name="since">Allow only entries that have been created at most this many hours ago. By default there is no filtering.</param>
@@ -270,6 +271,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
+			bool includeMembers = false,
 			bool onlyWithPvs = false,
 			[FromUri] PVServices? pvServices = null,
 			int? since = null,
@@ -288,13 +290,16 @@ namespace VocaDb.Web.Controllers.Api {
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, false, preferAccurateMatches, null) {
+				ArtistParticipation = {
+					ArtistIds = artistId,
+					Participation = artistParticipationStatus,
+					ChildVoicebanks = childVoicebanks,
+					IncludeMembers = includeMembers
+				},
 				TagIds = tagId,
 				Tags = tagName, 
 				ChildTags = childTags,
 				OnlyWithPVs = onlyWithPvs,
-				ArtistIds = artistId,		
-				ArtistParticipationStatus = artistParticipationStatus,
-				ChildVoicebanks = childVoicebanks,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,
 				MinScore = minScore ?? 0,
 				PVServices = pvServices,
