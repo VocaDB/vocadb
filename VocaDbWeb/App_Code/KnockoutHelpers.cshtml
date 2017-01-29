@@ -27,7 +27,14 @@
 	<div class="control-group" data-bind="visible: showChildVoicebanks">
 		<label class="checkbox">
 			<input type="checkbox" data-bind="checked: childVoicebanks" />
-			Include derived voicebanks
+			@ViewRes.Search.IndexStrings.IncludeDerivedVoicebanks
+		</label>
+	</div>
+
+	<div class="control-group" data-bind="visible: showMembers">
+		<label class="checkbox">
+			<input type="checkbox" data-bind="checked: includeMembers" />
+			@ViewRes.Search.IndexStrings.IncludeGroupMembers
 		</label>
 	</div>
 

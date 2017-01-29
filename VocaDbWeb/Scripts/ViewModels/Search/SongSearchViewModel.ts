@@ -77,7 +77,10 @@ module vdb.viewModels.search {
 
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
 				this.tagIds, this.childTags,
-				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus, this.artistFilters.childVoicebanks, this.pvsOnly, this.since,
+				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus,
+				this.artistFilters.childVoicebanks,
+				this.artistFilters.includeMembers,
+				this.pvsOnly, this.since,
 				this.minScore,
 				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly, this.advancedFilters.filters);
 
@@ -98,6 +101,7 @@ module vdb.viewModels.search {
 						this.artistFilters.artistIds(),
 						this.artistFilters.artistParticipationStatus(),
 						this.artistFilters.childVoicebanks(),
+						this.artistFilters.includeMembers(),
 						this.pvsOnly(),
 						null,
 						this.since(),

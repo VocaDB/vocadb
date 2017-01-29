@@ -15,9 +15,11 @@ module vdb.viewModels.search {
 				this.artists();
 				this.artistParticipationStatus();
 				this.childVoicebanks();
+				this.includeMembers();
 			}).extend({ notify: 'always' });
 
-			this.showChildVoicebanks = ko.computed(() => this.hasSingleArtist() && helpers.ArtistHelper.canHaveChildVoicebanks(this.artists()[0].artistType()));			
+			this.showChildVoicebanks = ko.computed(() => this.hasSingleArtist() && helpers.ArtistHelper.canHaveChildVoicebanks(this.artists()[0].artistType()));
+			this.showMembers = ko.computed(() => this.hasSingleArtist() && _.includes(helpers.ArtistHelper.groupTypes, this.firstArtist().artistType()));
 
 		}
 
@@ -25,14 +27,13 @@ module vdb.viewModels.search {
 		public artistIds = ko.computed(() => _.map(this.artists(), a => a.id));
 		public artistParticipationStatus = ko.observable("Everything");
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
-
 		public childVoicebanks: KnockoutObservable<boolean>;
-
 		public filters: KnockoutComputed<void>;
-
 		public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
-
 		public hasSingleArtist = ko.computed(() => this.artists().length === 1);
+		public includeMembers = ko.observable(false);
+
+		private firstArtist = () => this.artists()[0];
 
 		public selectArtist = (selectedArtistId: number) => {
 			this.selectArtists([selectedArtistId]);
@@ -63,6 +64,7 @@ module vdb.viewModels.search {
 		};
 
 		public showChildVoicebanks: KnockoutComputed<boolean>;
+		public showMembers: KnockoutComputed<boolean>;
 
 	}
 

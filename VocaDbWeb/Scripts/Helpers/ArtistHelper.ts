@@ -17,6 +17,12 @@ module vdb.helpers {
 			ArtistType.Utaite, ArtistType.Band, ArtistType.Unknown
 		];
 
+		// Artist types that are groups (excluding Unknown)
+		public static groupTypes = [
+			ArtistType.Band, ArtistType.Circle,
+			ArtistType.Label, ArtistType.OtherGroup
+		];
+
 		private static vocalistTypes = [
 			ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite,
 			ArtistType.UTAU, ArtistType.Vocaloid, ArtistType.CeVIO

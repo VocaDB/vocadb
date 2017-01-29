@@ -207,4 +207,7 @@
   <data name="VoicebankReleaseDate" xml:space="preserve">
     <value>Released:</value>
   </data>
+  <data name="IncludeGroupMembers" xml:space="preserve">
+    <value>Include group members</value>
+  </data>
 </root>

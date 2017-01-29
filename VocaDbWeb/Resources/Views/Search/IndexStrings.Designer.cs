@@ -133,6 +133,15 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include group members.
+        /// </summary>
+        public static string IncludeGroupMembers {
+            get {
+                return ResourceManager.GetString("IncludeGroupMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In my collection.
         /// </summary>
         public static string InMyCollection {
