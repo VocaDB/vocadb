@@ -288,6 +288,17 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
+		public ActionResult PopupContentWithVote(int id = invalidId) {
+
+			if (id == invalidId)
+				return HttpNotFound();
+
+			var song = queries.GetSongWithPVAndVote(id, false, includePVs: false);
+			return PartialView("_SongWithVotePopupContent", song);
+
+		}
+
 		public FeedResult Feed(IndexRouteParams indexParams) {
 
 			WebHelper.VerifyUserAgent(Request);

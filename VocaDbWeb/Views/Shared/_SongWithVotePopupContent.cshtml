@@ -1,0 +1,8 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.Songs.SongWithPVAndVoteContract
+	
+@{ Html.RenderPartial("SongPopupContent", Model); }
+
+@if (Model.Vote != VocaDb.Model.Domain.Songs.SongVoteRating.Nothing) {
+	<p>@Translate.SongVoteRatingNames[Model.Vote]</p>
+}

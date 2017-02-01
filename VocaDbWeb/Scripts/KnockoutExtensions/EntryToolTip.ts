@@ -68,7 +68,7 @@ ko.bindingHandlers.artistToolTip = {
 
 ko.bindingHandlers.songToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContent', ko.unwrap(valueAccessor()));
+		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContentWithVote', ko.unwrap(valueAccessor()));
 	}
 }
 

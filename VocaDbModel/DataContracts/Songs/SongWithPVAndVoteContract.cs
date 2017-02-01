@@ -11,10 +11,12 @@ namespace VocaDb.Model.DataContracts.Songs {
 	[DataContract]
 	public class SongWithPVAndVoteContract : SongContract {
 
-		public SongWithPVAndVoteContract(Song song, SongVoteRating vote, ContentLanguagePreference languagePreference)
+		public SongWithPVAndVoteContract(Song song, SongVoteRating vote, ContentLanguagePreference languagePreference, bool includePVs = true)
 			: base(song, languagePreference) {
 
-			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
+			if (includePVs) {
+				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
+			}
 			Vote = vote;
 
 		}

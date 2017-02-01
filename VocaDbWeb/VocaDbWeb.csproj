@@ -3386,6 +3386,7 @@
     <Content Include="Views\User\Partials\_SongLists.cshtml" />
     <Content Include="Views\Event\SeriesVersions.cshtml" />
     <Content Include="Views\Shared\_UserPopupContent.cshtml" />
+    <Content Include="Views\Shared\_SongWithVotePopupContent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

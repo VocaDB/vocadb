@@ -500,7 +500,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "") {
+		public SongWithPVAndVoteContract GetSongWithPVAndVote(int songId, bool addHit, string hostname = "", bool includePVs = true) {
 
 			return HandleQuery(session => {
 
@@ -515,7 +515,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (addHit)
 					AddSongHit(session, song, hostname);
 
-				return new SongWithPVAndVoteContract(song, vote != null ? vote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference);
+				return new SongWithPVAndVoteContract(song, vote != null ? vote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference, includePVs);
 
 			});
 
