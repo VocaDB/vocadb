@@ -8,23 +8,23 @@
 @inherits VocaDb.Web.Code.HelperPage
 
 @functions {
-	public static HelperResult DataRow<T>(string name, T primary, T compared, Func<T, object> valGetter)
+	public static HelperResult DataRow<T>(string name, T primary, T compared, Func<T, object> valGetter, bool preserveLineBreaks = false)
 		where T : class {
 
 		var val1 = valGetter(primary);
 		var val2 = (compared != null ? valGetter(compared) : null);
 
-		return DataRow(name, val1, val2);
+		return DataRow(name, val1, val2, preserveLineBreaks);
 		
     }
 
-	public static HelperResult DataRow<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<T, object> valGetter)
+	public static HelperResult DataRow<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<T, object> valGetter, bool preserveLineBreaks = false)
 		where T : class {
 
 		var val1 = valGetter(comparedVersions.FirstData);
 		var val2 = (comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null);
 
-		return DataRow(name, val1, val2);
+		return DataRow(name, val1, val2, preserveLineBreaks);
 
 	}
 
@@ -237,12 +237,12 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 	<p>@ViewRes.ArchivedObjectVersionsStrings.CurrentVersionIs @version (@Translate.EntryStatusNames[status]).</p>	
 }
 
-@helper DataRow(string name, object val, object compareVal = null) {
+@helper DataRow(string name, object val, object compareVal = null, bool preserveLineBreaks = false) {
 	<tr class="@(compareVal != null && val != compareVal ? "changed" : "")">
 		<td>@name</td>
-		<td colspan="@(compareVal != null ? 1 : 2)">@val</td>
+		<td colspan="@(compareVal != null ? 1 : 2)" @Html.ConditionalAttribute(preserveLineBreaks, "class", "pre-line")>@val</td>
 		@if (compareVal != null) {
-		<td>@compareVal</td>			
+		<td @Html.ConditionalAttribute(preserveLineBreaks, "class", "pre-line")>@compareVal</td>			
 		}
 	</tr>	
 }
