@@ -45,7 +45,7 @@ namespace VocaDb.Web.App_Start {
 			// Included on all pages except the front page (to optimize front page load time).
 			bundles.Add(new ScriptBundle("~/bundles/shared/main").Include(
 				"~/Scripts/moment-with-locales.js",
-				"~/Scripts/Helpers/HtmlHelper.js", 
+				"~/Scripts/Helpers/HtmlHelper.js",
 				"~/Scripts/Models/EntryType.js",
 				"~/Scripts/Shared/EntryUrlMapper.js",
 				"~/Scripts/Shared/EntryAutoComplete.js",
@@ -65,6 +65,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Models/PVServiceIcons.js",				
 				"~/Scripts/Models/Globalization/ContentLanguagePreference.js",
 				"~/Scripts/Models/EntryOptionalFields.js",
+				"~/Scripts/Helpers/ArtistHelper.js", // Depends on ArtistType
 				"~/Scripts/Repositories/EntryCommentRepository.js",
 				"~/Scripts/Repositories/BaseRepository.js",
 				"~/Scripts/Repositories/RepositoryFactory.js",
@@ -76,7 +77,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/PagedItemsViewModel.js",
 				"~/Scripts/ViewModels/ServerSidePagingViewModel.js",
 				"~/Scripts/ViewModels/ReportEntryViewModel.js",
-				"~/Scripts/ViewModels/Globalization/EnglishTranslatedStringViewModel.js"
+				"~/Scripts/ViewModels/Globalization/EnglishTranslatedStringViewModel.js",
+				"~/Scripts/ViewModels/SelfDescriptionViewModel.js"
 			));
 
 			// Included on all entry edit and create pages (album, artist, my settings etc.)
@@ -178,7 +180,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Models/Aggregate/TimeUnit.js",
-				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
@@ -211,7 +212,6 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Edit").Include(
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
-				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
@@ -254,7 +254,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Models/Tags/Tag.js",
-				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
@@ -289,9 +288,10 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/SongCreateViewModel.js"
 			));
 
-			bundles.Add(new ScriptBundle("~/bundles/Song/Details").Include(				
+			bundles.Add(new ScriptBundle("~/bundles/Song/Details").Include(
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
+				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/Song/SongDetailsViewModel.js",
@@ -308,7 +308,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Models/Tags/Tag.js",
 				"~/Scripts/Models/PVs/PVType.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
-				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Helpers/SongHelper.js",
 				"~/Scripts/Repositories/PVRepository.js",
@@ -346,7 +345,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
-				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/SongListRepository.js",
 				"~/Scripts/Models/ResourcesManager.js",
@@ -437,7 +435,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Helpers/HighchartsHelper.js",				
-				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
@@ -486,7 +483,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
-				"~/Scripts/Helpers/ArtistHelper.js",
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",

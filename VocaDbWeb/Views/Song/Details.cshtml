@@ -350,9 +350,40 @@
 
 			</tr>
 			}
-
+			
 		</table>
 		
+			<h3>Artist self-description</h3>
+			<div class="media">
+				@if (Model.SelfDescriptionAuthor != null) {
+				<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', @Model.SelfDescriptionAuthor.Id) }" class="pull-left">
+					@ArtistHelpers.ArtistIconLink(Model.SelfDescriptionAuthor)
+				</a>
+				}
+
+				<div class="media-body">
+					<div class="pull-right">
+						<a data-bind="click: selfDescription.beginEdit" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
+					</div>
+					@if (Model.SelfDescriptionAuthor != null) {						
+					<h3 class="media-heading">
+						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', @Model.SelfDescriptionAuthor.Id) }, text: '@Model.SelfDescriptionAuthor.Name'"></a>
+					</h3>
+					}
+					<div data-bind="visible: !selfDescription.editing()">
+						<p data-bind="markdown: selfDescription.text"></p>
+					</div>
+					<div data-bind="visible: selfDescription.editing()">
+						<select data-bind="value: selfDescription.author.entry, options: selfDescription.artists, optionsText: 'name', optionsCaption: 'Author'"></select>
+						<br />
+						<textarea data-bind="textInput: selfDescription.text" rows="5" cols="100" maxlength="2000"></textarea>
+						<br />
+						<button type="button" data-bind="click: selfDescription.save" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+						<button data-bind="click: selfDescription.cancelEdit" class="btn">Cancel</button>
+					</div>
+				</div>
+			</div>
+
 		@if (Model.Suggestions.Any()) {
 			<h3 class="withMargin">@Res.SuggestionsTitle</h3>
 			@SongHelpers.SongGrid(Model.Suggestions, 2, true, true)
@@ -462,13 +493,15 @@
 		var jsonModel = @Html.Raw(Model.Json);
 		var rootPath = '@RootPath';
 		var urlMapper = new vdb.UrlMapper(rootPath);
-		var repo = new vdb.repositories.SongRepository(rootPath, @LanguagePreferenceInt);
-		var userRepo = new vdb.repositories.UserRepository(urlMapper);
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var repo = repoFactory.songRepository();
+		var userRepo = repoFactory.userRepository();
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.SongReportTypeNames, SongReport.ReportTypesWithRequiredNotes));
 
-		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources,
+		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, 
+			resources,
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
 			jsonModel,
 			reportTypes,

@@ -8,6 +8,7 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
@@ -61,6 +62,8 @@ namespace VocaDb.Web.Models {
 			PublishDate = contract.Song.PublishDate;
 			RatingScore = contract.Song.RatingScore;
 			ReleaseEvent = contract.ReleaseEvent;
+			SelfDescription = contract.SelfDescription;
+			SelfDescriptionAuthor = contract.SelfDescriptionAuthor;
 			SongType = contract.Song.SongType;
 			Status = contract.Song.Status;
 			Suggestions = contract.Suggestions;
@@ -183,6 +186,10 @@ namespace VocaDb.Web.Models {
 
 		public ReleaseEventForApiContract ReleaseEvent { get; set; }
 
+		public string SelfDescription { get; set; }
+
+		public ArtistContract SelfDescriptionAuthor { get; set; }
+
 		public SongType SongType { get; set; }
 
 		public EntryStatus Status { get; set; }
@@ -232,6 +239,10 @@ namespace VocaDb.Web.Models {
 		public int SelectedLyricsId { get; set; }
 
 		public int SelectedPvId { get; set; }
+
+		public string SelfDescription { get; set; }
+
+		public ArtistContract SelfDescriptionAuthor { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongType SongType { get; set; }
