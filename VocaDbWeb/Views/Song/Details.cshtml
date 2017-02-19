@@ -353,27 +353,23 @@
 			
 		</table>
 		
-			<h3>Artist self-description</h3>
+			<h3 class="withMargin">Artist's personal description</h3>
 			<div class="media">
-				@if (Model.SelfDescriptionAuthor != null) {
-				<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', @Model.SelfDescriptionAuthor.Id) }" class="pull-left">
-					@ArtistHelpers.ArtistIconLink(Model.SelfDescriptionAuthor)
+				<a data-bind="visible: !selfDescription.author.isEmpty(), attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selfDescription.author.id()) }" class="pull-left">
+					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !selfDescription.author.isEmpty() ? selfDescription.author.entry().mainPicture.urlSmallThumb : null }" />
 				</a>
-				}
 
 				<div class="media-body">
 					<div class="pull-right">
 						<a data-bind="click: selfDescription.beginEdit" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
 					</div>
-					@if (Model.SelfDescriptionAuthor != null) {						
-					<h3 class="media-heading">
-						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', @Model.SelfDescriptionAuthor.Id) }, text: '@Model.SelfDescriptionAuthor.Name'"></a>
+					<h3 class="media-heading" data-bind="visible: !selfDescription.author.isEmpty()">
+						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selfDescription.author.id()) }, text: selfDescription.author.name"></a>
 					</h3>
-					}
 					<div data-bind="visible: !selfDescription.editing()">
 						<p data-bind="markdown: selfDescription.text"></p>
 					</div>
-					<div data-bind="visible: selfDescription.editing()">
+					<div data-bind="if: selfDescription.editing()">
 						<select data-bind="value: selfDescription.author.entry, options: selfDescription.artists, optionsText: 'name', optionsCaption: 'Author'"></select>
 						<br />
 						<textarea data-bind="textInput: selfDescription.text" rows="5" cols="100" maxlength="2000"></textarea>

@@ -65,7 +65,7 @@ namespace VocaDb.Model.Domain.Security {
 		/// </remarks>
 		private static bool IsVerifiedFor(IUserPermissionContext userContext, IEntryBase entry) {
 
-			if (entry == null || !userContext.IsLoggedIn || !userContext.LoggedUser.VerifiedArtist)
+			if (entry == null || !userContext.IsLoggedIn || !userContext.LoggedUser.VerifiedArtist || !userContext.LoggedUser.Active)
 				return false;
 
 			if (IsDirectlyVerifiedFor(userContext, entry))
@@ -227,6 +227,12 @@ namespace VocaDb.Model.Domain.Security {
 				return true;
 
 			return IsVerifiedFor(permissionContext, entry);
+
+		}
+
+		public static bool CanUpdateSelfDescription(IUserPermissionContext userContext, IEntryBase entry) {
+
+			return userContext.UserGroupId >= UserGroupId.Moderator || IsVerifiedFor(userContext, entry);
 
 		}
 

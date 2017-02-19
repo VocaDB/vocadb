@@ -156,6 +156,12 @@ module vdb.repositories {
 
 		}
 
+		public updateSelfDescription = (songId: number, text: string, author: dc.ArtistContract) => {
+
+			$.post(this.urlMapper.mapRelative("/api/songs/" + songId + "/self-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author }, null, 'json');
+
+		}
+
 		public updateSongRating = (songId: number, rating: vdb.models.SongVoteRating, callback: () => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings");

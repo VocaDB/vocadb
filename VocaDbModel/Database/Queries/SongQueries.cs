@@ -22,6 +22,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
@@ -60,6 +61,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly ObjectCache cache;
 		private readonly VdbConfigManager config;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly ILanguageDetector languageDetector;
 		private readonly IUserMessageMailer mailer;
@@ -259,7 +261,8 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
-			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, ObjectCache cache, VdbConfigManager config)
+			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IEntryThumbPersister entryThumbPersister, 
+			ObjectCache cache, VdbConfigManager config)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -268,6 +271,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.languageDetector = languageDetector;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
+			this.entryThumbPersister = entryThumbPersister;
             this.cache = cache;
 			this.config = config;
 
@@ -439,7 +443,7 @@ namespace VocaDb.Model.Database.Queries {
 				var lang = languagePreference ?? PermissionContext.LanguagePreference;
 				var song = session.Load<Song>(songId);
 				var contract = new SongDetailsContract(song, lang, GetSongPools(session, songId), 
-					config.SpecialTags, PermissionContext);
+					config.SpecialTags, PermissionContext, entryThumbPersister);
 				var user = PermissionContext.LoggedUser;
 
 				if (user != null) {
@@ -966,6 +970,26 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				return new SongForEditContract(song, PermissionContext.LanguagePreference);
+
+			});
+
+		}
+
+		public void UpdateSelfDescription(int songId, SongDetailsContract data) {
+
+			PermissionContext.VerifyLogin();
+
+			HandleTransaction(ctx => {
+
+				var song = ctx.Load(songId);
+
+				EntryPermissionManager.VerifyAccess(PermissionContext, song, EntryPermissionManager.CanUpdateSelfDescription);
+
+				song.PersonalDescriptionText = data.PersonalDescriptionText;
+				song.PersonalDescriptionAuthorId = data.PersonalDescriptionAuthor?.Id;
+
+				ctx.Update(song);
+				ctx.AuditLogger.AuditLog("updated self-description for {0}", entryLinkFactory.CreateEntryLink(song));
 
 			});
 

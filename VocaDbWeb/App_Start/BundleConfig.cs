@@ -65,7 +65,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Models/PVServiceIcons.js",				
 				"~/Scripts/Models/Globalization/ContentLanguagePreference.js",
 				"~/Scripts/Models/EntryOptionalFields.js",
-				"~/Scripts/Helpers/ArtistHelper.js", // Depends on ArtistType
+				"~/Scripts/Models/Artists/ArtistRoles.js",
+				"~/Scripts/Helpers/ArtistHelper.js", // Depends on ArtistType, ArtistRoles
 				"~/Scripts/Repositories/EntryCommentRepository.js",
 				"~/Scripts/Repositories/BaseRepository.js",
 				"~/Scripts/Repositories/RepositoryFactory.js",
@@ -86,7 +87,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/knockout-sortable.js",
 				"~/Scripts/Models/WebLinkCategory.js",
 				"~/Scripts/Models/EntryStatus.js",
-				"~/Scripts/Models/Artists/ArtistRoles.js",
 				"~/Scripts/Shared/WebLinkMatcher.js",
 				"~/Scripts/Shared/DialogService.js",
 				"~/Scripts/Helpers/SearchTextQueryHelper.js",

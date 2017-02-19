@@ -18,6 +18,8 @@ namespace VocaDb.Model.Mapping.Songs {
 			Map(m => m.FavoritedTimes).Not.Nullable();
 			Map(m => m.LengthSeconds).Not.Nullable();
 			Map(m => m.NicoId).Nullable();
+			Map(m => m.PersonalDescriptionAuthorId).Column(ClassConventions.EscapeColumn("PersonalDescriptionAuthor")).Nullable();
+			Map(m => m.PersonalDescriptionText).Nullable();
 			Map(m => m.PVServices).CustomType(typeof(PVServices)).Not.Nullable();
 			Map(m => m.RatingScore).Not.Nullable();
 			Map(m => m.SongType).Not.Nullable();

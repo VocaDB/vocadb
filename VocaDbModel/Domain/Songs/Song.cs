@@ -324,11 +324,11 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual ReleaseEvent ReleaseEvent { get; set; }
 
-		public virtual string SelfDescription { get; set; }
+		public virtual string PersonalDescriptionText { get; set; }
 
-		public virtual Artist SelfDescriptionAuthor => SelfDescriptionAuthorId != 0 ? ArtistList.FirstOrDefault(a => a.Id == SelfDescriptionAuthorId) : null;
+		public virtual Artist PersonalDescriptionAuthor => PersonalDescriptionAuthorId != null ? ArtistList.FirstOrDefault(a => a.Id == PersonalDescriptionAuthorId) : null;
 
-		public virtual int SelfDescriptionAuthorId { get; set; }
+		public virtual int? PersonalDescriptionAuthorId { get; set; }
 
 		public virtual SongType SongType { get; set; }
 

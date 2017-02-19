@@ -7,6 +7,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils.Config;
@@ -19,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongDetailsContract() {}
 
 		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
-			SongListBaseContract[] pools, ISpecialTags specialTags, IUserPermissionContext userContext) {
+			SongListBaseContract[] pools, ISpecialTags specialTags, IUserPermissionContext userContext, IEntryThumbPersister thumbPersister) {
 
 			Song = new SongContract(song, languagePreference);
 
@@ -39,9 +40,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			ReleaseEvent = song.ReleaseEvent != null ? new ReleaseEventForApiContract(song.ReleaseEvent, ReleaseEventOptionalFields.None) : null;
-			SelfDescription = song.SelfDescription;
-			var author = song.SelfDescriptionAuthor;
-			SelfDescriptionAuthor = author != null ? new ArtistContract(author, languagePreference) : null;
+			PersonalDescriptionText = song.PersonalDescriptionText;
+			var author = song.PersonalDescriptionAuthor;
+			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, true, ArtistOptionalFields.MainPicture) : null;
 			Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(song.TranslatedName);
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
@@ -135,10 +136,10 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public ReleaseEventForApiContract ReleaseEvent { get; set; }
 
 		[DataMember]
-		public string SelfDescription { get; set; }
+		public string PersonalDescriptionText { get; set; }
 
 		[DataMember]
-		public ArtistContract SelfDescriptionAuthor { get; set; }
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
 
 		[DataMember]
 		public SongContract Song { get; set; }

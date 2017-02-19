@@ -4,6 +4,18 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(201702192100)]
+	public class SongPersonalDescription : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("PersonalDescriptionText").OnTable(TableNames.Songs).AsString(2000).Nullable();
+			Create.Column("PersonalDescriptionAuthor").OnTable(TableNames.Songs).AsInt32().Nullable().ForeignKey(TableNames.Artists, "Id");
+
+		}
+
+	}
+
 	[Migration(201701122000)]
 	public class ArtistHit : AutoReversingMigration {
 

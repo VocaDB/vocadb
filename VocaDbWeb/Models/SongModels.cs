@@ -62,8 +62,8 @@ namespace VocaDb.Web.Models {
 			PublishDate = contract.Song.PublishDate;
 			RatingScore = contract.Song.RatingScore;
 			ReleaseEvent = contract.ReleaseEvent;
-			SelfDescription = contract.SelfDescription;
-			SelfDescriptionAuthor = contract.SelfDescriptionAuthor;
+			PersonalDescriptionText = contract.PersonalDescriptionText;
+			PersonalDescriptionAuthor = contract.PersonalDescriptionAuthor;
 			SongType = contract.Song.SongType;
 			Status = contract.Song.Status;
 			Suggestions = contract.Suggestions;
@@ -186,9 +186,9 @@ namespace VocaDb.Web.Models {
 
 		public ReleaseEventForApiContract ReleaseEvent { get; set; }
 
-		public string SelfDescription { get; set; }
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
 
-		public ArtistContract SelfDescriptionAuthor { get; set; }
+		public string PersonalDescriptionText { get; set; }
 
 		public SongType SongType { get; set; }
 
@@ -216,6 +216,8 @@ namespace VocaDb.Web.Models {
 			UserRating = model.UserRating;
 			LatestComments = model.LatestComments;
 			OriginalVersion = model.OriginalVersion;
+			PersonalDescriptionAuthor = model.PersonalDescriptionAuthor;
+			PersonalDescriptionText = model.PersonalDescriptionText;
 			Version = version;
 
 			SelectedLyricsId = preferredLyrics != null ? preferredLyrics.Id : 0;
@@ -240,9 +242,9 @@ namespace VocaDb.Web.Models {
 
 		public int SelectedPvId { get; set; }
 
-		public string SelfDescription { get; set; }
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
 
-		public ArtistContract SelfDescriptionAuthor { get; set; }
+		public string PersonalDescriptionText { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongType SongType { get; set; }
