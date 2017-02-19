@@ -52,6 +52,13 @@ module vdb.repositories {
 
 		};
 
+		public getOneWithComponents = (id: number, fields: string, callback: (result: dc.ArtistApiContract) => void) => {
+
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists/" + id);
+			$.getJSON(url, { fields: fields, lang: this.languagePreferenceStr }, callback);
+
+		};
+
 		public getList = (paging: dc.PagingProperties, lang: string, query: string, sort: string,
 			artistTypes: string,
 			allowBaseVoicebanks: boolean,

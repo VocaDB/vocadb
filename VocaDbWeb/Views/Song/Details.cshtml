@@ -370,9 +370,9 @@
 						<p data-bind="markdown: selfDescription.text"></p>
 					</div>
 					<div data-bind="if: selfDescription.editing()">
-						<select data-bind="value: selfDescription.author.entry, options: selfDescription.artists, optionsText: 'name', optionsCaption: 'Author'"></select>
+						<select data-bind="value: selfDescription.author.id, options: selfDescription.artists, optionsText: 'name', optionsValue: 'id', optionsCaption: 'Select author'"></select>
 						<br />
-						<textarea data-bind="textInput: selfDescription.text" rows="5" cols="100" maxlength="2000"></textarea>
+						<textarea data-bind="textInput: selfDescription.text" rows="5" cols="100" maxlength="2000" class="input-xxlarge"></textarea>
 						<br />
 						<button type="button" data-bind="click: selfDescription.save" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
 						<button data-bind="click: selfDescription.cancelEdit" class="btn">Cancel</button>
@@ -492,11 +492,13 @@
 		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var repo = repoFactory.songRepository();
 		var userRepo = repoFactory.userRepository();
+		var artistRepo = repoFactory.artistRepository();
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.SongReportTypeNames, SongReport.ReportTypesWithRequiredNotes));
 
 		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, 
+			artistRepo,
 			resources,
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
 			jsonModel,

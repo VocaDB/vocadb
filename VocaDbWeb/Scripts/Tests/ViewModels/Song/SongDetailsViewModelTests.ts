@@ -25,7 +25,7 @@ module vdb.tests.viewModels {
 				{ id: 2, name: "Favorite Lukas", featuredCategory: "Nothing" },
 				{ id: 3, name: "Mikupa 2013", featuredCategory: "Concerts" }
 			];
-            target = new vm.SongDetailsViewModel(rep, userRep, res, false, data, [], 0, vdb.models.globalization.ContentLanguagePreference.Default, false, null);
+            target = new vm.SongDetailsViewModel(rep, userRep, null, res, false, data, [], 0, vdb.models.globalization.ContentLanguagePreference.Default, false, null);
         }
     });
 
