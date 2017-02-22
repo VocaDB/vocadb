@@ -285,4 +285,13 @@
   <data name="ReleaseEvent" xml:space="preserve">
     <value>Release event</value>
   </data>
+  <data name="PersonalDescription" xml:space="preserve">
+    <value>Artist's personal description</value>
+  </data>
+  <data name="PersonalDescriptionHelp" xml:space="preserve">
+    <value>This field is for artist's personal introduction of the entry. Unlike the description field, this is considered a subjective opinion, possibly written in first person, and may include a limited amount of "marketing speech". Select the author of the description - who wrote it? For entries with multiple involved artists, only one description may be provided, but whenever possible the circle/group can be selected as the author.</value>
+  </data>
+  <data name="PersonalDescriptionSelectAuthor" xml:space="preserve">
+    <value>Select author</value>
+  </data>
 </root>

@@ -58,6 +58,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ToggleClick.js",
 				"~/Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
 				"~/Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
+				"~/Scripts/KnockoutExtensions/qTip.js",
 				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",
@@ -98,7 +99,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SongAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/FocusOut.js",
-				"~/Scripts/KnockoutExtensions/qTip.js",
 				"~/Scripts/KnockoutExtensions/InitialValue.js"
 			));
 

@@ -616,6 +616,7 @@ div.item {
 	cursor: help;
 	background: url("Icons/help.png") no-repeat right;
 	padding: 0 20px 0 0;
+	min-height: 16px;
 }
 
 /*.helpTip:after {
