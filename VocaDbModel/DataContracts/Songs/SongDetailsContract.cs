@@ -29,6 +29,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			AlternateVersions = song.AlternateVersions.Select(s => new SongContract(s, languagePreference, getThumbUrl: false)).OrderBy(s => s.PublishDate).ToArray();
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			ArtistString = song.ArtistString[languagePreference];
+			CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, song);
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, song);
 			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
@@ -53,7 +54,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		/// <summary>
 		/// Album id of the album being browsed.
-		/// 0 if none.
+		/// Null if none.
 		/// </summary>
 		public AlbumContract Album { get; set; }
 
@@ -74,6 +75,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public string ArtistString { get; set; }
+
+		public bool CanEditPersonalDescription { get; set; }
 
 		public bool CanRemoveTagUsages { get; set; }
 

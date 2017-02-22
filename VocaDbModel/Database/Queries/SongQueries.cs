@@ -975,7 +975,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void UpdateSelfDescription(int songId, SongDetailsContract data) {
+		public void UpdatePersonalDescription(int songId, SongDetailsContract data) {
 
 			PermissionContext.VerifyLogin();
 
@@ -983,7 +983,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var song = ctx.Load(songId);
 
-				EntryPermissionManager.VerifyAccess(PermissionContext, song, EntryPermissionManager.CanUpdateSelfDescription);
+				EntryPermissionManager.VerifyAccess(PermissionContext, song, EntryPermissionManager.CanEditPersonalDescription);
 
 				song.PersonalDescriptionText = data.PersonalDescriptionText;
 				song.PersonalDescriptionAuthorId = data.PersonalDescriptionAuthor?.Id;

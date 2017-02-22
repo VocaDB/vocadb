@@ -38,6 +38,7 @@ namespace VocaDb.Web.Models {
 			AlternateVersions = contract.AlternateVersions.Where(a => a.SongType != SongType.Original).ToArray();
 			ArtistString = contract.ArtistString;
 			CanEdit = EntryPermissionManager.CanEdit(userContext, contract.Song);
+			CanEditPersonalDescription = contract.CanEditPersonalDescription;
 			CanRemoveTagUsages = contract.CanRemoveTagUsages;
 			CommentCount = contract.CommentCount;
 			CreateDate = contract.CreateDate;
@@ -120,6 +121,8 @@ namespace VocaDb.Web.Models {
 		public ArtistForSongContract[] Bands { get; set; }
 
 		public bool CanEdit { get; set; }
+
+		public bool CanEditPersonalDescription { get; set; }
 
 		public bool CanRemoveTagUsages { get; set; }
 

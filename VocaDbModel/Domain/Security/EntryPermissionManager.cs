@@ -204,6 +204,14 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		public static bool CanEditPersonalDescription(IUserPermissionContext userContext, IEntryBase entry) {
+
+			ParamIs.NotNull(() => userContext);
+
+			return userContext.UserGroupId >= UserGroupId.Moderator || IsVerifiedFor(userContext, entry);
+
+		}
+
 		public static bool CanEditUser(IUserPermissionContext permissionContext, UserGroupId groupId) {
 
 			ParamIs.NotNull(() => permissionContext);
@@ -227,12 +235,6 @@ namespace VocaDb.Model.Domain.Security {
 				return true;
 
 			return IsVerifiedFor(permissionContext, entry);
-
-		}
-
-		public static bool CanUpdateSelfDescription(IUserPermissionContext userContext, IEntryBase entry) {
-
-			return userContext.UserGroupId >= UserGroupId.Moderator || IsVerifiedFor(userContext, entry);
 
 		}
 

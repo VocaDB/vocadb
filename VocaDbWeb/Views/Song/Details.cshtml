@@ -353,6 +353,7 @@
 			
 		</table>
 		
+		@if (Model.CanEditPersonalDescription || !string.IsNullOrEmpty(Model.PersonalDescriptionText)) {
 			<h3 class="withMargin">Artist's personal description</h3>
 			<div class="media">
 				<a data-bind="visible: !selfDescription.author.isEmpty(), attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selfDescription.author.id()) }" class="pull-left">
@@ -360,9 +361,11 @@
 				</a>
 
 				<div class="media-body">
+					@if (Model.CanEditPersonalDescription) {
 					<div class="pull-right">
 						<a data-bind="click: selfDescription.beginEdit" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
 					</div>
+					}
 					<h3 class="media-heading" data-bind="visible: !selfDescription.author.isEmpty()">
 						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selfDescription.author.id()) }, text: selfDescription.author.name"></a>
 					</h3>
@@ -379,6 +382,7 @@
 					</div>
 				</div>
 			</div>
+		}
 
 		@if (Model.Suggestions.Any()) {
 			<h3 class="withMargin">@Res.SuggestionsTitle</h3>
