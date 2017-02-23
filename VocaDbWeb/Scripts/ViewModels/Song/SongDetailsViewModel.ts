@@ -122,7 +122,9 @@ module vdb.viewModels {
 
 			this.selfDescription = new SelfDescriptionViewModel(data.personalDescriptionAuthor, data.personalDescriptionText, artistRepository, callback => {
 				repository.getOneWithComponents(this.id, 'Artists', cls.globalization.ContentLanguagePreference[this.languagePreference], result => {
-					var artists = _.chain(result.artists).filter(a => a.artist != null && vdb.helpers.ArtistHelper.isProducerType(cls.artists.ArtistType[a.artist.artistType], true)).map(a => a.artist).value();
+					var artists = _.chain(result.artists)
+						.filter(helpers.ArtistHelper.isValidForPersonalDescription)
+						.map(a => a.artist).value();
 					callback(artists);
 				});
 			}, vm => repository.updateSelfDescription(this.id, vm.text(), vm.author.entry()));

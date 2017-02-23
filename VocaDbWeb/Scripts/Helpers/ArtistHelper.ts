@@ -37,6 +37,10 @@ module vdb.helpers {
 
 		}
 
+		private static getRolesArray(roles: string[] | string): string[] {
+			return typeof roles === 'string' ? roles.split(',') : roles;
+		}
+
 		// Whether the roles for an artist type can be customized
 		public static isCustomizable(at: cls.artists.ArtistType) {
 
@@ -45,19 +49,21 @@ module vdb.helpers {
 		}
 
 		// Checks whether an artist type with possible custom roles is to be considered a producer
-		static isProducerRoleType(artistType: cls.artists.ArtistType, roles: string[], isAnimation: boolean) {
-			
-			if (ArtistHelper.useDefaultRoles(artistType, roles)) {
+		static isProducerRoleType(artistType: cls.artists.ArtistType, roles: string[] | string, isAnimation: boolean) {
+
+			const rolesArray = ArtistHelper.getRolesArray(roles);
+
+			if (ArtistHelper.useDefaultRoles(artistType, rolesArray)) {
 				return ArtistHelper.isProducerType(artistType, isAnimation);
 			}
 
-			var res =
-				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Arranger]) ||
-				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Composer]) ||
-				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.VoiceManipulator]);
+			let res =
+				_.includes(rolesArray, cls.artists.ArtistRoles[ArtistRoles.Arranger]) ||
+				_.includes(rolesArray, cls.artists.ArtistRoles[ArtistRoles.Composer]) ||
+				_.includes(rolesArray, cls.artists.ArtistRoles[ArtistRoles.VoiceManipulator]);
 
 			if (isAnimation)
-				res = res || _.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Animator]);
+				res = res || _.includes(rolesArray, cls.artists.ArtistRoles[ArtistRoles.Animator]);
 
 			return res;
 
@@ -72,10 +78,16 @@ module vdb.helpers {
 		// Whether an artist type with default roles is to be considered a producer
 		static isProducerType(artistType: cls.artists.ArtistType, isAnimation: boolean) {
 
-			return (artistType == ArtistType.Producer
-				|| artistType == ArtistType.Circle
-				|| artistType == ArtistType.Band
-				|| (artistType == ArtistType.Animator && isAnimation));
+			return (artistType === ArtistType.Producer
+				|| artistType === ArtistType.Circle
+				|| artistType === ArtistType.Band
+				|| (artistType === ArtistType.Animator && isAnimation));
+
+		}
+
+		static isValidForPersonalDescription(artistLink: dc.ArtistForAlbumContract) {
+
+			return artistLink.artist != null && ArtistHelper.isProducerRoleType(cls.artists.ArtistType[artistLink.artist.artistType], artistLink.roles, true);
 
 		}
 
@@ -107,9 +119,9 @@ module vdb.helpers {
 
 		// Whether default roles should be used for an artist type and roles combination.
 		// Some artist types do not allow customization. If no custom roles are specified default roles will be used.
-		static useDefaultRoles(artistType: cls.artists.ArtistType, roles: string[]) {
+		private static useDefaultRoles(artistType: cls.artists.ArtistType, roles: string[]) {
 
-			return roles == null || roles.length == 0 || roles[0] == cls.artists.ArtistRoles[ArtistRoles.Default] || !ArtistHelper.isCustomizable(artistType);
+			return roles == null || roles.length === 0 || roles[0] === cls.artists.ArtistRoles[ArtistRoles.Default] || !ArtistHelper.isCustomizable(artistType);
 
 		}
 
