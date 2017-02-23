@@ -4,7 +4,6 @@ module vdb.helpers {
 	import dc = vdb.dataContracts;
 	import cls = vdb.models;
 	var ArtistType = cls.artists.ArtistType;
-	var ArtistRoles = cls.artists.ArtistRoles;
 
 	export class ArtistHelper {
 		
@@ -33,12 +32,13 @@ module vdb.helpers {
 			if (at === null)
 				return false;
 
-			return ArtistHelper.isVocalistType(at) || at == ArtistType.Unknown;
+			return ArtistHelper.isVocalistType(at) || at === ArtistType.Unknown;
 
 		}
 
-		private static getRolesArray(roles: string[] | string): string[] {
-			return typeof roles === 'string' ? roles.split(',') : roles;
+		private static getRolesArray(roles: string[] | string): cls.artists.ArtistRoles[] {
+			const stringArr = typeof roles === 'string' ? roles.split(',') : roles;
+			return _.map(stringArr, s => cls.artists.ArtistRoles[s]);
 		}
 
 		// Whether the roles for an artist type can be customized
@@ -58,12 +58,12 @@ module vdb.helpers {
 			}
 
 			let res =
-				_.includes(rolesArray, cls.artists.ArtistRoles[ArtistRoles.Arranger]) ||
-				_.includes(rolesArray, cls.artists.ArtistRoles[ArtistRoles.Composer]) ||
-				_.includes(rolesArray, cls.artists.ArtistRoles[ArtistRoles.VoiceManipulator]);
+				_.includes(rolesArray, cls.artists.ArtistRoles.Arranger) ||
+				_.includes(rolesArray, cls.artists.ArtistRoles.Composer) ||
+				_.includes(rolesArray, cls.artists.ArtistRoles.VoiceManipulator);
 
 			if (isAnimation)
-				res = res || _.includes(rolesArray, cls.artists.ArtistRoles[ArtistRoles.Animator]);
+				res = res || _.includes(rolesArray, cls.artists.ArtistRoles.Animator);
 
 			return res;
 
@@ -87,19 +87,37 @@ module vdb.helpers {
 
 		static isValidForPersonalDescription(artistLink: dc.ArtistForAlbumContract) {
 
-			return artistLink.artist != null && ArtistHelper.isProducerRoleType(cls.artists.ArtistType[artistLink.artist.artistType], artistLink.roles, true);
+			if (!artistLink.artist || artistLink.isSupport)
+				return false;
+
+			const artistType = cls.artists.ArtistType[artistLink.artist.artistType];
+			const rolesArray = ArtistHelper.getRolesArray(artistLink.roles);
+
+			if (ArtistHelper.useDefaultRoles(artistType, rolesArray)) {
+				return ArtistHelper.isProducerType(artistType, true);
+			}
+
+			const validRoles = [
+				cls.artists.ArtistRoles.Animator, cls.artists.ArtistRoles.Arranger, cls.artists.ArtistRoles.Composer,
+				cls.artists.ArtistRoles.Distributor, cls.artists.ArtistRoles.Mastering, cls.artists.ArtistRoles.Other,
+				cls.artists.ArtistRoles.Publisher, cls.artists.ArtistRoles.VoiceManipulator
+			];
+
+			return _.some(validRoles, r => _.includes(rolesArray, r));
 
 		}
 
 		static isVocalistRoleType(artistType: cls.artists.ArtistType, roles: string[]) {
 
-			if (ArtistHelper.useDefaultRoles(artistType, roles)) {
+			const rolesArray = ArtistHelper.getRolesArray(roles);
+
+			if (ArtistHelper.useDefaultRoles(artistType, rolesArray)) {
 				return ArtistHelper.isVocalistType(artistType);
 			}
 
 			var res =
-				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Vocalist]) ||
-				_.includes(roles, cls.artists.ArtistRoles[ArtistRoles.Chorus]);
+				_.includes(rolesArray, cls.artists.ArtistRoles.Vocalist) ||
+				_.includes(rolesArray, cls.artists.ArtistRoles.Chorus);
 
 			return res;
 
@@ -119,9 +137,9 @@ module vdb.helpers {
 
 		// Whether default roles should be used for an artist type and roles combination.
 		// Some artist types do not allow customization. If no custom roles are specified default roles will be used.
-		private static useDefaultRoles(artistType: cls.artists.ArtistType, roles: string[]) {
+		private static useDefaultRoles(artistType: cls.artists.ArtistType, roles: cls.artists.ArtistRoles[]) {
 
-			return roles == null || roles.length === 0 || roles[0] === cls.artists.ArtistRoles[ArtistRoles.Default] || !ArtistHelper.isCustomizable(artistType);
+			return roles == null || roles.length === 0 || roles[0] === cls.artists.ArtistRoles.Default || !ArtistHelper.isCustomizable(artistType);
 
 		}
 
