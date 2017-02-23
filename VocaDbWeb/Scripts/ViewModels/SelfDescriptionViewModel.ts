@@ -20,6 +20,10 @@ namespace vdb.viewModels {
 		public author: BasicEntryLinkViewModel<dc.ArtistApiContract>;
 
 		public beginEdit = () => {
+
+			this.originalAuthor = this.author.id();
+			this.originalText = this.text();
+
 			if (!this.artists().length) {
 				this.getArtists(artists => {
 					this.artists(artists);
@@ -28,11 +32,19 @@ namespace vdb.viewModels {
 			} else {
 				this.editing(true);				
 			}
+
 		}
 
-		public cancelEdit = () => this.editing(false);
+		public cancelEdit = () => {
+			this.text(this.originalText);
+			this.author.id(this.originalAuthor);
+			this.editing(false);
+		};
 
 		public editing = ko.observable(false);
+
+		private originalAuthor: number;
+		private originalText: string;
 
 		public save = () => {
 			this.saveFunc(this);
