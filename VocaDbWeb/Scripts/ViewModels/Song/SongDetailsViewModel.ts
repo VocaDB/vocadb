@@ -65,7 +65,7 @@ module vdb.viewModels {
 
 		public selectedPvId: KnockoutObservable<number>;
 
-		public selfDescription: SelfDescriptionViewModel;
+		public personalDescription: SelfDescriptionViewModel;
 
         public showAllVersions: () => void;
 
@@ -120,14 +120,14 @@ module vdb.viewModels {
 
 			});
 
-			this.selfDescription = new SelfDescriptionViewModel(data.personalDescriptionAuthor, data.personalDescriptionText, artistRepository, callback => {
+			this.personalDescription = new SelfDescriptionViewModel(data.personalDescriptionAuthor, data.personalDescriptionText, artistRepository, callback => {
 				repository.getOneWithComponents(this.id, 'Artists', cls.globalization.ContentLanguagePreference[this.languagePreference], result => {
 					var artists = _.chain(result.artists)
 						.filter(helpers.ArtistHelper.isValidForPersonalDescription)
 						.map(a => a.artist).value();
 					callback(artists);
 				});
-			}, vm => repository.updateSelfDescription(this.id, vm.text(), vm.author.entry()));
+			}, vm => repository.updatePersonalDescription(this.id, vm.text(), vm.author.entry()));
 
             this.showAllVersions = () => {
                 this.allVersionsVisible(true);

@@ -15,6 +15,8 @@ namespace VocaDb.Model.Mapping.Albums {
 			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.DiscType).Column("[Type]").Not.Nullable();
+			Map(m => m.PersonalDescriptionAuthorId).Column(ClassConventions.EscapeColumn("PersonalDescriptionAuthor")).Nullable();
+			Map(m => m.PersonalDescriptionText).Nullable();
 			Map(m => m.RatingAverageInt).Column("[RatingAverage]").Not.Nullable();
 			Map(m => m.RatingCount).Not.Nullable();
 			Map(m => m.RatingTotal).Not.Nullable();

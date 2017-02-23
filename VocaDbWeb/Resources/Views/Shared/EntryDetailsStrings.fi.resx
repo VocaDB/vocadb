@@ -162,6 +162,9 @@
   <data name="OtherLinks" xml:space="preserve">
     <value>Epäviralliset linkit</value>
   </data>
+  <data name="PersonalDescription" xml:space="preserve">
+    <value>Artistin henkilökohtainen kuvaus</value>
+  </data>
   <data name="PicturesTab" xml:space="preserve">
     <value>Kuvat</value>
   </data>

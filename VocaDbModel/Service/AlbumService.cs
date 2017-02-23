@@ -19,6 +19,7 @@ using VocaDb.Model.Domain.Artists;
 using System.Drawing;
 using System;
 using VocaDb.Model.Database.Repositories.NHibernate;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
@@ -61,13 +62,15 @@ namespace VocaDb.Model.Service {
 			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
+		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IUserIconFactory userIconFactory;
 
 		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IUserIconFactory userIconFactory) 
+			IUserIconFactory userIconFactory, IEntryThumbPersister entryThumbPersister) 
 			: base(sessionFactory, permissionContext,entryLinkFactory) {
 			
 			this.userIconFactory = userIconFactory;
+			this.entryThumbPersister = entryThumbPersister;
 
 		}
 
@@ -268,7 +271,7 @@ namespace VocaDb.Model.Service {
 				if (stats == null)
 					throw new ObjectNotFoundException(id, typeof(Album));
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext) {
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, entryThumbPersister) {
 					OwnedCount = stats.OwnedCount,
 					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,

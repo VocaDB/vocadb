@@ -564,7 +564,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
-		[Route("{id:int}/self-description")]
+		[Route("{id:int}/personal-description")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
 		public void PostPersonalDescription(int id, SongDetailsContract data) {

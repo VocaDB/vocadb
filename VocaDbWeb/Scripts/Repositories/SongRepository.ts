@@ -156,9 +156,9 @@ module vdb.repositories {
 
 		}
 
-		public updateSelfDescription = (songId: number, text: string, author: dc.ArtistContract) => {
+		public updatePersonalDescription = (songId: number, text: string, author: dc.ArtistContract) => {
 
-			$.post(this.urlMapper.mapRelative("/api/songs/" + songId + "/self-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
+			$.post(this.urlMapper.mapRelative("/api/songs/" + songId + "/personal-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
 
 		}
 

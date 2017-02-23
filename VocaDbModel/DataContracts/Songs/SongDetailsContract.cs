@@ -121,6 +121,12 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongForApiContract OriginalVersion { get; set; }
 
 		[DataMember]
+		public string PersonalDescriptionText { get; set; }
+
+		[DataMember]
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
+
+		[DataMember]
 		public SongListBaseContract[] Pools { get; set; }
 
 		public LyricsForSongContract PreferredLyrics { get; set; }
@@ -137,12 +143,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public ReleaseEventForApiContract ReleaseEvent { get; set; }
-
-		[DataMember]
-		public string PersonalDescriptionText { get; set; }
-
-		[DataMember]
-		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
 
 		[DataMember]
 		public SongContract Song { get; set; }

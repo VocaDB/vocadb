@@ -94,7 +94,8 @@ module vdb.helpers {
 			const rolesArray = ArtistHelper.getRolesArray(artistLink.roles);
 
 			if (ArtistHelper.useDefaultRoles(artistType, rolesArray)) {
-				return ArtistHelper.isProducerType(artistType, true);
+				const validTypes = [ArtistType.Producer, ArtistType.Circle, ArtistType.Label, ArtistType.OtherGroup, ArtistType.Band, ArtistType.Animator];
+				return _.includes(validTypes, artistType);
 			}
 
 			const validRoles = [

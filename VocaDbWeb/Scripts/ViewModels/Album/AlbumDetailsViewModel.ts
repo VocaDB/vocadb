@@ -20,6 +20,8 @@ module vdb.viewModels {
 
 		public description: globalization.EnglishTranslatedStringViewModel;
 
+		public personalDescription: SelfDescriptionViewModel;
+
 		public tagsEditViewModel: tags.TagsEditViewModel;
 
 		public tagUsages: tags.TagListViewModel;
@@ -42,9 +44,11 @@ module vdb.viewModels {
         constructor(
 			repo: rep.AlbumRepository,
 			userRepo: rep.UserRepository,
+			artistRepository: rep.ArtistRepository,
 			data: AlbumDetailsAjax,
 			reportTypes: IEntryReportType[],
 			loggedUserId: number,
+			languagePreference: models.globalization.ContentLanguagePreference,
 			canDeleteAllComments: boolean,
 			formatString: string,
 			showTranslatedDescription: boolean) {
@@ -53,6 +57,15 @@ module vdb.viewModels {
             this.downloadTagsDialog = new DownloadTagsViewModel(this.id, formatString);
 			this.description = new globalization.EnglishTranslatedStringViewModel(showTranslatedDescription);
 			this.comments = new EditableCommentsViewModel(repo, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, data.latestComments, true);
+
+			this.personalDescription = new SelfDescriptionViewModel(data.personalDescriptionAuthor, data.personalDescriptionText, artistRepository, callback => {
+				repo.getOneWithComponents(this.id, 'Artists', cls.globalization.ContentLanguagePreference[languagePreference], result => {
+					var artists = _.chain(result.artists)
+						.filter(helpers.ArtistHelper.isValidForPersonalDescription)
+						.map(a => a.artist).value();
+					callback(artists);
+				});
+			}, vm => repo.updatePersonalDescription(this.id, vm.text(), vm.author.entry()));
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepo.getAlbumTagSelections(this.id, callback),
@@ -76,9 +89,9 @@ module vdb.viewModels {
     export interface AlbumDetailsAjax {
 
         id: number;
-
 		latestComments: dc.CommentContract[];
-
+		personalDescriptionText?: string;
+		personalDescriptionAuthor?: dc.ArtistApiContract;
 		tagUsages: dc.tags.TagUsageForApiContract[];
 
     }

@@ -2238,6 +2238,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\ActivityEntry\ActivityEntryContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Aggregate\CountPerDayContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumDiscPropertiesContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumReleaseContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForEditContract.ts" />

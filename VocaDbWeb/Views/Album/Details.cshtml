@@ -8,6 +8,7 @@
 @using VocaDb.Web.Models;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
+@using EntryRes = ViewRes.EntryDetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<AlbumDetails>
 
 @{
@@ -318,6 +319,39 @@
 				@PVHelpers.EmbedPV(Model.PrimaryPV)
 			</div>
 		}
+		
+		@if (Model.CanEditPersonalDescription || !string.IsNullOrEmpty(Model.PersonalDescriptionText)) {
+			<h3 class="withMargin helpTip" data-bind="qTip: null" title="@EntryRes.PersonalDescriptionHelp">
+				@EntryRes.PersonalDescription
+			</h3>
+			<div class="media" data-bind="with: personalDescription">
+				<a data-bind="visible: !author.isEmpty(), attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
+					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() ? author.entry().mainPicture.urlSmallThumb : null }" />
+				</a>
+
+				<div class="media-body">
+					@if (Model.CanEditPersonalDescription) {
+					<div class="pull-right">
+						<a data-bind="click: beginEdit" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
+					</div>
+					}
+					<h3 class="media-heading" data-bind="visible: !author.isEmpty()">
+						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
+					</h3>
+					<div data-bind="visible: !editing()">
+						<p data-bind="markdown: text"></p>
+					</div>
+					<div data-bind="if: editing()">
+						<select data-bind="value: author.id, options: artists, optionsText: 'name', optionsValue: 'id', optionsCaption: '@EntryRes.PersonalDescriptionSelectAuthor'"></select>
+						<br />
+						<textarea data-bind="textInput: text" rows="5" cols="100" maxlength="2000" class="input-xxlarge"></textarea>
+						<br />
+						<button type="button" data-bind="click: save" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+						<button data-bind="click: cancelEdit" class="btn">@ViewRes.SharedStrings.Cancel</button>
+					</div>
+				</div>
+			</div>
+		}
 
 		@CommentHelpers.LatestCommentsKnockout()
 
@@ -392,6 +426,7 @@
 			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
 			var albumRepo = repoFactory.albumRepository();
 			var userRepo = repoFactory.userRepository();
+			var artistRepo = repoFactory.artistRepository();
 
 			vdb.resources.album = {
 				addedToCollection: @ToJS(AjaxRes.AlbumStrings.AddedToCollection)
@@ -407,9 +442,12 @@
 			var jsonModel = @Html.Raw(Model.Json);
 			var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var viewModel = new vdb.viewModels.AlbumDetailsViewModel(albumRepo, userRepo, jsonModel,
+			var viewModel = new vdb.viewModels.AlbumDetailsViewModel(albumRepo, userRepo,
+				artistRepo,
+				jsonModel,
 				reportTypes,
 				@UserContext.LoggedUserId,
+				@LanguagePreferenceInt,
 				canDeleteAllComments, formatString, @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
 			ko.applyBindings(viewModel);
 

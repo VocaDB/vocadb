@@ -71,6 +71,11 @@ module vdb.repositories {
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);
 		}
 
+		public getOneWithComponents = (id: number, fields: string, languagePreference: string, callback: (result: dc.AlbumForApiContract) => void) => {
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + id);
+			$.getJSON(url, { fields: fields, lang: this.languagePreferenceStr }, callback);
+		}
+
 		getList = (paging: dc.PagingProperties, lang: string, query: string, sort: string,
 			discTypes: string,
 			tags: number[],
@@ -111,6 +116,12 @@ module vdb.repositories {
 		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), contract, callback, 'json');
+
+		}
+
+		public updatePersonalDescription = (albumId: number, text: string, author: dc.ArtistContract) => {
+
+			$.post(this.urlMapper.mapRelative("/api/albums/" + albumId + "/personal-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
 
 		}
 

@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Images;
@@ -41,6 +42,7 @@ namespace VocaDb.Web.Models {
 			AdditionalNames = contract.AdditionalNames;
 			ArtistString = contract.ArtistString;
 			CanEdit = EntryPermissionManager.CanEdit(permissionContext, contract);
+			CanEditPersonalDescription = contract.CanEditPersonalDescription;
 			CanRemoveTagUsages = contract.CanRemoveTagUsages;
 			CommentCount = contract.CommentCount;
 			CreateDate = contract.CreateDate;
@@ -54,6 +56,8 @@ namespace VocaDb.Web.Models {
 			MergedTo = contract.MergedTo;
 			Name = contract.Name;
 			OwnedBy = contract.OwnedCount;
+			PersonalDescriptionText = contract.PersonalDescriptionText;
+			PersonalDescriptionAuthor = contract.PersonalDescriptionAuthor;
 			Pictures = contract.Pictures;
 			PVs = contract.PVs;
 			RatingAverage = contract.RatingAverage;
@@ -112,6 +116,8 @@ namespace VocaDb.Web.Models {
 
 		public bool CanEdit { get; set; }
 
+		public bool CanEditPersonalDescription { get; set; }
+
 		public bool CanRemoveTagUsages { get; set; }
 
 		public string CatNum { get; set; }
@@ -157,6 +163,10 @@ namespace VocaDb.Web.Models {
 		public ArtistForAlbumContract[] OtherArtists { get; set; }
 
 		public int OwnedBy { get; set; }
+
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
+
+		public string PersonalDescriptionText { get; set; }
 
 		public EntryPictureFileContract[] Pictures { get; set; }
 
@@ -248,6 +258,8 @@ namespace VocaDb.Web.Models {
 
 			Id = model.Id;
 			LatestComments = model.LatestComments;
+			PersonalDescriptionAuthor = model.PersonalDescriptionAuthor;
+			PersonalDescriptionText = model.PersonalDescriptionText;
 			TagUsages = model.Tags;
 
 		}
@@ -255,6 +267,10 @@ namespace VocaDb.Web.Models {
 		public int Id { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
+
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
+
+		public string PersonalDescriptionText { get; set; }
 
 		public TagUsageForApiContract[] TagUsages { get; set; }
 
