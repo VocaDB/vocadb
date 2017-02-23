@@ -350,7 +350,7 @@
 
 			</tr>
 			}
-
+			
 		</table>
 		
 		@if (Model.Suggestions.Any()) {
@@ -359,6 +359,39 @@
 			<p>
 				<a href="#" id="viewRelatedLink">@Res.SeeRelatedSongs</a>
 			</p>
+		}		
+
+		@if (Model.CanEditPersonalDescription || !string.IsNullOrEmpty(Model.PersonalDescriptionText)) {
+			<h3 class="withMargin helpTip" data-bind="qTip: null" title="@Res.PersonalDescriptionHelp">
+				@Res.PersonalDescription
+			</h3>
+			<div class="media">
+				<a data-bind="visible: !selfDescription.author.isEmpty(), attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selfDescription.author.id()) }" class="pull-left">
+					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !selfDescription.author.isEmpty() ? selfDescription.author.entry().mainPicture.urlSmallThumb : null }" />
+				</a>
+
+				<div class="media-body">
+					@if (Model.CanEditPersonalDescription) {
+					<div class="pull-right">
+						<a data-bind="click: selfDescription.beginEdit" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
+					</div>
+					}
+					<h3 class="media-heading" data-bind="visible: !selfDescription.author.isEmpty()">
+						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selfDescription.author.id()) }, text: selfDescription.author.name"></a>
+					</h3>
+					<div data-bind="visible: !selfDescription.editing()">
+						<p data-bind="markdown: selfDescription.text"></p>
+					</div>
+					<div data-bind="if: selfDescription.editing()">
+						<select data-bind="value: selfDescription.author.id, options: selfDescription.artists, optionsText: 'name', optionsValue: 'id', optionsCaption: '@Res.PersonalDescriptionSelectAuthor'"></select>
+						<br />
+						<textarea data-bind="textInput: selfDescription.text" rows="5" cols="100" maxlength="2000" class="input-xxlarge"></textarea>
+						<br />
+						<button type="button" data-bind="click: selfDescription.save" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+						<button data-bind="click: selfDescription.cancelEdit" class="btn">@ViewRes.SharedStrings.Cancel</button>
+					</div>
+				</div>
+			</div>
 		}
 
 		@CommentHelpers.LatestCommentsKnockout()
@@ -462,13 +495,17 @@
 		var jsonModel = @Html.Raw(Model.Json);
 		var rootPath = '@RootPath';
 		var urlMapper = new vdb.UrlMapper(rootPath);
-		var repo = new vdb.repositories.SongRepository(rootPath, @LanguagePreferenceInt);
-		var userRepo = new vdb.repositories.UserRepository(urlMapper);
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var repo = repoFactory.songRepository();
+		var userRepo = repoFactory.userRepository();
+		var artistRepo = repoFactory.artistRepository();
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.SongReportTypeNames, SongReport.ReportTypesWithRequiredNotes));
 
-		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, resources,
+		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, 
+			artistRepo,
+			resources,
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
 			jsonModel,
 			reportTypes,

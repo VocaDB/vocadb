@@ -29,7 +29,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		private SongQueries Queries(ISongRepository repository) {
 			return new SongQueries(repository, userContext, new FakeEntryLinkFactory(), new FakePVParser(),
-				new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache(), new VdbConfigManager());
+				new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new VdbConfigManager());
 		}
 
 		private SongForEditContract Update(SongForEditContract contract) {

@@ -65,6 +65,8 @@ module vdb.viewModels {
 
 		public selectedPvId: KnockoutObservable<number>;
 
+		public selfDescription: SelfDescriptionViewModel;
+
         public showAllVersions: () => void;
 
 		public description: globalization.EnglishTranslatedStringViewModel;
@@ -83,7 +85,8 @@ module vdb.viewModels {
 
         constructor(
             private repository: rep.SongRepository,
-            userRepository: rep.UserRepository,
+			userRepository: rep.UserRepository,
+			artistRepository: rep.ArtistRepository,
             resources: SongDetailsResources,
 			showTranslatedDescription: boolean,
 			data: SongDetailsAjax,
@@ -116,6 +119,13 @@ module vdb.viewModels {
 				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
 
 			});
+
+			this.selfDescription = new SelfDescriptionViewModel(data.personalDescriptionAuthor, data.personalDescriptionText, artistRepository, callback => {
+				repository.getOneWithComponents(this.id, 'Artists', cls.globalization.ContentLanguagePreference[this.languagePreference], result => {
+					var artists = _.chain(result.artists).filter(a => a.artist != null && vdb.helpers.ArtistHelper.isProducerType(cls.artists.ArtistType[a.artist.artistType], true)).map(a => a.artist).value();
+					callback(artists);
+				});
+			}, vm => repository.updateSelfDescription(this.id, vm.text(), vm.author.entry()));
 
             this.showAllVersions = () => {
                 this.allVersionsVisible(true);
@@ -317,6 +327,10 @@ module vdb.viewModels {
 		selectedLyricsId: number;
 
 		selectedPvId: number;
+
+		personalDescriptionText?: string;
+
+		personalDescriptionAuthor?: dc.ArtistApiContract;
 
 		songType: string;
 

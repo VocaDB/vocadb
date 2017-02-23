@@ -15,6 +15,11 @@ ko.bindingHandlers.markdown = {
 
 		var val: string = ko.unwrap(valueAccessor());
 
+		if (!val) {
+			$(element).text(val);
+			return;
+		}
+
 		// Using GitHub-flavored markdown with simple line breaks and HTML sanitation.
 		marked(val, { gfm: true, breaks: true, sanitize: true }, (error, content: string) => {
 

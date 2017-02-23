@@ -8,6 +8,7 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
@@ -37,6 +38,7 @@ namespace VocaDb.Web.Models {
 			AlternateVersions = contract.AlternateVersions.Where(a => a.SongType != SongType.Original).ToArray();
 			ArtistString = contract.ArtistString;
 			CanEdit = EntryPermissionManager.CanEdit(userContext, contract.Song);
+			CanEditPersonalDescription = contract.CanEditPersonalDescription;
 			CanRemoveTagUsages = contract.CanRemoveTagUsages;
 			CommentCount = contract.CommentCount;
 			CreateDate = contract.CreateDate;
@@ -61,6 +63,8 @@ namespace VocaDb.Web.Models {
 			PublishDate = contract.Song.PublishDate;
 			RatingScore = contract.Song.RatingScore;
 			ReleaseEvent = contract.ReleaseEvent;
+			PersonalDescriptionText = contract.PersonalDescriptionText;
+			PersonalDescriptionAuthor = contract.PersonalDescriptionAuthor;
 			SongType = contract.Song.SongType;
 			Status = contract.Song.Status;
 			Suggestions = contract.Suggestions;
@@ -117,6 +121,8 @@ namespace VocaDb.Web.Models {
 		public ArtistForSongContract[] Bands { get; set; }
 
 		public bool CanEdit { get; set; }
+
+		public bool CanEditPersonalDescription { get; set; }
 
 		public bool CanRemoveTagUsages { get; set; }
 
@@ -183,6 +189,10 @@ namespace VocaDb.Web.Models {
 
 		public ReleaseEventForApiContract ReleaseEvent { get; set; }
 
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
+
+		public string PersonalDescriptionText { get; set; }
+
 		public SongType SongType { get; set; }
 
 		public EntryStatus Status { get; set; }
@@ -209,6 +219,8 @@ namespace VocaDb.Web.Models {
 			UserRating = model.UserRating;
 			LatestComments = model.LatestComments;
 			OriginalVersion = model.OriginalVersion;
+			PersonalDescriptionAuthor = model.PersonalDescriptionAuthor;
+			PersonalDescriptionText = model.PersonalDescriptionText;
 			Version = version;
 
 			SelectedLyricsId = preferredLyrics != null ? preferredLyrics.Id : 0;
@@ -232,6 +244,10 @@ namespace VocaDb.Web.Models {
 		public int SelectedLyricsId { get; set; }
 
 		public int SelectedPvId { get; set; }
+
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
+
+		public string PersonalDescriptionText { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongType SongType { get; set; }

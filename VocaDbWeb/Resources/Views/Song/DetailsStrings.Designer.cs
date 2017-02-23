@@ -376,6 +376,33 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Artist&apos;s personal description.
+        /// </summary>
+        public static string PersonalDescription {
+            get {
+                return ResourceManager.GetString("PersonalDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This field is for artist&apos;s personal introduction of the entry. Unlike the description field, this is considered a subjective opinion, possibly written in first person, and may include a limited amount of &quot;marketing speech&quot;. Select the author of the description - who wrote it? For entries with multiple involved artists, only one description may be provided, but whenever possible the circle/group can be selected as the author..
+        /// </summary>
+        public static string PersonalDescriptionHelp {
+            get {
+                return ResourceManager.GetString("PersonalDescriptionHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select author.
+        /// </summary>
+        public static string PersonalDescriptionSelectAuthor {
+            get {
+                return ResourceManager.GetString("PersonalDescriptionSelectAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pools and song lists.
         /// </summary>
         public static string PoolsAndLists {

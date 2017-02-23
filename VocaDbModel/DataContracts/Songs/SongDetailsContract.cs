@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils.Config;
@@ -18,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongDetailsContract() {}
 
 		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
-			SongListBaseContract[] pools, ISpecialTags specialTags, IUserPermissionContext userContext) {
+			SongListBaseContract[] pools, ISpecialTags specialTags, IUserPermissionContext userContext, IEntryThumbPersister thumbPersister) {
 
 			Song = new SongContract(song, languagePreference);
 
@@ -27,6 +29,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			AlternateVersions = song.AlternateVersions.Select(s => new SongContract(s, languagePreference, getThumbUrl: false)).OrderBy(s => s.PublishDate).ToArray();
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			ArtistString = song.ArtistString[languagePreference];
+			CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, song);
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, song);
 			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
@@ -38,6 +41,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			ReleaseEvent = song.ReleaseEvent != null ? new ReleaseEventForApiContract(song.ReleaseEvent, ReleaseEventOptionalFields.None) : null;
+			PersonalDescriptionText = song.PersonalDescriptionText;
+			var author = song.PersonalDescriptionAuthor;
+			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, true, ArtistOptionalFields.MainPicture) : null;
 			Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(song.TranslatedName);
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
@@ -48,7 +54,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		/// <summary>
 		/// Album id of the album being browsed.
-		/// 0 if none.
+		/// Null if none.
 		/// </summary>
 		public AlbumContract Album { get; set; }
 
@@ -69,6 +75,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public string ArtistString { get; set; }
+
+		public bool CanEditPersonalDescription { get; set; }
 
 		public bool CanRemoveTagUsages { get; set; }
 
@@ -129,6 +137,12 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public ReleaseEventForApiContract ReleaseEvent { get; set; }
+
+		[DataMember]
+		public string PersonalDescriptionText { get; set; }
+
+		[DataMember]
+		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
 
 		[DataMember]
 		public SongContract Song { get; set; }

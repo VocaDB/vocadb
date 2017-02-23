@@ -234,4 +234,7 @@
   <data name="NicoMimiDownload" xml:space="preserve">
     <value>Katso latauslinkki NicoMimistä</value>
   </data>
+  <data name="PersonalDescription" xml:space="preserve">
+    <value>Artistin henkilökohtainen kuvaus</value>
+  </data>
 </root>

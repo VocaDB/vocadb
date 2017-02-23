@@ -2896,6 +2896,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Search\TagFilter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\TagFilters.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\TagSearchViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\SelfDescriptionViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ServerSidePagingViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongCreateViewModel.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\SongCreateViewModelTests.ts" />
