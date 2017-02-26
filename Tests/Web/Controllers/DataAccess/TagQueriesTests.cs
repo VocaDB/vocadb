@@ -376,6 +376,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+
+		[TestMethod]
+		[ExpectedException(typeof(DuplicateTagNameException))]
+		public void Update_Name_DuplicateKana() {
+
+			var updated = new TagForEditContract(tag, false, permissionContext) {
+				Names = new[] {
+					new LocalizedStringWithIdContract {Value = "コノザマ", Language = ContentLanguageSelection.Japanese},
+					new LocalizedStringWithIdContract {Value = "このざま", Language = ContentLanguageSelection.Japanese},
+				}.ToArray()
+			};
+
+			queries.Update(updated, null);
+
+		}
+
 		[TestMethod]
 		public void Update_Parent() {
 			

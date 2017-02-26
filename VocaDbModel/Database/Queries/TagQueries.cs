@@ -618,7 +618,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			// Verify no duplicates for this tag
 			var duplicateName = nameValues
-				.GroupBy(n => n)
+				.GroupBy(n => n, new KanaAndCaseInsensitiveStringComparer())
 				.Where(n => n.Count() > 1)
 				.Select(n => n.First())
 				.FirstOrDefault();

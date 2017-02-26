@@ -542,6 +542,7 @@
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\ImpersonateUICulture.cs" />
     <Compile Include="Helpers\JsonRequest.cs" />
+    <Compile Include="Helpers\KanaAndCaseInsensitiveStringComparer.cs" />
     <Compile Include="Helpers\LambdaComparer.cs" />
     <Compile Include="Helpers\LocalizedStringHelper.cs" />
     <Compile Include="Helpers\LyricsHelper.cs" />
