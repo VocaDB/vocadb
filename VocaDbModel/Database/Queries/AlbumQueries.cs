@@ -761,7 +761,7 @@ namespace VocaDb.Model.Database.Queries {
 				album.PersonalDescriptionAuthorId = data.PersonalDescriptionAuthor?.Id;
 
 				ctx.Update(album);
-				ctx.AuditLogger.AuditLog("updated personal description for {0}", entryLinkFactory.CreateEntryLink(album));
+				ctx.AuditLogger.AuditLog(string.Format("updated personal description for {0}", entryLinkFactory.CreateEntryLink(album)));
 
 			});
 
