@@ -989,7 +989,7 @@ namespace VocaDb.Model.Database.Queries {
 				song.PersonalDescriptionAuthorId = data.PersonalDescriptionAuthor?.Id;
 
 				ctx.Update(song);
-				ctx.AuditLogger.AuditLog("updated self-description for {0}", entryLinkFactory.CreateEntryLink(song));
+				ctx.AuditLogger.AuditLog("updated personal description for {0}", entryLinkFactory.CreateEntryLink(song));
 
 			});
 
