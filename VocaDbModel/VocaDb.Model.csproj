@@ -323,6 +323,7 @@
     <Compile Include="Domain\Globalization\OptionalCultureCode.cs" />
     <Compile Include="Domain\Globalization\TranslationType.cs" />
     <Compile Include="Domain\IEntryWithArtists.cs" />
+    <Compile Include="Domain\Images\ImageSize.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventSeriesVersion.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventVersion.cs" />
     <Compile Include="Domain\Albums\IAlbumLink.cs" />

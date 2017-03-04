@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using VocaDb.Model.Helpers;
 
@@ -65,48 +64,6 @@ namespace VocaDb.Model.Domain.Images {
 			}
 
 		}
-
-	}
-
-	public enum ImageSize {
-
-		/// <summary>
-		/// Original image. 
-		/// Typically full size, although a maximum size can be placed as well.
-		/// </summary>
-		Original = 1,
-
-		/// <summary>
-		/// Large thumbnail, default size is 250x250px.
-		/// </summary>
-		Thumb = 2,
-
-		/// <summary>
-		/// Small thumbnail, default size is 150x150px.
-		/// </summary>
-		SmallThumb = 4,
-
-		/// <summary>
-		/// Tiny thumbnail, default size is 70x70px.
-		/// </summary>
-		TinyThumb = 8,
-
-	}
-
-	[Flags]
-	public enum ImageSizes {
-
-		Nothing = 0,
-
-		Original = 1,
-
-		Thumb = 2,
-
-		SmallThumb = 4,
-
-		TinyThumb = 8,
-
-		All = (Original | Thumb | SmallThumb | TinyThumb)
 
 	}
 
