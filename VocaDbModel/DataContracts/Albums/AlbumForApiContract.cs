@@ -182,6 +182,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// List of PVs. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
+		[JsonProperty("pvs")]
 		public PVContract[] PVs { get; set; }
 
 		/// <summary>
