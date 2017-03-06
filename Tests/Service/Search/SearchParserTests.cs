@@ -30,28 +30,34 @@ namespace VocaDb.Tests.Service.Search {
 		}
 
 		/// <summary>
-		/// Query with keywords (in this case artist-name)
+		/// Query with keywords (in this case artist name)
 		/// </summary>
 		[TestMethod]
 		public void ParseQuery_QueryWithKeywords() {
 
-			var result = SearchParser.ParseQuery("artist-name:doriko Nostalgia");
+			var result = SearchParser.ParseQuery("artist:doriko Nostalgia");
 
-			AssertSearchWord(result, "artist-name", "doriko");
+			AssertSearchWord(result, "artist", "doriko");
 			AssertSearchWord(result, string.Empty, "Nostalgia");
 
 		}
 
+		/// <summary>
+		/// Keywords + phrase (series of words)
+		/// </summary>
 		[TestMethod]
 		public void ParseQuery_KeywordWithPhrase() {
 
-			var result = SearchParser.ParseQuery("artist-name:\"Hatsune Miku\" Nostalgia");
+			var result = SearchParser.ParseQuery("artist:\"Hatsune Miku\" Nostalgia");
 
-			AssertSearchWord(result, "artist-name", "Hatsune Miku");
+			AssertSearchWord(result, "artist", "Hatsune Miku");
 			AssertSearchWord(result, string.Empty, "Nostalgia");
 
 		}
 
+		/// <summary>
+		/// Multiple words, no keywords
+		/// </summary>
 		[TestMethod]
 		public void ParseQuery_MultipleWords() {
 
@@ -61,6 +67,9 @@ namespace VocaDb.Tests.Service.Search {
 
 		}
 
+		/// <summary>
+		/// Single phrase
+		/// </summary>
 		[TestMethod]
 		public void ParseQuery_QueryWithPhrase() {
 
@@ -70,6 +79,9 @@ namespace VocaDb.Tests.Service.Search {
 
 		}
 
+		/// <summary>
+		/// Words + phrase
+		/// </summary>
 		[TestMethod]
 		public void ParseQuery_WordsAndPhrase() {
 
@@ -79,13 +91,16 @@ namespace VocaDb.Tests.Service.Search {
 
 		}
 
+		/// <summary>
+		/// Phrase with non-word characters
+		/// </summary>
 		[TestMethod]
 		public void ParseQuery_SpecialCharacters() {
 
-			var result = SearchParser.ParseQuery("\"Dancing☆Samurai\" artist-name:Gackpoid-V2");
+			var result = SearchParser.ParseQuery("\"Dancing☆Samurai\" artist:Gackpoid-V2");
 
 			AssertSearchWord(result, string.Empty, "Dancing☆Samurai");
-			AssertSearchWord(result, "artist-name", "Gackpoid-V2");
+			AssertSearchWord(result, "artist", "Gackpoid-V2");
 
 		}
 
