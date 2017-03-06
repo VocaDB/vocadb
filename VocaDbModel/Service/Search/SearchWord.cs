@@ -15,24 +15,17 @@ namespace VocaDb.Model.Service.Search {
 
 		}
 
-		private readonly string propertyName;
-		private readonly string value;
-
 		public SearchWord(string val) 
 			: this(string.Empty, val) {}
 
 		public SearchWord(string propName, string val) {
-			propertyName = propName;
-			value = val;
+			PropertyName = propName;
+			Value = val;
 		}
 
-		public string PropertyName {
-			get { return propertyName; }
-		}
+		public string PropertyName { get; }
 
-		public string Value {
-			get { return value; }
-		}
+		public string Value { get; }
 
 		public bool Equals(SearchWord other) {
 
@@ -52,7 +45,7 @@ namespace VocaDb.Model.Service.Search {
 
 		public override int GetHashCode() {
 			unchecked {
-				return ((propertyName != null ? propertyName.GetHashCode() : 0)*397) ^ (value != null ? value.GetHashCode() : 0);
+				return ((PropertyName != null ? PropertyName.GetHashCode() : 0)*397) ^ (Value != null ? Value.GetHashCode() : 0);
 			}
 		}
 

@@ -7,15 +7,11 @@ namespace VocaDb.Model.Service.Search {
 
 	public class SearchWordCollection : IEnumerable<SearchWord> {
 
-		private readonly List<SearchWord> words;
-
 		public SearchWordCollection(IEnumerable<SearchWord> words) {
-			this.words = words.ToList();
+			Words = words.ToList();
 		}
 
-		public List<SearchWord> Words {
-			get { return words; }
-		}
+		public List<SearchWord> Words { get; }
 
 		IEnumerator IEnumerable.GetEnumerator() {
 			return GetEnumerator();
@@ -25,14 +21,18 @@ namespace VocaDb.Model.Service.Search {
 			return Words.GetEnumerator();
 		}
 
+		private IEnumerable<SearchWord> GetWords(string name) {
+			return Words.Where(w => string.Equals(w.PropertyName, name, StringComparison.InvariantCultureIgnoreCase));
+		}
+
 		public SearchWord[] TakeAll(string name) {
-			var match = Words.Where(w => w.PropertyName != null && w.PropertyName.Equals(name, StringComparison.InvariantCultureIgnoreCase)).ToArray();
+			var match = GetWords(name).ToArray();
 			Words.RemoveAll(match.Contains);
 			return match;
 		}
 
 		public IEnumerable<string> GetValues(string name) {
-			return Words.Where(w => string.Equals(w.PropertyName, name, StringComparison.InvariantCultureIgnoreCase)).Select(w => w.Value);
+			return GetWords(name).Select(w => w.Value);
 		}
 
 		public SearchWord TakeNext() {

@@ -26,7 +26,6 @@ namespace VocaDb.Tests.Service.Search {
 
 			}
 
-
 		}
 
 		/// <summary>
