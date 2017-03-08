@@ -4,7 +4,7 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
-	[Migration(201702232100)]
+	[Migration(2017_02_23_2100)]
 	public class AlbumPersonalDescription : AutoReversingMigration {
 
 		public override void Up() {
