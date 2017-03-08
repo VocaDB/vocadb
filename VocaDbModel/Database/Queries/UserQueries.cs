@@ -1277,14 +1277,14 @@ namespace VocaDb.Model.Database.Queries {
 					|| (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAdmins
 						&& sender.EffectivePermissions.Has(PermissionToken.DesignatedStaff))) {
 
-					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Item1);
+					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Received);
 
 				}
 
-				session.Save(messages.Item1);
-				session.Save(messages.Item2);
+				session.Save(messages.Received);
+				session.Save(messages.Sent);
 
-				return new UserMessageContract(messages.Item1, userIconFactory);
+				return new UserMessageContract(messages.Received, userIconFactory);
 
 			});
 

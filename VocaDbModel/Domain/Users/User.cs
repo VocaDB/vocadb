@@ -639,7 +639,7 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public virtual Tuple<UserMessage, UserMessage> SendMessage(User to, string subject, string body, bool highPriority) {
+		public virtual (UserMessage Received, UserMessage Sent) SendMessage(User to, string subject, string body, bool highPriority) {
 
 			ParamIs.NotNull(() => to);
 
@@ -651,7 +651,7 @@ namespace VocaDb.Model.Domain.Users {
 			SentMessages.Add(sent);
 			Messages.Add(sent);
 
-			return Tuple.Create(received, sent);
+			return (received, sent);
 
 		}
 
