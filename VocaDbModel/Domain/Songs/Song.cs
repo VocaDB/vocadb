@@ -112,7 +112,7 @@ namespace VocaDb.Model.Domain.Songs {
 		public virtual IEnumerable<string> AllNames => Names.AllValues;
 
 		public virtual IList<ArtistForSong> AllArtists {
-			get { return artists; }
+			get => artists;
 			set {
 				ParamIs.NotNull(() => value);
 				artists = value;
