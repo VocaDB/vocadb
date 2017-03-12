@@ -14,15 +14,17 @@ interface KnockoutBindingHandlers {
 
 module vdb.knockoutExtensions {
 
-	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number) {
-        
+	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number, params?: any) {
+
+		var data = _.assign({ id: id }, params);
+
         $(element).qtip({
             content: {
                 text: 'Loading...',
                 ajax: {
                     url: vdb.functions.mapAbsoluteUrl(relativeUrl),
                     type: 'GET',
-                    data: { id: id }
+					data: data
                 }
             },
             position: {
@@ -74,14 +76,15 @@ ko.bindingHandlers.songToolTip = {
 
 ko.bindingHandlers.tagToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		var lang = vdb.values.uiLanguage || undefined;
-		vdb.knockoutExtensions.initToolTip(element, '/Tag/PopupContent?culture=' + lang, ko.unwrap(valueAccessor()));
+		var culture = vdb.values.uiLanguage || undefined;
+		var lang = vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference] || undefined;
+		vdb.knockoutExtensions.initToolTip(element, '/Tag/PopupContent', ko.unwrap(valueAccessor()), { culture: culture, lang: lang });
 	}
 }
 
 ko.bindingHandlers.userToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		var lang = vdb.values.uiLanguage || undefined;
-		vdb.knockoutExtensions.initToolTip(element, '/User/PopupContent?culture=' + lang, ko.unwrap(valueAccessor()));
+		var culture = vdb.values.uiLanguage || undefined;
+		vdb.knockoutExtensions.initToolTip(element, '/User/PopupContent', ko.unwrap(valueAccessor()), { culture: culture });
 	}
 }

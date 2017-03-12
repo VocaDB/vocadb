@@ -216,13 +216,16 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
-		public ActionResult PopupContent(int id = invalidId, string culture = InterfaceLanguage.DefaultCultureCode) {
+		public ActionResult PopupContent(
+			int id = invalidId, 
+			ContentLanguagePreference lang = ContentLanguagePreference.Default, 
+			string culture = InterfaceLanguage.DefaultCultureCode) {
 
 			if (id == invalidId)
 				return HttpNotFound();
 
-			var tag = queries.GetTag(id, t => new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request), 
-				PermissionContext.LanguagePreference, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
+			var tag = queries.GetTag(id, t => new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request),
+				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
 			return PartialView("_TagPopupContent", tag);
 
 		}
