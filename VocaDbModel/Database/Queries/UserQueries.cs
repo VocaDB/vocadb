@@ -295,6 +295,10 @@ namespace VocaDb.Model.Database.Queries {
 						|| (twitterUrl != null && a.WebLinks.Any(l => l.Url == twitterUrl)))
 					&& !a.OwnerUsers.Any());
 
+				if (details.PossibleProducerAccount) {
+					session.AuditLogger.SysLog("possible producer account");
+				}
+
 			}
 
 			return details;

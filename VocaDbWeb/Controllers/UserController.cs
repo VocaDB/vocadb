@@ -33,6 +33,7 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Models;
 using VocaDb.Web.Models.User;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Code.Exceptions;
 
 namespace VocaDb.Web.Controllers
 {
@@ -661,10 +662,19 @@ namespace VocaDb.Web.Controllers
 			if (!ModelState.IsValid)
 				return View(new MySettingsModel(GetUserForMySettings()));
 
+			UpdateUserSettingsContract contract;
+
+			try {
+				contract = model.ToContract();
+			} catch (InvalidFormException x) {
+				AddFormSubmissionError(x.Message);
+				return View(model);
+			}
+
 			UserWithPermissionsContract newUser;
 
 			try {
-				newUser = Data.UpdateUserSettings(model.ToContract());
+				newUser = Data.UpdateUserSettings(contract);
 				LoginManager.SetLoggedUser(newUser);
 				PermissionContext.LanguagePreferenceSetting.Value = model.DefaultLanguageSelection;
 			} catch (InvalidPasswordException x) {
