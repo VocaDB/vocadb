@@ -99,8 +99,8 @@
 	</a>
 }
 
-@helper SongLinkKnockout(string binding, string extUrlBinding = null) {
-	<a href="#" data-bind="attr: { href: @extUrlBinding || vdb.utils.EntryUrlMapper.details_song(@binding), title: @(binding).additionalNames }, text: @(binding).name, css: { extLink: @extUrlBinding }"></a>
+@helper SongLinkKnockout(string binding, string extUrlBinding = null, bool tooltip = false) {
+	<a href="#" data-bind="attr: { href: @extUrlBinding || vdb.utils.EntryUrlMapper.details_song(@binding), title: @(binding).additionalNames }, text: @(binding).name, css: { extLink: @extUrlBinding } @(tooltip ? ", songToolTip: " + binding + ".id" : "")"></a>
 }
 
 @helper SongGrid(IEnumerable<SongForApiContract> songs, int columns,
