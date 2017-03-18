@@ -71,7 +71,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual IEnumerable<Album> Albums => AllAlbums.Where(a => !a.Deleted);
 
 		public virtual IList<Album> AllAlbums {
-			get { return albums; }
+			get => albums;
 			set {
 				ParamIs.NotNull(() => value);
 				albums = value; 
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public virtual IList<Song> AllSongs {
-			get { return songs; }
+			get => songs;
 			set {
 				ParamIs.NotNull(() => value);
 				songs = value;
@@ -87,7 +87,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public virtual ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> ArchivedVersionsManager {
-			get { return archivedVersions; }
+			get => archivedVersions;
 			set {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
@@ -99,7 +99,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual Date Date { get; set; }
 
 		public virtual string Description {
-			get { return description; }
+			get => description;
 			set {
 				ParamIs.NotNull(() => value);
 				description = value; 
@@ -111,7 +111,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual int Id { get; set; }
 
 		public virtual string Name {
-			get { return name; }
+			get => name;
 			set {
 				ParamIs.NotNullOrWhiteSpace(() => value);
 				name = value; 
@@ -119,14 +119,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public virtual ReleaseEventSeries Series {
-			get { return series; }
-			set { series = value; }
+			get => series;
+			set => series = value;
 		}
 
 		public virtual int SeriesNumber { get; set; }
 
 		public virtual string SeriesSuffix {
-			get { return seriesSuffix; }
+			get => seriesSuffix;
 			set {
 				ParamIs.NotNull(() => value);
 				seriesSuffix = value;
@@ -140,7 +140,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual int Version { get; set; }
 
 		public virtual IList<ReleaseEventWebLink> WebLinks {
-			get { return webLinks; }
+			get => webLinks;
 			set {
 				ParamIs.NotNull(() => value);
 				webLinks = value;
@@ -189,7 +189,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public override int GetHashCode() {
-			return base.GetHashCode();
+			return Id.GetHashCode();
 		}
 
 		public override string ToString() {
