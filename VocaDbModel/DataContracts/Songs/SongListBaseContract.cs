@@ -1,12 +1,13 @@
 ﻿using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongListBaseContract {
+	public class SongListBaseContract : IEntryWithIntId {
 
 		public SongListBaseContract() {
 

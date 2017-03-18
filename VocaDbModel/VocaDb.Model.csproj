@@ -550,6 +550,7 @@
     <Compile Include="Helpers\LocalizedStringHelper.cs" />
     <Compile Include="Helpers\LyricsHelper.cs" />
     <Compile Include="Helpers\NameHelper.cs" />
+    <Compile Include="Helpers\ObjectHelper.cs" />
     <Compile Include="Helpers\OtherHelper.cs" />
     <Compile Include="Helpers\PrimitiveParseHelper.cs" />
     <Compile Include="Helpers\ReCaptcha2.cs" />

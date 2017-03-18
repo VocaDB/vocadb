@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
@@ -30,6 +32,14 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				Series = new ReleaseEventSeriesContract(rel.Series);
 			}
 
+			if (fields.HasFlag(ReleaseEventOptionalFields.SongList) && rel.SongList != null) {
+				SongList = new SongListBaseContract(rel.SongList);
+			}
+
+			if (fields.HasFlag(ReleaseEventOptionalFields.WebLinks)) {
+				WebLinks = rel.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
+			}
+
 		}
 
 		[DataMember]
@@ -57,7 +67,13 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string SeriesSuffix { get; set; }
 
 		[DataMember]
+		public SongListBaseContract SongList { get; set; }
+
+		[DataMember]
 		public string UrlSlug { get; set; }
+
+		[DataMember]
+		public WebLinkForApiContract[] WebLinks { get; set; }
 
 	}
 
@@ -67,6 +83,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		None = 0,
 		Description = 1,
 		Series = 2,
+		SongList = 4,
+		WebLinks = 8
 
 	}
 

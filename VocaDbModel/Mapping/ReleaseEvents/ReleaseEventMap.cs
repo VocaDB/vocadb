@@ -24,6 +24,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEvent]").Inverse().Cascade.All().Cache.ReadWrite();
 
 			References(m => m.Series).Nullable();
+			References(m => m.SongList).Nullable();
 
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Event]").Inverse().Cascade.All().OrderBy("Created DESC"));
