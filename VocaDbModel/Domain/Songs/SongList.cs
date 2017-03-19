@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
@@ -17,9 +18,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
-		INameManager IEntryWithNames.Names {
-			get { return new SingleNameManager(Name); }
-		}
+		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
 
 		/// <summary>
 		/// Generated image sizes for song list images
@@ -31,6 +30,7 @@ namespace VocaDb.Model.Domain.Songs {
 		private User author;
 		private IList<SongListComment> comments = new List<SongListComment>();
 		private string description;
+		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
 		private string name;
 		private IList<SongInList> songs = new List<SongInList>();
 
@@ -48,7 +48,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual IList<SongInList> AllSongs {
-			get { return songs; }
+			get => songs;
 			set {
 				ParamIs.NotNull(() => value);
 				songs = value;
@@ -56,7 +56,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> ArchivedVersionsManager {
-			get { return archivedVersions; }
+			get => archivedVersions;
 			set {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
@@ -64,7 +64,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual User Author {
-			get { return author; }
+			get => author;
 			set {
 				ParamIs.NotNull(() => value);
 				author = value;
@@ -72,7 +72,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual IList<SongListComment> Comments {
-			get { return comments; }
+			get => comments;
 			set {
 				ParamIs.NotNull(() => value);
 				comments = value;
@@ -96,42 +96,38 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual DateTime CreateDate { get; set; }
 
-		string IEntryBase.DefaultName {
-			get { return Name; }
-		}
+		string IEntryBase.DefaultName => Name;
 
-		public virtual bool Deleted {
-			get { return false; }
-		}
+		public virtual bool Deleted => false;
 
 		public virtual string Description {
-			get { return description; }
+			get => description;
 			set {
 				ParamIs.NotNull(() => value);
 				description = value;
 			}
 		}
 
-		public virtual EntryType EntryType {
-			get {
-				return EntryType.SongList;
-			}
-		}
+		public virtual EntryType EntryType => EntryType.SongList;
 
 		public virtual Date EventDate { get; set; }
 
-		public virtual SongListFeaturedCategory FeaturedCategory { get; set; }
-
-		public virtual bool FeaturedList {
-			get {
-				return FeaturedCategory != SongListFeaturedCategory.Nothing;
+		public virtual IList<ReleaseEvent> Events {
+			get => events;
+			set {
+				ParamIs.NotNull(() => value);
+				events = value;
 			}
 		}
+
+		public virtual SongListFeaturedCategory FeaturedCategory { get; set; }
+
+		public virtual bool FeaturedList => FeaturedCategory != SongListFeaturedCategory.Nothing;
 
 		public virtual int Id { get; set; }
 
 		public virtual string Name {
-			get { return name; }
+			get => name;
 			set {
 				ParamIs.NotNullOrWhiteSpace(() => value);
 				name = value;

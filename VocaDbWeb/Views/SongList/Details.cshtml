@@ -66,6 +66,11 @@
 		@if (!string.IsNullOrWhiteSpace(Model.SongList.Description)) {
 			@Html.Raw(descriptionHtml)
 		}
+		@if (Model.SongList.Events.Any()) {
+			<p>
+				Events: @Html.LinkList(Model.SongList.Events, e => Html.ActionLink(e.Name, "Details", "Event", new { id = e.Id }, null))
+			</p>
+		}
 	</div>
 </div>
 

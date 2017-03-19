@@ -37,6 +37,8 @@ namespace VocaDb.Model.Mapping.Songs {
 
 			HasMany(m => m.Comments).Inverse().KeyColumn("SongList").Cascade.AllDeleteOrphan().OrderBy("Created");
 
+			HasMany(m => m.Events).Inverse().Cache.ReadWrite();
+
 		}
 
 	}

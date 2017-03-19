@@ -14,11 +14,7 @@ namespace VocaDb.Web.Models.SongLists {
 			SongList = songList;
 		}
 
-		public bool IsFeatured {
-			get {
-				return SongList.FeaturedCategory != SongListFeaturedCategory.Nothing;
-			}
-		}
+		public bool IsFeatured => SongList.FeaturedCategory != SongListFeaturedCategory.Nothing;
 
 		public string SmallThumbUrl { get; set; }
 
