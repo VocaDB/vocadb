@@ -15,7 +15,7 @@ namespace VocaDb.Model.DataContracts.SongLists {
 		public SongListDetailsContract(SongList list, IUserPermissionContext userPermissionContext)
 			: base(list, userPermissionContext) {
 
-			Events = list.Events.Select(e => new ReleaseEventContract(e)).OrderBy(e => e.Name).ToArray();
+			Events = list.Events.Select(e => new ReleaseEventContract(e)).OrderBy(e => e.Date).ThenBy(e => e.Name).ToArray();
 
 		}
 

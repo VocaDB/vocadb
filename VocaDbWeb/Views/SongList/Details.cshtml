@@ -68,7 +68,19 @@
 		}
 		@if (Model.SongList.Events.Any()) {
 			<p>
-				Events: @Html.LinkList(Model.SongList.Events, e => Html.ActionLink(e.Name, "Details", "Event", new { id = e.Id }, null))
+				<h4>@Res.Events</h4>				
+				<ul>
+				@foreach (var ev in Model.SongList.Events) {
+					<li>
+						<a href="@Url.Action("Details", "Event", new { id = ev.Id }, null)">
+							@ev.Name
+						</a>
+						@if (ev.Date.HasValue) {
+							<small>(@ev.Date.Value.ToString("d"))</small>
+						}
+					</li>
+				}
+				</ul>
 			</p>
 		}
 	</div>

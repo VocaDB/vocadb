@@ -126,6 +126,9 @@
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
   <data name="Export" xml:space="preserve">
     <value>Export</value>
   </data>
