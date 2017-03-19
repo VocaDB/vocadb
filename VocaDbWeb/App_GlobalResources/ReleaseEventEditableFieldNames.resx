@@ -135,6 +135,9 @@
   <data name="SeriesSuffix" xml:space="preserve">
     <value>Series suffix</value>
   </data>
+  <data name="SongList" xml:space="preserve">
+    <value>Setlist</value>
+  </data>
   <data name="WebLinks" xml:space="preserve">
     <value>External links</value>
   </data>

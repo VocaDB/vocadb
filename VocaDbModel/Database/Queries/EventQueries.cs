@@ -195,6 +195,10 @@ namespace VocaDb.Model.Database.Queries {
 
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 
+					if (contract.SongList != null) {
+						diff.SongList.Set();
+					}
+
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
 
 					if (weblinksDiff.Changed) {
@@ -235,7 +239,7 @@ namespace VocaDb.Model.Database.Queries {
 						diff.SeriesSuffix.Set();
 
 					if (!ev.SongList.NullSafeIdEquals(contract.SongList)) {
-						// TODO
+						diff.SongList.Set();
 					}
 
 					var oldName = ev.Name;
