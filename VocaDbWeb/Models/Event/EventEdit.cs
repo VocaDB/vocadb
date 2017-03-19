@@ -68,6 +68,7 @@ namespace VocaDb.Web.Models.Event {
 		[Display(Name = "Series number")]
 		public int SeriesNumber { get; set; }
 
+		[FromJson]
 		public SongListBaseContract SongList { get; set; }
 
 		public string UrlSlug { get; set; }

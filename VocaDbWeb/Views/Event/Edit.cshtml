@@ -126,7 +126,8 @@
 		Setlist
 	</div>
 	<div class="editor-field">
-		@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("songListAutoComplete", "songList")
+		@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("songListAutoComplete", "songList", "songListCategory: 'Concerts'")
+		@Html.HiddenForKnockout(m => m.SongList, "value: ko.toJSON(songList.entry())")
 	</div>
 	
 	<div class="editor-label">
