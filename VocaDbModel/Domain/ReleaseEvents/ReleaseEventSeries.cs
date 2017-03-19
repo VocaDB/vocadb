@@ -49,7 +49,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public virtual IList<ReleaseEventSeriesAlias> Aliases {
-			get { return aliases; }
+			get => aliases;
 			set {
 				ParamIs.NotNull(() => value);
 				aliases = value; 
@@ -59,7 +59,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public virtual ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> ArchivedVersionsManager {
-			get { return archivedVersions; }
+			get => archivedVersions;
 			set {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
@@ -67,7 +67,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public virtual string Description {
-			get { return description; }
+			get => description;
 			set {
 				ParamIs.NotNull(() => value);
 				description = value; 
@@ -77,7 +77,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual EntryType EntryType => EntryType.ReleaseEventSeries;
 
 		public virtual IList<ReleaseEvent> Events {
-			get { return events; }
+			get => events;
 			set {
 				ParamIs.NotNull(() => value);
 				events = value; 
@@ -87,7 +87,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual int Id { get; set; }
 
 		public virtual string Name {
-			get { return name; }
+			get => name;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				name = value; 
@@ -99,7 +99,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual int Version { get; set; }
 
 		public virtual IList<ReleaseEventSeriesWebLink> WebLinks {
-			get { return webLinks; }
+			get => webLinks;
 			set {
 				ParamIs.NotNull(() => value);
 				webLinks = value;

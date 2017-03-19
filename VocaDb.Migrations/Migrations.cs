@@ -4,6 +4,14 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_03_19_2000)]
+	public class ReleaseEventPictureAndVenue : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("PictureMime").OnTable(TableNames.AlbumReleaseEvents).AsString(32).Nullable();
+			Create.Column("Venue").OnTable(TableNames.AlbumReleaseEvents).AsString(1000).Nullable();
+		}
+	}
+
 	[Migration(2017_03_18_2000)]
 	public class ReleaseEventSongList : AutoReversingMigration {
 		public override void Up() {

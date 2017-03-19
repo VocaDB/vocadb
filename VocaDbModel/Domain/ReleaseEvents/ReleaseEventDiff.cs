@@ -10,11 +10,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public EnumFieldAccessor<ReleaseEventEditableFields> Date => Field(ReleaseEventEditableFields.Date);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Description => Field(ReleaseEventEditableFields.Description);
+		public EnumFieldAccessor<ReleaseEventEditableFields> MainPicture => Field(ReleaseEventEditableFields.MainPicture);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Name => Field(ReleaseEventEditableFields.Name);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Series => Field(ReleaseEventEditableFields.Series);
 		public EnumFieldAccessor<ReleaseEventEditableFields> SeriesNumber => Field(ReleaseEventEditableFields.SeriesNumber);
 		public EnumFieldAccessor<ReleaseEventEditableFields> SeriesSuffix => Field(ReleaseEventEditableFields.SeriesSuffix);
 		public EnumFieldAccessor<ReleaseEventEditableFields> SongList => Field(ReleaseEventEditableFields.SongList);
+		public EnumFieldAccessor<ReleaseEventEditableFields> Venue => Field(ReleaseEventEditableFields.Venue);
 		public EnumFieldAccessor<ReleaseEventEditableFields> WebLinks => Field(ReleaseEventEditableFields.WebLinks);
 
 	}

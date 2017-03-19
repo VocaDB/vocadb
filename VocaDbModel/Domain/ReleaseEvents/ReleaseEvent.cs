@@ -118,6 +118,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual string PictureMime { get; set; }
+
 		public virtual ReleaseEventSeries Series {
 			get => series;
 			set => series = value;
@@ -138,6 +140,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(Name);
+
+		public virtual string Venue { get; set; }
 
 		public virtual int Version { get; set; }
 
