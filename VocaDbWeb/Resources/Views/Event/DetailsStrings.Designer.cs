@@ -97,6 +97,15 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Setlist.
+        /// </summary>
+        public static string SongList {
+            get {
+                return ResourceManager.GetString("SongList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Songs.
         /// </summary>
         public static string Songs {

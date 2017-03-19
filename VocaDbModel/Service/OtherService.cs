@@ -152,24 +152,7 @@ namespace VocaDb.Model.Service {
 					.Take(count)
 					.ToArray();
 
-				var recentConcerts = session.Query<SongList>()
-					.Where(s => s.FeaturedCategory == SongListFeaturedCategory.Concerts)
-					.WhereEventDateIsBetween(minDate, maxDate)
-					.OrderByDate(SortDirection.Descending)
-					.Take(count)
-					.ToArray();
-
-				var items = recentEvents.Select(e => new {
-					Entry = (IEntryWithNames)e,
-					e.Date
-				}).Concat(recentConcerts.Select(e => new {
-					Entry = (IEntryWithNames)e,
-					Date = e.EventDate
-				}))
-				.OrderByDescending(e => e.Date.DateTime)
-				.Take(count);
-
-				var entryContracts = items.Select(i => entryForApiContractFactory.Create(i.Entry, EntryOptionalFields.MainPicture, LanguagePreference, ssl));
+				var entryContracts = recentEvents.Select(i => entryForApiContractFactory.Create(i, EntryOptionalFields.MainPicture, LanguagePreference, ssl));
 
 				return entryContracts.ToArray();
 

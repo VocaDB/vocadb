@@ -1,5 +1,7 @@
 ﻿using System;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
@@ -19,6 +21,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = ev.Description;
 			Id = ev.Id;
 			Name = ev.Name;
+			SongList = ObjectHelper.Convert(ev.SongList, s => new SongListBaseContract(s));
 			UrlSlug = ev.UrlSlug;
 
 			if (includeSeries && ev.Series != null)
@@ -37,6 +40,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string Name { get; set; }
 
 		public ReleaseEventSeriesContract Series { get; set; }
+
+		public SongListBaseContract SongList { get; set; }
 
 		public string UrlSlug { get; set; }
 

@@ -133,6 +133,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual SongList SongList { get; set; }
+
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(Name);

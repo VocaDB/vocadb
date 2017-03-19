@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -192,6 +193,12 @@ namespace VocaDb.Model.Database.Queries {
 						ev = new ReleaseEvent(contract.Description, contract.Date, contract.Name);
 					}
 
+					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+
+					if (contract.SongList != null) {
+						diff.SongList.Set();
+					}
+
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
 
 					if (weblinksDiff.Changed) {
@@ -231,15 +238,20 @@ namespace VocaDb.Model.Database.Queries {
 					if (ev.SeriesSuffix != contract.SeriesSuffix)
 						diff.SeriesSuffix.Set();
 
+					if (!ev.SongList.NullSafeIdEquals(contract.SongList)) {
+						diff.SongList.Set();
+					}
+
 					var oldName = ev.Name;
 
-					ev.Series = session.OfType<ReleaseEventSeries>().NullSafeLoad(contract.Series);
+					ev.Series = session.NullSafeLoad<ReleaseEventSeries>(contract.Series);
 					ev.CustomName = contract.CustomName;
 					ev.Date = contract.Date;
 					ev.Description = contract.Description;
 					ev.Name = contract.Name;
 					ev.SeriesNumber = contract.SeriesNumber;
 					ev.SeriesSuffix = contract.SeriesSuffix;
+					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.UpdateNameFromSeries();
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);

@@ -5,12 +5,12 @@ module vdb.viewModels.releaseEvents {
 
 	export class ReleaseEventEditViewModel {
 
-		constructor(date: string, series: models.IEntryWithIdAndName, webLinks: dc.WebLinkContract[]) {
+		constructor(contract: dc.ReleaseEventContract) {
 
-			this.date = ko.observable(date ? moment(date).toDate() : null);
+			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
 			this.dateStr = ko.computed(() => (this.date() ? this.date().toISOString() : null));
 
-			this.series = new BasicEntryLinkViewModel(series, null);
+			this.series = new BasicEntryLinkViewModel(contract.series, null);
 			this.isSeriesEvent = ko.observable(!this.series.isEmpty());
 
 			this.isSeriesEventStr = ko.computed<string>({
@@ -23,7 +23,8 @@ module vdb.viewModels.releaseEvents {
 					this.series.clear();
 			});
 
-			this.webLinks = new WebLinksEditViewModel(webLinks);
+			this.songList = new BasicEntryLinkViewModel(contract.songList, null);
+			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 		}
 
@@ -40,6 +41,8 @@ module vdb.viewModels.releaseEvents {
 		public isSeriesEventStr: KnockoutComputed<string>;
 
 		public series: BasicEntryLinkViewModel<models.IEntryWithIdAndName>;
+
+		public songList: BasicEntryLinkViewModel<dc.SongListBaseContract>;
 
 		public submit = () => {
 			this.submitting(true);

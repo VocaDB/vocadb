@@ -49,6 +49,10 @@
 			<p>@Html.Raw(descriptionHtml)</p>
 		}
 		
+		@if (Model.SongList != null) {
+			<p>@Res.SongList: @Html.ActionLink(Model.SongList.Name, "Details", "SongList", new { id = Model.SongList.Id }, null)</p>
+		}
+
 		@if (Model.WebLinks.Any()) {
 			@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 			<br />

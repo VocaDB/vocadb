@@ -121,6 +121,14 @@
 		@Html.HiddenForKnockout(m => m.Date, "value: ko.toJSON(dateStr)")
 		@Html.ValidationMessageFor(m => m.Date)
 	</div>
+
+	<div class="editor-label">
+		Setlist
+	</div>
+	<div class="editor-field">
+		@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("songListAutoComplete", "songList", "songListCategory: 'Concerts'")
+		@Html.HiddenForKnockout(m => m.SongList, "value: ko.toJSON(songList.entry())")
+	</div>
 	
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
@@ -142,8 +150,8 @@
 <script type="text/javascript">
 	$(function () {
 
-		var webLinks = @ToJS(Model.WebLinks);
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(@ToJS(Model.Date), @ToJS(Model.Series), webLinks);
+		var contract = @ToJS(new { Model.Date, Model.Series, Model.SongList, Model.WebLinks });
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(contract);
 		ko.applyBindings(vm);
 
 		initPage();
