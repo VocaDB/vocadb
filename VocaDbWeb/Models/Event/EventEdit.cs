@@ -4,12 +4,17 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event {
 
 	[PropertyModelBinder]
-	public class EventEdit {
+	public class EventEdit : IEntryImageInformation {
+
+		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
+		string IEntryImageInformation.Mime => PictureMime;
 
 		public EventEdit() {
 			Description = SeriesSuffix = string.Empty;
@@ -36,6 +41,7 @@ namespace VocaDb.Web.Models.Event {
 			SeriesNumber = contract.SeriesNumber;
 			SeriesSuffix = contract.SeriesSuffix;
 			SongList = contract.SongList;
+			Venue = contract.Venue;
 			WebLinks = contract.WebLinks;
 
 			CopyNonEditableProperties(contract);
@@ -59,6 +65,8 @@ namespace VocaDb.Web.Models.Event {
 
 		public string OldName { get; set; }
 
+		public string PictureMime { get; set; }
+
 		[FromJson]
 		public ReleaseEventSeriesContract Series { get; set; }
 
@@ -73,6 +81,10 @@ namespace VocaDb.Web.Models.Event {
 
 		public string UrlSlug { get; set; }
 
+		public string Venue { get; set; }
+
+		public int Version { get; set; }
+
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
 
@@ -81,7 +93,9 @@ namespace VocaDb.Web.Models.Event {
 			ParamIs.NotNull(() => contract);
 
 			OldName = contract.Name;
+			PictureMime = contract.PictureMime;
 			UrlSlug = contract.UrlSlug;
+			Version = contract.Version;
 
 		}
 
@@ -97,6 +111,7 @@ namespace VocaDb.Web.Models.Event {
 				SeriesNumber = this.SeriesNumber,
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
 				SongList = SongList,
+				Venue = Venue,
 				WebLinks = this.WebLinks
 			};
 

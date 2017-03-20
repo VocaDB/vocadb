@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Model.Domain.Images
+@using VocaDb.Web.Helpers;
 @using Res = ViewRes.Event.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
@@ -14,8 +15,9 @@
 
 	PageProperties.Description = descriptionStripped;
 
-	var smallThumbUrl = Url.ImageThumb(Model.Series, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
-	var fullImageUrl = Url.ImageThumb(Model.Series, VocaDb.Model.Domain.Images.ImageSize.Original);
+	var pictureData = !string.IsNullOrEmpty(Model.PictureMime) ? (IEntryImageInformation)Model: Model.Series;
+	var smallThumbUrl = Url.ImageThumb(pictureData, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
+	var fullImageUrl = Url.ImageThumb(pictureData, VocaDb.Model.Domain.Images.ImageSize.Original);
 
 }
 
@@ -30,7 +32,7 @@
 }
 
 <div class="media">
-	@if (Model.Series != null && !string.IsNullOrEmpty(Model.Series.PictureMime)) {
+	@if (pictureData != null && !string.IsNullOrEmpty(pictureData.Mime)) {
 		<a class="pull-left" href="@fullImageUrl">
 			<img class="media-object" src="@smallThumbUrl" alt="Thumb" />
 		</a>
@@ -43,6 +45,10 @@
 
 		@if (Model.Date != null) {
 			<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
+		}
+		
+		@if (!string.IsNullOrEmpty(Model.Venue)) {
+			<p>@Res.Venue: @Model.Venue</p>
 		}
 
 		@if (!string.IsNullOrEmpty(Model.Description)) {

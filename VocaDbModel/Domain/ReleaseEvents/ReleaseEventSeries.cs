@@ -13,11 +13,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEventSeries : 
 		IEntryWithNames, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>, 
-		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink> {
+		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation {
 
 		string IEntryBase.DefaultName => Name;
 
 		bool IDeletableEntry.Deleted => false;
+
+		string IEntryImageInformation.Mime => PictureMime;
 
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 

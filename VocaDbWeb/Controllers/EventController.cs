@@ -90,7 +90,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-        public ActionResult Edit(EventEdit model)
+        public ActionResult Edit(EventEdit model, HttpPostedFileBase pictureUpload = null)
         {
 
 			// Either series or name must be specified. If series is specified, name is generated automatically.
@@ -108,7 +108,8 @@ namespace VocaDb.Web.Controllers
 				return View(model);
 			}
 
-			var id = queries.Update(model.ToContract()).Id;
+	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
+			var id = queries.Update(model.ToContract(), pictureData).Id;
 
 			return RedirectToAction("Details", new { id });
 

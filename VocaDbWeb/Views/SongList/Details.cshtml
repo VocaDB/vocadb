@@ -75,8 +75,12 @@
 						<a href="@Url.Action("Details", "Event", new { id = ev.Id }, null)">
 							@ev.Name
 						</a>
-						@if (ev.Date.HasValue) {
+						@if (ev.Date.HasValue && !string.IsNullOrEmpty(ev.Venue)) {
+							<small>(@ev.Date.Value.ToString("d"), @ev.Venue)</small>
+						} else if (ev.Date.HasValue) {
 							<small>(@ev.Date.Value.ToString("d"))</small>
+						} else if (!string.IsNullOrEmpty(ev.Venue)) {
+							<small>(@ev.Venue)</small>
 						}
 					</li>
 				}

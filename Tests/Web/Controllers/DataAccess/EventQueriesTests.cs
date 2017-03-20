@@ -29,7 +29,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private ReleaseEvent CallUpdate(ReleaseEventDetailsContract contract) {
 			
-			var result = queries.Update(contract);
+			var result = queries.Update(contract, null);
 			return repository.Load(result.Id);
 
 		}
@@ -172,7 +172,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default);
 			contract.Id = 0; // Simulate new event
 
-			queries.Update(contract);
+			queries.Update(contract, null);
 
 		}
 

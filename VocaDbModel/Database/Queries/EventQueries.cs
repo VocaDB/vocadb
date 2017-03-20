@@ -170,7 +170,7 @@ namespace VocaDb.Model.Database.Queries {
 		/// </summary>
 		/// <param name="contract">Updated contract. Cannot be null.</param>
 		/// <returns>Updated release event data. Cannot be null.</returns>
-		public ReleaseEventContract Update(ReleaseEventDetailsContract contract) {
+		public ReleaseEventContract Update(ReleaseEventDetailsContract contract, EntryPictureFileContract pictureData) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -194,9 +194,14 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+					ev.Venue = contract.Venue;
 
 					if (contract.SongList != null) {
 						diff.SongList.Set();
+					}
+
+					if (!string.IsNullOrEmpty(contract.Venue)) {
+						diff.Venue.Set();
 					}
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
@@ -208,6 +213,12 @@ namespace VocaDb.Model.Database.Queries {
 					CheckDuplicateName(session, ev);
 
 					session.Save(ev);
+
+					if (pictureData != null) {
+						diff.MainPicture.Set();
+						SaveImage(ev, pictureData);
+						session.Update(ev);
+					}
 
 					var archived = Archive(session, ev, diff, EntryEditEvent.Created, string.Empty);
 					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
@@ -242,7 +253,9 @@ namespace VocaDb.Model.Database.Queries {
 						diff.SongList.Set();
 					}
 
-					var oldName = ev.Name;
+					if (!string.Equals(ev.Venue, contract.Venue)) {
+						diff.Venue.Set();
+					}
 
 					ev.Series = session.NullSafeLoad<ReleaseEventSeries>(contract.Series);
 					ev.CustomName = contract.CustomName;
@@ -252,6 +265,7 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SeriesNumber = contract.SeriesNumber;
 					ev.SeriesSuffix = contract.SeriesSuffix;
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+					ev.Venue = contract.Venue;
 					ev.UpdateNameFromSeries();
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
@@ -262,6 +276,11 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					CheckDuplicateName(session, ev);
+
+					if (pictureData != null) {
+						diff.MainPicture.Set();
+						SaveImage(ev, pictureData);
+					}
 
 					session.Update(ev);
 
@@ -279,19 +298,31 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private PictureDataContract SaveImage(IEntryImageInformation entry, EntryPictureFileContract pictureData) {
+
+			if (pictureData == null) return null;
+
+			var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
+
+			pictureData.Id = entry.Id;
+			pictureData.EntryType = entry.EntryType;
+			var thumbGenerator = new ImageThumbGenerator(imagePersister);
+			thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ReleaseEventSeries.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
+			return parsed;
+
+		}
+
 		private void SaveImage(ReleaseEventSeries series, EntryPictureFileContract pictureData) {
 
-			if (pictureData != null) {
+			var parsed = SaveImage((IEntryImageInformation)series, pictureData);
+			series.PictureMime = parsed.Mime;
 
-				var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
-				series.PictureMime = parsed.Mime;
+		}
 
-				pictureData.Id = series.Id;
-				pictureData.EntryType = EntryType.ReleaseEventSeries;
-				var thumbGenerator = new ImageThumbGenerator(imagePersister);
-				thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ReleaseEventSeries.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
+		private void SaveImage(ReleaseEvent ev, EntryPictureFileContract pictureData) {
 
-			}
+			var parsed = SaveImage((IEntryImageInformation)ev, pictureData);
+			ev.PictureMime = parsed.Mime;
 
 		}
 

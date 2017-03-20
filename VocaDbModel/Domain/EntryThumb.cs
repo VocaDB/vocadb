@@ -4,6 +4,10 @@ namespace VocaDb.Model.Domain {
 
 	public class EntryThumb : IEntryImageInformation {
 
+		public static EntryThumb Create<T>(T entry) where T : IEntryBase, IEntryImageInformation {
+			return new EntryThumb(entry, entry.Mime);
+		}
+
 		private IEntryBase entry;
 
 		public EntryThumb() {}

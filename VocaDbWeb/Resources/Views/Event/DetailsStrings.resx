@@ -135,4 +135,7 @@
   <data name="Songs" xml:space="preserve">
     <value>Songs</value>
   </data>
+  <data name="Venue" xml:space="preserve">
+    <value>Venue</value>
+  </data>
 </root>

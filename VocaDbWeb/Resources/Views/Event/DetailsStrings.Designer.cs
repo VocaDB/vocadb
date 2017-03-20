@@ -113,5 +113,14 @@ namespace ViewRes.Event {
                 return ResourceManager.GetString("Songs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Venue.
+        /// </summary>
+        public static string Venue {
+            get {
+                return ResourceManager.GetString("Venue", resourceCulture);
+            }
+        }
     }
 }

@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Main picture.
+        /// </summary>
+        internal static string MainPicture {
+            get {
+                return ResourceManager.GetString("MainPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string Name {
@@ -120,6 +129,15 @@ namespace Resources {
         internal static string SongList {
             get {
                 return ResourceManager.GetString("SongList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Venue.
+        /// </summary>
+        internal static string Venue {
+            get {
+                return ResourceManager.GetString("Venue", resourceCulture);
             }
         }
         

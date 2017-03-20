@@ -128,8 +128,12 @@ namespace VocaDb.Model.DataContracts.Api {
 			ReleaseEventSeriesName = releaseEvent.Series != null ? releaseEvent.Series.Name : null;
 			UrlSlug = releaseEvent.UrlSlug;
 
-			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && releaseEvent.Series != null && !string.IsNullOrEmpty(releaseEvent.Series.PictureMime)) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(releaseEvent.Series, releaseEvent.Series.PictureMime), thumbPersister, ssl);
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
+				if (!string.IsNullOrEmpty(releaseEvent.PictureMime)) {
+					MainPicture = new EntryThumbForApiContract(EntryThumb.Create(releaseEvent), thumbPersister, ssl);
+				} else if (!string.IsNullOrEmpty(releaseEvent.Series?.PictureMime)) {
+					MainPicture = new EntryThumbForApiContract(EntryThumb.Create(releaseEvent.Series), thumbPersister, ssl);
+				}
 			}
 
 		}

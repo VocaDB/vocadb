@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
 @using EditRes = ViewRes.EntryEditStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.EventEdit>
@@ -33,7 +34,7 @@
 
 @Helpers.ValidationSymmaryPanel("Unable to save properties.")
 
-<form method="POST" data-bind="submit: submit">
+<form method="POST" data-bind="submit: submit" enctype="multipart/form-data">
 	@Html.HiddenFor(m => m.Id)
 
 	@Helpers.SaveAndBackBtn(backAction)
@@ -130,6 +131,32 @@
 		@Html.HiddenForKnockout(m => m.SongList, "value: ko.toJSON(songList.entry())")
 	</div>
 	
+	<div>
+		<div class="editor-label">
+			Venue
+		</div>
+		<div class="editor-field">
+			@Html.TextBoxFor(m => m.Venue, new { size = 40, @class = "span3", maxlength = 1000 })<br />
+		</div>
+	</div>
+	
+	<div class="editor-label">
+		<label>Picture</label>
+	</div>
+	<div class="editor-field">
+		<table>
+			<tr>
+				<td>
+					<img src="@Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Picture" class="coverPic" />
+				</td>
+				<td>
+					<p>@string.Format("Allowed types: {0}. Maximum size is {1} MB.", string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
+					<input type="file" id="pictureUpload" name="pictureUpload" />
+				</td>
+			</tr>
+		</table>
+	</div>
+
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
 			@EditRes.WebLinks
