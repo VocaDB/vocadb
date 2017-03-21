@@ -55,17 +55,31 @@
 			<p>@Html.Raw(descriptionHtml)</p>
 		}
 		
-		@if (Model.SongList != null) {
-			<p>@Res.SongList: @Html.ActionLink(Model.SongList.Name, "Details", "SongList", new { id = Model.SongList.Id }, null)</p>
-		}
-
 		@if (Model.WebLinks.Any()) {
 			@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 			<br />
-		}
-
+		}		
 	</div>
 </div>
+
+@if (Model.SongList != null) {
+	<h3 class="withMargin">@Res.SongList: @Html.ActionLink(Model.SongList.Name, "Details", "SongList", new { id = Model.SongList.Id }, null)</h3>
+	if (Model.SongListSongs.Any()) {
+		<table class="table">
+			@foreach (var song in Model.SongListSongs) {
+				<tr>
+					<td style="width: 50px"><h1>@song.Order</h1></td>
+					<td style="width: 75px">@SongHelpers.SongIconLink(song.Song)</td>
+					<td>
+						@SongHelpers.SongLink(song.Song)
+						<br />
+						<small class="extraInfo">@song.Song.ArtistString</small>
+					</td>
+				</tr>
+			}
+		</table>
+	}
+}
 
 @if (Model.Albums.Any()) {
 	<h3>

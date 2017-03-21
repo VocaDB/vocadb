@@ -32,6 +32,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				.OrderBy(s => s.Name)
 				.ToArray();
 
+			if (releaseEvent.SongList != null) {
+				SongListSongs = releaseEvent.SongList.SongLinks.OrderBy(s => s.Order).Select(s => new SongInListContract(s, languagePreference)).ToArray();
+			}
+
 		}
 
 		public AlbumContract[] Albums { get; set; }
@@ -41,6 +45,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public int SeriesNumber { get; set; }
 
 		public string SeriesSuffix { get; set; }
+
+		public SongInListContract[] SongListSongs { get; set; }
 
 		public SongForApiContract[] Songs { get; set; }
 
