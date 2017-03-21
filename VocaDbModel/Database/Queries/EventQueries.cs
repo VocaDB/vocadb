@@ -368,7 +368,7 @@ namespace VocaDb.Model.Database.Queries {
 				} else {
 
 					series = session.Load<ReleaseEventSeries>(contract.Id);
-					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Name);
+					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Nothing);
 
 					if (series.Name != contract.Name) {
 						diff.Name.Set();
