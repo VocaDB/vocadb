@@ -79,7 +79,7 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurrence date.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string OccurrenceDate {
             get {

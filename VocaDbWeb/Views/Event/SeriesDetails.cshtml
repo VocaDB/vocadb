@@ -23,6 +23,7 @@
 @section Toolbar {
 	@if (Login.CanManageEventSeries) {
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "EditSeries", new { id = Model.Id }, new { id = "editEventLink" })
+		@:
 		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "SeriesVersions", new { id = Model.Id }, new { id = "viewVersions" })
 	}
 	@if (Login.CanManageDb) {
