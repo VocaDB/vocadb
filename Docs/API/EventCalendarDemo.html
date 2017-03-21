@@ -80,7 +80,7 @@
 										events.push({
 											title: this.name,
 											start: this.date,
-											url: 'http://vocadb.net/Event/Details/' + this.id,
+											url: 'http://vocadb.net/E/' + this.id,
 											allDay: true
 										});
 									});
@@ -105,25 +105,7 @@
 									callback(events);
 								});
 							}
-						},
-						{
-							color: 'darkred',
-							textColor: 'white',
-							events: function (start, end, timezone, callback) {
-								$.getJSON("http://vocadb.net/api/songLists/featured", { featuredCategory: 'Concerts', releaseDateAfter: start.toJSON(), releaseDateBefore: end.toJSON() }, function (result) {
-									var events = [];
-									$(result.items).each(function () {
-										events.push({
-											title: this.name,
-											start: this.eventDate,
-											url: 'http://vocadb.net/SongList/Details/' + this.id,
-											allDay: true
-										});
-									});
-									callback(events);
-								});
-							}
-						}					
+						}								
 					]
 				});
 			}
