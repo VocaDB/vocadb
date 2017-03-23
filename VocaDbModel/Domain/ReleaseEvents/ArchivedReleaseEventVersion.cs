@@ -43,7 +43,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public override IEntryDiff DiffBase => Diff;
 
 		public virtual ReleaseEventDiff Diff {
-			get { return diff; }
+			get => diff;
 			set { 
 				ParamIs.NotNull(() => value);
 				diff = value; 
@@ -55,7 +55,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public override IEntryWithNames EntryBase => ReleaseEvent;
 
 		public virtual ReleaseEvent ReleaseEvent {
-			get { return releaseEvent; }
+			get => releaseEvent;
 			set { 
 				ParamIs.NotNull(() => value);
 				releaseEvent = value; 

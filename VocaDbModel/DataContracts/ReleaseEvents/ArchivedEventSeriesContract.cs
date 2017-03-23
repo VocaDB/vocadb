@@ -16,6 +16,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Aliases = series.Aliases.Select(a => a.Name).ToArray();
 			Description = series.Description;
 			Id = series.Id;
+			MainPictureMime = series.PictureMime;
 			Name = series.Name;
 			WebLinks = diff.IsIncluded(ReleaseEventSeriesEditableFields.WebLinks) ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
@@ -29,6 +30,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public int Id { get; set; }
+
+		[DataMember]
+		public string MainPictureMime { get; set; }
 
 		[DataMember]
 		public string Name { get; set; }

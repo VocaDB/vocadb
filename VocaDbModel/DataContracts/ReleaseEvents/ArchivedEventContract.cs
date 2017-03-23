@@ -18,9 +18,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Date = ev.Date;
 			Description = ev.Description;
 			Id = ev.Id;
+			MainPictureMime = ev.PictureMime;
 			Name = ev.Name;
 			Series = ObjectRefContract.Create(ev.Series);
 			SeriesNumber = ev.SeriesNumber;
+			SongList = ObjectRefContract.Create(ev.SongList);
+			Venue = ev.Venue;
 			WebLinks = diff.IsIncluded(ReleaseEventEditableFields.WebLinks) ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
@@ -35,6 +38,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public int Id { get; set; }
 
 		[DataMember]
+		public string MainPictureMime { get; set; }
+
+		[DataMember]
 		public string Name { get; set; }
 
 		[DataMember]
@@ -42,6 +48,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public int SeriesNumber { get; set; }
+
+		[DataMember]
+		public ObjectRefContract SongList { get; set; }
+
+		[DataMember]
+		public string Venue { get; set; }
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
