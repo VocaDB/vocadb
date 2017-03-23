@@ -89,7 +89,7 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			return queries.Find(e => new ReleaseEventForApiContract(e, fields), textQuery, seriesId, afterDate, beforeDate, 
+			return queries.Find(e => new ReleaseEventForApiContract(e, fields, thumbPersister, WebHelper.IsSSL(Request)), textQuery, seriesId, afterDate, beforeDate, 
 				start, maxResults, getTotalCount, sort);
 
 		}
@@ -127,7 +127,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{id:int}")]
 		public ReleaseEventForApiContract GetOne(int id, ReleaseEventOptionalFields fields) {
 
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), fields));
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), fields, thumbPersister, WebHelper.IsSSL(Request)));
 
 		}
 

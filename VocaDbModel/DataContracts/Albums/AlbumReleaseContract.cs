@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			CatNum = release.CatNum;
 			ReleaseDate = (release.ReleaseDate != null ? new OptionalDateTimeContract(release.ReleaseDate) : null);
-			ReleaseEvent = release.ReleaseEvent != null ? new ReleaseEventForApiContract(release.ReleaseEvent, ReleaseEventOptionalFields.None) : null;
+			ReleaseEvent = release.ReleaseEvent != null ? new ReleaseEventForApiContract(release.ReleaseEvent, ReleaseEventOptionalFields.None, null, false) : null;
 
 		}
 

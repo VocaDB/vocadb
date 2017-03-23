@@ -6,8 +6,11 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Event;
 using VocaDb.Web.Models.Shared;
 
@@ -15,23 +18,22 @@ namespace VocaDb.Web.Controllers
 {
     public class EventController : ControllerBase
     {
-
-		private readonly AlbumService albumService;
+		
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryThumbPersister thumbPersister;
 		private readonly EventQueries queries;
 		private readonly ReleaseEventService service;
 
-		private ReleaseEventService Service {
-			get { return service; }
-		}
+		private ReleaseEventService Service => service;
 
-		public EventController(EventQueries queries, ReleaseEventService service, AlbumService albumService, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory) {
+	    public EventController(EventQueries queries, ReleaseEventService service, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory,
+			IEntryThumbPersister thumbPersister) {
 			this.queries = queries;
 			this.service = service;
-			this.albumService = albumService;
 			this.enumTranslations = enumTranslations;
 			this.entryLinkFactory = entryLinkFactory;
+			this.thumbPersister = thumbPersister;
 		}
 
 		[HttpPost]
@@ -157,12 +159,15 @@ namespace VocaDb.Web.Controllers
         //
         // GET: /Event/
 
-        public ActionResult Index(EventSortRule sortRule = EventSortRule.Date)
+        public ActionResult Index()
         {
 
-			ViewBag.SortRule = sortRule;
+			var events = queries.Find(e =>
+				new ReleaseEventForApiContract(e, ReleaseEventOptionalFields.MainPicture, thumbPersister, WebHelper.IsSSL(Request)),
+				SearchTextQuery.Empty, 0, DateTime.Now.AddDays(-7), null, 0, 100, false, EventSortRule.Date);
 
-			return View(queries.List(sortRule, true));
+			return View(events.Items);
+
         }
 
 		public ActionResult SeriesDetails(int id = invalidId) {

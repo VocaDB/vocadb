@@ -15,7 +15,7 @@ namespace VocaDb.Tests.Web.Controllers {
 
 		[TestInitialize]
 		public void SetUp() {
-			controller = new EventController(null, null, null, null, new FakeEntryLinkFactory());
+			controller = new EventController(null, null, null, new FakeEntryLinkFactory(), null);
 		}
 
 		[TestMethod]

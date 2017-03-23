@@ -76,7 +76,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.ReleaseEvent) && song.ReleaseEvent != null) {
-				ReleaseEvent = new ReleaseEventForApiContract(song.ReleaseEvent, ReleaseEventOptionalFields.None);
+				ReleaseEvent = new ReleaseEventForApiContract(song.ReleaseEvent, ReleaseEventOptionalFields.None, null, true);
 			}
 
 			if (fields.HasFlag(SongOptionalFields.Tags))

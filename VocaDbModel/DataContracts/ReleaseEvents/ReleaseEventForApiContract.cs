@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
@@ -11,7 +13,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventForApiContract() { }
 
-		public ReleaseEventForApiContract(ReleaseEvent rel, ReleaseEventOptionalFields fields) {
+		public ReleaseEventForApiContract(ReleaseEvent rel, ReleaseEventOptionalFields fields, IEntryThumbPersister thumbPersister, bool ssl) {
 			
 			Date = rel.Date;
 			Id = rel.Id;
@@ -19,6 +21,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SeriesNumber = rel.SeriesNumber;
 			SeriesSuffix = rel.SeriesSuffix;
 			UrlSlug = rel.UrlSlug;
+			Venue = rel.Venue;
 
 			if (rel.Series != null) {
 				SeriesId = rel.Series.Id;
@@ -26,6 +29,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.Description)) {
 				Description = rel.Description;
+			}
+
+			if (thumbPersister != null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture) && !string.IsNullOrEmpty(rel.PictureMime)) {
+				MainPicture = new EntryThumbForApiContract(EntryThumb.Create(rel), thumbPersister, ssl);
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.Series != null) {
@@ -51,6 +58,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public int Id { get; set; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public EntryThumbForApiContract MainPicture { get; set; }
+
 		[DataMember]
 		public string Name { get; set; }
 
@@ -73,6 +83,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string UrlSlug { get; set; }
 
 		[DataMember]
+		public string Venue { get; set; }
+
+		[DataMember]
 		public WebLinkForApiContract[] WebLinks { get; set; }
 
 	}
@@ -82,9 +95,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		None = 0,
 		Description = 1,
-		Series = 2,
-		SongList = 4,
-		WebLinks = 8
+		MainPicture = 2,
+		Series = 4,
+		SongList = 8,
+		WebLinks = 16
 
 	}
 
