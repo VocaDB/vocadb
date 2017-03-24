@@ -5,6 +5,7 @@
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.DataContracts
 @using VocaDb.Model.DataContracts.Api
+@using VocaDb.Model.DataContracts.ReleaseEvents
 @using VocaDb.Model.Domain;
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.PVs
@@ -117,6 +118,33 @@
 		}
 	</ul>
 
+}
+
+@helper EventThumbs(IEnumerable<ReleaseEventForApiContract> events) {
+	<div class="clearfix">
+		@foreach (var ev in events) {
+			<div class="well well-transparent event-teaser">
+				@if (ev.MainPicture != null) {
+					<a href="@Url.EntryDetails(ev)" class="event-image pull-left">
+						<img class="media-object" src="@ev.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Thumb" />
+					</a>
+				}
+				<div>
+					<a href="@Url.EntryDetails(ev)">
+						@ev.Name
+					</a>
+					@if (ev.Date.HasValue) {
+						<br />
+						<small class="extraInfo">@(ev.Date.Value.ToShortDateString())</small>						
+					}
+					@if (!string.IsNullOrEmpty(ev.Venue)) {
+						<br />
+						<small class="extraInfo">@(ev.Venue)</small>
+					}
+				</div>
+			</div>
+		}
+	</div>
 }
 
 @helper FormatPVLink(VocaDb.Model.DataContracts.PVs.PVContract pv, bool type = true) {

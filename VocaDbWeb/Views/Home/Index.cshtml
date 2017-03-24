@@ -57,25 +57,7 @@
 	
 @if (Model.NewEvents.Any()) {
 	<h3 class="withMargin">@Res.RecentEvents</h3>
-	<div class="row-fluid">
-		@foreach (var ev in Model.NewEvents) {
-			<div class="well well-transparent span4 front-page-recent-events">
-				@if (ev.MainPicture != null) {
-					<a href="@Url.EntryDetails(ev)" class="pull-left">
-						<img class="media-object" src="@ev.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Thumb" />
-					</a>
-				}
-				<div class="pull-left">
-					<a href="@Url.EntryDetails(ev)">
-						@ev.Name
-					</a>
-					(@Translate.EntryTypeNames[ev.EntryType])
-					<br />
-					@(ev.ActivityDate.HasValue ? ev.ActivityDate.Value.ToShortDateString() : string.Empty)
-				</div>
-			</div>
-		}
-	</div>
+	@Helpers.EventThumbs(Model.NewEvents)
 }
 
 @{ Html.RenderPartial("Partials/_NewsItems"); }

@@ -14,7 +14,6 @@
 }
 
 @section Toolbar {
-
 	<ul class="nav nav-pills">
 		<li class="active">
 			@Html.ActionLink(Res.ViewList, "Index")
@@ -26,48 +25,7 @@
 			@Html.ActionLink(Res.ViewByDate, "EventsByDate")
 		</li>
 	</ul>
-
-	@if (Login.CanManageEventSeries) {
-		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
-	}
 }
 
-<table class="table table-striped table-hover">
-	<thead>
-		<tr>
-			<th>
-				@Html.ActionLink("Date", "Index", new { sortRule = rule.Date })
-				@SortDirection(rule.Date)
-			</th>
-			<th>
-				@Html.ActionLink("Name", "Index", new { sortRule = rule.Name })
-				@SortDirection(rule.Name)
-			</th>
-			<th>
-				@Html.ActionLink("Series", "Index", new { sortRule = rule.SeriesName })
-				@SortDirection(rule.SeriesName)
-			</th>
-		</tr>
-	</thead>
-	@foreach (var ev in Model) {
-		<tr>
-			<td>@(ev.Date != null ? ev.Date.Value.ToShortDateString() : string.Empty)</td>
-			<td>@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })</td>
-			<td>
-				@if (ev.Series != null) {
-					@Html.ActionLink(ev.Series.Name, "SeriesDetails", new { id = ev.Series.Id })
-				}
-			</td>
-		</tr>
-	}
-</table>
+@Helpers.EventThumbs(Model)
 
-@section BodyScripts {
-	<script type="text/javascript">
-
-		$(document).ready(function () {
-			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
-		});
-
-	</script>
-}

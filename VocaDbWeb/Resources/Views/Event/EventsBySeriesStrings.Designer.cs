@@ -79,7 +79,7 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By date.
+        ///   Looks up a localized string similar to All by date.
         /// </summary>
         public static string ViewByDate {
             get {
@@ -88,7 +88,7 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By series.
+        ///   Looks up a localized string similar to All by series.
         /// </summary>
         public static string ViewBySeries {
             get {
@@ -97,7 +97,7 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List.
+        ///   Looks up a localized string similar to Upcoming.
         /// </summary>
         public static string ViewList {
             get {

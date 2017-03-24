@@ -22,7 +22,7 @@
 			}
 			<li>@Html.ActionLink(ViewRes.SharedStrings.TopRatedAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingAverage }, null)</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null)</li>
-			<li>@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries", "Event")</li>
+			<li>@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Event")</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.FreeAlbums, "Index", "Search", new { searchType = "Album", tag = "free", childTags = true }, null)</li>
 		</ul>
 	</li>

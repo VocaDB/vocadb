@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Comments;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
@@ -18,8 +19,8 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public FrontPageContract() { }
 
 		public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
-			AlbumContract[] newAlbums, 
-			EntryForApiContract[] newEvents, 
+			AlbumContract[] newAlbums,
+			ReleaseEventForApiContract[] newEvents, 
 			IEnumerable<EntryWithCommentsContract> recentComments, 
 			AlbumContract[] topAlbums, Song[] newSongs,
 			SongVoteRating firstSongRating,
@@ -45,10 +46,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		public AlbumContract[] NewAlbums { get; set; }	
 
-		/// <summary>
-		/// Album release events and concerts
-		/// </summary>
-		public EntryForApiContract[] NewEvents { get; set; }
+		public ReleaseEventForApiContract[] NewEvents { get; set; }
 
 		public SongWithPVAndVoteContract[] NewSongs { get; set; }
 

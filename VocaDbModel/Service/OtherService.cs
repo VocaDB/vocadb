@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Comments;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -19,6 +20,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -48,6 +50,7 @@ namespace VocaDb.Model.Service {
 		private readonly ObjectCache cache;
 		private readonly IUserIconFactory userIconFactory;
 		private readonly EntryForApiContractFactory entryForApiContractFactory;
+		private readonly IEntryThumbPersister thumbPersister;
 
 		private AlbumContract[] GetTopAlbums(ISession session, AlbumContract[] recentAlbums) {
 
@@ -137,7 +140,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private EntryForApiContract[] GetRecentEvents(ISession session, bool ssl) {
+		private ReleaseEventForApiContract[] GetRecentEvents(ISession session, bool ssl) {
 
 			var count = 3;
 			var cacheKey = string.Format("OtherService.RecentEvents.{0}.{1}", LanguagePreference, ssl);
@@ -152,7 +155,7 @@ namespace VocaDb.Model.Service {
 					.Take(count)
 					.ToArray();
 
-				var entryContracts = recentEvents.Select(i => entryForApiContractFactory.Create(i, EntryOptionalFields.MainPicture, LanguagePreference, ssl));
+				var entryContracts = recentEvents.Select(i => new ReleaseEventForApiContract(i, ReleaseEventOptionalFields.MainPicture, thumbPersister, ssl));
 
 				return entryContracts.ToArray();
 
@@ -287,12 +290,13 @@ namespace VocaDb.Model.Service {
 		}
 
 		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory, ObjectCache cache) 
+			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory, ObjectCache cache, IEntryThumbPersister thumbPersister) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 			
 			this.userIconFactory = userIconFactory;
 			this.entryForApiContractFactory = entryForApiContractFactory;
 			this.cache = cache;
+			this.thumbPersister = thumbPersister;
 
 		}
 

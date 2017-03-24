@@ -9,7 +9,11 @@ using VocaDb.Model.Domain.ReleaseEvents;
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ReleaseEventForApiContract : IReleaseEvent {
+	public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase {
+
+		bool IDeletableEntry.Deleted => false;
+		string IEntryBase.DefaultName => Name;
+		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;
 
 		public ReleaseEventForApiContract() { }
 
@@ -22,6 +26,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SeriesSuffix = rel.SeriesSuffix;
 			UrlSlug = rel.UrlSlug;
 			Venue = rel.Venue;
+			Version = rel.Version;
 
 			if (rel.Series != null) {
 				SeriesId = rel.Series.Id;
@@ -84,6 +89,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public string Venue { get; set; }
+
+		[DataMember]
+		public int Version { get; set; }
 
 		[DataMember]
 		public WebLinkForApiContract[] WebLinks { get; set; }
