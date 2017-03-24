@@ -19,6 +19,7 @@ using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Events;
 
 namespace VocaDb.Model.Database.Queries {
 
@@ -90,34 +91,25 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<TResult> Find<TResult>(Func<ReleaseEvent, TResult> fac, SearchTextQuery textQuery,
-			int seriesId,
-			DateTime? afterDate,
-			DateTime? beforeDate,
-			int start,
-			int maxResults,
-			bool getTotalCount,
-			EventSortRule sort,
-			SortDirection? sortDirection) {
+		public PartialFindResult<TResult> Find<TResult>(Func<ReleaseEvent, TResult> fac, EventQueryParams queryParams) {
 
 			return HandleQuery(ctx => {
 
 				var q = ctx.Query()
-					.WhereHasName(textQuery)
-					.WhereHasSeries(seriesId)
-					.WhereDateIsBetween(afterDate, beforeDate);
+					.WhereHasName(queryParams.TextQuery)
+					.WhereHasSeries(queryParams.SeriesId)
+					.WhereDateIsBetween(queryParams.AfterDate, queryParams.BeforeDate);
 
 				var entries = q
-					.OrderBy(sort, sortDirection)
-					.Skip(start)
-					.Take(maxResults)
+					.OrderBy(queryParams.SortRule, queryParams.SortDirection)
+					.Paged(queryParams.Paging)
 					.ToArray()
 					.Select(fac)
 					.ToArray();
 
 				var count = 0;
 
-				if (getTotalCount) {
+				if (queryParams.Paging != null && queryParams.Paging.GetTotalCount) {
 
 					count = q.Count();
 

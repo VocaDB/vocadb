@@ -11,6 +11,7 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Web.Helpers;
@@ -108,7 +109,11 @@ namespace VocaDb.Web.Controllers
 					break;
 
 				case EntryType.ReleaseEvent:
-					var ev = eventQueries.Find(s => s.Id, textQuery, 0, null, null, 0, 2, false, EventSortRule.Name, SortDirection.Ascending);
+					var queryParams = new EventQueryParams {
+						TextQuery = textQuery,
+						Paging = new PagingProperties(0, 2, false)
+					};
+					var ev = eventQueries.Find(s => s.Id, queryParams);
 					if (ev.Items.Length == 1) {
 						return RedirectToReleaseEvent(ev.Items[0]);
 					}

@@ -859,6 +859,7 @@
     <Compile Include="Service\Search\Artists\ArtistSearchTextQuery.cs" />
     <Compile Include="Service\Search\Artists\ParsedArtistQuery.cs" />
     <Compile Include="Service\Search\EntryIdsCollection.cs" />
+    <Compile Include="Service\Search\Events\EventQueryParams.cs" />
     <Compile Include="Service\Search\QueryProcessor.cs" />
     <Compile Include="Service\Search\ReleaseEventSearch.cs" />
     <Compile Include="Service\Search\SearchTextQuery.cs" />

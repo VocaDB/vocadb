@@ -9,9 +9,11 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.Search.Events;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -88,9 +90,16 @@ namespace VocaDb.Web.Controllers.Api {
 			) {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var queryParams = new EventQueryParams {
+				TextQuery = textQuery,
+				SeriesId = seriesId,
+				AfterDate = afterDate,
+				BeforeDate = beforeDate,
+				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				SortRule = sort
+			};
 
-			return queries.Find(e => new ReleaseEventForApiContract(e, fields, thumbPersister, WebHelper.IsSSL(Request)), textQuery, seriesId, afterDate, beforeDate, 
-				start, maxResults, getTotalCount, sort, null);
+			return queries.Find(e => new ReleaseEventForApiContract(e, fields, thumbPersister, WebHelper.IsSSL(Request)), queryParams);
 
 		}
 

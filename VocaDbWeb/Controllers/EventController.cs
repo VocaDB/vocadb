@@ -8,8 +8,10 @@ using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Event;
@@ -163,9 +165,16 @@ namespace VocaDb.Web.Controllers
         public ActionResult Index()
         {
 
+	        var queryParams = new EventQueryParams {
+		        AfterDate = DateTime.Now.AddDays(-7),
+		        Paging = new PagingProperties(0, 12, false),
+		        SortRule = EventSortRule.Date,
+				SortDirection = SortDirection.Ascending
+			};
+
 			var events = queries.Find(e =>
 				new ReleaseEventForApiContract(e, ReleaseEventOptionalFields.MainPicture, thumbPersister, WebHelper.IsSSL(Request)),
-				SearchTextQuery.Empty, 0, DateTime.Now.AddDays(-7), null, 0, 12, false, EventSortRule.Date, SortDirection.Ascending);
+				queryParams);
 
 			return View(events.Items);
 
