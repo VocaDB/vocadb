@@ -4,8 +4,8 @@ namespace VocaDb.Model.Domain {
 
 	public class EntryThumb : IEntryImageInformation {
 
-		public static EntryThumb Create<T>(T entry) where T : IEntryBase, IEntryImageInformation {
-			return new EntryThumb(entry, entry.Mime);
+		public static EntryThumb Create<T>(T entry) where T : class, IEntryBase, IEntryImageInformation {
+			return !string.IsNullOrEmpty(entry?.Mime) ? new EntryThumb(entry, entry.Mime) : null;
 		}
 
 		private IEntryBase entry;
@@ -18,20 +18,16 @@ namespace VocaDb.Model.Domain {
 		}
 
 		public IEntryBase Entry {
-			get { return entry; }
+			get => entry;
 			set {
 				ParamIs.NotNull(() => value);
 				entry = value;
 			}
 		}
 
-		public EntryType EntryType {
-			get { return Entry.EntryType; }
-		}
+		public EntryType EntryType => Entry.EntryType;
 
-		public int Id {
-			get { return Entry.Id; }
-		}
+		public int Id => Entry.Id;
 
 		public string Mime { get; set; }
 
@@ -39,9 +35,7 @@ namespace VocaDb.Model.Domain {
 			return string.Format("Thumbnail for {0}.", Entry);
 		}
 
-		public int Version {
-			get { return Entry.Version; }
-		}
+		public int Version => Entry.Version;
 
 	}
 }

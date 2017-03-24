@@ -29,11 +29,18 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IOrderedQueryable<ReleaseEvent> OrderByDate(this IQueryable<ReleaseEvent> query, SortDirection direction) {
-			return query.OrderBy(e => e.Date.DateTime, direction);
+		public static IOrderedQueryable<ReleaseEvent> OrderByDate(this IQueryable<ReleaseEvent> query, SortDirection? direction) {
+			return query.OrderBy(e => e.Date.DateTime, direction ?? SortDirection.Descending);
 		}
 
-		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, SortDirection direction) {
+		/// <summary>
+		/// Sort query.
+		/// </summary>
+		/// <param name="query">Query. Cannot be null.</param>
+		/// <param name="sortRule">Sort rule.</param>
+		/// <param name="direction">Sort direction. If null, default direction is used.</param>
+		/// <returns>Sorted query. Cannot be null.</returns>
+		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, SortDirection? direction) {
 
 			switch (sortRule) {
 				case EventSortRule.Date:

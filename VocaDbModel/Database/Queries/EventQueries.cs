@@ -98,7 +98,7 @@ namespace VocaDb.Model.Database.Queries {
 			int maxResults,
 			bool getTotalCount,
 			EventSortRule sort,
-			SortDirection sortDirection) {
+			SortDirection? sortDirection) {
 
 			return HandleQuery(ctx => {
 

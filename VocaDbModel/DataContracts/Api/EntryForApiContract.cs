@@ -12,7 +12,6 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.DataContracts.Api {
 
@@ -72,7 +71,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			Status = artist.Status;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(artist, artist.PictureMime), thumbPersister, ssl);					
+				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime), thumbPersister, ssl);					
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
@@ -129,11 +128,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			UrlSlug = releaseEvent.UrlSlug;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
-				if (!string.IsNullOrEmpty(releaseEvent.PictureMime)) {
-					MainPicture = new EntryThumbForApiContract(EntryThumb.Create(releaseEvent), thumbPersister, ssl);
-				} else if (!string.IsNullOrEmpty(releaseEvent.Series?.PictureMime)) {
-					MainPicture = new EntryThumbForApiContract(EntryThumb.Create(releaseEvent.Series), thumbPersister, ssl);
-				}
+				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister, ssl);
 			}
 
 		}

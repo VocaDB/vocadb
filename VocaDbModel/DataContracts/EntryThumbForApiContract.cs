@@ -15,6 +15,16 @@ namespace VocaDb.Model.DataContracts {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryThumbForApiContract {
 
+		public static EntryThumbForApiContract Create(IEntryImageInformation image, IEntryImagePersister thumbPersister, bool ssl,
+			ImageSizes sizes = ImageSizes.All) {
+
+			if (thumbPersister == null || string.IsNullOrEmpty(image?.Mime))
+				return null;
+
+			return new EntryThumbForApiContract(image, thumbPersister, ssl, sizes);
+
+		}
+
 		public EntryThumbForApiContract() { }
 
 		/// <summary>
