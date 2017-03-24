@@ -125,12 +125,12 @@
 		@foreach (var ev in events) {
 			<div class="well well-transparent event-teaser">
 				@if (ev.MainPicture != null) {
-					<a href="@Url.EntryDetails(ev)" class="event-image pull-left">
+					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left">
 						<img class="media-object" src="@ev.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Thumb" />
 					</a>
 				}
 				<div>
-					<a href="@Url.EntryDetails(ev)">
+					<a href="@Url.EntryDetails(ev, ev.UrlSlug)">
 						@ev.Name
 					</a>
 					@if (ev.Date.HasValue) {
