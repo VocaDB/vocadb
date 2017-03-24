@@ -88,9 +88,10 @@ namespace VocaDb.Web.Controllers.Api {
 			) {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var sortDirection = sort == EventSortRule.Date ? SortDirection.Descending : SortDirection.Ascending;
 
 			return queries.Find(e => new ReleaseEventForApiContract(e, fields, thumbPersister, WebHelper.IsSSL(Request)), textQuery, seriesId, afterDate, beforeDate, 
-				start, maxResults, getTotalCount, sort);
+				start, maxResults, getTotalCount, sort, sortDirection);
 
 		}
 

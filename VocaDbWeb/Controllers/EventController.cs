@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
@@ -145,7 +146,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult EventsByDate() {
 			
-			return View(queries.List(EventSortRule.Date));
+			return View(queries.List(EventSortRule.Date, SortDirection.Descending));
 
 		}
 
@@ -164,8 +165,9 @@ namespace VocaDb.Web.Controllers
 
 			var events = queries.Find(e =>
 				new ReleaseEventForApiContract(e, ReleaseEventOptionalFields.MainPicture, thumbPersister, WebHelper.IsSSL(Request)),
-				SearchTextQuery.Empty, 0, DateTime.Now.AddDays(-7), null, 0, 100, false, EventSortRule.Date);
+				SearchTextQuery.Empty, 0, DateTime.Now.AddDays(-7), null, 0, 12, false, EventSortRule.Date, SortDirection.Ascending);
 
+			Array.Reverse(events.Items);
 			return View(events.Items);
 
         }

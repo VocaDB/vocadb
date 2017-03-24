@@ -108,7 +108,7 @@ namespace VocaDb.Web.Controllers
 					break;
 
 				case EntryType.ReleaseEvent:
-					var ev = eventQueries.Find(s => s.Id, textQuery, 0, null, null, 0, 2, false, EventSortRule.Name);
+					var ev = eventQueries.Find(s => s.Id, textQuery, 0, null, null, 0, 2, false, EventSortRule.Name, SortDirection.Ascending);
 					if (ev.Items.Length == 1) {
 						return RedirectToReleaseEvent(ev.Items[0]);
 					}

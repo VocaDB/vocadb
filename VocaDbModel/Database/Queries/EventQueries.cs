@@ -97,7 +97,8 @@ namespace VocaDb.Model.Database.Queries {
 			int start,
 			int maxResults,
 			bool getTotalCount,
-			EventSortRule sort) {
+			EventSortRule sort,
+			SortDirection sortDirection) {
 
 			return HandleQuery(ctx => {
 
@@ -107,7 +108,7 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereDateIsBetween(afterDate, beforeDate);
 
 				var entries = q
-					.OrderBy(sort)
+					.OrderBy(sort, sortDirection)
 					.Skip(start)
 					.Take(maxResults)
 					.ToArray()
@@ -151,12 +152,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ReleaseEventContract[] List(EventSortRule sortRule, bool includeSeries = false) {
+		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false) {
 			
 			return repository.HandleQuery(ctx => ctx
 				.Query()
 				.Where(e => e.Date.DateTime != null)
-				.OrderBy(sortRule)
+				.OrderBy(sortRule, sortDirection)
 				.ToArray()
 				.Select(e => new ReleaseEventContract(e, includeSeries))
 				.ToArray());
