@@ -36,8 +36,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				Description = rel.Description;
 			}
 
-			if (thumbPersister != null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture) && !string.IsNullOrEmpty(rel.PictureMime)) {
-				MainPicture = new EntryThumbForApiContract(EntryThumb.Create(rel), thumbPersister, ssl);
+			if (thumbPersister != null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture)) {
+				if (!string.IsNullOrEmpty(rel.PictureMime)) {
+					MainPicture = new EntryThumbForApiContract(EntryThumb.Create(rel), thumbPersister, ssl);
+				} else if (!string.IsNullOrEmpty(rel.Series?.PictureMime)) {
+					MainPicture = new EntryThumbForApiContract(EntryThumb.Create(rel.Series), thumbPersister, ssl);
+				}
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.Series != null) {

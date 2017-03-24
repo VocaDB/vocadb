@@ -167,7 +167,6 @@ namespace VocaDb.Web.Controllers
 				new ReleaseEventForApiContract(e, ReleaseEventOptionalFields.MainPicture, thumbPersister, WebHelper.IsSSL(Request)),
 				SearchTextQuery.Empty, 0, DateTime.Now.AddDays(-7), null, 0, 12, false, EventSortRule.Date, SortDirection.Ascending);
 
-			Array.Reverse(events.Items);
 			return View(events.Items);
 
         }
