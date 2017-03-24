@@ -27,11 +27,11 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static string EntryDetails(this UrlHelper urlHelper, IEntryBase entryBase) {
+		public static string EntryDetails(this UrlHelper urlHelper, IEntryBase entryBase, string urlSlug = null) {
 			
 			ParamIs.NotNull(() => entryBase);
 
-			return EntryDetails(urlHelper, entryBase.EntryType, entryBase.Id, null);
+			return EntryDetails(urlHelper, entryBase.EntryType, entryBase.Id, urlSlug);
 
 		}
 

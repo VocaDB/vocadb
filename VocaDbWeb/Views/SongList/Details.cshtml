@@ -72,7 +72,7 @@
 				<ul>
 				@foreach (var ev in Model.SongList.Events) {
 					<li>
-						<a href="@Url.Action("Details", "Event", new { id = ev.Id }, null)">
+						<a href="@Url.EntryDetails(ev, ev.UrlSlug)">
 							@ev.Name
 						</a>
 						@if (ev.Date.HasValue && !string.IsNullOrEmpty(ev.Venue)) {
