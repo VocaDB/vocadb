@@ -25,7 +25,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SeriesNumber = rel.SeriesNumber;
 			SeriesSuffix = rel.SeriesSuffix;
 			UrlSlug = rel.UrlSlug;
-			Venue = rel.Venue;
+			VenueName = rel.Venue;
 			Version = rel.Version;
 
 			if (rel.Series != null) {
@@ -88,7 +88,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string UrlSlug { get; set; }
 
 		[DataMember]
-		public string Venue { get; set; }
+		public string VenueName { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }

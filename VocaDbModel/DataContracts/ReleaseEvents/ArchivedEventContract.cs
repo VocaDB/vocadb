@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Series = ObjectRefContract.Create(ev.Series);
 			SeriesNumber = ev.SeriesNumber;
 			SongList = ObjectRefContract.Create(ev.SongList);
-			Venue = ev.Venue;
+			VenueName = ev.Venue;
 			WebLinks = diff.IsIncluded(ReleaseEventEditableFields.WebLinks) ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
@@ -53,7 +53,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ObjectRefContract SongList { get; set; }
 
 		[DataMember]
-		public string Venue { get; set; }
+		public string VenueName { get; set; }
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
