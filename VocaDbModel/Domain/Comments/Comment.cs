@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain.Comments {
 		public virtual User Author { get; set; }
 
 		public virtual string AuthorName {
-			get { return authorName; }
+			get => authorName;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				authorName = value;
@@ -45,20 +45,14 @@ namespace VocaDb.Model.Domain.Comments {
 		/// </summary>
 		public abstract IEntryWithNames Entry { get; }
 
-		public virtual EntryType EntryType {
-			get { return Entry.EntryType; }
-		}
+		public virtual EntryType EntryType => Entry.EntryType;
 
-		public virtual GlobalEntryId GlobalId {
-			get {
-				return new GlobalEntryId(EntryType, Id);
-			}
-		}
+		public virtual GlobalEntryId GlobalId => new GlobalEntryId(EntryType, Id);
 
 		public virtual int Id { get; set; }
 
 		public virtual string Message {
-			get { return message; }
+			get => message;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				message = value;

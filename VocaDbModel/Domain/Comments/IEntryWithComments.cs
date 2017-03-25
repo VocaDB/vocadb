@@ -11,4 +11,10 @@ namespace VocaDb.Model.Domain.Comments {
 
 	}
 
+	public interface IEntryWithComments<TComment> : IEntryWithComments where TComment : Comment {
+		
+		new IList<TComment> Comments { get; }
+
+	}
+
 }

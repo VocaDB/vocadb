@@ -17,7 +17,7 @@ using VocaDb.Model.Helpers;
 namespace VocaDb.Model.Domain.Artists {
 
 	public class Artist : IEntryBase, IEntryWithNames<ArtistName>, IEntryWithVersions, IEntryWithStatus, IDeletableEntry, 
-		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments, 
+		IEquatable<Artist>, INameFactory<ArtistName>, IWebLinkFactory<ArtistWebLink>, IEntryWithTags<ArtistTagUsage>, IEntryWithComments<ArtistComment>, 
 		IEntryWithLinks<ArtistWebLink>, 
 		IEntryWithArtists {
 
@@ -58,8 +58,6 @@ namespace VocaDb.Model.Domain.Artists {
 			: this() {
 
 			ParamIs.NotNull(() => translatedName);
-
-			//TranslatedName = translatedName;
 			
 			foreach (var name in translatedName.AllLocalized)
 				Names.Add(new ArtistName(this, name));
@@ -81,7 +79,7 @@ namespace VocaDb.Model.Domain.Artists {
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
 		public virtual IList<ArtistForAlbum> AllAlbums {
-			get { return albums; }
+			get => albums;
 			set {
 				ParamIs.NotNull(() => value);
 				albums = value;
@@ -89,7 +87,7 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		public virtual IList<ArtistForArtist> AllGroups {
-			get { return groups; }
+			get => groups;
 			set {
 				ParamIs.NotNull(() => value);
 				groups = value;
@@ -97,7 +95,7 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		public virtual IList<ArtistForArtist> AllMembers {
-			get { return members; }
+			get => members;
 			set {
 				ParamIs.NotNull(() => value);
 				members = value;
@@ -109,7 +107,7 @@ namespace VocaDb.Model.Domain.Artists {
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
 		public virtual IList<ArtistForSong> AllSongs {
-			get { return songs; }
+			get => songs;
 			set {
 				ParamIs.NotNull(() => value);
 				songs = value;
@@ -117,7 +115,7 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		public virtual ArchivedVersionManager<ArchivedArtistVersion, ArtistEditableFields> ArchivedVersionsManager {
-			get { return archivedVersions; }
+			get => archivedVersions;
 			set {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
@@ -156,7 +154,7 @@ namespace VocaDb.Model.Domain.Artists {
 		public virtual bool CanHaveChildVoicebanks => ArtistHelper.VocalistTypes.Contains(ArtistType) || ArtistType == ArtistType.Unknown;
 
 		public virtual IList<Artist> ChildVoicebanks {
-			get { return childVoicebanks; }
+			get => childVoicebanks;
 			set {
 				ParamIs.NotNull(() => value);
 				childVoicebanks = value;
@@ -164,7 +162,7 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		public virtual IList<ArtistComment> Comments {
-			get { return comments; }
+			get => comments;
 			set {
 				ParamIs.NotNull(() => value);
 				comments = value;
@@ -172,7 +170,7 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		public virtual User CreatedBy {
-			get { return createdBy; }
+			get => createdBy;
 			set {
 				ParamIs.NotNull(() => value);
 				createdBy = value; 
@@ -183,25 +181,17 @@ namespace VocaDb.Model.Domain.Artists {
 
 		public virtual bool Deleted { get; set; }
 
-		public virtual string DefaultName {
-			get {
-				return TranslatedName.Default;
-			}
-		}
+		public virtual string DefaultName => TranslatedName.Default;
 
 		public virtual EnglishTranslatedString Description {
-			get { return description; }
+			get => description;
 			set {
 				ParamIs.NotNull(() => value);
 				description = value;
 			}
 		}
 
-		public virtual EntryType EntryType {
-			get {
-				return EntryType.Artist;
-			}
-		}
+		public virtual EntryType EntryType => EntryType.Artist;
 
 		public virtual IEnumerable<ArtistForArtist> Groups {
 			get {
@@ -209,15 +199,10 @@ namespace VocaDb.Model.Domain.Artists {
 			}
 		}
 
-		/*public virtual IList<Artist> Hits {
-			get { return hits; }
-			set { hits = value; }
-		}*/
-
 		public virtual int Id { get; set; }
 
 		public virtual IList<ArtistHit> Hits {
-			get { return hits; }
+			get => hits;
 			set {
 				ParamIs.NotNull(() => value);
 				hits = value;
@@ -243,15 +228,8 @@ namespace VocaDb.Model.Domain.Artists {
 			get { return AllMembers.Where(m => !m.Member.Deleted); }
 		}
 
-		[Obsolete]
-		public virtual string Name {
-			get {
-				return TranslatedName.Default;
-			}
-		}
-
 		public virtual NameManager<ArtistName> Names {
-			get { return names; }
+			get => names;
 			set {
 				ParamIs.NotNull(() => value);
 				names = value;
@@ -266,7 +244,7 @@ namespace VocaDb.Model.Domain.Artists {
 		/// List of users who are verifid owners of this artist. Cannot be null.
 		/// </summary>
 		public virtual IList<OwnedArtistForUser> OwnerUsers {
-			get { return ownerUsers; }
+			get => ownerUsers;
 			set {
 				ParamIs.NotNull(() => value);
 				ownerUsers = value;
@@ -278,7 +256,7 @@ namespace VocaDb.Model.Domain.Artists {
 		public virtual string PictureMime { get; set; }
 
 		public virtual EntryPictureFileManager<ArtistPictureFile> Pictures {
-			get { return pictureManager; }
+			get => pictureManager;
 			set {
 				ParamIs.NotNull(() => value);
 				pictureManager = value;
@@ -300,7 +278,7 @@ namespace VocaDb.Model.Domain.Artists {
 		public virtual EntryStatus Status { get; set; }
 
 		public virtual TagManager<ArtistTagUsage> Tags {
-			get { return tags; }
+			get => tags;
 			set {
 				ParamIs.NotNull(() => value);
 				tags = value;
@@ -313,7 +291,7 @@ namespace VocaDb.Model.Domain.Artists {
 		/// List of users who follow this artist. Cannot be null.
 		/// </summary>
 		public virtual IList<ArtistForUser> Users {
-			get { return users; }
+			get => users;
 			set {
 				ParamIs.NotNull(() => value);
 				users = value; 
@@ -323,16 +301,14 @@ namespace VocaDb.Model.Domain.Artists {
 		public virtual int Version { get; set; }
 
 		public virtual IList<ArtistWebLink> WebLinks {
-			get { return webLinks; }
+			get => webLinks;
 			set {
 				ParamIs.NotNull(() => value);
 				webLinks = value;
 			}
 		}
 
-		public virtual IEnumerable<string> AllNames {
-			get { return Names.AllValues; }
-		}
+		public virtual IEnumerable<string> AllNames => Names.AllValues;
 
 		public virtual ArtistForAlbum AddAlbum(Album album) {
 			return AddAlbum(album, false, ArtistRoles.Default);
@@ -428,7 +404,7 @@ namespace VocaDb.Model.Domain.Artists {
 			var f = new ArtistPictureFile(name, mime, author, this);
 			Pictures.Add(f);
 
-			log.Info(string.Format("{0} created {1}", author, f));
+			log.Info("{0} created {1}", author, f);
 
 			return f;
 
@@ -553,20 +529,15 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public virtual void SetBaseVoicebank(Artist baseVoicebank) {
+		public virtual void SetBaseVoicebank(Artist newBaseVoicebank) {
 			
-			if (Equals(BaseVoicebank, baseVoicebank))
+			if (Equals(BaseVoicebank, newBaseVoicebank))
 				return;
 
-			if (BaseVoicebank != null) {
-				BaseVoicebank.ChildVoicebanks.Remove(this);
-			}
+			BaseVoicebank?.ChildVoicebanks.Remove(this);
+			newBaseVoicebank?.ChildVoicebanks.Add(this);
 
-			if (baseVoicebank != null) {
-				baseVoicebank.ChildVoicebanks.Add(this);
-			}
-
-			BaseVoicebank = baseVoicebank;
+			BaseVoicebank = newBaseVoicebank;
 
 		}
 

@@ -22,11 +22,9 @@ namespace VocaDb.Model.Domain.Albums {
 
 	public class Album : IEntryBase, IEntryWithNames<AlbumName>, IEntryWithVersions, IEntryWithStatus,
 		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtistLinks<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage>,
-		IEntryWithLinks<AlbumWebLink>, IEntryWithComments, IEntryWithArtists {
+		IEntryWithLinks<AlbumWebLink>, IEntryWithComments<AlbumComment>, IEntryWithArtists {
 
-		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager {
-			get { return ArchivedVersionsManager; }
-		}
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public static string ParseBarcode(string barcode) {
 			return !string.IsNullOrEmpty(barcode) ? barcode.Replace(" ", string.Empty).Replace("-", string.Empty) : barcode;

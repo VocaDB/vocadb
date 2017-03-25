@@ -14,7 +14,7 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class SongList : IEntryWithNames, IEntryWithComments {
+	public class SongList : IEntryWithNames, IEntryWithComments<SongListComment> {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
