@@ -22,7 +22,6 @@
 			}
 			<li>@Html.ActionLink(ViewRes.SharedStrings.TopRatedAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingAverage }, null)</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null)</li>
-			<li>@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Event")</li>
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.FreeAlbums, "Index", "Search", new { searchType = "Album", tag = "free", childTags = true }, null)</li>
 		</ul>
 	</li>
@@ -36,6 +35,7 @@
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewPVs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null)</li>
 		</ul>
 	</li>
+	<li>@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Event")</li>
 	<li>@Html.ActionLink(ViewRes.SharedStrings.FeaturedSongLists, "Featured", "SongList")</li>
 	<li>@Html.ActionLink(ViewRes._LayoutStrings.Tags, "Index", "Tag")</li>
 	<li>@Html.ActionLink(ViewRes._LayoutStrings.Help, "Index", "Help")</li>

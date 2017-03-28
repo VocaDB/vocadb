@@ -9,7 +9,7 @@
 @{
 
 	ViewBag.Parents = new[] {
-		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "EventsBySeries")
+		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index")
 	};
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);

@@ -13,14 +13,14 @@
 		PageProperties.Title = "Edit series - " + Model.Name;
 		backAction = Url.Action("SeriesDetails", new { id = Model.Id });
 		ViewBag.Parents = new[] {
-			Html.ActionLink("Events", "EventsBySeries"),
+			Html.ActionLink("Events", "Index"),
 			Html.ActionLink(Model.Name, "SeriesDetails", new { id = Model.Id })
 		};
 	} else {
 		PageProperties.Title = "Create a new series";
-		backAction = Url.Action("EventsBySeries");
+		backAction = Url.Action("Index");
 		ViewBag.Parents = new[] {
-			Html.ActionLink("Events", "EventsBySeries")
+			Html.ActionLink("Events", "Index")
 		};
 	}
 
