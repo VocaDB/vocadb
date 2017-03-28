@@ -150,7 +150,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual IEnumerable<Tag> Children => AllChildren.Where(t => !t.Deleted);
 
 		public virtual IList<TagComment> Comments {
-			get { return comments; }
+			get => comments;
 			set {
 				ParamIs.NotNull(() => value);
 				comments = value;

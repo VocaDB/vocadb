@@ -4,6 +4,18 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_03_28_2100)]
+	public class ReleaseEventComments : AutoReversingMigration {
+		public override void Up() {
+			Create.Table("ReleaseEventComments")
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+				.WithColumn("Author").AsInt32().NotNullable().ForeignKey("FK_ReleaseEventComments_Users", TableNames.Users, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Created").AsDateTime().NotNullable()
+				.WithColumn("Message").AsString(4000).NotNullable()
+				.WithColumn("ReleaseEvent").AsInt32().NotNullable().ForeignKey("FK_ReleaseEventComments_ReleaseEvents", TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade).Indexed("IX_ReleaseEventComments_ReleaseEvent");
+		}
+	}
+
 	[Migration(2017_03_19_2000)]
 	public class ReleaseEventPictureAndVenue : AutoReversingMigration {
 		public override void Up() {

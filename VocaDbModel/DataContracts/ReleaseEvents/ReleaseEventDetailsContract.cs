@@ -42,6 +42,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
 
+		public CommentForApiContract[] LatestComments { get; set; }
+
 		public int SeriesNumber { get; set; }
 
 		public string SeriesSuffix { get; set; }

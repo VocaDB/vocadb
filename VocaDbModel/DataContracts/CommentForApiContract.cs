@@ -34,6 +34,9 @@ namespace VocaDb.Model.DataContracts {
 		[DataMember]
 		public DateTime Created { get; set; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public EntryRefContract Entry { get; set; }
+
 		[DataMember]
 		public int Id { get; set; }
 

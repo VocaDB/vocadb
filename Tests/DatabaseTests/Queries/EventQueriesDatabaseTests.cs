@@ -24,7 +24,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 			context.RunTest(repository => {
 
-				var queries = new EventQueries(repository, new FakeEntryLinkFactory(), userContext, new InMemoryImagePersister());
+				var queries = new EventQueries(repository, new FakeEntryLinkFactory(), userContext, new InMemoryImagePersister(), new FakeUserIconFactory());
 
 				queries.Delete(Db.ReleaseEvent.Id);				
 

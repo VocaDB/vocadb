@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Service.Queries;
 
 namespace VocaDb.Model.Service {
 
@@ -35,12 +36,6 @@ namespace VocaDb.Model.Service {
 					Events = ungrouped.Select(e => new ReleaseEventContract(e)).ToArray() } }).ToArray();
 
 			});
-
-		}
-
-		public ReleaseEventDetailsContract GetReleaseEventDetails(int id) {
-
-			return HandleQuery(session => new ReleaseEventDetailsContract(session.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference));
 
 		}
 

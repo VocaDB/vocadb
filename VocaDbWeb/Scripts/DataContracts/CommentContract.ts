@@ -13,6 +13,8 @@ module vdb.dataContracts {
 
 		created?: Date;
 
+		entry?: EntryRefContract;
+
 		id?: number;
 
 		message: string;

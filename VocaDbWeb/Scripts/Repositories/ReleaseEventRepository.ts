@@ -6,7 +6,7 @@ module vdb.repositories {
 
 	export class ReleaseEventRepository extends BaseRepository {
 
-		constructor(urlMapper: vdb.UrlMapper) {
+		constructor(private urlMapper: vdb.UrlMapper) {
 			super(urlMapper.baseUrl);
 		}
 

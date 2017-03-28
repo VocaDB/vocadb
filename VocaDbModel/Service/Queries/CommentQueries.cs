@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.Queries {
 
 	public class CommentQueries<T, TEntry> : ICommentQueries where T : GenericComment<TEntry> where TEntry : class, IEntryWithComments {
 
-		private readonly IDatabaseContext<T> ctx;
+		private readonly IDatabaseContext ctx;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly Func<int, TEntry> entryLoaderFunc;
 		private readonly IUserPermissionContext permissionContext;
@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service.Queries {
 			return entryLoaderFunc != null ? entryLoaderFunc(entryId) : ctx.OfType<TEntry>().Load(entryId);
         }
 
-		public CommentQueries(IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
+		public CommentQueries(IDatabaseContext ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
 			Func<int, TEntry> entryLoaderFunc = null) {
 
 			this.ctx = ctx;

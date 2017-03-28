@@ -4,6 +4,7 @@ using NHibernate;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -17,6 +18,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Events;
@@ -27,6 +29,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryThumbPersister imagePersister;
+		private readonly IUserIconFactory userIconFactory;
 
 		private ArchivedReleaseEventVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason, string notes) {
 
@@ -57,11 +60,12 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
-			IEntryThumbPersister imagePersister)
+			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory)
 			: base(eventRepository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+			this.userIconFactory = userIconFactory;
 
 		}
 
@@ -140,6 +144,17 @@ namespace VocaDb.Model.Database.Queries {
 
 				return PartialFindResult.Create(entries, count);
 
+			});
+
+		}
+
+		public ReleaseEventDetailsContract GetDetails(int id) {
+
+			return HandleQuery(ctx => {
+				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference) {
+					LatestComments = new CommentQueries<ReleaseEventComment, ReleaseEvent>(
+						ctx, PermissionContext, userIconFactory, entryLinkFactory).GetList(id, 3)
+				};
 			});
 
 		}

@@ -238,6 +238,11 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/ReleaseEvent/Details").Include(
+				"~/Scripts/Repositories/CommentRepository.js",
+				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/ReleaseEvent/Edit").Include(
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/KnockoutExtensions/ReleaseEventSeriesAutoComplete.js",

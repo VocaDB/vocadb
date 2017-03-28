@@ -445,6 +445,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryStatusNames.zh-Hans.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2778,6 +2779,7 @@
     <TypeScriptCompile Include="Scripts\Models\PVs\PVType.ts" />
     <TypeScriptCompile Include="Scripts\Models\ResourcesManager.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\BaseRepository.ts" />
+    <TypeScriptCompile Include="Scripts\Repositories\CommentRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\DiscussionRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\EntryCommentRepository.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\ICommentRepository.ts" />
@@ -2879,6 +2881,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerSoundCloud.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerYoutube.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\ReleaseEvent\ReleaseEventDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ReleaseEvent\ReleaseEventEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ReleaseEvent\ReleaseEventSeriesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ReportEntryViewModel.ts" />

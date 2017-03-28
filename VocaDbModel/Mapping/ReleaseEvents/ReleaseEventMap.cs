@@ -23,6 +23,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 			HasMany(m => m.AllAlbums).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.AllSongs).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
+			HasMany(m => m.Comments).KeyColumn("[ReleaseEvent]").Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEvent]").Inverse().Cascade.All().Cache.ReadWrite();
 
 			References(m => m.Series).Nullable();
@@ -33,6 +34,14 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 			Component(m => m.Date, c => c.Map(m => m.DateTime).Column("[Date]").Nullable());
 
+		}
+
+	}
+
+	public class ReleaseEventCommentMap : CommentMap<ReleaseEventComment, ReleaseEvent> {
+
+		public ReleaseEventCommentMap() {
+			References(m => m.EntryForComment).Column("[ReleaseEvent]").Not.Nullable();
 		}
 
 	}

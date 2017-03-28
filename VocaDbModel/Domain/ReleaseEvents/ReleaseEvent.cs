@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -13,7 +14,7 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ReleaseEvent : IEntryWithNames, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent, IEntryImageInformation {
+	public class ReleaseEvent : IEntryWithNames, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent, IEntryImageInformation, IEntryWithComments<ReleaseEventComment> {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
@@ -28,6 +29,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private IList<Album> albums = new List<Album>();
 		private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> archivedVersions
 			= new ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields>();
+		private IList<ReleaseEventComment> comments = new List<ReleaseEventComment>();
 		private string description;
 		private string name;
 		private ReleaseEventSeries series;
@@ -97,6 +99,16 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
+
+		public virtual IList<ReleaseEventComment> Comments {
+			get => comments;
+			set {
+				ParamIs.NotNull(() => value);
+				comments = value;
+			}
+		}
+
 		public virtual bool CustomName { get; set; }
 
 		public virtual Date Date { get; set; }
@@ -163,6 +175,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Version++;
 
 			return archived;
+
+		}
+
+		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
+
+			ParamIs.NotNullOrEmpty(() => message);
+			ParamIs.NotNull(() => loginData);
+
+			var comment = new ReleaseEventComment(this, message, loginData);
+			Comments.Add(comment);
+
+			return comment;
 
 		}
 

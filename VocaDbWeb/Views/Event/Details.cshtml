@@ -1,4 +1,6 @@
-﻿@using VocaDb.Model.Domain.Images
+﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain.Images
+@using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.Event.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -97,12 +99,23 @@
 	@SongHelpers.SongGrid(Model.Songs, 2, true, false)
 }
 
+@CommentHelpers.LatestCommentsKnockout()
+
 @section BodyScripts {
+@Scripts.Render("~/bundles/ReleaseEvent/Details")
 <script type="text/javascript">
 
 	$(function () {
 		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
-		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock'} });
+		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+
+		var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
+		var latestComments = @ToJS(Model.LatestComments);
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, latestComments, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments);
+		ko.applyBindings(vm);
+
 	});
 
 </script>

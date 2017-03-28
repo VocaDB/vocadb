@@ -67,7 +67,7 @@ namespace VocaDb.Web.Controllers
 		    if (id == invalidId)
 		        return NoId();
 
-			var ev = Service.GetReleaseEventDetails(id);
+			var ev = queries.GetDetails(id);
 
 			if (slug != ev.UrlSlug) {
 				return RedirectToActionPermanent("Details", new { id, slug = ev.UrlSlug });
