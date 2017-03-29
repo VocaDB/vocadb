@@ -441,6 +441,7 @@
     <Compile Include="Domain\Tags\TagWebLink.cs" />
     <Compile Include="Domain\TrashedEntry.cs" />
     <Compile Include="Domain\Users\ArtistForUser.cs" />
+    <Compile Include="Domain\Users\EventForUser.cs" />
     <Compile Include="Domain\Users\IUser.cs" />
     <Compile Include="Domain\Users\IUserWithEmail.cs" />
     <Compile Include="Domain\Users\OldUsername.cs" />
@@ -597,6 +598,7 @@
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventSeriesMap.cs" />
     <Compile Include="Mapping\Tags\TagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
+    <Compile Include="Mapping\Users\EventForUserMap.cs" />
     <Compile Include="Mapping\Users\OldUsernameMap.cs" />
     <Compile Include="Mapping\Users\TagForUserMap.cs" />
     <Compile Include="Mapping\Users\UserKnownLanguageMap.cs" />

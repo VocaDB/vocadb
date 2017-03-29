@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
@@ -17,13 +18,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 	public class ReleaseEvent : IEntryWithNames, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent, IEntryImageInformation, IEntryWithComments<ReleaseEventComment> {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
-
 		string IEntryBase.DefaultName => Name;
-
 		bool IDeletableEntry.Deleted => false;
-
 		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
-
 		string IEntryImageInformation.Mime => PictureMime;
 
 		private IList<Album> albums = new List<Album>();
@@ -35,6 +32,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private ReleaseEventSeries series;
 		private string seriesSuffix;
 		private IList<Song> songs = new List<Song>();
+		private IList<EventForUser> users = new List<EventForUser>();
 		private IList<ReleaseEventWebLink> webLinks = new List<ReleaseEventWebLink>();
 
 		public ReleaseEvent() {
@@ -155,6 +153,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(Name);
+
+		public virtual IList<EventForUser> Users {
+			get => users;
+			set {
+				ParamIs.NotNull(() => value);
+				users = value;
+			}
+		}
 
 		public virtual string Venue { get; set; }
 

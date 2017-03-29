@@ -32,9 +32,7 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
-
 		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
-
 		int IEntryBase.Version => 0;
 
 		private string accessKey;
@@ -44,6 +42,7 @@ namespace VocaDb.Model.Domain.Users {
 		private IList<UserComment> comments = new List<UserComment>();
 		private string culture;
 		private string email;
+		private IList<EventForUser> events = new List<EventForUser>();
 		private IList<FavoriteSongForUser> favoriteSongs = new List<FavoriteSongForUser>();
 		private OptionalCultureCode language;
 		private IList<UserKnownLanguage> knownLanguages = new List<UserKnownLanguage>();
@@ -110,7 +109,7 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		public virtual string AccessKey {
-			get { return accessKey; }
+			get => accessKey;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				accessKey = value; 
@@ -123,12 +122,8 @@ namespace VocaDb.Model.Domain.Users {
 		/// Additional user permissions. Base permissions are assigned through the user group.
 		/// </summary>
 		public virtual PermissionCollection AdditionalPermissions {
-			get {
-				return additionalPermissions;
-			}
-			set {
-				additionalPermissions = value ?? new PermissionCollection();
-			}
+			get => additionalPermissions;
+			set => additionalPermissions = value ?? new PermissionCollection();
 		}
 
 		public virtual IEnumerable<AlbumForUser> Albums {
@@ -138,7 +133,7 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		public virtual IList<AlbumForUser> AllAlbums {
-			get { return albums; }
+			get => albums;
 			set {
 				ParamIs.NotNull(() => value);
 				albums = value;
@@ -158,7 +153,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// List of artists followed by this user. Includes deleted artists. Cannot be null.
 		/// </summary>
 		public virtual IList<ArtistForUser> AllArtists {
-			get { return artists; }
+			get => artists;
 			set {
 				ParamIs.NotNull(() => value);
 				artists = value;
@@ -169,7 +164,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// List of artists entries for which this user is a verified owner. Includes deleted artists. Cannot be null.
 		/// </summary>
 		public virtual IList<OwnedArtistForUser> AllOwnedArtists {
-			get { return ownedArtists; }
+			get => ownedArtists;
 			set {
 				ParamIs.NotNull(() => value);
 				ownedArtists = value;
@@ -178,13 +173,7 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual bool AnonymousActivity { get; set; }
 
-		public virtual bool CanBeDisabled {
-			get {
-
-				return !EffectivePermissions.Has(PermissionToken.DisableUsers);
-
-			}
-		}
+		public virtual bool CanBeDisabled => !EffectivePermissions.Has(PermissionToken.DisableUsers);
 
 		public virtual bool CanChangeName {
 			get {
@@ -198,7 +187,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// This is not the list of comments this user had made himself!
 		/// </summary>
 		public virtual IList<UserComment> Comments {
-			get { return comments; }
+			get => comments;
 			set {
 				ParamIs.NotNull(() => value);
 				comments = value;
@@ -215,7 +204,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// Also see <see cref="Language"/>.
 		/// </summary>
 		public virtual string Culture {
-			get { return culture; }
+			get => culture;
 			set { 
 				ParamIs.NotNull(() => value);
 				culture = value; 
@@ -224,13 +213,9 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual ContentLanguagePreference DefaultLanguageSelection { get; set; }
 
-		public virtual string DefaultName {
-			get { return Name; }
-		}
+		public virtual string DefaultName => Name;
 
-		public virtual bool Deleted {
-			get { return !Active; }
-		}
+		public virtual bool Deleted => !Active;
 
 		public virtual PermissionCollection EffectivePermissions {
 			get {
@@ -253,7 +238,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// Thus they must be unique.
 		/// </remarks>
 		public virtual string Email {
-			get { return email; }
+			get => email;
 			set {
 				ParamIs.NotNull(() => value);
 				email = value;
@@ -262,23 +247,25 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual UserEmailOptions EmailOptions { get; set; }
 
-		public virtual EntryType EntryType {
-			get { return EntryType.User; }
+		public virtual EntryType EntryType => EntryType.User;
+
+		public virtual IList<EventForUser> Events {
+			get => events;
+			set {
+				ParamIs.NotNull(() => value);
+				events = value;
+			}
 		}
 
 		public virtual IList<FavoriteSongForUser> FavoriteSongs {
-			get { return favoriteSongs; }
+			get => favoriteSongs;
 			set {
 				ParamIs.NotNull(() => value);
 				favoriteSongs = value;
 			}
 		}
 
-		public virtual bool HasPassword {
-			get {
-				return !string.IsNullOrEmpty(Password);
-			}
-		}
+		public virtual bool HasPassword => !string.IsNullOrEmpty(Password);
 
 		public virtual int Id { get; set; }
 
@@ -287,14 +274,10 @@ namespace VocaDb.Model.Domain.Users {
 		/// <summary>
 		/// User's group. Cannot be null.
 		/// </summary>
-		public virtual UserGroup Group {
-			get {
-				return UserGroup.GetGroup(GroupId);
-			}
-		}
+		public virtual UserGroup Group => UserGroup.GetGroup(GroupId);
 
 		public virtual IList<UserKnownLanguage> KnownLanguages {
-			get { return knownLanguages; }
+			get => knownLanguages;
 			set {
 				ParamIs.NotNull(() => value);
 				knownLanguages = value;
@@ -308,10 +291,8 @@ namespace VocaDb.Model.Domain.Users {
 		/// Can be empty, in which case the language is determined automatically.
 		/// </summary>
 		public virtual OptionalCultureCode Language {
-			get { return language ?? (language = new OptionalCultureCode()); }
-			set {
-				language = value ?? OptionalCultureCode.Empty;
-			}
+			get => language ?? (language = new OptionalCultureCode());
+			set => language = value ?? OptionalCultureCode.Empty;
 		}
 
 		/// <summary>
@@ -323,7 +304,7 @@ namespace VocaDb.Model.Domain.Users {
 		public virtual DateTime LastLogin { get; set; }
 
 		public virtual IList<UserMessage> Messages {
-			get { return messages; }
+			get => messages;
 			set {
 				ParamIs.NotNull(() => value);
 				messages = value;
@@ -345,7 +326,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// - Hyphens could probably be allowed.
 		/// </remarks>
 		public virtual string Name {
-			get { return name; }
+			get => name;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				name = value;
@@ -357,7 +338,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// Password has is always based on the lowercase username.
 		/// </summary>
 		public virtual string NameLC {
-			get { return nameLc; }
+			get => nameLc;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				nameLc = value;
@@ -365,32 +346,12 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		public virtual UserOptions Options {
-			get { return options; }
-			set {
-				options = value ?? new UserOptions(this);
-			}
+			get => options;
+			set => options = value ?? new UserOptions(this);
 		}
-
-		/*
-		public virtual UserOptions Options {
-			get {
-
-				if (!OptionsList.Any())
-					OptionsList.Add(new UserOptions(this));
-
-				return OptionsList.First();
-
-			}
-		}
-
-		public virtual IList<UserOptions> OptionsList {
-			get { return optionsList; }
-			set { optionsList = value; }
-		}
-		 */
 
 		public virtual IList<OldUsername> OldUsernames {
-			get { return oldUsernames; }
+			get => oldUsernames;
 			set {
 				ParamIs.NotNull(() => value);
 				oldUsernames = value;
@@ -411,7 +372,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// Cannot be null, but can be empty if not set (for Twitter login for example).
 		/// </summary>
 		public virtual string Password {
-			get { return password; }
+			get => password;
 			set {
 				ParamIs.NotNull(() => value);
 				password = value;
@@ -423,7 +384,7 @@ namespace VocaDb.Model.Domain.Users {
 		public virtual PVService PreferredVideoService { get; set; }
 
 		public virtual IList<UserMessage> ReceivedMessages {
-			get { return receivedMessages; }
+			get => receivedMessages;
 			set {
 				ParamIs.NotNull(() => value);
 				receivedMessages = value;
@@ -438,7 +399,7 @@ namespace VocaDb.Model.Domain.Users {
 		public virtual string Salt { get; set; }
 
 		public virtual IList<UserMessage> SentMessages {
-			get { return sentMessages; }
+			get => sentMessages;
 			set {
 				ParamIs.NotNull(() => value);
 				sentMessages = value;
@@ -446,7 +407,7 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		public virtual IList<SongList> SongLists {
-			get { return songLists; }
+			get => songLists;
 			set {
 				ParamIs.NotNull(() => value);
 				songLists = value; 
@@ -459,7 +420,7 @@ namespace VocaDb.Model.Domain.Users {
 		public virtual bool VerifiedArtist { get; set; }
 
 		public virtual IList<UserWebLink> WebLinks {
-			get { return webLinks; }
+			get => webLinks;
 			set { 
 				ParamIs.NotNull(() => value);
 				webLinks = value; 
@@ -528,7 +489,7 @@ namespace VocaDb.Model.Domain.Users {
 			var old = ownedArtists.FirstOrDefault(a => a.Artist.Equals(artist));
 
 			if (old != null)
-				throw new ArgumentException("Unable to add the same artist again", "artist");
+				throw new ArgumentException("Unable to add the same artist again", nameof(artist));
 
 			var link = new OwnedArtistForUser(this, artist);
 			AllOwnedArtists.Add(link);
