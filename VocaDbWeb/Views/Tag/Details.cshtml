@@ -5,6 +5,7 @@
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Tags
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
 
@@ -98,7 +99,7 @@
 		<div class="media-body">
 			@if (!Model.Description.IsEmpty) {
 				<div class="entry-description" data-bind="with: description">
-					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
+					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Description, 2100, 2000)); }
 				</div>
 			}
 

@@ -446,6 +446,7 @@
       <DependentUpon>EntryStatusNames.zh-Hans.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Api\CommentApiController.cs" />
+    <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

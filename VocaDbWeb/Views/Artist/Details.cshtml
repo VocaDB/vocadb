@@ -8,6 +8,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Models.Search
+@using VocaDb.Web.Models.Shared
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
@@ -108,7 +109,7 @@
 					<tr>
 						<td>@ViewRes.SharedStrings.Description</td>
 						<td class="entry-description" data-bind="with: description">
-							@{ Html.RenderPartial("Partials/_EnglishTranslatedString", Model.Description); }
+							@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Description)); }
 						</td>
 					</tr>
 				}

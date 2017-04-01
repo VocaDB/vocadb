@@ -79,7 +79,7 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TetoDB.
+        ///   Looks up a localized string similar to VocaDB.
         /// </summary>
         public static string SiteName {
             get {
@@ -88,7 +88,7 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Teto Database.
+        ///   Looks up a localized string similar to Vocaloid Database.
         /// </summary>
         public static string SiteTitle {
             get {

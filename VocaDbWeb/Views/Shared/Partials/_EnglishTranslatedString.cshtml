@@ -1,11 +1,11 @@
-﻿@model VocaDb.Model.Domain.Globalization.EnglishTranslatedString
+﻿@model VocaDb.Web.Models.Shared.EnglishTranslatedStringViewModel
 @using Res = VocaDb.Web.Resources.Views.Shared.Partials.EnglishTranslatedStringStrings
 		  
 <!-- Viewmodel: EnglishTranslatedStringViewModel -->
  
 @helper Text(string str) {
-	var maxLength = 500;
-	var summaryLength = 400;
+	var maxLength = Model.MaxLength;
+	var summaryLength = Model.SummaryLength;
 	if (str == null || str.Length <= maxLength) {
 		@HtmlHelpers.FormatMarkdown(str)	
 	} else {
@@ -19,7 +19,7 @@
 	}
 }
 
-@if (Model.HasEnglish) {
+@if (Model.String.HasEnglish) {
 	<div>
 		<ul class="nav nav-pills pull-right no-margin">
 			<li data-bind="css: { active: !showTranslatedDescription() }">
@@ -34,12 +34,12 @@
 			</li>
 		</ul>
 		<div data-bind="visible: !showTranslatedDescription()">
-			@Text(Model.Original)
+			@Text(Model.String.Original)
 		</div>
 		<div data-bind="visible: showTranslatedDescription()">
-			@Text(Model.English)
+			@Text(Model.String.English)
 		</div>
 	</div>
 } else {
-	@Text(Model.Original)
+	@Text(Model.String.Original)
 }

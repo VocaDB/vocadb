@@ -70,7 +70,7 @@ namespace VocaDb.Model.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to the Teto Database!.
+        ///   Looks up a localized string similar to Welcome to the Vocaloid Database!.
         /// </summary>
         internal static string Welcome {
             get {
