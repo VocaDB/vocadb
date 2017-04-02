@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Security;
@@ -15,6 +16,7 @@ using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Model.Utils;
 using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Models {
@@ -114,6 +116,7 @@ namespace VocaDb.Web.Models {
 			AboutMe = string.Empty;
 			AllInterfaceLanguages = InterfaceLanguage.Cultures;
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
+			AllStylesheets = AppConfig.SiteSettings.Stylesheets?.Split(',').ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
 			AllUserKnownLanguages = InterfaceLanguage.UserLanguageCultures;
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
@@ -144,6 +147,7 @@ namespace VocaDb.Web.Models {
 			PublicAlbumCollection = user.PublicAlbumCollection;
 			PublicRatings = user.PublicRatings;
 			ShowChatbox = user.ShowChatbox;
+			Stylesheet = user.Stylesheet;
 			TwitterName = user.TwitterName;
 			Username = user.Name;
 			UnreadNotificationsToKeep = user.UnreadNotificationsToKeep;
@@ -160,6 +164,8 @@ namespace VocaDb.Web.Models {
 		public CultureCollection AllInterfaceLanguages { get; set; }
 
 		public Dictionary<ContentLanguagePreference, string> AllLanguages { get; set; }
+
+		public Dictionary<string, string> AllStylesheets { get; set; }
 
 		public CultureCollection AllUserKnownLanguages { get; set; }
 
@@ -233,6 +239,8 @@ namespace VocaDb.Web.Models {
 		[StringLength(100)]
 		public string NewPassAgain { get; set; }
 
+		public string Stylesheet { get; set; }
+
 		public string TwitterName { get; set; }
 
 		[Range(1, 100)]
@@ -260,6 +268,7 @@ namespace VocaDb.Web.Models {
 				PublicAlbumCollection = this.PublicAlbumCollection,
 				PublicRatings = this.PublicRatings,
 				ShowChatbox = this.ShowChatbox,
+				Stylesheet = Stylesheet,
 				NewPass = this.NewPass,
 				UnreadNotificationsToKeep = this.UnreadNotificationsToKeep,
 				WebLinks = this.WebLinks.Select(w => w.ToContract()).ToArray(),

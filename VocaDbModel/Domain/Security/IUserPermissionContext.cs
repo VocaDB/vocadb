@@ -33,8 +33,6 @@ namespace VocaDb.Model.Domain.Security {
 		/// </summary>
 		string Name { get; }
 
-		UserSettingShowChatbox ShowChatbox { get; }
-
 		UserGroupId UserGroupId { get; }
 
 		/// <summary>

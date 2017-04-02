@@ -4,6 +4,13 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_04_02_2100)]
+	public class UserOptionStylesheet : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Stylesheet").OnTable(TableNames.UserOptions).AsString(50).Nullable();
+		}
+	}
+
 	[Migration(2017_03_29_2100)]
 	public class EventsForUsers : AutoReversingMigration {
 		public override void Up() {

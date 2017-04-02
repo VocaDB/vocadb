@@ -9,56 +9,56 @@ namespace VocaDb.Model.Utils.Config {
 
 		[ConfigurationProperty("blogUrl", DefaultValue = "blog.vocadb.net")]
 		public string BlogUrl {
-			get { return (string)this["blogUrl"]; }
-			set { this["blogUrl"] = value; }
+			get => (string)this["blogUrl"];
+			set => this["blogUrl"] = value;
 		}
+
+		[ConfigurationProperty("defaultStylesheet", DefaultValue = null)]
+		public string DefaultStylesheet => (string)this["defaultStylesheet"];
 
 		[ConfigurationProperty("ircUrl", DefaultValue = "irc.rizon.net/vocadb")]
 		public string IRCUrl {
-			get { return (string)this["ircUrl"]; }
-			set { this["ircUrl"] = value; }			
+			get => (string)this["ircUrl"];
+			set => this["ircUrl"] = value;
 		}
 
 		[ConfigurationProperty("openSearchPath", DefaultValue = "/opensearch.xml")]
 		public string OpenSearchPath {
-			get { return (string)this["openSearchPath"]; }
-			set { this["openSearchPath"] = value; }			
+			get => (string)this["openSearchPath"];
+			set => this["openSearchPath"] = value;
 		}
 
 		[ConfigurationProperty("paypalDonateCert", DefaultValue = "")]
 		public string PaypalDonateCert {
-			get { return (string)this["paypalDonateCert"]; }
-			set { this["paypalDonateCert"] = value; }			
+			get => (string)this["paypalDonateCert"];
+			set => this["paypalDonateCert"] = value;
 		}
 
 		[ConfigurationProperty("patreonLink", DefaultValue = "")]
 		public string PatreonLink {
-			get { return (string)this["patreonLink"]; }
-			set { this["patreonLink"] = value; }
+			get => (string)this["patreonLink"];
+			set => this["patreonLink"] = value;
 		}
 
 		[ConfigurationProperty("signupsDisabled", DefaultValue = "false")]
 		public bool SignupsDisabled {
-			get { return (bool)this["signupsDisabled"]; }
-			set { this["signupsDisabled"] = value; }						
+			get => (bool)this["signupsDisabled"];
+			set => this["signupsDisabled"] = value;
 		}
 
 		[ConfigurationProperty("sitewideAnnouncement", DefaultValue = "")]
 		public string SitewideAnnouncement {
-			get { return (string)this["sitewideAnnouncement"]; }
-			set { this["sitewideAnnouncement"] = value; }						
+			get => (string)this["sitewideAnnouncement"];
+			set => this["sitewideAnnouncement"] = value;
 		}
 
-		[ConfigurationProperty("spotImAccId", DefaultValue = "")]
-		public string SpotImAccId {
-			get { return (string)this["spotImAccId"]; }
-			set { this["spotImAccId"] = value; }			
-		}
+		[ConfigurationProperty("stylesheets", DefaultValue = null)]
+		public string Stylesheets => (string)this["stylesheets"];
 
 		[ConfigurationProperty("twitterAccountName", DefaultValue = "")]
 		public string TwitterAccountName {
-			get { return (string)this["twitterAccountName"]; }
-			set { this["twitterAccountName"] = value; }			
+			get => (string)this["twitterAccountName"];
+			set => this["twitterAccountName"] = value;
 		}
 	}
 }

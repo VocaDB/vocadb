@@ -65,11 +65,7 @@ namespace VocaDb.Model.Service.Security {
 
 		}
 
-		protected IPrincipal User {
-			get {
-				return (HttpContext.Current != null ? HttpContext.Current.User : null);
-			}
-		}
+		protected IPrincipal User => HttpContext.Current != null ? HttpContext.Current.User : null;
 
 		public bool HasPermission(PermissionToken token) {
 
@@ -92,23 +88,11 @@ namespace VocaDb.Model.Service.Security {
 			}
 		}
 
-		public ContentLanguagePreference LanguagePreference {
-			get {
-				return LanguagePreferenceSetting.Value;
-			}
-		}
+		public ContentLanguagePreference LanguagePreference => LanguagePreferenceSetting.Value;
 
-		public UserSettingLanguagePreference LanguagePreferenceSetting {
-			get {
-				return new UserSettingLanguagePreference(HttpContext.Current, this);
-			}
-		}
+		public UserSettingLanguagePreference LanguagePreferenceSetting => new UserSettingLanguagePreference(HttpContext.Current, this);
 
-		public bool LockdownEnabled {
-			get {
-				return !string.IsNullOrEmpty(AppConfig.LockdownMessage);
-			}
-		}
+		public bool LockdownEnabled => !string.IsNullOrEmpty(AppConfig.LockdownMessage);
 
 		/// <summary>
 		/// Currently logged in user. Can be null.
@@ -128,25 +112,9 @@ namespace VocaDb.Model.Service.Security {
 		/// <summary>
 		/// Logged user Id or InvalidId if no user is logged in.
 		/// </summary>
-		public int LoggedUserId {
-			get {
-				return (LoggedUser != null ? LoggedUser.Id : InvalidId);
-			}
-		}
+		public int LoggedUserId => LoggedUser != null ? LoggedUser.Id : InvalidId;
 
-		public string Name {
-			get {
-				return User.Identity.Name;
-			}
-		}
-
-		public UserSettingShowChatbox ShowChatbox {
-			get {
-				
-				return new UserSettingShowChatbox(HttpContext.Current, this);
-
-			}
-		}
+		public string Name => User.Identity.Name;
 
 		public UserGroupId UserGroupId {
 			get {

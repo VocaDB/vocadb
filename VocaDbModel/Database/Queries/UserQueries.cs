@@ -1550,7 +1550,7 @@ namespace VocaDb.Model.Database.Queries {
 				user.PreferredVideoService = contract.PreferredVideoService;
 				user.Options.PublicAlbumCollection = contract.PublicAlbumCollection;
 				user.Options.PublicRatings = contract.PublicRatings;
-				//user.Options.ShowChatbox = contract.ShowChatbox;
+				user.Options.Stylesheet = contract.Stylesheet;
 				user.Options.UnreadNotificationsToKeep = contract.UnreadNotificationsToKeep;
 				user.SetEmail(email);
 

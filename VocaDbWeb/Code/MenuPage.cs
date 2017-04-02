@@ -93,11 +93,7 @@ namespace VocaDb.Web.Code {
 
 		public static Link[] BigBanners { get; private set; }
 
-		public string BlogUrl {
-			get {
-				return UrlHelper.MakeLink(Config.SiteSettings.BlogUrl);
-			}
-		}
+		public string BlogUrl => UrlHelper.MakeLink(Config.SiteSettings.BlogUrl);
 
 		public static Link[] SmallBanners { get; private set; }
 

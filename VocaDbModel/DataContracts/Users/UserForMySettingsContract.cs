@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			Location = user.Options.Location;
 			PublicRatings = user.Options.PublicRatings;
 			ShowChatbox = user.Options.ShowChatbox;
+			Stylesheet = user.Options.Stylesheet;
 			TwitterId = user.Options.TwitterId;
 			TwitterName = user.Options.TwitterName;
 			UnreadNotificationsToKeep = user.Options.UnreadNotificationsToKeep;
@@ -50,6 +51,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public bool PublicRatings { get; set; }
 
 		public bool ShowChatbox { get; set; }
+
+		public string Stylesheet { get; set; }
 
 		public int TwitterId { get; set; }
 

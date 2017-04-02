@@ -748,9 +748,6 @@ namespace VocaDb.Web.Controllers.Api {
 				case "languagepreference":
 					setting = permissionContext.LanguagePreferenceSetting;
 					break;
-				case "showchatbox":
-					setting = permissionContext.ShowChatbox;
-					break;
 			}
 
 			if (setting == null) {

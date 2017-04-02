@@ -78,29 +78,13 @@ namespace VocaDb.Model.Domain.Security {
 		private readonly HttpContext context;
 		private readonly IUserPermissionContext permissionContext;
 
-		protected virtual TimeSpan CookieExpires {
-			get {
-				return TimeSpan.FromHours(24);
-			}
-		}
+		protected virtual TimeSpan CookieExpires => TimeSpan.FromHours(24);
 
-		protected virtual string CookieName {
-			get {
-				return string.Format("UserSettings.{0}", SettingName);
-			}
-		}
+		protected virtual string CookieName => string.Format("UserSettings.{0}", SettingName);
 
-		protected virtual T Default {
-			get {
-				return default(T);
-			}
-		}
+		protected virtual T Default => default(T);
 
-		private bool IsRequestValueOverridden {
-			get {
-				return context != null && context.Items.Contains(RequestItemName);
-			}
-		}
+		private bool IsRequestValueOverridden => context != null && context.Items.Contains(RequestItemName);
 
 		private T ParseValue(string str) {
 			
@@ -109,23 +93,11 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		private HttpRequest Request {
-			get {
-				return context != null ? context.Request : null;
-			}
-		}
+		private HttpRequest Request => context != null ? context.Request : null;
 
-		protected virtual string RequestParamName {
-			get {
-				return null;
-			}
-		}
+		protected virtual string RequestParamName => null;
 
-		private string RequestItemName {
-			get {
-				return string.Format("UserSettings.{0}", SettingName);
-			}
-		}
+		private string RequestItemName => string.Format("UserSettings.{0}", SettingName);
 
 		private T RequestValue {
 			get {
@@ -215,53 +187,16 @@ namespace VocaDb.Model.Domain.Security {
 
 	}
 
-	public class UserSettingShowChatbox : UserSetting<bool> {
-
-		public UserSettingShowChatbox(HttpContext context, IUserPermissionContext permissionContext) 
-			: base(context, permissionContext) {}
-
-		protected override bool Default {
-			get { return true; }
-		}
-
-		protected override string SettingName {
-			get { return "ShowChatbox"; }
-		}
-
-		protected override bool GetPersistedValue(UserWithPermissionsContract user) {
-			return user.ShowChatbox;
-		}
-
-		protected override void SetPersistedValue(User user, bool val) {
-			user.Options.ShowChatbox = val;
-		}
-
-		protected override void SetPersistedValue(UserWithPermissionsContract user, bool val) {
-			user.ShowChatbox = val;
-		}
-
-		protected override bool TryParseValue(string str, out bool val) {
-			return bool.TryParse(str, out val);
-		}
-
-	}
-
 	public class UserSettingLanguagePreference : UserSetting<ContentLanguagePreference> {
 		
 		public UserSettingLanguagePreference(HttpContext context, IUserPermissionContext permissionContext) 
 			: base(context, permissionContext) {}
 
-		protected override ContentLanguagePreference Default {
-			get { return ContentLanguagePreference.Default; }
-		}
+		protected override ContentLanguagePreference Default => ContentLanguagePreference.Default;
 
-		protected override string RequestParamName {
-			get { return "lang"; }
-		}
+		protected override string RequestParamName => "lang";
 
-		protected override string SettingName {
-			get { return "LanguagePreference"; }
-		}
+		protected override string SettingName => "LanguagePreference";
 
 		protected override ContentLanguagePreference GetPersistedValue(UserWithPermissionsContract user) {
 			return user.DefaultLanguageSelection;

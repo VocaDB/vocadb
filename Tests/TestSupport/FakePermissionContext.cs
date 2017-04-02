@@ -29,33 +29,19 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public bool IsLoggedIn {
-			get { return LoggedUser != null; }
-		}
+		public bool IsLoggedIn => LoggedUser != null;
 
 		public ContentLanguagePreference LanguagePreference { get; set; }
 
-		public UserSettingLanguagePreference LanguagePreferenceSetting {
-			get { throw new System.NotImplementedException(); }
-		}
+		public UserSettingLanguagePreference LanguagePreferenceSetting => throw new System.NotImplementedException();
 
 		public UserWithPermissionsContract LoggedUser { get; set; }
 
-		public int LoggedUserId {			
-			get { return (LoggedUser != null ? LoggedUser.Id : 0); }
-		}
+		public int LoggedUserId => (LoggedUser != null ? LoggedUser.Id : 0);
 
 		public string Name { get; set; }
 
-		public UserSettingShowChatbox ShowChatbox {
-			get { throw new System.NotImplementedException(); }
-		}
-
-		public UserGroupId UserGroupId {
-			get {
-				return LoggedUser != null ? LoggedUser.GroupId : UserGroupId.Nothing;
-			}
-		}
+		public UserGroupId UserGroupId => LoggedUser != null ? LoggedUser.GroupId : UserGroupId.Nothing;
 
 		/// <summary>
 		/// Updates status, including permissions, of the currently logged in user.

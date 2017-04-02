@@ -171,13 +171,13 @@
 			<div class="editor-field">
 				<input type="number" min="1" max="100" maxlength="3" name="UnreadNotificationsToKeep" value="@Model.UnreadNotificationsToKeep" />
 			</div>
-
-			@*<div class="editor-field">
-				<label class="checkbox">
-					@Html.CheckBoxFor(m => m.ShowChatbox)
-					Show chatbox
-				</label>
-			</div>*@
+			
+			<div class="editor-label">
+				@Res.Theme
+			</div>
+			<div class="editor-field">
+				@Html.DropDownListFor(m => m.Stylesheet, new SelectList(Model.AllStylesheets, "Key", "Value", Model.Stylesheet))
+			</div>
 
 		</div>
         

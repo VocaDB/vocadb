@@ -154,6 +154,8 @@ namespace VocaDb.Model.Utils {
 
 		public static string ReCAPTCHAPublicKey => Val("ReCAPTCHAPublicKey");
 
+		public static SiteSettingsSection SiteSettings => new VdbConfigManager().SiteSettings;
+
 		public static SongType[] SongTypes {
 			get {
 				

@@ -17,6 +17,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
 			PublicRatings = user.Options.PublicRatings;
 			ShowChatbox = user.Options.ShowChatbox;
+			Stylesheet = user.Options.Stylesheet;
 			UnreadNotificationsToKeep = user.Options.UnreadNotificationsToKeep;
 			WebLinks = user.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
 
@@ -35,6 +36,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public bool PublicRatings { get; set; }
 
 		public bool ShowChatbox { get; set; }
+
+		public string Stylesheet { get; set; }
 
 		public int UnreadNotificationsToKeep { get; set; }
 

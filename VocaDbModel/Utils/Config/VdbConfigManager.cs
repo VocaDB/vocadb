@@ -14,12 +14,7 @@ namespace VocaDb.Model.Utils.Config {
 			}
 		}
 
-		public SiteSettingsSection SiteSettings {
-			get {
-				var section = (SiteSettingsSection)WebConfigurationManager.GetSection("vocaDb/siteSettings");
-				return section ?? new SiteSettingsSection();
-			}
-		}
+		public SiteSettingsSection SiteSettings => (SiteSettingsSection)WebConfigurationManager.GetSection("vocaDb/siteSettings") ?? new SiteSettingsSection();
 
 		public SpecialTagsSection SpecialTags
 		{

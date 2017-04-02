@@ -227,6 +227,9 @@
   <data name="SettingsUpdated" xml:space="preserve">
     <value>Settings updated</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
   <data name="UnableToSave" xml:space="preserve">
     <value>Unable to save settings. Please correct the errors and try again.</value>
   </data>
