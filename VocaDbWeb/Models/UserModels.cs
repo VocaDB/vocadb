@@ -116,7 +116,7 @@ namespace VocaDb.Web.Models {
 			AboutMe = string.Empty;
 			AllInterfaceLanguages = InterfaceLanguage.Cultures;
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
-			AllStylesheets = AppConfig.SiteSettings.Stylesheets?.Split(',').ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
+			AllStylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries).ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
 			AllUserKnownLanguages = InterfaceLanguage.UserLanguageCultures;
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
