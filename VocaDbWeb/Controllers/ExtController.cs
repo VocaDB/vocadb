@@ -98,7 +98,7 @@ namespace VocaDb.Web.Controllers
 					data = RenderPartialViewToString("SongPopupContent", songService.GetSong(id));
 					break;
 				case EntryType.Tag:
-					data = RenderPartialViewToString("_TagPopupContent", tagQueries.GetTag(id, t => 
+					data = RenderPartialViewToString("_TagPopupContent", tagQueries.LoadTag(id, t => 
 						new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request), ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
 					break;
 			}

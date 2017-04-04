@@ -224,7 +224,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return HttpNotFound();
 
-			var tag = queries.GetTag(id, t => new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request),
+			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request),
 				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
 			return PartialView("_TagPopupContent", tag);
 

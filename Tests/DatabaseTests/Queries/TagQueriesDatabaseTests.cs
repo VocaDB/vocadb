@@ -35,7 +35,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 				queries.Merge(sourceId, targetId);
 
-				var result = queries.GetTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, TagOptionalFields.None));
+				var result = queries.LoadTag(targetId, t => new TagForApiContract(t, ContentLanguagePreference.English, TagOptionalFields.None));
 
 				return result;
 
