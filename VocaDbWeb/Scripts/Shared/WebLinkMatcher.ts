@@ -26,6 +26,7 @@ module vdb.utils {
 			{ url: "d-stage.com/shop/", desc: "D-Stage", cat: c.WebLinkCategory.Commercial },
             { url: "deviantart.com/", desc: "DeviantArt", cat: c.WebLinkCategory.Official },
             { url: "www.discogs.com/", desc: "Discogs", cat: c.WebLinkCategory.Reference },
+			{ url: "reference.discogslabs.com/", desc: "Discogs", cat: c.WebLinkCategory.Reference },
             { url: "exittunes.com/", desc: "Exit Tunes", cat: c.WebLinkCategory.Official },
             { url: "www.facebook.com/", desc: "Facebook", cat: c.WebLinkCategory.Official },
 			{ url: "shop.fasic.jp/", desc: "fasic", cat: c.WebLinkCategory.Commercial }, /* UtaiteDB */
