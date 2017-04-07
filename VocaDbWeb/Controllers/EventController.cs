@@ -67,6 +67,8 @@ namespace VocaDb.Web.Controllers
 		    if (id == invalidId)
 		        return NoId();
 
+			slug = slug ?? string.Empty;
+
 			var ev = queries.GetDetails(id);
 
 			if (slug != ev.UrlSlug) {

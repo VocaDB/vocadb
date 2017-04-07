@@ -152,6 +152,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
+		/// <summary>
+		/// URL slug. Cannot be null. Can be empty.
+		/// </summary>
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(Name);
 
 		public virtual IList<EventForUser> Users {
