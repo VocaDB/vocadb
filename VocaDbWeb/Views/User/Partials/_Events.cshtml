@@ -16,7 +16,7 @@
 	<table class="table" data-bind="foreach: events">
 		<tr>
 			<td width="85px">
-				<img alt="Picture" data-bind="visible: mainPicture && mainPicture.urlTinyThumb, attr: { src: mainPicture && mainPicture.urlTinyThumb ? mainPicture.urlTinyThumb : null }" />
+				<img alt="Picture" data-bind="visible: $data.mainPicture && $data.mainPicture.urlTinyThumb, attr: { src: $data.mainPicture && $data.mainPicture.urlTinyThumb ? $data.mainPicture.urlTinyThumb : null }" />
 			</td>
 			<td>
 				<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('ReleaseEvent', id, urlSlug) }"></a>
