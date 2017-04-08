@@ -28,7 +28,7 @@ module vdb.utils {
 					prefix = vdb.functions.mapAbsoluteUrl("/Ar/" + id);
 					break;
 				case cls.EntryType.ReleaseEvent:
-					prefix = vdb.functions.mapAbsoluteUrl("/Event/Details/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/E/" + id);
 					break;
 				case cls.EntryType.Song:
 					prefix = vdb.functions.mapAbsoluteUrl("/S/" + id);
