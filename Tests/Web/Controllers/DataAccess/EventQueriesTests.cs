@@ -116,7 +116,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_ChangeSeriesSuffix() {
 			
-			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default);
+			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default, null);
 			contract.SeriesSuffix = "Fall";
 
 			var result = CallUpdate(contract);
@@ -135,7 +135,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_ChangeName_CustomName() {
 
-			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default);
+			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default, null);
 			contract.CustomName = true;
 			contract.Name = "M3 2013 Fall X2";
 
@@ -152,7 +152,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_ChangeName_UseSeriesName() {
 
-			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default);
+			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default, null);
 			contract.Name = "New name";
 
 			var result = CallUpdate(contract);
@@ -169,7 +169,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(DuplicateEventNameException))]
 		public void Update_ChangeName_Duplicate() {
 
-			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default);
+			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default, null);
 			contract.Id = 0; // Simulate new event
 
 			queries.Update(contract, null);
