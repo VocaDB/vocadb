@@ -143,9 +143,9 @@ module vdb.repositories {
 
 		}
 
-		public getOne = (id: number, callback: (result: dc.user.UserApiContract) => void) => {
+		public getOne = (id: number, fields: string, callback: (result: dc.user.UserApiContract) => void) => {
 			var url = this.urlMapper.mapRelative("/api/users/" + id);
-			$.getJSON(url, callback);
+			$.getJSON(url, { fields: fields || undefined }, callback);
 		}
 
 		public getOneByName = (username: string, callback: (result: dc.user.UserApiContract) => void) => {

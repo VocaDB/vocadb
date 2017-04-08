@@ -70,7 +70,7 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I&apos;m attending.
+        ///   Looks up a localized string similar to Attending.
         /// </summary>
         public static string Attending {
             get {
@@ -84,15 +84,6 @@ namespace ViewRes.Event {
         public static string Event {
             get {
                 return ResourceManager.GetString("Event", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to I&apos;m interested.
-        /// </summary>
-        public static string Interested {
-            get {
-                return ResourceManager.GetString("Interested", resourceCulture);
             }
         }
         
@@ -138,6 +129,24 @@ namespace ViewRes.Event {
         public static string Songs {
             get {
                 return ResourceManager.GetString("Songs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I&apos;m attending.
+        /// </summary>
+        public static string UserAttending {
+            get {
+                return ResourceManager.GetString("UserAttending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I&apos;m interested.
+        /// </summary>
+        public static string UserInterested {
+            get {
+                return ResourceManager.GetString("UserInterested", resourceCulture);
             }
         }
         

@@ -117,7 +117,7 @@ module vdb.viewModels.user {
 				this.ratingsByGenreChart(vdb.helpers.HighchartsHelper.simplePieChart(null, "Songs", data));
 			});
 
-			userRepo.getOne(userId, data => {
+			userRepo.getOne(userId, null, data => {
 				this.name = data.name;
 			});
 

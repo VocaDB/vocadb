@@ -121,13 +121,10 @@
     <value>Albums</value>
   </data>
   <data name="Attending" xml:space="preserve">
-    <value>I'm attending</value>
+    <value>Attending</value>
   </data>
   <data name="Event" xml:space="preserve">
     <value>Event</value>
-  </data>
-  <data name="Interested" xml:space="preserve">
-    <value>I'm interested</value>
   </data>
   <data name="OccurrenceDate" xml:space="preserve">
     <value>Date</value>
@@ -143,6 +140,12 @@
   </data>
   <data name="Songs" xml:space="preserve">
     <value>Songs</value>
+  </data>
+  <data name="UserAttending" xml:space="preserve">
+    <value>I'm attending</value>
+  </data>
+  <data name="UserInterested" xml:space="preserve">
+    <value>I'm interested</value>
   </data>
   <data name="Venue" xml:space="preserve">
     <value>Venue</value>

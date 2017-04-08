@@ -42,7 +42,7 @@ namespace VocaDb.Model.Service {
 		public ReleaseEventDetailsContract GetReleaseEventForEdit(int id) {
 
 			return HandleQuery(session => new ReleaseEventDetailsContract(
-				session.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference) {
+				session.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, null) {
 					AllSeries = session.Query<ReleaseEventSeries>().Select(s => new ReleaseEventSeriesContract(s)).ToArray()
 				});
 

@@ -33,25 +33,6 @@
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 }
 
-@if (Login.IsLoggedIn) {
-	<div class="btn-group" data-bind="visible: hasEvent">
-		<button class="btn dropdown-toggle" data-toggle="dropdown">
-			<span data-bind="visible: isEventAttending">@Res.Attending</span>
-			<span data-bind="visible: isEventInterested">@Res.Interested</span>
-			<span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu">
-			<li><a data-bind="click: removeEvent" href="#">@Res.RemoveAttendance</a></li>
-			<li><a data-bind="click: setEventAttending, visible: isEventInterested" href="#">@Res.Attending</a></li>
-			<li><a data-bind="click: setEventInterested, visible: isEventAttending" href="#">@Res.Interested</a></li>
-		</ul>
-	</div>	
-	<div class="btn-group" data-bind="visible: !hasEvent()">
-		<button data-bind="click: setEventAttending" class="btn">@Res.Attending</button>		
-		<button data-bind="click: setEventInterested" class="btn">@Res.Interested</button>		
-	</div>
-}
-
 <div class="media">
 	@if (pictureData != null && !string.IsNullOrEmpty(pictureData.Mime)) {
 		<a class="pull-left" href="@fullImageUrl">
@@ -118,6 +99,35 @@
 	@SongHelpers.SongGrid(Model.Songs, 2, true, false)
 }
 
+<h3 data-bind="visible: loggedUserId || usersAttending().length" class="withMargin">@Res.Attending</h3>
+
+@if (Login.IsLoggedIn) {
+	<div class="btn-group" data-bind="visible: hasEvent">
+		<button class="btn dropdown-toggle" data-toggle="dropdown">
+			<span data-bind="visible: isEventAttending">@Res.UserAttending</span>
+			<span data-bind="visible: isEventInterested">@Res.UserInterested</span>
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li><a data-bind="click: removeEvent" href="#">@Res.RemoveAttendance</a></li>
+			<li><a data-bind="click: setEventAttending, visible: isEventInterested" href="#">@Res.UserAttending</a></li>
+			<li><a data-bind="click: setEventInterested, visible: isEventAttending" href="#">@Res.UserInterested</a></li>
+		</ul>
+	</div>	
+	<div class="btn-group" data-bind="visible: !hasEvent()">
+		<button data-bind="click: setEventAttending" class="btn">@Res.UserAttending</button>		
+		<button data-bind="click: setEventInterested" class="btn">@Res.UserInterested</button>		
+	</div>
+}
+
+<div data-bind="visible: usersAttending().length" class="withMargin">
+	<ul>
+		<li data-bind="foreach: usersAttending()">
+			@UserHelpers.IconAndNameLinkKnockout()
+		</li>
+	</ul>
+</div>
+
 @CommentHelpers.LatestCommentsKnockout()
 
 @section BodyScripts {
@@ -131,9 +141,10 @@
 		var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
 		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
 		var latestComments = @ToJS(Model.LatestComments);
+		var users = @ToJS(Model.UsersAttending);
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, userRepo, latestComments, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), canDeleteAllComments);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, userRepo, latestComments, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), users, canDeleteAllComments);
 		ko.applyBindings(vm);
 	});
 </script>

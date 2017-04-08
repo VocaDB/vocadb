@@ -2,6 +2,7 @@
 using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Users;
@@ -14,7 +15,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			WebLinks = new WebLinkContract[0];
 		}
 
-		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference) 
+		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory) 
 			: base(releaseEvent, true) {
 
 			ParamIs.NotNull(() => releaseEvent);
@@ -31,6 +32,11 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Songs = releaseEvent.Songs
 				.Select(s => new SongForApiContract(s, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
 				.OrderBy(s => s.Name)
+				.ToArray();
+
+			UsersAttending = releaseEvent.Users
+				.Where(u => u.RelationshipType == UserEventRelationshipType.Attending)
+				.Select(u => new UserForApiContract(u.User, userIconFactory, UserOptionalFields.MainPicture))
 				.ToArray();
 
 			if (releaseEvent.SongList != null) {
@@ -54,6 +60,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public SongInListContract[] SongListSongs { get; set; }
 
 		public SongForApiContract[] Songs { get; set; }
+
+		public UserForApiContract[] UsersAttending { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
 
