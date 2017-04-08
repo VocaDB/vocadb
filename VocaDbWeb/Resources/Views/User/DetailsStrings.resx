@@ -132,6 +132,9 @@
   <data name="ArtistVerificationPage" xml:space="preserve">
     <value>artist verification page</value>
   </data>
+  <data name="Attending" xml:space="preserve">
+    <value>Attending</value>
+  </data>
   <data name="CollectionTab" xml:space="preserve">
     <value>Collection</value>
   </data>
@@ -162,6 +165,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
   <data name="FavoriteSongsTab" xml:space="preserve">
     <value>Liked songs</value>
   </data>
@@ -173,6 +179,9 @@
   </data>
   <data name="ImportSongList" xml:space="preserve">
     <value>Import from YouTube or NicoNicoDouga</value>
+  </data>
+  <data name="Interested" xml:space="preserve">
+    <value>Interested</value>
   </data>
   <data name="KnownLanguagesMessage" xml:space="preserve">
     <value>Please let us know which languages you are familiar with. You can enter this information under &lt;a href="{0}"&gt;"My settings", "Profile"&lt;/a&gt;, "Languages I know". We can use this information to determine how to contact you when needed.</value>

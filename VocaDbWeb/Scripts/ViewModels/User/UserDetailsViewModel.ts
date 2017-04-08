@@ -3,6 +3,7 @@
 
 module vdb.viewModels.user {
 
+	import cls = models;
 	import dc = vdb.dataContracts;
     import rep = vdb.repositories;
 
@@ -34,12 +35,34 @@ module vdb.viewModels.user {
 		};
 
 		public comments: EditableCommentsViewModel;
+		private eventsLoaded = false;
+		public events = ko.observableArray<dc.ReleaseEventContract>([]);
+		public eventsType = ko.observable(cls.users.UserEventRelationshipType[cls.users.UserEventRelationshipType.Attending]);
 
 		public initComments = () => {
 
 			this.comments.initComments();
 
 		};
+
+		private initEvents = () => {
+
+			if (this.eventsLoaded) {
+				return;
+			}
+
+			this.loadEvents();
+			this.eventsLoaded = true;
+
+		}
+
+		private loadEvents = () => {
+
+			this.userRepo.getEvents(this.userId, cls.users.UserEventRelationshipType[this.eventsType()], events => {
+				this.events(events);
+			});
+
+		}
 
 		private name: string;
 		public ratingsByGenreChart = ko.observable<HighchartsOptions>(null);
@@ -64,6 +87,9 @@ module vdb.viewModels.user {
 				case "Songs":
 					this.ratedSongsViewModel.init();
 					break;
+				case "Events":
+					this.initEvents();
+					break;
 			}
 			
 		}
@@ -87,6 +113,7 @@ module vdb.viewModels.user {
 		public setComments = () => this.setView("Comments");
 		public setCustomLists = () => this.setView("CustomLists");
 		public setViewSongs = () => this.setView("Songs");
+	    public setViewEvents = () => this.setView("Events");
 
 		public songLists: UserSongListsViewModel;
 
@@ -120,6 +147,8 @@ module vdb.viewModels.user {
 			userRepo.getOne(userId, null, data => {
 				this.name = data.name;
 			});
+
+			this.eventsType.subscribe(this.loadEvents);
 
         }
 

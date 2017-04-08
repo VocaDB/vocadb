@@ -106,22 +106,25 @@
 
 <ul class="nav nav-pills">
 	<li data-bind="css: { active: view() == 'Overview' }">
-		<a href="#" data-bind="click: function() { setOverview(); }">@R.Overview</a>
+		<a href="#" data-bind="click: function() { setOverview(); }">@Res.Overview</a>
 	</li>
 	<li data-bind="css: { active: view() == 'Artists' }">
-		<a href="#Artists">@R.FollowedArtistsTab</a>
+		<a href="#Artists">@Res.FollowedArtistsTab</a>
 	</li>
 	<li data-bind="css: { active: view() == 'Albums' }">
-		<a href="#Albums">@R.CollectionTab</a>
+		<a href="#Albums">@Res.CollectionTab</a>
 	</li>
 	<li data-bind="css: { active: view() == 'Songs' }">
-		<a href="#Songs">@R.FavoriteSongsTab</a>
+		<a href="#Songs">@Res.FavoriteSongsTab</a>
 	</li>
 	<li data-bind="css: { active: view() == 'CustomLists' }">
-		<a href="#CustomLists">@R.CustomListsTab</a>
+		<a href="#CustomLists">@Res.CustomListsTab</a>
 	</li>
 	<li data-bind="css: { active: view() == 'Comments' }">
-		<a href="#Comments">@R.Comments</a>
+		<a href="#Comments">@Res.Comments</a>
+	</li>
+	<li data-bind="css: { active: view() == 'Events' }">
+		<a href="#Events">@Res.Events</a>
 	</li>
 </ul>
 
@@ -402,6 +405,10 @@
 	<div data-bind="with: comments">
 		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)	
 	</div>	
+</div>
+
+<div data-bind="visible: view() == 'Events'">
+	@{ Html.RenderPartial("Partials/_Events"); }
 </div>
 
 @if (Login.CanManageUsers) {

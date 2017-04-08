@@ -12,6 +12,7 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
@@ -87,6 +88,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryImagePersisterOld entryImagePersister;
+		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IUserMessageMailer mailer;
 		private readonly IStopForumSpamClient sfsClient;
@@ -362,7 +364,8 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public UserQueries(IUserRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IStopForumSpamClient sfsClient,
-			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister, ObjectCache cache, 
+			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister, IEntryThumbPersister entryThumbPersister, 
+			ObjectCache cache, 
 			BrandableStringsManager brandableStringsManager, IEnumTranslations enumTranslations)
 			: base(repository, permissionContext) {
 
@@ -377,6 +380,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.mailer = mailer;
 			this.userIconFactory = userIconFactory;
 			this.entryImagePersister = entryImagePersister;
+			this.entryThumbPersister = entryThumbPersister;
 			this.cache = cache;
 			this.brandableStringsManager = brandableStringsManager;
 			this.enumTranslations = enumTranslations;
@@ -847,6 +851,21 @@ namespace VocaDb.Model.Database.Queries {
 				var count = paging.GetTotalCount ? query.Count() : 0;
 
 				return new PartialFindResult<T>(artists, count);
+
+			});
+
+		}
+
+		public ReleaseEventForApiContract[] GetEvents(int userId, UserEventRelationshipType relationshipType) {
+
+			return HandleQuery(ctx => {
+
+				var user = ctx.Load<User>(userId);
+				return user.Events
+					.Where(e => e.RelationshipType == relationshipType)
+					.OrderByDescending(e => e.ReleaseEvent.Date.DateTime)
+					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, ReleaseEventOptionalFields.MainPicture, entryThumbPersister, true))
+					.ToArray();
 
 			});
 
@@ -1492,18 +1511,18 @@ namespace VocaDb.Model.Database.Queries {
 					if (relationshipType == null) {
 						subscription.OnDeleted();
 						ctx.Delete(subscription);
-						ctx.AuditLogger.SysLog(string.Format("removed association to {0}.", subscription.ReleaseEvent));
+						ctx.AuditLogger.AuditLog(string.Format("removed association to {0}.", subscription.ReleaseEvent));
 					} else if (relationshipType != subscription.RelationshipType) {
 						subscription.RelationshipType = relationshipType.Value;
 						ctx.Update(subscription);
-						ctx.AuditLogger.SysLog(string.Format("updated association to {0}.", subscription.ReleaseEvent));
+						ctx.AuditLogger.AuditLog(string.Format("updated association to {0}.", subscription.ReleaseEvent));
 					}
 
 				} else if (relationshipType.HasValue) {
 
 					subscription = ctx.Load<User>(userId).AddEvent(ctx.Load<ReleaseEvent>(eventId), relationshipType.Value);					
 					ctx.Save(subscription);
-					ctx.AuditLogger.SysLog(string.Format("created association to {0}.", subscription.ReleaseEvent));
+					ctx.AuditLogger.AuditLog(string.Format("created association to {0}.", subscription.ReleaseEvent));
 
 				}
 

@@ -8,6 +8,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.SongLists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
@@ -173,6 +174,11 @@ namespace VocaDb.Web.Controllers.Api {
 
 			return queries.GetUser(permissionContext.LoggedUserId, fields);
 
+		}
+
+		[Route("{id:int}/events")]
+		public ReleaseEventForApiContract[] GetEvents(int id, UserEventRelationshipType relationshipType) {
+			return queries.GetEvents(id, relationshipType);
 		}
 
 		/// <summary>

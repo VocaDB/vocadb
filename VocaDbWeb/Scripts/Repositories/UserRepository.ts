@@ -100,6 +100,13 @@ module vdb.repositories {
 
 		};
 
+		public getEvents = (userId: number, relationshipType: cls.users.UserEventRelationshipType, callback: (result: dc.ReleaseEventContract[]) => void) => {
+
+			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/events");
+			$.getJSON(url, { relationshipType: relationshipType }, callback);
+
+		}
+
 		public getFollowedArtistsList = (
 			userId: number,
 			paging: dc.PagingProperties, lang: string,

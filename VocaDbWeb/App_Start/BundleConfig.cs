@@ -433,7 +433,8 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/User/Details").Include(
-				"~/Scripts/soundcloud-api.js",				
+				"~/Scripts/soundcloud-api.js",
+				"~/Scripts/Models/Users/UserEventRelationshipType.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",

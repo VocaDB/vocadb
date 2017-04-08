@@ -1,0 +1,31 @@
+﻿@using Res = ViewRes.User.DetailsStrings
+
+<!-- UserDetailsViewModel -->
+
+<div class="well well-transparent">
+	
+	<ul class="nav nav-pills">
+		<li data-bind="css: { active: eventsType() == 'Attending' }">
+			<a href="#" data-bind="click: function() { eventsType('Attending'); }">@Res.Attending</a>
+		</li>
+		<li data-bind="css: { active: eventsType() == 'Interested' }">
+			<a href="#" data-bind="click: function() { eventsType('Interested'); }">@Res.Interested</a>
+		</li>
+	</ul>	
+	
+	<table class="table" data-bind="foreach: events">
+		<tr>
+			<td width="85px">
+				<img alt="Picture" data-bind="visible: mainPicture && mainPicture.urlTinyThumb, attr: { src: mainPicture && mainPicture.urlTinyThumb ? mainPicture.urlTinyThumb : null }" />
+			</td>
+			<td>
+				<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('ReleaseEvent', id, urlSlug) }"></a>
+				<span visible="date">
+					<br />
+					<small>{{date | formatDate: 'l'}}</small>					
+				</span>
+			</td>
+		</tr>
+	</table>
+
+</div>

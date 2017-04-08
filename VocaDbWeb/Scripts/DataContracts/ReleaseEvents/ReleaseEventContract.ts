@@ -8,6 +8,8 @@ namespace vdb.dataContracts {
 
 		id: number;
 
+		mainPicture?: EntryThumbContract;
+
 		name: string;
 
 		series?: models.IEntryWithIdAndName;

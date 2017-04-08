@@ -106,6 +106,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attending.
+        /// </summary>
+        public static string Attending {
+            get {
+                return ResourceManager.GetString("Attending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collection.
         /// </summary>
         public static string CollectionTab {
@@ -196,6 +205,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Events.
+        /// </summary>
+        public static string Events {
+            get {
+                return ResourceManager.GetString("Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Liked songs.
         /// </summary>
         public static string FavoriteSongsTab {
@@ -228,6 +246,15 @@ namespace ViewRes.User {
         public static string ImportSongList {
             get {
                 return ResourceManager.GetString("ImportSongList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interested.
+        /// </summary>
+        public static string Interested {
+            get {
+                return ResourceManager.GetString("Interested", resourceCulture);
             }
         }
         
