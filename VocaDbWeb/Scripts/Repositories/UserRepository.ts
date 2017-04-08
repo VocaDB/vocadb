@@ -33,6 +33,13 @@ module vdb.repositories {
 
 		}
 
+		public deleteEventForUser = (eventId: number, callback?: () => void) => {
+
+			var url = this.urlMapper.mapRelative("/api/users/current/events/" + eventId);
+			return $.ajax(url, { type: 'DELETE', success: callback }) as JQueryPromise<{}>;
+
+		}
+
 		public deleteFollowedTag = (tagId: number, callback?: () => void) => {
 			$.ajax(this.urlMapper.mapRelative("/api/users/current/followedTags/" + tagId), { type: 'DELETE', success: callback });
 		}
@@ -290,6 +297,13 @@ module vdb.repositories {
 		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/users/profileComments/" + commentId), contract, callback, 'json');
+
+		}
+
+		public updateEventForUser = (eventId: number, associationType: vdb.models.users.UserEventRelationshipType, callback?: () => void) => {
+
+			var url = this.urlMapper.mapRelative("/api/users/current/events/" + eventId);
+			return $.post(url, { associationType: vdb.models.users.UserEventRelationshipType[associationType] }, callback) as JQueryPromise<{}>;
 
 		}
 

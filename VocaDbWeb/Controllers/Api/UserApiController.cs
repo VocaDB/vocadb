@@ -60,6 +60,13 @@ namespace VocaDb.Web.Controllers.Api {
 			this.userIconFactory = userIconFactory;
 		}
 
+		[Authorize]
+		[Route("current/events/{eventId:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void DeleteEventAttendance(int eventId) {
+			queries.UpdateEventForUser(permissionContext.LoggedUserId, eventId, null);
+		}
+
 		[Route("current/followedTags/{tagId:int}")]
 		[Authorize]
 		public void DeleteFollowedTag(int tagId) {
@@ -587,6 +594,17 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
 
+		}
+
+		public class UserEventAssociation {
+			public UserEventRelationshipType AssociationType { get; set; }
+		}
+
+		[Authorize]
+		[Route("current/events/{eventId:int}")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PostEventAttendance(int eventId, UserEventAssociation association) {
+			queries.UpdateEventForUser(permissionContext.LoggedUserId, eventId, association.AssociationType);
 		}
 
 		/// <summary>

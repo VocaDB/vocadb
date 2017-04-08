@@ -48,8 +48,8 @@ namespace VocaDb.Model.Domain.Users {
 	}
 
 	public enum UserEventRelationshipType {
-		Interested,
-		Attending
+		Interested = 1,
+		Attending = 2
 	}
 
 }

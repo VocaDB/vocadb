@@ -33,6 +33,25 @@
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 }
 
+@if (Login.IsLoggedIn) {
+	<div class="btn-group" data-bind="visible: hasEvent">
+		<button class="btn dropdown-toggle" data-toggle="dropdown">
+			<span data-bind="visible: isEventAttending">@Res.Attending</span>
+			<span data-bind="visible: isEventInterested">@Res.Interested</span>
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li><a data-bind="click: removeEvent" href="#">@Res.RemoveAttendance</a></li>
+			<li><a data-bind="click: setEventAttending, visible: isEventInterested" href="#">@Res.Attending</a></li>
+			<li><a data-bind="click: setEventInterested, visible: isEventAttending" href="#">@Res.Interested</a></li>
+		</ul>
+	</div>	
+	<div class="btn-group" data-bind="visible: !hasEvent()">
+		<button data-bind="click: setEventAttending" class="btn">@Res.Attending</button>		
+		<button data-bind="click: setEventInterested" class="btn">@Res.Interested</button>		
+	</div>
+}
+
 <div class="media">
 	@if (pictureData != null && !string.IsNullOrEmpty(pictureData.Mime)) {
 		<a class="pull-left" href="@fullImageUrl">
@@ -104,19 +123,18 @@
 @section BodyScripts {
 @Scripts.Render("~/bundles/ReleaseEvent/Details")
 <script type="text/javascript">
-
 	$(function () {
 		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
 
+		var loggedUserId = @UserContext.LoggedUserId;
 		var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
+		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
 		var latestComments = @ToJS(Model.LatestComments);
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, latestComments, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, userRepo, latestComments, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), canDeleteAllComments);
 		ko.applyBindings(vm);
-
 	});
-
 </script>
 }

@@ -151,7 +151,18 @@ namespace VocaDb.Model.Database.Queries {
 		public ReleaseEventDetailsContract GetDetails(int id) {
 
 			return HandleQuery(ctx => {
-				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference) {
+
+				UserEventRelationshipType? eventAssociation = null;
+
+				if (permissionContext.IsLoggedIn) {
+					eventAssociation = ctx.Query<EventForUser>()
+						.Where(e => e.ReleaseEvent.Id == id && e.User.Id == permissionContext.LoggedUserId)
+						.Select(e => e.RelationshipType)
+						.FirstOrDefault();
+				}
+
+				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference) {	
+					EventAssociationType = eventAssociation,
 					LatestComments = new CommentQueries<ReleaseEventComment, ReleaseEvent>(
 						ctx, PermissionContext, userIconFactory, entryLinkFactory).GetList(id, 3)
 				};

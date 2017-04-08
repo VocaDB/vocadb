@@ -15,6 +15,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Security;
@@ -460,6 +461,18 @@ namespace VocaDb.Model.Domain.Users {
 			var link = new ArtistForUser(this, artist);
 			AllArtists.Add(link);
 			artist.Users.Add(link);
+
+			return link;
+
+		}
+
+		public virtual EventForUser AddEvent(ReleaseEvent releaseEvent, UserEventRelationshipType relationshipType) {
+
+			ParamIs.NotNull(() => releaseEvent);
+
+			var link = new EventForUser(this, releaseEvent, relationshipType);
+			Events.Add(link);
+			releaseEvent.Users.Add(link);
 
 			return link;
 

@@ -120,11 +120,20 @@
   <data name="Albums" xml:space="preserve">
     <value>Albums</value>
   </data>
+  <data name="Attending" xml:space="preserve">
+    <value>I'm attending</value>
+  </data>
   <data name="Event" xml:space="preserve">
     <value>Event</value>
   </data>
+  <data name="Interested" xml:space="preserve">
+    <value>I'm interested</value>
+  </data>
   <data name="OccurrenceDate" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="RemoveAttendance" xml:space="preserve">
+    <value>Remove from my events</value>
   </data>
   <data name="Series" xml:space="preserve">
     <value>Series</value>

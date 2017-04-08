@@ -4,6 +4,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
@@ -41,6 +42,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public AlbumContract[] Albums { get; set; }
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
+
+		public UserEventRelationshipType? EventAssociationType { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
 

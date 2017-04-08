@@ -7,17 +7,45 @@ namespace vdb.viewModels.releaseEvents {
 	export class ReleaseEventDetailsViewModel {
 
 		constructor(urlMapper: vdb.UrlMapper,
+			private userRepo: rep.UserRepository,
 			latestComments: dc.CommentContract[],
 			loggedUserId: number,
-			eventId: number,
+			private eventId: number,
+			eventAssociationType: models.users.UserEventRelationshipType,
 			canDeleteAllComments: boolean) {
 
 			const commentRepo = new rep.CommentRepository(urlMapper, vdb.models.EntryType.ReleaseEvent);
 			this.comments = new EditableCommentsViewModel(commentRepo, eventId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
+			this.eventAssociationType(eventAssociationType);
 
 		}
 
 		public comments: EditableCommentsViewModel;
+
+		private eventAssociationType = ko.observable<models.users.UserEventRelationshipType>(null);
+
+		public hasEvent = ko.computed(() => {
+			return !!this.eventAssociationType();
+		});
+
+		public isEventAttending = ko.computed(() => this.eventAssociationType() === models.users.UserEventRelationshipType.Attending);
+
+		public isEventInterested = ko.computed(() => this.eventAssociationType() === models.users.UserEventRelationshipType.Interested);
+
+		public removeEvent = () => {
+			this.userRepo.deleteEventForUser(this.eventId);
+			this.eventAssociationType(null);
+		}
+
+		public setEventAttending = () => {
+			this.userRepo.updateEventForUser(this.eventId, vdb.models.users.UserEventRelationshipType.Attending);
+			this.eventAssociationType(models.users.UserEventRelationshipType.Attending);
+		}
+
+		public setEventInterested = () => {
+			this.userRepo.updateEventForUser(this.eventId, vdb.models.users.UserEventRelationshipType.Interested);
+			this.eventAssociationType(models.users.UserEventRelationshipType.Interested);
+		}
 
 	}
 

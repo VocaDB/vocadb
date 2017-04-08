@@ -239,6 +239,7 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/ReleaseEvent/Details").Include(
+				"~/Scripts/Models/Users/UserEventRelationshipType.js",
 				"~/Scripts/Repositories/CommentRepository.js",
 				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel.js"
 			));

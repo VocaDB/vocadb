@@ -24,6 +24,7 @@ using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -1473,6 +1474,38 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.Update(subscription);
 
 				ctx.AuditLogger.SysLog(string.Format("updated artist subscription for {0}.", subscription.Artist));
+
+			});
+
+		}
+
+		public void UpdateEventForUser(int userId, int eventId, UserEventRelationshipType? relationshipType) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			repository.HandleTransaction(ctx => {
+
+				var subscription = ctx.Query<EventForUser>().FirstOrDefault(e => e.User.Id == userId && e.ReleaseEvent.Id == eventId);
+
+				if (subscription != null) {
+					
+					if (relationshipType == null) {
+						subscription.OnDeleted();
+						ctx.Delete(subscription);
+						ctx.AuditLogger.SysLog(string.Format("removed association to {0}.", subscription.ReleaseEvent));
+					} else if (relationshipType != subscription.RelationshipType) {
+						subscription.RelationshipType = relationshipType.Value;
+						ctx.Update(subscription);
+						ctx.AuditLogger.SysLog(string.Format("updated association to {0}.", subscription.ReleaseEvent));
+					}
+
+				} else if (relationshipType.HasValue) {
+
+					subscription = ctx.Load<User>(userId).AddEvent(ctx.Load<ReleaseEvent>(eventId), relationshipType.Value);					
+					ctx.Save(subscription);
+					ctx.AuditLogger.SysLog(string.Format("created association to {0}.", subscription.ReleaseEvent));
+
+				}
 
 			});
 
