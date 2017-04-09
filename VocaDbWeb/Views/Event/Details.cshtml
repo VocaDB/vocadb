@@ -121,8 +121,8 @@
 }
 
 <div data-bind="visible: usersAttending().length" class="withMargin">
-	<ul>
-		<li data-bind="foreach: usersAttending()">
+	<ul data-bind="foreach: usersAttending()">
+		<li>
 			@UserHelpers.IconAndNameLinkKnockout()
 		</li>
 	</ul>
