@@ -1502,6 +1502,10 @@ namespace VocaDb.Model.Database.Queries {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
+			if (userId != permissionContext.LoggedUserId) {
+				throw new NotAllowedException("Only allowed for self");
+			}
+
 			repository.HandleTransaction(ctx => {
 
 				var subscription = ctx.Query<EventForUser>().FirstOrDefault(e => e.User.Id == userId && e.ReleaseEvent.Id == eventId);

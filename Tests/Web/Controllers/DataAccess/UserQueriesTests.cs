@@ -43,9 +43,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private User userWithEmail;
 		private User userWithoutEmail;
 
-		private User LoggedUser {
-			get { return userWithEmail; }
-		}
+		private User LoggedUser => userWithEmail;
 
 		private void AssertEqual(User expected, UserContract actual) {
 			
@@ -618,6 +616,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsFalse(userWithEmail.Albums.Any(a => a.Album == album), "Album was removed");
 			Assert.AreEqual(0, userWithEmail.Albums.Count(), "Number of albums for user");
 			Assert.AreEqual(0, repository.List<AlbumForUser>().Count, "Number of album links in the repo");
+
+		}
+
+		[TestMethod]
+		public void UpdateEventForUser() {
+
+			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Miku land"));
+			data.UpdateEventForUser(userWithEmail.Id, releaseEvent.Id, UserEventRelationshipType.Attending);
+
+			var link = userWithEmail.Events.FirstOrDefault(e => e.ReleaseEvent == releaseEvent);
+			Assert.IsNotNull(link, "Event was added for user");
+			Assert.AreEqual(UserEventRelationshipType.Attending, link.RelationshipType, "Link relationship type");
 
 		}
 
