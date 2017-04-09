@@ -332,6 +332,7 @@
     <Compile Include="Domain\Albums\IAlbumLink.cs" />
     <Compile Include="Domain\Albums\IAlbumRelease.cs" />
     <Compile Include="Domain\Albums\OtherArtistForAlbum.cs" />
+    <Compile Include="Domain\ReleaseEvents\EventType.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventComment.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventDiff.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventEditableFields.cs" />

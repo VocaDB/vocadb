@@ -1,28 +1,32 @@
-﻿@using Res = ViewRes.User.DetailsStrings
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Model.Domain.Users
+@using Res = ViewRes.User.DetailsStrings
 
 <!-- UserDetailsViewModel -->
 
 <div class="well well-transparent">
 	
 	<ul class="nav nav-pills">
-		<li data-bind="css: { active: eventsType() == 'Attending' }">
-			<a href="#" data-bind="click: function() { eventsType('Attending'); }">@Res.Attending</a>
+		<li data-bind="css: { active: eventsType() == '@UserEventRelationshipType.Attending' }">
+			<a href="#" data-bind="click: function() { eventsType('@UserEventRelationshipType.Attending'); }">@Res.Attending</a>
 		</li>
-		<li data-bind="css: { active: eventsType() == 'Interested' }">
-			<a href="#" data-bind="click: function() { eventsType('Interested'); }">@Res.Interested</a>
+		<li data-bind="css: { active: eventsType() == '@UserEventRelationshipType.Interested' }">
+			<a href="#" data-bind="click: function() { eventsType('@UserEventRelationshipType.Interested'); }">@Res.Interested</a>
 		</li>
 	</ul>	
 	
 	<table class="table" data-bind="foreach: events">
 		<tr>
 			<td width="85px">
-				<img alt="Picture" data-bind="visible: $data.mainPicture && $data.mainPicture.urlTinyThumb, attr: { src: $data.mainPicture && $data.mainPicture.urlTinyThumb ? $data.mainPicture.urlTinyThumb : null }" />
+				<a visible="{{$data.mainPicture && $data.mainPicture.urlTinyThumb}}" href="{{vdb.utils.EntryUrlMapper.details('@EntryType.ReleaseEvent', id, urlSlug)}}">
+					<img alt="Picture" attr.src="{{$data.mainPicture && $data.mainPicture.urlTinyThumb ? $data.mainPicture.urlTinyThumb : null}}" />
+				</a>				
 			</td>
 			<td>
-				<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('ReleaseEvent', id, urlSlug) }"></a>
-				<span visible="date">
+				<a href="{{vdb.utils.EntryUrlMapper.details('@EntryType.ReleaseEvent', id, urlSlug)}}">{{name}}</a>
+				<span visible="{{$data.date}}">
 					<br />
-					<small>{{date | formatDate: 'l'}}</small>					
+					<small>{{$data.date | formatDate: 'l'}}</small>					
 				</span>
 			</td>
 		</tr>
