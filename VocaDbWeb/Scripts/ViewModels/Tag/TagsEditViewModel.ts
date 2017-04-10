@@ -1,9 +1,11 @@
 ﻿
 module vdb.viewModels.tags {
-	
+
+	import cls = vdb.models;
+
 	export class TagsEditViewModel {
 
-		constructor(private repo: ITagSelectionsRepository, private getSuggestions?: (callback: (result: dc.tags.TagUsageForApiContract[]) => void) => void) { }
+		constructor(private repo: ITagSelectionsRepository, public target?: cls.EntryType, private getSuggestions?: (callback: (result: dc.tags.TagUsageForApiContract[]) => void) => void) { }
 		
 		public addTag = () => {
 			

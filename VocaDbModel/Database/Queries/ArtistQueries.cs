@@ -31,6 +31,7 @@ using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Database.Queries {
@@ -413,6 +414,7 @@ namespace VocaDb.Model.Database.Queries {
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions 
 						&& u.Album.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
 					.Where(t => t.Count > 1)
@@ -425,6 +427,7 @@ namespace VocaDb.Model.Database.Queries {
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
 						&& u.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
 					.Where(t => t.Count > 1)

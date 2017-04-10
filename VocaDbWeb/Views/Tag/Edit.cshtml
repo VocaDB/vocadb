@@ -159,6 +159,13 @@
 	</div>
 	
 	<div class="editor-label">
+		Valid for
+	</div>
+	<div class="editor-field">
+		@Html.EnumDropDownListFor(m => m.Targets, Model.AllTagTargetTypes)
+	</div>
+	
+	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
 			@EditRes.WebLinks
 		</label>

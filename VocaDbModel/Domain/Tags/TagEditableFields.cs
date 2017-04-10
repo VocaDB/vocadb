@@ -32,7 +32,9 @@ namespace VocaDb.Model.Domain.Tags {
 
 		Status			= 512,
 
-		WebLinks		= 1024
+		Targets			= 1024,
+
+		WebLinks		= 2048
 
 	}
 

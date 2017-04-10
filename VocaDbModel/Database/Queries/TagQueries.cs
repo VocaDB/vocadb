@@ -679,6 +679,9 @@ namespace VocaDb.Model.Database.Queries {
 				if (tag.HideFromSuggestions != contract.HideFromSuggestions)
 					diff.HideFromSuggestions.Set();
 
+				if (tag.Targets != contract.Targets)
+					diff.Targets.Set();
+
 				if (tag.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
 					tag.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
 					diff.OriginalName.Set();
@@ -717,6 +720,7 @@ namespace VocaDb.Model.Database.Queries {
 				tag.CategoryName = contract.CategoryName;
 				tag.HideFromSuggestions = contract.HideFromSuggestions;
 				tag.Status = contract.Status;
+				tag.Targets = contract.Targets;
 
 				if (uploadedImage != null) {
 

@@ -1,4 +1,5 @@
 ﻿using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
@@ -24,6 +25,8 @@ namespace VocaDb.Model.Service.Search.Tags {
 		public PagingProperties Paging { get; set; }
 
 		public TagSortRule SortRule { get; set; } = TagSortRule.Name;
+
+		public TagTargetTypes Target { get; set; } = TagTargetTypes.All;
 
 	}
 

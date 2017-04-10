@@ -31,6 +31,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Service.Translations;
 
@@ -285,6 +286,7 @@ namespace VocaDb.Model.Database.Queries {
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
 						&& u.Song.AllAlbums.Any(a => a.Album.Id == albumId))
+					.WhereTagHasTarget(TagTargetTypes.Album)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
 					.Where(t => t.Count > 1)

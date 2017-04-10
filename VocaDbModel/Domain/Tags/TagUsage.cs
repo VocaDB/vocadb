@@ -9,7 +9,7 @@ namespace VocaDb.Model.Domain.Tags {
 	/// Tag attached to an entry (song, album, artist).
 	/// Tag usage may have multiple votes (<see cref="TagVote"/>), at most one vote per user.
 	/// </summary>
-	public abstract class TagUsage : IEntryWithLongId {
+	public abstract class TagUsage : IEntryWithLongId, ITagLink {
 
 		private Tag tag;
 

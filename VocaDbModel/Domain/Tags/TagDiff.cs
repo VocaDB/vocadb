@@ -18,6 +18,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public EnumFieldAccessor<TagEditableFields> Picture => Field(TagEditableFields.Picture);
 		public EnumFieldAccessor<TagEditableFields> RelatedTags => Field(TagEditableFields.RelatedTags);
 		public EnumFieldAccessor<TagEditableFields> Status => Field(TagEditableFields.Status);
+		public EnumFieldAccessor<TagEditableFields> Targets => Field(TagEditableFields.Targets);
 		public EnumFieldAccessor<TagEditableFields> WebLinks => Field(TagEditableFields.WebLinks);
 
 		public virtual bool IncludeDescription => IsSnapshot || Description.IsChanged;

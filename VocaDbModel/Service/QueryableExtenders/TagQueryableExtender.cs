@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Search;
@@ -89,6 +90,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			var predicate = names.Aggregate(PredicateBuilder.False<Tag>(), (nameExp, name) => nameExp.Or(q => q.Names.Names.Any(n => n.Value == name)));
 			return query.Where(predicate);
+
+		}
+
+		public static IQueryable<Tag> WhereHasTarget(this IQueryable<Tag> query, TagTargetTypes target) {
+
+			if (target == TagTargetTypes.All)
+				return query;
+
+			var types = Enum.GetValues(typeof(TagTargetTypes)).Cast<TagTargetTypes>().Where(t => t.HasFlag(target));
+			return query.Where(t => types.Contains(t.Targets));
 
 		}
 

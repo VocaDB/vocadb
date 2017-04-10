@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			HideFromSuggestions = tag.HideFromSuggestions;
 			Parent = tag.Parent != null ? new TagBaseContract(tag.Parent, languagePreference) : null;
 			Status = tag.Status;
+			Targets = tag.Targets;
 			Version = tag.Version;
 
 		}
@@ -50,6 +51,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public EntryStatus Status { get; set; }
+
+		[DataMember]
+		public TagTargetTypes Targets { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }

@@ -5,26 +5,28 @@ module vdb.models {
     // Corresponds to the EntryType enum C#.
     export enum EntryType {
         
-        Undefined			= 0,
+		Undefined			= 0,
 
-        Album				= 1,
+		Album				= 1,
 
-        Artist				= 2,
+		Artist				= 2,
 
-        PV					= 4,
+		DiscussionTopic		= 4,
 
-        ReleaseEvent		= 8,
+		PV					= 8,
 
-        ReleaseEventSeries	= 16,
+		ReleaseEvent		= 16,
 
-        Song				= 32,
+		ReleaseEventSeries	= 32,
 
-        SongList			= 64,
+		Song				= 64,
 
-        Tag					= 128,
+		SongList			= 128,
 
-        User				= 256
-    
+		Tag					= 256,
+
+		User                = 512
+		
     }
 
 }

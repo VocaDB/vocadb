@@ -25,7 +25,8 @@ namespace VocaDb.Model.Service.Search.Tags {
 				.WhereIsDeleted(false)
 				.WhereHasName(textQuery)
 				.WhereAllowChildren(queryParams.AllowChildren)
-				.WhereHasCategoryName(queryParams.CategoryName);
+				.WhereHasCategoryName(queryParams.CategoryName)
+				.WhereHasTarget(queryParams.Target);
 
 			return query;
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
@@ -7,8 +8,11 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
+using VocaDb.Web.Helpers;
+using VocaDb.Web.Resources.Domain;
 
 namespace VocaDb.Web.Models.Tag {
 
@@ -28,12 +32,15 @@ namespace VocaDb.Web.Models.Tag {
 			Name = contract.Name;
 			Parent = contract.Parent;
 			Status = contract.Status;
+			Targets = contract.Targets;
 			Thumb = contract.Thumb;
 			WebLinks = contract.WebLinks;
 
 			CopyNonEditableProperties(contract, permissionContext);
 
 		}
+
+		public Dictionary<TagTargetTypes, string> AllTagTargetTypes { get; set; }
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
@@ -74,6 +81,8 @@ namespace VocaDb.Web.Models.Tag {
 
 		public EntryStatus Status { get; set; }
 
+		public TagTargetTypes Targets { get; set; }
+
 		public EntryThumbContract Thumb { get; set; }
 
 		public string UpdateNotes { get; set; }
@@ -107,6 +116,19 @@ namespace VocaDb.Web.Models.Tag {
 			Thumb = contract.Thumb;
 			UrlSlug = contract.UrlSlug;
 
+			string GetTagTargetTypeName(TagTargetTypes t) {
+				switch (t) {
+					case TagTargetTypes.Nothing:
+						return "Nothing";
+					case TagTargetTypes.All:
+						return "Anything";
+				}
+				return string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined).Where(e => t.HasFlag((TagTargetTypes)e)).Select(e => Translate.EntryTypeNames[e]));
+			}
+
+			AllTagTargetTypes = EnumVal<TagTargetTypes>.Values
+				.ToDictionary(t => t, GetTagTargetTypeName);
+
 		}
 
 		public TagForEditContract ToContract() {
@@ -122,6 +144,7 @@ namespace VocaDb.Web.Models.Tag {
 				Parent = this.Parent,
 				RelatedTags = RelatedTags,
 				Status = this.Status,
+				Targets = Targets,
 				UpdateNotes = this.UpdateNotes ?? string.Empty,
 				WebLinks = WebLinks
 			};

@@ -16,6 +16,7 @@ namespace VocaDb.Model.Mapping.Tags {
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.HideFromSuggestions).Not.Nullable();
 			Map(m => m.Status).CustomType(typeof(EntryStatus)).Not.Nullable();
+			Map(m => m.Targets).Not.Nullable();
 			Map(m => m.UsageCount).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 

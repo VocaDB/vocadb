@@ -430,6 +430,7 @@
     <Compile Include="Domain\Songs\SongVoteRating.cs" />
     <Compile Include="Domain\Tags\ArchivedTagVersion.cs" />
     <Compile Include="Domain\Tags\IEntryWithTags.cs" />
+    <Compile Include="Domain\Tags\ITagLink.cs" />
     <Compile Include="Domain\Tags\RelatedTag.cs" />
     <Compile Include="Domain\Tags\SpecialTagType.cs" />
     <Compile Include="Domain\Tags\TagComment.cs" />
@@ -440,6 +441,7 @@
     <Compile Include="Domain\Tags\TagMergeRecord.cs" />
     <Compile Include="Domain\Tags\TagName.cs" />
     <Compile Include="Domain\Tags\TagReport.cs" />
+    <Compile Include="Domain\Tags\TagTargetType.cs" />
     <Compile Include="Domain\Tags\TagWebLink.cs" />
     <Compile Include="Domain\TrashedEntry.cs" />
     <Compile Include="Domain\Users\ArtistForUser.cs" />
@@ -788,6 +790,7 @@
     <Compile Include="Service\QueryableExtenders\ReleaseEventSeriesQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongInListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongListQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\TagLinkQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\TagQueryableExtender.cs" />
     <Compile Include="Service\Helpers\UserCommentNotifier.cs" />
     <Compile Include="Service\Queries\ArtistRelationsQuery.cs" />

@@ -4,6 +4,13 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_04_10_2100)]
+	public class TagTargetTypes : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Targets").OnTable(TableNames.Tags).AsString(50).NotNullable().WithDefaultValue("All");
+		}
+	}
+
 	[Migration(2017_04_02_2100)]
 	public class UserOptionStylesheet : AutoReversingMigration {
 		public override void Up() {

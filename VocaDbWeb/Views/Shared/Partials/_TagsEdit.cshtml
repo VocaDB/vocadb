@@ -1,5 +1,5 @@
 ﻿
-<!-- binding context: TagsEditViewModel -->
+<!-- TagsEditViewModel -->
 
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 500 }, dialogButtons: [{ text: '@ViewRes.SharedStrings.Save', click: save }], dialogVisible: dialogVisible" 
 	 style="display:none;" title="@ViewRes.SharedStrings.Tags">
@@ -32,7 +32,7 @@
 		<div class="form-inline">
 			@ViewRes.TagSelectionsStrings.AddTag:
 			<div class="input-append">
-				<input type="text" class="input-large" maxlength="30" data-bind="textInput: newTagName, tagAutoComplete: autoCompletedTag, allowAliases: true" />
+				<input type="text" class="input-large" maxlength="30" data-bind="textInput: newTagName, tagAutoComplete: autoCompletedTag, allowAliases: true, tagTarget: target" />
 				<button type="button" class="btn" data-bind="click: addTag">@ViewRes.SharedStrings.Add</button>
 			</div>
 		</div>

@@ -53,6 +53,7 @@ namespace VocaDb.Model.Domain.Tags {
 			CreateDate = DateTime.Now;
 			Description = new EnglishTranslatedString();
 			Status = EntryStatus.Draft;
+			Targets = TagTargetTypes.All;
 		}
 
 		public Tag(string englishName, string categoryName = "")
@@ -74,7 +75,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
 		public virtual ISet<AlbumTagUsage> AllAlbumTagUsages {
-			get { return albumTagUsages; }
+			get => albumTagUsages;
 			set {
 				ParamIs.NotNull(() => value);
 				albumTagUsages = value;
@@ -96,7 +97,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
 		public virtual ISet<ArtistTagUsage> AllArtistTagUsages {
-			get { return artistTagUsages; }
+			get => artistTagUsages;
 			set {
 				ParamIs.NotNull(() => value);
 				artistTagUsages = value;
@@ -107,7 +108,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// List of child tags. Includes deleted tags.
 		/// </summary>
 		public virtual ISet<Tag> AllChildren {
-			get { return children; }
+			get => children;
 			set {
 				ParamIs.NotNull(() => value);
 				children = value;
@@ -117,7 +118,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual IEnumerable<TagUsage> AllTagUsages => AllAlbumTagUsages.Cast<TagUsage>().Concat(AllArtistTagUsages).Concat(AllSongTagUsages);
 
 		public virtual ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> ArchivedVersionsManager {
-			get { return archivedVersions; }
+			get => archivedVersions;
 			set {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
@@ -137,7 +138,7 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public virtual string CategoryName {
-			get { return categoryName; }
+			get => categoryName;
 			set {
 				ParamIs.NotNull(() => value);
 				categoryName = value; 
@@ -182,7 +183,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Tag description, may contain Markdown formatting.
 		/// </summary>
 		public virtual EnglishTranslatedString Description {
-			get { return description; }
+			get => description;
 			set {
 				ParamIs.NotNull(() => value);
 				description = value;
@@ -201,7 +202,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int Id { get; set; }
 
 		public virtual NameManager<TagName> Names{
-			get { return names; }
+			get => names;
 			set {
 				ParamIs.NotNull(() => value);
 				names = value;
@@ -222,6 +223,8 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Does not include deleted tags.
 		/// </summary>
 		public virtual IEnumerable<Tag> Siblings => Parent != null ? Parent.Children.Where(t => !t.Equals(this)) : Enumerable.Empty<Tag>();
+
+		public virtual TagTargetTypes Targets { get; set; }
 
 		/// <summary>
 		/// Entry thumbnail picture. Can be null.

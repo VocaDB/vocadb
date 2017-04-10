@@ -185,7 +185,8 @@ namespace VocaDb.Web.Controllers.Api {
 			TagSortRule? sort = null,
 			bool preferAccurateMatches = false,
 			TagOptionalFields fields = TagOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			TagTargetTypes target = TagTargetTypes.All) {
 			
 			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? absoluteMax : int.MaxValue);
 			var ssl = WebHelper.IsSSL(Request);
@@ -194,7 +195,8 @@ namespace VocaDb.Web.Controllers.Api {
 					AllowChildren = allowChildren,
 					CategoryName = categoryName,
 					SortRule = sort ?? TagSortRule.Name,
-					LanguagePreference = lang
+					LanguagePreference = lang,
+					Target = target
 			};
 
 			var tags = queries.Find(queryParams, fields, ssl, lang);

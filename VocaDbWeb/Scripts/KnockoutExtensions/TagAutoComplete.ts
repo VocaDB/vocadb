@@ -21,7 +21,8 @@ ko.bindingHandlers.tagAutoComplete = {
 			preferAccurateMatches: true,
 			maxResults: 20,
 			sort: 'Name',
-			allowAliases: allowAliases
+			allowAliases: allowAliases,
+			target: ko.unwrap(allBindingsAccessor().tagTarget) || undefined
 		};
 
 		var params: vdb.EntryAutoCompleteParams<dc.TagApiContract> = {

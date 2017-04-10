@@ -70,7 +70,7 @@ module vdb.viewModels {
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepo.getAlbumTagSelections(this.id, callback),
 				saveTagSelections: tags => userRepo.updateAlbumTags(this.id, tags, this.tagUsages.updateTagUsages)
-			}, callback => repo.getTagSuggestions(this.id, callback));
+			}, cls.EntryType.Album, callback => repo.getTagSuggestions(this.id, callback));
 
 			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
 
