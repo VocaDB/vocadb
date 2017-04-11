@@ -7,7 +7,7 @@ namespace VocaDb.Migrations {
 	[Migration(2017_04_10_2100)]
 	public class TagTargetTypes : AutoReversingMigration {
 		public override void Up() {
-			Create.Column("Targets").OnTable(TableNames.Tags).AsString(50).NotNullable().WithDefaultValue("All");
+			Create.Column("Targets").OnTable(TableNames.Tags).AsInt32().NotNullable().WithDefaultValue(1073741823);
 		}
 	}
 

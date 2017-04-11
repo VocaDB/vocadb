@@ -11,8 +11,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (target == TagTargetTypes.All)
 				return query;
 
-			var types = Enum.GetValues(typeof(TagTargetTypes)).Cast<TagTargetTypes>().Where(t => t.HasFlag(target));
-			return query.Where(t => types.Contains(t.Tag.Targets));
+			return query.Where(t => (t.Tag.Targets & target) == target);
 
 		}
 

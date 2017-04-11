@@ -20,7 +20,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// Valid for all entry types (default)
 		/// </summary>
-		All = Album | Artist | Song
+		All = 1073741823
 	}
 
 }

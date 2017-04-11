@@ -147,6 +147,9 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="Targets" xml:space="preserve">
+    <value>Targets</value>
+  </data>
   <data name="WebLinks" xml:space="preserve">
     <value>External links</value>
   </data>
