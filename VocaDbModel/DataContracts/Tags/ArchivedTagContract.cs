@@ -46,9 +46,11 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		}
 
-		public ArchivedTagContract() { }
+		public ArchivedTagContract() {
+			Targets = TagTargetTypes.All;
+		}
 
-		public ArchivedTagContract(Tag tag, TagDiff diff) {
+		public ArchivedTagContract(Tag tag, TagDiff diff) : this() {
 
 			ParamIs.NotNull(() => tag);
 
