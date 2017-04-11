@@ -230,5 +230,14 @@ namespace ViewRes.Tag {
                 return ResourceManager.GetString("UnfollowTag", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid for.
+        /// </summary>
+        public static string ValidFor {
+            get {
+                return ResourceManager.GetString("ValidFor", resourceCulture);
+            }
+        }
     }
 }

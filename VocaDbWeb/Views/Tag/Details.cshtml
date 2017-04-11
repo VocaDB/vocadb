@@ -1,5 +1,7 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Model
 @using VocaDb.Model.DataContracts.Tags
+@using VocaDb.Model.Domain
 @using Res = ViewRes.Tag.DetailsStrings;
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Security
@@ -131,6 +133,12 @@
 				<br />
 			}
 			
+			@if (Model.Targets != TagTargetTypes.Nothing && Model.Targets != TagTargetTypes.All) {
+				<p>
+					@Res.ValidFor: @string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined && Model.Targets.HasFlag((TagTargetTypes)e)))
+				</p>
+			}
+
 			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Helpers.UniversalTimeLabel(Model.CreateDate)</p>
 
 			<br />

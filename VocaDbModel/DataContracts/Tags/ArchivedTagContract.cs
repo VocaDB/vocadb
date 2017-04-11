@@ -30,6 +30,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			data.CategoryName = thisVersion.CategoryName;
 			data.HideFromSuggestions = thisVersion.HideFromSuggestions;
 			data.Id = thisVersion.Id;
+			data.Targets = thisVersion.Targets;
 			data.TranslatedName = thisVersion.TranslatedName;
 
 			DoIfExists(version, TagEditableFields.Description, xmlCache, v => {
@@ -59,6 +60,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Names = diff.IncludeNames ? tag.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			Parent = ObjectRefContract.Create(tag.Parent);
 			RelatedTags = diff.IncludeRelatedTags ? tag.RelatedTags.Select(t => new ObjectRefContract(t.LinkedTag)).ToArray() : null;
+			Targets = tag.Targets;
 			ThumbMime = tag.Thumb != null ? tag.Thumb.Mime : null;
 			TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? tag.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
@@ -88,6 +90,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public ObjectRefContract[] RelatedTags { get; set; }
+
+		[DataMember]
+		public TagTargetTypes Targets { get; set; }
 
 		[DataMember]
 		public string ThumbMime { get; set; }

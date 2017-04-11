@@ -174,4 +174,7 @@
   <data name="UnfollowTag" xml:space="preserve">
     <value>Unfollow tag</value>
   </data>
+  <data name="ValidFor" xml:space="preserve">
+    <value>Valid for</value>
+  </data>
 </root>
