@@ -34,6 +34,7 @@ namespace VocaDb.Model.Domain.Security {
 		/// </summary>
 		public static readonly PermissionToken AddRawFileMedia =		New("9c1992d8-3fca-4008-b248-7d7f2a7f15dc", "AddRawFileMedia");
 		public static readonly PermissionToken Admin =					New("1c98077f-f36f-4ef2-8cf3-cd9e347d389a", "Admin");
+		public static readonly PermissionToken ApplyAnyTag =            New("100e81ce-6bc9-4083-bff4-2a47fcfb37d3", "ApplyAnyTag");
 		public static readonly PermissionToken ApproveEntries =			New("e3b4b909-5128-4a0e-9f26-2bf1d5e497ab", "ApproveEntries");
 		public static readonly PermissionToken BulkDeletePVs =			New("caa8f4d7-322e-44f7-ad79-7de767ef1128", "BulkDeletePVs");
 

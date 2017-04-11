@@ -13,10 +13,14 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Service.Queries {
 
+	/// <summary>
+	/// Tests for <see cref="TagUsageQueries"/>.
+	/// </summary>
 	[TestClass]
 	public class TagUsageQueriesTests {
 
 		private Song entry;
+		private Tag existingTag;
 		private readonly FakeUserRepository repository = new FakeUserRepository();
         private TagUsageQueries queries;
 		private User user;
@@ -41,7 +45,7 @@ namespace VocaDb.Tests.Service.Queries {
 			user = repository.Save(CreateEntry.User(group: UserGroupId.Trusted));
 			queries = new TagUsageQueries(new FakePermissionContext(user));
 			entry = repository.Save(CreateEntry.Song(name: "Puppet"));
-			repository.Save(CreateEntry.Tag("techno"));
+			existingTag = repository.Save(CreateEntry.Tag("techno"));
 		}
 
 		[TestMethod]
@@ -230,6 +234,20 @@ namespace VocaDb.Tests.Service.Queries {
 			AddTags(entry.Id, Contract(tag.Id));
 
 			Assert.AreEqual(0, repository.List<UserMessage>().Count, "No message was sent");
+
+		}
+
+		[TestMethod]
+		public void SkipInvalidTarget() {
+
+			existingTag.Targets = TagTargetTypes.Album;
+			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
+
+			AddTags(entry.Id, Contract(existingTag.Id), Contract(tag.Id));
+
+			var entryTags = entry.Tags.Tags.ToArray();
+			Assert.AreEqual(1, entryTags.Length, "Number of tags");
+			Assert.IsTrue(entryTags.Any(t => t.Id == 39), "vocarock tag is added");
 
 		}
 

@@ -35,6 +35,7 @@ namespace VocaDb.Model.Domain.Users {
 		private static readonly UserGroup mod = new UserGroup(UserGroupId.Moderator,
 			trusted, 
 			PermissionToken.AccessManageMenu, 
+			PermissionToken.ApplyAnyTag,
 			PermissionToken.BulkDeletePVs, 
 			PermissionToken.DeleteComments, 
 			PermissionToken.DesignatedStaff, 

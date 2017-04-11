@@ -362,6 +362,18 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		public virtual bool IsValidFor(EntryType entryType) {
+
+			if (Targets == TagTargetTypes.All)
+				return true;
+
+			if (Targets == TagTargetTypes.Nothing)
+				return false;
+
+			return Targets.HasFlag((TagTargetTypes)entryType);
+
+		}
+
 		public virtual ISet<RelatedTag> RelatedTags {
 			get { return relatedTags; }
 			set {

@@ -19,6 +19,7 @@
 			@ArchivedEntryHelpers.DataRow("Description", comparedTags, d => d.Description)
 			@ArchivedEntryHelpers.DataRow("Description English", comparedTags, d => d.DescriptionEng)
 			@ArchivedEntryHelpers.ObjectRefList("Related tags", comparedTags, d => d.RelatedTags)
+			@ArchivedEntryHelpers.DataRow("Valid for", comparedTags, d => d.Targets)
 			@ArchivedEntryHelpers.DataRowList("External links", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
 			@ArchivedEntryHelpers.DataRow("Category name", comparedTags, d => d.CategoryName)
 			@ArchivedEntryHelpers.DataRow("Parent", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.Parent))

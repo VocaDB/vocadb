@@ -39,7 +39,8 @@ namespace VocaDb.Model.Service.Queries {
 			this.permissionContext = permissionContext;
 		}
 
-		public TagUsageForApiContract[] AddTags<TEntry, TTag>(int entryId, TagBaseContract[] tags, 
+		public TagUsageForApiContract[] AddTags<TEntry, TTag>(int entryId, 
+			TagBaseContract[] tags, 
 			bool onlyAdd,
 			IRepository<User> repository,
 			IEntryLinkFactory entryLinkFactory,
@@ -76,10 +77,16 @@ namespace VocaDb.Model.Service.Queries {
 				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
 				var newTags = newTagNames.Select(t => tagFactory.CreateTag(t)).ToArray();
 
-				// Get the final list of tag names with translations
-				var appliedTags = tagsFromNames.Concat(tagsFromIds).Concat(newTags).Distinct().ToArray();
-
 				var entry = ctx.OfType<TEntry>().Load(entryId);
+
+				// Get the final list of tag names with translations
+				var appliedTags = tagsFromNames
+					.Concat(tagsFromIds)
+					.Where(t => permissionContext.HasPermission(PermissionToken.ApplyAnyTag) || t.IsValidFor(entry.EntryType))
+					.Concat(newTags)
+					.Distinct()
+					.ToArray();
+
 				var tagUsageFactory = tagUsageFactoryFactory(entry, ctx.OfType<TTag>());
 
 				var tagNames = appliedTags.Select(t => t.DefaultName);
