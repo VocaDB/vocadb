@@ -8,6 +8,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -77,8 +78,13 @@ namespace VocaDb.Web.Controllers
 
 			PageProperties.PageTitle = string.Format("{0} ({1})", ev.Name, ViewRes.Event.DetailsStrings.Event);
 			PageProperties.Title = ev.Name;
-			PageProperties.Subtitle = ViewRes.Event.DetailsStrings.Event;
 			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
+
+			if (ev.Category == EventCategory.Unspecified || ev.Category == EventCategory.Other) {
+				PageProperties.Subtitle = ViewRes.Event.DetailsStrings.Event;
+			} else {
+				PageProperties.Subtitle = Translate.ReleaseEventCategoryNames[ev.Category];
+			}
 
 			return View(ev);
 
