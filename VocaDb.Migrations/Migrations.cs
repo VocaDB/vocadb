@@ -4,6 +4,14 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_04_13_2100)]
+	public class EventStatusAndCategory : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Status").OnTable(TableNames.AlbumReleaseEvents).AsString(10).NotNullable().WithDefaultValue("Finished");
+			Create.Column("Category").OnTable(TableNames.AlbumReleaseEvents).AsString(30).NotNullable().WithDefaultValue("Unspecified");
+		}
+	}
+
 	[Migration(2017_04_10_2100)]
 	public class TagTargetTypes : AutoReversingMigration {
 		public override void Up() {

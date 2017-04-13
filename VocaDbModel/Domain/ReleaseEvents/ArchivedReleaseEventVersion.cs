@@ -27,14 +27,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public ArchivedReleaseEventVersion(ReleaseEvent releaseEvent, XDocument data, ReleaseEventDiff diff, AgentLoginData author,
 			EntryEditEvent commonEditEvent, string notes)
-			: base(data, author, releaseEvent.Version, EntryStatus.Finished, notes) {
+			: base(data, author, releaseEvent.Version, releaseEvent.Status, notes) {
 
 			ParamIs.NotNull(() => diff);
 
 			ReleaseEvent = releaseEvent;
 			Diff = diff;
 			CommonEditEvent = commonEditEvent;
-			Status = EntryStatus.Finished;
 
 		}
 

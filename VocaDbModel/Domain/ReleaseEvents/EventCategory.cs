@@ -1,12 +1,12 @@
 ﻿namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public enum EventType {
+	public enum EventCategory {
 		Unspecified = 0,
 		/// <summary>
 		/// Comiket, VoMas
 		/// </summary>
 		AlbumRelease = 1,
-		CharacterAnniversary = 2,
+		Anniversary = 2,
 		/// <summary>
 		/// Vocaloid Freak
 		/// </summary>
@@ -15,11 +15,12 @@
 		/// Magical Mirai
 		/// </summary>
 		Concert = 8,
+		Contest = 16,
 		/// <summary>
 		/// Nico Chokaigi
 		/// </summary>
-		Convention = 16,
-		Other = 32
+		Convention = 32,
+		Other = 64
 	}
 
 }

@@ -36,7 +36,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private IList<ReleaseEventWebLink> webLinks = new List<ReleaseEventWebLink>();
 
 		public ReleaseEvent() {
+			Category = EventCategory.Unspecified;
 			Description = SeriesSuffix = string.Empty;
+			Status = EntryStatus.Finished;
 		}
 
 		public ReleaseEvent(string description, DateTime? date, string name)
@@ -97,6 +99,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual EventCategory Category { get; set; }
+
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		public virtual IList<ReleaseEventComment> Comments {
@@ -151,6 +155,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual SongList SongList { get; set; }
 
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
+
+		public virtual EntryStatus Status { get; set; }
 
 		/// <summary>
 		/// URL slug. Cannot be null. Can be empty.
