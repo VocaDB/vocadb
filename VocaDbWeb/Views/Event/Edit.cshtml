@@ -114,13 +114,15 @@
 		<div data-bind="markdown: description"></div>
 	</div>
 	
-	<div class="editor-label">
-		<label>Category</label>
-	</div>
-	<div class="editor-field">
-		<div class="row-fluid">
-			<div class="span4">
-				@Html.EnumDropDownListFor(m => m.Category, Translate.ReleaseEventCategoryNames)
+	<div data-bind="visible: !isSeriesEvent()">
+		<div class="editor-label">
+			Category
+		</div>
+		<div class="editor-field">
+			<div class="row-fluid">
+				<div class="span4">
+					@Html.EnumDropDownListFor(m => m.Category, Translate.ReleaseEventCategoryNames)
+				</div>
 			</div>
 		</div>
 	</div>

@@ -7,15 +7,17 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		Nothing = 0,
 
-		Description = 1,
+		Category = 1,
 
-		Name = 2,
+		Description = 2,
 
-		Names = 4,
+		Name = 4,
 
-		Picture = 8,
+		Names = 8,
 
-		WebLinks = 16
+		Picture = 16,
+
+		WebLinks = 32
 
 	}
 

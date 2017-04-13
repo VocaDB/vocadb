@@ -19,7 +19,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 		string IEntryBase.DefaultName => Name;
-		bool IDeletableEntry.Deleted => false;
 		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
 		string IEntryImageInformation.Mime => PictureMime;
 
@@ -37,6 +36,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public ReleaseEvent() {
 			Category = EventCategory.Unspecified;
+			Deleted = false;
 			Description = SeriesSuffix = string.Empty;
 			Status = EntryStatus.Finished;
 		}
@@ -114,6 +114,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual bool CustomName { get; set; }
 
 		public virtual Date Date { get; set; }
+
+		public virtual bool Deleted { get; set; }
 
 		public virtual string Description {
 			get => description;

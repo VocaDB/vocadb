@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlbumRelease" xml:space="preserve">
-    <value>Album release event</value>
+    <value>Album release fair</value>
   </data>
   <data name="Anniversary" xml:space="preserve">
     <value>Character anniversary</value>

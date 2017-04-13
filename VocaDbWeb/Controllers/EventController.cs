@@ -80,10 +80,12 @@ namespace VocaDb.Web.Controllers
 			PageProperties.Title = ev.Name;
 			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
 
-			if (ev.Category == EventCategory.Unspecified || ev.Category == EventCategory.Other) {
+			var inheritedCategory = ev.Series != null ? ev.Series.Category : ev.Category;
+
+			if (inheritedCategory == EventCategory.Unspecified || inheritedCategory == EventCategory.Other) {
 				PageProperties.Subtitle = ViewRes.Event.DetailsStrings.Event;
 			} else {
-				PageProperties.Subtitle = Translate.ReleaseEventCategoryNames[ev.Category];
+				PageProperties.Subtitle = Translate.ReleaseEventCategoryNames[inheritedCategory];
 			}
 
 			return View(ev);

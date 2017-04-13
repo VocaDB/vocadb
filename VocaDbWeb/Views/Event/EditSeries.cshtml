@@ -70,6 +70,17 @@
 		<input id="newAliasName" type="text" maxlength="50" />
 		<a href="#" id="createAliasLink" class="textLink addLink">Add</a>
 	</div>
+	
+	<div class="editor-label">
+		<label>Category</label>
+	</div>
+	<div class="editor-field">
+		<div class="row-fluid">
+			<div class="span4">
+				@Html.EnumDropDownListFor(m => m.Category, Translate.ReleaseEventCategoryNames)
+			</div>
+		</div>
+	</div>
 
 	<div class="editor-label">
 		<label>Picture</label>

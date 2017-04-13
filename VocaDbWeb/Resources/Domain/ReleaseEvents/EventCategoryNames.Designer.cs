@@ -61,7 +61,7 @@ namespace VocaDb.Web.Resources.Domain.ReleaseEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Album release event.
+        ///   Looks up a localized string similar to Album release fair.
         /// </summary>
         public static string AlbumRelease {
             get {

@@ -11,6 +11,8 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
+			Map(m => m.Category).Not.Nullable();
+			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(400).Not.Nullable();
 			Map(m => m.Name).Length(50).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();

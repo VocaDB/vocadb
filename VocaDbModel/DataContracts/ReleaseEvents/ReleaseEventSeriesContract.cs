@@ -21,6 +21,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => series);
 
+			Category = series.Category;
+			Deleted = series.Deleted;
 			Description = series.Description;
 			Id = series.Id;
 			Name = series.Name;
@@ -28,6 +30,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Version = series.Version;
 
 		}
+
+		[DataMember]
+		public EventCategory Category { get; set; }
+
+		[DataMember]
+		public bool Deleted { get; set; }
 
 		[DataMember]
 		public string Description { get; set; }

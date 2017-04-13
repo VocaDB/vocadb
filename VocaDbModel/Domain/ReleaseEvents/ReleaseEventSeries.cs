@@ -15,14 +15,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		IEntryWithNames, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>, 
 		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation {
 
-		string IEntryBase.DefaultName => Name;
-
-		bool IDeletableEntry.Deleted => false;
-
-		string IEntryImageInformation.Mime => PictureMime;
-
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
+		string IEntryBase.DefaultName => Name;
+		string IEntryImageInformation.Mime => PictureMime;
 		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
 
 		private IList<ReleaseEventSeriesAlias> aliases = new List<ReleaseEventSeriesAlias>();
@@ -34,6 +30,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private IList<ReleaseEventSeriesWebLink> webLinks = new List<ReleaseEventSeriesWebLink>();
 
 		public ReleaseEventSeries() {
+			Category = EventCategory.Unspecified;
+			Deleted = false;
 			Description = string.Empty;
 		}
 
@@ -67,6 +65,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				archivedVersions = value;
 			}
 		}
+
+		public virtual EventCategory Category { get; set; }
+
+		public virtual bool Deleted { get; set; }
 
 		public virtual string Description {
 			get => description;

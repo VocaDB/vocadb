@@ -9,7 +9,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 	public class ReleaseEventContract : IReleaseEvent, IEntryImageInformation, IEntryBase {
 
-		bool IDeletableEntry.Deleted => false;
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;
 		string IEntryImageInformation.Mime => PictureMime;
@@ -27,6 +26,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Category = ev.Category;
 			CustomName = ev.CustomName;
 			Date = ev.Date;
+			Deleted = ev.Deleted;
 			Description = ev.Description;
 			Id = ev.Id;
 			Name = ev.Name;
@@ -47,6 +47,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public bool CustomName { get; set; }
 
 		public DateTime? Date { get; set; }
+
+		public bool Deleted { get; set; }
 
 		public string Description { get; set; }
 

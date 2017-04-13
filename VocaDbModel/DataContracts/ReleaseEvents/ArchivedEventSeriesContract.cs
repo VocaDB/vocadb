@@ -14,6 +14,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			ParamIs.NotNull(() => series);
 
 			Aliases = series.Aliases.Select(a => a.Name).ToArray();
+			Category = series.Category;
 			Description = series.Description;
 			Id = series.Id;
 			MainPictureMime = series.PictureMime;
@@ -24,6 +25,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public string[] Aliases { get; set; }
+
+		[DataMember]
+		public EventCategory Category { get; set; }
 
 		[DataMember]
 		public string Description { get; set; }

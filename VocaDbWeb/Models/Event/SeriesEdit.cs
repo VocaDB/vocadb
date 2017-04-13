@@ -4,6 +4,7 @@ using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event {
@@ -19,6 +20,7 @@ namespace VocaDb.Web.Models.Event {
 
 			ParamIs.NotNull(() => contract);
 
+			Category = contract.Category;
 			Contract = contract;
 			Aliases = contract.Aliases.ToList();
 			Description = contract.Description;
@@ -29,6 +31,8 @@ namespace VocaDb.Web.Models.Event {
 		}
 
 		public IList<string> Aliases { get; set; }
+
+		public EventCategory Category { get; set; }
 
 		public ReleaseEventSeriesForEditContract Contract { get; set; }
 
@@ -46,6 +50,7 @@ namespace VocaDb.Web.Models.Event {
 
 			return new ReleaseEventSeriesForEditContract { 
 				Aliases = this.Aliases.ToArray(),
+				Category = Category,
 				Description = this.Description ?? string.Empty, 
 				Id = this.Id,
 				Name = this.Name,

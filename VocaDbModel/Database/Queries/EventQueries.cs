@@ -367,7 +367,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (contract.Id == 0) {
 
-					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Aliases);
+					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Aliases) {
+						Category = contract.Category
+					};
 					session.Save(series);
 
 					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Name);
@@ -402,6 +404,11 @@ namespace VocaDb.Model.Database.Queries {
 					if (series.Name != contract.Name) {
 						diff.Name.Set();
 						series.Name = contract.Name;
+					}
+
+					if (series.Category != contract.Category) {
+						diff.Category.Set();
+						series.Category = contract.Category;
 					}
 
 					if (series.Description != contract.Description) {
