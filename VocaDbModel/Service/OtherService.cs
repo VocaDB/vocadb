@@ -151,7 +151,7 @@ namespace VocaDb.Model.Service {
 
 				var recentEvents = session.Query<ReleaseEvent>()
 					.WhereDateIsBetween(minDate, maxDate)
-					.OrderByDate(SortDirection.Descending)
+					.OrderByDate(SortDirection.Ascending)
 					.Take(count)
 					.ToArray();
 
