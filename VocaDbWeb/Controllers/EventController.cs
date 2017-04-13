@@ -88,7 +88,7 @@ namespace VocaDb.Web.Controllers
         public ActionResult Edit(int? id, int? seriesId)
         {
 
-			var model = (id != null ? new EventEdit(Service.GetReleaseEventForEdit(id.Value)) 
+			var model = (id != null ? new EventEdit(Service.GetReleaseEventForEdit(id.Value), PermissionContext) 
 				: new EventEdit(seriesId != null ? Service.GetReleaseEventSeriesForEdit(seriesId.Value): null));
 
 			return View(model);
@@ -109,7 +109,7 @@ namespace VocaDb.Web.Controllers
 
 				if (model.Id != 0) {
 					var contract = Service.GetReleaseEventForEdit(model.Id);
-					model.CopyNonEditableProperties(contract);					
+					model.CopyNonEditableProperties(contract, PermissionContext);					
 				}
 
 				return View(model);

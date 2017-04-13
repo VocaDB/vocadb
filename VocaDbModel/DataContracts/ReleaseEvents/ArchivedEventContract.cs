@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			ParamIs.NotNull(() => ev);
 			ParamIs.NotNull(() => diff);
 
+			Category = ev.Category;
 			Date = ev.Date;
 			Description = ev.Description;
 			Id = ev.Id;
@@ -27,6 +28,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			WebLinks = diff.IsIncluded(ReleaseEventEditableFields.WebLinks) ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
+
+		[DataMember]
+		public EventCategory Category { get; set; }
 
 		[DataMember]
 		public DateTime? Date { get; set; }

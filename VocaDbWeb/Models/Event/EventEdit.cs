@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event {
@@ -27,11 +30,12 @@ namespace VocaDb.Web.Models.Event {
 
 		}
 
-		public EventEdit(ReleaseEventDetailsContract contract)
+		public EventEdit(ReleaseEventDetailsContract contract, IUserPermissionContext userContext)
 			: this() {
 
 			ParamIs.NotNull(() => contract);
 
+			Category = contract.Category;
 			CustomName = contract.CustomName = contract.CustomName;
 			Date = contract.Date;
 			Description = contract.Description;
@@ -41,14 +45,19 @@ namespace VocaDb.Web.Models.Event {
 			SeriesNumber = contract.SeriesNumber;
 			SeriesSuffix = contract.SeriesSuffix;
 			SongList = contract.SongList;
+			Status = contract.Status;
 			Venue = contract.Venue;
 			WebLinks = contract.WebLinks;
 
-			CopyNonEditableProperties(contract);
+			CopyNonEditableProperties(contract, userContext);
 
 		}
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
+
+		public EntryStatus[] AllowedEntryStatuses { get; set; }
+
+		public EventCategory Category { get; set; }
 
 		public bool CustomName { get; set; }
 
@@ -79,6 +88,8 @@ namespace VocaDb.Web.Models.Event {
 		[FromJson]
 		public SongListBaseContract SongList { get; set; }
 
+		public EntryStatus Status { get; set; }
+
 		public string UrlSlug { get; set; }
 
 		public string Venue { get; set; }
@@ -88,10 +99,11 @@ namespace VocaDb.Web.Models.Event {
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
 
-		public void CopyNonEditableProperties(ReleaseEventDetailsContract contract) {
+		public void CopyNonEditableProperties(ReleaseEventDetailsContract contract, IUserPermissionContext userContext) {
 
 			ParamIs.NotNull(() => contract);
 
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 			OldName = contract.Name;
 			PictureMime = contract.PictureMime;
 			UrlSlug = contract.UrlSlug;
@@ -102,6 +114,7 @@ namespace VocaDb.Web.Models.Event {
 		public ReleaseEventDetailsContract ToContract() {
 
 			return new ReleaseEventDetailsContract {
+				Category = Category,
 				CustomName = this.CustomName,
 				Date = this.Date,
 				Description = this.Description ?? string.Empty,
@@ -111,6 +124,7 @@ namespace VocaDb.Web.Models.Event {
 				SeriesNumber = this.SeriesNumber,
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
 				SongList = SongList,
+				Status = Status,
 				Venue = Venue,
 				WebLinks = this.WebLinks
 			};

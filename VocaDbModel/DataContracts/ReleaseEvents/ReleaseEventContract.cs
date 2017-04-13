@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => ev);
 
+			Category = ev.Category;
 			CustomName = ev.CustomName;
 			Date = ev.Date;
 			Description = ev.Description;
@@ -31,6 +32,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Name = ev.Name;
 			PictureMime = ev.PictureMime;
 			SongList = ObjectHelper.Convert(ev.SongList, s => new SongListBaseContract(s));
+			Status = ev.Status;
 			UrlSlug = ev.UrlSlug;
 			Venue = ev.Venue;
 			Version = ev.Version;
@@ -39,6 +41,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				Series = new ReleaseEventSeriesContract(ev.Series);
 
 		}
+
+		public EventCategory Category { get; set; }
 
 		public bool CustomName { get; set; }
 
@@ -55,6 +59,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ReleaseEventSeriesContract Series { get; set; }
 
 		public SongListBaseContract SongList { get; set; }
+
+		public EntryStatus Status { get; set; }
 
 		public string UrlSlug { get; set; }
 

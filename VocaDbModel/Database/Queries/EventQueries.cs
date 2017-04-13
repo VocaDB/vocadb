@@ -212,7 +212,9 @@ namespace VocaDb.Model.Database.Queries {
 						ev = new ReleaseEvent(contract.Description, contract.Date, contract.Name);
 					}
 
+					ev.Category = contract.Category;
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+					ev.Status = contract.Status;
 					ev.Venue = contract.Venue;
 
 					if (contract.SongList != null) {
@@ -249,6 +251,9 @@ namespace VocaDb.Model.Database.Queries {
 					ev = session.Load(contract.Id);
 					var diff = new ReleaseEventDiff(DoSnapshot(ev, session));
 
+					if (ev.Category != contract.Category)
+						diff.Category.Set();
+
 					if (!ev.Date.Equals(contract.Date))
 						diff.Date.Set();
 
@@ -272,11 +277,15 @@ namespace VocaDb.Model.Database.Queries {
 						diff.SongList.Set();
 					}
 
+					if (ev.Status != contract.Status)
+						diff.Status.Set();
+
 					if (!string.Equals(ev.Venue, contract.Venue)) {
 						diff.Venue.Set();
 					}
 
 					ev.Series = session.NullSafeLoad<ReleaseEventSeries>(contract.Series);
+					ev.Category = contract.Category;
 					ev.CustomName = contract.CustomName;
 					ev.Date = contract.Date;
 					ev.Description = contract.Description;
@@ -284,6 +293,7 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SeriesNumber = contract.SeriesNumber;
 					ev.SeriesSuffix = contract.SeriesSuffix;
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+					ev.Status = contract.Status;
 					ev.Venue = contract.Venue;
 					ev.UpdateNameFromSeries();
 

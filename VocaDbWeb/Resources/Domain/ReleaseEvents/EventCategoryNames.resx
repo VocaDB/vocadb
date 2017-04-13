@@ -117,40 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
+  <data name="AlbumRelease" xml:space="preserve">
+    <value>Album release event</value>
   </data>
-  <data name="Date" xml:space="preserve">
-    <value>Date</value>
+  <data name="Anniversary" xml:space="preserve">
+    <value>Character anniversary</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="Club" xml:space="preserve">
+    <value>Club</value>
   </data>
-  <data name="MainPicture" xml:space="preserve">
-    <value>Main picture</value>
+  <data name="Concert" xml:space="preserve">
+    <value>Concert</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="Contest" xml:space="preserve">
+    <value>Contest</value>
   </data>
-  <data name="Series" xml:space="preserve">
-    <value>Series</value>
+  <data name="Convention" xml:space="preserve">
+    <value>Convention</value>
   </data>
-  <data name="SeriesNumber" xml:space="preserve">
-    <value>Series number</value>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
   </data>
-  <data name="SeriesSuffix" xml:space="preserve">
-    <value>Series suffix</value>
-  </data>
-  <data name="SongList" xml:space="preserve">
-    <value>Setlist</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Venue" xml:space="preserve">
-    <value>Venue</value>
-  </data>
-  <data name="WebLinks" xml:space="preserve">
-    <value>External links</value>
+  <data name="Unspecified" xml:space="preserve">
+    <value>Unspecified</value>
   </data>
 </root>

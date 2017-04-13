@@ -113,6 +113,17 @@
 		Live preview
 		<div data-bind="markdown: description"></div>
 	</div>
+	
+	<div class="editor-label">
+		<label>Category</label>
+	</div>
+	<div class="editor-field">
+		<div class="row-fluid">
+			<div class="span4">
+				@Html.EnumDropDownListFor(m => m.Category, Translate.ReleaseEventCategoryNames)
+			</div>
+		</div>
+	</div>
 
 	<div class="editor-label">
 		@Html.LabelFor(m => m.Date)
@@ -163,6 +174,13 @@
 	<div class="editor-field" data-bind="with: webLinks">
 		@KnockoutHelpers.WebLinksEditViewKnockout(false)
 		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+	</div>
+	
+	<div class="editor-label">
+		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+	</div>
+	<div class="editor-field">
+		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
 	</div>
 
 	<br />

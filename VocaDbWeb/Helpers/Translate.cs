@@ -116,6 +116,9 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<PVType> PVTypeNames =
 			new TranslateableEnum<PVType>(() => global::Resources.PVTypeNames.ResourceManager);
 
+		public static readonly TranslateableEnum<EventCategory> ReleaseEventCategoryNames =
+			new TranslateableEnum<EventCategory>(() => Resources.Domain.ReleaseEvents.EventCategoryNames.ResourceManager);
+
 		public static readonly TranslateableEnum<ReleaseEventEditableFields> ReleaseEventEditableFieldNames =
 			new TranslateableEnum<ReleaseEventEditableFields>(() => global::Resources.ReleaseEventEditableFieldNames.ResourceManager);
 

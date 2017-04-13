@@ -1278,6 +1278,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TranslationTypeNames.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Domain\ReleaseEvents\EventCategoryNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventCategoryNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Domain\ReleaseEvents\ReleaseEventSeriesEditableFieldNames.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2202,6 +2207,10 @@
     <EmbeddedResource Include="Resources\Domain\Globalization\TranslationTypeNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TranslationTypeNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Domain\ReleaseEvents\EventCategoryNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EventCategoryNames.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Domain\ReleaseEvents\ReleaseEventSeriesEditableFieldNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
