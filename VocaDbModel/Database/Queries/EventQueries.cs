@@ -255,6 +255,7 @@ namespace VocaDb.Model.Database.Queries {
 				} else {
 
 					ev = session.Load(contract.Id);
+					permissionContext.VerifyEntryEdit(ev);
 					var diff = new ReleaseEventDiff(DoSnapshot(ev, session));
 
 					if (ev.Category != contract.Category)

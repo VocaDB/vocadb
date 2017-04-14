@@ -7,7 +7,7 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
-	public class ReleaseEventContract : IReleaseEvent, IEntryImageInformation, IEntryBase {
+	public class ReleaseEventContract : IReleaseEvent, IEntryImageInformation, IEntryBase, IEntryWithStatus {
 
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;

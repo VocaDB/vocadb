@@ -15,7 +15,8 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ReleaseEvent : IEntryWithNames, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent, IEntryImageInformation, IEntryWithComments<ReleaseEventComment> {
+	public class ReleaseEvent : IEntryWithNames, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent, 
+		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 		string IEntryBase.DefaultName => Name;
