@@ -124,11 +124,16 @@ namespace VocaDb.Model.DataContracts.Api {
 			: this(releaseEvent, ContentLanguagePreference.Default, includedFields) {
 
 			ActivityDate = releaseEvent.Date.DateTime;
-			ReleaseEventSeriesName = releaseEvent.Series != null ? releaseEvent.Series.Name : null;
+			ReleaseEventSeriesName = releaseEvent.Series?.Name;
+			Status = releaseEvent.Status;
 			UrlSlug = releaseEvent.UrlSlug;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
 				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister, ssl);
+			}
+
+			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
+				WebLinks = releaseEvent.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
 
 		}
@@ -197,10 +202,15 @@ namespace VocaDb.Model.DataContracts.Api {
 			: this(tag, languagePreference, includedFields) {
 
 			CreateDate = tag.CreateDate;
+			Status = tag.Status;
 			TagCategoryName = tag.CategoryName;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null) {
 				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl, Tag.ImageSizes);					
+			}
+
+			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
+				WebLinks = tag.WebLinks.Links.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
 
 			UrlSlug = tag.UrlSlug;
