@@ -43,7 +43,7 @@ namespace VocaDb.Model.Service {
 
 			return HandleQuery(session => new ReleaseEventDetailsContract(
 				session.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, null) {
-					AllSeries = session.Query<ReleaseEventSeries>().Select(s => new ReleaseEventSeriesContract(s)).ToArray()
+					AllSeries = session.Query<ReleaseEventSeries>().Select(s => new ReleaseEventSeriesContract(s, false)).ToArray()
 				});
 
 		}

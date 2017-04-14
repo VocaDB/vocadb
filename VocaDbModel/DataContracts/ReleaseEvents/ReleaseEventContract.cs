@@ -18,7 +18,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = string.Empty;
 		}
 
-		public ReleaseEventContract(ReleaseEvent ev, bool includeSeries = false)
+		public ReleaseEventContract(ReleaseEvent ev, bool includeSeries = false, bool includeSeriesLinks = false)
 			: this() {
 
 			ParamIs.NotNull(() => ev);
@@ -37,8 +37,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Venue = ev.Venue;
 			Version = ev.Version;
 
-			if (includeSeries && ev.Series != null)
-				Series = new ReleaseEventSeriesContract(ev.Series);
+			if (includeSeries && ev.Series != null) {
+				Series = new ReleaseEventSeriesContract(ev.Series, includeSeriesLinks);
+			}
 
 		}
 

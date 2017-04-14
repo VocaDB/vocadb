@@ -8,9 +8,16 @@
 
 @{
 
-	ViewBag.Parents = new[] {
-		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index")
-	};
+	if (Model.Series == null) {
+		ViewBag.Parents = new[] {
+			Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index")
+		};
+	} else {
+		ViewBag.Parents = new[] {
+			Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index"),
+			Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })
+		};
+	}
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
@@ -34,36 +41,43 @@
 	@Helpers.EntryStatusMessage(Model.Status)
 }
 
-<div class="media">
-	@if (pictureData != null && !string.IsNullOrEmpty(pictureData.Mime)) {
-		<a class="pull-left" href="@fullImageUrl">
-			<img class="media-object" src="@smallThumbUrl" alt="Thumb" />
-		</a>
-	}
-	<div class="media-body">
-		
-		@if (Model.Series != null) {
-			<p>@Res.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })</p>
-		}
+<div class="well well-transparent">
 
-		@if (Model.Date != null) {
-			<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
+	<div class="media">
+		@if (pictureData != null && !string.IsNullOrEmpty(pictureData.Mime)) {
+			<a class="pull-left" href="@fullImageUrl">
+				<img class="media-object" src="@smallThumbUrl" alt="Thumb" />
+			</a>
 		}
+		<div class="media-body">
+			@if (Model.Date != null) {
+				<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
+			}
 		
-		@if (!string.IsNullOrEmpty(Model.Venue)) {
-			<p>@Res.Venue: @Model.Venue</p>
-		}
+			@if (!string.IsNullOrEmpty(Model.Venue)) {
+				<p>@Res.Venue: @Model.Venue</p>
+			}
 
-		@if (!string.IsNullOrEmpty(Model.Description)) {
-			<p>@Html.Raw(descriptionHtml)</p>
-		}
+			@if (!string.IsNullOrEmpty(Model.Description)) {
+				<p>@Html.Raw(descriptionHtml)</p>
+			}
 		
-		@if (Model.WebLinks.Any()) {
-			@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
-			<br />
-		}		
+			@if (Model.WebLinks.Any()) {
+				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
+				<br />
+			}		
+		</div>
 	</div>
+	
 </div>
+
+@if (Model.Series != null) {
+	<h3>@Res.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })</h3>
+	if (!string.IsNullOrEmpty(Model.Series.Description)) {
+		@HtmlHelpers.FormatMarkdown(Model.Series.Description);
+	}
+	@EntryDetailsHelpers.ExternalLinksList(Model.Series.WebLinks, false)
+}
 
 @if (Model.SongList != null) {
 	<h3 class="withMargin">@Res.SongList: @Html.ActionLink(Model.SongList.Name, "Details", "SongList", new { id = Model.SongList.Id }, null)</h3>
@@ -85,7 +99,7 @@
 }
 
 @if (Model.Albums.Any()) {
-	<h3>
+	<h3 class="withMargin">
 		@Res.Albums
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Albums.Length)</small>
 	</h3>

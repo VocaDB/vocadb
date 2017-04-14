@@ -18,7 +18,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public string[] Aliases { get; set; }
 
-		public WebLinkContract[] WebLinks { get; set; }
-
 	}
+
 }

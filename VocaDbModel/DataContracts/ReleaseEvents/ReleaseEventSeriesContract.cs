@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Linq;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -16,7 +17,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = string.Empty;
 		}
 
-		public ReleaseEventSeriesContract(ReleaseEventSeries series)
+		public ReleaseEventSeriesContract(ReleaseEventSeries series, bool includeLinks = false)
 			: this() {
 
 			ParamIs.NotNull(() => series);
@@ -28,6 +29,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Name = series.Name;
 			PictureMime = series.PictureMime;
 			Version = series.Version;
+
+			if (includeLinks) {
+				WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
+			}
 
 		}
 
@@ -51,6 +56,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public int Version { get; set; }
+
+		[DataMember]
+		public WebLinkContract[] WebLinks { get; set; }
 
 		public override string ToString() {
 			return string.Format("release event series {0} [{1}]", Name, Id);
