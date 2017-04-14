@@ -182,6 +182,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields) {
+
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), fields, imagePersister, true));
+
+		}
+
 		/// <summary>
 		/// Updates or creates release event.
 		/// 

@@ -3407,6 +3407,7 @@
     <Content Include="Views\Shared\_UserPopupContent.cshtml" />
     <Content Include="Views\Shared\_SongWithVotePopupContent.cshtml" />
     <Content Include="Views\User\Partials\_Events.cshtml" />
+    <Content Include="Views\Shared\_EventPopupContent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

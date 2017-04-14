@@ -1,0 +1,39 @@
+﻿@using VocaDb.Model.Helpers
+@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventForApiContract
+
+<style type="text/css">
+	.popupTitle {
+		color: black;
+	}
+</style>
+
+@{
+	var cat = Model.Series != null ? Model.Series.Category : Model.Category;
+}
+
+@if (Model.MainPicture != null && Model.MainPicture.UrlSmallThumb != null) {
+	<div class="thumbnail">
+		<img src='@Model.MainPicture.UrlSmallThumb' alt="Thumb" class="coverPicThumb" />
+	</div>
+}
+
+<strong class="popupTitle">@Model.Name</strong>
+
+@if (cat != VocaDb.Model.Domain.ReleaseEvents.EventCategory.Unspecified && cat != VocaDb.Model.Domain.ReleaseEvents.EventCategory.Other) {
+	<p>
+		@Translate.ReleaseEventCategoryNames[cat]
+	</p>
+}
+
+@if (!string.IsNullOrEmpty(Model.Description)) {
+	<p>
+		@Html.StripMarkdown(Model.Description).TruncateWithEllipsis(100)	
+	</p>
+}
+
+@if (Model.Date.HasValue) {
+	<p>
+		@ViewRes.Event.DetailsStrings.OccurrenceDate: @Model.Date.Value.ToShortDateString()		
+	</p>
+}

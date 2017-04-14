@@ -6,7 +6,9 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Paging;
@@ -195,6 +197,19 @@ namespace VocaDb.Web.Controllers
 			return View(events.Items);
 
         }
+
+	    [OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
+	    public ActionResult PopupContent(
+		    int id = invalidId,
+		    string culture = InterfaceLanguage.DefaultCultureCode) {
+
+		    if (id == invalidId)
+			    return HttpNotFound();
+
+		    var releaseEvent = queries.Load(id, ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
+		    return PartialView("_EventPopupContent", releaseEvent);
+
+	    }
 
 		public ActionResult SeriesDetails(int id = invalidId) {
 

@@ -222,7 +222,7 @@
 					<tr>
 						<td>@ViewRes.Album.DetailsStrings.ReleaseEvent</td>
 						<td>
-							@Html.ActionLink(Model.ReleaseEvent.Name, "Details", "Event", new { id = Model.ReleaseEvent.Id, slug = Model.ReleaseEvent.UrlSlug }, null)<br />
+							<a href="@Url.Action("Details", "Event", new { id = Model.ReleaseEvent.Id, slug = Model.ReleaseEvent.UrlSlug })" data-bind="eventToolTip: @Model.ReleaseEvent.Id">@Model.ReleaseEvent.Name</a>
 						</td>
 					</tr>
 				}

@@ -7,6 +7,7 @@ interface KnockoutBindingHandlers {
 	albumToolTip: KnockoutBindingHandler;
     artistToolTip: KnockoutBindingHandler;
     entryToolTip: KnockoutBindingHandler;
+	eventToolTip: KnockoutBindingHandler;
 	songToolTip: KnockoutBindingHandler;
 	tagToolTip: KnockoutBindingHandler;
 	userToolTip: KnockoutBindingHandler;
@@ -66,6 +67,13 @@ ko.bindingHandlers.artistToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
 		vdb.knockoutExtensions.initToolTip(element, '/Artist/PopupContent', ko.unwrap(valueAccessor()));
     }
+}
+
+ko.bindingHandlers.eventToolTip = {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
+		const culture = vdb.values.uiLanguage || undefined;
+		vdb.knockoutExtensions.initToolTip(element, '/Event/PopupContent', ko.unwrap(valueAccessor()), { culture: culture });
+	}
 }
 
 ko.bindingHandlers.songToolTip = {
