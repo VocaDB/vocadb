@@ -38,7 +38,7 @@ namespace VocaDb.Web.Code {
 
 		public EntryType GlobalSearchType { get; set; }
 
-		public OpenGraphModel OpenGraph { get; private set; }
+		public OpenGraphModel OpenGraph { get; }
 
 		/// <summary>
 		/// Page title is what appears in the browser title bar.
@@ -53,9 +53,7 @@ namespace VocaDb.Web.Code {
 				return (string)ViewBag.Title ?? string.Empty;
 
 			}
-			set {
-				ViewBag.PageTitle = value;
-			}
+			set => ViewBag.PageTitle = value;
 		}
 
 		/// <summary>
@@ -79,22 +77,19 @@ namespace VocaDb.Web.Code {
 		/// Subtitle appears next to the main Title.
 		/// </summary>
 		public string Subtitle {
-			get { return ViewBag.Subtitle; }
-			set { ViewBag.Subtitle = value; }
+			get => ViewBag.Subtitle;
+			set => ViewBag.Subtitle = value;
 		}
 
 		/// <summary>
 		/// Title is what appears at the top of the page.
 		/// </summary>
 		public string Title {
-			get { return ViewBag.Title; }
-			set { ViewBag.Title = value; }
+			get => ViewBag.Title;
+			set => ViewBag.Title = value;
 		}
 
-		public dynamic ViewBag {
-			get { return viewBag; }
-		}
-
+		public dynamic ViewBag => viewBag;
 	}
 
 	public class OpenGraphModel {
@@ -112,24 +107,16 @@ namespace VocaDb.Web.Code {
 		/// og:description meta field value. Defaults to summarized description meta field.
 		/// </summary>
 		public string Description {
-			get {
-				return !string.IsNullOrEmpty(description) ? description : pageProperties.SummarizedDescription;
-			}
-			set {
-				description = value;
-			}
+			get => !string.IsNullOrEmpty(description) ? description : pageProperties.SummarizedDescription;
+			set => description = value;
 		}
 
 		/// <summary>
 		/// og:image meta field value. Defaults to main image set for the page.
 		/// </summary>
 		public string Image {
-			get {
-				return !string.IsNullOrEmpty(image) ? image : pageProperties.ViewBag.Banner;
-			}
-			set {
-				image = value;
-			}
+			get => !string.IsNullOrEmpty(image) ? image : pageProperties.ViewBag.Banner;
+			set => image = value;
 		}
 
 		public bool ShowTwitterCard { get; set; }
@@ -138,12 +125,8 @@ namespace VocaDb.Web.Code {
 		/// og:title meta field value. Defaults to page title.
 		/// </summary>
 		public string Title {
-			get {
-				return !string.IsNullOrEmpty(title) ? title : pageProperties.Title;
-			}
-			set {
-				title = value;
-			}
+			get => !string.IsNullOrEmpty(title) ? title : pageProperties.Title;
+			set => title = value;
 		}
 
 		/// <summary>

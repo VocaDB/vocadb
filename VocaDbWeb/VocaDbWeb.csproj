@@ -1388,6 +1388,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FindStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Event\SeriesDetailsStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SeriesDetailsStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Views\Home\IndexStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4213,6 +4218,10 @@
       <CustomToolNamespace>ViewRes.Event</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Event\FindStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Event\SeriesDetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SeriesDetailsStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.es.resx" />
     <EmbeddedResource Include="Resources\Views\Home\IndexStrings.fi.resx" />

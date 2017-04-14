@@ -14,11 +14,7 @@ namespace VocaDb.Web.Helpers {
 
 		private static readonly IEntryThumbPersister imagePersister = new ServerEntryThumbPersister();
 
-		private static ServerEntryImagePersisterOld EntryImagePersisterOld {
-			get {
-				return new ServerEntryImagePersisterOld();
-			}
-		}
+		private static ServerEntryImagePersisterOld EntryImagePersisterOld => new ServerEntryImagePersisterOld();
 
 		private static string GetUnknownImageUrl(UrlHelper urlHelper, IEntryImageInformation imageInfo) {
 			return urlHelper.Content("~/Content/unknown.png");

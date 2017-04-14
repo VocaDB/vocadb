@@ -1,10 +1,8 @@
 ﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Resources.Views.Event
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
 
 @{
-
-	PageProperties.Title = ViewRes.MiscStrings.EventSeries + " - " + Model.Name;
-	PageProperties.Subtitle = string.Join(", ", Model.Aliases);
 
 	ViewBag.Parents = new[] {
 		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index")
@@ -46,6 +44,12 @@
 	@if (Model.WebLinks.Any()) {
 		@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 		<br />
+	}
+	
+	@if (Model.Aliases.Any()) {
+		<p>
+			@SeriesDetailsStrings.Aliases: @string.Join(", ", Model.Aliases)
+		</p>		
 	}
 </div>
 

@@ -76,17 +76,23 @@ namespace VocaDb.Web.Controllers
 				return RedirectToActionPermanent("Details", new { id, slug = ev.UrlSlug });
 			}
 
-			PageProperties.PageTitle = string.Format("{0} ({1})", ev.Name, ViewRes.Event.DetailsStrings.Event);
-			PageProperties.Title = ev.Name;
-			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
-
 			var inheritedCategory = ev.Series != null ? ev.Series.Category : ev.Category;
+			string subtitle;
 
 			if (inheritedCategory == EventCategory.Unspecified || inheritedCategory == EventCategory.Other) {
-				PageProperties.Subtitle = ViewRes.Event.DetailsStrings.Event;
+				subtitle = ViewRes.Event.DetailsStrings.Event;
 			} else {
-				PageProperties.Subtitle = Translate.ReleaseEventCategoryNames[inheritedCategory];
+				subtitle = Translate.ReleaseEventCategoryNames[inheritedCategory];
 			}
+
+			var pictureData = !string.IsNullOrEmpty(ev.PictureMime) ? (IEntryImageInformation)ev : ev.Series;
+
+			PageProperties.PageTitle = string.Format("{0} ({1})", ev.Name, subtitle);
+			PageProperties.Title = ev.Name;
+			PageProperties.Subtitle = subtitle;
+			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
+			PageProperties.OpenGraph.Image = Url.ImageThumb(pictureData, ImageSize.Original);
+			// Note: description is set in view
 
 			return View(ev);
 
@@ -196,6 +202,19 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var series = Service.GetReleaseEventSeriesDetails(id);
+			string subtitle;
+
+			if (series.Category == EventCategory.Unspecified || series.Category == EventCategory.Other) {
+				subtitle = ViewRes.MiscStrings.EventSeries;
+			} else {
+				subtitle = Translate.ReleaseEventCategoryNames[series.Category];
+			}
+
+			PageProperties.PageTitle = string.Format("{0} ({1})", series.Name, subtitle);
+			PageProperties.Title = series.Name;
+			PageProperties.Subtitle = subtitle;
+			PageProperties.OpenGraph.Image = Url.ImageThumb(series, ImageSize.Original);
+
 			return View(series);
 
 		}
