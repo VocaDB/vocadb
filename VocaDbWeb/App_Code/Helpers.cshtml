@@ -9,6 +9,7 @@
 @using VocaDb.Model.Domain;
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.PVs
+@using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 
@@ -123,6 +124,7 @@
 @helper EventThumbs(IEnumerable<ReleaseEventForApiContract> events) {
 	<div class="clearfix">
 		@foreach (var ev in events) {
+			var cat = ev.Series != null ? ev.Series.Category : ev.Category;
 			<div class="well well-transparent event-teaser">
 				@if (ev.MainPicture != null) {
 					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left">
@@ -133,6 +135,9 @@
 					<a href="@Url.EntryDetails(ev, ev.UrlSlug)">
 						@ev.Name
 					</a>
+					@if (cat != EventCategory.Unspecified && cat != EventCategory.Other) {
+						@:(@Translate.ReleaseEventCategoryNames[cat])
+					}
 					@if (ev.Date.HasValue) {
 						<br />
 						<small class="extraInfo">@(ev.Date.Value.ToShortDateString())</small>						

@@ -18,12 +18,14 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ReleaseEventForApiContract() { }
 
 		public ReleaseEventForApiContract(ReleaseEvent rel, ReleaseEventOptionalFields fields, IEntryThumbPersister thumbPersister, bool ssl) {
-			
+
+			Category = rel.Category;
 			Date = rel.Date;
 			Id = rel.Id;
 			Name = rel.Name;
 			SeriesNumber = rel.SeriesNumber;
 			SeriesSuffix = rel.SeriesSuffix;
+			Status = rel.Status;
 			UrlSlug = rel.UrlSlug;
 			VenueName = rel.Venue;
 			Version = rel.Version;
@@ -55,6 +57,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		}
 
 		[DataMember]
+		public EventCategory Category { get; set; }
+
+		[DataMember]
 		public DateTime? Date { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
@@ -83,6 +88,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public SongListBaseContract SongList { get; set; }
+
+		[DataMember]
+		public EntryStatus Status { get; set; }
 
 		[DataMember]
 		public string UrlSlug { get; set; }
