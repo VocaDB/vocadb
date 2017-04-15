@@ -108,6 +108,13 @@
 		@KnockoutHelpers.WebLinksEditViewKnockout(false)
 		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
 	</div>
+	
+	<div class="editor-label">
+		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+	</div>
+	<div class="editor-field">
+		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
+	</div>
 
 	<br />
 	@Helpers.SaveAndBackBtn(backAction)

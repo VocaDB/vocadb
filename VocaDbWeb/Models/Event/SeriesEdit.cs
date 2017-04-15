@@ -4,7 +4,9 @@ using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event {
@@ -16,7 +18,7 @@ namespace VocaDb.Web.Models.Event {
 			Aliases = new List<string>();
 		}
 
-		public SeriesEdit(ReleaseEventSeriesForEditContract contract) {
+		public SeriesEdit(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -26,11 +28,16 @@ namespace VocaDb.Web.Models.Event {
 			Description = contract.Description;
 			Id = contract.Id;
 			Name = contract.Name;
+			Status = contract.Status;
 			WebLinks = contract.WebLinks;
+
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 
 		}
 
 		public IList<string> Aliases { get; set; }
+
+		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
 		public EventCategory Category { get; set; }
 
@@ -43,6 +50,8 @@ namespace VocaDb.Web.Models.Event {
 		[Required]
 		public string Name { get; set; }
 
+		public EntryStatus Status { get; set; }
+
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
 
@@ -54,6 +63,7 @@ namespace VocaDb.Web.Models.Event {
 				Description = this.Description ?? string.Empty, 
 				Id = this.Id,
 				Name = this.Name,
+				Status = Status,
 				WebLinks = this.WebLinks
 			};
 

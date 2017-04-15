@@ -27,7 +27,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public ArchivedReleaseEventSeriesVersion(ReleaseEventSeries series, XDocument data, ReleaseEventSeriesDiff diff, AgentLoginData author,
 			EntryEditEvent commonEditEvent, string notes)
-			: base(data, author, series.Version, EntryStatus.Finished, notes) {
+			: base(data, author, series.Version, series.Status, notes) {
 
 			ParamIs.NotNull(() => diff);
 
@@ -42,7 +42,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public override IEntryDiff DiffBase => Diff;
 
 		public virtual ReleaseEventSeriesDiff Diff {
-			get { return diff; }
+			get => diff;
 			set {
 				ParamIs.NotNull(() => value);
 				diff = value;
@@ -54,7 +54,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public override IEntryWithNames EntryBase => Entry;
 
 		public virtual ReleaseEventSeries Entry {
-			get { return series; }
+			get => series;
 			set {
 				ParamIs.NotNull(() => value);
 				series = value;

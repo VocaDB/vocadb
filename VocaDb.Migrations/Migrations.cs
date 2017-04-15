@@ -4,6 +4,13 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_04_15_2100)]
+	public class EventSeriesStatus : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Status").OnTable(TableNames.AlbumReleaseEventSeries).AsString(10).NotNullable().WithDefaultValue("Finished");
+		}
+	}
+
 	[Migration(2017_04_13_2200)]
 	public class EventDeletionAndSeriesCategory : AutoReversingMigration {
 		public override void Up() {

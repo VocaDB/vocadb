@@ -13,6 +13,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public EnumFieldAccessor<ReleaseEventSeriesEditableFields> Name => Field(ReleaseEventSeriesEditableFields.Name);
 		public EnumFieldAccessor<ReleaseEventSeriesEditableFields> Names => Field(ReleaseEventSeriesEditableFields.Names);
 		public EnumFieldAccessor<ReleaseEventSeriesEditableFields> Picture => Field(ReleaseEventSeriesEditableFields.Picture);
+		public EnumFieldAccessor<ReleaseEventSeriesEditableFields> Status => Field(ReleaseEventSeriesEditableFields.Status);
 		public EnumFieldAccessor<ReleaseEventSeriesEditableFields> WebLinks => Field(ReleaseEventSeriesEditableFields.WebLinks);
 
 	}

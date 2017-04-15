@@ -7,10 +7,11 @@ using VocaDb.Model.Domain.ReleaseEvents;
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntId {
+	public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntId, IEntryWithStatus {
 
+		string IEntryBase.DefaultName => Name;		
+		EntryType IEntryBase.EntryType => EntryType.ReleaseEventSeries;
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEventSeries;
-
 		string IEntryImageInformation.Mime => PictureMime;
 
 		public ReleaseEventSeriesContract() {
@@ -28,6 +29,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Id = series.Id;
 			Name = series.Name;
 			PictureMime = series.PictureMime;
+			Status = series.Status;
 			Version = series.Version;
 
 			if (includeLinks) {
@@ -53,6 +55,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public string PictureMime { get; set; }
+
+		[DataMember]
+		public EntryStatus Status { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }

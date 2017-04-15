@@ -143,7 +143,7 @@ namespace VocaDb.Web.Controllers
         {
 
 			var contract = (id != null ? Service.GetReleaseEventSeriesForEdit(id.Value) : new ReleaseEventSeriesForEditContract());
-			return View(new SeriesEdit(contract));
+			return View(new SeriesEdit(contract, PermissionContext));
 
 		}
 
@@ -153,6 +153,7 @@ namespace VocaDb.Web.Controllers
         {
 
 			if (!ModelState.IsValid) {
+				model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
 				return View(model);
 			}
 

@@ -16,6 +16,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.Description).Length(400).Not.Nullable();
 			Map(m => m.Name).Length(50).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();
+			Map(m => m.Status).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 
 			HasMany(m => m.Aliases).KeyColumn("[Series]").Inverse().Cascade.All().Cache.ReadWrite();

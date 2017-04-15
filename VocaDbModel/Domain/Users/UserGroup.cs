@@ -16,7 +16,8 @@ namespace VocaDb.Model.Domain.Users {
 		private static readonly UserGroup regular = new UserGroup(UserGroupId.Regular,
 			limited, 
 			PermissionToken.CreateComments, 
-			PermissionToken.ManageDatabase
+			PermissionToken.ManageDatabase,
+			PermissionToken.ManageEventSeries
 		);
 
 		private static readonly UserGroup trusted = new UserGroup(UserGroupId.Trusted,
@@ -26,7 +27,6 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.DeleteEntries, 
 			PermissionToken.EditFeaturedLists, 
 			PermissionToken.ManageEntryReports, 
-			PermissionToken.ManageEventSeries, 
 			PermissionToken.MergeEntries,
 			PermissionToken.RemoveEditPermission,
 			PermissionToken.RemoveTagUsages

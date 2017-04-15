@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEventSeries : 
 		IEntryWithNames, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>, 
-		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation {
+		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation, IEntryWithStatus {
 
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
@@ -33,6 +33,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Category = EventCategory.Unspecified;
 			Deleted = false;
 			Description = string.Empty;
+			Status = EntryStatus.Draft;
 		}
 
 		public ReleaseEventSeries(string name, string description, IEnumerable<string> aliases)
@@ -99,6 +100,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public virtual string PictureMime { get; set; }
+
+		public virtual EntryStatus Status { get; set; }
 
 		public virtual int Version { get; set; }
 

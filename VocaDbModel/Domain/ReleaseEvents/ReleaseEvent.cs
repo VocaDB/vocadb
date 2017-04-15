@@ -39,7 +39,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Category = EventCategory.Unspecified;
 			Deleted = false;
 			Description = SeriesSuffix = string.Empty;
-			Status = EntryStatus.Finished;
+			Status = EntryStatus.Draft;
 		}
 
 		public ReleaseEvent(string description, DateTime? date, string name)

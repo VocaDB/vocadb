@@ -17,7 +17,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		Picture = 16,
 
-		WebLinks = 32
+		Status = 32,
+
+		WebLinks = 64
 
 	}
 
