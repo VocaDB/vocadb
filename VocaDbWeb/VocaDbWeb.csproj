@@ -2213,6 +2213,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TranslationTypeNames.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Domain\ReleaseEvents\EventCategoryNames.ja.resx" />
     <EmbeddedResource Include="Resources\Domain\ReleaseEvents\EventCategoryNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EventCategoryNames.Designer.cs</LastGenOutput>
