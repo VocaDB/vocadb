@@ -289,13 +289,18 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
-		public ActionResult PopupContentWithVote(int id = invalidId) {
+		public ActionResult PopupContentWithVote(int id = invalidId, string callback = null) {
 
 			if (id == invalidId)
 				return HttpNotFound();
 
 			var song = queries.GetSongWithPVAndVote(id, false, includePVs: false);
-			return PartialView("_SongWithVotePopupContent", song);
+
+			if (string.IsNullOrEmpty(callback)) {
+				return PartialView("_SongWithVotePopupContent", song);
+			} else {
+				return Json(RenderPartialViewToString("_SongWithVotePopupContent", song), callback);
+			}
 
 		}
 

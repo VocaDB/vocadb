@@ -15,17 +15,21 @@ interface KnockoutBindingHandlers {
 
 module vdb.knockoutExtensions {
 
-	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number, params?: any) {
+	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number, params?: any, foreignDomain?: string) {
 
-		var data = _.assign({ id: id }, params);
+		const whitelistedDomains = ["http://vocadb.net", "https://vocadb.net", "http://utaitedb.net"];
+		const url = foreignDomain && _.some(whitelistedDomains, domain => _.includes(foreignDomain.toLocaleLowerCase(), domain)) ?
+			vdb.functions.mergeUrls(foreignDomain, relativeUrl) : vdb.functions.mapAbsoluteUrl(relativeUrl);
+		const data = _.assign({ id: id }, params);
 
         $(element).qtip({
             content: {
                 text: 'Loading...',
                 ajax: {
-                    url: vdb.functions.mapAbsoluteUrl(relativeUrl),
+					url: url,
                     type: 'GET',
-					data: data
+					data: data,
+					dataType: foreignDomain ? 'jsonp' : undefined
                 }
             },
             position: {
@@ -77,8 +81,9 @@ ko.bindingHandlers.eventToolTip = {
 }
 
 ko.bindingHandlers.songToolTip = {
-	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContentWithVote', ko.unwrap(valueAccessor()));
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>, allPropertiesAccessor: () => any) => {
+		const allProps = allPropertiesAccessor();
+		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContentWithVote', ko.unwrap(valueAccessor()), null, allProps.toolTipDomain);
 	}
 }
 

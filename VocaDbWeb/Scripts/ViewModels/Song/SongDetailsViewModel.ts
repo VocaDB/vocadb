@@ -23,22 +23,22 @@ module vdb.viewModels {
 				return;
 
 			// http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
-			var regex = /(http:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
-			var page = linkedPages[0];
+			const regex = /(http:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
+			const page = linkedPages[0];
 
-			var match = regex.exec(page);
+			const match = regex.exec(page);
 
 			if (!match || match.length < 3)
 				return;
 
-			var siteUrl = match[1]; // either http://utaitedb.net/ or http://vocadb.net/
-			var id = parseInt(match[2]);
+			const siteUrl = match[1]; // either http://utaitedb.net/ or http://vocadb.net/
+			const id = parseInt(match[2]);
 
-			var repo = new rep.SongRepository(siteUrl, this.languagePreference);
+			const repo = new rep.SongRepository(siteUrl, this.languagePreference);
 			// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 			repo.getOneWithComponents(id, 'Nothing', null, song => {
 				if (song.songType === "Original")
-					this.originalVersion({ entry: song, url: page });
+					this.originalVersion({ entry: song, url: page, domain: siteUrl });
 			});
 
 		}
@@ -355,6 +355,8 @@ module vdb.viewModels {
 		entry: dc.SongApiContract;
 
 		url?: string;
+
+		domain?: string;
 
 	}
 

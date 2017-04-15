@@ -262,7 +262,7 @@
 			<tr data-bind="if: originalVersion().entry">
 				<td>@Res.OriginalVersion</td>
 				<td>
-					@SongHelpers.SongLinkKnockout("originalVersion().entry", "originalVersion().url", tooltip: true)
+					@SongHelpers.SongLinkKnockout("originalVersion().entry", "originalVersion().url", tooltip: true, toolTipDomainBinding: "originalVersion().domain")
 					<span data-bind="songTypeLabel: originalVersion().entry.songType"></span>
 					<br />
 					<span data-bind="text: originalVersion().entry.artistString"></span>
