@@ -211,7 +211,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(NotAllowedException))]
 		public void UpdateSeries_NoPermission() {
 
-			user.GroupId = UserGroupId.Regular;
+			user.GroupId = UserGroupId.Limited;
 			permissionContext.RefreshLoggedUser(repository);
 
 			var contract = new ReleaseEventSeriesForEditContract(series);
