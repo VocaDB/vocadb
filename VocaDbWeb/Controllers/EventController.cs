@@ -212,7 +212,7 @@ namespace VocaDb.Web.Controllers
 
 	    }
 
-		public ActionResult SeriesDetails(int id = invalidId) {
+		public ActionResult SeriesDetails(int id = invalidId, string slug = null) {
 
 			if (id == invalidId)
 				return NoId();

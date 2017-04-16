@@ -14,9 +14,7 @@ namespace VocaDb.Model.Service.Security {
 
 		}
 
-		public UserWithPermissionsContract User {
-			get { return user; }
-		}
+		public UserWithPermissionsContract User => user;
 
 	}
 
