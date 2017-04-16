@@ -70,24 +70,34 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public void Delete(int eventId) {
-			
+
 			repository.HandleTransaction(ctx => {
-				
+
 				var entry = ctx.Load(eventId);
 
-				ctx.AuditLogger.SysLog(string.Format("deleting {0}", entry));
+				PermissionContext.VerifyEntryDelete(entry);
 
-				foreach (var song in entry.AllSongs) {
-					song.ReleaseEvent = null;
-				}
+				entry.Deleted = true;
+				ctx.Update(entry);
 
-				var ctxActivity = ctx.OfType<ReleaseEventActivityEntry>();
-				var activityEntries = ctxActivity.Query().Where(a => a.Entry.Id == eventId).ToArray();
+				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
 
-				foreach (var activityEntry in activityEntries)
-					ctxActivity.Delete(activityEntry);
+			});
 
-				ctx.Delete(entry);
+		}
+
+		public void DeleteSeries(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.ManageEventSeries);
+
+			repository.HandleTransaction(ctx => {
+
+				var entry = ctx.Load<ReleaseEventSeries>(id);
+
+				PermissionContext.VerifyEntryDelete(entry);
+
+				entry.Deleted = true;
+				ctx.Update(entry);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
 
@@ -100,6 +110,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(ctx => {
 
 				var q = ctx.Query()
+					.WhereNotDeleted()
 					.WhereHasName(queryParams.TextQuery)
 					.WhereHasSeries(queryParams.SeriesId)
 					.WhereDateIsBetween(queryParams.AfterDate, queryParams.BeforeDate);
@@ -185,6 +196,37 @@ namespace VocaDb.Model.Database.Queries {
 		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields) {
 
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), fields, imagePersister, true));
+
+		}
+
+		public void MoveToTrash(int eventId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
+
+			repository.HandleTransaction(ctx => {
+
+				var entry = ctx.Load(eventId);
+
+				PermissionContext.VerifyEntryDelete(entry);
+
+				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
+
+				foreach (var song in entry.AllSongs)
+				{
+					song.ReleaseEvent = null;
+				}
+
+				var ctxActivity = ctx.OfType<ReleaseEventActivityEntry>();
+				var activityEntries = ctxActivity.Query().Where(a => a.Entry.Id == eventId).ToArray();
+
+				foreach (var activityEntry in activityEntries)
+					ctxActivity.Delete(activityEntry);
+
+				ctx.Delete(entry);
+
+				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
+
+			});
 
 		}
 

@@ -27,7 +27,7 @@
 }
 
 @section Toolbar {
-	@if (!isNew) {
+	@if (!isNew && Login.CanDeleteEntries) {
 		@Html.ActionLink("Delete", "DeleteSeries", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this series?\");" })
 	}
 }

@@ -862,7 +862,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var user = ctx.Load<User>(userId);
 				return user.Events
-					.Where(e => e.RelationshipType == relationshipType)
+					.Where(e => !e.ReleaseEvent.Deleted && e.RelationshipType == relationshipType)
 					.OrderByDescending(e => e.ReleaseEvent.Date.DateTime)
 					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, ReleaseEventOptionalFields.MainPicture, entryThumbPersister, true))
 					.ToArray();

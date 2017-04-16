@@ -40,7 +40,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);
 
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-			ReleaseEvent = song.ReleaseEvent != null ? new ReleaseEventForApiContract(song.ReleaseEvent, ReleaseEventOptionalFields.None, thumbPersister, true) : null;
+			ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted ? new ReleaseEventForApiContract(song.ReleaseEvent, ReleaseEventOptionalFields.None, thumbPersister, true) : null;
 			PersonalDescriptionText = song.PersonalDescriptionText;
 			var author = song.PersonalDescriptionAuthor;
 			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, true, ArtistOptionalFields.MainPicture) : null;

@@ -14,12 +14,6 @@ namespace VocaDb.Model.Service {
 		public ReleaseEventService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
 			: base(sessionFactory, permissionContext,entryLinkFactory) {}
 
-		public void DeleteSeries(int id) {
-
-			DeleteEntity<ReleaseEventSeries>(id, PermissionToken.ManageEventSeries);
-
-		}
-
 		public ReleaseEventSeriesWithEventsContract[] GetReleaseEventsBySeries() {
 
 			return HandleQuery(session => {

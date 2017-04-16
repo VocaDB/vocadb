@@ -59,7 +59,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult DeleteSeries(int id) {
 
-			Service.DeleteSeries(id);
+			queries.DeleteSeries(id);
 
 			return RedirectToAction("EventsBySeries");
 

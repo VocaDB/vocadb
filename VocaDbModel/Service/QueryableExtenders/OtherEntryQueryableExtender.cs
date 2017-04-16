@@ -11,5 +11,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<T> WhereNotDeleted<T>(this IQueryable<T> query) where T : IDeletableEntry {
+
+			return query.Where(m => !m.Deleted);
+
+		}
+
 	}
 }
