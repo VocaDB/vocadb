@@ -217,7 +217,14 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
+			slug = slug ?? string.Empty;
+
 			var series = Service.GetReleaseEventSeriesDetails(id);
+
+			if (slug != series.UrlSlug) {
+				return RedirectToActionPermanent("SeriesDetails", new { id, slug = series.UrlSlug });
+			}
+
 			string subtitle;
 
 			if (series.Category == EventCategory.Unspecified || series.Category == EventCategory.Other) {

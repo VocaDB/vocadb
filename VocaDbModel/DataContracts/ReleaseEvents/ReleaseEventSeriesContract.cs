@@ -30,6 +30,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Name = series.Name;
 			PictureMime = series.PictureMime;
 			Status = series.Status;
+			UrlSlug = series.UrlSlug;
 			Version = series.Version;
 
 			if (includeLinks) {
@@ -58,6 +59,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public EntryStatus Status { get; set; }
+
+		[DataMember]
+		public string UrlSlug { get; set; }
 
 		[DataMember]
 		public int Version { get; set; }

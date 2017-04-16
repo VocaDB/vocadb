@@ -15,7 +15,7 @@
 	} else {
 		ViewBag.Parents = new[] {
 			Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index"),
-			Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })
+			Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id, slug = Model.Series.UrlSlug })
 		};
 	}
 
@@ -72,7 +72,7 @@
 </div>
 
 @if (Model.Series != null) {
-	<h3>@Res.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id })</h3>
+	<h3>@Res.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id, slug = Model.Series.UrlSlug })</h3>
 	if (!string.IsNullOrEmpty(Model.Series.Description)) {
 		@HtmlHelpers.FormatMarkdown(Model.Series.Description);
 	}

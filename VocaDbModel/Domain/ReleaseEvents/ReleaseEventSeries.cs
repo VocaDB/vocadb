@@ -103,6 +103,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual EntryStatus Status { get; set; }
 
+		/// <summary>
+		/// URL slug. Cannot be null. Can be empty.
+		/// </summary>
+		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(Name);
+
 		public virtual int Version { get; set; }
 
 		public virtual IList<ReleaseEventSeriesWebLink> WebLinks {
