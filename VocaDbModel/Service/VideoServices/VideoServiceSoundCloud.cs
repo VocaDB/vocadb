@@ -56,24 +56,25 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			SoundCloudResult result;
 
-			try {				
+			bool HasStatusCode(WebException x, HttpStatusCode statusCode) => x.Response != null && ((HttpWebResponse)x.Response).StatusCode == statusCode;
+			
+			VideoUrlParseResult ReturnError(Exception x, string additionalInfo = null) {
+				var msg = string.Format("Unable to load SoundCloud URL '{0}'.{1}", url, additionalInfo != null ? " " + additionalInfo + ".": string.Empty);
+				log.Warn(x, msg);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
+			}
+
+			try {
 				result = JsonRequest.ReadObject<SoundCloudResult>(apiUrl, timeoutMs: 10000);
-			} catch (WebException x) {
-
-				var msg = string.Format("Unable to load SoundCloud URL '{0}'.", url);
-
+			} catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden)) {
 				// Forbidden most likely means the artist has prevented API access to their tracks, http://stackoverflow.com/a/36529330
-				if (x.Response != null && ((HttpWebResponse)x.Response).StatusCode == HttpStatusCode.Forbidden) {
-					msg += " This track cannot be embedded.";
-				}
-
-				log.Warn(x, msg);
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
-
+				return ReturnError(x, "This track cannot be embedded");
+			} catch (WebException x) when (HasStatusCode(x, HttpStatusCode.NotFound)) {
+				return ReturnError(x, "Not found");
+			} catch (WebException x) {
+				return ReturnError(x);
 			} catch (JsonSerializationException x) {
-				var msg = string.Format("Unable to load SoundCloud URL '{0}'.", url);
-				log.Warn(x, msg);
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
+				return ReturnError(x);
 			}
 
 			var trackId = result.Id;
