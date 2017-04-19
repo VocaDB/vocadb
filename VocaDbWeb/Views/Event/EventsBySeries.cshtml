@@ -20,7 +20,9 @@
 		</li>
 	</ul>	
 
-	@if (Login.CanManageEventSeries) {
+	@if (Login.CanManageDb) {
+		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
+		@:
 		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
 	}	
 }
@@ -65,7 +67,8 @@
 @section BodyScripts {
 	<script type="text/javascript">
 
-		$(document).ready(function () {
+		$(function () {
+			$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
 			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
 		});
 

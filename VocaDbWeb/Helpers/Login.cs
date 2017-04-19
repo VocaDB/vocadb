@@ -1,4 +1,5 @@
-﻿using VocaDb.Model;
+﻿using System;
+using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.DataContracts.Users;
@@ -35,6 +36,7 @@ namespace VocaDb.Web.Helpers {
 			}
 		}
 
+		[Obsolete]
 		public static bool CanManageEventSeries {
 			get { return Manager.HasPermission(PermissionToken.ManageEventSeries); }
 		}

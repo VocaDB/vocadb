@@ -13,7 +13,8 @@
 	}
 }
 
-@section Toolbar {
+@section Toolbar {	
+	
 	<ul class="nav nav-pills">
 		<li class="active">
 			@Html.ActionLink(Res.ViewList, "Index")
@@ -25,7 +26,21 @@
 			@Html.ActionLink(Res.ViewByDate, "EventsByDate")
 		</li>
 	</ul>
+
+	@if (Login.CanManageDb) {
+		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
+		@:
+		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+	}
 }
 
 @Helpers.EventThumbs(Model)
 
+@section BodyScripts {
+	<script type="text/javascript">
+		$(function () {
+			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
+			$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
+		});
+	</script>
+}

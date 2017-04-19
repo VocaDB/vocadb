@@ -60,6 +60,7 @@ namespace VocaDb.Model.Domain.Security {
 		public static readonly PermissionToken LockEntries =			New("eb02e92e-207f-4330-a763-6bafd2cedde1", "LockEntries");
 		public static readonly PermissionToken ManageDatabase =			New("d762d720-79ef-4e60-8397-1d638c26d82b", "ManageDatabase");
 		public static readonly PermissionToken ManageEntryReports =		New("f9eb1d22-9142-4a04-9238-f4ebe5f1fc17", "ManageEntryReports");
+		[Obsolete]
 		public static readonly PermissionToken ManageEventSeries =		New("cf39509b-b9c5-4efc-9b13-2743ffec9aac", "ManageEventSeries");
 		public static readonly PermissionToken ManageIPRules =			New("f125fe5b-6474-4d52-823f-955c7d19f7c8", "ManageIPRules");
 		public static readonly PermissionToken ManageUserPermissions =	New("c0eb147e-10f5-4fea-9b19-b412ef613479", "ManageUserPermissions");
