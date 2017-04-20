@@ -14,7 +14,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.Category).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(400).Not.Nullable();
-			Map(m => m.Name).Length(50).Not.Nullable();
+			Map(m => m.Name).Column("EnglishName").Length(50).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();
 			Map(m => m.Status).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
@@ -31,16 +31,17 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 	}
 
-	public class ReleaseEventSeriesAliasMap : ClassMap<ReleaseEventSeriesAlias> {
+	public class EventSeriesNameMap : ClassMap<EventSeriesName> {
 
-		public ReleaseEventSeriesAliasMap() {
+		public EventSeriesNameMap() {
 
-			Table("AlbumReleaseEventSeriesAliases");
+			Table("EventSeriesNames");
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
-			Map(m => m.Name).Length(50).Not.Nullable();
-			References(m => m.Series).Column("[Series]").Not.Nullable();
+			Map(m => m.Language).Not.Nullable();
+			Map(m => m.Value).Length(255).Not.Nullable();
+			References(m => m.Entry).Column("[Series]").Not.Nullable();
 
 		}
 

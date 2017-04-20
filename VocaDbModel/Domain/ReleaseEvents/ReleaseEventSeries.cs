@@ -21,7 +21,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		string IEntryImageInformation.Mime => PictureMime;
 		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
 
-		private IList<ReleaseEventSeriesAlias> aliases = new List<ReleaseEventSeriesAlias>();
+		private IList<EventSeriesName> aliases = new List<EventSeriesName>();
 		private ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> archivedVersions
 			= new ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>();
 		private string description;
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual IList<ReleaseEventSeriesAlias> Aliases {
+		public virtual IList<EventSeriesName> Aliases {
 			get => aliases;
 			set {
 				ParamIs.NotNull(() => value);
@@ -118,9 +118,9 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
-		public virtual ReleaseEventSeriesAlias CreateAlias(string alias) {
+		public virtual EventSeriesName CreateAlias(string alias) {
 
-			var a = new ReleaseEventSeriesAlias(this, alias);
+			var a = new EventSeriesName(this, new LocalizedString(alias, ContentLanguageSelection.Unspecified));
 			Aliases.Add(a);
 
 			return a;
@@ -190,7 +190,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 			ParamIs.NotNull(() => aliases);
 
-			var diff = CollectionHelper.Diff(Aliases, aliases, (a1, a2) => a1.Name.Equals(a2));
+			var diff = CollectionHelper.Diff(Aliases, aliases, (a1, a2) => a1.Value.Equals(a2));
 
 			foreach (var added in diff.Added)
 				CreateAlias(added);

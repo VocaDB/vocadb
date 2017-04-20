@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventSeriesForEditContract(ReleaseEventSeries series) : base(series) {
 
-			Aliases = series.Aliases.Select(a => a.Name).ToArray();
+			Aliases = series.Aliases.Select(a => a.Value).ToArray();
 			WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}

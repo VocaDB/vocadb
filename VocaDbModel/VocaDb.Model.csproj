@@ -344,7 +344,7 @@
     <Compile Include="Domain\Albums\PVForAlbum.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEvent.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventSeries.cs" />
-    <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesAlias.cs" />
+    <Compile Include="Domain\ReleaseEvents\EventSeriesName.cs" />
     <Compile Include="Domain\Artists\ArtistReport.cs" />
     <Compile Include="Domain\Artists\ArtistRoles.cs" />
     <Compile Include="Domain\Artists\ArtistStringFactory.cs" />

@@ -58,7 +58,7 @@ namespace VocaDb.Model.Service.Search {
 				return new ReleaseEventFindResultContract(ev);
 
 			var startsWithMatches = Query<ReleaseEventSeries>()
-				.Where(s => query.StartsWith(s.Name) || s.Aliases.Any(a => query.StartsWith(a.Name)))
+				.Where(s => query.StartsWith(s.Name) || s.Aliases.Any(a => query.StartsWith(a.Value)))
 				.ToArray();
 
 			foreach (var startsWithMatch in startsWithMatches) {
@@ -72,9 +72,9 @@ namespace VocaDb.Model.Service.Search {
 
 				}
 
-				foreach (var alias in startsWithMatch.Aliases.Where(a => query.StartsWith(a.Name, StringComparison.InvariantCultureIgnoreCase))) {
+				foreach (var alias in startsWithMatch.Aliases.Where(a => query.StartsWith(a.Value, StringComparison.InvariantCultureIgnoreCase))) {
 					
-					var result = AttemptSeriesMatch(alias.Name, startsWithMatch, query);
+					var result = AttemptSeriesMatch(alias.Value, startsWithMatch, query);
 
 					if (result != null)
 						return result;
@@ -96,7 +96,7 @@ namespace VocaDb.Model.Service.Search {
 					.Where(e => e.SeriesNumber == seriesNumber 
 						&& e.SeriesSuffix == seriesSuffix 
 						&& (seriesName.StartsWith(e.Series.Name) || e.Series.Name.Contains(seriesName)
-							|| e.Series.Aliases.Any(a => seriesName.StartsWith(a.Name) || a.Name.Contains(seriesName)))).ToArray();
+							|| e.Series.Aliases.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)))).ToArray();
 
 				if (results.Length > 1)
 					return new ReleaseEventFindResultContract();
@@ -105,7 +105,7 @@ namespace VocaDb.Model.Service.Search {
 					return new ReleaseEventFindResultContract(results[0]);
 
 				// Attempt to match just the series
-				var series = Query<ReleaseEventSeries>().FirstOrDefault(s => seriesName.StartsWith(s.Name) || s.Name.Contains(seriesName) || s.Aliases.Any(a => seriesName.StartsWith(a.Name) || a.Name.Contains(seriesName)));
+				var series = Query<ReleaseEventSeries>().FirstOrDefault(s => seriesName.StartsWith(s.Name) || s.Name.Contains(seriesName) || s.Aliases.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)));
 
 				if (series != null)
 					return new ReleaseEventFindResultContract(series, seriesNumber, seriesSuffix, query);

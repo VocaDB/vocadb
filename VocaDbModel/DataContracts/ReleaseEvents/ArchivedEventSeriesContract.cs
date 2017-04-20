@@ -13,7 +13,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => series);
 
-			Aliases = series.Aliases.Select(a => a.Name).ToArray();
+			Aliases = series.Aliases.Select(a => a.Value).ToArray();
 			Category = series.Category;
 			Description = series.Description;
 			Id = series.Id;

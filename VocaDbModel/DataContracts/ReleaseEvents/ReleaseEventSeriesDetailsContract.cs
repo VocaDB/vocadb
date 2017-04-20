@@ -11,7 +11,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ReleaseEventSeriesDetailsContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference)
 			: base(series, languagePreference) {
 
-			Aliases = series.Aliases.Select(a => a.Name).ToArray();
+			Aliases = series.Aliases.Select(a => a.Value).ToArray();
 			WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
