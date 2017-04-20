@@ -18,6 +18,8 @@
 		public const string Artists = "Artists";
 		public const string ArtistTagUsages = "ArtistTagUsages";
 		public const string EntryReports = "EntryReports";
+		public const string EventNames = nameof(EventNames);
+		public const string EventSeriesNames = nameof(EventSeriesNames);
 		public const string FavoriteSongsForUsers = "FavoriteSongsForUsers";
 		public const string GroupsForArtists = "GroupsForArtists";
 		public const string LyricsForSongs = "LyricsForSongs";
