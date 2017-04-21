@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.ReleaseEvents;
+﻿using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
@@ -25,9 +26,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		}
 
-		public ReleaseEventFindResultContract(ReleaseEventSeries series, int seriesNumber, string seriesSuffix, string eventName) {
+		public ReleaseEventFindResultContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, int seriesNumber, string seriesSuffix, string eventName) {
 
-			Series = new ReleaseEventSeriesContract(series);
+			Series = new ReleaseEventSeriesContract(series, languagePreference);
 			SeriesNumber = seriesNumber;
 			SeriesSuffix = seriesSuffix;
 			EventName = eventName;

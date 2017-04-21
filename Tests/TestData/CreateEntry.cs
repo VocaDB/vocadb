@@ -34,7 +34,7 @@ namespace VocaDb.Tests.TestData {
 		}
 
 		public static ReleaseEventSeries EventSeries(string name) {
-			return new ReleaseEventSeries(name, string.Empty, new string[0]);
+			return new ReleaseEventSeries(name, string.Empty, new LocalizedString[0]);
 		}
 
 		public static LyricsForSongContract LyricsForSongContract(TranslationType translationType = TranslationType.Translation, string value = "Miku Miku", string cultureCode = "ja") {

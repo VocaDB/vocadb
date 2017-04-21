@@ -24,7 +24,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			Song = new SongContract(song, languagePreference);
 
-			AdditionalNames = string.Join(", ", song.AllNames.Where(n => n != Song.Name).Distinct());
+			AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			Albums = song.OnAlbums.OrderBy(a => a.OriginalReleaseDate.SortableDateTime).Select(a => new AlbumContract(a, languagePreference)).ToArray();
 			AlternateVersions = song.AlternateVersions.Select(s => new SongContract(s, languagePreference, getThumbUrl: false)).OrderBy(s => s.PublishDate).ToArray();
 			Artists = song.Artists.Select(a => new ArtistForSongContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
@@ -40,7 +40,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);
 
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-			ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted ? new ReleaseEventForApiContract(song.ReleaseEvent, ReleaseEventOptionalFields.None, thumbPersister, true) : null;
+			ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted ? new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister, true) : null;
 			PersonalDescriptionText = song.PersonalDescriptionText;
 			var author = song.PersonalDescriptionAuthor;
 			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, true, ArtistOptionalFields.MainPicture) : null;

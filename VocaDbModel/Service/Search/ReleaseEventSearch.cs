@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Service.Search {
@@ -23,7 +24,7 @@ namespace VocaDb.Model.Service.Search {
 			this.querySource = querySource;
 		}
 
-		private ReleaseEventFindResultContract AttemptSeriesMatch(string seriesName, ReleaseEventSeries series, string query) {
+		private ReleaseEventFindResultContract AttemptSeriesMatch(string seriesName, ReleaseEventSeries series, string query, ContentLanguagePreference languagePreference) {
 			
 			var queryWithoutSeries = query.Remove(0, seriesName.Length).TrimStart();
 			var match = eventNumberRegex.Match(queryWithoutSeries);
@@ -39,12 +40,12 @@ namespace VocaDb.Model.Service.Search {
 			if (ev != null) {
 				return new ReleaseEventFindResultContract(ev);
 			} else {
-				return new ReleaseEventFindResultContract(series, seriesNumber, seriesSuffix, query);
+				return new ReleaseEventFindResultContract(series, languagePreference, seriesNumber, seriesSuffix, query);
 			}
 
 		}
 
-		public ReleaseEventFindResultContract Find(string query) {
+		public ReleaseEventFindResultContract Find(string query, ContentLanguagePreference languagePreference) {
 
 			if (string.IsNullOrEmpty(query))
 				return new ReleaseEventFindResultContract();
@@ -58,23 +59,14 @@ namespace VocaDb.Model.Service.Search {
 				return new ReleaseEventFindResultContract(ev);
 
 			var startsWithMatches = Query<ReleaseEventSeries>()
-				.Where(s => query.StartsWith(s.Name) || s.Aliases.Any(a => query.StartsWith(a.Value)))
+				.Where(s => s.Names.Names.Any(a => query.StartsWith(a.Value)))
 				.ToArray();
 
 			foreach (var startsWithMatch in startsWithMatches) {
 
-				if (query.StartsWith(startsWithMatch.Name, StringComparison.InvariantCultureIgnoreCase)) {
+				foreach (var alias in startsWithMatch.Names.Where(a => query.StartsWith(a.Value, StringComparison.InvariantCultureIgnoreCase))) {
 					
-					var result = AttemptSeriesMatch(startsWithMatch.Name, startsWithMatch, query);
-
-					if (result != null)
-						return result;
-
-				}
-
-				foreach (var alias in startsWithMatch.Aliases.Where(a => query.StartsWith(a.Value, StringComparison.InvariantCultureIgnoreCase))) {
-					
-					var result = AttemptSeriesMatch(alias.Value, startsWithMatch, query);
+					var result = AttemptSeriesMatch(alias.Value, startsWithMatch, query, languagePreference);
 
 					if (result != null)
 						return result;
@@ -95,8 +87,7 @@ namespace VocaDb.Model.Service.Search {
 				var results = Query<ReleaseEvent>()
 					.Where(e => e.SeriesNumber == seriesNumber 
 						&& e.SeriesSuffix == seriesSuffix 
-						&& (seriesName.StartsWith(e.Series.Name) || e.Series.Name.Contains(seriesName)
-							|| e.Series.Aliases.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)))).ToArray();
+						&& (e.Series.Names.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)))).ToArray();
 
 				if (results.Length > 1)
 					return new ReleaseEventFindResultContract();
@@ -105,10 +96,10 @@ namespace VocaDb.Model.Service.Search {
 					return new ReleaseEventFindResultContract(results[0]);
 
 				// Attempt to match just the series
-				var series = Query<ReleaseEventSeries>().FirstOrDefault(s => seriesName.StartsWith(s.Name) || s.Name.Contains(seriesName) || s.Aliases.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)));
+				var series = Query<ReleaseEventSeries>().FirstOrDefault(s => s.Names.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)));
 
 				if (series != null)
-					return new ReleaseEventFindResultContract(series, seriesNumber, seriesSuffix, query);
+					return new ReleaseEventFindResultContract(series, languagePreference, seriesNumber, seriesSuffix, query);
 
 			}
 

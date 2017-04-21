@@ -15,7 +15,7 @@ namespace VocaDb.Web.Models.Event {
 	public class SeriesEdit {
 
 		public SeriesEdit() { 
-			Aliases = new List<string>();
+
 		}
 
 		public SeriesEdit(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext) {
@@ -24,7 +24,6 @@ namespace VocaDb.Web.Models.Event {
 
 			Category = contract.Category;
 			Contract = contract;
-			Aliases = contract.Aliases.ToList();
 			Description = contract.Description;
 			Id = contract.Id;
 			Name = contract.Name;
@@ -34,8 +33,6 @@ namespace VocaDb.Web.Models.Event {
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 
 		}
-
-		public IList<string> Aliases { get; set; }
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
@@ -50,6 +47,9 @@ namespace VocaDb.Web.Models.Event {
 		[Required]
 		public string Name { get; set; }
 
+		[FromJson]
+		public LocalizedStringWithIdContract[] Names { get; set; }
+
 		public EntryStatus Status { get; set; }
 
 		[FromJson]
@@ -58,11 +58,11 @@ namespace VocaDb.Web.Models.Event {
 		public ReleaseEventSeriesForEditContract ToContract() {
 
 			return new ReleaseEventSeriesForEditContract { 
-				Aliases = this.Aliases.ToArray(),
 				Category = Category,
 				Description = this.Description ?? string.Empty, 
 				Id = this.Id,
 				Name = this.Name,
+				Names = this.Names.ToArray(),
 				Status = Status,
 				WebLinks = this.WebLinks
 			};

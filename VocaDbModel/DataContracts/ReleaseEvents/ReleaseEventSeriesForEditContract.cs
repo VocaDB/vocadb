@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
@@ -6,18 +7,21 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 	public class ReleaseEventSeriesForEditContract : ReleaseEventSeriesContract {
 
 		public ReleaseEventSeriesForEditContract() {
-			Aliases = new string[] {};
+			Names = new LocalizedStringWithIdContract[] {};
 			WebLinks = new WebLinkContract[0];
 		}
 
-		public ReleaseEventSeriesForEditContract(ReleaseEventSeries series) : base(series) {
+		public ReleaseEventSeriesForEditContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference) : base(series, languagePreference) {
 
-			Aliases = series.Aliases.Select(a => a.Value).ToArray();
+			DefaultNameLanguage = series.TranslatedName.DefaultLanguage;
+			Names = series.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
 
-		public string[] Aliases { get; set; }
+		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		public LocalizedStringWithIdContract[] Names { get; set; }
 
 	}
 

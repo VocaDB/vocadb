@@ -86,7 +86,8 @@ namespace VocaDb.Web.Controllers.Api {
 			int maxResults = defaultMax,
 			bool getTotalCount = false, 
 			EventSortRule sort = EventSortRule.Name,
-			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None
+			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default
 			) {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
@@ -99,7 +100,7 @@ namespace VocaDb.Web.Controllers.Api {
 				SortRule = sort
 			};
 
-			return queries.Find(e => new ReleaseEventForApiContract(e, fields, thumbPersister, WebHelper.IsSSL(Request)), queryParams);
+			return queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, thumbPersister, WebHelper.IsSSL(Request)), queryParams);
 
 		}
 
@@ -134,9 +135,9 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("{id:int}")]
-		public ReleaseEventForApiContract GetOne(int id, ReleaseEventOptionalFields fields) {
+		public ReleaseEventForApiContract GetOne(int id, ReleaseEventOptionalFields fields, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), fields, thumbPersister, WebHelper.IsSSL(Request)));
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, thumbPersister, WebHelper.IsSSL(Request)));
 
 		}
 

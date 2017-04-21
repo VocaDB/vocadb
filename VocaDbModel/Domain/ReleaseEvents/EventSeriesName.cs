@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public EventSeriesName() { }
 
-		public EventSeriesName(ReleaseEventSeries series, LocalizedString localizedString) : base(series, localizedString) {}
+		public EventSeriesName(ReleaseEventSeries series, ILocalizedString localizedString) : base(series, localizedString) {}
 
 	}
 

@@ -82,7 +82,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 				var queries = Queries(repository);
 
-				var newEvent = repository.HandleTransaction(ctx => new ReleaseEventContract(ctx.Save(CreateEntry.ReleaseEvent("Mikumas")), false));
+				var newEvent = repository.HandleTransaction(ctx => new ReleaseEventContract(ctx.Save(CreateEntry.ReleaseEvent("Mikumas")), ContentLanguagePreference.English, false));
 
 				// Act
 				var contract = new SongForEditContract(Db.Song, ContentLanguagePreference.English) {

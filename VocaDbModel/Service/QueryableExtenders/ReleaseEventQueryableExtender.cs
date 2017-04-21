@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
@@ -40,17 +41,17 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <param name="sortRule">Sort rule.</param>
 		/// <param name="direction">Sort direction. If null, default direction is used.</param>
 		/// <returns>Sorted query. Cannot be null.</returns>
-		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, SortDirection? direction) {
+		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) {
 
 			switch (sortRule) {
 				case EventSortRule.Date:
 					return query.OrderByDate(direction);
 				case EventSortRule.Name:
 					return query.OrderBy(r => r.Name);
-				case EventSortRule.SeriesName:
+				/*case EventSortRule.SeriesName:
 					return query
 						.OrderBy(r => r.Series.Name)
-						.ThenBy(r => r.SeriesNumber);
+						.ThenBy(r => r.SeriesNumber);*/ // FIXME: add this
 			}
 
 			return query;

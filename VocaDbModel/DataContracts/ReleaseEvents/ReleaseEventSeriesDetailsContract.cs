@@ -11,12 +11,15 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ReleaseEventSeriesDetailsContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference)
 			: base(series, languagePreference) {
 
-			Aliases = series.Aliases.Select(a => a.Value).ToArray();
+			AdditionalNames = series.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			TranslatedName = new TranslatedStringContract(series.TranslatedName);
 			WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 		}
 
-		public string[] Aliases { get; set; }
+		public string AdditionalNames { get; set; }
+
+		public TranslatedStringContract TranslatedName { get; set; }
 
 	}
 

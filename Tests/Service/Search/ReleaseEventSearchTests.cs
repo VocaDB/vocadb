@@ -1,6 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Search;
 using VocaDb.Tests.TestSupport;
@@ -51,7 +53,7 @@ namespace VocaDb.Tests.Service.Search {
 
 		private ReleaseEventSeries CreateSeries(string name, params string[] aliases) {
 
-			var s = new ReleaseEventSeries(name, string.Empty, aliases);
+			var s = new ReleaseEventSeries(name, string.Empty, aliases.Select(a => new LocalizedString(a, ContentLanguageSelection.English)));
 			querySource.Add(s);
 
 			return s;
@@ -73,7 +75,7 @@ namespace VocaDb.Tests.Service.Search {
 		}
 
 		private ReleaseEventFindResultContract Find(string query) {
-			return target.Find(query);
+			return target.Find(query, ContentLanguagePreference.English);
 		}
 
 		/// <summary>

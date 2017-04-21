@@ -1,6 +1,7 @@
 ﻿using System;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Helpers;
@@ -18,7 +19,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = string.Empty;
 		}
 
-		public ReleaseEventContract(ReleaseEvent ev, bool includeSeries = false, bool includeSeriesLinks = false)
+		public ReleaseEventContract(ReleaseEvent ev, ContentLanguagePreference languagePreference, bool includeSeries = false, bool includeSeriesLinks = false)
 			: this() {
 
 			ParamIs.NotNull(() => ev);
@@ -38,7 +39,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Version = ev.Version;
 
 			if (includeSeries && ev.Series != null) {
-				Series = new ReleaseEventSeriesContract(ev.Series, includeSeriesLinks);
+				Series = new ReleaseEventSeriesContract(ev.Series, languagePreference, includeSeriesLinks);
 			}
 
 		}

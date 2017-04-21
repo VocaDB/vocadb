@@ -7,7 +7,7 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		public EntryName() { }
 
-		public EntryName(TEntry song, LocalizedString localizedString)
+		public EntryName(TEntry song, ILocalizedString localizedString)
 			: base(localizedString.Value, localizedString.Language) {
 
 			Entry = song;

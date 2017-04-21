@@ -14,15 +14,23 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.Category).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(400).Not.Nullable();
-			Map(m => m.Name).Column("EnglishName").Length(50).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();
 			Map(m => m.Status).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 
-			HasMany(m => m.Aliases).KeyColumn("[Series]").Inverse().Cascade.All().Cache.ReadWrite();
-
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Series]").Inverse().Cascade.All());
+
+			Component(m => m.Names, c => {
+				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
+				c.HasMany(m => m.Names).Table("TagNames").KeyColumn("[Tag]").Inverse().Cascade.All().Cache.ReadWrite();
+				c.Component(m => m.SortNames, c2 => {
+					c2.Map(m => m.DefaultLanguage, "DefaultNameLanguage");
+					c2.Map(m => m.Japanese, "JapaneseName");
+					c2.Map(m => m.English, "EnglishName");
+					c2.Map(m => m.Romaji, "RomajiName");
+				});
+			});
 
 			HasMany(m => m.Events).OrderBy("[SeriesNumber]").KeyColumn("[Series]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEventSeries]").Inverse().Cascade.All().Cache.ReadWrite();

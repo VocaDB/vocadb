@@ -763,7 +763,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_ReleaseEvent_ExistingEvent() {
 
 			var contract = EditContract();
-			contract.ReleaseEvent = new ReleaseEventContract(releaseEvent);
+			contract.ReleaseEvent = new ReleaseEventContract(releaseEvent, ContentLanguagePreference.English);
 
 			queries.UpdateBasicProperties(contract);
 

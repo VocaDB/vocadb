@@ -11,15 +11,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		Description = 2,
 
+		[Obsolete]
 		Name = 4,
 
 		Names = 8,
 
-		Picture = 16,
+		OriginalName = 16,
 
-		Status = 32,
+		Picture = 32,
 
-		WebLinks = 64
+		Status = 64,
+
+		WebLinks = 128
 
 	}
 

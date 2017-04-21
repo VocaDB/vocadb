@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		}
 
 		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory) 
-			: base(releaseEvent, true, true) {
+			: base(releaseEvent, languagePreference, true, true) {
 
 			ParamIs.NotNull(() => releaseEvent);
 

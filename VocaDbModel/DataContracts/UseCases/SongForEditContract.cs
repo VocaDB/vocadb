@@ -32,7 +32,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			Notes = new EnglishTranslatedStringContract(song.Notes);
 			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? new SongContract(song.OriginalVersion, languagePreference) : null);
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-			ReleaseEvent = song.ReleaseEvent != null ? new ReleaseEventContract(song.ReleaseEvent) : null;
+			ReleaseEvent = song.ReleaseEvent != null ? new ReleaseEventContract(song.ReleaseEvent, languagePreference) : null;
 			Tags = song.Tags.Tags.Select(t => t.Id).ToArray();
 			UpdateNotes = string.Empty;
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();

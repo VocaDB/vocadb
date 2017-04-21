@@ -76,7 +76,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {
-				ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, ReleaseEventOptionalFields.None, thumbPersister, ssl) : null;
+				ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister, ssl) : null;
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.Tags)) {

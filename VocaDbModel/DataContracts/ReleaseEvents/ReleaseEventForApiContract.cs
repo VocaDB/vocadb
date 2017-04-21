@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 
@@ -17,7 +18,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventForApiContract() { }
 
-		public ReleaseEventForApiContract(ReleaseEvent rel, ReleaseEventOptionalFields fields, IEntryThumbPersister thumbPersister, bool ssl) {
+		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IEntryThumbPersister thumbPersister, bool ssl) {
 
 			Category = rel.Category;
 			Date = rel.Date;
@@ -43,7 +44,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.Series != null) {
-				Series = new ReleaseEventSeriesContract(rel.Series);
+				Series = new ReleaseEventSeriesContract(rel.Series, languagePreference);
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.SongList) && rel.SongList != null) {

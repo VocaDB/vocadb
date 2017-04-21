@@ -24,7 +24,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			Discs = album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToArray();
 			Identifiers = album.Identifiers.Select(i => i.Value).ToArray();
 			Names = album.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
-			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease) : null);
+			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease, languagePreference) : null);
 			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p)).ToList();
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 			Songs = album.Songs
