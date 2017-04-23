@@ -195,7 +195,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void UpdateSeries_Update() {
 
 			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English);
-			contract.Name = "M3.9";
+			contract.Names[0].Value = "M3.9";
 
 			var result = queries.UpdateSeries(contract, null);
 
