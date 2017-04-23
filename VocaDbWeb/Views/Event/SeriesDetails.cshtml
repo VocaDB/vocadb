@@ -47,9 +47,9 @@
 		<br />
 	}
 	
-	@if (Model.Aliases.Any()) {
+	@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
 		<p>
-			@SeriesDetailsStrings.Aliases: @string.Join(", ", Model.Aliases)
+			@SeriesDetailsStrings.Aliases: @Model.AdditionalNames
 		</p>		
 	}
 </div>

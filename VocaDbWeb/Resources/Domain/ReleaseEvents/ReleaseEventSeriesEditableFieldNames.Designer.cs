@@ -61,6 +61,15 @@ namespace VocaDb.Web.Resources.Domain.ReleaseEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string Category {
+            get {
+                return ResourceManager.GetString("Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -84,6 +93,15 @@ namespace VocaDb.Web.Resources.Domain.ReleaseEvents {
         public static string Names {
             get {
                 return ResourceManager.GetString("Names", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default name language.
+        /// </summary>
+        public static string OriginalName {
+            get {
+                return ResourceManager.GetString("OriginalName", resourceCulture);
             }
         }
         

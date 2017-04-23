@@ -21,7 +21,8 @@ namespace VocaDb.Migrations {
 			Alter.Table(TableNames.AlbumReleaseEventSeries)
 				.AddColumn("DefaultNameLanguage").AsString(20).NotNullable().WithDefaultValue("English")
 				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
-				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
+				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.AddColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty);
 
 			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.AlbumReleaseEventSeries));
 			Execute.Sql(string.Format("INSERT INTO {0} (Series, Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.EventSeriesNames, TableNames.AlbumReleaseEventSeries));
@@ -37,7 +38,8 @@ namespace VocaDb.Migrations {
 			Alter.Table(TableNames.AlbumReleaseEvents)
 				.AddColumn("DefaultNameLanguage").AsString(20).NotNullable().WithDefaultValue("English")
 				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
-				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
+				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.AddColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty);
 
 			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.AlbumReleaseEvents));
 			Execute.Sql(string.Format("INSERT INTO {0} ([Event], Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.EventNames, TableNames.AlbumReleaseEvents));
