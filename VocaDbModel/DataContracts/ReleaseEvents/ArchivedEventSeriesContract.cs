@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			MainPictureMime = series.PictureMime;
 			Names = diff.IncludeNames ? series.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			TranslatedName = new ArchivedTranslatedStringContract(series.TranslatedName);
-			WebLinks = diff.IsIncluded(ReleaseEventSeriesEditableFields.WebLinks) ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
+			WebLinks = diff.IncludeWebLinks ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
 
