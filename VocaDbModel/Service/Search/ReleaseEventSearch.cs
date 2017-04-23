@@ -38,7 +38,7 @@ namespace VocaDb.Model.Service.Search {
 			var ev = Query<ReleaseEvent>().FirstOrDefault(e => e.Series != null && e.Series.Id == series.Id && e.SeriesNumber == seriesNumber && e.SeriesSuffix == seriesSuffix);
 
 			if (ev != null) {
-				return new ReleaseEventFindResultContract(ev);
+				return new ReleaseEventFindResultContract(ev, languagePreference);
 			} else {
 				return new ReleaseEventFindResultContract(series, languagePreference, seriesNumber, seriesSuffix, query);
 			}
@@ -53,10 +53,10 @@ namespace VocaDb.Model.Service.Search {
 			query = query.Trim().Normalize(NormalizationForm.FormKC);   // Replaces fullwidth characters with ASCII
 
 			// Attempt to match exact name
-			var ev = Query<ReleaseEvent>().FirstOrDefault(e => e.Name == query);
+			var ev = Query<ReleaseEvent>().FirstOrDefault(e => e.Names.Names.Any(n => n.Value == query));
 
 			if (ev != null)
-				return new ReleaseEventFindResultContract(ev);
+				return new ReleaseEventFindResultContract(ev, languagePreference);
 
 			var startsWithMatches = Query<ReleaseEventSeries>()
 				.Where(s => s.Names.Names.Any(a => query.StartsWith(a.Value)))
@@ -93,7 +93,7 @@ namespace VocaDb.Model.Service.Search {
 					return new ReleaseEventFindResultContract();
 
 				if (results.Length == 1)
-					return new ReleaseEventFindResultContract(results[0]);
+					return new ReleaseEventFindResultContract(results[0], languagePreference);
 
 				// Attempt to match just the series
 				var series = Query<ReleaseEventSeries>().FirstOrDefault(s => s.Names.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)));
@@ -103,13 +103,13 @@ namespace VocaDb.Model.Service.Search {
 
 			}
 
-			var events = Query<ReleaseEvent>().Where(e => query.Contains(e.Name) || e.Name.Contains(query)).Take(2).ToArray();
+			var events = Query<ReleaseEvent>().Where(e => e.Names.Names.Any(n => query.Contains(n.Value) || n.Value.Contains(query))).Take(2).ToArray();
 
 			if (events.Length != 1) {
 				return new ReleaseEventFindResultContract(query);
 			}
 
-			return new ReleaseEventFindResultContract(events[0]);
+			return new ReleaseEventFindResultContract(events[0], languagePreference);
 
 		}
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
@@ -27,22 +28,28 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private ReleaseEventSeries series;
 		private User user;
 
-		private ReleaseEvent CallUpdate(ReleaseEventDetailsContract contract) {
+		private ReleaseEvent CallUpdate(ReleaseEventForEditContract contract) {
 			
 			var result = queries.Update(contract, null);
 			return repository.Load(result.Id);
 
 		}
 
+		private LocalizedStringWithIdContract[] Names(string name) {
+			return new[] { new LocalizedStringWithIdContract(new LocalizedStringWithId(name, ContentLanguageSelection.English)) };
+		}
+
 		[TestInitialize]
 		public void SetUp() {
 
 			series = CreateEntry.EventSeries("M3");
-			existingEvent = new ReleaseEvent(string.Empty, null, series, 2013, "Spring", null, false);
+			existingEvent = new ReleaseEvent(string.Empty, null, series, 2013, "Spring", ContentLanguageSelection.Unspecified, null, false);
 
 			repository = new FakeEventRepository();
 			repository.Save(series);
 			repository.Save(existingEvent);
+			repository.SaveNames(series);
+			repository.SaveNames(existingEvent);
 
 			album = CreateEntry.Album(name: "Day's Footsteps");
 			album.OriginalReleaseEvent = existingEvent;
@@ -58,15 +65,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Create_NoSeries() {
 			
-			var contract = new ReleaseEventDetailsContract {
+			var contract = new ReleaseEventForEditContract {
 				Description = string.Empty,
-				Name = "Vocaloid Paradise",
+				Names = Names("Vocaloid Paradise")
 			};
 
 			var result = CallUpdate(contract);
 
 			Assert.IsTrue(repository.Contains(result), "Event was saved to repository");
-			Assert.AreEqual("Vocaloid Paradise", result.Name, "Name");
+			Assert.AreEqual("Vocaloid Paradise", result.DefaultName, "Name");
 			Assert.IsNull(result.Series, "Series");
 
 		}
@@ -75,7 +82,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Create_WithSeriesAndSuffix() {
 
 			
-			var contract = new ReleaseEventDetailsContract {
+			var contract = new ReleaseEventForEditContract {
 				Description = string.Empty,
 				Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.English),
 				SeriesNumber = 2014,
@@ -85,7 +92,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var result = CallUpdate(contract);
 
 			Assert.IsTrue(repository.Contains(result), "Event was saved to repository");
-			Assert.AreEqual("M3 2014 Spring", result.Name, "Name");
+			Assert.AreEqual("M3 2014 Spring", result.DefaultName, "Name");
 			Assert.AreEqual(2014, result.SeriesNumber, "SeriesNumber");
 			Assert.AreEqual("Spring", result.SeriesSuffix, "SeriesSuffix");
 			Assert.AreSame(series, result.Series, "Series");
@@ -94,9 +101,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		public void Create_WithSeriesNoSuffix() {
-
 			
-			var contract = new ReleaseEventDetailsContract {
+			var contract = new ReleaseEventForEditContract {
 				Description = string.Empty,
 				Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.English),
 				SeriesNumber = 2014,
@@ -106,7 +112,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var result = CallUpdate(contract);
 
 			Assert.IsTrue(repository.Contains(result), "Event was saved to repository");
-			Assert.AreEqual("M3 2014", result.Name, "Name");
+			Assert.AreEqual("M3 2014", result.DefaultName, "Name");
 			Assert.AreEqual(2014, result.SeriesNumber, "SeriesNumber");
 			Assert.AreEqual(string.Empty, result.SeriesSuffix, "SeriesSuffix");
 			Assert.AreSame(series, result.Series, "Series");
@@ -116,15 +122,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_ChangeSeriesSuffix() {
 			
-			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default, null);
+			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, null);
 			contract.SeriesSuffix = "Fall";
 
 			var result = CallUpdate(contract);
 
 			Assert.AreEqual(2013, contract.SeriesNumber, "SeriesNumber");
 			Assert.AreEqual("Fall", contract.SeriesSuffix, "SeriesSuffix");
-			Assert.AreEqual("M3 2013 Fall", result.Name, "Name");
-			Assert.AreEqual("M3 2013 Fall", album.OriginalReleaseEvent?.Name, "OriginalReleaseEventName for album");
+			Assert.AreEqual("M3 2013 Fall", result.DefaultName, "Name");
+			Assert.AreEqual("M3 2013 Fall", album.OriginalReleaseEvent?.DefaultName, "OriginalReleaseEventName for album");
 
 			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
 			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
@@ -135,29 +141,29 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_ChangeName_CustomName() {
 
-			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default, null);
+			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, null);
 			contract.CustomName = true;
-			contract.Name = "M3 2013 Fall X2";
+			contract.Names[0].Value = "M3 2013 Fall X2";
 
 			var result = CallUpdate(contract);
 
-			Assert.AreEqual("M3 2013 Fall X2", result.Name, "Name was updated");
+			Assert.AreEqual("M3 2013 Fall X2", result.DefaultName, "Name was updated");
 
 			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
 			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
-			Assert.AreEqual(ReleaseEventEditableFields.Name, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+			Assert.AreEqual(ReleaseEventEditableFields.Names, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
 
 		}
 
 		[TestMethod]
 		public void Update_ChangeName_UseSeriesName() {
 
-			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default, null);
+			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, null);
 			contract.Name = "New name";
 
 			var result = CallUpdate(contract);
 
-			Assert.AreEqual("M3 2013 Spring", result.Name, "Name was not updated");
+			Assert.AreEqual("M3 2013 Spring", result.DefaultName, "Name was not updated");
 
 			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
 			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
@@ -169,7 +175,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[ExpectedException(typeof(DuplicateEventNameException))]
 		public void Update_ChangeName_Duplicate() {
 
-			var contract = new ReleaseEventDetailsContract(existingEvent, ContentLanguagePreference.Default, null);
+			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, null);
 			contract.Id = 0; // Simulate new event
 
 			queries.Update(contract, null);
@@ -179,7 +185,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void UpdateSeries_Create() {
 
-			var contract = new ReleaseEventSeriesForEditContract { Name = "Comiket" };
+			var contract = new ReleaseEventSeriesForEditContract {
+				Names = Names("Comiket")
+			};
 
 			var result = queries.UpdateSeries(contract, null);
 

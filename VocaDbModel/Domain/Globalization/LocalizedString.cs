@@ -29,6 +29,12 @@ namespace VocaDb.Model.Domain.Globalization {
 			}
 		}
 
+		public virtual bool ContentEquals(ILocalizedString another) {
+
+			return (another != null && another.Language == Language && another.Value == Value);
+
+		}
+
 		public virtual bool ContentEquals(LocalizedString another) {
 
 			return (another != null && another.Language == Language && another.Value == Value);

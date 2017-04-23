@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
@@ -32,7 +33,7 @@ namespace VocaDb.Web.Models.Event {
 
 		}
 
-		public EventEdit(ReleaseEventDetailsContract contract, IUserPermissionContext userContext)
+		public EventEdit(ReleaseEventForEditContract contract, IUserPermissionContext userContext)
 			: this() {
 
 			ParamIs.NotNull(() => contract);
@@ -40,9 +41,11 @@ namespace VocaDb.Web.Models.Event {
 			Category = contract.Category;
 			CustomName = contract.CustomName = contract.CustomName;
 			Date = contract.Date;
+			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Description = contract.Description;
 			Id = contract.Id;
 			Name = OldName = contract.Name;
+			Names = contract.Names;
 			Series = contract.Series;
 			SeriesNumber = contract.SeriesNumber;
 			SeriesSuffix = contract.SeriesSuffix;
@@ -66,6 +69,8 @@ namespace VocaDb.Web.Models.Event {
 		[FromJson]
 		public DateTime? Date { get; set; }
 
+		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
 		[StringLength(400)]
 		public string Description { get; set; }
 
@@ -73,6 +78,9 @@ namespace VocaDb.Web.Models.Event {
 
 		[StringLength(50)]
 		public string Name { get; set; }
+
+		[FromJson]
+		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		public string OldName { get; set; }
 
@@ -113,15 +121,17 @@ namespace VocaDb.Web.Models.Event {
 
 		}
 
-		public ReleaseEventDetailsContract ToContract() {
+		public ReleaseEventForEditContract ToContract() {
 
-			return new ReleaseEventDetailsContract {
+			return new ReleaseEventForEditContract {
 				Category = Category,
 				CustomName = this.CustomName,
 				Date = this.Date,
+				DefaultNameLanguage = DefaultNameLanguage,
 				Description = this.Description ?? string.Empty,
 				Id = this.Id,
 				Name = this.Name,
+				Names = Names,
 				Series = this.Series, 
 				SeriesNumber = this.SeriesNumber,
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty,

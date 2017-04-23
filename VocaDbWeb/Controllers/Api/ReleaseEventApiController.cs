@@ -8,6 +8,7 @@ using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
@@ -119,15 +120,13 @@ namespace VocaDb.Web.Controllers.Api {
 			string query = "",
 			int maxResults = 10) {
 			
-			var textQuery = SearchTextQuery.Create(query);
-
 			return repository.HandleQuery(ctx => {
 
-				return ctx.Query()
-					.WhereHasName(textQuery)
-					.OrderBy(r => r.Name)
+				return ctx.Query<EventName>()
+					.Where(n => n.Value.Contains(query))
+					.OrderBy(n => n.Value)
 					.Take(maxResults)
-					.Select(r => r.Name)
+					.Select(r => r.Value)
 					.ToArray();
 				
 			});

@@ -1,8 +1,8 @@
 ﻿using VocaDb.Model.Database.Repositories;
-using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
-using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -44,15 +44,16 @@ namespace VocaDb.Model.Database.Queries.Partial {
 			ReleaseEvent newEvent;
 
 			if (series == null) {
-				newEvent = new ReleaseEvent(string.Empty, null, searchResult.EventName.EmptyToNull() ?? contract.Name);
+				var nameValue = searchResult.EventName.EmptyToNull() ?? contract.Name;
+				var name = new LocalizedStringContract(nameValue, ContentLanguageSelection.English);
+				newEvent = new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { name });
 			} else {
-				newEvent = new ReleaseEvent(string.Empty, null, series, searchResult.SeriesNumber, searchResult.SeriesSuffix, null, false);
+				newEvent = new ReleaseEvent(string.Empty, null, series, searchResult.SeriesNumber, searchResult.SeriesSuffix, ContentLanguageSelection.Unspecified, null, false);
 			}
 
 			ctx.Save(newEvent);
 
-			var eventDiff = new ReleaseEventDiff(ReleaseEventEditableFields.Name);
-			eventDiff.Name.Set();
+			var eventDiff = new ReleaseEventDiff(ReleaseEventEditableFields.OriginalName | ReleaseEventEditableFields.Names);
 
 			var archivedVersion = ArchivedReleaseEventVersion.Create(newEvent, eventDiff, ctx.OfType<User>().CreateAgentLoginData(userContext), EntryEditEvent.Created, "Created for " + forEntry);
 			ctx.Save(archivedVersion);

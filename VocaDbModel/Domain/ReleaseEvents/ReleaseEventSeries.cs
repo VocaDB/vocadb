@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.ExtLinks;
@@ -35,17 +36,19 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Status = EntryStatus.Draft;
 		}
 
-		public ReleaseEventSeries(string name, string description, IEnumerable<ILocalizedString> aliases)
+		public ReleaseEventSeries(ContentLanguageSelection defaultLanguage, ICollection<ILocalizedString> names, string description)
 			: this() {
 
-			ParamIs.NotNull(() => aliases);
+			ParamIs.NotNull(() => names);
 
-			TranslatedName.DefaultLanguage = ContentLanguageSelection.English;
-			CreateName(new LocalizedString(name, ContentLanguageSelection.English));
+			if (!names.Any()) {
+				throw new ArgumentException("Need at least one name", nameof(names));
+			}
 
+			TranslatedName.DefaultLanguage = defaultLanguage;
 			Description = description;
 
-			foreach (var a in aliases)
+			foreach (var a in names)
 				CreateName(a);
 
 		}
@@ -173,12 +176,15 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			return base.GetHashCode();
 		}
 
-		public virtual string GetEventName(int number, string suffix, ContentLanguageSelection languageSelection) {
+		public virtual string GetEventName(int number, string suffix, string name) {
+
+			if (string.IsNullOrEmpty(name))
+				return string.Empty;
 
 			if (string.IsNullOrEmpty(suffix)) {
-				return string.Format("{0} {1}", TranslatedName[languageSelection], number);
+				return string.Format("{0} {1}", name, number);
 			} else {
-				return string.Format("{0} {1} {2}", TranslatedName[languageSelection], number, suffix);
+				return string.Format("{0} {1} {2}", name, number, suffix);
 			}
 
 		}

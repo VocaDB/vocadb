@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
@@ -11,23 +9,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 	public static class ReleaseEventQueryableExtender {
 
 		public static IQueryable<ReleaseEvent> WhereHasName(this IQueryable<ReleaseEvent> query, SearchTextQuery textQuery) {
-
-			if (textQuery.IsEmpty)
-				return query;
-
-			switch (textQuery.MatchMode) {
-				case NameMatchMode.Exact:
-					return query.Where(t => t.Name == textQuery.Query);
-				case NameMatchMode.StartsWith:
-					return query.Where(t => t.Name.StartsWith(textQuery.Query));
-				case NameMatchMode.Words:
-					return textQuery.Words
-						.Take(FindHelpers.MaxSearchWords)
-						.Aggregate(query, (q, word) => q.Where(list => list.Name.Contains(word)));
-				default:
-					return query.Where(t => t.Name.Contains(textQuery.Query));
-			}
-
+			return query.WhereHasNameGeneric<ReleaseEvent, EventName>(textQuery);
 		}
 
 		public static IOrderedQueryable<ReleaseEvent> OrderByDate(this IQueryable<ReleaseEvent> query, SortDirection? direction) {
@@ -47,7 +29,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case EventSortRule.Date:
 					return query.OrderByDate(direction);
 				case EventSortRule.Name:
-					return query.OrderBy(r => r.Name);
+					return query.OrderByName(languagePreference);
 				/*case EventSortRule.SeriesName:
 					return query
 						.OrderBy(r => r.Series.Name)
@@ -56,6 +38,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			return query;
 
+		}
+
+		public static IQueryable<ReleaseEvent> OrderByName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
+			return query.OrderByEntryName(languagePreference);
 		}
 
 		public static IQueryable<ReleaseEvent> WhereDateIsBetween(this IQueryable<ReleaseEvent> query, DateTime? begin, DateTime? end) {
