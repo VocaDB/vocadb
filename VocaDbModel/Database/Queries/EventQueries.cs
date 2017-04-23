@@ -116,7 +116,7 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereDateIsBetween(queryParams.AfterDate, queryParams.BeforeDate);
 
 				var entries = q
-					.OrderBy(queryParams.SortRule, queryParams.SortDirection)
+					.OrderBy(queryParams.SortRule, LanguagePreference, queryParams.SortDirection)
 					.Paged(queryParams.Paging)
 					.ToArray()
 					.Select(fac)
@@ -146,7 +146,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Paged(paging);
 
 				var entries = q
-					.OrderBy(s => s.Name)
+					.OrderByEntryName(PermissionContext.LanguagePreference)
 					.ToArray()
 					.Select(fac)
 					.ToArray();
@@ -186,16 +186,16 @@ namespace VocaDb.Model.Database.Queries {
 			return repository.HandleQuery(ctx => ctx
 				.Query()
 				.Where(e => e.Date.DateTime != null)
-				.OrderBy(sortRule, sortDirection)
+				.OrderBy(sortRule, LanguagePreference, sortDirection)
 				.ToArray()
-				.Select(e => new ReleaseEventContract(e, includeSeries))
+				.Select(e => new ReleaseEventContract(e, LanguagePreference, includeSeries))
 				.ToArray());
 
 		}
 
 		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields) {
 
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), fields, imagePersister, true));
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, imagePersister, true));
 
 		}
 
@@ -370,7 +370,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				return new ReleaseEventContract(ev);
+				return new ReleaseEventContract(ev, LanguagePreference);
 
 			});
 
@@ -408,7 +408,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			ParamIs.NotNull(() => contract);
 
-			PermissionContext.VerifyPermission(PermissionToken.ManageEventSeries);
+			PermissionContext.VerifyManageDatabase();
 
 			return HandleTransaction(session => {
 
@@ -416,16 +416,15 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (contract.Id == 0) {
 
-					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Aliases) {
+					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Names) {
 						Category = contract.Category,
 						Status = contract.Status
 					};
 					session.Save(series);
 
-					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Name);
+					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.OriginalName | ReleaseEventSeriesEditableFields.Names);
 
 					diff.Description.Set(!string.IsNullOrEmpty(contract.Description));
-					diff.Names.Set(contract.Aliases.Any());
 
 					var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
 
@@ -452,10 +451,17 @@ namespace VocaDb.Model.Database.Queries {
 					permissionContext.VerifyEntryEdit(series);
 					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Nothing);
 
-					if (series.Name != contract.Name) {
-						diff.Name.Set();
-						series.Name = contract.Name;
+					if (series.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
+						series.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
+						diff.OriginalName.Set();
 					}
+
+					var nameDiff = series.Names.Sync(contract.Names, series);
+
+					if (nameDiff.Changed) {
+						diff.Names.Set();
+					}
+
 
 					if (series.Category != contract.Category) {
 						diff.Category.Set();
@@ -470,10 +476,6 @@ namespace VocaDb.Model.Database.Queries {
 					if (series.Status != contract.Status) {
 						diff.Status.Set();
 						series.Status = contract.Status;
-					}
-
-					if (series.UpdateAliases(contract.Aliases)) {
-						diff.Names.Set();
 					}
 
 					if (pictureData != null) {

@@ -13,13 +13,13 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => series);
 
-			Aliases = series.Aliases.Select(a => a.Name).ToArray();
 			Category = series.Category;
 			Description = series.Description;
 			Id = series.Id;
 			MainPictureMime = series.PictureMime;
-			Name = series.Name;
-			WebLinks = diff.IsIncluded(ReleaseEventSeriesEditableFields.WebLinks) ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
+			Names = diff.IncludeNames ? series.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
+			TranslatedName = new ArchivedTranslatedStringContract(series.TranslatedName);
+			WebLinks = diff.IncludeWebLinks ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
 
@@ -39,7 +39,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string MainPictureMime { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public LocalizedStringContract[] Names { get; set; }
+
+		[DataMember]
+		public ArchivedTranslatedStringContract TranslatedName { get; set; }
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 
@@ -18,7 +19,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = string.Empty;
 		}
 
-		public ReleaseEventSeriesContract(ReleaseEventSeries series, bool includeLinks = false)
+		public ReleaseEventSeriesContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, bool includeLinks = false)
 			: this() {
 
 			ParamIs.NotNull(() => series);
@@ -27,7 +28,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Deleted = series.Deleted;
 			Description = series.Description;
 			Id = series.Id;
-			Name = series.Name;
+			Name = series.TranslatedName[languagePreference];
 			PictureMime = series.PictureMime;
 			Status = series.Status;
 			UrlSlug = series.UrlSlug;

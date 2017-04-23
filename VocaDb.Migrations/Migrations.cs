@@ -4,6 +4,53 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_04_20_2000)]
+	public class TranslatedEventName : Migration {
+
+		public override void Up() {
+
+			// Event series
+			Rename.Table("AlbumReleaseEventSeriesAliases").To(TableNames.EventSeriesNames);
+			Rename.Column("[Name]").OnTable(TableNames.EventSeriesNames).To("Value"); // Note: must NOT use brackets in column name here
+			
+			Alter.Table(TableNames.EventSeriesNames)
+				.AlterColumn("[Value]").AsString(255).NotNullable()
+				.AddColumn("Language").AsString(16).NotNullable().WithDefaultValue("Unspecified"); // Assume existing aliases are unspecified language, can be changed
+
+			Rename.Column("[Name]").OnTable(TableNames.AlbumReleaseEventSeries).To("EnglishName"); // Assume existing names are English, can be changed
+			Alter.Table(TableNames.AlbumReleaseEventSeries)
+				.AddColumn("DefaultNameLanguage").AsString(20).NotNullable().WithDefaultValue("English")
+				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.AddColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty);
+
+			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.AlbumReleaseEventSeries));
+			Execute.Sql(string.Format("INSERT INTO {0} (Series, Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.EventSeriesNames, TableNames.AlbumReleaseEventSeries));
+
+			// Events
+			Create.Table(TableNames.EventNames)
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("[Event]").AsInt32().NotNullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Language").AsString(16).NotNullable()
+				.WithColumn("Value").AsString(255).NotNullable();
+
+			Rename.Column("[Name]").OnTable(TableNames.AlbumReleaseEvents).To("EnglishName");
+			Alter.Table(TableNames.AlbumReleaseEvents)
+				.AddColumn("DefaultNameLanguage").AsString(20).NotNullable().WithDefaultValue("English")
+				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.AddColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty);
+
+			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.AlbumReleaseEvents));
+			Execute.Sql(string.Format("INSERT INTO {0} ([Event], Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.EventNames, TableNames.AlbumReleaseEvents));
+
+		}
+
+		public override void Down() {
+		}
+
+	}
+
 	[Migration(2017_04_15_2100)]
 	public class EventSeriesStatus : AutoReversingMigration {
 		public override void Up() {

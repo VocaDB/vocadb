@@ -77,7 +77,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			var contract = new ReleaseEventDetailsContract {
 				Description = string.Empty,
-				Series = new ReleaseEventSeriesContract(series),
+				Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.English),
 				SeriesNumber = 2014,
 				SeriesSuffix = "Spring",
 			};
@@ -98,7 +98,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			var contract = new ReleaseEventDetailsContract {
 				Description = string.Empty,
-				Series = new ReleaseEventSeriesContract(series),
+				Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.English),
 				SeriesNumber = 2014,
 				SeriesSuffix = string.Empty,
 			};
@@ -187,15 +187,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(2, repository.List<ReleaseEventSeries>().Count, "Number of series in repo");
 			Assert.IsNotNull(seriesFromRepo, "Series was loaded successfully");
-			Assert.AreEqual("Comiket", seriesFromRepo.Name, "Name was updated");
+			Assert.AreEqual("Comiket", seriesFromRepo.TranslatedName.Default, "Name was updated");
 
 		}
 
 		[TestMethod]
 		public void UpdateSeries_Update() {
 
-			var contract = new ReleaseEventSeriesForEditContract(series);
-			contract.Name = "M3.9";
+			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English);
+			contract.Names[0].Value = "M3.9";
 
 			var result = queries.UpdateSeries(contract, null);
 
@@ -203,7 +203,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(1, repository.List<ReleaseEventSeries>().Count, "Number of series in repo");
 			Assert.IsNotNull(seriesFromRepo, "Series was loaded successfully");
-			Assert.AreEqual("M3.9", seriesFromRepo.Name, "Name was updated");
+			Assert.AreEqual("M3.9", seriesFromRepo.TranslatedName.Default, "Name was updated");
 
 		}
 
@@ -214,7 +214,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user.GroupId = UserGroupId.Limited;
 			permissionContext.RefreshLoggedUser(repository);
 
-			var contract = new ReleaseEventSeriesForEditContract(series);
+			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English);
 			queries.UpdateSeries(contract, null);
 
 		}

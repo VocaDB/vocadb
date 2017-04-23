@@ -34,7 +34,7 @@ namespace VocaDb.Model.Database.Queries.Partial {
 			if (existing != null)
 				return existing;
 
-			var searchResult = new ReleaseEventSearch(ctx).Find(contract.Name);
+			var searchResult = new ReleaseEventSearch(ctx).Find(contract.Name, userContext.LanguagePreference);
 
 			if (searchResult.IsKnownEvent)
 				return ctx.Load<ReleaseEvent>(searchResult.EventId);

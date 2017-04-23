@@ -36,15 +36,26 @@
 
 <form action="@Url.Action("EditSeries")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 	@Html.HiddenFor(m => m.Id)
+	@Html.HiddenFor(m => m.Name)
 
 	@Helpers.SaveAndBackBtn(backAction)
 
 	<div class="editor-label">
-		@Html.LabelFor(m => m.Name)
+		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
+			@EditRes.DefaultLanguageSelection
+		</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxFor(m => m.Name, new { size = 40, @class = "span3" })<br />
-		@Html.ValidationMessageFor(m => m.Name)
+		@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
+	</div>
+
+	<div class="editor-label">
+		@Html.LabelFor(m => m.Names)
+	</div>
+	<div class="editor-field" data-bind="with: names">
+		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+		@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
 	</div>
 
 	<div class="editor-label">
@@ -56,21 +67,7 @@
 		Live preview
 		<div data-bind="markdown: description"></div>
 	</div>
-
-	<div class="editor-label">
-		@Html.LabelFor(m => m.Aliases)
-	</div>
-	<div class="editor-field">
-		<ul id="aliases">
-			@foreach (var alias in Model.Aliases) {
-				Html.RenderPartial("AliasForSeries", alias);
-			}
-		</ul>
-
-		<input id="newAliasName" type="text" maxlength="50" />
-		<a href="#" id="createAliasLink" class="textLink addLink">Add</a>
-	</div>
-	
+		
 	<div class="editor-label">
 		<label>Category</label>
 	</div>
@@ -122,15 +119,15 @@
 </form>
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit")
-<script type="text/javascript" src="@Url.Content("~/Scripts/Event/SeriesEdit.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel.js")"></script>
+@Scripts.Render("~/bundles/shared/edit", "~/bundles/EventSeries/Edit")
 <script type="text/javascript">
 
 	$(function () {
 
+		var defaultNameLanguage = @ToJS(Model.DefaultNameLanguage.ToString());
+		var names = @ToJS(Model.Names);
 		var webLinks = @ToJS(Model.WebLinks);
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel(webLinks);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel(defaultNameLanguage, names, webLinks);
 		ko.applyBindings(vm);
 
 		initPage();

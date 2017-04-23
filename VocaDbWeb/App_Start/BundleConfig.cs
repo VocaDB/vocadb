@@ -88,6 +88,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/knockout-sortable.js",
 				"~/Scripts/Models/WebLinkCategory.js",
 				"~/Scripts/Models/EntryStatus.js",
+				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Shared/WebLinkMatcher.js",
 				"~/Scripts/Shared/DialogService.js",
 				"~/Scripts/Helpers/SearchTextQueryHelper.js",
@@ -143,7 +144,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 				"~/Scripts/Models/Albums/AlbumType.js",
-				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
@@ -212,7 +212,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Edit").Include(
-				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
@@ -236,6 +235,14 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/DiscussionRepository.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionTopicViewModel.js",
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
+			));
+
+			bundles.Add(new ScriptBundle("~/bundles/EventSeries/Edit").Include(
+				"~/Scripts/Helpers/KnockoutHelper.js",
+				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
+				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
+				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel.js",
+				"~/Scripts/Event/SeriesEdit.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/ReleaseEvent/Details").Include(
@@ -311,7 +318,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
-				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Models/Globalization/TranslationType.js",
 				"~/Scripts/Models/Tags/Tag.js",
 				"~/Scripts/Models/PVs/PVType.js",
@@ -401,7 +407,6 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Edit").Include(
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",
-				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
 				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",

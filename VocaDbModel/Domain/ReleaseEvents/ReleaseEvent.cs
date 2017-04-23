@@ -250,7 +250,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual void UpdateNameFromSeries() {
 
 			if (Series != null && !CustomName) {
-				Name = Series.GetEventName(SeriesNumber, SeriesSuffix);				
+				Name = Series.GetEventName(SeriesNumber, SeriesSuffix, ContentLanguageSelection.English /* FIXME: change this */);				
 			}
 			
 		}

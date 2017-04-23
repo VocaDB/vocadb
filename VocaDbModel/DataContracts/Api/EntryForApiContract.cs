@@ -32,7 +32,7 @@ namespace VocaDb.Model.DataContracts.Api {
 				case EntryType.DiscussionTopic:
 					return new EntryForApiContract((DiscussionTopic)entry, languagePreference);
 				case EntryType.ReleaseEvent:
-					return new EntryForApiContract((ReleaseEvent)entry, thumbPersister, ssl, includedFields);
+					return new EntryForApiContract((ReleaseEvent)entry, languagePreference, thumbPersister, ssl, includedFields);
 				case EntryType.Song:
 					return new EntryForApiContract((Song)entry, languagePreference, includedFields);
 				case EntryType.SongList:
@@ -120,11 +120,12 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(ReleaseEvent releaseEvent, IEntryThumbPersister thumbPersister, bool ssl, EntryOptionalFields includedFields)
-			: this(releaseEvent, ContentLanguagePreference.Default, includedFields) {
+		public EntryForApiContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, 
+			bool ssl, EntryOptionalFields includedFields)
+			: this(releaseEvent, languagePreference, includedFields) {
 
 			ActivityDate = releaseEvent.Date.DateTime;
-			ReleaseEventSeriesName = releaseEvent.Series?.Name;
+			ReleaseEventSeriesName = releaseEvent.Series?.TranslatedName[languagePreference];
 			Status = releaseEvent.Status;
 			UrlSlug = releaseEvent.UrlSlug;
 

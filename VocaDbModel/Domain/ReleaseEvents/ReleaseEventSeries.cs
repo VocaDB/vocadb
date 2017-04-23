@@ -7,26 +7,25 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
-using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEventSeries : 
-		IEntryWithNames, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>, 
-		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation, IEntryWithStatus {
+		IEntryWithNames<EventSeriesName>, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>, 
+		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation, IEntryWithStatus, INameFactory<EventSeriesName> {
 
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
-		string IEntryBase.DefaultName => Name;
+		string IEntryBase.DefaultName => TranslatedName.Default;
 		string IEntryImageInformation.Mime => PictureMime;
-		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
+		INameManager IEntryWithNames.Names => Names;
+		INameManager<EventSeriesName> IEntryWithNames<EventSeriesName>.Names => Names;
 
-		private IList<ReleaseEventSeriesAlias> aliases = new List<ReleaseEventSeriesAlias>();
 		private ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> archivedVersions
 			= new ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>();
 		private string description;
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
-		private string name;
+		private NameManager<EventSeriesName> names = new NameManager<EventSeriesName>();
 		private IList<ReleaseEventSeriesWebLink> webLinks = new List<ReleaseEventSeriesWebLink>();
 
 		public ReleaseEventSeries() {
@@ -36,25 +35,19 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Status = EntryStatus.Draft;
 		}
 
-		public ReleaseEventSeries(string name, string description, IEnumerable<string> aliases)
+		public ReleaseEventSeries(string name, string description, IEnumerable<ILocalizedString> aliases)
 			: this() {
 
 			ParamIs.NotNull(() => aliases);
 
-			Name = name;
+			TranslatedName.DefaultLanguage = ContentLanguageSelection.English;
+			CreateName(new LocalizedString(name, ContentLanguageSelection.English));
+
 			Description = description;
 
 			foreach (var a in aliases)
-				CreateAlias(a);
+				CreateName(a);
 
-		}
-
-		public virtual IList<ReleaseEventSeriesAlias> Aliases {
-			get => aliases;
-			set {
-				ParamIs.NotNull(() => value);
-				aliases = value; 
-			}
 		}
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
@@ -91,11 +84,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual int Id { get; set; }
 
-		public virtual string Name {
-			get => name;
+		public virtual NameManager<EventSeriesName> Names {
+			get => names;
 			set {
-				ParamIs.NotNullOrEmpty(() => value);
-				name = value; 
+				ParamIs.NotNull(() => value);
+				names = value;
 			}
 		}
 
@@ -103,10 +96,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual EntryStatus Status { get; set; }
 
+		public virtual TranslatedString TranslatedName => Names.SortNames;
+
 		/// <summary>
 		/// URL slug. Cannot be null. Can be empty.
 		/// </summary>
-		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(Name);
+		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
 
 		public virtual int Version { get; set; }
 
@@ -118,12 +113,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
-		public virtual ReleaseEventSeriesAlias CreateAlias(string alias) {
+		public virtual EventSeriesName CreateName(string val, ContentLanguageSelection language) {
+			return CreateName(new LocalizedString(val, language));
+		}
 
-			var a = new ReleaseEventSeriesAlias(this, alias);
-			Aliases.Add(a);
+		public virtual EventSeriesName CreateName(ILocalizedString localizedString) {
 
-			return a;
+			ParamIs.NotNull(() => localizedString);
+
+			var name = new EventSeriesName(this, localizedString);
+			Names.Add(name);
+
+			return name;
 
 		}
 
@@ -172,34 +173,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			return base.GetHashCode();
 		}
 
-		public virtual string GetEventName(int number, string suffix) {
+		public virtual string GetEventName(int number, string suffix, ContentLanguageSelection languageSelection) {
 
 			if (string.IsNullOrEmpty(suffix)) {
-				return string.Format("{0} {1}", Name, number);
+				return string.Format("{0} {1}", TranslatedName[languageSelection], number);
 			} else {
-				return string.Format("{0} {1} {2}", Name, number, suffix);
+				return string.Format("{0} {1} {2}", TranslatedName[languageSelection], number, suffix);
 			}
 
 		}
 
 		public override string ToString() {
-			return string.Format("release event series '{0}' [{1}]", Name, Id);
-		}
-
-		public virtual bool UpdateAliases(IEnumerable<string> aliases) {
-
-			ParamIs.NotNull(() => aliases);
-
-			var diff = CollectionHelper.Diff(Aliases, aliases, (a1, a2) => a1.Name.Equals(a2));
-
-			foreach (var added in diff.Added)
-				CreateAlias(added);
-
-			foreach (var removed in diff.Removed)
-				Aliases.Remove(removed);
-
-			return diff.Changed;
-
+			return string.Format("release event series '{0}' [{1}]", TranslatedName.Default, Id);
 		}
 
 	}

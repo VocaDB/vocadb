@@ -5,6 +5,7 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
@@ -15,7 +16,7 @@ namespace VocaDb.Web.Models.Event {
 	public class SeriesEdit {
 
 		public SeriesEdit() { 
-			Aliases = new List<string>();
+
 		}
 
 		public SeriesEdit(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext) {
@@ -24,10 +25,11 @@ namespace VocaDb.Web.Models.Event {
 
 			Category = contract.Category;
 			Contract = contract;
-			Aliases = contract.Aliases.ToList();
+			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Description = contract.Description;
 			Id = contract.Id;
 			Name = contract.Name;
+			Names = contract.Names;
 			Status = contract.Status;
 			WebLinks = contract.WebLinks;
 
@@ -35,13 +37,13 @@ namespace VocaDb.Web.Models.Event {
 
 		}
 
-		public IList<string> Aliases { get; set; }
-
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
 		public EventCategory Category { get; set; }
 
 		public ReleaseEventSeriesForEditContract Contract { get; set; }
+
+		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		public string Description { get; set; }
 
@@ -49,6 +51,9 @@ namespace VocaDb.Web.Models.Event {
 
 		[Required]
 		public string Name { get; set; }
+
+		[FromJson]
+		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		public EntryStatus Status { get; set; }
 
@@ -58,11 +63,12 @@ namespace VocaDb.Web.Models.Event {
 		public ReleaseEventSeriesForEditContract ToContract() {
 
 			return new ReleaseEventSeriesForEditContract { 
-				Aliases = this.Aliases.ToArray(),
 				Category = Category,
+				DefaultNameLanguage = DefaultNameLanguage,
 				Description = this.Description ?? string.Empty, 
 				Id = this.Id,
 				Name = this.Name,
+				Names = this.Names.ToArray(),
 				Status = Status,
 				WebLinks = this.WebLinks
 			};
