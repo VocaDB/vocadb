@@ -6,11 +6,15 @@ namespace vdb.dataContracts {
 
 		date?: string;
 
+		defaultNameLanguage: string;
+
 		id: number;
 
 		mainPicture?: EntryThumbContract;
 
 		name: string;
+
+		names?: globalization.LocalizedStringWithIdContract[];
 
 		series?: models.IEntryWithIdAndName;
 

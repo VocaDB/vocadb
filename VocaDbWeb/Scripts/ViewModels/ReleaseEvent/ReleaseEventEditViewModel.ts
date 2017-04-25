@@ -10,6 +10,9 @@ module vdb.viewModels.releaseEvents {
 			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
 			this.dateStr = ko.computed(() => (this.date() ? this.date().toISOString() : null));
 
+			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
+			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
+
 			this.series = new BasicEntryLinkViewModel(contract.series, null);
 			this.isSeriesEvent = ko.observable(!this.series.isEmpty());
 
@@ -34,11 +37,15 @@ module vdb.viewModels.releaseEvents {
 
 		public dateStr: KnockoutComputed<string>;
 
+		public defaultNameLanguage: KnockoutObservable<string>;
+
 		public description = ko.observable<string>();
 
 		public isSeriesEvent: KnockoutObservable<boolean>;
 
 		public isSeriesEventStr: KnockoutComputed<string>;
+
+		public names: globalization.NamesEditViewModel;
 
 		public series: BasicEntryLinkViewModel<models.IEntryWithIdAndName>;
 

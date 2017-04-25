@@ -60,6 +60,22 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 	}
 
+	public class EventNameMap : ClassMap<EventName> {
+
+		public EventNameMap() {
+
+			Table("EventNames");
+			Cache.ReadWrite();
+			Id(m => m.Id);
+
+			Map(m => m.Language).Not.Nullable();
+			Map(m => m.Value).Length(255).Not.Nullable();
+			References(m => m.Entry).Column("[Event]").Not.Nullable();
+
+		}
+
+	}
+
 	public class ReleaseEventWebLinkMap : WebLinkMap<ReleaseEventWebLink, ReleaseEvent> { }
 
 	public class ArchivedReleaseEventVersionMap : ClassMap<ArchivedReleaseEventVersion> {

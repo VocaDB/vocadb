@@ -97,11 +97,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Names.
         /// </summary>
-        internal static string Name {
+        internal static string Names {
             get {
-                return ResourceManager.GetString("Name", resourceCulture);
+                return ResourceManager.GetString("Names", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default name language.
+        /// </summary>
+        internal static string OriginalName {
+            get {
+                return ResourceManager.GetString("OriginalName", resourceCulture);
             }
         }
         

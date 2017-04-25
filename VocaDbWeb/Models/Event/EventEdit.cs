@@ -111,13 +111,14 @@ namespace VocaDb.Web.Models.Event {
 
 		public void CopyNonEditableProperties(ReleaseEventDetailsContract contract, IUserPermissionContext userContext) {
 
-			ParamIs.NotNull(() => contract);
-
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
-			OldName = contract.Name;
-			PictureMime = contract.PictureMime;
-			UrlSlug = contract.UrlSlug;
-			Version = contract.Version;
+
+			if (contract != null) {
+				OldName = contract.Name;
+				PictureMime = contract.PictureMime;
+				UrlSlug = contract.UrlSlug;
+				Version = contract.Version;
+			}
 
 		}
 

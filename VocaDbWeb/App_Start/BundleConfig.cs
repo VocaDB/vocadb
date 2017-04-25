@@ -252,9 +252,12 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/ReleaseEvent/Edit").Include(
+				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/KnockoutExtensions/ReleaseEventSeriesAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/SongListAutoComplete.js",
+				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
+				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventEditViewModel.js",
 				"~/Scripts/Event/Edit.js"
 			));
