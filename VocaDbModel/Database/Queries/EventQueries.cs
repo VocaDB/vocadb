@@ -314,6 +314,7 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					var nameDiff = ev.Names.Sync(contract.Names, ev);
+					session.Sync(nameDiff);
 
 					if (nameDiff.Changed) {
 						diff.Names.Set();
@@ -464,6 +465,7 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					var nameDiff = series.Names.Sync(contract.Names, series);
+					session.Sync(nameDiff);
 
 					if (nameDiff.Changed) {
 						diff.Names.Set();
@@ -498,6 +500,13 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					session.Update(series);
+
+					if (diff.Names.IsChanged || diff.OriginalName.IsChanged) {
+						foreach (var ev in series.Events.Where(e => !e.CustomName)) {
+							ev.UpdateNameFromSeries();
+							session.Update(ev);
+						}
+					}
 
 					Archive(session, series, diff, EntryEditEvent.Updated, string.Empty);
 

@@ -208,7 +208,7 @@
 	$(function () {
 
 		var contract = @ToJS(new {
-			Model.Date, Model.DefaultNameLanguage, 
+			Model.Date, DefaultNameLanguage = Model.DefaultNameLanguage.ToString(), 
 			Model.Names, Model.Series, 
 			Model.SongList, Model.WebLinks
 		});
