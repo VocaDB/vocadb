@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Category = rel.Category;
 			Date = rel.Date;
 			Id = rel.Id;
-			Name = rel.Name;
+			Name = rel.TranslatedName[languagePreference];
 			SeriesNumber = rel.SeriesNumber;
 			SeriesSuffix = rel.SeriesSuffix;
 			Status = rel.Status;

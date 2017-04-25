@@ -20,12 +20,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Description = ev.Description;
 			Id = ev.Id;
 			MainPictureMime = ev.PictureMime;
-			Name = ev.Name;
+			Names = diff.IncludeNames ? ev.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			Series = ObjectRefContract.Create(ev.Series);
 			SeriesNumber = ev.SeriesNumber;
 			SongList = ObjectRefContract.Create(ev.SongList);
 			VenueName = ev.Venue;
-			WebLinks = diff.IsIncluded(ReleaseEventEditableFields.WebLinks) ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
+			WebLinks = diff.IncludeWebLinks ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
 
@@ -48,6 +48,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string Name { get; set; }
 
 		[DataMember]
+		public LocalizedStringContract[] Names { get; set; }
+
+		[DataMember]
 		public ObjectRefContract Series { get; set; }
 
 		[DataMember]
@@ -55,6 +58,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public ObjectRefContract SongList { get; set; }
+
+		[DataMember]
+		public ArchivedTranslatedStringContract TranslatedName { get; set; }
 
 		[DataMember]
 		public string VenueName { get; set; }

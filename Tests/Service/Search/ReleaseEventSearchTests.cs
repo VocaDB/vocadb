@@ -25,14 +25,14 @@ namespace VocaDb.Tests.Service.Search {
 		private void AreEqual(ReleaseEvent expected, ReleaseEventFindResultContract actual) {
 			
 			Assert.IsNotNull(actual, "Result");
-			Assert.AreEqual(expected.Name, actual.EventName, "EventName");
+			Assert.AreEqual(expected.DefaultName, actual.EventName, "EventName");
 			Assert.AreEqual(expected.Id, actual.EventId, "EventId");
 
 		}
 
 		private ReleaseEvent CreateEvent(ReleaseEventSeries series, int number, string suffix = "") {
 
-			var e = new ReleaseEvent(string.Empty, null, series, number, suffix, null, false) {
+			var e = new ReleaseEvent(string.Empty, null, series, number, suffix, ContentLanguageSelection.Unspecified, null, false) {
 				Id = eventId++
 			};
 			querySource.Add(e);
@@ -44,16 +44,16 @@ namespace VocaDb.Tests.Service.Search {
 
 		private ReleaseEvent CreateEvent(string name) {
 
-			var e = new ReleaseEvent(string.Empty, null, name) { Id = eventId++ };
+			var e = new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { new LocalizedString(name, ContentLanguageSelection.English) }) { Id = eventId++ };
 			querySource.Add(e);
 
 			return e;
 
 		}
 
-		private ReleaseEventSeries CreateSeries(string name, params string[] aliases) {
+		private ReleaseEventSeries CreateSeries(params string[] aliases) {
 
-			var s = new ReleaseEventSeries(name, string.Empty, aliases.Select(a => new LocalizedString(a, ContentLanguageSelection.English)));
+			var s = new ReleaseEventSeries(ContentLanguageSelection.English, aliases.Select(a => new LocalizedString(a, ContentLanguageSelection.English)).ToArray(), string.Empty);
 			querySource.Add(s);
 
 			return s;
@@ -84,8 +84,8 @@ namespace VocaDb.Tests.Service.Search {
 		[TestMethod]
 		public void Ctor() {
 
-			Assert.AreEqual("Comiket 84", eventInSeries.Name, "Name");
-			Assert.AreEqual("Vocaloid Festa", unsortedEvent.Name, "Name");
+			Assert.AreEqual("Comiket 84", eventInSeries.DefaultName, "Name");
+			Assert.AreEqual("Vocaloid Festa", unsortedEvent.DefaultName, "Name");
 
 		}
 

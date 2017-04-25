@@ -34,7 +34,7 @@ namespace VocaDb.Tests.TestData {
 		}
 
 		public static ReleaseEventSeries EventSeries(string name) {
-			return new ReleaseEventSeries(name, string.Empty, new LocalizedString[0]);
+			return new ReleaseEventSeries(ContentLanguageSelection.English, new[] { new LocalizedString(name, ContentLanguageSelection.English) }, string.Empty);
 		}
 
 		public static LyricsForSongContract LyricsForSongContract(TranslationType translationType = TranslationType.Translation, string value = "Miku Miku", string cultureCode = "ja") {
@@ -50,7 +50,7 @@ namespace VocaDb.Tests.TestData {
 		}
 
 		public static ReleaseEvent ReleaseEvent(string name) {
-			return new ReleaseEvent(string.Empty, null, name);
+			return new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { new LocalizedString(name, ContentLanguageSelection.English) });
 		}
 
 		public static Song Song(int id = 0, string name = "Nebula") {

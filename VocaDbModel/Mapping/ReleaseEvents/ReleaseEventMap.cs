@@ -16,7 +16,6 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.CustomName).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(400).Not.Nullable();
-			Map(m => m.Name).Column("EnglishName").Length(50).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();
 			Map(m => m.SeriesNumber).Not.Nullable();
 			Map(m => m.SeriesSuffix).Length(50).Not.Nullable();
@@ -36,6 +35,17 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Event]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
+			Component(m => m.Names, c => {
+				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
+				c.HasMany(m => m.Names).Table("EventNames").KeyColumn("[Event]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
+				c.Component(m => m.SortNames, c2 => {
+					c2.Map(m => m.DefaultLanguage, "DefaultNameLanguage");
+					c2.Map(m => m.Japanese, "JapaneseName");
+					c2.Map(m => m.English, "EnglishName");
+					c2.Map(m => m.Romaji, "RomajiName");
+				});
+			});
+
 			Component(m => m.Date, c => c.Map(m => m.DateTime).Column("[Date]").Nullable());
 
 		}
@@ -46,6 +56,22 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 		public ReleaseEventCommentMap() {
 			References(m => m.EntryForComment).Column("[ReleaseEvent]").Not.Nullable();
+		}
+
+	}
+
+	public class EventNameMap : ClassMap<EventName> {
+
+		public EventNameMap() {
+
+			Table("EventNames");
+			Cache.ReadWrite();
+			Id(m => m.Id);
+
+			Map(m => m.Language).Not.Nullable();
+			Map(m => m.Value).Length(255).Not.Nullable();
+			References(m => m.Entry).Column("[Event]").Not.Nullable();
+
 		}
 
 	}

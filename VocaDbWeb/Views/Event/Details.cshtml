@@ -65,7 +65,13 @@
 			@if (Model.WebLinks.Any()) {
 				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 				<br />
-			}		
+			}	
+			
+			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+				<p>
+					@Res.Aliases: @Model.AdditionalNames
+				</p>		
+			}
 		</div>
 	</div>
 	

@@ -109,7 +109,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			tag = new Tag("vocarock");
 			repository.Add(tag, new Tag("vocaloud"));
 
-			releaseEvent = repository.Save(new ReleaseEvent { Name = "Comiket 39" });
+			releaseEvent = repository.Save(new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { new LocalizedString("Comiket 39", ContentLanguageSelection.English) } ));
 
 			permissionContext = new FakePermissionContext(user);
 			entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
@@ -532,7 +532,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var album = repository.Save(CreateEntry.Album());
 			album.OriginalRelease.ReleaseDate = new OptionalDateTime(2007, 8, 31);
-			var relEvent = repository.Save(new ReleaseEvent(string.Empty, new DateTime(2007, 8, 31), "Miku's birthday"));
+			var relEvent = repository.Save(new ReleaseEvent(string.Empty, new DateTime(2007, 8, 31), ContentLanguageSelection.English, new[] { new LocalizedString("Miku's birthday", ContentLanguageSelection.English) }));
 			album.OriginalRelease.ReleaseEvent = relEvent;
 			album.AddSong(song, 1, 1);
 
@@ -780,7 +780,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			queries.UpdateBasicProperties(contract);
 
 			Assert.IsNotNull(song.ReleaseEvent, "ReleaseEvent");
-			Assert.AreSame("Comiket 40", song.ReleaseEvent.Name, "ReleaseEvent.Name");
+			Assert.AreSame("Comiket 40", song.ReleaseEvent.DefaultName, "ReleaseEvent.Name");
 
 			Assert.AreEqual(1, song.ReleaseEvent.ArchivedVersionsManager.Versions.Count, "New release event was archived");
 

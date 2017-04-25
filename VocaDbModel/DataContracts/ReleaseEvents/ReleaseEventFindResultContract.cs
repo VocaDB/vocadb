@@ -11,12 +11,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventFindResultContract() { }
 
-		public ReleaseEventFindResultContract(ReleaseEvent releaseEvent) {
+		public ReleaseEventFindResultContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference) {
 
 			ParamIs.NotNull(() => releaseEvent);
 
 			EventId = releaseEvent.Id;
-			EventName = releaseEvent.Name;
+			EventName = releaseEvent.TranslatedName[languagePreference];
 
 		}
 

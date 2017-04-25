@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service {
 
 				var seriesContracts = series.Select(s => 
 					new ReleaseEventSeriesWithEventsContract(s, allEvents.Where(e => s.Equals(e.Series)), PermissionContext.LanguagePreference));
-				var ungrouped = allEvents.Where(e => e.Series == null).OrderBy(e => e.Name);
+				var ungrouped = allEvents.Where(e => e.Series == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
 
 				return seriesContracts.Concat(new[] { new ReleaseEventSeriesWithEventsContract { 
 					Name = string.Empty, 
@@ -34,9 +34,9 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public ReleaseEventDetailsContract GetReleaseEventForEdit(int id) {
+		public ReleaseEventForEditContract GetReleaseEventForEdit(int id) {
 
-			return HandleQuery(session => new ReleaseEventDetailsContract(
+			return HandleQuery(session => new ReleaseEventForEditContract(
 				session.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, null) {
 					AllSeries = session.Query<ReleaseEventSeries>().Select(s => new ReleaseEventSeriesContract(s, LanguagePreference, false)).ToArray()
 				});

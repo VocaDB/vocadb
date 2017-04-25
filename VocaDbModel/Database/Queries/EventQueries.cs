@@ -51,10 +51,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		private void CheckDuplicateName(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent ev) {
 
-			var hasDuplicate = ctx.Query().Any(e => e.Id != ev.Id && e.Name == ev.Name);
+			var duplicate = ctx.Query<EventName>().FirstOrDefault(e => e.Entry.Id != ev.Id && ev.Names.AllValues.Contains(e.Value));
 
-			if (hasDuplicate) {
-				throw new DuplicateEventNameException(ev.Name);
+			if (duplicate != null) {
+				throw new DuplicateEventNameException(duplicate.Value);
 			}
 
 		}
@@ -237,7 +237,7 @@ namespace VocaDb.Model.Database.Queries {
 		/// </summary>
 		/// <param name="contract">Updated contract. Cannot be null.</param>
 		/// <returns>Updated release event data. Cannot be null.</returns>
-		public ReleaseEventContract Update(ReleaseEventDetailsContract contract, EntryPictureFileContract pictureData) {
+		public ReleaseEventContract Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -254,10 +254,10 @@ namespace VocaDb.Model.Database.Queries {
 					if (!contract.Series.IsNullOrDefault()) {
 						var series = session.OfType<ReleaseEventSeries>().Load(contract.Series.Id);
 						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
-							contract.Name, contract.CustomName);
+							contract.DefaultNameLanguage, contract.Names, contract.CustomName);
 						series.Events.Add(ev);
 					} else {
-						ev = new ReleaseEvent(contract.Description, contract.Date, contract.Name);
+						ev = new ReleaseEvent(contract.Description, contract.Date, contract.DefaultNameLanguage, contract.Names);
 					}
 
 					ev.Category = contract.Category;
@@ -309,8 +309,16 @@ namespace VocaDb.Model.Database.Queries {
 					if (ev.Description != contract.Description)
 						diff.Description.Set();
 
-					if (ev.Name != contract.Name && (contract.Series == null || contract.CustomName))
-						diff.Name.Set();
+					if (ev.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
+						diff.OriginalName.Set();
+					}
+
+					var nameDiff = ev.Names.Sync(contract.Names, ev);
+					session.Sync(nameDiff);
+
+					if (nameDiff.Changed) {
+						diff.Names.Set();
+					}
 
 					if (!ev.Series.NullSafeIdEquals(contract.Series)) {
 						diff.Series.Set();
@@ -338,11 +346,11 @@ namespace VocaDb.Model.Database.Queries {
 					ev.CustomName = contract.CustomName;
 					ev.Date = contract.Date;
 					ev.Description = contract.Description;
-					ev.Name = contract.Name;
 					ev.SeriesNumber = contract.SeriesNumber;
 					ev.SeriesSuffix = contract.SeriesSuffix;
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.Status = contract.Status;
+					ev.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
 					ev.Venue = contract.Venue;
 					ev.UpdateNameFromSeries();
 
@@ -416,7 +424,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (contract.Id == 0) {
 
-					series = new ReleaseEventSeries(contract.Name, contract.Description, contract.Names) {
+					series = new ReleaseEventSeries(contract.DefaultNameLanguage, contract.Names, contract.Description) {
 						Category = contract.Category,
 						Status = contract.Status
 					};
@@ -457,6 +465,7 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					var nameDiff = series.Names.Sync(contract.Names, series);
+					session.Sync(nameDiff);
 
 					if (nameDiff.Changed) {
 						diff.Names.Set();
@@ -491,6 +500,13 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					session.Update(series);
+
+					if (diff.Names.IsChanged || diff.OriginalName.IsChanged) {
+						foreach (var ev in series.Events.Where(e => !e.CustomName)) {
+							ev.UpdateNameFromSeries();
+							session.Update(ev);
+						}
+					}
 
 					Archive(session, series, diff, EntryEditEvent.Updated, string.Empty);
 

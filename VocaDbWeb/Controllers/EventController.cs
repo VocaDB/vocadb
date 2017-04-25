@@ -117,8 +117,11 @@ namespace VocaDb.Web.Controllers
         {
 
 			// Either series or name must be specified. If series is specified, name is generated automatically.
-			if (string.IsNullOrEmpty(model.Name) && (model.Series.IsNullOrDefault() || model.CustomName)) {
-				ModelState.AddModelError("Name", "Name cannot be empty");
+			if (model.Series.IsNullOrDefault() || model.CustomName) {
+				// Note: name is allowed to be whitespace, but not empty.
+				if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value))) {
+					ModelState.AddModelError("Names", "Name cannot be empty");
+				}
 			}
 
 			if (!ModelState.IsValid) {
@@ -126,6 +129,8 @@ namespace VocaDb.Web.Controllers
 				if (model.Id != 0) {
 					var contract = Service.GetReleaseEventForEdit(model.Id);
 					model.CopyNonEditableProperties(contract, PermissionContext);					
+				} else {
+					model.CopyNonEditableProperties(null, PermissionContext);
 				}
 
 				return View(model);

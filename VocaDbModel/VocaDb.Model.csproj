@@ -164,6 +164,7 @@
     <Compile Include="DataContracts\Globalization\EnglishTranslatedStringContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArchivedEventSeriesVersionContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForEditContract.cs" />
     <Compile Include="DataContracts\SongImport\PartialImportedSongs.cs" />
     <Compile Include="DataContracts\SongLists\SongListDetailsContract.cs" />
     <Compile Include="DataContracts\SongLists\SongListForApiContract.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="Domain\Albums\IAlbumRelease.cs" />
     <Compile Include="Domain\Albums\OtherArtistForAlbum.cs" />
     <Compile Include="Domain\ReleaseEvents\EventCategory.cs" />
+    <Compile Include="Domain\ReleaseEvents\EventName.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventComment.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventDiff.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventEditableFields.cs" />

@@ -20,8 +20,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => releaseEvent);
 
+			DefaultNameLanguage = releaseEvent.TranslatedName.DefaultLanguage;
 			SeriesNumber = releaseEvent.SeriesNumber;
 			SeriesSuffix = releaseEvent.SeriesSuffix;
+			TranslatedName = new TranslatedStringContract(releaseEvent.TranslatedName);
 			WebLinks = releaseEvent.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 			Albums = releaseEvent.Albums
@@ -49,6 +51,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
 
+		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
 		public UserEventRelationshipType? EventAssociationType { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
@@ -60,6 +64,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public SongInListContract[] SongListSongs { get; set; }
 
 		public SongForApiContract[] Songs { get; set; }
+
+		public TranslatedStringContract TranslatedName { get; set; }
 
 		public UserForApiContract[] UsersAttending { get; set; }
 

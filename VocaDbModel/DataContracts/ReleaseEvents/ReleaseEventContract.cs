@@ -24,13 +24,14 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => ev);
 
+			AdditionalNames = ev.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			Category = ev.Category;
 			CustomName = ev.CustomName;
 			Date = ev.Date;
 			Deleted = ev.Deleted;
 			Description = ev.Description;
 			Id = ev.Id;
-			Name = ev.Name;
+			Name = ev.TranslatedName[languagePreference];
 			PictureMime = ev.PictureMime;
 			SongList = ObjectHelper.Convert(ev.SongList, s => new SongListBaseContract(s));
 			Status = ev.Status;
@@ -43,6 +44,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			}
 
 		}
+
+		public string AdditionalNames { get; set; }
 
 		public EventCategory Category { get; set; }
 
