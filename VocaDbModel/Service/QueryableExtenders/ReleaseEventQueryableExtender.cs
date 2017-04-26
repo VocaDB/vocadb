@@ -30,18 +30,36 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.OrderByDate(direction);
 				case EventSortRule.Name:
 					return query.OrderByName(languagePreference);
-				/*case EventSortRule.SeriesName:
-					return query
-						.OrderBy(r => r.Series.Name)
-						.ThenBy(r => r.SeriesNumber);*/ // FIXME: add this
+				case EventSortRule.SeriesName:
+					return query.OrderBySeriesName(languagePreference);
 			}
 
 			return query;
 
 		}
 
-		public static IQueryable<ReleaseEvent> OrderByName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
+		public static IOrderedQueryable<ReleaseEvent> OrderByName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
 			return query.OrderByEntryName(languagePreference);
+		}
+
+		public static IOrderedQueryable<ReleaseEvent> OrderBySeriesName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
+
+			IOrderedQueryable<ReleaseEvent> ordered;
+
+			switch (languagePreference) {
+				case ContentLanguagePreference.English:
+					ordered = query.OrderBy(e => e.Series.Names.SortNames.English);
+					break;
+				case ContentLanguagePreference.Romaji:
+					ordered = query.OrderBy(e => e.Series.Names.SortNames.Romaji);
+					break;
+				default:
+					ordered = query.OrderBy(e => e.Series.Names.SortNames.Japanese);
+					break;
+			}
+
+			return ordered.ThenBy(e => e.SeriesNumber);
+
 		}
 
 		public static IQueryable<ReleaseEvent> WhereDateIsBetween(this IQueryable<ReleaseEvent> query, DateTime? begin, DateTime? end) {
