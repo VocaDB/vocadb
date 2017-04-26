@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -44,6 +45,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			series = CreateEntry.EventSeries("M3");
 			existingEvent = new ReleaseEvent(string.Empty, null, series, 2013, "Spring", ContentLanguageSelection.Unspecified, null, false);
+			series.Events.Add(existingEvent);
 
 			repository = new FakeEventRepository();
 			repository.Save(series);
@@ -80,7 +82,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		public void Create_WithSeriesAndSuffix() {
-
 			
 			var contract = new ReleaseEventForEditContract {
 				Description = string.Empty,
@@ -93,6 +94,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.IsTrue(repository.Contains(result), "Event was saved to repository");
 			Assert.AreEqual("M3 2014 Spring", result.DefaultName, "Name");
+			Assert.AreEqual(1, result.Names.Names.Count, "Number of names");
+			Assert.AreEqual("M3 2014 Spring", result.Names.Names[0].Value, "First name");
 			Assert.AreEqual(2014, result.SeriesNumber, "SeriesNumber");
 			Assert.AreEqual("Spring", result.SeriesSuffix, "SeriesSuffix");
 			Assert.AreSame(series, result.Series, "Series");
@@ -116,6 +119,32 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(2014, result.SeriesNumber, "SeriesNumber");
 			Assert.AreEqual(string.Empty, result.SeriesSuffix, "SeriesSuffix");
 			Assert.AreSame(series, result.Series, "Series");
+
+		}
+
+		[TestMethod]
+		public void Create_SeriesHasMultipleNames() {
+
+			series.Names.Names = new[] {
+				series.CreateName("Comiket", ContentLanguageSelection.English),
+				series.CreateName("コミケ", ContentLanguageSelection.Japanese),
+				series.CreateName("Comic Market", ContentLanguageSelection.Unspecified),
+			}.ToList();
+
+			var contract = new ReleaseEventForEditContract {
+				Description = string.Empty,
+				Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.English),
+				SeriesNumber = 39,
+				SeriesSuffix = string.Empty,
+			};
+
+			var result = CallUpdate(contract);
+
+			Assert.AreEqual(3, result.Names.Names.Count, "Number of names");
+			Assert.IsTrue(result.Names.HasName("Comiket 39"), "Found English name");
+			Assert.IsTrue(result.Names.HasName("コミケ 39"), "Found Japanese name");
+			Assert.AreEqual("Comiket 39", result.TranslatedName.English, "English name");
+			Assert.AreEqual("コミケ 39", result.TranslatedName.Japanese, "Japanese name");
 
 		}
 
@@ -212,6 +241,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(1, repository.List<ReleaseEventSeries>().Count, "Number of series in repo");
 			Assert.IsNotNull(seriesFromRepo, "Series was loaded successfully");
 			Assert.AreEqual("M3.9", seriesFromRepo.TranslatedName.Default, "Name was updated");
+
+			Assert.AreEqual(1, existingEvent.Names.Names.Count, "Number of event names");
+			Assert.AreEqual("M3.9 2013 Spring", existingEvent.Names.Names[0].Value, "Event name value");
 
 		}
 
