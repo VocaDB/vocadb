@@ -78,7 +78,7 @@
 </div>
 
 @if (Model.Series != null) {
-	<h3>@Res.Series: @Html.ActionLink(Model.Series.Name, "SeriesDetails", new { id = Model.Series.Id, slug = Model.Series.UrlSlug })</h3>
+	<h3>@Res.Series: <a href="@Url.Action("SeriesDetails", new { id = Model.Series.Id, slug = Model.Series.UrlSlug })" title="@Model.Series.AdditionalNames">@Model.Series.Name</a></h3>
 	if (!string.IsNullOrEmpty(Model.Series.Description)) {
 		@HtmlHelpers.FormatMarkdown(Model.Series.Description);
 	}

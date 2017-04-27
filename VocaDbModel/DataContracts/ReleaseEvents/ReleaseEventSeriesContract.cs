@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => series);
 
+			AdditionalNames = series.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			Category = series.Category;
 			Deleted = series.Deleted;
 			Description = series.Description;
@@ -39,6 +40,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			}
 
 		}
+
+		[DataMember]
+		public string AdditionalNames { get; set; }
 
 		[DataMember]
 		public EventCategory Category { get; set; }
