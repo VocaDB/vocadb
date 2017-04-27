@@ -127,12 +127,12 @@
 			var cat = ev.Series != null ? ev.Series.Category : ev.Category;
 			<div class="well well-transparent event-teaser">
 				@if (ev.MainPicture != null) {
-					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left">
+					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left" title="@ev.AdditionalNames">
 						<img class="media-object" src="@ev.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Thumb" />
 					</a>
 				}
 				<div>
-					<a href="@Url.EntryDetails(ev, ev.UrlSlug)">
+					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" title="@ev.AdditionalNames">
 						@ev.Name
 					</a>
 					@if (cat != EventCategory.Unspecified && cat != EventCategory.Other) {

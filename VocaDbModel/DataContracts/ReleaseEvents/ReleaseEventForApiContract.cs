@@ -35,12 +35,20 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				SeriesId = rel.Series.Id;
 			}
 
+			if (fields.HasFlag(ReleaseEventOptionalFields.AdditionalNames)) {
+				AdditionalNames = rel.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			}
+
 			if (fields.HasFlag(ReleaseEventOptionalFields.Description)) {
 				Description = rel.Description;
 			}
 
 			if (thumbPersister != null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture)) {
 				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(rel) ?? EntryThumb.Create(rel.Series), thumbPersister, ssl);
+			}
+
+			if (fields.HasFlag(ReleaseEventOptionalFields.Names)) {
+				Names = rel.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.Series != null) {
@@ -56,6 +64,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			}
 
 		}
+
+		/// <summary>
+		/// Comma-separated list of all other names that aren't the display name.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public string AdditionalNames { get; set; }
 
 		[DataMember]
 		public EventCategory Category { get; set; }
@@ -74,6 +88,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public string Name { get; set; }
+
+		/// <summary>
+		/// List of all names for this entry. Optional field.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public LocalizedStringContract[] Names { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public ReleaseEventSeriesContract Series { get; set; }
@@ -111,11 +131,13 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 	public enum ReleaseEventOptionalFields {
 
 		None = 0,
-		Description = 1,
-		MainPicture = 2,
-		Series = 4,
-		SongList = 8,
-		WebLinks = 16
+		AdditionalNames = 1,
+		Description = 2,
+		MainPicture = 4,
+		Names = 8,
+		Series = 16,
+		SongList = 32,
+		WebLinks = 64
 
 	}
 

@@ -197,7 +197,8 @@ namespace VocaDb.Web.Controllers
 			};
 
 			var events = queries.Find(e =>
-				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference, ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, thumbPersister, WebHelper.IsSSL(Request)),
+				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference, 
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, thumbPersister, WebHelper.IsSSL(Request)),
 				queryParams);
 
 			return View(events.Items);
