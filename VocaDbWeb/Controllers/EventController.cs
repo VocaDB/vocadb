@@ -104,6 +104,10 @@ namespace VocaDb.Web.Controllers
         public ActionResult Edit(int? id, int? seriesId)
         {
 
+			if (id != null) {
+				CheckConcurrentEdit(EntryType.ReleaseEvent, id.Value);
+			}
+
 			var model = (id != null ? new EventEdit(Service.GetReleaseEventForEdit(id.Value), PermissionContext) 
 				: new EventEdit(seriesId != null ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null, PermissionContext));
 

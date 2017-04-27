@@ -207,12 +207,15 @@
 <script type="text/javascript">
 	$(function () {
 
+		var userRepo = new vdb.repositories.UserRepository(new vdb.UrlMapper('@RootPath'));
 		var contract = @ToJS(new {
-			Model.Date, DefaultNameLanguage = Model.DefaultNameLanguage.ToString(), 
-			Model.Names, Model.Series, 
+			Model.Date, DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
+			Model.Id,
+			Model.Names, Model.Series,
 			Model.SongList, Model.WebLinks
 		});
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(contract);
+
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(userRepo, contract);
 		ko.applyBindings(vm);
 
 		initPage();

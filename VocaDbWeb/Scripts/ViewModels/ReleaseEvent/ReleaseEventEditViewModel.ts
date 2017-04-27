@@ -5,7 +5,9 @@ module vdb.viewModels.releaseEvents {
 
 	export class ReleaseEventEditViewModel {
 
-		constructor(contract: dc.ReleaseEventContract) {
+		constructor(
+			userRepository: rep.UserRepository,
+			contract: dc.ReleaseEventContract) {
 
 			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
 			this.dateStr = ko.computed(() => (this.date() ? this.date().toISOString() : null));
@@ -28,6 +30,10 @@ module vdb.viewModels.releaseEvents {
 
 			this.songList = new BasicEntryLinkViewModel(contract.songList, null);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
+
+			if (contract.id) {
+				window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.ReleaseEvent, contract.id), 10000);				
+			}
 
 		}
 
