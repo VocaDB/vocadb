@@ -20,6 +20,12 @@
 
 <strong class="popupTitle">@Model.Name</strong>
 
+@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+	<p>
+		@Model.AdditionalNames
+	</p>
+}
+
 @if (cat != VocaDb.Model.Domain.ReleaseEvents.EventCategory.Unspecified && cat != VocaDb.Model.Domain.ReleaseEvents.EventCategory.Other) {
 	<p>
 		@Translate.ReleaseEventCategoryNames[cat]

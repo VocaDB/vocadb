@@ -5,6 +5,7 @@ using System.Web.SessionState;
 using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
@@ -28,15 +29,17 @@ namespace VocaDb.Web.Controllers
 		private readonly ArtistService artistService;
 		private readonly IEntryImagePersisterOld entryThumbPersister;
 		private readonly IEntryUrlParser entryUrlParser;
+		private readonly EventQueries eventQueries;
 		private readonly SongQueries songService;
 		private readonly TagQueries tagQueries;
 
 		public ExtController(IEntryUrlParser entryUrlParser, IEntryImagePersisterOld entryThumbPersister, 
-			AlbumService albumService, ArtistService artistService, SongQueries songService, TagQueries tagQueries) {
+			AlbumService albumService, ArtistService artistService, EventQueries eventQueries, SongQueries songService, TagQueries tagQueries) {
 			this.entryUrlParser = entryUrlParser;
 			this.entryThumbPersister = entryThumbPersister;
 			this.albumService = albumService;
 			this.artistService = artistService;
+			this.eventQueries = eventQueries;
 			this.songService = songService;
 			this.tagQueries = tagQueries;
 		}
@@ -93,6 +96,9 @@ namespace VocaDb.Web.Controllers
 					break;
 				case EntryType.Artist:
 					data = RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id));
+					break;
+				case EntryType.ReleaseEvent:
+					data = RenderPartialViewToString("_EventPopupContent", eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, WebHelper.IsSSL(Request)));
 					break;
 				case EntryType.Song:
 					data = RenderPartialViewToString("SongPopupContent", songService.GetSong(id));

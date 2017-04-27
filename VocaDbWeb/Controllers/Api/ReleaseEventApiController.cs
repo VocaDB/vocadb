@@ -135,9 +135,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("{id:int}")]
 		public ReleaseEventForApiContract GetOne(int id, ReleaseEventOptionalFields fields, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, thumbPersister, WebHelper.IsSSL(Request)));
-
+			return queries.GetOne(id, lang, fields, WebHelper.IsSSL(Request));
 		}
 
 	}
