@@ -2,6 +2,7 @@
 module vdb.viewModels.releaseEvents {
 
 	import dc = vdb.dataContracts;
+	import rep = repositories;
 
 	export class ReleaseEventEditViewModel {
 

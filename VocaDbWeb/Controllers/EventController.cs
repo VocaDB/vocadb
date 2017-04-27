@@ -151,6 +151,10 @@ namespace VocaDb.Web.Controllers
         public ActionResult EditSeries(int? id)
         {
 
+	        if (id != null) {
+		        CheckConcurrentEdit(EntryType.ReleaseEventSeries, id.Value);
+	        }
+
 			var contract = (id != null ? Service.GetReleaseEventSeriesForEdit(id.Value) : new ReleaseEventSeriesForEditContract());
 			return View(new SeriesEdit(contract, PermissionContext));
 

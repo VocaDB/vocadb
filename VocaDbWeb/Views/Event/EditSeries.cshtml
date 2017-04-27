@@ -124,10 +124,15 @@
 
 	$(function () {
 
-		var defaultNameLanguage = @ToJS(Model.DefaultNameLanguage.ToString());
-		var names = @ToJS(Model.Names);
-		var webLinks = @ToJS(Model.WebLinks);
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel(defaultNameLanguage, names, webLinks);
+		var userRepo = new vdb.repositories.UserRepository(new vdb.UrlMapper('@RootPath'));
+		var model = @ToJS(new {
+			 DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
+			 Model.Id,
+			 Model.Names,
+			 Model.WebLinks
+		});
+
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel(userRepo, model.id, model.defaultNameLanguage, model.names, model.webLinks);
 		ko.applyBindings(vm);
 
 		initPage();
