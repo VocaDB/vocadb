@@ -221,7 +221,7 @@ namespace VocaDb.Web.Controllers
 		    if (id == invalidId)
 			    return HttpNotFound();
 
-		    var releaseEvent = queries.Load(id, ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
+		    var releaseEvent = queries.Load(id, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
 		    return PartialView("_EventPopupContent", releaseEvent);
 
 	    }
