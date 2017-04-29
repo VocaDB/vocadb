@@ -117,7 +117,7 @@ namespace VocaDb.Web.Controllers
 					if (ev.Items.Length == 1) {
 						return RedirectToReleaseEvent(ev.Items[0]);
 					}
-					return RedirectToAction("EventsBySeries", "Event");
+					break;
 
 				case EntryType.Song:
 					var song = songService.Find(new SongQueryParams(textQuery, null, 0, 2, false, SongSortRule.None, false, false, null) {
