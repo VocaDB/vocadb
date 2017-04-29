@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Globalization;
 using Resources;
+using VocaDb.Model;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
@@ -109,6 +110,9 @@ namespace VocaDb.Web.Helpers {
 
 		public static readonly TranslateableEnum<EntryType> EntryTypeNames =
 			new TranslateableEnum<EntryType>(() => Resources.Domain.EntryTypeNames.ResourceManager);
+
+		public static readonly TranslateableEnum<EventSortRule> EventSortRuleNames =
+			new TranslateableEnum<EventSortRule>(() => Resources.Domain.ReleaseEvents.EventSortRuleNames.ResourceManager, EnumVal<EventSortRule>.Values.Where(s => s != EventSortRule.None));
 
 		public static readonly TranslateableEnum<PVType> PVTypeDescriptions =
 			new TranslateableEnum<PVType>(() => global::Resources.PVTypeDescriptions.ResourceManager);

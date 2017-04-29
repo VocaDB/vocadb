@@ -1,0 +1,67 @@
+﻿
+@using VocaDb.Model.Domain
+@using VocaDb.Model.Domain.ReleaseEvents
+@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers
+@using SharedRes = ViewRes.SharedStrings;
+@using Res = ViewRes.Search.IndexStrings;
+
+<!-- binding context: EventSearchViewModel -->
+	
+@{ Html.RenderPartial("Partials/_EntryCountBox"); }
+
+<div data-bind="with: paging">
+	@KnockoutHelpers.ServerSidePaging()
+</div>
+
+<table class="table table-striped" data-bind="css: { loading: loading }">
+	<thead>
+	<tr>
+		<th colspan="2">
+			<a data-bind="click: function() { sort('Name') }" href="#">
+				@SharedRes.Name
+				<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
+			</a>
+		</th>
+		<th>
+			<a data-bind="click: function() { sort('Date') }" href="#">
+				Date
+				<span class="sortDirection_down" data-bind="visible: sort() == 'Date'"></span>
+			</a>
+		</th>
+		<th>
+			<a data-bind="click: function() { sort('SeriesName') }" href="#">
+				Series
+				<span class="sortDirection_down" data-bind="visible: sort() == 'SeriesName'"></span>
+			</a>
+		</th>
+	</tr>
+	</thead>
+	<tbody data-bind="foreach: page">
+	<tr>
+		<td style="width: 80px">
+			<a data-bind="visible: $data.mainPicture && mainPicture.urlSmallThumb, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#">
+				<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlSmallThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
+			</a>			
+		</td>
+		<td>
+			<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#"></a>
+				
+			@KnockoutHelpers.DraftIcon("status")
+				
+			<br />
+			<small class="extraInfo" data-bind="text: $parent.getCategoryName($data)"></small>
+		</td>
+		<td>
+			<span data-bind="text: $parent.formatDate($data.date)"></span>
+		</td>
+		<td>
+			<a data-bind="visible: $data.series, text: $data.series ? series.name : null, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEventSeries), $data.seriesId, $data.series ? series.urlSlug : null) }"></a>
+		</td>
+	</tr>
+	</tbody>
+</table>
+
+<div data-bind="with: paging">
+	@KnockoutHelpers.ServerSidePaging()
+</div>

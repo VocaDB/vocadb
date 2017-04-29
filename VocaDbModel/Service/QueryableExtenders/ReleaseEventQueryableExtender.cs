@@ -77,6 +77,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<ReleaseEvent> WhereHasCategory(this IQueryable<ReleaseEvent> query, EventCategory? category) {
+
+			if (category == null)
+				return query;
+
+			return query.Where(e => (e.Series != null && e.Series.Category == category) || (e.Series == null && e.Category == category));
+
+		}
+
 		public static IQueryable<ReleaseEvent> WhereHasSeries(this IQueryable<ReleaseEvent> query, int seriesId) {
 			
 			if (seriesId == 0)

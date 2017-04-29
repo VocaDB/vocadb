@@ -112,6 +112,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var q = ctx.Query()
 					.WhereNotDeleted()
+					.WhereHasCategory(queryParams.Category)
 					.WhereHasName(queryParams.TextQuery)
 					.WhereHasSeries(queryParams.SeriesId)
 					.WhereDateIsBetween(queryParams.AfterDate, queryParams.BeforeDate);

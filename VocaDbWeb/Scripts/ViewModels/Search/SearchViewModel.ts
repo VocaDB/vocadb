@@ -10,6 +10,7 @@ module vdb.viewModels.search {
 			urlMapper: vdb.UrlMapper,
 			entryRepo: rep.EntryRepository, artistRepo: rep.ArtistRepository,
 			albumRepo: rep.AlbumRepository, songRepo: rep.SongRepository,
+			eventRepo: rep.ReleaseEventRepository,
 			tagRepo: rep.TagRepository,
 			resourceRepo: rep.ResourceRepository,
 			userRepo: rep.UserRepository,
@@ -53,6 +54,8 @@ module vdb.viewModels.search {
 				isAlbum ? childVoicebanks : null,
 				albumType,
 				isAlbum ? viewMode : null);
+
+			this.eventSearchViewModel = new EventSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], eventRepo);
 
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
 				resourceRepo,
@@ -106,7 +109,11 @@ module vdb.viewModels.search {
 
 			});
 
-			resourceRepo.getList(cultureCode, ['albumSortRuleNames', 'artistSortRuleNames', 'artistTypeNames', 'discTypeNames', 'entryTypeNames', 'songSortRuleNames', 'songTypeNames'], resources => {
+			resourceRepo.getList(cultureCode, [
+				'albumSortRuleNames', 'artistSortRuleNames', 'artistTypeNames',
+				'discTypeNames', 'eventCategoryNames', 'eventSortRuleNames',
+				'entryTypeNames', 'songSortRuleNames', 'songTypeNames'],
+				resources => {
 				this.resources(resources);
 				this.updateResults();
 			});
@@ -120,6 +127,7 @@ module vdb.viewModels.search {
 		public albumSearchViewModel: AlbumSearchViewModel;
 		public anythingSearchViewModel: AnythingSearchViewModel;
 		public artistSearchViewModel: ArtistSearchViewModel;
+		public eventSearchViewModel: EventSearchViewModel;
 		public songSearchViewModel: SongSearchViewModel;
 		public tagSearchViewModel: TagSearchViewModel;
 
@@ -137,9 +145,10 @@ module vdb.viewModels.search {
 		public showAnythingSearch: KnockoutComputed<boolean>;
 		public showArtistSearch: KnockoutComputed<boolean>;
 		public showAlbumSearch: KnockoutComputed<boolean>;
+		public showEventSearch = ko.computed(() => this.searchType() === SearchType.ReleaseEvent);
 		public showSongSearch: KnockoutComputed<boolean>;
 		public showTagSearch = ko.computed(() => this.searchType() === SearchType.Tag);
-		public showTagFilter = ko.computed(() => !this.showTagSearch());
+		public showTagFilter = ko.computed(() => !this.showTagSearch() && this.searchType() !== SearchType.ReleaseEvent);
 		public showTags = ko.observable(false);
 		public showDraftsFilter = ko.computed(() => this.searchType() !== SearchType.Tag);
 
@@ -154,6 +163,8 @@ module vdb.viewModels.search {
 					return this.artistSearchViewModel;
 				case SearchType.Album:
 					return this.albumSearchViewModel;
+				case SearchType.ReleaseEvent:
+					return this.eventSearchViewModel;
 				case SearchType.Song:
 					return this.songSearchViewModel;
 				case SearchType.Tag:
@@ -179,6 +190,7 @@ module vdb.viewModels.search {
 		public static Anything = "Anything";
 		public static Artist = "Artist";
 		public static Album = "Album";
+		public static ReleaseEvent = "ReleaseEvent";
 		public static Song = "Song";
 		public static Tag = "Tag";
 	}

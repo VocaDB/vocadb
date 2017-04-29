@@ -1282,6 +1282,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventCategoryNames.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Domain\ReleaseEvents\EventSortRuleNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventSortRuleNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Domain\ReleaseEvents\ReleaseEventSeriesEditableFieldNames.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2217,6 +2222,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EventCategoryNames.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Domain\ReleaseEvents\EventSortRuleNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EventSortRuleNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Domain\ReleaseEvents\ReleaseEventSeriesEditableFieldNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReleaseEventSeriesEditableFieldNames.Designer.cs</LastGenOutput>
@@ -2266,6 +2275,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringWithIdContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PartialFindResultContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PVs\PVContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\EventSeriesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ReleaseEventContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ResourcesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\SongList\ImportedSongInListContract.ts" />
@@ -2908,6 +2918,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistFilter.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistFilters.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\ArtistSearchViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Search\EventSearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchCategoryBaseViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SearchViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Search\SongSearchViewModel.ts" />
@@ -3407,6 +3418,7 @@
     <Content Include="Views\Shared\_SongWithVotePopupContent.cshtml" />
     <Content Include="Views\User\Partials\_Events.cshtml" />
     <Content Include="Views\Shared\_EventPopupContent.cshtml" />
+    <Content Include="Views\Search\Partials\_EventSearchList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -17,7 +17,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
 
 		var params: vdb.EntryAutoCompleteParams<dc.ReleaseEventContract> = {
 			acceptSelection: (id, term, itemType, item) => {
-				valueAccessor()(item || { id: id, name: term, webLinks: [], defaultNameLanguage: 'Undefined' });
+				valueAccessor()(item || { id: id, name: term, webLinks: [], category: 'Unspecified', defaultNameLanguage: 'Undefined' });
 			},
 			createOptionFirstRow: (item) => item.name,
 			createNewItem: allBindingsAccessor().createNewItem,

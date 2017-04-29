@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using Newtonsoft.Json.Serialization;
 using VocaDb.Model.Domain;
+using VocaDb.Web.Resources.Domain.ReleaseEvents;
 using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -52,6 +53,8 @@ namespace VocaDb.Web.Controllers.Api {
 			{ "contentLanguageSelectionNames", global::Resources.ContentLanguageSelectionNames.ResourceManager },
 			{ "discTypeNames", Model.Resources.Albums.DiscTypeNames.ResourceManager },
 			{ "entryTypeNames", Resources.Domain.EntryTypeNames.ResourceManager },
+			{ "eventCategoryNames", EventCategoryNames.ResourceManager },
+			{ "eventSortRuleNames", EventSortRuleNames.ResourceManager },
 			{ "songSortRuleNames", global::Resources.SongSortRuleNames.ResourceManager },
 			{ "songTypeNames", Model.Resources.Songs.SongTypeNames.ResourceManager },
 			{ "userGroupNames", global::Resources.UserGroupNames.ResourceManager },

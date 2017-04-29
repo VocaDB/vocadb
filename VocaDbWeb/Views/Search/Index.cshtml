@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
 @using Resources
+@using VocaDb.Model.Domain
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Resources.Domain
@@ -9,6 +10,12 @@
 
 @section Head {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
+}
+
+@helper SearchCategory(EntryType entryType, string title) {
+	<li data-bind="css: { active: searchType() == '@entryType.ToString()' }">
+		<a href="#" data-bind="click: function() { searchType('@entryType.ToString()'); }">@title</a>
+	</li>
 }
 
 <ul class="nav nav-pills">
@@ -24,9 +31,8 @@
 	<li data-bind="css: { active: searchType() == 'Song' }">
 		<a href="#" data-bind="click: function() { searchType('Song'); }">@ViewRes.SharedStrings.Songs</a>
 	</li>
-	<li data-bind="css: { active: searchType() == 'Tag' }">
-		<a href="#" data-bind="click: function() { searchType('Tag'); }">@ViewRes.SharedStrings.Tags</a>
-	</li>
+	@SearchCategory(EntryType.ReleaseEvent, ViewRes.SharedStrings.ReleaseEvents)
+	@SearchCategory(EntryType.Tag, ViewRes.SharedStrings.Tags)
 </ul>
 
 <div id="anythingSearchTab" class="form-horizontal well well-transparent">
@@ -35,6 +41,7 @@
 		@SearchDropDown("showArtistSearch", "artistSearchViewModel", Translate.ArtistSortRuleNames.ValuesAndNamesStrings)
 		@SearchDropDown("showAlbumSearch", "albumSearchViewModel", Translate.AlbumSortRuleNames.ValuesAndNamesStrings)
 		@SearchDropDown("showSongSearch", "songSearchViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)
+		@SearchDropDown("showEventSearch", "eventSearchViewModel", Translate.EventSortRuleNames.ValuesAndNamesStrings)
 
 		<div class="inline-block" data-bind="visible: showAlbumSearch(), with: albumSearchViewModel">
 			<div class="btn-group">
@@ -97,6 +104,16 @@
 		@{ Html.RenderPartial("Partials/_AlbumSearchOptions"); }
 
 		@{ Html.RenderPartial("Partials/_SongSearchOptions"); }
+		
+		<!-- Event search options -->
+		<div class="control-group" data-bind="visible: showEventSearch, with: eventSearchViewModel">
+			<div class="control-label">Category</div>
+			<div class="controls">
+				<div class="input-append">
+					@KnockoutHelpers.DropdownList(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")
+				</div>
+			</div>
+		</div>
 
 		<!-- Tag search options -->
 		<div class="control-group" data-bind="visible: showTagSearch, with: tagSearchViewModel">
@@ -107,7 +124,8 @@
 				</div>
 			</div>
 		</div>
-
+		
+		<!-- Checkboxes -->
 		<div class="control-group">
 			<div class="controls">
 				
@@ -154,6 +172,10 @@
 	@{ Html.RenderPartial("Partials/_SongSearchList"); }
 </div>
 
+<div data-bind="visible: showEventSearch, with: eventSearchViewModel">
+	@{ Html.RenderPartial("Partials/_EventSearchList"); }
+</div>
+
 @{ Html.RenderPartial("Partials/_TagSearchList"); }
 
 
@@ -198,12 +220,15 @@
 			var artistRepo = repoFactory.artistRepository();
 			var albumRepo = repoFactory.albumRepository();
 			var songRepo = repoFactory.songRepository();
+			var eventRepo = repoFactory.eventRepository();
 			var tagRepo = repoFactory.tagRepository();
 			var userRepo = repoFactory.userRepository();
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 
-			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo, tagRepo, resourceRepo,
+			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo,
+				eventRepo,
+				tagRepo, resourceRepo,
 				userRepo,
 				unknownPictureUrl,
 				languageSelection, loggedUserId, cultureCode, searchType, query, tagIds, sort,

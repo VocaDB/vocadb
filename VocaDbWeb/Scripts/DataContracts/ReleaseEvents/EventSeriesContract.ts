@@ -2,13 +2,9 @@
 namespace vdb.dataContracts {
 
 	// Matches ReleaseEventForApiContract
-	export interface ReleaseEventContract {
+	export interface EventSeriesContract extends models.IEntryWithIdAndName {
 
 		category: string;
-
-		date?: string;
-
-		defaultNameLanguage: string;
 
 		id: number;
 
@@ -17,10 +13,6 @@ namespace vdb.dataContracts {
 		name: string;
 
 		names?: globalization.LocalizedStringWithIdContract[];
-
-		series?: EventSeriesContract;
-
-		songList?: SongListBaseContract;
 
 		webLinks: WebLinkContract[];
 

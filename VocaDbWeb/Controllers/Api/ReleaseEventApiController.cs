@@ -83,6 +83,7 @@ namespace VocaDb.Web.Controllers.Api {
 			int seriesId = 0,
 			DateTime? afterDate = null,
 			DateTime? beforeDate = null,
+			EventCategory? category = EventCategory.Unspecified,
 			int start = 0, 
 			int maxResults = defaultMax,
 			bool getTotalCount = false, 
@@ -97,6 +98,7 @@ namespace VocaDb.Web.Controllers.Api {
 				SeriesId = seriesId,
 				AfterDate = afterDate,
 				BeforeDate = beforeDate,
+				Category = category,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
 				SortRule = sort
 			};

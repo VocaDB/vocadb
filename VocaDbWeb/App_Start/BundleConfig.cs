@@ -276,6 +276,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/DateTimeHelper.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/Repositories/EntryRepository.js",
+				"~/Scripts/Repositories/ReleaseEventRepository.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
@@ -297,6 +298,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Search/AnythingSearchViewModel.js",
 				"~/Scripts/ViewModels/Search/ArtistSearchViewModel.js",
 				"~/Scripts/ViewModels/Search/AlbumSearchViewModel.js",
+				"~/Scripts/ViewModels/Search/EventSearchViewModel.js",
 				"~/Scripts/ViewModels/Search/SongSearchViewModel.js",
 				"~/Scripts/ViewModels/Search/TagSearchViewModel.js"
 			));
