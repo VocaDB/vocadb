@@ -21,6 +21,7 @@ module vdb.repositories {
 				query: queryParams.query,
 				category: queryParams.category || undefined,
 				fields: queryParams.fields || undefined,
+				status: queryParams.status || undefined,
 				nameMatchMode: models.NameMatchMode[nameMatchMode],
 				lang: queryParams.lang,
 				sort: queryParams.sort
@@ -50,6 +51,8 @@ module vdb.repositories {
 		fields?: string;
 
 		sort?: string;
+
+		status?: string;
 
 	}
 

@@ -19,7 +19,8 @@ namespace vdb.viewModels.search {
 
 				this.eventRepo.getList({
 					start: pagingProperties.start, maxResults: pagingProperties.maxEntries, getTotalCount: pagingProperties.getTotalCount,
-					lang: lang, query: searchTerm, sort: this.sort(), category: this.category() === 'Unspecified' ? null : this.category(), fields: "AdditionalNames,MainPicture,Series"
+					lang: lang, query: searchTerm, sort: this.sort(), category: this.category() === 'Unspecified' ? null : this.category(), status: status,
+					fields: "AdditionalNames,MainPicture,Series"
 				}, callback);
 
 			}

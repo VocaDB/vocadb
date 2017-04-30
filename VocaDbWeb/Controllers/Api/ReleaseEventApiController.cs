@@ -6,6 +6,7 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -84,6 +85,7 @@ namespace VocaDb.Web.Controllers.Api {
 			DateTime? afterDate = null,
 			DateTime? beforeDate = null,
 			EventCategory category = EventCategory.Unspecified,
+			EntryStatus? status = null,
 			int start = 0, 
 			int maxResults = defaultMax,
 			bool getTotalCount = false, 
@@ -99,6 +101,7 @@ namespace VocaDb.Web.Controllers.Api {
 				AfterDate = afterDate,
 				BeforeDate = beforeDate,
 				Category = category,
+				EntryStatus = status,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
 				SortRule = sort
 			};

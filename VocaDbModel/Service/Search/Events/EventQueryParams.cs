@@ -1,4 +1,5 @@
 ﻿using System;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -14,6 +15,7 @@ namespace VocaDb.Model.Service.Search.Events {
 		public int SeriesId { get; set; }
 		public SortDirection? SortDirection { get; set; }
 		public EventSortRule SortRule { get; set; }
+		public EntryStatus? EntryStatus { get; set; }
 		public SearchTextQuery TextQuery { get; set; } = SearchTextQuery.Empty;
 
 	}

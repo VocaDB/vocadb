@@ -115,6 +115,7 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereHasCategory(queryParams.Category)
 					.WhereHasName(queryParams.TextQuery)
 					.WhereHasSeries(queryParams.SeriesId)
+					.WhereStatusIs(queryParams.EntryStatus)
 					.WhereDateIsBetween(queryParams.AfterDate, queryParams.BeforeDate);
 
 				var entries = q
