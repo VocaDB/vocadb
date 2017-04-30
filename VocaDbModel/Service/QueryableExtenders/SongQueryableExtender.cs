@@ -49,6 +49,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.OrderByEntryName(languagePreference);
 				case EntrySortRule.AdditionDate:
 					return query.OrderByDescending(a => a.CreateDate);
+				case EntrySortRule.ActivityDate:
+					return query.OrderByDescending(a => a.PublishDate.DateTime);
 			}
 
 			return query;

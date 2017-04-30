@@ -24,6 +24,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			switch (sortRule) {
 				case EventSortRule.Date:
 					return query.OrderByDate(direction);
+				case EventSortRule.AdditionDate:
+					return query.OrderBy(e => e.CreateDate, direction ?? SortDirection.Descending);
 				case EventSortRule.Name:
 					return query.OrderByName(languagePreference);
 				case EventSortRule.SeriesName:
@@ -40,6 +42,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			switch (sortRule) {
 				case EntrySortRule.Name:
 					return query.OrderByName(languagePreference);
+				case EntrySortRule.AdditionDate:
+					return query.OrderBy(e => e.CreateDate, direction ?? SortDirection.Descending);
 				case EntrySortRule.ActivityDate:
 					return query.OrderByDate(direction);
 			}
@@ -117,7 +121,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		Name,
 
+		/// <summary>
+		/// Event date
+		/// </summary>
 		Date,
+
+		AdditionDate,
 
 		SeriesName
 

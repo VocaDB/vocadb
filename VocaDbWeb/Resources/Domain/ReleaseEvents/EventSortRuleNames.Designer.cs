@@ -61,6 +61,15 @@ namespace VocaDb.Web.Resources.Domain.ReleaseEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Addition date.
+        /// </summary>
+        public static string AdditionDate {
+            get {
+                return ResourceManager.GetString("AdditionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {

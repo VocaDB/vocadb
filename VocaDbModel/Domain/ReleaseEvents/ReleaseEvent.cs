@@ -38,6 +38,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public ReleaseEvent() {
 			Category = EventCategory.Unspecified;
+			CreateDate = DateTime.Now;
 			Deleted = false;
 			Description = SeriesSuffix = string.Empty;
 			Status = EntryStatus.Draft;
@@ -122,6 +123,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				comments = value;
 			}
 		}
+
+		public virtual DateTime CreateDate { get; set; }
 
 		public virtual bool CustomName { get; set; }
 

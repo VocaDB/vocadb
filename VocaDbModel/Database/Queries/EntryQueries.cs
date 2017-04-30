@@ -72,7 +72,7 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereStatusIs(status);
 
 				var albumNames = albumQuery
-					.OrderBy(sort, lang)
+					.OrderBy(sort, lang, null)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.Album)
 					.ToArray();

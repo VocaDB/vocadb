@@ -347,6 +347,14 @@ namespace VocaDb.Model.Service {
 					.Take(maxResults)
 					.ToArray();
 
+				var eventNames = session.Query<EventName>()
+					.WhereEntryNameIs(tagTextQuery)
+					.Where(a => !a.Entry.Deleted)
+					.Select(t => t.Value)
+					.OrderBy(t => t)
+					.Take(maxResults)
+					.ToArray();
+
 				var tagNames = session.Query<TagName>()
 					.WhereEntryNameIs(tagTextQuery)
 					.Where(a => !a.Entry.Deleted)
@@ -358,6 +366,7 @@ namespace VocaDb.Model.Service {
 				var allNames = artistNames
 					.Concat(albumNames)
 					.Concat(songNames)
+					.Concat(eventNames)
 					.Concat(tagNames)
 					.Distinct()
 					.OrderBy(n => n)

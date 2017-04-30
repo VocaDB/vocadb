@@ -13,6 +13,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Id(m => m.Id);
 
 			Map(m => m.Category).Not.Nullable();
+			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.CustomName).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(400).Not.Nullable();

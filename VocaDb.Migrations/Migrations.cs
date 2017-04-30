@@ -4,6 +4,13 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_04_30_1600)]
+	public class ReleaseEventCreateDate : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("CreateDate").OnTable(TableNames.AlbumReleaseEvents).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+		}
+	}
+
 	[Migration(2017_04_20_2000)]
 	public class TranslatedEventName : Migration {
 
