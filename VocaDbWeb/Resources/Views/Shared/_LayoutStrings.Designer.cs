@@ -88,6 +88,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add an event.
+        /// </summary>
+        public static string AddEvent {
+            get {
+                return ResourceManager.GetString("AddEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit a song.
         /// </summary>
         public static string AddSong {
@@ -291,6 +300,15 @@ namespace ViewRes {
         public static string UnreadMessages {
             get {
                 return ResourceManager.GetString("UnreadMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upcoming events.
+        /// </summary>
+        public static string UpcomingEvents {
+            get {
+                return ResourceManager.GetString("UpcomingEvents", resourceCulture);
             }
         }
         

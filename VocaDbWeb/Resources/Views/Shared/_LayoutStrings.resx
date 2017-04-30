@@ -126,6 +126,9 @@
   <data name="AddArtist" xml:space="preserve">
     <value>Add an artist</value>
   </data>
+  <data name="AddEvent" xml:space="preserve">
+    <value>Add an event</value>
+  </data>
   <data name="AddSong" xml:space="preserve">
     <value>Submit a song</value>
   </data>
@@ -194,6 +197,9 @@
   </data>
   <data name="UnreadMessages" xml:space="preserve">
     <value>You have unread messages</value>
+  </data>
+  <data name="UpcomingEvents" xml:space="preserve">
+    <value>Upcoming events</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>

@@ -35,7 +35,12 @@
 			<li>@Html.ActionLink(ViewRes._LayoutStrings.NewPVs, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null)</li>
 		</ul>
 	</li>
-	<li>@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Event")</li>
+	<li>
+		@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Search", new SearchRouteParams{ searchType = EntryType.ReleaseEvent }, null)		
+		<ul>
+			<li>@Html.ActionLink(ViewRes._LayoutStrings.UpcomingEvents, "Index", "Event")</li>
+		</ul>
+	</li>
 	<li>@Html.ActionLink(ViewRes.SharedStrings.FeaturedSongLists, "Featured", "SongList")</li>
 	<li>@Html.ActionLink(ViewRes._LayoutStrings.Tags, "Index", "Tag")</li>
 	<li>@Html.ActionLink(ViewRes._LayoutStrings.Help, "Index", "Help")</li>
