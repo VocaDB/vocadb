@@ -87,7 +87,7 @@ namespace VocaDb.Model.Service.Search {
 				var results = Query<ReleaseEvent>()
 					.Where(e => e.SeriesNumber == seriesNumber 
 						&& e.SeriesSuffix == seriesSuffix 
-						&& (e.Series.Names.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)))).ToArray();
+						&& (e.Series.Names.Names.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)))).ToArray();
 
 				if (results.Length > 1)
 					return new ReleaseEventFindResultContract();
@@ -96,7 +96,7 @@ namespace VocaDb.Model.Service.Search {
 					return new ReleaseEventFindResultContract(results[0], languagePreference);
 
 				// Attempt to match just the series
-				var series = Query<ReleaseEventSeries>().FirstOrDefault(s => s.Names.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)));
+				var series = Query<ReleaseEventSeries>().FirstOrDefault(s => s.Names.Names.Any(a => seriesName.StartsWith(a.Value) || a.Value.Contains(seriesName)));
 
 				if (series != null)
 					return new ReleaseEventFindResultContract(series, languagePreference, seriesNumber, seriesSuffix, query);
