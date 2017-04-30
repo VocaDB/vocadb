@@ -4,6 +4,14 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_04_30_2000)]
+	public class PVExtendedMetadata : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("ExtendedMetadataJson").OnTable(TableNames.PVsForSongs).AsString(int.MaxValue).Nullable();
+			Create.Column("ExtendedMetadataJson").OnTable(TableNames.PVsForAlbums).AsString(int.MaxValue).Nullable();
+		}
+	}
+
 	[Migration(2017_04_30_1600)]
 	public class ReleaseEventCreateDate : AutoReversingMigration {
 		public override void Up() {

@@ -1,4 +1,6 @@
-﻿using PiaproClient;
+﻿using System.Runtime.Serialization;
+using PiaproClient;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -21,10 +23,22 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException("Content type indicates this isn't an audio post"));				
 			}
 
+			var piaproMetadata = new PVExtendedMetadata(new PiaproMetadata {
+				Timestamp = result.UploadTimestamp
+			});
+
 			return VideoUrlParseResult.CreateOk(url, PVService.Piapro, result.Id,
-				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, string.Empty, result.LengthSeconds, uploadDate: result.Date));
+				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, string.Empty, result.LengthSeconds, uploadDate: result.Date, extendedMetadata: piaproMetadata));
 
 		}
 
 	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	public class PiaproMetadata {
+
+		[DataMember]
+		public string Timestamp { get; set; }
+	}
+
 }

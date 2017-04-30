@@ -42,6 +42,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			Title = meta.Title ?? string.Empty;
 			Author = meta.Author ?? string.Empty;
 			AuthorId = meta.AuthorId ?? string.Empty;
+			ExtendedMetadata = meta.ExtendedMetadata;
 			ThumbUrl = meta.ThumbUrl ?? string.Empty;
 			LengthSeconds = meta.LengthSeconds;
 			Tags = meta.Tags;
@@ -77,6 +78,8 @@ namespace VocaDb.Model.Service.VideoServices {
 		/// Exception. Cannot be null if result type is anything but Ok.
 		/// </summary>
 		public VideoParseException Exception { get; set; }
+
+		public PVExtendedMetadata ExtendedMetadata { get; set; }
 
 		public string Id { get; set; }
 

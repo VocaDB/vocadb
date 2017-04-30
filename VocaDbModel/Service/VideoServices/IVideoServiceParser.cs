@@ -1,4 +1,5 @@
 ﻿using System;
+using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -20,11 +21,11 @@ namespace VocaDb.Model.Service.VideoServices {
 			return new VideoTitleParseResult(false, error, null, null, null);
 		}
 
-		public static VideoTitleParseResult CreateSuccess(string title, string author, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null) {
-			return new VideoTitleParseResult(true, null, title, author, thumbUrl, length, tags, uploadDate);
+		public static VideoTitleParseResult CreateSuccess(string title, string author, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
+			return new VideoTitleParseResult(true, null, title, author, thumbUrl, length, tags, uploadDate, extendedMetadata);
 		}
 
-		public VideoTitleParseResult(bool success, string error, string title, string author, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null) {
+		public VideoTitleParseResult(bool success, string error, string title, string author, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
 			Error = error;
 			Success = success;
 			Title = title ?? string.Empty;
@@ -32,6 +33,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			ThumbUrl = thumbUrl ?? string.Empty;
 			LengthSeconds = length;
 			UploadDate = uploadDate;
+			ExtendedMetadata = extendedMetadata;
 			Tags = tags ?? new string[0];
 		}
 
@@ -56,6 +58,8 @@ namespace VocaDb.Model.Service.VideoServices {
 		/// Null if there was no error.
 		/// </summary>
 		public string Error { get; set; }
+
+		public PVExtendedMetadata ExtendedMetadata { get; set; }
 
 		public int? LengthSeconds { get; set; }
 

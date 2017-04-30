@@ -18,6 +18,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			ParamIs.NotNull(() => pv);
 
 			Author = pv.Author;
+			ExtendedMetadata = pv.ExtendedMetadata;
 			Id = pv.Id;
 			Name = pv.Name;
 			PVId = pv.PVId;
@@ -54,6 +55,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			ParamIs.NotNull(() => parseResult);
 
 			Author = parseResult.Author;
+			ExtendedMetadata = parseResult.ExtendedMetadata;
 			Length = parseResult.LengthSeconds ?? 0;
 			Name = parseResult.Title;
 			PVId = parseResult.Id;
@@ -68,6 +70,9 @@ namespace VocaDb.Model.DataContracts.PVs {
 
 		[DataMember]
 		public string Author { get; set; }
+
+		[DataMember]
+		public PVExtendedMetadata ExtendedMetadata { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

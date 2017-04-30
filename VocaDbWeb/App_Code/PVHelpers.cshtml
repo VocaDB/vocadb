@@ -1,11 +1,28 @@
-﻿@using VocaDb.Model.Domain.PVs
+﻿@using VocaDb.Model.DataContracts.PVs
+@using VocaDb.Model.Domain.PVs
+@using VocaDb.Model.Service.VideoServices
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper EmbedNico(string pvId, string widthStr, string heightStr) {
 	<iframe width="@widthStr" height="@heightStr" allowfullscreen="allowfullscreen" style="border: none;" src="http://embed.nicovideo.jp/watch/@pvId?oldScript=1&noRelatedVideo=0&autoplay=0&defaultNoComment=0&noLinkToNiconico=0&noController=0&noHeader=0&noTags=0&noShare=0"></iframe>	
 }
 
-@helper EmbedPV(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 560, int height = 315, bool autoplay = false, bool enableApi = false, string id = null) {
+@helper EmbedPiapro(PVContract pv, string widthStr, string heightStr) {
+	var meta = pv.ExtendedMetadata != null ? pv.ExtendedMetadata.GetExtendedMetadata<PiaproMetadata>() : null;
+	if (meta != null && !string.IsNullOrEmpty(meta.Timestamp)) {
+		var prefix = pv.PVId.Substring(0, 2);
+		<audio controls controlsList="nodownload" src="http://c1.piapro.jp/audio_audition/@prefix/@(pv.PVId)_@(meta.Timestamp)_audition.mp3"></audio>
+	} else {
+	@* <object> embed instead of iframe because iframe doesn't work with flash disabled *@
+	var piaproSwf = string.Format("//piapro.jp/modpub/swf/player03_h.swf?030503&id={0}&c=1", pv.PVId);
+	<object type="application/x-shockwave-flash" width="340" height="80" style="border: 0" data="@piaproSwf">
+		<param name="movie" value="@piaproSwf" />
+		<param name="quality" value="high"/>
+	</object>
+	}
+}
+
+@helper EmbedPV(PVContract pv, int width = 560, int height = 315, bool autoplay = false, bool enableApi = false, string id = null) {
 	var widthStr = (width > 0 ? width.ToString() : "");
 	var heightStr = (height > 0 ? height.ToString() : "");
 	id = id ?? string.Empty;
@@ -17,7 +34,7 @@
 
 		case PVService.File:
 		case PVService.LocalFile:
-			<audio id="@id" controls src="@pv.Url"></audio>
+			<audio id="@id" controls controlsList="nodownload" src="@pv.Url"></audio>
 			break;
 
 		case PVService.NicoNicoDouga:
@@ -25,12 +42,7 @@
 			break;
 
 		case PVService.Piapro:
-			@* <object> embed instead of iframe because iframe doesn't work with flash disabled *@
-			var piaproSwf = string.Format("//piapro.jp/modpub/swf/player03_h.swf?030503&id={0}&c=1", pv.PVId);
-			<object type="application/x-shockwave-flash" width="340" height="80" style="border: 0" data="@piaproSwf">
-				<param name="movie" value="@piaproSwf" />
-				<param name="quality" value="high"/>
-			</object>
+			@EmbedPiapro(pv, widthStr, heightStr)
 		break;
 
 		case PVService.SoundCloud:

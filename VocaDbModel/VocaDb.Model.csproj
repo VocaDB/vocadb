@@ -72,8 +72,7 @@
       <HintPath>..\packages\NLog.4.4.3\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="PiaproClient, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PiaproClient.1.1.2.0\lib\net45\PiaproClient.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\PiaproClient.1.2.0.0\lib\net45\PiaproClient.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
@@ -327,6 +326,8 @@
     <Compile Include="Domain\Globalization\TranslationType.cs" />
     <Compile Include="Domain\IEntryWithArtists.cs" />
     <Compile Include="Domain\Images\ImageSize.cs" />
+    <Compile Include="Domain\JsonProperty.cs" />
+    <Compile Include="Domain\PVs\PVExtendedMetadata.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventSeriesVersion.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventVersion.cs" />
     <Compile Include="Domain\Albums\IAlbumLink.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Service.VideoServices;
 
@@ -11,6 +12,7 @@ namespace VocaDb.Model.Domain.PVs {
 		}
 
 		private string author;
+		private PVExtendedMetadata extendedMetadata;
 		private string name;
 		private string pvId;
 
@@ -32,6 +34,7 @@ namespace VocaDb.Model.Domain.PVs {
 			PVType = contract.PVType;
 			Name = contract.Name ?? string.Empty;
 			Author = contract.Author ?? string.Empty;
+			ExtendedMetadata = contract.ExtendedMetadata;
 
 		}
 
@@ -44,6 +47,11 @@ namespace VocaDb.Model.Domain.PVs {
 		}
 
 		public virtual int Id { get; set; }
+
+		public virtual PVExtendedMetadata ExtendedMetadata {
+			get => extendedMetadata;
+			set => extendedMetadata = value;
+		}
 
 		public virtual string Name {
 			get { return name; }

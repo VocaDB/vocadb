@@ -181,6 +181,10 @@ namespace VocaDb.Model.Mapping.Songs {
 
 			References(m => m.Song).Not.Nullable();
 
+			Component(m => m.ExtendedMetadata, c => {
+				c.Map(m => m.Json, "ExtendedMetadataJson").Nullable();
+			});
+
 		}
 
 	}
