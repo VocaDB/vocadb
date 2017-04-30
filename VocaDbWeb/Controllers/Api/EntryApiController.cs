@@ -75,7 +75,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var ssl = WebHelper.IsSSL(Request);
 			maxResults = GetMaxResults(maxResults);
 
-			return queries.GetList(query, tagId, tagName, childTags, status, start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, ssl);
+			return queries.GetList(query, tagId, tagName, childTags, status, start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, ssl, searchEvents: true);
 
 		}
 

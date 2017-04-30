@@ -8,10 +8,6 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class ReleaseEventQueryableExtender {
 
-		public static IQueryable<ReleaseEvent> WhereHasName(this IQueryable<ReleaseEvent> query, SearchTextQuery textQuery) {
-			return query.WhereHasNameGeneric<ReleaseEvent, EventName>(textQuery);
-		}
-
 		public static IOrderedQueryable<ReleaseEvent> OrderByDate(this IQueryable<ReleaseEvent> query, SortDirection? direction) {
 			return query.OrderBy(e => e.Date.DateTime, direction ?? SortDirection.Descending);
 		}
@@ -32,6 +28,20 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.OrderByName(languagePreference);
 				case EventSortRule.SeriesName:
 					return query.OrderBySeriesName(languagePreference);
+			}
+
+			return query;
+
+		}
+
+		public static IQueryable<ReleaseEvent> OrderBy(
+			this IQueryable<ReleaseEvent> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) {
+
+			switch (sortRule) {
+				case EntrySortRule.Name:
+					return query.OrderByName(languagePreference);
+				case EntrySortRule.ActivityDate:
+					return query.OrderByDate(direction);
 			}
 
 			return query;
@@ -84,6 +94,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			return query.Where(e => (e.Series != null && e.Series.Category == category) || (e.Series == null && e.Category == category));
 
+		}
+
+		public static IQueryable<ReleaseEvent> WhereHasName(this IQueryable<ReleaseEvent> query, SearchTextQuery textQuery) {
+			return query.WhereHasNameGeneric<ReleaseEvent, EventName>(textQuery);
 		}
 
 		public static IQueryable<ReleaseEvent> WhereHasSeries(this IQueryable<ReleaseEvent> query, int seriesId) {

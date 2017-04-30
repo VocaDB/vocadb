@@ -40,8 +40,8 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", "Artist", new { id });			
 		}
 
-		private ActionResult RedirectToReleaseEvent(int id) {
-			return RedirectToAction("Details", "Event", new { id });
+		private ActionResult RedirectToReleaseEvent(int id, string urlSlug) {
+			return RedirectToAction("Details", "Event", new { id, urlSlug });
 		}
 
 		private ActionResult RedirectToSong(int id) {
@@ -65,25 +65,26 @@ namespace VocaDb.Web.Controllers
 				
 				case EntryType.Undefined: {
 					var result = entryQueries.GetList(filter, null, null, false, null, 0, 1, true, EntrySortRule.Name, 
-						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default, false, true);
+						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default, false, 
+						searchTags: true, searchEvents: true);
 
 					if (result.TotalCount == 1) {
 
 						var item = result.Items.First();
-						var entryType = item.EntryType;
 						var entryId = item.Id;
 
-						if (entryType == EntryType.Album)
-							return RedirectToAlbum(entryId);
-
-						if (entryType == EntryType.Artist)
-							return RedirectToArtist(entryId);
-
-						if (entryType == EntryType.Song)
-							return RedirectToSong(entryId);
-
-						if (entryType == EntryType.Tag)
-							return RedirectToTag(entryId, item.UrlSlug);
+						switch (item.EntryType) {
+							case EntryType.Album:
+								return RedirectToAlbum(entryId);
+							case EntryType.Artist:
+								return RedirectToArtist(entryId);
+							case EntryType.ReleaseEvent:
+								return RedirectToReleaseEvent(entryId, item.UrlSlug);
+							case EntryType.Song:
+								return RedirectToSong(entryId);
+							case EntryType.Tag:
+								return RedirectToTag(entryId, item.UrlSlug);
+						}
 
 					}
 
@@ -113,9 +114,9 @@ namespace VocaDb.Web.Controllers
 						TextQuery = textQuery,
 						Paging = new PagingProperties(0, 2, false)
 					};
-					var ev = eventQueries.Find(s => s.Id, queryParams);
+					var ev = eventQueries.Find(s => new { s.Id, s.UrlSlug }, queryParams);
 					if (ev.Items.Length == 1) {
-						return RedirectToReleaseEvent(ev.Items[0]);
+						return RedirectToReleaseEvent(ev.Items[0].Id, ev.Items[0].UrlSlug);
 					}
 					break;
 

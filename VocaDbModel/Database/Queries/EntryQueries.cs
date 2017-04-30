@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -40,7 +41,8 @@ namespace VocaDb.Model.Database.Queries {
 			EntryOptionalFields fields,
 			ContentLanguagePreference lang,
 			bool ssl,
-			bool searchTags = false
+			bool searchTags = false,
+			bool searchEvents = false
 			) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
@@ -88,6 +90,16 @@ namespace VocaDb.Model.Database.Queries {
 					.SelectEntryBase(lang, EntryType.Song)
 					.ToArray();
 
+				var eventQuery = searchEvents ? ctx.OfType<ReleaseEvent>().Query()
+					.WhereHasName(textQuery)
+					.WhereStatusIs(status) : null;
+
+				var eventNames = searchEvents ? eventQuery
+					.OrderBy(sort, lang, null)
+					.Take(start + maxResults)
+					.SelectEntryBase(lang, EntryType.ReleaseEvent)
+					.ToArray() : null;
+
 				var tagQuery = searchTags ? ctx.OfType<Tag>().Query()
 					.WhereHasName(textQuery)
 					.WhereStatusIs(status) : null;
@@ -99,7 +111,11 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray() : null;
 
 				// Get page of combined names
-				var entryNames = artistNames.Concat(albumNames).Concat(songNames).Concat(tagNames ?? new DataContracts.EntryBaseContract[0])
+				var entryNames = artistNames
+					.Concat(albumNames)
+					.Concat(songNames)
+					.Concat(tagNames ?? new DataContracts.EntryBaseContract[0])
+					.Concat(eventNames ?? new DataContracts.EntryBaseContract[0])
 					.OrderBy(e => e.DefaultName)
 					.Skip(start)
 					.Take(maxResults)
@@ -109,6 +125,7 @@ namespace VocaDb.Model.Database.Queries {
 				var albumIds = entryNames.Where(e => e.EntryType == EntryType.Album).Select(a => a.Id).ToArray();
 				var songIds = entryNames.Where(e => e.EntryType == EntryType.Song).Select(a => a.Id).ToArray();
 				var searchedTagIds = searchTags ? entryNames.Where(e => e.EntryType == EntryType.Tag).Select(a => a.Id).ToArray() : new int[0];
+				var eventIds = searchEvents ? entryNames.Where(e => e.EntryType == EntryType.ReleaseEvent).Select(a => a.Id).ToArray() : new int[0];
 
 				// Get the actual entries in the page
 				var artists = artistIds.Any() ? ctx.OfType<Artist>().Query()
@@ -131,14 +148,22 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray()
 					.Select(a => new EntryForApiContract(a, lang, entryImagePersisterOld, ssl, fields)) : new EntryForApiContract[0];
 
+				var events = searchEvents && eventIds.Any() ? ctx.OfType<ReleaseEvent>().Query()
+					.Where(a => eventIds.Contains(a.Id))
+					.ToArray()
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, ssl, fields)) : new EntryForApiContract[0];
+
 				// Merge and sort the final list
-				var entries = artists.Concat(albums).Concat(songs).Concat(searchedTags);
+				var entries = artists.Concat(albums).Concat(songs).Concat(searchedTags).Concat(events);
 
 				if (sort == EntrySortRule.Name)
 					entries = entries.OrderBy(a => a.Name);
 
 				if (sort == EntrySortRule.AdditionDate)
 					entries = entries.OrderByDescending(a => a.CreateDate);
+
+				if (sort == EntrySortRule.ActivityDate)
+					entries = entries.OrderByDescending(a => a.ActivityDate);
 
 				var count = 0;
 
@@ -156,7 +181,10 @@ namespace VocaDb.Model.Database.Queries {
 					var tagCount =
 						searchTags ? (tagNames.Length >= maxResults ? tagQuery.Count() : tagNames.Length) : 0;
 
-					count = artistCount + albumCount + songCount + tagCount;
+					var eventCount =
+						searchEvents ? (eventNames.Length >= maxResults ? eventQuery.Count() : eventNames.Length) : 0;
+
+					count = artistCount + albumCount + songCount + tagCount + eventCount;
 
 				}
 

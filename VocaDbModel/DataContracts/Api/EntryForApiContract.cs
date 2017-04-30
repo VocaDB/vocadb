@@ -220,7 +220,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		/// <summary>
 		/// Date when this entry was published or the indicated activity happened.
-		/// PRERELEASE - this might change.
+		/// Depends on entry type.
 		/// </summary>
 		/// <remarks>
 		/// For albums and songs: publish date.
