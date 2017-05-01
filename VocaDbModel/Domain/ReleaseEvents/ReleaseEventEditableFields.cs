@@ -22,19 +22,21 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		OriginalName    = 64,
 
-		Series          = 128,
+		PVs				= 128,
 
-		SeriesNumber	= 256,
+		Series          = 256,
 
-		SeriesSuffix	= 512,
+		SeriesNumber	= 512,
 
-		SongList		= 1024,
+		SeriesSuffix	= 1024,
 
-		Status			= 2048,
+		SongList		= 2048,
 
-		Venue			= 4096,
+		Status			= 4096,
 
-		WebLinks		= 8192
+		Venue			= 8192,
+
+		WebLinks		= 16384
 
 	}
 

@@ -47,6 +47,10 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 				});
 			});
 
+			Component(m => m.PVs, c => {
+				c.HasMany(m => m.PVs).KeyColumn("[Event]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
+			});
+
 			Component(m => m.Date, c => c.Map(m => m.DateTime).Column("[Date]").Nullable());
 
 		}

@@ -106,6 +106,15 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PVs.
+        /// </summary>
+        public static string PVs {
+            get {
+                return ResourceManager.GetString("PVs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove from my events.
         /// </summary>
         public static string RemoveAttendance {

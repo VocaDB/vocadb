@@ -25,6 +25,7 @@
 		public const string LyricsForSongs = "LyricsForSongs";
 		public const string OldUsernames = "OldUsernames";
 		public const string PVsForAlbums = "PVsForAlbums";
+		public const string PVsForEvents = "PVsForEvents";
 		public const string PVsForSongs = "PVsForSongs";
 		public const string RelatedTags = "RelatedTags";
 		public const string SongsInAlbums = "SongsInAlbums";

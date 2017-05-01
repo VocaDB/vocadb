@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -30,6 +32,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private IList<ReleaseEventComment> comments = new List<ReleaseEventComment>();
 		private string description;
 		private NameManager<EventName> names = new NameManager<EventName>();
+		private PVManager<PVForEvent> pvs = new PVManager<PVForEvent>();
 		private ReleaseEventSeries series;
 		private string seriesSuffix;
 		private IList<Song> songs = new List<Song>();
@@ -156,6 +159,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual string PictureMime { get; set; }
 
+		public virtual PVManager<PVForEvent> PVs {
+			get => pvs;
+			set {
+				ParamIs.NotNull(() => value);
+				pvs = value;
+			}
+		}
+
 		public virtual ReleaseEventSeries Series {
 			get => series;
 			set => series = value;
@@ -238,6 +249,17 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Names.Add(name);
 
 			return name;
+
+		}
+
+		public virtual PVForEvent CreatePV(PVContract contract) {
+
+			ParamIs.NotNull(() => contract);
+
+			var pv = new PVForEvent(this, contract);
+			PVs.Add(pv);
+
+			return pv;
 
 		}
 

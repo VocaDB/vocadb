@@ -308,7 +308,7 @@ namespace VocaDb.Model.Domain.Songs {
 		public virtual Date PublishDate { get; set; }
 
 		public virtual PVManager<PVForSong> PVs {
-			get { return pvs; }
+			get => pvs;
 			set {
 				ParamIs.NotNull(() => value);
 				pvs = value;

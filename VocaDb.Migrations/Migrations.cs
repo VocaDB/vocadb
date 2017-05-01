@@ -4,6 +4,21 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_05_01_1700)]
+	public class PVsForEvents : AutoReversingMigration {
+		public override void Up() {
+			Create.Table(TableNames.PVsForEvents)
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Author").AsString(100).NotNullable()
+				.WithColumn("[Event]").AsInt32().NotNullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").Indexed()
+				.WithColumn("Name").AsString(200).NotNullable()
+				.WithColumn("PVId").AsString(255).NotNullable()
+				.WithColumn("PVType").AsString(20).NotNullable()
+				.WithColumn("Service").AsString(20).NotNullable()
+				.WithColumn("ExtendedMetadataJson").AsString(int.MaxValue).Nullable();
+		}
+	}
+
 	[Migration(2017_04_30_2000)]
 	public class PVExtendedMetadata : AutoReversingMigration {
 		public override void Up() {

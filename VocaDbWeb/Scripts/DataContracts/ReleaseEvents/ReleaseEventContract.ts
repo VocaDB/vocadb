@@ -18,6 +18,8 @@ namespace vdb.dataContracts {
 
 		names?: globalization.LocalizedStringWithIdContract[];
 
+		pvs?: pvs.PVContract[];
+
 		series?: EventSeriesContract;
 
 		songList?: SongListBaseContract;

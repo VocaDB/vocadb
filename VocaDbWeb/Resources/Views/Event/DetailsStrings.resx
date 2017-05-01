@@ -132,6 +132,9 @@
   <data name="OccurrenceDate" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="PVs" xml:space="preserve">
+    <value>PVs</value>
+  </data>
   <data name="RemoveAttendance" xml:space="preserve">
     <value>Remove from my events</value>
   </data>

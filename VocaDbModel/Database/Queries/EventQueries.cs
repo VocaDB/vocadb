@@ -287,6 +287,12 @@ namespace VocaDb.Model.Database.Queries {
 						diff.WebLinks.Set();
 					}
 
+					var pvDiff = ev.PVs.Sync(contract.PVs, ev.CreatePV);
+					session.OfType<PVForAlbum>().Sync(pvDiff);
+
+					if (pvDiff.Changed)
+						diff.PVs.Set();
+
 					CheckDuplicateName(session, ev);
 
 					session.Save(ev);
@@ -368,6 +374,12 @@ namespace VocaDb.Model.Database.Queries {
 						diff.WebLinks.Set();
 						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
 					}
+
+					var pvDiff = ev.PVs.Sync(contract.PVs, ev.CreatePV);
+					session.OfType<PVForAlbum>().Sync(pvDiff);
+
+					if (pvDiff.Changed)
+						diff.PVs.Set();
 
 					CheckDuplicateName(session, ev);
 

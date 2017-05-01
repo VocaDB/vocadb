@@ -8,6 +8,8 @@ module vdb.viewModels.releaseEvents {
 
 		constructor(
 			userRepository: rep.UserRepository,
+			pvRepository: rep.PVRepository,
+			urlMapper: vdb.UrlMapper,
 			contract: dc.ReleaseEventContract) {
 
 			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
@@ -15,7 +17,7 @@ module vdb.viewModels.releaseEvents {
 
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
-
+			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, contract.pvs, false, true);
 			this.series = new BasicEntryLinkViewModel(contract.series, null);
 			this.isSeriesEvent = ko.observable(!this.series.isEmpty());
 
@@ -53,7 +55,7 @@ module vdb.viewModels.releaseEvents {
 		public isSeriesEventStr: KnockoutComputed<string>;
 
 		public names: globalization.NamesEditViewModel;
-
+		public pvs: pvs.PVListEditViewModel;
 		public series: BasicEntryLinkViewModel<models.IEntryWithIdAndName>;
 
 		public songList: BasicEntryLinkViewModel<dc.SongListBaseContract>;

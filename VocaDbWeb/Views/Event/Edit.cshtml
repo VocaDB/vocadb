@@ -1,5 +1,7 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Helpers
+@using VocaDb.Model.Service.VideoServices
 @using VocaDb.Web.Helpers
 @using EditRes = ViewRes.EntryEditStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.EventEdit>
@@ -38,163 +40,211 @@
 	@Html.HiddenFor(m => m.Id)
 
 	@Helpers.SaveAndBackBtn(backAction)
-
-	<div>
-		<div class="editor-label">
-			Event type
-		</div>
-		<div class="editor-field">
-			<label>
-				<input type="radio" data-bind="checked: isSeriesEventStr" value="true" />
-				Series event
-			</label>
-			<label>
-				<input type="radio" data-bind="checked: isSeriesEventStr" value="false" />
-				Standalone event
-			</label>
-		</div>
-	</div>
-
-	<div data-bind="visible: isSeriesEvent()">
-
-		<div class="editor-label">
-			Series
-		</div>
-		<div class="editor-field">
-			@KnockoutHelpers.LockingAutoComplete("releaseEventSeriesAutoComplete", "series.entry", "series.name")
-			@Html.HiddenForKnockout(m => m.Series, "value: ko.toJSON(series)")
-		</div>
-
-		<div class="editor-label">
-			@Html.LabelFor(m => m.SeriesNumber)
-		</div>
-		<div class="editor-field">
-			@Html.TextBoxFor(m => m.SeriesNumber, new { size = 20 })<br />
-			@Html.ValidationMessageFor(m => m.SeriesNumber)
-		</div>
-
-		<div class="editor-label">
-
-		</div>
-		<div class="editor-field">
-			<label>
-				<input type="checkbox" data-bind="initialValue, checked: customName" @(Model.CustomName ? "checked" : "") />
-				Customize event name
-			</label>
-			@Html.HiddenForKnockout(m => m.CustomName, "value: customName")
-		</div>
-		
-		<div data-bind="visible: !customName()">
-			<div class="editor-label">
-				@Html.LabelFor(m => m.SeriesSuffix)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxFor(m => m.SeriesSuffix, new { size = 20 })<br />
-			</div>
-		</div>
-	</div>
 	
-	<div data-bind="visible: !isSeriesEvent() || customName()">
+	<div id="tabs">
 		
-		<div class="editor-label">
-			<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
-				@EditRes.DefaultLanguageSelection
-			</label>
-		</div>
-		<div class="editor-field">
-			@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
-			@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
-		</div>
+		<ul>
+			<li><a href="#basicInfoTab">@EditRes.BasicInfo</a></li>
+			<li><a href="#pvsTab">Media</a></li>
+		</ul>		
+		
+		<div id="basicInfoTab">
 
-		<div class="editor-label">
-			@Html.LabelFor(m => m.Names)
-		</div>
-		<div class="editor-field" data-bind="with: names">
-			@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
-			@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
-		</div>
-
-	</div>
-
-	<div class="editor-label">
-		@Html.LabelFor(m => m.Description)
-	</div>
-	<div class="editor-field">
-		@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, @cssClass: "span4", maxLength: 400)
-
-		Live preview
-		<div data-bind="markdown: description"></div>
-	</div>
-	
-	<div data-bind="visible: !isSeriesEvent()">
-		<div class="editor-label">
-			Category
-		</div>
-		<div class="editor-field">
-			<div class="row-fluid">
-				<div class="span4">
-					@Html.EnumDropDownListFor(m => m.Category, Translate.ReleaseEventCategoryNames)
+			<div>
+				<div class="editor-label">
+					Event type
+				</div>
+				<div class="editor-field">
+					<label>
+						<input type="radio" data-bind="checked: isSeriesEventStr" value="true" />
+						Series event
+					</label>
+					<label>
+						<input type="radio" data-bind="checked: isSeriesEventStr" value="false" />
+						Standalone event
+					</label>
 				</div>
 			</div>
+
+			<div data-bind="visible: isSeriesEvent()">
+
+				<div class="editor-label">
+					Series
+				</div>
+				<div class="editor-field">
+					@KnockoutHelpers.LockingAutoComplete("releaseEventSeriesAutoComplete", "series.entry", "series.name")
+					@Html.HiddenForKnockout(m => m.Series, "value: ko.toJSON(series)")
+				</div>
+
+				<div class="editor-label">
+					@Html.LabelFor(m => m.SeriesNumber)
+				</div>
+				<div class="editor-field">
+					@Html.TextBoxFor(m => m.SeriesNumber, new { size = 20 })<br />
+					@Html.ValidationMessageFor(m => m.SeriesNumber)
+				</div>
+
+				<div class="editor-label">
+
+				</div>
+				<div class="editor-field">
+					<label>
+						<input type="checkbox" data-bind="initialValue, checked: customName" @(Model.CustomName ? "checked" : "") />
+						Customize event name
+					</label>
+					@Html.HiddenForKnockout(m => m.CustomName, "value: customName")
+				</div>
+		
+				<div data-bind="visible: !customName()">
+					<div class="editor-label">
+						@Html.LabelFor(m => m.SeriesSuffix)
+					</div>
+					<div class="editor-field">
+						@Html.TextBoxFor(m => m.SeriesSuffix, new { size = 20 })<br />
+					</div>
+				</div>
+			</div>
+	
+			<div data-bind="visible: !isSeriesEvent() || customName()">
+		
+				<div class="editor-label">
+					<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
+						@EditRes.DefaultLanguageSelection
+					</label>
+				</div>
+				<div class="editor-field">
+					@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+					@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
+				</div>
+
+				<div class="editor-label">
+					@Html.LabelFor(m => m.Names)
+				</div>
+				<div class="editor-field" data-bind="with: names">
+					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
+				</div>
+
+			</div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Description)
+			</div>
+			<div class="editor-field">
+				@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, @cssClass: "span4", maxLength: 400)
+
+				Live preview
+				<div data-bind="markdown: description"></div>
+			</div>
+	
+			<div data-bind="visible: !isSeriesEvent()">
+				<div class="editor-label">
+					Category
+				</div>
+				<div class="editor-field">
+					<div class="row-fluid">
+						<div class="span4">
+							@Html.EnumDropDownListFor(m => m.Category, Translate.ReleaseEventCategoryNames)
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Date)
+			</div>
+			<div class="editor-field">
+				<input type="text" data-bind="datepicker: { value: date, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
+				@Html.HiddenForKnockout(m => m.Date, "value: ko.toJSON(dateStr)")
+				@Html.ValidationMessageFor(m => m.Date)
+			</div>
+
+			<div class="editor-label">
+				@Helpers.HelpLabel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.")
+			</div>
+			<div class="editor-field">
+				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("songListAutoComplete", "songList", "songListCategory: 'Concerts'")
+				@Html.HiddenForKnockout(m => m.SongList, "value: ko.toJSON(songList.entry())")
+			</div>
+	
+			<div class="editor-label">
+				@Helpers.HelpLabel("Venue", "Can be either a physical location such as concert hall, or a virtual location (website).")
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Venue, new { size = 40, @class = "span3", maxlength = 1000 })<br />
+			</div>
+	
+			<div class="editor-label">
+				<label>Picture</label>
+			</div>
+			<div class="editor-field">
+				<table>
+					<tr>
+						<td>
+							<img src="@Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Picture" class="coverPic" />
+						</td>
+						<td>
+							<p>@string.Format("Allowed types: {0}. Maximum size is {1} MB.", string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
+							<input type="file" id="pictureUpload" name="pictureUpload" />
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
+					@EditRes.WebLinks
+				</label>
+			</div>
+			<div class="editor-field" data-bind="with: webLinks">
+				@KnockoutHelpers.WebLinksEditViewKnockout(false)
+				@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+			</div>
+	
+			<div class="editor-label">
+				@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+			</div>
+			<div class="editor-field">
+				@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
+			</div>
+		
 		</div>
-	</div>
+		
+		<div id="pvsTab" data-bind="with: pvs">
 
-	<div class="editor-label">
-		@Html.LabelFor(m => m.Date)
-	</div>
-	<div class="editor-field">
-		<input type="text" data-bind="datepicker: { value: date, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
-		@Html.HiddenForKnockout(m => m.Date, "value: ko.toJSON(dateStr)")
-		@Html.ValidationMessageFor(m => m.Date)
-	</div>
+			<table data-bind="visible: pvs().length">
+				<thead>
+				<tr>
+					<th>Service</th>
+					<th>Type</th>
+					<th>Name</th>
+					<th>Length</th>
+					<th>Date</th>
+					<th>Author</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody data-bind="foreach: pvs">
+				@{ Html.RenderPartial("PVs/_PVEdit"); }
+				</tbody>
+			</table>
 
-	<div class="editor-label">
-		@Helpers.HelpLabel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.")
-	</div>
-	<div class="editor-field">
-		@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("songListAutoComplete", "songList", "songListCategory: 'Concerts'")
-		@Html.HiddenForKnockout(m => m.SongList, "value: ko.toJSON(songList.entry())")
-	</div>
-	
-	<div class="editor-label">
-		@Helpers.HelpLabel("Venue", "Can be either a physical location such as concert hall, or a virtual location (website).")
-	</div>
-	<div class="editor-field">
-		@Html.TextBoxFor(m => m.Venue, new { size = 40, @class = "span3", maxlength = 1000 })<br />
-	</div>
-	
-	<div class="editor-label">
-		<label>Picture</label>
-	</div>
-	<div class="editor-field">
-		<table>
-			<tr>
-				<td>
-					<img src="@Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Picture" class="coverPic" />
-				</td>
-				<td>
-					<p>@string.Format("Allowed types: {0}. Maximum size is {1} MB.", string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
-					<input type="file" id="pictureUpload" name="pictureUpload" />
-				</td>
-			</tr>
-		</table>
-	</div>
+			<br />
+			<h4>Add media</h4>
 
-	<div class="editor-label">
-		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
-			@EditRes.WebLinks
-		</label>
-	</div>
-	<div class="editor-field" data-bind="with: webLinks">
-		@KnockoutHelpers.WebLinksEditViewKnockout(false)
-		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
-	</div>
-	
-	<div class="editor-label">
-		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
-	</div>
-	<div class="editor-field">
-		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
+			<p>Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</p>
+			<p>
+				URL:
+				<input type="text" data-bind="textInput: newPvUrl" maxlength="255" size="40" class="input-xlarge" />
+			</p>
+
+			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
+
+			@Helpers.AjaxLoader("pvLoader")
+			@Html.HiddenForKnockout(m => m.PVs, "value: ko.toJSON($data.toContracts())")
+
+		</div>
+
 	</div>
 
 	<br />
@@ -207,15 +257,21 @@
 <script type="text/javascript">
 	$(function () {
 
-		var userRepo = new vdb.repositories.UserRepository(new vdb.UrlMapper('@RootPath'));
+		ko.punches.enableAll();
+
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var userRepo = new vdb.repositories.UserRepository(urlMapper);
+		var pvRepo = new vdb.repositories.PVRepository(urlMapper);
 		var contract = @ToJS(new {
 			Model.Date, DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
 			Model.Id,
-			Model.Names, Model.Series,
+			Model.Names, 
+			Model.PVs,
+			Model.Series,
 			Model.SongList, Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(userRepo, contract);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(userRepo, pvRepo, urlMapper,  contract);
 		ko.applyBindings(vm);
 
 		initPage();

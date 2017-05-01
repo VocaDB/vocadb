@@ -14,6 +14,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public EnumFieldAccessor<ReleaseEventEditableFields> MainPicture => Field(ReleaseEventEditableFields.MainPicture);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Names => Field(ReleaseEventEditableFields.Names);
 		public EnumFieldAccessor<ReleaseEventEditableFields> OriginalName => Field(ReleaseEventEditableFields.OriginalName);
+		public EnumFieldAccessor<ReleaseEventEditableFields> PVs => Field(ReleaseEventEditableFields.PVs);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Series => Field(ReleaseEventEditableFields.Series);
 		public EnumFieldAccessor<ReleaseEventEditableFields> SeriesNumber => Field(ReleaseEventEditableFields.SeriesNumber);
 		public EnumFieldAccessor<ReleaseEventEditableFields> SeriesSuffix => Field(ReleaseEventEditableFields.SeriesSuffix);

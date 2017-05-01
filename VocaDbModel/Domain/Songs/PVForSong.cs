@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain.Songs {
 		public virtual DateTime? PublishDate { get; set; }
 
 		public virtual Song Song {
-			get { return song; }
+			get => song;
 			set {
 				ParamIs.NotNull(() => value);
 				song = value;
@@ -39,7 +39,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual string ThumbUrl {
-			get { return thumbUrl; }
+			get => thumbUrl;
 			set { 
 				ParamIs.NotNull(() => value);
 				thumbUrl = value; 

@@ -28,6 +28,8 @@
 	var smallThumbUrl = Url.ImageThumb(pictureData, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
 	var fullImageUrl = Url.ImageThumb(pictureData, VocaDb.Model.Domain.Images.ImageSize.Original);
 
+	var primaryPV = PVHelper.PrimaryPV(Model.PVs);
+
 }
 
 @section Head {
@@ -64,8 +66,8 @@
 
 			@if (!string.IsNullOrEmpty(Model.Description)) {
 				<p>@Html.Raw(descriptionHtml)</p>
-			}
-		
+			}			
+
 			@if (Model.WebLinks.Any()) {
 				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 				<br />
@@ -76,6 +78,7 @@
 					@Res.Aliases: @Model.AdditionalNames
 				</p>		
 			}
+			
 		</div>
 	</div>
 	
@@ -122,6 +125,17 @@
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Songs.Length)</small>
 	</h3>
 	@SongHelpers.SongGrid(Model.Songs, 2, true, false)
+}
+
+@if (Model.PVs.Any()) {
+	<h3 class="withMargin">@Res.PVs</h3>
+	@Html.LinkListHtml(Model.PVs, pv => Helpers.FormatPVLink(pv, false))
+}	
+
+@if (primaryPV != null) {
+	<div class="song-pv-player">
+		@PVHelpers.EmbedPV(primaryPV)
+	</div>
 }
 
 <h3 data-bind="visible: loggedUserId || usersAttending().length" class="withMargin">@Res.Attending</h3>

@@ -326,6 +326,7 @@
     <Compile Include="Domain\Globalization\TranslationType.cs" />
     <Compile Include="Domain\IEntryWithArtists.cs" />
     <Compile Include="Domain\Images\ImageSize.cs" />
+    <Compile Include="Domain\PVs\GenericPV.cs" />
     <Compile Include="Domain\PVs\PVExtendedMetadata.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventSeriesVersion.cs" />
     <Compile Include="Domain\ReleaseEvents\ArchivedReleaseEventVersion.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Domain\Albums\OtherArtistForAlbum.cs" />
     <Compile Include="Domain\ReleaseEvents\EventCategory.cs" />
     <Compile Include="Domain\ReleaseEvents\EventName.cs" />
+    <Compile Include="Domain\ReleaseEvents\PVForEvent.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventComment.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventDiff.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventEditableFields.cs" />
@@ -583,6 +585,7 @@
     <Compile Include="Mapping\Albums\PVForAlbumMap.cs" />
     <Compile Include="Mapping\EntryHitMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ArchivedReleaseEventSeriesVersionMap.cs" />
+    <Compile Include="Mapping\ReleaseEvents\PVForEventMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventMap.cs" />
     <Compile Include="Mapping\Artists\ArtistMergeRecordMap.cs" />
     <Compile Include="Mapping\Artists\ArtistPictureFileMap.cs" />

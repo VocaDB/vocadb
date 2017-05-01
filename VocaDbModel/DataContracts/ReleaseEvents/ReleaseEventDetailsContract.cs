@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
@@ -12,6 +13,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 	public class ReleaseEventDetailsContract : ReleaseEventContract {
 
 		public ReleaseEventDetailsContract() {
+			PVs = new PVContract[0];
 			WebLinks = new WebLinkContract[0];
 		}
 
@@ -21,6 +23,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			ParamIs.NotNull(() => releaseEvent);
 
 			DefaultNameLanguage = releaseEvent.TranslatedName.DefaultLanguage;
+			PVs = releaseEvent.PVs.Select(p => new PVContract(p)).ToArray();
 			SeriesNumber = releaseEvent.SeriesNumber;
 			SeriesSuffix = releaseEvent.SeriesSuffix;
 			TranslatedName = new TranslatedStringContract(releaseEvent.TranslatedName);
@@ -56,6 +59,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public UserEventRelationshipType? EventAssociationType { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
+
+		public PVContract[] PVs { get; set; }
 
 		public int SeriesNumber { get; set; }
 

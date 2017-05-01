@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
@@ -46,6 +47,7 @@ namespace VocaDb.Web.Models.Event {
 			Id = contract.Id;
 			Name = OldName = contract.Name;
 			Names = contract.Names;
+			PVs = contract.PVs;
 			Series = contract.Series;
 			SeriesNumber = contract.SeriesNumber;
 			SeriesSuffix = contract.SeriesSuffix;
@@ -85,6 +87,9 @@ namespace VocaDb.Web.Models.Event {
 		public string OldName { get; set; }
 
 		public string PictureMime { get; set; }
+
+		[FromJson]
+		public PVContract[] PVs { get; set; }
 
 		[FromJson]
 		public ReleaseEventSeriesContract Series { get; set; }
@@ -133,6 +138,7 @@ namespace VocaDb.Web.Models.Event {
 				Id = this.Id,
 				Name = this.Name,
 				Names = Names,
+				PVs = PVs,
 				Series = this.Series, 
 				SeriesNumber = this.SeriesNumber,
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
