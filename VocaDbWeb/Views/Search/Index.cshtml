@@ -107,7 +107,7 @@
 		
 		<!-- Event search options -->
 		<div class="control-group" data-bind="visible: showEventSearch, with: eventSearchViewModel">
-			<div class="control-label">Category</div>
+			<div class="control-label">@Res.EventCategory</div>
 			<div class="controls">
 				<div class="input-append">
 					@KnockoutHelpers.DropdownList(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")
@@ -145,6 +145,13 @@
 					<label class="checkbox" data-bind="visible: loggedUserId">
 						<input type="checkbox" data-bind="checked: onlyRatedSongs" />
 						@Res.InMyCollection
+					</label>
+				</div>
+				
+				<div data-bind="visible: showEventSearch, with: eventSearchViewModel">
+					<label class="checkbox" data-bind="visible: loggedUserId">
+						<input type="checkbox" data-bind="checked: onlyMyEvents" />
+						@Res.OnlyMyEvents
 					</label>
 				</div>
 

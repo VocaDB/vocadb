@@ -65,6 +65,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="seriesId">Filter by series Id.</param>
 		/// <param name="afterDate">Filter by events after this date (inclusive).</param>
 		/// <param name="beforeDate">Filter by events before this date (exclusive).</param>
+		/// <param name="category">Filter by event category.</param>
+		/// <param name="userCollectionId">Filter to include only events in user's events (interested or attending).</param>
+		/// <param name="status">Filter by entry status.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -75,6 +78,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="fields">
 		/// Optional fields (optional). Possible values are Description, Series.
 		/// </param>
+		/// <param name="lang">Content language preference.</param>
 		/// <returns>Page of events.</returns>
 		/// <example>http://vocadb.net/api/releaseEvents?query=Voc@loid</example>
 		[Route("")]
@@ -85,6 +89,7 @@ namespace VocaDb.Web.Controllers.Api {
 			DateTime? afterDate = null,
 			DateTime? beforeDate = null,
 			EventCategory category = EventCategory.Unspecified,
+			int? userCollectionId = null,
 			EntryStatus? status = null,
 			int start = 0, 
 			int maxResults = defaultMax,
@@ -101,6 +106,7 @@ namespace VocaDb.Web.Controllers.Api {
 				AfterDate = afterDate,
 				BeforeDate = beforeDate,
 				Category = category,
+				UserId = userCollectionId ?? 0,
 				EntryStatus = status,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
 				SortRule = sort

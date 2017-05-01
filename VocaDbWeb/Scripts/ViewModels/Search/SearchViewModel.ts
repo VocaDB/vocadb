@@ -55,7 +55,7 @@ module vdb.viewModels.search {
 				albumType,
 				isAlbum ? viewMode : null);
 
-			this.eventSearchViewModel = new EventSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], eventRepo);
+			this.eventSearchViewModel = new EventSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], eventRepo, loggedUserId);
 
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
 				resourceRepo,

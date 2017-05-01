@@ -1,10 +1,7 @@
 ﻿
 @using VocaDb.Model.Domain
-@using VocaDb.Model.Domain.ReleaseEvents
-@using VocaDb.Model.Domain.Songs
-@using VocaDb.Web.Helpers
 @using SharedRes = ViewRes.SharedStrings;
-@using Res = ViewRes.Search.IndexStrings;
+@using EventRes = ViewRes.Event.DetailsStrings;
 
 <!-- binding context: EventSearchViewModel -->
 	
@@ -25,13 +22,13 @@
 		</th>
 		<th>
 			<a data-bind="click: function() { sort('Date') }" href="#">
-				Date
+				@EventRes.OccurrenceDate
 				<span class="sortDirection_down" data-bind="visible: sort() == 'Date'"></span>
 			</a>
 		</th>
 		<th>
 			<a data-bind="click: function() { sort('SeriesName') }" href="#">
-				Series
+				@EventRes.Series
 				<span class="sortDirection_down" data-bind="visible: sort() == 'SeriesName'"></span>
 			</a>
 		</th>

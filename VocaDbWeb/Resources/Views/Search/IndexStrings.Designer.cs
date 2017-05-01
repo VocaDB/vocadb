@@ -124,6 +124,15 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string EventCategory {
+            get {
+                return ResourceManager.GetString("EventCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Include derived voicebanks.
         /// </summary>
         public static string IncludeDerivedVoicebanks {
@@ -183,6 +192,15 @@ namespace ViewRes.Search {
         public static string MoreRecentThan {
             get {
                 return ResourceManager.GetString("MoreRecentThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only my events.
+        /// </summary>
+        public static string OnlyMyEvents {
+            get {
+                return ResourceManager.GetString("OnlyMyEvents", resourceCulture);
             }
         }
         

@@ -116,7 +116,8 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereHasName(queryParams.TextQuery)
 					.WhereHasSeries(queryParams.SeriesId)
 					.WhereStatusIs(queryParams.EntryStatus)
-					.WhereDateIsBetween(queryParams.AfterDate, queryParams.BeforeDate);
+					.WhereDateIsBetween(queryParams.AfterDate, queryParams.BeforeDate)
+					.WhereInUserCollection(queryParams.UserId);
 
 				var entries = q
 					.OrderBy(queryParams.SortRule, LanguagePreference, queryParams.SortDirection)

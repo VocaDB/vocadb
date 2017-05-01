@@ -111,7 +111,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			return query.Where(e => e.Series.Id == seriesId);
 
-		} 
+		}
+
+		public static IQueryable<ReleaseEvent> WhereInUserCollection(this IQueryable<ReleaseEvent> query, int userId) {
+
+			if (userId == 0)
+				return query;
+
+			return query.Where(s => s.Users.Any(a => a.User.Id == userId));
+
+		}
 
 	}
 

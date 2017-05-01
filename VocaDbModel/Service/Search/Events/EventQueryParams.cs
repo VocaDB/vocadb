@@ -17,6 +17,7 @@ namespace VocaDb.Model.Service.Search.Events {
 		public EventSortRule SortRule { get; set; }
 		public EntryStatus? EntryStatus { get; set; }
 		public SearchTextQuery TextQuery { get; set; } = SearchTextQuery.Empty;
+		public int UserId { get; set; }
 
 	}
 

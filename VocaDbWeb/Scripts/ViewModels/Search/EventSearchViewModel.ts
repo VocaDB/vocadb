@@ -8,18 +8,22 @@ namespace vdb.viewModels.search {
 		constructor(
 			searchViewModel: SearchViewModel,
 			lang: vdb.models.globalization.ContentLanguagePreference,
-			private eventRepo: rep.ReleaseEventRepository) {
+			private eventRepo: rep.ReleaseEventRepository,
+			public loggedUserId?: number) {
 
 			super(searchViewModel);
 
 			this.category.subscribe(this.updateResultsWithTotalCount);
+			this.onlyMyEvents.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 
 			this.loadResults = (pagingProperties, searchTerm, tag, childTags, status, callback) => {
 
 				this.eventRepo.getList({
 					start: pagingProperties.start, maxResults: pagingProperties.maxEntries, getTotalCount: pagingProperties.getTotalCount,
-					lang: lang, query: searchTerm, sort: this.sort(), category: this.category() === 'Unspecified' ? null : this.category(), status: status,
+					lang: lang, query: searchTerm, sort: this.sort(), category: this.category() === 'Unspecified' ? null : this.category(),
+					userCollectionId: this.onlyMyEvents() ? loggedUserId : null,
+					status: status,
 					fields: "AdditionalNames,MainPicture,Series"
 				}, callback);
 
@@ -33,6 +37,7 @@ namespace vdb.viewModels.search {
 
 		public allowAliases = ko.observable(false);
 		public category = ko.observable("");
+		public onlyMyEvents = ko.observable(false);
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
 

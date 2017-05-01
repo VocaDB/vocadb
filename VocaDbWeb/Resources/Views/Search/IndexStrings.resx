@@ -210,4 +210,10 @@
   <data name="IncludeGroupMembers" xml:space="preserve">
     <value>Include group members</value>
   </data>
+  <data name="OnlyMyEvents" xml:space="preserve">
+    <value>Only my events</value>
+  </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
 </root>
