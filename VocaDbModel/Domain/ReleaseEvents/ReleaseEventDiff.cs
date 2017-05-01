@@ -24,6 +24,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public EnumFieldAccessor<ReleaseEventEditableFields> WebLinks => Field(ReleaseEventEditableFields.WebLinks);
 
 		public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;
+		public virtual bool IncludePVs => IsSnapshot || PVs.IsChanged;
 		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks.IsChanged;
 
 	}

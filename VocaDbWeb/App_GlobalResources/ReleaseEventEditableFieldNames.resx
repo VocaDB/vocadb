@@ -135,6 +135,9 @@
   <data name="OriginalName" xml:space="preserve">
     <value>Default name language</value>
   </data>
+  <data name="PVs" xml:space="preserve">
+    <value>PVs</value>
+  </data>
   <data name="Series" xml:space="preserve">
     <value>Series</value>
   </data>

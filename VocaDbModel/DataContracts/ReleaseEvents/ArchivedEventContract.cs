@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
@@ -21,6 +22,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Id = ev.Id;
 			MainPictureMime = ev.PictureMime;
 			Names = diff.IncludeNames ? ev.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
+			PVs = diff.IncludePVs ? ev.PVs.Select(p => new ArchivedPVContract(p)).ToArray() : null;
 			Series = ObjectRefContract.Create(ev.Series);
 			SeriesNumber = ev.SeriesNumber;
 			SongList = ObjectRefContract.Create(ev.SongList);
@@ -49,6 +51,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public LocalizedStringContract[] Names { get; set; }
+
+		[DataMember]
+		public ArchivedPVContract[] PVs { get; set; }
 
 		[DataMember]
 		public ObjectRefContract Series { get; set; }
