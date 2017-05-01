@@ -41,6 +41,10 @@
 	@Helpers.EntryStatusMessage(Model.Status)
 }
 
+@if (Model.Deleted) {
+	@EntryDetailsHelpers.DeletedBanner(null)
+}
+
 <div class="well well-transparent">
 
 	<div class="media">

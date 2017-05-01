@@ -19,7 +19,7 @@
 }
 
 @section Toolbar {
-	@if (Login.CanManageEventSeries && Login.CanEdit(Model)) {
+	@if (Login.CanManageDb && Login.CanEdit(Model)) {
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "EditSeries", new { id = Model.Id }, new { id = "editEventLink" })
 		@:
 		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "SeriesVersions", new { id = Model.Id }, new { id = "viewVersions" })
@@ -28,6 +28,10 @@
 		<a href="@Url.Action("Edit", new { seriesId = Model.Id != 0 ? (int?)Model.Id : null })" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
 	}	
 	@Helpers.EntryStatusMessage(Model.Status)
+}
+
+@if (Model.Deleted) {
+	@EntryDetailsHelpers.DeletedBanner(null)
 }
 
 <div class="media">
