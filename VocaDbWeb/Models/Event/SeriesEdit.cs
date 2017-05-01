@@ -49,7 +49,6 @@ namespace VocaDb.Web.Models.Event {
 
 		public int Id { get; set; }
 
-		[Required]
 		public string Name { get; set; }
 
 		[FromJson]

@@ -165,6 +165,11 @@ namespace VocaDb.Web.Controllers
         public ActionResult EditSeries(SeriesEdit model, HttpPostedFileBase pictureUpload = null)
         {
 
+		    // Note: name is allowed to be whitespace, but not empty.
+		    if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value))) {
+			    ModelState.AddModelError("Names", "Name cannot be empty");
+		    }
+
 			if (!ModelState.IsValid) {
 				model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
 				return View(model);
