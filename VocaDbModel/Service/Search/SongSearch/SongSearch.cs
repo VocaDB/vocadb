@@ -51,6 +51,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereIdIs(parsedQuery.Id)
 				.WhereIdNotIn(queryParams.IgnoredIds)
 				.WhereInUserCollection(queryParams.UserCollectionId)
+				.WhereArtistIsFollowedByUser(queryParams.FollowedByUserId)
 				.WherePublishDateIsBetween(parsedQuery.PublishedAfter, parsedQuery.PublishedBefore)
 				.WhereHasScore(queryParams.MinScore)
 				.WhereCreateDateIsWithin(queryParams.TimeFilter)

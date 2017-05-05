@@ -61,6 +61,12 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		public CommonSearchParams Common { get; set; }
 
 		/// <summary>
+		/// Filter to include only songs with artists followed by the specified user.
+		/// 0 = no filtering (default).
+		/// </summary>
+		public int FollowedByUserId { get; set; }
+
+		/// <summary>
 		/// List of songs that should be ignored from search. Cannot be null. If set to empty, will be replaced with empty list.
 		/// If empty, no filtering is done by song IDs.
 		/// TODO: this isn't really in use anymore. Filtering by ID should be done after search.
@@ -101,6 +107,10 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public TimeSpan TimeFilter { get; set; }
 
+		/// <summary>
+		/// Filter to include only songs rated by the specified user.
+		/// 0 = no filtering (default).
+		/// </summary>
 		public int UserCollectionId { get; set; }
 
 	}

@@ -22,6 +22,7 @@ namespace VocaDb.Web.Models.Song {
 			artistId = index.artistId;
 			draftsOnly = index.draftsOnly;
 			filter = index.filter;
+			followedByUserId = index.followedByUserId;
 			hasLyrics = index.hasLyrics;
 			matchMode = index.matchMode;
 			minScore = index.minScore;
@@ -41,6 +42,8 @@ namespace VocaDb.Web.Models.Song {
 		public bool? draftsOnly { get; set; }
 
 		public string filter { get; set; }
+
+		public int? followedByUserId { get; set; }
 
 		public ContentLanguageSelection? hasLyrics { get; set; }
 

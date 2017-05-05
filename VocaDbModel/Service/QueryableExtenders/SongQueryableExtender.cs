@@ -70,6 +70,17 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return query.WhereArtistHasType<Song, ArtistForSong>(artistType);
 		}
 
+		public static IQueryable<Song> WhereArtistIsFollowedByUser(this IQueryable<Song> query, int userId) {
+
+			if (userId == 0)
+				return query;
+
+			query = query.Where(s => s.AllArtists.Any(a => a.Artist.Users.Any(u => u.User.Id == userId)));
+
+			return query;
+
+		}
+
 		public static IQueryable<Song> WhereDraftsOnly(this IQueryable<Song> query, bool draftsOnly) {
 
 			if (!draftsOnly)

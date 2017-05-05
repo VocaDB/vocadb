@@ -327,6 +327,8 @@ namespace VocaDb.Web.Controllers
 					TimeFilter = timeFilter,
 					OnlyWithPVs = onlyWithPVs,
 					MinScore = minScore,
+					UserCollectionId = indexParams.userCollectionId ?? 0,
+					FollowedByUserId = indexParams.followedByUserId ?? 0
 				};
 
 			var result = Service.FindWithThumbPreferNotNico(queryParams);
