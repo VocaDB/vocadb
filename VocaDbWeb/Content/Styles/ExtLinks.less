@@ -4,8 +4,8 @@
 }
 
 a.extLink {
-    .extLink(url("/Content/Icons/world.png"));
-    padding: 2px 0 2px 20px;
+	.extLink(url("/Content/Icons/world.png"));
+	padding: 2px 0 2px 20px;
 
 	&[href^="http://about.me/"], &[href^="https://about.me/"] {
 		.extLink(url("/Content/ExtIcons/aboutme.png"));
@@ -75,6 +75,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/tsutaya.png"));
 	}
 
+	&[href^="http://twipla.jp/"] {
+		.extLink(url("/Content/ExtIcons/twipla.png"));
+	}
+
 	&[href^="http://utaitedb.net/"], &[href^="https://utaitedb.net/"] {
 		.extLink(url("/Content/ExtIcons/utaitedb.png"));
 	}
@@ -83,8 +87,8 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/utaitewikia.png"));
 	}
 
-	&[href^="http://vk.com/"], &[href^="https://vk.com/"] { 
-		.extLink(url("/Content/ExtIcons/vk.png")); 
+	&[href^="http://vk.com/"], &[href^="https://vk.com/"] {
+		.extLink(url("/Content/ExtIcons/vk.png"));
 	}
 
 	&[href^="http://www.vocallective.net"] {
