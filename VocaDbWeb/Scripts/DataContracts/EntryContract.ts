@@ -13,6 +13,8 @@ module vdb.dataContracts {
 
 		entryType: string;
 
+		eventCategory?: string;
+
 		id: number;
 
 		mainPicture: EntryThumbContract;

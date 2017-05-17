@@ -14,6 +14,23 @@ module vdb.viewModels.search {
 
 		}
 
+		public entryCategoryName = (entry: dc.EntryContract) => {
+
+			switch (models.EntryType[entry.entryType]) {
+				case models.EntryType.Artist:
+					return this.searchViewModel.resources().artistTypeNames[entry.artistType];
+				case models.EntryType.Album:
+					return this.searchViewModel.resources().discTypeNames[entry.discType];
+				case models.EntryType.ReleaseEvent:
+					return this.searchViewModel.resources().eventCategoryNames[entry.eventCategory];
+				case models.EntryType.Song:
+					return this.searchViewModel.resources().songTypeNames[entry.songType];
+			}
+
+			return null;
+
+		}
+
 		public entryUrl = (entry: dc.EntryContract) => {
 
 			return vdb.utils.EntryUrlMapper.details(entry.entryType, entry.id);

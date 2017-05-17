@@ -43,14 +43,8 @@
 				</td>
 				<td>
 					<a data-bind="text: $parent.searchViewModel.resources().entryTypeNames[entryType], click: function() { $parent.searchViewModel.searchType(entryType); }" href="#"></a>
-					<!-- ko if: $data.artistType -->
-					<small class="extraInfo" data-bind="text: '(' + $parent.searchViewModel.resources().artistTypeNames[artistType] + ')'"></small>
-					<!-- /ko -->
-					<!-- ko if: $data.discType -->
-					<small class="extraInfo" data-bind="text: '(' + $parent.searchViewModel.resources().discTypeNames[discType] + ')'"></small>
-					<!-- /ko -->
-					<!-- ko if: $data.songType -->
-					<small class="extraInfo" data-bind="text: '(' + $parent.searchViewModel.resources().songTypeNames[songType] + ')'"></small>
+					<!-- ko if: $data.artistType || $data.discType || $data.songType || $data.eventCategory -->
+					<small class="extraInfo" data-bind="text: '(' + $parent.entryCategoryName($data) + ')'"></small>
 					<!-- /ko -->
 				</td>
 				<td data-bind="if: $parents[1].showTags() && $data.tags" class="search-tags-column">

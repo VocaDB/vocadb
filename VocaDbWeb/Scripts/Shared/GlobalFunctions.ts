@@ -78,5 +78,5 @@ module vdb.functions {
 }
 
 interface Navigator {
-	sendBeacon: Function;
+	sendBeacon(url: USVString, data?: BodyInit): boolean;
 }
