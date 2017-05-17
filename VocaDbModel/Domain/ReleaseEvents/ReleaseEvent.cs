@@ -147,7 +147,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual EntryType EntryType => EntryType.ReleaseEvent;
 
+		public virtual bool HasSeries => Series != null;
+
 		public virtual int Id { get; set; }
+
+		/// <summary>
+		/// Event category inherited from series if there is one, otherwise event's own category.
+		/// </summary>
+		public virtual EventCategory InheritedCategory => HasSeries ? Series.Category : Category;
 
 		public virtual NameManager<EventName> Names {
 			get => names;
@@ -304,7 +311,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual void UpdateNameFromSeries() {
 
-			if (Series != null && !CustomName) {
+			if (HasSeries && !CustomName) {
 
 				TranslatedName.DefaultLanguage = Series.TranslatedName.DefaultLanguage;
 

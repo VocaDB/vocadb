@@ -39,7 +39,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Venue = ev.Venue;
 			Version = ev.Version;
 
-			if (includeSeries && ev.Series != null) {
+			if (includeSeries && ev.HasSeries) {
 				Series = new ReleaseEventSeriesContract(ev.Series, languagePreference, includeSeriesLinks);
 			}
 

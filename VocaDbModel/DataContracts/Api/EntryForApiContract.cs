@@ -125,6 +125,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			: this(releaseEvent, languagePreference, includedFields) {
 
 			ActivityDate = releaseEvent.Date.DateTime;
+			EventCategory = releaseEvent.InheritedCategory;
 			ReleaseEventSeriesName = releaseEvent.Series?.TranslatedName[languagePreference];
 			Status = releaseEvent.Status;
 			UrlSlug = releaseEvent.UrlSlug;
@@ -255,6 +256,13 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		[DataMember]
 		public EntryType EntryType { get; set; }
+
+		/// <summary>
+		/// Event category.
+		/// Inherited from event series, if the event has series.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public EventCategory? EventCategory { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

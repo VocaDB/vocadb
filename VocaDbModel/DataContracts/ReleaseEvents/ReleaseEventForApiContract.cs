@@ -31,7 +31,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			VenueName = rel.Venue;
 			Version = rel.Version;
 
-			if (rel.Series != null) {
+			if (rel.HasSeries) {
 				SeriesId = rel.Series.Id;
 			}
 
@@ -51,7 +51,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				Names = rel.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.Series != null) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.HasSeries) {
 				Series = new ReleaseEventSeriesContract(rel.Series, languagePreference);
 			}
 
@@ -71,6 +71,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set; }
 
+		/// <summary>
+		/// Event category. 
+		/// This is NOT inherited from series at the moment (you need to check <see cref="Series"/> for the category).
+		/// </summary>
 		[DataMember]
 		public EventCategory Category { get; set; }
 
@@ -83,6 +87,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public int Id { get; set; }
 
+		/// <summary>
+		/// Main picture.
+		/// This IS inherited from series.
+		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public EntryThumbForApiContract MainPicture { get; set; }
 
