@@ -78,5 +78,6 @@ module vdb.functions {
 }
 
 interface Navigator {
-	sendBeacon(url: USVString, data?: BodyInit): boolean;
+	// sendBeacon is not available in older TS versions
+	sendBeacon(url: any, data?: any): boolean;
 }
