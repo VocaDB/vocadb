@@ -129,6 +129,44 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
+		private ParsedSongQuery ParseReferenceQuery(string trimmed, string query) {
+
+			// Optimization: check prefix, in most cases the user won't be searching by URL
+			if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase)) {
+
+				var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
+
+				if (entryId.EntryType == EntryType.Song)
+					return new ParsedSongQuery { Id = entryId.Id };
+
+			} else if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
+
+				// Test PV URL with services that don't require a web call
+				var videoParseResult = VideoServiceHelper.ParseByUrl(query, false, null,
+					VideoService.NicoNicoDouga, VideoService.Youtube, VideoService.Bilibili, VideoService.File, VideoService.LocalFile, VideoService.Vimeo);
+
+				if (videoParseResult.IsOk) {
+
+					if (videoParseResult.Service == Domain.PVs.PVService.NicoNicoDouga) {
+						return new ParsedSongQuery { NicoId = videoParseResult.Id };
+					}
+					else {
+						return new ParsedSongQuery { PV = new PVContract { PVId = videoParseResult.Id, Service = videoParseResult.Service } };
+					}
+
+				}
+
+				var entryId = entryUrlParser.Parse(trimmed, allowRelative: false);
+
+				if (entryId.EntryType == EntryType.Song)
+					return new ParsedSongQuery { Id = entryId.Id };
+
+			}
+
+			return null;
+
+		}
+
 		public ParsedSongQuery ParseTextQuery(SearchTextQuery textQuery) {
 
 			var query = textQuery.OriginalQuery;
@@ -140,58 +178,21 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			var term = GetTerm(trimmed, "id", "tag", "artist-tag", "artist-type", "publish-date");
 			
-			if (term == null) {
-
-				// Optimization: check prefix, in most cases the user won't be searching by URL
-				if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase)) {
-
-					var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
-
-					if (entryId.EntryType == EntryType.Song)
-						return new ParsedSongQuery { Id = entryId.Id };
-					
-				} else if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
-
-					// Test PV URL with services that don't require a web call
-					var videoParseResult = VideoServiceHelper.ParseByUrl(query, false, null, 
-						VideoService.NicoNicoDouga, VideoService.Youtube, VideoService.Bilibili, VideoService.File, VideoService.LocalFile, VideoService.Vimeo);
-
-					if (videoParseResult.IsOk) {
-
-						if (videoParseResult.Service == Domain.PVs.PVService.NicoNicoDouga) {
-							return new ParsedSongQuery { NicoId = videoParseResult.Id };
-						} else {
-							return new ParsedSongQuery { PV = new PVContract { PVId = videoParseResult.Id, Service = videoParseResult.Service } };
-						}
-
-					}
-
-					var entryId = entryUrlParser.Parse(trimmed, allowRelative: false);
-
-					if (entryId.EntryType == EntryType.Song)
-						return new ParsedSongQuery { Id = entryId.Id };
-
-				}
-
-			} else {
-
-				switch (term.PropertyName) {
-					case "tag":
-						return new ParsedSongQuery { TagName = term.Value };
-					case "artist-tag":
-						return new ParsedSongQuery { ArtistTag = term.Value };
-					case "artist-type":
-						return new ParsedSongQuery { ArtistType = EnumVal<ArtistType>.ParseSafe(term.Value, ArtistType.Unknown) };
-					case "id":
-						return new ParsedSongQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) };
-					case "publish-date":
-						return ParseDateRange(term.Value);
-				}
-				
+			switch (term?.PropertyName) {
+				case "tag":
+					return new ParsedSongQuery { TagName = term.Value };
+				case "artist-tag":
+					return new ParsedSongQuery { ArtistTag = term.Value };
+				case "artist-type":
+					return new ParsedSongQuery { ArtistType = EnumVal<ArtistType>.ParseSafe(term.Value, ArtistType.Unknown) };
+				case "id":
+					return new ParsedSongQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) };
+				case "publish-date":
+					return ParseDateRange(term.Value);
+				default:
+					return ParseReferenceQuery(trimmed, query) ?? new ParsedSongQuery { Name = textQuery };
 			}
-
-			return new ParsedSongQuery { Name = textQuery };
-
+				
 		}
 
 		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser) {
