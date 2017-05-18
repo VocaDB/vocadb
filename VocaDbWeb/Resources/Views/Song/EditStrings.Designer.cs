@@ -142,7 +142,7 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notes.
+        ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string BaNotes {
             get {

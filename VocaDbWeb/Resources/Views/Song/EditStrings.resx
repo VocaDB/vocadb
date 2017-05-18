@@ -145,7 +145,7 @@
     <value>Primary name (in one or more languages)</value>
   </data>
   <data name="BaNotes" xml:space="preserve">
-    <value>Notes</value>
+    <value>Description</value>
   </data>
   <data name="BaOriginalVersion" xml:space="preserve">
     <value>Original version</value>
