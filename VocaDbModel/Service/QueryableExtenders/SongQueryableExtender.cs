@@ -365,6 +365,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					var param = EnumVal<ArtistType>.Parse(filter.Param);
 					return WhereArtistHasType(query, param);
 				}
+				case AdvancedFilterType.HasAlbum:
+					return filter.Negate ? query.Where(s => !s.AllAlbums.Any()) : query.Where(s => s.AllAlbums.Any());
 				case AdvancedFilterType.HasMultipleVoicebanks: {
 					return query.Where(s => s.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1);	
 				}

@@ -48,6 +48,11 @@
 
 		// Song
 
+		/// <summary>
+		/// Song is an album song
+		/// </summary>
+		HasAlbum,
+
 		HasMultipleVoicebanks,
 
 		HasPublishDate,
