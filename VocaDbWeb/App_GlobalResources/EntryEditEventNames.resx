@@ -123,6 +123,9 @@
   <data name="Deleted" xml:space="preserve">
     <value>Deleted</value>
   </data>
+  <data name="Restored" xml:space="preserve">
+    <value>Restored</value>
+  </data>
   <data name="Updated" xml:space="preserve">
     <value>Updated</value>
   </data>

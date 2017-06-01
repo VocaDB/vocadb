@@ -73,6 +73,8 @@ namespace VocaDb.Web.Models.Event {
 
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
+		public bool Deleted { get; set; }
+
 		[StringLength(400)]
 		public string Description { get; set; }
 
@@ -119,6 +121,7 @@ namespace VocaDb.Web.Models.Event {
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 
 			if (contract != null) {
+				Deleted = contract.Deleted;
 				OldName = contract.Name;
 				PictureMime = contract.PictureMime;
 				UrlSlug = contract.UrlSlug;

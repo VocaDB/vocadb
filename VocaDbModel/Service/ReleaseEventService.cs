@@ -19,8 +19,8 @@ namespace VocaDb.Model.Service {
 
 			return HandleQuery(session => {
 
-				var allEvents = session.Query<ReleaseEvent>().ToArray();
-				var series = session.Query<ReleaseEventSeries>().OrderByName(LanguagePreference).ToArray();
+				var allEvents = session.Query<ReleaseEvent>().Where(e => !e.Deleted).ToArray();
+				var series = session.Query<ReleaseEventSeries>().Where(e => !e.Deleted).OrderByName(LanguagePreference).ToArray();
 
 				var seriesContracts = series.Select(s => 
 					new ReleaseEventSeriesWithEventsContract(s, allEvents.Where(e => s.Equals(e.Series)), PermissionContext.LanguagePreference));

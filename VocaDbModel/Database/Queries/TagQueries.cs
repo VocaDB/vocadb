@@ -591,13 +591,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void Restore(int songId) {
+		public void Restore(int tagId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
 			HandleTransaction(session => {
 
-				var tag = session.Load<Tag>(songId);
+				var tag = session.Load<Tag>(tagId);
 
 				tag.Deleted = false;
 

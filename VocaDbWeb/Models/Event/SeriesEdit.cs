@@ -33,7 +33,7 @@ namespace VocaDb.Web.Models.Event {
 			Status = contract.Status;
 			WebLinks = contract.WebLinks;
 
-			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
+			CopyNonEditableProperties(contract, userContext);
 
 		}
 
@@ -44,6 +44,8 @@ namespace VocaDb.Web.Models.Event {
 		public ReleaseEventSeriesForEditContract Contract { get; set; }
 
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		public bool Deleted { get; set; }
 
 		public string Description { get; set; }
 
@@ -58,6 +60,16 @@ namespace VocaDb.Web.Models.Event {
 
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
+
+		public void CopyNonEditableProperties(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext) {
+
+			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
+
+			if (contract != null) {
+				Deleted = contract.Deleted;
+			}
+
+		}
 
 		public ReleaseEventSeriesForEditContract ToContract() {
 

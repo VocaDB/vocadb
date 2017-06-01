@@ -208,6 +208,22 @@ namespace VocaDb.Web.Controllers
 
 	    }
 
+	    public ActionResult Restore(int id) {
+
+		    queries.Restore(id);
+
+		    return RedirectToAction("Edit", new { id });
+
+	    }
+
+	    public ActionResult RestoreSeries(int id) {
+
+		    queries.RestoreSeries(id);
+
+		    return RedirectToAction("EditSeries", new { id });
+
+	    }
+
 		public ActionResult SeriesDetails(int id = invalidId, string slug = null) {
 
 			if (id == invalidId)

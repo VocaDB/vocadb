@@ -28,7 +28,11 @@
 
 @section Toolbar {
 	@if (!isNew && Login.CanDeleteEntries) {
-		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
+		if (!Model.Deleted) {
+			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
+		} else {
+			@Html.ActionLink(EditRes.Restore, "RestoreSeries", new { id = Model.Id }, new { id = "restoreLink" })								
+		}
 	}
 }
 

@@ -244,6 +244,46 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void Restore(int eventId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
+
+			HandleTransaction(ctx => {
+
+				var ev = ctx.Load<ReleaseEvent>(eventId);
+
+				ev.Deleted = false;
+
+				ctx.Update(ev);
+
+				Archive(ctx, ev, new ReleaseEventDiff(false), EntryEditEvent.Restored, string.Empty);
+
+				ctx.AuditLogger.AuditLog(string.Format("restored {0}", ev));
+
+			});
+
+		}
+
+		public void RestoreSeries(int eventId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
+
+			HandleTransaction(ctx => {
+
+				var ev = ctx.Load<ReleaseEventSeries>(eventId);
+
+				ev.Deleted = false;
+
+				ctx.Update(ev);
+
+				Archive(ctx, ev, new ReleaseEventSeriesDiff(false), EntryEditEvent.Restored, string.Empty);
+
+				ctx.AuditLogger.AuditLog(string.Format("restored {0}", ev));
+
+			});
+
+		}
+
 		/// <summary>
 		/// Updates or creates release event.
 		/// 

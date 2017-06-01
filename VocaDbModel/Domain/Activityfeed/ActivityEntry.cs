@@ -71,7 +71,9 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 		Updated = 2,
 
-		Deleted = 3
+		Deleted = 3,
+
+		Restored = 4
 
 	}
 
