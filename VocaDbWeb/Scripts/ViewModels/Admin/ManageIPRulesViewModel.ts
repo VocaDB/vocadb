@@ -7,10 +7,17 @@ module vdb.viewModels {
 
         public add = () => {
 
-			if (!this.newAddress())
+			const addr = this.newAddress().trim();
+
+			if (!addr)
 				return;
 
-            this.rules.unshift(new IPRule({ address: this.newAddress(), notes: "", created: new Date() }));
+			if (_.some(this.rules(), r => r.address() === addr)) {
+				ui.showErrorMessage("Address already added");
+				return;
+			}
+
+            this.rules.unshift(new IPRule({ address: addr, notes: "", created: new Date() }));
 			this.newAddress("");
 
         }
@@ -41,7 +48,7 @@ module vdb.viewModels {
 
         constructor(data: IPRuleContract[], repo: rep.AdminRepository) {
 
-			var rules = _.chain(data).sortBy('created').reverse().map(r => new IPRule(r)).value();
+			const rules = _.chain(data).sortBy('created').reverse().map(r => new IPRule(r)).value();
             this.rules = ko.observableArray(rules);
 
 			repo.getTempBannedIps(result => this.bannedIPs(result));
