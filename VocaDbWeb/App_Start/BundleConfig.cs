@@ -238,6 +238,7 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/EventSeries/Edit").Include(
 				"~/Scripts/Helpers/KnockoutHelper.js",
+				"~/Scripts/Repositories/ReleaseEventRepository.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel.js",
@@ -258,6 +259,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/Repositories/PVRepository.js",
+				"~/Scripts/Repositories/ReleaseEventRepository.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVEditViewModel.js",

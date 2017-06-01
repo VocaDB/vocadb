@@ -70,7 +70,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void Delete(int eventId) {
+		public void Delete(int eventId, string notes) {
+
+			permissionContext.VerifyManageDatabase();
 
 			repository.HandleTransaction(ctx => {
 
@@ -81,15 +83,17 @@ namespace VocaDb.Model.Database.Queries {
 				entry.Deleted = true;
 				ctx.Update(entry);
 
+				Archive(ctx, entry, new ReleaseEventDiff(false), EntryEditEvent.Deleted, notes);
+
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
 
 			});
 
 		}
 
-		public void DeleteSeries(int id) {
+		public void DeleteSeries(int id, string notes) {
 
-			PermissionContext.VerifyPermission(PermissionToken.ManageEventSeries);
+			permissionContext.VerifyManageDatabase();
 
 			repository.HandleTransaction(ctx => {
 
@@ -99,6 +103,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				entry.Deleted = true;
 				ctx.Update(entry);
+
+				Archive(ctx, entry, new ReleaseEventSeriesDiff(false), EntryEditEvent.Deleted, notes);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
 

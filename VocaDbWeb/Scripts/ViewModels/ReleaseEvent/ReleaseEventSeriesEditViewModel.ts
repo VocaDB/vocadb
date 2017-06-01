@@ -6,8 +6,10 @@ module vdb.viewModels.releaseEvents {
 	export class ReleaseEventSeriesEditViewModel {
 
 		constructor(
+			private readonly eventRepository: rep.ReleaseEventRepository,
 			userRepository: rep.UserRepository,
-			id: number,
+			private readonly urlMapper: vdb.UrlMapper,
+			private readonly id: number,
 			defaultNameLanguage: string,
 			names: dataContracts.globalization.LocalizedStringWithIdContract[],
 			webLinks: dc.WebLinkContract[]) {
@@ -27,6 +29,12 @@ module vdb.viewModels.releaseEvents {
 		public names: globalization.NamesEditViewModel;
 		public submitting = ko.observable(false);
         public webLinks: WebLinksEditViewModel;
+
+		public deleteViewModel = new DeleteEntryViewModel(notes => {
+			this.eventRepository.deleteSeries(this.id, notes, () => {
+				window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.ReleaseEventSeries, this.id));
+			});
+		});
 
 		public submit = () => {
 			this.submitting(true);

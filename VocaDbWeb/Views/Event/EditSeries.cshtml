@@ -28,7 +28,7 @@
 
 @section Toolbar {
 	@if (!isNew && Login.CanDeleteEntries) {
-		@Html.ActionLink("Delete", "DeleteSeries", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"Are you sure you want to delete this series?\");" })
+		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
 	}
 }
 
@@ -118,13 +118,17 @@
 
 </form>
 
+@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/EventSeries/Edit")
 <script type="text/javascript">
 
 	$(function () {
 
-		var userRepo = new vdb.repositories.UserRepository(new vdb.UrlMapper('@RootPath'));
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var eventRepo = new vdb.repositories.ReleaseEventRepository(urlMapper);
+		var userRepo = new vdb.repositories.UserRepository(urlMapper);
 		var model = @ToJS(new {
 			 DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
 			 Model.Id,
@@ -132,7 +136,7 @@
 			 Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel(userRepo, model.id, model.defaultNameLanguage, model.names, model.webLinks);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel(eventRepo, userRepo, urlMapper, model.id, model.defaultNameLanguage, model.names, model.webLinks);
 		ko.applyBindings(vm);
 
 		initPage();

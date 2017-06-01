@@ -7,11 +7,13 @@ module vdb.viewModels.releaseEvents {
 	export class ReleaseEventEditViewModel {
 
 		constructor(
+			private readonly repo: rep.ReleaseEventRepository,
 			userRepository: rep.UserRepository,
 			pvRepository: rep.PVRepository,
-			urlMapper: vdb.UrlMapper,
+			private readonly urlMapper: vdb.UrlMapper,
 			contract: dc.ReleaseEventContract) {
 
+			this.id = contract.id;
 			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
 			this.dateStr = ko.computed(() => (this.date() ? this.date().toISOString() : null));
 
@@ -48,7 +50,15 @@ module vdb.viewModels.releaseEvents {
 
 		public defaultNameLanguage: KnockoutObservable<string>;
 
+		public deleteViewModel = new DeleteEntryViewModel(notes => {
+			this.repo.delete(this.id, notes, () => {
+				window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.ReleaseEvent, this.id));
+			});
+		});
+
 		public description = ko.observable<string>();
+
+		private id: number;
 
 		public isSeriesEvent: KnockoutObservable<boolean>;
 

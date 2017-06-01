@@ -21,6 +21,19 @@ namespace VocaDb.Web.Controllers.Api {
 			this.queries = queries;
 		}
 
+		/// <summary>
+		/// Deletes an event series.
+		/// </summary>
+		/// <param name="id">ID of the series to be deleted.</param>
+		/// <param name="notes">Notes.</param>
+		[Route("{id:int}")]
+		[Authorize]
+		public void Delete(int id, string notes = "") {
+
+			queries.DeleteSeries(id, notes ?? string.Empty);
+
+		}
+
 		[Route("")]
 		public PartialFindResult<ReleaseEventSeriesContract> GetList(
 			string query = "", 

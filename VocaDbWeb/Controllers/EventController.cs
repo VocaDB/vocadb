@@ -42,29 +42,6 @@ namespace VocaDb.Web.Controllers
 			this.thumbPersister = thumbPersister;
 		}
 
-		[HttpPost]
-		public PartialViewResult AliasForSeries(string name) {
-
-			return PartialView("AliasForSeries", name);
-
-		}
-
-		public ActionResult Delete(int id) {
-
-			queries.Delete(id);
-
-			return RedirectToAction("EventsBySeries");
-
-		}
-
-		public ActionResult DeleteSeries(int id) {
-
-			queries.DeleteSeries(id);
-
-			return RedirectToAction("EventsBySeries");
-
-		}
-
 		public ActionResult Details(int id = invalidId, string slug = null) {
 
 		    if (id == invalidId)

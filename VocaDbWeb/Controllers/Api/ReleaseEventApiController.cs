@@ -37,6 +37,19 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Deletes an event.
+		/// </summary>
+		/// <param name="id">ID of the event to be deleted.</param>
+		/// <param name="notes">Notes.</param>
+		[Route("{id:int}")]
+		[Authorize]
+		public void Delete(int id, string notes = "") {
+
+			queries.Delete(id, notes ?? string.Empty);
+
+		}
+
+		/// <summary>
 		/// Gets a list of albums for a specific release event.
 		/// </summary>
 		/// <param name="eventId">Release event ID.</param>
