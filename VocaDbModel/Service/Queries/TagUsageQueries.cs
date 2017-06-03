@@ -120,7 +120,7 @@ namespace VocaDb.Model.Service.Queries {
 
 				var tagUsage = ctx.Load<TUsage>(tagUsageId);
 
-				EntryPermissionManager.VerifyAccess(permissionContext, tagUsage.Entry, EntryPermissionManager.CanRemoveTagUsages);
+				EntryPermissionManager.VerifyAccess(permissionContext, tagUsage.EntryBase, EntryPermissionManager.CanRemoveTagUsages);
 
 				ctx.AuditLogger.AuditLog(string.Format("removing {0}", tagUsage));
 
@@ -128,7 +128,7 @@ namespace VocaDb.Model.Service.Queries {
 				ctx.Delete(tagUsage);
 				ctx.Update(tagUsage.Tag);
 
-				return tagUsage.Entry.Id;
+				return tagUsage.EntryBase.Id;
 
 			});
 

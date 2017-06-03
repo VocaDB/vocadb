@@ -461,13 +461,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		private void MergeTagUsages(Tag source, Tag target) {
 
-			var targetTagUsages = target.AllTagUsages.ToDictionary(t => new GlobalEntryId(t.Entry.EntryType, t.Entry.Id));
+			var targetTagUsages = target.AllTagUsages.ToDictionary(t => new GlobalEntryId(t.EntryBase.EntryType, t.EntryBase.Id));
 
 			foreach (var usage in source.AllTagUsages.ToArray()) {
 
 				TagUsage targetUsage;
 
-				if (!targetTagUsages.TryGetValue(new GlobalEntryId(usage.Entry.EntryType, usage.Entry.Id), out targetUsage)) {
+				if (!targetTagUsages.TryGetValue(new GlobalEntryId(usage.EntryBase.EntryType, usage.EntryBase.Id), out targetUsage)) {
 					targetUsage = usage.Move(target);
 					source.UsageCount--;
 					target.UsageCount++;

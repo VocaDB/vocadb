@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// Attached entry. Cannot be null.
 		/// </summary>
-		public abstract IEntryBase Entry { get; }
+		public abstract IEntryBase EntryBase { get; }
 
 		public virtual bool HasVotes => Count > 0;
 
@@ -96,7 +96,7 @@ namespace VocaDb.Model.Domain.Tags {
 		}
 
 		public override int GetHashCode() {
-			var format = string.Format("{0}_{1}{2}", Tag.Id, Entry.EntryType, Entry.Id);
+			var format = string.Format("{0}_{1}{2}", Tag.Id, EntryBase.EntryType, EntryBase.Id);
 			return format.GetHashCode();
 		}
 
@@ -117,7 +117,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public abstract TagVote RemoveVote(User user);
 
 		public override string ToString() {
-			return string.Format("{0} for {1} [{2}]", Tag, Entry, Id);
+			return string.Format("{0} for {1} [{2}]", Tag, EntryBase, Id);
 		}
 
 	}
