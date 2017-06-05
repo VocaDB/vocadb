@@ -12,13 +12,14 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEvent : IEntryWithNames<EventName>, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent, 
-		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName> {
+		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName>, IEntryWithTags<EventTagUsage> {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 		string IReleaseEvent.Name => DefaultName;
@@ -36,6 +37,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private ReleaseEventSeries series;
 		private string seriesSuffix;
 		private IList<Song> songs = new List<Song>();
+		private TagManager<EventTagUsage> tags = new TagManager<EventTagUsage>();
 		private IList<EventForUser> users = new List<EventForUser>();
 		private IList<ReleaseEventWebLink> webLinks = new List<ReleaseEventWebLink>();
 
@@ -194,6 +196,16 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual IEnumerable<Song> Songs => AllSongs.Where(a => !a.Deleted);
 
 		public virtual EntryStatus Status { get; set; }
+
+		public virtual TagManager<EventTagUsage> Tags {
+			get => tags;
+			set {
+				ParamIs.NotNull(() => value);
+				tags = value;
+			}
+		}
+
+		ITagManager IEntryWithTags.Tags => Tags;
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 

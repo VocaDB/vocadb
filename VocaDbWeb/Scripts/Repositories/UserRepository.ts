@@ -263,6 +263,12 @@ module vdb.repositories {
 
         }
 
+		public getEventTagSelections = (eventId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/users/current/eventTags/" + eventId), callback);
+
+		}
+
         public getSongTagSelections = (songId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), callback);
@@ -312,6 +318,10 @@ module vdb.repositories {
 			var url = this.urlMapper.mapRelative("/api/users/current/events/" + eventId);
 			return $.post(url, { associationType: vdb.models.users.UserEventRelationshipType[associationType] }, callback) as JQueryPromise<{}>;
 
+		}
+
+		public updateEventTags = (eventId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/eventTags/" + eventId), tags, callback);
 		}
 
         // Updates rating score for a song.

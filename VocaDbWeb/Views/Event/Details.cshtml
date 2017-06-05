@@ -79,6 +79,14 @@
 				</p>		
 			}
 			
+			<p>
+				@ViewRes.SharedStrings.Tags:
+				<div data-bind="with: tagUsages" class="entry-tag-usages">
+					@{ Html.RenderPartial("Partials/_TagList"); }
+				</div>
+				<a data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
+			</p>
+
 		</div>
 	</div>
 	
@@ -169,6 +177,10 @@
 
 @CommentHelpers.LatestCommentsKnockout()
 
+<div data-bind="with: tagsEditViewModel">
+	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+</div>
+
 @section BodyScripts {
 @Scripts.Render("~/bundles/ReleaseEvent/Details")
 <script type="text/javascript">
@@ -181,9 +193,10 @@
 		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
 		var latestComments = @ToJS(Model.LatestComments);
 		var users = @ToJS(Model.UsersAttending);
+		var tags = @ToJS(Model.Tags);
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, userRepo, latestComments, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), users, canDeleteAllComments);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, userRepo, latestComments, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), users, tags, canDeleteAllComments);
 		ko.applyBindings(vm);
 	});
 </script>

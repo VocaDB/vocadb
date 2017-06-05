@@ -139,7 +139,7 @@ namespace VocaDb.Model.Service.Queries {
 			// Note: these counts are not up to date in tests, only when querying the real DB
 			var result = ctx.Query().Where(t => tagIds.Contains(t.Id)).Select(t => new {
 				Id = t.Id,
-				Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count + t.AllSongTagUsages.Count
+				Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count + t.AllSongTagUsages.Count + t.AllEventTagUsages.Count
 			}).ToDictionary(t => t.Id, t => t.Count);
 
 			return result;

@@ -3,6 +3,7 @@ using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -26,6 +27,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			PVs = releaseEvent.PVs.Select(p => new PVContract(p)).ToArray();
 			SeriesNumber = releaseEvent.SeriesNumber;
 			SeriesSuffix = releaseEvent.SeriesSuffix;
+			Tags = releaseEvent.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(releaseEvent.TranslatedName);
 			WebLinks = releaseEvent.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
@@ -69,6 +71,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public SongInListContract[] SongListSongs { get; set; }
 
 		public SongForApiContract[] Songs { get; set; }
+
+		public TagUsageForApiContract[] Tags { get; set; }
 
 		public TranslatedStringContract TranslatedName { get; set; }
 

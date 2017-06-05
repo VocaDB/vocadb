@@ -9,6 +9,7 @@ using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -42,6 +43,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private ISet<Tag> children = new HashSet<Tag>();
 		private IList<TagComment> comments = new List<TagComment>();
 		private EnglishTranslatedString description;
+		private ISet<EventTagUsage> eventTagUsages = new HashSet<EventTagUsage>();
 		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
@@ -350,17 +352,27 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
+		public virtual ISet<EventTagUsage> AllEventTagUsages {
+			get => eventTagUsages;
+			set {
+				ParamIs.NotNull(() => value);
+				eventTagUsages = value;
+			}
+		}
+
 		/// <summary>
 		/// List of all song tag usages (including deleted songs) for this tag.
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
 		public virtual ISet<SongTagUsage> AllSongTagUsages {
-			get { return songTagUsages; }
+			get => songTagUsages;
 			set {
 				ParamIs.NotNull(() => value);
 				songTagUsages = value;
 			}
 		}
+
+		public virtual IEnumerable<EventTagUsage> EventTagUsages => AllEventTagUsages.Where(a => !a.Entry.Deleted);
 
 		public virtual bool IsValidFor(EntryType entryType) {
 

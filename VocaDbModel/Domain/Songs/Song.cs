@@ -335,7 +335,7 @@ namespace VocaDb.Model.Domain.Songs {
 		public virtual EntryStatus Status { get; set; }
 
 		public virtual TagManager<SongTagUsage> Tags {
-			get { return tags; }
+			get => tags;
 			set {
 				ParamIs.NotNull(() => value);
 				tags = value;

@@ -1,24 +1,33 @@
 ﻿
 namespace vdb.viewModels.releaseEvents {
 
+	import cls = vdb.models;
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
 
 	export class ReleaseEventDetailsViewModel {
 
 		constructor(urlMapper: vdb.UrlMapper,
-			private userRepo: rep.UserRepository,
+			private readonly userRepo: rep.UserRepository,
 			latestComments: dc.CommentContract[],
 			public loggedUserId: number,
-			private eventId: number,
+			private readonly eventId: number,
 			eventAssociationType: models.users.UserEventRelationshipType,
 			usersAttending: dc.UserBaseContract[],
+			tagUsages: dc.tags.TagUsageForApiContract[],
 			canDeleteAllComments: boolean) {
 
 			const commentRepo = new rep.CommentRepository(urlMapper, vdb.models.EntryType.ReleaseEvent);
 			this.comments = new EditableCommentsViewModel(commentRepo, eventId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
 			this.eventAssociationType(eventAssociationType);
 			this.usersAttending = ko.observableArray(usersAttending);
+
+			this.tagsEditViewModel = new tags.TagsEditViewModel({
+				getTagSelections: callback => userRepo.getEventTagSelections(this.eventId, callback),
+				saveTagSelections: tags => userRepo.updateEventTags(this.eventId, tags, this.tagUsages.updateTagUsages)
+			}, cls.EntryType.Song);
+
+			this.tagUsages = new tags.TagListViewModel(tagUsages);
 
 		}
 
@@ -55,6 +64,10 @@ namespace vdb.viewModels.releaseEvents {
 			var link = _.find(this.usersAttending(), u => u.id === this.loggedUserId);
 			this.usersAttending.remove(link);
 		}
+
+		public tagsEditViewModel: tags.TagsEditViewModel;
+
+		public tagUsages: tags.TagListViewModel;
 
 		public usersAttending: KnockoutObservableArray<dc.UserBaseContract>;
 

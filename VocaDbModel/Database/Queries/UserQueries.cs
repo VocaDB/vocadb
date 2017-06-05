@@ -1030,6 +1030,22 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private TagSelectionContract[] GetTagSelections<TEntry, TUsage, TVote>(int entryId, int userId) where TEntry : class, IEntryWithNames where TUsage : GenericTagUsage<TEntry, TVote> where TVote : GenericTagVote<TUsage> {
+
+			return HandleQuery(session => {
+
+				var tagsInUse = session.Query<TUsage>().Where(a => a.Entry.Id == entryId && !a.Tag.Deleted).ToArray();
+				var tagVotes = session.Query<TVote>().Where(a => a.User.Id == userId && a.Usage.Entry.Id == entryId).ToArray();
+
+				var tagSelections = tagsInUse.Select(t =>
+					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
+
+				return tagSelections.ToArray();
+
+			});
+
+		}
+
 		public TagSelectionContract[] GetAlbumTagSelections(int albumId, int userId) {
 
 			return HandleQuery(session => {
@@ -1060,6 +1076,10 @@ namespace VocaDb.Model.Database.Queries {
 
 			});
 
+		}
+
+		public TagSelectionContract[] GetEventTagSelections(int eventId, int userId) {
+			return GetTagSelections<ReleaseEvent, EventTagUsage, EventTagVote>(eventId, userId);
 		}
 
 		public TagSelectionContract[] GetSongTagSelections(int songId, int userId) {
@@ -1265,6 +1285,15 @@ namespace VocaDb.Model.Database.Queries {
 				artistId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				artist => artist.Tags, 
 				(artist, ctx) => new ArtistTagUsageFactory(ctx, artist));
+
+		}
+
+		public TagUsageForApiContract[] SaveEventTags(int eventId, TagBaseContract[] tags, bool onlyAdd) {
+
+			return new TagUsageQueries(PermissionContext).AddTags<ReleaseEvent, EventTagUsage>(
+				eventId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
+				releaseEvent => releaseEvent.Tags,
+				(releaseEvent, ctx) => new EventTagUsageFactory(ctx, releaseEvent));
 
 		}
 
@@ -1744,6 +1773,36 @@ namespace VocaDb.Model.Database.Queries {
 
 			var usage = new ArtistTagUsage(oldUsage.Artist, tag);
 			session.Save(usage);
+
+			return usage;
+
+		}
+
+	}
+
+	public class EventTagUsageFactory : ITagUsageFactory<EventTagUsage> {
+
+		private readonly ReleaseEvent releaseEvent;
+		private readonly IDatabaseContext ctx;
+
+		public EventTagUsageFactory(IDatabaseContext ctx, ReleaseEvent releaseEvent) {
+			this.ctx = ctx;
+			this.releaseEvent = releaseEvent;
+		}
+
+		public EventTagUsage CreateTagUsage(Tag tag) {
+
+			var usage = new EventTagUsage(releaseEvent, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+		public EventTagUsage CreateTagUsage(Tag tag, EventTagUsage oldUsage) {
+
+			var usage = new EventTagUsage(oldUsage.Entry, tag);
+			ctx.Save(usage);
 
 			return usage;
 
