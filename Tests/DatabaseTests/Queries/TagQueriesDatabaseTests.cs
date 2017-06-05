@@ -30,7 +30,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 			return context.RunTest(repository => {
 
-				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(),
+				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(), new InMemoryImagePersister(),
 					new FakeUserIconFactory(), new EnumTranslations());
 
 				queries.Merge(sourceId, targetId);
@@ -49,7 +49,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 			return context.RunTest(repository => {
 
-				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(),
+				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(), new InMemoryImagePersister(),
 					new FakeUserIconFactory(), new EnumTranslations());
 
 				var updated = queries.Update(contract, null);
