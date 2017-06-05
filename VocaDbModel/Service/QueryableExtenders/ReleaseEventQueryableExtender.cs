@@ -113,6 +113,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<ReleaseEvent> WhereHasTags(this IQueryable<ReleaseEvent> query, int[] tagId, bool childTags = false) {
+			return query.WhereHasTags<ReleaseEvent, EventTagUsage>(tagId, childTags);
+		}
+
 		public static IQueryable<ReleaseEvent> WhereInUserCollection(this IQueryable<ReleaseEvent> query, int userId) {
 
 			if (userId == 0)

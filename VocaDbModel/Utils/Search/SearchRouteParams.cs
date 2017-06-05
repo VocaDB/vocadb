@@ -70,6 +70,14 @@ namespace VocaDb.Model.Utils.Search {
 
 		}
 
+		public SearchRouteParams Events(int? tagId = null) {
+
+			return new SearchRouteParams(EntryType.ReleaseEvent) {
+				tagId = tagId,
+			};
+
+		}
+
 		public SearchRouteParams Songs(
 			int? artistId = null, 
 			SongType? songType = null, 

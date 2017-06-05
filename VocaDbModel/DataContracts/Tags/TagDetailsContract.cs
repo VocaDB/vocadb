@@ -2,6 +2,7 @@
 using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -9,6 +10,8 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.Tags {
 
@@ -22,7 +25,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagDetailsContract(Tag tag, 
 			IEnumerable<Artist> artists, int artistCount, IEnumerable<Album> albums, int albumCount,
-			IEnumerable<Song> songs, int songCount, ContentLanguagePreference languagePreference)
+			IEnumerable<Song> songs, int songCount, IEnumerable<ReleaseEvent> events, int eventCount, ContentLanguagePreference languagePreference,
+			IEntryThumbPersister thumbStore)
 			: base(tag, languagePreference) {
 
 			AdditionalNames = tag.Names.AdditionalNamesString;
@@ -45,6 +49,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
 				.ToArray();
+
+			Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture, thumbStore, true)).ToArray();
+			EventCount = eventCount;
 
 			Siblings = tag.Siblings
 				.Select(a => new TagBaseContract(a, languagePreference))
@@ -72,6 +79,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public int CommentCount { get; set; }
 
 		public new EnglishTranslatedString Description { get; set; }
+
+		public int EventCount { get; set; }
+
+		public ReleaseEventForApiContract[] Events { get; set; }
 
 		public bool IsFollowing { get; set; }
 

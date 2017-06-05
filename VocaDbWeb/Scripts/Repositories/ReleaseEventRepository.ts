@@ -28,6 +28,8 @@ module vdb.repositories {
 				start: queryParams.start, getTotalCount: queryParams.getTotalCount, maxResults: queryParams.maxResults,
 				query: queryParams.query,
 				category: queryParams.category || undefined,
+				tagId: queryParams.tagIds,
+				childTags: queryParams.childTags,
 				fields: queryParams.fields || undefined,
 				userCollectionId: queryParams.userCollectionId || undefined,
 				status: queryParams.status || undefined,
@@ -56,12 +58,16 @@ module vdb.repositories {
 
 		category?: string;
 
+		childTags: boolean;
+
 		// Comma-separated list of optional fields
 		fields?: string;
 
 		sort?: string;
 
 		status?: string;
+
+		tagIds: number[];
 
 		userCollectionId?: number;
 

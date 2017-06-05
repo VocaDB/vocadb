@@ -123,7 +123,8 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereHasSeries(queryParams.SeriesId)
 					.WhereStatusIs(queryParams.EntryStatus)
 					.WhereDateIsBetween(queryParams.AfterDate, queryParams.BeforeDate)
-					.WhereInUserCollection(queryParams.UserId);
+					.WhereInUserCollection(queryParams.UserId)
+					.WhereHasTags(queryParams.TagIds, queryParams.ChildTags);
 
 				var entries = q
 					.OrderBy(queryParams.SortRule, LanguagePreference, queryParams.SortDirection)

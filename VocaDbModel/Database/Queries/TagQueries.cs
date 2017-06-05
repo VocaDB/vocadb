@@ -15,6 +15,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -39,6 +40,7 @@ namespace VocaDb.Model.Database.Queries {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
+		private readonly IEntryThumbPersister thumbStore;
 		private readonly IEntryImagePersisterOld imagePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -119,12 +121,13 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public TagQueries(ITagRepository repository, IUserPermissionContext permissionContext,
-			IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IUserIconFactory userIconFactory,
+			IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IEntryThumbPersister thumbStore, IUserIconFactory userIconFactory,
 			IEnumTranslations enumTranslations)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+			this.thumbStore = thumbStore;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
 
@@ -306,13 +309,16 @@ namespace VocaDb.Model.Database.Queries {
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(session, tagId, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(session, tagId, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
 				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(session, tagId, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
+				var events = GetTopUsagesAndCount<EventTagUsage, ReleaseEvent, int>(session, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var latestComments = Comments(session).GetList(tag.Id, 3);
 
 				return new TagDetailsContract(tag,
 					artists.TopUsages, artists.TotalCount,
 					albums.TopUsages, albums.TotalCount,
 					songs.TopUsages, songs.TotalCount,
-					PermissionContext.LanguagePreference) {
+					events.TopUsages, events.TotalCount,
+					PermissionContext.LanguagePreference,
+					thumbStore) {
 					CommentCount = Comments(session).GetCount(tag.Id),
 					LatestComments = latestComments,
 					IsFollowing = permissionContext.IsLoggedIn && session.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId)

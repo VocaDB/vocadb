@@ -148,7 +148,7 @@ module vdb.viewModels.search {
 		public showEventSearch = ko.computed(() => this.searchType() === SearchType.ReleaseEvent);
 		public showSongSearch: KnockoutComputed<boolean>;
 		public showTagSearch = ko.computed(() => this.searchType() === SearchType.Tag);
-		public showTagFilter = ko.computed(() => !this.showTagSearch() && this.searchType() !== SearchType.ReleaseEvent);
+		public showTagFilter = ko.computed(() => !this.showTagSearch());
 		public showTags = ko.observable(false);
 		public showDraftsFilter = ko.computed(() => this.searchType() !== SearchType.Tag);
 

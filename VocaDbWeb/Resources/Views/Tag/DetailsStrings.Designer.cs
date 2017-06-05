@@ -106,6 +106,15 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All events.
+        /// </summary>
+        public static string AllEvents {
+            get {
+                return ResourceManager.GetString("AllEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All songs.
         /// </summary>
         public static string AllSongs {
@@ -201,6 +210,15 @@ namespace ViewRes.Tag {
         public static string TopArtists {
             get {
                 return ResourceManager.GetString("TopArtists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top events.
+        /// </summary>
+        public static string TopEvents {
+            get {
+                return ResourceManager.GetString("TopEvents", resourceCulture);
             }
         }
         

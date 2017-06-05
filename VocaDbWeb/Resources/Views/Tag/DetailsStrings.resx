@@ -132,6 +132,9 @@
   <data name="AllEntries" xml:space="preserve">
     <value>All entries</value>
   </data>
+  <data name="AllEvents" xml:space="preserve">
+    <value>All events</value>
+  </data>
   <data name="AllSongs" xml:space="preserve">
     <value>All songs</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="TopArtists" xml:space="preserve">
     <value>Top artists</value>
+  </data>
+  <data name="TopEvents" xml:space="preserve">
+    <value>Top events</value>
   </data>
   <data name="TopSongs" xml:space="preserve">
     <value>Top songs</value>

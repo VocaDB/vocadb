@@ -144,7 +144,7 @@
 			<br />
 
 			<div>
-				@Html.ActionLink(Res.AllEntries + " (" + (Model.ArtistCount + Model.AlbumCount + Model.SongCount) + ")", "Index", "Search", UrlMapper.Search.Entries(tagId: Model.Id), null)
+				@Html.ActionLink(Res.AllEntries + " (" + (Model.ArtistCount + Model.AlbumCount + Model.SongCount + Model.EventCount) + ")", "Index", "Search", UrlMapper.Search.Entries(tagId: Model.Id), null)
 			</div>
 
 			@if (Model.ArtistCount > 0) {
@@ -164,7 +164,12 @@
 					@Html.ActionLink(Res.AllSongs + " (" + Model.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id), null)
 				</div>
 			}
-
+			
+			@if (Model.EventCount > 0) {
+				<div>
+					@Html.ActionLink(Res.AllEvents + " (" + Model.EventCount + ")", "Index", "Search", UrlMapper.Search.Events(tagId: Model.Id), null)
+				</div>
+			}
 		</div>
 	</div>
 </div>
@@ -205,6 +210,19 @@
 			</a>
 		</h3>
 		@SongHelpers.SongGrid(Model.Songs.Select(s => s), 2, true)
+	</div>
+}
+
+@if (Model.Events.Any()) {
+	<div class="well well-transparent">
+		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))
+		<h3>
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
+				@Res.TopEvents
+				<small>(@Model.EventCount @SharedRes.Total)</small>
+			</a>
+		</h3>
+		@Helpers.EventThumbs(Model.Events)
 	</div>
 }
 

@@ -22,6 +22,7 @@ namespace vdb.viewModels.search {
 				this.eventRepo.getList({
 					start: pagingProperties.start, maxResults: pagingProperties.maxEntries, getTotalCount: pagingProperties.getTotalCount,
 					lang: lang, query: searchTerm, sort: this.sort(), category: this.category() === 'Unspecified' ? null : this.category(),
+					childTags: childTags, tagIds: tag,
 					userCollectionId: this.onlyMyEvents() ? loggedUserId : null,
 					status: status,
 					fields: "AdditionalNames,MainPicture,Series"

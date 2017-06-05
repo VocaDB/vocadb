@@ -103,6 +103,8 @@ namespace VocaDb.Web.Controllers.Api {
 			DateTime? beforeDate = null,
 			EventCategory category = EventCategory.Unspecified,
 			int? userCollectionId = null,
+			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			EntryStatus? status = null,
 			int start = 0, 
 			int maxResults = defaultMax,
@@ -120,6 +122,8 @@ namespace VocaDb.Web.Controllers.Api {
 				BeforeDate = beforeDate,
 				Category = category,
 				UserId = userCollectionId ?? 0,
+				ChildTags = childTags,
+				TagIds = tagId,
 				EntryStatus = status,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
 				SortRule = sort
