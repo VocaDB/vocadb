@@ -36,7 +36,7 @@ namespace VocaDb.Tests.Service.Search {
 				Id = eventId++
 			};
 			querySource.Add(e);
-			series.Events.Add(e);
+			series.AllEvents.Add(e);
 
 			return e;
 

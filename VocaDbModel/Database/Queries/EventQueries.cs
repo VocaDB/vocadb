@@ -310,7 +310,7 @@ namespace VocaDb.Model.Database.Queries {
 						var series = session.OfType<ReleaseEventSeries>().Load(contract.Series.Id);
 						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
 							contract.DefaultNameLanguage, contract.Names, contract.CustomName);
-						series.Events.Add(ev);
+						series.AllEvents.Add(ev);
 					} else {
 						ev = new ReleaseEvent(contract.Description, contract.Date, contract.DefaultNameLanguage, contract.Names);
 					}

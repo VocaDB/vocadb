@@ -45,7 +45,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			series = CreateEntry.EventSeries("M3");
 			existingEvent = new ReleaseEvent(string.Empty, null, series, 2013, "Spring", ContentLanguageSelection.Unspecified, null, false);
-			series.Events.Add(existingEvent);
+			series.AllEvents.Add(existingEvent);
 
 			repository = new FakeEventRepository();
 			repository.Save(series);

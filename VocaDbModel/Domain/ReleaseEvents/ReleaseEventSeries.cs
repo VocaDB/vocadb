@@ -53,6 +53,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
+		public virtual IList<ReleaseEvent> AllEvents {
+			get => events;
+			set {
+				ParamIs.NotNull(() => value);
+				events = value;
+			}
+		}
+
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public virtual ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> ArchivedVersionsManager {
@@ -77,13 +85,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual EntryType EntryType => EntryType.ReleaseEventSeries;
 
-		public virtual IList<ReleaseEvent> Events {
-			get => events;
-			set {
-				ParamIs.NotNull(() => value);
-				events = value; 
-			}
-		}
+		public virtual IEnumerable<ReleaseEvent> Events => AllEvents.Where(e => !e.Deleted);
 
 		public virtual int Id { get; set; }
 
