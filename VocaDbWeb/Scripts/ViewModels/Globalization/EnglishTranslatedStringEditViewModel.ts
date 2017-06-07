@@ -6,9 +6,9 @@ module vdb.viewModels.globalization {
 	export class EnglishTranslatedStringEditViewModel {
 		
 		constructor(contract: dc.globalization.EnglishTranslatedStringContract) {
-			this.english = ko.observable(contract.english);
-			this.original = ko.observable(contract.original);
-			this.showTranslation = ko.observable(contract.english !== "");
+			this.english = ko.observable(contract ? contract.english : null);
+			this.original = ko.observable(contract ? contract.original : null);
+			this.showTranslation = ko.observable(contract && contract.english !== "");
 		}
 
 		public english: KnockoutObservable<string>;

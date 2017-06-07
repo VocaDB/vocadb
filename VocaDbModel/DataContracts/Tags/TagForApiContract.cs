@@ -34,6 +34,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Id = tag.Id;
 			Name = tag.TranslatedName[languagePreference];
 			Status = tag.Status;
+			Targets = (int)tag.Targets;
 			UrlSlug = tag.UrlSlug;
 			UsageCount = tag.UsageCount;
 			Version = tag.Version;
@@ -127,6 +128,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public EntryStatus Status { get; set; }
+
+		[DataMember]
+		public int Targets { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public EnglishTranslatedStringContract TranslatedDescription { get; set; }

@@ -127,7 +127,7 @@ namespace VocaDb.Web.Models.Tag {
 			}
 
 			AllTagTargetTypes = EnumVal<TagTargetTypes>.Values
-				.ToDictionary(t => t, GetTagTargetTypeName);
+				.Where(t => t != TagTargetTypes.Nothing && t != TagTargetTypes.All).ToDictionary(t => t, GetTagTargetTypeName);
 
 		}
 

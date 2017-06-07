@@ -2827,6 +2827,7 @@
     <TypeScriptCompile Include="Scripts\Tests\Shared\Routing\ObservableUrlParamRouterTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Artist\ArtistRolesEditViewModelTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Globalization\NamesEditViewModelTests.ts" />
+    <TypeScriptCompile Include="Scripts\Tests\ViewModels\Tag\TagEditViewModelTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\ViewModels\Tag\TagsEditViewModelTests.ts" />
     <TypeScriptCompile Include="Scripts\typings\google.analytics\ga.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\highcharts\highcharts.d.ts" />

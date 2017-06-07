@@ -25,6 +25,8 @@ module vdb.dataContracts {
 
 		status: string;
 
+		targets: models.EntryType;
+
 		translatedDescription?: globalization.EnglishTranslatedStringContract;
 
 		urlSlug?: string;

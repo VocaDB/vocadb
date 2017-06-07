@@ -202,7 +202,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public void Delete(int id, string notes) {
 
-			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
+			PermissionContext.VerifyManageDatabase();
 
 			repository.HandleTransaction(ctx => {
 

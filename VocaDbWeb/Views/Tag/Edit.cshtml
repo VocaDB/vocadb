@@ -34,7 +34,7 @@
 		var userRepo = new vdb.repositories.UserRepository(urlMapper);
 
 		tagRepo.getById('@Model.Id', "AliasedTo,TranslatedDescription,Names,Parent,RelatedTags,WebLinks", '@UserContext.LanguagePreference.ToString()', function (contract) {
-			var viewModel = new vdb.viewModels.TagEditViewModel(urlMapper, userRepo, contract);
+			var viewModel = new vdb.viewModels.tags.TagEditViewModel(urlMapper, userRepo, contract);
 			ko.applyBindings(viewModel);
 		});
 
@@ -47,7 +47,7 @@
 @if (Model.CanDelete) {
 	if (!Model.Deleted) {
 		<a href="#" id="deleteLink" data-bind="click: deleteViewModel.show">@ViewRes.SharedStrings.Delete</a>
-	} else {
+	} else if (Login.CanDeleteEntries) {
 		@Html.ActionLink("Restore", "Restore", new { id = Model.Id }, new { id = "restoreLink" })
 	}
 	if (Login.CanMoveToTrash) {
@@ -162,7 +162,12 @@
 		Valid for
 	</div>
 	<div class="editor-field">
-		@Html.EnumDropDownListFor(m => m.Targets, Model.AllTagTargetTypes)
+		@foreach (var entryType in Model.AllTagTargetTypes) {
+			<input type="checkbox" data-bind="checked: hasTargetType(@((int)entryType.Key))" />
+			@entryType.Value
+			<br />
+		}
+		@Html.HiddenForKnockout(m => m.Targets, "value: targets")
 	</div>
 	
 	<div class="editor-label">

@@ -51,6 +51,9 @@ namespace VocaDb.Model.Domain.Security {
 		/// Also allows moving discussion topics.
 		/// </summary>
 		public static readonly PermissionToken DeleteComments =			New("1b1dfcfa-6b96-4a8a-8aca-d76465439ffb", "DeleteComments");
+		/// <summary>
+		/// Delete any entry (entry state still matters, meaning edit permission is required).
+		/// </summary>
 		public static readonly PermissionToken DeleteEntries =			New("cc51c6b6-be93-4942-a6e4-fdf88f4520b9", "DeleteEntries");
 		public static readonly PermissionToken DesignatedStaff =		New("b995a14b-49b4-4f1e-8fac-36a34967ddb0", "DesignatedStaff");
 		public static readonly PermissionToken DisableUsers =			New("cb46dfbe-5221-4af4-9968-53aec5faa3d4", "DisableUsers");

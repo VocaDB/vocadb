@@ -1,13 +1,16 @@
 /// <reference path="../typings/knockout/knockout.d.ts" />
 
-module vdb.viewModels {
+namespace vdb.viewModels.tags {
 
 	import dc = vdb.dataContracts;
 
 	export class TagEditViewModel {
 
+		// Bitmask for all possible entry types (all bits 1)
+		public static readonly allEntryTypes = 1073741823;
+
 		constructor(
-			private urlMapper: vdb.UrlMapper,
+			private readonly urlMapper: vdb.UrlMapper,
 			userRepository: vdb.repositories.UserRepository,
 			contract: dc.TagApiContract) {
 
@@ -18,6 +21,7 @@ module vdb.viewModels {
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
 			this.parent = ko.observable(contract.parent);
 			this.relatedTags = ko.observableArray(contract.relatedTags);
+			this.targets = ko.observable(contract.targets);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 			this.validationError_needDescription = ko.computed(() =>
@@ -45,6 +49,7 @@ module vdb.viewModels {
 		public parentName: KnockoutComputed<string>;
 		public relatedTags: KnockoutObservableArray<dc.TagBaseContract>;
 		public submitting = ko.observable(false);
+		public targets: KnockoutObservable<models.EntryType>;
 		public validationExpanded = ko.observable(false);
 		public validationError_needDescription: KnockoutComputed<boolean>;
         public webLinks: WebLinksEditViewModel;
@@ -66,6 +71,32 @@ module vdb.viewModels {
 		public submit = () => {
 			this.submitting(true);
 			return true;
+		}
+
+		public hasTargetType = (target: models.EntryType) => {		
+			const hasFlag = (t) => (this.targets() & t) === t;
+			const checkFlags = () => {
+				const types = [models.EntryType.Album, models.EntryType.Artist, models.EntryType.ReleaseEvent, models.EntryType.Song];
+				if (this.targets() === _.sum(types)) {
+					this.targets(TagEditViewModel.allEntryTypes);
+				} else {
+					this.targets(_.chain(types).filter(t => hasFlag(t)).sum().value());
+				}
+			};
+			const addFlag = () => {
+				this.targets(this.targets() | target);
+				checkFlags();
+			};
+			const removeFlag = () => {
+				if (hasFlag(target)) {
+					this.targets(this.targets() - target);
+					checkFlags();
+				}
+			};
+			return ko.computed<boolean>({
+				read: () => hasFlag(target),
+				write: flag => flag ? addFlag() : removeFlag()
+			});
 		}
 
 		public trashViewModel = new DeleteEntryViewModel(notes => {
