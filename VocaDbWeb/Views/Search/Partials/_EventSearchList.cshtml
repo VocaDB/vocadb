@@ -50,7 +50,7 @@
 			<small class="extraInfo" data-bind="text: $parent.getCategoryName($data)"></small>
 		</td>
 		<td>
-			<span data-bind="text: $parent.formatDate($data.date)"></span>
+			<span data-bind="visible: $data.date, text: $parent.formatDate($data.date)"></span>
 		</td>
 		<td>
 			<a data-bind="visible: $data.series, text: $data.series ? series.name : null, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEventSeries), $data.seriesId, $data.series ? series.urlSlug : null) }"></a>
