@@ -5,6 +5,10 @@ namespace VocaDb.Model.Domain.Tags {
 	/// <summary>
 	/// Possible tag targets. This is a subset of combinations of <see cref="EntryType"/>.
 	/// </summary>
+	/// <remarks>
+	/// Note: hybrid values such as AlbumArtist are no longer used, but they must not be marked with the ObsoleteAttribute
+	/// because that makes them being ignored by XmlSerializer (see https://stackoverflow.com/questions/331013/obsolete-attribute-causes-property-to-be-ignored-by-xmlserialization).
+	/// </remarks>
 	[Flags]
 	public enum TagTargetTypes {
 		/// <summary>
@@ -14,11 +18,8 @@ namespace VocaDb.Model.Domain.Tags {
 		Album = EntryType.Album,
 		Artist = EntryType.Artist,
 		Song = EntryType.Song,
-		[Obsolete]
 		AlbumArtist = Album | Artist,
-		[Obsolete]
 		AlbumSong = Album | Song,
-		[Obsolete]
 		ArtistSong = Artist | Song,
 		Event = EntryType.ReleaseEvent,
 		/// <summary>
