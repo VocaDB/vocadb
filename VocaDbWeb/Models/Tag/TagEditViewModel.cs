@@ -126,8 +126,8 @@ namespace VocaDb.Web.Models.Tag {
 				return string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined).Where(e => t.HasFlag((TagTargetTypes)e)).Select(e => Translate.EntryTypeNames[e]));
 			}
 
-			AllTagTargetTypes = EnumVal<TagTargetTypes>.Values
-				.Where(t => t != TagTargetTypes.Nothing && t != TagTargetTypes.All).ToDictionary(t => t, GetTagTargetTypeName);
+			AllTagTargetTypes = new[] { TagTargetTypes.Album, TagTargetTypes.Artist, TagTargetTypes.Song, TagTargetTypes.Event }
+				.ToDictionary(t => t, GetTagTargetTypeName);
 
 		}
 

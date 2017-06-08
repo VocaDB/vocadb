@@ -14,6 +14,12 @@ namespace VocaDb.Model.Domain.Tags {
 		Album = EntryType.Album,
 		Artist = EntryType.Artist,
 		Song = EntryType.Song,
+		[Obsolete]
+		AlbumArtist = Album | Artist,
+		[Obsolete]
+		AlbumSong = Album | Song,
+		[Obsolete]
+		ArtistSong = Artist | Song,
 		Event = EntryType.ReleaseEvent,
 		/// <summary>
 		/// Valid for all entry types (default)
