@@ -14,7 +14,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			var versionWithField = version.GetLatestVersionWithField(field);
 
-			if (versionWithField != null && versionWithField.Data != null) {
+			if (versionWithField?.Data != null) {
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
@@ -63,7 +63,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Parent = ObjectRefContract.Create(tag.Parent);
 			RelatedTags = diff.IncludeRelatedTags ? tag.RelatedTags.Select(t => new ObjectRefContract(t.LinkedTag)).ToArray() : null;
 			Targets = tag.Targets;
-			ThumbMime = tag.Thumb != null ? tag.Thumb.Mime : null;
+			ThumbMime = tag.Thumb?.Mime;
 			TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? tag.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
