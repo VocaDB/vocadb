@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Service.VideoServices;
 
@@ -39,7 +38,7 @@ namespace VocaDb.Model.Domain.PVs {
 		}
 
 		public virtual string Author {
-			get { return author; }
+			get => author;
 			set {
 				ParamIs.NotNull(() => value);
 				author = value;
@@ -54,7 +53,7 @@ namespace VocaDb.Model.Domain.PVs {
 		}
 
 		public virtual string Name {
-			get { return name; }
+			get => name;
 			set {
 				ParamIs.NotNull(() => value);
 				name = value;
@@ -62,7 +61,7 @@ namespace VocaDb.Model.Domain.PVs {
 		}
 
 		public virtual string PVId {
-			get { return pvId; }
+			get => pvId;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				pvId = value;
@@ -73,11 +72,7 @@ namespace VocaDb.Model.Domain.PVs {
 
 		public virtual PVType PVType { get; set; }
 
-		public virtual string Url {
-			get {
-				return GetUrl(Service, PVId);
-			}
-		}
+		public virtual string Url => GetUrl(Service, PVId);
 
 		public virtual bool ContentEquals(PVContract pv) {
 
