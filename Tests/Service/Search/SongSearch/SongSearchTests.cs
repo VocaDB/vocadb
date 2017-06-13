@@ -35,7 +35,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 
 		}
 
-		private void AssertTags(PartialFindResult<Song> result, params string[] songNames) {
+		private void AssertResults(PartialFindResult<Song> result, params string[] songNames) {
 
 			Assert.AreEqual(songNames.Length, result.TotalCount, "Total number of results");
 			Assert.AreEqual(songNames.Length, result.Items.Length, "Number of returned items");
@@ -57,7 +57,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 
 			var result = CallFind();
 
-			AssertTags(result, "Anger", "Anger [EXTEND RMX]");
+			AssertResults(result, "Anger", "Anger [EXTEND RMX]");
 
 		}
 
@@ -68,7 +68,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 
 			var result = CallFind();
 
-			AssertTags(result, "Anger");
+			AssertResults(result, "Anger");
 
 		}
 
@@ -82,7 +82,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 
 			var result = CallFind();
 
-			AssertTags(result, "Anger");
+			AssertResults(result, "Anger");
 
 		}
 

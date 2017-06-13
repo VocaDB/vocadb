@@ -93,6 +93,10 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
+		private static bool ShouldEncodeSQLCharacters(NameMatchMode matchMode) {
+			return matchMode == NameMatchMode.Partial || matchMode == NameMatchMode.StartsWith || matchMode == NameMatchMode.Words;
+		}
+
 		/// <summary>
 		/// Gets match mode and query for search.
 		/// 
@@ -108,21 +112,25 @@ namespace VocaDb.Model.Service.Helpers {
 			if (string.IsNullOrEmpty(query))
 				return query;
 
-			// Remove SQL wildcard characters from the query, regardless of name match mode
-			query = CleanTerm(query.Trim());
+			// Remove SQL wildcard characters from the query
+			query = query.Trim();
 
 			// If name match mode is already decided, there's nothing more to do
-			if (matchMode != NameMatchMode.Auto)
+			if (matchMode != NameMatchMode.Auto) {
+				if (ShouldEncodeSQLCharacters(matchMode)) {
+					query = CleanTerm(query);
+				}
 				return query;
+			}
 
 			if (query.Length > 1 && query.StartsWith("*")) {
 				matchMode = NameMatchMode.Words;
-				return query.Substring(1);
+				return CleanTerm(query).Substring(1);
 			}
 
 			if (query.Length > 1 && query.EndsWith("*")) {
 				matchMode = NameMatchMode.StartsWith;
-				return query.Substring(0, query.Length - 1);
+				return CleanTerm(query).Substring(0, query.Length - 1);
 			}
 
 			if (query.Length > 2 && query.StartsWith("\"") && query.EndsWith("\"")) {
@@ -132,10 +140,15 @@ namespace VocaDb.Model.Service.Helpers {
 
 			if (query.Length <= 2) {
 				matchMode = NameMatchMode.StartsWith;
-				return query;
+				return CleanTerm(query);
 			}
 
 			matchMode = defaultMode;
+
+			if (ShouldEncodeSQLCharacters(matchMode)) {
+				query = CleanTerm(query);
+			}
+
 			return query;
 
 		}

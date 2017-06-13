@@ -79,7 +79,16 @@ namespace VocaDb.Tests.Service.Helpers {
 		[TestMethod]
 		public void GetMatchModeAndQueryForSearch_CleanTerm() {
 
+			// For words search special SQL characters should be encoded.
 			TestGetMatchModeAndQueryForSearch("alone [SNDI RMX]", "alone [[]SNDI RMX]");
+
+		}
+
+		[TestMethod]
+		public void GetMatchModeAndQueryForSearch_ExactQueryWithWildcards() {
+
+			// Query is quoted so exact match is used. Special SQL characters are *not* encoded.
+			TestGetMatchModeAndQueryForSearch("\"alone [SNDI RMX]\"", "alone [SNDI RMX]", NameMatchMode.Exact);
 
 		}
 
