@@ -72,6 +72,9 @@ namespace VocaDb.Model.DataContracts.PVs {
 		public string Author { get; set; }
 
 		[DataMember]
+		public int? CreatedBy { get; set; }
+
+		[DataMember]
 		public PVExtendedMetadata ExtendedMetadata { get; set; }
 
 		[DataMember]

@@ -5,6 +5,8 @@ module vdb.dataContracts.pvs {
 
 		author?: string;
 
+		createdBy?: number;
+
 		extendedMetadata?: any;
 
 		id?: number;

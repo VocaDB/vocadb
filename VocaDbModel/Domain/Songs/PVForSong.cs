@@ -1,6 +1,7 @@
 ﻿using System;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -20,8 +21,15 @@ namespace VocaDb.Model.Domain.Songs {
 			Length = contract.Length;
 			ThumbUrl = contract.ThumbUrl ?? string.Empty;
 			PublishDate = contract.PublishDate;
+			CreatedBy = contract.CreatedBy;
 
 		}
+
+		/// <summary>
+		/// ID of the user who added this PV.
+		/// Just the primary key for performance purposes.
+		/// </summary>
+		public virtual int? CreatedBy { get; set; }
 
 		/// <summary>
 		/// Length in seconds.

@@ -8,6 +8,7 @@ using TagLib;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 using File = System.IO.File;
@@ -21,7 +22,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		public const int MaxMediaSizeBytes = MaxMediaSizeMB * 1024 * 1024;
 		public static readonly string[] MimeTypes = { "audio/mp3", "audio/mpeg" };
 
-		public PVContract CreatePVContract(HttpPostedFileBase file, IIdentity user) {
+		public PVContract CreatePVContract(HttpPostedFileBase file, IIdentity user, IUser loggedInUser) {
 
 			var tempFile = Path.ChangeExtension(Path.GetTempFileName(), ImageHelper.GetExtensionFromMime(file.ContentType));
 			file.SaveAs(tempFile);
@@ -34,6 +35,8 @@ namespace VocaDb.Model.Service.VideoServices {
 				pv.Author = user.Name;
 				pv.Length = (int)mp3.Properties.Duration.TotalSeconds;
 			}
+
+			pv.CreatedBy = loggedInUser.Id;
 
 			if (string.IsNullOrEmpty(pv.Name))
 				pv.Name = Path.GetFileNameWithoutExtension(file.FileName);

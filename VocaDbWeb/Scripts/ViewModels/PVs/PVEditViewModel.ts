@@ -8,6 +8,7 @@ module vdb.viewModels.pvs {
 		constructor(contract: dc.pvs.PVContract, pvType?: string) {
 
 			this.author = contract.author;
+			this.createdBy = contract.createdBy;
 			this.extendedMetadata = contract.extendedMetadata;
 			this.id = contract.id;
 			this.length = contract.length;
@@ -24,6 +25,8 @@ module vdb.viewModels.pvs {
 		}
 
 		author: string;
+
+		createdBy: number;
 
 		extendedMetadata: string;
 
