@@ -2851,6 +2851,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\ArchivedAlbumViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\DeletedAlbumsViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\ArchivedEntryViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArchivedArtistViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistMergeViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Artist\ArtistRolesEditViewModel.ts" />
