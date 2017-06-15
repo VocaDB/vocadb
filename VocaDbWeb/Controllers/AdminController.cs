@@ -33,6 +33,16 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
+		public ActionResult ActiveEdits() {
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			var items = Service.GetActiveEditors();
+			return View(items);
+
+		}
+
+		[Authorize]
 		public ActionResult AuditLogEntries(ViewAuditLogModel model, int start = 0) {
 
 			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);

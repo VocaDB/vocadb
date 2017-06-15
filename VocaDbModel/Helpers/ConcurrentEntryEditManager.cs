@@ -45,6 +45,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		public static IEnumerable<KeyValuePair<EntryRef, EntryEditData>> Editors => staticInstance.editors;
+
 		public static EntryEditData CheckConcurrentEdits(EntryRef entry, IUser user) {
 			return staticInstance.CheckConcurrentEditsInst(entry, user);
 		}

@@ -1,0 +1,19 @@
+﻿@using VocaDb.Web.Helpers
+@model KeyValuePair<VocaDb.Model.DataContracts.Api.EntryForApiContract, VocaDb.Model.DataContracts.Users.UserContract>[]
+
+<table>
+	<thead>
+		<tr>
+			<th>Entry</th>
+			<th>Editor</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model) {
+			<tr>
+				<td><a href="@Url.EntryDetails(item.Key)">@item.Key.Name</a></td>
+				<td><a href="@Url.UserDetails(item.Value)">@item.Value.Name</a></td>
+			</tr>
+		}
+	</tbody>
+</table>

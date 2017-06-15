@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
+using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
@@ -21,6 +22,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Api;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.DataSharing;
 using VocaDb.Model.Service.Helpers;
@@ -262,6 +264,24 @@ namespace VocaDb.Model.Service {
 					.OrderBy(p => p.Author)
 					.Select(p => p.Author)
 					.Distinct()
+					.ToArray();
+
+			});
+
+		}
+
+		public KeyValuePair<EntryForApiContract, UserContract>[] GetActiveEditors() {
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			var editors = ConcurrentEntryEditManager.Editors;
+
+			return HandleQuery(ctx => {
+
+				var db = new NHibernateDatabaseContext(ctx, PermissionContext);
+				var entryLoader = new Queries.EntryQueries();
+				return editors
+					.Select(i => new KeyValuePair<EntryForApiContract, UserContract>(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, null, true, EntryOptionalFields.None), new UserContract(ctx.Load<User>(i.Value.UserId))))
 					.ToArray();
 
 			});

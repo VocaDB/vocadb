@@ -36,6 +36,9 @@
 @if (UserContext.HasPermission(PermissionToken.Admin)) {
 <h3>Database maintenance tasks</h3>
 <p>
+	@Html.ActionLink("View active editors", "ActiveEdits")	
+</p>
+<p>
 	@Html.ActionLink("Create XML dump", "CreateXmlDump")
 </p>	
 <p>

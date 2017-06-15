@@ -779,6 +779,7 @@
     <Compile Include="Service\PredicateBuilder.cs" />
     <Compile Include="Service\QueriesBase.cs" />
     <Compile Include="Service\Queries\ActivityEntryQueries.cs" />
+    <Compile Include="Service\Queries\EntryQueries.cs" />
     <Compile Include="Service\Queries\EntryReportQueries.cs" />
     <Compile Include="Service\QueryableExtenders\AlbumForUserQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\AlbumQueryableExtender.cs" />
