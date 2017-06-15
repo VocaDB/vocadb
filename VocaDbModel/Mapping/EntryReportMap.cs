@@ -2,6 +2,7 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
@@ -49,6 +50,20 @@ namespace VocaDb.Model.Mapping {
 			Map(m => m.ReportType).Not.Nullable();
 
 			References(m => m.Entry).Column("Artist").Not.Nullable();
+
+		}
+
+	}
+
+	public class EventReportMap : SubclassMap<EventReport> {
+
+		public EventReportMap() {
+
+			DiscriminatorValue("Event");
+
+			Map(m => m.ReportType).Not.Nullable();
+
+			References(m => m.Entry).Column("Event").Not.Nullable();
 
 		}
 

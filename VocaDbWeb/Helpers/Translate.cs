@@ -111,6 +111,9 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<EntryType> EntryTypeNames =
 			new TranslateableEnum<EntryType>(() => Resources.Domain.EntryTypeNames.ResourceManager);
 
+		public static readonly TranslateableEnum<EventReportType> EventReportTypeNames =
+			new TranslateableEnum<EventReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+
 		public static readonly TranslateableEnum<EventSortRule> EventSortRuleNames =
 			new TranslateableEnum<EventSortRule>(() => Resources.Domain.ReleaseEvents.EventSortRuleNames.ResourceManager, EnumVal<EventSortRule>.Values.Where(s => s != EventSortRule.None));
 

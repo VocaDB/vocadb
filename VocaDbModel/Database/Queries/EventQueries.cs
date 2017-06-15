@@ -23,12 +23,14 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Events;
+using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Database.Queries {
 
 	public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent> {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -61,12 +63,28 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
-			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory)
+			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
 			: base(eventRepository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
 			this.userIconFactory = userIconFactory;
+			this.enumTranslations = enumTranslations;
+
+		}
+
+		public bool CreateReport(int eventId, EventReportType reportType, string hostname, string notes, int? versionNumber) {
+
+			ParamIs.NotNull(() => hostname);
+			ParamIs.NotNull(() => notes);
+
+			return HandleTransaction(ctx => {
+				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
+					entryLinkFactory, report => report.Entry.Id == eventId,
+					(song, reporter, notesTruncated) => new EventReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
+					() => reportType != EventReportType.Other ? enumTranslations.Translation(reportType) : null,
+					eventId, reportType, hostname, notes);
+			});
 
 		}
 

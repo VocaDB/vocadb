@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain.Images
+@using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.Event.DetailsStrings;
@@ -40,6 +41,7 @@
 @section Toolbar {
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editEventLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 	@Helpers.EntryStatusMessage(Model.Status)
 }
 
@@ -181,22 +183,28 @@
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }
 </div>
 
+@EntryDetailsHelpers.ReportEntryPopupKnockout()
+
 @section BodyScripts {
 @Scripts.Render("~/bundles/ReleaseEvent/Details")
 <script type="text/javascript">
 	$(function () {
 		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+		$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
 
 		var loggedUserId = @UserContext.LoggedUserId;
 		var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
+		var eventRepo = new vdb.repositories.ReleaseEventRepository(urlMapper);
 		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
 		var latestComments = @ToJS(Model.LatestComments);
 		var users = @ToJS(Model.UsersAttending);
 		var tags = @ToJS(Model.Tags);
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.EventReportTypeNames, EventReport.ReportTypesWithRequiredNotes));
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, userRepo, latestComments, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), users, tags, canDeleteAllComments);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, eventRepo, userRepo, latestComments,
+			reportTypes, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), users, tags, canDeleteAllComments);
 		ko.applyBindings(vm);
 	});
 </script>

@@ -4,6 +4,7 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.DatabaseTests.Queries {
 
@@ -24,7 +25,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 			context.RunTest(repository => {
 
-				var queries = new EventQueries(repository, new FakeEntryLinkFactory(), userContext, new InMemoryImagePersister(), new FakeUserIconFactory());
+				var queries = new EventQueries(repository, new FakeEntryLinkFactory(), userContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations());
 
 				queries.Delete(Db.ReleaseEvent.Id, string.Empty);				
 

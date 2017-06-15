@@ -16,6 +16,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Events;
+using VocaDb.Web.Code.WebApi;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -164,6 +165,21 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{id:int}")]
 		public ReleaseEventForApiContract GetOne(int id, ReleaseEventOptionalFields fields, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			return queries.GetOne(id, lang, fields, WebHelper.IsSSL(Request));
+		}
+
+		/// <summary>
+		/// Creates a new report.
+		/// </summary>
+		/// <param name="eventId">Event to be reported.</param>
+		/// <param name="reportType">Report type.</param>
+		/// <param name="notes">Notes. Optional.</param>
+		/// <param name="versionNumber">Version to be reported. Optional.</param>
+		[Route("{eventId:int}/reports")]
+		[RestrictBannedIP]
+		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) {
+
+			queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+
 		}
 
 	}

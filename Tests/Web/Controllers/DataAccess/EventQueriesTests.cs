@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
@@ -60,7 +61,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user = CreateEntry.User(group: UserGroupId.Trusted);
 			repository.Save(user);
 			permissionContext = new FakePermissionContext(user);
-			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister(), new FakeUserIconFactory());
+			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations());
 
 		}
 

@@ -247,6 +247,7 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/ReleaseEvent/Details").Include(
 				"~/Scripts/Models/Users/UserEventRelationshipType.js",
 				"~/Scripts/Repositories/CommentRepository.js",
+				"~/Scripts/Repositories/ReleaseEventRepository.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel.js"

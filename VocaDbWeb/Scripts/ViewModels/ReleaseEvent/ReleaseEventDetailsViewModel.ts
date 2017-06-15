@@ -7,9 +7,12 @@ namespace vdb.viewModels.releaseEvents {
 
 	export class ReleaseEventDetailsViewModel {
 
-		constructor(urlMapper: vdb.UrlMapper,
+		constructor(
+			urlMapper: vdb.UrlMapper,
+			private readonly repo: rep.ReleaseEventRepository,
 			private readonly userRepo: rep.UserRepository,
 			latestComments: dc.CommentContract[],
+			reportTypes: IEntryReportType[],
 			public loggedUserId: number,
 			private readonly eventId: number,
 			eventAssociationType: models.users.UserEventRelationshipType,
@@ -21,6 +24,11 @@ namespace vdb.viewModels.releaseEvents {
 			this.comments = new EditableCommentsViewModel(commentRepo, eventId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
 			this.eventAssociationType(eventAssociationType);
 			this.usersAttending = ko.observableArray(usersAttending);
+
+			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
+				repo.createReport(eventId, reportType, notes, null);
+				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+			});
 
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepo.getEventTagSelections(this.eventId, callback),
@@ -49,6 +57,8 @@ namespace vdb.viewModels.releaseEvents {
 			var link = _.find(this.usersAttending(), u => u.id === this.loggedUserId);
 			this.usersAttending.remove(link);
 		}
+
+		public reportViewModel: ReportEntryViewModel;
 
 		public setEventAttending = () => {
 			this.userRepo.updateEventForUser(this.eventId, vdb.models.users.UserEventRelationshipType.Attending);

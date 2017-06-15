@@ -6,8 +6,13 @@ module vdb.repositories {
 
 	export class ReleaseEventRepository extends BaseRepository {
 
-		constructor(private urlMapper: vdb.UrlMapper) {
+		constructor(private readonly urlMapper: vdb.UrlMapper) {
 			super(urlMapper.baseUrl);
+		}
+
+		public createReport = (eventId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + eventId + "/reports?" + helpers.AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
+			$.post(url, callback);
 		}
 
 		public delete = (id: number, notes: string, callback?: () => void) => {
