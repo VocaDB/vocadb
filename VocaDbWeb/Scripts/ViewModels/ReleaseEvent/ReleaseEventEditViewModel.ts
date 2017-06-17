@@ -44,8 +44,10 @@ module vdb.viewModels.releaseEvents {
 
 		public customName = ko.observable(false);
 
+		// Event date. This should always be in UTC.
 		public date: KnockoutObservable<Date>;
 
+		// Date as ISO string, in UTC, ready to be posted to server
 		public dateStr: KnockoutComputed<string>;
 
 		public defaultNameLanguage: KnockoutObservable<string>;
