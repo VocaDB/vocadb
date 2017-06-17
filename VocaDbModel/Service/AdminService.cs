@@ -270,7 +270,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public KeyValuePair<EntryForApiContract, UserContract>[] GetActiveEditors() {
+		public (EntryForApiContract entry, UserContract user, DateTime time)[] GetActiveEditors() {
 
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
@@ -281,7 +281,10 @@ namespace VocaDb.Model.Service {
 				var db = new NHibernateDatabaseContext(ctx, PermissionContext);
 				var entryLoader = new Queries.EntryQueries();
 				return editors
-					.Select(i => new KeyValuePair<EntryForApiContract, UserContract>(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, null, true, EntryOptionalFields.None), new UserContract(ctx.Load<User>(i.Value.UserId))))
+					.Select(i => 
+						(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, null, true, EntryOptionalFields.None), 
+						new UserContract(ctx.Load<User>(i.Value.UserId)),
+						i.Value.Time))
 					.ToArray();
 
 			});

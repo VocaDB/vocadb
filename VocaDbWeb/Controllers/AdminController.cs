@@ -37,7 +37,7 @@ namespace VocaDb.Web.Controllers
 
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-			var items = Service.GetActiveEditors();
+			var items = Service.GetActiveEditors().Select(t => Tuple.Create(t.Item1, t.Item2, t.Item3)).ToArray();
 			return View(items);
 
 		}

@@ -4,7 +4,7 @@
 @{
 	PageProperties.Title = "Manage tag usages - " + Model.DefaultName;
 	ViewBag.Parents = new[] { 
-		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null), 
+		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Event"), 
 		Html.ActionLink(Model.DefaultName, "Details", new { id = Model.Id }) 
 	};	
 }
