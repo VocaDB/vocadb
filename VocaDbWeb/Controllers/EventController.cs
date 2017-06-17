@@ -11,6 +11,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -41,6 +42,15 @@ namespace VocaDb.Web.Controllers
 			this.entryLinkFactory = entryLinkFactory;
 			this.thumbPersister = thumbPersister;
 		}
+
+	    public ActionResult ArchivedVersionXml(int id) {
+
+		    var doc = queries.GetVersionXml(id);
+		    var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
+
+		    return Xml(content);
+
+	    }
 
 		public ActionResult Details(int id = invalidId, string slug = null) {
 
@@ -275,6 +285,14 @@ namespace VocaDb.Web.Controllers
 			return View(new Versions(contract, enumTranslations));
 
 		}
+
+	    public ActionResult ViewVersion(int id, int? ComparedVersionId) {
+
+		    var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
+
+		    return View(new ViewVersion<ArchivedEventVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
+
+	    }
 
 	}
 }

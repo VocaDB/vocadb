@@ -2418,6 +2418,7 @@
     <Content Include="Content\Styles\embedSong.less" />
     <Content Include="App_Code\PVHelpers.cshtml" />
     <Content Include="App_Code\SearchHelpers.cshtml" />
+    <Content Include="App_Code\EventHelpers.cshtml" />
     <None Include="compilerconfig.json" />
     <Content Include="Content\Styles\song.less" />
     <None Include="compilerconfig.json.defaults">
@@ -3423,6 +3424,7 @@
     <Content Include="Views\User\Partials\_Events.cshtml" />
     <Content Include="Views\Shared\_EventPopupContent.cshtml" />
     <Content Include="Views\Search\Partials\_EventSearchList.cshtml" />
+    <Content Include="Views\Event\ViewVersion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

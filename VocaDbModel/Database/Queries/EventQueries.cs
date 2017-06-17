@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Xml.Linq;
 using NHibernate;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -212,6 +213,19 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields, bool ssl) {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister, ssl));
+		}
+
+		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
+
+			return HandleQuery(session =>
+				new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
+					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
+					PermissionContext.LanguagePreference));
+
+		}
+
+		public XDocument GetVersionXml(int id) {
+			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventVersion>(id).Data);
 		}
 
 		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false) {

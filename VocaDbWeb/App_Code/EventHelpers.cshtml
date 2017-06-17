@@ -1,0 +1,28 @@
+﻿@using VocaDb.Model.DataContracts.ReleaseEvents
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.HelperPage
+	
+@helper PrintArchivedEventData(ComparedEventsContract comparedTags) {
+
+	<div class="well well-transparent archived-entry-contents">
+		<h4>Content</h4>
+
+		<table class="table table-bordered">
+			@ArchivedEntryHelpers.DataRow("Id", comparedTags.FirstData.Id)
+			@ArchivedEntryHelpers.TranslatedNameRow(comparedTags, d => d.TranslatedName)
+			@ArchivedEntryHelpers.DataRowList("Names", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+			@ArchivedEntryHelpers.DataRow("Description", comparedTags, d => d.Description)
+			@ArchivedEntryHelpers.DataRowList("External links", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+			@ArchivedEntryHelpers.DataRow("Category", comparedTags, d => d.Category)
+			@ArchivedEntryHelpers.DataRow("Date", comparedTags, d => d.Date)
+			@ArchivedEntryHelpers.DataRow("Venue name", comparedTags, d => d.VenueName)
+			@ArchivedEntryHelpers.DataRow("Main picture MIME", comparedTags, d => d.MainPictureMime)
+			@ArchivedEntryHelpers.DataRow("Series", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.Series))
+			@ArchivedEntryHelpers.DataRow("Series number", comparedTags, d => d.SeriesNumber)
+			@ArchivedEntryHelpers.DataRowList("PVs", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
+			@ArchivedEntryHelpers.DataRow("Song list", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.SongList))
+		</table>
+
+	</div>
+
+}

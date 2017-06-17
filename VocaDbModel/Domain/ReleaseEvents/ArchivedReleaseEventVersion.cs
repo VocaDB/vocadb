@@ -61,6 +61,15 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual ArchivedReleaseEventVersion GetLatestVersionWithField(ReleaseEventEditableFields field) {
+
+			if (IsIncluded(field))
+				return this;
+
+			return ReleaseEvent.ArchivedVersionsManager.GetLatestVersionWithField(field, Version);
+
+		}
+
 		public virtual bool IsIncluded(ReleaseEventEditableFields field) {
 			return true;
 		}
