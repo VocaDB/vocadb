@@ -7,6 +7,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
@@ -18,11 +19,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			WebLinks = new WebLinkContract[0];
 		}
 
-		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory) 
+		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IUserIconFactory userIconFactory) 
 			: base(releaseEvent, languagePreference, true, true) {
 
 			ParamIs.NotNull(() => releaseEvent);
 
+			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, releaseEvent);
 			DefaultNameLanguage = releaseEvent.TranslatedName.DefaultLanguage;
 			PVs = releaseEvent.PVs.Select(p => new PVContract(p)).ToArray();
 			SeriesNumber = releaseEvent.SeriesNumber;
@@ -55,6 +57,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public AlbumContract[] Albums { get; set; }
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
+
+		public bool CanRemoveTagUsages { get; set; }
 
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 

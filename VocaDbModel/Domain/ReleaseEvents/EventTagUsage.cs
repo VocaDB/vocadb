@@ -30,7 +30,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 			base.Delete();
 
-			//Song.Tags.Usages.Remove(this);
+			Entry.Tags.Usages.Remove(this);
 			Tag.AllEventTagUsages.Remove(this);
 
 		}

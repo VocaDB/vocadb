@@ -5,6 +5,7 @@ using NHibernate;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -202,11 +203,20 @@ namespace VocaDb.Model.Database.Queries {
 						.FirstOrDefault();
 				}
 
-				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, userIconFactory) {	
+				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, userIconFactory) {	
 					EventAssociationType = eventAssociation,
 					LatestComments = new CommentQueries<ReleaseEventComment, ReleaseEvent>(
 						ctx, PermissionContext, userIconFactory, entryLinkFactory).GetList(id, 3)
 				};
+			});
+
+		}
+
+		public EntryWithTagUsagesContract GetEntryWithTagUsages(int eventId) {
+
+			return HandleQuery(session => {
+				var releaseEvent = session.Load<ReleaseEvent>(eventId);
+				return new EntryWithTagUsagesContract(releaseEvent, releaseEvent.Tags.ActiveUsages, LanguagePreference, PermissionContext);
 			});
 
 		}
@@ -274,6 +284,12 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
 
 			});
+
+		}
+
+		public int RemoveTagUsage(long tagUsageId) {
+
+			return new TagUsageQueries(PermissionContext).RemoveTagUsage<EventTagUsage, ReleaseEvent>(tagUsageId, repository);
 
 		}
 

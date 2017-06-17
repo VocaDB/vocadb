@@ -205,7 +205,15 @@ namespace VocaDb.Web.Controllers
 
         }
 
-	    [OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
+	    [Authorize]
+	    public ActionResult ManageTagUsages(int id) {
+
+		    var releaseEvent = queries.GetEntryWithTagUsages(id);
+		    return View(releaseEvent);
+
+	    }
+
+		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
 	    public ActionResult PopupContent(
 		    int id = invalidId,
 		    string culture = InterfaceLanguage.DefaultCultureCode) {
@@ -218,7 +226,17 @@ namespace VocaDb.Web.Controllers
 
 	    }
 
-	    public ActionResult Restore(int id) {
+	    [Authorize]
+	    public ActionResult RemoveTagUsage(long id) {
+
+		    var eventId = queries.RemoveTagUsage(id);
+		    TempData.SetStatusMessage("Tag usage removed");
+
+		    return RedirectToAction("ManageTagUsages", new { id = eventId });
+
+	    }
+
+		public ActionResult Restore(int id) {
 
 		    queries.Restore(id);
 

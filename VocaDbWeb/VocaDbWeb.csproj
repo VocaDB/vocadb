@@ -3425,6 +3425,7 @@
     <Content Include="Views\Shared\_EventPopupContent.cshtml" />
     <Content Include="Views\Search\Partials\_EventSearchList.cshtml" />
     <Content Include="Views\Event\ViewVersion.cshtml" />
+    <Content Include="Views\Event\ManageTagUsages.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

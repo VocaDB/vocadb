@@ -37,7 +37,7 @@
 	@Html.LinkListHtml(tagNames, t => TagLink(t, tooltip))
 }
 
-@helper TagUsagesManageTable(EntryType entryType, TagUsageWithVotesContract[] tagUsages, bool canRemove) {
+@helper TagUsagesManageTable(EntryType entryType, TagUsageWithVotesContract[] tagUsages, bool canRemove, string controllerName = null) {
 
 	<div class="alert">
 		You can use this to deassociate tags that are no longer valid for this entry. Be careful, this cannot be undone.
@@ -73,7 +73,7 @@
 					</td>
 					<td>
 						@if (canRemove) {
-							@Html.ActionLink("Remove tag usage", "RemoveTagUsage", entryType.ToString(), new { id = usage.Id }, new { @class = "removeLink textLink", @onclick = "javascript: return confirm('Really delete?');" })
+							@Html.ActionLink("Remove tag usage", "RemoveTagUsage", controllerName ?? entryType.ToString(), new { id = usage.Id }, new { @class = "removeLink textLink", @onclick = "javascript: return confirm('Really delete?');" })
 						}
 					</td>
 				</tr>
