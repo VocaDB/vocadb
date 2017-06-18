@@ -19,7 +19,7 @@ ko.bindingHandlers.datepicker = {
 		$(element).datepicker({ dateFormat: options.dateFormat });
 
 		if (value) {
-			$(element).datepicker('setDate', value);
+			$(element).datepicker('setDate', vdb.helpers.DateTimeHelper.converToLocal(value));
 		}
 
 		if (ko.isObservable(options.value)) {
