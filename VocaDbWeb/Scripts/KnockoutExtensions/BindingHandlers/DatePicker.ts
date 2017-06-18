@@ -13,14 +13,6 @@ interface DatePickerOptions {
 ko.bindingHandlers.datepicker = {
 	init: (element: HTMLElement, valueAccessor: () => DatePickerOptions) => {
 
-		const convertToLocal = (utcDate: Date) => {
-			return new Date(utcDate.getFullYear(), utcDate.getMonth(), utcDate.getDate());
-		}
-
-		const convertToUtc = (localDate: Date) => {
-			return moment.utc([localDate.getFullYear(), localDate.getMonth(), localDate.getDate()]).toDate();
-		}
-
 		var options = valueAccessor();
 		var value = ko.utils.unwrapObservable(options.value);
 
@@ -32,7 +24,8 @@ ko.bindingHandlers.datepicker = {
 
 		if (ko.isObservable(options.value)) {
 			var subscription = options.value.subscribe((newValue: Date) => {
-				$(element).datepicker('setDate', convertToLocal(newValue)); // datepicker displays time in local time, so we convert it back to local
+				// datepicker displays time in local time, so we convert it back to local
+				$(element).datepicker('setDate', vdb.helpers.DateTimeHelper.converToLocal(newValue));
 			});
 
 			ko.utils.domNodeDisposal.addDisposeCallback(element, () => {
@@ -44,7 +37,8 @@ ko.bindingHandlers.datepicker = {
 			if (selectedText) {
 				const format = $(element).datepicker('option', 'dateFormat');
 				const parsed = $.datepicker.parseDate(format, selectedText);
-				const date = convertToUtc(parsed); // Make sure the date is parsed as UTC as we don't want any timezones here. jQuery UI seems to always parse as local.
+				// Make sure the date is parsed as UTC as we don't want any timezones here. jQuery UI seems to always parse as local.
+				const date = vdb.helpers.DateTimeHelper.convertToUtc(parsed);
 				options.value(date);					
 			} else {
 				options.value(null);
