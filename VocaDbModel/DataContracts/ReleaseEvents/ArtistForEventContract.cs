@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ParamIs.NotNull(() => artistForEvent);
 
-			Artist = new ArtistContract(artistForEvent.Artist, languagePreference);
+			Artist = artistForEvent.Artist != null ? new ArtistContract(artistForEvent.Artist, languagePreference) : null;
 			Id = artistForEvent.Id;
 			Name = artistForEvent.Name;
 			Roles = artistForEvent.Roles;
