@@ -25,6 +25,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.Version).Not.Nullable();
 
 			HasMany(m => m.AllAlbums).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
+			HasMany(m => m.AllArtists).KeyColumn("[Event]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.AllSongs).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.Comments).KeyColumn("[ReleaseEvent]").Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.Users).Inverse().Cascade.All().Cache.ReadWrite();
@@ -106,6 +107,24 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Component(m => m.Diff, c => {
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 			});
+
+		}
+
+	}
+
+	public class ArtistForEventMap : ClassMap<ArtistForEvent> {
+
+		public ArtistForEventMap() {
+
+			Table("ArtistsForEvents");
+			Id(m => m.Id);
+			Cache.ReadWrite();
+
+			Map(m => m.Name).Length(250).Nullable();
+			Map(m => m.Roles).Not.Nullable();
+
+			References(m => m.Artist).Nullable();
+			References(m => m.ReleaseEvent).Column("[Event]").Not.Nullable();
 
 		}
 

@@ -7,7 +7,7 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ArtistForEvent {
+	public class ArtistForEvent : IEntryWithIntId {
 
 		private ReleaseEvent releaseEvent;
 		private string name;
@@ -24,6 +24,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		/// </summary>
 		public virtual Artist Artist { get; set; }
 
+		public virtual int Id { get; set; }
+
 		public virtual string Name {
 			get => name;
 			set => name = value;
@@ -38,13 +40,35 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	}
 
+	[Flags]
 	public enum ArtistEventRoles {
 		Default = 0,
-		Organizer = 1,
-		Performer = 2,
-		Promoter = 4,
-		VoiceManipulator = 8,
-		Other = 16
+		/// <summary>
+		/// Disc jockey (plays songs)
+		/// </summary>
+		DJ = 1,
+		/// <summary>
+		/// Plays an instrument
+		/// </summary>
+		Instrumentalist = 2,
+		/// <summary>
+		/// Organizes event (might not participate directly)
+		/// </summary>
+		Organizer = 4,
+		/// <summary>
+		/// Promotes (advertises) event (might not participate directly)
+		/// </summary>
+		Promoter = 8,
+		/// <summary>
+		/// Video jockey (plays videos)
+		/// </summary>
+		VJ = 16,
+		Vocalist = 32,
+		/// <summary>
+		/// Voice manipulator of Vocaloid/UTAU
+		/// </summary>
+		VoiceManipulator = 64,
+		Other = 128
 	}
 
 }

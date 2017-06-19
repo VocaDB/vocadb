@@ -102,6 +102,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual IList<ArtistForEvent> AllArtists {
+			get => artists;
+			set {
+				ParamIs.NotNull(() => value);
+				artists = value;
+			}
+		}
+
 		public virtual IList<Song> AllSongs {
 			get => songs;
 			set {
@@ -115,14 +123,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			set {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
-			}
-		}
-
-		public virtual IList<ArtistForEvent> Artists {
-			get => artists;
-			set {
-				ParamIs.NotNull(() => value);
-				artists = value;
 			}
 		}
 
