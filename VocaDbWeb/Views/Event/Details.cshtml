@@ -105,6 +105,11 @@
 	@EntryDetailsHelpers.ExternalLinksList(Model.Series.WebLinks, false)
 }
 
+@if (Model.Artists.Any()) {
+	<h3 class="withMargin">Participating artists</h3>
+	@ArtistHelpers.ArtistGrid(Model.Artists.Where(a => a.Artist != null).Select(a => a.Artist), 3)
+}
+
 @if (Model.SongList != null) {
 	<h3 class="withMargin">@Res.SongList: @Html.ActionLink(Model.SongList.Name, "Details", "SongList", new { id = Model.SongList.Id }, null)</h3>
 	if (Model.SongListSongs.Any()) {

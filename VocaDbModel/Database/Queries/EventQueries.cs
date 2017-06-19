@@ -10,6 +10,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -388,6 +389,11 @@ namespace VocaDb.Model.Database.Queries {
 					if (pvDiff.Changed)
 						diff.PVs.Set();
 
+					var artistDiff = ev.SyncArtists(contract.Artists, artistId => session.Load<Artist>(artistId));
+
+					if (artistDiff.Changed)
+						diff.Artists.Set();
+
 					CheckDuplicateName(session, ev);
 
 					session.Save(ev);
@@ -475,6 +481,11 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (pvDiff.Changed)
 						diff.PVs.Set();
+
+					var artistDiff = ev.SyncArtists(contract.Artists, artistId => session.Load<Artist>(artistId));
+
+					if (artistDiff.Changed)
+						diff.Artists.Set();
 
 					CheckDuplicateName(session, ev);
 

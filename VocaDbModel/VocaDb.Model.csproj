@@ -162,6 +162,7 @@
     <Compile Include="DataContracts\Globalization\EnglishTranslatedStringContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArchivedEventSeriesVersionContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArchivedEventVersionDetailsContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ArtistForEventContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ComparedEventsContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForEditContract.cs" />

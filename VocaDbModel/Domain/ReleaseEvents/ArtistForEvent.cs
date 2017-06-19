@@ -38,6 +38,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual ArtistEventRoles Roles { get; set; }
 
+		public virtual void Delete() {
+			ReleaseEvent.AllArtists.Remove(this);
+		}
+
 	}
 
 	[Flags]

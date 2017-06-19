@@ -4,6 +4,8 @@ namespace vdb.dataContracts {
 	// Matches ReleaseEventForApiContract
 	export interface ReleaseEventContract {
 
+		artists: events.ArtistForEventContract[];
+
 		category: string;
 
 		date?: string;

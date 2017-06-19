@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
@@ -15,6 +18,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
@@ -324,6 +328,45 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public override int GetHashCode() {
 			return Id.GetHashCode();
+		}
+
+		private ArtistForEvent AddArtist(ArtistForEventContract contract, Func<int, Artist> artistGetter) {
+
+			ArtistForEvent link;
+
+			if (contract.Artist == null) {
+				link = new ArtistForEvent(this, null) {
+					Name = contract.Name,
+					Roles = contract.Roles
+				};
+			} else {
+				var artist = artistGetter(contract.Artist.Id);
+				link = new ArtistForEvent(this, artist) {
+					Roles = contract.Roles
+				};
+			}
+
+			AllArtists.Add(link);
+			return link;
+
+		}
+
+		public virtual CollectionDiffWithValue<ArtistForEvent, ArtistForEvent> SyncArtists(
+			IList<ArtistForEventContract> newArtists, Func<int, Artist> artistGetter) {
+
+			ParamIs.NotNull(() => newArtists);
+
+			bool Update(ArtistForEvent old, ArtistForEventContract newArtist) {
+				if (old.Roles == newArtist.Roles) {
+					return false;
+				}
+				old.Roles = newArtist.Roles;
+				return true;
+			}
+
+			var diff = CollectionHelper.SyncWithContent(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, a => AddArtist(a, artistGetter), Update, null);
+			return diff;
+
 		}
 
 		public override string ToString() {

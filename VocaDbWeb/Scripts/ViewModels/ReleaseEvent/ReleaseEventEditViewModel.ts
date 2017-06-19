@@ -10,9 +10,11 @@ module vdb.viewModels.releaseEvents {
 			private readonly repo: rep.ReleaseEventRepository,
 			userRepository: rep.UserRepository,
 			pvRepository: rep.PVRepository,
+			private readonly artistRepository: rep.ArtistRepository,
 			private readonly urlMapper: vdb.UrlMapper,
 			contract: dc.ReleaseEventContract) {
 
+			this.artistLinks = ko.observableArray(_.map(contract.artists, artist => new events.ArtistForEventEditViewModel(artist)));
 			this.id = contract.id;
 			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
 			this.dateStr = ko.computed(() => (this.date() ? this.date().toISOString() : null));
@@ -36,11 +38,56 @@ module vdb.viewModels.releaseEvents {
 			this.songList = new BasicEntryLinkViewModel(contract.songList, null);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
+			this.artistLinkContracts = ko.computed(() => ko.toJS(this.artistLinks()));
+
 			if (contract.id) {
 				window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.ReleaseEvent, contract.id), 10000);				
 			}
 
 		}
+
+		addArtist = (artistId?: number, customArtistName?: string) => {
+
+			if (artistId) {
+
+				this.artistRepository.getOne(artistId, artist => {
+
+					const data: dc.events.ArtistForEventContract = {
+						artist: artist,
+						name: artist.name,
+						id: 0,
+						roles: 'Default'
+					};
+
+					const link = new events.ArtistForEventEditViewModel(data);
+					this.artistLinks.push(link);
+
+				});
+
+			} else {
+
+				const data: dc.events.ArtistForEventContract = {
+					artist: null,
+					name: customArtistName,
+					id: 0,
+					roles: 'Default'
+				};
+
+				const link = new events.ArtistForEventEditViewModel(data);
+				this.artistLinks.push(link);
+
+			}
+
+		};
+
+		public artistLinks: KnockoutObservableArray<events.ArtistForEventEditViewModel>;
+
+		public artistLinkContracts: KnockoutComputed<dc.events.ArtistForEventContract[]>;
+
+		public artistSearchParams = {
+			createNewItem: "Add custom artist named '{0}'",
+			acceptSelection: this.addArtist
+		};
 
 		public customName = ko.observable(false);
 
@@ -68,6 +115,11 @@ module vdb.viewModels.releaseEvents {
 
 		public names: globalization.NamesEditViewModel;
 		public pvs: pvs.PVListEditViewModel;
+
+		public removeArtist = (artist: events.ArtistForEventEditViewModel) => {
+			this.artistLinks.remove(artist);
+		};
+
 		public series: BasicEntryLinkViewModel<models.IEntryWithIdAndName>;
 
 		public songList: BasicEntryLinkViewModel<dc.SongListBaseContract>;

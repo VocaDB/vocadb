@@ -49,6 +49,7 @@
 		
 		<ul>
 			<li><a href="#basicInfoTab">@EditRes.BasicInfo</a></li>
+			<li><a href="#artistsTab">Artists</a></li>
 			<li><a href="#pvsTab">Media</a></li>
 		</ul>		
 		
@@ -214,6 +215,43 @@
 		
 		</div>
 		
+		<div id="artistsTab" data-bind="with: artistLinks">
+			<div class="row-fluid">
+				<div class="span6">
+					<table data-bind="visible: $data.length">
+						<thead>
+							<tr>
+								<th>Artist</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach: $data">
+							<tr>
+								<td>
+									<div data-bind="with: artist">
+										<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
+										<br />
+										<span data-bind="text: additionalNames" class="extraInfo"></span>
+									</div>
+									<div data-bind="ifnot: artist">
+										<span data-bind="text: name"></span>
+									</div>
+								</td>								
+								<td>
+									<a data-bind="click: $root.removeArtist" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
+								</td>
+							</tr>							
+						</tbody>
+					</table>
+
+					<br />
+					<h4>Add artist</h4>
+					<input type="text" data-bind="artistAutoComplete: $parent.artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
+				</div>
+			</div>
+			@Html.HiddenForKnockout(m => m.Artists, "value: ko.toJSON($parent.artistLinkContracts())")
+		</div>
+		
 		<div id="pvsTab" data-bind="with: pvs">
 
 			<table data-bind="visible: pvs().length">
@@ -266,11 +304,15 @@
 		ko.punches.enableAll();
 
 		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var eventRepo = new vdb.repositories.ReleaseEventRepository(urlMapper);
-		var userRepo = new vdb.repositories.UserRepository(urlMapper);
-		var pvRepo = new vdb.repositories.PVRepository(urlMapper);
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper);
+		var eventRepo = repoFactory.eventRepository();
+		var userRepo = repoFactory.userRepository();
+		var pvRepo = repoFactory.pvRepository();
+		var artistRepo = repoFactory.artistRepository();
 		var contract = @ToJS(new {
-			Model.Date, DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
+			Model.Artists,
+			Model.Date, 
+			DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
 			Model.Id,
 			Model.Names, 
 			Model.PVs,
@@ -278,7 +320,7 @@
 			Model.SongList, Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, urlMapper,  contract);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, contract);
 		ko.applyBindings(vm);
 
 		initPage();

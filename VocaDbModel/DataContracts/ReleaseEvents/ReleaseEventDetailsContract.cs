@@ -38,6 +38,11 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				.OrderBy(a => a.Name)
 				.ToArray();
 
+			Artists = releaseEvent.AllArtists
+				.Select(a => new ArtistForEventContract(a, languagePreference))
+				.OrderBy(a => a.Artist != null ? a.Artist.Name : a.Name)
+				.ToArray();
+
 			Songs = releaseEvent.Songs
 				.Select(s => new SongForApiContract(s, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl))
 				.OrderBy(s => s.Name)
@@ -57,6 +62,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public AlbumContract[] Albums { get; set; }
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
+
+		public ArtistForEventContract[] Artists { get; set; }
 
 		public bool CanRemoveTagUsages { get; set; }
 

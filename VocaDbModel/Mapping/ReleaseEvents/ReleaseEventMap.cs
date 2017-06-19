@@ -1,5 +1,4 @@
 ﻿using FluentNHibernate.Mapping;
-using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Mapping.ReleaseEvents {
@@ -121,7 +120,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Cache.ReadWrite();
 
 			Map(m => m.Name).Length(250).Nullable();
-			Map(m => m.Roles).Not.Nullable();
+			Map(m => m.Roles).CustomType(typeof(ArtistEventRoles)).Not.Nullable();
 
 			References(m => m.Artist).Nullable();
 			References(m => m.ReleaseEvent).Column("[Event]").Not.Nullable();

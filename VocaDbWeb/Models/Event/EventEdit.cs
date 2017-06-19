@@ -39,6 +39,7 @@ namespace VocaDb.Web.Models.Event {
 
 			ParamIs.NotNull(() => contract);
 
+			Artists = contract.Artists;
 			Category = contract.Category;
 			CustomName = contract.CustomName = contract.CustomName;
 			Date = contract.Date;
@@ -63,6 +64,9 @@ namespace VocaDb.Web.Models.Event {
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
+
+		[FromJson]
+		public ArtistForEventContract[] Artists { get; set; }
 
 		public EventCategory Category { get; set; }
 
@@ -133,6 +137,7 @@ namespace VocaDb.Web.Models.Event {
 		public ReleaseEventForEditContract ToContract() {
 
 			return new ReleaseEventForEditContract {
+				Artists = Artists,
 				Category = Category,
 				CustomName = this.CustomName,
 				Date = this.Date,

@@ -8,6 +8,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public ReleaseEventDiff(bool isSnapshot) : base(isSnapshot) { }
 		public ReleaseEventDiff(ReleaseEventEditableFields changedFields) : base(changedFields) { }
 
+		public EnumFieldAccessor<ReleaseEventEditableFields> Artists => Field(ReleaseEventEditableFields.Artists);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Category => Field(ReleaseEventEditableFields.Category);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Date => Field(ReleaseEventEditableFields.Date);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Description => Field(ReleaseEventEditableFields.Description);
@@ -23,6 +24,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public EnumFieldAccessor<ReleaseEventEditableFields> Venue => Field(ReleaseEventEditableFields.Venue);
 		public EnumFieldAccessor<ReleaseEventEditableFields> WebLinks => Field(ReleaseEventEditableFields.WebLinks);
 
+		public virtual bool IncludeArtists => IsSnapshot || Artists.IsChanged;
 		public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;
 		public virtual bool IncludePVs => IsSnapshot || PVs.IsChanged;
 		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks.IsChanged;
