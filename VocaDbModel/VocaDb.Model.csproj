@@ -335,6 +335,7 @@
     <Compile Include="Domain\Albums\IAlbumLink.cs" />
     <Compile Include="Domain\Albums\IAlbumRelease.cs" />
     <Compile Include="Domain\Albums\OtherArtistForAlbum.cs" />
+    <Compile Include="Domain\ReleaseEvents\ArtistForEvent.cs" />
     <Compile Include="Domain\ReleaseEvents\EventCategory.cs" />
     <Compile Include="Domain\ReleaseEvents\EventName.cs" />
     <Compile Include="Domain\ReleaseEvents\EventReport.cs" />

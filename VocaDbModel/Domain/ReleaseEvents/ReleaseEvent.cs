@@ -30,6 +30,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private IList<Album> albums = new List<Album>();
 		private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> archivedVersions
 			= new ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields>();
+		private IList<ArtistForEvent> artists = new List<ArtistForEvent>();
 		private IList<ReleaseEventComment> comments = new List<ReleaseEventComment>();
 		private string description;
 		private NameManager<EventName> names = new NameManager<EventName>();
@@ -114,6 +115,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			set {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
+			}
+		}
+
+		public virtual IList<ArtistForEvent> Artists {
+			get => artists;
+			set {
+				ParamIs.NotNull(() => value);
+				artists = value;
 			}
 		}
 
