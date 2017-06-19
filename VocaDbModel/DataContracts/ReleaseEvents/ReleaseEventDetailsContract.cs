@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 	public class ReleaseEventDetailsContract : ReleaseEventContract {
 
 		public ReleaseEventDetailsContract() {
+			Artists = new ArtistForEventContract[0];
 			PVs = new PVContract[0];
 			WebLinks = new WebLinkContract[0];
 		}
