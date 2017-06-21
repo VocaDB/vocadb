@@ -176,9 +176,15 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets a list of events a user has subscribed to.
+		/// </summary>
+		/// <param name="id">User ID.</param>
+		/// <param name="relationshipType">Type of event subscription.</param>
+		/// <returns>List of events.</returns>
 		[Route("{id:int}/events")]
 		public ReleaseEventForApiContract[] GetEvents(int id, UserEventRelationshipType relationshipType) {
-			return queries.GetEvents(id, relationshipType);
+			return queries.GetEvents(id, relationshipType, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
 		}
 
 		/// <summary>

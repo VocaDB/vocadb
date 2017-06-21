@@ -856,7 +856,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ReleaseEventForApiContract[] GetEvents(int userId, UserEventRelationshipType relationshipType) {
+		public ReleaseEventForApiContract[] GetEvents(int userId, UserEventRelationshipType relationshipType, ReleaseEventOptionalFields fields) {
 
 			return HandleQuery(ctx => {
 
@@ -864,8 +864,7 @@ namespace VocaDb.Model.Database.Queries {
 				return user.Events
 					.Where(e => !e.ReleaseEvent.Deleted && e.RelationshipType == relationshipType)
 					.OrderByDescending(e => e.ReleaseEvent.Date.DateTime)
-					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, 
-						ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, entryThumbPersister, true))
+					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, entryThumbPersister, true))
 					.ToArray();
 
 			});
