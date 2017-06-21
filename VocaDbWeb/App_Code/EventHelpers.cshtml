@@ -19,6 +19,7 @@
 			@ArchivedEntryHelpers.DataRow("Main picture MIME", comparedTags, d => d.MainPictureMime)
 			@ArchivedEntryHelpers.DataRow("Series", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.Series))
 			@ArchivedEntryHelpers.DataRow("Series number", comparedTags, d => d.SeriesNumber)
+			@ArchivedEntryHelpers.DataRowList("Artists", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.Artists, ArchivedEntryHelpers.ObjectRefInfo))
 			@ArchivedEntryHelpers.DataRowList("PVs", comparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
 			@ArchivedEntryHelpers.DataRow("Song list", comparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.SongList))
 		</table>

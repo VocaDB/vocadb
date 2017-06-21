@@ -6,9 +6,9 @@ module vdb.repositories {
 	export class RepositoryFactory {
 		
 		constructor(
-			private urlMapper: vdb.UrlMapper,
-			private lang: cls.globalization.ContentLanguagePreference,
-			private loggedUserId: number) { }
+			private readonly urlMapper: vdb.UrlMapper,
+			private readonly lang: cls.globalization.ContentLanguagePreference,
+			private readonly loggedUserId: number) { }
 
 		public adminRepository = () => {
 			return new AdminRepository(this.urlMapper);

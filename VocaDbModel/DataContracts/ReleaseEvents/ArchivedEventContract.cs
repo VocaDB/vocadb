@@ -39,6 +39,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			data.TranslatedName = thisVersion.TranslatedName;
 			data.VenueName = thisVersion.VenueName;
 
+			DoIfExists(version, ReleaseEventEditableFields.Artists, xmlCache, v => data.Artists = v.Artists);
 			DoIfExists(version, ReleaseEventEditableFields.Names, xmlCache, v => data.Names = v.Names);
 			DoIfExists(version, ReleaseEventEditableFields.PVs, xmlCache, v => data.PVs = v.PVs);
 			DoIfExists(version, ReleaseEventEditableFields.WebLinks, xmlCache, v => data.WebLinks = v.WebLinks);
@@ -54,6 +55,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			ParamIs.NotNull(() => ev);
 			ParamIs.NotNull(() => diff);
 
+			Artists = diff.IncludeArtists ? ev.Artists.Select(l => new ArchivedArtistForEventContract(l)).ToArray() : null;
 			Category = ev.Category;
 			Date = ev.Date;
 			Description = ev.Description;
@@ -69,6 +71,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			WebLinks = diff.IncludeWebLinks ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
+
+		[DataMember]
+		public ArchivedArtistForEventContract[] Artists { get; set; }
 
 		[DataMember]
 		public EventCategory Category { get; set; }

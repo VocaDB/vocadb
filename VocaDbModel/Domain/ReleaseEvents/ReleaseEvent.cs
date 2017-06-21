@@ -130,6 +130,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual IEnumerable<ArtistForEvent> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
+
 		public virtual EventCategory Category { get; set; }
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;

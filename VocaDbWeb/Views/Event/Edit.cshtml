@@ -304,7 +304,7 @@
 		ko.punches.enableAll();
 
 		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper);
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();
 		var pvRepo = repoFactory.pvRepository();

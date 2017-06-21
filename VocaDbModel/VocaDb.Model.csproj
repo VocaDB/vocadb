@@ -160,6 +160,7 @@
     <Compile Include="DataContracts\Discussions\DiscussionTopicContract.cs" />
     <Compile Include="DataContracts\EntryThumbForApiContract.cs" />
     <Compile Include="DataContracts\Globalization\EnglishTranslatedStringContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ArchivedArtistForEventContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArchivedEventSeriesVersionContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArchivedEventVersionDetailsContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArtistForEventContract.cs" />
