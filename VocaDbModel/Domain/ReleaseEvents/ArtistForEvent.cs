@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VocaDb.Model.Domain.Artists;
+﻿using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
@@ -43,36 +38,4 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 	}
-
-	[Flags]
-	public enum ArtistEventRoles {
-		Default = 0,
-		/// <summary>
-		/// Disc jockey (plays songs)
-		/// </summary>
-		DJ = 1,
-		/// <summary>
-		/// Plays an instrument
-		/// </summary>
-		Instrumentalist = 2,
-		/// <summary>
-		/// Organizes event (might not participate directly)
-		/// </summary>
-		Organizer = 4,
-		/// <summary>
-		/// Promotes (advertises) event (might not participate directly)
-		/// </summary>
-		Promoter = 8,
-		/// <summary>
-		/// Video jockey (plays videos)
-		/// </summary>
-		VJ = 16,
-		Vocalist = 32,
-		/// <summary>
-		/// Voice manipulator of Vocaloid/UTAU
-		/// </summary>
-		VoiceManipulator = 64,
-		Other = 128
-	}
-
 }

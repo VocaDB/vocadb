@@ -12,8 +12,10 @@ module vdb.viewModels.releaseEvents {
 			pvRepository: rep.PVRepository,
 			private readonly artistRepository: rep.ArtistRepository,
 			private readonly urlMapper: vdb.UrlMapper,
+			private readonly artistRoleNames: { [key: string]: string; },
 			contract: dc.ReleaseEventContract) {
 
+			this.artistRolesEditViewModel = new artists.AlbumArtistRolesEditViewModel(artistRoleNames);
 			this.artistLinks = ko.observableArray(_.map(contract.artists, artist => new events.ArtistForEventEditViewModel(artist)));
 			this.id = contract.id;
 			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
@@ -84,6 +86,8 @@ module vdb.viewModels.releaseEvents {
 
 		public artistLinkContracts: KnockoutComputed<dc.events.ArtistForEventContract[]>;
 
+		public artistRolesEditViewModel: EventArtistRolesEditViewModel;
+
 		public artistSearchParams = {
 			createNewItem: "Add custom artist named '{0}'",
 			acceptSelection: this.addArtist
@@ -106,6 +110,10 @@ module vdb.viewModels.releaseEvents {
 		});
 
 		public description = ko.observable<string>();
+
+		public editArtistRoles = (artist: events.ArtistForEventEditViewModel) => {
+			this.artistRolesEditViewModel.show(artist);
+		}
 
 		private id: number;
 
@@ -131,7 +139,19 @@ module vdb.viewModels.releaseEvents {
 
 		public submitting = ko.observable(false);
 
+		public translateArtistRole = (role: string) => {
+			return this.artistRoleNames[role];
+		};
+
         public webLinks: WebLinksEditViewModel;
+
+	}
+
+	export class EventArtistRolesEditViewModel extends artists.ArtistRolesEditViewModel {
+
+		constructor(roleNames: { [key: string]: string; }) {
+			super(roleNames, models.events.ArtistEventRoles[models.events.ArtistEventRoles.Default]);
+		}
 
 	}
 

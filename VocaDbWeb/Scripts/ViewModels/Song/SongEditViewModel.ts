@@ -174,7 +174,7 @@ module vdb.viewModels {
 			pvRepository: rep.PVRepository,
 			userRepository: rep.UserRepository,
 			private urlMapper: vdb.UrlMapper,
-			private artistRoleNames: { [key: string]: string; },
+			private readonly artistRoleNames: { [key: string]: string; },
 			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
 			data: dc.songs.SongForEditContract,
 			canBulkDeletePVs: boolean,

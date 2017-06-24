@@ -266,6 +266,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVEditViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVListEditViewModel.js",
+				"~/Scripts/ViewModels/Artist/ArtistRolesEditViewModel.js",
 				"~/Scripts/ViewModels/ReleaseEvent/ArtistForEventEditViewModel.js",
 				"~/Scripts/ViewModels/ReleaseEvent/ReleaseEventEditViewModel.js",
 				"~/Scripts/Event/Edit.js"

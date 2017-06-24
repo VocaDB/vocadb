@@ -72,6 +72,9 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<ArtistEditableFields> ArtistEditableFieldNames =
 			new TranslateableEnum<ArtistEditableFields>(() => global::Resources.ArtistEditableFieldNames.ResourceManager);
 
+		public static readonly TranslateableEnum<ArtistEventRoles> ArtistEventRoleNames =
+			new TranslateableEnum<ArtistEventRoles>(() => Resources.Domain.ReleaseEvents.ArtistEventRoleNames.ResourceManager);
+
 		public static TranslateableEnum<ArtistLinkType> ArtistLinkTypeNames => new TranslateableEnum<ArtistLinkType>(() => Resources.Domain.Artists.ArtistLinkTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ArtistReportType> ArtistReportTypeNames =

@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.Service.VideoServices
@@ -222,6 +223,7 @@
 						<thead>
 							<tr>
 								<th>Artist</th>
+								<th>Roles</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -236,6 +238,15 @@
 									<div data-bind="ifnot: artist">
 										<span data-bind="text: name"></span>
 									</div>
+								</td>	
+								<td>
+									<div data-bind="foreach: rolesArray">
+										<div data-bind="ifnot: $data == '@ArtistEventRoles.Default.ToString()'">
+											<span data-bind="text: $root.translateArtistRole($data)"></span>
+											<br />				
+										</div>
+									</div>
+									<a href="#" class="artistRolesEdit textLink editLink" data-bind="click: $root.editArtistRoles">@ViewRes.Album.ArtistForAlbumEditRowStrings.Customize</a>
 								</td>								
 								<td>
 									<a data-bind="click: $root.removeArtist" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
@@ -294,6 +305,10 @@
 
 </form>
 
+<div data-bind="with: artistRolesEditViewModel">
+	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
+</div>
+
 @EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
 
 @section BodyScripts {
@@ -309,18 +324,19 @@
 		var userRepo = repoFactory.userRepository();
 		var pvRepo = repoFactory.pvRepository();
 		var artistRepo = repoFactory.artistRepository();
+		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistEventRoleNames.ValuesAndNamesStrings, false));
 		var contract = @ToJS(new {
 			Model.Artists,
-			Model.Date, 
+			Model.Date,
 			DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
 			Model.Id,
-			Model.Names, 
+			Model.Names,
 			Model.PVs,
 			Model.Series,
 			Model.SongList, Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, contract);
+		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, artistRoleJson, contract);
 		ko.applyBindings(vm);
 
 		initPage();
