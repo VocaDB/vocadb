@@ -8,11 +8,15 @@ namespace vdb.viewModels.search {
 		constructor(
 			searchViewModel: SearchViewModel,
 			lang: vdb.models.globalization.ContentLanguagePreference,
-			private eventRepo: rep.ReleaseEventRepository,
+			private readonly eventRepo: rep.ReleaseEventRepository,
+			artistRepo: rep.ArtistRepository,
 			public loggedUserId?: number) {
 
 			super(searchViewModel);
 
+			this.artistFilters = new ArtistFilters(artistRepo, false);
+
+			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.category.subscribe(this.updateResultsWithTotalCount);
 			this.onlyMyEvents.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithTotalCount);
@@ -24,6 +28,9 @@ namespace vdb.viewModels.search {
 					lang: lang, query: searchTerm, sort: this.sort(), category: this.category() === 'Unspecified' ? null : this.category(),
 					childTags: childTags, tagIds: tag,
 					userCollectionId: this.onlyMyEvents() ? loggedUserId : null,
+					artistId: this.artistFilters.artistIds(),
+					childVoicebanks: this.artistFilters.childVoicebanks(),
+					includeMembers: this.artistFilters.includeMembers(),
 					status: status,
 					fields: "AdditionalNames,MainPicture,Series"
 				}, callback);
@@ -37,6 +44,7 @@ namespace vdb.viewModels.search {
 		}
 
 		public allowAliases = ko.observable(false);
+		public artistFilters: ArtistFilters;
 		public category = ko.observable("");
 		public onlyMyEvents = ko.observable(false);
 		public sort = ko.observable("Name");

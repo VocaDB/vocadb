@@ -37,6 +37,9 @@ module vdb.repositories {
 				childTags: queryParams.childTags,
 				fields: queryParams.fields || undefined,
 				userCollectionId: queryParams.userCollectionId || undefined,
+				artistId: queryParams.artistId || undefined,
+				childVoicebanks: queryParams.childVoicebanks || undefined,
+				includeMembers: queryParams.includeMembers || undefined,
 				status: queryParams.status || undefined,
 				nameMatchMode: models.NameMatchMode[nameMatchMode],
 				lang: queryParams.lang,
@@ -61,12 +64,18 @@ module vdb.repositories {
 
 	export interface EventQueryParams extends CommonQueryParams {
 
+		artistId?: number[];
+
 		category?: string;
 
 		childTags: boolean;
 
+		childVoicebanks?: boolean;
+
 		// Comma-separated list of optional fields
 		fields?: string;
+
+		includeMembers?: boolean;
 
 		sort?: string;
 
