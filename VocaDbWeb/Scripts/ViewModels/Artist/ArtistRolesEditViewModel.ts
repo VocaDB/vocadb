@@ -1,9 +1,11 @@
 ﻿
 module vdb.viewModels.artists {
-	
-	export class ArtistRolesEditViewModel {
+
+	export class ArtistRolesEditViewModel<TRole> {
 		
-		constructor(roleNames: { [key: string]: string; }) {
+		constructor(
+			roleNames: { [key: string]: string; },
+			private readonly defaultRoleName: string) {
 			
 			this.roleSelections = [];
 
@@ -16,8 +18,6 @@ module vdb.viewModels.artists {
 			this.roleSelections = _.sortBy(this.roleSelections, r => r.name);
 
 		}
-
-		private defaultRoleName = models.artists.ArtistRoles[models.artists.ArtistRoles.Default];
 
 		public dialogVisible = ko.observable(false);
 
@@ -49,6 +49,14 @@ module vdb.viewModels.artists {
 			this.selectedArtist(artist);
 			this.dialogVisible(true);
 
+		}
+
+	}
+
+	export class AlbumArtistRolesEditViewModel extends ArtistRolesEditViewModel<models.artists.ArtistRoles> {
+
+		constructor(roleNames: { [key: string]: string; }) {
+			super(roleNames, models.artists.ArtistRoles[models.artists.ArtistRoles.Default]);
 		}
 
 	}

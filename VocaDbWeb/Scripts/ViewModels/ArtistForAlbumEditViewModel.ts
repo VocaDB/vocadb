@@ -64,7 +64,7 @@ module vdb.viewModels {
         
         }
     
-    }
+	}
 
 	export interface IEditableArtistWithSupport {
 		

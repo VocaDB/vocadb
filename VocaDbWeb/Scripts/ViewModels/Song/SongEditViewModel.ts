@@ -84,7 +84,7 @@ module vdb.viewModels {
 
 		};
 
-		public artistRolesEditViewModel: artists.ArtistRolesEditViewModel;
+		public artistRolesEditViewModel: artists.AlbumArtistRolesEditViewModel;
 
 		// Clears fields that are not valid for the selected song type.
 		private clearInvalidData = () => {
@@ -203,7 +203,7 @@ module vdb.viewModels {
 			this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
 
 
-			this.artistRolesEditViewModel = new artists.ArtistRolesEditViewModel(artistRoleNames);
+			this.artistRolesEditViewModel = new artists.AlbumArtistRolesEditViewModel(artistRoleNames);
 
 			this.artistSearchParams = {
 				createNewItem: vdb.resources.song.addExtraArtist,

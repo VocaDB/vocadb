@@ -63,7 +63,7 @@ module vdb.viewModels {
         // List of artist links for this album.
         public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
 
-		public artistRolesEditViewModel: artists.ArtistRolesEditViewModel;
+		public artistRolesEditViewModel: artists.AlbumArtistRolesEditViewModel;
 
 		public catalogNumber: KnockoutObservable<string>;
 
@@ -321,7 +321,7 @@ module vdb.viewModels {
 
             this.artistLinks = ko.observableArray(_.map(data.artistLinks, artist => new ArtistForAlbumEditViewModel(repository, artist)));
 
-			this.artistRolesEditViewModel = new artists.ArtistRolesEditViewModel(artistRoleNames);
+			this.artistRolesEditViewModel = new artists.AlbumArtistRolesEditViewModel(artistRoleNames);
 
 			this.discs = new albums.AlbumDiscPropertiesListEditViewModel(data.discs);
 
