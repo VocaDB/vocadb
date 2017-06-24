@@ -23,7 +23,7 @@ using VocaDb.Model.Helpers;
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEvent : IEntryWithNames<EventName>, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent, 
-		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName>, IEntryWithTags<EventTagUsage> {
+		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName>, IEntryWithTags<EventTagUsage>, IEntryWithArtistLinks<ArtistForEvent> {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 		string IReleaseEvent.Name => DefaultName;

@@ -139,6 +139,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var q = ctx.Query()
 					.WhereNotDeleted()
+					.WhereHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks, queryParams.IncludeMembers)
 					.WhereHasCategory(queryParams.Category)
 					.WhereHasName(queryParams.TextQuery)
 					.WhereHasSeries(queryParams.SeriesId)

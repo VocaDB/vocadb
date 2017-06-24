@@ -21,6 +21,10 @@ namespace VocaDb.Model.Service.Search.Events {
 		public SearchTextQuery TextQuery { get; set; } = SearchTextQuery.Empty;
 		public int UserId { get; set; }
 
+		public EntryIdsCollection ArtistIds { get; set; }
+		public bool ChildVoicebanks { get; set; }
+		public bool IncludeMembers { get; set; }
+
 	}
 
 }

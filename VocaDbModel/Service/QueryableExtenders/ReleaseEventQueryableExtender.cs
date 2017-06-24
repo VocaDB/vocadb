@@ -91,6 +91,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<ReleaseEvent> WhereHasArtists(this IQueryable<ReleaseEvent> query, EntryIdsCollection artistIds, bool childVoicebanks, bool includeMembers) {
+
+			if (!artistIds.HasAny)
+				return query;
+
+			return query.WhereHasArtists<ReleaseEvent, ArtistForEvent>(artistIds, childVoicebanks, includeMembers);
+
+		}
+
 		public static IQueryable<ReleaseEvent> WhereHasCategory(this IQueryable<ReleaseEvent> query, EventCategory category) {
 
 			if (category == EventCategory.Unspecified)

@@ -2,7 +2,7 @@
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class ArtistForEvent : IEntryWithIntId {
+	public class ArtistForEvent : IEntryWithIntId, IArtistLink {
 
 		private ReleaseEvent releaseEvent;
 		private string name;

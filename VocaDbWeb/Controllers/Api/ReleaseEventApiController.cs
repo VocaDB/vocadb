@@ -81,6 +81,11 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="beforeDate">Filter by events before this date (exclusive).</param>
 		/// <param name="category">Filter by event category.</param>
 		/// <param name="userCollectionId">Filter to include only events in user's events (interested or attending).</param>
+		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
+		/// <param name="artistId">Filter by artist Id.</param>
+		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
+		/// <param name="includeMembers">Include members of groups. This applies if <paramref name="artistId"/> is a group.</param>
 		/// <param name="status">Filter by entry status.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10).</param>
@@ -106,6 +111,9 @@ namespace VocaDb.Web.Controllers.Api {
 			int? userCollectionId = null,
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
+			[FromUri] int[] artistId = null,
+			bool childVoicebanks = false,
+			bool includeMembers = false,
 			EntryStatus? status = null,
 			int start = 0, 
 			int maxResults = defaultMax,
