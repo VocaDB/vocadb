@@ -30,7 +30,7 @@ namespace VocaDb.Tests.Service.Queries {
 			repository.Save(song.AddArtist(artist));
 			repository.Save(song.AddArtist(voicebank));
 			repository.Save(song2.AddArtist(artist));
-			query = new ArtistRelationsQuery(repository.CreateContext(), Model.Domain.Globalization.ContentLanguagePreference.English, new FakeObjectCache());
+			query = new ArtistRelationsQuery(repository.CreateContext(), Model.Domain.Globalization.ContentLanguagePreference.English, new FakeObjectCache(), new InMemoryImagePersister());
 		}
 
 		[TestMethod]
