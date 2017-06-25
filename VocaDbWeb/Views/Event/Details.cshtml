@@ -1,4 +1,6 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Model.DataContracts.ReleaseEvents
+@using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Domain.Security
@@ -45,6 +47,23 @@
 	@Helpers.EntryStatusMessage(Model.Status)
 }
 
+@helper ArtistList(IList<ArtistForEventContract> artists, bool showRoles = false, bool showType = false) {
+	foreach (var artist in artists) {
+		if (artist.Artist != null) {
+			@ArtistHelpers.ArtistLink(artist.Artist, typeLabel: showType)
+		} else {
+			@artist.Name
+		}
+		if (showRoles && artist.EffectiveRoles != ArtistEventRoles.Default) {
+			@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistEventRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistEventRoles.Default) + ")</small>")
+		}
+		if (artist != artists.Last()) {
+			@(", ")
+		}
+	}
+}
+
+
 @if (Model.Deleted) {
 	@EntryDetailsHelpers.DeletedBanner(null)
 }
@@ -64,6 +83,10 @@
 		
 			@if (!string.IsNullOrEmpty(Model.Venue)) {
 				<p>@Res.Venue: @Model.Venue</p>
+			}
+			
+			@if (Model.Artists.Any()) {
+				<p>Participating artists: @ArtistList(Model.Artists, true, true)</p>
 			}
 
 			@if (!string.IsNullOrEmpty(Model.Description)) {
@@ -103,11 +126,6 @@
 		@HtmlHelpers.FormatMarkdown(Model.Series.Description);
 	}
 	@EntryDetailsHelpers.ExternalLinksList(Model.Series.WebLinks, false)
-}
-
-@if (Model.Artists.Any()) {
-	<h3 class="withMargin">Participating artists</h3>
-	@ArtistHelpers.ArtistGrid(Model.Artists.Where(a => a.Artist != null).Select(a => a.Artist), 3)
 }
 
 @if (Model.SongList != null) {
@@ -215,6 +233,9 @@
 		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, eventRepo, userRepo, latestComments,
 			reportTypes, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), users, tags, canDeleteAllComments);
 		ko.applyBindings(vm);
+
+		$(".artistLink").vdbArtistToolTip();
+
 	});
 </script>
 }
