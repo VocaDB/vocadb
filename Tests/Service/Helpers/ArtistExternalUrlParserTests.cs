@@ -42,6 +42,13 @@ namespace VocaDb.Tests.Service.Helpers {
 
 		}
 
+		[TestMethod]
+		public void Twitter() {
+
+			TestGetExternalUrl("https://twitter.com/cleantears", "https://twitter.com/cleantears");
+
+		}
+
 	}
 
 }

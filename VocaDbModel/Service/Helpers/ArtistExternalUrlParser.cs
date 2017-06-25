@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -9,10 +11,22 @@ namespace VocaDb.Model.Service.Helpers {
 	/// </summary>
 	public class ArtistExternalUrlParser {
 
-		private readonly Regex nicoMatcher = 
-			new Regex(@"^(?:http://www.nicovideo.jp)?/?(user|mylist)/(\d+)", RegexOptions.IgnoreCase);
+		private class Matcher {
 
-		private const string nicoUrlTemplate = "http://www.nicovideo.jp/{0}/{1}";
+			public Matcher(string template, string regex) {
+				Template = template;
+				Regex = new Regex(regex);
+			}
+
+			public string Template { get; }
+			public Regex Regex { get; }
+
+		}
+
+		private static readonly Matcher[] linkMatchers = {
+			new Matcher("http://www.nicovideo.jp/{0}/{1}", @"^(?:http://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
+			new Matcher("https://twitter.com/{0}", @"^https://twitter\.com/(\w+)")
+		};
 
 		/// <summary>
 		/// Get full external URL from a possible external URL fragment.
@@ -31,15 +45,18 @@ namespace VocaDb.Model.Service.Helpers {
 			if (string.IsNullOrEmpty(possibleUrl))
 				return null;
 
-			var match = nicoMatcher.Match(possibleUrl);
+			var match = linkMatchers
+				.Select(matcher => new {
+					matcher.Template,
+					Result = matcher.Regex.Match(possibleUrl)
+				})
+				.FirstOrDefault(m => m.Result.Success);
 
-			if (!match.Success)
+			if (match == null)
 				return null;
 
-			var type = match.Groups[1].Value;
-			var id = match.Groups[2].Value;
-
-			return string.Format(nicoUrlTemplate, type, id);
+			var values = match.Result.Groups.Cast<Group>().Skip(1).Select(g => g.Value).ToArray();
+			return string.Format(match.Template, values);
 
 		}
 

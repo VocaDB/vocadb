@@ -106,10 +106,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Artist> WhereHasExternalLinkUrl(this IQueryable<Artist> query, string extLinkUrl) {
 			
-			if (string.IsNullOrEmpty(extLinkUrl))
+			if (string.IsNullOrEmpty(extLinkUrl) || extLinkUrl.Length <= 1)
 				return query;
 
-			return query.Where(a => a.WebLinks.Any(link => link.Url == extLinkUrl));
+			var withoutSlash = extLinkUrl.EndsWith("/") ? extLinkUrl.Substring(0, extLinkUrl.Length - 1) : extLinkUrl;
+			return query.Where(a => a.WebLinks.Any(link => link.Url == withoutSlash || link.Url == withoutSlash + "/"));
 
 		} 
 
