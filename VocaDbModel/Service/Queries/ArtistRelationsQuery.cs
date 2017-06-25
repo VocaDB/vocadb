@@ -4,11 +4,14 @@ using System.Runtime.Caching;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -21,6 +24,7 @@ namespace VocaDb.Model.Service.Queries {
 		private static readonly SongOptionalFields songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
 		private readonly ObjectCache cache;
 		private readonly IDatabaseContext ctx;
+		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly ContentLanguagePreference languagePreference;
 
 		private AlbumContract[] GetLatestAlbums(IDatabaseContext session, Artist artist) {
@@ -42,6 +46,20 @@ namespace VocaDb.Model.Service.Queries {
 				.OrderByReleaseDate(SortDirection.Descending)
 				.Take(6).ToArray()
 				.Select(s => new AlbumContract(s, languagePreference))
+				.ToArray();
+
+		}
+
+		private ReleaseEventForApiContract[] GetLatestEvents(IDatabaseContext session, Artist artist) {
+
+			var id = artist.Id;
+
+			return session.Query<ReleaseEvent>()
+				.Where(e => e.AllArtists.Any(a => a.Artist.Id == id))
+				.OrderByDate(SortDirection.Descending)
+				.Take(3).ToArray()
+				.Select(s => new ReleaseEventForApiContract(s, languagePreference, 
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, entryThumbPersister, true))
 				.ToArray();
 
 		}
@@ -134,10 +152,11 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public ArtistRelationsQuery(IDatabaseContext ctx, ContentLanguagePreference languagePreference, ObjectCache cache) {
+		public ArtistRelationsQuery(IDatabaseContext ctx, ContentLanguagePreference languagePreference, ObjectCache cache, IEntryThumbPersister entryThumbPersister) {
 			this.ctx = ctx;
 			this.languagePreference = languagePreference;
 			this.cache = cache;
+			this.entryThumbPersister = entryThumbPersister;
 		}
 
 		public ArtistRelationsForApi GetRelations(Artist artist, ArtistRelationsFields fields) {
@@ -159,6 +178,10 @@ namespace VocaDb.Model.Service.Queries {
 
 			if (fields.HasFlag(ArtistRelationsFields.PopularSongs)) {
 				contract.PopularSongs = GetTopSongs(ctx, artist, contract.LatestSongs);
+			}
+
+			if (fields.HasFlag(ArtistRelationsFields.LatestEvents)) {
+				contract.LatestEvents = GetLatestEvents(ctx, artist);
 			}
 
 			return contract;

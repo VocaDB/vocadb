@@ -23,6 +23,8 @@ namespace VocaDb.Model.Mapping.Artists {
 				.Inverse()
 				.Cascade.All()
 				.Cache.ReadWrite();
+			HasMany(m => m.AllEvents).Table("ArtistsForEvents")
+				.Inverse();
 			HasMany(m => m.AllGroups)
 				.Inverse()
 				.KeyColumn("[Member]")

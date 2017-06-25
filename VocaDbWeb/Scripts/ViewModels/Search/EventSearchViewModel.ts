@@ -10,11 +10,17 @@ namespace vdb.viewModels.search {
 			lang: vdb.models.globalization.ContentLanguagePreference,
 			private readonly eventRepo: rep.ReleaseEventRepository,
 			artistRepo: rep.ArtistRepository,
-			public loggedUserId?: number) {
+			public loggedUserId: number,
+			sort: string,
+			artistId: number[]) {
 
 			super(searchViewModel);
 
 			this.artistFilters = new ArtistFilters(artistRepo, false);
+			this.artistFilters.selectArtists(artistId);
+
+			if (sort)
+				this.sort(sort);
 
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.category.subscribe(this.updateResultsWithTotalCount);

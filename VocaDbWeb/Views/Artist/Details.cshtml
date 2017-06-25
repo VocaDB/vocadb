@@ -7,6 +7,7 @@
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Service.QueryableExtenders
 @using VocaDb.Web.Models.Search
 @using VocaDb.Web.Models.Shared
 @using R = ViewRes.Artist;
@@ -303,6 +304,14 @@
 			@SongHelpers.SongGrid(Model.TopSongs, 2, true, true)
 		}
 		
+		@if (Model.LatestEvents.Any()) {
+			<h3 class="withMargin">
+				@Html.ActionLink(Res.RecentEvents, "Index", "Search", UrlMapper.Search.Events(artistId: Model.Id, sort: EventSortRule.Date), null)
+				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.EventCount))</small>				
+			</h3>
+			@Helpers.EventThumbs(Model.LatestEvents)
+		}
+
 		<div data-bind="visible: songsOverTimeChart">
 			<h3 class="withMargin">@Res.SongsPerMonth</h3>
 			<div style="width: 100%; max-width: 800px; height: 300px;" data-bind="highcharts: songsOverTimeChart"></div>

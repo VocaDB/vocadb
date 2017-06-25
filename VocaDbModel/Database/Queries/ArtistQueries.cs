@@ -64,7 +64,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
 
-				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache).GetTopVoicebanks(artist);
+				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache, imagePersister).GetTopVoicebanks(artist);
 
 				return new CachedAdvancedArtistStatsContract {
 					TopVocaloids = topVocaloids
@@ -115,7 +115,8 @@ namespace VocaDb.Model.Database.Queries {
 							SongCount = a.AllSongs.Count(s => !s.Song.Deleted),
 							RatedSongCount = a.AllSongs.Count(s => !s.Song.Deleted && s.Song.RatingScore > 0),
 							AlbumRatingsTotalCount = a.AllAlbums.Any() ? a.AllAlbums.Sum(l => l.Album.RatingCount) : 0,
-							AlbumRatingsTotalSum = a.AllAlbums.Any() ? a.AllAlbums.Sum(l => l.Album.RatingTotal) : 0
+							AlbumRatingsTotalSum = a.AllAlbums.Any() ? a.AllAlbums.Sum(l => l.Album.RatingTotal) : 0,
+							EventCount = a.AllEvents.Count(e => !e.ReleaseEvent.Deleted)
 						})
 						.FirstOrDefault();
 
@@ -125,7 +126,8 @@ namespace VocaDb.Model.Database.Queries {
 						RatedAlbumCount = stats.RatedAlbumCount,
 						SongCount = stats.SongCount,
 						RatedSongCount = stats.RatedSongCount,
-						AlbumRatingAverage = (stats.AlbumRatingsTotalCount > 0 ? Math.Round(stats.AlbumRatingsTotalSum / (double)stats.AlbumRatingsTotalCount, 2) : 0)
+						AlbumRatingAverage = (stats.AlbumRatingsTotalCount > 0 ? Math.Round(stats.AlbumRatingsTotalSum / (double)stats.AlbumRatingsTotalCount, 2) : 0),
+						EventCount = stats.EventCount
 					};
 
 				} catch (HibernateException x) {
@@ -343,11 +345,12 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache)).GetRelations(artist, ArtistRelationsFields.All);
+				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache, imagePersister)).GetRelations(artist, ArtistRelationsFields.All);
 				contract.LatestAlbums = relations.LatestAlbums;
 				contract.TopAlbums = relations.PopularAlbums;
 				contract.LatestSongs = relations.LatestSongs;
 				contract.TopSongs = relations.PopularSongs;
+				contract.LatestEvents = relations.LatestEvents;
 
 				// If song and album counts are out of date and we know there's more albums/songs than that, update counts.
 				contract.SharedStats.AlbumCount = Math.Max(contract.SharedStats.AlbumCount, contract.LatestAlbums.Length + contract.TopAlbums.Length);

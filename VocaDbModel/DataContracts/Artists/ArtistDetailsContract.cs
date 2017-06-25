@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
@@ -149,6 +150,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public AlbumContract[] LatestAlbums { get; set; }
 
 		[DataMember]
+		public ReleaseEventForApiContract[] LatestEvents { get; set; } = new ReleaseEventForApiContract[0];
+
+		[DataMember]
 		public SongForApiContract[] LatestSongs { get; set; }
 
 		[DataMember]
@@ -212,6 +216,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public double AlbumRatingAverage { get; set; }
+
+		[DataMember]
+		public int EventCount { get; set; }
 
 		[DataMember]
 		public int FollowerCount { get; set; }

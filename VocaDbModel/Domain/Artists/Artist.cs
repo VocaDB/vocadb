@@ -9,6 +9,7 @@ using VocaDb.Model.Domain.Songs;
 using System;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
@@ -34,6 +35,7 @@ namespace VocaDb.Model.Domain.Artists {
 		private IList<ArtistComment> comments = new List<ArtistComment>();
 		private User createdBy;
 		private EnglishTranslatedString description;
+		private IList<ArtistForEvent> events = new List<ArtistForEvent>();
 		private IList<ArtistForArtist> groups = new List<ArtistForArtist>();
 		private IList<ArtistHit> hits = new List<ArtistHit>();
 		private IList<ArtistForArtist> members = new List<ArtistForArtist>();
@@ -83,6 +85,14 @@ namespace VocaDb.Model.Domain.Artists {
 			set {
 				ParamIs.NotNull(() => value);
 				albums = value;
+			}
+		}
+
+		public virtual IList<ArtistForEvent> AllEvents {
+			get => events;
+			set {
+				ParamIs.NotNull(() => value);
+				events = value;
 			}
 		}
 

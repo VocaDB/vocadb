@@ -286,6 +286,15 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recent events.
+        /// </summary>
+        public static string RecentEvents {
+            get {
+                return ResourceManager.GetString("RecentEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recent songs / PVs.
         /// </summary>
         public static string RecentSongs {

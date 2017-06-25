@@ -7,6 +7,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Utils.Search {
 
@@ -70,10 +71,15 @@ namespace VocaDb.Model.Utils.Search {
 
 		}
 
-		public SearchRouteParams Events(int? tagId = null) {
+		public SearchRouteParams Events(
+			int? tagId = null, 
+			int? artistId = null, 
+			EventSortRule? sort = null) {
 
 			return new SearchRouteParams(EntryType.ReleaseEvent) {
 				tagId = tagId,
+				artistId = artistId,
+				sort = sort
 			};
 
 		}

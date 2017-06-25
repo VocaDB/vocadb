@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
@@ -208,6 +209,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public AlbumContract[] LatestAlbums { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
+		public ReleaseEventForApiContract[] LatestEvents { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
 		public SongForApiContract[] LatestSongs { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
@@ -223,10 +227,11 @@ namespace VocaDb.Model.DataContracts.Artists {
 		
 		None = 0,
 		LatestAlbums = 1,
-		LatestSongs = 2,
-		PopularAlbums = 4,
-		PopularSongs = 8,
-		All = (LatestAlbums | LatestSongs | PopularAlbums | PopularSongs)
+		LatestEvents = 2,
+		LatestSongs = 4,
+		PopularAlbums = 8,
+		PopularSongs = 16,
+		All = LatestAlbums | LatestEvents | LatestSongs | PopularAlbums | PopularSongs
 
 	}
 

@@ -192,6 +192,9 @@
   <data name="RecentAlbums" xml:space="preserve">
     <value>Recent albums</value>
   </data>
+  <data name="RecentEvents" xml:space="preserve">
+    <value>Recent events</value>
+  </data>
   <data name="RecentSongs" xml:space="preserve">
     <value>Recent songs / PVs</value>
   </data>

@@ -52,7 +52,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var contract = new ArtistForApiContract(a, lang, thumbPersister, WebHelper.IsSSL(Request), fields);
 
 			if (relations != ArtistRelationsFields.None) {
-				contract.Relations = new ArtistRelationsQuery(ctx, lang, cache).GetRelations(a, relations);
+				contract.Relations = new ArtistRelationsQuery(ctx, lang, cache, thumbPersister).GetRelations(a, relations);
 			}
 
 			return contract;
