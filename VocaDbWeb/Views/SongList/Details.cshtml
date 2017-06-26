@@ -75,12 +75,12 @@
 						<a href="@Url.EntryDetails(ev, ev.UrlSlug)">
 							@ev.Name
 						</a>
-						@if (ev.Date.HasValue && !string.IsNullOrEmpty(ev.Venue)) {
-							<small>(@ev.Date.Value.ToString("d"), @ev.Venue)</small>
+						@if (ev.Date.HasValue && !string.IsNullOrEmpty(ev.VenueName)) {
+							<small>(@ev.Date.Value.ToString("d"), @ev.VenueName)</small>
 						} else if (ev.Date.HasValue) {
 							<small>(@ev.Date.Value.ToString("d"))</small>
-						} else if (!string.IsNullOrEmpty(ev.Venue)) {
-							<small>(@ev.Venue)</small>
+						} else if (!string.IsNullOrEmpty(ev.VenueName)) {
+							<small>(@ev.VenueName)</small>
 						}
 					</li>
 				}

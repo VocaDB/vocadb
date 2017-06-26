@@ -28,7 +28,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SeriesSuffix = rel.SeriesSuffix;
 			Status = rel.Status;
 			UrlSlug = rel.UrlSlug;
-			VenueName = rel.Venue;
+			VenueName = rel.VenueName;
 			Version = rel.Version;
 
 			if (rel.HasSeries) {
@@ -37,6 +37,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.AdditionalNames)) {
 				AdditionalNames = rel.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			}
+
+			if (fields.HasFlag(ReleaseEventOptionalFields.Artists)) {
+				Artists = rel.Artists.Select(a => new ArtistForEventContract(a, languagePreference)).ToArray();
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.Description)) {
@@ -70,6 +74,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set; }
+
+		/// <summary>
+		/// List of artist links.
+		/// </summary>
+		[DataMember(EmitDefaultValue = false)]
+		public ArtistForEventContract[] Artists { get; set; }
 
 		/// <summary>
 		/// Event category. 
@@ -140,12 +150,13 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		None = 0,
 		AdditionalNames = 1,
-		Description = 2,
-		MainPicture = 4,
-		Names = 8,
-		Series = 16,
-		SongList = 32,
-		WebLinks = 64
+		Artists = 2,
+		Description = 4,
+		MainPicture = 8,
+		Names = 16,
+		Series = 32,
+		SongList = 64,
+		WebLinks = 128
 
 	}
 

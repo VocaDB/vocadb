@@ -67,7 +67,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SeriesNumber = ev.SeriesNumber;
 			SongList = ObjectRefContract.Create(ev.SongList);
 			TranslatedName = new ArchivedTranslatedStringContract(ev.TranslatedName);
-			VenueName = ev.Venue;
+			VenueName = ev.VenueName;
 			WebLinks = diff.IncludeWebLinks ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}

@@ -36,7 +36,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SongList = ObjectHelper.Convert(ev.SongList, s => new SongListBaseContract(s));
 			Status = ev.Status;
 			UrlSlug = ev.UrlSlug;
-			Venue = ev.Venue;
+			VenueName = ev.VenueName;
 			Version = ev.Version;
 
 			if (includeSeries && ev.HasSeries) {
@@ -71,7 +71,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public string UrlSlug { get; set; }
 
-		public string Venue { get; set; }
+		public string VenueName { get; set; }
 
 		public int Version { get; set; }
 

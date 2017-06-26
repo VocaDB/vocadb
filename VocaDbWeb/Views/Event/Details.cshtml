@@ -81,8 +81,8 @@
 				<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
 			}
 		
-			@if (!string.IsNullOrEmpty(Model.Venue)) {
-				<p>@Res.Venue: @Model.Venue</p>
+			@if (!string.IsNullOrEmpty(Model.VenueName)) {
+				<p>@Res.Venue: @Model.VenueName</p>
 			}
 			
 			@if (Model.Artists.Any()) {

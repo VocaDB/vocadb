@@ -237,7 +237,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
-		public virtual string Venue { get; set; }
+		public virtual string VenueName { get; set; }
 
 		public virtual int Version { get; set; }
 

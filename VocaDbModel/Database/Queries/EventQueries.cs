@@ -368,13 +368,13 @@ namespace VocaDb.Model.Database.Queries {
 					ev.Category = contract.Category;
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.Status = contract.Status;
-					ev.Venue = contract.Venue;
+					ev.VenueName = contract.VenueName;
 
 					if (contract.SongList != null) {
 						diff.SongList.Set();
 					}
 
-					if (!string.IsNullOrEmpty(contract.Venue)) {
+					if (!string.IsNullOrEmpty(contract.VenueName)) {
 						diff.Venue.Set();
 					}
 
@@ -453,7 +453,7 @@ namespace VocaDb.Model.Database.Queries {
 					if (ev.Status != contract.Status)
 						diff.Status.Set();
 
-					if (!string.Equals(ev.Venue, contract.Venue)) {
+					if (!string.Equals(ev.VenueName, contract.VenueName)) {
 						diff.Venue.Set();
 					}
 
@@ -467,7 +467,7 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.Status = contract.Status;
 					ev.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
-					ev.Venue = contract.Venue;
+					ev.VenueName = contract.VenueName;
 					ev.UpdateNameFromSeries();
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);

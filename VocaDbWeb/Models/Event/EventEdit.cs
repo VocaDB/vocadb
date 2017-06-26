@@ -54,7 +54,7 @@ namespace VocaDb.Web.Models.Event {
 			SeriesSuffix = contract.SeriesSuffix;
 			SongList = contract.SongList;
 			Status = contract.Status;
-			Venue = contract.Venue;
+			Venue = contract.VenueName;
 			WebLinks = contract.WebLinks;
 
 			CopyNonEditableProperties(contract, userContext);
@@ -152,7 +152,7 @@ namespace VocaDb.Web.Models.Event {
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
 				SongList = SongList,
 				Status = Status,
-				Venue = Venue,
+				VenueName = Venue,
 				WebLinks = this.WebLinks
 			};
 
