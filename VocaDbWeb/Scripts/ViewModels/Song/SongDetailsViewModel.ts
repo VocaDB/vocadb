@@ -274,7 +274,7 @@ module vdb.viewModels {
 
 			this.favoritesCount = ko.computed(() => _
 				.chain(this.ratings())
-				.filter(r => r.user && r.rating === fav)
+				.filter(r => r.rating === fav)
 				.size()
 				.value());
 
@@ -288,7 +288,7 @@ module vdb.viewModels {
 
 			this.likesCount = ko.computed(() => _
 				.chain(this.ratings())
-				.filter(r => r.user && r.rating === like)
+				.filter(r => r.rating === like)
 				.size()
 				.value());
 
@@ -298,21 +298,28 @@ module vdb.viewModels {
 				.size()
 				.value());
 
+			this.showFavorites = ko.computed(() => !!this.favorites().length);
+			this.showLikes = ko.computed(() => !!this.likes().length);
+
 		}
 
-		public favorites: KnockoutComputed<dc.user.UserApiContract[]>;
+		public readonly favorites: KnockoutComputed<dc.user.UserApiContract[]>;
 
-		public favoritesCount: KnockoutComputed<number>;
+		public readonly favoritesCount: KnockoutComputed<number>;
 
-		public hiddenRatingsCount: KnockoutComputed<number>;
+		public readonly hiddenRatingsCount: KnockoutComputed<number>;
 
-		public likes: KnockoutComputed<dc.user.UserApiContract[]>;
+		public readonly likes: KnockoutComputed<dc.user.UserApiContract[]>;
 
-		public likesCount: KnockoutComputed<number>;
+		public readonly likesCount: KnockoutComputed<number>;
 
-		public popupVisible = ko.observable(false);
+		public readonly popupVisible = ko.observable(false);
 
-		public ratings = ko.observableArray<dc.RatedSongForUserForApiContract>();
+		public readonly ratings = ko.observableArray<dc.RatedSongForUserForApiContract>();
+
+		public readonly showFavorites: KnockoutComputed<boolean>;
+
+		public readonly showLikes: KnockoutComputed<boolean>;
 
 	}
 
