@@ -44,6 +44,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private IList<TagComment> comments = new List<TagComment>();
 		private EnglishTranslatedString description;
 		private ISet<EventTagUsage> eventTagUsages = new HashSet<EventTagUsage>();
+		private IList<TagMapping> mappings = new List<TagMapping>();
 		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
@@ -202,6 +203,14 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Unique database ID, assigned by identity.
 		/// </summary>
 		public virtual int Id { get; set; }
+
+		public virtual IList<TagMapping> Mappings {
+			get => mappings;
+			set {
+				ParamIs.NotNull(() => value);
+				mappings = value;
+			}
+		}
 
 		public virtual NameManager<TagName> Names{
 			get => names;

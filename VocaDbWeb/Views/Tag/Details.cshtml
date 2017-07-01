@@ -85,6 +85,10 @@
 	@Helpers.EntryStatusMessage(Model.Status)
 }
 
+@helper NicoTagLink(string nicoTag) {
+	<a href="http://www.nicovideo.jp/tag/@nicoTag" class="extLink">@nicoTag</a>
+}
+
 @if (Model.Deleted) {
 	@EntryDetailsHelpers.DeletedBanner(null)
 }
@@ -112,6 +116,10 @@
 			@if (Model.WebLinks.Any()) {
 				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 				<br />
+			}
+			
+			@if (Model.MappedNicoTags.Any()) {
+				<p>@Res.MappedTags: @Html.LinkListHtml(Model.MappedNicoTags, NicoTagLink)</p>
 			}
 
 			@if (Model.CategoryName != string.Empty) {

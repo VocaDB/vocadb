@@ -63,6 +63,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			WebLinks = tag.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
+			MappedNicoTags = tag.Mappings.Select(t => t.SourceTag).ToArray();
 
 		}
 
@@ -87,6 +88,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public bool IsFollowing { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
+
+		public string[] MappedNicoTags { get; set; }
 
 		public TagBaseContract[] RelatedTags { get; set; }
 

@@ -22,7 +22,7 @@
 		/// For example "VOCAROCK".
 		/// </summary>
 		public virtual string SourceTag {
-			get { return sourceTag; }
+			get => sourceTag;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				sourceTag = value;
@@ -33,7 +33,7 @@
 		/// VocaDB tag. Cannot be null.
 		/// </summary>
 		public virtual Tag Tag {
-			get { return tag; }
+			get => tag;
 			set {
 				ParamIs.NotNull(() => value);
 				tag = value;

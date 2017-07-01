@@ -147,6 +147,9 @@
   <data name="FollowTag" xml:space="preserve">
     <value>Follow tag</value>
   </data>
+  <data name="MappedTags" xml:space="preserve">
+    <value>The following NicoNicoDouga tags are mapped to this tag</value>
+  </data>
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>
   </data>
