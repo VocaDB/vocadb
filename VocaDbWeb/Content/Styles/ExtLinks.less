@@ -19,6 +19,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/animate.png"));
 	}
 
+	&[href^="http://www5.atwiki.jp/hmiku/"], &[href^="https://www5.atwiki.jp/hmiku/"] {
+		.extLink(url("/Content/ExtIcons/atwiki.png"));
+	}
+
 	&[href*="booth.pm/"] {
 		.extLink(url("/Content/ExtIcons/booth.png"));
 	}
@@ -118,10 +122,6 @@ a.extLink[href^="http://ameblo.jp/"] {
 
 a.extLink[href^="http://www.amiami.com/"] {
 	background: url("/Content/ExtIcons/amiami.png") no-repeat left 50%;
-}
-
-a.extLink[href^="http://www5.atwiki.jp/hmiku/"] {
-	background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
 }
 
 a.extLink[href*="bandcamp.com"] {
