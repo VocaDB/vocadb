@@ -85,9 +85,7 @@
 	@Helpers.EntryStatusMessage(Model.Status)
 }
 
-@helper NicoTagLink(string nicoTag) {
-	<a href="http://www.nicovideo.jp/tag/@nicoTag" class="extLink">@nicoTag</a>
-}
+@helper NicoTagLink(string nicoTag) {<a href="http://www.nicovideo.jp/tag/@nicoTag" class="extLink">@nicoTag</a>}
 
 @if (Model.Deleted) {
 	@EntryDetailsHelpers.DeletedBanner(null)
