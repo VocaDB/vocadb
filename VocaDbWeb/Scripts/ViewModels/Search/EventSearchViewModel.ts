@@ -12,7 +12,8 @@ namespace vdb.viewModels.search {
 			artistRepo: rep.ArtistRepository,
 			public loggedUserId: number,
 			sort: string,
-			artistId: number[]) {
+			artistId: number[],
+			category: string) {
 
 			super(searchViewModel);
 
@@ -21,6 +22,9 @@ namespace vdb.viewModels.search {
 
 			if (sort)
 				this.sort(sort);
+
+			if (category)
+				this.category(category);
 
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.category.subscribe(this.updateResultsWithTotalCount);

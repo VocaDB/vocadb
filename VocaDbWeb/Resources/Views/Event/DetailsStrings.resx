@@ -126,6 +126,9 @@
   <data name="Attending" xml:space="preserve">
     <value>Attending</value>
   </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
   <data name="Event" xml:space="preserve">
     <value>Event</value>
   </data>

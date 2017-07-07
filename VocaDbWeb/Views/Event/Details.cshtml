@@ -88,6 +88,11 @@
 			@if (Model.Artists.Any()) {
 				<p>Participating artists: @ArtistList(Model.Artists, true, true)</p>
 			}
+			
+			<p>
+				@ViewRes.Event.DetailsStrings.Category:
+				@Html.ActionLink(Translate.ReleaseEventCategoryNames[Model.InheritedCategory], "Index", "Search", UrlMapper.Search.Events(category: Model.InheritedCategory), null)
+			</p>	
 
 			@if (!string.IsNullOrEmpty(Model.Description)) {
 				<p>@Html.Raw(descriptionHtml)</p>

@@ -15,7 +15,10 @@ module vdb.viewModels.search {
 			resourceRepo: rep.ResourceRepository,
 			userRepo: rep.UserRepository,
 			unknownPictureUrl: string,
-			private languageSelection: string, loggedUserId: number, cultureCode: string, searchType: string,
+			private languageSelection: string,
+			loggedUserId: number,
+			cultureCode: string,
+			searchType: string,
 			searchTerm: string,
 			tagIds: number[],
 			sort: string,
@@ -23,7 +26,9 @@ module vdb.viewModels.search {
 			childTags: boolean,
 			childVoicebanks: boolean,
 			artistType: string,
-			albumType: string, songType: string,
+			albumType: string,
+			songType: string,
+			eventCategory: string,
 			onlyWithPVs: boolean,
 			onlyRatedSongs: boolean,
 			since: number,
@@ -56,7 +61,7 @@ module vdb.viewModels.search {
 				isAlbum ? viewMode : null);
 
 			this.eventSearchViewModel = new EventSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], eventRepo, artistRepo,
-				loggedUserId, sort, artistId);
+				loggedUserId, sort, artistId, eventCategory);
 
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
 				resourceRepo,
@@ -77,7 +82,7 @@ module vdb.viewModels.search {
 
 			this.tagSearchViewModel = new TagSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], tagRepo);
 
-			if (tagIds != null || artistId != null || artistType || albumType || songType || onlyWithPVs != null || since || minScore)
+			if (tagIds != null || artistId != null || artistType || albumType || songType || eventCategory || onlyWithPVs != null || since || minScore)
 				this.showAdvancedFilters(true);
 
 			if (searchType)

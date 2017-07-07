@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VocaDb.Model.Domain;
+﻿using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtenders;
 
@@ -22,6 +18,8 @@ namespace VocaDb.Model.Utils.Search {
 		public ArtistType? artistType { get; set; }
 
 		public DiscType? discType { get; set; }
+
+		public EventCategory? eventCategory { get; set; }
 
 		public string filter { get; set; }
 
@@ -43,9 +41,7 @@ namespace VocaDb.Model.Utils.Search {
 
 	public class SearchRouteParamsFactory {
 
-		public static SearchRouteParamsFactory Instance {
-			get { return new SearchRouteParamsFactory(); }
-		}
+		public static SearchRouteParamsFactory Instance => new SearchRouteParamsFactory();
 
 		public SearchRouteParams Albums(int? tagId = null) {
 			
@@ -74,12 +70,14 @@ namespace VocaDb.Model.Utils.Search {
 		public SearchRouteParams Events(
 			int? tagId = null, 
 			int? artistId = null, 
-			EventSortRule? sort = null) {
+			EventSortRule? sort = null,
+			EventCategory? category = null) {
 
 			return new SearchRouteParams(EntryType.ReleaseEvent) {
 				tagId = tagId,
 				artistId = artistId,
-				sort = sort
+				sort = sort,
+				eventCategory = category
 			};
 
 		}

@@ -65,7 +65,7 @@ namespace VocaDb.Web.Controllers
 				return RedirectToActionPermanent("Details", new { id, slug = ev.UrlSlug });
 			}
 
-			var inheritedCategory = ev.Series != null ? ev.Series.Category : ev.Category;
+			var inheritedCategory = ev.InheritedCategory;
 			string subtitle;
 
 			if (inheritedCategory == EventCategory.Unspecified || inheritedCategory == EventCategory.Other) {

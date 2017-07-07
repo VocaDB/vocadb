@@ -59,6 +59,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public int Id { get; set; }
 
+		public EventCategory InheritedCategory => Series?.Category ?? Category;
+
 		public string Name { get; set; }
 
 		public string PictureMime { get; set; }

@@ -46,6 +46,11 @@
 		}
 	</div>
 	
+	<p>
+		@ViewRes.Event.DetailsStrings.Category:
+		@Html.ActionLink(Translate.ReleaseEventCategoryNames[Model.Category], "Index", "Search", UrlMapper.Search.Events(category: Model.Category), null)
+	</p>	
+	
 	@if (Model.WebLinks.Any()) {
 		@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 		<br />
