@@ -418,6 +418,7 @@
     <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesEditableFields.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesWebLink.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventWebLink.cs" />
+    <Compile Include="Domain\ReleaseEvents\Venue.cs" />
     <Compile Include="Domain\Security\AuditLogCategory.cs" />
     <Compile Include="Domain\Security\EntryPermissionManager.cs" />
     <Compile Include="Domain\Security\IPRule.cs" />
