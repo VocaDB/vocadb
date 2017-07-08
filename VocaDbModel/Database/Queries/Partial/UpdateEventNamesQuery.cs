@@ -10,6 +10,14 @@ using VocaDb.Model.Service.Exceptions;
 
 namespace VocaDb.Model.Database.Queries.Partial {
 
+	/// <summary>
+	/// Handles updating event names.
+	/// </summary>
+	/// <remarks>
+	/// Event names are unique. In addition, event names can be inherited from series.
+	/// Because of the order in which NHibernate saves cascaded collections, we need to make sure
+	/// that there's no duplicate event names at any point.
+	/// </remarks>
 	public class UpdateEventNamesQuery {
 
 		public void CheckDuplicateName(IDatabaseContext ctx, string[] names, int eventId) {
@@ -35,6 +43,7 @@ namespace VocaDb.Model.Database.Queries.Partial {
 
 		private bool SaveNames(IDatabaseContext ctx, ReleaseEvent ev, IEnumerable<ILocalizedString> names) {
 
+			// Make sure deletions are flushed to database BEFORE new names are added, to make sure there's no duplicates
 			var diff = ev.Names.SyncByContent(names, ev,
 				deleted => {
 					foreach (var name in deleted)
