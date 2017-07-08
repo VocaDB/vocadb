@@ -4,6 +4,19 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_07_07_2100)]
+	public class ReplaceEventIndex : Migration {
+		public override void Up() {
+			Delete.Index("IX_AlbumReleaseEvents_Name").OnTable(TableNames.AlbumReleaseEvents);
+			Create.Index("IX_EventNames_Value").OnTable(TableNames.EventNames).OnColumn("Value").Unique();
+		}
+
+		public override void Down() {
+			Delete.Index("IX_EventNames_Value").OnTable(TableNames.EventNames);
+			Create.Index("IX_AlbumReleaseEvents_Name").OnTable(TableNames.AlbumReleaseEvents).OnColumn("EnglishName").Unique();
+		}
+	}
+
 	[Migration(2017_06_19_2000)]
 	public class ArtistsForEvents : AutoReversingMigration {
 		public override void Up() {

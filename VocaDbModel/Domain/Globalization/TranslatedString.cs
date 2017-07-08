@@ -196,6 +196,10 @@ namespace VocaDb.Model.Domain.Globalization {
 			}
 		}
 
+		public virtual void Clear() {
+			Japanese = Romaji = English = string.Empty;
+		}
+
 		public virtual void CopyFrom(ITranslatedString contract) {
 
 			ParamIs.NotNull(() => contract);

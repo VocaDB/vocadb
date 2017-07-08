@@ -120,6 +120,7 @@
     <Compile Include="Database\Queries\Partial\CreateEntryHitQuery.cs" />
     <Compile Include="Database\Queries\Partial\CreateEventQuery.cs" />
     <Compile Include="Database\Queries\Partial\CreateMergeEntryQuery.cs" />
+    <Compile Include="Database\Queries\Partial\UpdateEventNamesQuery.cs" />
     <Compile Include="Database\Queries\SongAggregateQueries.cs" />
     <Compile Include="Database\Queries\SongListQueries.cs" />
     <Compile Include="Database\Queries\SongQueries.cs" />

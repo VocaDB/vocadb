@@ -45,7 +45,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void SetUp() {
 
 			series = CreateEntry.EventSeries("M3");
-			existingEvent = new ReleaseEvent(string.Empty, null, series, 2013, "Spring", ContentLanguageSelection.Unspecified, null, false);
+			existingEvent = CreateEntry.SeriesEvent(series, 2013, "Spring");
 			series.AllEvents.Add(existingEvent);
 
 			repository = new FakeEventRepository();
@@ -164,7 +164,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
 			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
-			Assert.AreEqual(ReleaseEventEditableFields.SeriesSuffix, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+			// Names are changed too when suffix changes
+			Assert.AreEqual(ReleaseEventEditableFields.Names | ReleaseEventEditableFields.SeriesSuffix, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
 
 		}
 
@@ -189,11 +190,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_ChangeName_UseSeriesName() {
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
-			contract.Name = "New name";
+			contract.Names[0].Value = "New name";
+			contract.DefaultNameLanguage = ContentLanguageSelection.Romaji;
 
 			var result = CallUpdate(contract);
 
 			Assert.AreEqual("M3 2013 Spring", result.DefaultName, "Name was not updated");
+			Assert.AreEqual(ContentLanguageSelection.English, result.TranslatedName.DefaultLanguage, "Default language was not updated");
 
 			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
 			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
@@ -203,10 +206,26 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateEventNameException))]
-		public void Update_ChangeName_Duplicate() {
+		public void Update_ChangeName_DuplicateOfAnotherEvent() {
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.Id = 0; // Simulate new event
+
+			queries.Update(contract, null);
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DuplicateEventNameException))]
+		public void Update_ChangeName_DuplicateForSameEvent() {
+
+			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
+			var contract = new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, permissionContext, null) {
+				Names = new[] {
+					new LocalizedStringWithIdContract {Value = "Comiket 39"},
+					new LocalizedStringWithIdContract {Value = "Comiket 39"}
+				}
+			};
 
 			queries.Update(contract, null);
 
@@ -229,8 +248,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Update series name, event names are updated as well
+		/// </summary>
 		[TestMethod]
-		public void UpdateSeries_Update() {
+		public void UpdateSeries_UpdateName_EventsUpdated() {
 
 			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English);
 			contract.Names[0].Value = "M3.9";
@@ -245,6 +267,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(1, existingEvent.Names.Names.Count, "Number of event names");
 			Assert.AreEqual("M3.9 2013 Spring", existingEvent.Names.Names[0].Value, "Event name value");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DuplicateEventNameException))]
+		public void UpdateSeries_DuplicateName() {
+
+			var series2 = repository.SaveWithNames<ReleaseEventSeries, EventSeriesName>(CreateEntry.EventSeries("M3.9"));
+			repository.SaveWithNames<ReleaseEvent, EventName>(CreateEntry.SeriesEvent(series2, 2013, "Spring"));
+
+			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English);
+			contract.Names[0].Value = "M3.9";
+
+			queries.UpdateSeries(contract, null);
 
 		}
 

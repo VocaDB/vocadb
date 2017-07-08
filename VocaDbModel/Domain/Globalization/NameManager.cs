@@ -14,6 +14,10 @@ namespace VocaDb.Model.Domain.Globalization {
 		private IList<T> names = new List<T>();
 		private TranslatedString sortNames = new TranslatedString();
 
+		public NameManager() {
+			AdditionalNamesString = string.Empty;
+		}
+
 		private T GetDefaultName() {
 
 			if (!Names.Any())
@@ -254,8 +258,7 @@ namespace VocaDb.Model.Domain.Globalization {
 				Remove(n);
 			}
 
-			if (deletedCallback != null)
-				deletedCallback(diff.Removed);
+			deletedCallback?.Invoke(diff.Removed);
 
 			foreach (var old in diff.Unchanged) {
 
@@ -269,8 +272,7 @@ namespace VocaDb.Model.Domain.Globalization {
 
 			}
 
-			if (editedCallback != null)
-				editedCallback(edited.ToArray());
+			editedCallback?.Invoke(edited.ToArray());
 
 			foreach (var nameEntry in diff.Added) {
 
@@ -285,7 +287,7 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
-		public virtual CollectionDiff<T, T> SyncByContent(IEnumerable<ILocalizedString> newNames, INameFactory<T> nameFactory) {
+		public virtual CollectionDiff<T, T> SyncByContent(IEnumerable<ILocalizedString> newNames, INameFactory<T> nameFactory, Action<T[]> deletedCallback = null) {
 
 			ParamIs.NotNull(() => newNames);
 			ParamIs.NotNull(() => nameFactory);
@@ -296,6 +298,8 @@ namespace VocaDb.Model.Domain.Globalization {
 			foreach (var n in diff.Removed) {
 				Remove(n);
 			}
+
+			deletedCallback?.Invoke(diff.Removed);
 
 			foreach (var nameEntry in diff.Added) {
 

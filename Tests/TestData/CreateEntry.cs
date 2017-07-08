@@ -49,8 +49,18 @@ namespace VocaDb.Tests.TestData {
 			return new PVContract { Id = id, Service = PVService.Youtube, PVId = pvId, Name = "Nebula", PVType = pvType, PublishDate = publishDate };
 		}
 
-		public static ReleaseEvent ReleaseEvent(string name) {
-			return new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { new LocalizedString(name, ContentLanguageSelection.English) });
+		public static ReleaseEvent ReleaseEvent(string englishName, DateTime? date = null, int id = 0) {
+			var ev = new ReleaseEvent(string.Empty, date, ContentLanguageSelection.English) { Id = id };
+			ev.CreateName(new LocalizedString(englishName, ContentLanguageSelection.English));
+			return ev;
+		}
+
+		public static ReleaseEvent SeriesEvent(ReleaseEventSeries series, int seriesNumber, string seriesSuffix = "", int id = 0) {
+			var ev = new ReleaseEvent(string.Empty, null, series, seriesNumber, seriesSuffix, ContentLanguageSelection.English, false) { Id = id };
+			foreach (var name in ev.GetNamesFromSeries()) {
+				ev.CreateName(name);
+			}
+			return ev;
 		}
 
 		public static Song Song(int id = 0, string name = "Nebula") {

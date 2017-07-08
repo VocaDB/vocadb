@@ -126,6 +126,13 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
+		public TEntry SaveWithNames<TEntry, TName>(TEntry entry) where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId {
+
+			CreateContext().Save(entry);
+			SaveNames(entry);
+			return entry;
+
+		}
 	}
 
 	public class ListDatabaseContext<T> : IDatabaseContext<T> {

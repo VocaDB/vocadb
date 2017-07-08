@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Search;
+using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.Search {
@@ -32,9 +33,7 @@ namespace VocaDb.Tests.Service.Search {
 
 		private ReleaseEvent CreateEvent(ReleaseEventSeries series, int number, string suffix = "") {
 
-			var e = new ReleaseEvent(string.Empty, null, series, number, suffix, ContentLanguageSelection.Unspecified, null, false) {
-				Id = eventId++
-			};
+			var e = CreateEntry.SeriesEvent(series, number, suffix, id: eventId++);
 			querySource.Add(e);
 			series.AllEvents.Add(e);
 
@@ -44,7 +43,7 @@ namespace VocaDb.Tests.Service.Search {
 
 		private ReleaseEvent CreateEvent(string name) {
 
-			var e = new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { new LocalizedString(name, ContentLanguageSelection.English) }) { Id = eventId++ };
+			var e = CreateEntry.ReleaseEvent(name, id: eventId++);
 			querySource.Add(e);
 
 			return e;
