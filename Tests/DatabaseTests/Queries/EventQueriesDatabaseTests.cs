@@ -54,8 +54,24 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		[ExpectedException(typeof(DuplicateEventNameException))]
 		public void Update_DuplicateName() {
 
+			// Name "Comiket 39" is already taken by ReleaseEvent2
 			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, userContext, null);
 			contract.Names[0].Value = "Comiket 39";
+
+			Update(contract);
+
+		}
+
+		[TestMethod]
+		[TestCategory(TestCategories.Database)]
+		[ExpectedException(typeof(DuplicateEventNameException))]
+		public void Update_DuplicateNameFromSeries() {
+
+			// Generated name is "Comiket 39", which is already taken
+			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, userContext, null) {
+				Series = new ReleaseEventSeriesContract(Db.ReleaseEventSeries, ContentLanguagePreference.English),
+				SeriesNumber = 39
+			};
 
 			Update(contract);
 

@@ -23,6 +23,7 @@ namespace VocaDb.Tests.DatabaseTests {
 		public Artist Producer2 { get; private set; }
 		public Artist Producer3 { get; private set; }
 
+		public ReleaseEventSeries ReleaseEventSeries { get; private set; }
 		public ReleaseEvent ReleaseEvent { get; private set; }
 		public ReleaseEvent ReleaseEvent2 { get; private set; }
 
@@ -126,7 +127,10 @@ namespace VocaDb.Tests.DatabaseTests {
 				ReleaseEvent.AllSongs.Add(Song);
 				session.Update(Song);
 
-				ReleaseEvent2 = CreateEntry.ReleaseEvent("Comiket 39");
+				ReleaseEventSeries = CreateEntry.EventSeries("Comiket");
+				session.Save(ReleaseEventSeries);
+
+				ReleaseEvent2 = new ReleaseEvent(string.Empty, null, ReleaseEventSeries, 39, string.Empty, ContentLanguageSelection.English, new LocalizedString[0], false);
 				session.Save(ReleaseEvent2);
 
 				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };
