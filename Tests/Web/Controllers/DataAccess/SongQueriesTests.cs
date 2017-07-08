@@ -759,11 +759,29 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// User has selected the event
+		/// </summary>
 		[TestMethod]
-		public void Update_ReleaseEvent_ExistingEvent() {
+		public void Update_ReleaseEvent_ExistingEvent_Selected() {
 
 			var contract = EditContract();
 			contract.ReleaseEvent = new ReleaseEventContract(releaseEvent, ContentLanguagePreference.English);
+
+			queries.UpdateBasicProperties(contract);
+
+			Assert.AreSame(releaseEvent, song.ReleaseEvent, "ReleaseEvent");
+
+		}
+
+		/// <summary>
+		/// User typed an event name, and there's a name match
+		/// </summary>
+		[TestMethod]
+		public void Update_ReleaseEvent_ExistingEvent_MatchByName() {
+
+			var contract = EditContract();
+			contract.ReleaseEvent = new ReleaseEventContract { Name = releaseEvent.DefaultName };
 
 			queries.UpdateBasicProperties(contract);
 
