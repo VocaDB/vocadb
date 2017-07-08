@@ -41,9 +41,9 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 				c.HasMany(m => m.Names).Table("EventNames").KeyColumn("[Event]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 				c.Component(m => m.SortNames, c2 => {
 					c2.Map(m => m.DefaultLanguage, "DefaultNameLanguage");
-					c2.Map(m => m.Japanese, "JapaneseName");
-					c2.Map(m => m.English, "EnglishName");
-					c2.Map(m => m.Romaji, "RomajiName");
+					c2.Map(m => m.Japanese, "JapaneseName").Not.Nullable();
+					c2.Map(m => m.English, "EnglishName").Not.Nullable();
+					c2.Map(m => m.Romaji, "RomajiName").Not.Nullable();
 				});
 			});
 

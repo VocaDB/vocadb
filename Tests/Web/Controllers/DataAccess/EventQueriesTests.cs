@@ -190,11 +190,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_ChangeName_UseSeriesName() {
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
-			contract.Name = "New name";
+			contract.Names[0].Value = "New name";
+			contract.DefaultNameLanguage = ContentLanguageSelection.Romaji;
 
 			var result = CallUpdate(contract);
 
 			Assert.AreEqual("M3 2013 Spring", result.DefaultName, "Name was not updated");
+			Assert.AreEqual(ContentLanguageSelection.English, result.TranslatedName.DefaultLanguage, "Default language was not updated");
 
 			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
 			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
@@ -246,8 +248,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Update series name, event names are updated as well
+		/// </summary>
 		[TestMethod]
-		public void UpdateSeries_Update() {
+		public void UpdateSeries_UpdateName_EventsUpdated() {
 
 			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English);
 			contract.Names[0].Value = "M3.9";

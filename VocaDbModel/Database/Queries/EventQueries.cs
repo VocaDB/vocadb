@@ -431,7 +431,8 @@ namespace VocaDb.Model.Database.Queries {
 					if (ev.Description != contract.Description)
 						diff.Description.Set();
 
-					if (ev.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
+					var inheritedLanguage = ev.Series == null || contract.CustomName ? contract.DefaultNameLanguage : ev.Series.TranslatedName.DefaultLanguage;
+					if (ev.TranslatedName.DefaultLanguage != inheritedLanguage) {
 						diff.OriginalName.Set();
 					}
 
@@ -471,7 +472,7 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SeriesSuffix = contract.SeriesSuffix;
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.Status = contract.Status;
-					ev.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
+					ev.TranslatedName.DefaultLanguage = inheritedLanguage;
 					ev.VenueName = contract.VenueName;
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);

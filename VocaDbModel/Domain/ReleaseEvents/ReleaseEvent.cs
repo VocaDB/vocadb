@@ -62,6 +62,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Description = description;
 			Date = date;
 			TranslatedName.DefaultLanguage = defaultNameLanguage;
+			TranslatedName.Clear();
 
 		}
 
@@ -77,6 +78,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			SeriesNumber = seriesNumber;
 			SeriesSuffix = seriesSuffix;
 			CustomName = customName;
+			TranslatedName.Clear();
 
 			if (customName) {
 				TranslatedName.DefaultLanguage = defaultNameLanguage;
