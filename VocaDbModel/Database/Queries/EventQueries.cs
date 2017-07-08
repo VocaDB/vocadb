@@ -397,9 +397,12 @@ namespace VocaDb.Model.Database.Queries {
 					if (artistDiff.Changed)
 						diff.Artists.Set();
 
-					new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
-
 					session.Save(ev);
+
+					var namesChanged = new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
+					if (namesChanged) {
+						session.Update(ev);
+					}
 
 					if (pictureData != null) {
 						diff.MainPicture.Set();

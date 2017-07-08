@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
@@ -46,6 +47,22 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 				queries.Delete(Db.ReleaseEvent.Id, string.Empty);				
 
 			});
+
+		}
+
+		[TestMethod]
+		[TestCategory(TestCategories.Database)]
+		public void Create() {
+			
+			var contract = new ReleaseEventForEditContract {
+				Names = new[] {
+					new LocalizedStringWithIdContract { Value = "M3 2016" }
+				}
+			};
+
+			var result = Update(contract);
+
+			Assert.IsNotNull(result, "result");
 
 		}
 
