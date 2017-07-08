@@ -24,6 +24,7 @@ namespace VocaDb.Tests.DatabaseTests {
 		public Artist Producer3 { get; private set; }
 
 		public ReleaseEvent ReleaseEvent { get; private set; }
+		public ReleaseEvent ReleaseEvent2 { get; private set; }
 
 		public Song Song { get; private set; }
 		public Song Song2 { get; private set; }
@@ -119,10 +120,14 @@ namespace VocaDb.Tests.DatabaseTests {
 				session.Save(SongWithSpecialChars);
 
 				ReleaseEvent = CreateEntry.ReleaseEvent("Miku's birthday");
+				ReleaseEvent.CreateName("ミク誕生祭", ContentLanguageSelection.Japanese);
 				session.Save(ReleaseEvent);
 				Song.ReleaseEvent = ReleaseEvent;
 				ReleaseEvent.AllSongs.Add(Song);
 				session.Update(Song);
+
+				ReleaseEvent2 = CreateEntry.ReleaseEvent("Comiket 39");
+				session.Save(ReleaseEvent2);
 
 				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };
 				session.Save(UserWithEditPermissions);

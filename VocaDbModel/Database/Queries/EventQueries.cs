@@ -55,9 +55,20 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void CheckDuplicateName(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent ev) {
+		private void CheckDuplicateName(IDatabaseContext ctx, string[] names, int eventId) {
 
-			var duplicate = ctx.Query<EventName>().FirstOrDefault(e => e.Entry.Id != ev.Id && ev.Names.AllValues.Contains(e.Value));
+			var duplicateName = names
+				.GroupBy(n => n, new KanaAndCaseInsensitiveStringComparer())
+				.Where(n => n.Count() > 1)
+				.Select(n => n.First())
+				.FirstOrDefault();
+
+			if (duplicateName != null) {
+				throw new DuplicateEventNameException(duplicateName);
+			}
+
+			var duplicate = ctx.Query<EventName>()
+				.FirstOrDefault(e => e.Entry.Id != eventId && names.Contains(e.Value));
 
 			if (duplicate != null) {
 				throw new DuplicateEventNameException(duplicate.Value);
@@ -223,6 +234,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public ReleaseEventForEditContract GetEventForEdit(int id) {
+
+			return HandleQuery(session => new ReleaseEventForEditContract(
+				session.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, null) {
+				AllSeries = session.Query<ReleaseEventSeries>().Select(s => new ReleaseEventSeriesContract(s, LanguagePreference, false)).ToArray()
+			});
+
+		}
+
 		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields, bool ssl) {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister, ssl));
 		}
@@ -342,7 +362,25 @@ namespace VocaDb.Model.Database.Queries {
 		/// </summary>
 		/// <param name="contract">Updated contract. Cannot be null.</param>
 		/// <returns>Updated release event data. Cannot be null.</returns>
+		/// <exception cref="DuplicateEventNameException">If the event name is already in use.</exception>
 		public ReleaseEventContract Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData) {
+
+			bool SaveNames(IDatabaseContext ctx, ReleaseEvent ev, LocalizedStringWithIdContract[] names) {
+
+				var diff = ev.Names.Sync(names, ev,
+					deleted => {
+						foreach (var name in deleted)
+							ctx.Delete(name);
+						ctx.Flush();
+					}, immutable: true
+				);
+
+				foreach (var n in diff.Added)
+					ctx.Save(n);
+
+				return diff.Changed;
+
+			}
 
 			ParamIs.NotNull(() => contract);
 
@@ -395,7 +433,7 @@ namespace VocaDb.Model.Database.Queries {
 					if (artistDiff.Changed)
 						diff.Artists.Set();
 
-					CheckDuplicateName(session, ev);
+					CheckDuplicateName(session, contract.Names.Select(n => n.Value).ToArray(), ev.Id);
 
 					session.Save(ev);
 
@@ -414,6 +452,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					ev = session.Load(contract.Id);
 					permissionContext.VerifyEntryEdit(ev);
+					CheckDuplicateName(session, contract.Names.Select(n => n.Value).ToArray(), ev.Id);
+
 					var diff = new ReleaseEventDiff(DoSnapshot(ev, session));
 
 					if (ev.Category != contract.Category)
@@ -429,10 +469,9 @@ namespace VocaDb.Model.Database.Queries {
 						diff.OriginalName.Set();
 					}
 
-					var nameDiff = ev.Names.Sync(contract.Names, ev);
-					session.Sync(nameDiff);
+					var namesChanged = SaveNames(session, ev, contract.Names);
 
-					if (nameDiff.Changed) {
+					if (namesChanged) {
 						diff.Names.Set();
 					}
 
@@ -487,8 +526,6 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (artistDiff.Changed)
 						diff.Artists.Set();
-
-					CheckDuplicateName(session, ev);
 
 					if (pictureData != null) {
 						diff.MainPicture.Set();

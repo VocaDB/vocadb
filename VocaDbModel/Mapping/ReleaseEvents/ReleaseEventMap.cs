@@ -78,7 +78,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Id(m => m.Id);
 
 			Map(m => m.Language).Not.Nullable();
-			Map(m => m.Value).Length(255).Not.Nullable();
+			Map(m => m.Value).Length(255).Not.Nullable().Unique();
 			References(m => m.Entry).Column("[Event]").Not.Nullable();
 
 		}

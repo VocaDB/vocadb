@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -95,10 +96,23 @@ namespace VocaDb.Web.Controllers
 				CheckConcurrentEdit(EntryType.ReleaseEvent, id.Value);
 			}
 
-			var model = (id != null ? new EventEdit(Service.GetReleaseEventForEdit(id.Value), PermissionContext) 
+			var model = (id != null ? new EventEdit(queries.GetEventForEdit(id.Value), PermissionContext) 
 				: new EventEdit(seriesId != null ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null, PermissionContext));
 
 			return View(model);
+
+		}
+
+	    private ActionResult RenderEdit(EventEdit model) {
+
+			if (model.Id != 0) {
+			    var contract = queries.GetEventForEdit(model.Id);
+			    model.CopyNonEditableProperties(contract, PermissionContext);
+		    } else {
+			    model.CopyNonEditableProperties(null, PermissionContext);
+		    }
+
+		    return View("Edit", model);
 
 		}
 
@@ -116,19 +130,18 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-
-				if (model.Id != 0) {
-					var contract = Service.GetReleaseEventForEdit(model.Id);
-					model.CopyNonEditableProperties(contract, PermissionContext);					
-				} else {
-					model.CopyNonEditableProperties(null, PermissionContext);
-				}
-
-				return View(model);
+				return RenderEdit(model);
 			}
 
 	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
-			var id = queries.Update(model.ToContract(), pictureData).Id;
+	        int id;
+
+	        try {
+				id = queries.Update(model.ToContract(), pictureData).Id;
+	        } catch (DuplicateEventNameException x) {
+		        ModelState.AddModelError("Names", x.Message);
+		        return RenderEdit(model);
+	        }
 
 			return RedirectToAction("Details", new { id });
 
