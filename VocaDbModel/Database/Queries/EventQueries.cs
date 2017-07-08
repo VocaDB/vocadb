@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using NHibernate;
+using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -52,27 +54,6 @@ namespace VocaDb.Model.Database.Queries {
 			var archived = ArchivedReleaseEventSeriesVersion.Create(releaseEvent, diff, agentLoginData, reason, notes);
 			ctx.Save(archived);
 			return archived;
-
-		}
-
-		private void CheckDuplicateName(IDatabaseContext ctx, string[] names, int eventId) {
-
-			var duplicateName = names
-				.GroupBy(n => n, new KanaAndCaseInsensitiveStringComparer())
-				.Where(n => n.Count() > 1)
-				.Select(n => n.First())
-				.FirstOrDefault();
-
-			if (duplicateName != null) {
-				throw new DuplicateEventNameException(duplicateName);
-			}
-
-			var duplicate = ctx.Query<EventName>()
-				.FirstOrDefault(e => e.Entry.Id != eventId && names.Contains(e.Value));
-
-			if (duplicate != null) {
-				throw new DuplicateEventNameException(duplicate.Value);
-			}
 
 		}
 
@@ -365,23 +346,6 @@ namespace VocaDb.Model.Database.Queries {
 		/// <exception cref="DuplicateEventNameException">If the event name is already in use.</exception>
 		public ReleaseEventContract Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData) {
 
-			bool SaveNames(IDatabaseContext ctx, ReleaseEvent ev, LocalizedStringWithIdContract[] names) {
-
-				var diff = ev.Names.Sync(names, ev,
-					deleted => {
-						foreach (var name in deleted)
-							ctx.Delete(name);
-						ctx.Flush();
-					}, immutable: true
-				);
-
-				foreach (var n in diff.Added)
-					ctx.Save(n);
-
-				return diff.Changed;
-
-			}
-
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyManageDatabase();
@@ -397,10 +361,10 @@ namespace VocaDb.Model.Database.Queries {
 					if (!contract.Series.IsNullOrDefault()) {
 						var series = session.OfType<ReleaseEventSeries>().Load(contract.Series.Id);
 						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
-							contract.DefaultNameLanguage, contract.Names, contract.CustomName);
+							contract.DefaultNameLanguage, contract.CustomName);
 						series.AllEvents.Add(ev);
 					} else {
-						ev = new ReleaseEvent(contract.Description, contract.Date, contract.DefaultNameLanguage, contract.Names);
+						ev = new ReleaseEvent(contract.Description, contract.Date, contract.DefaultNameLanguage);
 					}
 
 					ev.Category = contract.Category;
@@ -433,7 +397,7 @@ namespace VocaDb.Model.Database.Queries {
 					if (artistDiff.Changed)
 						diff.Artists.Set();
 
-					CheckDuplicateName(session, contract.Names.Select(n => n.Value).ToArray(), ev.Id);
+					new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
 
 					session.Save(ev);
 
@@ -452,7 +416,6 @@ namespace VocaDb.Model.Database.Queries {
 
 					ev = session.Load(contract.Id);
 					permissionContext.VerifyEntryEdit(ev);
-					CheckDuplicateName(session, contract.Names.Select(n => n.Value).ToArray(), ev.Id);
 
 					var diff = new ReleaseEventDiff(DoSnapshot(ev, session));
 
@@ -469,7 +432,7 @@ namespace VocaDb.Model.Database.Queries {
 						diff.OriginalName.Set();
 					}
 
-					var namesChanged = SaveNames(session, ev, contract.Names);
+					var namesChanged = new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
 
 					if (namesChanged) {
 						diff.Names.Set();
@@ -507,7 +470,6 @@ namespace VocaDb.Model.Database.Queries {
 					ev.Status = contract.Status;
 					ev.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
 					ev.VenueName = contract.VenueName;
-					ev.UpdateNameFromSeries();
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
 
@@ -666,8 +628,9 @@ namespace VocaDb.Model.Database.Queries {
 					session.Update(series);
 
 					if (diff.Names.IsChanged || diff.OriginalName.IsChanged) {
+						var eventNamesQuery = new UpdateEventNamesQuery();
 						foreach (var ev in series.Events.Where(e => !e.CustomName)) {
-							ev.UpdateNameFromSeries();
+							eventNamesQuery.UpdateNames(session, ev, series, ev.CustomName, ev.SeriesNumber, ev.SeriesSuffix, ev.Names);
 							session.Update(ev);
 						}
 					}

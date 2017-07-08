@@ -45,7 +45,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void SetUp() {
 
 			series = CreateEntry.EventSeries("M3");
-			existingEvent = new ReleaseEvent(string.Empty, null, series, 2013, "Spring", ContentLanguageSelection.Unspecified, null, false);
+			existingEvent = CreateEntry.SeriesEvent(series, 2013, "Spring");
 			series.AllEvents.Add(existingEvent);
 
 			repository = new FakeEventRepository();
@@ -164,7 +164,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var archivedVersions = repository.List<ArchivedReleaseEventVersion>();
 			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
-			Assert.AreEqual(ReleaseEventEditableFields.SeriesSuffix, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+			// Names are changed too when suffix changes
+			Assert.AreEqual(ReleaseEventEditableFields.Names | ReleaseEventEditableFields.SeriesSuffix, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
 
 		}
 

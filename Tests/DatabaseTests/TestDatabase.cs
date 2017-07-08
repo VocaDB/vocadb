@@ -130,7 +130,7 @@ namespace VocaDb.Tests.DatabaseTests {
 				ReleaseEventSeries = CreateEntry.EventSeries("Comiket");
 				session.Save(ReleaseEventSeries);
 
-				ReleaseEvent2 = new ReleaseEvent(string.Empty, null, ReleaseEventSeries, 39, string.Empty, ContentLanguageSelection.English, new LocalizedString[0], false);
+				ReleaseEvent2 = CreateEntry.SeriesEvent(ReleaseEventSeries, 39);
 				session.Save(ReleaseEvent2);
 
 				UserWithEditPermissions = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Trusted };

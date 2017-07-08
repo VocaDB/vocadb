@@ -109,7 +109,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			tag = new Tag("vocarock");
 			repository.Add(tag, new Tag("vocaloud"));
 
-			releaseEvent = repository.Save(new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { new LocalizedString("Comiket 39", ContentLanguageSelection.English) } ));
+			releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
 
 			permissionContext = new FakePermissionContext(user);
 			entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
@@ -532,7 +532,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var album = repository.Save(CreateEntry.Album());
 			album.OriginalRelease.ReleaseDate = new OptionalDateTime(2007, 8, 31);
-			var relEvent = repository.Save(new ReleaseEvent(string.Empty, new DateTime(2007, 8, 31), ContentLanguageSelection.English, new[] { new LocalizedString("Miku's birthday", ContentLanguageSelection.English) }));
+			var relEvent = repository.Save(CreateEntry.ReleaseEvent("Miku's birthday", new DateTime(2007, 8, 31)));
 			album.OriginalRelease.ReleaseEvent = relEvent;
 			album.AddSong(song, 1, 1);
 
