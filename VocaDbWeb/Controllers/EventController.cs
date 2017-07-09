@@ -103,23 +103,22 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-	    private ActionResult RenderEdit(EventEdit model) {
-
-			if (model.Id != 0) {
-			    var contract = queries.GetEventForEdit(model.Id);
-			    model.CopyNonEditableProperties(contract, PermissionContext);
-		    } else {
-			    model.CopyNonEditableProperties(null, PermissionContext);
-		    }
-
-		    return View("Edit", model);
-
-		}
-
 		[HttpPost]
         [Authorize]
-        public ActionResult Edit(EventEdit model, HttpPostedFileBase pictureUpload = null)
-        {
+        public ActionResult Edit(EventEdit model, HttpPostedFileBase pictureUpload = null) {
+
+	        ActionResult RenderEdit() {
+
+		        if (model.Id != 0) {
+			        var contract = queries.GetEventForEdit(model.Id);
+			        model.CopyNonEditableProperties(contract, PermissionContext);
+		        } else {
+			        model.CopyNonEditableProperties(null, PermissionContext);
+		        }
+
+		        return View("Edit", model);
+
+	        }
 
 			// Either series or name must be specified. If series is specified, name is generated automatically.
 			if (model.Series.IsNullOrDefault() || model.CustomName) {
@@ -130,7 +129,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-				return RenderEdit(model);
+				return RenderEdit();
 			}
 
 	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
@@ -140,7 +139,7 @@ namespace VocaDb.Web.Controllers
 				id = queries.Update(model.ToContract(), pictureData).Id;
 	        } catch (DuplicateEventNameException x) {
 		        ModelState.AddModelError("Names", x.Message);
-		        return RenderEdit(model);
+		        return RenderEdit();
 	        }
 
 			return RedirectToAction("Details", new { id });
@@ -162,22 +161,31 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-        public ActionResult EditSeries(SeriesEdit model, HttpPostedFileBase pictureUpload = null)
-        {
+        public ActionResult EditSeries(SeriesEdit model, HttpPostedFileBase pictureUpload = null) {
 
-		    // Note: name is allowed to be whitespace, but not empty.
-		    if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value))) {
+	        ActionResult RenderEdit() {
+		        model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
+		        return View("EditSeries", model);
+			}
+
+			// Note: name is allowed to be whitespace, but not empty.
+			if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value))) {
 			    ModelState.AddModelError("Names", "Name cannot be empty");
 		    }
 
 			if (!ModelState.IsValid) {
-				model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
-				return View(model);
+				return RenderEdit();
 			}
 
 			var pictureData = ParsePicture(pictureUpload, "Picture");
 
-			var id = queries.UpdateSeries(model.ToContract(), pictureData);
+	        int id;
+	        try {
+		        id = queries.UpdateSeries(model.ToContract(), pictureData);
+	        } catch (DuplicateEventNameException x) {
+		        ModelState.AddModelError("Names", x.Message);
+		        return RenderEdit();
+	        }
 
 			return RedirectToAction("SeriesDetails", new { id });
 
