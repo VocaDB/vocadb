@@ -259,7 +259,17 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void MoveToTrash(int eventId) {
+		private void CreateTrashedEntry(IDatabaseContext ctx, ReleaseEvent releaseEvent, string notes) {
+
+			var archived = new ArchivedEventContract(releaseEvent, new ReleaseEventDiff(true));
+			var data = XmlHelper.SerializeToXml(archived);
+			var trashed = new TrashedEntry(releaseEvent, data, GetLoggedUser(ctx), notes);
+
+			ctx.Save(trashed);
+
+		}
+
+		public void MoveToTrash(int eventId, string notes) {
 
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
@@ -271,8 +281,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
 
-				foreach (var song in entry.AllSongs)
-				{
+				CreateTrashedEntry(ctx, entry, notes);
+
+				entry.Series?.AllEvents.Remove(entry);
+
+				foreach (var song in entry.AllSongs) {
 					song.ReleaseEvent = null;
 				}
 

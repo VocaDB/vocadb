@@ -104,9 +104,7 @@ module vdb.viewModels.releaseEvents {
 		public defaultNameLanguage: KnockoutObservable<string>;
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
-			this.repo.delete(this.id, notes, () => {
-				window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.ReleaseEvent, this.id));
-			});
+			this.repo.delete(this.id, notes, false, this.redirectToDetails);
 		});
 
 		public description = ko.observable<string>();
@@ -123,6 +121,14 @@ module vdb.viewModels.releaseEvents {
 
 		public names: globalization.NamesEditViewModel;
 		public pvs: pvs.PVListEditViewModel;
+
+		private redirectToDetails = () => {
+			window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.ReleaseEvent, this.id));
+		}
+
+		private redirectToRoot = () => {
+			window.location.href = this.urlMapper.mapRelative("Event");
+		}
 
 		public removeArtist = (artist: events.ArtistForEventEditViewModel) => {
 			this.artistLinks.remove(artist);
@@ -142,6 +148,10 @@ module vdb.viewModels.releaseEvents {
 		public translateArtistRole = (role: string) => {
 			return this.artistRoleNames[role];
 		};
+
+		public trashViewModel = new DeleteEntryViewModel(notes => {
+			this.repo.delete(this.id, notes, true, this.redirectToRoot);
+		});
 
         public webLinks: WebLinksEditViewModel;
 

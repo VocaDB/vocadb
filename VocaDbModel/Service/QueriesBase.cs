@@ -116,7 +116,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		protected User GetLoggedUser(IDatabaseContext<TEntity> session) {
+		protected User GetLoggedUser(IDatabaseContext session) {
 			return session.OfType<User>().GetLoggedUser(PermissionContext);
 		}
 
