@@ -1,10 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
@@ -15,14 +18,18 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 	public class EventQueriesDatabaseTests {
 
 		private readonly DatabaseTestContext<IEventRepository> context = new DatabaseTestContext<IEventRepository>();
+		private readonly FakeEntryLinkFactory entryLinkFactory = new FakeEntryLinkFactory();
+		private readonly EnumTranslations enumTranslations = new EnumTranslations();
+		private readonly InMemoryImagePersister imageStore = new InMemoryImagePersister();
 		private readonly FakePermissionContext userContext;
+		private readonly FakeUserIconFactory userIconFactory = new FakeUserIconFactory();
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
 		private ReleaseEventForEditContract Update(ReleaseEventForEditContract contract) {
 
 			return context.RunTest(repository => {
 
-				var queries = new EventQueries(repository, new FakeEntryLinkFactory(), userContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations());
+				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations);
 
 				var updated = queries.Update(contract, null);
 
@@ -38,13 +45,27 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Delete() {
+		public void MoveToTrash() {
+
+			userContext.GrantPermission(PermissionToken.MoveToTrash);
 
 			context.RunTest(repository => {
 
-				var queries = new EventQueries(repository, new FakeEntryLinkFactory(), userContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations());
+				var id = Db.ReleaseEvent.Id;
+				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations);
 
-				queries.Delete(Db.ReleaseEvent.Id, string.Empty);				
+				queries.MoveToTrash(id, "Deleted");
+
+				var query = repository.HandleQuery(ctx => {
+					return new {
+						EventFromDb = ctx.Get(id),
+						TrashedEntry = ctx.Query<TrashedEntry>().FirstOrDefault(e => e.EntryType == EntryType.ReleaseEvent && e.EntryId == id)
+					};
+				});
+
+				Assert.IsNull(query.EventFromDb, "Release event was deleted");
+				Assert.IsNotNull(query.TrashedEntry, "Trashed entry was created");
+				Assert.AreEqual("Deleted", query.TrashedEntry.Notes, "TrashedEntry.Notes");
 
 			});
 

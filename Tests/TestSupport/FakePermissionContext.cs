@@ -37,11 +37,15 @@ namespace VocaDb.Tests.TestSupport {
 
 		public UserWithPermissionsContract LoggedUser { get; set; }
 
-		public int LoggedUserId => (LoggedUser != null ? LoggedUser.Id : 0);
+		public int LoggedUserId => LoggedUser?.Id ?? 0;
 
 		public string Name { get; set; }
 
 		public UserGroupId UserGroupId => LoggedUser != null ? LoggedUser.GroupId : UserGroupId.Nothing;
+
+		public void GrantPermission(PermissionToken permissionToken) {
+			LoggedUser?.EffectivePermissions.Add(permissionToken);
+		}
 
 		/// <summary>
 		/// Updates status, including permissions, of the currently logged in user.

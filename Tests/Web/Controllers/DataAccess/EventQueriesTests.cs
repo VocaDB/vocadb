@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -146,6 +147,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsTrue(result.Names.HasName("コミケ 39"), "Found Japanese name");
 			Assert.AreEqual("Comiket 39", result.TranslatedName.English, "English name");
 			Assert.AreEqual("コミケ 39", result.TranslatedName.Japanese, "Japanese name");
+
+		}
+
+		[TestMethod]
+		public void Delete() {
+			
+			queries.Delete(existingEvent.Id, "Deleted");
+
+			Assert.IsTrue(existingEvent.Deleted, "Deleted");
+			var archivedVersion = existingEvent.ArchivedVersionsManager.Versions.FirstOrDefault();
+			Assert.IsNotNull(archivedVersion, "Archived version was created");
+			Assert.AreEqual(EntryEditEvent.Deleted, archivedVersion.EditEvent, "EditEvent");
 
 		}
 
