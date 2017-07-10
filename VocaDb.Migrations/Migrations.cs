@@ -4,8 +4,7 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
-
-	[Migration(2017_07_10_1900)]
+	[Migration(2017_07_10_2300)]
 	public class EventSeriesTags : AutoReversingMigration {
 		public override void Up() {
 			Create.Table("EventSeriesTagUsages")
