@@ -4,6 +4,7 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+
 	[Migration(2017_07_10_1900)]
 	public class EventSeriesTags : AutoReversingMigration {
 		public override void Up() {
@@ -17,6 +18,14 @@ namespace VocaDb.Migrations {
 				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Usage").AsInt64().NotNullable().ForeignKey("EventSeriesTagUsages", "Id")
 				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
+		}
+	}
+
+	[Migration(2017_07_10_2100)]
+	public class EntryReportStatus : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Status").OnTable(TableNames.EntryReports).AsString(50).NotNullable().WithDefaultValue("Open");
+			Create.Column("ClosedBy").OnTable(TableNames.EntryReports).AsInt32().Nullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.SetNull);
 		}
 	}
 
