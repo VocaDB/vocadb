@@ -556,6 +556,15 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("current/eventSeriesTags/{seriesId:int}")]
+		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagSelectionContract[] GetEventSeriesTags(int seriesId) {
+
+			return queries.GetEventSeriesTagSelections(seriesId, permissionContext.LoggedUserId);
+
+		}
+
 		[Route("{id:int}/songs-per-genre")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[CacheOutput(ClientTimeSpan = Constants.SecondsInADay)]
@@ -730,6 +739,18 @@ namespace VocaDb.Web.Controllers.Api {
 				throw new HttpBadRequestException();
 
 			return queries.SaveEventTags(eventId, tags, false);
+
+		}
+
+		[Route("current/eventSeriesTags/{seriesId:int}")]
+		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagUsageForApiContract[] PutEventSeriesTags(int seriesId, TagBaseContract[] tags) {
+
+			if (tags == null)
+				throw new HttpBadRequestException();
+
+			return queries.SaveEventSeriesTags(seriesId, tags, false);
 
 		}
 

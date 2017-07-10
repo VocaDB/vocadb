@@ -15,7 +15,7 @@ namespace VocaDb.Migrations {
 				.WithColumn("Date").AsDateTime().NotNullable();
 			Create.Table("EventSeriesTagVotes")
 				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
-				.WithColumn("Usage").AsInt64().NotNullable().ForeignKey("EventSeriesTagUsages", "Id")
+				.WithColumn("Usage").AsInt64().NotNullable().ForeignKey("EventSeriesTagUsages", "Id").OnDelete(Rule.Cascade)
 				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
 		}
 	}
