@@ -4,6 +4,22 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_07_10_1900)]
+	public class EventSeriesTags : AutoReversingMigration {
+		public override void Up() {
+			Create.Table("EventSeriesTagUsages")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Count").AsInt32().NotNullable()
+				.WithColumn("EventSeries").AsInt32().NotNullable().ForeignKey(TableNames.AlbumReleaseEventSeries, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id")
+				.WithColumn("Date").AsDateTime().NotNullable();
+			Create.Table("EventSeriesTagVotes")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Usage").AsInt64().NotNullable().ForeignKey("EventSeriesTagUsages", "Id")
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
+		}
+	}
+
 	[Migration(2017_07_07_2100)]
 	public class ReplaceEventIndex : Migration {
 		public override void Up() {
