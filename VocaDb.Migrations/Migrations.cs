@@ -4,6 +4,14 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_07_10_2100)]
+	public class EntryReportStatus : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Status").OnTable(TableNames.EntryReports).AsString(50).NotNullable().WithDefaultValue("Open");
+			Create.Column("ClosedBy").OnTable(TableNames.EntryReports).AsInt32().Nullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.SetNull);
+		}
+	}
+
 	[Migration(2017_07_07_2100)]
 	public class ReplaceEventIndex : Migration {
 		public override void Up() {

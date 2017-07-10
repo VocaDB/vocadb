@@ -20,7 +20,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(ctx => {
 
 				var cutoff = DateTime.Now - TimeSpan.FromDays(7);
-				var count = ctx.Query().Count(r => r.Created >= cutoff);
+				var count = ctx.Query().Count(r => r.Status == ReportStatus.Open && r.Created >= cutoff);
 				return count;
 
 			});

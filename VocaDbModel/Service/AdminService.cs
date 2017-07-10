@@ -217,11 +217,13 @@ namespace VocaDb.Model.Service {
 				var reports = session.Query<EntryReport>().Where(r => reportIds.Contains(r.Id)).ToArray();
 
 				foreach (var report in reports) {
-					AuditLog(string.Format("deleted entry report {0}{1} for {2}", 
+					AuditLog(string.Format("closed entry report {0}{1} for {2}", 
 						report.TranslatedReportTypeName(enumTranslations, CultureInfo.DefaultThreadCurrentCulture), 
 						!string.IsNullOrEmpty(report.Notes) ? " (" + report.Notes + ")" : string.Empty, 
 						EntryLinkFactory.CreateEntryLink(report.EntryBase)), session);
-					session.Delete(report);
+					report.Status = ReportStatus.Closed;
+					report.ClosedBy = GetLoggedUser(session);
+					session.Update(report);
 				}
 
 			});
@@ -297,7 +299,12 @@ namespace VocaDb.Model.Service {
 
 			return HandleQuery(session => {
 
-				var reports = session.Query<EntryReport>().OrderByDescending(r => r.Created).Take(200).ToArray();
+				var reports = session
+					.Query<EntryReport>()
+					.Where(r => r.Status == ReportStatus.Open)
+					.OrderByDescending(r => r.Created)
+					.Take(200)
+					.ToArray();
 				var fac = new EntryForApiContractFactory(null, null);
 				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference, false), enumTranslations)).ToArray();
 
