@@ -14,7 +14,7 @@ namespace vdb.viewModels.releaseEvents {
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepo.getEventSeriesTagSelections(this.seriesId, callback),
 				saveTagSelections: tags => userRepo.updateEventSeriesTags(this.seriesId, tags, this.tagUsages.updateTagUsages)
-			}, cls.EntryType.ReleaseEventSeries);
+			}, cls.EntryType.ReleaseEvent /* Event series use event tags for now */);
 
 			this.tagUsages = new tags.TagListViewModel(tagUsages);
 

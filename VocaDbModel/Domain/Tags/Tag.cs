@@ -402,12 +402,15 @@ namespace VocaDb.Model.Domain.Tags {
 			if (Targets == TagTargetTypes.Nothing)
 				return false;
 
+			if (entryType == EntryType.ReleaseEventSeries)
+				entryType = EntryType.ReleaseEvent;
+
 			return Targets.HasFlag((TagTargetTypes)entryType);
 
 		}
 
 		public virtual ISet<RelatedTag> RelatedTags {
-			get { return relatedTags; }
+			get => relatedTags;
 			set {
 				ParamIs.NotNull(() => value);
 				relatedTags = value;
@@ -427,7 +430,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual EntryStatus Status { get; set; }
 
 		public virtual IList<TagForUser> TagsForUsers {
-			get { return tagsForUsers; }
+			get => tagsForUsers;
 			set {
 				ParamIs.NotNull(() => value);
 				tagsForUsers = value;
@@ -445,7 +448,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int Version { get; set; }
 
 		public virtual WebLinkManager<TagWebLink> WebLinks {
-			get { return webLinks; }
+			get => webLinks;
 			set {
 				ParamIs.NotNull(() => value);
 				webLinks = value;
