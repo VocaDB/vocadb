@@ -95,11 +95,20 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request message (required).
+        ///   Looks up a localized string similar to Additional message (optional).
         /// </summary>
         public static string MessageTitle {
             get {
                 return ResourceManager.GetString("MessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The proof is provided in the URL below.
+        /// </summary>
+        public static string NoPrivateMessage {
+            get {
+                return ResourceManager.GetString("NoPrivateMessage", resourceCulture);
             }
         }
         
@@ -122,6 +131,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I will submit the proof in a private message.
+        /// </summary>
+        public static string PrivateMessage {
+            get {
+                return ResourceManager.GetString("PrivateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send request.
         /// </summary>
         public static string Send {
@@ -136,6 +154,15 @@ namespace ViewRes.User {
         public static string Signup {
             get {
                 return ResourceManager.GetString("Signup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link to proof, for example a tweet (required).
+        /// </summary>
+        public static string URL {
+            get {
+                return ResourceManager.GetString("URL", resourceCulture);
             }
         }
     }

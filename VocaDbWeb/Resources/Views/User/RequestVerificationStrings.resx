@@ -148,7 +148,10 @@
     <value>log in</value>
   </data>
   <data name="MessageTitle" xml:space="preserve">
-    <value>Request message (required)</value>
+    <value>Additional message (optional)</value>
+  </data>
+  <data name="NoPrivateMessage" xml:space="preserve">
+    <value>The proof is provided in the URL below</value>
   </data>
   <data name="NotLoggedInMessage" xml:space="preserve">
     <value>Sorry, you need to {0} or {1} to use this feature.</value>
@@ -156,10 +159,16 @@
   <data name="PageTitle" xml:space="preserve">
     <value>Request account verification</value>
   </data>
+  <data name="PrivateMessage" xml:space="preserve">
+    <value>I will submit the proof in a private message</value>
+  </data>
   <data name="Send" xml:space="preserve">
     <value>Send request</value>
   </data>
   <data name="Signup" xml:space="preserve">
     <value>sign up</value>
+  </data>
+  <data name="URL" xml:space="preserve">
+    <value>Link to proof, for example a tweet (required)</value>
   </data>
 </root>

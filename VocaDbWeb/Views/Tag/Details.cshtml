@@ -225,7 +225,7 @@
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
-				Event series
+				@Res.EventSeries
 			</a>
 		</h3>
 		@Helpers.EventSeriesThumbs(Model.EventSeries)

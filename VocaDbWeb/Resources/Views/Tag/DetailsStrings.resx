@@ -144,6 +144,9 @@
   <data name="Children" xml:space="preserve">
     <value>Children</value>
   </data>
+  <data name="EventSeries" xml:space="preserve">
+    <value>Event series</value>
+  </data>
   <data name="FollowTag" xml:space="preserve">
     <value>Follow tag</value>
   </data>

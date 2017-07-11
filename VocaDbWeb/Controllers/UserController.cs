@@ -753,19 +753,25 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult RequestVerification([FromJson] ArtistContract selectedArtist, string message) {
+		public ActionResult RequestVerification([FromJson] ArtistContract selectedArtist, string message, string linkToProof, bool privateMessage) {
 
 			if (selectedArtist == null) {
 				TempData.SetErrorMessage("Artist must be selected");
 				return View("RequestVerification", null, message);
 			}
 
-			if (string.IsNullOrEmpty(message)) {
-				TempData.SetErrorMessage("You must enter some message");
+			if (string.IsNullOrEmpty(linkToProof) && !privateMessage) {
+				TempData.SetErrorMessage("You must provide a link to proof");
 				return View();
 			}
 
-			artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", message), null);
+			if (string.IsNullOrEmpty(linkToProof) && privateMessage) {
+				linkToProof = "in a private message";
+			}
+
+			var fullMessage = "Proof: " + linkToProof + ", Message: " + message;
+
+			artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", fullMessage), null);
 
 			TempData.SetSuccessMessage("Request sent");
 			return View();

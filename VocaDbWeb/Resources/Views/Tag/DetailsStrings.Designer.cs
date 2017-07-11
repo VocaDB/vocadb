@@ -142,6 +142,15 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event series.
+        /// </summary>
+        public static string EventSeries {
+            get {
+                return ResourceManager.GetString("EventSeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow tag.
         /// </summary>
         public static string FollowTag {
