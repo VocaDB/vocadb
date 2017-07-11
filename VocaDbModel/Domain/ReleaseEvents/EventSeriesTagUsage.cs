@@ -3,18 +3,18 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
-	public class EventTagUsage : GenericTagUsage<ReleaseEvent, EventTagVote> {
+	public class EventSeriesTagUsage : GenericTagUsage<ReleaseEventSeries, EventSeriesTagVote> {
 
-		public EventTagUsage() { }
+		public EventSeriesTagUsage() { }
 
-		public EventTagUsage(ReleaseEvent song, Tag tag) : base(song, tag) { }
+		public EventSeriesTagUsage(ReleaseEventSeries song, Tag tag) : base(song, tag) { }
 
 		public override TagVote CreateVote(User user) {
 
 			if (FindVote(user) != null)
 				return null;
 
-			var vote = new EventTagVote(this, user);
+			var vote = new EventSeriesTagVote(this, user);
 			Votes.Add(vote);
 			Count++;
 
@@ -27,7 +27,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			base.Delete();
 
 			Entry.Tags.Usages.Remove(this);
-			Tag.AllEventTagUsages.Remove(this);
+			Tag.AllEventSeriesTagUsages.Remove(this);
 
 		}
 
@@ -39,11 +39,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				return this;
 
 			// TODO: have to make a clone because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
-			Tag.AllEventTagUsages.Remove(this);
+			Tag.AllEventSeriesTagUsages.Remove(this);
 			Entry.Tags.Usages.Remove(this);
 
-			var newUsage = new EventTagUsage(Entry, target);
-			target.AllEventTagUsages.Add(newUsage);
+			var newUsage = new EventSeriesTagUsage(Entry, target);
+			target.AllEventSeriesTagUsages.Add(newUsage);
 			Entry.Tags.Usages.Add(newUsage);
 
 			return newUsage;
@@ -51,4 +51,5 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 	}
+
 }

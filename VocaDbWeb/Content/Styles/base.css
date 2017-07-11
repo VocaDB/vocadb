@@ -210,14 +210,21 @@ body {
 .archived-entry-compare-modified {
   font-weight: bold;
 }
-.event-teaser {
-  height: 150px;
+.event-teaser,
+.event-teaser-tiny {
   width: 29%;
   margin-right: 1%;
   float: left;
 }
-.event-teaser .event-image {
+.event-teaser .event-image,
+.event-teaser-tiny .event-image {
   margin-right: 7px;
+}
+.event-teaser {
+  height: 150px;
+}
+.event-teaser-tiny {
+  height: 70px;
 }
 .song-lists-filters {
   margin-bottom: 20px;

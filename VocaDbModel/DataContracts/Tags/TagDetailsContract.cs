@@ -25,7 +25,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagDetailsContract(Tag tag, 
 			IEnumerable<Artist> artists, int artistCount, IEnumerable<Album> albums, int albumCount,
-			IEnumerable<Song> songs, int songCount, IEnumerable<ReleaseEvent> events, int eventCount, ContentLanguagePreference languagePreference,
+			IEnumerable<Song> songs, int songCount,
+			IEnumerable<ReleaseEventSeries> eventSeries, int eventSeriesCount,
+			IEnumerable<ReleaseEvent> events, int eventCount, 
+			ContentLanguagePreference languagePreference,
 			IEntryThumbPersister thumbStore)
 			: base(tag, languagePreference) {
 
@@ -49,6 +52,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
 				.ToArray();
+
+			EventSeries = eventSeries.Select(a => new ReleaseEventSeriesContract(a, languagePreference, false)).ToArray();
+			EventSeriesCount = eventSeriesCount;
 
 			Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture, thumbStore, true)).ToArray();
 			EventCount = eventCount;
@@ -83,7 +89,11 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public int EventCount { get; set; }
 
+		public int EventSeriesCount { get; set; }
+
 		public ReleaseEventForApiContract[] Events { get; set; }
+
+		public ReleaseEventSeriesContract[] EventSeries { get; set; }
 
 		public bool IsFollowing { get; set; }
 

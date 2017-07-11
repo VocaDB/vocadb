@@ -88,6 +88,15 @@ namespace VocaDb.Web.Resources.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event series.
+        /// </summary>
+        public static string ReleaseEventSeries {
+            get {
+                return ResourceManager.GetString("ReleaseEventSeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Song.
         /// </summary>
         public static string Song {

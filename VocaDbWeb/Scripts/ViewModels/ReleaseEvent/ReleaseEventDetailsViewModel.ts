@@ -33,7 +33,7 @@ namespace vdb.viewModels.releaseEvents {
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepo.getEventTagSelections(this.eventId, callback),
 				saveTagSelections: tags => userRepo.updateEventTags(this.eventId, tags, this.tagUsages.updateTagUsages)
-			}, cls.EntryType.Song);
+			}, cls.EntryType.ReleaseEvent);
 
 			this.tagUsages = new tags.TagListViewModel(tagUsages);
 

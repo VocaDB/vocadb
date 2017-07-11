@@ -7,13 +7,15 @@ using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	public class ReleaseEventSeries : 
 		IEntryWithNames<EventSeriesName>, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>, 
-		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation, IEntryWithStatus, INameFactory<EventSeriesName> {
+		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation, IEntryWithStatus,
+		IEntryWithTags<EventSeriesTagUsage>, INameFactory<EventSeriesName> {
 
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
@@ -27,6 +29,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private string description;
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
 		private NameManager<EventSeriesName> names = new NameManager<EventSeriesName>();
+		private TagManager<EventSeriesTagUsage> tags = new TagManager<EventSeriesTagUsage>();
 		private IList<ReleaseEventSeriesWebLink> webLinks = new List<ReleaseEventSeriesWebLink>();
 
 		public ReleaseEventSeries() {
@@ -100,6 +103,16 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual string PictureMime { get; set; }
 
 		public virtual EntryStatus Status { get; set; }
+
+		public virtual TagManager<EventSeriesTagUsage> Tags {
+			get => tags;
+			set {
+				ParamIs.NotNull(() => value);
+				tags = value;
+			}
+		}
+
+		ITagManager IEntryWithTags.Tags => Tags;
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 

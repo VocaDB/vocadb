@@ -32,6 +32,10 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 				});
 			});
 
+			Component(m => m.Tags, c => {
+				c.HasMany(m => m.Usages).KeyColumn("[EventSeries]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
+			});
+
 			HasMany(m => m.AllEvents).OrderBy("[SeriesNumber]").KeyColumn("[Series]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEventSeries]").Inverse().Cascade.All().Cache.ReadWrite();
 
