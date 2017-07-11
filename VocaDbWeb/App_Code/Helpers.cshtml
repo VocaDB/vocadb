@@ -127,7 +127,7 @@
 			<div class="well well-transparent event-teaser-tiny">
 				@if (ev.PictureMime != null) {
 					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left" title="@ev.AdditionalNames">
-						<img class="media-object" src="@Url.EntryImageOld(ev, ImageSize.TinyThumb)" alt="Thumb" />
+						<img class="media-object" src="@Url.ImageThumb(ev, ImageSize.TinyThumb)" alt="Thumb" />
 					</a>
 				}
 				<div>
