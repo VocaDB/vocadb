@@ -216,15 +216,16 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /User/
 
-		public ActionResult Index(string filter = null) {
+		public ActionResult Index(string filter = null, UserGroupId? groupId = null) {
 
-			var vm = new Index { Filter = filter };
+			var vm = new Index { Filter = filter, GroupId = groupId };
 
 			if (!string.IsNullOrEmpty(filter)) {
 
 				var queryParams = new UserQueryParams {
 					Common = new CommonSearchParams(SearchTextQuery.Create(filter), false, false),
-					Paging = new PagingProperties(0, 1, true)
+					Paging = new PagingProperties(0, 1, true),
+					Group = groupId ?? UserGroupId.Nothing
 				};
 
 				var result = Data.GetUsers(queryParams, u => u.Name);
