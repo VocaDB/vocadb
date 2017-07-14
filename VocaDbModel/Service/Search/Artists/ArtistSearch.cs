@@ -13,12 +13,9 @@ namespace VocaDb.Model.Service.Search.Artists {
 	public class ArtistSearch {
 
 		private readonly IEntryUrlParser entryUrlParser;
-		private readonly ContentLanguagePreference languagePreference;
 		private readonly IDatabaseContext<Artist> context; 
 
-		private ContentLanguagePreference LanguagePreference {
-			get { return languagePreference; }
-		}
+		private ContentLanguagePreference LanguagePreference { get; }
 
 		private IQueryable<Artist> CreateQuery(
 			ArtistQueryParams queryParams, 
@@ -96,7 +93,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 		} 
 
 		public ArtistSearch(ContentLanguagePreference languagePreference, IDatabaseContext<Artist> context, IEntryUrlParser entryUrlParser) {
-			this.languagePreference = languagePreference;
+			this.LanguagePreference = languagePreference;
 			this.context = context;
 			this.entryUrlParser = entryUrlParser;
 		}
