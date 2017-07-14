@@ -34,6 +34,16 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets a page of event series.
+		/// </summary>
+		/// <param name="query">Text query.</param>
+		/// <param name="start">First item to be retrieved (optional).</param>
+		/// <param name="maxResults">Maximum number of results to be loaded (optional).</param>
+		/// <param name="getTotalCount">Whether to load total number of items (optional).</param>
+		/// <param name="nameMatchMode">Match mode for event name (optional).</param>
+		/// <param name="lang">Content language preference (optional).</param>
+		/// <returns>Page of event series.</returns>
 		[Route("")]
 		public PartialFindResult<ReleaseEventSeriesContract> GetList(
 			string query = "", 

@@ -82,7 +82,7 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
-		/// Gets a page of release events.
+		/// Gets a page of events.
 		/// </summary>
 		/// <param name="query">Event name query (optional).</param>
 		/// <param name="nameMatchMode">Match mode for event name (optional, defaults to Auto).</param>
