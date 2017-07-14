@@ -58,6 +58,25 @@ namespace VocaDb.Tests.Service.Search.Artists {
 
 		}
 
+		[TestMethod]
+		public void Find_ByTwitter_EndsWithP() {
+
+			var artist = db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Uji"));
+			db.SaveNames(artist);
+			db.Save(artist.CreateWebLink("Twitter", "https://twitter.com/Uji_RaychoruiP", WebLinkCategory.Official));
+
+			var result = artistSearch.Find(new ArtistQueryParams {
+				Common = {
+					TextQuery = ArtistSearchTextQuery.Create("https://twitter.com/Uji_RaychoruiP")
+				}
+			});
+
+			Assert.AreEqual(1, result.Items.Length, "Got 1 result");
+			Assert.AreEqual("Uji", result.Items[0].DefaultName, "Result as expected");
+
+
+		}
+
 	}
 
 }

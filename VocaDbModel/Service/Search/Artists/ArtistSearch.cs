@@ -41,12 +41,12 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		}
 
-		private ParsedArtistQuery ParseTextQuery(string query) {
+		private ParsedArtistQuery ParseTextQuery(SearchTextQuery textQuery) {
 			
-			if (string.IsNullOrWhiteSpace(query))
+			if (textQuery.IsEmpty)
 				return new ParsedArtistQuery();
 
-			var trimmed = query.Trim();
+			var trimmed = textQuery.OriginalQuery.Trim();
 
 			var term = SearchWord.GetTerm(trimmed, "id");
 			
@@ -82,7 +82,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 				
 			}
 
-			return new ParsedArtistQuery { Name = trimmed };
+			return new ParsedArtistQuery { Name = textQuery.Query };
 
 		}
 
@@ -106,7 +106,7 @@ namespace VocaDb.Model.Service.Search.Artists {
 				&& queryParams.Paging.Start == 0
 				&& !queryParams.Common.TextQuery.IsEmpty);
 
-			var parsedQuery = ParseTextQuery(queryParams.Common.Query);
+			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
 			if (isMoveToTopQuery) {
 				return GetArtistsMoveExactToTop(queryParams, parsedQuery);
