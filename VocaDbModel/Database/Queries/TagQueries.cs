@@ -311,7 +311,7 @@ namespace VocaDb.Model.Database.Queries {
 				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(ctx, tagId, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
 				var eventSeries = GetTopUsagesAndCount<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var seriesIds = eventSeries.TopUsages.Select(e => e.Id).ToArray();
-				var events = GetTopUsagesAndCount<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted && !seriesIds.Contains(t.Entry.Series.Id), t => t.Entry.Id, t => t.Entry);
+				var events = GetTopUsagesAndCount<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted && (t.Entry.Series == null || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry);
 				var latestComments = Comments(ctx).GetList(tag.Id, 3);
 
 				return new TagDetailsContract(tag,
