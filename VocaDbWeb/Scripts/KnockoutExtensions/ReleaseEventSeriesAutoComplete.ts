@@ -16,6 +16,7 @@ ko.bindingHandlers.releaseEventSeriesAutoComplete = {
 		var queryParams = {
 			nameMatchMode: 'Auto',
 			preferAccurateMatches: true,
+			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
 			maxResults: 20,
 			sort: 'Name'
 		};
