@@ -56,7 +56,8 @@ namespace VocaDb.Model.Database.Queries {
 			IDatabaseContext<Tag> ctx, int tagId, 
 			Expression<Func<TUsage, bool>> whereExpression, 
 			Expression<Func<TUsage, TSort>> createDateExpression,
-			Expression<Func<TUsage, TEntry>> selectExpression)
+			Expression<Func<TUsage, TEntry>> selectExpression,
+			int maxCount = 12)
 			where TUsage: TagUsage {
 			
 			var q = TagUsagesQuery<TUsage>(ctx, tagId)
@@ -66,7 +67,7 @@ namespace VocaDb.Model.Database.Queries {
 				.OrderByDescending(t => t.Count)
 				.ThenByDescending(createDateExpression)
 				.Select(selectExpression)
-				.Take(12)
+				.Take(maxCount)
 				.ToArray();
 
 			var usageCount = q.Count();
@@ -309,9 +310,9 @@ namespace VocaDb.Model.Database.Queries {
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
 				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(ctx, tagId, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
-				var eventSeries = GetTopUsagesAndCount<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
+				var eventSeries = GetTopUsagesAndCount<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var seriesIds = eventSeries.TopUsages.Select(e => e.Id).ToArray();
-				var events = GetTopUsagesAndCount<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted && (t.Entry.Series == null || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry);
+				var events = GetTopUsagesAndCount<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted && (t.Entry.Series == null || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var latestComments = Comments(ctx).GetList(tag.Id, 3);
 
 				return new TagDetailsContract(tag,
