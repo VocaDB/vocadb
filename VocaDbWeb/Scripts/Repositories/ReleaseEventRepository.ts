@@ -15,8 +15,8 @@ module vdb.repositories {
 			$.post(url, callback);
 		}
 
-		public delete = (id: number, notes: string, callback?: () => void) => {
-			$.ajax(this.urlMapper.mapRelative("/api/releaseEvents/" + id + "?notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
+		public delete = (id: number, notes: string, hardDelete: boolean, callback?: () => void) => {
+			$.ajax(this.urlMapper.mapRelative("/api/releaseEvents/" + id + "?hardDelete=" + hardDelete + "&notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
 		}
 
 		public deleteSeries = (id: number, notes: string, callback?: () => void) => {

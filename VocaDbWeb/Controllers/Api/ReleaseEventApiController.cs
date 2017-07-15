@@ -42,11 +42,21 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="id">ID of the event to be deleted.</param>
 		/// <param name="notes">Notes.</param>
+		/// <param name="hardDelete">
+		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
+		/// If false, the entry is soft deleted, meaning it can still be restored.
+		/// </param>
 		[Route("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "") {
+		public void Delete(int id, string notes = "", bool hardDelete = false) {
 
-			queries.Delete(id, notes ?? string.Empty);
+			notes = notes ?? string.Empty;
+
+			if (hardDelete) {
+				queries.MoveToTrash(id, notes);
+			} else {
+				queries.Delete(id, notes);
+			}
 
 		}
 
@@ -72,7 +82,7 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
-		/// Gets a page of release events.
+		/// Gets a page of events.
 		/// </summary>
 		/// <param name="query">Event name query (optional).</param>
 		/// <param name="nameMatchMode">Match mode for event name (optional, defaults to Auto).</param>

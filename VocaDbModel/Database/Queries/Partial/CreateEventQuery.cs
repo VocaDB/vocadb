@@ -1,5 +1,6 @@
 ﻿using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
@@ -42,16 +43,20 @@ namespace VocaDb.Model.Database.Queries.Partial {
 			var series = ctx.NullSafeLoad<ReleaseEventSeries>(searchResult.Series);
 
 			ReleaseEvent newEvent;
+			LocalizedStringContract[] names;
 
 			if (series == null) {
 				var nameValue = searchResult.EventName.EmptyToNull() ?? contract.Name;
 				var name = new LocalizedStringContract(nameValue, ContentLanguageSelection.English);
-				newEvent = new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { name });
+				names = new[] { name };
+				newEvent = new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English);
 			} else {
-				newEvent = new ReleaseEvent(string.Empty, null, series, searchResult.SeriesNumber, searchResult.SeriesSuffix, ContentLanguageSelection.Unspecified, null, false);
+				names = new LocalizedStringContract[0];
+				newEvent = new ReleaseEvent(string.Empty, null, series, searchResult.SeriesNumber, searchResult.SeriesSuffix, ContentLanguageSelection.Unspecified, false);
 			}
 
 			ctx.Save(newEvent);
+			new UpdateEventNamesQuery().UpdateNames(ctx, newEvent, series, false, searchResult.SeriesNumber, searchResult.SeriesSuffix, names);
 
 			var eventDiff = new ReleaseEventDiff(ReleaseEventEditableFields.OriginalName | ReleaseEventEditableFields.Names);
 

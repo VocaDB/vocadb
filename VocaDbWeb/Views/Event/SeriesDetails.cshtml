@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Resources.Views.Event
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
 
@@ -46,6 +47,11 @@
 		}
 	</div>
 	
+	<p>
+		@ViewRes.Event.DetailsStrings.Category:
+		@Html.ActionLink(Translate.ReleaseEventCategoryNames[Model.Category], "Index", "Search", UrlMapper.Search.Events(category: Model.Category), null)
+	</p>	
+	
 	@if (Model.WebLinks.Any()) {
 		@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 		<br />
@@ -56,6 +62,14 @@
 			@SeriesDetailsStrings.Aliases: @Model.AdditionalNames
 		</p>		
 	}
+	
+	<p>
+		<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
+		<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
+			@{ Html.RenderPartial("Partials/_TagList"); }
+		</div>
+		<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
+	</p>
 </div>
 
 <h3>@ViewRes.SharedStrings.ReleaseEvents</h3>
@@ -70,12 +84,26 @@
 	}
 </ul>
 
+<div data-bind="with: tagsEditViewModel">
+	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+</div>
+
 @section BodyScripts {
+@Scripts.Render("~/bundles/EventSeries/Details")
 <script type="text/javascript">
 	$(function () {
-		$("#editEventLink").button({ icons: { primary: 'ui-icon-wrench'} });
+		$("#editEventLink").button({ icons: { primary: 'ui-icon-wrench' } });
 		$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+
+		var loggedUserId = @UserContext.LoggedUserId;
+		var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
+		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
+		var tags = @ToJS(Model.Tags);
+
+		var vm = new vdb.viewModels.releaseEvents.EventSeriesDetailsViewModel(userRepo, @Model.Id, tags);
+		ko.applyBindings(vm);
+
 	});
 </script>
 }

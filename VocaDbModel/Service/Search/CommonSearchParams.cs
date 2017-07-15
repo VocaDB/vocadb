@@ -44,19 +44,11 @@ namespace VocaDb.Model.Service.Search {
 		/// </summary>
 		public bool MoveExactToTop { get; set; }
 
-		public NameMatchMode NameMatchMode {
-			get {
-				return TextQuery.MatchMode;
-			}
-		}
+		public NameMatchMode NameMatchMode => TextQuery.MatchMode;
 
 		public bool OnlyByName { get; set; }
 
-		public string Query {
-			get {
-				return TextQuery.Query;
-			}
-		}
+		public string Query => TextQuery.Query;
 
 		public TTextQuery TextQuery { get; set; }
 

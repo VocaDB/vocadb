@@ -25,7 +25,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagDetailsContract(Tag tag, 
 			IEnumerable<Artist> artists, int artistCount, IEnumerable<Album> albums, int albumCount,
-			IEnumerable<Song> songs, int songCount, IEnumerable<ReleaseEvent> events, int eventCount, ContentLanguagePreference languagePreference,
+			IEnumerable<Song> songs, int songCount,
+			IEnumerable<ReleaseEventSeries> eventSeries, int eventSeriesCount,
+			IEnumerable<ReleaseEvent> events, int eventCount, 
+			ContentLanguagePreference languagePreference,
 			IEntryThumbPersister thumbStore)
 			: base(tag, languagePreference) {
 
@@ -50,6 +53,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 				.OrderBy(t => t.Name)
 				.ToArray();
 
+			EventSeries = eventSeries.Select(a => new ReleaseEventSeriesContract(a, languagePreference, false)).ToArray();
+			EventSeriesCount = eventSeriesCount;
+
 			Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture, thumbStore, true)).ToArray();
 			EventCount = eventCount;
 
@@ -63,6 +69,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			WebLinks = tag.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
+			MappedNicoTags = tag.Mappings.Select(t => t.SourceTag).ToArray();
 
 		}
 
@@ -82,11 +89,17 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public int EventCount { get; set; }
 
+		public int EventSeriesCount { get; set; }
+
 		public ReleaseEventForApiContract[] Events { get; set; }
+
+		public ReleaseEventSeriesContract[] EventSeries { get; set; }
 
 		public bool IsFollowing { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
+
+		public string[] MappedNicoTags { get; set; }
 
 		public TagBaseContract[] RelatedTags { get; set; }
 

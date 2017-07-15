@@ -1,7 +1,7 @@
 ﻿
 <!-- RatingsViewModel -->
 
-<div data-bind="visible: favoritesCount">
+<div data-bind="visible: showFavorites">
 	<h4>
 		@ViewRes.Song.DetailsStrings.FavoritedByTitle
 		<span data-bind="text: '@(ViewRes.EntryDetailsStrings.NumTotalParenthesis)'.replace('{0}', favoritesCount())"></span>
@@ -13,7 +13,7 @@
 	</ul>
 </div>
 
-<div data-bind="visible: likesCount" class="withMargin">
+<div data-bind="visible: showLikes" class="withMargin">
 	<h4>
 		@ViewRes.Song.DetailsStrings.LikedByTitle
 		<span data-bind="text: '@(ViewRes.EntryDetailsStrings.NumTotalParenthesis)'.replace('{0}', likesCount())"></span>

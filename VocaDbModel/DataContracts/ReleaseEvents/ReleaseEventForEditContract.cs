@@ -8,7 +8,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 	public class ReleaseEventForEditContract : ReleaseEventDetailsContract {
 
-		public ReleaseEventForEditContract() { }
+		public ReleaseEventForEditContract() {
+			Names = new LocalizedStringWithIdContract[0];
+		}
+
 		public ReleaseEventForEditContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IUserIconFactory userIconFactory) : 
 			base(releaseEvent, languagePreference, userContext, userIconFactory) {
 

@@ -5,11 +5,14 @@ module vdb.viewModels {
 
     export class RequestVerificationViewModel {
     
-        constructor(private artistRepository: vdb.repositories.ArtistRepository) {}
+		constructor(
+			private readonly artistRepository: vdb.repositories.ArtistRepository) { }
 
         public clearArtist = () => {
             this.selectedArtist(null);
-        }
+		}
+
+		public privateMessage = ko.observable(false);
 
         public selectedArtist: KnockoutObservable<dc.ArtistContract> = ko.observable(null);
 

@@ -144,8 +144,14 @@
   <data name="Children" xml:space="preserve">
     <value>Children</value>
   </data>
+  <data name="EventSeries" xml:space="preserve">
+    <value>Event series</value>
+  </data>
   <data name="FollowTag" xml:space="preserve">
     <value>Follow tag</value>
+  </data>
+  <data name="MappedTags" xml:space="preserve">
+    <value>The following NicoNicoDouga tags are mapped to this tag</value>
   </data>
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>

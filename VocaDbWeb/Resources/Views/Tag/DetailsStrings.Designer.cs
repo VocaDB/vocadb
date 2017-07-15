@@ -142,11 +142,29 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event series.
+        /// </summary>
+        public static string EventSeries {
+            get {
+                return ResourceManager.GetString("EventSeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow tag.
         /// </summary>
         public static string FollowTag {
             get {
                 return ResourceManager.GetString("FollowTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following NicoNicoDouga tags are mapped to this tag.
+        /// </summary>
+        public static string MappedTags {
+            get {
+                return ResourceManager.GetString("MappedTags", resourceCulture);
             }
         }
         

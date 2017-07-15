@@ -44,6 +44,8 @@ namespace VocaDb.Model.Domain.Tags {
 		private IList<TagComment> comments = new List<TagComment>();
 		private EnglishTranslatedString description;
 		private ISet<EventTagUsage> eventTagUsages = new HashSet<EventTagUsage>();
+		private ISet<EventSeriesTagUsage> eventSeriesTagUsages = new HashSet<EventSeriesTagUsage>();
+		private IList<TagMapping> mappings = new List<TagMapping>();
 		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
@@ -203,6 +205,14 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual int Id { get; set; }
 
+		public virtual IList<TagMapping> Mappings {
+			get => mappings;
+			set {
+				ParamIs.NotNull(() => value);
+				mappings = value;
+			}
+		}
+
 		public virtual NameManager<TagName> Names{
 			get => names;
 			set {
@@ -360,6 +370,14 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		public virtual ISet<EventSeriesTagUsage> AllEventSeriesTagUsages {
+			get => eventSeriesTagUsages;
+			set {
+				ParamIs.NotNull(() => value);
+				eventSeriesTagUsages = value;
+			}
+		}
+
 		/// <summary>
 		/// List of all song tag usages (including deleted songs) for this tag.
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
@@ -374,6 +392,8 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual IEnumerable<EventTagUsage> EventTagUsages => AllEventTagUsages.Where(a => !a.Entry.Deleted);
 
+		public virtual IEnumerable<EventSeriesTagUsage> EventSeriesTagUsages => AllEventSeriesTagUsages.Where(a => !a.Entry.Deleted);
+
 		public virtual bool IsValidFor(EntryType entryType) {
 
 			if (Targets == TagTargetTypes.All)
@@ -382,12 +402,15 @@ namespace VocaDb.Model.Domain.Tags {
 			if (Targets == TagTargetTypes.Nothing)
 				return false;
 
+			if (entryType == EntryType.ReleaseEventSeries)
+				entryType = EntryType.ReleaseEvent;
+
 			return Targets.HasFlag((TagTargetTypes)entryType);
 
 		}
 
 		public virtual ISet<RelatedTag> RelatedTags {
-			get { return relatedTags; }
+			get => relatedTags;
 			set {
 				ParamIs.NotNull(() => value);
 				relatedTags = value;
@@ -407,7 +430,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual EntryStatus Status { get; set; }
 
 		public virtual IList<TagForUser> TagsForUsers {
-			get { return tagsForUsers; }
+			get => tagsForUsers;
 			set {
 				ParamIs.NotNull(() => value);
 				tagsForUsers = value;
@@ -425,7 +448,7 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual int Version { get; set; }
 
 		public virtual WebLinkManager<TagWebLink> WebLinks {
-			get { return webLinks; }
+			get => webLinks;
 			set {
 				ParamIs.NotNull(() => value);
 				webLinks = value;

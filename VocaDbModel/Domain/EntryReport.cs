@@ -16,6 +16,7 @@ namespace VocaDb.Model.Domain {
 		protected EntryReport() {
 			Created = DateTime.Now;
 			Notes = string.Empty;
+			Status = ReportStatus.Open;
 		}
 
 		protected EntryReport(User user, string hostname, string notes, int? versionNumber)
@@ -28,6 +29,8 @@ namespace VocaDb.Model.Domain {
 
 		}
 
+		public virtual User ClosedBy { get; set; }
+
 		public virtual DateTime Created { get; set; }
 
 		public abstract IEntryWithNames EntryBase { get; }
@@ -35,19 +38,21 @@ namespace VocaDb.Model.Domain {
 		public virtual EntryType EntryType => EntryBase.EntryType;
 
 		public virtual string Hostname {
-			get { return hostname; }
-			set { hostname = value; }
+			get => hostname;
+			set => hostname = value;
 		}
 
 		public virtual int Id { get; set; }
 
 		public virtual string Notes {
-			get { return notes; }
+			get => notes;
 			set {
 				ParamIs.NotNull(() => value);
 				notes = value;
 			}
 		}
+
+		public virtual ReportStatus Status { get; set; }
 
 		public abstract string TranslatedReportTypeName(IEnumTranslations enumTranslations);
 
@@ -60,4 +65,10 @@ namespace VocaDb.Model.Domain {
 		public virtual int? VersionNumber { get; set; }
 
 	}
+
+	public enum ReportStatus {
+		Open,
+		Closed
+	}
+
 }

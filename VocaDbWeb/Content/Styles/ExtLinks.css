@@ -16,6 +16,10 @@ a.extLink[href^="https://www.amazon.com/"] {
 a.extLink[href^="http://www.animate-onlineshop.jp/"] {
   background: url("/Content/ExtIcons/animate.png") no-repeat left 50%;
 }
+a.extLink[href^="http://www5.atwiki.jp/hmiku/"],
+a.extLink[href^="https://www5.atwiki.jp/hmiku/"] {
+  background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
+}
 a.extLink[href*="booth.pm/"] {
   background: url("/Content/ExtIcons/booth.png") no-repeat left 50%;
 }
@@ -94,9 +98,6 @@ a.extLink[href^="http://ameblo.jp/"] {
 }
 a.extLink[href^="http://www.amiami.com/"] {
   background: url("/Content/ExtIcons/amiami.png") no-repeat left 50%;
-}
-a.extLink[href^="http://www5.atwiki.jp/hmiku/"] {
-  background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
 }
 a.extLink[href*="bandcamp.com"] {
   background: url("/Content/ExtIcons/bandcamp.png") no-repeat left 50%;

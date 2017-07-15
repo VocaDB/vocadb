@@ -54,7 +54,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Status = EntryStatus.Draft;
 		}
 
-		public ReleaseEvent(string description, DateTime? date, ContentLanguageSelection defaultNameLanguage, ICollection<ILocalizedString> names)
+		public ReleaseEvent(string description, DateTime? date, ContentLanguageSelection defaultNameLanguage)
 			: this() {
 
 			ParamIs.NotNull(() => names);
@@ -62,14 +62,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Description = description;
 			Date = date;
 			TranslatedName.DefaultLanguage = defaultNameLanguage;
-
-			foreach (var a in names)
-				CreateName(a);
+			TranslatedName.Clear();
 
 		}
 
 		public ReleaseEvent(string description, DateTime? date, ReleaseEventSeries series, int seriesNumber, string seriesSuffix,
-			ContentLanguageSelection defaultNameLanguage, ICollection<ILocalizedString> names, bool customName)
+			ContentLanguageSelection defaultNameLanguage, bool customName)
 			: this() {
 
 			ParamIs.NotNull(() => series);
@@ -80,19 +78,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			SeriesNumber = seriesNumber;
 			SeriesSuffix = seriesSuffix;
 			CustomName = customName;
+			TranslatedName.Clear();
 
 			if (customName) {
 				TranslatedName.DefaultLanguage = defaultNameLanguage;
 			} else {
 				TranslatedName.DefaultLanguage = Series.TranslatedName.DefaultLanguage;
 			}
-
-			if (names != null) {
-				foreach (var a in names)
-					CreateName(a);
-			}
-
-			UpdateNameFromSeries();
 
 		}
 
@@ -353,6 +345,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
+		public virtual IEnumerable<LocalizedString> GetNamesFromSeries() {
+			return Series.Names.Select(seriesName => new LocalizedString(Series.GetEventName(SeriesNumber, SeriesSuffix, seriesName.Value), seriesName.Language));
+		}
+
 		public virtual CollectionDiffWithValue<ArtistForEvent, ArtistForEvent> SyncArtists(
 			IList<ArtistForEventContract> newArtists, Func<int, Artist> artistGetter) {
 
@@ -373,19 +369,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public override string ToString() {
 			return string.Format("Release event '{0}' [{1}]", DefaultName, Id);
-		}
-
-		public virtual void UpdateNameFromSeries() {
-
-			if (HasSeries && !CustomName) {
-
-				TranslatedName.DefaultLanguage = Series.TranslatedName.DefaultLanguage;
-
-				var newNames = Series.Names.Select(seriesName => new LocalizedString(Series.GetEventName(SeriesNumber, SeriesSuffix, seriesName.Value), seriesName.Language));
-				Names.SyncByContent(newNames, this);
-
-			}
-
 		}
 
 	}

@@ -1081,6 +1081,10 @@ namespace VocaDb.Model.Database.Queries {
 			return GetTagSelections<ReleaseEvent, EventTagUsage, EventTagVote>(eventId, userId);
 		}
 
+		public TagSelectionContract[] GetEventSeriesTagSelections(int seriesId, int userId) {
+			return GetTagSelections<ReleaseEventSeries, EventSeriesTagUsage, EventSeriesTagVote>(seriesId, userId);
+		}
+
 		public TagSelectionContract[] GetSongTagSelections(int songId, int userId) {
 
 			return HandleQuery(session => {
@@ -1293,6 +1297,15 @@ namespace VocaDb.Model.Database.Queries {
 				eventId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				releaseEvent => releaseEvent.Tags,
 				(releaseEvent, ctx) => new EventTagUsageFactory(ctx, releaseEvent));
+
+		}
+
+		public TagUsageForApiContract[] SaveEventSeriesTags(int seriesId, TagBaseContract[] tags, bool onlyAdd) {
+
+			return new TagUsageQueries(PermissionContext).AddTags<ReleaseEventSeries, EventSeriesTagUsage>(
+				seriesId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
+				releaseEvent => releaseEvent.Tags,
+				(releaseEvent, ctx) => new EventSeriesTagUsageFactory(ctx, releaseEvent));
 
 		}
 
@@ -1801,6 +1814,36 @@ namespace VocaDb.Model.Database.Queries {
 		public EventTagUsage CreateTagUsage(Tag tag, EventTagUsage oldUsage) {
 
 			var usage = new EventTagUsage(oldUsage.Entry, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+	}
+
+	public class EventSeriesTagUsageFactory : ITagUsageFactory<EventSeriesTagUsage> {
+
+		private readonly ReleaseEventSeries releaseEvent;
+		private readonly IDatabaseContext ctx;
+
+		public EventSeriesTagUsageFactory(IDatabaseContext ctx, ReleaseEventSeries releaseEvent) {
+			this.ctx = ctx;
+			this.releaseEvent = releaseEvent;
+		}
+
+		public EventSeriesTagUsage CreateTagUsage(Tag tag) {
+
+			var usage = new EventSeriesTagUsage(releaseEvent, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+		public EventSeriesTagUsage CreateTagUsage(Tag tag, EventSeriesTagUsage oldUsage) {
+
+			var usage = new EventSeriesTagUsage(oldUsage.Entry, tag);
 			ctx.Save(usage);
 
 			return usage;

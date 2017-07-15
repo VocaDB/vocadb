@@ -1,6 +1,7 @@
 ﻿using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Web.Models.Search {
@@ -29,6 +30,8 @@ namespace VocaDb.Web.Models.Search {
 		public bool? ChildVoicebanks { get; set; }
 
 		public DiscType? DiscType { get; set; }
+
+		public EventCategory? EventCategory { get; set; }
 
 		public string Filter { get; set; }
 

@@ -216,15 +216,16 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /User/
 
-		public ActionResult Index(string filter = null) {
+		public ActionResult Index(string filter = null, UserGroupId? groupId = null) {
 
-			var vm = new Index { Filter = filter };
+			var vm = new Index { Filter = filter, GroupId = groupId };
 
 			if (!string.IsNullOrEmpty(filter)) {
 
 				var queryParams = new UserQueryParams {
 					Common = new CommonSearchParams(SearchTextQuery.Create(filter), false, false),
-					Paging = new PagingProperties(0, 1, true)
+					Paging = new PagingProperties(0, 1, true),
+					Group = groupId ?? UserGroupId.Nothing
 				};
 
 				var result = Data.GetUsers(queryParams, u => u.Name);
@@ -753,19 +754,25 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult RequestVerification([FromJson] ArtistContract selectedArtist, string message) {
+		public ActionResult RequestVerification([FromJson] ArtistContract selectedArtist, string message, string linkToProof, bool privateMessage) {
 
 			if (selectedArtist == null) {
 				TempData.SetErrorMessage("Artist must be selected");
 				return View("RequestVerification", null, message);
 			}
 
-			if (string.IsNullOrEmpty(message)) {
-				TempData.SetErrorMessage("You must enter some message");
+			if (string.IsNullOrEmpty(linkToProof) && !privateMessage) {
+				TempData.SetErrorMessage("You must provide a link to proof");
 				return View();
 			}
 
-			artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", message), null);
+			if (string.IsNullOrEmpty(linkToProof) && privateMessage) {
+				linkToProof = "in a private message";
+			}
+
+			var fullMessage = "Proof: " + linkToProof + ", Message: " + message;
+
+			artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", fullMessage), null);
 
 			TempData.SetSuccessMessage("Request sent");
 			return View();

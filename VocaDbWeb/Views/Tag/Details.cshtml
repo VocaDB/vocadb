@@ -85,6 +85,8 @@
 	@Helpers.EntryStatusMessage(Model.Status)
 }
 
+@helper NicoTagLink(string nicoTag) {<a href="http://www.nicovideo.jp/tag/@nicoTag" class="extLink">@nicoTag</a>}
+
 @if (Model.Deleted) {
 	@EntryDetailsHelpers.DeletedBanner(null)
 }
@@ -112,6 +114,10 @@
 			@if (Model.WebLinks.Any()) {
 				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
 				<br />
+			}
+			
+			@if (Model.MappedNicoTags.Any()) {
+				<p>@Res.MappedTags: @Html.LinkListHtml(Model.MappedNicoTags, NicoTagLink)</p>
 			}
 
 			@if (Model.CategoryName != string.Empty) {
@@ -213,6 +219,19 @@
 	</div>
 }
 
+
+@if (Model.EventSeries.Any()) {
+	<div class="well well-transparent">
+		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))
+		<h3>
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
+				@Res.EventSeries
+			</a>
+		</h3>
+		@Helpers.EventSeriesThumbs(Model.EventSeries)
+	</div>
+}
+
 @if (Model.Events.Any()) {
 	<div class="well well-transparent">
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))
@@ -222,7 +241,7 @@
 				<small>(@Model.EventCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@Helpers.EventThumbs(Model.Events)
+		@Helpers.EventThumbs(Model.Events, ImageSize.TinyThumb)
 	</div>
 }
 

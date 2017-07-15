@@ -18,6 +18,9 @@ namespace VocaDb.Web.Helpers {
 				case EntryType.ReleaseEvent:
 					return urlHelper.Action("Details", "Event", new { id, slug = urlSlug });
 
+				case EntryType.ReleaseEventSeries:
+					return urlHelper.Action("SeriesDetails", "Event", new { id, slug = urlSlug });
+
 				case EntryType.Tag:
 					return urlHelper.Action("DetailsById", "Tag", new { id, slug = urlSlug });
 

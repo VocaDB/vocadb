@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -65,7 +66,7 @@ namespace VocaDb.Web.Controllers
 				return RedirectToActionPermanent("Details", new { id, slug = ev.UrlSlug });
 			}
 
-			var inheritedCategory = ev.Series != null ? ev.Series.Category : ev.Category;
+			var inheritedCategory = ev.InheritedCategory;
 			string subtitle;
 
 			if (inheritedCategory == EventCategory.Unspecified || inheritedCategory == EventCategory.Other) {
@@ -95,7 +96,7 @@ namespace VocaDb.Web.Controllers
 				CheckConcurrentEdit(EntryType.ReleaseEvent, id.Value);
 			}
 
-			var model = (id != null ? new EventEdit(Service.GetReleaseEventForEdit(id.Value), PermissionContext) 
+			var model = (id != null ? new EventEdit(queries.GetEventForEdit(id.Value), PermissionContext) 
 				: new EventEdit(seriesId != null ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null, PermissionContext));
 
 			return View(model);
@@ -104,8 +105,20 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-        public ActionResult Edit(EventEdit model, HttpPostedFileBase pictureUpload = null)
-        {
+        public ActionResult Edit(EventEdit model, HttpPostedFileBase pictureUpload = null) {
+
+	        ActionResult RenderEdit() {
+
+		        if (model.Id != 0) {
+			        var contract = queries.GetEventForEdit(model.Id);
+			        model.CopyNonEditableProperties(contract, PermissionContext);
+		        } else {
+			        model.CopyNonEditableProperties(null, PermissionContext);
+		        }
+
+		        return View("Edit", model);
+
+	        }
 
 			// Either series or name must be specified. If series is specified, name is generated automatically.
 			if (model.Series.IsNullOrDefault() || model.CustomName) {
@@ -116,19 +129,18 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (!ModelState.IsValid) {
-
-				if (model.Id != 0) {
-					var contract = Service.GetReleaseEventForEdit(model.Id);
-					model.CopyNonEditableProperties(contract, PermissionContext);					
-				} else {
-					model.CopyNonEditableProperties(null, PermissionContext);
-				}
-
-				return View(model);
+				return RenderEdit();
 			}
 
 	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
-			var id = queries.Update(model.ToContract(), pictureData).Id;
+	        int id;
+
+	        try {
+				id = queries.Update(model.ToContract(), pictureData).Id;
+	        } catch (DuplicateEventNameException x) {
+		        ModelState.AddModelError("Names", x.Message);
+		        return RenderEdit();
+	        }
 
 			return RedirectToAction("Details", new { id });
 
@@ -149,22 +161,31 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-        public ActionResult EditSeries(SeriesEdit model, HttpPostedFileBase pictureUpload = null)
-        {
+        public ActionResult EditSeries(SeriesEdit model, HttpPostedFileBase pictureUpload = null) {
 
-		    // Note: name is allowed to be whitespace, but not empty.
-		    if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value))) {
+	        ActionResult RenderEdit() {
+		        model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
+		        return View("EditSeries", model);
+			}
+
+			// Note: name is allowed to be whitespace, but not empty.
+			if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value))) {
 			    ModelState.AddModelError("Names", "Name cannot be empty");
 		    }
 
 			if (!ModelState.IsValid) {
-				model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
-				return View(model);
+				return RenderEdit();
 			}
 
 			var pictureData = ParsePicture(pictureUpload, "Picture");
 
-			var id = queries.UpdateSeries(model.ToContract(), pictureData);
+	        int id;
+	        try {
+		        id = queries.UpdateSeries(model.ToContract(), pictureData);
+	        } catch (DuplicateEventNameException x) {
+		        ModelState.AddModelError("Names", x.Message);
+		        return RenderEdit();
+	        }
 
 			return RedirectToAction("SeriesDetails", new { id });
 

@@ -235,6 +235,12 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
 			));
 
+			bundles.Add(new ScriptBundle("~/bundles/EventSeries/Details").Include(
+				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
+				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
+				"~/Scripts/ViewModels/ReleaseEvent/EventSeriesDetailsViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/EventSeries/Edit").Include(
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/Repositories/ReleaseEventRepository.js",

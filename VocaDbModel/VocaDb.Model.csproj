@@ -120,6 +120,7 @@
     <Compile Include="Database\Queries\Partial\CreateEntryHitQuery.cs" />
     <Compile Include="Database\Queries\Partial\CreateEventQuery.cs" />
     <Compile Include="Database\Queries\Partial\CreateMergeEntryQuery.cs" />
+    <Compile Include="Database\Queries\Partial\UpdateEventNamesQuery.cs" />
     <Compile Include="Database\Queries\SongAggregateQueries.cs" />
     <Compile Include="Database\Queries\SongListQueries.cs" />
     <Compile Include="Database\Queries\SongQueries.cs" />
@@ -342,6 +343,8 @@
     <Compile Include="Domain\ReleaseEvents\EventCategory.cs" />
     <Compile Include="Domain\ReleaseEvents\EventName.cs" />
     <Compile Include="Domain\ReleaseEvents\EventReport.cs" />
+    <Compile Include="Domain\ReleaseEvents\EventSeriesTagUsage.cs" />
+    <Compile Include="Domain\ReleaseEvents\EventSeriesTagVote.cs" />
     <Compile Include="Domain\ReleaseEvents\EventTagUsage.cs" />
     <Compile Include="Domain\ReleaseEvents\EventTagVote.cs" />
     <Compile Include="Domain\ReleaseEvents\PVForEvent.cs" />
@@ -597,6 +600,7 @@
     <Compile Include="Mapping\Albums\PVForAlbumMap.cs" />
     <Compile Include="Mapping\EntryHitMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ArchivedReleaseEventSeriesVersionMap.cs" />
+    <Compile Include="Mapping\ReleaseEvents\EventSeriesTagUsageMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\EventTagUsageMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\PVForEventMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventMap.cs" />

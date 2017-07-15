@@ -109,7 +109,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			tag = new Tag("vocarock");
 			repository.Add(tag, new Tag("vocaloud"));
 
-			releaseEvent = repository.Save(new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English, new[] { new LocalizedString("Comiket 39", ContentLanguageSelection.English) } ));
+			releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
 
 			permissionContext = new FakePermissionContext(user);
 			entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
@@ -532,7 +532,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var album = repository.Save(CreateEntry.Album());
 			album.OriginalRelease.ReleaseDate = new OptionalDateTime(2007, 8, 31);
-			var relEvent = repository.Save(new ReleaseEvent(string.Empty, new DateTime(2007, 8, 31), ContentLanguageSelection.English, new[] { new LocalizedString("Miku's birthday", ContentLanguageSelection.English) }));
+			var relEvent = repository.Save(CreateEntry.ReleaseEvent("Miku's birthday", new DateTime(2007, 8, 31)));
 			album.OriginalRelease.ReleaseEvent = relEvent;
 			album.AddSong(song, 1, 1);
 
@@ -759,11 +759,29 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// User has selected the event
+		/// </summary>
 		[TestMethod]
-		public void Update_ReleaseEvent_ExistingEvent() {
+		public void Update_ReleaseEvent_ExistingEvent_Selected() {
 
 			var contract = EditContract();
 			contract.ReleaseEvent = new ReleaseEventContract(releaseEvent, ContentLanguagePreference.English);
+
+			queries.UpdateBasicProperties(contract);
+
+			Assert.AreSame(releaseEvent, song.ReleaseEvent, "ReleaseEvent");
+
+		}
+
+		/// <summary>
+		/// User typed an event name, and there's a name match
+		/// </summary>
+		[TestMethod]
+		public void Update_ReleaseEvent_ExistingEvent_MatchByName() {
+
+			var contract = EditContract();
+			contract.ReleaseEvent = new ReleaseEventContract { Name = releaseEvent.DefaultName };
 
 			queries.UpdateBasicProperties(contract);
 

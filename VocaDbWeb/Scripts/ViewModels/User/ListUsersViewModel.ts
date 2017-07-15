@@ -6,10 +6,14 @@ module vdb.viewModels.user {
 	export class ListUsersViewModel {
 		
 		constructor(
-			private repo: repositories.UserRepository,
+			private readonly repo: repositories.UserRepository,
 			resourceRepo: repositories.ResourceRepository,
 			cultureCode: string,
-			searchTerm: string) {
+			searchTerm: string,
+			group: string) {
+
+			if (group)
+				this.group(group);
 
 			this.searchTerm = ko.observable(searchTerm || "").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 
