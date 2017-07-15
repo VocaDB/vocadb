@@ -78,7 +78,12 @@
 		}
 		<div class="media-body">
 			@if (Model.Date != null) {
-				<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
+				<p>
+					@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()
+					@if (Model.EndDate != null && Model.EndDate.Value > Model.Date.Value) {
+						@:- @Model.EndDate.Value.ToShortDateString()
+					}
+				</p>
 			}
 		
 			@if (!string.IsNullOrEmpty(Model.VenueName)) {

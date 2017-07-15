@@ -154,6 +154,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual Date EndDate { get; set; }
+
 		public virtual EntryType EntryType => EntryType.ReleaseEvent;
 
 		public virtual bool HasSeries => Series != null;

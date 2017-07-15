@@ -160,11 +160,14 @@
 			</div>
 
 			<div class="editor-label">
-				@Html.LabelFor(m => m.Date)
+				@Helpers.HelpLabel("Date", "Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date.")
 			</div>
 			<div class="editor-field">
-				<input type="text" data-bind="datepicker: { value: date, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
+				<input type="text" data-bind="datepicker: { value: date, dateFormat: 'yy-mm-dd' }" class="input-small" maxlength="10" />
+				to
+				<input type="text" data-bind="datepicker: { value: endDate, dateFormat: 'yy-mm-dd' }" class="input-small" maxlength="10" />
 				@Html.HiddenForKnockout(m => m.Date, "value: ko.toJSON(dateStr)")
+				@Html.HiddenForKnockout(m => m.EndDate, "value: ko.toJSON(endDateStr)")
 				@Html.ValidationMessageFor(m => m.Date)
 			</div>
 
@@ -333,6 +336,7 @@
 			Model.Artists,
 			Model.Date,
 			DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
+            Model.EndDate,
 			Model.Id,
 			Model.Names,
 			Model.PVs,

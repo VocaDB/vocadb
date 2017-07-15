@@ -30,6 +30,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Date = ev.Date;
 			Deleted = ev.Deleted;
 			Description = ev.Description;
+			EndDate = ev.EndDate;
 			Id = ev.Id;
 			Name = ev.TranslatedName[languagePreference];
 			PictureMime = ev.PictureMime;
@@ -56,6 +57,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public bool Deleted { get; set; }
 
 		public string Description { get; set; }
+
+		public DateTime? EndDate { get; set; }
 
 		public int Id { get; set; }
 

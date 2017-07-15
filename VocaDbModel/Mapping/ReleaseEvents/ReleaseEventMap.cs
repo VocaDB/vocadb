@@ -56,6 +56,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			});
 
 			Component(m => m.Date, c => c.Map(m => m.DateTime).Column("[Date]").Nullable());
+			Component(m => m.EndDate, c => c.Map(m => m.DateTime).Column("[EndDate]").Nullable());
 
 		}
 

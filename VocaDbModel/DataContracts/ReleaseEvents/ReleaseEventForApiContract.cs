@@ -22,6 +22,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			Category = rel.Category;
 			Date = rel.Date;
+			EndDate = rel.EndDate;
 			Id = rel.Id;
 			Name = rel.TranslatedName[languagePreference];
 			SeriesNumber = rel.SeriesNumber;
@@ -93,6 +94,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }
+
+		[DataMember]
+		public DateTime? EndDate { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

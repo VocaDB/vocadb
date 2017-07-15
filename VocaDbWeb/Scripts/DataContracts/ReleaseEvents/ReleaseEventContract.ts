@@ -12,6 +12,8 @@ namespace vdb.dataContracts {
 
 		defaultNameLanguage: string;
 
+		endDate?: string;
+
 		id: number;
 
 		mainPicture?: EntryThumbContract;

@@ -4,6 +4,13 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_07_15_2300)]
+	public class EventEndDate : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("EndDate").OnTable(TableNames.AlbumReleaseEvents).AsDateTime().Nullable();
+		}
+	}
+
 	[Migration(2017_07_10_2300)]
 	public class EventSeriesTags : AutoReversingMigration {
 		public override void Up() {
