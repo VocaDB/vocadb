@@ -163,7 +163,12 @@
 					}
 					@if (ev.Date.HasValue) {
 						<br />
-						<small class="extraInfo">@(ev.Date.Value.ToShortDateString())</small>						
+						<small class="extraInfo">
+							@(ev.Date.Value.ToShortDateString())
+							@if (ev.EndDate.HasValue) {
+								@:- @ev.EndDate.Value.ToShortDateString()
+							}
+						</small>						
 					}
 					@if (!string.IsNullOrEmpty(ev.VenueName)) {
 						<br />
