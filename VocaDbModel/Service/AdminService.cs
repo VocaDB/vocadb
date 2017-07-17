@@ -378,7 +378,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PVForSongContract[] GetSongPVsByAuthor(string author) {
+		public PVForSongContract[] GetSongPVsByAuthor(string author, int maxResults) {
 
 			if (string.IsNullOrEmpty(author))
 				return new PVForSongContract[] {};
@@ -386,7 +386,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				return session.Query<PVForSong>().Where(p => p.Author == author)
-					.Take(50)
+					.Take(maxResults)
 					.ToArray()
 					.Select(p => new PVForSongContract(p, LanguagePreference))
 					.ToArray();

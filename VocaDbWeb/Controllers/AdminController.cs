@@ -204,9 +204,9 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult PVsByAuthor(string author) {
+		public ActionResult PVsByAuthor(string author, int maxResults = 50) {
 
-			var songs = Service.GetSongPVsByAuthor(author ?? string.Empty);
+			var songs = Service.GetSongPVsByAuthor(author ?? string.Empty, maxResults);
 
 			var model = new PVsByAuthor(author ?? string.Empty, songs);
 
