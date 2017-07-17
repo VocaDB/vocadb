@@ -6,9 +6,12 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -34,9 +37,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="author">Uploader name (optional).</param>
 		/// <param name="maxResults">Maximum number of results.</param>
+		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
+		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of PVs.</returns>
 		[Route("for-songs")]
-		public IEnumerable<PVContract> GetList(string author = null, int maxResults = 10) {
+		public PartialFindResult<PVForSongContract> GetList(string author = null, int maxResults = 10, bool getTotalCount = false, 
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			return repository.HandleQuery(db => {
 
@@ -46,10 +52,12 @@ namespace VocaDb.Web.Controllers.Api {
 					query = query.Where(p => p.Author == author);
 				}
 
+				var count = getTotalCount ? query.Count() : 0;
+
 				query = query.Take(maxResults);
 
-				var results = query.Select(p => new PVContract(p)).ToArray();
-				return results;
+				var results = query.Select(p => new PVForSongContract(p, lang)).ToArray();
+				return PartialFindResult.Create(results, count);
 
 			});
 
