@@ -147,6 +147,7 @@
     <Compile Include="Domain\Artists\ArtistStringFactoryTests.cs" />
     <Compile Include="Domain\Artists\ArtistTests.cs" />
     <Compile Include="Domain\DateTests.cs" />
+    <Compile Include="Domain\Globalization\EnglishTranslatedStringTests.cs" />
     <Compile Include="Domain\Globalization\InterfaceLanguageTests.cs" />
     <Compile Include="Domain\Globalization\NameManagerTests.cs" />
     <Compile Include="Domain\Globalization\TranslatedStringTests.cs" />

@@ -20,7 +20,7 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 		public virtual string English {
-			get { return english; }
+			get => english;
 			set {
 				ParamIs.NotNull(() => value);
 				english = value;
@@ -49,14 +49,17 @@ namespace VocaDb.Model.Domain.Globalization {
 			ParamIs.NotNull(() => contract);
 
 			var changed = false;
+			var newOriginal = contract.Original?.Trim();
 
-			if (Original != contract.Original) {
-				Original = contract.Original;
+			if (Original != newOriginal) {
+				Original = newOriginal;
 				changed = true;
 			}
 
-			if (English != contract.English) {
-				English = contract.English;
+			var newEnglish = contract.English?.Trim();
+
+			if (English != newEnglish) {
+				English = newEnglish;
 				changed = true;
 			}
 
