@@ -120,11 +120,37 @@
   <data name="ArtistTitle" xml:space="preserve">
     <value>认证词条（必填）</value>
   </data>
+  <data name="Info" xml:space="preserve">
+    <value>&lt;p&gt;
+不论您是P主，画师，PV师还是其他VOCALOID相关创作者或社团代表，您都可以通过本界面向VocaDb申请核实您的账号。核实无误后，您的账号名将会展示在“艺术家”总条目中。
+		&lt;/p&gt;
+		&lt;p&gt;
+			&lt;strong&gt;
+				您需要证明该条目是您本人，否则申请将不予通过。
+			&lt;/strong&gt;
+			例如，在您的微博贴出VocaDb条目地址，即可证明您的身份。
+			&lt;strong&gt;
+				同时，您的账号条目内需要包含至少一至两首已完成的歌曲（VOCALOID或UTAU）条目，如您有满足条件的作品但本站无该条目，您可自行添加新条目。
+			&lt;/strong&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+账号核实后，您可以设置您账号条目的可编辑人员。目前仅有已核实的“艺术家”账号可进行该操作，“歌曲”与“专辑”总条目尚未开通该服务。
+		&lt;/p&gt;
+		&lt;p&gt;
+VocaDb有权利不通过您的申请，以上提及的原因均有可能。如有以上未提及的问题，VocaDb的编辑将会联系您，修正申请中的错误。
+		&lt;/p&gt;</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登陆</value>
+  </data>
   <data name="MessageTitle" xml:space="preserve">
     <value>备注（可选）</value>
   </data>
   <data name="NoPrivateMessage" xml:space="preserve">
     <value>在下方填写证明链接</value>
+  </data>
+  <data name="NotLoggedInMessage" xml:space="preserve">
+    <value>您只有【{0}】或【{1}】之后才能进行此操作。</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>申请账户认证</value>
@@ -134,6 +160,9 @@
   </data>
   <data name="Send" xml:space="preserve">
     <value>提交申请</value>
+  </data>
+  <data name="Signup" xml:space="preserve">
+    <value>注册</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>证明链接（必填）</value>
