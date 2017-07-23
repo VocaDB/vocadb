@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ArtistTitle" xml:space="preserve">
-    <value>认证词条（必填）</value>
+    <value>您申请核实的条目名称：（必填）</value>
   </data>
   <data name="Info" xml:space="preserve">
     <value>&lt;p&gt;
@@ -144,10 +144,10 @@ VocaDb有权利不通过您的申请，以上提及的原因均有可能。如�
     <value>登陆</value>
   </data>
   <data name="MessageTitle" xml:space="preserve">
-    <value>备注（可选）</value>
+    <value>其余信息：（选填）</value>
   </data>
   <data name="NoPrivateMessage" xml:space="preserve">
-    <value>在下方填写证明链接</value>
+    <value>下方所填地址即证明材料</value>
   </data>
   <data name="NotLoggedInMessage" xml:space="preserve">
     <value>您只有【{0}】或【{1}】之后才能进行此操作。</value>
@@ -156,7 +156,7 @@ VocaDb有权利不通过您的申请，以上提及的原因均有可能。如�
     <value>申请账户认证</value>
   </data>
   <data name="PrivateMessage" xml:space="preserve">
-    <value>通过私信发送证明链接</value>
+    <value>证明材料将通过私信提交至管理员</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>提交申请</value>
@@ -165,6 +165,6 @@ VocaDb有权利不通过您的申请，以上提及的原因均有可能。如�
     <value>注册</value>
   </data>
   <data name="URL" xml:space="preserve">
-    <value>证明链接（必填）</value>
+    <value>证明材料地址，如一条说明“VocaDb某目是我本人”的微博：（必填）</value>
   </data>
 </root>
