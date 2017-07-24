@@ -53,6 +53,8 @@
 		/// </summary>
 		HasAlbum,
 
+		HasOriginalMedia,
+
 		HasMultipleVoicebanks,
 
 		HasPublishDate,
