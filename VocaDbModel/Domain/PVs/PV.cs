@@ -45,6 +45,11 @@ namespace VocaDb.Model.Domain.PVs {
 			}
 		}
 
+		public virtual bool Disabled {
+			get => false;
+			set => throw new NotSupportedException();
+		}
+
 		public virtual int Id { get; set; }
 
 		public virtual PVExtendedMetadata ExtendedMetadata {

@@ -31,6 +31,8 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual int? CreatedBy { get; set; }
 
+		public override bool Disabled { get; set; }
+
 		/// <summary>
 		/// Length in seconds.
 		/// </summary>
@@ -54,10 +56,15 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public override bool ContentEquals(PVContract pv) {
+			return base.ContentEquals(pv) && Disabled == pv.Disabled;
+		}
+
 		public override void CopyMetaFrom(PVContract contract) {
 
 			base.CopyMetaFrom(contract);
 
+			Disabled = contract.Disabled;
 			ThumbUrl = contract.ThumbUrl;
 
 		}

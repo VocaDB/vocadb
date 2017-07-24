@@ -32,6 +32,10 @@
 			{{ author }}
 		{{/if}}
 	</td>
+	<td visible="{{ $parent.allowDisabled }}">
+		<input type="checkbox" checked="{{ disabled }}" />
+		@ViewRes.EntryEditStrings.PVUnavailable
+	</td>
 	<td>
 		<a data-bind="click: $parent.remove" class="textLink deleteLink" href="#">@ViewRes.SharedStrings.Delete</a>
 	</td>

@@ -172,6 +172,7 @@ namespace VocaDb.Model.Mapping.Songs {
 
 			Map(m => m.Author).Length(100).Not.Nullable();
 			Map(m => m.CreatedBy).Nullable();
+			Map(m => m.Disabled).Not.Nullable();
 			Map(m => m.Length).Not.Nullable();
 			Map(m => m.Name).Length(200).Not.Nullable();
 			Map(m => m.PublishDate).Nullable();

@@ -867,7 +867,7 @@ namespace VocaDb.Model.Domain.Songs {
 			var services = PVServices.Nothing;
 
 			foreach (var service in EnumVal<PVService>.Values) {
-				if (PVs.Any(p => p.Service == service))
+				if (PVs.Any(p => !p.Disabled && p.Service == service))
 					services |= (PVServices)service;
 			}
 

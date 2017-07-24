@@ -7,6 +7,8 @@ namespace VocaDb.Model.Domain.PVs {
 	/// </summary>
 	public interface IPV {
 
+		bool Disabled { get; }
+
 		/// <summary>
 		/// Unique Id.
 		/// </summary>

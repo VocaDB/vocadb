@@ -412,6 +412,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (PV is unavailable).
+        /// </summary>
+        public static string PVUnavailable {
+            get {
+                return ResourceManager.GetString("PVUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Related songs.
         /// </summary>
         public static string RelatedSongs {

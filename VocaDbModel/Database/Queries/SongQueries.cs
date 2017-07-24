@@ -846,8 +846,10 @@ namespace VocaDb.Model.Database.Queries {
 			var pvDiff = song.SyncPVs(pvs);
 			ctx.OfType<PVForSong>().Sync(pvDiff);
 
-			if (pvDiff.Changed)
+			if (pvDiff.Changed) {
 				diff.PVs.Set();
+				song.UpdatePVServices();
+			}
 
 			if (pvDiff.Changed && !oldPublishDate.Equals(song.PublishDate)) {
 				diff.PublishDate.Set();

@@ -146,7 +146,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			ParamIs.NotNull(() => pvs);
 
-			var p = pvs.ToArray();
+			var p = pvs.Where(pv => !pv.Disabled).ToArray();
 
 			if (preferredService.HasValue)
 				return GetPV(p, preferredService.Value) ?? GetPV(p);

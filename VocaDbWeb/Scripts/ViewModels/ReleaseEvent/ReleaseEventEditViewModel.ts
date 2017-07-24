@@ -25,7 +25,7 @@ module vdb.viewModels.releaseEvents {
 
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
-			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, contract.pvs, false, true);
+			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, contract.pvs, false, true, false);
 			this.series = new BasicEntryLinkViewModel(contract.series, null);
 			this.isSeriesEvent = ko.observable(!this.series.isEmpty());
 

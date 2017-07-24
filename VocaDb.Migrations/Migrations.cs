@@ -4,6 +4,13 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_07_24_1500)]
+	public class PVForSongDisabled : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Disabled").OnTable(TableNames.PVsForSongs).AsBoolean().NotNullable().WithDefaultValue(false);
+		}
+	}
+
 	[Migration(2017_07_15_2300)]
 	public class EventEndDate : AutoReversingMigration {
 		public override void Up() {

@@ -31,7 +31,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 		.ajaxStart(function () { $(this).show(); })
 		.ajaxStop(function () { $(this).hide(); });
 
-	$(".pvLink").click(function () {
+	$(".pvLink:not(.disabled)").click(function () {
 
 		var id = getId(this);
 		$.post(urlMapper.mapRelative("/Song/PVForSong"), { pvId: id }, function (content) {
