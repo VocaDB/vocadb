@@ -313,6 +313,24 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string PvStatus {
+            get {
+                return ResourceManager.GetString("PvStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the PV is deleted or hidden by the author and thus unplayable, it should be marked as &quot;Unavailable&quot; here..
+        /// </summary>
+        public static string PvStatusHelp {
+            get {
+                return ResourceManager.GetString("PvStatusHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili..
         /// </summary>
         public static string PvSupportedServices {
