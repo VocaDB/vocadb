@@ -29,6 +29,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 		public ArchivedPVContract(PVForSong pv)
 			: this((PV)pv) {
 
+			Disabled = pv.Disabled;
 			Length = pv.Length;
 			PublishDate = pv.PublishDate;
 			ThumbUrl = pv.ThumbUrl;
@@ -37,6 +38,9 @@ namespace VocaDb.Model.DataContracts.PVs {
 
 		[DataMember]
 		public string Author { get; set; }
+
+		[DataMember]
+		public bool Disabled { get; set; }
 
 		[DataMember]
 		public PVExtendedMetadata ExtendedMetadata { get; set; }
