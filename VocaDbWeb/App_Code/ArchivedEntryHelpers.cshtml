@@ -314,6 +314,9 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 	if (pv.PublishDate != null) {
 		@:at @pv.PublishDate.Value.ToShortDateString()
 	}
+	if (pv.Disabled) {
+		@:(unavailable)
+	}
 }
 
 @helper TranslatedNameRow(TranslatedStringContract name, TranslatedStringContract compareToName = null) {
