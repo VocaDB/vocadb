@@ -150,6 +150,7 @@ namespace VocaDb.Model.Service {
 				var maxDate = DateTime.Now + TimeSpan.FromDays(14);
 
 				var recentEvents = session.Query<ReleaseEvent>()
+					.WhereNotDeleted()
 					.WhereDateIsBetween(minDate, maxDate)
 					.OrderByDate(SortDirection.Ascending)
 					.Take(count)
