@@ -44,6 +44,7 @@ namespace VocaDb.Model.Service.Search {
 			Filter("Album song", AdvancedFilterType.HasAlbum),
 			Filter("Standalone (no album)", AdvancedFilterType.HasAlbum, negate: true),
 			Filter("No original media", AdvancedFilterType.HasOriginalMedia, negate: true),
+			Filter("No media", AdvancedFilterType.HasMedia, negate: true)
 		};
 
 	}

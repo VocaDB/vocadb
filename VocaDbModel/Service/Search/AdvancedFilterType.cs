@@ -55,6 +55,12 @@
 
 		HasOriginalMedia,
 
+		/// <summary>
+		/// Song has any media.
+		/// This includes disabled media (to make it more useful for searching abandoned songs).
+		/// </summary>
+		HasMedia,
+
 		HasMultipleVoicebanks,
 
 		HasPublishDate,
