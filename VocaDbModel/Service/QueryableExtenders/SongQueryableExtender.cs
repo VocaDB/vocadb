@@ -385,7 +385,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.Where(s => filter.Negate != s.PVs.PVs.Any(pv => !pv.Disabled && pv.PVType == PVType.Original));
 				}
 				case AdvancedFilterType.HasMedia: {
-					return query.Where(s => filter.Negate != s.PVs.PVs.Any(pv => !pv.Disabled && pv.PVType == PVType.Original));
+					return query.Where(s => filter.Negate != s.PVs.PVs.Any());
 				}
 				case AdvancedFilterType.WebLink: {
 					return query.WhereHasLink<Song, SongWebLink>(filter.Param);

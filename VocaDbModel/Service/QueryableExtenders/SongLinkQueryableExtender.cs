@@ -195,7 +195,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.Where(s => s.Song.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1);
 				}
 				case AdvancedFilterType.HasMedia: {
-					return query.Where(s => filter.Negate != s.Song.PVs.PVs.Any(pv => !pv.Disabled && pv.PVType == PVType.Original));
+					return query.Where(s => filter.Negate != s.Song.PVs.PVs.Any());
 				}
 				case AdvancedFilterType.HasPublishDate: {
 					return query.WhereSongHasPublishDate(!filter.Negate);
