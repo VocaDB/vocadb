@@ -42,6 +42,11 @@
 		HasStoreLink,
 
 		/// <summary>
+		/// Album has (not deleted) tracks
+		/// </summary>
+		HasTracks,
+
+		/// <summary>
 		/// Album with no cover picture
 		/// </summary>
 		NoCoverPicture,

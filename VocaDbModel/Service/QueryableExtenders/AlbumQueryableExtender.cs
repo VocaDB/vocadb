@@ -215,6 +215,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case AdvancedFilterType.HasStoreLink: {
 					return query.WhereHasLinkWithCategory(WebLinkCategory.Commercial);
 				}
+				case AdvancedFilterType.HasTracks: {
+					return query.Where(a => filter.Negate != a.AllSongs.Any(s => s.Song == null || !s.Song.Deleted));
+				}
 				case AdvancedFilterType.WebLink: {
 					return query.WhereHasLink<Album, AlbumWebLink>(filter.Param);
 				}

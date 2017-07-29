@@ -17,6 +17,7 @@ namespace VocaDb.Model.Service.Search {
 			Filter("Artist type: other voice synthesizer", AdvancedFilterType.ArtistType, ArtistType.OtherVoiceSynthesizer.ToString()),
 			Filter("No cover picture", AdvancedFilterType.NoCoverPicture),
 			Filter("With store link", AdvancedFilterType.HasStoreLink),
+			Filter("No tracks", AdvancedFilterType.HasTracks, negate: true)
 		};
 
 		public static Tuple<string, AdvancedFilterType, string, bool>[] ArtistFilters { get; } = {
