@@ -289,7 +289,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
-		public ActionResult PopupContentWithVote(int id = invalidId, string callback = null) {
+		public ActionResult PopupContentWithVote(int id = invalidId, int? version = null, string callback = null) {
 
 			if (id == invalidId)
 				return HttpNotFound();
