@@ -95,6 +95,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public ReleaseEventSeriesContract[] EventSeries { get; set; }
 
+		public int FollowerCount { get; set; }
+
 		public bool IsFollowing { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }

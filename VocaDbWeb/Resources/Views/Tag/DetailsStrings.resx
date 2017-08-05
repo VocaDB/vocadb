@@ -147,6 +147,9 @@
   <data name="EventSeries" xml:space="preserve">
     <value>Event series</value>
   </data>
+  <data name="FollowCount" xml:space="preserve">
+    <value>Followed by {0} user(s)</value>
+  </data>
   <data name="FollowTag" xml:space="preserve">
     <value>Follow tag</value>
   </data>

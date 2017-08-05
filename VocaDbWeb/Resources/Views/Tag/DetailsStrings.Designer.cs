@@ -151,6 +151,15 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Followed by {0} user(s).
+        /// </summary>
+        public static string FollowCount {
+            get {
+                return ResourceManager.GetString("FollowCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow tag.
         /// </summary>
         public static string FollowTag {
