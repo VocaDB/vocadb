@@ -268,7 +268,7 @@
 	</ul>
 
 	<div id="latestCommentsTab">
-		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)
 		<!-- ko ifnot: comments().length -->
 		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 		<!-- /ko -->
