@@ -88,7 +88,7 @@ namespace VocaDb.Model.DataContracts.Discussions {
 		Comments		= 1,
 		CommentCount	= 2,
 		Content			= 4,
-		LastComment = 8,
+		LastComment 	= 8,
 
 		All = (Comments | CommentCount | Content | LastComment)
 

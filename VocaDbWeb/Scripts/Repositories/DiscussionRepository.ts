@@ -61,7 +61,7 @@ module vdb.repositories {
 
 		public getTopicsForFolder = (folderId: number, callback: (topics: dc.discussions.DiscussionTopicContract[]) => void) => {
 
-			$.getJSON(this.mapUrl("folders/" + folderId + "/topics"), { fields: 'CommentCount,LastComment' }, callback);
+			$.getJSON(this.mapUrl("topics"), { folderId: folderId, fields: 'CommentCount,LastComment', maxResults: 50 }, result => callback(result.items));
 
 		}
 
