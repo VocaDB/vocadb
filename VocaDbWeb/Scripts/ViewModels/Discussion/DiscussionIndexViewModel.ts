@@ -6,10 +6,10 @@ module vdb.viewModels.discussions {
 
 	export class DiscussionIndexViewModel {
 		
-		constructor(private repo: rep.DiscussionRepository,
-			private urlMapper: vdb.UrlMapper,
-			private canDeleteAllComments: boolean,
-			private loggedUserId: number) {
+		constructor(private readonly repo: rep.DiscussionRepository,
+			private readonly urlMapper: vdb.UrlMapper,
+			private readonly canDeleteAllComments: boolean,
+			private readonly loggedUserId: number) {
 		
 			this.newTopic = ko.observable(new DiscussionTopicEditViewModel(loggedUserId, this.folders()));
 
@@ -46,10 +46,14 @@ module vdb.viewModels.discussions {
 
 				this.showCreateNewTopic(false);
 				this.selectedTopic(null);
+				this.paging.goToFirstPage();
 
 				this.loadTopics(folder);
 
 			});
+
+			this.paging.page.subscribe(this.loadTopicsForCurrentFolder);
+			this.paging.pageSize.subscribe(this.loadTopicsForCurrentFolder);
 
 		}
 
@@ -90,6 +94,10 @@ module vdb.viewModels.discussions {
 			return _.find(this.folders(), f => f.id === folderId);
 		}
 
+		private loadTopicsForCurrentFolder = () => {
+			this.loadTopics(this.selectedFolder());
+		}
+
 		private loadTopics = (folder: dc.discussions.DiscussionFolderContract, callback?: () => void) => {
 		
 			if (!folder) {
@@ -103,9 +111,13 @@ module vdb.viewModels.discussions {
 
 			}
 
-			this.repo.getTopicsForFolder(folder.id, topics => {
+			const paging = this.paging.getPagingProperties(true);
+			this.repo.getTopicsForFolder(folder.id, paging, result => {
 
-				this.topics(topics);
+				this.topics(result.items);
+
+				if (paging.getTotalCount)
+					this.paging.totalItems(result.totalCount);
 
 				if (callback)
 					callback();
@@ -121,6 +133,8 @@ module vdb.viewModels.discussions {
 		}
 
 		public newTopic: KnockoutObservable<DiscussionTopicEditViewModel>;
+
+		public paging = new ServerSidePagingViewModel(30); // Paging view model
 
 		public recentTopics = ko.observableArray<dc.discussions.DiscussionTopicContract>([]);
 
