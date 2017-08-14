@@ -3,7 +3,7 @@
 namespace VocaDb.SiteMapGenerator.VocaDb.DataContracts {
 
 	[DataContract]
-	public class TagBaseContract {
+	public class EntryBaseContract {
 
 		[DataMember]
 		public int Id { get; set; }

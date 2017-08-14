@@ -55,14 +55,19 @@ namespace VocaDb.SiteMapGenerator.VocaDb {
 			return await GetEntries<int[]>(string.Format("{0}api/artists/ids", apiRoot));
 		}
 
+		public async Task<PartialFindResult<EntryBaseContract>> GetEvents() {
+			log.Info("Getting artists");
+			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/releaseEvents?maxResults=100000", apiRoot));
+		}
+
 		public async Task<int[]> GetSongs() {
 			log.Info("Getting songs");
 			return await GetEntries<int[]>(string.Format("{0}api/songs/ids", apiRoot));
 		}
 
-		public async Task<PartialFindResult<TagBaseContract>> GetTags() {
+		public async Task<PartialFindResult<EntryBaseContract>> GetTags() {
 			log.Info("Getting tags");
-			return await GetEntries<PartialFindResult<TagBaseContract>>(string.Format("{0}api/tags?maxResults=100000", apiRoot));
+			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/tags?maxResults=100000", apiRoot));
 		}
 
 	}

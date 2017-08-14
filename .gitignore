@@ -24,3 +24,4 @@ VocaDb.Migrations/bin/
 *.vspx
 .vs/config/applicationhost.config
 TestResults/
+/.vs/VocaDb/v15/sqlite3/storage.ide
