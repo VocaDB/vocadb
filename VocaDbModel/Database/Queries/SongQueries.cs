@@ -307,7 +307,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return repository.HandleTransaction(ctx => {
 
-				var pvResults = contract.PVUrls.Select(pvUrl => ParsePV(ctx.OfType<PVForSong>(), pvUrl)).ToArray();
+				var pvResults = contract.PVUrls?.Select(pvUrl => ParsePV(ctx.OfType<PVForSong>(), pvUrl)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
 				var reprintPvResult = ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
