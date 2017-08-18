@@ -15,7 +15,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		public SongContract OriginalVersion { get; set; }
 
-		public string PVUrl { get; set; }
+		public string[] PVUrls { get; set; }
 
 		public string ReprintPVUrl { get; set; }
 
