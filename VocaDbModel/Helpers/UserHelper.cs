@@ -19,14 +19,14 @@ namespace VocaDb.Model.Helpers {
 			ParamIs.NotNull(() => detailsContract);
 
 			var power =
-				detailsContract.EditCount / 4
+				detailsContract.EditCount / 2
 				+ detailsContract.SubmitCount / 2
 				+ detailsContract.TagVotes * 2
 				+ detailsContract.AlbumCollectionCount * 2
-				+ ownedAlbumCount * 5
+				+ ownedAlbumCount * 2
 				+ albumRatingCount * 3
-				+ detailsContract.FavoriteSongCount * 2
-				+ detailsContract.CommentCount * 4
+				+ detailsContract.FavoriteSongCount
+				+ detailsContract.CommentCount * 5
 				+ songListCount * 5
 				+ (detailsContract.EmailVerified ? 100 : 0);
 
