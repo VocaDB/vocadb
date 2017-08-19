@@ -8,13 +8,11 @@ namespace VocaDb.Model.DataContracts {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryPictureFileContract : IEntryPictureFile {
 
-		int IEntryImageInformation.Version {
-			get { return 0; }
-		}
+		int IEntryImageInformation.Version => 0;
 
 		public EntryPictureFileContract() { }
 
-		public EntryPictureFileContract(EntryPictureFile picture) {
+		public EntryPictureFileContract(EntryPictureFile picture, IEntryImagePersister imageStore) {
 
 			ParamIs.NotNull(() => picture);
 
@@ -23,6 +21,7 @@ namespace VocaDb.Model.DataContracts {
 			Mime = picture.Mime;
 			Name = picture.Name;
 			OwnerEntryId = picture.OwnerEntryId;
+			ThumbUrl = imageStore.GetUrlAbsolute(picture, ImageSize.Thumb, true);
 
 		}
 
@@ -45,6 +44,9 @@ namespace VocaDb.Model.DataContracts {
 
 		[DataMember]
 		public int OwnerEntryId { get; set; }
+
+		[DataMember]
+		public string ThumbUrl { get; set;}
 
 		/// <summary>
 		/// File data stream. Only used for uploads.

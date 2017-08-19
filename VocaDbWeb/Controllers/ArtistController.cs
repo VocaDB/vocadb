@@ -34,7 +34,7 @@ namespace VocaDb.Web.Controllers
 		private readonly MarkdownParser markdownParser;
 
 		private ArtistEditViewModel CreateArtistEditViewModel(int id, ArtistForEditContract editedArtist) {
-			return queries.Get(id, album => new ArtistEditViewModel(new ArtistForEditContract(album, PermissionContext.LanguagePreference), PermissionContext,
+			return queries.Get(id, album => new ArtistEditViewModel(new ArtistContract(album, PermissionContext.LanguagePreference), PermissionContext,
 				EntryPermissionManager.CanDelete(PermissionContext, album), editedArtist));
 		}
 

@@ -15,6 +15,7 @@ using VocaDb.Web.Models;
 using System.Drawing;
 using System.Globalization;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Helpers;
 using VocaDb.Web.Models.Album;
 using VocaDb.Model.DataContracts.UseCases;
@@ -39,7 +40,7 @@ namespace VocaDb.Web.Controllers
 		private AlbumService Service { get; set; }
 
 		private AlbumEditViewModel CreateAlbumEditViewModel(int id, AlbumForEditContract editedAlbum) {
-			return Service.GetAlbum(id, album => new AlbumEditViewModel(new AlbumForEditContract(album, PermissionContext.LanguagePreference), PermissionContext,
+			return Service.GetAlbum(id, album => new AlbumEditViewModel(new AlbumContract(album, PermissionContext.LanguagePreference), PermissionContext,
 				EntryPermissionManager.CanDelete(PermissionContext, album), editedAlbum));
 		}
 

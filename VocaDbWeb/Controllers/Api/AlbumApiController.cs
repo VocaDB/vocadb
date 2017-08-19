@@ -87,7 +87,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[ApiExplorerSettings(IgnoreApi=true)]
 		public AlbumForEditContract GetForEdit(int id) {
 			
-			return service.GetAlbumForEdit(id);
+			return queries.GetForEdit(id);
 
 		}
 

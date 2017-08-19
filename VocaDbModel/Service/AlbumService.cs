@@ -62,15 +62,17 @@ namespace VocaDb.Model.Service {
 			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
+		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IUserIconFactory userIconFactory;
 
 		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IUserIconFactory userIconFactory, IEntryThumbPersister entryThumbPersister) 
+			IUserIconFactory userIconFactory, IEntryThumbPersister entryThumbPersister, IEntryPictureFilePersister pictureFilePersister) 
 			: base(sessionFactory, permissionContext,entryLinkFactory) {
 			
 			this.userIconFactory = userIconFactory;
 			this.entryThumbPersister = entryThumbPersister;
+			this.pictureFilePersister = pictureFilePersister;
 
 		}
 
@@ -271,7 +273,7 @@ namespace VocaDb.Model.Service {
 				if (stats == null)
 					throw new ObjectNotFoundException(id, typeof(Album));
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, entryThumbPersister) {
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, entryThumbPersister, pictureFilePersister) {
 					OwnedCount = stats.OwnedCount,
 					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,
@@ -331,14 +333,6 @@ namespace VocaDb.Model.Service {
 				return contract;
 
 			});
-
-		}
-
-		public AlbumForEditContract GetAlbumForEdit(int id) {
-
-			return
-				HandleQuery(session =>
-					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference));
 
 		}
 

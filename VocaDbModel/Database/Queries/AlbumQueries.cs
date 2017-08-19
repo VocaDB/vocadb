@@ -245,6 +245,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public AlbumForEditContract GetForEdit(int id) {
+
+			return
+				HandleQuery(session =>
+					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, pictureFilePersister));
+
+		}
+
 		public RelatedAlbumsContract GetRelatedAlbums(int albumId) {
 
 			return repository.HandleQuery(ctx => {
@@ -743,7 +751,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				return new AlbumForEditContract(album, PermissionContext.LanguagePreference);
+				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, pictureFilePersister);
 
 			});
 
