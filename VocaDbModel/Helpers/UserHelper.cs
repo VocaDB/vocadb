@@ -1,5 +1,6 @@
 ﻿using System;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Helpers {
 
@@ -31,6 +32,17 @@ namespace VocaDb.Model.Helpers {
 				+ (detailsContract.EmailVerified ? 100 : 0);
 
 			return power;
+
+		}
+
+		public static bool IsVeteran(UserDetailsContract details) {
+			
+			var timeOnSite = DateTime.Now - details.CreateDate;
+			return
+				details.Active &&
+				details.GroupId >= UserGroupId.Regular &&
+				timeOnSite.TotalDays > 365 &&
+				details.EditCount > 1000;
 
 		}
 

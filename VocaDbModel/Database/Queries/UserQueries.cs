@@ -282,6 +282,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			details.Power = UserHelper.GetPower(details, cachedStats.OwnedAlbumCount, cachedStats.RatedAlbumCount, songListCount);
 			details.Level = UserHelper.GetLevel(details.Power);
+			details.IsVeteran = UserHelper.IsVeteran(details);
 
 			// If the user is viewing their own profile, check for possible producer account.
 			// Skip users who are not active, limited or are already verified artists.

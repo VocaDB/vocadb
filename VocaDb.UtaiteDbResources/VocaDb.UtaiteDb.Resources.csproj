@@ -67,6 +67,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewRes\UserRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserRes.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
@@ -97,6 +102,10 @@
     <EmbeddedResource Include="ViewRes\SongRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SongRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewRes\UserRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

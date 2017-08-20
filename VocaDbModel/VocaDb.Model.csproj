@@ -753,6 +753,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\UserRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserRes.resx</DependentUpon>
+    </Compile>
     <Compile Include="Service\ActivityFeedService.cs" />
     <Compile Include="Service\AdminService.cs" />
     <Compile Include="Service\AlbumImport\AlbumImporters.cs" />
@@ -767,6 +772,7 @@
     <Compile Include="Service\BrandableStrings\Collections\LayoutStrings.cs" />
     <Compile Include="Service\BrandableStrings\Collections\ResStringCollection.cs" />
     <Compile Include="Service\BrandableStrings\Collections\SongStrings.cs" />
+    <Compile Include="Service\BrandableStrings\Collections\UserStrings.cs" />
     <Compile Include="Service\BrandableStrings\IBrandedStringsAssemblyHeader.cs" />
     <Compile Include="Service\EntrySortRule.cs" />
     <Compile Include="Service\EntryUrlFriendlyNameFactory.cs" />
@@ -1155,6 +1161,10 @@
     <EmbeddedResource Include="Resources\Views\SongRes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SongRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\UserRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

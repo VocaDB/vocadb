@@ -16,5 +16,7 @@ namespace VocaDb.UtaiteDb.Resources {
 
 		public SongStrings Song => new SongStrings(SongRes.ResourceManager);
 
+		public UserStrings User => new UserStrings(UserRes.ResourceManager);
+
 	}
 }

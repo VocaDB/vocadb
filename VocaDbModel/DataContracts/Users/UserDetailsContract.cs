@@ -53,6 +53,8 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public ArtistContract[] FollowedArtists { get; set;}
 
+		public bool IsVeteran { get; set; }
+
 		public DateTime LastLogin { get; set; }
 
 		public string LastLoginAddress { get; set; }
