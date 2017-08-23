@@ -207,12 +207,11 @@ namespace VocaDb.Web.Controllers
         //
         // GET: /Event/
 
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
 
 	        var queryParams = new EventQueryParams {
-		        AfterDate = DateTime.Now.AddDays(-7),
-		        Paging = new PagingProperties(0, 12, false),
+		        AfterDate = DateTime.Now.AddDays(-2),
+		        Paging = new PagingProperties(0, 15, false),
 		        SortRule = EventSortRule.Date,
 				SortDirection = SortDirection.Ascending
 			};
