@@ -10,7 +10,8 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public AlbumForUserContract() {}
 
-		public AlbumForUserContract(AlbumForUser albumForUser, ContentLanguagePreference languagePreference) {
+		public AlbumForUserContract(AlbumForUser albumForUser, 
+			ContentLanguagePreference languagePreference) {
 
 			ParamIs.NotNull(() => albumForUser);
 
@@ -19,7 +20,10 @@ namespace VocaDb.Model.DataContracts.Users {
 			MediaType = albumForUser.MediaType;
 			PurchaseStatus = albumForUser.PurchaseStatus;
 			Rating = albumForUser.Rating;
-			User = new UserContract(albumForUser.User);
+
+			if (albumForUser.User.Options.PublicAlbumCollection) {
+				User = new UserContract(albumForUser.User);
+			}
 
 		}
 
@@ -41,6 +45,9 @@ namespace VocaDb.Model.DataContracts.Users {
 		// Note: only needed for album collection. True if public collection or viewer is the user himself.
 		public bool ShouldShowCollectionStatus { get; set; }
 
+		/// <summary>
+		/// User who rated the album. Can be null for anonymous ratins.
+		/// </summary>
 		[DataMember]
 		public UserContract User { get; set; }
 

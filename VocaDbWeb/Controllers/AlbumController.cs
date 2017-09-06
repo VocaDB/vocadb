@@ -395,7 +395,6 @@ namespace VocaDb.Web.Controllers
 
 			var users = Service.GetUsersWithAlbumInCollection(albumId);
 			return PartialView(users);
-			//return Json(users);
 
 		}
 
