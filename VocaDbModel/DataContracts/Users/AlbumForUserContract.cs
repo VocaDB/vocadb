@@ -11,7 +11,7 @@ namespace VocaDb.Model.DataContracts.Users {
 		public AlbumForUserContract() {}
 
 		public AlbumForUserContract(AlbumForUser albumForUser, 
-			ContentLanguagePreference languagePreference) {
+			ContentLanguagePreference languagePreference, bool includeUser = true) {
 
 			ParamIs.NotNull(() => albumForUser);
 
@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			PurchaseStatus = albumForUser.PurchaseStatus;
 			Rating = albumForUser.Rating;
 
-			if (albumForUser.User.Options.PublicAlbumCollection) {
+			if (includeUser) {
 				User = new UserContract(albumForUser.User);
 			}
 
