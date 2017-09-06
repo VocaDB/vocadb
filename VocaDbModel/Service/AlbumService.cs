@@ -273,14 +273,18 @@ namespace VocaDb.Model.Service {
 				if (stats == null)
 					throw new ObjectNotFoundException(id, typeof(Album));
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, entryThumbPersister, pictureFilePersister) {
+				var user = PermissionContext.LoggedUser;
+
+				Func<Song, SongVoteRating?> GetRatingFunc = (song) => {
+					return user != null ? (SongVoteRating?)session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
+				};
+
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, entryThumbPersister, pictureFilePersister, GetRatingFunc) {
 					OwnedCount = stats.OwnedCount,
 					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits
 				};
-
-				var user = PermissionContext.LoggedUser;
 
 				if (user != null) {
 
