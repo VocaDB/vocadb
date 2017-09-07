@@ -218,7 +218,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetDetails() {
+		public void GetAlbumDetails() {
 			
 			repository.Save(album.AddSong(song, 1, 1));
 			repository.Save(album.AddSong(song2, 2, 1));
@@ -234,7 +234,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetDetails_CustomTrack() {
+		public void GetAlbumDetails_CustomTrack() {
 
 			repository.Save(album.AddSong("Miku Miku", 1, 1));
 			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
@@ -242,6 +242,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
 
 			Assert.AreEqual(1, result.Songs.Length, "Number of songs");
+
+		}
+
+		[TestMethod]
+		public void GetAlbumDetails_NotLoggedIn() {
+
+			repository.Save(album.AddSong("Miku Miku", 1, 1));
+			permissionContext.LogOff();
+
+			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+			Assert.IsNotNull(result, "result");
 
 		}
 
