@@ -32,11 +32,11 @@ namespace VocaDb.Web.Services {
 	[ServiceContract(Namespace = Schemas.VocaDb)]
 	public class QueryService {
 
+		private readonly AlbumQueries albumQueries;
 		private readonly AlbumService albumService;
 		private readonly ArtistQueries artistQueries;
 		private readonly ArtistService artistService;
 		private readonly EntryQueries entryQueries;
-		private readonly OtherService otherService;
 		private readonly TagQueries tagQueries;
 		private readonly IUserPermissionContext userPermissionContext;
 		private readonly SongQueries songQueries;
@@ -46,21 +46,21 @@ namespace VocaDb.Web.Services {
 		private readonly UserService userService;
 
 		public QueryService(ArtistQueries artistQueries, TagQueries tagQueries, UserQueries userQueries, 
-			AlbumService albumService, ArtistService artistService, SongQueries songQueries, SongService songService, SongListQueries songListQueries, UserService userService, 
-			OtherService otherService, EntryQueries entryQueries,
+			AlbumService albumService, AlbumQueries albumQueries, ArtistService artistService, SongQueries songQueries, SongService songService, SongListQueries songListQueries, UserService userService, 
+			EntryQueries entryQueries,
 			IUserPermissionContext userPermissionContext) {
 
 			this.artistQueries = artistQueries;
 			this.tagQueries = tagQueries;
 			this.userQueries = userQueries;
 			this.albumService = albumService;
+			this.albumQueries = albumQueries;
 			this.artistService = artistService;
 			this.songQueries = songQueries;
 			this.entryQueries = entryQueries;
 			this.songService = songService;
 			this.songListQueries = songListQueries;
 			this.userService = userService;
-			this.otherService = otherService;
 			this.userPermissionContext = userPermissionContext;
 
 		}
@@ -133,7 +133,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public AlbumDetailsContract GetAlbumById(int id) {
 
-			var album = albumService.GetAlbumDetails(id, null);
+			var album = albumQueries.GetAlbumDetails(id, null);
 			return album;
 
 		}

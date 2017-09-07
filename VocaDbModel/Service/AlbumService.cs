@@ -1,6 +1,4 @@
-﻿using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using System.Linq;
 using System.Xml.Linq;
 using NLog;
 using NHibernate;
@@ -19,7 +17,6 @@ using VocaDb.Model.Domain.Artists;
 using System.Drawing;
 using System;
 using VocaDb.Model.Database.Repositories.NHibernate;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
@@ -58,23 +55,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private AlbumMergeRecord GetMergeRecord(ISession session, int sourceId) {
-			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
-		}
-
-		private readonly IEntryPictureFilePersister pictureFilePersister;
-		private readonly IEntryThumbPersister entryThumbPersister;
-		private readonly IUserIconFactory userIconFactory;
-
-		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IUserIconFactory userIconFactory, IEntryThumbPersister entryThumbPersister, IEntryPictureFilePersister pictureFilePersister) 
-			: base(sessionFactory, permissionContext,entryLinkFactory) {
-			
-			this.userIconFactory = userIconFactory;
-			this.entryThumbPersister = entryThumbPersister;
-			this.pictureFilePersister = pictureFilePersister;
-
-		}
+		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
+			: base(sessionFactory, permissionContext,entryLinkFactory) {}
 
 		public ArchivedAlbumVersion Archive(ISession session, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
 
@@ -219,15 +201,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public T GetAlbumWithMergeRecord<T>(int id, Func<Album, AlbumMergeRecord, T> fac) {
-
-			return HandleQuery(session => {
-				var album = session.Load<Album>(id);
-				return fac(album, (album.Deleted ? GetMergeRecord(session, id) : null));
-			});
-
-		}
-
 		public AlbumContract GetAlbum(int id) {
 
 			return GetAlbum(id, a => new AlbumContract(a, PermissionContext.LanguagePreference));
@@ -241,100 +214,6 @@ namespace VocaDb.Model.Service {
 				var webLink = session.Query<AlbumWebLink>().FirstOrDefault(p => p.Url.Contains(link));
 
 				return (webLink != null ? new AlbumContract(webLink.Entry, PermissionContext.LanguagePreference) : null);
-
-			});
-
-		}
-
-		/// <summary>
-		/// Gets album details, and updates hit count if necessary.
-		/// </summary>
-		/// <param name="id">Id of the album to be retrieved.</param>
-		/// <param name="hostname">
-		/// Hostname of the user requestin the album. Used to hit counting when no user is logged in. If null or empty, and no user is logged in, hit count won't be updated.
-		/// </param>
-		/// <returns>Album details contract. Cannot be null.</returns>
-		public AlbumDetailsContract GetAlbumDetails(int id, string hostname) {
-
-			return HandleQuery(session => {
-
-				var album = session.Load<Album>(id);
-
-				var stats = session.Query<Album>()
-					.Where(a => a.Id == id)
-					.Select(a => new {
-						OwnedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
-						WishlistedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
-						CommentCount = a.Comments.Count,
-						Hits = a.Hits.Count
-					})
-					.FirstOrDefault();
-
-				if (stats == null)
-					throw new ObjectNotFoundException(id, typeof(Album));
-
-				var user = PermissionContext.LoggedUser;
-
-				Func<Song, SongVoteRating?> GetRatingFunc = (song) => {
-					return user != null ? (SongVoteRating?)session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
-				};
-
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, entryThumbPersister, pictureFilePersister, GetRatingFunc) {
-					OwnedCount = stats.OwnedCount,
-					WishlistCount = stats.WishlistedCount,
-					CommentCount = stats.CommentCount,
-					Hits = stats.Hits
-				};
-
-				if (user != null) {
-
-					var albumForUser = session.Query<AlbumForUser>()
-						.FirstOrDefault(a => a.Album.Id == id && a.User.Id == user.Id);
-
-					contract.AlbumForUser = (albumForUser != null ? new AlbumForUserContract(albumForUser, PermissionContext.LanguagePreference) : null);
-
-				}
-
-				contract.LatestComments = session.Query<AlbumComment>()
-					.Where(c => c.EntryForComment.Id == id)
-					.OrderByDescending(c => c.Created)
-					.Take(3)
-					.ToArray()
-					.Select(c => new CommentForApiContract(c, userIconFactory))
-					.ToArray();
-
-				if (album.Deleted) {
-					var mergeEntry = GetMergeRecord(session, id);
-					contract.MergedTo = (mergeEntry != null ? new AlbumContract(mergeEntry.Target, LanguagePreference) : null);
-				}
-
-				if (user != null || !string.IsNullOrEmpty(hostname)) {
-
-					var agentNum = (user != null ? user.Id : hostname.GetHashCode());
-
-					using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted)) {
-
-						var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
-
-						if (!isHit) {
-
-							var hit = new AlbumHit(album, agentNum);
-							session.Save(hit);
-
-							try {
-								tx.Commit();
-							} catch (SqlException x) {
-								log.Warn(x, "Error while committing hit");
-							}
-
-						}
-
-					}
-
-				}
-
-
-				return contract;
 
 			});
 

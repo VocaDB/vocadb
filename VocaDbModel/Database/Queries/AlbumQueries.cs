@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
 using NHibernate;
+using NHibernate.Linq;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -65,6 +68,10 @@ namespace VocaDb.Model.Database.Queries {
 		private Artist[] GetArtists(IDatabaseContext<Album> ctx, ArtistContract[] artistContracts) {
 			var ids = artistContracts.Select(a => a.Id).ToArray();
 			return ctx.OfType<Artist>().Query().Where(a => ids.Contains(a.Id)).ToArray();			
+		}
+
+		private AlbumMergeRecord GetMergeRecord(IDatabaseContext session, int sourceId) {
+			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
 		private ArtistForAlbum RestoreArtistRef(Album album, Artist artist, ArchivedArtistForAlbumContract albumRef) {
@@ -209,6 +216,108 @@ namespace VocaDb.Model.Database.Queries {
 					(album, reporter, notesTruncated) => new AlbumReport(album, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != AlbumReportType.Other ? enumTranslations.AlbumReportTypeNames[reportType] : null,
 					albumId, reportType, hostname, notes);
+			});
+
+		}
+
+		/// <summary>
+		/// Gets album details, and updates hit count if necessary.
+		/// </summary>
+		/// <param name="id">Id of the album to be retrieved.</param>
+		/// <param name="hostname">
+		/// Hostname of the user requestin the album. Used to hit counting when no user is logged in. If null or empty, and no user is logged in, hit count won't be updated.
+		/// </param>
+		/// <returns>Album details contract. Cannot be null.</returns>
+		public AlbumDetailsContract GetAlbumDetails(int id, string hostname) {
+
+			return HandleQuery(session => {
+
+				var album = session.Load<Album>(id);
+
+				var stats = session.Query<Album>()
+					.Where(a => a.Id == id)
+					.Select(a => new {
+						OwnedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
+						WishlistedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
+						CommentCount = a.Comments.Count,
+						Hits = a.Hits.Count
+					})
+					.FirstOrDefault();
+
+				if (stats == null)
+					throw new ObjectNotFoundException(id, typeof(Album));
+
+				var user = PermissionContext.LoggedUser;
+
+				SongVoteRating? GetRatingFunc(Song song) {
+					return user != null ? (SongVoteRating?) session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
+				}
+
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imagePersister, pictureFilePersister, GetRatingFunc) {
+					OwnedCount = stats.OwnedCount,
+					WishlistCount = stats.WishlistedCount,
+					CommentCount = stats.CommentCount,
+					Hits = stats.Hits
+				};
+
+				if (user != null) {
+
+					var albumForUser = session.Query<AlbumForUser>()
+						.FirstOrDefault(a => a.Album.Id == id && a.User.Id == user.Id);
+
+					contract.AlbumForUser = (albumForUser != null ? new AlbumForUserContract(albumForUser, PermissionContext.LanguagePreference) : null);
+
+				}
+
+				contract.LatestComments = session.Query<AlbumComment>()
+					.Where(c => c.EntryForComment.Id == id)
+					.OrderByDescending(c => c.Created)
+					.Take(3)
+					.ToArray()
+					.Select(c => new CommentForApiContract(c, userIconFactory))
+					.ToArray();
+
+				if (album.Deleted) {
+					var mergeEntry = GetMergeRecord(session, id);
+					contract.MergedTo = (mergeEntry != null ? new AlbumContract(mergeEntry.Target, LanguagePreference) : null);
+				}
+
+				if (user != null || !string.IsNullOrEmpty(hostname)) {
+
+					var agentNum = (user != null ? user.Id : hostname.GetHashCode());
+
+					using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted)) {
+
+						var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
+
+						if (!isHit) {
+
+							var hit = new AlbumHit(album, agentNum);
+							session.Save(hit);
+
+							try {
+								tx.Commit();
+							} catch (SqlException x) {
+								session.AuditLogger.SysLog("Error while committing hit: " + x.Message);
+							}
+
+						}
+
+					}
+
+				}
+
+				return contract;
+
+			});
+
+		}
+
+		public T GetAlbumWithMergeRecord<T>(int id, Func<Album, AlbumMergeRecord, T> fac) {
+
+			return HandleQuery(session => {
+				var album = session.Load<Album>(id);
+				return fac(album, (album.Deleted ? GetMergeRecord(session, id) : null));
 			});
 
 		}
