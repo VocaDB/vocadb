@@ -21,12 +21,12 @@
 	@UserGrid(owned)
 
 	if (hiddenOwnerCount > 0) {
-		<h5>@hiddenOwnerCount hidden</h5>
+		<p>@string.Format(ViewRes.Album.DetailsStrings.HiddenCollections, hiddenOwnerCount)</p>
 	}
 }
 
 @if (wishlisted.Any()) {
-	<h4>@ViewRes.Album.DetailsStrings.WishlistedByTitle</h4>
+	<h4 class="withMargin">@ViewRes.Album.DetailsStrings.WishlistedByTitle</h4>
 
 	@UserGrid(wishlisted)
 }

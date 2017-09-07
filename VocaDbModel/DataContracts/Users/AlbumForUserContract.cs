@@ -46,7 +46,7 @@ namespace VocaDb.Model.DataContracts.Users {
 		public bool ShouldShowCollectionStatus { get; set; }
 
 		/// <summary>
-		/// User who rated the album. Can be null for anonymous ratins.
+		/// User who rated the album. Can be null for anonymous ratings.
 		/// </summary>
 		[DataMember]
 		public UserContract User { get; set; }

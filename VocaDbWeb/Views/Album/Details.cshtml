@@ -299,12 +299,7 @@
 										@SongHelpers.SongTypeLabel(song.Song.SongType)
 									}
 									@Helpers.PVServiceIcons(song.Song.PVServices)
-									if (song.Rating == SongVoteRating.Like) {
-										<span class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
-									}
-									if (song.Rating == SongVoteRating.Favorite) {
-										<span class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
-									}
+									@SongHelpers.RatingIcon(song.Rating ?? SongVoteRating.Nothing)
 									<br />
 									<small class="muted">@song.Song.ArtistString</small>
 								} else {
