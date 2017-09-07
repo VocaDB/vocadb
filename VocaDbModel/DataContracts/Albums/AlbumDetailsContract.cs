@@ -34,7 +34,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 			Songs = album.Songs
 				.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber)
-				.Select(s => new SongInAlbumContract(s, languagePreference, false, rating: s.Song != null ? getSongRating?.Invoke(s.Song) : null))
+				.Select(s => new SongInAlbumContract(s, languagePreference, false, rating: getSongRating?.Invoke(s.Song)))
 				.ToArray();
 			Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			WebLinks = album.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
