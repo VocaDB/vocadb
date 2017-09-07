@@ -234,6 +234,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void GetDetails_CustomTrack() {
+
+			repository.Save(album.AddSong("Miku Miku", 1, 1));
+			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
+
+			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+
+			Assert.AreEqual(1, result.Songs.Length, "Number of songs");
+
+		}
+
+		[TestMethod]
 		public void Merge_ToEmpty() {
 			
 			Save(album.AddArtist(producer));
