@@ -250,7 +250,6 @@ namespace VocaDb.Model.Database.Queries {
 				var user = PermissionContext.LoggedUser;
 
 				SongVoteRating? GetRatingFunc(Song song) {
-					var q = session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).ToArray();
 					return user != null ? (SongVoteRating?) session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
