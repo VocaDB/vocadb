@@ -218,6 +218,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void GetDetails() {
+			
+			repository.Save(album.AddSong(song, 1, 1));
+			repository.Save(album.AddSong(song2, 2, 1));
+			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
+
+			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+
+			Assert.AreEqual(2, result.Songs.Length, "Number of songs");
+			var track = result.Songs[0];
+			Assert.AreEqual(SongVoteRating.Favorite, track.Rating, "First track rating");
+			Assert.AreEqual(SongVoteRating.Nothing, result.Songs[1].Rating, "Second track rating");
+
+		}
+
+		[TestMethod]
 		public void Merge_ToEmpty() {
 			
 			Save(album.AddArtist(producer));
