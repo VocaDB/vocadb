@@ -219,4 +219,10 @@
   <data name="PvDate" xml:space="preserve">
     <value>日付</value>
   </data>
+  <data name="BaUseAlbumDate" xml:space="preserve">
+    <value>アルバムの発売日：</value>
+  </data>
+  <data name="BaUseEventDate" xml:space="preserve">
+    <value>イベントの開催日：</value>
+  </data>
 </root>

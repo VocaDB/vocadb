@@ -159,4 +159,7 @@
   <data name="Translations" xml:space="preserve">
     <value>他言語の名前</value>
   </data>
+  <data name="ValidFor" xml:space="preserve">
+    <value>対応</value>
+  </data>
 </root>

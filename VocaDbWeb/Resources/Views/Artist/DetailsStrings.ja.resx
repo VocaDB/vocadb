@@ -204,4 +204,13 @@
   <data name="VoiceProviderOf" xml:space="preserve">
     <value>音声提供</value>
   </data>
+  <data name="RecentEvents" xml:space="preserve">
+    <value>最近のイベント</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>発売日</value>
+  </data>
+  <data name="SongsPerMonth" xml:space="preserve">
+    <value>一か月間の曲数</value>
+  </data>
 </root>
