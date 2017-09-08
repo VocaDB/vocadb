@@ -167,6 +167,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(ctx => {
 
 				var q = ctx.Query<ReleaseEventSeries>()
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.Paged(paging);
 

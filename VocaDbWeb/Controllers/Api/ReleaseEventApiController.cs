@@ -173,7 +173,7 @@ namespace VocaDb.Web.Controllers.Api {
 			return repository.HandleQuery(ctx => {
 
 				return ctx.Query<EventName>()
-					.Where(n => n.Value.Contains(query))
+					.Where(n => !n.Entry.Deleted && n.Value.Contains(query))
 					.OrderBy(n => n.Value)
 					.Take(maxResults)
 					.Select(r => r.Value)
