@@ -25,6 +25,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private Album album;
 		private ReleaseEvent existingEvent;
+		private FakeUserMessageMailer mailer = new FakeUserMessageMailer();
 		private FakePermissionContext permissionContext;
 		private FakeEventRepository repository;
 		private EventQueries queries;
@@ -62,7 +63,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user = CreateEntry.User(group: UserGroupId.Trusted);
 			repository.Save(user);
 			permissionContext = new FakePermissionContext(user);
-			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations());
+			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations(), mailer);
 
 		}
 

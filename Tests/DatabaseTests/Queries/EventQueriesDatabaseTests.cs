@@ -21,6 +21,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		private readonly FakeEntryLinkFactory entryLinkFactory = new FakeEntryLinkFactory();
 		private readonly EnumTranslations enumTranslations = new EnumTranslations();
 		private readonly InMemoryImagePersister imageStore = new InMemoryImagePersister();
+		private readonly FakeUserMessageMailer mailer = new FakeUserMessageMailer();
 		private readonly FakePermissionContext userContext;
 		private readonly FakeUserIconFactory userIconFactory = new FakeUserIconFactory();
 		private TestDatabase Db => TestContainerManager.TestDatabase;
@@ -29,7 +30,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 			return context.RunTest(repository => {
 
-				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations);
+				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer);
 
 				var updated = queries.Update(contract, null);
 
@@ -52,7 +53,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 			context.RunTest(repository => {
 
 				var id = Db.ReleaseEvent.Id;
-				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations);
+				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer);
 
 				queries.MoveToTrash(id, "Deleted");
 

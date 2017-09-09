@@ -23,6 +23,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -37,6 +38,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryThumbPersister imagePersister;
+		private readonly IUserMessageMailer mailer;
 		private readonly IUserIconFactory userIconFactory;
 
 		private ArchivedReleaseEventVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason, string notes) {
@@ -58,13 +60,14 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
-			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
+			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IUserMessageMailer mailer)
 			: base(eventRepository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
+			this.mailer = mailer;
 
 		}
 
@@ -430,6 +433,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
 
+					new FollowedArtistNotifier().SendNotifications(session, ev, ev.Artists.Where(a => a != null).Select(a => a.Artist), PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);
+
 				} else {
 
 					ev = session.Load(contract.Id);
@@ -521,6 +526,17 @@ namespace VocaDb.Model.Database.Queries {
 
 					var logStr = string.Format("updated properties for {0} ({1})", entryLinkFactory.CreateEntryLink(ev), diff.ChangedFieldsString);
 					session.AuditLogger.AuditLog(logStr);
+
+					var newSongCutoff = TimeSpan.FromHours(1);
+					if (artistDiff.Added.Any() && ev.CreateDate >= DateTime.Now - newSongCutoff) {
+
+						var addedArtists = artistDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
+
+						if (addedArtists.Any()) {
+							new FollowedArtistNotifier().SendNotifications(session, ev, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);
+						}
+
+					}
 
 				}
 
