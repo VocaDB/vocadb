@@ -122,11 +122,12 @@ namespace VocaDb.Model.Service.Queries {
 
 				EntryPermissionManager.VerifyAccess(permissionContext, tagUsage.EntryBase, EntryPermissionManager.CanRemoveTagUsages);
 
-				ctx.AuditLogger.AuditLog(string.Format("removing {0}", tagUsage));
-
 				tagUsage.Delete();
 				ctx.Delete(tagUsage);
 				ctx.Update(tagUsage.Tag);
+
+				ctx.AuditLogger.AuditLog(string.Format("removed {0}", tagUsage));
+				ctx.AuditLogger.SysLog("Usage count for " + tagUsage.Tag + " is now " + tagUsage.Tag.UsageCount);
 
 				return tagUsage.EntryBase.Id;
 

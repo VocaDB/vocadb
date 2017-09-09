@@ -40,6 +40,9 @@
 
 @if (Model.Date.HasValue) {
 	<p>
-		@ViewRes.Event.DetailsStrings.OccurrenceDate: @Model.Date.Value.ToShortDateString()		
+		@ViewRes.Event.DetailsStrings.OccurrenceDate: @Model.Date.Value.ToShortDateString()
+		@if (Model.EndDate.HasValue) {
+			@:- @Model.EndDate.Value.ToShortDateString()
+		}
 	</p>
 }

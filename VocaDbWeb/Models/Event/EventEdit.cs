@@ -45,6 +45,7 @@ namespace VocaDb.Web.Models.Event {
 			Date = contract.Date;
 			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Description = contract.Description;
+			EndDate = contract.EndDate;
 			Id = contract.Id;
 			Name = OldName = contract.Name;
 			Names = contract.Names;
@@ -81,6 +82,9 @@ namespace VocaDb.Web.Models.Event {
 
 		[StringLength(400)]
 		public string Description { get; set; }
+
+		[FromJson]
+		public DateTime? EndDate { get; set; }
 
 		public int Id { get; set; }
 
@@ -143,6 +147,7 @@ namespace VocaDb.Web.Models.Event {
 				Date = this.Date,
 				DefaultNameLanguage = DefaultNameLanguage,
 				Description = this.Description ?? string.Empty,
+				EndDate = this.EndDate,
 				Id = this.Id,
 				Name = this.Name,
 				Names = Names,

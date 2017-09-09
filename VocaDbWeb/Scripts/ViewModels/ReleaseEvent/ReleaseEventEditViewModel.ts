@@ -20,10 +20,12 @@ module vdb.viewModels.releaseEvents {
 			this.id = contract.id;
 			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
 			this.dateStr = ko.computed(() => (this.date() ? this.date().toISOString() : null));
+			this.endDate = ko.observable(contract.endDate ? moment(contract.endDate).toDate() : null);
+			this.endDateStr = ko.computed(() => (this.endDate() ? this.endDate().toISOString() : null));
 
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
-			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, contract.pvs, false, true);
+			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, contract.pvs, false, true, false);
 			this.series = new BasicEntryLinkViewModel(contract.series, null);
 			this.isSeriesEvent = ko.observable(!this.series.isEmpty());
 
@@ -112,6 +114,10 @@ module vdb.viewModels.releaseEvents {
 		public editArtistRoles = (artist: events.ArtistForEventEditViewModel) => {
 			this.artistRolesEditViewModel.show(artist);
 		}
+
+		public endDate: KnockoutObservable<Date>;
+
+		public endDateStr: KnockoutComputed<string>;
 
 		private id: number;
 

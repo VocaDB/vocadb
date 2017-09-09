@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using VocaDb.Model.Database.Queries;
@@ -63,6 +64,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("topics")]
 		public PartialFindResult<DiscussionTopicContract> GetTopics(
+			int? folderId = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
  			DiscussionTopicSortRule sort = DiscussionTopicSortRule.DateCreated,
 			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
@@ -71,7 +73,8 @@ namespace VocaDb.Web.Controllers.Api {
 
 				var query = ctx.OfType<DiscussionTopic>()
 					.Query()
-					.Where(f => !f.Deleted);
+					.WhereNotDeleted()
+					.WhereIsInFolder(folderId);
 
 				var topics = query
 					.OrderBy(sort)
@@ -89,6 +92,7 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("folders/{folderId:int}/topics")]
+		[Obsolete]
 		public IEnumerable<DiscussionTopicContract> GetTopicsForFolder(int folderId, 
 			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
 			

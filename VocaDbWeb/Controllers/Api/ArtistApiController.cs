@@ -107,7 +107,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[ApiExplorerSettings(IgnoreApi=true)]
 		public ArtistForEditContract GetForEdit(int id) {
 			
-			return service.GetArtistForEdit(id);
+			return queries.GetArtistForEdit(id);
 
 		}
 

@@ -302,6 +302,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public ArtistForEditContract GetArtistForEdit(int id) {
+
+			return
+				HandleQuery(session =>
+					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, pictureFilePersister));
+
+		}
+
 		public CommentForApiContract[] GetComments(int artistId) {
 			
 			return HandleQuery(ctx => ctx.Load(artistId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
@@ -324,7 +332,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (stats == null)
 					EntityNotFoundException.Throw<Artist>(id);
 
-				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext) {
+				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imagePersister) {
 					CommentCount = stats.CommentCount,
 					SharedStats = GetSharedArtistStats(session, artist),
 					PersonalStats = GetPersonalArtistStats(session, artist),

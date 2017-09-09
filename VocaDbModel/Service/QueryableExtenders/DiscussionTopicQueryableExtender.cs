@@ -20,6 +20,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		} 
 
+		public static IQueryable<DiscussionTopic> WhereIsInFolder(this IQueryable<DiscussionTopic> query, int? folderId) {
+			
+			if (folderId == null)
+				return query;
+
+			return query.Where(t => t.Folder.Id == folderId);
+
+		}
+
 	}
 
 	public enum DiscussionTopicSortRule {

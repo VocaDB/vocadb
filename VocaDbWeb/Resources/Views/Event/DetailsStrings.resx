@@ -120,9 +120,6 @@
   <data name="Albums" xml:space="preserve">
     <value>Albums</value>
   </data>
-  <data name="Aliases" xml:space="preserve">
-    <value>Aliases</value>
-  </data>
   <data name="Attending" xml:space="preserve">
     <value>Attending</value>
   </data>

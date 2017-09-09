@@ -21,6 +21,7 @@ namespace VocaDb.SiteMapGenerator {
 
 			var artists = await client.GetArtists();
 			var albums = await client.GetAlbums();
+			var events = await client.GetEvents();
 			var songs = await client.GetSongs();
 			var tags = await client.GetTags();
 
@@ -30,6 +31,7 @@ namespace VocaDb.SiteMapGenerator {
 			generator.Generate(config.OutFolder, new Dictionary<EntryType, IEnumerable<EntryReference>> {
 				{ EntryType.Artist, artists.Select(e => new EntryReference(e)) },
 				{ EntryType.Album, albums.Select(e => new EntryReference(e)) },
+				{ EntryType.ReleaseEvent, events.Items.Select(e => new EntryReference(e.Id, e.UrlSlug)) },
 				{ EntryType.Song, songs.Select(e => new EntryReference(e)) },
 				{ EntryType.Tag, tags.Items.Select(e => new EntryReference(e.Id, e.UrlSlug)) },
 			});

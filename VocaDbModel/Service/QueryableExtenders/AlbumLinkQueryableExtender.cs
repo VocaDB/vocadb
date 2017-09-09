@@ -63,6 +63,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case AdvancedFilterType.HasStoreLink: {
 					return query.WhereAlbumHasLinkWithCategory(WebLinkCategory.Commercial);
 				}
+				case AdvancedFilterType.HasTracks: {
+					return query.Where(a => filter.Negate != a.Album.AllSongs.Any(s => s.Song == null || !s.Song.Deleted));
+				}
 			}
 
 			return query;

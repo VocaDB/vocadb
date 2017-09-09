@@ -285,4 +285,7 @@
   <data name="ReleaseEvent" xml:space="preserve">
     <value>Release event</value>
   </data>
+  <data name="PVUnavailable" xml:space="preserve">
+    <value>(PV is unavailable)</value>
+  </data>
 </root>

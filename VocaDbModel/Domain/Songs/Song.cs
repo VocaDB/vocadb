@@ -317,6 +317,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		/// <summary>
 		/// Bitarray of PV services for this song. Persisted as a bitfield.
+		/// This list does not include disabled PVs.
 		/// </summary>
 		public virtual PVServices PVServices { get; set; }
 
@@ -867,7 +868,7 @@ namespace VocaDb.Model.Domain.Songs {
 			var services = PVServices.Nothing;
 
 			foreach (var service in EnumVal<PVService>.Values) {
-				if (PVs.Any(p => p.Service == service))
+				if (PVs.Any(p => !p.Disabled && p.Service == service))
 					services |= (PVServices)service;
 			}
 

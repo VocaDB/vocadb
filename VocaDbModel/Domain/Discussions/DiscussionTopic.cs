@@ -41,7 +41,7 @@ namespace VocaDb.Model.Domain.Discussions {
 		public virtual User Author { get; set; }
 
 		public virtual string AuthorName {
-			get { return authorName; }
+			get => authorName;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				authorName = value;
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Domain.Discussions {
 		}
 
 		public virtual IList<DiscussionComment> Comments {
-			get { return comments; }
+			get => comments;
 			set {
 				ParamIs.NotNull(() => value);
 				comments = value;
@@ -57,7 +57,7 @@ namespace VocaDb.Model.Domain.Discussions {
 		}
 
 		public virtual string Content {
-			get { return content; }
+			get => content;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				content = value;
@@ -68,15 +68,13 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual bool Deleted { get; set; }
 
-		public virtual EntryType EntryType {
-			get { return EntryType.DiscussionTopic; }
-		}
+		public virtual EntryType EntryType => EntryType.DiscussionTopic;
 
 		/// <summary>
 		/// Folder containing this topic. Cannot be null.
 		/// </summary>
 		public virtual DiscussionFolder Folder {
-			get { return folder; }
+			get => folder;
 			set {
 				ParamIs.NotNull(() => value);
 				folder = value;
@@ -88,7 +86,7 @@ namespace VocaDb.Model.Domain.Discussions {
 		public virtual bool Locked { get; set; }
 
 		public virtual string Name {
-			get { return title; }
+			get => title;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				title = value;

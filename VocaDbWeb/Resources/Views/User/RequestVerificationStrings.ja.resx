@@ -140,7 +140,7 @@
     <value>ログオン</value>
   </data>
   <data name="MessageTitle" xml:space="preserve">
-    <value>メッセージ（必須）</value>
+    <value>追加メッセージ（任意）</value>
   </data>
   <data name="Signup" xml:space="preserve">
     <value>登録</value>
@@ -153,5 +153,14 @@
   </data>
   <data name="Send" xml:space="preserve">
     <value>送信</value>
+  </data>
+  <data name="NoPrivateMessage" xml:space="preserve">
+    <value>証明を以下のURLで提出</value>
+  </data>
+  <data name="PrivateMessage" xml:space="preserve">
+    <value>証明をダイレクトメッセージで提出</value>
+  </data>
+  <data name="URL" xml:space="preserve">
+    <value>ツイートなどの証明へのリンク（必須）</value>
   </data>
 </root>

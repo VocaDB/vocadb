@@ -271,4 +271,10 @@
   <data name="TrackOnAlbum" xml:space="preserve">
     <value>アルバム「{1}」{0}曲目</value>
   </data>
+  <data name="SeeRelatedSongs" xml:space="preserve">
+    <value>関連曲をもっと見る</value>
+  </data>
+  <data name="SuggestionsTitle" xml:space="preserve">
+    <value>この曲が「いいね」した人はこんな曲も「いいね」しました</value>
+  </data>
 </root>

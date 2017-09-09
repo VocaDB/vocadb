@@ -40,7 +40,12 @@ module vdb.knockoutExtensions {
             }
         });
     
-    }
+	}
+
+	export interface TooltipOptions {
+		toolTipDomain?: string;
+		version?: number;
+	}
 
 }
 
@@ -81,9 +86,9 @@ ko.bindingHandlers.eventToolTip = {
 }
 
 ko.bindingHandlers.songToolTip = {
-	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>, allPropertiesAccessor: () => any) => {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>, allPropertiesAccessor: () => vdb.knockoutExtensions.TooltipOptions) => {
 		const allProps = allPropertiesAccessor();
-		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContentWithVote', ko.unwrap(valueAccessor()), null, allProps.toolTipDomain);
+		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContentWithVote', ko.unwrap(valueAccessor()), { version: allProps.version }, allProps.toolTipDomain);
 	}
 }
 

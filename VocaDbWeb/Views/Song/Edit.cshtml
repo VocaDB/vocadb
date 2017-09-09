@@ -148,14 +148,14 @@
 				<div data-bind="if: !publishDate() && (suggestedPublishDate() || eventDate())">
 					<div data-bind="with: suggestedPublishDate" class="inline-block">
 						<button class="btn" data-bind="click: function() { $parent.publishDate(date.toDate()); }">
-							<span data-bind="visible: source === 'PV'">Use PV date</span>
-							<span data-bind="visible: source === 'Album'">Use album release date</span>						
+							<span data-bind="visible: source === 'PV'">@Res.BaUsePvDate</span>
+							<span data-bind="visible: source === 'Album'">@Res.BaUseAlbumDate</span>						
 							<span data-bind="text: date.format('L')"></span>
 						</button>				
 					</div>
 					<div data-bind="with: eventDate, visible: eventDate() && (!suggestedPublishDate() || eventDate() < suggestedPublishDate().date)" class="inline-block">
 						<button class="btn" data-bind="click: function() { $parent.publishDate($data.toDate()); }">
-							Use event date		
+							@Res.BaUseEventDate
 							<span data-bind="text: $data.format('L')"></span>
 						</button>				
 					</div>
@@ -197,6 +197,9 @@
 						<th>@Res.PvLength</th>
 						<th>@Res.PvDate</th>
 						<th>@Res.PvAuthor</th>
+						<th>
+							<span class="helpTip" data-bind="qTip: null" title="@Res.PvStatusHelp">@Res.PvStatus</span>
+						</th>
 						<th></th>
 					</tr>
 				</thead>

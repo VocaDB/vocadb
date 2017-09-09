@@ -1,5 +1,27 @@
 ﻿import dc = vdb.dataContracts;
 
+function initTagsPage(vm: vdb.viewModels.tags.TagDetailsViewModel) {
+
+	$("#tabs").tabs({
+		activate: (event, ui) => {
+			if (ui.newTab.data('tab') === "Discussion") {
+				vm.comments.initComments();
+			}
+		}
+	});
+
+	$("#editTagLink").button({ disabled: $("#editTagLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
+	$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+	$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
+
+	$("#viewCommentsLink").click(() => {
+		var index = $('#tabs ul [data-tab="Discussion"]').index();
+		$("#tabs").tabs("option", "active", index);
+		return false;
+	});
+
+}
+
 function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBaseContract, siblings: dc.TagBaseContract[], children: dc.TagBaseContract[]) {
 
 	var tagUrl = (tag: dc.TagBaseContract) => urlMapper.mapRelative("/T/" + tag.id + "/" + tag.urlSlug);

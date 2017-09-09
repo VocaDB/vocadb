@@ -154,6 +154,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual Date EndDate { get; set; }
+
 		public virtual EntryType EntryType => EntryType.ReleaseEvent;
 
 		public virtual bool HasSeries => Series != null;
@@ -347,6 +349,17 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual IEnumerable<LocalizedString> GetNamesFromSeries() {
 			return Series.Names.Select(seriesName => new LocalizedString(Series.GetEventName(SeriesNumber, SeriesSuffix, seriesName.Value), seriesName.Language));
+		}
+
+		public virtual void SetSeries(ReleaseEventSeries newSeries) {
+			
+			if (Equals(Series, newSeries))
+				return;
+
+			Series?.AllEvents.Remove(this);
+			newSeries?.AllEvents.Add(this);
+			Series = newSeries;
+
 		}
 
 		public virtual CollectionDiffWithValue<ArtistForEvent, ArtistForEvent> SyncArtists(

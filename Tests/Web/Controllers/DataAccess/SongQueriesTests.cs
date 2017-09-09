@@ -123,7 +123,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 					new ArtistForSongContract { Artist = new ArtistContract(producer, ContentLanguagePreference.Default) },
 					new ArtistForSongContract { Artist = new ArtistContract(vocalist, ContentLanguagePreference.Default) }, 
 				},
-				PVUrl = "http://test.vocadb.net/"
+				PVUrls = new[] { "http://test.vocadb.net/" }
 			};
 
 			pvParser = new FakePVParser();
@@ -285,7 +285,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Create_NoPV() {
 
-			newSongContract.PVUrl = null;
+			newSongContract.PVUrls = new string[0];
+
+			var result = CallCreate();
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(PVServices.Nothing, result.PVServices, "PVServices");
+
+		}
+
+		[TestMethod]
+		public void Create_EmptyPV() {
+
+			newSongContract.PVUrls = new[] { string.Empty };
 
 			var result = CallCreate();
 

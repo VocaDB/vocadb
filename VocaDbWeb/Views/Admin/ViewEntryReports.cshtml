@@ -1,10 +1,21 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
 @using VocaDb.Model.DataContracts
+@using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 
 @{
 	PageProperties.Title = "View entry reports";
+	ReportStatus status = ViewBag.ReportStatus;
 }
+
+<ul class="nav nav-pills">
+	<li @Html.ConditionalAttribute(status == ReportStatus.Open, "class", "active")>
+		<a href="@Url.Action("ViewEntryReports", new { status = ReportStatus.Open })">Open</a>
+	</li>
+	<li @Html.ConditionalAttribute(status == ReportStatus.Closed, "class", "active")>
+		<a href="@Url.Action("ViewEntryReports", new { status = ReportStatus.Closed })">Closed</a>		
+	</li>
+</ul>
 
 <div class="alert alert-info">
 	This list contains entries that have been reported for errors. 
@@ -21,7 +32,12 @@
 			<th>Entry</th>
 			<th>Type</th>
 			<th>Notes</th>
-			<th>Actions</th>
+			@if (status == ReportStatus.Open) {
+				<th>Actions</th>				
+			}
+			@if (status == ReportStatus.Closed) {
+				<th>Closed by</th>
+			}
 		</tr>
 	</thead>
 	<tbody>
@@ -39,7 +55,16 @@
 				</td>
 				<td>@r.ReportTypeName</td>
 				<td>@r.Notes</td>
-				<td><a href="@Url.Action("DeleteEntryReport", new { id = r.Id })" class="textLink deleteLink">Delete</a></td>
+				@if (status == ReportStatus.Open) {
+					<td>
+						<a href="@Url.Action("DeleteEntryReport", new {id = r.Id})" class="textLink deleteLink">Close</a>						
+					</td>
+				}
+				@if (status == ReportStatus.Closed) {
+					<td>
+						@UserHelpers.UserIconLink(r.ClosedBy)
+					</td>
+				}
 			</tr>
 		}
 	</tbody>

@@ -144,6 +144,9 @@
 				{
 					<span class="label label-success">@R.VerifiedAccount</span>
 				}
+				@if (Model.IsVeteran) {
+					<span class="label label-success">@string.Format(R.Veteran, BrandableStrings.Layout.SiteName)</span>
+				}
 				@if (!Model.Active)
 				{
 					<span class="label">@R.AccountDisabled</span>

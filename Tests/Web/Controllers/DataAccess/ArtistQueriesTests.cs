@@ -42,7 +42,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		private ArtistForEditContract CallUpdate(Stream image, string mime = MediaTypeNames.Image.Jpeg) {
-			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English);
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister());
 			using (var stream = image) {
 				contract.Id = queries.Update(contract, new EntryPictureFileContract { UploadedFile = stream, ContentLength = (int)stream.Length, Mime = mime }, permissionContext);
 			}		
@@ -197,7 +197,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			// Arrange
 			artist.Description.English = "Original";
 			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, artist, ArtistArchiveReason.PropertiesUpdated));
-			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English);
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.Description.English = "Updated";
 			CallUpdate(contract);
 
@@ -292,7 +292,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Update_Names() {
 			
 			// Arrange
-			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English);
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister());
 
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated artist";
@@ -351,7 +351,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var circle = repository.Save(CreateEntry.Circle());
 			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
 
-			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English) {
+			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English, new InMemoryImagePersister()) {
 				Groups = new[] {
 					new ArtistForArtistContract { Parent = new ArtistContract(circle, ContentLanguagePreference.English)},
 				},
@@ -380,7 +380,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			vocalist.AddGroup(illustrator, ArtistLinkType.Illustrator);
 
 			// Change linked artist from illustrator to voice provider
-			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English) {
+			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English, new InMemoryImagePersister()) {
 				Illustrator = null,
 				VoiceProvider = new ArtistContract(illustrator, ContentLanguagePreference.English)
 			};
@@ -407,7 +407,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var circle2 = repository.Save(CreateEntry.Circle());
 
 			// Cannot add character designer for producer
-			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English) {
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister()) {
 				AssociatedArtists = new[] {
 					new ArtistForArtistContract(new ArtistForArtist(circle, artist, ArtistLinkType.CharacterDesigner), ContentLanguagePreference.English),
 				},

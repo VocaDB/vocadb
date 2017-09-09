@@ -237,4 +237,7 @@
   <data name="TotalLength" xml:space="preserve">
     <value>total length {0}</value>
   </data>
+  <data name="HiddenCollections" xml:space="preserve">
+    <value>+ {0} hidden</value>
+  </data>
 </root>

@@ -307,7 +307,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return repository.HandleTransaction(ctx => {
 
-				var pvResult = ParsePV(ctx.OfType<PVForSong>(), contract.PVUrl);
+				var pvResults = contract.PVUrls?.Select(pvUrl => ParsePV(ctx.OfType<PVForSong>(), pvUrl)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
 				var reprintPvResult = ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
@@ -342,7 +342,7 @@ namespace VocaDb.Model.Database.Queries {
 				var pvs = new List<PVContract>();
 				Tag[] addedTags = null;
 
-				if (pvResult != null) {
+				foreach (var pvResult in pvResults) {
 
 					pvs.Add(new PVContract(pvResult, PVType.Original));
 
@@ -846,8 +846,10 @@ namespace VocaDb.Model.Database.Queries {
 			var pvDiff = song.SyncPVs(pvs);
 			ctx.OfType<PVForSong>().Sync(pvDiff);
 
-			if (pvDiff.Changed)
+			if (pvDiff.Changed) {
 				diff.PVs.Set();
+				song.UpdatePVServices();
+			}
 
 			if (pvDiff.Changed && !oldPublishDate.Equals(song.PublishDate)) {
 				diff.PublishDate.Set();

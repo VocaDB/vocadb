@@ -4,6 +4,7 @@ using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Tests.TestData;
+using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.DataContracts.UseCases {
 
@@ -18,7 +19,7 @@ namespace VocaDb.Tests.DataContracts.UseCases {
 			artist.AddGroup(illustrator, ArtistLinkType.Illustrator);
 			artist.AddGroup(illustrator, ArtistLinkType.Manager);
 
-			var result = new ArtistForEditContract(artist, ContentLanguagePreference.Default);
+			var result = new ArtistForEditContract(artist, ContentLanguagePreference.Default, new InMemoryImagePersister());
 
 			Assert.AreEqual(illustrator.Id, result.Illustrator?.Id, "Illustrator");
 			Assert.AreEqual(1, result.AssociatedArtists.Length, "Illustrator is included in the associated artists list");

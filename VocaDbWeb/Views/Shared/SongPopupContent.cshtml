@@ -28,3 +28,9 @@
 		@ViewRes.EntryDetailsStrings.PublishDate @Model.PublishDate.Value.ToShortDateString()		
 	</p>
 }
+
+@if (Model.LengthSeconds > 0) {
+	<p>
+		@DateTimeUtils.FormatFromSeconds(Model.LengthSeconds)
+	</p>
+}

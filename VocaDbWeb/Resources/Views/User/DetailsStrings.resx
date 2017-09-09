@@ -277,6 +277,9 @@ If so, please see the {0}.</value>
   <data name="VerifiedOwner" xml:space="preserve">
     <value>Verified owner</value>
   </data>
+  <data name="Veteran" xml:space="preserve">
+    <value>{0} veteran</value>
+  </data>
   <data name="VisibleOnlyToMe" xml:space="preserve">
     <value>Visible only to me and staff.</value>
   </data>

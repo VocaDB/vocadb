@@ -77,46 +77,52 @@
 			</a>
 		}
 		<div class="media-body">
+			<p>
+				@ViewRes.SharedStrings.Name: @Model.Name
+				@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+					<small class="extraInfo">(@Model.AdditionalNames)</small>							
+				}
+			</p>
+
 			@if (Model.Date != null) {
-				<p>@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()</p>
+				<p>
+					@Res.OccurrenceDate: @Model.Date.Value.ToShortDateString()
+					@if (Model.EndDate != null && Model.EndDate.Value > Model.Date.Value) {
+						@:- @Model.EndDate.Value.ToShortDateString()
+					}
+				</p>
 			}
-		
+
 			@if (!string.IsNullOrEmpty(Model.VenueName)) {
 				<p>@Res.Venue: @Model.VenueName</p>
 			}
-			
+
 			@if (Model.Artists.Any()) {
 				<p>Participating artists: @ArtistList(Model.Artists, true, true)</p>
 			}
-			
+
 			<p>
 				@ViewRes.Event.DetailsStrings.Category:
 				@Html.ActionLink(Translate.ReleaseEventCategoryNames[Model.InheritedCategory], "Index", "Search", UrlMapper.Search.Events(category: Model.InheritedCategory), null)
-			</p>	
+			</p>
 
 			@if (!string.IsNullOrEmpty(Model.Description)) {
 				<p>@Html.Raw(descriptionHtml)</p>
-			}			
+			}
 
 			@if (Model.WebLinks.Any()) {
 				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
-				<br />
-			}	
-			
-			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
-				<p>
-					@Res.Aliases: @Model.AdditionalNames
-				</p>		
+				<br/>
 			}
-			
+
 			<p>
 				<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
 				<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
 					@{ Html.RenderPartial("Partials/_TagList"); }
 				</div>
-				<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
+				<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 				@if (Model.CanRemoveTagUsages) {
-					@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
+					@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new {id = Model.Id}, new {id = "manageTags"})
 				}
 			</p>
 

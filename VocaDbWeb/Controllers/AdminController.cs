@@ -4,6 +4,7 @@ using System.Runtime.Caching;
 using System.Web.Mvc;
 using NHibernate;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
@@ -126,7 +127,7 @@ namespace VocaDb.Web.Controllers
 			Service.DeleteEntryReports(new[] { id });
 			TempData.SetStatusMessage("Reports deleted");
 
-			return RedirectToAction("ViewEntryReports");
+			return RedirectToAction("ViewEntryReports", new { status = ReportStatus.Closed } );
 
 		}
 
@@ -204,9 +205,9 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult PVsByAuthor(string author) {
+		public ActionResult PVsByAuthor(string author, int maxResults = 50) {
 
-			var songs = Service.GetSongPVsByAuthor(author ?? string.Empty);
+			var songs = Service.GetSongPVsByAuthor(author ?? string.Empty, maxResults);
 
 			var model = new PVsByAuthor(author ?? string.Empty, songs);
 
@@ -298,11 +299,12 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ViewEntryReports() {
+		public ActionResult ViewEntryReports(ReportStatus status = ReportStatus.Open) {
 
+			ViewBag.ReportStatus = status;
 			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
-			var reports = Service.GetEntryReports();
+			var reports = Service.GetEntryReports(status);
 
 			return View(reports);
 

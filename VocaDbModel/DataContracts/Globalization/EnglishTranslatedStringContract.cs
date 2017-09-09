@@ -6,7 +6,9 @@ namespace VocaDb.Model.DataContracts.Globalization {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EnglishTranslatedStringContract {
 
-		public EnglishTranslatedStringContract() { }
+		public EnglishTranslatedStringContract() {
+			English = Original = string.Empty;
+		}
 
 		public EnglishTranslatedStringContract(EnglishTranslatedString str) {
 

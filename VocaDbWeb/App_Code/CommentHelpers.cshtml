@@ -125,7 +125,7 @@
 	</div>
 }
 
-@helper EditableComments(bool allowCreateComment, bool well = true, string commentsBinding = "pageOfComments", int newCommentRows = 6, bool commentBoxEnd = false) {
+@helper EditableComments(bool allowCreateComment, bool well = true, string commentsBinding = "pageOfComments", int newCommentRows = 6, bool commentBoxEnd = false, bool pagination = true) {
 
 	var cssClass = (well ? "well well-transparent" : "standalone");
 
@@ -135,9 +135,11 @@
 		@CreateComment(cssClass, newCommentRows)
 	}
 
+	if (pagination) {
 	<div data-bind="with: paging, visible: paging.hasMultiplePages">
 		@KnockoutHelpers.ServerSidePaging()
 	</div>
+	}
 
 	<div data-bind="foreach: @commentsBinding">
 		<div class="editable-comment @cssClass">
@@ -145,9 +147,11 @@
 		</div>
 	</div>
 
+	if (pagination) {
 	<div data-bind="with: paging, visible: paging.hasMultiplePages">
 		@KnockoutHelpers.ServerSidePaging()
 	</div>
+	}
 
 	if (allowCreateComment && commentBoxEnd) {
 		@CreateComment(cssClass, newCommentRows)
@@ -158,7 +162,7 @@
 @helper LatestCommentsKnockout() {	
 	<h3 class="withMargin">@ViewRes.EntryDetailsStrings.LatestComments</h3>
 	<div data-bind="with: comments">
-		@EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+		@EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)
 		<!-- ko ifnot: comments().length -->
 		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 		<!-- /ko -->

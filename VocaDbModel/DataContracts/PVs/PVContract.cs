@@ -44,6 +44,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 		public PVContract(PVForSong pv)
 			: this((PV)pv) {
 
+			Disabled = pv.Disabled;
 			Length = pv.Length;
 			ThumbUrl = pv.ThumbUrl;
 			PublishDate = pv.PublishDate;
@@ -73,6 +74,9 @@ namespace VocaDb.Model.DataContracts.PVs {
 
 		[DataMember]
 		public int? CreatedBy { get; set; }
+
+		[DataMember]
+		public bool Disabled { get; set; }
 
 		[DataMember]
 		public PVExtendedMetadata ExtendedMetadata { get; set; }
@@ -119,7 +123,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			if (pv == null)
 				return false;
 
-			return (Name == pv.Name);
+			return (Name == pv.Name && Disabled == pv.Disabled);
 
 		}
 

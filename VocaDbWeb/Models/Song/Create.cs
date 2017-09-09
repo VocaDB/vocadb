@@ -59,7 +59,7 @@ namespace VocaDb.Web.Models.Song {
 				Draft = this.Draft,
 				Names = LocalizedStringHelper.SkipNullAndEmpty(NameOriginal, NameRomaji, NameEnglish).ToArray(),
 				OriginalVersion = OriginalVersion,
-				PVUrl = this.PVUrl,
+				PVUrls = new [] { this.PVUrl },
 				ReprintPVUrl = this.ReprintPVUrl,
 				SongType = this.SongType
 			};

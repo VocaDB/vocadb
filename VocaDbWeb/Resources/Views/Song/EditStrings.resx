@@ -162,6 +162,15 @@
   <data name="BaSongType" xml:space="preserve">
     <value>Song type</value>
   </data>
+  <data name="BaUseAlbumDate" xml:space="preserve">
+    <value>Use album release date</value>
+  </data>
+  <data name="BaUseEventDate" xml:space="preserve">
+    <value>Use event date</value>
+  </data>
+  <data name="BaUsePvDate" xml:space="preserve">
+    <value>Use PV date</value>
+  </data>
   <data name="EditTitle" xml:space="preserve">
     <value>Edit song {0}</value>
   </data>
@@ -200,6 +209,12 @@
   </data>
   <data name="PvService" xml:space="preserve">
     <value>Service</value>
+  </data>
+  <data name="PvStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="PvStatusHelp" xml:space="preserve">
+    <value>If the PV is deleted or hidden by the author and thus unplayable, it should be marked as "Unavailable" here.</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
     <value>Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili.</value>

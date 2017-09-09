@@ -171,6 +171,9 @@ Note that you do not need to copy the missing names from others. The system will
 &lt;br /&gt;
 Additional names can be entered as aliases. See more in the guide.</value>
   </data>
+  <data name="PVUnavailable" xml:space="preserve">
+    <value>Unavailable</value>
+  </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
   </data>

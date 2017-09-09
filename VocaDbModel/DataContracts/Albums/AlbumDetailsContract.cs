@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Albums {
 
@@ -19,7 +20,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		public AlbumDetailsContract() { }
 
-		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IEntryThumbPersister thumbPersister)
+		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IEntryThumbPersister thumbPersister,
+			IEntryImagePersister imageStoreOld, Func<Song, SongVoteRating?> getSongRating = null)
 			: base(album, languagePreference) {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
@@ -28,11 +30,12 @@ namespace VocaDb.Model.DataContracts.Albums {
 			Description = album.Description;
 			Discs = album.Songs.Any(s => s.DiscNumber > 1) ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToDictionary(a => a.DiscNumber) : new Dictionary<int, AlbumDiscPropertiesContract>(0);
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease, languagePreference) : null);
-			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p)).ToArray();
+			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p, imageStoreOld)).ToArray();
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 			Songs = album.Songs
 				.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber)
-				.Select(s => new SongInAlbumContract(s, languagePreference, false)).ToArray();
+				.Select(s => new SongInAlbumContract(s, languagePreference, false, rating: getSongRating?.Invoke(s.Song)))
+				.ToArray();
 			Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			WebLinks = album.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 

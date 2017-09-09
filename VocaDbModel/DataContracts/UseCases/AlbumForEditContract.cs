@@ -7,6 +7,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.UseCases {
 
@@ -15,7 +16,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		public AlbumForEditContract() {}
 
-		public AlbumForEditContract(Album album, ContentLanguagePreference languagePreference)
+		public AlbumForEditContract(Album album, ContentLanguagePreference languagePreference, IEntryImagePersister imageStore)
 			: base(album, languagePreference) {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
@@ -25,7 +26,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			Identifiers = album.Identifiers.Select(i => i.Value).ToArray();
 			Names = album.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease, languagePreference) : null);
-			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p)).ToList();
+			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToList();
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 			Songs = album.Songs
 				.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber)

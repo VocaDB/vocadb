@@ -110,6 +110,14 @@ if (user != null) {
 	</a>
 }
 
+@helper UserIconLink(UserForApiContract user, string name, int size = 20) {
+	if (user != null) {
+		@UserIconLink(user, size)
+	} else {
+		@name
+	}
+}
+
 @helper UserIconLink(IUserWithEmail user, string name, int size = 20) {
 if (user != null) {
 		@UserIconLink(user, size)

@@ -2,6 +2,7 @@
 @using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Albums
+@using VocaDb.Model.DataContracts.PVs
 @using VocaDb.Model.DataContracts.Songs
 @using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.Songs
@@ -72,7 +73,9 @@
 @section Toolbar {
 @if (Model.OriginalPVs.Any() || Model.OtherPVs.Any()) {
 	<div id="pvPlayer" class="song-pv-player">
-		@PVHelpers.EmbedPV(Model.PrimaryPV)
+		@if (Model.PrimaryPV != null) {
+			@PVHelpers.EmbedPV(Model.PrimaryPV)			
+		}
 	</div>
 }
 
@@ -527,8 +530,8 @@
 @helper PVList(IEnumerable<VocaDb.Model.DataContracts.PVs.PVContract> pvs, bool showPVType) {
 
 	foreach (var pv in pvs) {
-		<a href="#" class="pvLink btn" id="pv_@(pv.Id)" data-bind="css: { active: selectedPvId() == @pv.Id }, click: function () { selectedPvId(@pv.Id); }"
-		   title="@(pv.PublishDate.HasValue && !string.IsNullOrEmpty(pv.Author) ? string.Format(Res.PVDescription, pv.PublishDate.Value.ToShortDateString(), pv.Author) : "")">
+		<a class="pvLink btn @(pv.Disabled ? "disabled" : "")" id="pv_@(pv.Id)" data-bind="css: { active: selectedPvId() == @pv.Id }, click: function () { @(pv.Disabled ? "return false;" : "selectedPvId(" + pv.Id + ");") }"
+		   title="@(pv.PublishDate.HasValue && !string.IsNullOrEmpty(pv.Author) ? string.Format(Res.PVDescription, pv.PublishDate.Value.ToShortDateString(), pv.Author) : "") @(pv.Disabled ? Res.PVUnavailable : "")">
 			<img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" />
 			@(!string.IsNullOrEmpty(pv.Name) ? pv.Name : pv.Service.ToString())
 			@if (showPVType) {

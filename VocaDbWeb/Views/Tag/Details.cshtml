@@ -47,17 +47,6 @@
 			var jsonModel = @ToJS(new { Model.Name, Model.Parent, Model.Children, Model.Siblings });
 			var vm;
 
-			$("#tabs").tabs({
-				activate: function (event, ui) {
-					if (ui.newTab.data('tab') === "Discussion") {
-						vm.comments.initComments();
-					}
-				}
-			});
-
-			$("#editTagLink").button({ disabled: $("#editTagLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
-			$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
-			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
 			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children);
 
 			var repo = new vdb.repositories.TagRepository('@RootPath');
@@ -69,6 +58,7 @@
 			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, userRepo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
 				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)), @ToJS(Model.IsFollowing));
 			ko.applyBindings(vm);
+			initTagsPage(vm);
 
 		});
 
@@ -144,6 +134,8 @@
 					@Res.ValidFor: @string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined && Model.Targets.HasFlag((TagTargetTypes)e)))
 				</p>
 			}
+			
+			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
 
 			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Helpers.UniversalTimeLabel(Model.CreateDate)</p>
 
@@ -266,10 +258,13 @@
 	</ul>
 
 	<div id="latestCommentsTab">
-		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)
 		<!-- ko ifnot: comments().length -->
 		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 		<!-- /ko -->
+		<p>
+			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
+		</p>
 	</div>
 
 	<div id="discussionTab">

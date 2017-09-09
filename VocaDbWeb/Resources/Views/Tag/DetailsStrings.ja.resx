@@ -135,6 +135,9 @@
   <data name="Category" xml:space="preserve">
     <value>カテゴリー</value>
   </data>
+  <data name="MappedTags" xml:space="preserve">
+    <value>このタグに当たるニコニコ動画用のタグ</value>
+  </data>
   <data name="Overview" xml:space="preserve">
     <value>概要</value>
   </data>
@@ -158,5 +161,8 @@
   </data>
   <data name="Translations" xml:space="preserve">
     <value>他言語の名前</value>
+  </data>
+  <data name="ValidFor" xml:space="preserve">
+    <value>対応</value>
   </data>
 </root>

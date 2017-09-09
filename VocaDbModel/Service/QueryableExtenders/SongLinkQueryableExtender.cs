@@ -188,8 +188,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					var param = EnumVal<ArtistType>.Parse(filter.Param);
 					return WhereSongHasArtistWithType(query, param);
 				}
+				case AdvancedFilterType.HasOriginalMedia: {
+					return query.Where(s => filter.Negate != s.Song.PVs.PVs.Any(pv => !pv.Disabled && pv.PVType == PVType.Original));
+				}
 				case AdvancedFilterType.HasMultipleVoicebanks: {
 					return query.Where(s => s.Song.AllArtists.Count(a => !a.IsSupport && ArtistHelper.VoiceSynthesizerTypes.Contains(a.Artist.ArtistType)) > 1);
+				}
+				case AdvancedFilterType.HasMedia: {
+					return query.Where(s => filter.Negate != s.Song.PVs.PVs.Any());
 				}
 				case AdvancedFilterType.HasPublishDate: {
 					return query.WhereSongHasPublishDate(!filter.Negate);

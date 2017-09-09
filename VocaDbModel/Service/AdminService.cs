@@ -34,16 +34,18 @@ namespace VocaDb.Model.Service {
 	public class AdminService : ServiceBase {
 
 		private readonly IEnumTranslations enumTranslations;
+		private readonly IUserIconFactory userIconFactory;
 
 		private void VerifyAdmin() {
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 		}
 
 		public AdminService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IEnumTranslations enumTranslations) 
+			IEnumTranslations enumTranslations, IUserIconFactory userIconFactory) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 
 			this.enumTranslations = enumTranslations;
+			this.userIconFactory = userIconFactory;
 
 		}
 
@@ -293,7 +295,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public EntryReportContract[] GetEntryReports() {
+		public EntryReportContract[] GetEntryReports(ReportStatus status) {
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
@@ -301,12 +303,13 @@ namespace VocaDb.Model.Service {
 
 				var reports = session
 					.Query<EntryReport>()
-					.Where(r => r.Status == ReportStatus.Open)
+					.Where(r => r.Status == status)
 					.OrderByDescending(r => r.Created)
 					.Take(200)
 					.ToArray();
 				var fac = new EntryForApiContractFactory(null, null);
-				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference, false), enumTranslations)).ToArray();
+				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference, false), 
+					enumTranslations, userIconFactory)).ToArray();
 
 			});
 
@@ -378,7 +381,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PVForSongContract[] GetSongPVsByAuthor(string author) {
+		public PVForSongContract[] GetSongPVsByAuthor(string author, int maxResults) {
 
 			if (string.IsNullOrEmpty(author))
 				return new PVForSongContract[] {};
@@ -386,7 +389,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session => {
 
 				return session.Query<PVForSong>().Where(p => p.Author == author)
-					.Take(50)
+					.Take(maxResults)
 					.ToArray()
 					.Select(p => new PVForSongContract(p, LanguagePreference))
 					.ToArray();

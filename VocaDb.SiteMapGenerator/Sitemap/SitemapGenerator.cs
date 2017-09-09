@@ -29,6 +29,8 @@ namespace VocaDb.SiteMapGenerator.Sitemap {
 					return string.Format("{0}Al/{1}", siteRoot, id.Id);
 				case EntryType.Artist:
 					return string.Format("{0}Ar/{1}", siteRoot, id.Id);
+				case EntryType.ReleaseEvent:
+					return string.Format("{0}E/{1}/{2}", siteRoot, id.Id, id.UrlSlug);
 				case EntryType.Song:
 					return string.Format("{0}S/{1}", siteRoot, id.Id);
 				case EntryType.Tag:

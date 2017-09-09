@@ -56,7 +56,7 @@ module vdb.viewModels.globalization {
 
 		private static nameOrEmpty(names: LocalizedStringWithIdEditViewModel[], lang: cls.globalization.ContentLanguageSelection) {
 
-			var name = _.find(names, n => n.language() === lang);
+			const name = _.find(names, n => n.language() === lang);
 			return name || new LocalizedStringWithIdEditViewModel(lang, "");
 
 		}

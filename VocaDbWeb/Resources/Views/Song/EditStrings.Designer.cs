@@ -19,7 +19,7 @@ namespace ViewRes.Song {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class EditStrings {
@@ -196,6 +196,33 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use album release date.
+        /// </summary>
+        public static string BaUseAlbumDate {
+            get {
+                return ResourceManager.GetString("BaUseAlbumDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use event date.
+        /// </summary>
+        public static string BaUseEventDate {
+            get {
+                return ResourceManager.GetString("BaUseEventDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use PV date.
+        /// </summary>
+        public static string BaUsePvDate {
+            get {
+                return ResourceManager.GetString("BaUsePvDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit song {0}.
         /// </summary>
         public static string EditTitle {
@@ -309,6 +336,24 @@ namespace ViewRes.Song {
         public static string PvService {
             get {
                 return ResourceManager.GetString("PvService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string PvStatus {
+            get {
+                return ResourceManager.GetString("PvStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the PV is deleted or hidden by the author and thus unplayable, it should be marked as &quot;Unavailable&quot; here..
+        /// </summary>
+        public static string PvStatusHelp {
+            get {
+                return ResourceManager.GetString("PvStatusHelp", resourceCulture);
             }
         }
         

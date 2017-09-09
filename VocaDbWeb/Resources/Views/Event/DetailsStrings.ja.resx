@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Albums" xml:space="preserve">
+    <value>アルバム</value>
+  </data>
   <data name="Attending" xml:space="preserve">
     <value>参加</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>カテゴリ</value>
   </data>
   <data name="Event" xml:space="preserve">
     <value>イベント</value>

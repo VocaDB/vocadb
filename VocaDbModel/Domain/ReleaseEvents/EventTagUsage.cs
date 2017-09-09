@@ -7,7 +7,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public EventTagUsage() { }
 
-		public EventTagUsage(ReleaseEvent song, Tag tag) : base(song, tag) { }
+		public EventTagUsage(ReleaseEvent releaseEvent, Tag tag) : base(releaseEvent, tag) { }
 
 		public override TagVote CreateVote(User user) {
 

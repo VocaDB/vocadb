@@ -11,6 +11,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -54,6 +55,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		private TagUsage CreateTagUsage(Tag tag, ReleaseEvent releaseEvent) {
+			
+			var usage = repository.Save(new EventTagUsage(releaseEvent, tag));
+			tag.AllEventTagUsages.Add(usage);
+			releaseEvent.Tags.Usages.Add(usage);
+			return usage;
+
+		}
+
 		private Stream TestImage() {
 			return ResourceHelper.TestImage();
 		}
@@ -92,6 +102,39 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Create_Duplicate() {
 
 			queries.Create("Appearance Miku");
+
+		}
+
+		[TestMethod]
+		public void GetDetails_RecentEvents() {
+			
+			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent) {
+				Assert.IsTrue(details.Events.Any(e => e.Id == releaseEvent.Id), "Contains " + releaseEvent);
+			}
+
+			var standaloneEvent = CreateEntry.ReleaseEvent("Miku party");
+			var otherEvent = CreateEntry.ReleaseEvent("Magical Mirai");
+			var eventSeries = CreateEntry.EventSeries("VocaTRAVers");
+			var seriesUsage = repository.Save(new EventSeriesTagUsage(eventSeries, tag));
+			eventSeries.Tags.Usages.Add(seriesUsage);
+			tag.AllEventSeriesTagUsages.Add(seriesUsage);
+			var oldSeriesEvent = CreateEntry.ReleaseEvent("VocaTRAVers 1", date: DateTime.Now.AddDays(-30));
+			oldSeriesEvent.SetSeries(eventSeries);
+			var recentSeriesEvent = CreateEntry.ReleaseEvent("VocaTRAVers 2", date: DateTime.Now);
+			recentSeriesEvent.SetSeries(eventSeries);
+			repository.Save(standaloneEvent, otherEvent, oldSeriesEvent, recentSeriesEvent);
+			repository.Save(eventSeries);
+			repository.Save(CreateTagUsage(tag, standaloneEvent), CreateTagUsage(tag, oldSeriesEvent), CreateTagUsage(tag, recentSeriesEvent));
+
+			var result = queries.GetDetails(tag.Id);
+
+			Assert.AreEqual(2, result.EventCount, "EventCount");
+			Assert.AreEqual(2, result.Events.Length, "Events.Length");
+			Assert.AreEqual(1, result.EventSeriesCount, "EventSeriesCount");
+			Assert.AreEqual(1, result.EventSeries.Length, "EventSeries.Length");
+			AssertContainsEvent(result, standaloneEvent);
+			AssertContainsEvent(result, recentSeriesEvent);
+			Assert.IsTrue(result.EventSeries.Any(e => e.Id == eventSeries.Id), "Contains " + eventSeries);
 
 		}
 

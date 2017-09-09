@@ -12,6 +12,7 @@ using VocaDb.Web.Code.Exceptions;
 using System.Drawing;
 using System.Globalization;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Markdown;
@@ -33,7 +34,7 @@ namespace VocaDb.Web.Controllers
 		private readonly MarkdownParser markdownParser;
 
 		private ArtistEditViewModel CreateArtistEditViewModel(int id, ArtistForEditContract editedArtist) {
-			return queries.Get(id, album => new ArtistEditViewModel(new ArtistForEditContract(album, PermissionContext.LanguagePreference), PermissionContext,
+			return queries.Get(id, album => new ArtistEditViewModel(new ArtistContract(album, PermissionContext.LanguagePreference), PermissionContext,
 				EntryPermissionManager.CanDelete(PermissionContext, album), editedArtist));
 		}
 
@@ -204,8 +205,15 @@ namespace VocaDb.Web.Controllers
 			var contract = model.ToContract();
 			contract.PictureData = pictureData;
 
-			var album = queries.Create(contract);
-			return RedirectToAction("Edit", new { id = album.Id });
+			ArtistContract artist;
+			try {
+				artist = queries.Create(contract);
+			} catch (InvalidPictureException) {
+				ModelState.AddModelError("Picture", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
+				return View(model);
+			}
+
+			return RedirectToAction("Edit", new { id = artist.Id });
 
 		}
         

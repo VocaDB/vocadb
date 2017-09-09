@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Artists {
@@ -18,7 +19,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		public ArtistDetailsContract() {}
 
-		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext)
+		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IEntryImagePersister imageStore)
 			: base(artist, languagePreference) {
 
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));
@@ -31,7 +32,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 			LatestAlbums = new AlbumContract[] {};
 			LatestSongs = new SongForApiContract[] {};
 			OwnerUsers = artist.OwnerUsers.Select(u => new UserContract(u.User)).ToArray();
-			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p)).ToArray();
+			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToArray();
 			TopAlbums = new AlbumContract[] {};
 			TopSongs = new SongForApiContract[] {};
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();

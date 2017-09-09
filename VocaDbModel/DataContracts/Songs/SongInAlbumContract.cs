@@ -9,7 +9,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		public SongInAlbumContract() {}
 
-		public SongInAlbumContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, bool getThumbUrl = true) {
+		public SongInAlbumContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, bool getThumbUrl = true,
+			SongVoteRating? rating = null) {
 			
 			ParamIs.NotNull(() => songInAlbum);
 
@@ -20,6 +21,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			var song = songInAlbum.Song;
 			Song = song != null ? new SongContract(song, languagePreference, getThumbUrl) : null;
 			Name = Song != null ? Song.Name : songInAlbum.Name;
+			Rating = rating;
 
 		}
 
@@ -31,6 +33,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public string Name { get; set; }
+
+		[DataMember]
+		public SongVoteRating? Rating { get; set; }
 
 		[DataMember]
 		public SongContract Song { get; set; }

@@ -7,6 +7,8 @@ module vdb.dataContracts.pvs {
 
 		createdBy?: number;
 
+		disabled?: boolean;
+
 		extendedMetadata?: any;
 
 		id?: number;

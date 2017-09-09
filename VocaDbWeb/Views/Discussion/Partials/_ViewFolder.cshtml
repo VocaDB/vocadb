@@ -29,6 +29,10 @@
 		</form>
 	}
 
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
 	<table class="table">
 		<thead>
 			<tr>
@@ -64,6 +68,10 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
 
 </div>
 

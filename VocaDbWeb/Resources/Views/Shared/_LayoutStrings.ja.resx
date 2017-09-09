@@ -195,4 +195,7 @@
   <data name="BackgroundCredit" xml:space="preserve">
     <value>背景イラスト: {0}様</value>
   </data>
+  <data name="UpcomingEvents" xml:space="preserve">
+    <value>今後のイベント</value>
+  </data>
 </root>

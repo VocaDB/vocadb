@@ -1,9 +1,11 @@
-﻿using VocaDb.Model.DataContracts.PVs;
+﻿using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs {
 
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PVForSongContract : PVContract {
 
 		public PVForSongContract(PVForSong pv, ContentLanguagePreference languagePreference)
@@ -13,6 +15,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		}
 
+		[DataMember]
 		public SongContract Song { get; set; }
 
 	}

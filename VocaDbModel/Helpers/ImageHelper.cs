@@ -45,9 +45,7 @@ namespace VocaDb.Model.Helpers {
 		public const int MaxImageSizeMB = 8;
 		public const int MaxImageSizeBytes = MaxImageSizeMB * 1024 * 1024;
 
-		public static string[] AllowedExtensions {
-			get { return allowedExt; }
-		}
+		public static string[] AllowedExtensions => allowedExt;
 
 		/// <summary>
 		/// Gets image extension from MIME type.

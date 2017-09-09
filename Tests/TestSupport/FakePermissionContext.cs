@@ -47,6 +47,10 @@ namespace VocaDb.Tests.TestSupport {
 			LoggedUser?.EffectivePermissions.Add(permissionToken);
 		}
 
+		public void LogOff() {
+			LoggedUser = null;
+		}
+
 		/// <summary>
 		/// Updates status, including permissions, of the currently logged in user.
 		/// </summary>

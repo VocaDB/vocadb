@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
@@ -10,6 +11,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -273,11 +275,17 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="name">Tag English name. Tag names must be unique.</param>
 		/// <returns>The created tag.</returns>
+		/// <response code="200">OK</response>		
+		/// <response code="400">If tag name is already in use</response>
 		[Route("")]
 		[Authorize]
 		public TagBaseContract PostNewTag(string name) {
 
-			return queries.Create(name);
+			try {
+				return queries.Create(name);				
+			} catch (DuplicateTagNameException) {
+				throw new HttpBadRequestException("Tag name is already in use");
+			}
 
 		}
 

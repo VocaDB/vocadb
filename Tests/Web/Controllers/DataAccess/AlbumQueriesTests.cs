@@ -79,7 +79,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		private AlbumForEditContract CallUpdate(Stream image) {
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			using (var stream = image) {
 				return queries.UpdateBasicProperties(contract, new EntryPictureFileContract { UploadedFile = stream, Mime = MediaTypeNames.Image.Jpeg });
 			}		
@@ -218,6 +218,45 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void GetAlbumDetails() {
+			
+			repository.Save(album.AddSong(song, 1, 1));
+			repository.Save(album.AddSong(song2, 2, 1));
+			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
+
+			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+
+			Assert.AreEqual(2, result.Songs.Length, "Number of songs");
+			var track = result.Songs[0];
+			Assert.AreEqual(SongVoteRating.Favorite, track.Rating, "First track rating");
+			Assert.AreEqual(SongVoteRating.Nothing, result.Songs[1].Rating, "Second track rating");
+
+		}
+
+		[TestMethod]
+		public void GetAlbumDetails_CustomTrack() {
+
+			repository.Save(album.AddSong("Miku Miku", 1, 1));
+			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
+
+			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+
+			Assert.AreEqual(1, result.Songs.Length, "Number of songs");
+
+		}
+
+		[TestMethod]
+		public void GetAlbumDetails_NotLoggedIn() {
+
+			repository.Save(album.AddSong("Miku Miku", 1, 1));
+			permissionContext.LogOff();
+
+			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+			Assert.IsNotNull(result, "result");
+
+		}
+
+		[TestMethod]
 		public void Merge_ToEmpty() {
 			
 			Save(album.AddArtist(producer));
@@ -312,7 +351,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			// Arrange
 			album.Description.English = "Original";
 			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, album, AlbumArchiveReason.PropertiesUpdated));
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.Description.English = "Updated";
 			CallUpdate(contract);
 
@@ -361,7 +400,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Names() {
 			
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated album";
@@ -414,7 +453,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Tracks() {
 			
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			var existingSong = CreateEntry.Song(name: "Nebula");
 			repository.Save(existingSong);
 
@@ -445,7 +484,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Discs() {
 
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			repository.Save(CreateEntry.AlbumDisc(album));
 
 			contract.Discs = new[] {
@@ -499,7 +538,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Artists() {
 			
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.ArtistLinks = new [] {
 				CreateArtistForAlbumContract(artistId: producer.Id), 
 				CreateArtistForAlbumContract(artistId: vocalist.Id)
@@ -525,7 +564,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void Update_Artists_CustomArtist() {
 			
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English);
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.ArtistLinks = new [] {
 				CreateArtistForAlbumContract(customArtistName: "Custom artist", roles: ArtistRoles.Composer)
 			};
@@ -550,7 +589,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			Save(user2.AddArtist(vocalist));
 
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.Default);
+			var contract = new AlbumForEditContract(album, ContentLanguagePreference.Default, new InMemoryImagePersister());
 			contract.ArtistLinks = contract.ArtistLinks.Concat(new [] { CreateArtistForAlbumContract(vocalist.Id)}).ToArray();
 
 			queries.UpdateBasicProperties(contract, null);

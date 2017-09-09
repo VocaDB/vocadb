@@ -4,6 +4,7 @@
 
 		Artist,
 		Album,
+		ReleaseEvent,
 		Song,
 		Tag
 

@@ -9,6 +9,7 @@ module vdb.viewModels.pvs {
 
 			this.author = contract.author;
 			this.createdBy = contract.createdBy;
+			this.disabled = ko.observable(contract.disabled);
 			this.extendedMetadata = contract.extendedMetadata;
 			this.id = contract.id;
 			this.length = contract.length;
@@ -27,6 +28,8 @@ module vdb.viewModels.pvs {
 		author: string;
 
 		createdBy: number;
+
+		disabled: KnockoutObservable<boolean>;
 
 		extendedMetadata: string;
 
