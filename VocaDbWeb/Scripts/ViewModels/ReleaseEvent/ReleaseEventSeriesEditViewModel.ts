@@ -18,14 +18,32 @@ module vdb.viewModels.releaseEvents {
 			this.names = globalization.NamesEditViewModel.fromContracts(names);
 			this.webLinks = new WebLinksEditViewModel(webLinks);			
 
-			if (id) {
+			if (!this.isNew()) {
 				window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.ReleaseEventSeries, id), 10000);
+			} else {
+				_.forEach([this.names.originalName, this.names.romajiName, this.names.englishName], name => {
+					ko.computed(() => name.value()).extend({ rateLimit: 500 }).subscribe(this.checkName);
+				});
 			}
+
+		}
+
+		private checkName = (value: string) => {
+
+			if (!value) {
+				this.duplicateName(null);
+				return;				
+			}
+
+			this.eventRepository.getSeriesList(value, vdb.models.NameMatchMode.Exact, 1, result => {				
+				this.duplicateName(result.items.length ? value : null);
+			});
 
 		}
 		
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public description = ko.observable<string>();
+		public duplicateName = ko.observable<string>();
 		public names: globalization.NamesEditViewModel;
 		public submitting = ko.observable(false);
         public webLinks: WebLinksEditViewModel;
@@ -35,6 +53,8 @@ module vdb.viewModels.releaseEvents {
 				window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.ReleaseEventSeries, this.id));
 			});
 		});
+
+		private isNew = () => !this.id;
 
 		public submit = () => {
 			this.submitting(true);

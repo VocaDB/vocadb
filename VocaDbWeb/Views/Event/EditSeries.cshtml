@@ -57,10 +57,22 @@
 	<div class="editor-label">
 		@Html.LabelFor(m => m.Names)
 	</div>
-	<div class="editor-field" data-bind="with: names">
-		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
-		@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
-	</div>
+	<div class="editor-field">
+		<table>			
+			<tr>
+				<td data-bind="with: names">
+					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
+				</td>
+				<td style="vertical-align: top">
+					<div class="alert" data-bind="visible: duplicateName" style="display: none;">
+						Series already exists with name
+						<span data-bind="text: duplicateName"></span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>	
 
 	<div class="editor-label">
 		@Html.LabelFor(m => m.Description)

@@ -60,6 +60,19 @@ module vdb.repositories {
 			$.getJSON(url, { }, result => callback(result && result.items && result.items.length ? result.items[0] : null));
 		}
 
+		public getSeriesList = (query: string, nameMatchMode: models.NameMatchMode, maxResults: number, callback?: (result: dc.PartialFindResultContract<dc.EventSeriesContract>) => void) => {
+
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEventSeries");
+			var data = {
+				query: query,
+				maxResults: maxResults,
+				nameMatchMode: models.NameMatchMode[nameMatchMode]
+			};
+
+			$.getJSON(url, data, callback);
+
+		}
+
 	}
 
 	export interface EventQueryParams extends CommonQueryParams {
