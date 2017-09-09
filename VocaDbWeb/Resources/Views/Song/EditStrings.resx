@@ -168,6 +168,9 @@
   <data name="BaUseEventDate" xml:space="preserve">
     <value>Use event date</value>
   </data>
+  <data name="BaUsePvDate" xml:space="preserve">
+    <value>Use PV date</value>
+  </data>
   <data name="EditTitle" xml:space="preserve">
     <value>Edit song {0}</value>
   </data>

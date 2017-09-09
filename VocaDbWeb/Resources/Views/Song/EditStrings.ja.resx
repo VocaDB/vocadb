@@ -225,4 +225,7 @@
   <data name="BaUseEventDate" xml:space="preserve">
     <value>イベントの開催日：</value>
   </data>
+  <data name="BaUsePvDate" xml:space="preserve">
+    <value>PVの投稿日付</value>
+  </data>
 </root>

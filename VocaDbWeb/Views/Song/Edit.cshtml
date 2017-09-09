@@ -148,7 +148,7 @@
 				<div data-bind="if: !publishDate() && (suggestedPublishDate() || eventDate())">
 					<div data-bind="with: suggestedPublishDate" class="inline-block">
 						<button class="btn" data-bind="click: function() { $parent.publishDate(date.toDate()); }">
-							<span data-bind="visible: source === 'PV'">Use PV date</span>
+							<span data-bind="visible: source === 'PV'">@Res.BaUsePvDate</span>
 							<span data-bind="visible: source === 'Album'">@Res.BaUseAlbumDate</span>						
 							<span data-bind="text: date.format('L')"></span>
 						</button>				

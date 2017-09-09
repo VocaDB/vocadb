@@ -214,6 +214,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use PV date.
+        /// </summary>
+        public static string BaUsePvDate {
+            get {
+                return ResourceManager.GetString("BaUsePvDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit song {0}.
         /// </summary>
         public static string EditTitle {
