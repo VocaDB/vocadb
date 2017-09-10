@@ -75,7 +75,7 @@
 							color: 'teal',
 							textColor: 'white',
 							events: function (start, end, timezone, callback) {
-								$.getJSON("http://vocadb.net/api/releaseEvents", { afterDate: start.toJSON(), beforeDate: end.toJSON() }, function (result) {
+								$.getJSON("http://vocadb.net/api/releaseEvents", { afterDate: start.toJSON(), beforeDate: end.toJSON(), maxResults: 50 }, function (result) {
 									var events = [];
 									$(result.items).each(function () {
 										events.push({
