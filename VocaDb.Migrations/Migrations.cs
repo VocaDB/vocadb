@@ -4,6 +4,17 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	public class EventVenues : AutoReversingMigration {
+		public override void Up() {
+			Create.Table("EventVenues")
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Address").AsString().NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("EnglishName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
+		}
+	}
+
 	[Migration(2017_07_24_1500)]
 	public class PVForSongDisabled : AutoReversingMigration {
 		public override void Up() {
