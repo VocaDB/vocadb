@@ -28,6 +28,10 @@ namespace VocaDb.Model.Service.Helpers {
 			new Matcher("https://twitter.com/{0}", @"^https://twitter\.com/(\w+)")
 		};
 
+		private static readonly string[] whitelistedUrls = {
+			"http://piapro.jp/"
+		};
+
 		/// <summary>
 		/// Get full external URL from a possible external URL fragment.
 		/// For example both /mylist/6667938 and http://www.nicovideo.jp/mylist/6667938 will be identified as http://www.nicovideo.jp/mylist/6667938
@@ -44,6 +48,11 @@ namespace VocaDb.Model.Service.Helpers {
 			
 			if (string.IsNullOrEmpty(possibleUrl))
 				return null;
+
+			var lowercase = possibleUrl.ToLowerInvariant();
+			if (whitelistedUrls.Any(u => lowercase.StartsWith(u))) {
+				return possibleUrl;
+			}
 
 			var match = linkMatchers
 				.Select(matcher => new {

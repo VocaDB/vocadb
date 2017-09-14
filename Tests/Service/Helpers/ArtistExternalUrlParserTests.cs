@@ -49,6 +49,13 @@ namespace VocaDb.Tests.Service.Helpers {
 
 		}
 
+		[TestMethod]
+		public void Piapro() {
+
+			TestGetExternalUrl("http://piapro.jp/bpms", "http://piapro.jp/bpms");
+
+		}
+
 	}
 
 }
