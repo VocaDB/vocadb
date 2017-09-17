@@ -1014,6 +1014,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(ctx => { 
 				
 				var query = ctx.Query<SongList>()
+					.WhereNotDeleted()
 					.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing)
 					.WhereHasName(textQuery);
 

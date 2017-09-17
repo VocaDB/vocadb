@@ -156,7 +156,7 @@ module vdb.viewModels.user {
 
 	export class UserSongListsViewModel extends songList.SongListsBaseViewModel {
 		
-		constructor(private userId, private userRepo: rep.UserRepository) {			
+		constructor(private readonly userId, private readonly userRepo: rep.UserRepository) {			
 			super(true);
 		}
 
