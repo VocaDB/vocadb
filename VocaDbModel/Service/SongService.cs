@@ -318,6 +318,7 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				return session.Query<SongList>()
+					.WhereNotDeleted()
 					.Where(l => !ignoredLists.Contains(l.Id) && 
 						((l.Author.Id == PermissionContext.LoggedUser.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing) 
 							|| (canEditPools && l.FeaturedCategory == SongListFeaturedCategory.Pools)))

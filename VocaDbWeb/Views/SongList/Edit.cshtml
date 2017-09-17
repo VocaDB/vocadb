@@ -4,6 +4,7 @@
 @using VocaDb.Web.Models.SongLists;
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.SongList.EditStrings;
+@using EditRes = ViewRes.EntryEditStrings
 @inherits VocaDb.Web.Code.VocaDbPage<SongListEditViewModel>
 @{
 	
@@ -27,7 +28,10 @@
 
 @section Toolbar {
 	@if (!isNew) {
-		@Html.ActionLink(ViewRes.SharedStrings.Delete, "Delete", new { id = Model.Id }, new { id = "deleteLink", onclick = "return confirm(\"" + Res.ConfirmDelete + "\");" })
+		if (!Model.Deleted) {
+			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
+		}
+		<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
 	}
 }
 
@@ -124,25 +128,25 @@
 
 			<table>
 				<tbody data-bind="sortable: songLinks">
-					<tr class="ui-state-default">
-						<td style="cursor: move">
-							<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-						</td>
-						<td>
-							<span data-bind="text: order"></span>
-						</td>
-						<td>
-							<span data-bind="title: song.additionalNames, text: song.name"></span>
-							<br />
-							<span class="extraInfo" data-bind="text: song.artistString"></span>
-						</td>
-						<td>
-							<input type="text" data-bind="value: notes" maxlength="200" />
-						</td>
-						<td>
-							<a href="#" class="iconLink removeLink" title="@Res.RemoveFromList" data-bind="click: $parent.removeSong">@ViewRes.SharedStrings.Remove</a>
-						</td>
-					</tr>
+				<tr class="ui-state-default">
+					<td style="cursor: move">
+						<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+					</td>
+					<td>
+						<span data-bind="text: order"></span>
+					</td>
+					<td>
+						<span data-bind="title: song.additionalNames, text: song.name"></span>
+						<br />
+						<span class="extraInfo" data-bind="text: song.artistString"></span>
+					</td>
+					<td>
+						<input type="text" data-bind="value: notes" maxlength="200" />
+					</td>
+					<td>
+						<a href="#" class="iconLink removeLink" title="@Res.RemoveFromList" data-bind="click: $parent.removeSong">@ViewRes.SharedStrings.Remove</a>
+					</td>
+				</tr>
 				</tbody>
 			</table>
 
@@ -164,3 +168,6 @@
 	@Helpers.SaveAndBackBtn(parentUrl)
 
 </form>
+
+@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)

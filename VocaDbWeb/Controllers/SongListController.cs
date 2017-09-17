@@ -27,14 +27,6 @@ namespace VocaDb.Web.Controllers
 			this.entryLinkFactory = entryLinkFactory;
 		}
 
-		public ActionResult Delete(int id) {
-
-			queries.DeleteSongList(id);
-
-			return RedirectToAction("Profile", "User", new { id = PermissionContext.LoggedUser.Name });
-
-		}
-
 		public ActionResult Details(int id = invalidId) {
 
 			if (id == invalidId)

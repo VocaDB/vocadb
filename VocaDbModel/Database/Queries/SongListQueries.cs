@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
@@ -144,7 +145,28 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void DeleteSongList(int listId) {
+		public void Delete(int listId, string notes) {
+
+			permissionContext.VerifyManageDatabase();
+
+			repository.HandleTransaction(ctx => {
+
+				var entry = ctx.Load(listId);
+
+				PermissionContext.VerifyEntryDelete(entry);
+
+				entry.Deleted = true;
+				ctx.Update(entry);
+
+				Archive(ctx, entry, new SongListDiff(false), EntryEditEvent.Deleted, notes);
+
+				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+
+			});
+
+		}
+
+		public void MoveToTrash(int listId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
@@ -178,6 +200,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(ctx => {
 
 				var listQuery = ctx.Query()
+					.WhereNotDeleted()
 					.WhereHasFeaturedCategory(featuredCategory, false)
 					.WhereHasName(textQuery);
 

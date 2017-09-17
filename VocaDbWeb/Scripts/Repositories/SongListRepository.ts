@@ -6,7 +6,11 @@ module vdb.repositories {
 
 	export class SongListRepository {
 
-		constructor(private urlMapper: vdb.UrlMapper) {}
+		constructor(private readonly urlMapper: vdb.UrlMapper) {}
+
+		public delete = (id: number, notes: string, hardDelete: boolean, callback?: () => void) => {
+			$.ajax(this.urlMapper.mapRelative("/api/songLists/" + id + "?hardDelete=" + hardDelete + "&notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
+		}
 
 		public getComments = () => new EntryCommentRepository(this.urlMapper, "/songLists/");
 

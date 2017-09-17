@@ -4,6 +4,13 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_09_17_2200)]
+	public class SongListDeleted : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Deleted").OnTable(TableNames.SongLists).AsBoolean().NotNullable().WithDefaultValue(false);
+		}
+	}
+
 	[Migration(2017_07_24_1500)]
 	public class PVForSongDisabled : AutoReversingMigration {
 		public override void Up() {

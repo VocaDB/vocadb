@@ -46,6 +46,29 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Deletes a song list.
+		/// </summary>
+		/// <param name="id">ID of the list to be deleted.</param>
+		/// <param name="notes">Notes.</param>
+		/// <param name="hardDelete">
+		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
+		/// If false, the entry is soft deleted, meaning it can still be restored.
+		/// </param>
+		[Route("{id:int}")]
+		[Authorize]
+		public void Delete(int id, string notes = "", bool hardDelete = false) {
+
+			notes = notes ?? string.Empty;
+
+			if (hardDelete) {
+				queries.MoveToTrash(id);
+			} else {
+				queries.Delete(id, notes);
+			}
+
+		}
+
+		/// <summary>
 		/// Deletes a comment.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be deleted.</param>

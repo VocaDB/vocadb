@@ -11,6 +11,7 @@ namespace VocaDb.Model.Mapping.Songs {
 			Id(m => m.Id);
 
 			Map(m => m.CreateDate).Not.Nullable();
+			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(4000).Not.Nullable();
 			Map(m => m.FeaturedCategory).Length(20).Not.Nullable();
 			Map(m => m.Name).Length(200).Not.Nullable();

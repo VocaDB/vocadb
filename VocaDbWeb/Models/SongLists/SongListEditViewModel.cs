@@ -28,6 +28,7 @@ namespace VocaDb.Web.Models.SongLists {
 			ParamIs.NotNull(() => contract);
 
 			CurrentName = contract.Name;
+			Deleted = contract.Deleted;
 			Description = contract.Description;
 			EventDate = contract.EventDate;
 			FeaturedCategory = contract.FeaturedCategory;
@@ -46,6 +47,8 @@ namespace VocaDb.Web.Models.SongLists {
 		public bool CanCreateFeaturedLists { get; set; }
 
 		public string CurrentName { get; set; }
+
+		public bool Deleted { get; set;}
 
 		[StringLength(2000)]
 		public string Description { get; set; }

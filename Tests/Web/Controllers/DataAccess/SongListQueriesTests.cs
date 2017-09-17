@@ -86,7 +86,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var archived = repository.Save(list.CreateArchivedVersion(new SongListDiff(), new AgentLoginData(userWithSongList), EntryEditEvent.Created, string.Empty));
 			repository.Save(new SongListActivityEntry(list, EntryEditEvent.Created, userWithSongList, archived)); // Note: activity entries are generally only created for featured song lists.
 
-			queries.DeleteSongList(list.Id);
+			queries.MoveToTrash(list.Id);
 
 			Assert.AreEqual(0, repository.Count<SongList>(), "Song list was removed");
 			Assert.AreEqual(0, repository.Count<ArchivedSongListVersion>(), "Song list archived version was removed");

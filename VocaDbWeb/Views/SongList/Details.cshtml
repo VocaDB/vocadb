@@ -49,8 +49,12 @@
 	}
 }
 
-@if (Model.IsFeatured && Model.SongList.Status == EntryStatus.Draft) {
+@if (Model.IsFeatured && Model.SongList.Status == EntryStatus.Draft && !Model.SongList.Deleted) {
 	@Helpers.DraftMessage(string.Empty)
+}
+
+@if (Model.SongList.Deleted) {
+	@EntryDetailsHelpers.DeletedBanner(null)
 }
 
 <div class="media">

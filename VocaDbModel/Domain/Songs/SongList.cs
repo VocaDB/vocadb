@@ -14,7 +14,9 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class SongList : IEntryWithNames, IEntryWithComments<SongListComment> {
+	public class SongList : IEntryWithNames, 
+		IEntryWithVersions<ArchivedSongListVersion, SongListEditableFields>, 
+		IEntryWithComments<SongListComment>, IEntryWithStatus {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
@@ -54,6 +56,8 @@ namespace VocaDb.Model.Domain.Songs {
 				songs = value;
 			}
 		}
+
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public virtual ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> ArchivedVersionsManager {
 			get => archivedVersions;
@@ -98,7 +102,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		string IEntryBase.DefaultName => Name;
 
-		public virtual bool Deleted => false;
+		public virtual bool Deleted { get; set; }
 
 		public virtual string Description {
 			get => description;
