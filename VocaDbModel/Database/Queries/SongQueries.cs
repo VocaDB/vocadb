@@ -884,7 +884,7 @@ namespace VocaDb.Model.Database.Queries {
 					artistForSong => artistForSong.Delete());
 
 				if (artistDiff.Changed) {
-					//song.UpdateArtistString();
+					song.UpdateArtistString();
 				}
 
 				// Names
