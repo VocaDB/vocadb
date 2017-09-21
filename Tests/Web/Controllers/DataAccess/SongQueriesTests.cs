@@ -640,6 +640,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var latestVersion = song.ArchivedVersionsManager.GetLatestVersion();
 			Assert.AreEqual(SongArchiveReason.Reverted, latestVersion.Reason, "Reason");
+			Assert.IsTrue(latestVersion.IsIncluded(SongEditableFields.Artists), "Artists are included in diff");
 
 		}
 
