@@ -103,10 +103,14 @@
 @Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 
 <a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-
+	
+@if (UserContext.HasPermission(PermissionToken.Admin)) {
+	<a data-bind="jqButton: { icon: 'ui-icon-wrench' }" href="@Url.Action("UpdateArtistString", new { id = Model.Id})">Update artist string</a>			 
+}
+	
 @Helpers.EntryStatusMessage(Model.Status)
 
-@Helpers.AjaxLoader("pvLoader")	
+@Helpers.AjaxLoader("pvLoader")		
 }
 
 @if (Model.Deleted) {

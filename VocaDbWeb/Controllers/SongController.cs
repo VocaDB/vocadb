@@ -520,6 +520,22 @@ namespace VocaDb.Web.Controllers
 			return RedirectToActionPermanent("Rankings");
 		}
 
+		[Authorize]
+		public ActionResult UpdateArtistString(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			queries.HandleTransaction(ctx => {
+				var song = ctx.Load(id);
+				song.UpdateArtistString();
+				ctx.Update(song);
+				ctx.AuditLogger.SysLog("Updated artist string for " + song);
+			});
+
+			return RedirectToAction("Details", new { id });
+
+		}
+
 		public ActionResult Versions(int id = invalidId) {
 
 			if (id == invalidId)
