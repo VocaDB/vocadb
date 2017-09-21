@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		public static void RestoreObjectRefs<TExisting, TEntry, TObjRef>(ISession session, IList<string> warnings, IEnumerable<TExisting> existing,
+		public static CollectionDiff<TExisting, TObjRef> RestoreObjectRefs<TExisting, TEntry, TObjRef>(ISession session, IList<string> warnings, IEnumerable<TExisting> existing,
 			IEnumerable<TObjRef> objRefs, Func<TExisting, TObjRef, bool> equality,
 			Func<TEntry, TObjRef, TExisting> createEntryFunc, Action<TExisting> deleteFunc) 
 			where TObjRef : ObjectRefContract where TEntry : class where TExisting : class {
@@ -84,6 +84,7 @@ namespace VocaDb.Model.Service.Helpers {
 				session.Delete(removed);
 			}
 
+			return diff;
 
 		}
 

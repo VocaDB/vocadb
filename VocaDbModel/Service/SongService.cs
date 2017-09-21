@@ -457,11 +457,15 @@ namespace VocaDb.Model.Service {
 				song.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
 
 				// Artists
-				SessionHelper.RestoreObjectRefs<ArtistForSong, Artist, ArchivedArtistForSongContract>(
+				var artistDiff = SessionHelper.RestoreObjectRefs<ArtistForSong, Artist, ArchivedArtistForSongContract>(
 					session, warnings, song.AllArtists, fullProperties.Artists,
 					(a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
 					(artist, artistRef) => RestoreArtistRef(song, artist, artistRef),
 					artistForSong => artistForSong.Delete());
+
+				if (artistDiff.Changed) {
+					song.UpdateArtistString();
+				}
 
 				// Names
 				if (fullProperties.Names != null) {
