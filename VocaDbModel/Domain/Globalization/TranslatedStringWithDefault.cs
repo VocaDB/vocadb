@@ -62,7 +62,7 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 		public override string Default {
-			get { return def; }
+			get => def;
 			set {
 				ParamIs.NotNull(() => value);
 				def = value; 
@@ -70,7 +70,12 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 		public bool Equals(TranslatedStringWithDefault other) {
+
+			if (other == null)
+				return false;
+
 			return Default.Equals(other.Default) && English.Equals(other.English) && Japanese.Equals(other.Japanese) && Romaji.Equals(other.Romaji);
+
 		}
 
 		public override bool Equals(object obj) {

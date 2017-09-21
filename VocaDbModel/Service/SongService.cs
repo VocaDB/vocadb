@@ -42,20 +42,6 @@ namespace VocaDb.Model.Service {
 			return new SongSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference, entryUrlParser).Find(queryParams);
 		}
 
-		private ArtistForSong RestoreArtistRef(Song song, Artist artist, ArchivedArtistForSongContract albumRef) {
-
-			if (artist != null) {
-
-				return (!artist.HasSong(song) ? artist.AddSong(song, albumRef.IsSupport, albumRef.Roles) : null);
-
-			} else {
-
-				return song.AddArtist(albumRef.NameHint, albumRef.IsSupport, albumRef.Roles);
-
-			}
-
-		}
-
 		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser,
 			VdbConfigManager config)
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
@@ -429,106 +415,6 @@ namespace VocaDb.Model.Service {
 				Archive(session, song, new SongDiff(false), SongArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(song), session);
-
-			});
-
-		}
-
-		public EntryRevertedContract RevertToVersion(int archivedSongVersionId) {
-
-			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
-
-			return HandleTransaction(session => {
-
-				var archivedVersion = session.Load<ArchivedSongVersion>(archivedSongVersionId);
-				var song = archivedVersion.Song;
-
-				SysLog("reverting " + song + " to version " + archivedVersion.Version);
-
-				var fullProperties = ArchivedSongContract.GetAllProperties(archivedVersion);
-				var warnings = new List<string>();
-
-				song.LengthSeconds = fullProperties.LengthSeconds;
-				song.NicoId = fullProperties.NicoId;
-				song.Notes.Original = fullProperties.Notes;
-				song.Notes.English = fullProperties.NotesEng ?? string.Empty;
-				song.PublishDate = fullProperties.PublishDate;
-				song.SongType = fullProperties.SongType;
-				song.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
-
-				// Artists
-				var artistDiff = SessionHelper.RestoreObjectRefs<ArtistForSong, Artist, ArchivedArtistForSongContract>(
-					session, warnings, song.AllArtists, fullProperties.Artists,
-					(a1, a2) => (a1.Artist != null && a1.Artist.Id == a2.Id) || (a1.Artist == null && a2.Id == 0 && a1.Name == a2.NameHint),
-					(artist, artistRef) => RestoreArtistRef(song, artist, artistRef),
-					artistForSong => artistForSong.Delete());
-
-				if (artistDiff.Changed) {
-					song.UpdateArtistString();
-				}
-
-				// Names
-				if (fullProperties.Names != null) {
-					var nameDiff = song.Names.SyncByContent(fullProperties.Names, song);
-					SessionHelper.Sync(session, nameDiff);
-				}
-
-				// Weblinks
-				if (fullProperties.WebLinks != null) {
-					var webLinkDiff = WebLink.SyncByValue(song.WebLinks, fullProperties.WebLinks, song);
-					SessionHelper.Sync(session, webLinkDiff);
-				}
-
-				// Lyrics
-				if (fullProperties.Lyrics != null) {
-
-					var lyricsDiff = CollectionHelper.Diff(song.Lyrics, fullProperties.Lyrics, (p1, p2) => (p1.Id == p2.Id));
-
-					foreach (var lyrics in lyricsDiff.Added) {
-						session.Save(song.CreateLyrics(lyrics.Value, lyrics.Source ?? string.Empty, lyrics.URL, lyrics.TranslationType, lyrics.CultureCode));
-					}
-
-					foreach (var lyrics in lyricsDiff.Removed) {
-						song.Lyrics.Remove(lyrics);
-						session.Delete(lyrics);
-					}
-
-					foreach (var lyrics in lyricsDiff.Unchanged) {
-
-						var newLyrics = fullProperties.Lyrics.First(l => l.Id == lyrics.Id);
-
-						lyrics.CultureCode = new OptionalCultureCode(newLyrics.CultureCode);
-						lyrics.TranslationType = newLyrics.TranslationType;
-						lyrics.Source = newLyrics.Source ?? string.Empty;
-						lyrics.Value = newLyrics.Value;
-						session.Update(lyrics);
-
-					}
-
-				}
-
-				// PVs
-				if (fullProperties.PVs != null) {
-
-					var pvDiff = CollectionHelper.Diff(song.PVs, fullProperties.PVs, (p1, p2) => (p1.PVId == p2.PVId && p1.Service == p2.Service));
-
-					foreach (var pv in pvDiff.Added) {
-						session.Save(song.CreatePV(new PVContract(pv)));
-					}
-
-					foreach (var pv in pvDiff.Removed) {
-						pv.OnDelete();
-						session.Delete(pv);
-					}
-
-				}
-
-				song.UpdateFavoritedTimes();
-
-				Archive(session, song, SongArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				AuditLog(string.Format("reverted {0} to revision {1}", EntryLinkFactory.CreateEntryLink(song), archivedVersion.Version), session);
-
-				return new EntryRevertedContract(song, warnings);
 
 			});
 

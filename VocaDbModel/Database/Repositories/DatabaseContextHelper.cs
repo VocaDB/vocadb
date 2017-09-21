@@ -18,7 +18,7 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
-		public static void RestoreObjectRefs<TExisting, TEntry, TObjRef>(IDatabaseContext<TEntry> session, IList<string> warnings, IEnumerable<TExisting> existing,
+		public static CollectionDiff<TExisting, TObjRef> RestoreObjectRefs<TExisting, TEntry, TObjRef>(IDatabaseContext<TEntry> session, IList<string> warnings, IEnumerable<TExisting> existing,
 			IEnumerable<TObjRef> objRefs, Func<TExisting, TObjRef, bool> equality,
 			Func<TEntry, TObjRef, TExisting> createEntryFunc, Action<TExisting> deleteFunc)
 			where TObjRef : ObjectRefContract 
@@ -64,6 +64,7 @@ namespace VocaDb.Model.Database.Repositories {
 				session.Delete(removed);
 			}
 
+			return diff;
 
 		}
 

@@ -613,6 +613,37 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Revert() {
+
+			user.GroupId = UserGroupId.Moderator;
+			permissionContext.RefreshLoggedUser(repository);
+			SongForEditContract Contract() {
+				return new SongForEditContract(song, ContentLanguagePreference.English);
+			}
+
+			queries.UpdateBasicProperties(Contract());
+
+			// Remove all artists
+			var contract = Contract();
+			contract.Artists = new ArtistForSongContract[0];
+			queries.UpdateBasicProperties(contract);
+
+			var latestVersionBeforeRevert = song.ArchivedVersionsManager.GetLatestVersion();
+			Assert.IsNotNull(latestVersionBeforeRevert, "latestVersion");
+			Assert.AreEqual(2, song.Version, "Version number before revert");
+
+			queries.RevertToVersion(latestVersionBeforeRevert.Id);
+
+			Assert.AreEqual(3, song.Version, "Version was incremented");
+			Assert.AreEqual(2, song.Artists.Count(), "Artist links were restored");
+			Assert.AreNotEqual(song.ArtistString?.Default, string.Empty, "Artist string was restored");
+
+			var latestVersion = song.ArchivedVersionsManager.GetLatestVersion();
+			Assert.AreEqual(SongArchiveReason.Reverted, latestVersion.Reason, "Reason");
+
+		}
+
+		[TestMethod]
 		public void Update_Names() {
 			
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
