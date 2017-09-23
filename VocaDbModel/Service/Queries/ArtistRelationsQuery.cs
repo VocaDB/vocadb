@@ -55,6 +55,7 @@ namespace VocaDb.Model.Service.Queries {
 			var id = artist.Id;
 
 			return session.Query<ReleaseEvent>()
+				.WhereNotDeleted()
 				.Where(e => e.AllArtists.Any(a => a.Artist.Id == id))
 				.OrderByDate(SortDirection.Descending)
 				.Take(3).ToArray()
