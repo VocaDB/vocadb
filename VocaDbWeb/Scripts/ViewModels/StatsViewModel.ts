@@ -57,6 +57,7 @@ module vdb.viewModels {
 						{ name: 'Cumulative songs published per day', url: 'cumulativeSongsPublished', allowTimespan: true },
 						{ name: 'Views per song', url: 'hitsPerSong', allowTimespan: true },
 						{ name: 'Views per song over time', url: 'hitsPerSongOverTime', allowTimespan: true },
+						{ name: 'Score per song over time', url: 'scorePerSongOverTime', allowTimespan: true },
 						{ name: 'Songs per genre', url: 'songsPerGenre' },
 						{ name: 'Album songs over time', url: 'albumSongsOverTime' }
 					]

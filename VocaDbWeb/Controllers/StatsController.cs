@@ -948,6 +948,72 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
+		public ActionResult ScorePerSongOverTime(DateTime? cutoff) {
+
+			var data = repository.HandleQuery(ctx => {
+
+				var topSongIds = ctx.Query<FavoriteSongForUser>()
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null)
+					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
+					.GroupBy(s => new {
+						SongId = s.Song.Id,
+					})
+					.Select(s => new {
+						s.Key.SongId,
+						TotalCount = s.Sum(s2 => (int)s2.Rating)
+					})
+					.OrderByDescending(s => s.TotalCount)
+					.Take(20)
+					.ToArray()
+					.Select(s => s.SongId)
+					.ToArray();
+
+				// Note: the same song may be included multiple times for different artists
+				var points = ctx.Query<FavoriteSongForUser>()
+					.Where(s => topSongIds.Contains(s.Song.Id))
+					.OrderBy(a => a.Date.Year)
+					.ThenBy(a => a.Date.Month)
+					.ThenBy(a => a.Date.Day)
+					.GroupBy(s => new {
+						Year = s.Date.Year,
+						Month = s.Date.Month,
+						Day = s.Date.Day,
+						SongId = s.Song.Id,
+					})
+					.Select(s => new {
+						s.Key.Year,
+						s.Key.Month,
+						s.Key.Day,
+						s.Key.SongId,
+						Count = s.Sum(s2 => (int)s2.Rating)
+					})
+					.ToArray()
+					.Select(s => new {
+						s.SongId,
+						Data = new CountPerDayContract(s.Year, s.Month, s.Day, s.Count),
+					})
+					.ToArray();
+
+				var songs = GetSongsWithNames(ctx, topSongIds);
+
+				var bySong = points.GroupBy(p => p.SongId).Select(p => new EntryWithIdAndData<LocalizedValue> {
+					Id = p.Key,
+					Entry = songs[p.Key],
+					Data = p.Select(d => d.Data).ToArray()
+				}).OrderByIds(topSongIds);
+				return bySong;
+
+			});
+
+			var dataSeries = data.Select(ser => new Series {
+				Name = ser.Entry.Name.English,
+				Data = Series.DateData(ser.Data.CumulativeSumContract())
+			}).ToArray();
+
+			return LowercaseJson(HighchartsHelper.DateLineChart("Score per song over time", "Songs", "Views", dataSeries));
+
+		}
+
 		private static Dictionary<int, LocalizedValue> GetSongsWithNames(IDatabaseContext ctx, int[] topSongIds) {
 			var songs = ctx.OfType<Song>().Query()
 				.Where(a => topSongIds.Contains(a.Id))
@@ -957,6 +1023,21 @@ namespace VocaDb.Web.Controllers {
 						English = a.Names.SortNames.English,
 						Romaji = a.Names.SortNames.Romaji,
 						Japanese = a.Names.SortNames.Japanese,
+					},
+					EntryId = a.Id
+				}).ToDictionary(s => s.EntryId);
+			return songs;
+		}
+
+		private static Dictionary<int, LocalizedValue> GetSongsWithNamesAndArtists(IDatabaseContext ctx, int[] topSongIds) {
+			var songs = ctx.OfType<Song>().Query()
+				.Where(a => topSongIds.Contains(a.Id))
+				.Select(a => new LocalizedValue {
+					Name = new TranslatedString {
+						DefaultLanguage = a.Names.SortNames.DefaultLanguage,
+						English = a.Names.SortNames.English + " (" + a.ArtistString.English + ")",
+						Romaji = a.Names.SortNames.Romaji + " (" + a.ArtistString.Romaji + ")",
+						Japanese = a.Names.SortNames.Japanese + " (" + a.ArtistString.Japanese + ")",
 					},
 					EntryId = a.Id
 				}).ToDictionary(s => s.EntryId);
