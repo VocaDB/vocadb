@@ -76,14 +76,15 @@ namespace VocaDb.Model.DataContracts.Aggregate {
 			return dict.ContainsKey(date) ? dict[date] : new CountPerDayContract(date, 0);
 		}
 
-		private static CountPerDayContract[] FillValues(this CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit, Func<Dictionary<DateTime, CountPerDayContract>, DateTime, CountPerDayContract, CountPerDayContract> func) {
+		private static CountPerDayContract[] FillValues(this CountPerDayContract[] query, DateTime? endDate, bool addZeros, TimeUnit timeUnit, Func<Dictionary<DateTime, CountPerDayContract>, DateTime, CountPerDayContract, CountPerDayContract> func) {
 
 			if (!addZeros || !query.Any())
 				return query;
 
 			var dict = query.ToDictionary(t => new DateTime(t.Year, t.Month, t.Day));
+			var end = endDate ?? dict.Last().Key;
 
-			return DateGenerator(dict.First().Key, dict.Last().Key, timeUnit)
+			return DateGenerator(dict.First().Key, end, timeUnit)
 				.SelectWithPrevious<DateTime, CountPerDayContract>((d, prev) => func(dict, d, prev))
 				.ToArray();
 
@@ -93,14 +94,14 @@ namespace VocaDb.Model.DataContracts.Aggregate {
 		/// Makes sure that a value is generated for every day, inserting zero for days without value.
 		/// </summary>
 		public static CountPerDayContract[] AddZeros(this CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit) {
-			return FillValues(query, addZeros, timeUnit, GetCountOrZero);
+			return FillValues(query, null, addZeros, timeUnit, GetCountOrZero);
 		}
 
 		/// <summary>
 		/// Makes sure that a value is generated for every day, inserting previous value for days without value.
 		/// </summary>
-		public static CountPerDayContract[] AddPreviousValues(this CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit) {
-			return FillValues(query, addZeros, timeUnit, GetCountOrPrevious);
+		public static CountPerDayContract[] AddPreviousValues(this CountPerDayContract[] query, DateTime? endDate, bool addZeros, TimeUnit timeUnit) {
+			return FillValues(query, endDate, addZeros, timeUnit, GetCountOrPrevious);
 		}
 	}
 
