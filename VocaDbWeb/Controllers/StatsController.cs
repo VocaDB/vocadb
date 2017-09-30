@@ -25,36 +25,6 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers {
 
-	internal static class StatsExtensions {
-			
-		public static IEnumerable<TResult> CumulativeSelect<TSource, TResult>(this IEnumerable<TSource> sequence, Func<TSource, TResult, TResult> func)
-		{
-			var previous = default(TResult);
-			foreach(var item in sequence)
-			{
-				var res = func(item, previous);
-				previous = res;
-				yield return res;
-			}        
-		}
-
-		public static Tuple<DateTime, int>[] CumulativeSum(this IEnumerable<CountPerDayContract> sequence) {
-			return sequence.CumulativeSelect<CountPerDayContract, Tuple<DateTime, int>>((v, previous) => {
-				return Tuple.Create(v.ToDateTime(), (previous?.Item2 ?? 0) + v.Count);
-			}).ToArray();
-		}
-
-		public static IEnumerable<CountPerDayContract> CumulativeSumContract(this IEnumerable<CountPerDayContract> sequence) {
-			return sequence.CumulativeSelect<CountPerDayContract, CountPerDayContract>((v, previous) => {
-				return new CountPerDayContract(v.ToDateTime(), (previous?.Count ?? 0) + v.Count);
-			});
-		}
-
-		public static Tuple<DateTime, int>[] ToDatePoints(this IEnumerable<CountPerDayContract> sequence) {
-			return sequence.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
-		}
-	}
-
 	class EntryWithIdAndData<T> : IEntryWithIntId {
 		public T Entry { get; set; }
 		public int Id { get; set; }
@@ -944,7 +914,7 @@ namespace VocaDb.Web.Controllers {
 				Data = Series.DateData(ser.Data.CumulativeSumContract())
 			}).ToArray();
 
-			return LowercaseJson(HighchartsHelper.DateLineChart("Hits per song over time", "Songs", "Views", dataSeries));
+			return LowercaseJson(HighchartsHelper.DateLineChart("Views per song over time", "Songs", "Views", dataSeries));
 
 		}
 
@@ -999,7 +969,7 @@ namespace VocaDb.Web.Controllers {
 				var bySong = points.GroupBy(p => p.SongId).Select(p => new EntryWithIdAndData<LocalizedValue> {
 					Id = p.Key,
 					Entry = songs[p.Key],
-					Data = p.Select(d => d.Data).ToArray()
+					Data = p.Select(d => d.Data).ToArray().AddPreviousValues(true, TimeUnit.Day).ToArray()
 				}).OrderByIds(topSongIds);
 				return bySong;
 
@@ -1010,7 +980,7 @@ namespace VocaDb.Web.Controllers {
 				Data = Series.DateData(ser.Data.CumulativeSumContract())
 			}).ToArray();
 
-			return LowercaseJson(HighchartsHelper.DateLineChart("Score per song over time", "Songs", "Views", dataSeries));
+			return LowercaseJson(HighchartsHelper.DateLineChart("Score per song over time", "Songs", "Score", dataSeries));
 
 		}
 

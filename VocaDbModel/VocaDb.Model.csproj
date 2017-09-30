@@ -133,6 +133,7 @@
     <Compile Include="Database\Repositories\NHibernate\TagNHibernateSessionPerRequestRepository.cs" />
     <Compile Include="DataContracts\Activityfeed\ActivityEntryForApiContract.cs" />
     <Compile Include="DataContracts\Aggregate\CountPerDayContract.cs" />
+    <Compile Include="DataContracts\Aggregate\CountPerDayContractExtender.cs" />
     <Compile Include="DataContracts\Albums\AlbumDiscPropertiesContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
