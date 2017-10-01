@@ -1,23 +1,17 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Aggregate;
-using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Database.Queries {
 
 	/// <summary>
-	/// Tests for <see cref="SongAggregateQueries"/>.
+	/// Tests for <see cref="CountPerDayContractExtender"/>.
 	/// </summary>
 	[TestClass]
-	public class SongAggregateQueriesTests {
+	public class CountPerDayContractExtenderTests {
 
-		private SongAggregateQueries queries;
-
-		[TestInitialize]
-		public void SetUp() {
-
-			queries = new SongAggregateQueries(new FakeSongRepository(), new FakePermissionContext());
-
+		private CountPerDayContract[] AddPrevious(TimeUnit timeUnit, params CountPerDayContract[] points) {
+			return points.AddPreviousValues(true, timeUnit);
 		}
 
 		[TestMethod]
@@ -29,7 +23,7 @@ namespace VocaDb.Tests.Database.Queries {
 				new CountPerDayContract(2039, 1, 9, 3939)
 			};
 
-			var result = queries.AddZeros(points, true, TimeUnit.Day);
+			var result = points.AddZeros(true, TimeUnit.Day);
 
 			Assert.AreEqual(9, result.Length, "Number of data points");
 			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
@@ -48,7 +42,7 @@ namespace VocaDb.Tests.Database.Queries {
 				new CountPerDayContract(2040, 1, 1, 3939)
 			};
 
-			var result = queries.AddZeros(points, true, TimeUnit.Month);
+			var result = points.AddZeros(true, TimeUnit.Month);
 
 			Assert.AreEqual(13, result.Length, "Number of data points");
 			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
@@ -63,7 +57,7 @@ namespace VocaDb.Tests.Database.Queries {
 				new CountPerDayContract(2039, 1, 1, 39),
 			};
 
-			var result = queries.AddZeros(points, true, TimeUnit.Day);
+			var result = points.AddZeros(true, TimeUnit.Day);
 
 			Assert.AreEqual(1, result.Length, "Number of data points");
 
@@ -74,7 +68,16 @@ namespace VocaDb.Tests.Database.Queries {
 
 			var points = new CountPerDayContract[0];
 
-			var result = queries.AddZeros(points, true, TimeUnit.Day);
+			var result = points.AddZeros(true, TimeUnit.Day);
+
+			Assert.AreEqual(0, result.Length, "Number of data points");
+
+		}
+
+		[TestMethod]
+		public void AddPrevious_NoPoints() {
+
+			var result = AddPrevious(TimeUnit.Day);
 
 			Assert.AreEqual(0, result.Length, "Number of data points");
 

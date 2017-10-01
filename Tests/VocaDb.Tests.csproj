@@ -140,7 +140,7 @@
     <Compile Include="DatabaseTests\Search\SongSearch\SongSearchDatabaseTests.cs" />
     <Compile Include="DatabaseTests\Search\Tags\TagSearchDatabaseTests.cs" />
     <Compile Include="DatabaseTests\TestDatabase.cs" />
-    <Compile Include="Database\Queries\SongAggregateQueriesTests.cs" />
+    <Compile Include="Database\Queries\CountPerDayContractExtenderTests.cs" />
     <Compile Include="DataContracts\UseCases\ArtistForEditContractTests.cs" />
     <Compile Include="Domain\Albums\AlbumTests.cs" />
     <Compile Include="Domain\Albums\ArtistForAlbumTests.cs" />

@@ -969,7 +969,7 @@ namespace VocaDb.Web.Controllers {
 				var bySong = points.GroupBy(p => p.SongId).Select(p => new EntryWithIdAndData<LocalizedValue> {
 					Id = p.Key,
 					Entry = songs[p.Key],
-					Data = p.Select(d => d.Data).ToArray().AddPreviousValues(DateTime.Now, true, TimeUnit.Day).ToArray()
+					Data = p.Select(d => d.Data).ToArray().AddPreviousValues(true, TimeUnit.Day, DateTime.Now).ToArray()
 				}).OrderByIds(topSongIds);
 				return bySong;
 

@@ -100,7 +100,7 @@ namespace VocaDb.Model.DataContracts.Aggregate {
 		/// <summary>
 		/// Makes sure that a value is generated for every day, inserting previous value for days without value.
 		/// </summary>
-		public static CountPerDayContract[] AddPreviousValues(this CountPerDayContract[] query, DateTime? endDate, bool addZeros, TimeUnit timeUnit) {
+		public static CountPerDayContract[] AddPreviousValues(this CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit, DateTime? endDate = null) {
 			return FillValues(query, endDate, addZeros, timeUnit, GetCountOrPrevious);
 		}
 	}
