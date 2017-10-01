@@ -54,15 +54,15 @@ namespace VocaDb.Model.DataContracts.Aggregate {
 		// https://stackoverflow.com/a/3683217
 		public static IEnumerable<TResult> SelectWithPrevious<TSource, TResult>(this IEnumerable<TSource> source,
 			Func<TSource, TResult, TResult> projection) {
-			var previous = default(TResult);
 			using (var iterator = source.GetEnumerator()) {
-				if (!iterator.MoveNext()) {
+				/*if (!iterator.MoveNext()) {
 					yield break;
 				}
-				var current = iterator.Current;
+				var previous = projection(iterator.Current, default(TResult));
+				yield return previous;*/
+				var previous = default(TResult);
 				while (iterator.MoveNext()) {
-					previous = projection(current, previous);
-					current = iterator.Current;
+					previous = projection(iterator.Current, previous);
 					yield return previous;
 				}
 			}
@@ -73,7 +73,7 @@ namespace VocaDb.Model.DataContracts.Aggregate {
 		}
 
 		private static CountPerDayContract GetCountOrPrevious(Dictionary<DateTime, CountPerDayContract> dict, DateTime date, CountPerDayContract prev) {
-			return dict.ContainsKey(date) ? dict[date] : new CountPerDayContract(date, 0);
+			return dict.ContainsKey(date) ? dict[date] : new CountPerDayContract(date, prev.Count);
 		}
 
 		private static CountPerDayContract[] FillValues(this CountPerDayContract[] query, DateTime? endDate, bool addZeros, TimeUnit timeUnit, Func<Dictionary<DateTime, CountPerDayContract>, DateTime, CountPerDayContract, CountPerDayContract> func) {
