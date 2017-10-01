@@ -1147,7 +1147,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				if (!queryParams.IncludeDisabled) {
-					usersQuery = usersQuery.Where(u => u.Active);
+					usersQuery = usersQuery.Where(u => u.Active && !u.Options.Standalone);
 				}
 
 				if (queryParams.OnlyVerifiedArtists) {
@@ -1332,6 +1332,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (receiver == null)
 					throw new UserNotFoundException();
+
+				if (receiver.Options.Standalone) {
+					throw new UserNotFoundException();
+				}
 
 				var sender = session.Load(contract.Sender.Id);
 

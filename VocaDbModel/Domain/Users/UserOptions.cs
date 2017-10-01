@@ -114,6 +114,8 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual bool ShowChatbox { get; set; }
 
+		public virtual bool Standalone { get; set; }
+
 		/// <summary>
 		/// Custom stylesheet name. If null or empty, default stylesheet is used.
 		/// </summary>
