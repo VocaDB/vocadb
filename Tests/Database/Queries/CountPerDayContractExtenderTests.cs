@@ -60,6 +60,7 @@ namespace VocaDb.Tests.Database.Queries {
 			var result = points.AddZeros(true, TimeUnit.Day);
 
 			Assert.AreEqual(1, result.Length, "Number of data points");
+			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
 
 		}
 
@@ -83,6 +84,34 @@ namespace VocaDb.Tests.Database.Queries {
 
 		}
 
+		[TestMethod]
+		public void AddPrevious_OnePoint() {
+
+			var result = AddPrevious(TimeUnit.Day, new CountPerDayContract(2039, 1, 1, 39));
+
+			Assert.AreEqual(1, result.Length, "Number of data points");
+			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
+
+		}
+
+		[TestMethod]
+		public void AddPrevious_WithGaps() {
+
+			var result = AddPrevious(TimeUnit.Day,
+				new CountPerDayContract(2039, 1, 1, 39),
+				new CountPerDayContract(2039, 1, 3, 393),
+				new CountPerDayContract(2039, 1, 9, 3939)
+			);
+
+			Assert.AreEqual(9, result.Length, "Number of data points");
+			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
+			Assert.AreEqual(1, result[0].Day, "First point day");
+			Assert.AreEqual(39, result[1].Count, "Second point (generated, previous)");
+			Assert.AreEqual(2, result[1].Day, "Second point day");
+			Assert.AreEqual(393, result[2].Count, "Third point (assigned)");
+			Assert.AreEqual(393, result[3].Count, "4th point (generated, previous)");
+
+		}
 	}
 
 }
