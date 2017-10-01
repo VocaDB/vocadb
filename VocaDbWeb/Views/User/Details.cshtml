@@ -379,7 +379,7 @@
 			</a>
 		</h3>
 		<div data-bind="with: comments">
-			@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+			@CommentHelpers.EditableComments(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
 			<!-- ko ifnot: comments().length -->
 			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 			<!-- /ko -->
@@ -406,8 +406,8 @@
 
 <div data-bind="visible: view() == 'Comments', show" class="well well-transparent js-cloak">
 	<div data-bind="with: comments">
-		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)	
-	</div>	
+		@CommentHelpers.EditableComments(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false)
+	</div>
 </div>
 
 <div data-bind="visible: view() == 'Events', show" class="js-cloak">

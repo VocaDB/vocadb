@@ -28,6 +28,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			Location = user.Options.Location;
 			KnownLanguages = user.KnownLanguages.OrderByDescending(l => l.Proficiency).Select(l => new UserKnownLanguageContract(l)).ToArray();
 			OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
+			Standalone = user.Options.Standalone;
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 
@@ -81,6 +82,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public bool PossibleProducerAccount { get; set; }
 
 		public SongListContract[] SongLists { get; set; }
+
+		public bool Standalone { get; set; }
 
 		public int SubmitCount { get; set; }
 
