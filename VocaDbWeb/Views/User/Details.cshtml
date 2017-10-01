@@ -62,7 +62,7 @@
 		@Html.ActionLink(R.Messages, "Messages", null, new { id = "messagesLink" });
 	}
 
-	@if (UserContext.IsLoggedIn && UserContext.LoggedUserId != Model.Id && Login.User.Active) {
+	@if (UserContext.IsLoggedIn && UserContext.LoggedUserId != Model.Id && Login.User.Active && !Model.Standalone) {
 		@Html.ActionLink(R.ComposeMessage, "Messages", null, null, null, "composeTab", new { receiverName = Model.Name }, new { id = "composeMessageLink" });
 	}
 
