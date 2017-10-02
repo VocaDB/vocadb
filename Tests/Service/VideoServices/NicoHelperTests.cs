@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.VideoServices {
@@ -204,6 +205,22 @@ namespace VocaDb.Tests.Service.VideoServices {
 			Assert.AreEqual("MEIKO", result.Artists.First().DefaultName, "artist");
 			Assert.AreEqual("libido / L.A.M.B", result.Title, "title");
 			Assert.AreEqual(SongType.Original, result.SongType, "song type");
+
+		}
+
+		[TestMethod]
+		public void ParseTitle_EmptyParts() {
+
+			// "オリジナル・PV" lead to an empty artist name being searched. 
+			// The database collation matches this with an invalid artist, so empty artist searches are ignored.
+			var result = NicoHelper.ParseTitle("【初音ミク】心闇【オリジナル・PV】", val => {
+				if (string.IsNullOrEmpty(val)) {
+					Assert.Fail("Empty name not allowed");
+				}
+				return CreateEntry.Artist(ArtistType.Producer, name: val);
+			});
+
+			Assert.AreEqual(2, result.Artists.Count, "Number of parsed artists");
 
 		}
 

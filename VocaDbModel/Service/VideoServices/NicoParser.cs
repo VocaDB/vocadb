@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -212,7 +213,7 @@ namespace VocaDb.Model.Service.VideoServices {
 						
 						var parts = content.Split('･', '・', '×');
 
-						foreach (var part in parts) {
+						foreach (var part in parts.Where(p => p != string.Empty)) {
 							
 							a = artistFunc(part);
 
