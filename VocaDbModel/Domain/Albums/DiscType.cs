@@ -19,7 +19,9 @@
 
 		Video		= 32,
 
-		Other		= 64
+		Artbook		= 64,
+
+		Other		= 128
 
 	}
 

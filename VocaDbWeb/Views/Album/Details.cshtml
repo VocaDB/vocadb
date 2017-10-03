@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Domain.Albums
@@ -121,6 +122,15 @@
 						<td>@ViewRes.Album.DetailsStrings.Producers</td>
 						<td class="artistList">
 							@ArtistHelpers.ArtistList(Model.Producers, showRoles: Model.ShowProducerRoles)
+						</td>
+					</tr>
+				}
+				
+				@if (Model.Illustrators != null && Model.Illustrators.Any()) {
+					<tr>
+						<td>Illustrators</td>
+						<td class="artistList">
+							@ArtistHelpers.ArtistList(Model.Illustrators, showRoles: false)
 						</td>
 					</tr>
 				}
@@ -258,61 +268,63 @@
 				</tr>
 			</table>
 		</div>
-
+		
+		@if (Model.Discs.Any() || Model.ContentFocus != ContentFocus.Illustration) {
 		<h3>
 			@Res.Tracklist
 			@if (Model.TotalLength != TimeSpan.Zero) {
 				<small>(@string.Format(Res.TotalLength, DateTimeHelper.FormatMinSec(Model.TotalLength)))</small>
 			}
 		</h3>
-		<div class="tracklist">
-			@foreach (var disc in Model.Discs) {
-				if (Model.Discs.Length > 1) {
-					<h4>
-						@Res.Disc @disc.DiscNumber
-						@if (!string.IsNullOrEmpty(disc.Name)) {
-							@:- @disc.Name
-						}
-						@if (disc.TotalLength != TimeSpan.Zero) {
-							<small>(@DateTimeHelper.FormatMinSec(disc.TotalLength))</small>
-						}
-						@if (disc.IsVideo) {
-							<i class="icon-film" title="@Resources.AlbumDiscMediaTypeNames.Video"></i>
-						}
-					</h4>
-				}
-				<ul>
-					@foreach (var song in disc.Songs) {
-						<li class="tracklist-track">
-							<div class="tracklist-trackNumber">
-								@song.TrackNumber
-							</div>
-							<div class="tracklist-trackTitle">
-								@if (song.Song != null) {
-									@SongHelpers.SongLink(song.Song, Model.Id, tooltip: true)
-									if (song.Song.LengthSeconds > 0) {
-										@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
-									}
-									@:&nbsp;
-									@Helpers.DraftIcon(song.Song.Status)
-									if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified) {
-										@SongHelpers.SongTypeLabel(song.Song.SongType)
-									}
-									@Helpers.PVServiceIcons(song.Song.PVServices)
-									@SongHelpers.RatingIcon(song.Rating ?? SongVoteRating.Nothing)
-									<br />
-									<small class="muted">@song.Song.ArtistString</small>
-								} else {
-									@song.Name
-								}
-							</div>
-						</li>
+			<div class="tracklist">
+				@foreach (var disc in Model.Discs) {
+					if (Model.Discs.Length > 1) {
+						<h4>
+							@Res.Disc @disc.DiscNumber
+							@if (!string.IsNullOrEmpty(disc.Name)) {
+								@:- @disc.Name
+							}
+							@if (disc.TotalLength != TimeSpan.Zero) {
+								<small>(@DateTimeHelper.FormatMinSec(disc.TotalLength))</small>
+							}
+							@if (disc.IsVideo) {
+								<i class="icon-film" title="@Resources.AlbumDiscMediaTypeNames.Video"></i>
+							}
+						</h4>
 					}
-				</ul>
-			}
-		</div>
+					<ul>
+						@foreach (var song in disc.Songs) {
+							<li class="tracklist-track">
+								<div class="tracklist-trackNumber">
+									@song.TrackNumber
+								</div>
+								<div class="tracklist-trackTitle">
+									@if (song.Song != null) {
+										@SongHelpers.SongLink(song.Song, Model.Id, tooltip: true)
+										if (song.Song.LengthSeconds > 0) {
+											@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
+										}
+										@:&nbsp;
+										@Helpers.DraftIcon(song.Song.Status)
+										if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified) {
+											@SongHelpers.SongTypeLabel(song.Song.SongType)
+										}
+										@Helpers.PVServiceIcons(song.Song.PVServices)
+										@SongHelpers.RatingIcon(song.Rating ?? SongVoteRating.Nothing)
+										<br />
+										<small class="muted">@song.Song.ArtistString</small>
+									} else {
+										@song.Name
+									}
+								</div>
+							</li>
+						}
+					</ul>
+				}
+			</div>
+		}
 
-		@if (!Model.Discs.Any()) {
+		@if (!Model.Discs.Any() && Model.ContentFocus != ContentFocus.Illustration) {
 			<p>@Res.NoTracklist</p>
 		}
 

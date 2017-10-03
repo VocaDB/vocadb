@@ -18,6 +18,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Models {
 
@@ -92,13 +93,17 @@ namespace VocaDb.Web.Models {
 			}
 
 			var artists = contract.ArtistLinks;
+			ContentFocus = AlbumHelper.GetContentFocus(DiscType);
 
 			Bands = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Band)).ToArray();
 			Circles = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Circle)).ToArray();
+			Illustrators = ContentFocus == ContentFocus.Illustration ? artists.Where(a => a.Categories.HasFlag(ArtistCategories.Illustrator)).ToArray() : null;
 			Labels = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Label)).ToArray();
 			Producers = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
 			Vocalists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Vocalist)).ToArray();
-			OtherArtists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Other) || a.Categories.HasFlag(ArtistCategories.Animator) || a.Categories.HasFlag(ArtistCategories.Illustrator)).ToArray();
+			OtherArtists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Other) 
+				|| a.Categories.HasFlag(ArtistCategories.Animator) 
+				|| (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
 
 			PrimaryPV = PVHelper.PrimaryPV(PVs);
 
@@ -128,6 +133,8 @@ namespace VocaDb.Web.Models {
 
 		public int CommentCount { get; set; }
 
+		public ContentFocus ContentFocus { get; set; }
+
 		public DateTime CreateDate { get; set; }
 
 		public bool Deleted { get; set; }
@@ -145,6 +152,8 @@ namespace VocaDb.Web.Models {
 		public int Hits { get; set; }
 
 		public int Id { get; set; }
+
+		public ArtistForAlbumContract[] Illustrators { get; set; }
 
 		public string Json {
 			get {

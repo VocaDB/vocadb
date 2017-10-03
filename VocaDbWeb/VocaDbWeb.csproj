@@ -2771,6 +2771,7 @@
     <TypeScriptCompile Include="Scripts\Models\Artists\ArtistRoles.ts" />
     <TypeScriptCompile Include="Scripts\Models\Artists\ArtistType.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\CommonEntryContract.ts" />
+    <TypeScriptCompile Include="Scripts\Models\ContentFocus.ts" />
     <TypeScriptCompile Include="Scripts\Models\EntryStatus.ts" />
     <TypeScriptCompile Include="Scripts\Models\Events\ArtistEventRoles.ts" />
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguagePreference.ts" />

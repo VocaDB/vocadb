@@ -49,12 +49,12 @@ module vdb.helpers {
 		}
 
 		// Checks whether an artist type with possible custom roles is to be considered a producer
-		static isProducerRoleType(artistType: cls.artists.ArtistType, roles: string[] | string, isAnimation: boolean) {
+		static isProducerRoleType(artistType: cls.artists.ArtistType, roles: string[] | string, focus: cls.ContentFocus) {
 
 			const rolesArray = ArtistHelper.getRolesArray(roles);
 
 			if (ArtistHelper.useDefaultRoles(artistType, rolesArray)) {
-				return ArtistHelper.isProducerType(artistType, isAnimation);
+				return ArtistHelper.isProducerType(artistType, focus);
 			}
 
 			let res =
@@ -62,26 +62,30 @@ module vdb.helpers {
 				_.includes(rolesArray, cls.artists.ArtistRoles.Composer) ||
 				_.includes(rolesArray, cls.artists.ArtistRoles.VoiceManipulator);
 
-			if (isAnimation)
+			if (focus === cls.ContentFocus.Video)
 				res = res || _.includes(rolesArray, cls.artists.ArtistRoles.Animator);
+
+			if (focus === cls.ContentFocus.Illustration)
+				res = res || _.includes(rolesArray, cls.artists.ArtistRoles.Illustrator);
 
 			return res;
 
 		}
 
-		static isProducerRole(artist: dc.ArtistContract, roles: string[], isAnimation: boolean) {
+		static isProducerRole(artist: dc.ArtistContract, roles: string[], focus: cls.ContentFocus) {
 
-			return ArtistHelper.isProducerRoleType(artist != null ? cls.artists.ArtistType[artist.artistType] : ArtistType.Unknown, roles, isAnimation);
+			return ArtistHelper.isProducerRoleType(artist != null ? cls.artists.ArtistType[artist.artistType] : ArtistType.Unknown, roles, focus);
 
 		}
 
 		// Whether an artist type with default roles is to be considered a producer
-		static isProducerType(artistType: cls.artists.ArtistType, isAnimation: boolean) {
+		static isProducerType(artistType: cls.artists.ArtistType, focus: cls.ContentFocus) {
 
 			return (artistType === ArtistType.Producer
 				|| artistType === ArtistType.Circle
 				|| artistType === ArtistType.Band
-				|| (artistType === ArtistType.Animator && isAnimation));
+				|| (artistType === ArtistType.Animator && focus === cls.ContentFocus.Video)
+				|| (artistType === ArtistType.Illustrator && focus === cls.ContentFocus.Illustration));
 
 		}
 

@@ -69,6 +69,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Models/Globalization/ContentLanguagePreference.js",
 				"~/Scripts/Models/EntryOptionalFields.js",
 				"~/Scripts/Models/Artists/ArtistRoles.js",
+				"~/Scripts/Models/ContentFocus.js",
 				"~/Scripts/Helpers/ArtistHelper.js", // Depends on ArtistType, ArtistRoles
 				"~/Scripts/Repositories/EntryCommentRepository.js",
 				"~/Scripts/Repositories/BaseRepository.js",

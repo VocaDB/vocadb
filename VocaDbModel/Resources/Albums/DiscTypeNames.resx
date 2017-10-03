@@ -120,6 +120,9 @@
   <data name="Album" xml:space="preserve">
     <value>Original album</value>
   </data>
+  <data name="Artbook" xml:space="preserve">
+    <value>Artbook</value>
+  </data>
   <data name="Compilation" xml:space="preserve">
     <value>Compilation</value>
   </data>

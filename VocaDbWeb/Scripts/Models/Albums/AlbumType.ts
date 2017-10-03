@@ -15,9 +15,11 @@ module vdb.models.albums {
 
 		Compilation	= 16,
 
-		Video		= 32,
+		Video 		= 32,
 
-		Other		= 64
+		Artbook 	= 64,
+
+		Other		= 128
 
 	}
 

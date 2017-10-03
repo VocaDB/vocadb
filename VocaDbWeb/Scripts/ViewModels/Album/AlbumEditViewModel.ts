@@ -459,7 +459,7 @@ module vdb.viewModels {
 				var num = !_.isNumber(this.releaseYear()) || this.releaseYear() == null;
 				return num;
 			});
-			this.validationError_needTracks = ko.computed(() => _.isEmpty(this.tracks()));
+			this.validationError_needTracks = ko.computed(() => this.discType() !== cls.albums.AlbumType.Artbook && _.isEmpty(this.tracks()));
 			this.validationError_needType = ko.computed(() => this.discType() === cls.albums.AlbumType.Unknown);
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 

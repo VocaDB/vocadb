@@ -70,6 +70,15 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Artbook.
+        /// </summary>
+        public static string Artbook {
+            get {
+                return ResourceManager.GetString("Artbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compilation.
         /// </summary>
         public static string Compilation {
