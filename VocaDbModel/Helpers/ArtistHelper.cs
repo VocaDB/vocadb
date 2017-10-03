@@ -29,7 +29,8 @@ namespace VocaDb.Model.Helpers {
 			return (categories.HasFlag(ArtistCategories.Producer) 
 				|| categories.HasFlag(ArtistCategories.Circle) 
 				|| categories.HasFlag(ArtistCategories.Band) 
-				|| (focus == ContentFocus.Video && categories.HasFlag(ArtistCategories.Animator)));
+				|| (focus == ContentFocus.Video && categories.HasFlag(ArtistCategories.Animator))
+				|| (focus == ContentFocus.Illustration && categories.HasFlag(ArtistCategories.Illustrator)));
 
 		}
 
@@ -48,7 +49,7 @@ namespace VocaDb.Model.Helpers {
 			{ ArtistType.Animator, ArtistCategories.Animator },
 			{ ArtistType.Circle, ArtistCategories.Circle },
 			{ ArtistType.Band, ArtistCategories.Band },
-			{ ArtistType.Illustrator, ArtistCategories.Other },
+			{ ArtistType.Illustrator, ArtistCategories.Illustrator },
 			{ ArtistType.Label, ArtistCategories.Label },
 			{ ArtistType.Lyricist, ArtistCategories.Other },
 			{ ArtistType.OtherGroup, ArtistCategories.Circle },
@@ -179,6 +180,9 @@ namespace VocaDb.Model.Helpers {
 
 				if (roles.HasFlag(ArtistRoles.Animator))
 					cat |= ArtistCategories.Animator;
+
+				if (roles.HasFlag(ArtistRoles.Illustrator))
+					cat |= ArtistCategories.Illustrator;
 
 				//if (roles.HasFlag(ArtistRoles.Illustrator) || roles.HasFlag(ArtistRoles.Lyricist) || roles.HasFlag(ArtistRoles.Mastering))
 				//	cat |= ArtistCategories.Other;

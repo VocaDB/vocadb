@@ -26,6 +26,9 @@ namespace VocaDb.Model.Domain.Artists {
 			if (focus == ContentFocus.Video && categories.HasFlag(ArtistCategories.Animator))
 				return 0;
 
+			if (focus == ContentFocus.Illustration && categories.HasFlag(ArtistCategories.Illustrator))
+				return 0;
+
 			// Composer role always appears first
 			if (categories.HasFlag(ArtistCategories.Producer) && artistLink.Roles.HasFlag(ArtistRoles.Composer))
 				return 1;

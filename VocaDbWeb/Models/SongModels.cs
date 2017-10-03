@@ -78,7 +78,8 @@ namespace VocaDb.Web.Models {
 			Producers = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
 			OtherArtists = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Circle)  
 				|| a.Categories.HasFlag(ArtistCategories.Label) 
-				|| a.Categories.HasFlag(ArtistCategories.Other)).ToArray();
+				|| a.Categories.HasFlag(ArtistCategories.Other)
+				|| a.Categories.HasFlag(ArtistCategories.Illustrator)).ToArray();
 
 			var pvs = contract.PVs;
 
