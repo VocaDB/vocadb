@@ -240,4 +240,7 @@
   <data name="HiddenCollections" xml:space="preserve">
     <value>+ {0} hidden</value>
   </data>
+  <data name="Illustrators" xml:space="preserve">
+    <value>Illustrators</value>
+  </data>
 </root>

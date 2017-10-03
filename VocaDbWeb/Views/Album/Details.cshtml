@@ -94,7 +94,7 @@
 					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
 						<meta itemprop="ratingValue" content="@DecimalDot(Model.RatingAverage)" />
 						@Helpers.StarsMeta(Model.RatingAverage, 5)<br />
-						(<span itemprop="ratingCount">@Model.RatingCount</span> @ViewRes.Album.DetailsStrings.Ratings)
+						(<span itemprop="ratingCount">@Model.RatingCount</span> @Res.Ratings)
 					</div>
 				}			
 			</div>
@@ -110,7 +110,7 @@
 
 				@if (Model.Vocalists.Any()) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.Vocalists</td>
+						<td>@Res.Vocalists</td>
 						<td class="artistList">
 							@ArtistHelpers.ArtistList(Model.Vocalists, showType: true)
 						</td>
@@ -119,7 +119,7 @@
 
 				@if (Model.Producers.Any()) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.Producers</td>
+						<td>@Res.Producers</td>
 						<td class="artistList">
 							@ArtistHelpers.ArtistList(Model.Producers, showRoles: Model.ShowProducerRoles)
 						</td>
@@ -128,7 +128,7 @@
 				
 				@if (Model.Illustrators != null && Model.Illustrators.Any()) {
 					<tr>
-						<td>Illustrators</td>
+						<td>@Res.Illustrators</td>
 						<td class="artistList">
 							@ArtistHelpers.ArtistList(Model.Illustrators, showRoles: false)
 						</td>
@@ -146,7 +146,7 @@
 
 				@if (Model.Circles.Any()) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.Circle</td>
+						<td>@Res.Circle</td>
 						<td class="artistList">
 							@ArtistHelpers.ArtistList(Model.Circles)
 						</td>
@@ -155,7 +155,7 @@
 
 				@if (Model.Labels.Any()) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.Labels</td>
+						<td>@Res.Labels</td>
 						<td class="artistList">
 							@ArtistHelpers.ArtistList(Model.Labels)
 						</td>
@@ -164,7 +164,7 @@
 
 				@if (Model.OtherArtists.Any()) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.OtherArtists</td>
+						<td>@Res.OtherArtists</td>
 						<td class="artistList">
 							@ArtistHelpers.ArtistList(Model.OtherArtists, true)
 						</td>
@@ -202,7 +202,7 @@
 
 				@if (Model.ReleaseDate != null && !Model.ReleaseDate.IsEmpty) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.ReleaseDate</td>
+						<td>@Res.ReleaseDate</td>
 						<td>
 							@Model.ReleaseDate.Formatted
 							@if (Model.ReleaseDateIsInThePast) {
@@ -221,7 +221,7 @@
 
 				@if (!string.IsNullOrEmpty(Model.CatNum)) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.CatalogNumber</td>
+						<td>@Res.CatalogNumber</td>
 						<td>
 							@Model.CatNum<br />
 						</td>
@@ -230,7 +230,7 @@
 
 				@if (Model.ReleaseEvent != null) {
 					<tr>
-						<td>@ViewRes.Album.DetailsStrings.ReleaseEvent</td>
+						<td>@Res.ReleaseEvent</td>
 						<td>
 							<a href="@Url.Action("Details", "Event", new { id = Model.ReleaseEvent.Id, slug = Model.ReleaseEvent.UrlSlug })" data-bind="eventToolTip: @Model.ReleaseEvent.Id">@Model.ReleaseEvent.Name</a>
 						</td>

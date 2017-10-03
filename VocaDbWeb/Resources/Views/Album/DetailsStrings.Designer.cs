@@ -178,6 +178,15 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Illustrators.
+        /// </summary>
+        public static string Illustrators {
+            get {
+                return ResourceManager.GetString("Illustrators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Label(s).
         /// </summary>
         public static string Labels {
