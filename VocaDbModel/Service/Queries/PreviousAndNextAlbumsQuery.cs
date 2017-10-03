@@ -59,7 +59,7 @@ namespace VocaDb.Model.Service.Queries {
 			if (album.ArtistString.Default == ArtistHelper.VariousArtists)
 				return null;
 
-			return ArtistHelper.GetProducers(creditableArtists, AlbumHelper.IsAnimation(album.DiscType)).Select(a => a.Artist).ToArray();
+			return ArtistHelper.GetProducers(creditableArtists, AlbumHelper.GetContentFocus(album.DiscType)).Select(a => a.Artist).ToArray();
 
 		}
 

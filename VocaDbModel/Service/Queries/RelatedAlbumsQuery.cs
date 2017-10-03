@@ -28,7 +28,7 @@ namespace VocaDb.Model.Service.Queries {
 
 			}
 
-			return ArtistHelper.GetProducers(creditableArtists, AlbumHelper.IsAnimation(album.DiscType)).Select(a => a.Artist).ToArray();
+			return ArtistHelper.GetProducers(creditableArtists, AlbumHelper.GetContentFocus(album.DiscType)).Select(a => a.Artist).ToArray();
 
 		}
 

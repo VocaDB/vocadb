@@ -882,7 +882,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual void UpdateArtistString() {
 
-			ArtistString = ArtistHelper.GetArtistString(Artists, AlbumHelper.IsAnimation(DiscType));
+			ArtistString = ArtistHelper.GetArtistString(Artists, AlbumHelper.GetContentFocus(DiscType));
 
 		}
 

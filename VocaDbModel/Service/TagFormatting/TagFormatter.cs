@@ -17,8 +17,8 @@ namespace VocaDb.Model.Service.TagFormatting {
 		};		
 
 		private string GetAlbumMainProducersStr(Album album, ContentLanguagePreference languagePreference) {
-			bool isAnimation = AlbumHelper.IsAnimation(album.DiscType);
-			return ArtistHelper.GetArtistString(ArtistHelper.GetProducers(album.Artists.Where(a => !a.IsSupport), isAnimation), isAnimation)[languagePreference];
+			var focus = AlbumHelper.GetContentFocus(album.DiscType);
+			return ArtistHelper.GetArtistString(ArtistHelper.GetProducers(album.Artists.Where(a => !a.IsSupport), focus), focus)[languagePreference];
 		}
 
 		protected override string GetFieldValue(string fieldName, SongInAlbum track, ContentLanguagePreference languagePreference) {
@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service.TagFormatting {
 					return album.ArtistString[languagePreference];
 
 				case "albummaincircle":
-					var circle = ArtistHelper.GetMainCircle(album.Artists.ToArray(), AlbumHelper.IsAnimation(album.DiscType));
+					var circle = ArtistHelper.GetMainCircle(album.Artists.ToArray(), AlbumHelper.GetContentFocus(album.DiscType));
 					return (circle != null ? circle.TranslatedName[languagePreference] : GetAlbumMainProducersStr(album, languagePreference));
 
 				case "catalognum":

@@ -318,6 +318,7 @@
     <Compile Include="Domain\Albums\AlbumDiff.cs" />
     <Compile Include="Domain\Albums\AlbumDiscProperties.cs" />
     <Compile Include="Domain\Albums\AlbumEditableFields.cs" />
+    <Compile Include="Domain\ContentFocus.cs" />
     <Compile Include="Domain\Albums\AlbumHit.cs" />
     <Compile Include="Domain\Albums\AlbumIdentifier.cs" />
     <Compile Include="Domain\Albums\AlbumMergeRecord.cs" />

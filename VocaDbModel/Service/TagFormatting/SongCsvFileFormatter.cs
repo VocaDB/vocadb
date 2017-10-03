@@ -30,7 +30,7 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 		private string GetProducerStr(Song song, ContentLanguagePreference languagePreference) {
 
-			return string.Join(", ", ArtistHelper.GetProducerNames(song.Artists, SongHelper.IsAnimation(song.SongType), languagePreference));
+			return string.Join(", ", ArtistHelper.GetProducerNames(song.Artists, SongHelper.GetContentFocus(song.SongType), languagePreference));
 
 		}
 

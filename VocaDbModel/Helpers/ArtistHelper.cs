@@ -18,18 +18,18 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static bool IsProducerRole(IArtistLinkWithRoles link, bool isAnimation) {
+		public static bool IsProducerRole(IArtistLinkWithRoles link, ContentFocus focus) {
 
-			return IsProducerRole(GetCategories(link), isAnimation);
+			return IsProducerRole(GetCategories(link), focus);
 
 		}
 
-		private static bool IsProducerRole(ArtistCategories categories, bool isAnimation) {
+		private static bool IsProducerRole(ArtistCategories categories, ContentFocus focus) {
 
 			return (categories.HasFlag(ArtistCategories.Producer) 
 				|| categories.HasFlag(ArtistCategories.Circle) 
 				|| categories.HasFlag(ArtistCategories.Band) 
-				|| (isAnimation && categories.HasFlag(ArtistCategories.Animator)));
+				|| (focus == ContentFocus.Video && categories.HasFlag(ArtistCategories.Animator)));
 
 		}
 
@@ -127,9 +127,9 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation) {
+		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus) {
 
-			return new ArtistStringFactory().GetArtistString(artists, isAnimation);
+			return new ArtistStringFactory().GetArtistString(artists, focus);
 
 		}
 
@@ -214,11 +214,11 @@ namespace VocaDb.Model.Helpers {
 		/// Here main circle is defined as the circle in which all the producers of the album belong to.
 		/// </summary>
 		/// <param name="artists">List of artists. Cannot be null.</param>
-		/// <param name="isAnimation">Whether animation producers should be considered as well.</param>
+		/// <param name="focus">Determines types of producers to consider.</param>
 		/// <returns>The main circle, or null if there is none.</returns>
-		public static Artist GetMainCircle(IList<IArtistLinkWithRoles> artists, bool isAnimation) {
+		public static Artist GetMainCircle(IList<IArtistLinkWithRoles> artists, ContentFocus focus) {
 
-			var producers = GetProducers(artists.Where(a => !a.IsSupport), isAnimation).ToArray();
+			var producers = GetProducers(artists.Where(a => !a.IsSupport), focus).ToArray();
 
 			// Find the circle in which all the producers belong to
 			var circle = artists.FirstOrDefault(a => a.Artist != null 
@@ -244,14 +244,14 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static IEnumerable<IArtistLinkWithRoles> GetProducers(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation) {
-			return artists.Where(a => IsProducerRole(a, isAnimation));
+		public static IEnumerable<IArtistLinkWithRoles> GetProducers(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus) {
+			return artists.Where(a => IsProducerRole(a, focus));
 		}
 
-		public static string[] GetProducerNames(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation, ContentLanguagePreference languagePreference) {
+		public static string[] GetProducerNames(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus, ContentLanguagePreference languagePreference) {
 
 			var matched = artists.Where(IsValidCreditableArtist).ToArray();
-			var producers = matched.Where(a => IsProducerRole(a, isAnimation)).ToArray();
+			var producers = matched.Where(a => IsProducerRole(a, focus)).ToArray();
 			var names = producers.Select(p => GetTranslatedName(p).GetBestMatch(languagePreference)).ToArray();
 
 			return names;
