@@ -477,6 +477,7 @@ namespace VocaDb.Web.Controllers {
 			var values = userRepository.HandleQuery(ctx => {
 
 				return ctx.Query<Album>()
+					.WhereNotDeleted()
 					.WhereHasReleaseDate()
 					.OrderByReleaseDate(SortDirection.Ascending)
 					.GroupBy(a => new {
