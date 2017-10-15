@@ -165,6 +165,9 @@
   <data name="FollowedArtistsTab" xml:space="preserve">
     <value>Künstler, denen ich folge:</value>
   </data>
+  <data name="LanguagesIKnow" xml:space="preserve">
+    <value>Sprachen, die ich spreche</value>
+  </data>
   <data name="LastLogin" xml:space="preserve">
     <value>Letzter Login</value>
   </data>
