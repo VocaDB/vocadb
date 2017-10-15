@@ -168,4 +168,7 @@
   <data name="Notifications" xml:space="preserve">
     <value>Benachrichtigungen</value>
   </data>
+  <data name="DeleteSelected" xml:space="preserve">
+    <value>Ausgewälte löschen</value>
+  </data>
 </root>
