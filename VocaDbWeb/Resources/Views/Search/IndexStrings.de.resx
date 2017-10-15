@@ -154,7 +154,7 @@
     <value>Bewertung</value>
   </data>
   <data name="ReleaseDate" xml:space="preserve">
-    <value>Zeige</value>
+    <value>Erscheinungsdatum</value>
   </data>
   <data name="Showing" xml:space="preserve">
     <value>Zeige</value>
@@ -173,5 +173,8 @@
   </data>
   <data name="TypeSomething" xml:space="preserve">
     <value>Schreibe etwas...</value>
+  </data>
+  <data name="ShowingItemsOf" xml:space="preserve">
+    <value>Zeige {0} von {1} Elementen</value>
   </data>
 </root>
