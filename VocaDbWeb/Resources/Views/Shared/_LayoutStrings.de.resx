@@ -183,6 +183,9 @@
   <data name="UnreadMessages" xml:space="preserve">
     <value>Du hast ungelesene Nachrichten</value>
   </data>
+  <data name="UpcomingEvents" xml:space="preserve">
+    <value>Anstehende events</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Willkommen</value>
   </data>
