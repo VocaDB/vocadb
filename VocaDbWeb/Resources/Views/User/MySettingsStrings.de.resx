@@ -123,14 +123,28 @@
   <data name="AccessKey" xml:space="preserve">
     <value>Zugriffsschlüssel</value>
   </data>
+  <data name="AccessKeyDescription" xml:space="preserve">
+    <value>Der Zugriffsschlüssel kann benutzt werden um sich von verschiedenen anderen Diensten einzuloggen, ohne dein eigentliches Passwort anzugeben.
+				Du kannst den Zugriffsschlüssel jederzeit erneuern - dies wird den vorherigen Schlüssel ungültig machen.
+				Halte deinen Zugriffsschlüssel geheim! Wenn du bemerkst, dass dein Schlüssel von jemand anderem herausgefunden wurde, erneuere ihn sofort.</value>
+  </data>
   <data name="AccountSettings" xml:space="preserve">
     <value>Kontoeinstellungen</value>
+  </data>
+  <data name="AddKnownLanguage" xml:space="preserve">
+    <value>Neue Zeile hinzufügen</value>
   </data>
   <data name="AnonymousActivity" xml:space="preserve">
     <value>Mein Benutzername darf in der Liste für die letzten Aktivitäten angezeigt werden.</value>
   </data>
   <data name="Automatic" xml:space="preserve">
     <value>(Automatisch)</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Passwort ändern</value>
+  </data>
+  <data name="ChangePasswordNotice" xml:space="preserve">
+    <value>Du musst das nur ausfüllen wenn du dein Passwort ändern willst</value>
   </data>
   <data name="Connect" xml:space="preserve">
     <value>Verknüpfen</value>
@@ -174,6 +188,9 @@
   <data name="InvalidEmail" xml:space="preserve">
     <value>Bitte überprüfe die E-Mail Adresse.</value>
   </data>
+  <data name="LivePreview" xml:space="preserve">
+    <value>Aktuelle Vorschau</value>
+  </data>
   <data name="Location" xml:space="preserve">
     <value>Ort</value>
   </data>
@@ -198,6 +215,9 @@
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
   </data>
+  <data name="PublicAlbumCollection" xml:space="preserve">
+    <value>Jeder darf sehen welche Alben ich besitze</value>
+  </data>
   <data name="PublicRatings" xml:space="preserve">
     <value>Jeder darf meine Song- und Albenbewertungen einsehen.</value>
   </data>
@@ -213,8 +233,14 @@
   <data name="SettingsUpdated" xml:space="preserve">
     <value>Einstellungen aktualisiert</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Thema</value>
+  </data>
   <data name="UnableToSave" xml:space="preserve">
     <value>Einstellungen konnten nicht gespeichert werden. Bitte behebe die Fehler und versuche es erneut.</value>
+  </data>
+  <data name="UnreadNotificationsToKeep" xml:space="preserve">
+    <value>Maximale Anzahl von ungelesenen Benachrichtigungen</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Benutzername</value>

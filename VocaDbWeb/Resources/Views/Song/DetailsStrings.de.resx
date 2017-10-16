@@ -169,7 +169,7 @@
     <value>Auf externer Seite ansehen</value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value>{0} Favorit(en)</value>
+    <value>{0} Favorisierte</value>
   </data>
   <data name="SearchYoutube" xml:space="preserve">
     <value>Auf Youtube suchen</value>
@@ -245,5 +245,11 @@
   </data>
   <data name="Band" xml:space="preserve">
     <value>Band/Gruppen</value>
+  </data>
+  <data name="SuggestionsTitle" xml:space="preserve">
+    <value>Nutzer die dies mochten, mochten auch</value>
+  </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Erscheinungs Event</value>
   </data>
 </root>

@@ -132,6 +132,9 @@
   <data name="Blog" xml:space="preserve">
     <value>Blog</value>
   </data>
+  <data name="Discussions" xml:space="preserve">
+    <value>Diskussionen</value>
+  </data>
   <data name="FollowUser" xml:space="preserve">
     <value>Benutzer folgen</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="UnreadMessages" xml:space="preserve">
     <value>Du hast ungelesene Nachrichten</value>
+  </data>
+  <data name="UpcomingEvents" xml:space="preserve">
+    <value>Anstehende events</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Willkommen</value>

@@ -132,6 +132,9 @@
   <data name="EntrySong" xml:space="preserve">
     <value>Song</value>
   </data>
+  <data name="EntrySongList" xml:space="preserve">
+    <value>Song Liste</value>
+  </data>
   <data name="Someone" xml:space="preserve">
     <value>Ein Mitwirkender</value>
   </data>
