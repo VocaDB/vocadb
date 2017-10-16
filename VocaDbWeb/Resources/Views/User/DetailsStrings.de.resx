@@ -138,6 +138,9 @@
   <data name="Comments" xml:space="preserve">
     <value>Kommentare</value>
   </data>
+  <data name="CommentsMade" xml:space="preserve">
+    <value>Kommentare</value>
+  </data>
   <data name="ComposeMessage" xml:space="preserve">
     <value>Eine Nachricht verfassen</value>
   </data>
