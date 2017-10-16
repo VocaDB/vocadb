@@ -261,4 +261,7 @@
   <data name="BaDiscTypeExplanation" xml:space="preserve">
     <value>Wenn du unsicher bist, welchen Typen du verwenden willst, versuche herauszufinden wie die Künstler selbst das Album bezeichnen. Für weitere ausführliche Beschreibungen, besuche bitte Wikipedia, Discogs oder Musicbrainz.</value>
   </data>
+  <data name="DiAddRow" xml:space="preserve">
+    <value>Neue Zeile hinzufügen</value>
+  </data>
 </root>
