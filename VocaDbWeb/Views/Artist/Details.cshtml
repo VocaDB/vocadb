@@ -26,9 +26,9 @@
 }
 
 @section Toolbar {
-	<a href="#" id="addToUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@(Model.IsAdded ? "display: none;" : "")">@ViewRes.Artist.DetailsStrings.Follow</a>
-	<span id="removeFromUserSplitBtn" style="@(Model.IsAdded ? "" : "display: none;")">
-		<a href="#" id="removeFromUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Artist.DetailsStrings.Unfollow</a>
+	<a href="#" id="addToUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" data-bind="visible: !hasArtistSubscription(), click: addFollowedArtist">@ViewRes.Artist.DetailsStrings.Follow</a>
+	<span id="removeFromUserSplitBtn" data-bind="visible: hasArtistSubscription">
+		<a href="#" id="removeFromUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" data-bind="click: removeFollowedArtist">@ViewRes.Artist.DetailsStrings.Unfollow</a>
 		<a data-bind="click: customizeSubscriptionDialog.show" href="#" id="customizeSubscription">@R.DetailsStrings.Customize</a>
 	</span>
 
@@ -453,6 +453,7 @@
 
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(artistRepo, @Model.Id,
 				tagUsages,
+				@ToJS(Model.IsAdded),
 				@ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
 				@ToJS(Model.Description.HasEnglish),
 				unknownPictureUrl,

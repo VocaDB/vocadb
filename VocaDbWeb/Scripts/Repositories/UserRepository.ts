@@ -15,6 +15,12 @@ module vdb.repositories {
 			$.post(this.urlMapper.mapRelative("/api/users/current/followedTags/" + tagId), callback);
 		}
 
+		public createArtistSubscription = (artistId: number, callback?: () => void) => {
+
+			$.post(this.mapUrl("/AddArtistForUser"), { artistId: artistId }, callback);
+
+		};
+
 		public createComment = (userId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/users/" + userId + "/profileComments"), contract, callback, 'json');
@@ -25,6 +31,12 @@ module vdb.repositories {
 
 			return $.post(this.urlMapper.mapRelative("/api/users/" + userId + "/messages"), contract, callback, 'json');
 			
+		}
+
+		public deleteArtistSubscription = (artistId: number, callback?: () => void) => {
+
+			$.post(this.mapUrl("/RemoveArtistFromUser"), { artistId: artistId }, callback);
+
 		}
 
 		public deleteComment = (commentId: number, callback: () => void) => {

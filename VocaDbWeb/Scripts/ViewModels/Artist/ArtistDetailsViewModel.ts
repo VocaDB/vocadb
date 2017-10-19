@@ -13,6 +13,7 @@ module vdb.viewModels {
 			repo: rep.ArtistRepository,
 			private artistId: number,
 			tagUsages: dc.tags.TagUsageForApiContract[],
+			hasSubscription: boolean,
 			emailNotifications: boolean, siteNotifications: boolean,
 			hasEnglishDescription: boolean,
 			private unknownPictureUrl: string,
@@ -30,6 +31,7 @@ module vdb.viewModels {
 			latestComments: dc.CommentContract[]) {
 
 			this.lang = cls.globalization.ContentLanguagePreference[languagePreference];
+			this.hasArtistSubscription = ko.observable(hasSubscription);
 			this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(artistId, emailNotifications, siteNotifications, userRepository);
 			this.description = new globalization.EnglishTranslatedStringViewModel((hasEnglishDescription
 				&& (languagePreference === cls.globalization.ContentLanguagePreference.English || languagePreference === cls.globalization.ContentLanguagePreference.Romaji)));
@@ -55,9 +57,18 @@ module vdb.viewModels {
 
 		}
 
+		public addFollowedArtist = () => {
+			this.userRepository.createArtistSubscription(this.artistId, () => {
+				this.hasArtistSubscription(true);
+				this.customizeSubscriptionDialog.notificationsMethod('Site');
+			});
+		}
+
 		public comments: EditableCommentsViewModel;
 
 		customizeSubscriptionDialog: CustomizeArtistSubscriptionViewModel;
+
+		public hasArtistSubscription: KnockoutObservable<boolean>;
 
 		private lang: string;
 
@@ -78,6 +89,14 @@ module vdb.viewModels {
 					this.songsOverTimeChart(vdb.helpers.HighchartsHelper.dateLineChartWithAverage('Songs per month', null, 'Songs', points));					
 				}
 
+			});
+
+		}
+
+		public removeFollowedArtist = () => {
+
+			this.userRepository.deleteArtistSubscription(this.artistId, () => {
+				this.hasArtistSubscription(false);
 			});
 
 		}
