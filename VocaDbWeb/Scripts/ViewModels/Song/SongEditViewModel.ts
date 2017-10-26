@@ -250,7 +250,7 @@ module vdb.viewModels {
 			this.showLyricsNote = ko.computed(() => this.songType() !== cls.songs.SongType.Instrumental && !this.originalVersion.isEmpty());
 
 			this.validationError_duplicateArtist = ko.computed(() => {
-				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport()), a => a.length > 1);
+				return _.some(_.groupBy(this.artistLinks(), (a: ArtistForAlbumEditViewModel) => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport()), a => a.length > 1);
 			});
 
 			this.validationError_needArtist = ko.computed(() => !_.some(this.artistLinks(), a => a.artist != null));

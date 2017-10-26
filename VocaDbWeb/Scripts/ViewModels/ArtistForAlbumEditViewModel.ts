@@ -1,5 +1,5 @@
 
-module vdb.viewModels {
+namespace vdb.viewModels {
 
     import dc = vdb.dataContracts;
     import rep = vdb.repositories;
