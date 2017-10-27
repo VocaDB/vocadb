@@ -22,6 +22,7 @@ namespace VocaDb.Model.Domain.Songs {
 			ThumbUrl = contract.ThumbUrl ?? string.Empty;
 			PublishDate = contract.PublishDate;
 			CreatedBy = contract.CreatedBy;
+			Disabled = contract.Disabled;
 
 		}
 
