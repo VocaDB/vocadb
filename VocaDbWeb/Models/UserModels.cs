@@ -243,7 +243,7 @@ namespace VocaDb.Web.Models {
 
 		public string TwitterName { get; set; }
 
-		[Range(1, 100)]
+		[Range(1, 390)]
 		public int UnreadNotificationsToKeep { get; set; }
 
 		public UpdateUserSettingsContract ToContract() {
