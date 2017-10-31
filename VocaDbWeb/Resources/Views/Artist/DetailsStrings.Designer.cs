@@ -124,6 +124,15 @@ namespace ViewRes.Artist {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Designer of.
+        /// </summary>
+        public static string CharacterDesignerOf {
+            get {
+                return ResourceManager.GetString("CharacterDesignerOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Derived voicebanks.
         /// </summary>
         public static string ChildVoicebanks {

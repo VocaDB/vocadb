@@ -40,6 +40,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 			CharacterDesigner = artist.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.ManyToOne, allowInheritance: true)
 				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 
+			CharacterDesignerOf = artist.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.OneToMany)
+				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
+
 			if (artist.CanHaveChildVoicebanks) {
 
 				var children = artist.ChildVoicebanks
@@ -98,6 +101,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public ArtistContract CharacterDesigner { get; set; }
+
+		[DataMember]
+		public ArtistContract[] CharacterDesignerOf { get; set; }
 
 		[DataMember]
 		public ArtistContract[] ChildVoicebanks { get; set; }
