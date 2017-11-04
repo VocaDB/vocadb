@@ -45,6 +45,10 @@ a.extLink[href^="http://www.hmv.co.jp/"] {
 a.extLink[href^="http://mikumikudance.wikia.com/wiki/"] {
   background: url("/Content/ExtIcons/mmdwiki.png") no-repeat left 50%;
 }
+a.extLink[href^="http://www.pixiv.net/"],
+a.extLink[href^="https://www.pixiv.net/"] {
+  background: url("/Content/ExtIcons/pixiv.png") no-repeat left 50%;
+}
 a.extLink[href^="http://www.play-asia.com/"] {
   background: url("/Content/ExtIcons/playasia.png") no-repeat left 50%;
 }
@@ -84,7 +88,8 @@ a.extLink[href^="http://www.vocallective.net"] {
 a.extLink[href^="http://www.vocaloidotaku.net"] {
   background: url("/Content/ExtIcons/vo.png") no-repeat left 50%;
 }
-a.extLink[href^="http://weibo.com/"] {
+a.extLink[href^="http://weibo.com/"],
+a.extLink[href^="https://www.weibo.com/"] {
   background: url("/Content/ExtIcons/weibo.png") no-repeat left 50%;
 }
 a.extLink[href^="mailto:"] {
@@ -162,9 +167,6 @@ a.extLink[href^="http://chokuhan.nicovideo.jp/"] {
 a.extLink[href^="http://piapro.jp/"],
 a.extLink[href^="http://www.piapro.jp/"] {
   background: url("/Content/ExtIcons/piapro.png") no-repeat left 50%;
-}
-a.extLink[href^="http://www.pixiv.net/"] {
-  background: url("/Content/ExtIcons/pixiv.png") no-repeat left 50%;
 }
 a.extLink[href^="http://books.rakuten.co.jp/"] {
   background: url("/Content/ExtIcons/rakuten.png") no-repeat left 50%;
