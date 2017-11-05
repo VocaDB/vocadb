@@ -35,6 +35,18 @@ namespace VocaDb.Model.Utils {
 			Domain.Artists.ArtistRoles.Other
 		};
 
+		private static readonly DiscType[] DefaultDiscTypes = {
+			DiscType.Unknown,
+			DiscType.Album,
+			DiscType.Single,
+			DiscType.EP,
+			DiscType.SplitAlbum,
+			DiscType.Compilation,
+			DiscType.Video,
+			DiscType.Artbook,
+			DiscType.Other
+		};
+
 		private static readonly SongType[] DefaultSongTypes = {
 			SongType.Unspecified,
 			SongType.Original,
@@ -55,11 +67,7 @@ namespace VocaDb.Model.Utils {
 		private static bool Val(string key, bool def) {
 
 			var val = Val(key);
-			bool boolVal;
-			if (bool.TryParse(val, out boolVal))
-				return boolVal;
-			else
-				return def;
+			return (bool.TryParse(val, out var boolVal)) ? boolVal : def;
 			
 		}
 
@@ -68,7 +76,7 @@ namespace VocaDb.Model.Utils {
 
 				if (albumTypes == null) {
 					var val = Val("AlbumTypes");
-					albumTypes = !string.IsNullOrEmpty(val) ? EnumVal<DiscType>.ParseMultiple(val) : EnumVal<DiscType>.Values;
+					albumTypes = !string.IsNullOrEmpty(val) ? EnumVal<DiscType>.ParseMultiple(val) : DefaultDiscTypes;
 				}
 
 				return albumTypes;
