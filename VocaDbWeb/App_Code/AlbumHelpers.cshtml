@@ -6,6 +6,7 @@
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Images;
+@using VocaDb.Model.Utils
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper AlbumIconLink(AlbumContract album) {
@@ -115,7 +116,7 @@
 }
 
 @helper DiscTypesDropdownKnockout(string binding) {
-	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.ValuesAndNamesStrings, binding)
+	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), binding)
 }
 
 @helper EditCollectionDialog(PurchaseStatus purchaseStatus, MediaType mediaType) {

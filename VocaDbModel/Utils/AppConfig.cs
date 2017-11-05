@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils.Config;
@@ -7,6 +8,7 @@ namespace VocaDb.Model.Utils {
 
 	public static class AppConfig {
 
+		private static DiscType[] albumTypes;
 		private static ArtistType[] artistTypes;
 		private static ArtistRoles[] artistRoles;
 		private static SongType[] songTypes;
@@ -59,6 +61,19 @@ namespace VocaDb.Model.Utils {
 			else
 				return def;
 			
+		}
+
+		public static DiscType[] AlbumTypes {
+			get {
+
+				if (albumTypes == null) {
+					var val = Val("AlbumTypes");
+					albumTypes = !string.IsNullOrEmpty(val) ? EnumVal<DiscType>.ParseMultiple(val) : EnumVal<DiscType>.Values;
+				}
+
+				return albumTypes;
+
+			}
 		}
 
 		public static bool AllowCustomTracks => Val("AllowCustomTracks", false);
