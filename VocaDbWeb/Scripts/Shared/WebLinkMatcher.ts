@@ -17,6 +17,7 @@ module vdb.utils {
             { url: "anidb.net/", desc: "AniDB", cat: c.WebLinkCategory.Reference },
             { url: "www.animate-onlineshop.jp/", desc: "Animate Online Shop", cat: c.WebLinkCategory.Commercial },
             { url: "bandcamp.com", desc: "Bandcamp", cat: c.WebLinkCategory.Commercial },
+			{ url: "beatport.com", desc: "Beatport", cat: c.WebLinkCategory.Commercial },
 			{ url: "bilibili.com/", desc: "Bilibili", cat: c.WebLinkCategory.Official },
             { url: "bilibili.tv/", desc: "Bilibili", cat: c.WebLinkCategory.Official },
 			{ url: "booth.pm/", desc: "Booth", cat: c.WebLinkCategory.Commercial },
@@ -85,12 +86,14 @@ module vdb.utils {
             { url: "www.yesasia.com/", desc: "YesAsia", cat: c.WebLinkCategory.Commercial },
             { url: "youtube.com/channel/", desc: "YouTube Channel", cat: c.WebLinkCategory.Official },
             { url: "youtube.com/user/", desc: "YouTube Channel", cat: c.WebLinkCategory.Official }
-        ];
+		];
+
+		private static isMatch(url: string, item: WebLinkMatcher) {
+			return (url.indexOf(item.url) !== -1);
+		}
 
         public static matchWebLink(url: string): WebLinkMatcher {
-
-            return _.find(WebLinkMatcher.matchers, item => (url.indexOf(item.url) !== -1));
-
+            return _.find(WebLinkMatcher.matchers, item => this.isMatch(url, item));
         }
 
         constructor(public url: string, public desc: string, public cat: vdb.models.WebLinkCategory) {}
