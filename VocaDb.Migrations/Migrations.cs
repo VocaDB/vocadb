@@ -872,7 +872,9 @@ namespace VocaDb.Migrations {
 				.OnColumn("Author").Ascending()
 				.OnColumn("EditEvent").Ascending(); // Include EditEvent column because it's used for filtering
 
-			Delete.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers);
+			if (Schema.Table(TableNames.FavoriteSongsForUsers).Index("IX_FavoriteSongsForUsers_3").Exists()) {
+				Delete.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers);
+			}
 
 			Create.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers)
 				.OnColumn("[User]").Ascending()

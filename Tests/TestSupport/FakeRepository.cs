@@ -139,22 +139,19 @@ namespace VocaDb.Tests.TestSupport {
 
 		private static readonly bool isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || typeof(IEntryWithLongId).IsAssignableFrom(typeof(T));
 
-		protected bool IsEntityWithId {
-			get { return isEntityWithId; }
-		}
+		protected bool IsEntityWithId => isEntityWithId;
 
 		// Get next Id
 		private void AssignNewId(T obj) {
 
-			var entityInt = obj as IEntryWithIntId;
+			switch (obj) {
+				case IEntryWithIntId entityInt when entityInt.Id == 0:
+					entityInt.Id = (Query().Any() ? Query().Max(o => ((IEntryWithIntId)o).Id) + 1 : 1);
+					break;
 
-			if (entityInt != null && entityInt.Id == 0) {
-				entityInt.Id = (Query().Any() ? Query().Max(o => ((IEntryWithIntId)o).Id) + 1 : 1);
-			}
-
-			var entityLong = obj as IEntryWithLongId;
-			if (entityLong != null && entityLong.Id == 0) {
-				entityLong.Id = (Query().Any() ? Query().Max(o => ((IEntryWithLongId)o).Id) + 1 : 1);
+				case IEntryWithLongId entityLong when entityLong.Id == 0:
+					entityLong.Id = (Query().Any() ? Query().Max(o => ((IEntryWithLongId)o).Id) + 1 : 1);
+					break;
 			}
 
 		}
@@ -188,11 +185,12 @@ namespace VocaDb.Tests.TestSupport {
 		/// <returns>Entity Id. Cannot be null (Id can never be null)</returns>
 		protected virtual object GetId(T entity) {
 			
-			if (entity is IEntryWithIntId)
-				return ((IEntryWithIntId)entity).Id;
-
-			if (entity is IEntryWithLongId)
-				return ((IEntryWithLongId)entity).Id;
+			switch (entity) {
+				case IEntryWithIntId id:
+					return id.Id;
+				case IEntryWithLongId longId:
+					return longId.Id;
+			}
 
 			if (typeof(T).GetProperty("Id") == null)
 				throw new NotSupportedException("Id property not found. You need to override GetId method for this repository.");
@@ -208,11 +206,7 @@ namespace VocaDb.Tests.TestSupport {
 			this.querySource = querySource;
 		}
 
-		public IAuditLogger AuditLogger {
-			get {
-				return new FakeAuditLogger();
-			}
-		}
+		public IAuditLogger AuditLogger => new FakeAuditLogger();
 
 		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
 			return new FakeTransaction();
