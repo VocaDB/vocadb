@@ -70,8 +70,8 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "No title element");
 
 			var title = HtmlEntity.DeEntitize(titleElem.Value);
-			var thumb = thumbElem != null ? thumbElem.Value : string.Empty;
-			var author = authorElem != null ? authorElem.Value : string.Empty;
+			var thumb = thumbElem?.Value ?? string.Empty;
+			var author = authorElem?.Value ?? string.Empty;
 			var created = createdElem != null ? (DateTime?)DateTime.Parse(createdElem.Value) : null;
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, 
