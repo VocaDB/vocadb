@@ -65,12 +65,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public PVContract GetPVByUrl(string pvUrl, PVType type = PVType.Original) {
+		public PVContract GetPVByUrl(string pvUrl, PVType type = PVType.Original, bool getTitle = true) {
 
 			if (string.IsNullOrEmpty(pvUrl))
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			var result = pvParser.ParseByUrl(pvUrl, true, permissionContext);
+			var result = pvParser.ParseByUrl(pvUrl, getTitle, permissionContext);
 
 			if (!result.IsOk) {
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = result.Exception.Message });
