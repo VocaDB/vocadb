@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.PVs;
+﻿using System.Linq;
+using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -9,17 +10,21 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public override string GetThumbUrlById(string id) {
 
-			const string url = "http://img.youtube.com/vi/{0}/default.jpg";
+			const string url = "https://img.youtube.com/vi/{0}/default.jpg";
 			return string.Format(url, id);
 
 		}
 
 		public override string GetMaxSizeThumbUrlById(string id) {
 		
-			const string url = "http://img.youtube.com/vi/{0}/hqdefault.jpg";
+			const string url = "https://img.youtube.com/vi/{0}/hqdefault.jpg";
 			return string.Format(url, id);
 	
 		}
 
+		public override string GetUrlById(string id) {
+			var matcher = linkMatchers.First();
+			return string.Format("https://{0}", matcher.MakeLinkFromId(id));
+		}
 	}
 }
