@@ -91,6 +91,7 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray();
 
 				var eventQuery = searchEvents ? ctx.OfType<ReleaseEvent>().Query()
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereHasTags(tagIds, childTags)
 					.WhereStatusIs(status) : null;
@@ -102,6 +103,7 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray() : null;
 
 				var tagQuery = searchTags ? ctx.OfType<Tag>().Query()
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereStatusIs(status) : null;
 
