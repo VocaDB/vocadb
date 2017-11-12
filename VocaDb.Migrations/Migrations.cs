@@ -4,6 +4,13 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_11_12_2100)]
+	public class TagMappingCreateDate : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("CreateDate").OnTable(TableNames.TagMappings).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+		}
+	}
+
 	[Migration(2017_10_01_1400)]
 	public class UserStandAlone : AutoReversingMigration {
 		public override void Up() {
