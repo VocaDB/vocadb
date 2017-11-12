@@ -764,6 +764,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		public void UpdateMappings(TagMappingContract[] mappings) {
 
+			TagMapping CreateMapping(IDatabaseContext<Tag> ctx, TagMappingContract contract) {
+				return ctx.LoadEntry<Tag>(contract.Tag).CreateMapping(contract.SourceTag);
+			}
+
 			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
 			//mappings = mappings.Distinct(m => m.SourceTag).ToArray();
@@ -774,7 +778,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var existing = ctx.Query<TagMapping>().ToList();
 				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.SourceTag == m2.SourceTag && m.Tag.IdEquals(m2.Tag), 
-					create: t => new TagMapping(ctx.NullSafeLoad(t.Tag), t.SourceTag), remove: t => ctx.Delete(t));
+					create: t => CreateMapping(ctx, t), remove: t => ctx.Delete(t));
 
 				ctx.Sync(diff);
 

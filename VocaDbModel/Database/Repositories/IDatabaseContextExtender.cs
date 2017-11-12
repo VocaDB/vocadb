@@ -69,6 +69,10 @@ namespace VocaDb.Model.Database.Repositories {
 			return ctx.OfType<T2>().Load(id);
 		}
 
+		public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithIntId entry) {
+			return ctx.Load<T>(entry.Id);
+		}
+
 		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : IEntryWithIntId {
 			return ctx.OfType<T2>().Query().Where(e => ids.Contains(e.Id));
 		}

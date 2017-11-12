@@ -255,6 +255,16 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
+		public virtual TagMapping CreateMapping(string sourceTag) {
+
+			ParamIs.NotNullOrEmpty(() => sourceTag);
+
+			var mapping = new TagMapping(this, sourceTag);
+			Mappings.Add(mapping);
+			return mapping;
+
+		}
+
 		public virtual TagName CreateName(string val, ContentLanguageSelection language) {
 
 			ParamIs.NotNullOrEmpty(() => val);

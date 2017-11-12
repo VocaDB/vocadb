@@ -8,8 +8,13 @@
 		public TagMapping() { }
 
 		public TagMapping(Tag tag, string sourceTag) {
+
+			ParamIs.NotNull(() => tag);
+			ParamIs.NotNullOrEmpty(() => sourceTag);
+
 			Tag = tag;
 			SourceTag = sourceTag;
+
 		}
 
 		private Tag tag;
