@@ -143,6 +143,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var ssl = WebHelper.IsSSL(Request);
 
 			var queryParams = new AlbumCollectionQueryParams(id, new PagingProperties(start, maxResults, getTotalCount)) {
+				AlbumType = albumTypes,
 				ArtistId = artistId ?? 0,
 				FilterByStatus = purchaseStatuses != null ? purchaseStatuses.Value.ToIndividualSelections().ToArray() : null,
 				TextQuery = textQuery,

@@ -17,6 +17,7 @@ namespace vdb.viewModels.user {
 			};
 
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
+			this.albumType.subscribe(this.updateResultsWithTotalCount);
 			this.artistId.subscribe(this.updateResultsWithTotalCount);
 			this.collectionStatus.subscribe(this.updateResultsWithTotalCount);
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
@@ -32,6 +33,7 @@ namespace vdb.viewModels.user {
 		}
 
 		public advancedFilters = new viewModels.search.AdvancedSearchFilters;
+		public albumType = ko.observable("Unknown");
 		public artistId = ko.observable<number>(null);
 		public artistName = ko.observable("");
 		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
@@ -101,6 +103,7 @@ namespace vdb.viewModels.user {
 
 			this.userRepo.getAlbumCollectionList(this.loggedUserId, pagingProperties, this.languageSelection, this.searchTerm(),
 				this.tagId(),
+				this.albumType(),
 				this.artistId(),
 				this.collectionStatus(),
 				this.releaseEvent.id(),
