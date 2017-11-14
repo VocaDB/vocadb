@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Domain.Users;
+﻿using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.User {
@@ -19,6 +20,8 @@ namespace VocaDb.Model.Service.Search.User {
 		}
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+
+		public DiscType AlbumType { get; set; }
 
 		public int ArtistId { get; set; }
 

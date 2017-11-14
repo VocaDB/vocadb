@@ -39,6 +39,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<T> WhereAlbumHasType<T>(this IQueryable<T> query, DiscType albumType) where T : IAlbumLink {
+
+			if (albumType == DiscType.Unknown)
+				return query;
+
+			return query.Where(m => m.Album.DiscType == albumType);
+
+		}
+
 		public static IQueryable<T> WhereAlbumHasLinkWithCategory<T>(this IQueryable<T> query, WebLinkCategory category) 
 			where T : IAlbumLink {
 
