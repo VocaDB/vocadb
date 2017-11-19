@@ -1874,6 +1874,9 @@
     <Content Include="Content\Styles\base.css">
       <DependentUpon>base.less</DependentUpon>
     </Content>
+    <Content Include="Content\Styles\DarkAngel.css">
+      <DependentUpon>DarkAngel.less</DependentUpon>
+    </Content>
     <Content Include="Content\Styles\discussions.css">
       <DependentUpon>discussions.less</DependentUpon>
     </Content>
@@ -1911,6 +1914,7 @@
     <Content Include="Content\Styles\songlist.css">
       <DependentUpon>songlist.less</DependentUpon>
     </Content>
+    <Content Include="Content\Styles\TetoDB.css" />
     <Content Include="Content\Styles\userpage.css">
       <DependentUpon>userpage.less</DependentUpon>
     </Content>
@@ -3462,6 +3466,7 @@
     <Content Include="Views\Error\IPForbidden.cshtml" />
     <Content Include="Views\Admin\ManageTagMappings.cshtml" />
     <Content Include="Views\Admin\ActiveEdits.cshtml" />
+    <Content Include="Content\Styles\DarkAngel.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
