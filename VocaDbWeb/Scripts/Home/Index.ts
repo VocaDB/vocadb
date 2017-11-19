@@ -9,6 +9,11 @@ $(() => {
 		const urlMapper = new vdb.UrlMapper(vdb.values.baseAddress);
 		const repo = new vdb.repositories.UserRepository(urlMapper);
 		const ratingBar = $("#rating-bar");
+
+		if (!ratingBar.length) {
+			return;
+		}
+
 		const songId = ratingBar.data('song-id');
 		const rating = ratingBar.data('rating');
 		const viewModel = new vdb.viewModels.PVRatingButtonsViewModel(repo, { id: songId, vote: rating }, () => {

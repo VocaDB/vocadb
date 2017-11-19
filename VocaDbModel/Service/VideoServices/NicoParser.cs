@@ -109,7 +109,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public static VideoTitleParseResult GetTitleAPI(string id) {
 
-			var url = string.Format("http://ext.nicovideo.jp/api/getthumbinfo/{0}", id);
+			var url = string.Format("https://ext.nicovideo.jp/api/getthumbinfo/{0}", id);
 
 			var request = WebRequest.Create(url);
 			request.Timeout = 10000;
