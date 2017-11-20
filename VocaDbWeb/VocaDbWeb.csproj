@@ -3036,6 +3036,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerFile.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerNico.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayersFactory.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerSoundCloud.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerViewModel.ts" />

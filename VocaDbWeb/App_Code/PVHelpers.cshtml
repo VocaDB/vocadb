@@ -3,8 +3,10 @@
 @using VocaDb.Model.Service.VideoServices
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper EmbedNico(string pvId, string widthStr, string heightStr) {
-	<iframe width="@widthStr" height="@heightStr" allowfullscreen="allowfullscreen" style="border: none;" src="//embed.nicovideo.jp/watch/@pvId?oldScript=1&noRelatedVideo=0&autoplay=0&defaultNoComment=0&noLinkToNiconico=0&noController=0&noHeader=0&noTags=0&noShare=0"></iframe>	
+@helper EmbedNico(string pvId, string widthStr, string heightStr, string id = null, bool enableApi = false) {
+	<div id="@id">
+		<iframe width="@widthStr" height="@heightStr" allowfullscreen="allowfullscreen" style="border: none;" src="//embed.nicovideo.jp/watch/@pvId?jsapi=@(enableApi ? 1 : 0)&noRelatedVideo=0&autoplay=0&defaultNoComment=0&noLinkToNiconico=0&noController=0&noHeader=0&noTags=0&noShare=0"></iframe>	
+	</div>
 }
 
 @helper EmbedPiapro(PVContract pv, string widthStr, string heightStr) {
@@ -38,7 +40,7 @@
 			break;
 
 		case PVService.NicoNicoDouga:
-			@EmbedNico(pv.PVId, widthStr, heightStr)
+			@EmbedNico(pv.PVId, widthStr, heightStr, id, enableApi)
 			break;
 
 		case PVService.Piapro:
