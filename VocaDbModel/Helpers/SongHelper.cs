@@ -26,7 +26,15 @@ namespace VocaDb.Model.Helpers {
 		}
 
 		public static ContentFocus GetContentFocus(SongType songType) {
-			return (songType == SongType.DramaPV || songType == SongType.MusicPV) ? ContentFocus.Video : ContentFocus.Music;
+			switch (songType) {
+				case SongType.DramaPV:
+				case SongType.MusicPV:
+					return ContentFocus.Video;
+				case SongType.Illustration:
+					return ContentFocus.Illustration;
+				default:
+					return ContentFocus.Music;
+			}
 		}
 
 	}

@@ -36,7 +36,15 @@
 
 		case PVService.File:
 		case PVService.LocalFile:
-			<audio id="@id" controls controlsList="nodownload" src="@pv.Url"></audio>
+			if (LocalFileManager.IsAudio(id)) {
+				<audio id="@id" controls controlsList="nodownload" src="@pv.Url"></audio>
+			} else {				
+				<div style="width: @(widthStr + "px"); height: @(heightStr + "px")">
+					<a href="@pv.Url">
+						<img style="max-width: 100%; max-height: 100%;" src="@pv.Url" alt="@pv.Name" />
+					</a>
+				</div>				
+			}
 			break;
 
 		case PVService.NicoNicoDouga:

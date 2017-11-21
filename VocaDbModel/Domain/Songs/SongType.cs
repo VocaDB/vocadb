@@ -26,7 +26,9 @@ namespace VocaDb.Model.Domain.Songs {
 
 		Live			= 256,
 
-		Other			= 512
+		Illustration	= 512,
+
+		Other			= 1024,
 
 	}
 
@@ -53,7 +55,9 @@ namespace VocaDb.Model.Domain.Songs {
 
 		Live			= 256,
 
-		Other			= 512
+		Illustration	= 512,
+
+		Other           = 1024,
 
 	}
 

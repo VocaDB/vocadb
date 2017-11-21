@@ -20,7 +20,15 @@ namespace VocaDb.Model.Service.VideoServices {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public const int MaxMediaSizeMB = 20;
 		public const int MaxMediaSizeBytes = MaxMediaSizeMB * 1024 * 1024;
-		public static readonly string[] MimeTypes = { "audio/mp3", "audio/mpeg" };
+		public static readonly string[] Extensions = { ".mp3", ".jpg", ".png" };
+		public static readonly string[] MimeTypes = { "audio/mp3", "audio/mpeg", "image/jpeg", "image/png" };
+
+		public static bool IsAudio(string filename) {
+			string[] imageExtensions = { ".jpg", ".png" };
+			var ext = Path.GetExtension(filename);
+			return imageExtensions.Contains(ext);
+		}
+
 
 		public PVContract CreatePVContract(HttpPostedFileBase file, IIdentity user, IUser loggedInUser) {
 
@@ -59,7 +67,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				if (Path.GetDirectoryName(oldFull) != Path.GetDirectoryName(Path.GetTempPath()))
 					throw new InvalidOperationException("File folder doesn't match with temporary folder");
 
-				if (Path.GetExtension(oldFull) != ".mp3")
+				if (!Extensions.Contains(Path.GetExtension(oldFull)))
 					throw new InvalidOperationException("Invalid extension");
 
 				var newId = string.Format("{0}-S{1}-{2}", pv.Author, songId, pv.PVId);

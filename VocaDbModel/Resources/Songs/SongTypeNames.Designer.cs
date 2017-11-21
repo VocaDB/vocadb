@@ -79,6 +79,15 @@ namespace VocaDb.Model.Resources.Songs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Illustration.
+        /// </summary>
+        public static string Illustration {
+            get {
+                return ResourceManager.GetString("Illustration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Instrumental.
         /// </summary>
         public static string Instrumental {
