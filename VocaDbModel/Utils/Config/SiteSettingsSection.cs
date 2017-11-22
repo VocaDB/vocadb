@@ -13,6 +13,9 @@ namespace VocaDb.Model.Utils.Config {
 			set => this["blogUrl"] = value;
 		}
 
+		/// <summary>
+		/// Default stylesheet, if any. Name of the CSS file, for example "TetoDB.css".
+		/// </summary>
 		[ConfigurationProperty("defaultStylesheet", DefaultValue = null)]
 		public string DefaultStylesheet => (string)this["defaultStylesheet"];
 
@@ -52,6 +55,9 @@ namespace VocaDb.Model.Utils.Config {
 			set => this["sitewideAnnouncement"] = value;
 		}
 
+		/// <summary>
+		/// Comma-separated list of stylesheets with extensions, for example "TetoDB.css,DarkAngel.css"
+		/// </summary>
 		[ConfigurationProperty("stylesheets", DefaultValue = null)]
 		public string Stylesheets => (string)this["stylesheets"];
 
