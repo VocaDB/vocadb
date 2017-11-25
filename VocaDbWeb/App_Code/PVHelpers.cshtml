@@ -36,7 +36,7 @@
 
 		case PVService.File:
 		case PVService.LocalFile:
-			if (LocalFileManager.IsAudio(id)) {
+			if (LocalFileManager.IsAudio(pv.Url)) {
 				<audio id="@id" controls controlsList="nodownload" src="@pv.Url"></audio>
 			} else {				
 				<div style="width: @(widthStr + "px"); height: @(heightStr + "px")">
