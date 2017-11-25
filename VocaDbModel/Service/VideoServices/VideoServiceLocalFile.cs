@@ -15,6 +15,8 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		public override string GetThumbUrlById(string id) {
+			if (LocalFileManager.IsImage(id))
+				return GetUrlById(id);
 			return string.Empty;
 		}
 

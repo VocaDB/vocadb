@@ -1,4 +1,6 @@
-﻿
+﻿@light-green: rgb(150, 220, 220);
+@medium-green: #64B7B7;
+
 body {
 	color: rgb(150, 220, 220);
 	background: url(https://static.vocadb.net/img/darkangel.png)top center no-repeat fixed;
@@ -13,12 +15,70 @@ body {
 
 .rightFrame a {
 	color: rgb(100, 180, 250);
+
+	&:visited {
+		color: rgb(80, 160, 220);
+	}
+}
+
+.well-transparent {
+	background-color: rgb(0, 50, 50);
+	background-color: rgba(0, 50, 50, 0.85);
+	border: solid #009696 2px;
+}
+
+.rightFrame .ui-widget-content {
+	color: rgb(150, 220, 220);
+	background: rgb(0, 50, 50);
+}
+
+.rightFrame a.btn {
+	color: black;
+
+	&.btn-inverse, &.btn-info {
+		color: white;
+	}
+}
+
+.rightFrame td {
+	color: #96dcdc;
+}
+
+.rightFrame .ui-widget-header a,
+.rightFrame .ui-widget-content a,
+.ui-dialog.ui-widget-content a {
+	color: rgb(100, 180, 250) !important;
+
+	&:hover {
+		color: #0065B2 !important;
+	}
+}
+
+span.extraInfo, small.extraInfo {
+	color: #79AFAF;
+}
+
+.table-striped tbody > tr:nth-child(odd) > td, .table-striped tbody > tr:nth-child(odd) > th {
+	background-color: rgba(0, 50, 50, 0.85);
+}
+
+.pagination ul > li > a, .pagination ul > li > span {
+	background-color: rgba(0, 50, 50, 0.85);
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+	background-color: @light-green;
+	color: black;
 }
 
 .menu > .well {
 	background-color: rgb(0, 50, 50);
 	background-color: rgba(0, 50, 50, 0.85);
 	border: solid #009696 2px;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+	background-color: rgba(0, 70, 70, 0.85);
 }
 
 .menu a {

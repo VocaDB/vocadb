@@ -24,11 +24,14 @@ namespace VocaDb.Model.Service.VideoServices {
 		public static readonly string[] MimeTypes = { "audio/mp3", "audio/mpeg", "image/jpeg", "image/png" };
 
 		public static bool IsAudio(string filename) {
+			return !IsImage(filename);
+		}
+
+		public static bool IsImage(string filename) {
 			string[] imageExtensions = { ".jpg", ".png" };
 			var ext = Path.GetExtension(filename);
 			return imageExtensions.Contains(ext);
 		}
-
 
 		public PVContract CreatePVContract(HttpPostedFileBase file, IIdentity user, IUser loggedInUser) {
 
