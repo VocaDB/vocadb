@@ -60,6 +60,23 @@ namespace VocaDb.Model.Service.VideoServices {
 			return Path.Combine(AppConfig.StaticContentPath + "\\media\\", pvId);
         }
 
+		private void CreateThumbnail(string oldFull, string pvId, PVForSong pv) {
+
+			if (!IsImage(oldFull))
+				return;
+
+			var path = Path.Combine(AppConfig.StaticContentPath + "\\media-thumb\\", pvId);
+
+			using (var stream = new FileStream(oldFull, FileMode.Open))
+			using (var original = ImageHelper.OpenImage(stream)) {
+				var thumb = ImageHelper.ResizeToFixedSize(original, 560, 315);
+				thumb.Save(path);
+				pv.ThumbUrl = VocaUriBuilder.StaticResource("/media-thumb/" + pvId);
+				pv.Song.UpdateThumbUrl();
+			}
+
+		}
+
 		public void SyncLocalFilePVs(CollectionDiff<PVForSong, PVForSong> diff, int songId) {
 
 			var addedLocalMedia = diff.Added.Where(m => m.Service == PVService.LocalFile);
@@ -85,6 +102,8 @@ namespace VocaDb.Model.Service.VideoServices {
 					var fs = File.GetAccessControl(newFull);
 					fs.SetAccessRuleProtection(false, false);
 					File.SetAccessControl(newFull, fs);
+
+					CreateThumbnail(newFull, newId, pv);
 
 				} catch (IOException x) {
 					log.Error(x, "Unable to move local media file: " + oldFull);
