@@ -405,7 +405,7 @@ module vdb.viewModels {
 
             this.tracks.subscribe(() => this.updateTrackNumbers());
 
-			var songTypes = "Unspecified,Original,Remaster,Remix,Cover,Mashup,Other,Instrumental,Live";
+			var songTypes = "Unspecified,Original,Remaster,Remix,Cover,Mashup,Other,Instrumental,Live,Illustration";
             
             if (data.discType == "Video")
                 songTypes += ",MusicPV,DramaPV";
