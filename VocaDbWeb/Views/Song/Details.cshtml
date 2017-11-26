@@ -148,7 +148,13 @@
 			</tr>
 			@if (Model.Performers.Any()) {
 			<tr>
-				<td>@ViewRes.Song.DetailsStrings.Vocalists</td>
+				<td>
+					@if (Model.SongType != SongType.Illustration) {
+						@ViewRes.Song.DetailsStrings.Vocalists						
+					} else {
+						@:Subject
+					}
+				</td>
 				<td class="artistList">
 					@ArtistHelpers.ArtistList(Model.Performers, showType: true)
 				</td>
@@ -163,6 +169,14 @@
 				</td>
 			</tr>
    }
+			@if (Model.Illustrators != null && Model.Illustrators.Any()) {
+				<tr>
+					<td>Illustrators</td>
+					<td class="artistList">
+						@ArtistHelpers.ArtistList(Model.Illustrators, showRoles: false)
+					</td>
+				</tr>
+			}			
    
 			@if (Model.Bands.Any()) {
 				<tr>

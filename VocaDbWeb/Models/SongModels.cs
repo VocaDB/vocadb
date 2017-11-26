@@ -71,15 +71,17 @@ namespace VocaDb.Web.Models {
 			Tags = contract.Tags;
 			UserRating = contract.UserRating;
 			WebLinks = contract.WebLinks.ToList();
+			ContentFocus = SongHelper.GetContentFocus(SongType);
 
 			Animators = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Animator)).ToArray();
 			Bands = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Band)).ToArray();
+			Illustrators = ContentFocus == ContentFocus.Illustration ? contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Illustrator)).ToArray() : null;
 			Performers = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Vocalist)).ToArray();
 			Producers = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
 			OtherArtists = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Circle)  
 				|| a.Categories.HasFlag(ArtistCategories.Label) 
 				|| a.Categories.HasFlag(ArtistCategories.Other)
-				|| a.Categories.HasFlag(ArtistCategories.Illustrator)).ToArray();
+			    || (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
 
 			var pvs = contract.PVs;
 
@@ -129,6 +131,8 @@ namespace VocaDb.Web.Models {
 
 		public int CommentCount { get; set; }
 
+		public ContentFocus ContentFocus { get; set; }
+
 		public SongDetailsContract Contract { get; set; }
 
 		public DateTime CreateDate { get; set; }
@@ -144,6 +148,8 @@ namespace VocaDb.Web.Models {
 		public int Hits { get; set; }
 
 		public int Id { get; set; }
+
+		public ArtistForSongContract[] Illustrators { get; set; }
 
 		public bool IsFavorited { get; set; }
 
