@@ -45,15 +45,19 @@
 
 <br />
 
-<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
-<div id="newAlbums">
-	@AlbumHelpers.AlbumThumbs(Model.NewAlbums)
-</div>
+@if (Model.NewAlbums.Any()) {
+	<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
+	<div id="newAlbums">
+		@AlbumHelpers.AlbumThumbs(Model.NewAlbums)
+	</div>	
+}
 
-<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
-<div id="topAlbums">
-	@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
-</div>
+@if (Model.TopAlbums.Any()) {
+	<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
+	<div id="topAlbums">
+		@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
+	</div>	
+}
 	
 @if (Model.NewEvents.Any()) {
 	<h3 class="withMargin">@Res.RecentEvents</h3>

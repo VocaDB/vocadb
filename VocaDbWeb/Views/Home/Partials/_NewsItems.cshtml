@@ -1,7 +1,7 @@
 ﻿
 <!-- Binding context: NewsListViewModel -->
 
-<h3 class="withMargin">@ViewRes.Home.IndexStrings.News</h3>
+<h3 class="withMargin" data-bind="visible: !loaded() || posts().length">@ViewRes.Home.IndexStrings.News</h3>
 
 <div data-bind="visible: loaded, foreach: posts" style="display: none;">
 	<div class="message newsEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
