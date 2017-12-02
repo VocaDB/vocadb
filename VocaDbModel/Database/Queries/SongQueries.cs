@@ -201,8 +201,23 @@ namespace VocaDb.Model.Database.Queries {
 			if (config.SpecialTags.Cover == 0)
 				return false;
 
+			// Tag mappings are only supported for nico for now.
+			if (res.Service != PVService.NicoNicoDouga)
+				return false;
+
 			var coverSourceTag = ctx.Query<TagMapping>().FirstOrDefault(t => t.Tag.Id == config.SpecialTags.Cover)?.SourceTag;
 			return coverSourceTag != null && res.Tags.Contains(coverSourceTag, StringComparer.InvariantCultureIgnoreCase);
+
+		}
+
+		private string[] GetUserProfileUrls(VideoUrlParseResult res) {
+			
+			switch (res.Service) {
+				case PVService.NicoNicoDouga:
+					return new[] { NicoHelper.GetUserProfileUrlById(res.AuthorId) };
+				default: 
+					return new string[0];
+			}
 
 		}
 
@@ -222,10 +237,10 @@ namespace VocaDb.Model.Database.Queries {
 
 			if (!string.IsNullOrEmpty(res.AuthorId)) {
 
-				var authorPage = NicoHelper.GetUserProfileUrlById(res.AuthorId);
+				var authorPages = GetUserProfileUrls(res);
 
 				var author = ctx.OfType<ArtistWebLink>().Query()
-					.Where(w => w.Url == authorPage && !w.Entry.Deleted)
+					.Where(w => authorPages.Contains(w.Url) && !w.Entry.Deleted)
 					.Select(w => w.Entry)
 					.FirstOrDefault();
 
@@ -648,10 +663,10 @@ namespace VocaDb.Model.Database.Queries {
 		public NewSongCheckResultContract FindDuplicates(string[] anyName, string[] anyPv, int[] artistIds, bool getPVInfo) {
 
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
-			var firstNicoPV = getPVInfo ? anyPv.FirstOrDefault(p => VideoService.NicoNicoDouga.IsValidFor(p)) : null; // For downloading video info
+			var checkedPV = getPVInfo ? anyPv.FirstOrDefault(p => VideoService.NicoNicoDouga.IsValidFor(p)) ?? anyPv.FirstOrDefault() : null; // For downloading video info
 
 			// Parse PV URLs (gets ID and service for each PV). Metadata will be parsed only for the first Nico PV, and only if it's needed.
-			var pvs = anyPv.Select(p => pvParser.ParseByUrl(p, getPVInfo && p == firstNicoPV, PermissionContext)).Where(p => p.IsOk).ToArray();
+			var pvs = anyPv.Select(p => pvParser.ParseByUrl(p, getPVInfo && p == checkedPV, PermissionContext)).Where(p => p.IsOk).ToArray();
 
 			if (!names.Any() && !pvs.Any())
 				return new NewSongCheckResultContract();
@@ -660,7 +675,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				NicoTitleParseResult titleParseResult = null;
 				if (getPVInfo) {
-					var nicoPV = pvs.FirstOrDefault(p => p.Service == PVService.NicoNicoDouga);
+					var nicoPV = pvs.FirstOrDefault(p => p.Service == PVService.NicoNicoDouga) ?? pvs.FirstOrDefault();
 					(titleParseResult, names, artistIds) = GetPVInfo(ctx, nicoPV, names, artistIds);
 				}
 

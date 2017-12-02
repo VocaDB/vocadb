@@ -444,6 +444,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void FindDuplicates_ParsePVInfo_YouTube() {
+
+			pvParser.MatchedPVs.Add("https://youtu.be/aJKY_EeAeYc",
+				VideoUrlParseResult.CreateOk("https://youtu.be/aJKY_EeAeYc", PVService.Youtube, "aJKY_EeAeYc",
+					VideoTitleParseResult.CreateSuccess("Clean Tears - Ruby", "Clean Tears", "http://tn.smilevideo.jp/smile?i=32347786", 39)));
+
+			var result = CallFindDuplicates(new string[0], new[] { "https://youtu.be/aJKY_EeAeYc" });
+
+			Assert.AreEqual("Clean Tears - Ruby", result.Title, "Title"); // Title from PV
+
+		}
+
+		[TestMethod]
 		public void FindDuplicates_MatchName() {
 
 			var result = CallFindDuplicates(new []{ "Nebula"});
