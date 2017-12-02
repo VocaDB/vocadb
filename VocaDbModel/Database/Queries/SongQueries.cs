@@ -239,13 +239,17 @@ namespace VocaDb.Model.Database.Queries {
 
 				var authorPages = GetUserProfileUrls(res);
 
-				var author = ctx.OfType<ArtistWebLink>().Query()
-					.Where(w => authorPages.Contains(w.Url) && !w.Entry.Deleted)
-					.Select(w => w.Entry)
-					.FirstOrDefault();
+				if (authorPages.Any()) {
 
-				if (author != null && !titleParseResult.Artists.Contains(author))
-					titleParseResult.Artists.Add(author);
+					var author = ctx.OfType<ArtistWebLink>().Query()
+						.Where(w => authorPages.Contains(w.Url) && !w.Entry.Deleted)
+						.Select(w => w.Entry)
+						.FirstOrDefault();
+
+					if (author != null && !titleParseResult.Artists.Contains(author))
+						titleParseResult.Artists.Add(author);
+
+				}
 
 			}
 
