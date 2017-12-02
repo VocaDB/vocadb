@@ -51,7 +51,9 @@ namespace VocaDb.Model.Service.VideoServices {
 			var author = video.Snippet.ChannelTitle;
 			var publishDate = GetPublishDate(video);
 
-			return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, thumbUrl, length, uploadDate: publishDate);
+			var res = VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, thumbUrl, length, uploadDate: publishDate);
+			res.AuthorId = video.Snippet.ChannelId;
+			return res;
 
 		}
 

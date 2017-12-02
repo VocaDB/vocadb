@@ -427,7 +427,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void FindDuplicates_NoMatches_ParsePVInfo() {
 
-			// Note: for now only NNDPV will be used for song metadata parsing.
+			// Note: Nico will be preferred, if available
 			pvParser.MatchedPVs.Add("http://youtu.be/123456567",
 				VideoUrlParseResult.CreateOk("http://youtu.be/123456567", PVService.Youtube, "123456567", 
 				VideoTitleParseResult.CreateSuccess("anger PV", "Tripshots", "testimg2.jpg", 33)));
@@ -446,13 +446,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void FindDuplicates_ParsePVInfo_YouTube() {
 
+			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears"));
+			repository.Save(artist.CreateWebLink("YouTube", "https://www.youtube.com/channel/UCnHGCQ0pwnRFF5Oe2YTeOcA", WebLinkCategory.Official));
+
+			var titleParseResult = VideoTitleParseResult.CreateSuccess("Clean Tears - Ruby", "Clean Tears", "http://tn.smilevideo.jp/smile?i=32347786", 39);
+			titleParseResult.Author = "Clean Tears";
+			titleParseResult.AuthorId = "UCnHGCQ0pwnRFF5Oe2YTeOcA";
+
 			pvParser.MatchedPVs.Add("https://youtu.be/aJKY_EeAeYc",
-				VideoUrlParseResult.CreateOk("https://youtu.be/aJKY_EeAeYc", PVService.Youtube, "aJKY_EeAeYc",
-					VideoTitleParseResult.CreateSuccess("Clean Tears - Ruby", "Clean Tears", "http://tn.smilevideo.jp/smile?i=32347786", 39)));
+				VideoUrlParseResult.CreateOk("https://youtu.be/aJKY_EeAeYc", PVService.Youtube, "aJKY_EeAeYc", titleParseResult));
 
 			var result = CallFindDuplicates(new string[0], new[] { "https://youtu.be/aJKY_EeAeYc" });
 
 			Assert.AreEqual("Clean Tears - Ruby", result.Title, "Title"); // Title from PV
+			Assert.AreEqual(1, result.Artists.Length, "Number of matched artists");
+			Assert.AreEqual(artist.Id, result.Artists[0].Id, "Matched artist");
 
 		}
 

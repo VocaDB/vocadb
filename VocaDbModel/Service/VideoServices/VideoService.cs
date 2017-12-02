@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 
@@ -86,6 +87,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			var matcher = linkMatchers.First();
 			return string.Format("http://{0}", matcher.MakeLinkFromId(id));
 
+		}
+
+		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) {
+			return Enumerable.Empty<string>();
 		}
 
 		public virtual VideoTitleParseResult GetVideoTitle(string id) {

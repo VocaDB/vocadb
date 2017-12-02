@@ -212,12 +212,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		private string[] GetUserProfileUrls(VideoUrlParseResult res) {
 			
-			switch (res.Service) {
-				case PVService.NicoNicoDouga:
-					return new[] { NicoHelper.GetUserProfileUrlById(res.AuthorId) };
-				default: 
-					return new string[0];
-			}
+			var profileUrls = VideoServiceHelper.Services[res.Service]
+				.GetUserProfileUrls(res.AuthorId)
+				.WhereIsNotNullOrEmpty()
+				.ToArray();
+
+			return profileUrls;
 
 		}
 

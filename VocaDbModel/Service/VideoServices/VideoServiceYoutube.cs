@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -26,5 +27,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			var matcher = linkMatchers.First();
 			return string.Format("https://{0}", matcher.MakeLinkFromId(id));
 		}
+
+		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
+			return Enumerable.Repeat("https://www.youtube.com/channel/" + authorId, 1);
+		}
+
 	}
 }

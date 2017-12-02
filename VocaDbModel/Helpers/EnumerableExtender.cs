@@ -75,6 +75,10 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		public static IEnumerable<string> WhereIsNotNullOrEmpty(this IEnumerable<string> enumerable) {
+			return enumerable.Where(s => !string.IsNullOrEmpty(s));
+		}
+
 	}
 
 	public class DistinctPropertyEqualityComparer<T, T2> : IEqualityComparer<T> {

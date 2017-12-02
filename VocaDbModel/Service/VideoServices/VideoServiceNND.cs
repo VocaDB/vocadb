@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -20,6 +22,10 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			return string.Format("http://tn-skr1.smilevideo.jp/smile?i={0}", numId.Value);
 
+		}
+
+		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
+			return Enumerable.Repeat(NicoHelper.GetUserProfileUrlById(authorId), 1);
 		}
 
 	}
