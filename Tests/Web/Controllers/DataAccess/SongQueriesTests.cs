@@ -430,13 +430,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			// Note: for now only NNDPV will be used for song metadata parsing.
 			pvParser.MatchedPVs.Add("http://youtu.be/123456567",
 				VideoUrlParseResult.CreateOk("http://youtu.be/123456567", PVService.Youtube, "123456567", 
-				VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", "testimg2.jpg", 33)));
+				VideoTitleParseResult.CreateSuccess("anger PV", "Tripshots", "testimg2.jpg", 33)));
 
 			pvParser.MatchedPVs.Add("http://www.nicovideo.jp/watch/sm3183550",
 				VideoUrlParseResult.CreateOk("http://www.nicovideo.jp/watch/sm3183550", PVService.NicoNicoDouga, "sm3183550", 
-				VideoTitleParseResult.CreateSuccess("anger", "Tripshots", "testimg.jpg", 39)));
+				VideoTitleParseResult.CreateSuccess("【初音ミク】anger【VOCALOID3DPV】", "Tripshots", "testimg.jpg", 39)));
 
-			var result = CallFindDuplicates(new []{ "【初音ミク】anger PV EDIT【VOCALOID3DPV】"}, new []{ "http://youtu.be/123456567", "http://www.nicovideo.jp/watch/sm3183550" });
+			var result = CallFindDuplicates(new []{ "【初音ミク】anger【VOCALOID3DPV】"}, new []{ "http://youtu.be/123456567", "http://www.nicovideo.jp/watch/sm3183550" });
 
 			Assert.AreEqual("anger", result.Title, "Title"); // Title from PV
 			Assert.AreEqual(0, result.Matches.Length, "No matches");
