@@ -114,7 +114,10 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
-			return Enumerable.Repeat("http://soundcloud.com/" + authorId, 1);
+			return new[] { 
+				string.Format("http://soundcloud.com/{0}", authorId),
+				string.Format("https://soundcloud.com/{0}", authorId),
+			};
 		}
 
 	}
