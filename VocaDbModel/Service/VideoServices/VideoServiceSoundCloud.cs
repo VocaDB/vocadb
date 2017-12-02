@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -31,6 +32,8 @@ namespace VocaDb.Model.Service.VideoServices {
 		class SoundCloudUser {
 
 			public string Avatar_url { get; set; }
+
+			public string Permalink { get; set; }
 
 			public string Username { get; set; }
 
@@ -96,8 +99,9 @@ namespace VocaDb.Model.Service.VideoServices {
 			var uploadDate = result.Created_at;
 
 			var id = new SoundCloudId(trackId, url);
+			var authorId = result.User.Permalink; // Using permalink because that's the public URL
 
-			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: uploadDate));
+			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, authorId, thumbUrl, length, uploadDate: uploadDate));
 
 		}
 
@@ -107,6 +111,10 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			return ParseBySoundCloudUrl(soundCloudUrl);
 
+		}
+
+		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
+			return Enumerable.Repeat("http://soundcloud.com/" + authorId, 1);
 		}
 
 	}

@@ -44,7 +44,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				name = HttpUtility.UrlDecode(uri.Segments.Last());
 			}
 
-			return VideoTitleParseResult.CreateSuccess(name, string.Empty, string.Empty);
+			return VideoTitleParseResult.CreateSuccess(name, string.Empty, string.Empty, string.Empty);
 
 		}
 

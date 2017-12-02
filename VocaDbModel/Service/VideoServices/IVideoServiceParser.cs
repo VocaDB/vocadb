@@ -11,25 +11,22 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	public class VideoTitleParseResult {
 
-		public static VideoTitleParseResult Empty {
-			get {
-				return new VideoTitleParseResult(true, null, null, null, null);
-			}
-		}
+		public static VideoTitleParseResult Empty => new VideoTitleParseResult(true, null, null, null, null, null);
 
 		public static VideoTitleParseResult CreateError(string error) {
-			return new VideoTitleParseResult(false, error, null, null, null);
+			return new VideoTitleParseResult(false, error, null, null, null, null);
 		}
 
-		public static VideoTitleParseResult CreateSuccess(string title, string author, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
-			return new VideoTitleParseResult(true, null, title, author, thumbUrl, length, tags, uploadDate, extendedMetadata);
+		public static VideoTitleParseResult CreateSuccess(string title, string author, string authorId, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
+			return new VideoTitleParseResult(true, null, title, author, authorId, thumbUrl, length, tags, uploadDate, extendedMetadata);
 		}
 
-		public VideoTitleParseResult(bool success, string error, string title, string author, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
+		public VideoTitleParseResult(bool success, string error, string title, string author, string authorId, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
 			Error = error;
 			Success = success;
 			Title = title ?? string.Empty;
 			Author = author ?? string.Empty;
+			AuthorId = authorId ?? string.Empty;
 			ThumbUrl = thumbUrl ?? string.Empty;
 			LengthSeconds = length;
 			UploadDate = uploadDate;

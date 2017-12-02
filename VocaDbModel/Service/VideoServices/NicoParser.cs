@@ -99,8 +99,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (string.IsNullOrEmpty(author))
 				author = GetUserName(userId);
 
-			var result = VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: publishDate);
-			result.AuthorId = userId;
+			var result = VideoTitleParseResult.CreateSuccess(title, author, userId, thumbUrl, length, uploadDate: publishDate);
 			result.Tags = nicoResponse.Thumb.Tags;
 
 			return result;

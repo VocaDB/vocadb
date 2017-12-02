@@ -32,7 +32,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var length = result.Video.Duration;
 			var date = Convert.ToDateTime(result.Video.Upload_Date); // xmlserializer can't parse the date
 
-			return VideoTitleParseResult.CreateSuccess(result.Video.Title, author, thumbUrl, length, uploadDate: date);
+			return VideoTitleParseResult.CreateSuccess(result.Video.Title, author, null, thumbUrl, length, uploadDate: date);
 
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -27,6 +28,10 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public VideoServiceBilibili() 
 			: base(PVService.Bilibili, null, Matchers) {}
+
+		private string GetValue(XDocument doc, string xpath) {
+			return doc.XPathSelectElement(xpath)?.Value;
+		}
 
 		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
 
@@ -64,6 +69,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var titleElem = doc.XPathSelectElement("/info/title");
 			var thumbElem = doc.XPathSelectElement("/info/pic");
 			var authorElem = doc.XPathSelectElement("/info/author");
+			var authorId = GetValue(doc, "/info/mid");
 			var createdElem = doc.XPathSelectElement("/info/created_at");
 
 			if (titleElem == null)
@@ -75,8 +81,15 @@ namespace VocaDb.Model.Service.VideoServices {
 			var created = createdElem != null ? (DateTime?)DateTime.Parse(createdElem.Value) : null;
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, 
-				VideoTitleParseResult.CreateSuccess(title, author, thumb, uploadDate: created));
+				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, uploadDate: created));
 
+		}
+
+		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
+			return new[] {
+				string.Format("http://space.bilibili.com/{0}", authorId),
+				string.Format("http://space.bilibili.com/{0}/#!/index", authorId)
+			};
 		}
 
 	}

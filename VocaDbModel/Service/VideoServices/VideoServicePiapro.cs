@@ -28,7 +28,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			});
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Piapro, result.Id,
-				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, string.Empty, result.LengthSeconds, uploadDate: result.Date, extendedMetadata: piaproMetadata));
+				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, string.Empty, string.Empty, result.LengthSeconds, uploadDate: result.Date, extendedMetadata: piaproMetadata));
 
 		}
 

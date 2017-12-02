@@ -42,7 +42,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var date = ParseDate(doc.DocumentNode.SelectSingleNode("//div[@class = 'audio-main-content-info-heading']")?.InnerText);
 			var author = doc.DocumentNode.SelectSingleNode("//a[@class = 'user-info-icon']")?.Attributes["title"]?.Value; // <a class="user-info-icon" title="ERIGON" href="/erigon">
 
-			return VideoTitleParseResult.CreateSuccess(title, author, thumb, length, uploadDate: date);
+			return VideoTitleParseResult.CreateSuccess(title, author, null, thumb, length, uploadDate: date);
 
 		}
 
