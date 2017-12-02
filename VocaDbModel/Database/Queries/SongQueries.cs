@@ -611,6 +611,25 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private (NicoTitleParseResult titleParseResult, string[] names, int[] artistIds) GetPVInfo(IDatabaseContext ctx, VideoUrlParseResult pv, string[] names, int[] artistIds) {
+
+			var titleParseResult = ParseNicoPV(ctx.OfType<PVForSong>(), pv);
+
+			if (titleParseResult != null && !string.IsNullOrEmpty(titleParseResult.Title))
+				names = names.Concat(new[] { titleParseResult.Title }).ToArray();
+
+			if (titleParseResult != null && titleParseResult.Artists != null && titleParseResult.Artists.Any()) {
+
+				// Append artists from PV
+				var pvArtistIds = titleParseResult.Artists.Select(a => a.Id);
+				artistIds = artistIds != null ? artistIds.Union(pvArtistIds).ToArray() : pvArtistIds.ToArray();
+
+			}
+
+			return (titleParseResult, names, artistIds);
+
+		}
+
 		/// <summary>
 		/// Parse song and find duplicates in the database.
 		/// 
@@ -641,22 +660,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				NicoTitleParseResult titleParseResult = null;
 				if (getPVInfo) {
-
 					var nicoPV = pvs.FirstOrDefault(p => p.Service == PVService.NicoNicoDouga);
-
-					titleParseResult = ParseNicoPV(ctx.OfType<PVForSong>(), nicoPV);
-
-					if (titleParseResult != null && !string.IsNullOrEmpty(titleParseResult.Title))
-						names = names.Concat(new[] { titleParseResult.Title }).ToArray();
-
-					if (titleParseResult != null && titleParseResult.Artists != null && titleParseResult.Artists.Any()) {
-
-						// Append artists from PV
-						var pvArtistIds = titleParseResult.Artists.Select(a => a.Id);
-						artistIds = artistIds != null ? artistIds.Union(pvArtistIds).ToArray() : pvArtistIds.ToArray();
-
-					}
-
+					(titleParseResult, names, artistIds) = GetPVInfo(ctx, nicoPV, names, artistIds);
 				}
 
 				var nameMatches = GetNameMatches(ctx, names, artistIds);
