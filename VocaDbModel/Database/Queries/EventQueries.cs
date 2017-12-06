@@ -483,7 +483,7 @@ namespace VocaDb.Model.Database.Queries {
 						diff.Venue.Set();
 					}
 
-					ev.Series = session.NullSafeLoad<ReleaseEventSeries>(contract.Series);
+					ev.SetSeries(session.NullSafeLoad<ReleaseEventSeries>(contract.Series));
 					ev.Category = contract.Category;
 					ev.CustomName = contract.CustomName;
 					ev.Date = contract.Date;

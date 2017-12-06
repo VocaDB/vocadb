@@ -25,7 +25,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private Album album;
 		private ReleaseEvent existingEvent;
-		private FakeUserMessageMailer mailer = new FakeUserMessageMailer();
+		private readonly FakeUserMessageMailer mailer = new FakeUserMessageMailer();
 		private FakePermissionContext permissionContext;
 		private FakeEventRepository repository;
 		private EventQueries queries;
@@ -37,6 +37,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var result = queries.Update(contract, null);
 			return repository.Load(result.Id);
 
+		}
+
+		private ReleaseEventForEditContract Contract(ReleaseEvent releaseEvent) {
+			return new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, permissionContext, null);
 		}
 
 		private LocalizedStringWithIdContract[] Names(string name) {
@@ -242,6 +246,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			};
 
 			queries.Update(contract, null);
+
+		}
+
+		[TestMethod]
+		public void Update_ChangeToSeriesEvent() {
+
+			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("M3 39"));
+			var contract = Contract(releaseEvent);
+			contract.Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.Default);
+
+			queries.Update(contract, null);
+
+			Assert.AreEqual(series, releaseEvent.Series, "Series");
+			Assert.IsTrue(series.AllEvents.Contains(releaseEvent), "Series contains event");
 
 		}
 

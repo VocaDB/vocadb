@@ -110,7 +110,7 @@ namespace VocaDb.Tests.TestData {
 			int? length = null,
 			string[] tags = null) {
 			
-			return VideoUrlParseResult.CreateOk(url, service, id, VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, tags));
+			return VideoUrlParseResult.CreateOk(url, service, id, VideoTitleParseResult.CreateSuccess(title, author, null, thumbUrl, length, tags));
 
 		}
 
