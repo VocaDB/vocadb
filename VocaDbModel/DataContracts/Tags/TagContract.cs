@@ -13,11 +13,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 		}
 
 		public TagContract(Tag tag, ContentLanguagePreference languagePreference, bool includeAdditionalNames = false)
-			: base(tag, languagePreference, includeAdditionalNames) {
+			: base(tag, languagePreference, includeAdditionalNames, true) {
 
 			ParamIs.NotNull(() => tag);
 
-			CategoryName = tag.CategoryName;
 			CreateDate = tag.CreateDate;
 			Deleted = tag.Deleted;
 			Description = tag.Description.GetBestMatch(languagePreference);
@@ -28,9 +27,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Version = tag.Version;
 
 		}
-
-		[DataMember]
-		public string CategoryName { get; set; }
 
 		/// <summary>
 		/// Date this entry was created.
