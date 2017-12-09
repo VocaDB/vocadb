@@ -56,7 +56,7 @@ namespace VocaDb.Model.Mapping.CustomTypes {
 			get { return true; }
 		}
 
-		public object NullSafeGet(DbDataReader dr, string[] names, ISessionImplementor session, object owner) {
+		public object NullSafeGet(IDataReader dr, string[] names, object owner) {
 
 			var content = dr[names[0]] as string;
 
@@ -67,7 +67,7 @@ namespace VocaDb.Model.Mapping.CustomTypes {
 
 		}
 
-		public void NullSafeSet(DbCommand cmd, object obj, int index, ISessionImplementor session) {
+		public void NullSafeSet(IDbCommand cmd, object obj, int index) {
 
 			var parameter = (DbParameter)cmd.Parameters[index];
 
