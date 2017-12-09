@@ -23,6 +23,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/atwiki.png"));
 	}
 
+	&[href^="http://space.bilibili.tv/"], &[href^="http://www.bilibili.tv/"], &[href^="http://space.bilibili.com/"] {
+		.extLink(url("/Content/ExtIcons/bilibili.png"));
+	}
+
 	&[href*="booth.pm/"] {
 		.extLink(url("/Content/ExtIcons/booth.png"));
 	}
@@ -107,7 +111,7 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/vo.png"));
 	}
 
-	&[href^="http://weibo.com/"], &[href^="https://www.weibo.com/"] {
+	&[href^="http://weibo.com/"], &[href^="http://www.weibo.com/"], &[href^="https://www.weibo.com/"] {
 		.extLink(url("/Content/ExtIcons/weibo.png"));
 	}
 }
@@ -130,10 +134,6 @@ a.extLink[href^="http://www.amiami.com/"] {
 
 a.extLink[href*="bandcamp.com"] {
 	.extLink(url("/Content/ExtIcons/bandcamp.png"));
-}
-
-a.extLink[href^="http://space.bilibili.tv/"], a.extLink[href^="http://www.bilibili.tv/"] {
-	background: url("/Content/ExtIcons/bilibili.png") no-repeat left 50%;
 }
 
 a.extLink[href^="http://www.cdjapan.co.jp/"] {

@@ -20,6 +20,11 @@ a.extLink[href^="http://www5.atwiki.jp/hmiku/"],
 a.extLink[href^="https://www5.atwiki.jp/hmiku/"] {
   background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
 }
+a.extLink[href^="http://space.bilibili.tv/"],
+a.extLink[href^="http://www.bilibili.tv/"],
+a.extLink[href^="http://space.bilibili.com/"] {
+  background: url("/Content/ExtIcons/bilibili.png") no-repeat left 50%;
+}
 a.extLink[href*="booth.pm/"] {
   background: url("/Content/ExtIcons/booth.png") no-repeat left 50%;
 }
@@ -89,6 +94,7 @@ a.extLink[href^="http://www.vocaloidotaku.net"] {
   background: url("/Content/ExtIcons/vo.png") no-repeat left 50%;
 }
 a.extLink[href^="http://weibo.com/"],
+a.extLink[href^="http://www.weibo.com/"],
 a.extLink[href^="https://www.weibo.com/"] {
   background: url("/Content/ExtIcons/weibo.png") no-repeat left 50%;
 }
@@ -106,10 +112,6 @@ a.extLink[href^="http://www.amiami.com/"] {
 }
 a.extLink[href*="bandcamp.com"] {
   background: url("/Content/ExtIcons/bandcamp.png") no-repeat left 50%;
-}
-a.extLink[href^="http://space.bilibili.tv/"],
-a.extLink[href^="http://www.bilibili.tv/"] {
-  background: url("/Content/ExtIcons/bilibili.png") no-repeat left 50%;
 }
 a.extLink[href^="http://www.cdjapan.co.jp/"] {
   background: url("/Content/ExtIcons/cdjapan.png") no-repeat left 50%;
