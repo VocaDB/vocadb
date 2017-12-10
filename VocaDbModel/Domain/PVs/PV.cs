@@ -32,6 +32,7 @@ namespace VocaDb.Model.Domain.PVs {
 			PVId = contract.PVId;
 			PVType = contract.PVType;
 			Name = contract.Name ?? string.Empty;
+			PublishDate = contract.PublishDate;
 			Author = contract.Author ?? string.Empty;
 			ExtendedMetadata = contract.ExtendedMetadata;
 
@@ -64,6 +65,8 @@ namespace VocaDb.Model.Domain.PVs {
 				name = value;
 			}
 		}
+
+		public virtual DateTime? PublishDate { get; set; }
 
 		public virtual string PVId {
 			get => pvId;

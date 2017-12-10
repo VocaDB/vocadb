@@ -145,6 +145,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ParseInteger.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Models/Albums/AlbumType.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/Repositories/AlbumRepository.js",

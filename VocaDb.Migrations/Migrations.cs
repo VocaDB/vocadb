@@ -4,6 +4,14 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2017_12_10_1900)]
+	public class PublishDateForAllPVs : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("PublishDate").OnTable(TableNames.PVsForAlbums).AsDateTime().Nullable();
+			Create.Column("PublishDate").OnTable(TableNames.PVsForEvents).AsDateTime().Nullable();
+		}
+	}
+
 	[Migration(2017_11_12_2100)]
 	public class TagMappingCreateDate : AutoReversingMigration {
 		public override void Up() {

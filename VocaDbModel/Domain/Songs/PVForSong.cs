@@ -20,7 +20,6 @@ namespace VocaDb.Model.Domain.Songs {
 			Song = song;
 			Length = contract.Length;
 			ThumbUrl = contract.ThumbUrl ?? string.Empty;
-			PublishDate = contract.PublishDate;
 			CreatedBy = contract.CreatedBy;
 			Disabled = contract.Disabled;
 
@@ -38,8 +37,6 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Length in seconds.
 		/// </summary>
 		public virtual int Length { get; set; }
-
-		public virtual DateTime? PublishDate { get; set; }
 
 		public virtual Song Song {
 			get => song;

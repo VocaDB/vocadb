@@ -23,6 +23,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			Name = pv.Name;
 			PVId = pv.PVId;
 			Service = pv.Service;
+			PublishDate = pv.PublishDate;
 			PVType = pv.PVType;
 			Url = pv.Url;
 
@@ -47,7 +48,6 @@ namespace VocaDb.Model.DataContracts.PVs {
 			Disabled = pv.Disabled;
 			Length = pv.Length;
 			ThumbUrl = pv.ThumbUrl;
-			PublishDate = pv.PublishDate;
 
 		}
 

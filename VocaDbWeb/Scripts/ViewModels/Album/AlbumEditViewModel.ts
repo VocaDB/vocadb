@@ -251,7 +251,7 @@ module vdb.viewModels {
 			this.discTypeStr = ko.observable(data.discType);
 			this.discType = ko.computed(() => cls.albums.AlbumType[this.discTypeStr()]);
 			this.id = data.id;
-			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, false, false);
+			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, true, false);
 			this.releaseDay = ko.observable(data.originalRelease.releaseDate.day).extend({ parseInteger: {} });
 			this.releaseMonth = ko.observable(data.originalRelease.releaseDate.month).extend({ parseInteger: {} });
 			this.releaseYear = ko.observable(data.originalRelease.releaseDate.year).extend({ parseInteger: {} });
