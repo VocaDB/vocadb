@@ -218,6 +218,7 @@ namespace VocaDb.Web.Models {
 		// Note: no validation here because of legacy usernames
 		[Display(Name = "Username")]
 		[Required]
+		[StringLength(100, MinimumLength = 3)]
 		public string Username { get; set; }
 
 		[FromJson]
