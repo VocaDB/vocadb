@@ -83,6 +83,10 @@ a.extLink[href^="https://utaitedb.net/"] {
 a.extLink[href^="http://utaite.wikia.com/wiki/"] {
   background: url("/Content/ExtIcons/utaitewikia.png") no-repeat left 50%;
 }
+a.extLink[href^="http://vgmdb.net/"],
+a.extLink[href^="https://vgmdb.net/"] {
+  background: url("/Content/ExtIcons/vgmdb.png") no-repeat left 50%;
+}
 a.extLink[href^="http://vk.com/"],
 a.extLink[href^="https://vk.com/"] {
   background: url("/Content/ExtIcons/vk.png") no-repeat left 50%;
@@ -188,9 +192,6 @@ a.extLink[href*="twitter.com/"] {
 }
 a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"] {
   background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
-}
-a.extLink[href^="http://vgmdb.net/"] {
-  background: url("/Content/ExtIcons/vgmdb.png") no-repeat left 50%;
 }
 a.extLink[href^="http://vimeo.com/"] {
   background: url("/Content/ExtIcons/vimeo.png") no-repeat left 50%;

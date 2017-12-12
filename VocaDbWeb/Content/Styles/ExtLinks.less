@@ -99,6 +99,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/utaitewikia.png"));
 	}
 
+	&[href^="http://vgmdb.net/"], &[href^="https://vgmdb.net/"] {
+		background: url("/Content/ExtIcons/vgmdb.png") no-repeat left 50%;
+	}
+
 	&[href^="http://vk.com/"], &[href^="https://vk.com/"] {
 		.extLink(url("/Content/ExtIcons/vk.png"));
 	}
@@ -230,10 +234,6 @@ a.extLink[href*="twitter.com/"] {
 
 a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"] {
 	background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
-}
-
-a.extLink[href^="http://vgmdb.net/"] {
-	background: url("/Content/ExtIcons/vgmdb.png") no-repeat left 50%;
 }
 
 a.extLink[href^="http://vimeo.com/"] {
