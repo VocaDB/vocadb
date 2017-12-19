@@ -129,4 +129,15 @@ module vdb.tests.viewModels {
 
     });
 
+	QUnit.test("validationError_duplicateArtist support", () => {
+
+		const target = createViewModel();
+
+		const artist = { id: 39, name: 'Clean Tears' };
+		target.artistLinks.push(new vm.ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: false, roles: '' }));
+		target.artistLinks.push(new vm.ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: true, roles: '' }));
+
+		equal(target.validationError_duplicateArtist(), true, "validationError_duplicateArtist");
+
+	});
 }
