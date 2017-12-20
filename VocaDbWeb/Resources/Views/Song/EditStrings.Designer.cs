@@ -358,7 +358,7 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro and Bilibili..
+        ///   Looks up a localized string similar to Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro, Bilibili and Creofuga..
         /// </summary>
         public static string PvSupportedServices {
             get {
