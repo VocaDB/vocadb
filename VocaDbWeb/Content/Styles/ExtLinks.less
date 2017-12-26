@@ -55,6 +55,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/hmv.png"));
 	}
 
+	&[href^="http://shop.melonbooks.co.jp/"], &[href^="https://www.melonbooks.co.jp/"] {
+		.extLink(url("/Content/ExtIcons/melonbooks.png"));
+	}
+
 	&[href^="http://mikumikudance.wikia.com/wiki/"] {
 		.extLink(url("/Content/ExtIcons/mmdwiki.png"));
 	}
@@ -174,10 +178,6 @@ a.extLink[href*="last.fm/"] {
 
 a.extLink[href^="http://listen.jp/store/"] {
 	background: url("/Content/ExtIcons/listenjapan.png") no-repeat left 50%;
-}
-
-a.extLink[href^="http://shop.melonbooks.co.jp/"] {
-	background: url("/Content/ExtIcons/melonbooks.png") no-repeat left 50%;
 }
 
 a.extLink[href^="http://mikudb.com/"] {

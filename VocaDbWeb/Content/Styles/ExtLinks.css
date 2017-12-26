@@ -47,6 +47,10 @@ a.extLink[href^="https://play.google.com/"] {
 a.extLink[href^="http://www.hmv.co.jp/"] {
   background: url("/Content/ExtIcons/hmv.png") no-repeat left 50%;
 }
+a.extLink[href^="http://shop.melonbooks.co.jp/"],
+a.extLink[href^="https://www.melonbooks.co.jp/"] {
+  background: url("/Content/ExtIcons/melonbooks.png") no-repeat left 50%;
+}
 a.extLink[href^="http://mikumikudance.wikia.com/wiki/"] {
   background: url("/Content/ExtIcons/mmdwiki.png") no-repeat left 50%;
 }
@@ -144,9 +148,6 @@ a.extLink[href*="last.fm/"] {
 }
 a.extLink[href^="http://listen.jp/store/"] {
   background: url("/Content/ExtIcons/listenjapan.png") no-repeat left 50%;
-}
-a.extLink[href^="http://shop.melonbooks.co.jp/"] {
-  background: url("/Content/ExtIcons/melonbooks.png") no-repeat left 50%;
 }
 a.extLink[href^="http://mikudb.com/"] {
   background: url("/Content/ExtIcons/mikudb.png") no-repeat left 50%;
