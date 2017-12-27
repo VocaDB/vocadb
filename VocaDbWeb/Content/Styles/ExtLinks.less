@@ -111,6 +111,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/vk.png"));
 	}
 
+	&[href^="http://vocadb.net/"], &[href^="https://vocadb.net/"] {
+		.extLink(url("/Content/ExtIcons/vocadb.png"));
+	}
+
 	&[href^="http://www.vocallective.net"] {
 		.extLink(url("/Content/ExtIcons/vocallective.png"));
 	}
@@ -238,10 +242,6 @@ a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"] {
 
 a.extLink[href^="http://vimeo.com/"] {
 	background: url("/Content/ExtIcons/vimeo.png") no-repeat left 50%;
-}
-
-a.extLink[href^="http://vocadb.net/"] {
-    .extLink(url("/Content/ExtIcons/vocadb.png"));
 }
 
 a.extLink[href^="http://shop.vocaloidstore.com/"] {
