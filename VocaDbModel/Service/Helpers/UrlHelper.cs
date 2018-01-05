@@ -41,6 +41,24 @@ namespace VocaDb.Model.Service.Helpers {
 			return (new ExtSites.AffiliateLinkGenerator(new VdbConfigManager())).GenerateAffiliateLink(link);
 
 		}
+		
+		/// <summary>
+		/// Removes http:// and https:// from the beginning of an URL.
+		/// </summary>
+		public static string RemoveScheme(string url) {
+
+			if (string.IsNullOrEmpty(url))
+				return url;
+
+			if (url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase)) {
+				return url.Substring(7);
+			} else if (url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase)) {
+				return url.Substring(8);
+			}
+
+			return url;
+
+		}
 
 	}
 

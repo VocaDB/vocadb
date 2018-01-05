@@ -142,6 +142,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void FindDuplicates_DifferentScheme() {
+
+			var result = queries.FindDuplicates(new string[0], "https://tripshots.net");
+
+			Assert.IsNotNull(result, "result");
+			Assert.AreEqual(1, result.Length, "Number of results");
+			Assert.AreEqual(artist.Id, result[0].Id, "Matched artist");
+
+		}
+
+		[TestMethod]
 		public void FindDuplicates_IgnoreNullsAndEmpty() {
 
 			var result = queries.FindDuplicates(new[] { null, string.Empty }, string.Empty);
@@ -159,6 +170,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(0, result.Length, "Number of results");
+
+		}
+
+		[TestMethod]
+		public void FindDuplicates_Link_IgnoreInvalidLink() {
+
+			var result = queries.FindDuplicates(new string[0], "Miku!");
+			Assert.AreEqual(0, result?.Length, "Number of results");
 
 		}
 
