@@ -162,6 +162,9 @@
   <data name="Email" xml:space="preserve">
     <value>correo electrónico</value>
   </data>
+	<data name="Events" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
   <data name="FavoriteSongsTab" xml:space="preserve">
     <value>Canciones gustadas</value>
   </data>
