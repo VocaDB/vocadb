@@ -433,7 +433,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
 
-					new FollowedArtistNotifier().SendNotifications(session, ev, ev.Artists.Where(a => a != null).Select(a => a.Artist), PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);
+					new FollowedArtistNotifier().SendNotifications(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);
 
 				} else {
 

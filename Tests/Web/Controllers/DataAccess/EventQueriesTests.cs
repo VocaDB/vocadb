@@ -3,9 +3,11 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
@@ -152,6 +154,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsTrue(result.Names.HasName("コミケ 39"), "Found Japanese name");
 			Assert.AreEqual("Comiket 39", result.TranslatedName.English, "English name");
 			Assert.AreEqual("コミケ 39", result.TranslatedName.Japanese, "Japanese name");
+
+		}
+
+		[TestMethod]
+		public void Create_WithCustomArtists() {
+			
+			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
+			var contract = new ReleaseEventForEditContract {
+				Description = string.Empty,
+				SeriesSuffix = string.Empty,
+				Artists = new [] {
+					new ArtistForEventContract { Artist = new ArtistContract(artist, ContentLanguagePreference.Default) },
+					new ArtistForEventContract { Name = "Miku!" }
+				}
+			};
+
+			CallUpdate(contract);
 
 		}
 
