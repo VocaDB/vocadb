@@ -1824,6 +1824,7 @@
     <Content Include="Content\ExtIcons\spotify.png" />
     <Content Include="Content\ExtIcons\three.png" />
     <Content Include="Content\ExtIcons\tora.png" />
+    <Content Include="Content\ExtIcons\touhouwiki.png" />
     <Content Include="Content\ExtIcons\towerrecords.png" />
     <Content Include="Content\ExtIcons\tsutaya.png" />
     <Content Include="Content\ExtIcons\tumblr.png" />
