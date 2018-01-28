@@ -74,7 +74,7 @@ a.extLink[href^="https://play.spotify.com/"] {
 a.extLink[href^="http://www.lagoa.jp/"] {
   background: url("/Content/ExtIcons/three.png") no-repeat left 50%;
 }
-a.extLink[href*="http://sonicwire.com"] {
+a.extLink[href^="http://sonicwire.com"] {
   background: url("/Content/ExtIcons/sonicwire.png") no-repeat left 50%;
 }
 a.extLink[href^="https://item.taobao.com"] {
@@ -242,4 +242,8 @@ a.extLink[href^="http://youtu.be/"] {
 }
 a.extLink[href^="http://vocaloid.wikia.com/wiki/"] {
   background: url("/Content/ExtIcons/vocawiki.png") no-repeat left 50%;
+}
+a.extLink[href^="http://cevio.wikia.com/wiki/"],
+a.extLink[href^="http://alterego.wikia.com/wiki/"] {
+  background: url("/Content/ExtIcons/wikia.png") no-repeat left 50%;
 }
