@@ -23,7 +23,7 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/atwiki.png"));
 	}
 
-	&[href^="http://space.bilibili.tv/"], &[href^="http://www.bilibili.tv/"], &[href^="http://space.bilibili.com/"] {
+	&[href^="http://space.bilibili.tv/"], &[href^="http://www.bilibili.tv/"], &[href^="http://space.bilibili.com/"], &[href^="https://space.bilibili.tv/"], &[href^="https://www.bilibili.tv/"], &[href^="https://space.bilibili.com/"] {
 		.extLink(url("/Content/ExtIcons/bilibili.png"));
 	}
 
@@ -55,6 +55,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/hmv.png"));
 	}
 
+	&[href^="https://www.instagram.com/"] {
+		.extLink(url("/Content/ExtIcons/instagram.png"));
+	}
+	
 	&[href^="http://shop.melonbooks.co.jp/"], &[href^="https://www.melonbooks.co.jp/"] {
 		.extLink(url("/Content/ExtIcons/melonbooks.png"));
 	}
@@ -77,6 +81,14 @@ a.extLink {
 
 	&[href^="http://www.lagoa.jp/"] {
 		.extLink(url("/Content/ExtIcons/three.png"));
+	}
+	
+	&[href^="http://sonicwire.com"] {
+		.extLink(url("/Content/ExtIcons/sonicwire.png"));
+	}
+	
+	&[href^="https://item.taobao.com"] {
+		.extLink(url("/Content/ExtIcons/itemtaobao.png"));
 	}
 
 	&[href^="http://www.toranoana.jp/"], &[href^="https://www.toranoana.jp/"] {
@@ -156,7 +168,7 @@ a.extLink[href^="http://www.cdjapan.co.jp/"] {
 	background: url("/Content/ExtIcons/cdjapan.png") no-repeat left 50%;
 }
 
-a.extLink[href^="http://www.crypton.co.jp/"] {
+a.extLink[href^="http://www.crypton.co.jp/"], a.extLink[href^="https://ec.crypton.co.jp/"] {
 	background: url("/Content/ExtIcons/cfm.png") no-repeat left 50%;
 }
 
@@ -170,6 +182,10 @@ a.extLink[href^="http://exittunes.com/"] {
 
 a.extLink[href*="www.facebook.com/"] {
 	background: url("/Content/ExtIcons/facebook.png") no-repeat left 50%;
+}
+
+a.extLink[href^="https://plus.google.com/"] {
+	background: url("/Content/ExtIcons/google_plus.png") no-repeat left 50%;
 }
 
 a.extLink[href^="http://itunes.apple.com/"], a.extLink[href^="https://itunes.apple.com/"] {
