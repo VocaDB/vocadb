@@ -47,6 +47,9 @@ a.extLink[href^="https://play.google.com/"] {
 a.extLink[href^="http://www.hmv.co.jp/"] {
   background: url("/Content/ExtIcons/hmv.png") no-repeat left 50%;
 }
+a.extLink[href^="https://www.instagram.com/"] {
+  background: url("/Content/ExtIcons/instagram.png") no-repeat left 50%;
+}
 a.extLink[href^="http://shop.melonbooks.co.jp/"],
 a.extLink[href^="https://www.melonbooks.co.jp/"] {
   background: url("/Content/ExtIcons/melonbooks.png") no-repeat left 50%;
