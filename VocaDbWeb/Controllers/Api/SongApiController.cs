@@ -242,6 +242,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="since">Allow only entries that have been created at most this many hours ago. By default there is no filtering.</param>
 		/// <param name="minScore">Minimum rating score. Optional.</param>
 		/// <param name="userCollectionId">Filter by user's rated songs. By default there is no filtering.</param>
+		/// <param name="releaseEventId">Filter by release event. By default there is no filtering.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
 		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
@@ -277,6 +278,7 @@ namespace VocaDb.Web.Controllers.Api {
 			int? since = null,
 			int? minScore = null,
 			int? userCollectionId = null,
+			int? releaseEventId = null,
 			EntryStatus? status = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -304,6 +306,7 @@ namespace VocaDb.Web.Controllers.Api {
 				MinScore = minScore ?? 0,
 				PVServices = pvServices,
 				UserCollectionId = userCollectionId ?? 0,
+				ReleaseEventId = releaseEventId ?? 0,
 				AdvancedFilters = advancedFilters,
 				LanguagePreference = lang
 			};

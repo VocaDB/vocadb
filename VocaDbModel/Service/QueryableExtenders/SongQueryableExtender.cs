@@ -417,6 +417,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> WhereReleaseEventIs(this IQueryable<Song> query, int eventId) {
+
+			if (eventId == 0)
+				return query;
+
+			return query.Where(s => s.ReleaseEvent.Id == eventId);
+
+		}
+
 	}
 
 	public enum SongVocalistSelection {

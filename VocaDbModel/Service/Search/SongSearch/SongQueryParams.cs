@@ -89,6 +89,12 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		public PVServices? PVServices { get; set; }
 
 		/// <summary>
+		/// Filter by release event.
+		/// 0 = no filter.
+		/// </summary>
+		public int ReleaseEventId { get; set; }
+
+		/// <summary>
 		/// List of song types that should be searched for. Cannot be null.
 		/// If empty, all song types are included.
 		/// </summary>
