@@ -230,6 +230,9 @@ a.extLink[href^="http://vimeo.com/"] {
 a.extLink[href^="http://shop.vocaloidstore.com/"] {
   background: url("/Content/ExtIcons/vocastore.png") no-repeat left 50%;
 }
+a.extLink[href^="https://weibo.com/"] {
+  background: url("/Content/ExtIcons/weibo.png") no-repeat left 50%;
+}
 a.extLink[href^="http://www.yesasia.com/"] {
   background: url("/Content/ExtIcons/yesasia.png") no-repeat left 50%;
 }
