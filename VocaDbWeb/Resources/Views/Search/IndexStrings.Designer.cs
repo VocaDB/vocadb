@@ -259,6 +259,15 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Release event.
+        /// </summary>
+        public static string ReleaseEvent {
+            get {
+                return ResourceManager.GetString("ReleaseEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Showing {0} items of {1}.
         /// </summary>
         public static string ShowingItemsOf {

@@ -4,6 +4,8 @@
 @using Res = ViewRes.Search.IndexStrings;
 
 <!-- Song search options -->
+<!-- Viewmodel: SongSearchViewModel -->
+
 <div data-bind="visible: showSongSearch, with: songSearchViewModel">
 	<div class="control-group">
 		<div class="control-label">@Res.SongType</div>
@@ -43,7 +45,14 @@
 			<input type="number" data-bind="textInput: minScore" maxlength="10" min="0" class="input-small" />
 		</div>
 	</div>
-	
+
+	<div class="control-group">
+		<div class="control-label">@Res.ReleaseEvent</div>
+		<div class="controls">
+			@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent")
+		</div>
+	</div>
+
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">

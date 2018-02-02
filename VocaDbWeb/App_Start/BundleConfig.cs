@@ -77,6 +77,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/AdminRepository.js",
 				"~/Scripts/Repositories/SongRepository.js",
 				"~/Scripts/Repositories/ArtistRepository.js",
+				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/CommentViewModel.js",
 				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/PagedItemsViewModel.js",
@@ -99,7 +100,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/WebLinkEditViewModel.js",
 				"~/Scripts/ViewModels/WebLinksEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/EnglishTranslatedStringEditViewModel.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SongAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/FocusOut.js",
@@ -134,7 +134,6 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/Album/Details").Include(
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/Album/AlbumDetailsViewModel.js",
@@ -288,6 +287,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Models/Tags/Tag.js",
 				"~/Scripts/Helpers/PVHelper.js",
@@ -328,7 +328,6 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Details").Include(
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/Song/SongDetailsViewModel.js",
@@ -468,7 +467,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/TagRepository.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerNico.js",

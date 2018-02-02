@@ -216,4 +216,7 @@
   <data name="EventCategory" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Release event</value>
+  </data>
 </root>

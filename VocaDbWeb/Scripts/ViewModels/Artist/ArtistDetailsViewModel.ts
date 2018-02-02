@@ -143,8 +143,8 @@ module vdb.viewModels {
 			if (this.songsViewModel())
 				return;
 
-			this.songsViewModel(new vdb.viewModels.search.SongSearchViewModel(null, this.urlMapper, this.lang, this.songRepo, null, this.userRepository, this.resourceRepo,
-				this.cultureCode, this.loggedUserId, null, [ this.artistId ], null, null, false, false, null, null, null, null, null, this.pvPlayersFactory));
+			this.songsViewModel(new vdb.viewModels.search.SongSearchViewModel(null, this.urlMapper, this.lang, this.songRepo, null, this.userRepository, null, this.resourceRepo,
+				this.cultureCode, this.loggedUserId, null, [ this.artistId ], null, null, null, false, false, null, null, null, null, null, this.pvPlayersFactory));
 			this.songsViewModel().updateResults(true);
 
 		}

@@ -52,7 +52,7 @@ module vdb.repositories {
 
 		public getOne = (id: number, callback?: (result: dc.ReleaseEventContract) => void) => {
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + id);
-			$.getJSON(url, {}, result => callback(result && result.items && result.items.length ? result.items[0] : null));
+			$.getJSON(url, {}, callback);
 		}
 
 		public getOneByName = (name: string, callback?: (result: dc.ReleaseEventContract) => void) => {

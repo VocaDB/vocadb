@@ -14,6 +14,7 @@ module vdb.viewModels.search {
 			private songRepo: rep.SongRepository,
 			private artistRepo: rep.ArtistRepository,
 			private userRepo: rep.UserRepository,
+			private eventRepo: rep.ReleaseEventRepository,
 			resourceRep: rep.ResourceRepository,
 			cultureCode: string,
 			private loggedUserId: number,
@@ -21,6 +22,7 @@ module vdb.viewModels.search {
 			artistId: number[],
 			childVoicebanks: boolean,
 			songType: string,
+			eventId: number,
 			onlyWithPVs: boolean,
 			onlyRatedSongs: boolean,
 			since: number,
@@ -46,6 +48,11 @@ module vdb.viewModels.search {
 			this.artistFilters = new ArtistFilters(this.artistRepo, childVoicebanks);
 			this.artistFilters.selectArtists(artistId);
 
+			this.releaseEvent = new BasicEntryLinkViewModel<cls.IEntryWithIdAndName>({ id: eventId, name: null }, this.eventRepo.getOne);
+
+			if (eventId)
+				this.releaseEvent.id(eventId);
+
 			if (sort)
 				this.sort(sort);
 
@@ -64,6 +71,7 @@ module vdb.viewModels.search {
 
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
+			this.releaseEvent.subscribe(this.updateResultsWithTotalCount);
 			this.minScore.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory, autoplay, shuffle);
@@ -80,6 +88,7 @@ module vdb.viewModels.search {
 				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus,
 				this.artistFilters.childVoicebanks,
 				this.artistFilters.includeMembers,
+				this.releaseEvent.id,
 				this.pvsOnly, this.since,
 				this.minScore,
 				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly, this.advancedFilters.filters);
@@ -102,6 +111,7 @@ module vdb.viewModels.search {
 						this.artistFilters.artistParticipationStatus(),
 						this.artistFilters.childVoicebanks(),
 						this.artistFilters.includeMembers(),
+						this.releaseEvent.id(),
 						this.pvsOnly(),
 						null,
 						this.since(),
@@ -134,6 +144,7 @@ module vdb.viewModels.search {
 		}
 
 		public artistFilters: ArtistFilters;
+		public releaseEvent: BasicEntryLinkViewModel<cls.IEntryWithIdAndName>;
 		public minScore: KnockoutObservable<number>;
 		public onlyRatedSongs = ko.observable(false);
 		public playListViewModel: vdb.viewModels.songs.PlayListViewModel;

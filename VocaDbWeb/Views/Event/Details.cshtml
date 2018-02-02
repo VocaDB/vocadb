@@ -168,7 +168,7 @@
 
 @if (Model.Songs.Any()) {
 	<h3 class="withMargin">
-		@Res.Songs
+		@Html.ActionLink(Res.Songs, "Index", "Search", UrlMapper.Search.Songs(eventId: Model.Id), null)
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Songs.Length)</small>
 	</h3>
 	@SongHelpers.SongGrid(Model.Songs, 2, true, false)

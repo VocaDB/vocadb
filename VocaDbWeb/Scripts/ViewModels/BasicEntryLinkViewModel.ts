@@ -42,6 +42,8 @@ module vdb.viewModels {
 
 		public name: KnockoutComputed<string>;
 
+		public subscribe = (callback: (newValue: number) => void) => this.id.subscribe(callback);
+
 	}
 
 }
