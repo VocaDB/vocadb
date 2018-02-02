@@ -19,7 +19,13 @@ module vdb.models.albums {
 
 		Artbook 	= 64,
 
-		Other		= 128
+		Game = 128,
+
+		Fanmade = 256,
+
+		Instrumental = 512,
+
+		Other = 1024
 
 	}
 

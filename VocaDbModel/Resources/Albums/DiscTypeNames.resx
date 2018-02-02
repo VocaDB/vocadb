@@ -129,6 +129,15 @@
   <data name="EP" xml:space="preserve">
     <value>E.P.</value>
   </data>
+  <data name="Fanmade" xml:space="preserve">
+    <value>Fanmade/doujin</value>
+  </data>
+  <data name="Game" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="Instrumental" xml:space="preserve">
+    <value>Instrumental</value>
+  </data>
   <data name="Other" xml:space="preserve">
     <value>Other</value>
   </data>

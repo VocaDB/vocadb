@@ -97,6 +97,33 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fanmade/doujin.
+        /// </summary>
+        public static string Fanmade {
+            get {
+                return ResourceManager.GetString("Fanmade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game.
+        /// </summary>
+        public static string Game {
+            get {
+                return ResourceManager.GetString("Game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instrumental.
+        /// </summary>
+        public static string Instrumental {
+            get {
+                return ResourceManager.GetString("Instrumental", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other.
         /// </summary>
         public static string Other {

@@ -75,7 +75,7 @@ namespace VocaDb.Web.Helpers {
 		}
 
 		public static SelectList CreateDiscTypesList(object selectedValue) {
-			return new SelectList(EnumVal<DiscType>.Values.ToDictionary(s => s, Translate.DiscTypeName), "Key", "Value", selectedValue);
+			return new SelectList(AppConfig.AlbumTypes.ToDictionary(s => s, Translate.DiscTypeName), "Key", "Value", selectedValue);
 		}
 
 		public static SelectList CreateEmailOptionsList(object selectedValue) {
