@@ -48,7 +48,7 @@ module vdb.viewModels.search {
 			this.artistFilters = new ArtistFilters(this.artistRepo, childVoicebanks);
 			this.artistFilters.selectArtists(artistId);
 
-			this.releaseEvent = new BasicEntryLinkViewModel<cls.IEntryWithIdAndName>({ id: eventId, name: null }, this.eventRepo.getOne);
+			this.releaseEvent = new BasicEntryLinkViewModel<cls.IEntryWithIdAndName>({ id: eventId, name: null }, this.eventRepo ? this.eventRepo.getOne : null);
 
 			if (eventId)
 				this.releaseEvent.id(eventId);
