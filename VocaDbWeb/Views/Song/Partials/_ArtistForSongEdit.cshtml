@@ -3,9 +3,16 @@
 <tr>
 	<td>
 		<div data-bind="with: artist">
-			<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
+			<a data-bind="text: $parent.name || name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
 			<br />
 			<span data-bind="text: additionalNames" class="extraInfo"></span>
+
+			<div class="btn-group" data-bind="visible: additionalNames">
+				<button class="btn dropdown-toggle">Use alternate name</button>
+				<ul class="dropdown-menu" data-bind="foreach: names">
+					<li></li>
+				</ul>
+			</div>
 		</div>
 		<div data-bind="ifnot: artist">
 			<span data-bind="text: name"></span>
