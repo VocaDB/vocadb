@@ -20,7 +20,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (!numId.Success)
 				return null;
 
-			return string.Format("https://tn-skr1.smilevideo.jp/smile?i={0}", numId.Value);
+			return string.Format("https://tn.smilevideo.jp/smile?i={0}", numId.Value);
 
 		}
 
