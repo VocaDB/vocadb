@@ -71,6 +71,8 @@ namespace VocaDb.Model.Utils {
 			
 		}
 
+		public static bool AllowCustomArtistName => Val("AllowCustomArtistName", false);
+
 		public static DiscType[] AlbumTypes {
 			get {
 

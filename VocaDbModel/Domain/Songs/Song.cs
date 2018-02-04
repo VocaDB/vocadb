@@ -726,6 +726,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 					if (!HasArtist(artist)) {
 						l = artist.AddSong(this, newEntry.IsSupport, newEntry.Roles);
+						l.Name = newEntry.IsCustomName ? newEntry.Name : null;
 						created.Add(l);
 					}
 
@@ -744,6 +745,7 @@ namespace VocaDb.Model.Domain.Songs {
 				if (!linkEntry.ContentEquals(newEntry)) {
 					linkEntry.IsSupport = newEntry.IsSupport;
 					linkEntry.Roles = newEntry.Roles;
+					linkEntry.Name = newEntry.IsCustomName ? newEntry.Name : null;
 					edited.Add(linkEntry);
 				}
 

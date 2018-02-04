@@ -433,6 +433,10 @@
 	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
 </div>	
 
+<div data-bind="with: editedArtistLink">
+	@{ Html.RenderPartial("Partials/_CustomNameEdit"); }
+</div>
+
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 550 }, dialogButtons: trackPropertiesDialogButtons, dialogVisible: trackPropertiesDialogVisible" style="display:none;" title="@R.EditStrings.TrackPropertiesTitle">
 
 	@{ Html.RenderPartial("Partials/_TrackProperties"); }

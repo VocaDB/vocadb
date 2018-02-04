@@ -176,7 +176,7 @@ module vdb.tests.viewModels {
 		target.addArtist(null, "Custom artist");
 
 		equal(target.artistLinks().length, 5, "artistLinks().length");
-		equal(_.some(target.artistLinks(), a => a.name == "Custom artist"), true, "Custom artist was added");
+		equal(_.some(target.artistLinks(), a => a.name() == "Custom artist"), true, "Custom artist was added");
 
 	});
 

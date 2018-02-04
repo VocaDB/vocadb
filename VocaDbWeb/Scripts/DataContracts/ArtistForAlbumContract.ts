@@ -7,6 +7,8 @@ module vdb.dataContracts {
 
         id?: number;
 
+		isCustomName?: boolean;
+
         isSupport?: boolean;
 
         name?: string;
