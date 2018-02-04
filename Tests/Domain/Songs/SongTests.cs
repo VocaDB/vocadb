@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
@@ -26,11 +27,15 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		private Artist artist;
+		private readonly List<Artist> artists = new List<Artist>();
 		private Tag changedLyricsTag;
 		private Tag instrumentalTag;
 		private LyricsForSong lyrics;
 		private Song song;
 		private SpecialTags specialTags;	
+		private Artist vocalist;
+
+		private Func<ArtistForSongContract, Artist> artistFunc;
 
 		private PVForSong CreatePV(PVService service = PVService.Youtube, PVType pvType = PVType.Original, DateTime? publishDate = null) {
 			return song.CreatePV(new PVContract { Service = service, PVId = "test", Name = "test", PublishDate = publishDate, PVType = pvType });
@@ -48,6 +53,9 @@ namespace VocaDb.Tests.Domain.Songs {
 		public void Setup() {
 
 			artist = new Artist(TranslatedString.Create("Minato")) { Id = 1, ArtistType = ArtistType.Producer };
+			vocalist = CreateEntry.Vocalist(39);
+			artists.Add(artist);
+			artists.Add(vocalist);
 			song = new Song(new LocalizedString("Soar", ContentLanguageSelection.English));
 			lyrics = song.CreateLyrics("Miku!", "miku", string.Empty, TranslationType.Original, "ja");
 			instrumentalTag = CreateEntry.Tag("instrumental", 1);
@@ -56,6 +64,7 @@ namespace VocaDb.Tests.Domain.Songs {
 				Instrumental = instrumentalTag.Id,
 				ChangedLyrics = changedLyricsTag.Id
 			};
+			artistFunc = (contract => artists.FirstOrDefault(a => a.Id == contract.Artist?.Id));
 
 		}
 
@@ -191,6 +200,25 @@ namespace VocaDb.Tests.Domain.Songs {
 
 			Assert.AreEqual(2, song.AllArtists.Count, "artists count");
 			Assert.IsTrue(song.HasArtistLink(link), "Still has the extra artist");
+
+		}
+
+		[TestMethod]
+		public void SyncArtists_CustomName() {
+
+			var contract = new ArtistForSongContract {
+				Artist = new ArtistContract(artist, ContentLanguagePreference.Default), 
+				Name = "RyuuseiP", 
+				IsCustomName = true
+			};
+
+			song.SyncArtists(new [] { contract, new ArtistForSongContract(new ArtistContract(vocalist, ContentLanguagePreference.Default)) }, artistFunc);
+
+			Assert.AreEqual(2, song.Artists.Count(), "Number of artists");
+			var producerLink = song.Artists.FirstOrDefault(a => a.Artist?.Id == artist.Id);
+			Assert.IsNotNull(producerLink, "Artist link was added");
+			Assert.AreEqual("RyuuseiP", producerLink.Name, "Added link name");
+			Assert.AreEqual("RyuuseiP feat. Hatsune Miku", song.ArtistString.Default, "Artist string");
 
 		}
 
