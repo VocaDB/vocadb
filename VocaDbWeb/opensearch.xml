@@ -4,8 +4,8 @@
 	<Description>Vocaloid Database with artists, albums, songs, PVs and more.</Description>
 	<Tags>vocaloid hatsune_miku</Tags>
 	<Contact>support@vocadb.net</Contact>
-	<Image width="16" height="16" type="image/x-icon">http://vocadb.net/Content/favicon.ico</Image>
+	<Image width="16" height="16" type="image/x-icon">https://vocadb.net/Content/favicon.ico</Image>
 	<Url type="application/x-suggestions+json"
-			 template="http://vocadb.net/api/entries?nameMatchMode=Auto&amp;query={searchTerms}"/>
-	<Url type="text/html" template="http://vocadb.net/Search?filter={searchTerms}" />
+			 template="https://vocadb.net/api/entries?nameMatchMode=Auto&amp;query={searchTerms}"/>
+	<Url type="text/html" template="https://vocadb.net/Search?filter={searchTerms}" />
 </OpenSearchDescription>
