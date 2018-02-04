@@ -317,6 +317,10 @@
 	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
 </div>
 
+<div data-bind="with: editedArtistLink">
+	@{ Html.RenderPartial("Partials/_CustomNameEdit"); }
+</div>
+
 @EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
 
 @section BodyScripts {

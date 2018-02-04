@@ -76,6 +76,10 @@ module vdb.viewModels {
 
 		}
 
+	    public customizeName = (artistLink: ArtistForAlbumEditViewModel) => {
+		    this.editedArtistLink.open(artistLink);
+		}
+
 		public defaultNameLanguage: KnockoutObservable<string>;
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
@@ -97,6 +101,8 @@ module vdb.viewModels {
 		public editArtistRoles = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistRolesEditViewModel.show(artist);
 		}
+
+	    public editedArtistLink = new CustomNameEditViewModel();
 
         // Begins editing properties for multiple tracks. Opens the properties dialog.
         public editMultipleTrackProperties: () => void;
@@ -444,7 +450,7 @@ module vdb.viewModels {
             this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
             
 			this.validationError_duplicateArtist = ko.computed(() => {
-				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport()), a => a.length > 1);
+				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name()) + a.isSupport()), a => a.length > 1);
 			});
 
 			this.validationError_needArtist = ko.computed(() => _.isEmpty(this.artistLinks()));

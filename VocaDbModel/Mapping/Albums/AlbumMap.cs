@@ -99,7 +99,7 @@ namespace VocaDb.Model.Mapping.Albums {
 			Id(m => m.Id);
 
 			Map(m => m.IsSupport).Not.Nullable();
-			Map(m => m.Name).Nullable();
+			Map(m => m.Name).Length(250).Nullable();
 			Map(m => m.Roles).CustomType(typeof(ArtistRoles)).Not.Nullable();
 			References(m => m.Album).Not.Nullable();
 			References(m => m.Artist).Nullable();

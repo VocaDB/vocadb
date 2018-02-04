@@ -93,7 +93,9 @@ namespace VocaDb.Model.Domain.Songs {
 			if (contract == null)
 				return false;
 
-			return (IsSupport == contract.IsSupport && Roles == contract.Roles);
+			var realNewName = contract.IsCustomName ? contract.Name : null;
+
+			return (IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName);
 
 		}
 

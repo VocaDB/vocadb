@@ -3,13 +3,16 @@
 <tr>
 	<td>
 		<div data-bind="with: artist">
-			<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
+			<a data-bind="text: $parent.name || name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
 			<br />
 			<span data-bind="text: additionalNames" class="extraInfo"></span>
 		</div>
 		<div data-bind="ifnot: artist">
 			<span data-bind="text: name"></span>
 		</div>
+		@if (VocaDb.Model.Utils.AppConfig.AllowCustomArtistName) {
+			<a href="#" class="textLink editLink" data-bind="click: $parent.customizeName">@ViewRes.Album.ArtistForAlbumEditRowStrings.Customize</a>
+		}
 	</td>
 	<td>
 		<label class="checkbox inline">

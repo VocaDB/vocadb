@@ -20,6 +20,7 @@ module vdb.viewModels {
 		public canHaveOriginalVersion: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public deleted: boolean;
+		public editedArtistLink = new CustomNameEditViewModel();
 		public eventDate: KnockoutComputed<moment.Moment>;
 		public firstPvDate: KnockoutComputed<moment.Moment>;
 		public id: number;
@@ -93,6 +94,10 @@ module vdb.viewModels {
 				this.originalVersion.clear();
 			}
 				
+		}
+
+		public customizeName = (artistLink: ArtistForAlbumEditViewModel) => {
+			this.editedArtistLink.open(artistLink);
 		}
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {

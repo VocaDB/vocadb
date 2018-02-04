@@ -1802,15 +1802,15 @@
     <Content Include="Content\ExtIcons\exittunes.png" />
     <Content Include="Content\ExtIcons\facebook.png" />
     <Content Include="Content\ExtIcons\facebook32.png" />
-	<Content Include="Content\ExtIcons\google_plus.png" /> 
+    <Content Include="Content\ExtIcons\google_plus.png" />
     <Content Include="Content\ExtIcons\Fasic.png" />
     <Content Include="Content\ExtIcons\google-play.png" />
     <Content Include="Content\ExtIcons\hmv.png" />
-	<Content Include="Content\ExtIcons\instagram.png" />
+    <Content Include="Content\ExtIcons\instagram.png" />
     <Content Include="Content\ExtIcons\itunes.png" />
     <Content Include="Content\ExtIcons\karent.png" />
     <Content Include="Content\ExtIcons\lastfm.png" />
-	<Content Include="Content\ExtIcons\listography.png" />
+    <Content Include="Content\ExtIcons\listography.png" />
     <Content Include="Content\ExtIcons\listenjapan.png" />
     <Content Include="Content\ExtIcons\melonbooks.png" />
     <Content Include="Content\ExtIcons\mikudb.png" />
@@ -1820,15 +1820,15 @@
     <Content Include="Content\ExtIcons\nicochokuhan.png" />
     <Content Include="Content\ExtIcons\nicopedia.png" />
     <Content Include="Content\ExtIcons\piapro.png" />
-	<Content Include="Content\ExtIcons\poppro.png" />
+    <Content Include="Content\ExtIcons\poppro.png" />
     <Content Include="Content\ExtIcons\pixiv.png" />
     <Content Include="Content\ExtIcons\playasia.png" />
     <Content Include="Content\ExtIcons\rakuten.png" />
     <Content Include="Content\ExtIcons\reddit32.png" />
     <Content Include="Content\ExtIcons\spotify.png" />
     <Content Include="Content\ExtIcons\three.png" />
-	<Content Include="Content\ExtIcons\sonicwire.png" />
-	<Content Include="Content\ExtIcons\itemtaobao.png" />
+    <Content Include="Content\ExtIcons\sonicwire.png" />
+    <Content Include="Content\ExtIcons\itemtaobao.png" />
     <Content Include="Content\ExtIcons\tora.png" />
     <Content Include="Content\ExtIcons\touhouwiki.png" />
     <Content Include="Content\ExtIcons\towerrecords.png" />
@@ -1847,7 +1847,7 @@
     <Content Include="Content\ExtIcons\vocallective.png" />
     <Content Include="Content\ExtIcons\vocastore.png" />
     <Content Include="Content\ExtIcons\vocawiki.png" />
-	<Content Include="Content\ExtIcons\wikia.png" />
+    <Content Include="Content\ExtIcons\wikia.png" />
     <Content Include="Content\ExtIcons\weibo.png" />
     <Content Include="Content\ExtIcons\yesasia.png" />
     <Content Include="Content\Icons\accept.png" />
@@ -2999,6 +2999,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\BasicEntryLinkViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\CommentViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\CustomNameEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\DeleteEntryViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionIndexViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionTopicViewModel.ts" />
@@ -3573,6 +3574,7 @@
     <Content Include="Views\Search\Partials\_EventSearchList.cshtml" />
     <Content Include="Views\Event\ViewVersion.cshtml" />
     <Content Include="Views\Event\ManageTagUsages.cshtml" />
+    <Content Include="Views\Shared\Partials\_CustomNameEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

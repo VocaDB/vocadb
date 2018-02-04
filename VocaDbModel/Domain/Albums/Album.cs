@@ -705,6 +705,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 					if (!HasArtist(artist)) {
 						link = AddArtist(artist, contract.IsSupport, contract.Roles);
+						link.Name = contract.IsCustomName ? contract.Name : null;
 					}
 
 				} else {
@@ -724,6 +725,7 @@ namespace VocaDb.Model.Domain.Albums {
 				if (!old.ContentEquals(newEntry)) {
 					old.IsSupport = newEntry.IsSupport;
 					old.Roles = newEntry.Roles;
+					old.Name = newEntry.IsCustomName ? newEntry.Name : null;
 					return true;
 				} else {
 					return false;

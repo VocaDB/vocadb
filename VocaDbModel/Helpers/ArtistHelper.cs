@@ -14,7 +14,7 @@ namespace VocaDb.Model.Helpers {
 
 		public static TranslatedString GetTranslatedName(IArtistLinkWithRoles link) {
 
-			return (link.Artist != null ? link.Artist.TranslatedName : TranslatedString.Create(link.Name));
+			return (link.Artist != null && string.IsNullOrEmpty(link.Name) ? link.Artist.TranslatedName : TranslatedString.Create(link.Name));
 
 		}
 
