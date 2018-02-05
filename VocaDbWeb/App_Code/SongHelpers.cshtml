@@ -195,6 +195,10 @@
 
 @helper SongTypeLabel(SongType songType) {
 	switch (songType) {
+		case SongType.Arrangement:
+			<span class="label" title="@Translate.SongTypeNames[songType]">C</span>
+			break;
+
 		case SongType.Cover:
 			<span class="label" title="@Translate.SongTypeNames[songType]">C</span>
 			break;
