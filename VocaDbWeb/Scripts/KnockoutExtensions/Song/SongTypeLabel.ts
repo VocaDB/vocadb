@@ -52,6 +52,11 @@ module vdb.knockoutExtensions.song {
 			removeClasses: "label-important label-inverse label-info label-success",
 			content: "R"
 		},
+		Arrangement: {
+			addClass: "",
+			removeClasses: "label-important label-inverse label-info label-success",
+			content: "A"
+		},
 		MusicPV: {
 			addClass: "label-success",
 			removeClasses: "label-important label-inverse label-info",
