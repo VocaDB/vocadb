@@ -263,7 +263,7 @@ module vdb.viewModels {
 			this.validationError_needOriginal = ko.computed(() => {
 				
 				var songType = models.songs.SongType;
-				var derivedTypes = [songType.Remaster, songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix];
+				var derivedTypes = [songType.Remaster, songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix, songType.Arrangement];
 				return (this.notes.original() === null || this.notes.original() === "")
 					&& this.originalVersion.entry() == null
 					&& _.includes(derivedTypes, this.songType());

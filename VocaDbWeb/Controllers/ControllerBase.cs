@@ -31,7 +31,7 @@ namespace VocaDb.Web.Controllers {
 		protected const int statsCacheDurationSec = 24 * 60 * 60;
 
 		protected ControllerBase() {
-			PageProperties.OpenGraph.Image = VocaUriBuilder.CreateAbsolute("/Content/vocaDB-title-large.png").ToString();			
+			PageProperties.OpenGraph.Image = VocaUrlHelper.StaticResource("/img/vocaDB-title-large.png");			
 		}
 
 		protected string Hostname => WebHelper.GetRealHost(Request);
