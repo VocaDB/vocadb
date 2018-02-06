@@ -68,6 +68,7 @@ module vdb.utils {
 			{ url: "www.lagoa.jp/", desc: "THREE!", cat: c.WebLinkCategory.Commercial }, /* UtaiteDB */
 			{ url: "item.taobao.com", desc: "Taobao", cat: c.WebLinkCategory.Commercial },
             { url: "toranoana.jp/mailorder/article/", desc: "Toranoana", cat: c.WebLinkCategory.Commercial },
+			{ url: "touhoudb.com/", desc: "TouhouDB", cat: c.WebLinkCategory.Reference },
 			{ url: "en.touhouwiki.net/wiki/", desc: "Touhou Wiki", cat: c.WebLinkCategory.Reference },
             { url: "tumblr.com/", desc: "Tumblr", cat: c.WebLinkCategory.Official },
             { url: "twitter.com/", desc: "Twitter", cat: c.WebLinkCategory.Official },
