@@ -97,7 +97,7 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Songs needs notes, PVs or links for reference..
+        ///   Looks up a localized string similar to Song needs notes, PVs or links for reference..
         /// </summary>
         public static string NeedReferences {
             get {
