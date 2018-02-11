@@ -284,6 +284,7 @@ module vdb.viewModels {
 
 				return (!this.validationError_needArtist()
 					&& !hel.SongHelper.isInstrumental(this.songType())
+					&& this.songType() !== models.songs.SongType.Arrangement // Arrangements are considered possible instrumentals in this context
 					&& !_.some(this.tags, t => t === this.instrumentalTagId))
 					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArray()));
 
