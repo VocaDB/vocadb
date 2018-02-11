@@ -32,7 +32,7 @@ module vdb.helpers {
 			if (at === null)
 				return false;
 
-			return ArtistHelper.isVocalistType(at) || at === ArtistType.Unknown;
+			return (ArtistHelper.isVocalistType(at) || at === ArtistType.Unknown) && at !== ArtistType.Vocalist;
 
 		}
 
