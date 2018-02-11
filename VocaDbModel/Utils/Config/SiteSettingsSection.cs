@@ -25,6 +25,12 @@ namespace VocaDb.Model.Utils.Config {
 			set => this["ircUrl"] = value;
 		}
 
+		[ConfigurationProperty("minAlbumYear", DefaultValue = 2000)]
+		public int MinAlbumYear {
+			get => (int)this["minAlbumYear"];
+			set => this["minAlbumYear"] = value;
+		}
+
 		[ConfigurationProperty("openSearchPath", DefaultValue = "/opensearch.xml")]
 		public string OpenSearchPath {
 			get => (string)this["openSearchPath"];

@@ -19,6 +19,7 @@ using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Domain.Songs {
@@ -181,7 +182,7 @@ namespace VocaDb.Model.Domain.Songs {
 			get {
 
 				// Sanity check
-				var minDateLimit = new DateTime(2000, 1, 1);
+				var minDateLimit = new DateTime(AppConfig.SiteSettings.MinAlbumYear, 1, 1);
 
 				return Albums
 					.Where(a => a.Album != null && a.Album.OriginalReleaseDate.IsFullDate)
@@ -849,7 +850,7 @@ namespace VocaDb.Model.Domain.Songs {
 				return;
 
 			// Sanity check
-			var minDateLimit = new DateTime(2000, 1, 1); 
+			var minDateLimit = new DateTime(AppConfig.SiteSettings.MinAlbumYear, 1, 1); 
 
 			// Original PVs that have a publish date
 			var pvsWithDate = PVs.Where(p => p.PVType == PVType.Original && p.PublishDate.HasValue && p.PublishDate > minDateLimit).ToArray();
