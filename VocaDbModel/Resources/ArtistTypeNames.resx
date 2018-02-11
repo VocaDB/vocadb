@@ -165,4 +165,7 @@
   <data name="CeVIO" xml:space="preserve">
     <value>CeVIO</value>
   </data>
+  <data name="Vocalist" xml:space="preserve">
+    <value>Vocalist</value>
+  </data>
 </root>

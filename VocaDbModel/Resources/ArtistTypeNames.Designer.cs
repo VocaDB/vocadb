@@ -196,6 +196,15 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vocalist.
+        /// </summary>
+        public static string Vocalist {
+            get {
+                return ResourceManager.GetString("Vocalist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vocaloid.
         /// </summary>
         public static string Vocaloid {

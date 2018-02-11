@@ -13,7 +13,7 @@ module vdb.helpers {
 		public static customizableTypes = [
 			ArtistType.Animator, ArtistType.OtherGroup, ArtistType.OtherIndividual, 
 			ArtistType.OtherVocalist, ArtistType.Producer, ArtistType.Illustrator, ArtistType.Lyricist, 
-			ArtistType.Utaite, ArtistType.Band, ArtistType.Unknown
+			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown
 		];
 
 		// Artist types that are groups (excluding Unknown)
@@ -24,7 +24,7 @@ module vdb.helpers {
 
 		private static vocalistTypes = [
 			ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite,
-			ArtistType.UTAU, ArtistType.Vocaloid, ArtistType.CeVIO
+			ArtistType.UTAU, ArtistType.Vocaloid, ArtistType.CeVIO, ArtistType.Vocalist
 		];
 
 		public static canHaveChildVoicebanks(at: cls.artists.ArtistType) {

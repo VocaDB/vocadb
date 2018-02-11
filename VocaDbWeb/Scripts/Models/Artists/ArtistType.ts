@@ -42,7 +42,9 @@ module vdb.models.artists {
 
 		Utaite,
 
-		Band
+		Band,
+
+		Vocalist
 
 	}
 

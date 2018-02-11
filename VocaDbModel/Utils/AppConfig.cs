@@ -149,6 +149,10 @@ namespace VocaDb.Model.Utils {
 
 		}
 
+		public static SlogansSection GetSlogansSection() {
+			return (SlogansSection)ConfigurationManager.GetSection("vocaDb/slogans");
+		}
+
 		/// <summary>
 		/// Host address of the main site, contains full path to the web application's root, including hostname.
 		/// Could be either HTTP or HTTPS.

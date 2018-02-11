@@ -1000,6 +1000,7 @@
     <Compile Include="Utils\Config\AffiliatesSection.cs" />
     <Compile Include="Utils\Config\GlobalLinksSection.cs" />
     <Compile Include="Utils\Config\SiteSettingsSection.cs" />
+    <Compile Include="Utils\Config\SlogansSection.cs" />
     <Compile Include="Utils\Config\SpecialTagsSection.cs" />
     <Compile Include="Utils\Config\VdbConfigManager.cs" />
     <Compile Include="Utils\Search\SearchRouteParams.cs" />
