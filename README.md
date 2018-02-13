@@ -6,7 +6,7 @@ The software is based on Microsoft ASP.NET MVC 5 (.NET 4.6), jQuery, jQuery UI, 
 Knockout, and it uses a SQL database through the NHibernate 4 ORM. 
 Server side code is written in C#, most of the client side is TypeScript.
 
-The same software is used for [UtaiteDB](http://utaitedb.net/).
+The same software is used for [UtaiteDB](http://utaitedb.net/) and [TouhouDB](https://touhoudb.com/).
 
 ## How to contribute
 
