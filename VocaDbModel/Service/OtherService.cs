@@ -54,10 +54,10 @@ namespace VocaDb.Model.Service {
 
 		private AlbumContract[] GetTopAlbums(ISession session, AlbumContract[] recentAlbums) {
 
-			var minRatings = 2;
-			var sampleSize = 300;
+			var minRatings = 2; // Minimum number of ratings
+			var sampleSize = 300; // Get this many popular albums to be rotated when cache expires
+			var albumCount = 7; // This many albums are shown, the albums are rotated when cache expires
 			var cacheKey = "OtherService.PopularAlbums";
-			var cache = MemoryCache.Default;
 			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
 
 			if (item != null)
@@ -67,7 +67,7 @@ namespace VocaDb.Model.Service {
 
 			// If only a small number of rated albums, reduce minimum ratings count
 			var totalRatedAlbumCount = session.Query<Album>().Count(a => !a.Deleted && a.RatingCount >= minRatings && a.RatingAverageInt >= 300);
-			if (totalRatedAlbumCount < sampleSize) {
+			if (totalRatedAlbumCount < albumCount) {
 				minRatings = 1;
 			}
 
@@ -83,7 +83,7 @@ namespace VocaDb.Model.Service {
 
 			// Pick random albums to be displayed from the group of popular albums
 			var randomIds = CollectionHelper
-				.GetRandomItems(popularIds, 7)
+				.GetRandomItems(popularIds, albumCount)
 				.ToArray();
 
 			var random = session.Query<Album>()
@@ -108,7 +108,6 @@ namespace VocaDb.Model.Service {
 		private AlbumContract[] GetRecentAlbums(ISession session) {
 
 			var cacheKey = "OtherService.RecentAlbums";
-			var cache = MemoryCache.Default;
 			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
 
 			if (item != null)
