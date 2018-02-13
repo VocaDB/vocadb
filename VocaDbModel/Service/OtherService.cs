@@ -65,6 +65,12 @@ namespace VocaDb.Model.Service {
 
 			var recentIds = recentAlbums.Select(a => a.Id).ToArray();
 
+			// If only a small number of rated albums, reduce minimum ratings count
+			var totalRatedAlbumCount = session.Query<Album>().Count(a => !a.Deleted && a.RatingCount >= minRatings && a.RatingAverageInt >= 300);
+			if (totalRatedAlbumCount < sampleSize) {
+				minRatings = 1;
+			}
+
 			// Find Ids of albums that match the popularity filters, take maximum of sampleSize albums
 			var popularIds = session.Query<Album>()
 				.Where(a => !a.Deleted 
