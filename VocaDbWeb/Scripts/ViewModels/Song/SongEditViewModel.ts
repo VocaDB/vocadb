@@ -223,7 +223,7 @@ module vdb.viewModels {
 			this.originalVersionSearchParams = {
 				acceptSelection: this.originalVersion.id,
 				extraQueryParams: {
-					songTypes: "Unspecified,Original,Remaster,Remix,Cover,Mashup,DramaPV,Other"
+					songTypes: "Unspecified,Original,Remaster,Remix,Cover,Arrangement,Mashup,DramaPV,Other"
 				},
 				ignoreId: this.id,
 				height: 250
