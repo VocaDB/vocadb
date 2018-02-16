@@ -1,5 +1,7 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Helpers
 @using Res = ViewRes.Discussion.IndexStrings
+@inherits VocaDb.Web.Code.VocaDbPage
 
 <div data-bind="visible: selectedFolder() !== null && selectedTopic() === null" class="discussion-folder">
 	
@@ -15,7 +17,7 @@
 		{{selectedFolder() ? selectedFolder().description : ''}}
 	</p>
 
-	@if (Login.CanManageDb) {
+	@if (UserContext.HasPermission(PermissionToken.CreateComments)) {
 		<button data-bind="visible: !showCreateNewTopic(), click: function() { showCreateNewTopic(true); }" class="btn create-topic">
 			<i class="icon-comment"></i>
 			@Res.WriteNewPost
