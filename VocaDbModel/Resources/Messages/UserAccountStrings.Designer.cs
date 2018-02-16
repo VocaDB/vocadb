@@ -97,5 +97,14 @@ namespace VocaDb.Model.Resources.Messages {
                 return ResourceManager.GetString("VerifyEmailBody", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify your email at {0}..
+        /// </summary>
+        public static string VerifyEmailSubject {
+            get {
+                return ResourceManager.GetString("VerifyEmailSubject", resourceCulture);
+            }
+        }
     }
 }

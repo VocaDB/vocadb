@@ -1202,7 +1202,7 @@ namespace VocaDb.Model.Database.Queries {
 				var user = ctx.Load(userId);
 				ctx.AuditLogger.SysLog(string.Format("requesting email verification ({0})", user.Email), user.Name);
 
-				var subject = "Verify your email at VocaDB.";
+				var subject = string.Format(UserAccountStrings.VerifyEmailSubject, brandableStringsManager.Layout.SiteName);
 
 				SendEmailVerificationRequest(ctx, user, resetUrl, subject);
 
