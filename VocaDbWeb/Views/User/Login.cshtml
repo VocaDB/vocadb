@@ -49,12 +49,6 @@
 
 @Res.ForgotPassword @Html.ActionLink(Res.ResetPass, "ForgotPassword")@ViewRes.SharedStrings.Period<br />
 
-@if (Model.SecureLogin) {
-	@Html.ActionLink(Res.LoginWithoutSSL, "Login", new { secureLogin = false })
-} else {
-	@Html.ActionLink(Res.LoginUsingSSL, "Login", new { secureLogin = true })	
-}
-
 <br />
 <hr />
 <a href="@Url.Action("LoginTwitter", new { returnUrl = Model.ReturnUrl })">
