@@ -77,6 +77,9 @@ a.extLink[href^="https://play.spotify.com/"] {
 a.extLink[href^="http://www.lagoa.jp/"] {
   background: url("/Content/ExtIcons/three.png") no-repeat left 50%;
 }
+a.extLink[href^="https://www.metal-archives.com/"] {
+  background: url("/Content/ExtIcons/ma.png") no-repeat left 50%;
+}
 a.extLink[href^="http://sonicwire.com"] {
   background: url("/Content/ExtIcons/sonicwire.png") no-repeat left 50%;
 }

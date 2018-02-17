@@ -1801,6 +1801,7 @@
     <Content Include="Content\ExtIcons\lastfm.png" />
     <Content Include="Content\ExtIcons\listography.png" />
     <Content Include="Content\ExtIcons\listenjapan.png" />
+    <Content Include="Content\ExtIcons\ma.png" />
     <Content Include="Content\ExtIcons\melonbooks.png" />
     <Content Include="Content\ExtIcons\mikudb.png" />
     <Content Include="Content\ExtIcons\mikustar.png" />
