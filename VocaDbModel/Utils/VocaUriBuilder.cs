@@ -58,7 +58,7 @@ namespace VocaDb.Model.Utils {
 		/// <returns>Absolute address, for example http://vocadb.net/User/Profile/Test </returns>
 		public static Uri CreateAbsolute(string relative) {
 
-			return new Uri(new Uri(AppConfig.HostAddress), relative);
+			return new Uri(new Uri(AppConfig.HostAddressSecure), relative);
 
 		}
 

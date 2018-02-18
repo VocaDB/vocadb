@@ -480,7 +480,7 @@
 		</div>
 		<div>
 			@R.DetailsStrings.Embed<br />
-			<textarea class="input-xxlarge" rows="3">@(string.Format("<iframe style=\"overflow: hidden;\" src=\"http://vocadb.net/Ext/EmbedSong?songId={0}&lang={1}\" height=\"400\" width=\"570\" frameborder=\"0\" scrolling=\"no\"></iframe>", Model.Id, Login.Manager.LanguagePreference))</textarea>
+			<textarea class="input-xxlarge" rows="3">@(string.Format("<iframe style=\"overflow: hidden;\" src=\"{0}?songId={1}&lang={2}\" height=\"400\" width=\"570\" frameborder=\"0\" scrolling=\"no\"></iframe>", UrlMapper.FullAbsolute("/Ext/EmbedSong"), Model.Id, Login.Manager.LanguagePreference))</textarea>
 		</div>
 	</div>
 
