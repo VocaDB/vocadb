@@ -93,6 +93,9 @@ a.extLink[href^="https://www.toranoana.jp/"] {
 a.extLink[href^="http://www.tower.com/"] {
   background: url("/Content/ExtIcons/towerrecords.png") no-repeat left 50%;
 }
+a.extLink[href^="https://touhoudb.com"] {
+  background: url("/Content/ExtIcons/touhoudb.png") no-repeat left 50%;
+}
 a.extLink[href^="http://www.tsutaya.co.jp/"] {
   background: url("/Content/ExtIcons/tsutaya.png") no-repeat left 50%;
 }

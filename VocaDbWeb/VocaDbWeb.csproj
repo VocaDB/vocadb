@@ -1820,6 +1820,7 @@
     <Content Include="Content\ExtIcons\sonicwire.png" />
     <Content Include="Content\ExtIcons\itemtaobao.png" />
     <Content Include="Content\ExtIcons\tora.png" />
+    <Content Include="Content\ExtIcons\touhoudb.png" />
     <Content Include="Content\ExtIcons\touhouwiki.png" />
     <Content Include="Content\ExtIcons\towerrecords.png" />
     <Content Include="Content\ExtIcons\tsutaya.png" />
