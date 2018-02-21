@@ -998,6 +998,7 @@
     <Compile Include="Service\VideoServices\Youtube\YoutubeVideoResponse.cs" />
     <Compile Include="Utils\AppConfig.cs" />
     <Compile Include="Utils\Config\AffiliatesSection.cs" />
+    <Compile Include="Utils\Config\AssetsSection.cs" />
     <Compile Include="Utils\Config\GlobalLinksSection.cs" />
     <Compile Include="Utils\Config\SiteSettingsSection.cs" />
     <Compile Include="Utils\Config\SlogansSection.cs" />
