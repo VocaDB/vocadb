@@ -20,6 +20,7 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code.Highcharts;
 using VocaDb.Web.Helpers;
 
@@ -52,6 +53,7 @@ namespace VocaDb.Web.Controllers {
 	public class StatsController : ControllerBase {
 
 		private const int clientCacheDurationSec = 86400;
+		private readonly VdbConfigManager config;
 		private readonly SongAggregateQueries songAggregateQueries;
 
 		private T GetCachedReport<T>() where T : class {
@@ -322,13 +324,14 @@ namespace VocaDb.Web.Controllers {
 		private readonly IUserRepository userRepository;
 
 		public StatsController(IUserRepository userRepository, IRepository repository, IUserPermissionContext permissionContext, SongAggregateQueries songAggregateQueries,
-			HttpContextBase context) {
+			HttpContextBase context, VdbConfigManager config) {
 
 			this.userRepository = userRepository;
 			this.repository = repository;
 			this.permissionContext = permissionContext;
 			this.songAggregateQueries = songAggregateQueries;
 			this.context = context;
+			this.config = config;
 
 		}
 
@@ -644,6 +647,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "unit")]
 		public ActionResult SongsPublishedPerDay(DateTime? cutoff = null, TimeUnit unit = TimeUnit.Day) {
 			
+			cutoff = cutoff ?? new DateTime(config.SiteSettings.MinAlbumYear, 1, 1);
 			var values = songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
