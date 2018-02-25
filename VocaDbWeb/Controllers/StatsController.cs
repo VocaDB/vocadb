@@ -441,13 +441,14 @@ namespace VocaDb.Web.Controllers {
 		public ActionResult ArtistsPerMonth(DateTime? cutoff = null) {
 
 			cutoff = cutoff ?? DefaultMinDate;
+			var end = DateTime.Now.AddMonths(-1);
 
 			// TODO: report not verified
 			var values = repository.HandleQuery(ctx => {
 
 				return ctx.Query<ArtistForSong>()
 					.WhereSongHasPublishDate(true)
-					.WhereSongPublishDateIsBetween(cutoff, null)
+					.WhereSongPublishDateIsBetween(cutoff, end)
 					.Where(a => a.Artist.ArtistType == ArtistType.Producer && !a.Song.Deleted)
 					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
 					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
