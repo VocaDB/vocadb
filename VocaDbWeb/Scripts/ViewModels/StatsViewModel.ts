@@ -30,7 +30,7 @@ module vdb.viewModels {
 						{ name: 'Songs by producer', url: 'songsPerProducer' },
 						{ name: 'Albums by producer', url: 'albumsPerProducer' },
 						{ name: 'Followers by producer', url: 'followersPerProducer' },
-						{ name: 'Artists per month', url: 'artistsPerMonth' }
+						{ name: 'Artists per month', url: 'artistsPerMonth', allowTimespan: true }
 					]
 				},
 				{

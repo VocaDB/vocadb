@@ -323,6 +323,8 @@ namespace VocaDb.Web.Controllers {
 		private readonly IRepository repository;
 		private readonly IUserRepository userRepository;
 
+		private DateTime DefaultMinDate => new DateTime(config.SiteSettings.MinAlbumYear, 1, 1);
+
 		public StatsController(IUserRepository userRepository, IRepository repository, IUserPermissionContext permissionContext, SongAggregateQueries songAggregateQueries,
 			HttpContextBase context, VdbConfigManager config) {
 
@@ -436,13 +438,17 @@ namespace VocaDb.Web.Controllers {
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec)]
-		public ActionResult ArtistsPerMonth() {
+		public ActionResult ArtistsPerMonth(DateTime? cutoff = null) {
+
+			cutoff = cutoff ?? DefaultMinDate;
 
 			// TODO: report not verified
 			var values = repository.HandleQuery(ctx => {
 
 				return ctx.Query<ArtistForSong>()
-					.Where(a => a.Artist.ArtistType == ArtistType.Producer && !a.Song.Deleted && a.Song.PublishDate.DateTime != null)
+					.WhereSongHasPublishDate(true)
+					.WhereSongPublishDateIsBetween(cutoff, null)
+					.Where(a => a.Artist.ArtistType == ArtistType.Producer && !a.Song.Deleted)
 					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
 					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
 					.GroupBy(a => new { // Note: we want to do count distinct here, but it's not supported by NHibernate LINQ, so doing a second group by in memory
@@ -647,7 +653,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "unit")]
 		public ActionResult SongsPublishedPerDay(DateTime? cutoff = null, TimeUnit unit = TimeUnit.Day) {
 			
-			cutoff = cutoff ?? new DateTime(config.SiteSettings.MinAlbumYear, 1, 1);
+			cutoff = cutoff ?? DefaultMinDate;
 			var values = songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -174,6 +175,21 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			return query.Where(m => songTypes.Contains(m.Song.SongType));
+
+		}
+
+		public static IQueryable<T> WhereSongPublishDateIsBetween<T>(this IQueryable<T> query, DateTime? begin, DateTime? end) where T : ISongLink {
+
+			if (begin.HasValue && end.HasValue)
+				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime >= begin && e.Song.PublishDate.DateTime < end);
+
+			if (begin.HasValue)
+				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime >= begin);
+
+			if (end.HasValue)
+				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime < end);
+
+			return query;
 
 		}
 
