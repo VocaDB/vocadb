@@ -98,7 +98,7 @@
 	<a data-bind="jqButton: { disabled: true, icon: 'ui-icon-star' }" href="#">@ViewRes.Song.DetailsStrings.AddToCustomList</a>	
 }
 
-<a data-bind="jqButton: { disabled: @ToJS(!Model.CanEdit), icon: 'ui-icon-wrench' }" href="@Url.Action("Edit", new { id = Model.Id })">@ViewRes.SharedStrings.Edit</a>	
+<a data-bind="jqButton: { disabled: @ToJS(!Model.CanEdit), icon: 'ui-icon-wrench' }" href="@Url.Action("Edit", new { id = Model.Id, albumId = Model.BrowsedAlbumId })">@ViewRes.SharedStrings.Edit</a>	
 
 @Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 

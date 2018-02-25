@@ -201,13 +201,13 @@ namespace VocaDb.Web.Controllers
         //
         // GET: /Song/Edit/5 
         [Authorize]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, int? albumId = null)
         {
 
 			CheckConcurrentEdit(EntryType.Song, id);
 
 			var model = Service.GetSong(id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
-				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song)));
+				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), albumId: albumId));
 
 			return View(model);
 
@@ -221,7 +221,7 @@ namespace VocaDb.Web.Controllers
         {
 
 			// Unable to continue if viewmodel is null because we need the ID at least
-			if (viewModel == null || viewModel.EditedSong == null) {
+			if (viewModel?.EditedSong == null) {
 				log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");				
 			}
@@ -250,7 +250,7 @@ namespace VocaDb.Web.Controllers
 
 			queries.UpdateBasicProperties(model);
 
-			return RedirectToAction("Details", new { id = model.Id });
+			return RedirectToAction("Details", new { id = model.Id, albumId = viewModel.AlbumId });
 
         }
 

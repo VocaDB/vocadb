@@ -51,8 +51,8 @@
 
 <br />
 <form action="@Url.Action("Edit", "Song")" method="POST" data-bind="submit: submit, visible: true" style="display: none;">
-
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id }))
+	@Html.HiddenFor(m => m.AlbumId)
+	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))
 	
 	<div id="tabs">
 
@@ -306,7 +306,7 @@
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id }))
+	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))
 	
 	<!-- JSON model to be posted to the server -->
 	@Html.HiddenForKnockout(m => m.EditedSong, "value: submittedJson")
