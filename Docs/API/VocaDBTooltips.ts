@@ -7,9 +7,9 @@ interface jQueryInt {
 declare var jQuery: jQueryInt;
 
 jQuery(document).ready(() => {
-	jQuery("a[href^='http://vocadb.net/']").each((_, elem: HTMLElement) => {
+	jQuery("a[href^='http://vocadb.net/'], a[href^='https://vocadb.net/']").each((_, elem: HTMLElement) => {
 
-		var regex = /http:\/\/vocadb\.net\/((Artist|Album|Song)\/Details|(Ar|Al|E|S|T))\/(\d+)/g;
+		var regex = /http(s)?:\/\/vocadb\.net\/((Artist|Album|Song)\/Details|(Ar|Al|E|S|T))\/(\d+)/g;
 		var href = jQuery(elem).attr("href");
 		var match = regex.test(href);
 
