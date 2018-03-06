@@ -36,7 +36,7 @@ namespace VocaDb.Model.Domain.Globalization {
 		};
 
 		private static readonly string[] UserLanguageCodes = {
-			"de", "en", "es", "fi", "fil", "fr", "id", "it", "ko", "nl", "no", "pl", "pt", "ru", "sv", "ja", "zh"
+			"de", "en", "es", "fi", "fil", "fr", "id", "it", "ko", "nl", "no", "pl", "pt", "ru", "sv", "th", "ja", "zh"
 		};
 
 		public static CultureCollection UserLanguageCultures => new CultureCollection(UserLanguageCodes);
