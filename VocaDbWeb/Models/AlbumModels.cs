@@ -101,6 +101,7 @@ namespace VocaDb.Web.Models {
 			Labels = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Label)).ToArray();
 			Producers = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
 			Vocalists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Vocalist)).ToArray();
+			Subject = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Subject)).ToArray();
 			OtherArtists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Other) 
 				|| a.Categories.HasFlag(ArtistCategories.Animator) 
 				|| (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
@@ -219,6 +220,8 @@ namespace VocaDb.Web.Models {
 		}
 
 		public EntryStatus Status { get; set; }
+
+		public ArtistForAlbumContract[] Subject { get; set; }
 
 		public TagUsageForApiContract[] Tags { get; set; }
 

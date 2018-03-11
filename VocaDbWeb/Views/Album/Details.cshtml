@@ -116,6 +116,15 @@
 						</td>
 					</tr>
 				}
+				
+				@if (Model.Subject != null && Model.Subject.Any()) {
+					<tr>
+						<td>@EntryRes.Subject</td>
+						<td class="artistList">
+							@ArtistHelpers.ArtistList(Model.Subject, showRoles: false)
+						</td>
+					</tr>
+				}			
 
 				@if (Model.Producers.Any()) {
 					<tr>
