@@ -52,7 +52,9 @@ namespace VocaDb.Model.Domain.Artists {
 
 		Band,
 
-		Vocalist
+		Vocalist,
+
+		Character
 
 	}
 
@@ -95,7 +97,9 @@ namespace VocaDb.Model.Domain.Artists {
 
 		Band = 16384,
 
-		Vocalist = 32768
+		Vocalist = 32768,
+
+		Character = 65536
 
 	}
 

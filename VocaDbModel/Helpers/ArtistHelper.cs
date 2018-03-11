@@ -47,6 +47,7 @@ namespace VocaDb.Model.Helpers {
 
 		public static readonly Dictionary<ArtistType, ArtistCategories> CategoriesForTypes = new Dictionary<ArtistType, ArtistCategories> {
 			{ ArtistType.Animator, ArtistCategories.Animator },
+			{ ArtistType.Character, ArtistCategories.Subject },
 			{ ArtistType.Circle, ArtistCategories.Circle },
 			{ ArtistType.Band, ArtistCategories.Band },
 			{ ArtistType.Illustrator, ArtistCategories.Illustrator },
@@ -95,7 +96,7 @@ namespace VocaDb.Model.Helpers {
 		public static readonly ArtistType[] SongArtistTypes = {
 			ArtistType.Unknown, ArtistType.OtherGroup, ArtistType.OtherVocalist,
 			ArtistType.Producer, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.Vocaloid, ArtistType.Animator, ArtistType.Illustrator,
-			ArtistType.Lyricist, ArtistType.OtherIndividual
+			ArtistType.Lyricist, ArtistType.OtherIndividual, ArtistType.Character
 		};
 
 		public static readonly ArtistType[] VocalistTypes = {
