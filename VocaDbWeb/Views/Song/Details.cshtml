@@ -68,6 +68,7 @@
 	<link rel="alternate" type="text/xml+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "xml" }))" title="@Model.Name" />
 	<link rel="canonical" href="@url" />
 	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
+	<link href="@Url.Content("~/Scripts/MediaElement/mediaelementplayer.min.css")" rel="stylesheet" type="text/css" />	
 }
 
 @section Toolbar {

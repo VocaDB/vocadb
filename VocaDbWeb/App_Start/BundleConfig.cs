@@ -328,6 +328,7 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Details").Include(
+				"~/Scripts/MediaElement/mediaelement-and-player.min.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
