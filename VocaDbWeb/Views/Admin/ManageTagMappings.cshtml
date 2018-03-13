@@ -6,12 +6,13 @@
 	ViewBag.Parents = new[] {
 		Html.ActionLink("Manage", "Index"),
 	};
+	var siteName = BrandableStrings.Layout.SiteName;
 }
 
 <div class="alert alert-info">
 	These mappings will be used to automatically add tags from external video streaming service. Currently only NicoNicoDouga is supported.
-	Tags will be mapped from the source system (NND) to target tag on VocaDB.
-	Multiple tags from the source system may be mapped to a single tag on VocaDB, but one source tag can be mapped to only one target tag (additional mappings are ignored).
+	Tags will be mapped from the source system (NND) to target tag on @siteName.
+	Multiple tags from the source system may be mapped to a single tag on @siteName, but one source tag can be mapped to only one target tag (additional mappings are ignored).
 </div>
 
 <form class="form-horizontal">
@@ -48,7 +49,7 @@
 		<thead>
 			<tr>
 				<th>Source (NND)</th>
-				<th>Target (VocaDB)</th>
+				<th>Target (@siteName)</th>
 				<th></th>
 			</tr>
 		</thead>
