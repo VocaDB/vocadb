@@ -318,6 +318,7 @@ namespace VocaDb.Model.Domain.Tags {
 				Parent.AllChildren.Remove(this);
 
 			TagsForUsers.Clear();
+			Mappings.Clear();
 
 		}
 
