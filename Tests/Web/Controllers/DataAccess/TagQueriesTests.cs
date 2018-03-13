@@ -348,6 +348,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Merge_TagMappings() {
+
+			repository.Save(tag.CreateMapping("ApiMiku"));
+			var target = repository.Save(new Tag("target"));
+			queries.Merge(tag.Id, target.Id);
+
+			Assert.IsTrue(target.Mappings.Any(m => m.SourceTag == "ApiMiku"), "Mapping was moved to target tag");
+			Assert.IsTrue(repository.List<TagMapping>().Any(m => m.SourceTag == "ApiMiku" && m.Tag.Equals(target)), "Mapped was saved to DB");
+
+		}
+
+		[TestMethod]
 		public void Update_Description() {
 
 			var updated = new TagForEditContract(tag, false, permissionContext);

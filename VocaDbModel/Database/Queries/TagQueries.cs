@@ -542,8 +542,15 @@ namespace VocaDb.Model.Database.Queries {
 					diff.WebLinks.Set();
 				}
 
+				// Followed tags
 				foreach (var user in source.TagsForUsers.Select(r => r.User).Where(u => !target.TagsForUsers.Any(r2 => r2.User.Equals(u)))) {
 					var link = user.AddTag(target);
+					ctx.Save(link);
+				}
+
+				// Tag mappings
+				foreach (var mapping in source.Mappings.Select(r => r.SourceTag).Where(r => target.Mappings.All(r2 => r2.SourceTag != r))) {
+					var link = target.CreateMapping(mapping);
 					ctx.Save(link);
 				}
 

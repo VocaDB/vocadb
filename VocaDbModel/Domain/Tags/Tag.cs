@@ -440,6 +440,9 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual EntryStatus Status { get; set; }
 
+		/// <summary>
+		/// Users following tag
+		/// </summary>
 		public virtual IList<TagForUser> TagsForUsers {
 			get => tagsForUsers;
 			set {
