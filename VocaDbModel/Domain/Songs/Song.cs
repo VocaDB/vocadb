@@ -144,10 +144,13 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		/// <summary>
+		/// List of artist links. Does not include deleted artists.
+		/// </summary>
 		public virtual IEnumerable<ArtistForSong> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 
 		public virtual TranslatedStringWithDefault ArtistString {
-			get { return artistString; }
+			get => artistString;
 			set {
 				ParamIs.NotNull(() => value);
 				artistString = value;
@@ -155,7 +158,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual IList<SongComment> Comments {
-			get { return comments; }
+			get => comments;
 			set {
 				ParamIs.NotNull(() => value);
 				comments = value;
