@@ -58,7 +58,7 @@ namespace VocaDb.Web.App_Start {
 
 			// Other dependencies (for repositories mostly)
 			builder.RegisterType<LoginManager>().As<IUserPermissionContext>();
-			builder.Register(x => new EntryAnchorFactory(AppConfig.HostAddress)).As<IEntryLinkFactory>();
+			builder.Register(x => new EntryAnchorFactory(AppConfig.HostAddressSecure)).As<IEntryLinkFactory>();
 			builder.RegisterType<UserMessageMailer>().As<IUserMessageMailer>();
 			builder.RegisterType<StopForumSpamClient>().As<IStopForumSpamClient>();
 			builder.RegisterType<PVParser>().As<IPVParser>();
