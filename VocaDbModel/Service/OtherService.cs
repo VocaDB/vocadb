@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Comments;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -20,6 +21,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Discussions;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
@@ -52,18 +54,20 @@ namespace VocaDb.Model.Service {
 		private readonly EntryForApiContractFactory entryForApiContractFactory;
 		private readonly IEntryThumbPersister thumbPersister;
 
-		private AlbumContract[] GetTopAlbums(ISession session, AlbumContract[] recentAlbums) {
+		public AlbumContract[] GetTopAlbums(ContentLanguagePreference languagePreference, int[] ignoreIds) {
+			return HandleQuery(session => GetTopAlbums(session, ignoreIds, languagePreference));
+		}
+
+		private AlbumContract[] GetTopAlbums(ISession session, int[] recentIds, ContentLanguagePreference languagePreference) {
 
 			var minRatings = 2; // Minimum number of ratings
 			var sampleSize = 300; // Get this many popular albums to be rotated when cache expires
 			var albumCount = 7; // This many albums are shown, the albums are rotated when cache expires
-			var cacheKey = "OtherService.PopularAlbums";
+			var cacheKey = "OtherService.PopularAlbums." + languagePreference;
 			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
 
 			if (item != null)
 				return item.Select(a => new AlbumContract(a, LanguagePreference)).ToArray();
-
-			var recentIds = recentAlbums.Select(a => a.Id).ToArray();
 
 			// If only a small number of rated albums, reduce minimum ratings count
 			var totalRatedAlbumCount = session.Query<Album>().Count(a => !a.Deleted && a.RatingCount >= minRatings && a.RatingAverageInt >= 300);
@@ -96,7 +100,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			var popularAlbumContracts = random
-				.Select(a => new AlbumContract(a, LanguagePreference))
+				.Select(a => new AlbumContract(a, languagePreference))
 				.ToArray();
 
 			cache.Add(cacheKey, popularAlbumsCached, DateTime.Now + TimeSpan.FromHours(24));
@@ -105,9 +109,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private AlbumContract[] GetRecentAlbums(ISession session) {
+		public AlbumContract[] GetRecentAlbums(ContentLanguagePreference languagePreference) {
+			return HandleQuery(session => GetRecentAlbums(session, languagePreference));
+		}
 
-			var cacheKey = "OtherService.RecentAlbums";
+		private AlbumContract[] GetRecentAlbums(ISession session, ContentLanguagePreference languagePreference) {
+
+			var cacheKey = "OtherService.RecentAlbums." + languagePreference;
 			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
 
 			if (item != null)
@@ -136,7 +144,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			var newAlbumContracts = upcoming.Reverse().Concat(recent)
-				.Select(a => new AlbumContract(a, LanguagePreference))
+				.Select(a => new AlbumContract(a, languagePreference))
 				.ToArray();
 
 			cache.Add(cacheKey, newAlbums, DateTime.Now + TimeSpan.FromHours(1));
@@ -184,6 +192,10 @@ namespace VocaDb.Model.Service {
 
 			return item;
 
+		}
+
+		public SongForApiContract[] GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields) {
+			return HandleQuery(session => GetHighlightedSongs(session).Select(s => new SongForApiContract(s, languagePreference, fields)).ToArray());
 		}
 
 		private Song[] GetHighlightedSongs(ISession session) {
@@ -397,9 +409,10 @@ namespace VocaDb.Model.Service {
 					.ToArray()
 					.Where(a => !a.EntryBase.Deleted);
 
-				var newAlbums = GetRecentAlbums(session);
+				var newAlbums = GetRecentAlbums(session, LanguagePreference);
 
-				var topAlbums = GetTopAlbums(session, newAlbums);
+				var recentIds = newAlbums.Select(a => a.Id).ToArray();
+				var topAlbums = GetTopAlbums(session, recentIds, LanguagePreference);
 
 				var newSongs = GetHighlightedSongs(session);
 

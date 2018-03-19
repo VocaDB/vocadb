@@ -35,9 +35,11 @@ namespace VocaDb.Web.Controllers.Api {
 	[System.Web.Http.RoutePrefix("api/songs")]
 	public class SongApiController : ApiController {
 
+		private const int hourInSeconds = 3600;
 		private const int absoluteMax = 50;
 		private const int defaultMax = 10;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly OtherService otherService;
 		private readonly SongQueries queries;
 		private readonly SongService service;
 		private readonly SongAggregateQueries songAggregateQueries;
@@ -48,13 +50,17 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Initializes controller.
 		/// </summary>
 		public SongApiController(SongService service, SongQueries queries, SongAggregateQueries songAggregateQueries, 
-			IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext, UserService userService) {
+			IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext, 
+			UserService userService, OtherService otherService) {
+
 			this.service = service;
 			this.queries = queries;
 			this.userService = userService;
 			this.songAggregateQueries = songAggregateQueries;
 			this.entryLinkFactory = entryLinkFactory;
 			this.userPermissionContext = userPermissionContext;
+			this.otherService = otherService;
+
 		}
 
 		/// <summary>
@@ -162,6 +168,22 @@ namespace VocaDb.Web.Controllers.Api {
 			
 			var song = queries.GetSongForApi(id, fields, lang);
 			return song;
+
+		}
+
+		/// <summary>
+		/// Gets list of highlighted songs, same as front page.
+		/// </summary>
+		/// <remarks>
+		/// Output is cached for 1 hour.
+		/// </remarks>
+		[Route("highlighted")]
+		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		public IEnumerable<SongForApiContract> GetHighlightedSongs(
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, 
+			SongOptionalFields fields = SongOptionalFields.None) {
+
+			return otherService.GetHighlightedSongs(languagePreference, fields);
 
 		}
 

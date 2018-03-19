@@ -17,6 +17,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Web.Helpers;
+using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -26,16 +27,22 @@ namespace VocaDb.Web.Controllers.Api {
 	[RoutePrefix("api/albums")]
 	public class AlbumApiController : ApiController {
 
+		private const int hourInSeconds = 3600;
 		private const int absoluteMax = 50;
 		private const int defaultMax = 10;
 		private readonly IEntryThumbPersister thumbPersister;
+		private readonly OtherService otherService;
 		private readonly AlbumQueries queries;
 		private readonly AlbumService service;
 
-		public AlbumApiController(AlbumQueries queries, AlbumService service, IEntryThumbPersister thumbPersister) {			
+		public AlbumApiController(AlbumQueries queries, AlbumService service, 
+			OtherService otherService, IEntryThumbPersister thumbPersister) {		
+			
 			this.queries = queries;
 			this.service = service;
+			this.otherService = otherService;
 			this.thumbPersister = thumbPersister;
+
 		}
 
 		/// <summary>
@@ -228,6 +235,37 @@ namespace VocaDb.Web.Controllers.Api {
 		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) {
 			
 			return service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
+
+		}
+
+		/// <summary>
+		/// Gets list of upcoming or recent albums, same as front page.
+		/// </summary>
+		/// <remarks>
+		/// Output is cached for 1 hour.
+		/// </remarks>
+		[Route("new")]
+		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		public IEnumerable<AlbumContract> GetNewAlbums(
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+
+			return otherService.GetRecentAlbums(languagePreference);
+
+		}
+
+		/// <summary>
+		/// Gets list of top rated albums, same as front page.
+		/// </summary>
+		/// <remarks>
+		/// Output is cached for 1 hour.
+		/// </remarks>
+		[Route("top")]
+		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		public IEnumerable<AlbumContract> GetTopAlbums(
+			int[] ignoreIds,
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+
+			return otherService.GetTopAlbums(languagePreference, ignoreIds ?? new int[0]);
 
 		}
 
