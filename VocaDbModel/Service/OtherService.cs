@@ -200,6 +200,13 @@ namespace VocaDb.Model.Service {
 
 		private Song[] GetHighlightedSongs(ISession session) {
 
+			var cacheKey = "OtherService.HighlightedSongs";
+			var cachedSongIds = (int[])cache.Get(cacheKey);
+
+			if (cachedSongIds != null) {
+				return session.Query<Song>().Where(s => cachedSongIds.Contains(s.Id)).ToArray().OrderByIds(cachedSongIds);
+			}
+
 			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
 			var maxSongs = 1000;
 			var songCount = 20;
@@ -232,10 +239,12 @@ namespace VocaDb.Model.Service {
 				.OrderBy(SongSortRule.RatingScore)
 				.ToArray();
 
+			Song[] songs;
+
 			// If there's enough songs for cutoff date, return them, otherwise load more songs.
 			if (recentSongs.Length >= songCount) {
 
-				return recentSongs;
+				songs = recentSongs;
 
 			}  else {
 
@@ -249,13 +258,18 @@ namespace VocaDb.Model.Service {
 					.Take(songCount - recentSongs.Length)
 					.ToArray();
 
-				return 
+				songs =
 					recentSongs
 					.Concat(moreSongs)
 					.OrderByDescending(s => s.RatingScore)
 					.ToArray();
 
 			}
+
+			var allSongIds = songs.Select(s => s.Id).ToArray();
+			cache.Add(cacheKey, allSongIds, DateTime.Now + TimeSpan.FromMinutes(15));
+
+			return songs;
 
 		}
 
