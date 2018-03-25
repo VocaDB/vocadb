@@ -132,11 +132,13 @@ namespace VocaDb.Model.Utils {
 
 		public static string DbDumpFolder => Val("DbDumpFolder");
 
-		public static string ExternalHelpPath => Val("ExternalHelpPath");
+		public static bool EnableArtistInheritance => Val(nameof(EnableArtistInheritance), false);
 
-		public static string GAAccountId => Val("GAAccountId");
+		public static string ExternalHelpPath => Val(nameof(ExternalHelpPath));
 
-		public static string GADomain => Val("GADomain");
+		public static string GAAccountId => Val(nameof(GAAccountId));
+
+		public static string GADomain => Val(nameof(GADomain));
 
 		public static GlobalLinksSection GetGlobalLinksSection() {
 		

@@ -37,17 +37,9 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual Artist Artist { get; set; }
 
-		public virtual ArtistCategories ArtistCategories {
-			get {
-				return ArtistHelper.GetCategories(this);
-			}
-		}
+		public virtual ArtistCategories ArtistCategories => ArtistHelper.GetCategories(this);
 
-		public virtual string ArtistToStringOrName {
-			get {
-				return Artist != null ? Artist.ToString() : Name;
-			}
-		}
+		public virtual string ArtistToStringOrName => Artist?.ToString() ?? Name;
 
 		public virtual ArtistRoles EffectiveRoles {
 			get {
@@ -62,7 +54,7 @@ namespace VocaDb.Model.Domain.Songs {
 		public virtual string Name { get; set; }
 
 		public virtual string Notes {
-			get { return notes; }
+			get => notes;
 			set {
 				ParamIs.NotNull(() => value);
 				notes = value; 
@@ -72,7 +64,7 @@ namespace VocaDb.Model.Domain.Songs {
 		public virtual ArtistRoles Roles { get; set; }
 
 		public virtual Song Song {
-			get { return song; }
+			get => song;
 			set {
 				ParamIs.NotNull(() => value);
 				song = value;

@@ -230,6 +230,34 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual IEnumerable<ArtistForSong> GetCharactersFromParents() {
+
+			if (!AppConfig.EnableArtistInheritance || OriginalVersion == null)
+				return Enumerable.Empty<ArtistForSong>();
+
+			return OriginalVersion.GetCharactersFromParents(0);
+
+		}
+
+		private IEnumerable<ArtistForSong> GetCharactersFromParents(int levels) {
+
+			int maxLevels = 10;
+
+			if (levels > maxLevels)
+				return Enumerable.Empty<ArtistForSong>();
+
+			var characters = Artists.Where(a => a.ArtistCategories == ArtistCategories.Subject).ToArray();
+
+			if (characters.Any())
+				return characters;
+
+			if (OriginalVersion != null)
+				return OriginalVersion.GetCharactersFromParents(levels + 1);
+
+			return Enumerable.Empty<ArtistForSong>();
+
+		}
+
 		/// <summary>
 		/// Lyrics for this song, either from the song entry itself, or its original version.
 		/// </summary>
