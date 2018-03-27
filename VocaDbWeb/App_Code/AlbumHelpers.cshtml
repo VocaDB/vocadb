@@ -83,12 +83,12 @@
 			
 }
 
-@helper AlbumThumbs(IEnumerable<AlbumContract> albums) {
+@helper AlbumThumbs(IEnumerable<AlbumForApiContract> albums) {
 	
 	<ul class="smallThumbs">
 		@foreach (var album in albums) {
 			@Helpers.ThumbItem(Url.Action("Details", "Album", new { id = album.Id }),
-                Url.ImageThumb(album, ImageSize.SmallThumb), album.Name, album)	  
+                album.MainPicture.UrlSmallThumb, album.Name, album)	  
 		}
 	</ul>
 	

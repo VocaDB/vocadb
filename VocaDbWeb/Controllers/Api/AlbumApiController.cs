@@ -246,10 +246,11 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("new")]
 		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
-		public IEnumerable<AlbumContract> GetNewAlbums(
-			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+		public IEnumerable<AlbumForApiContract> GetNewAlbums(
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
+			AlbumOptionalFields fields = AlbumOptionalFields.None) {
 
-			return otherService.GetRecentAlbums(languagePreference);
+			return otherService.GetRecentAlbums(languagePreference, fields);
 
 		}
 
@@ -261,11 +262,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
-		public IEnumerable<AlbumContract> GetTopAlbums(
+		public IEnumerable<AlbumForApiContract> GetTopAlbums(
 			int[] ignoreIds,
-			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
+			AlbumOptionalFields fields = AlbumOptionalFields.None) {
 
-			return otherService.GetTopAlbums(languagePreference, ignoreIds ?? new int[0]);
+			return otherService.GetTopAlbums(languagePreference, fields, ignoreIds ?? new int[0]);
 
 		}
 
