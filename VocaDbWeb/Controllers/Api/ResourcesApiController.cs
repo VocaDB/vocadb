@@ -95,7 +95,7 @@ namespace VocaDb.Web.Controllers.Api {
 			if (culture == null)
 				culture = CultureInfo.GetCultureInfo("en-US");
 
-			var sets = setNames.ToDictionary(s => s, s => GetResources(s, culture));
+			var sets = setNames.Distinct().ToDictionary(s => s, s => GetResources(s, culture));
 			return sets;
 
 		} 
