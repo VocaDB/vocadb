@@ -7,6 +7,12 @@ namespace VocaDb.Model.Utils.Config {
 		public SiteSettingsSection() {
 		}
 
+		[ConfigurationProperty("bannerUrl", DefaultValue = "")]
+		public string BannerUrl {
+			get => (string)this["bannerUrl"];
+			set => this["bannerUrl"] = value;
+		}
+
 		[ConfigurationProperty("blogUrl", DefaultValue = "blog.vocadb.net")]
 		public string BlogUrl {
 			get => (string)this["blogUrl"];

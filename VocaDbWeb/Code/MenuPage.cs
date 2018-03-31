@@ -27,6 +27,8 @@ namespace VocaDb.Web.Code {
 		}
 
 		static MenuPage() {
+
+			BannerUrl = AppConfig.SiteSettings.BannerUrl.EmptyToNull();
 			
 			var config = AppConfig.GetGlobalLinksSection();
 
@@ -88,15 +90,20 @@ namespace VocaDb.Web.Code {
 
 		}
 
-		public static Link[] AppLinks { get; private set; }
+		public static Link[] AppLinks { get; }
 
-		public static Link[] BigBanners { get; private set; }
+		/// <summary>
+		/// Custom banner URL. Null if default.
+		/// </summary>
+		public static string BannerUrl { get; }
+
+		public static Link[] BigBanners { get; }
 
 		public string BlogUrl => UrlHelper.MakeLink(Config.SiteSettings.BlogUrl);
 
-		public static Link[] SmallBanners { get; private set; }
+		public static Link[] SmallBanners { get; }
 
-		public static Link[] SocialLinks { get; private set; }
+		public static Link[] SocialLinks { get; }
 
 	}
 
