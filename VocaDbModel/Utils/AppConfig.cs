@@ -71,6 +71,13 @@ namespace VocaDb.Model.Utils {
 			
 		}
 
+		private static int Val(string key, int def) {
+
+			var val = Val(key);
+			return (int.TryParse(val, out var boolVal)) ? boolVal : def;
+
+		}
+
 		public static bool AllowCustomArtistName => Val("AllowCustomArtistName", false);
 
 		public static DiscType[] AlbumTypes {
@@ -135,6 +142,8 @@ namespace VocaDb.Model.Utils {
 		public static bool EnableArtistInheritance => Val(nameof(EnableArtistInheritance), false);
 
 		public static string ExternalHelpPath => Val(nameof(ExternalHelpPath));
+
+		public static int FilteredArtistId => Val("FilteredArtistId", 0);
 
 		public static string GAAccountId => Val(nameof(GAAccountId));
 

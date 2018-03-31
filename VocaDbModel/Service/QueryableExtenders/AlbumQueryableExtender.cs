@@ -83,6 +83,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Album> WhereHasArtist(this IQueryable<Album> query, int artistId) {
+
+			if (artistId == 0)
+				return query;
+
+			return query.WhereHasArtist<Album, ArtistForAlbum>(artistId, false, false);
+
+		}
+
 		public static IQueryable<Album> WhereHasArtistParticipationStatus(
 			this IQueryable<Album> query, 
 			ArtistParticipationQueryParams queryParams,

@@ -32,6 +32,7 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service {
 
@@ -77,6 +78,7 @@ namespace VocaDb.Model.Service {
 
 			// Find Ids of albums that match the popularity filters, take maximum of sampleSize albums
 			var popularIds = session.Query<Album>()
+				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.Where(a => !a.Deleted 
 					&& a.RatingCount >= minRatings && a.RatingAverageInt >= 300	// Filter by number of ratings and average rating
 					&& !recentIds.Contains(a.Id))						// Filter out recent albums (that are already shown)
@@ -124,6 +126,7 @@ namespace VocaDb.Model.Service {
 			var now = DateTime.Now;
 
 			var upcoming = session.Query<Album>()
+				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.Where(a => !a.Deleted)
 				.WhereHasReleaseDate()
 				.WhereReleaseDateIsAfter(now)
@@ -132,6 +135,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			var recent = session.Query<Album>()
+				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.Where(a => !a.Deleted)
 				.WhereHasReleaseDate()
 				.WhereReleaseDateIsBefore(now)
@@ -214,6 +218,7 @@ namespace VocaDb.Model.Service {
 			// Load at most maxSongs songs for cutoff date
 			var recentSongIdAndScore =
 				session.Query<Song>()
+				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.Where(s => !s.Deleted 
 					&& s.PVServices != PVServices.Nothing 
 					&& s.CreateDate >= cutoffDate
@@ -234,7 +239,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			// Load the songs
-			var recentSongs = session.Query<Song>()
+			var recentSongs = session.Query<Song>()				
 				.Where(s => songIds.Contains(s.Id))
 				.OrderBy(SongSortRule.RatingScore)
 				.ToArray();
@@ -250,6 +255,7 @@ namespace VocaDb.Model.Service {
 
 				var moreSongs =
 					session.Query<Song>()
+					.WhereHasArtist(AppConfig.FilteredArtistId)
 					.Where(s => !s.Deleted 
 						&& s.PVServices != PVServices.Nothing 						
 						&& s.CreateDate < cutoffDate
