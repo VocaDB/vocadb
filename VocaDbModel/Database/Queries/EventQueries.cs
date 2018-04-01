@@ -297,7 +297,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				CreateTrashedEntry(ctx, entry, notes);
 
-				foreach (var ev in entry.AllEvents) {
+				var allEvents = entry.AllEvents.ToArray();
+				foreach (var ev in allEvents) {
 					ev.SetSeries(null);
 				}
 
