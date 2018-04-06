@@ -6,6 +6,8 @@
 	var contributors = new[] {
 		"digited", "Zakudono", "salanos", "kyllakivi", "Goship", "mi.chan", "gaminat", "Wiktor", "Shiroizu", "Ota-kun", "Hissori", "nebulasresolution", "megaki11"
 	};
+	int freeTagId = ViewBag.FreeTagId;
+	int instTagId = ViewBag.InstrumentalTagId;
 }
 
 <div id="tabs">
@@ -73,10 +75,6 @@
 		support[at]vocadb.net<br />
 		<a href="discussion/folders/5" title="">VocaDB日本語話し合いページ</a><br />
 		<a href="https://github.com/VocaDB/vocadb" title="">Github</a><br />
-		<!-- You can also contact the
-		@Html.ActionLink("moderators", "Index", "User", new { groupId = VocaDb.Model.Domain.Users.UserGroupId.Moderator }, null)
-		or @Html.ActionLink("administrators", "Index", "User", new { groupId = VocaDb.Model.Domain.Users.UserGroupId.Admin }, null)
-		directly on the site if you have questions.<br /> -->
 	</div>
 
 	<div id="aboutvocaloid">
@@ -442,9 +440,9 @@
 
                 if (hsh_arr[1].length > 0) {
                     switch (hsh_arr[0]) {
-                    case 'vocadb':     aboutvocadb(); break;
-                    case 'vocaloid':   aboutvocaloid(); break;
-                    case 'guidelines': guidelines(); break;
+						case 'vocadb': aboutvocadb(); break;
+						case 'vocaloid': aboutvocaloid(); break;
+						case 'guidelines': guidelines(); break;
                     default: break;
                     }
 
