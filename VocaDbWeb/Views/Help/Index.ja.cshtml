@@ -6,6 +6,8 @@
 	var contributors = new[] {
 		"digited", "Zakudono", "salanos", "kyllakivi", "Goship", "mi.chan", "gaminat", "Wiktor", "Shiroizu", "Ota-kun", "Hissori", "nebulasresolution", "megaki11"
 	};
+	int freeTagId = ViewBag.FreeTagId;
+	int instTagId = ViewBag.InstrumentalTagId;
 }
 
 <div id="tabs">
@@ -438,9 +440,9 @@
 
                 if (hsh_arr[1].length > 0) {
                     switch (hsh_arr[0]) {
-                    case 'vocadb':     aboutvocadb(); break;
-                    case 'vocaloid':   aboutvocaloid(); break;
-                    case 'guidelines': guidelines(); break;
+						case 'vocadb': aboutvocadb(); break;
+						case 'vocaloid': aboutvocaloid(); break;
+						case 'guidelines': guidelines(); break;
                     default: break;
                     }
 
