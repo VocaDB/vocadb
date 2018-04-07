@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlbumDetails" xml:space="preserve">
+    <value>詳細</value>
+  </data>
+  <data name="AlbumTiles" xml:space="preserve">
+    <value>アルバムジャケット</value>
+  </data>
+  <data name="AlbumType" xml:space="preserve">
+    <value>アルバムのタイプ</value>
+  </data>
+  <data name="ArtistType" xml:space="preserve">
+    <value>アーティストのタイプ</value>
+  </data>
   <data name="Category" xml:space="preserve">
     <value>カテゴリ</value>
   </data>
@@ -126,8 +138,17 @@
   <data name="InMyCollection" xml:space="preserve">
     <value>コレクションに入っている</value>
   </data>
+  <data name="ItemsPerPage" xml:space="preserve">
+    <value>{0}件ずつ表示</value>
+  </data>
   <data name="MoreFilters" xml:space="preserve">
     <value>その外のフィルター</value>
+  </data>
+  <data name="MoreRecentThan" xml:space="preserve">
+    <value>この曲以降にリリースされた曲</value>
+  </data>
+  <data name="OnlyWithPVs" xml:space="preserve">
+    <value>PV付きの楽曲のみ</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>プレビュ</value>
@@ -138,64 +159,52 @@
   <data name="ReleaseDate" xml:space="preserve">
     <value>リリース日</value>
   </data>
-  <data name="TagCategory" xml:space="preserve">
-    <value>カテゴリ</value>
-  </data>
-  <data name="TypeSomething" xml:space="preserve">
-    <value>タイプする</value>
-  </data>
-  <data name="MinScore" xml:space="preserve">
-    <value>最低点</value>
-  </data>
-  <data name="IncludeDerivedVoicebanks" xml:space="preserve">
-    <value>派生ボイスバンクを含む</value>
-  </data>
-  <data name="MoreRecentThan" xml:space="preserve">
-    <value>この曲以降にリリースされた曲</value>
-  </data>
-  <data name="OnlyWithPVs" xml:space="preserve">
-    <value>PV付きの楽曲のみ</value>
-  </data>
-  <data name="OnlyMyFollowedArtists" xml:space="preserve">
-    <value>フォローしているアーティストのみ</value>
-  </data>
-  <data name="TopGenres" xml:space="preserve">
-    <value>最も人気の高いジャンル</value>
-  </data>
-  <data name="ItemsPerPage" xml:space="preserve">
-    <value>{0}件ずつ表示</value>
-  </data>
   <data name="ShowTags" xml:space="preserve">
     <value>タグを表示する</value>
-  </data>
-  <data name="Playlist" xml:space="preserve">
-    <value>プレイリスト</value>
-  </data>
-  <data name="AlbumTiles" xml:space="preserve">
-    <value>アルバムジャケット</value>
-  </data>
-  <data name="AlbumDetails" xml:space="preserve">
-    <value>詳細</value>
-  </data>
-  <data name="TotalScore" xml:space="preserve">
-    <value>総評価数</value>
-  </data>
-  <data name="AlbumType" xml:space="preserve">
-    <value>アルバムのタイプ</value>
-  </data>
-  <data name="ArtistType" xml:space="preserve">
-    <value>アーティストのタイプ</value>
   </data>
   <data name="SongType" xml:space="preserve">
     <value>曲のタイプ</value>
   </data>
-  <data name="ShowingItemsOf" xml:space="preserve">
-    <value>{1}件中{0} を表示</value>
+  <data name="TagCategory" xml:space="preserve">
+    <value>カテゴリ</value>
+  </data>
+  <data name="TagInformation" xml:space="preserve">
+    <value>タグ情報</value>
   </data>
   <data name="Times" xml:space="preserve">
     <value>評価回数</value>
   </data>
-  <data name="TagInformation" xml:space="preserve">
-    <value>タグ情報</value>
+  <data name="TotalScore" xml:space="preserve">
+    <value>総評価数</value>
+  </data>
+  <data name="TypeSomething" xml:space="preserve">
+    <value>タイプする</value>
+  </data>
+  <data name="IncludeDerivedVoicebanks" xml:space="preserve">
+    <value>派生ボイスバンクを含む</value>
+  </data>
+  <data name="MinScore" xml:space="preserve">
+    <value>最低点</value>
+  </data>
+  <data name="OnlyMyFollowedArtists" xml:space="preserve">
+    <value>フォローしているアーティストのみ</value>
+  </data>
+  <data name="Playlist" xml:space="preserve">
+    <value>プレイリスト</value>
+  </data>
+  <data name="TopGenres" xml:space="preserve">
+    <value>最も人気の高いジャンル</value>
+  </data>
+  <data name="ShowingItemsOf" xml:space="preserve">
+    <value>{1}件中{0} を表示</value>
+  </data>
+  <data name="OnlyMyEvents" xml:space="preserve">
+    <value>登録したイベントのみ</value>
+  </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>カテゴリ</value>
+  </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>リリースイベント</value>
   </data>
 </root>
