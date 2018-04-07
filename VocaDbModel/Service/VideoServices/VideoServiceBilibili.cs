@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using HtmlAgilityPack;
 using NLog;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
@@ -75,6 +77,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var authorElem = doc.XPathSelectElement("/info/author");
 			var authorId = GetValue(doc, "/info/mid");
 			var createdElem = doc.XPathSelectElement("/info/created_at");
+			int.TryParse(GetValue(doc, "/info/cid"), out var cid); // Unsure what this is, but it's required for embedding
 
 			if (titleElem == null)
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "No title element");
@@ -84,8 +87,12 @@ namespace VocaDb.Model.Service.VideoServices {
 			var author = authorElem?.Value ?? string.Empty;
 			var created = createdElem != null ? (DateTime?)DateTime.Parse(createdElem.Value) : null;
 
+			var metadata = new PVExtendedMetadata(new BiliMetadata {
+				Cid = cid
+			});
+
 			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, 
-				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, uploadDate: created));
+				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, uploadDate: created, extendedMetadata: metadata));
 
 		}
 
@@ -96,5 +103,11 @@ namespace VocaDb.Model.Service.VideoServices {
 			};
 		}
 
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	public class BiliMetadata {
+		[DataMember]
+		public int Cid { get; set; }
 	}
 }
