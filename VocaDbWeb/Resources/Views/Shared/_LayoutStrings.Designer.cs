@@ -259,7 +259,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Related sites.
+        ///   Looks up a localized string similar to Partners.
         /// </summary>
         public static string RelatedSites {
             get {
