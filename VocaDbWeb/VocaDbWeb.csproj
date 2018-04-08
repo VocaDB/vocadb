@@ -1769,7 +1769,7 @@
     <Content Include="Content\banners\vocaloidism-180px.png" />
     <Content Include="Content\banners\vo_small.png" />
     <Content Include="Content\banners\vuslogo.png" />
-	<Content Include="Content\banners\mikupa_ru.jpg" />
+    <Content Include="Content\banners\mikupa_ru.jpg" />
     <Content Include="Content\barcode.png" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2879,6 +2879,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\UserAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Bootstrap\Tooltip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ConfirmClick.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\Filters\Truncate.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatDateFilter.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatLengthSecondsFilter.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Highcharts.ts" />
