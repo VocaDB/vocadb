@@ -791,7 +791,7 @@ namespace VocaDb.Model.Database.Queries {
 						session.Sync(songArtistDiff);
 
 						var archived = ArchiveSong(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
-							string.Format("Created for album '{0}'", album.DefaultName));
+							string.Format("Created for album '{0}'", album.DefaultName.TruncateWithEllipsis(100)));
 
 						session.AuditLogger.AuditLog(string.Format("created {0} for {1}",
 							entryLinkFactory.CreateEntryLink(song), entryLinkFactory.CreateEntryLink(album)));
