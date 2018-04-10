@@ -23,7 +23,7 @@ module vdb.viewModels {
 				return;
 
 			// http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
-			const regex = /(http:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
+			const regex = /(http(?:s)?:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net)|(?:touhoudb\.com))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
 			const page = linkedPages[0];
 
 			const match = regex.exec(page);
@@ -31,7 +31,7 @@ module vdb.viewModels {
 			if (!match || match.length < 3)
 				return;
 
-			const siteUrl = match[1]; // either http://utaitedb.net/ or http://vocadb.net/
+			const siteUrl = match[1].replace("http://", "https://"); // either http://utaitedb.net/ or http://vocadb.net/
 			const id = parseInt(match[2]);
 
 			const repo = new rep.SongRepository(siteUrl, this.languagePreference);
