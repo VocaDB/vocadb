@@ -17,22 +17,34 @@ module vdb.viewModels {
 
 		public comments: EditableCommentsViewModel;
 
+		public getMatchedSite = (page: string) => {
+
+			// http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
+			const regex = /(http(?:s)?:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net)|(?:touhoudb\.com))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
+			const match = regex.exec(page);
+
+			if (!match || match.length < 3)
+				return null;
+
+			const siteUrl = match[1].replace("http://", "https://"); // either http://utaitedb.net/ or http://vocadb.net/
+			const id = parseInt(match[2]);
+
+			return { siteUrl: siteUrl, id: id };
+
+		}
+
 		private getOriginal = (linkedPages: string[]) => {
 			
 			if (linkedPages == null || !linkedPages.length)
 				return;
 
-			// http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
-			const regex = /(http(?:s)?:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net)|(?:touhoudb\.com))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
 			const page = linkedPages[0];
+			const match = this.getMatchedSite(page);
 
-			const match = regex.exec(page);
-
-			if (!match || match.length < 3)
+			if (!match)
 				return;
 
-			const siteUrl = match[1].replace("http://", "https://"); // either http://utaitedb.net/ or http://vocadb.net/
-			const id = parseInt(match[2]);
+			const {siteUrl, id} = match;
 
 			const repo = new rep.SongRepository(siteUrl, this.languagePreference);
 			// TODO: this should be cached, but first we need to make sure the other instances are not cached.
