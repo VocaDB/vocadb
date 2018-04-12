@@ -45,7 +45,7 @@ module vdb.viewModels.pvs {
 			};
 
 			if (!PVPlayerNico.scriptLoaded) {
-				$.getScript("https://embed.res.nimg.jp/js/api.js").then(() => {
+				$.getScript("https://static.vocadb.net/script/nico/api.js").then(() => {
 					PVPlayerNico.scriptLoaded = true;
 
 					window.addEventListener("message", (e: nico.PlayerEvent) => {
