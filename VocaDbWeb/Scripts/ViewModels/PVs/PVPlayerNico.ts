@@ -58,6 +58,13 @@ module vdb.viewModels.pvs {
 						if (e.data.eventName === "loadComplete") {
 							this.loadedPv = e.data.data.videoInfo.watchId;
 						}
+						if (e.data.eventName === "error") {
+							const currentPv = this.loadedPv;
+							window.setTimeout(() => {
+								if (this.songFinishedCallback && currentPv === this.loadedPv)
+									this.songFinishedCallback();							
+							}, 3900);
+						}
 					});
 
 					if (readyCallback) {
@@ -144,7 +151,14 @@ declare namespace nico {
 		}
 	}
 
-	type EventData = StatusEvent | MetadataEvent | LoadCompleteEvent;
+	export interface ErrorEvent {
+		eventName: "error";
+		data: {
+			message: string;
+		};
+	}
+
+	type EventData = StatusEvent | MetadataEvent | LoadCompleteEvent | ErrorEvent;
 
 	export interface NicoPlayer {
 		play(): void;
