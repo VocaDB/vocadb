@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -16,6 +17,8 @@ namespace VocaDb.Model.Service.Helpers {
 	/// This is to prevent flooding users with too many notifications.
 	/// </summary>
 	public class FollowedArtistNotifier {
+
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown, 
 			string entryTypeName) {
@@ -73,6 +76,8 @@ namespace VocaDb.Model.Service.Helpers {
 			var coll = artists.ToArray();
 			var artistIds = coll.Select(a => a.Id).ToArray();
 
+			log.Info("Sending notifications for {0} artists", artistIds.Length);
+
 			// Get users with less than maximum number of unread messages, following any of the artists
 			var usersWithArtists = ctx.OfType<ArtistForUser>()
 				.Query()
@@ -90,6 +95,8 @@ namespace VocaDb.Model.Service.Helpers {
 				.ToDictionary(afu => afu.Key, afu => afu.Select(a => a.ArtistId));
 
 			var userIds = usersWithArtists.Keys;
+
+			log.Debug("Found {0} users subscribed to artists", userIds.Count);
 
 			if (!userIds.Any())
 				return new User[0];
