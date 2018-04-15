@@ -468,6 +468,7 @@
     <Compile Include="Domain\Tags\TagTargetTypes.cs" />
     <Compile Include="Domain\Tags\TagWebLink.cs" />
     <Compile Include="Domain\TrashedEntry.cs" />
+    <Compile Include="Domain\Users\UserAuditEvent.cs" />
     <Compile Include="Domain\Users\ArtistForUser.cs" />
     <Compile Include="Domain\Users\EventForUser.cs" />
     <Compile Include="Domain\Users\IUser.cs" />
@@ -584,6 +585,7 @@
     <Compile Include="Helpers\OtherHelper.cs" />
     <Compile Include="Helpers\PrimitiveParseHelper.cs" />
     <Compile Include="Helpers\ReCaptcha2.cs" />
+    <Compile Include="Helpers\RelatedSitesHelper.cs" />
     <Compile Include="Helpers\SongHelper.cs" />
     <Compile Include="Helpers\StreamHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
