@@ -17,6 +17,11 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
+		public void IsRelatedSite_NoMatch2() {
+			TestRelatedSite(false, "https://www5.atwiki.jp/hmiku/pages/37501.html");
+		}
+
+		[TestMethod]
 		public void IsRelatedSite_MatchHttp() {
 			TestRelatedSite(true, "http://vocadb.net/S/3939");
 		}
