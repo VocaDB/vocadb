@@ -150,7 +150,7 @@ namespace VocaDb.Web.Controllers
 
 			var id = entryId.Id;
 
-			var song = songService.GetSong(entryId.Id);
+			var song = songService.GetSongForApi(entryId.Id, SongOptionalFields.ThumbUrl);
 			var src = VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new { songId = id })).ToString();
 			var html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>", src, maxwidth, maxheight);
 

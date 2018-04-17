@@ -11,7 +11,7 @@ namespace VocaDb.Web.Models.Ext {
 
 		public SongOEmbedResponse() {}
 
-		public SongOEmbedResponse(SongContract song, int width, int height, string html) {
+		public SongOEmbedResponse(SongForApiContract song, int width, int height, string html) {
 
 			ParamIs.NotNull(() => song);
 			ParamIs.NotNullOrEmpty(() => html);
