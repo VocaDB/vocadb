@@ -26,44 +26,34 @@ namespace VocaDb.Web.Models.Ext {
 
 		}
 
-		[JsonProperty("author_name")]
-		[XmlElement("author_name")]
+		[JsonProperty("author_name"), XmlElement("author_name")]
 		public string AuthorName { get; set; }
 
-		[JsonProperty("height")]
-		[XmlElement("height")]
+		[JsonProperty("height"), XmlElement("height")]
 		public int Height { get; set; }
 
-		[JsonProperty("html")]
-		[XmlElement("html")]
+		[JsonProperty("html"), XmlElement("html")]
 		public string Html { get; set; }
 
-		[JsonProperty("provider_name")]
-		[XmlElement("provider_name")]
+		[JsonProperty("provider_name"), XmlElement("provider_name")]
 		public string ProviderName => "VocaDB";
 
-		[JsonProperty("provider_url")]
-		[XmlElement("provider_url")]
+		[JsonProperty("provider_url"), XmlElement("provider_url")]
 		public string ProviderUrl => AppConfig.HostAddress;
 
-		[JsonProperty("thumbnail_url")]
-		[XmlElement("thumbnail_url")]
+		[JsonProperty("thumbnail_url"), XmlElement("thumbnail_url")]
 		public string ThumbnailUrl { get; set; }
 
-		[JsonProperty("title")]
-		[XmlElement("title")]
+		[JsonProperty("title"), XmlElement("title")]
 		public string Title { get; set; }
 
-		[JsonProperty("type")]
-		[XmlElement("type")]
+		[JsonProperty("type"), XmlElement("type")]
 		public string Type => "video";
 
-		[JsonProperty("version")]
-		[XmlElement("version")]
+		[JsonProperty("version"), XmlElement("version")]
 		public string Version => "1.0";
 
-		[JsonProperty("width")]
-		[XmlElement("width")]
+		[JsonProperty("width"), XmlElement("width")]
 		public int Width { get; set; }
 
 	}
