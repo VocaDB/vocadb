@@ -131,18 +131,10 @@ namespace VocaDb.Web.Controllers
 			var id = entryId.Id;
 
 			var song = songService.GetSong(entryId.Id);
-			var responsiveBegin = responsiveWrapper ? "<span style=\"display:inline-block;width:100%;max-width:" + maxwidth + "px\"><span style=\"display:block;overflow:hidden;position:relative;padding-bottom:56.25%\">" : string.Empty;
-			var responsiveEnd = responsiveWrapper ? "</span></span>" : string.Empty;
-			var html = string.Format("{3}<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>{4}",
-				VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new {songId = id})), maxwidth, maxheight, responsiveBegin, responsiveEnd);
+			var src = VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new { songId = id })).ToString();
+			var html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>", src, maxwidth, maxheight);
 
 			return Object(new SongOEmbedResponse(song, maxwidth, maxheight, html), format);
-
-		}
-
-		public ActionResult OEmbedResponsive(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json) {
-
-			return OEmbed(url, maxwidth, maxheight, format, true);
 
 		}
 
