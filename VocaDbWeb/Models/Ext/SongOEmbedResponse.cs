@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using Newtonsoft.Json;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Utils;
@@ -15,47 +16,55 @@ namespace VocaDb.Web.Models.Ext {
 			ParamIs.NotNull(() => song);
 			ParamIs.NotNullOrEmpty(() => html);
 
-			author_name = song.ArtistString;	
-			thumbnail_url = song.ThumbUrl;
-			title = song.Name;
+			AuthorName = song.ArtistString;	
+			ThumbnailUrl = song.ThumbUrl;
+			Title = song.Name;
 
-			this.height = height;
-			this.html = html;
-			this.width = width;
+			Height = height;
+			Html = html;
+			Width = width;
 
 		}
 
-		public string author_name { get; set; }
+		[JsonProperty("author_name")]
+		[XmlElement("author_name")]
+		public string AuthorName { get; set; }
 
-		public int height { get; set; }
+		[JsonProperty("height")]
+		[XmlElement("height")]
+		public int Height { get; set; }
 
-		public string html { get; set; }
+		[JsonProperty("html")]
+		[XmlElement("html")]
+		public string Html { get; set; }
 
-		public string provider_name {
-			get { return "VocaDB"; }
-			set { }
-		}
+		[JsonProperty("provider_name")]
+		[XmlElement("provider_name")]
+		public string ProviderName => "VocaDB";
 
-		public string provider_url {
-			get { return AppConfig.HostAddress; }
-			set { }
-		}
+		[JsonProperty("provider_url")]
+		[XmlElement("provider_url")]
+		public string ProviderUrl => AppConfig.HostAddress;
 
-		public string thumbnail_url { get; set; }
+		[JsonProperty("thumbnail_url")]
+		[XmlElement("thumbnail_url")]
+		public string ThumbnailUrl { get; set; }
 
-		public string title { get; set; }
+		[JsonProperty("title")]
+		[XmlElement("title")]
+		public string Title { get; set; }
 
-		public string type {
-			get { return "video"; }
-			set { }
-		}
+		[JsonProperty("type")]
+		[XmlElement("type")]
+		public string Type => "video";
 
-		public string version {
-			get { return "1.0"; }
-			set { }
-		}
+		[JsonProperty("version")]
+		[XmlElement("version")]
+		public string Version => "1.0";
 
-		public int width { get; set; }
+		[JsonProperty("width")]
+		[XmlElement("width")]
+		public int Width { get; set; }
 
 	}
 

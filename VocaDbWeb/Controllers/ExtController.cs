@@ -49,7 +49,7 @@ namespace VocaDb.Web.Controllers
 				return new EmptyResult();
 
 			var content = XmlHelper.SerializeToUTF8XmlString(obj);
-			return Xml(content);
+			return base.Xml(content);
 
 		}
 
