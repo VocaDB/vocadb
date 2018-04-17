@@ -3568,6 +3568,7 @@
     <Content Include="Views\Event\ViewVersion.cshtml" />
     <Content Include="Views\Event\ManageTagUsages.cshtml" />
     <Content Include="Views\Shared\Partials\_CustomNameEdit.cshtml" />
+    <Content Include="Views\Ext\OEmbedResponsive.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -133,7 +133,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json) {
+		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json, bool responsiveWrapper = false) {
 
 			if (string.IsNullOrEmpty(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
@@ -152,12 +152,28 @@ namespace VocaDb.Web.Controllers
 
 			var song = songService.GetSongForApi(entryId.Id, SongOptionalFields.ThumbUrl);
 			var src = VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new { songId = id })).ToString();
-			var html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>", src, maxwidth, maxheight);
+			string html;
+
+			if (responsiveWrapper) {
+				html = RenderPartialViewToString("OEmbedResponsive", new OEmbedParams { Width = maxwidth, Height = maxheight, Src = src });
+			} else {
+				html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>", src, maxwidth, maxheight);
+			}
 
 			return Object(new SongOEmbedResponse(song, maxwidth, maxheight, html), format);
 
 		}
 
+		public ActionResult OEmbedResponsive(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json) {
+			return OEmbed(url, maxwidth, maxheight, format, true);
+		}
+
+	}
+
+	public class OEmbedParams {
+		public int Height { get; set; }
+		public int Width { get; set; }
+		public string Src { get; set; }
 	}
 
 }
