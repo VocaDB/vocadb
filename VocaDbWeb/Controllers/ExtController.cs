@@ -11,6 +11,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
@@ -32,6 +33,25 @@ namespace VocaDb.Web.Controllers
 		private readonly EventQueries eventQueries;
 		private readonly SongQueries songService;
 		private readonly TagQueries tagQueries;
+
+		protected ActionResult Object<T>(T obj, DataFormat format) where T : class {
+
+			if (format == DataFormat.Xml)
+				return Xml(obj);
+			else
+				return Json(obj);
+
+		}
+
+		protected ActionResult Xml<T>(T obj) where T : class {
+
+			if (obj == null)
+				return new EmptyResult();
+
+			var content = XmlHelper.SerializeToUTF8XmlString(obj);
+			return Xml(content);
+
+		}
 
 		public ExtController(IEntryUrlParser entryUrlParser, IEntryImagePersisterOld entryThumbPersister, 
 			AlbumService albumService, ArtistService artistService, EventQueries eventQueries, SongQueries songService, TagQueries tagQueries) {
@@ -113,7 +133,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json, bool responsiveWrapper = false) {
+		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json) {
 
 			if (string.IsNullOrEmpty(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
