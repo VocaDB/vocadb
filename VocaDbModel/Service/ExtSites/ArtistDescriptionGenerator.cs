@@ -15,7 +15,7 @@ namespace VocaDb.Model.Service.ExtSites {
 			}
 
 			if (artist.VoiceProviders.Any()) {
-				sb.AppendFormat(" Voice provider: {0}.", artist.VoiceProviders.First().Name);
+				sb.AppendFormat(" Voice provider: {0}.", string.Join(", ", artist.VoiceProviders.Select(a => a.Name)));
 			}
 
 		}
