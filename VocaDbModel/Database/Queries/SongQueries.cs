@@ -418,7 +418,7 @@ namespace VocaDb.Model.Database.Queries {
 				var user = PermissionContext.LoggedUser;
 
 				// Send notifications. Avoid sending notification to the same users twice.
-				var notifiedUsers = new FollowedArtistNotifier().SendNotifications(ctx, song, song.ArtistList, user, entryLinkFactory, mailer, enumTranslations);
+				var notifiedUsers = new FollowedArtistNotifier().SendNotifications(ctx, song, song.ArtistList, enumTranslations.Translation, user, entryLinkFactory, mailer, enumTranslations);
 
 				if (addedTags != null && addedTags.Length > 0) {
 					new FollowedTagNotifier().SendNotifications(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);
