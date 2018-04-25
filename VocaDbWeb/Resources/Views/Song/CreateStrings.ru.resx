@@ -142,10 +142,10 @@
     <value>Название трека не должно содержать имени артиста - для этого есть отдельное специальное поле.</value>
   </data>
   <data name="OriginalPV" xml:space="preserve">
-    <value>Ссылка на оригинальное PV (NicoNicoDouga, Youtube или Vimeo)</value>
+    <value>Ссылка на оригинальное PV (NicoNico, Youtube или Vimeo)</value>
   </data>
   <data name="ReprintPV" xml:space="preserve">
-    <value>Cсылка на копию (NicoNicoDouga, Youtube или Vimeo)</value>
+    <value>Cсылка на копию (NicoNico, Youtube или Vimeo)</value>
   </data>
   <data name="SongInfo" xml:space="preserve">
     <value>Пожалуйста, удостоверьтесь, что данной песни ещё нет в базе. Нужно указать хотя бы одного артиста. Также желательна ссылка на оригинальное видео (или Piapro/SoundCloud).</value>
