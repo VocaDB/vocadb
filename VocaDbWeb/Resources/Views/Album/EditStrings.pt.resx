@@ -208,7 +208,7 @@
     <value>Serviço</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>Serviços suportados: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro e Bilibili.</value>
+    <value>Serviços suportados: YouTube, NicoNico, Vimeo, SoundCloud, Piapro e Bilibili.</value>
   </data>
   <data name="PvType" xml:space="preserve">
     <value>Tipo</value>
