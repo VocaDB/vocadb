@@ -219,9 +219,9 @@
 <!--	<div id="tabs" class="js-cloak" data-bind="show, with: comments">
 
 	<ul>
-		<li><a href="#latestCommentsTab">@ViewRes.EntryDetailsStrings.LatestComments</a></li> <-Find equivalent file
+		<li><a href="#latestCommentsTab">@ViewRes.EntryDetailsStrings.LatestComments</a></li>
 		<li data-tab="Discussion">
-			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a> <- Find equivalent file
+			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
 		</li>
 	</ul>
 
@@ -229,7 +229,7 @@
 		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)
 		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 		<p>
-			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a> <- Find equivalent file
+			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
 		</p>
 	</div>
 
