@@ -540,7 +540,6 @@
     <Compile Include="Domain\PictureData.cs" />
     <Compile Include="Domain\Security\AuditLogEntry.cs" />
     <Compile Include="Domain\Security\NotAllowedException.cs" />
-    <Compile Include="Domain\Security\RoleTypes.cs" />
     <Compile Include="Domain\Songs\PVForSong.cs" />
     <Compile Include="Domain\PVs\PVService.cs" />
     <Compile Include="Domain\PVs\PVType.cs" />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net.Mail;
 using VocaDb.Model.DataContracts;
@@ -391,8 +391,6 @@ namespace VocaDb.Model.Domain.Users {
 				receivedMessages = value;
 			}
 		}
-
-		public virtual RoleTypes Roles { get; set; }
 
 		/// <summary>
 		/// Per-user password salt. Applied to password hash.
