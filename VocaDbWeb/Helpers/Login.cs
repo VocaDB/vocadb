@@ -29,6 +29,12 @@ namespace VocaDb.Web.Helpers {
 				return Manager.HasPermission(PermissionToken.ManageDatabase);
 			}
 		}
+		
+		public static bool CanEditTags {
+			get {
+				return Manager.HasPermission(PermissionToken.EditTags);
+			}
+		}
 
 		public static bool CanManageEntryReports {
 			get {
