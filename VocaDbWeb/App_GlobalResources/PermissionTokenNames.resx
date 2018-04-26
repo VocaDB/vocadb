@@ -123,6 +123,12 @@
   <data name="Admin" xml:space="preserve">
     <value>Database admin tasks</value>
   </data>
+  <data name="AddRawFileMedia" xml:space="preserve">
+    <value>Add raw media</value>
+  </data>
+  <data name="ApplyAnyTag" xml:space="preserve">
+    <value>Add any tag to entry</value>
+  </data>
   <data name="ApproveEntries" xml:space="preserve">
     <value>Approve entries</value>
   </data>
@@ -144,6 +150,9 @@
   <data name="DisableUsers" xml:space="preserve">
     <value>Disable users</value>
   </data>
+  <data name="EditAllSongLists" xml:space="preserve">
+    <value>Edit all song lists</value>
+  </data>
   <data name="EditFeaturedLists" xml:space="preserve">
     <value>Manage featured songlists</value>
   </data>
@@ -152,6 +161,9 @@
   </data>
   <data name="EditProfile" xml:space="preserve">
     <value>Edit personal profile</value>
+  </data>
+  <data name="EditTags" xml:space="preserve">
+    <value>Edit tags</value>
   </data>
   <data name="LockEntries" xml:space="preserve">
     <value>Lock entries</value>
@@ -186,11 +198,17 @@
   <data name="ReadRecentComments" xml:space="preserve">
     <value>Read recent comments</value>
   </data>
+  <data name="RemoveEditPermission" xml:space="preserve">
+    <value>Remove database editing permissions</value>
+  </data>
   <data name="RemoveTagUsages" xml:space="preserve">
     <value>Remove tag usages</value>
   </data>
   <data name="RestoreRevisions" xml:space="preserve">
     <value>Restore revisions</value>
+  </data>
+  <data name="UploadMedia" xml:space="preserve">
+    <value>Upload own media</value>
   </data>
   <data name="ViewAuditLog" xml:space="preserve">
     <value>View event log</value>
