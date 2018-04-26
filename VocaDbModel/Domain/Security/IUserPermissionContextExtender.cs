@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Users;
@@ -27,12 +27,6 @@ namespace VocaDb.Model.Domain.Security {
 		public static void VerifyManageDatabase(this IUserPermissionContext permissionContext) {
 
 			permissionContext.VerifyPermission(PermissionToken.ManageDatabase);
-
-		}
-
-		public static void VerifyEditTags(this IUserPermissionContext permissionContext) {
-
-			permissionContext.VerifyPermission(PermissionToken.EditTags);
 
 		}
 		

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts;
@@ -62,7 +62,7 @@ namespace VocaDb.Model.Domain.Security {
 		public static readonly PermissionToken EditProfile =			New("4f79b01a-7154-4a7f-bc87-a8a9259a9905", "EditProfile");
 		public static readonly PermissionToken LockEntries =			New("eb02e92e-207f-4330-a763-6bafd2cedde1", "LockEntries");
 		public static readonly PermissionToken ManageDatabase =			New("d762d720-79ef-4e60-8397-1d638c26d82b", "ManageDatabase");
-		///public static readonly PermissionToken EditTags =			New("", "EditTags"); <- no idea how to do the security thing, but EditTags can go here, I think?
+		public static readonly PermissionToken EditTags =               New("2ab6da19-bc5a-4a28-86d4-8ddce399ca0b", "EditTags");
 		public static readonly PermissionToken ManageEntryReports =		New("f9eb1d22-9142-4a04-9238-f4ebe5f1fc17", "ManageEntryReports");
 		[Obsolete]
 		public static readonly PermissionToken ManageEventSeries =		New("cf39509b-b9c5-4efc-9b13-2743ffec9aac", "ManageEventSeries");

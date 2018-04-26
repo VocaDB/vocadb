@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -157,7 +157,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			ParamIs.NotNullOrWhiteSpace(() => name);
 
-			PermissionContext.VerifyEditTags();
+			PermissionContext.VerifyManageDatabase();
 
 			return repository.HandleTransaction(ctx => {
 
@@ -203,7 +203,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public void Delete(int id, string notes) {
 
-			PermissionContext.VerifEditTags();
+			PermissionContext.VerifyManageDatabase();
 
 			repository.HandleTransaction(ctx => {
 
