@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.ReleaseEvents
 @using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
@@ -215,6 +215,29 @@
 </div>
 
 @CommentHelpers.LatestCommentsKnockout()
+
+<div id="tabs" class="js-cloak" data-bind="show, with: comments">	
+	
+	<ul>	
+		<li><a href="#latestCommentsTab">@ViewRes.EntryDetailsStrings.LatestComments</a></li>	
+		<li data-tab="Discussion">	
+			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>	
+		</li>	
+	</ul>	
+	
+	<div id="latestCommentsTab">	
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)	
+		<p>@ViewRes.EntryDetailsStrings.NoComments</p>	
+		<p>	
+			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>	
+		</p>	
+	</div>	
+	
+	<div id="discussionTab">	
+		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)	
+	</div>	
+	
+</div>
 
 <div data-bind="with: tagsEditViewModel">
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }
