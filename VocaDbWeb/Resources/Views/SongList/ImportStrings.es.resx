@@ -166,7 +166,7 @@
     <value>Subir</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Crear una lista de canciones via NicoNicoDouga MyList o una lista de reproducción de YouTube</value>
+    <value>Crear una lista de canciones via NicoNico MyList o una lista de reproducción de YouTube</value>
   </data>
   <data name="TotalSongs" xml:space="preserve">
     <value>Total de canciones</value>
@@ -175,7 +175,7 @@
     <value>No se ha podido analizar grámaticalmente ("parsear") la lista</value>
   </data>
   <data name="UrlDescription" xml:space="preserve">
-    <value>Puede ser una lista de NicoNicoDouga MyList (por ejemplo: http://www.nicovideo.jp/mylist/1234567 ) o una lista de reproducción de YouTube (por ejemplo: https://www.youtube.com/playlist?list=MIKUMIKU3939 )</value>
+    <value>Puede ser una lista de NicoNico MyList (por ejemplo: http://www.nicovideo.jp/mylist/1234567 ) o una lista de reproducción de YouTube (por ejemplo: https://www.youtube.com/playlist?list=MIKUMIKU3939 )</value>
   </data>
   <data name="UrlLabel" xml:space="preserve">
     <value>URL de la Lista de reproducción YouTube/NND Mylist</value>

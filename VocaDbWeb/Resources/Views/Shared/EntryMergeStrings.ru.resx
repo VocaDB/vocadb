@@ -117,46 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ArtistDesc" xml:space="preserve">
-    <value>Продюсеры и вокалисты, относящиеся к этой песне.</value>
+  <data name="MergeBtnText" xml:space="preserve">
+    <value>Объединить</value>
   </data>
-  <data name="ArtistHelp" xml:space="preserve">
-    <value>Если найти артиста не удаётся, возможно, его нет в базе данных. Проверьте другие варианты его имени, и если уверены, что артиста в базе точно ещё нет, пожалуйста, добавьте его с помощью пункта "Добавить артиста" в главном меню сайта. Добавить артиста можно и после добавления песни. С данной страницы создать нового артиста нельзя.</value>
+  <data name="MergeInfo" xml:space="preserve">
+    <value>Choose the entry which this one will be merged to. All references will be pointed to that new entry and this entry will be deleted.
+Prefer merging the later entry to the earlier one, unless the new entry is finalized while the older one is draft.</value>
   </data>
-  <data name="ArtistsInfo" xml:space="preserve">
-    <value>Артисты (минимум 1)</value>
+  <data name="MergeWarning" xml:space="preserve">
+    <value>This action cannot be undone! Please make sure the entries really need to be merged before proceeding.</value>
   </data>
-  <data name="Draft" xml:space="preserve">
-    <value>Эта запись - черновик</value>
+  <data name="ValidationErrorTargetIsLessComplete" xml:space="preserve">
+    <value>The selected entry seems to be draft while the one being merged from is not.
+Prefer merging from the less complete entry to the more complete entry.</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Название (хотя бы одно)</value>
-  </data>
-  <data name="NameHelp" xml:space="preserve">
-    <value>Поле для "Неанглийского" названия - для названий на любом другом языке (включая японский и неопределённый пользователем). Добавление транслитерированного на английский названия ("ромадзи" если с японского) весьма приветствуется.</value>
-  </data>
-  <data name="NeedArtist" xml:space="preserve">
-    <value>Нужен хотя бы один артист.</value>
-  </data>
-  <data name="NoArtistsToName" xml:space="preserve">
-    <value>Название трека не должно содержать имени артиста - для этого есть отдельное специальное поле.</value>
-  </data>
-  <data name="OriginalPV" xml:space="preserve">
-    <value>Ссылка на оригинальное PV (NicoNico, Youtube или Vimeo)</value>
-  </data>
-  <data name="ReprintPV" xml:space="preserve">
-    <value>Cсылка на копию (NicoNico, Youtube или Vimeo)</value>
-  </data>
-  <data name="SongInfo" xml:space="preserve">
-    <value>Пожалуйста, удостоверьтесь, что данной песни ещё нет в базе. Нужно указать хотя бы одного артиста. Также желательна ссылка на оригинальное видео (или Piapro/SoundCloud).</value>
-  </data>
-  <data name="SongType" xml:space="preserve">
-    <value>Тип песни</value>
-  </data>
-  <data name="SubmitSong" xml:space="preserve">
-    <value>Добавить новую песню</value>
-  </data>
-  <data name="UnableToCreateSong" xml:space="preserve">
-    <value>Не удалось добавить песню. Исправьте данные и попробуйте снова.</value>
+  <data name="ValidationErrorTargetIsNewer" xml:space="preserve">
+    <value>The selected entry seems to be newer than the one being merged from.
+Prefer merging from newer entry to the older entry.</value>
   </data>
 </root>
