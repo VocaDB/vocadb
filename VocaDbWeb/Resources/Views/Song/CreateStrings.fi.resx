@@ -142,10 +142,10 @@
     <value>Älä kirjoita artistin nimeä nimikenttään. Käytä artistilistaa.</value>
   </data>
   <data name="OriginalPV" xml:space="preserve">
-    <value>Osoite alkuperäiseen videoon (NicoNicoDouga tai Youtube)</value>
+    <value>Osoite alkuperäiseen videoon (NicoNico tai Youtube)</value>
   </data>
   <data name="ReprintPV" xml:space="preserve">
-    <value>Osoite videon kopioon (NicoNicoDouga tai Youtube)</value>
+    <value>Osoite videon kopioon (NicoNico tai Youtube)</value>
   </data>
   <data name="SongType" xml:space="preserve">
     <value>Kappaleen tyyppi</value>
