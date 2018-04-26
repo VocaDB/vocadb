@@ -17,6 +17,7 @@ namespace VocaDb.Model.Domain.Users {
 			limited, 
 			PermissionToken.CreateComments, 
 			PermissionToken.ManageDatabase,
+			PermissionToken.EditTags,  
 			PermissionToken.ManageEventSeries
 		);
 
