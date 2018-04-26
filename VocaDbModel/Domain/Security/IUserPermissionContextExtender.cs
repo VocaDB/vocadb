@@ -30,6 +30,12 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		public static void VerifyEditTags(this IUserPermissionContext permissionContext) {
+
+			permissionContext.VerifyPermission(PermissionToken.EditTags);
+
+		}
+		
 		public static void VerifyAccess<T>(this IUserPermissionContext permissionContext, T entry, Func<IUserPermissionContext, T, bool> accessCheck) where T : class {
 
 			EntryPermissionManager.VerifyAccess(permissionContext, entry, accessCheck);
