@@ -157,7 +157,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			ParamIs.NotNullOrWhiteSpace(() => name);
 
-			PermissionContext.VerifyManageDatabase();
+			PermissionContext.VerifyEditTags();
 
 			return repository.HandleTransaction(ctx => {
 
@@ -203,7 +203,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public void Delete(int id, string notes) {
 
-			PermissionContext.VerifyManageDatabase();
+			PermissionContext.VerifEditTags();
 
 			repository.HandleTransaction(ctx => {
 
@@ -683,7 +683,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			ParamIs.NotNull(() => contract);
 
-			PermissionContext.VerifyPermission(PermissionToken.ManageDatabase);
+			PermissionContext.VerifyPermission(PermissionToken.EditTags);
 
 			return repository.HandleTransaction(ctx => {
 
