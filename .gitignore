@@ -25,3 +25,5 @@ VocaDb.Migrations/bin/
 .vs/config/applicationhost.config
 TestResults/
 /.vs
+VocaDb.TouhouDb.Resources/bin/
+VocaDb.TouhouDb.Resources/obj/

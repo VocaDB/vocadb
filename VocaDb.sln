@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.Migrations", "VocaDb.Migrations\VocaDb.Migrations.csproj", "{69130140-2978-4843-84BF-348A71B44616}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.TouhouDb.Resources", "VocaDb.TouhouDb.Resources\VocaDb.TouhouDb.Resources.csproj", "{BF02D394-4900-4DFB-9348-C9A39762614A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{69130140-2978-4843-84BF-348A71B44616}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69130140-2978-4843-84BF-348A71B44616}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69130140-2978-4843-84BF-348A71B44616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF02D394-4900-4DFB-9348-C9A39762614A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF02D394-4900-4DFB-9348-C9A39762614A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF02D394-4900-4DFB-9348-C9A39762614A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF02D394-4900-4DFB-9348-C9A39762614A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
