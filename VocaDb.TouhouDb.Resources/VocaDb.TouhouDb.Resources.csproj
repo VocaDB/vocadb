@@ -38,9 +38,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="VocaDb.Model">
-      <HintPath>..\..\..\VocaDB\git\VocaDbModel\bin\Debug\VocaDb.Model.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Header.cs" />
@@ -101,6 +98,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UserRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
+      <Project>{024d07df-f669-46e9-9514-3ab8094f74ac}</Project>
+      <Name>VocaDb.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
