@@ -201,7 +201,7 @@ namespace VocaDb.Model.Service {
 
 		public async Task<SongForApiContract[]> GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields) {
 
-			return await HandleQuery(async session => {
+			return await HandleQueryAsync(async session => {
 				return (await GetHighlightedSongs(session))
 					.Select(s => new SongForApiContract(s, languagePreference, fields))
 					.ToArray();
