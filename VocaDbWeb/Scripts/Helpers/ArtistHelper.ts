@@ -62,30 +62,28 @@ module vdb.helpers {
 		}
 
 		// Checks whether an artist type with possible custom roles is to be considered a producer
-		static isProducerRoleType(artistType: cls.artists.ArtistType, roles: string[] | string, focus: cls.ContentFocus) {
+		static isProducerRoleType(artistType: cls.artists.ArtistType, roles: cls.artists.ArtistRoles[], focus: cls.ContentFocus) {
 
-			const rolesArray = ArtistHelper.getRolesArray(roles);
-
-			if (ArtistHelper.useDefaultRoles(artistType, rolesArray)) {
+			if (ArtistHelper.useDefaultRoles(artistType, roles)) {
 				return ArtistHelper.isProducerType(artistType, focus);
 			}
 
 			let res =
-				_.includes(rolesArray, cls.artists.ArtistRoles.Arranger) ||
-				_.includes(rolesArray, cls.artists.ArtistRoles.Composer) ||
-				_.includes(rolesArray, cls.artists.ArtistRoles.VoiceManipulator);
+				_.includes(roles, cls.artists.ArtistRoles.Arranger) ||
+				_.includes(roles, cls.artists.ArtistRoles.Composer) ||
+				_.includes(roles, cls.artists.ArtistRoles.VoiceManipulator);
 
 			if (focus === cls.ContentFocus.Video)
-				res = res || _.includes(rolesArray, cls.artists.ArtistRoles.Animator);
+				res = res || _.includes(roles, cls.artists.ArtistRoles.Animator);
 
 			if (focus === cls.ContentFocus.Illustration)
-				res = res || _.includes(rolesArray, cls.artists.ArtistRoles.Illustrator);
+				res = res || _.includes(roles, cls.artists.ArtistRoles.Illustrator);
 
 			return res;
 
 		}
 
-		static isProducerRole(artist: dc.ArtistContract, roles: string[], focus: cls.ContentFocus) {
+		static isProducerRole(artist: dc.ArtistContract, roles: cls.artists.ArtistRoles[], focus: cls.ContentFocus) {
 
 			return ArtistHelper.isProducerRoleType(artist != null ? cls.artists.ArtistType[artist.artistType] : ArtistType.Unknown, roles, focus);
 
@@ -129,23 +127,21 @@ module vdb.helpers {
 
 		}
 
-		static isVocalistRoleType(artistType: cls.artists.ArtistType, roles: string[]) {
+		static isVocalistRoleType(artistType: cls.artists.ArtistType, roles: cls.artists.ArtistRoles[]) {
 
-			const rolesArray = ArtistHelper.getRolesArray(roles);
-
-			if (ArtistHelper.useDefaultRoles(artistType, rolesArray)) {
+			if (ArtistHelper.useDefaultRoles(artistType, roles)) {
 				return ArtistHelper.isVocalistType(artistType);
 			}
 
 			var res =
-				_.includes(rolesArray, cls.artists.ArtistRoles.Vocalist) ||
-				_.includes(rolesArray, cls.artists.ArtistRoles.Chorus);
+				_.includes(roles, cls.artists.ArtistRoles.Vocalist) ||
+				_.includes(roles, cls.artists.ArtistRoles.Chorus);
 
 			return res;
 
 		}
 
-		static isVocalistRole(artist: dc.ArtistContract, roles: string[]) {
+		static isVocalistRole(artist: dc.ArtistContract, roles: cls.artists.ArtistRoles[]) {
 
 			return ArtistHelper.isVocalistRoleType(artist != null ? cls.artists.ArtistType[artist.artistType] : ArtistType.Unknown, roles);
 

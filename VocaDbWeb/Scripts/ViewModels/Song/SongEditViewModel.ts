@@ -271,7 +271,7 @@ module vdb.viewModels {
 
 			});
 
-			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArray(), hel.SongHelper.getContentFocus(this.songType()))));
+			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArrayTyped(), hel.SongHelper.getContentFocus(this.songType()))));
 
 			this.validationError_needReferences = ko.computed(() =>
 				!this.hasAlbums
@@ -287,7 +287,7 @@ module vdb.viewModels {
 					&& !hel.SongHelper.isInstrumental(this.songType())
 					&& this.songType() !== models.songs.SongType.Arrangement // Arrangements are considered possible instrumentals in this context
 					&& !_.some(this.tags, t => t === this.instrumentalTagId))
-					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArray()));
+					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArrayTyped()));
 
 			});
 
@@ -302,7 +302,7 @@ module vdb.viewModels {
 
 				// Show warning if there is only 1 producer, using default roles
 				var producers = _.filter(this.artistLinks(), a => a.artist != null 					
-					&& helpers.ArtistHelper.isProducerRole(a.artist, a.rolesArray(), contentFocus));
+					&& helpers.ArtistHelper.isProducerRole(a.artist, a.rolesArrayTyped(), contentFocus));
 
 				return producers.length === 1 && hel.ArtistHelper.isProducerType(producers[0].artist.artistType, contentFocus) && !helpers.ArtistHelper.isDefaultRoles(producers[0].rolesArrayTyped());
 
