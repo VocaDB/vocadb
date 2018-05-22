@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -14,6 +14,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Helpers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -210,7 +211,23 @@ namespace VocaDb.Model.Service {
 			}
 
 		}
-		
+
+		protected async Task<T> HandleQueryAsync<T>(Func<ISession, Task<T>> func, string failMsg = "Unexpected NHibernate error") {
+
+			try {
+				using (var session = OpenSession()) {
+					return await func(session);
+				}
+			} catch (ObjectNotFoundException x) {
+				log.Error(x.Message);
+				throw;
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+
+		}
+
 		protected T HandleTransaction<T>(Func<ISession, T> func, string failMsg = "Unexpected NHibernate error") {
 
 			try {

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.SessionState;
 using VocaDb.Model.Database.Queries;
@@ -45,12 +46,12 @@ namespace VocaDb.Web.Controllers
         //
         // GET: /Home/
 
-        public ActionResult Index() {
+        public async Task<ActionResult> Index() {
 
 			PageProperties.Description = brandableStringsManager.Home.SiteDescription;
 			PageProperties.AddMainScripts = false;
 
-			var contract = otherService.GetFrontPageContent(WebHelper.IsSSL(Request));
+			var contract = await otherService.GetFrontPageContent(WebHelper.IsSSL(Request));
 
             return View(contract);
 

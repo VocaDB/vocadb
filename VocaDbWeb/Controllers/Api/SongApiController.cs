@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model;
@@ -179,11 +180,11 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("highlighted")]
 		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
-		public IEnumerable<SongForApiContract> GetHighlightedSongs(
+		public async Task<IEnumerable<SongForApiContract>> GetHighlightedSongs(
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, 
 			SongOptionalFields fields = SongOptionalFields.None) {
 
-			return otherService.GetHighlightedSongs(languagePreference, fields);
+			return await otherService.GetHighlightedSongs(languagePreference, fields);
 
 		}
 

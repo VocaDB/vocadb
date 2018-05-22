@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.DataContracts;
@@ -198,17 +199,18 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongForApiContract[] GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields) {
-			return HandleQuery(session => GetHighlightedSongs(session).Select(s => new SongForApiContract(s, languagePreference, fields)).ToArray());
+		public async Task<SongForApiContract[]> GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields) {
+			return (await HandleQuery(async session => await GetHighlightedSongs(session)))
+				.Select(s => new SongForApiContract(s, languagePreference, fields)).ToArray();
 		}
 
-		private Song[] GetHighlightedSongs(ISession session) {
+		private async Task<Song[]> GetHighlightedSongs(ISession session) {
 
 			var cacheKey = "OtherService.HighlightedSongs";
 			var cachedSongIds = (int[])cache.Get(cacheKey);
 
 			if (cachedSongIds != null) {
-				return session.Query<Song>().Where(s => cachedSongIds.Contains(s.Id)).ToArray().OrderByIds(cachedSongIds);
+				return (await session.Query<Song>().Where(s => cachedSongIds.Contains(s.Id)).ToListAsync()).OrderByIds(cachedSongIds);
 			}
 
 			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
@@ -417,16 +419,16 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public FrontPageContract GetFrontPageContent(bool ssl) {
+		public async Task<FrontPageContract> GetFrontPageContent(bool ssl) {
 
 			const int maxActivityEntries = 15;
 
-			return HandleQuery(session => {
+			return await HandleQueryAsync(async session => {
 
-				var activityEntries = session.Query<ActivityEntry>()
+				var activityEntries = (await session.Query<ActivityEntry>()
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxActivityEntries)
-					.ToArray()
+					.ToListAsync())
 					.Where(a => !a.EntryBase.Deleted);
 
 				var newAlbums = GetRecentAlbums(session, LanguagePreference);
@@ -434,7 +436,7 @@ namespace VocaDb.Model.Service {
 				var recentIds = newAlbums.Select(a => a.Id).ToArray();
 				var topAlbums = GetTopAlbums(session, recentIds, LanguagePreference);
 
-				var newSongs = GetHighlightedSongs(session);
+				var newSongs = await GetHighlightedSongs(session);
 
 				var firstSongVote = (newSongs.Any() ? session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
