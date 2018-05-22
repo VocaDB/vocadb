@@ -133,6 +133,15 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Producer&apos;s roles do not need to be specified when that producer is the only one..
+        /// </summary>
+        public static string RedundantRoles {
+            get {
+                return ResourceManager.GetString("RedundantRoles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Song needs a primary name..
         /// </summary>
         public static string UnspecifiedNames {

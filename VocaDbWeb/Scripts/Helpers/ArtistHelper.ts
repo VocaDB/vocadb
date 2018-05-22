@@ -1,4 +1,4 @@
-﻿ 
+ 
 module vdb.helpers {
 
 	import dc = vdb.dataContracts;
@@ -36,7 +36,7 @@ module vdb.helpers {
 
 		}
 
-		private static getRolesArray(roles: string[] | string): cls.artists.ArtistRoles[] {
+		public static getRolesArray(roles: string[] | string): cls.artists.ArtistRoles[] {
 			const stringArr = typeof roles === 'string' ? roles.split(',') : roles;
 			return _.map(stringArr, s => cls.artists.ArtistRoles[s]);
 		}
@@ -46,6 +46,11 @@ module vdb.helpers {
 
 			return _.includes(ArtistHelper.customizableTypes, at);
 
+		}
+
+		// Whether roles array indicates default roles
+		public static isDefaultRoles(roles: cls.artists.ArtistRoles[]) {
+			return roles.length === 0 || roles[0] === cls.artists.ArtistRoles.Default;
 		}
 
 		// Checks whether an artist type with possible custom roles is to be considered a producer
@@ -79,7 +84,11 @@ module vdb.helpers {
 		}
 
 		// Whether an artist type with default roles is to be considered a producer
-		static isProducerType(artistType: cls.artists.ArtistType, focus: cls.ContentFocus) {
+		static isProducerType(artistType: cls.artists.ArtistType | string, focus: cls.ContentFocus) {
+
+			if (typeof artistType === "string") {
+				artistType = ArtistType[artistType];
+			}
 
 			return (artistType === ArtistType.Producer
 				|| artistType === ArtistType.Circle
@@ -144,7 +153,7 @@ module vdb.helpers {
 		// Some artist types do not allow customization. If no custom roles are specified default roles will be used.
 		private static useDefaultRoles(artistType: cls.artists.ArtistType, roles: cls.artists.ArtistRoles[]) {
 
-			return roles == null || roles.length === 0 || roles[0] === cls.artists.ArtistRoles.Default || !ArtistHelper.isCustomizable(artistType);
+			return roles == null || ArtistHelper.isDefaultRoles(roles) || !ArtistHelper.isCustomizable(artistType);
 
 		}
 

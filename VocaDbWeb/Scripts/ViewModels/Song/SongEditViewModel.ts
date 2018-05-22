@@ -170,7 +170,8 @@ module vdb.viewModels {
 		public validationError_needReferences: KnockoutComputed<boolean>;
 		public validationError_needType: KnockoutComputed<boolean>;
 		public validationError_nonInstrumentalSongNeedsVocalists: KnockoutComputed<boolean>;
-		public validationError_redundantEvent: KnockoutComputed<boolean>;
+	    public validationError_redundantRoles: KnockoutComputed<boolean>;
+	    public validationError_redundantEvent: KnockoutComputed<boolean>;
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
 
 		constructor(
@@ -292,6 +293,21 @@ module vdb.viewModels {
 
 			this.validationError_redundantEvent = ko.computed(() => this.albumEventId && !this.releaseEvent.isEmpty() && this.releaseEvent.id() === this.albumEventId);
 
+			this.validationError_redundantRoles = ko.computed(() => {
+
+				if (this.songType() !== SongType.Original)
+					return false;
+
+				const contentFocus = hel.SongHelper.getContentFocus(this.songType());
+
+				// Show warning if there is only 1 producer, using default roles
+				var producers = _.filter(this.artistLinks(), a => a.artist != null 					
+					&& helpers.ArtistHelper.isProducerRole(a.artist, a.rolesArray(), contentFocus));
+
+				return producers.length === 1 && hel.ArtistHelper.isProducerType(producers[0].artist.artistType, contentFocus) && !helpers.ArtistHelper.isDefaultRoles(producers[0].rolesArrayTyped());
+
+			});
+
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 
 			this.hasValidationErrors = ko.computed(() =>
@@ -303,6 +319,7 @@ module vdb.viewModels {
 				this.validationError_needType() ||
 				this.validationError_nonInstrumentalSongNeedsVocalists() ||
 				this.validationError_redundantEvent() ||
+				this.validationError_redundantRoles() ||
 				this.validationError_unspecifiedNames()
 			);
 		
