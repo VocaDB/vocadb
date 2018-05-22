@@ -41,6 +41,14 @@ module vdb.helpers {
 			return _.map(stringArr, s => cls.artists.ArtistRoles[s]);
 		}
 
+		public static getRolesList(roles: cls.artists.ArtistRoles | cls.artists.ArtistRoles[]): string {
+			if (Array.isArray(roles)) {
+				return _.map(roles, r => cls.artists.ArtistRoles[r]).join(",");
+			} else {
+				return cls.artists.ArtistRoles[roles];
+			}			
+		}
+
 		// Whether the roles for an artist type can be customized
 		public static isCustomizable(at: cls.artists.ArtistType) {
 
