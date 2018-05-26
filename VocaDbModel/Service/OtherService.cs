@@ -443,7 +443,7 @@ namespace VocaDb.Model.Service {
 
 				var newSongs = await GetHighlightedSongs(session);
 
-				var firstSongVote = (newSongs.Any() ? session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
+				var firstSongVote = (newSongs.Any() ? await session.Query<FavoriteSongForUser>().FirstOrDefaultAsync(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
 				var recentComments = GetRecentComments(session, ssl);
 

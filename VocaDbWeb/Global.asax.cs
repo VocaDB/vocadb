@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -22,11 +22,7 @@ namespace VocaDb.Web {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private static UserService UserService {
-			get {
-				return DependencyResolver.Current.GetService<UserService>();				
-			}
-		}
+		private static UserService UserService => DependencyResolver.Current.GetService<UserService>();
 
 		public static bool IsAjaxRequest(HttpRequest request) {
 
@@ -36,11 +32,7 @@ namespace VocaDb.Web {
 
 		}
 
-		public static LoginManager LoginManager {
-			get {
-				return new LoginManager();
-			}
-		}
+		public static LoginManager LoginManager => new LoginManager();
 
 		protected void Application_AuthenticateRequest(object sender, EventArgs e) {
 
