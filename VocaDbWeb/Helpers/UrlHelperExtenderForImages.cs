@@ -1,8 +1,11 @@
-﻿using System.IO;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Helpers {
@@ -16,7 +19,7 @@ namespace VocaDb.Web.Helpers {
 
 		private static ServerEntryImagePersisterOld EntryImagePersisterOld => new ServerEntryImagePersisterOld();
 
-		private static string GetUnknownImageUrl(UrlHelper urlHelper, IEntryImageInformation imageInfo) {
+		private static string GetUnknownImageUrl(UrlHelper urlHelper) {
 			return urlHelper.Content("~/Content/unknown.png");
 		}
 
@@ -69,6 +72,19 @@ namespace VocaDb.Web.Helpers {
 		}
 
 		/// <summary>
+		/// Returns an URL to entry thumbnail image, or placeholder if no image if specified.
+		/// </summary>
+		/// <param name="urlHelper">URL helper. Cannot be null.</param>
+		/// <param name="imageInfo">Image information. Cannot be null.</param>
+		/// <param name="size">Requested image size.</param>
+		/// <returns>URL to the image thumbnail (may be placeholder).</returns>
+		public static string ImageThumb(this UrlHelper urlHelper, EntryThumbForApiContract imageInfo, ImageSize size) {
+
+			return imageInfo?.GetSmallestThumb(size).EmptyToNull() ?? GetUnknownImageUrl(urlHelper);
+
+		}
+
+		/// <summary>
 		/// Returns an URL to entry thumbnail image.
 		/// Currently only used for album and artist main images.
 		/// 
@@ -117,7 +133,7 @@ namespace VocaDb.Web.Helpers {
 			}
 
 			if (!shouldExist) {
-				var unknown = GetUnknownImageUrl(urlHelper, imageInfo);
+				var unknown = GetUnknownImageUrl(urlHelper);
 				return fullUrl ? VocaUriBuilder.Absolute(unknown, ssl) : unknown;
 			}
 

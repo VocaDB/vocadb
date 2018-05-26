@@ -1,4 +1,4 @@
-﻿@using System.Web.Mvc;
+@using System.Web.Mvc;
 @using System.Web.Mvc.Html
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts.Albums;
@@ -88,7 +88,7 @@
 	<ul class="smallThumbs">
 		@foreach (var album in albums) {
 			@Helpers.ThumbItem(Url.Action("Details", "Album", new { id = album.Id }),
-                album.MainPicture.UrlSmallThumb, album.Name, album)	  
+				Url.ImageThumb(album.MainPicture, ImageSize.SmallThumb), album.Name, album)
 		}
 	</ul>
 	

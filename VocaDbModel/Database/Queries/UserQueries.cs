@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -248,7 +248,7 @@ namespace VocaDb.Model.Database.Queries {
 				.Select(a => a.Album)
 				.Take(7)
 				.ToArray()
-				.Select(c => new AlbumContract(c, LanguagePreference))
+				.Select(c => new AlbumForApiContract(c, null, LanguagePreference, entryThumbPersister, true, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture, SongOptionalFields.None))
 				.ToArray();
 
 			details.FollowedArtists = session.Query<ArtistForUser>()

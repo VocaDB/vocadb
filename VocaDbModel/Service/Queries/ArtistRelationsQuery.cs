@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Caching;
 using VocaDb.Model.Database.Repositories;
@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.Queries {
 		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly ContentLanguagePreference languagePreference;
 
-		private AlbumContract[] GetLatestAlbums(IDatabaseContext session, Artist artist) {
+		private AlbumForApiContract[] GetLatestAlbums(IDatabaseContext session, Artist artist) {
 			
 			var id = artist.Id;
 
@@ -45,7 +45,7 @@ namespace VocaDb.Model.Service.Queries {
 				.Select(s => s.Album)
 				.OrderByReleaseDate(SortDirection.Descending)
 				.Take(6).ToArray()
-				.Select(s => new AlbumContract(s, languagePreference))
+				.Select(s => new AlbumForApiContract(s, languagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 
 		}
@@ -65,7 +65,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		private AlbumContract[] GetTopAlbums(IDatabaseContext session, Artist artist, int[] latestAlbumIds) {
+		private AlbumForApiContract[] GetTopAlbums(IDatabaseContext session, Artist artist, int[] latestAlbumIds) {
 			
 			var id = artist.Id;
 
@@ -85,7 +85,7 @@ namespace VocaDb.Model.Service.Queries {
 				.OrderByDescending(s => s.RatingAverageInt)
 				.ThenByDescending(s => s.RatingCount)
 				.Take(6).ToArray()
-				.Select(s => new AlbumContract(s, languagePreference))
+				.Select(s => new AlbumForApiContract(s, languagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 
 		}

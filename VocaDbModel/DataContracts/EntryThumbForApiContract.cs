@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts {

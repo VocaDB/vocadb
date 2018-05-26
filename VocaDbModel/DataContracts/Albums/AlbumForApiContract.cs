@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -20,6 +20,14 @@ namespace VocaDb.Model.DataContracts.Albums {
 		EntryType IEntryBase.EntryType => EntryType.Album;
 
 		public AlbumForApiContract() { }
+
+		public AlbumForApiContract(
+			Album album,
+			ContentLanguagePreference languagePreference, 
+			IEntryThumbPersister thumbPersister,
+			AlbumOptionalFields fields,
+			SongOptionalFields songFields = SongOptionalFields.None) : 
+			this(album, null, languagePreference, thumbPersister, true, fields, songFields) {}
 
 		public AlbumForApiContract(
 			Album album, AlbumMergeRecord mergeRecord, 
