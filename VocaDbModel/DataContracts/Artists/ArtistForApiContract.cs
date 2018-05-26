@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -206,7 +206,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 	public class ArtistRelationsForApi {
 
 		[DataMember(EmitDefaultValue = false)]
-		public AlbumContract[] LatestAlbums { get; set; }
+		public AlbumForApiContract[] LatestAlbums { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public ReleaseEventForApiContract[] LatestEvents { get; set; }
@@ -215,7 +215,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public SongForApiContract[] LatestSongs { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public AlbumContract[] PopularAlbums { get; set; }
+		public AlbumForApiContract[] PopularAlbums { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public SongForApiContract[] PopularSongs { get; set; }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
@@ -29,11 +29,11 @@ namespace VocaDb.Model.DataContracts.Artists {
 			Description =  artist.Description;
 			Draft = artist.Status == EntryStatus.Draft;
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);
-			LatestAlbums = new AlbumContract[] {};
+			LatestAlbums = new AlbumForApiContract[] {};
 			LatestSongs = new SongForApiContract[] {};
 			OwnerUsers = artist.OwnerUsers.Select(u => new UserContract(u.User)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToArray();
-			TopAlbums = new AlbumContract[] {};
+			TopAlbums = new AlbumForApiContract[] {};
 			TopSongs = new SongForApiContract[] {};
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
@@ -154,7 +154,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public ArtistContract MergedTo { get; set; }
 
 		[DataMember]
-		public AlbumContract[] LatestAlbums { get; set; }
+		public AlbumForApiContract[] LatestAlbums { get; set; }
 
 		[DataMember]
 		public ReleaseEventForApiContract[] LatestEvents { get; set; } = new ReleaseEventForApiContract[0];
@@ -185,7 +185,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public TagUsageForApiContract[] Tags { get; set; }
 
 		[DataMember]
-		public AlbumContract[] TopAlbums { get; set; }
+		public AlbumForApiContract[] TopAlbums { get; set; }
 
 		[DataMember]
 		public SongForApiContract[] TopSongs { get; set; }

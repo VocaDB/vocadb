@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -15,9 +15,19 @@ using VocaDb.Model.Domain.Images;
 namespace VocaDb.Model.DataContracts.Albums {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumForApiContract {
+	public class AlbumForApiContract : IEntryBase {
+
+		EntryType IEntryBase.EntryType => EntryType.Album;
 
 		public AlbumForApiContract() { }
+
+		public AlbumForApiContract(
+			Album album,
+			ContentLanguagePreference languagePreference, 
+			IEntryThumbPersister thumbPersister,
+			AlbumOptionalFields fields,
+			SongOptionalFields songFields = SongOptionalFields.None) : 
+			this(album, null, languagePreference, thumbPersister, true, fields, songFields) {}
 
 		public AlbumForApiContract(
 			Album album, AlbumMergeRecord mergeRecord, 
@@ -96,6 +106,36 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		}
 
+		public AlbumForApiContract(TranslatedAlbumContract album, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, AlbumOptionalFields fields) {
+
+			ParamIs.NotNull(() => album);
+
+			ArtistString = album.TranslatedArtistString.GetBestMatch(languagePreference);
+			CreateDate = album.CreateDate;
+			Deleted = album.Deleted;
+			DiscType = album.DiscType;
+			Id = album.Id;
+			Name = album.Names.SortNames[languagePreference];
+			RatingAverage = album.RatingAverage;
+			RatingCount = album.RatingCount;
+			ReleaseDate = album.ReleaseDate;
+			Status = album.Status;
+			Version = album.Version;
+
+			if (fields.HasFlag(AlbumOptionalFields.AdditionalNames)) {
+				AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.MainPicture)) {
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister, true);
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {
+				ReleaseEvent = album.ReleaseEvent;
+			}
+
+		}
+
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
@@ -137,6 +177,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// </summary>
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public bool Deleted { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }

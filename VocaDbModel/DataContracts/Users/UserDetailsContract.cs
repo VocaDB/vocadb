@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
@@ -46,7 +46,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public int EditCount { get; set; }
 
-		public AlbumContract[] FavoriteAlbums { get; set;}
+		public AlbumForApiContract[] FavoriteAlbums { get; set;}
 
 		public int FavoriteSongCount { get; set; }
 

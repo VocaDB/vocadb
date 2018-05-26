@@ -56,11 +56,11 @@ namespace VocaDb.Model.Service {
 		private readonly EntryForApiContractFactory entryForApiContractFactory;
 		private readonly IEntryThumbPersister thumbPersister;
 
-		public AlbumContract[] GetTopAlbums(ContentLanguagePreference languagePreference, int[] ignoreIds) {
-			return HandleQuery(session => GetTopAlbums(session, ignoreIds, languagePreference));
+		public AlbumForApiContract[] GetTopAlbums(ContentLanguagePreference languagePreference, AlbumOptionalFields fields, int[] ignoreIds) {
+			return HandleQuery(session => GetTopAlbums(session, ignoreIds, languagePreference, fields));
 		}
 
-		private AlbumContract[] GetTopAlbums(ISession session, int[] recentIds, ContentLanguagePreference languagePreference) {
+		private AlbumForApiContract[] GetTopAlbums(ISession session, int[] recentIds, ContentLanguagePreference languagePreference, AlbumOptionalFields fields) {
 
 			var minRatings = 2; // Minimum number of ratings
 			var sampleSize = 300; // Get this many popular albums to be rotated when cache expires
@@ -69,7 +69,7 @@ namespace VocaDb.Model.Service {
 			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
 
 			if (item != null)
-				return item.Select(a => new AlbumContract(a, LanguagePreference)).ToArray();
+				return item.Select(a => new AlbumForApiContract(a, LanguagePreference, thumbPersister, fields)).ToArray();
 
 			// If only a small number of rated albums, reduce minimum ratings count
 			var totalRatedAlbumCount = session.Query<Album>().Count(a => !a.Deleted && a.RatingCount >= minRatings && a.RatingAverageInt >= 300);
@@ -103,7 +103,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			var popularAlbumContracts = random
-				.Select(a => new AlbumContract(a, languagePreference))
+				.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, true, fields, SongOptionalFields.None))
 				.ToArray();
 
 			cache.Add(cacheKey, popularAlbumsCached, DateTime.Now + TimeSpan.FromHours(24));
@@ -112,17 +112,17 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public AlbumContract[] GetRecentAlbums(ContentLanguagePreference languagePreference) {
-			return HandleQuery(session => GetRecentAlbums(session, languagePreference));
+		public AlbumForApiContract[] GetRecentAlbums(ContentLanguagePreference languagePreference, AlbumOptionalFields fields) {
+			return HandleQuery(session => GetRecentAlbums(session, languagePreference, fields));
 		}
 
-		private AlbumContract[] GetRecentAlbums(ISession session, ContentLanguagePreference languagePreference) {
+		private AlbumForApiContract[] GetRecentAlbums(ISession session, ContentLanguagePreference languagePreference, AlbumOptionalFields fields) {
 
 			var cacheKey = "OtherService.RecentAlbums." + languagePreference;
 			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
 
 			if (item != null)
-				return item.Select(a => new AlbumContract(a, LanguagePreference)).ToArray();
+				return item.Select(a => new AlbumForApiContract(a, LanguagePreference, thumbPersister, fields)).ToArray();
 
 			var now = DateTime.Now;
 
@@ -149,7 +149,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			var newAlbumContracts = upcoming.Reverse().Concat(recent)
-				.Select(a => new AlbumContract(a, languagePreference))
+				.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, true, fields, SongOptionalFields.None))
 				.ToArray();
 
 			cache.Add(cacheKey, newAlbums, DateTime.Now + TimeSpan.FromHours(1));
@@ -436,10 +436,10 @@ namespace VocaDb.Model.Service {
 					.ToListAsync())
 					.Where(a => !a.EntryBase.Deleted);
 
-				var newAlbums = GetRecentAlbums(session, LanguagePreference);
+				var newAlbums = GetRecentAlbums(session, LanguagePreference, AlbumOptionalFields.MainPicture);
 
 				var recentIds = newAlbums.Select(a => a.Id).ToArray();
-				var topAlbums = GetTopAlbums(session, recentIds, LanguagePreference);
+				var topAlbums = GetTopAlbums(session, recentIds, LanguagePreference, AlbumOptionalFields.MainPicture);
 
 				var newSongs = await GetHighlightedSongs(session);
 
