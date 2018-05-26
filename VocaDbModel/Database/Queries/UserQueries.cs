@@ -248,7 +248,7 @@ namespace VocaDb.Model.Database.Queries {
 				.Select(a => a.Album)
 				.Take(7)
 				.ToArray()
-				.Select(c => new AlbumForApiContract(c, null, LanguagePreference, entryThumbPersister, true, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture, SongOptionalFields.None))
+				.Select(c => new AlbumForApiContract(c, LanguagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 
 			details.FollowedArtists = session.Query<ArtistForUser>()
