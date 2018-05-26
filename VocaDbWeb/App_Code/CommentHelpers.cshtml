@@ -1,8 +1,9 @@
-﻿@using VocaDb.Model.DataContracts
+@using VocaDb.Model.DataContracts
 @using VocaDb.Model.DataContracts.Api
 @using VocaDb.Model.DataContracts.Comments
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Helpers
+@using VocaDb.Model.Service.Helpers
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
 @inherits VocaDb.Web.Code.HelperPage
@@ -79,7 +80,7 @@
 
 @helper CommentEntryItem(EntryForApiContract entry) {
 		
-	var thumbUrl = (entry.MainPicture != null ? entry.MainPicture.UrlTinyThumb ?? entry.MainPicture.UrlSmallThumb : null);
+	var thumbUrl = (entry.MainPicture != null ? UrlHelper.UpgradeToHttps(entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null);
 	
 	<div class="media">
 		@if (!string.IsNullOrEmpty(thumbUrl)) {
