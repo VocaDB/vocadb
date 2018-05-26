@@ -90,22 +90,17 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		/*
 		/// <summary>
 		/// Filters a song query by a list of artist Ids.
 		/// </summary>
-		public static IQueryable<Song> WhereHasArtist(this IQueryable<Song> query, int[] artistIds) {
+		public static IQueryable<Song> WhereHasArtist(this IQueryable<Song> query, int artistId) {
 
-			if (artistIds == null || artistIds.Length == 0)
+			if (artistId == 0)
 				return query;
 
-			if (artistIds.Length == 1)
-				return WhereHasArtist(query, artistIds.First());
+			return query.WhereHasArtist<Song, ArtistForSong>(artistId, false, false);
 
-			// TODO: should change to AND
-			return query.Where(s => s.AllArtists.Any(a => artistIds.Contains(a.Artist.Id)));
-
-		}*/
+		}
 
 		public static IQueryable<Song> WhereHasArtistParticipationStatus(this IQueryable<Song> query, 
 			ArtistParticipationQueryParams queryParams,

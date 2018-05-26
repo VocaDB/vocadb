@@ -61,6 +61,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
 				"~/Scripts/KnockoutExtensions/qTip.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/Filters/Truncate.js",
 				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",

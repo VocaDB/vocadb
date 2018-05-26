@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -683,7 +683,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			ParamIs.NotNull(() => contract);
 
-			PermissionContext.VerifyPermission(PermissionToken.ManageDatabase);
+			PermissionContext.VerifyPermission(PermissionToken.EditTags);
 
 			return repository.HandleTransaction(ctx => {
 

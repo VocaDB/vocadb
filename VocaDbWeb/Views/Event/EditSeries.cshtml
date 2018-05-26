@@ -33,6 +33,9 @@
 		} else {
 			@Html.ActionLink(EditRes.Restore, "RestoreSeries", new { id = Model.Id }, new { id = "restoreLink" })								
 		}
+		if (Login.CanMoveToTrash) {
+			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
+		}
 	}
 }
 
@@ -135,6 +138,7 @@
 </form>
 
 @EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/EventSeries/Edit")

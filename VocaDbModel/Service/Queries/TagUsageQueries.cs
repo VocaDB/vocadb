@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NLog;
@@ -51,7 +51,7 @@ namespace VocaDb.Model.Service.Queries {
 			
 			ParamIs.NotNull(() => tags);
 
-			permissionContext.VerifyManageDatabase();
+			permissionContext.VerifyPermission(PermissionToken.EditTags);
 
 			tags = tags.Where(IsValid).ToArray();
 

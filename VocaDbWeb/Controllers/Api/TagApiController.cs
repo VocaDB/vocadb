@@ -240,13 +240,14 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets the most common tags in a category.
 		/// </summary>
 		/// <param name="categoryName">Tag category, for example "Genres". Optional - if not specified, no filtering is done.</param>
+		/// <param name="maxResults">Maximum number of tags to return.</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of names of the most commonly used tags in that category.</returns>
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public TagBaseContract[] GetTopTags(string categoryName = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public TagBaseContract[] GetTopTags(string categoryName = null, int maxResults = 15, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.Find(t => new TagBaseContract(t, lang), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
+			return queries.Find(t => new TagBaseContract(t, lang), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, maxResults, false)) {
 				CategoryName = categoryName,
 				SortRule = TagSortRule.UsageCount,
 				LanguagePreference = lang

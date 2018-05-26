@@ -4,6 +4,7 @@
 
 module vdb.tests.viewModels {
 
+	import cls = vdb.models;
 	import vm = vdb.viewModels;
 	import dc = vdb.dataContracts;
 	import sup = vdb.tests.testSupport;
@@ -16,6 +17,11 @@ module vdb.tests.viewModels {
 	var pvRepo = null;
 	var userRepo = new sup.FakeUserRepository();
 	resources.song = { addExtraArtist: 'Add extra artist' };
+
+	function addArtist(viewModel: vm.SongEditViewModel, artistType: cls.artists.ArtistType, roles: cls.artists.ArtistRoles) {		
+		const artist = artistType != null ? { id: 39, name: 'Clean Tears', artistType: cls.artists.ArtistType[artistType] } : null;
+		viewModel.artistLinks.push(new vm.ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: false, roles: vdb.helpers.ArtistHelper.getRolesList(roles) }));
+	}
 
 	QUnit.module("SongEditViewModelTests", {
 		setup: () => {
@@ -140,4 +146,5 @@ module vdb.tests.viewModels {
 		equal(target.validationError_duplicateArtist(), true, "validationError_duplicateArtist");
 
 	});
+
 }

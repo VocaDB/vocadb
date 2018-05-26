@@ -273,6 +273,43 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private void CreateTrashedEntry(IDatabaseContext ctx, ReleaseEventSeries eventSeries, string notes) {
+
+			var archived = new ArchivedEventSeriesContract(eventSeries, new ReleaseEventSeriesDiff(true));
+			var data = XmlHelper.SerializeToXml(archived);
+			var trashed = new TrashedEntry(eventSeries, data, GetLoggedUser(ctx), notes);
+
+			ctx.Save(trashed);
+
+		}
+
+		public void MoveSeriesToTrash(int seriesId, string notes) {
+
+			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
+
+			repository.HandleTransaction(ctx => {
+
+				var entry = ctx.Load<ReleaseEventSeries>(seriesId);
+
+				PermissionContext.VerifyEntryDelete(entry);
+
+				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
+
+				CreateTrashedEntry(ctx, entry, notes);
+
+				var allEvents = entry.AllEvents.ToArray();
+				foreach (var ev in allEvents) {
+					ev.SetSeries(null);
+				}
+
+				ctx.Delete(entry);
+
+				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
+
+			});
+
+		}
+
 		public void MoveToTrash(int eventId, string notes) {
 
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);

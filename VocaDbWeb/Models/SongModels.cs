@@ -241,8 +241,7 @@ namespace VocaDb.Web.Models {
 			SongType = model.SongType;
 			TagUsages = model.Tags;
 
-			var domains = new[] { "http://vocadb.net/", "http://utaitedb.net/" };
-			LinkedPages = model.WebLinks.Where(w => domains.Any(d => w.Url.StartsWith(d, StringComparison.InvariantCultureIgnoreCase))).Select(w => w.Url).ToArray();
+			LinkedPages = model.WebLinks.Select(w => w.Url).Where(RelatedSitesHelper.IsRelatedSite).ToArray();
 
 		}
 

@@ -88,4 +88,32 @@ module vdb.tests.viewModels {
 
     });
 
+	QUnit.test("getMatchedSite no match", () => {
+
+		const result = target.getMatchedSite("http://google.com");
+
+		equal(result, null, "result is null");
+
+	});
+
+	QUnit.test("getMatchedSite match http", () => {
+
+		const result = target.getMatchedSite("http://vocadb.net/S/3939");
+
+		ok(result, "result is a match");
+		equal(result.siteUrl, "https://vocadb.net/", "Site URL converted to https");
+		equal(result.id, "3939", "id");
+		
+	});
+
+	QUnit.test("getMatchedSite match https", () => {
+
+		const result = target.getMatchedSite("https://vocadb.net/S/3939");
+
+		ok(result, "result is a match");
+		equal(result.siteUrl, "https://vocadb.net/", "Site URL");
+		equal(result.id, "3939", "id");
+
+	});
+
 }

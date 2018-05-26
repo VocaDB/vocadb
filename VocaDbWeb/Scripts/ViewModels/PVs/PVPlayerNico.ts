@@ -45,7 +45,7 @@ module vdb.viewModels.pvs {
 			};
 
 			if (!PVPlayerNico.scriptLoaded) {
-				$.getScript("https://embed.res.nimg.jp/js/api.js").then(() => {
+				$.getScript("https://static.vocadb.net/script/nico/api.js").then(() => {
 					PVPlayerNico.scriptLoaded = true;
 
 					window.addEventListener("message", (e: nico.PlayerEvent) => {
@@ -57,6 +57,13 @@ module vdb.viewModels.pvs {
 						}
 						if (e.data.eventName === "loadComplete") {
 							this.loadedPv = e.data.data.videoInfo.watchId;
+						}
+						if (e.data.eventName === "error") {
+							const currentPv = this.loadedPv;
+							window.setTimeout(() => {
+								if (this.songFinishedCallback && currentPv === this.loadedPv)
+									this.songFinishedCallback();							
+							}, 3900);
 						}
 					});
 
@@ -144,7 +151,14 @@ declare namespace nico {
 		}
 	}
 
-	type EventData = StatusEvent | MetadataEvent | LoadCompleteEvent;
+	export interface ErrorEvent {
+		eventName: "error";
+		data: {
+			message: string;
+		};
+	}
+
+	type EventData = StatusEvent | MetadataEvent | LoadCompleteEvent | ErrorEvent;
 
 	export interface NicoPlayer {
 		play(): void;

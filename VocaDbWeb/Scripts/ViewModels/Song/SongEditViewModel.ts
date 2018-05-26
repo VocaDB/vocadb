@@ -170,7 +170,7 @@ module vdb.viewModels {
 		public validationError_needReferences: KnockoutComputed<boolean>;
 		public validationError_needType: KnockoutComputed<boolean>;
 		public validationError_nonInstrumentalSongNeedsVocalists: KnockoutComputed<boolean>;
-		public validationError_redundantEvent: KnockoutComputed<boolean>;
+	    public validationError_redundantEvent: KnockoutComputed<boolean>;
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
 
 		constructor(
@@ -270,7 +270,7 @@ module vdb.viewModels {
 
 			});
 
-			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArray(), hel.SongHelper.getContentFocus(this.songType()))));
+			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArrayTyped(), hel.SongHelper.getContentFocus(this.songType()))));
 
 			this.validationError_needReferences = ko.computed(() =>
 				!this.hasAlbums
@@ -286,7 +286,7 @@ module vdb.viewModels {
 					&& !hel.SongHelper.isInstrumental(this.songType())
 					&& this.songType() !== models.songs.SongType.Arrangement // Arrangements are considered possible instrumentals in this context
 					&& !_.some(this.tags, t => t === this.instrumentalTagId))
-					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArray()));
+					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArrayTyped()));
 
 			});
 

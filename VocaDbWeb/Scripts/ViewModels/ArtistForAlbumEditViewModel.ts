@@ -32,6 +32,8 @@ namespace vdb.viewModels {
         // List of roles for this artist.
 		public rolesArray: KnockoutObservableArray<string>;
 
+	    public rolesArrayTyped: KnockoutComputed<models.artists.ArtistRoles[]>;
+
 		public toContract: () => dc.ArtistForAlbumContract = () => {
 			return {
 				artist: this.artist,
@@ -67,6 +69,7 @@ namespace vdb.viewModels {
             });
 
             this.roles(data.roles);
+			this.rolesArrayTyped = ko.pureComputed(() => helpers.ArtistHelper.getRolesArray(this.rolesArray()));
         
         }
     

@@ -4,6 +4,7 @@
 
 		public const string ActivityEntries = "ActivityEntries";
 		public const string AlbumDiscProperties = "AlbumDiscProperties";
+		public const string AlbumNames = nameof(AlbumNames);
         public const string Albums = "Albums";
 		public const string AlbumsForUsers = "AlbumsForUsers";
 		public const string AlbumReleaseEvents = "AlbumReleaseEvents";
@@ -15,6 +16,7 @@
 		public const string ArchivedSongVersions = "ArchivedSongVersions";
 		public const string ArchivedSongListVersions = "ArchivedSongListVersions";
 		public const string ArchivedTagVersions = "ArchivedTagVersions";
+		public const string ArtistNames = nameof(ArtistNames);
 		public const string Artists = "Artists";
 		public const string ArtistTagUsages = "ArtistTagUsages";
 		public const string EntryReports = "EntryReports";
@@ -31,6 +33,7 @@
 		public const string SongsInAlbums = "SongsInAlbums";
         public const string SongLists = "SongLists";
 		public const string Songs = "Songs";
+		public const string SongNames = nameof(SongNames);
 		public const string SongTagUsages = "SongTagUsages";
 		public const string Tags = "Tags";
 		public const string TagComments = "TagComments";

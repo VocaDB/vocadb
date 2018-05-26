@@ -19,8 +19,8 @@ module vdb.repositories {
 			$.ajax(this.urlMapper.mapRelative("/api/releaseEvents/" + id + "?hardDelete=" + hardDelete + "&notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
 		}
 
-		public deleteSeries = (id: number, notes: string, callback?: () => void) => {
-			$.ajax(this.urlMapper.mapRelative("/api/releaseEventSeries/" + id + "?notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
+		public deleteSeries = (id: number, notes: string, hardDelete: boolean, callback?: () => void) => {
+			$.ajax(this.urlMapper.mapRelative("/api/releaseEventSeries/" + id + "?hardDelete=" + hardDelete + "&notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
 		}
 
 		public getList = (queryParams: EventQueryParams,

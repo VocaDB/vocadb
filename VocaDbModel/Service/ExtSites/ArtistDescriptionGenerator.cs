@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Translations;
@@ -13,8 +14,8 @@ namespace VocaDb.Model.Service.ExtSites {
 				sb.AppendFormat(" Released {0}.", artist.ReleaseDate.Value.ToShortDateString());
 			}
 
-			if (artist.VoiceProvider != null) {
-				sb.AppendFormat(" Voice provider: {0}.", artist.VoiceProvider.Name);
+			if (artist.VoiceProviders.Any()) {
+				sb.AppendFormat(" Voice provider: {0}.", string.Join(", ", artist.VoiceProviders.Select(a => a.Name)));
 			}
 
 		}

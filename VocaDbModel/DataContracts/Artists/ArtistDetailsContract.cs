@@ -80,8 +80,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 				.Select(u => new TagUsageForApiContract(u, languagePreference))
 				.OrderByDescending(t => t.Count).ToArray();
 
-			VoiceProvider = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne, allowInheritance: true)
-				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
+			VoiceProviders = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne, allowInheritance: true)
+				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
 
 			Voicebanks = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.OneToMany)
 				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
@@ -197,7 +197,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public ArtistContract[] Voicebanks { get; set; }
 
 		[DataMember]
-		public ArtistContract VoiceProvider { get; set; }
+		public ArtistContract[] VoiceProviders { get; set; }
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }

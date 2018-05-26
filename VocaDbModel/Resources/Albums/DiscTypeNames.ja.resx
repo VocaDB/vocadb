@@ -120,8 +120,14 @@
   <data name="Album" xml:space="preserve">
     <value>オリジナル・アルバム</value>
   </data>
+  <data name="Artbook" xml:space="preserve">
+    <value>画集</value>
+  </data>
   <data name="Compilation" xml:space="preserve">
     <value>コンピレーションアルバム</value>
+  </data>
+  <data name="Instrumental" xml:space="preserve">
+    <value>インストゥメンタル</value>
   </data>
   <data name="EP" xml:space="preserve">
     <value>E.P.</value>

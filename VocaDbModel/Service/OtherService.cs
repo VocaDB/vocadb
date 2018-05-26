@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.DataContracts;
@@ -32,6 +33,7 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service {
 
@@ -77,6 +79,7 @@ namespace VocaDb.Model.Service {
 
 			// Find Ids of albums that match the popularity filters, take maximum of sampleSize albums
 			var popularIds = session.Query<Album>()
+				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.Where(a => !a.Deleted 
 					&& a.RatingCount >= minRatings && a.RatingAverageInt >= 300	// Filter by number of ratings and average rating
 					&& !recentIds.Contains(a.Id))						// Filter out recent albums (that are already shown)
@@ -124,6 +127,7 @@ namespace VocaDb.Model.Service {
 			var now = DateTime.Now;
 
 			var upcoming = session.Query<Album>()
+				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.Where(a => !a.Deleted)
 				.WhereHasReleaseDate()
 				.WhereReleaseDateIsAfter(now)
@@ -132,6 +136,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			var recent = session.Query<Album>()
+				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.Where(a => !a.Deleted)
 				.WhereHasReleaseDate()
 				.WhereReleaseDateIsBefore(now)
@@ -194,17 +199,23 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongForApiContract[] GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields) {
-			return HandleQuery(session => GetHighlightedSongs(session).Select(s => new SongForApiContract(s, languagePreference, fields)).ToArray());
+		public async Task<SongForApiContract[]> GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields) {
+
+			return await HandleQueryAsync(async session => {
+				return (await GetHighlightedSongs(session))
+					.Select(s => new SongForApiContract(s, languagePreference, fields))
+					.ToArray();
+			});
+
 		}
 
-		private Song[] GetHighlightedSongs(ISession session) {
+		private async Task<Song[]> GetHighlightedSongs(ISession session) {
 
 			var cacheKey = "OtherService.HighlightedSongs";
 			var cachedSongIds = (int[])cache.Get(cacheKey);
 
 			if (cachedSongIds != null) {
-				return session.Query<Song>().Where(s => cachedSongIds.Contains(s.Id)).ToArray().OrderByIds(cachedSongIds);
+				return (await session.Query<Song>().Where(s => cachedSongIds.Contains(s.Id)).ToListAsync()).OrderByIds(cachedSongIds);
 			}
 
 			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
@@ -214,6 +225,7 @@ namespace VocaDb.Model.Service {
 			// Load at most maxSongs songs for cutoff date
 			var recentSongIdAndScore =
 				session.Query<Song>()
+				.WhereHasArtist(AppConfig.FilteredArtistId)
 				.Where(s => !s.Deleted 
 					&& s.PVServices != PVServices.Nothing 
 					&& s.CreateDate >= cutoffDate
@@ -234,7 +246,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			// Load the songs
-			var recentSongs = session.Query<Song>()
+			var recentSongs = session.Query<Song>()				
 				.Where(s => songIds.Contains(s.Id))
 				.OrderBy(SongSortRule.RatingScore)
 				.ToArray();
@@ -250,6 +262,7 @@ namespace VocaDb.Model.Service {
 
 				var moreSongs =
 					session.Query<Song>()
+					.WhereHasArtist(AppConfig.FilteredArtistId)
 					.Where(s => !s.Deleted 
 						&& s.PVServices != PVServices.Nothing 						
 						&& s.CreateDate < cutoffDate
@@ -411,16 +424,16 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public FrontPageContract GetFrontPageContent(bool ssl) {
+		public async Task<FrontPageContract> GetFrontPageContent(bool ssl) {
 
 			const int maxActivityEntries = 15;
 
-			return HandleQuery(session => {
+			return await HandleQueryAsync(async session => {
 
-				var activityEntries = session.Query<ActivityEntry>()
+				var activityEntries = (await session.Query<ActivityEntry>()
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxActivityEntries)
-					.ToArray()
+					.ToListAsync())
 					.Where(a => !a.EntryBase.Deleted);
 
 				var newAlbums = GetRecentAlbums(session, LanguagePreference, AlbumOptionalFields.MainPicture);
@@ -428,9 +441,9 @@ namespace VocaDb.Model.Service {
 				var recentIds = newAlbums.Select(a => a.Id).ToArray();
 				var topAlbums = GetTopAlbums(session, recentIds, LanguagePreference, AlbumOptionalFields.MainPicture);
 
-				var newSongs = GetHighlightedSongs(session);
+				var newSongs = await GetHighlightedSongs(session);
 
-				var firstSongVote = (newSongs.Any() ? session.Query<FavoriteSongForUser>().FirstOrDefault(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
+				var firstSongVote = (newSongs.Any() ? await session.Query<FavoriteSongForUser>().FirstOrDefaultAsync(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
 				var recentComments = GetRecentComments(session, ssl);
 
