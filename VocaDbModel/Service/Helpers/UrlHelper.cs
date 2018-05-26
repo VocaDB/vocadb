@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -54,6 +54,19 @@ namespace VocaDb.Model.Service.Helpers {
 				return url.Substring(7);
 			} else if (url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase)) {
 				return url.Substring(8);
+			}
+
+			return url;
+
+		}
+
+		public static string UpgradeToHttps(string url) {
+
+			if (string.IsNullOrEmpty(url))
+				return url;
+
+			if (url.StartsWith("http://tn.smilevideo.jp/smile")) {
+				return url.Replace("http://", "https://");
 			}
 
 			return url;
