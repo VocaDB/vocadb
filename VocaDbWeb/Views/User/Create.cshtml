@@ -1,4 +1,4 @@
-﻿@using R = ViewRes.User.CreateStrings;
+@using R = ViewRes.User.CreateStrings;
 
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.RegisterModel>
 
@@ -69,6 +69,11 @@
 				<a href="@Url.Action("LoginTwitter")">
 					<img src="@Url.Content("~/Content/Sign-in-with-Twitter-darker.png")" alt="@R.LoginWithTwitter" />
 				</a>
+				
+				<br /><br/>
+				<small>
+					<a href="https://wiki.vocadb.net/wiki/50/privacy-and-cookie-policy" target="_blank">@ViewRes._LayoutStrings.PrivacyPolicy</a>
+				</small>
 			</div>
 
 			<div class="span3">

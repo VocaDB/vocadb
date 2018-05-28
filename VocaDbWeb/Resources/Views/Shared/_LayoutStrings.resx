@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -179,6 +179,9 @@
   </data>
   <data name="OtherCredit" xml:space="preserve">
     <value>Other credits and source code</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy and cookie policy</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
