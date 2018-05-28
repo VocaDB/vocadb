@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -73,7 +73,11 @@ namespace VocaDb.Web.Controllers.Api {
 			var result = pvParser.ParseByUrl(pvUrl, getTitle, permissionContext);
 
 			if (!result.IsOk) {
-				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = result.Exception.Message });
+				var msg = result.Exception.Message;
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) {
+					ReasonPhrase = msg, 
+					Content = new StringContent(msg)
+				});
 			}
 
 			var contract = new PVContract(result, type);

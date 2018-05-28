@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.pvs {
 
 	import dc = vdb.dataContracts;
@@ -36,8 +36,10 @@ module vdb.viewModels.pvs {
 					
 			}).fail((jqXHR: JQueryXHR) => {
 
-				if (jqXHR.statusText)
-					alert(jqXHR.statusText);
+				const error = jqXHR.responseText || jqXHR.statusText;
+
+				if (error)
+					alert(error);
 
 			});
 
