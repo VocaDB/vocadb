@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +12,7 @@ using NLog;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -90,7 +91,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 
 			var title = HtmlEntity.DeEntitize(nicoResponse.Thumb.Title);
-			var thumbUrl = nicoResponse.Thumb.Thumbnail_Url ?? string.Empty;
+			var thumbUrl = UrlHelper.UpgradeToHttps(nicoResponse.Thumb.Thumbnail_Url) ?? string.Empty;
 			var userId = nicoResponse.Thumb.User_Id ?? string.Empty;
 			var length = ParseLength(nicoResponse.Thumb.Length);
 			var author = nicoResponse.Thumb.User_Nickname;

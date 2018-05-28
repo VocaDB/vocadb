@@ -40,6 +40,8 @@ namespace VocaDb.Model.DataContracts {
 			ParamIs.NotNull(() => image);
 			ParamIs.NotNull(() => thumbPersister);
 
+			Mime = image.Mime;
+
 			if (string.IsNullOrEmpty(image.Mime) && sizes != ImageSizes.Nothing)
 				return;
 
@@ -53,6 +55,12 @@ namespace VocaDb.Model.DataContracts {
 				UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb, ssl);				
 
 		}
+
+		/// <summary>
+		/// MIME type, for example "image/jpeg".
+		/// </summary>
+		[DataMember]
+		public string Mime { get; set;}
 
 		/// <summary>
 		/// URL to small thumbnail.
