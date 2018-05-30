@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+@using System.Web.Optimization
 @using Resources
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Code
@@ -105,24 +105,7 @@
 
 		@{ Html.RenderPartial("Partials/_SongSearchOptions"); }
 		
-		<!-- Event search options -->
-		<div data-bind="visible: showEventSearch, with: eventSearchViewModel">
-			<div class="control-group">
-				<div class="control-label">@Res.EventCategory</div>
-				<div class="controls">
-					<div class="input-append">
-						@KnockoutHelpers.DropdownList(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")
-					</div>
-				</div>
-			</div>
-		
-			<div class="control-group">
-				<div class="control-label">@EntryTypeNames.Artist</div>
-				<div class="controls" data-bind="with: artistFilters">
-					@KnockoutHelpers.ArtistFilters(artistParticipationStatus: false)
-				</div>
-			</div>
-		</div>
+		@{ Html.RenderPartial("Partials/_EventSearchOptions"); }
 
 		<!-- Tag search options -->
 		<div class="control-group" data-bind="visible: showTagSearch, with: tagSearchViewModel">

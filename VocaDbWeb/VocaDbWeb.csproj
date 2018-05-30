@@ -3582,6 +3582,7 @@
     <Content Include="Views\Event\ManageTagUsages.cshtml" />
     <Content Include="Views\Shared\Partials\_CustomNameEdit.cshtml" />
     <Content Include="Views\Ext\OEmbedResponsive.cshtml" />
+    <Content Include="Views\Search\Partials\_EventSearchOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
