@@ -1,4 +1,4 @@
-﻿using System.Web.Optimization;
+using System.Web.Optimization;
 
 namespace VocaDb.Web.App_Start {
 
@@ -290,6 +290,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Models/Tags/Tag.js",
 				"~/Scripts/Helpers/PVHelper.js",

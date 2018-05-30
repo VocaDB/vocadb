@@ -1,4 +1,4 @@
-﻿
+
 module vdb.repositories {
 
 	import cls = vdb.models;
@@ -41,6 +41,8 @@ module vdb.repositories {
 				childVoicebanks: queryParams.childVoicebanks || undefined,
 				includeMembers: queryParams.includeMembers || undefined,
 				status: queryParams.status || undefined,
+				afterDate: this.getDate(queryParams.afterDate),
+				beforeDate: this.getDate(queryParams.beforeDate),
 				nameMatchMode: models.NameMatchMode[nameMatchMode],
 				lang: queryParams.lang,
 				sort: queryParams.sort
@@ -77,7 +79,11 @@ module vdb.repositories {
 
 	export interface EventQueryParams extends CommonQueryParams {
 
+		afterDate?: Date;
+
 		artistId?: number[];
+
+		beforeDate?: Date;
 
 		category?: string;
 

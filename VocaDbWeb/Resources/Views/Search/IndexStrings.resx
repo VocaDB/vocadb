@@ -219,4 +219,7 @@
   <data name="ReleaseEvent" xml:space="preserve">
     <value>Release event</value>
   </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
 </root>

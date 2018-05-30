@@ -1,9 +1,13 @@
-﻿
+
 module vdb.repositories {
 
 	import cls = vdb.models;
 
 	export class BaseRepository {
+
+		protected getDate(date?: Date) {
+			return date ? date.toISOString() : undefined;
+		}
 
 		// todo: protected
 		public languagePreferenceStr: string;
