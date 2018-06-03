@@ -1,4 +1,4 @@
-﻿
+
 module vdb.helpers {
 	
 	export class DateTimeHelper {
@@ -7,13 +7,17 @@ module vdb.helpers {
 			return (val < 10 ? "0" + val : val);
 		}
 
-		public static converToLocal(utcDate: Date) {
+		public static convertToLocal(utcDate: Date) {
+			if (utcDate == null)
+				return null;
 			const momentDate = moment.utc(utcDate);
 			return new Date(momentDate.year(), momentDate.month(), momentDate.date());
 			//return new Date(utcDate.getFullYear(), utcDate.getMonth(), utcDate.getDate());
 		}
 
 		public static convertToUtc(localDate: Date) {
+			if (localDate == null)
+				return null;
 			return moment.utc([localDate.getFullYear(), localDate.getMonth(), localDate.getDate()]).toDate();
 		}
 
