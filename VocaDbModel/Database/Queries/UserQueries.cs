@@ -906,7 +906,7 @@ namespace VocaDb.Model.Database.Queries {
 				var q = session.OfType<FavoriteSongForUser>().Query()
 					.Where(a => !a.Song.Deleted && a.User.Id == queryParams.UserId)
 					.WhereChildHasName(queryParams.TextQuery)
-					.WhereSongHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks)
+					.WhereSongHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks, queryParams.ArtistGrouping)
 					.WhereHasRating(queryParams.FilterByRating)
 					.WhereSongIsInList(queryParams.SonglistId)
 					.WhereSongHasTags(queryParams.TagIds)

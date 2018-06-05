@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Artists;
@@ -68,6 +68,23 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query.Where(s => s.Song.AllArtists.Any(a => a.Artist.Id == artistId 
 					|| a.Artist.BaseVoicebank.Id == artistId || a.Artist.BaseVoicebank.BaseVoicebank.Id == artistId 
 					|| a.Artist.BaseVoicebank.BaseVoicebank.BaseVoicebank.Id == artistId));
+
+		}
+
+		public static IQueryable<T> WhereSongHasArtists<T>(this IQueryable<T> query, EntryIdsCollection artistIds, bool childVoicebanks, LogicalGrouping grouping)
+			where T : ISongLink {
+
+			return grouping == LogicalGrouping.And ? WhereSongHasArtists(query, artistIds, childVoicebanks) : WhereSongHasAnyArtist(query, artistIds, childVoicebanks);
+
+		}
+
+		public static IQueryable<T> WhereSongHasAnyArtist<T>(this IQueryable<T> query, EntryIdsCollection artistIds, bool childVoicebanks)
+			where T : ISongLink {
+
+			if (!artistIds.HasAny)
+				return query;
+
+			return query.Where(s => s.Song.AllArtists.Any(a => artistIds.Ids.Contains(a.Artist.Id)));
 
 		}
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -409,6 +409,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="tagName">Filter by tag name (optional).</param>
 		/// <param name="artistId">Filter by song artist (optional).</param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
+		/// <param name="artistGrouping">Logical grouping for artists.</param>
 		/// <param name="rating">Filter songs by given rating (optional).</param>
 		/// <param name="songListId">Filter songs by song list (optional).</param>
 		/// <param name="groupByRating">Group results by rating so that highest rated are first.</param>
@@ -432,6 +433,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] int[] tagId = null,
 			[FromUri] int[] artistId = null,
 			bool childVoicebanks = false,
+			LogicalGrouping artistGrouping = LogicalGrouping.And,
 			SongVoteRating? rating = null,
 			int? songListId = null,
 			bool groupByRating = true,
@@ -450,6 +452,7 @@ namespace VocaDb.Web.Controllers.Api {
 				TextQuery = textQuery,
 				SortRule = sort ?? RatedSongForUserSortRule.Name,
 				ArtistIds = artistId,
+				ArtistGrouping = artistGrouping,
 				ChildVoicebanks = childVoicebanks,
 				FilterByRating = rating ?? SongVoteRating.Nothing,
 				GroupByRating = groupByRating,
