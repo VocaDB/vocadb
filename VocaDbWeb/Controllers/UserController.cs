@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -370,7 +370,7 @@ namespace VocaDb.Web.Controllers
 			var twitterSignIn = new TwitterConsumer().TwitterSignIn;
 
 			var targetUrl = Url.Action("LoginTwitterComplete", new { returnUrl });
-			var uri = new Uri(new Uri(AppConfig.HostAddress), targetUrl);
+			var uri = new Uri(new Uri(AppConfig.HostAddressSecure), targetUrl);
 
 			UserAuthorizationRequest request;
 

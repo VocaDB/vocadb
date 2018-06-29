@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -133,7 +133,12 @@ namespace VocaDb.Web.Controllers
 			}
 
 	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
-	        int id;
+
+			if (!ModelState.IsValid) {
+				return RenderEdit();
+			}
+
+			int id;
 
 	        try {
 				id = queries.Update(model.ToContract(), pictureData).Id;
