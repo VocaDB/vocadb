@@ -1,4 +1,4 @@
-﻿@using VocaDb.Model.Domain
+@using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Models.Song
@@ -54,8 +54,6 @@
 			@foreach (var link in SocialLinks) {
 				@SocialLink(link.Title, link.Url, link.BannerImg)
 			}
-			<br />
-			@Html.ActionLink(ViewRes._LayoutStrings.IRCLink, "Chat", "Home")
 		</div>
 
 		<br />
