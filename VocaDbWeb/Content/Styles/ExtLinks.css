@@ -210,7 +210,9 @@ a.extLink[href^="http://chokuhan.nicovideo.jp/"] {
   background: url("/Content/ExtIcons/nicochokuhan.png") no-repeat left 50%;
 }
 a.extLink[href^="http://piapro.jp/"],
-a.extLink[href^="http://www.piapro.jp/"] {
+a.extLink[href^="http://www.piapro.jp/"],
+a.extLink[href^="https://piapro.jp/"],
+a.extLink[href^="https://www.piapro.jp/"] {
   background: url("/Content/ExtIcons/piapro.png") no-repeat left 50%;
 }
 a.extLink[href^="http://books.rakuten.co.jp/"] {
@@ -245,7 +247,8 @@ a.extLink[href^="http://www.youtube.com/"],
 a.extLink[href^="https://www.youtube.com/"],
 a.extLink[href^="http://youtube.com/"],
 a.extLink[href^="https://youtube.com/"],
-a.extLink[href^="http://youtu.be/"] {
+a.extLink[href^="http://youtu.be/"],
+a.extLink[href^="https://youtu.be/"] {
   background: url("/Content/youtube.png") no-repeat left 50%;
 }
 a.extLink[href^="http://vocaloid.wikia.com/wiki/"] {

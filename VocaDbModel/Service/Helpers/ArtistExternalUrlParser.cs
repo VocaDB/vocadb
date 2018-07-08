@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.Helpers {
 		};
 
 		private static readonly string[] whitelistedUrls = {
-			"http://piapro.jp/"
+			"http://piapro.jp/", "https://piapro.jp/", "http://www.piapro.jp/", "https://www.piapro.jp/"
 		};
 
 		/// <summary>
