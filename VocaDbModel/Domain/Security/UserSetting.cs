@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
