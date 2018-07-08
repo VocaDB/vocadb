@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.Queries {
 			ParamIs.NotNull(() => notes);
 
 			var msg = string.Format("creating report for {0} [{1}] as {2}", typeof(TEntry).Name, entryId, reportType);
-			ctx.AuditLogger.SysLog(msg.Truncate(200), hostname);
+			ctx.AuditLogger.SysLog(msg, hostname);
 
 			var loggedUserId = permissionContext.LoggedUserId;
 			var existing = ctx.Query<TReport>()
