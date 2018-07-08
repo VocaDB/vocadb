@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -25,6 +25,9 @@ namespace VocaDb.Model.Service.Queries {
 
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
+
+			var msg = string.Format("creating report for {0} [{1}] as {2}", typeof(TEntry).Name, entryId, reportType);
+			ctx.AuditLogger.SysLog(msg.Truncate(200), hostname);
 
 			var loggedUserId = permissionContext.LoggedUserId;
 			var existing = ctx.Query<TReport>()
@@ -71,7 +74,7 @@ namespace VocaDb.Model.Service.Queries {
 			if (existing != null)
 				return false;
 
-			var msg =  string.Format("reported {0} as {1} ({2})", entryLinkFactory.CreateEntryLink(entry), reportType, HttpUtility.HtmlEncode(notes));
+			msg =  string.Format("reported {0} as {1} ({2})", entryLinkFactory.CreateEntryLink(entry), reportType, HttpUtility.HtmlEncode(notes));
 			ctx.AuditLogger.AuditLog(msg.Truncate(200), new AgentLoginData(reporter, hostname));
 
 			ctx.Save(report);
