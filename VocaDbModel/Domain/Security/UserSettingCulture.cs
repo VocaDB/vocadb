@@ -1,5 +1,6 @@
 using System.Web;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Security {
@@ -26,4 +27,28 @@ namespace VocaDb.Model.Domain.Security {
 			return true;
 		}
 	}
+
+	public class UserSettingLanguage : UserSetting<string> {
+
+		public UserSettingLanguage(HttpContext context, IUserPermissionContext permissionContext) : base(context, permissionContext) {
+		}
+
+		protected override string RequestParamName => "culture";
+		protected override string SettingName => "Language";
+		protected override string GetPersistedValue(UserWithPermissionsContract permissionContext) => permissionContext.Language;
+
+		protected override void SetPersistedValue(User user, string val) {
+			user.Language = new OptionalCultureCode(val);
+		}
+
+		protected override void SetPersistedValue(UserWithPermissionsContract user, string val) {
+			user.Language = val;
+		}
+
+		protected override bool TryParseValue(string str, out string val) {
+			val = str;
+			return true;
+		}
+	}
+
 }
