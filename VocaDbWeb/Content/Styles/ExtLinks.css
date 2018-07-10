@@ -237,6 +237,10 @@ a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"] {
 a.extLink[href^="http://vimeo.com/"] {
   background: url("/Content/ExtIcons/vimeo.png") no-repeat left 50%;
 }
+a.extLink[href^="http://twipla.jp/"],
+a.extLink[href^="https://twipla.jp/"] {
+  background: url("/Content/ExtIcons/vimeo.png") no-repeat left 50%;
+}
 a.extLink[href^="http://shop.vocaloidstore.com/"] {
   background: url("/Content/ExtIcons/vocastore.png") no-repeat left 50%;
 }
