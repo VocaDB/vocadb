@@ -99,7 +99,8 @@ a.extLink[href^="https://touhoudb.com"] {
 a.extLink[href^="http://www.tsutaya.co.jp/"] {
   background: url("/Content/ExtIcons/tsutaya.png") no-repeat left 50%;
 }
-a.extLink[href^="http://twipla.jp/"] {
+a.extLink[href^="http://twipla.jp/"],
+a.extLink[href^="https://twipla.jp/"] {
   background: url("/Content/ExtIcons/twipla.png") no-repeat left 50%;
 }
 a.extLink[href^="https://en.touhouwiki.net/wiki/"] {
@@ -235,10 +236,6 @@ a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"] {
   background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
 }
 a.extLink[href^="http://vimeo.com/"] {
-  background: url("/Content/ExtIcons/vimeo.png") no-repeat left 50%;
-}
-a.extLink[href^="http://twipla.jp/"],
-a.extLink[href^="https://twipla.jp/"] {
   background: url("/Content/ExtIcons/vimeo.png") no-repeat left 50%;
 }
 a.extLink[href^="http://shop.vocaloidstore.com/"] {
