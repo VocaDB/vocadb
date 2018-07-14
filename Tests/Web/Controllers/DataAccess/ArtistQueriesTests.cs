@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Runtime.Caching;
@@ -338,6 +338,31 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNotNull(activityEntry, "Activity entry was created");
 			Assert.AreEqual(artist, activityEntry.EntryBase, "Activity entry's entry");
 			Assert.AreEqual(EntryEditEvent.Updated, activityEntry.EditEvent, "Activity entry event type");
+
+		}
+
+		[TestMethod]
+		public void Update_OriginalName_UpdateArtistStrings() {
+
+			artist.Names.Names.Clear();
+			artist.Names.Add(new ArtistName(artist, new LocalizedString("初音ミク", ContentLanguageSelection.Japanese)));
+			artist.Names.Add(new ArtistName(artist, new LocalizedString("Hatsune Miku", ContentLanguageSelection.Romaji)));
+			artist.TranslatedName.DefaultLanguage = ContentLanguageSelection.Japanese;
+			artist.Names.UpdateSortNames();
+			repository.SaveNames(artist);
+
+			var song = repository.Save(CreateEntry.Song());
+			repository.Save(song.AddArtist(artist));
+			song.UpdateArtistString();
+
+			Assert.AreEqual("初音ミク", song.ArtistString[ContentLanguagePreference.Default], "Precondition: default name");
+
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister());
+			contract.DefaultNameLanguage = ContentLanguageSelection.English;
+
+			CallUpdate(contract);
+
+			Assert.AreEqual("Hatsune Miku", song.ArtistString[ContentLanguagePreference.Default], "Default name was updated");
 
 		}
 

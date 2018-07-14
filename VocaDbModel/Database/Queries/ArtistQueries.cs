@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -628,7 +628,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (webLinkDiff.Changed)
 					diff.WebLinks.Set();
 
-				if (diff.ArtistType.IsChanged || diff.Names.IsChanged) {
+				if (diff.ArtistType.IsChanged || diff.Names.IsChanged || diff.OriginalName.IsChanged) {
 
 					foreach (var song in artist.Songs) {
 						song.Song.UpdateArtistString();
