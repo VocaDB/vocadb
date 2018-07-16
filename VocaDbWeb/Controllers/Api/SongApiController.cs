@@ -431,7 +431,6 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("{id:int}/tagSuggestions")]
-		[CacheOutput(ClientTimeSpan = 60, ServerTimeSpan = 60)]
 		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) {
 			return queries.GetTagSuggestions(id);
 		}

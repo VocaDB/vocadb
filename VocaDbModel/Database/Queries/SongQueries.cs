@@ -602,7 +602,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(pv => pvParser.ParseByUrl(pv.Url, true, permissionContext))
 					.Where(p => p != null);
 
-				var nicoTags = pvResults.SelectMany(pv => pv.Tags).ToArray();
+				var nicoTags = pvResults.SelectMany(pv => pv.Tags).Distinct().ToArray();
 				var mappedTags = MapTags(ctx, nicoTags).Select(t => t.Id).Where(t => !songTags.Contains(t));
 
 				var tags = ctx.LoadMultiple<Tag>(mappedTags);
