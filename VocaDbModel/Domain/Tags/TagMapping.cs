@@ -59,13 +59,17 @@ namespace VocaDb.Model.Domain.Tags {
 	public enum TagMappingType {
 		Nothing = 0,
 		/// <summary>
+		/// Tag appears in related tags, but is not automatically mapped
+		/// </summary>
+		Related = 1,
+		/// <summary>
 		/// Tag is automatically applied when adding song
 		/// </summary>
-		Automatic = 1,
+		Automatic = 2,
 		/// <summary>
 		/// Tag is only offered as suggestion
 		/// </summary>
-		Suggestion = 2
+		Suggestion = 4
 	}
 
 }
