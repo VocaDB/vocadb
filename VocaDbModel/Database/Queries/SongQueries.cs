@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -13,6 +13,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -584,6 +585,30 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(session => {
 				var song = session.Load<Song>(id);
 				return fac(song, (song.Deleted ? GetMergeRecord(session, id) : null));
+			});
+
+		}
+
+		public TagUsageForApiContract[] GetTagSuggestions(int songId) {
+
+			return repository.HandleQuery(ctx => {
+
+				var song = ctx.Load<Song>(songId);
+
+				var songTags = song.Tags.Tags.Select(t => t.Id);
+
+				var pvResults = song.PVs
+					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
+					.Select(pv => pvParser.ParseByUrl(pv.Url, true, permissionContext))
+					.Where(p => p != null);
+
+				var nicoTags = pvResults.SelectMany(pv => pv.Tags).ToArray();
+				var mappedTags = MapTags(ctx, nicoTags);
+
+				var tags = ctx.LoadMultiple<Tag>(mappedTags.Select(t => t.Id));
+
+				return tags.Select(t => new TagUsageForApiContract(t, 1, LanguagePreference)).ToArray();
+
 			});
 
 		}

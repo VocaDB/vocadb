@@ -10,6 +10,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Aggregate;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -426,6 +427,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 			return songAggregateQueries.SongsOverTime(timeUnit, true, null, artistId, tagId);
 
+		}
+
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[Route("{id:int}/tagSuggestions")]
+		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) {
+			return queries.GetTagSuggestions(id);
 		}
 
 		/// <summary>

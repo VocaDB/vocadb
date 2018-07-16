@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace VocaDb.Model.Domain.Tags {
 
@@ -9,6 +9,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public TagMapping() {
 			CreateDate = DateTime.Now;
+			MappingType = TagMappingType.Automatic;
 		}
 
 		public TagMapping(Tag tag, string sourceTag) : this() {
@@ -27,6 +28,8 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual DateTime CreateDate { get; set; }
 
 		public virtual int Id { get; set; }
+
+		public virtual TagMappingType MappingType { get; set; }
 
 		/// <summary>
 		/// Tag name in the source system.
@@ -51,6 +54,18 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+	}
+
+	public enum TagMappingType {
+		Nothing = 0,
+		/// <summary>
+		/// Tag is automatically applied when adding song
+		/// </summary>
+		Automatic = 1,
+		/// <summary>
+		/// Tag is only offered as suggestion
+		/// </summary>
+		Suggestion = 2
 	}
 
 }
