@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -102,6 +102,8 @@ namespace VocaDb.Model.Service.VideoServices {
 				string.Format("http://space.bilibili.com/{0}/#!/index", authorId)
 			};
 		}
+
+		public override string GetUrlById(string id) => $"https://www.bilibili.com/video/av{id}";
 
 	}
 
