@@ -595,7 +595,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var song = ctx.Load<Song>(songId);
 
-				var songTags = song.Tags.Tags.Select(t => t.Id);
+				var songTags = new HashSet<int>(song.Tags.Tags.Select(t => t.Id));
 
 				var pvResults = song.PVs
 					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
@@ -603,9 +603,9 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(p => p != null);
 
 				var nicoTags = pvResults.SelectMany(pv => pv.Tags).ToArray();
-				var mappedTags = MapTags(ctx, nicoTags);
+				var mappedTags = MapTags(ctx, nicoTags).Select(t => t.Id).Where(t => !songTags.Contains(t));
 
-				var tags = ctx.LoadMultiple<Tag>(mappedTags.Select(t => t.Id));
+				var tags = ctx.LoadMultiple<Tag>(mappedTags);
 
 				return tags.Select(t => new TagUsageForApiContract(t, 1, LanguagePreference)).ToArray();
 
