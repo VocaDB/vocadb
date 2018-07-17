@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
@@ -577,6 +577,27 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(relEvent.Id, result.AlbumEventId, "AlbumEventId");
+
+		}
+
+		[TestMethod]
+		public void GetTagSuggestions() {
+
+			var tag2 = repository.Save(CreateEntry.Tag("metalcore"));
+			repository.Save(new TagMapping(tag, "vocarock"));
+			repository.Save(new TagMapping(tag2, "vocacore"));
+
+			pvParser.ResultFunc = (url, getMeta) =>
+				VideoUrlParseResult.CreateOk(url, PVService.NicoNicoDouga, "sm393939",
+					getMeta ? VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", null, "testimg.jpg", tags: new [] { "vocarock", "vocacore" }) : VideoTitleParseResult.Empty);
+
+			song.AddTag(tag);
+			song.PVs.Add(new PVForSong(song, new PVContract { Service = PVService.NicoNicoDouga, PVType = PVType.Original, PVId = "sm393939" }));
+			
+			var result = queries.GetTagSuggestions(song.Id);
+
+			Assert.AreEqual(1, result.Length, "One suggestion");
+			Assert.AreEqual("metalcore", result[0].Tag.Name, "Tag name");
 
 		}
 
