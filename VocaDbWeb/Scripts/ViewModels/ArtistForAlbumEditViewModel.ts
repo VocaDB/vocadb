@@ -7,9 +7,6 @@ namespace vdb.viewModels {
     // View model for editing artist for album link.
     export class ArtistForAlbumEditViewModel implements IEditableArtistWithSupport {
         
-        private static customizableArtistTypes = ['Animator', 'OtherGroup', 'OtherIndividual',
-            'OtherVocalist', 'Producer', 'Illustrator', 'Lyricist', 'Unknown', 'Utaite', 'Band'];
-
 		public artist: dc.ArtistContract;
 
         // Unique link Id.
@@ -56,7 +53,7 @@ namespace vdb.viewModels {
             this.rolesArray = ko.observableArray<string>([]);
 
             this.isCustomizable = ko.computed(() => {
-                return !this.artist || _.some(ArtistForAlbumEditViewModel.customizableArtistTypes, typeName => this.artist.artistType == typeName);
+                return !this.artist || helpers.ArtistHelper.isCustomizable(this.artist.artistType);
             });
 
             this.roles = ko.computed({

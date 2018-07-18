@@ -50,7 +50,11 @@ module vdb.helpers {
 		}
 
 		// Whether the roles for an artist type can be customized
-		public static isCustomizable(at: cls.artists.ArtistType) {
+		public static isCustomizable(at: cls.artists.ArtistType | string) {
+
+			if (typeof at === 'string') {
+				at = cls.artists.ArtistType[at];
+			}
 
 			return _.includes(ArtistHelper.customizableTypes, at);
 
