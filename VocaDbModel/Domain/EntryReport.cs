@@ -14,7 +14,7 @@ namespace VocaDb.Model.Domain {
 		private string notes;
 
 		protected EntryReport() {
-			Created = DateTime.Now;
+			Created = DateTime.UtcNow;
 			Notes = string.Empty;
 			Status = ReportStatus.Open;
 		}
