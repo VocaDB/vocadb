@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
@@ -28,6 +28,8 @@ namespace VocaDb.Model.Domain {
 			VersionNumber = versionNumber;
 
 		}
+
+		public virtual DateTime? CloseDate { get; set; }
 
 		public virtual User ClosedBy { get; set; }
 

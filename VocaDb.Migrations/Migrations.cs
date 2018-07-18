@@ -1,8 +1,15 @@
-﻿using System;
+using System;
 using System.Data;
 using FluentMigrator;
 
 namespace VocaDb.Migrations {
+
+	[Migration(2018_07_18_1900)]
+	public class EntryReportCloseDate : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("CloseDate").OnTable(TableNames.EntryReports).AsDateTime().Nullable();
+		}
+	}
 
 	[Migration(2017_12_10_1900)]
 	public class PublishDateForAllPVs : AutoReversingMigration {

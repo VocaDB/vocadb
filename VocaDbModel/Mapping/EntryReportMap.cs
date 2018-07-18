@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -16,6 +16,7 @@ namespace VocaDb.Model.Mapping {
 			Id(m => m.Id);
 			DiscriminateSubClassesOnColumn("[EntryType]");
 
+			Map(m => m.CloseDate).Nullable();
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Hostname).Length(50).Not.Nullable();
 			Map(m => m.Notes).Length(EntryReport.MaxNotesLength).Not.Nullable();

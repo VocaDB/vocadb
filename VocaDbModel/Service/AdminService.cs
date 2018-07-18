@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -225,6 +225,7 @@ namespace VocaDb.Model.Service {
 						EntryLinkFactory.CreateEntryLink(report.EntryBase)), session);
 					report.Status = ReportStatus.Closed;
 					report.ClosedBy = GetLoggedUser(session);
+					report.CloseDate = DateTime.UtcNow;
 					session.Update(report);
 				}
 

@@ -1,4 +1,4 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
+@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
 @using VocaDb.Model.DataContracts
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
@@ -37,6 +37,7 @@
 			}
 			@if (status == ReportStatus.Closed) {
 				<th>Closed by</th>
+				<th>Closed at</th>
 			}
 		</tr>
 	</thead>
@@ -63,6 +64,9 @@
 				@if (status == ReportStatus.Closed) {
 					<td>
 						@UserHelpers.UserIconLink(r.ClosedBy)
+					</td>
+					<td>
+						@r.CloseDate
 					</td>
 				}
 			</tr>
