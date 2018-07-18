@@ -13,7 +13,7 @@ namespace VocaDb.Model.DataContracts {
 
 			ParamIs.NotNull(() => report);
 
-			CloseDate = report.CloseDate;
+			ClosedAt = report.ClosedAt;
 			ClosedBy = report.ClosedBy != null ? new UserForApiContract(report.ClosedBy, userIconFactory, UserOptionalFields.MainPicture) : null;
 			Created = report.Created;
 			Entry = entry;
@@ -28,7 +28,7 @@ namespace VocaDb.Model.DataContracts {
 
 		public UserForApiContract ClosedBy { get; set;}
 
-		public DateTime? CloseDate { get; set; }
+		public DateTime? ClosedAt { get; set; }
 
 		public DateTime Created { get; set; }
 

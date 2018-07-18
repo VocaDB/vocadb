@@ -29,7 +29,7 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public virtual DateTime? CloseDate { get; set; }
+		public virtual DateTime? ClosedAt { get; set; }
 
 		public virtual User ClosedBy { get; set; }
 

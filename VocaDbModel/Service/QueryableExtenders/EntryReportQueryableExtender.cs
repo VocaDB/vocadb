@@ -9,7 +9,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			switch (sortRule) {
 				case EntryReportSortRule.CloseDate:
-					return query.OrderByDescending(e => e.CloseDate ?? e.Created);
+					return query.OrderByDescending(e => e.ClosedAt ?? e.Created);
 				case EntryReportSortRule.Created:
 					return query.OrderByDescending(e => e.Created);
 			}

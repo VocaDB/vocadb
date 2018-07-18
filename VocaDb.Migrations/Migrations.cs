@@ -7,7 +7,7 @@ namespace VocaDb.Migrations {
 	[Migration(2018_07_18_1900)]
 	public class EntryReportCloseDate : AutoReversingMigration {
 		public override void Up() {
-			Create.Column("CloseDate").OnTable(TableNames.EntryReports).AsDateTime().Nullable();
+			Create.Column("ClosedAt").OnTable(TableNames.EntryReports).AsDateTime().Nullable();
 		}
 	}
 

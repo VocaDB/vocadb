@@ -226,7 +226,7 @@ namespace VocaDb.Model.Service {
 						EntryLinkFactory.CreateEntryLink(report.EntryBase)), session);
 					report.Status = ReportStatus.Closed;
 					report.ClosedBy = GetLoggedUser(session);
-					report.CloseDate = DateTime.UtcNow;
+					report.ClosedAt = DateTime.UtcNow;
 					session.Update(report);
 				}
 
