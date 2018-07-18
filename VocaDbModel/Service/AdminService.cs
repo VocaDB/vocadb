@@ -26,6 +26,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.DataSharing;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 
@@ -305,7 +306,7 @@ namespace VocaDb.Model.Service {
 				var reports = session
 					.Query<EntryReport>()
 					.Where(r => r.Status == status)
-					.OrderByDescending(r => r.Created)
+					.OrderBy(EntryReportSortRule.CloseDate)
 					.Take(200)
 					.ToArray();
 				var fac = new EntryForApiContractFactory(null, null);
