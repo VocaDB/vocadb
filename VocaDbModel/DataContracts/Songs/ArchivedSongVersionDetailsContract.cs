@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
@@ -31,6 +31,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 		}
 
 		public ArchivedSongVersionContract ArchivedVersion { get; set; }
+
+		public bool CanBeReverted => ArchivedVersion.Version < Song.Version - 1;
 
 		public ArchivedObjectVersionWithFieldsContract<SongEditableFields, SongArchiveReason>[] ComparableVersions { get; set; }
 
