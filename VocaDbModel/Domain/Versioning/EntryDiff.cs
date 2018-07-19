@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace VocaDb.Model.Domain.Versioning {
@@ -113,6 +113,9 @@ namespace VocaDb.Model.Domain.Versioning {
 			val.SetFlag(field, value);
 		}
 
+		public override string ToString() {
+			return $"{field} changed: {IsChanged}";
+		}
 	}
 
 }
