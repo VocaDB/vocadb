@@ -361,6 +361,8 @@ namespace VocaDb.Web.Controllers
 
 		[RestrictBannedIP]
 		public ActionResult LoginTwitter(string returnUrl) {
+
+			log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
 			
 			// Make sure session ID is initialized
 // ReSharper disable UnusedVariable
