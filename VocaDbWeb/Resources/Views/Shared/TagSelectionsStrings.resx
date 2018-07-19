@@ -123,6 +123,9 @@
   <data name="Info" xml:space="preserve">
     <value>Check tags that apply, or add your own.</value>
   </data>
+  <data name="NoSuggestions" xml:space="preserve">
+    <value>No suggestions</value>
+  </data>
   <data name="Suggestions" xml:space="preserve">
     <value>Suggestions:</value>
   </data>

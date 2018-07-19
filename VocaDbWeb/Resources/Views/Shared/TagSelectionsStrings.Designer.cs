@@ -79,6 +79,15 @@ namespace ViewRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No suggestions.
+        /// </summary>
+        public static string NoSuggestions {
+            get {
+                return ResourceManager.GetString("NoSuggestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suggestions:.
         /// </summary>
         public static string Suggestions {

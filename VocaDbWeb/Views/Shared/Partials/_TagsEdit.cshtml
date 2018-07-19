@@ -1,4 +1,5 @@
-﻿
+@using Res = ViewRes.TagSelectionsStrings
+
 <!-- TagsEditViewModel -->
 
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 500 }, dialogButtons: [{ text: '@ViewRes.SharedStrings.Save', click: save }], dialogVisible: dialogVisible" 
@@ -6,7 +7,7 @@
 
 	<div class="trackProperties">
 
-		<p>@ViewRes.TagSelectionsStrings.Info</p>
+		<p>@Res.Info</p>
 
 		<div data-bind="foreach: selections">
 			<span class="tag" data-bind="attr: { title: tag.additionalNames }">
@@ -19,10 +20,16 @@
 		</div>
 		<br />
 		
-		<div data-bind="visible: suggestions().length">
-			<p>@ViewRes.TagSelectionsStrings.Suggestions</p>
-			<div data-bind="foreach: suggestions">
-				<span class="tag" data-bind="attr: { title: tag.additionalNames + '\n' + '@ViewRes.TagSelectionsStrings.Usages'.replace('{0}', count) }">
+		<div data-bind="visible: getSuggestions">
+			<p>@Res.Suggestions</p>
+			<div data-bind="visible: !suggestionsLoaded()">
+				@Helpers.AjaxLoader()
+			</div>
+			<div data-bind="visible: suggestionsLoaded() && !suggestions().length">
+				@Res.NoSuggestions
+			</div>
+			<div data-bind="foreach: suggestions, visible: suggestionsLoaded()">
+				<span class="tag" data-bind="attr: { title: tag.additionalNames + '\n' + '@Res.Usages'.replace('{0}', count) }">
 					<a href="#" data-bind="text: tag.name, click: function() { $parent.autoCompletedTag(tag); }, jqButton: { icon: 'ui-icon-plus' }"></a>
 				</span>
 			</div>
@@ -30,7 +37,7 @@
 		</div>
 
 		<div class="form-inline">
-			@ViewRes.TagSelectionsStrings.AddTag:
+			@Res.AddTag:
 			<div class="input-append">
 				<input type="text" class="input-large" maxlength="30" data-bind="textInput: newTagName, tagAutoComplete: autoCompletedTag, allowAliases: true, tagTarget: target" />
 				<button type="button" class="btn" data-bind="click: addTag">@ViewRes.SharedStrings.Add</button>

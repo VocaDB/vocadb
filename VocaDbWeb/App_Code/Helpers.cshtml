@@ -1,4 +1,4 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
+@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
 @using System.Web.Routing
 @using VocaDb.Model
@@ -19,6 +19,10 @@
 		return UrlMapper.FullAbsolute(relative);
 	}
 
+}
+
+@helper AjaxLoader() {
+	<img src="@Url.Content("~/Content/ajax-loader.gif")" alt="loading..." />
 }
 
 @helper AjaxLoader(string id) {

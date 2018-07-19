@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.tags {
 
 	import cls = vdb.models;
@@ -68,12 +68,17 @@ module vdb.viewModels.tags {
 			});
 
 			if (this.getSuggestions) {
-				this.getSuggestions(result => this.suggestions(result));
+				this.suggestionsLoaded(false);
+				this.getSuggestions(result => {
+					this.suggestions(result);
+					this.suggestionsLoaded(true);
+				});
 			}
 
 		}
 
 		public suggestions = ko.observableArray<dc.tags.TagUsageForApiContract>();
+		public suggestionsLoaded = ko.observable(false);
 		
 	}
 
