@@ -124,7 +124,7 @@
     <value>タグを選択、または追加。</value>
   </data>
   <data name="NoSuggestions" xml:space="preserve">
-    <value>おすすめはありません</value>
+    <value>おすすめなし</value>
   </data>
   <data name="Suggestions" xml:space="preserve">
     <value>おすすめタグ</value>
