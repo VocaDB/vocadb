@@ -609,7 +609,11 @@ namespace VocaDb.Model.Database.Queries {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.ShortVersion, 1));
 				}
 
-				mappedTags = mappedTags.Where(t => !songTags.Contains(t));
+				if (song.SongType != SongType.DramaPV && song.SongType != SongType.Instrumental && !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any()) {
+					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.Instrumental, 1));
+				}
+
+				mappedTags = mappedTags.Where(t => !songTags.Contains(t)).ToArray();
 
 				var tags = ctx.LoadMultiple<Tag>(mappedTags);
 
