@@ -603,7 +603,13 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(p => p != null);
 
 				var nicoTags = pvResults.SelectMany(pv => pv.Tags).Distinct().ToArray();
-				var mappedTags = MapTags(ctx, nicoTags).Select(t => t.Id).Where(t => !songTags.Contains(t));
+				var mappedTags = MapTags(ctx, nicoTags).Select(t => t.Id);
+
+				if (song.HasOriginalVersion && song.OriginalVersion.LengthSeconds > song.LengthSeconds) {
+					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.ShortVersion, 1));
+				}
+
+				mappedTags = mappedTags.Where(t => !songTags.Contains(t));
 
 				var tags = ctx.LoadMultiple<Tag>(mappedTags);
 

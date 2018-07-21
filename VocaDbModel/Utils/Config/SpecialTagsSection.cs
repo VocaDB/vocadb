@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Utils.Config {
@@ -35,6 +35,12 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["instrumental"] = value; }
 		}
 
+		[ConfigurationProperty("shortVersion")]
+		public int ShortVersion {
+			get { return TagId("shortVersion"); }
+			set { this["shortVersion"] = value; }
+		}
+
 		public int GetSpecialTagId(SpecialTagType specialTag) {
 
 			switch (specialTag) {
@@ -44,6 +50,8 @@ namespace VocaDb.Model.Utils.Config {
 					return Free;
 				case SpecialTagType.Instrumental:
 					return Instrumental;
+				case SpecialTagType.ShortVersion:
+					return ShortVersion;
 				default:
 					return 0;
 			}

@@ -1,11 +1,12 @@
-﻿namespace VocaDb.Model.Domain.Tags {
+namespace VocaDb.Model.Domain.Tags {
 
 	public enum SpecialTagType {
 
 		Nothing,
 		ChangedLyrics,
 		Free,
-		Instrumental
+		Instrumental,
+		ShortVersion
 
 	}
 
