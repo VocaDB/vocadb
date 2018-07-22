@@ -221,6 +221,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					var param = EnumVal<ArtistType>.Parse(filter.Param);
 					return WhereSongHasArtistWithType(query, param);
 				}
+				case AdvancedFilterType.HasAlbum: {
+					return filter.Negate ? query.Where(s => !s.Song.AllAlbums.Any()) : query.Where(s => s.Song.AllAlbums.Any());
+				}
 				case AdvancedFilterType.HasOriginalMedia: {
 					return query.Where(s => filter.Negate != s.Song.PVs.PVs.Any(pv => !pv.Disabled && pv.PVType == PVType.Original));
 				}
