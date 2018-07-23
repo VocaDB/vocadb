@@ -1753,6 +1753,7 @@
     <Content Include="Content\banners\appstore.png" />
     <Content Include="Content\banners\en_app_rgb_wo_45.png" />
     <Content Include="Content\banners\facebook.png" />
+	<Content Include="Content\banners\vk.png" />
     <Content Include="Content\banners\googleplus-icon.png" />
     <Content Include="Content\banners\mikufan_bannertest.png" />
     <Content Include="Content\banners\mikufan_small.png" />
