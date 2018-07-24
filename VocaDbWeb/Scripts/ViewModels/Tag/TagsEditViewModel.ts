@@ -2,10 +2,13 @@
 module vdb.viewModels.tags {
 
 	import cls = vdb.models;
+	import dc = vdb.dataContracts;
 
 	export class TagsEditViewModel {
 
-		constructor(private repo: ITagSelectionsRepository, public target?: cls.EntryType, private getSuggestions?: (callback: (result: dc.tags.TagUsageForApiContract[]) => void) => void) { }
+		constructor(private readonly repo: ITagSelectionsRepository, 
+			public readonly target?: cls.EntryType, 
+			private readonly getSuggestions?: (callback: (result: dc.tags.TagUsageForApiContract[]) => void) => void) { }
 		
 		public addTag = () => {
 			
@@ -42,6 +45,22 @@ module vdb.viewModels.tags {
 		}
 
         public dialogVisible = ko.observable(false);
+
+		public getSuggestionText = (suggestion: dc.tags.TagUsageForApiContract, countText: string) => {
+
+			var text = "";
+
+			if (suggestion.tag.additionalNames) {
+				text += suggestion.tag.additionalNames + '\n';
+			}
+
+			if (suggestion.count > 0) {
+				text += countText.replace('{0}', suggestion.count.toString());
+			}
+
+			return text;
+
+		}
 
 		public newTagName = ko.observable("");
 

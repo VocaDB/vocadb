@@ -617,7 +617,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tags = ctx.LoadMultiple<Tag>(mappedTags);
 
-				return tags.Select(t => new TagUsageForApiContract(t, 1, LanguagePreference)).ToArray();
+				return tags.Select(t => new TagUsageForApiContract(t, 0, LanguagePreference)).ToArray();
 
 			});
 

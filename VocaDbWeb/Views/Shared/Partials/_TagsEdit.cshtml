@@ -1,3 +1,4 @@
+@inherits VocaDb.Web.Code.VocaDbPage
 @using Res = ViewRes.TagSelectionsStrings
 
 <!-- TagsEditViewModel -->
@@ -29,7 +30,7 @@
 				@Res.NoSuggestions
 			</div>
 			<div data-bind="foreach: suggestions, visible: suggestionsLoaded()">
-				<span class="tag" data-bind="attr: { title: tag.additionalNames + '\n' + '@Res.Usages'.replace('{0}', count) }">
+				<span class="tag" data-bind="attr: { title: $parent.getSuggestionText($data, '@Res.Usages') }">
 					<a href="#" data-bind="text: tag.name, click: function() { $parent.autoCompletedTag(tag); }, jqButton: { icon: 'ui-icon-plus' }"></a>
 				</span>
 			</div>
