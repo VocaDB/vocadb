@@ -158,6 +158,11 @@ a.extLink {
 	&[href^="http://cevio.wikia.com/wiki/"], &[href^="http://alterego.wikia.com/wiki/"] {
 		.extLink(url("/Content/ExtIcons/wikia.png"));
 	}
+	
+	&[href^="https://www.vocaloid.com/"] {
+		.extLink(url("/Content/ExtIcons/vocaloidshop.png"));
+}
+	
 }
 
 a.extLink[href^="mailto:"] {
@@ -299,8 +304,4 @@ a.extLink[href^="https://youtu.be/"] {
 
 a.extLink[href^="http://vocaloid.wikia.com/wiki/"] {
 	background: url("/Content/ExtIcons/vocawiki.png") no-repeat left 50%;
-}
-
-a.extLink[href^="https://www.vocaloid.com/"] {
-	background: url("/Content/ExtIcons/vocaloidshop.png") no-repeat left 50%;
 }
