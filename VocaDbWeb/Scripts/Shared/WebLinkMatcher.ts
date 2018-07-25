@@ -90,6 +90,8 @@ module vdb.utils {
 			{ url: "voiceroid.wikia.com/wiki/", desc: "Voiceroid Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "cevio.wikia.com/wiki/", desc: "CeVIO Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "alterego.wikia.com/wiki/", desc: "Alter/Ego Wiki", cat: c.WebLinkCategory.Reference },
+			{ url: "www.vocaloid.com/products/", desc: "VOCALOID SHOP (JPN)", cat: c.WebLinkCategory.Commercial },
+			{ url: "www.vocaloid.com/en/products/", desc: "VOCALOID SHOP (ENG)", cat: c.WebLinkCategory.Commercial },
 			{ url: "vocalotracks.ssw.co.jp/", desc: "Vocalotracks", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.vocallective.net/", desc: "Vocallective", cat: c.WebLinkCategory.Official },
 			{ url: "weibo.com/", desc: "Weibo", cat: c.WebLinkCategory.Official },
