@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+@using System.Web.Optimization
 @using VocaDb.Web.Helpers
 @using Res = ViewRes.User.RequestVerificationStrings
 @inherits VocaDb.Web.Code.VocaDbPage<string>
@@ -65,7 +65,7 @@
 	}
 
 	<div class="span4 alert alert-info">
-		@Html.Raw(Res.Info)
+		@Html.Raw(BrandableStrings.User.RequestVerificationInfo)
 	</div>
 
 </div>

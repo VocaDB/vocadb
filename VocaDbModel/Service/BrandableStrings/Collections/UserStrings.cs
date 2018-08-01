@@ -1,4 +1,4 @@
-﻿using System.Resources;
+using System.Resources;
 
 namespace VocaDb.Model.Service.BrandableStrings.Collections {
 
@@ -6,6 +6,8 @@ namespace VocaDb.Model.Service.BrandableStrings.Collections {
 
 		public UserStrings(ResourceManager resourceMan) 
 			: base(resourceMan) { }
+
+		public string RequestVerificationInfo => GetString(nameof(RequestVerificationInfo));
 
 	}
 

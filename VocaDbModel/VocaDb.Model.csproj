@@ -1175,10 +1175,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SongRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\UserRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\UserRes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UserRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\UserRes.zh-Hans.resx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Shared\" />

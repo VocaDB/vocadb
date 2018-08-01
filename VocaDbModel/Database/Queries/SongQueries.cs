@@ -591,6 +591,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagUsageForApiContract[] GetTagSuggestions(int songId) {
 
+			var maxResults = 3;
+
 			return repository.HandleQuery(ctx => {
 
 				var song = ctx.Load<Song>(songId);
@@ -613,7 +615,7 @@ namespace VocaDb.Model.Database.Queries {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.Instrumental, 1));
 				}
 
-				mappedTags = mappedTags.Where(t => !songTags.Contains(t)).ToArray();
+				mappedTags = mappedTags.Where(t => !songTags.Contains(t)).Take(maxResults).ToArray();
 
 				var tags = ctx.LoadMultiple<Tag>(mappedTags);
 

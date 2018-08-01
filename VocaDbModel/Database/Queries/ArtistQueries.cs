@@ -418,7 +418,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			return repository.HandleQuery(ctx => {
 
-				var artistTags = ctx.Load<Artist>(artistId).Tags.Tags.Select(t => t.Id);
+				var artist = ctx.Load<Artist>(artistId);
+				var artistTags = artist.Tags.Tags.Select(t => t.Id);
 
 				var albumUsages = ctx.Query<AlbumTagUsage>()
 					.Where(u => !artistTags.Contains(u.Tag.Id) 
