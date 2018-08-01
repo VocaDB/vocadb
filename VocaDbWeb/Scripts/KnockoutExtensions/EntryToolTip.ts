@@ -17,7 +17,7 @@ module vdb.knockoutExtensions {
 
 	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number, params?: any, foreignDomain?: string) {
 
-		const whitelistedDomains = ["http://vocadb.net", "https://vocadb.net", "http://utaitedb.net"];
+		const whitelistedDomains = ["http://vocadb.net", "https://vocadb.net", "http://utaitedb.net", "https://utaitedb.net", "https://touhoudb.com"];
 		const url = foreignDomain && _.some(whitelistedDomains, domain => _.includes(foreignDomain.toLocaleLowerCase(), domain)) ?
 			vdb.functions.mergeUrls(foreignDomain, relativeUrl) : vdb.functions.mapAbsoluteUrl(relativeUrl);
 		const data = _.assign({ id: id }, params);
