@@ -180,21 +180,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		private Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {
-
-			// Construct tag mappings (many to many)
-			var tagMappings = ctx
-				.Query<TagMapping>()
-				.Where(t => nicoTags.Contains(t.SourceTag))
-				.ToArray()
-				.GroupBy(map => map.SourceTag, StringComparer.InvariantCultureIgnoreCase)
-				.ToDictionary(grp => grp.Key, grp => grp.Select(map => map.Tag), StringComparer.InvariantCultureIgnoreCase);
-
-			return nicoTags
-				.Where(t => tagMappings.ContainsKey(t))
-				.SelectMany(t => tagMappings[t])
-				.Distinct()
-				.ToArray();
-
+			return new TagMapper().MapTags(ctx, nicoTags);
 		}
 
 		private bool HasCoverTag(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res) {

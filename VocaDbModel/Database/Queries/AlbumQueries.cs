@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -25,6 +25,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -37,6 +38,7 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Database.Queries {
 
@@ -50,6 +52,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserMessageMailer mailer;
+		private readonly IPVParser pvParser;
 		private readonly IUserIconFactory userIconFactory;
 
 		private IEntryLinkFactory EntryLinkFactory {
@@ -127,7 +130,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
-			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
+			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -136,6 +139,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.mailer = mailer;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
+			this.pvParser = pvParser;
 
 		}
 
@@ -394,9 +398,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagUsageForApiContract[] GetTagSuggestions(int albumId) {
 
+			var maxResults = 3;
+
 			return repository.HandleQuery(ctx => {
 
-				var albumTags = ctx.Load<Album>(albumId).Tags.Tags.Select(t => t.Id);
+				var album = ctx.Load<Album>(albumId);
+				var albumTags = album.Tags.Tags.Select(t => t.Id);
 
 				var songUsages = ctx.Query<SongTagUsage>()
 					.Where(u => !albumTags.Contains(u.Tag.Id)
@@ -408,12 +415,31 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
 					.Where(t => t.Count > 1)
 					.OrderByDescending(t => t.Count)
-					.Take(3)
+					.Take(maxResults)
 					.ToArray();
 
 				var tags = ctx.LoadMultiple<Tag>(songUsages.Select(t => t.TagId)).ToDictionary(t => t.Id);
 
-				return songUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], t.Count, LanguagePreference)).ToArray();
+				var results = songUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], t.Count, LanguagePreference));
+
+				if (songUsages.Length < 3) {
+
+					var pvResults = album.PVs
+						.Where(pv => pv.Service == PVService.NicoNicoDouga)
+						.Select(pv => pvParser.ParseByUrl(pv.Url, true, permissionContext))
+						.Where(p => p != null);
+
+					var nicoTags = pvResults.SelectMany(pv => pv.Tags).Distinct().ToArray();
+					var mappedTags = new TagMapper().MapTags(ctx, nicoTags)
+						.Where(tag => !albumTags.Contains(tag.Id) && !tags.ContainsKey(tag.Id));
+
+					results = results
+						.Concat(mappedTags.Select(tag => new TagUsageForApiContract(tag, 0, LanguagePreference)))
+						.Take(maxResults);
+
+				}
+
+				return results.ToArray();
 
 			});
 
