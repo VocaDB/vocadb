@@ -211,6 +211,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void GetTagSuggestions() {
+
+			var song = repository.Save(CreateEntry.Song());
+
+		}
+
+		[TestMethod]
 		public void Revert() {
 
 			// Arrange

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
@@ -491,6 +491,38 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(tag2, tag.Parent, "Parent");
 			Assert.IsTrue(tag2.Children.Contains(tag), "Parent contains child tag");
+
+		}
+
+		[TestMethod]
+		public void UpdateMappings_Add() {
+
+			queries.UpdateMappings(new[] { 
+				new TagMappingContract {
+					SourceTag = "apimiku",
+					Tag = new TagBaseContract(tag, ContentLanguagePreference.Default)
+				}
+			});
+
+			var mappings = repository.List<TagMapping>();
+			Assert.AreEqual(1, mappings.Count, "Mapping was saved");
+			Assert.AreEqual(tag, mappings[0].Tag, "Tag");
+			Assert.AreEqual("apimiku", mappings[0].SourceTag, "SourceTag");
+
+		}
+
+		[TestMethod]
+		public void UpdateMappings_Remove() {
+
+			repository.Save(tag.CreateMapping("apimiku"));
+
+			Assert.AreEqual(1, repository.List<TagMapping>().Count, "Precondition: mapping exists in database");
+			Assert.AreEqual(1, tag.Mappings.Count, "Precondition: mapping exists for tag");
+
+			queries.UpdateMappings(new TagMappingContract[0]);
+
+			Assert.AreEqual(0, repository.List<TagMapping>().Count, "Mapping was deleted");
+			Assert.AreEqual(0, tag.Mappings.Count, "Mapping was removed from tag");
 
 		}
 

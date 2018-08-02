@@ -5,7 +5,7 @@ namespace VocaDb.Model.Domain.Tags {
 	/// <summary>
 	/// Defines tag mapping from an external source system such as NicoNicoDouga to VocaDB.
 	/// </summary>
-	public class TagMapping {
+	public class TagMapping : IEntryWithIntId {
 
 		public TagMapping() {
 			CreateDate = DateTime.Now;
@@ -53,6 +53,12 @@ namespace VocaDb.Model.Domain.Tags {
 				tag = value;
 			}
 		}
+
+		public virtual void Delete() {
+			Tag.Mappings.Remove(this);
+		}
+
+		public override string ToString() => $"Mapping from '{SourceTag}' to {Tag}";
 
 	}
 

@@ -777,15 +777,13 @@ namespace VocaDb.Model.Database.Queries {
 
 			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
-			//mappings = mappings.Distinct(m => m.SourceTag).ToArray();
-
 			HandleTransaction(ctx => {
 
 				ctx.AuditLogger.SysLog("updating tag mappings");
 
 				var existing = ctx.Query<TagMapping>().ToList();
 				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.SourceTag == m2.SourceTag && m.Tag.IdEquals(m2.Tag), 
-					create: t => CreateMapping(ctx, t), remove: t => ctx.Delete(t));
+					create: t => CreateMapping(ctx, t), remove: mapping => mapping.Delete());
 
 				ctx.Sync(diff);
 
