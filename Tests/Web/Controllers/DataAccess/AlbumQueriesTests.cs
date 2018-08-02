@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -253,6 +253,30 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
 			Assert.IsNotNull(result, "result");
+
+		}
+
+		[TestMethod]
+		public void GetTagSuggestions() {
+
+			void AddTagUsages(Song[] songs, string[] tagNames) {
+				foreach (var tagName in tagNames) {
+					var tag = repository.Save(CreateEntry.Tag(tagName));
+					foreach (var song in songs) {
+						var usage = repository.Save(song.AddTag(tag).Result);
+						repository.Save(usage.CreateVote(user));
+					}
+				}
+			}
+
+			AddTagUsages(new [] { song, song2 }, new[] { "vocarock", "techno" });
+
+			repository.Save(album.AddSong(song, 1, 1), album.AddSong(song2, 2, 1));
+
+			var result = queries.GetTagSuggestions(album.Id);
+
+			Assert.AreEqual(2, result.Length, "Number of tag suggestions");
+			Assert.IsTrue(result.Any(r => r.Tag.Name == "vocarock"), "First tag was returned");
 
 		}
 
