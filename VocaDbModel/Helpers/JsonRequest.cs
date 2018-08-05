@@ -1,5 +1,6 @@
-﻿using System.IO;
+using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace VocaDb.Model.Helpers {
@@ -28,6 +29,18 @@ namespace VocaDb.Model.Helpers {
 				var serializer = new JsonSerializer();
 				return serializer.Deserialize<T>(jsonReader);
 			}
+
+		}
+
+		public static async Task<T> ReadObjectAsync<T>(string url, int timeoutMs = 100000) {
+
+			return await HtmlRequestHelper.GetStreamAsync(url, stream => {
+				using (var streamReader = new StreamReader(stream))
+				using (var jsonReader = new JsonTextReader(streamReader)) {
+					var serializer = new JsonSerializer();
+					return serializer.Deserialize<T>(jsonReader);
+				}
+			}, timeoutSec: timeoutMs / 1000);
 
 		}
 

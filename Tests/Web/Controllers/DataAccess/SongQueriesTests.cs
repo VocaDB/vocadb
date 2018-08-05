@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -581,7 +582,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetTagSuggestions() {
+		public async Task GetTagSuggestions() {
 
 			var tag2 = repository.Save(CreateEntry.Tag("metalcore"));
 			repository.Save(new TagMapping(tag, "vocarock"));
@@ -594,9 +595,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			song.AddTag(tag);
 			song.PVs.Add(new PVForSong(song, new PVContract { Service = PVService.NicoNicoDouga, PVType = PVType.Original, PVId = "sm393939" }));
 			
-			var result = queries.GetTagSuggestions(song.Id);
+			var result = await queries.GetTagSuggestionsAsync(song.Id);
 
-			Assert.AreEqual(1, result.Length, "One suggestion");
+			Assert.AreEqual(1, result.Count, "One suggestion");
 			Assert.AreEqual("metalcore", result[0].Tag.Name, "Tag name");
 
 		}

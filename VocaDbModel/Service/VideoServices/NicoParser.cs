@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using HtmlAgilityPack;
@@ -17,13 +19,8 @@ using VocaDb.Model.Service.Helpers;
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class NicoParser : IVideoServiceParser {
-
-		public VideoTitleParseResult GetTitle(string id) {
-
-			return NicoHelper.GetTitleAPI(id);
-
-		}
-
+		public VideoTitleParseResult GetTitle(string id) => NicoHelper.GetTitleAPI(id);
+		public Task<VideoTitleParseResult> GetTitleAsync(string id) => NicoHelper.GetTitleAPIAsync(id);
 	}
 
 	public static class NicoHelper {
@@ -127,6 +124,22 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);
 			} catch (IOException x) {
 				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);				
+			}
+
+			return ParseResponse(nicoResponse);
+
+		}
+
+		public static async Task<VideoTitleParseResult> GetTitleAPIAsync(string id) {
+
+			var url = string.Format("https://ext.nicovideo.jp/api/getthumbinfo/{0}", id);
+
+			NicoResponse nicoResponse;
+
+			try {
+				nicoResponse = await XmlRequest.GetXmlObjectAsync<NicoResponse>(url);
+			} catch (HttpRequestException x) {
+				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);
 			}
 
 			return ParseResponse(nicoResponse);

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using NHibernate;
 using NLog;
 using VocaDb.Model.Domain.Security;
@@ -24,6 +25,20 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			try {
 				using (var ctx = OpenSessionForContext()) {
 					return func(ctx);
+				}
+			} catch (ObjectNotFoundException x) {
+				log.Error(x.Message);
+				throw;
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+		}
+
+		public async Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			try {
+				using (var ctx = OpenSessionForContext()) {
+					return await func(ctx);
 				}
 			} catch (ObjectNotFoundException x) {
 				log.Error(x.Message);
@@ -90,6 +105,20 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			try {
 				using (var ctx = OpenSessionForContext()) {
 					return func(ctx);
+				}
+			} catch (ObjectNotFoundException x) {
+				log.Error(x.Message);
+				throw;
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+		}
+
+		public async Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			try {
+				using (var ctx = OpenSessionForContext()) {
+					return await func(ctx);
 				}
 			} catch (ObjectNotFoundException x) {
 				log.Error(x.Message);

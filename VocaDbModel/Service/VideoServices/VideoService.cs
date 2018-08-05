@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 
@@ -78,9 +79,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public virtual string GetMaxSizeThumbUrlById(string id) {
-			return GetThumbUrlById(id);
-		}
+		public virtual string GetMaxSizeThumbUrlById(string id) => GetThumbUrlById(id);
 
 		public virtual string GetUrlById(string id) {
 
@@ -89,15 +88,10 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) {
-			return Enumerable.Empty<string>();
-		}
+		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) => Enumerable.Empty<string>();
 
-		public virtual VideoTitleParseResult GetVideoTitle(string id) {
-
-			return (parser != null ? parser.GetTitle(id) : null);
-
-		}
+		public virtual VideoTitleParseResult GetVideoTitle(string id) => (parser != null ? parser.GetTitle(id) : null);
+		public virtual Task<VideoTitleParseResult> GetVideoTitleAsync(string id) => (parser != null ? parser.GetTitleAsync(id) : null);
 
 		/// <summary>
 		/// Tests whether the user has the required permissions to add PVs for this service.
@@ -126,6 +120,18 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
+		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+
+			var id = GetIdByUrl(url);
+
+			if (id == null) {
+				return Task.FromResult(VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher));
+			}
+
+			return ParseByIdAsync(id, url, getTitle);
+
+		}
+
 		protected virtual VideoUrlParseResult ParseById(string id, string url, bool getMeta) {
 
 			var meta = (getMeta ? GetVideoTitle(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;
@@ -133,6 +139,16 @@ namespace VocaDb.Model.Service.VideoServices {
 			//if (!meta.Success) {
 			//	return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, meta.Error);
 			//}
+
+			// Note that even if meta lookup failed, we're returning Ok here, because for example NND API doesn't support all PVs.
+
+			return VideoUrlParseResult.CreateOk(url, Service, id, meta);
+
+		}
+
+		protected virtual async Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta) {
+
+			var meta = (getMeta ? await GetVideoTitleAsync(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;
 
 			// Note that even if meta lookup failed, we're returning Ok here, because for example NND API doesn't support all PVs.
 

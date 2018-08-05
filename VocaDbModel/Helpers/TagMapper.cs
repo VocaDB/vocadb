@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using NHibernate.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Tags;
 
@@ -25,7 +27,25 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		public async Task<Tag[]> MapTagsAsync(IDatabaseContext ctx, string[] nicoTags) {
 
+			// Construct tag mappings (many to many)
+			var tagMappingsList = await ctx
+				.Query<TagMapping>()
+				.Where(t => nicoTags.Contains(t.SourceTag))
+				.ToListAsync();
+
+			var tagMappings = tagMappingsList
+				.GroupBy(map => map.SourceTag, StringComparer.InvariantCultureIgnoreCase)
+				.ToDictionary(grp => grp.Key, grp => grp.Select(map => map.Tag), StringComparer.InvariantCultureIgnoreCase);
+
+			return nicoTags
+				.Where(t => tagMappings.ContainsKey(t))
+				.SelectMany(t => tagMappings[t])
+				.Distinct()
+				.ToArray();
+
+		}
 	}
 
 }

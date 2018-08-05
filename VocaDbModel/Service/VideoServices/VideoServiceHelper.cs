@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 
@@ -156,9 +157,11 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		public static VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext) {
-
 			return ParseByUrl(url, getTitle, permissionContext, services);
+		}
 
+		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext) {
+			return ParseByUrlAsync(url, getTitle, permissionContext, services);
 		}
 
 		public static VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices) {
@@ -170,6 +173,18 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 
 			return service.ParseByUrl(url, getTitle);
+
+		}
+
+		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices) {
+
+			var service = testServices.FirstOrDefault(s => s.IsAuthorized(permissionContext) && s.IsValidFor(url));
+
+			if (service == null) {
+				return Task.FromResult(VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher));
+			}
+
+			return service.ParseByUrlAsync(url, getTitle);
 
 		}
 

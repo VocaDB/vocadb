@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -61,17 +62,13 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
-		public static T2 Load<T2>(this IDatabaseContext ctx, object id) {
-			return ctx.OfType<T2>().Load(id);
-		}
+		public static T2 Load<T2>(this IDatabaseContext ctx, object id) => ctx.OfType<T2>().Load(id);
 
-		public static T2 Load<T, T2>(this IDatabaseContext<T> ctx, object id) {
-			return ctx.OfType<T2>().Load(id);
-		}
+		public static Task<T2> LoadAsync<T2>(this IDatabaseContext ctx, object id) => ctx.OfType<T2>().LoadAsync(id);
 
-		public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithIntId entry) {
-			return ctx.Load<T>(entry.Id);
-		}
+		public static T2 Load<T, T2>(this IDatabaseContext<T> ctx, object id) => ctx.OfType<T2>().Load(id);
+
+		public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithIntId entry) => ctx.Load<T>(entry.Id);
 
 		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : IEntryWithIntId {
 			return ctx.OfType<T2>().Query().Where(e => ids.Contains(e.Id));

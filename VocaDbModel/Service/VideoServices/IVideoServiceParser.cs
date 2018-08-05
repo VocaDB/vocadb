@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -6,7 +7,8 @@ namespace VocaDb.Model.Service.VideoServices {
 	public interface IVideoServiceParser {
 
 		VideoTitleParseResult GetTitle(string id);
-	
+		Task<VideoTitleParseResult> GetTitleAsync(string id);
+
 	}
 
 	public class VideoTitleParseResult {

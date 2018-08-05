@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Xml;
 using VocaDb.Model.Service.VideoServices.Youtube;
 using VocaDb.Model.Utils;
@@ -8,6 +10,12 @@ using VocaDb.Model.Utils;
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class YoutubeParser : IVideoServiceParser {
+
+		private YoutubeService service;
+
+		public YoutubeParser() {
+			service = new YoutubeService(AppConfig.YoutubeApiKey);
+		}
 
 		private int? GetLength(YoutubeVideoItem video) {
 
@@ -30,16 +38,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return (video.Snippet.PublishedAt.HasValue ? (DateTime?)video.Snippet.PublishedAt.Value.Date : null);
 		}
 
-		public VideoTitleParseResult GetTitle(string id) {
-
-			var service = new YoutubeService(AppConfig.YoutubeApiKey);
-
-			YoutubeVideoResponse result;
-			try {
-				result = service.Video(id);
-            } catch (WebException x) {
-				return VideoTitleParseResult.CreateError(x.Message);
-			}
+		private VideoTitleParseResult GetTitle(YoutubeVideoResponse result) {
 
 			if (!result.Items.Any()) {
 				return VideoTitleParseResult.Empty;
@@ -53,6 +52,32 @@ namespace VocaDb.Model.Service.VideoServices {
 			var publishDate = GetPublishDate(video);
 
 			return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, authorId, thumbUrl, length, uploadDate: publishDate);
+
+		}
+
+		public VideoTitleParseResult GetTitle(string id) {
+
+			YoutubeVideoResponse result;
+			try {
+				result = service.Video(id);
+            } catch (WebException x) {
+				return VideoTitleParseResult.CreateError(x.Message);
+			}
+
+			return GetTitle(result);
+
+		}
+
+		public async Task<VideoTitleParseResult> GetTitleAsync(string id) {
+
+			YoutubeVideoResponse result;
+			try {
+				result = await service.VideoAsync(id);
+			} catch (HttpRequestException x) {
+				return VideoTitleParseResult.CreateError(x.Message);
+			}
+
+			return GetTitle(result);
 
 		}
 

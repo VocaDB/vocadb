@@ -594,6 +594,7 @@
     <Compile Include="Helpers\UrlValidator.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
+    <Compile Include="Helpers\XmlRequest.cs" />
     <Compile Include="Mapping\Activityfeed\ActivityEntryMap.cs" />
     <Compile Include="Mapping\Albums\AlbumCommentMap.cs" />
     <Compile Include="Mapping\Albums\AlbumDiscPropertiesMap.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
@@ -12,6 +13,10 @@ namespace VocaDb.Tests.TestSupport {
 		}
 
 		public TResult HandleQuery<TResult>(Func<IDatabaseContext, TResult> func, string failMsg = "Unexpected database error") {
+			return func(dbContext);
+		}
+
+		public Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			return func(dbContext);
 		}
 
@@ -34,6 +39,10 @@ namespace VocaDb.Tests.TestSupport {
 		}
 
 		public TResult HandleQuery<TResult>(Func<IDatabaseContext<TRepo>, TResult> func, string failMsg = "Unexpected database error") {
+			return func(dbContext);
+		}
+
+		public Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext<TRepo>, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			return func(dbContext);
 		}
 

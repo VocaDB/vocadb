@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Helpers;
+using System.Threading.Tasks;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices.Youtube {
 
@@ -9,17 +10,14 @@ namespace VocaDb.Model.Service.VideoServices.Youtube {
 
 		private readonly string apiKey;
 
+		private string Url(string id) => string.Format(videoQueryFormat, apiKey, id);
+
 		public YoutubeService(string apiKey) {
 			this.apiKey = apiKey;
 		}
 
-		public YoutubeVideoResponse Video(string id) {
-
-			var url = string.Format(videoQueryFormat, apiKey, id);
-
-			return JsonRequest.ReadObject<YoutubeVideoResponse>(url);
-
-		}
+		public YoutubeVideoResponse Video(string id) => JsonRequest.ReadObject<YoutubeVideoResponse>(Url(id));
+		public Task<YoutubeVideoResponse> VideoAsync(string id) => JsonRequest.ReadObjectAsync<YoutubeVideoResponse>(Url(id));
 
 	}
 }

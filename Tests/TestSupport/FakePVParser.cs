@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.VideoServices;
 
@@ -22,6 +23,10 @@ namespace VocaDb.Tests.TestSupport {
 
 			return MatchedPVs[url];
 
+		}
+
+		public Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext) {
+			return Task.FromResult(ParseByUrl(url, getTitle, permissionContext));
 		}
 
 	}

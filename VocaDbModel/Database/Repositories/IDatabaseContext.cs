@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace VocaDb.Model.Database.Repositories {
 
@@ -68,7 +69,18 @@ namespace VocaDb.Model.Database.Repositories {
 		/// Accessing the proxy throws a NHibernate exception if the entity is not found.
 		/// </remarks>
 		T Load(object id);
-			
+
+		/// <summary>
+		/// Loads an entity from the repository, assuming the entity exists.
+		/// </summary>
+		/// <param name="id">Entity Id.</param>
+		/// <returns>The loaded entity. Cannot be null.</returns>
+		/// <remarks>
+		/// This method returns a proxy that will be loaded when it's first accessed. 
+		/// Accessing the proxy throws a NHibernate exception if the entity is not found.
+		/// </remarks>
+		Task<T> LoadAsync(object id);
+
 		/// <summary>
 		/// LINQ query against the repository.
 		/// </summary>

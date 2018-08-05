@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -64,6 +65,8 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 				
 		}
+
+		public Task<VideoTitleParseResult> GetTitleAsync(string id) => Task.FromResult(GetTitle(id));
 
 	}
 

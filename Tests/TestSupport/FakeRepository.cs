@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -53,6 +54,10 @@ namespace VocaDb.Tests.TestSupport {
 		}
 
 		public TResult HandleQuery<TResult>(Func<IDatabaseContext<T>, TResult> func, string failMsg = "Unexpected database error") {
+			return func(CreateContext());
+		}
+
+		public Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			return func(CreateContext());
 		}
 
@@ -240,6 +245,10 @@ namespace VocaDb.Tests.TestSupport {
 
 			return list.First(i => IdEquals(i, id));
 
+		}
+
+		public Task<T> LoadAsync(object id) {
+			return Task.FromResult(Load(id));
 		}
 
 		public virtual IDatabaseContext<T2> OfType<T2>() {

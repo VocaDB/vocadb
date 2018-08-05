@@ -1,5 +1,6 @@
-﻿using System.Data;
+using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.Domain.Security;
@@ -24,21 +25,15 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			return new NHibernateTransaction(Session.BeginTransaction(isolationLevel));
 		}
 
-		public virtual void Dispose() {
-			Session.Dispose();
-		}
+		public virtual void Dispose() => Session.Dispose();
 
-		public void Flush() {
-			Session.Flush();
-		}
+		public void Flush() => Session.Flush();
 
 		public IDatabaseContext<T2> OfType<T2>() {
 			return new NHibernateDatabaseContext<T2>(Session, PermissionContext);
 		}
 
-		public IQueryable<T2> Query<T2>() {
-			return OfType<T2>().Query();
-		}
+		public IQueryable<T2> Query<T2>() => OfType<T2>().Query();
 
 	}
 
@@ -49,30 +44,22 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 		}
 
-		public void Delete(T entity) {
-			Session.Delete(entity);
-		}
+		public void Delete(T entity) => Session.Delete(entity);
 
-		public T Get(object id) {
-			return Session.Get<T>(id);
-		}
+		public T Get(object id) => Session.Get<T>(id);
 
-		public T Load(object id) {
-			return Session.Load<T>(id);
-		}
+		public T Load(object id) => Session.Load<T>(id);
 
-		public IQueryable<T> Query() {
-			return Session.Query<T>();
-		}
+		public Task<T> LoadAsync(object id) => Session.LoadAsync<T>(id);
+
+		public IQueryable<T> Query() => Session.Query<T>();
 
 		public T Save(T obj) {
 			Session.Save(obj);
 			return obj;
 		}
 
-		public void Update(T obj) {
-			Session.Update(obj);
-		}
+		public void Update(T obj) => Session.Update(obj);
 
 	}
 

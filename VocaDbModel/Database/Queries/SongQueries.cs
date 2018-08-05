@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 using System.Web;
 using NHibernate;
+using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -181,6 +184,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		private Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {
 			return new TagMapper().MapTags(ctx, nicoTags);
+		}
+
+		private Task<Tag[]> MapTagsAsync(IDatabaseContext ctx, string[] nicoTags) {
+			return new TagMapper().MapTagsAsync(ctx, nicoTags);
 		}
 
 		private bool HasCoverTag(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res) {
@@ -575,23 +582,22 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagUsageForApiContract[] GetTagSuggestions(int songId) {
+		public async Task<ReadOnlyCollection<TagUsageForApiContract>> GetTagSuggestionsAsync(int songId) {
 
 			var maxResults = 3;
 
-			return repository.HandleQuery(ctx => {
+			return await repository.HandleQueryAsync(async ctx => {
 
-				var song = ctx.Load<Song>(songId);
+				var song = await ctx.LoadAsync<Song>(songId);
 
 				var songTags = new HashSet<int>(song.Tags.Tags.Select(t => t.Id));
 
-				var pvResults = song.PVs
+				var pvResults = await Task.WhenAll(song.PVs
 					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
-					.Select(pv => pvParser.ParseByUrl(pv.Url, true, permissionContext))
-					.Where(p => p != null);
+					.Select(pv => pvParser.ParseByUrlAsync(pv.Url, true, permissionContext)));
 
-				var nicoTags = pvResults.SelectMany(pv => pv.Tags).Distinct().ToArray();
-				var mappedTags = MapTags(ctx, nicoTags).Select(t => t.Id);
+				var nicoTags = pvResults.Where(p => p != null).SelectMany(pv => pv.Tags).Distinct().ToArray();
+				var mappedTags = (await MapTagsAsync(ctx, nicoTags)).Select(t => t.Id);
 
 				if (song.HasOriginalVersion && song.OriginalVersion.LengthSeconds > song.LengthSeconds) {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.ShortVersion, 1));
@@ -605,7 +611,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tags = ctx.LoadMultiple<Tag>(mappedTags);
 
-				return tags.Select(t => new TagUsageForApiContract(t, 0, LanguagePreference)).ToArray();
+				var result = await tags.Select(t => new TagUsageForApiContract(t, 0, LanguagePreference)).ToListAsync();
+				return result.AsReadOnly();
 
 			});
 

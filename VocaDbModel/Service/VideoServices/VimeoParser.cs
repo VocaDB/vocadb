@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -35,6 +36,8 @@ namespace VocaDb.Model.Service.VideoServices {
 			return VideoTitleParseResult.CreateSuccess(result.Video.Title, author, null, thumbUrl, length, uploadDate: date);
 
 		}
+
+		public Task<VideoTitleParseResult> GetTitleAsync(string id) => Task.FromResult(GetTitle(id));
 
 	}
 
