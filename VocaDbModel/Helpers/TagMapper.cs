@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NHibernate.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Helpers {
 
@@ -33,7 +34,7 @@ namespace VocaDb.Model.Helpers {
 			var tagMappingsList = await ctx
 				.Query<TagMapping>()
 				.Where(t => nicoTags.Contains(t.SourceTag))
-				.ToListAsync();
+				.VdbToListAsync();
 
 			var tagMappings = tagMappingsList
 				.GroupBy(map => map.SourceTag, StringComparer.InvariantCultureIgnoreCase)

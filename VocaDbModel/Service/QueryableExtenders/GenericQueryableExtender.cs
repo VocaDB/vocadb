@@ -1,6 +1,10 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using NHibernate.Linq;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
@@ -58,6 +62,22 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			var memberInit = Expression.MemberInit(Expression.New(typeof(TResult)), memberBindings); // new T2 { Prop = p.Prop, ... }
 
 			return query.Select(Expression.Lambda<Func<TSource, TResult>>(memberInit, param));
+
+		}
+
+		/// <summary>
+		/// Executes the query and returns its result as <see cref="IList{T}"/>.
+		/// To be used instead of the NHibernate extension method to make the query testable.
+		/// Calls NHibernate's method when supported, otherwise non-async version.
+		/// </summary>
+		public static Task<List<TSource>> VdbToListAsync<TSource>(this IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken)) {
+
+			// Note: ToListAsync only supports INhQueryProvider
+			if (source.Provider is INhQueryProvider) {
+				return source.ToListAsync();
+			}
+
+			return Task.FromResult(source.ToList());
 
 		}
 
