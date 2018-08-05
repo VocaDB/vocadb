@@ -582,19 +582,19 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public async Task<ReadOnlyCollection<TagUsageForApiContract>> GetTagSuggestionsAsync(int songId) {
+		public Task<ReadOnlyCollection<TagUsageForApiContract>> GetTagSuggestionsAsync(int songId) {
 
 			var maxResults = 3;
 
-			return await repository.HandleQueryAsync(async ctx => {
+			return repository.HandleQueryAsync(async ctx => {
 
 				var song = await ctx.LoadAsync<Song>(songId);
 
 				var songTags = new HashSet<int>(song.Tags.Tags.Select(t => t.Id));
 
-				var pvResults = await Task.WhenAll(song.PVs
+				var pvResults = await pvParser.ParseByUrlsAsync(song.PVs
 					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
-					.Select(pv => pvParser.ParseByUrlAsync(pv.Url, true, permissionContext)));
+					.Select(pv => pv.Url), true, permissionContext);
 
 				var nicoTags = pvResults.Where(p => p != null).SelectMany(pv => pv.Tags).Distinct().ToArray();
 				var mappedTags = (await MapTagsAsync(ctx, nicoTags)).Select(t => t.Id);

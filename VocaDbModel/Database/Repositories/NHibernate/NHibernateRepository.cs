@@ -38,6 +38,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 		public async Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			try {
 				using (var ctx = OpenSessionForContext()) {
+					// Note: async/await is needed here because of using statement
 					return await func(ctx);
 				}
 			} catch (ObjectNotFoundException x) {
@@ -118,6 +119,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 		public async Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			try {
 				using (var ctx = OpenSessionForContext()) {
+					// Note: async/await is needed here because of using statement
 					return await func(ctx);
 				}
 			} catch (ObjectNotFoundException x) {
