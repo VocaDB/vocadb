@@ -597,6 +597,10 @@ namespace VocaDb.Model.Database.Queries {
 					songTags.Add(config.SpecialTags.Cover);
 				}
 
+				if (song.SongType == SongType.Remix) {
+					songTags.Add(config.SpecialTags.Remix);
+				}
+
 				var pvResults = await pvParser.ParseByUrlsAsync(song.PVs
 					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
 					.Select(pv => pv.Url), true, permissionContext);

@@ -35,6 +35,12 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["instrumental"] = value; }
 		}
 
+		[ConfigurationProperty("remix")]
+		public int Remix {
+			get => TagId("remix");
+			set => this["remix"] = value;
+		}
+
 		[ConfigurationProperty("shortVersion")]
 		public int ShortVersion {
 			get { return TagId("shortVersion"); }

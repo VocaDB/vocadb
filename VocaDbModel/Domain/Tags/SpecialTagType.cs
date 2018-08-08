@@ -4,8 +4,10 @@ namespace VocaDb.Model.Domain.Tags {
 
 		Nothing,
 		ChangedLyrics,
+		Cover,
 		Free,
 		Instrumental,
+		Remix,
 		ShortVersion
 
 	}
