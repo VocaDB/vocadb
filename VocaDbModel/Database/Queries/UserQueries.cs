@@ -1742,9 +1742,9 @@ namespace VocaDb.Model.Database.Queries {
 	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage> {
 
 		private readonly Album album;
-		private readonly IDatabaseContext<AlbumTagUsage> session;
+		private readonly IDatabaseContext session;
 
-		public AlbumTagUsageFactory(IDatabaseContext<AlbumTagUsage> session, Album album) {
+		public AlbumTagUsageFactory(IDatabaseContext session, Album album) {
 			this.session = session;
 			this.album = album;
 		}
@@ -1772,9 +1772,9 @@ namespace VocaDb.Model.Database.Queries {
 	public class ArtistTagUsageFactory : ITagUsageFactory<ArtistTagUsage> {
 
 		private readonly Artist artist;
-		private readonly IDatabaseContext<ArtistTagUsage> session;
+		private readonly IDatabaseContext session;
 
-		public ArtistTagUsageFactory(IDatabaseContext<ArtistTagUsage> session, Artist artist) {
+		public ArtistTagUsageFactory(IDatabaseContext session, Artist artist) {
 			this.session = session;
 			this.artist = artist;
 		}
@@ -1862,9 +1862,9 @@ namespace VocaDb.Model.Database.Queries {
 	public class SongTagUsageFactory : ITagUsageFactory<SongTagUsage> {
 
 		private readonly Song song;
-		private readonly IDatabaseContext<SongTagUsage> ctx;
+		private readonly IDatabaseContext ctx;
 
-		public SongTagUsageFactory(IDatabaseContext<SongTagUsage> ctx, Song song) {
+		public SongTagUsageFactory(IDatabaseContext ctx, Song song) {
 			this.ctx = ctx;
 			this.song = song;
 		}

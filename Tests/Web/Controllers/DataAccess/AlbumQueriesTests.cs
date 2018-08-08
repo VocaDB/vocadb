@@ -260,13 +260,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void GetTagSuggestions() {
 
 			void AddTagUsages(Song[] songs, string[] tagNames) {
-				foreach (var tagName in tagNames) {
-					var tag = repository.Save(CreateEntry.Tag(tagName));
-					foreach (var song in songs) {
-						var usage = repository.Save(song.AddTag(tag).Result);
-						repository.Save(usage.CreateVote(user));
-					}
-				}
+				var (tags, tagUsages, tagVotes) = CreateEntry.TagUsages(songs, tagNames, user, new SongTagUsageFactory(repository.CreateContext(), song));
+				repository.Save(tags);
+				repository.Save(tagUsages);
+				repository.Save(tagVotes);
 			}
 
 			AddTagUsages(new [] { song, song2 }, new[] { "vocarock", "techno" });

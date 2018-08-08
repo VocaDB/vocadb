@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
@@ -78,6 +79,21 @@ namespace VocaDb.Tests.TestData {
 
 		public static Tag Tag(string name, int id = 0) {
 			return new Tag(name) { Id = id };
+		}
+
+		public static (ICollection<Tag> tags, ICollection<TUsage> usages, ICollection<TagVote> votes) TagUsages<TUsage>(IEntryWithTags[] songs, string[] tagNames, User user, ITagUsageFactory<TUsage> usageFactory) where TUsage: TagUsage {
+			var tags = new List<Tag>();
+			var usages = new List<TUsage>();
+			var votes = new List<TagVote>();
+			foreach (var tagName in tagNames) {
+				var tag = Tag(tagName);
+				tags.Add(tag);
+				foreach (var song in songs) {
+					var usage = usageFactory.CreateTagUsage(tag);
+					votes.Add(usage.CreateVote(user));
+				}
+			}
+			return (tags, usages, votes);
 		}
 
 		public static User User(int id = 0, string name = "Miku", UserGroupId group = UserGroupId.Regular, string email = "") {
