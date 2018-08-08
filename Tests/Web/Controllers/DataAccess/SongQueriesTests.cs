@@ -622,6 +622,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public async Task GetTagSuggestions_IgnoreCoverTagIfTypeIsCover() {
+
+			var coverTag = repository.Save(CreateEntry.Tag("cover", coverTagId));
+			repository.Save(new TagMapping(coverTag, "cover"));
+
+			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
+			song.SongType = SongType.Cover;
+			song.PVs.Add(new PVForSong(song, new PVContract { Service = PVService.NicoNicoDouga, PVType = PVType.Original, PVId = "sm393939" }));
+
+			var result = await queries.GetTagSuggestionsAsync(song.Id);
+
+			Assert.AreEqual(0, result.Count, "Cover tag suggestion ignored");
+
+		}
+
+		[TestMethod]
 		public void Merge_ToEmpty() {
 
 			song.Notes.Original = "Notes";

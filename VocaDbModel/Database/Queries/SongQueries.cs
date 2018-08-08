@@ -592,6 +592,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				var songTags = new HashSet<int>(song.Tags.Tags.Select(t => t.Id));
 
+				// Ignore cover tag if song type is cover
+				if (song.SongType == SongType.Cover) {
+					songTags.Add(config.SpecialTags.Cover);
+				}
+
 				var pvResults = await pvParser.ParseByUrlsAsync(song.PVs
 					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
 					.Select(pv => pv.Url), true, permissionContext);
