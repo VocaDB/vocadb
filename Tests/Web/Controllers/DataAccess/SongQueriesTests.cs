@@ -37,6 +37,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 	[TestClass]
 	public class SongQueriesTests {
 
+		private const int coverTagId = 3939;
 		private EntryAnchorFactory entryLinkFactory;
 		private FakeUserMessageMailer mailer;
 		private CreateSongContract newSongContract;
@@ -280,6 +281,24 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var message = messages[0];
 			Assert.AreEqual(user2, message.Receiver, "Message receiver");
 			Assert.AreEqual("New song tagged with vocarock", message.Subject, "Message subject"); // Test subject to make sure it's for one tag
+
+		}
+
+		[TestMethod]
+		public void Create_Tags_IgnoreCoverIfSongTypeIsCover() {
+
+			var coverTag = repository.Save(CreateEntry.Tag("cover", coverTagId));
+			repository.Save(new TagMapping(coverTag, "cover"));
+
+			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
+			newSongContract.SongType = SongType.Cover;
+
+			var id = CallCreate().Id;
+
+			song = repository.Load(id);
+
+			Assert.AreEqual(SongType.Cover, song.SongType, "SongType");
+			Assert.AreEqual(0, song.Tags.Tags.Count(), "No tags added");
 
 		}
 
