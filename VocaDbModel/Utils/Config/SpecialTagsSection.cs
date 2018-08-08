@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Configuration;
 using VocaDb.Model.Domain.Tags;
 
@@ -50,12 +51,16 @@ namespace VocaDb.Model.Utils.Config {
 		public int GetSpecialTagId(SpecialTagType specialTag) {
 
 			switch (specialTag) {
+				case SpecialTagType.Cover:
+					return Cover;
 				case SpecialTagType.ChangedLyrics:
 					return ChangedLyrics;
 				case SpecialTagType.Free:
 					return Free;
 				case SpecialTagType.Instrumental:
 					return Instrumental;
+				case SpecialTagType.Remix:
+					return Remix;
 				case SpecialTagType.ShortVersion:
 					return ShortVersion;
 				default:
@@ -67,8 +72,10 @@ namespace VocaDb.Model.Utils.Config {
 	}
 
 	public interface ISpecialTags {
+		int Cover { get; }
 		int ChangedLyrics { get; }
 		int Instrumental { get; }
+		int Remix { get; }
 	}
 
 }

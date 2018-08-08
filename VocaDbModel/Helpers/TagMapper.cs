@@ -3,12 +3,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using NHibernate.Linq;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Helpers {
 
 	public class TagMapper {
+
+		/// <summary>
+		/// Tests if a particular tag is redundant for a song and should be skipped from automatic mapping.
+		/// </summary>
+		public bool TagIsRedundantForSong(SongType songType, int tagId, ISpecialTags specialTags) {
+
+			if (songType == SongType.Cover && tagId == specialTags.Cover)
+				return true;
+
+			if (songType == SongType.Remix && tagId == specialTags.Remix)
+				return true;
+
+			return false;
+
+		}
 
 		public Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,7 +23,9 @@ namespace VocaDb.Tests.Domain.Songs {
 
 		private class SpecialTags : ISpecialTags {
 			public int ChangedLyrics { get; set; }
+			public int Cover { get; set; }
 			public int Instrumental { get; set; }
+			public int Remix { get; set; }
 		}
 
 		private Artist artist;

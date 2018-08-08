@@ -70,6 +70,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly ILanguageDetector languageDetector;
 		private readonly IUserMessageMailer mailer;
 		private readonly IPVParser pvParser;
+		private readonly TagMapper tagMapper = new TagMapper();
 		private readonly IUserIconFactory userIconFactory;
 
 		private void AddSongHit(IDatabaseContext<Song> session, Song song, string hostname) {
@@ -88,7 +89,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			foreach (var tag in tags) {
 
-				if (song.SongType == SongType.Cover && tag.Id == config.SpecialTags.Cover) {
+				if (tagMapper.TagIsRedundantForSong(song.SongType, tag.Id, config.SpecialTags)) {
 					continue;
 				}
 							
@@ -592,21 +593,13 @@ namespace VocaDb.Model.Database.Queries {
 
 				var songTags = new HashSet<int>(song.Tags.Tags.Select(t => t.Id));
 
-				// Ignore cover tag if song type is cover
-				if (song.SongType == SongType.Cover) {
-					songTags.Add(config.SpecialTags.Cover);
-				}
-
-				if (song.SongType == SongType.Remix) {
-					songTags.Add(config.SpecialTags.Remix);
-				}
-
 				var pvResults = await pvParser.ParseByUrlsAsync(song.PVs
 					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
 					.Select(pv => pv.Url), true, permissionContext);
 
+				var tagMapper = new TagMapper();
 				var nicoTags = pvResults.Where(p => p != null).SelectMany(pv => pv.Tags).Distinct().ToArray();
-				var mappedTags = (await MapTagsAsync(ctx, nicoTags)).Select(t => t.Id);
+				var mappedTags = (await MapTagsAsync(ctx, nicoTags)).Where(t => !tagMapper.TagIsRedundantForSong(song.SongType, t.Id, config.SpecialTags)).Select(t => t.Id);
 
 				if (song.HasOriginalVersion && song.OriginalVersion.LengthSeconds > song.LengthSeconds) {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.ShortVersion, 1));
