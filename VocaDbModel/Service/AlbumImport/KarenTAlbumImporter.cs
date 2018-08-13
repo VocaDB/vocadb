@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 	public class KarenTAlbumImporter : IAlbumImporter {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly RegexLinkMatcher matcher = new RegexLinkMatcher("http://karent.jp/album/{0}", @"http://karent.jp/album/(\d+)");
+		private static readonly RegexLinkMatcher matcher = new RegexLinkMatcher("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
 		private readonly IPictureDownloader pictureDownloader;
 
 		public KarenTAlbumImporter(IPictureDownloader pictureDownloader) {
@@ -74,7 +74,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 			PictureDataContract coverPic = null;
 
 			if (coverElem != null) {
-				coverPic = DownloadCoverPicture("http://karent.jp" + coverElem.Attributes["src"].Value);
+				coverPic = DownloadCoverPicture("https://karent.jp" + coverElem.Attributes["src"].Value);
 			}
 
 			return new MikuDbAlbumContract(data) { CoverPicture = coverPic, SourceUrl = url };
