@@ -342,7 +342,7 @@ namespace VocaDb.Web.Controllers
 						targetUrl = Url.Action("Index", "Home");
 
 					if (model.ReturnToMainSite)
-						targetUrl = VocaUriBuilder.AbsoluteFromUnknown(targetUrl, preserveAbsolute: true, ssl: false);
+						targetUrl = VocaUriBuilder.AbsoluteFromUnknown(targetUrl, preserveAbsolute: true);
 
 					return Redirect(targetUrl);
 
@@ -352,7 +352,7 @@ namespace VocaDb.Web.Controllers
 
 			if (model.ReturnToMainSite) {
 				SaveErrorsToTempData();
-				return Redirect(VocaUriBuilder.Absolute(Url.Action("Login", new { model.ReturnUrl, model.SecureLogin }), false));				
+				return Redirect(VocaUriBuilder.Absolute(Url.Action("Login", new { model.ReturnUrl, model.SecureLogin })));				
 			}
 
         	return View(model);
@@ -429,7 +429,7 @@ namespace VocaDb.Web.Controllers
 			string targetUrl;
 
 			if (!string.IsNullOrEmpty(returnUrl))
-				targetUrl = VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true, ssl: false);
+				targetUrl = VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true);
 			else
 				targetUrl = Url.Action("Index", "Home");
 
