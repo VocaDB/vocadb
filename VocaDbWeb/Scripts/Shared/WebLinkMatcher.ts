@@ -53,6 +53,7 @@ module vdb.utils {
             { url: "mora.jp/", desc: "mora", cat: c.WebLinkCategory.Commercial },
             { url: "musicbrainz.org/", desc: "MusicBrainz", cat: c.WebLinkCategory.Reference },
 			{ url: "www.muzie.ne.jp/", desc: "Muzie", cat: c.WebLinkCategory.Official },
+			{ url: "myfigurecollection.net/", desc: "MyFigureCollection", cat: c.WebLinkCategory.Reference },
             { url: "chokuhan.nicovideo.jp/", desc: "NicoNico Chokuhan", cat: c.WebLinkCategory.Commercial },
             { url: "dic.nicovideo.jp/", desc: "NicoNicoPedia", cat: c.WebLinkCategory.Reference },
             { url: "nicovideo.jp/user/", desc: "NND Account", cat: c.WebLinkCategory.Official },
@@ -66,6 +67,7 @@ module vdb.utils {
             { url: "books.rakuten.co.jp/", desc: "Rakuten", cat: c.WebLinkCategory.Commercial },
 			{ url: "spotify.com/", desc: "Spotify", cat: c.WebLinkCategory.Commercial },
 			{ url: "soundcloud.com/", desc: "SoundCloud", cat: c.WebLinkCategory.Official },
+			{ url: "www.suruga-ya.jp/", desc: "Suruga-ya", cat: c.WebLinkCategory.Commercial },
 			{ url: "item.taobao.com/item.htm", desc: "Taobao", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.lagoa.jp/", desc: "THREE!", cat: c.WebLinkCategory.Commercial }, /* UtaiteDB */
 			{ url: "item.taobao.com", desc: "Taobao", cat: c.WebLinkCategory.Commercial },
