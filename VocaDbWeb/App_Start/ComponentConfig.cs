@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Caching;
 using System.Web.Http;
@@ -12,6 +12,7 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
@@ -75,6 +76,7 @@ namespace VocaDb.Web.App_Start {
 			builder.Register(_ => MemoryCache.Default).As<ObjectCache>().ExternallyOwned(); // Disable dispose
 			builder.RegisterType<EntryForApiContractFactory>().AsSelf();
 			builder.RegisterType<EnumTranslations>().As<IEnumTranslations>();
+			builder.RegisterType<EntrySubTypeNameFactory>().As<IEntrySubTypeNameFactory>();
 
 			// Legacy services
 			builder.RegisterType<ActivityFeedService>().AsSelf();

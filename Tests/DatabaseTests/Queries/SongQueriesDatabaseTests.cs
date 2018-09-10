@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -9,6 +9,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.DatabaseTests.Queries {
@@ -29,7 +30,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		private SongQueries Queries(ISongRepository repository) {
 			return new SongQueries(repository, userContext, new FakeEntryLinkFactory(), new FakePVParser(),
-				new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new VdbConfigManager());
+				new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new VdbConfigManager(), new EntrySubTypeNameFactory());
 		}
 
 		private SongForEditContract Update(SongForEditContract contract) {

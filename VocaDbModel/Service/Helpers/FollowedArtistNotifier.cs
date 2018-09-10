@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using NLog;
 using VocaDb.Model.Database.Repositories;
@@ -64,7 +64,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="mailer">Mailer for user email messages. Cannot be null.</param>
 		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, 
 			IEnumerable<Artist> artists, IUser creator, IEntryLinkFactory entryLinkFactory,
-			IUserMessageMailer mailer, IEnumTranslations enumTranslations) {
+			IUserMessageMailer mailer, IEnumTranslations enumTranslations, IEntrySubTypeNameFactory entrySubTypeNameFactory) {
 
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
@@ -115,6 +115,12 @@ namespace VocaDb.Model.Service.Helpers {
 				string title;
 
 				var entryTypeName = entryTypeNames.GetName(entry.EntryType, CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture)).ToLowerInvariant();
+				var entrySubType = entrySubTypeNameFactory.GetEntrySubTypeName(entry, enumTranslations)?.ToLowerInvariant();
+
+				if (!string.IsNullOrEmpty(entrySubType)) {
+					entryTypeName += $" ({entrySubType})";
+				}
+
 				var msg = CreateMessageBody(followedArtists, user, entry, entryLinkFactory, true, entryTypeName);
 
 				if (followedArtists.Length == 1) {

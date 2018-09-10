@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -99,11 +99,8 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<ContentLanguageSelection> ContentLanguageSelectionNames =
 			new TranslateableEnum<ContentLanguageSelection>(() => global::Resources.ContentLanguageSelectionNames.ResourceManager);
 
-		public static TranslateableEnum<DiscType> DiscTypeNames {
-			get {
-				return new TranslateableEnum<DiscType>(() => Model.Resources.Albums.DiscTypeNames.ResourceManager);
-			}
-		}			
+		public static TranslateableEnum<DiscType> DiscTypeNames = 
+			new TranslateableEnum<DiscType>(() => Model.Resources.Albums.DiscTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EntryEditEvent> EntryEditEventNames =
 			new TranslateableEnum<EntryEditEvent>(() => global::Resources.EntryEditEventNames.ResourceManager);

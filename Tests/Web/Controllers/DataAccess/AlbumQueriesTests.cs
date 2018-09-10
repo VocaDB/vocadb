@@ -131,7 +131,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			imagePersister = new InMemoryImagePersister();
 			mailer = new FakeUserMessageMailer();
 			queries = new AlbumQueries(repository, permissionContext, entryLinkFactory, imagePersister, imagePersister, mailer, 
-				new FakeUserIconFactory(), new EnumTranslations(), new FakePVParser());
+				new FakeUserIconFactory(), new EnumTranslations(), new FakePVParser(), new EntrySubTypeNameFactory());
 
 		}
 
