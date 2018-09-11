@@ -19,6 +19,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
@@ -131,7 +132,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			imagePersister = new InMemoryImagePersister();
 			mailer = new FakeUserMessageMailer();
 			queries = new AlbumQueries(repository, permissionContext, entryLinkFactory, imagePersister, imagePersister, mailer, 
-				new FakeUserIconFactory(), new EnumTranslations(), new FakePVParser(), new EntrySubTypeNameFactory());
+				new FakeUserIconFactory(), new EnumTranslations(), new FakePVParser(),
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
 
 		}
 

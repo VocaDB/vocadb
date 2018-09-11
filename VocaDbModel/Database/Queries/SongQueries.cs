@@ -68,6 +68,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntrySubTypeNameFactory entrySubTypeNameFactory;
 		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
+		private readonly FollowedArtistNotifier followedArtistNotifier;
 		private readonly ILanguageDetector languageDetector;
 		private readonly IUserMessageMailer mailer;
 		private readonly IPVParser pvParser;
@@ -291,7 +292,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
 			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IEntryThumbPersister entryThumbPersister, 
-			ObjectCache cache, VdbConfigManager config, IEntrySubTypeNameFactory entrySubTypeNameFactory)
+			ObjectCache cache, VdbConfigManager config, IEntrySubTypeNameFactory entrySubTypeNameFactory, FollowedArtistNotifier followedArtistNotifier)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -303,7 +304,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.entryThumbPersister = entryThumbPersister;
             this.cache = cache;
 			this.config = config;
-			this.entrySubTypeNameFactory = entrySubTypeNameFactory;
+			this.followedArtistNotifier = followedArtistNotifier;
 
 		}
 
@@ -415,7 +416,7 @@ namespace VocaDb.Model.Database.Queries {
 				var user = PermissionContext.LoggedUser;
 
 				// Send notifications. Avoid sending notification to the same users twice.
-				var notifiedUsers = new FollowedArtistNotifier().SendNotifications(ctx, song, song.ArtistList, user, entryLinkFactory, mailer, enumTranslations, entrySubTypeNameFactory);
+				var notifiedUsers = followedArtistNotifier.SendNotifications(ctx, song, song.ArtistList, user);
 
 				if (addedTags != null && addedTags.Length > 0) {
 					new FollowedTagNotifier().SendNotifications(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);
@@ -1129,7 +1130,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var newPVCutoff = TimeSpan.FromDays(7);
 				if (oldPvCount == 0 && song.PVs.OfType(PVType.Original).Any() && song.CreateDate <= DateTime.Now - newPVCutoff) {
-					new FollowedArtistNotifier().SendNotifications(ctx, song, song.ArtistList, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations, entrySubTypeNameFactory);
+					followedArtistNotifier.SendNotifications(ctx, song, song.ArtistList, PermissionContext.LoggedUser);
 				}
 
 				var newSongCutoff = TimeSpan.FromHours(1);
@@ -1138,7 +1139,7 @@ namespace VocaDb.Model.Database.Queries {
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 					if (addedArtists.Any()) {
-						new FollowedArtistNotifier().SendNotifications(ctx, song, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations, entrySubTypeNameFactory);											
+						followedArtistNotifier.SendNotifications(ctx, song, addedArtists, PermissionContext.LoggedUser);
 					}
 
 				}

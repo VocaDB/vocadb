@@ -19,8 +19,22 @@ namespace VocaDb.Model.Service.Helpers {
 	public class FollowedArtistNotifier {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IUserMessageMailer mailer;
+		private readonly IEnumTranslations enumTranslations;
+		private readonly IEntrySubTypeNameFactory entrySubTypeNameFactory;
 
-		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown, 
+		public FollowedArtistNotifier(IEntryLinkFactory entryLinkFactory, IUserMessageMailer mailer, 
+			IEnumTranslations enumTranslations, IEntrySubTypeNameFactory entrySubTypeNameFactory) {
+
+			this.entryLinkFactory = entryLinkFactory;
+			this.mailer = mailer;
+			this.enumTranslations = enumTranslations;
+			this.entrySubTypeNameFactory = entrySubTypeNameFactory;
+
+		}
+
+		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, bool markdown, 
 			string entryTypeName) {
 			
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
@@ -60,11 +74,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="entry">Entry that was created. Cannot be null.</param>
 		/// <param name="artists">List of artists for the entry. Cannot be null.</param>
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
-		/// <param name="entryLinkFactory">Factory for creating links to entries. Cannot be null.</param>
-		/// <param name="mailer">Mailer for user email messages. Cannot be null.</param>
-		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, 
-			IEnumerable<Artist> artists, IUser creator, IEntryLinkFactory entryLinkFactory,
-			IUserMessageMailer mailer, IEnumTranslations enumTranslations, IEntrySubTypeNameFactory entrySubTypeNameFactory) {
+		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
 
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
@@ -122,7 +132,7 @@ namespace VocaDb.Model.Service.Helpers {
 					entryTypeName += $" ({entrySubType})";
 				}
 
-				var msg = CreateMessageBody(followedArtists, user, entry, entryLinkFactory, true, entryTypeName);
+				var msg = CreateMessageBody(followedArtists, user, entry, true, entryTypeName);
 
 				if (followedArtists.Length == 1) {
 
@@ -142,7 +152,7 @@ namespace VocaDb.Model.Service.Helpers {
 				if (user.EmailOptions != UserEmailOptions.NoEmail && !string.IsNullOrEmpty(user.Email) 
 					&& followedArtists.Any(a => a.Users.Any(u => u.User.Equals(user) && u.EmailNotifications))) {
 					
-					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, entryLinkFactory, false, entryTypeName));
+					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, false, entryTypeName));
 
 				}
 

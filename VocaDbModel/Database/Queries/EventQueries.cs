@@ -36,8 +36,8 @@ namespace VocaDb.Model.Database.Queries {
 	public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent> {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntrySubTypeNameFactory entrySubTypeNameFactory;
 		private readonly IEnumTranslations enumTranslations;
+		private readonly FollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IUserMessageMailer mailer;
 		private readonly IUserIconFactory userIconFactory;
@@ -61,7 +61,8 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
-			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IUserMessageMailer mailer, IEntrySubTypeNameFactory entrySubTypeNameFactory)
+			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, 
+			IUserMessageMailer mailer, FollowedArtistNotifier followedArtistNotifier)
 			: base(eventRepository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -69,7 +70,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
 			this.mailer = mailer;
-			this.entrySubTypeNameFactory = entrySubTypeNameFactory;
+			this.followedArtistNotifier = followedArtistNotifier;
 
 		}
 
@@ -472,7 +473,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
 
-					new FollowedArtistNotifier().SendNotifications(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations, entrySubTypeNameFactory);
+					followedArtistNotifier.SendNotifications(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
 
 				} else {
 
@@ -572,7 +573,7 @@ namespace VocaDb.Model.Database.Queries {
 						var addedArtists = artistDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 						if (addedArtists.Any()) {
-							new FollowedArtistNotifier().SendNotifications(session, ev, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations, entrySubTypeNameFactory);
+							followedArtistNotifier.SendNotifications(session, ev, addedArtists, PermissionContext.LoggedUser);
 						}
 
 					}

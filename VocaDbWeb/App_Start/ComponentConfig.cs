@@ -77,6 +77,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<EntryForApiContractFactory>().AsSelf();
 			builder.RegisterType<EnumTranslations>().As<IEnumTranslations>();
 			builder.RegisterType<EntrySubTypeNameFactory>().As<IEntrySubTypeNameFactory>();
+			builder.RegisterType<FollowedArtistNotifier>().AsSelf();
 
 			// Legacy services
 			builder.RegisterType<ActivityFeedService>().AsSelf();

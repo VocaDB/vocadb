@@ -31,7 +31,7 @@ namespace VocaDb.Tests.Service.Helpers {
 		private void CallSendNotifications(IUser creator) {
 
 			repository.HandleTransaction(ctx => {
-				new FollowedArtistNotifier().SendNotifications(ctx, album, new[] { producer, vocalist }, creator, entryLinkFactory, mailer, new EnumTranslations(), new EntrySubTypeNameFactory());
+				new FollowedArtistNotifier(entryLinkFactory, mailer, new EnumTranslations(), new EntrySubTypeNameFactory()).SendNotifications(ctx, album, new[] { producer, vocalist }, creator);
 			});
 
 		}

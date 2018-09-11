@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
@@ -30,7 +31,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		private SongQueries Queries(ISongRepository repository) {
 			return new SongQueries(repository, userContext, new FakeEntryLinkFactory(), new FakePVParser(),
-				new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new VdbConfigManager(), new EntrySubTypeNameFactory());
+				new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new VdbConfigManager(), new EntrySubTypeNameFactory(), 
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
 		}
 
 		private SongForEditContract Update(SongForEditContract contract) {
