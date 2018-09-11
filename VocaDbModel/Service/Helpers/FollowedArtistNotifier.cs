@@ -114,8 +114,9 @@ namespace VocaDb.Model.Service.Helpers {
 
 				string title;
 
-				var entryTypeName = entryTypeNames.GetName(entry.EntryType, CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture)).ToLowerInvariant();
-				var entrySubType = entrySubTypeNameFactory.GetEntrySubTypeName(entry, enumTranslations)?.ToLowerInvariant();
+				var culture = CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture);
+				var entryTypeName = entryTypeNames.GetName(entry.EntryType, culture).ToLowerInvariant();
+				var entrySubType = entrySubTypeNameFactory.GetEntrySubTypeName(entry, enumTranslations, culture)?.ToLowerInvariant();
 
 				if (!string.IsNullOrEmpty(entrySubType)) {
 					entryTypeName += $" ({entrySubType})";
