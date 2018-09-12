@@ -136,7 +136,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			mailer = new FakeUserMessageMailer();
 
 			queries = new SongQueries(repository, permissionContext, entryLinkFactory, pvParser, mailer, 				
-				new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new Model.Utils.Config.VdbConfigManager());
+				new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new Model.Utils.Config.VdbConfigManager(), new EntrySubTypeNameFactory(),
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), mailer, new EnumTranslations(), new EntrySubTypeNameFactory()));
 
 		}
 

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
@@ -9,7 +9,9 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.DatabaseTests.Queries {
@@ -30,7 +32,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 			return context.RunTest(repository => {
 
-				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer);
+				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer, 
+					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
 
 				var updated = queries.Update(contract, null);
 
@@ -53,7 +56,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 			context.RunTest(repository => {
 
 				var id = Db.ReleaseEvent.Id;
-				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer);
+				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer, 
+					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
 
 				queries.MoveToTrash(id, "Deleted");
 

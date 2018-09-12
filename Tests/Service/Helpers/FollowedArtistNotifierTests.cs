@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Service.Helpers {
@@ -30,7 +31,7 @@ namespace VocaDb.Tests.Service.Helpers {
 		private void CallSendNotifications(IUser creator) {
 
 			repository.HandleTransaction(ctx => {
-				new FollowedArtistNotifier().SendNotifications(ctx, album, new[] { producer, vocalist }, creator, entryLinkFactory, mailer, new EnumTranslations());
+				new FollowedArtistNotifier(entryLinkFactory, mailer, new EnumTranslations(), new EntrySubTypeNameFactory()).SendNotifications(ctx, album, new[] { producer, vocalist }, creator);
 			});
 
 		}
@@ -66,7 +67,7 @@ namespace VocaDb.Tests.Service.Helpers {
 
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.AreEqual(user, notification.Receiver, "Receiver");
-			Assert.AreEqual("New album by Tripshots", notification.Subject, "Subject");
+			Assert.AreEqual("New album (original album) by Tripshots", notification.Subject, "Subject");
 
 		}
 
@@ -80,7 +81,7 @@ namespace VocaDb.Tests.Service.Helpers {
 
 			Assert.IsNotNull(mailer.Body, "Body");
 			Assert.AreEqual(user.Name, mailer.ReceiverName, "ReceiverName");
-			Assert.AreEqual("New album by Tripshots", mailer.Subject, "Subject");
+			Assert.AreEqual("New album (original album) by Tripshots", mailer.Subject, "Subject");
 
 		}
 
@@ -113,7 +114,7 @@ namespace VocaDb.Tests.Service.Helpers {
 			var notification = repository.List<UserMessage>().FirstOrDefault();
 
 			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual("New album", notification.Subject, "Subject");
+			Assert.AreEqual("New album (original album)", notification.Subject, "Subject");
 
 		}
 
