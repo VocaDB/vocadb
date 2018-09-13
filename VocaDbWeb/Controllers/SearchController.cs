@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
@@ -65,7 +65,7 @@ namespace VocaDb.Web.Controllers
 				
 				case EntryType.Undefined: {
 					var result = entryQueries.GetList(filter, null, null, false, null, 0, 1, true, EntrySortRule.Name, 
-						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default, false, 
+						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default, 
 						searchTags: true, searchEvents: true);
 
 					if (result.TotalCount == 1) {
@@ -140,7 +140,7 @@ namespace VocaDb.Web.Controllers
 					var tags = tagQueries.Find(new TagQueryParams(new CommonSearchParams(textQuery, true, true), PagingProperties.FirstPage(2)) {
 						AllowChildren = true,
 						LanguagePreference = PermissionContext.LanguagePreference
-					}, TagOptionalFields.None, WebHelper.IsSSL(Request), permissionContext.LanguagePreference);
+					}, TagOptionalFields.None, permissionContext.LanguagePreference);
 					if (tags.Items.Length == 1) {
 						return RedirectToTag(tags.Items.First().Id, tags.Items.First().Name);
 					}

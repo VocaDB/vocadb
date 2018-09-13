@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
@@ -72,10 +72,9 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
 			) {
 			
-			var ssl = WebHelper.IsSSL(Request);
 			maxResults = GetMaxResults(maxResults);
 
-			return queries.GetList(query, tagId, tagName, childTags, status, start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, ssl, searchEvents: true);
+			return queries.GetList(query, tagId, tagName, childTags, status, start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, searchEvents: true);
 
 		}
 

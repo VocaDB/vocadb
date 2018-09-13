@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Mvc;
 using NLog;
 using ViewRes.Tag;
@@ -224,7 +224,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return HttpNotFound();
 
-			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request),
+			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister,
 				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
 			return PartialView("_TagPopupContent", tag);
 

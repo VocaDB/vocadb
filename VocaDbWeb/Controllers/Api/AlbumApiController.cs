@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -117,8 +117,7 @@ namespace VocaDb.Web.Controllers.Api {
 			SongOptionalFields songFields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
-			var ssl = WebHelper.IsSSL(Request);
-			var album = queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, thumbPersister, ssl, fields, songFields));
+			var album = queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, thumbPersister, fields, songFields));
 
 			return album;
 
@@ -216,9 +215,7 @@ namespace VocaDb.Web.Controllers.Api {
 			};
 			queryParams.Common.EntryStatus = status;
 
-			var ssl = WebHelper.IsSSL(Request);
-
-			var entries = service.Find(a => new AlbumForApiContract(a, null, lang, thumbPersister, ssl, fields, SongOptionalFields.None), queryParams);
+			var entries = service.Find(a => new AlbumForApiContract(a, null, lang, thumbPersister, fields, SongOptionalFields.None), queryParams);
 			
 			return entries;
 

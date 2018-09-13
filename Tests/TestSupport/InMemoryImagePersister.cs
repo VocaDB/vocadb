@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -30,23 +30,23 @@ namespace VocaDb.Tests.TestSupport {
 			}
 		}
 
-		public string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool url) {
+		public string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
 			return picture.EntryType + "/" + picture.Id + "/" + size;
 		}
 
 		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size) {
-			return new MemoryStream(images[GetUrlAbsolute(picture, size, false)]);
+			return new MemoryStream(images[GetUrlAbsolute(picture, size)]);
 		}
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) {
-			return images.ContainsKey(GetUrlAbsolute(picture, size, false));
+			return images.ContainsKey(GetUrlAbsolute(picture, size));
 		}
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Stream stream) {
 
 			var bytes = StreamHelper.ReadStream(stream);
 
-			var url = GetUrlAbsolute(picture, size, false);
+			var url = GetUrlAbsolute(picture, size);
 
 			if (images.ContainsKey(url))
 				images[url] = bytes;

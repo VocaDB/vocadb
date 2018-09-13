@@ -27,13 +27,12 @@ namespace VocaDb.Model.DataContracts.Albums {
 			IEntryThumbPersister thumbPersister,
 			AlbumOptionalFields fields,
 			SongOptionalFields songFields = SongOptionalFields.None) : 
-			this(album, null, languagePreference, thumbPersister, true, fields, songFields) {}
+			this(album, null, languagePreference, thumbPersister, fields, songFields) {}
 
 		public AlbumForApiContract(
 			Album album, AlbumMergeRecord mergeRecord, 
 			ContentLanguagePreference languagePreference, 
 			IEntryThumbPersister thumbPersister,
-			bool ssl,
 			AlbumOptionalFields fields,
 			SongOptionalFields songFields) {
 
@@ -73,7 +72,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && !string.IsNullOrEmpty(album.CoverPictureMime)) {
 				
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister, ssl);
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);
 
 			}
 
@@ -86,7 +85,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {
-				ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister, ssl) : null;
+				ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister) : null;
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.Tags)) {
@@ -127,7 +126,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.MainPicture)) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister, true);
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {

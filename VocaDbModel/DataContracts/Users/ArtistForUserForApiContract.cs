@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -16,10 +16,9 @@ namespace VocaDb.Model.DataContracts.Users {
 		public ArtistForUserForApiContract(ArtistForUser artistForUser, 
 			ContentLanguagePreference languagePreference, 
 			IEntryThumbPersister thumbPersister,
-			bool ssl,
 			ArtistOptionalFields includedFields) {
 
-			Artist = new ArtistForApiContract(artistForUser.Artist, languagePreference, thumbPersister, ssl, includedFields);
+			Artist = new ArtistForApiContract(artistForUser.Artist, languagePreference, thumbPersister, includedFields);
 
 		}
 

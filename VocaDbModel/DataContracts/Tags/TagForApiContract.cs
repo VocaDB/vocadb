@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -18,11 +18,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagForApiContract(Tag tag,
 			ContentLanguagePreference languagePreference,
-			TagOptionalFields optionalFields) : this(tag, null, false, languagePreference, optionalFields) { }
+			TagOptionalFields optionalFields) : this(tag, null, languagePreference, optionalFields) { }
 
 		public TagForApiContract(Tag tag, 
 			IEntryImagePersisterOld thumbPersister,
-			bool ssl,
 			ContentLanguagePreference languagePreference,
 			TagOptionalFields optionalFields) {
 
@@ -50,7 +49,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.MainPicture) && tag.Thumb != null && thumbPersister != null) {
-				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl);
+				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister);
 			}
 
 			if (optionalFields.HasFlag(TagOptionalFields.Names)) {

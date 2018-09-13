@@ -1,4 +1,4 @@
-﻿using System.Web.Mvc;
+using System.Web.Mvc;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 
@@ -18,7 +18,7 @@ namespace VocaDb.Web.Controllers {
         public ActionResult Index()
         {
 
-			var comments = otherService.GetRecentComments(Request.IsSSL());
+			var comments = otherService.GetRecentComments();
 			return View(comments);
 
         }

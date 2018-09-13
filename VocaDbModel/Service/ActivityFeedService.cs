@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
 using VocaDb.Model.DataContracts.Activityfeed;
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Service {
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxEntries)
 					.Select(e => new ActivityEntryForApiContract(e, entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, 
-						LanguagePreference, ssl), userIconFactory,
+						LanguagePreference), userIconFactory,
 					PermissionContext, ActivityEntryOptionalFields.None))
 					.ToArray();
 

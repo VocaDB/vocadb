@@ -290,13 +290,13 @@ namespace VocaDb.Web.Controllers
 
 			RestoreErrorsFromTempData();
 
-            return View(new LoginModel(returnUrl, !WebHelper.IsSSL(Request), secureLogin));
+            return View(new LoginModel(returnUrl, false, secureLogin));
         }
 
 		[RestrictBannedIP]
 		public PartialViewResult LoginForm(string returnUrl, bool secureLogin = true) {
 
-		   return PartialView("Login", new LoginModel(returnUrl, !WebHelper.IsSSL(Request), secureLogin));
+		   return PartialView("Login", new LoginModel(returnUrl, false, secureLogin));
 
 		}
 
@@ -404,14 +404,14 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(param)) {
 				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.SignInCancelled);
-				return View("Login", new LoginModel(string.Empty, !WebHelper.IsSSL(Request), true));
+				return View("Login", new LoginModel(string.Empty, false, true));
 			}
 
 			var response = new TwitterConsumer().ProcessUserAuthorization(Hostname);
 
 			if (response == null) {
 				ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
-				return View("Login", new LoginModel(string.Empty, !WebHelper.IsSSL(Request), true));
+				return View("Login", new LoginModel(string.Empty, false, true));
 			}
 
 			var culture = WebHelper.GetInterfaceCultureName(Request);

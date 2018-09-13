@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -77,7 +77,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static bool IsSSL(HttpRequest request) {
+		/*public static bool IsSSL(HttpRequest request) {
 			return request != null && request.Url.Scheme == Uri.UriSchemeHttps;
 		}
 
@@ -87,7 +87,7 @@ namespace VocaDb.Web.Helpers {
 
 		public static bool IsSSL(HttpRequestMessage request) {
 			return request != null && request.RequestUri != null && request.RequestUri.Scheme == Uri.UriSchemeHttps;
-		}
+		}*/
 
 		/// <summary>
 		/// Checks whether the request should be counted as a valid hit (view) 
