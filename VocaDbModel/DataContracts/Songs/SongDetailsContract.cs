@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
@@ -40,10 +40,10 @@ namespace VocaDb.Model.DataContracts.Songs {
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);
 
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
-			ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted ? new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister, true) : null;
+			ReleaseEvent = song.ReleaseEvent != null && !song.ReleaseEvent.Deleted ? new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister) : null;
 			PersonalDescriptionText = song.PersonalDescriptionText;
 			var author = song.PersonalDescriptionAuthor;
-			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, true, ArtistOptionalFields.MainPicture) : null;
+			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, ArtistOptionalFields.MainPicture) : null;
 			SubjectsFromParents = song.GetCharactersFromParents().Select(c => new ArtistForSongContract(c, languagePreference)).ToArray();
 			Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(song.TranslatedName);

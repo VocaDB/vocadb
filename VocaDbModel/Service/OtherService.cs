@@ -103,7 +103,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			var popularAlbumContracts = random
-				.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, true, fields, SongOptionalFields.None))
+				.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, fields, SongOptionalFields.None))
 				.ToArray();
 
 			cache.Add(cacheKey, popularAlbumsCached, DateTime.Now + TimeSpan.FromHours(24));
@@ -149,7 +149,7 @@ namespace VocaDb.Model.Service {
 				.ToArray();
 
 			var newAlbumContracts = upcoming.Reverse().Concat(recent)
-				.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, true, fields, SongOptionalFields.None))
+				.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, fields, SongOptionalFields.None))
 				.ToArray();
 
 			cache.Add(cacheKey, newAlbums, DateTime.Now + TimeSpan.FromHours(1));
@@ -158,10 +158,10 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private ReleaseEventForApiContract[] GetRecentEvents(ISession session, bool ssl) {
+		private ReleaseEventForApiContract[] GetRecentEvents(ISession session) {
 
 			var count = 3;
-			var cacheKey = string.Format("OtherService.RecentEvents.{0}.{1}", LanguagePreference, ssl);
+			var cacheKey = string.Format("OtherService.RecentEvents.{0}", LanguagePreference);
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () => {
 
 				var minDate = DateTime.Now - TimeSpan.FromDays(2);
@@ -176,7 +176,7 @@ namespace VocaDb.Model.Service {
 
 				var entryContracts = recentEvents.Select(i => 
 					new ReleaseEventForApiContract(i, LanguagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, 
-					thumbPersister, ssl));
+					thumbPersister));
 
 				return entryContracts.ToArray();
 
@@ -184,15 +184,15 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private EntryWithCommentsContract[] GetRecentComments(ISession session, bool ssl) {
+		private EntryWithCommentsContract[] GetRecentComments(ISession session) {
 			
-			var cacheKey = string.Format("OtherService.RecentComments.{0}.{1}", LanguagePreference, ssl);
+			var cacheKey = string.Format("OtherService.RecentComments.{0}", LanguagePreference);
 			var item = (EntryWithCommentsContract[])cache.Get(cacheKey);
 
 			if (item != null)
 				return item;
 
-			item = GetRecentComments(session, 9, ssl);
+			item = GetRecentComments(session, 9);
 			cache.Add(cacheKey, item, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)));
 
 			return item;
@@ -304,7 +304,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private EntryWithCommentsContract[] GetRecentComments(ISession session, int maxComments, bool ssl) {
+		private EntryWithCommentsContract[] GetRecentComments(ISession session, int maxComments) {
 
 			var albumComments = GetComments<Album, AlbumComment>(session, maxComments, true);
 			var artistComments = GetComments<Artist, ArtistComment>(session, maxComments, true);
@@ -331,7 +331,7 @@ namespace VocaDb.Model.Service {
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 				
-			var contracts = CreateEntryWithCommentsContract(combined, c => entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, LanguagePreference, ssl))
+			var contracts = CreateEntryWithCommentsContract(combined, c => entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, LanguagePreference))
 				.ToArray();
 
 			return contracts;
@@ -424,7 +424,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public async Task<FrontPageContract> GetFrontPageContent(bool ssl) {
+		public async Task<FrontPageContract> GetFrontPageContent() {
 
 			const int maxActivityEntries = 15;
 
@@ -445,29 +445,21 @@ namespace VocaDb.Model.Service {
 
 				var firstSongVote = (newSongs.Any() ? await session.Query<FavoriteSongForUser>().FirstOrDefaultAsync(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
-				var recentComments = GetRecentComments(session, ssl);
+				var recentComments = GetRecentComments(session);
 
-				var recentEvents = GetRecentEvents(session, ssl);
+				var recentEvents = GetRecentEvents(session);
 
 				return new FrontPageContract(activityEntries, newAlbums, recentEvents, recentComments, topAlbums, newSongs, 
 					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference,
-					ssl, userIconFactory, PermissionContext, entryForApiContractFactory);
+					userIconFactory, PermissionContext, entryForApiContractFactory);
 
 			});
 
 		}
 
-		public IPRule[] GetIPRules() {
+		public IPRule[] GetIPRules() => HandleQuery(session => session.Query<IPRule>().ToArray());
 
-			return HandleQuery(session => session.Query<IPRule>().ToArray());
-
-		}
-
-		public EntryWithCommentsContract[] GetRecentComments(bool ssl) {
-
-			return HandleQuery(session => GetRecentComments(session, 50, ssl));
-
-		}
+		public EntryWithCommentsContract[] GetRecentComments() => HandleQuery(session => GetRecentComments(session, 50));
 
 	}
 }

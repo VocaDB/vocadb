@@ -140,7 +140,6 @@ namespace VocaDb.Web.Controllers.Api {
 		
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
-			var ssl = WebHelper.IsSSL(Request);
 
 			var queryParams = new AlbumCollectionQueryParams(id, new PagingProperties(start, maxResults, getTotalCount)) {
 				AlbumType = albumTypes,
@@ -155,7 +154,7 @@ namespace VocaDb.Web.Controllers.Api {
 			};
 
 			var albums = queries.GetAlbumCollection(queryParams, (afu, shouldShowCollectionStatus) => 
-				new AlbumForUserForApiContract(afu, lang, thumbPersister, ssl, fields, shouldShowCollectionStatus));
+				new AlbumForUserForApiContract(afu, lang, thumbPersister, fields, shouldShowCollectionStatus));
 
 			return albums;
 
@@ -219,7 +218,6 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
-			var ssl = WebHelper.IsSSL(Request);
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new FollowedArtistQueryParams {
@@ -231,7 +229,7 @@ namespace VocaDb.Web.Controllers.Api {
 			};
 
 			var artists = queries.GetArtists(queryParams, afu => 
-				new ArtistForUserForApiContract(afu, lang, thumbPersister, ssl, fields));
+				new ArtistForUserForApiContract(afu, lang, thumbPersister, fields));
 
 			return artists;
 
@@ -491,7 +489,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			return queries.GetCustomSongLists(id, textQuery, WebHelper.IsSSL(Request), sort, 
+			return queries.GetCustomSongLists(id, textQuery, sort, 
 				new PagingProperties(start, maxResults, getTotalCount), fields ?? SongListOptionalFields.None);
 
 		}

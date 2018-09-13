@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 
@@ -35,7 +35,7 @@ namespace VocaDb.Model.Domain.Images {
 			}
 		}
 
-		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl) {
+		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
 
 			ParamIs.NotNull(() => picture);
 
@@ -47,7 +47,7 @@ namespace VocaDb.Model.Domain.Images {
 				url = string.Format("/EntryImg/{0}/{1}", picture.EntryType, GetFileName(picture, size));
 			}
 
-			return VocaUriBuilder.Absolute(url, ssl);
+			return VocaUriBuilder.Absolute(url);
 
 		}
 

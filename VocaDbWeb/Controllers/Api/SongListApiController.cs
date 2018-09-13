@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -123,10 +123,9 @@ namespace VocaDb.Web.Controllers.Api {
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name) {
 			
-			var ssl = WebHelper.IsSSL(Request);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, SongListOptionalFields.MainPicture),
+			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture),
 				textQuery, featuredCategory, start, maxResults, getTotalCount, sort);
 
 		}

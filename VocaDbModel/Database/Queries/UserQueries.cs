@@ -866,7 +866,7 @@ namespace VocaDb.Model.Database.Queries {
 				return user.Events
 					.Where(e => !e.ReleaseEvent.Deleted && e.RelationshipType == relationshipType)
 					.OrderByDescending(e => e.ReleaseEvent.Date.DateTime)
-					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, entryThumbPersister, true))
+					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, entryThumbPersister))
 					.ToArray();
 
 			});
@@ -1010,7 +1010,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SearchTextQuery textQuery, bool ssl, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
+		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SearchTextQuery textQuery, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
 			
 			return HandleQuery(ctx => { 
 				
@@ -1021,7 +1021,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var items = query.OrderBy(sort)
 					.Paged(paging)
-					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, fields))
+					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, fields))
 					.ToArray();
 
 				var count = paging.GetTotalCount ? query.Count() : 0;

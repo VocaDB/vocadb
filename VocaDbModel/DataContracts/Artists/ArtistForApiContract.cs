@@ -22,7 +22,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public ArtistForApiContract(Artist artist, 
 			ContentLanguagePreference languagePreference, 
 			IEntryThumbPersister thumbPersister,
-			bool ssl,
 			ArtistOptionalFields includedFields) {
 
 			ArtistType = artist.ArtistType;
@@ -60,7 +59,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 			if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && !string.IsNullOrEmpty(artist.PictureMime)) {
 				
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(artist, artist.PictureMime), thumbPersister, ssl);
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(artist, artist.PictureMime), thumbPersister);
 
 			}
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -89,7 +89,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{id:int}")]
 		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields));
+			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, lang, fields));
 			return tag;
 
 		}
@@ -108,7 +108,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Obsolete]
 		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
-			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields));
+			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, lang, fields));
 
 			return tag;
 
@@ -139,7 +139,7 @@ namespace VocaDb.Web.Controllers.Api {
 			TagOptionalFields fields = TagOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields)).ToArray());
+			return queries.HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbPersister, lang, fields)).ToArray());
 
 		}
 
@@ -191,7 +191,6 @@ namespace VocaDb.Web.Controllers.Api {
 			TagTargetTypes target = TagTargetTypes.All) {
 			
 			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? absoluteMax : int.MaxValue);
-			var ssl = WebHelper.IsSSL(Request);
 			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, preferAccurateMatches),
 				new PagingProperties(start, maxResults, getTotalCount)) {
 					AllowChildren = allowChildren,
@@ -201,7 +200,7 @@ namespace VocaDb.Web.Controllers.Api {
 					Target = target
 			};
 
-			var tags = queries.Find(queryParams, fields, ssl, lang);
+			var tags = queries.Find(queryParams, fields, lang);
 
 			return tags;
 

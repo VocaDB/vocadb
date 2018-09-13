@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
@@ -49,7 +49,7 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang,
 			IDatabaseContext<Artist> ctx) {
 			
-			var contract = new ArtistForApiContract(a, lang, thumbPersister, WebHelper.IsSSL(Request), fields);
+			var contract = new ArtistForApiContract(a, lang, thumbPersister, fields);
 
 			if (relations != ArtistRelationsFields.None) {
 				contract.Relations = new ArtistRelationsQuery(ctx, lang, cache, thumbPersister).GetRelations(a, relations);
@@ -190,8 +190,7 @@ namespace VocaDb.Web.Controllers.Api {
 			};
 			param.Common.EntryStatus = status;
 
-			var ssl = WebHelper.IsSSL(Request);
-			var artists = service.FindArtists(s => new ArtistForApiContract(s, lang, thumbPersister, ssl, fields), param);
+			var artists = service.FindArtists(s => new ArtistForApiContract(s, lang, thumbPersister, fields), param);
 
 			return artists;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
@@ -49,8 +49,8 @@ namespace VocaDb.Model.Domain.Images {
 
 		}
 
-		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl) {
-			return VocaUriBuilder.StaticResource(GetRelativeUrl(picture, size), ssl);
+		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
+			return VocaUriBuilder.StaticResource(GetRelativeUrl(picture, size));
 		}
 
 	}

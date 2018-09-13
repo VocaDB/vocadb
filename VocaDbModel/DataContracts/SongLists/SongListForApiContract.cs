@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Users;
@@ -13,7 +13,7 @@ namespace VocaDb.Model.DataContracts.SongLists {
 		public SongListForApiContract() {}
 
 		public SongListForApiContract(SongList list, IUserIconFactory userIconFactory, IEntryImagePersister imagePersister,
-			bool ssl, SongListOptionalFields fields) : base(list) {
+			SongListOptionalFields fields) : base(list) {
 			
 			ParamIs.NotNull(() => list);
 
@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.SongLists {
 			EventDate = list.EventDate;
 
 			if (fields.HasFlag(SongListOptionalFields.MainPicture)) {
-				MainPicture = (list.Thumb != null ? new EntryThumbForApiContract(list.Thumb, imagePersister, ssl) : null);				
+				MainPicture = (list.Thumb != null ? new EntryThumbForApiContract(list.Thumb, imagePersister) : null);				
 			}
 
 		}

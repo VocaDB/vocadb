@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.IO;
 
 namespace VocaDb.Model.Domain.Images {
@@ -13,9 +13,8 @@ namespace VocaDb.Model.Domain.Images {
 		/// </summary>
 		/// <param name="picture">Image information. Cannot be null.</param>
 		/// <param name="size">Image size.</param>
-		/// <param name="ssl">Whether the URL should use the SSL domain.</param>
 		/// <returns>Absolute URL to the image, for example "http://static.vocadb.net/img/Album/Orig/Full/123.jpg"</returns>
-		string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl);
+		string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size);
 
 		/// <summary>
 		/// Gets stream for reading an image from the store.
@@ -54,12 +53,12 @@ namespace VocaDb.Model.Domain.Images {
 
 	public static class IEntryImagePersisterExtender {
 
-		public static string GetUrlAbsolute(this IEntryImagePersister persister, IEntryImageInformation picture, ImageSize size, bool ssl, bool checkExists) {
+		public static string GetUrlAbsolute(this IEntryImagePersister persister, IEntryImageInformation picture, ImageSize size, bool checkExists) {
 
 			if (checkExists && !persister.HasImage(picture, size))
 				return null;
 
-			return persister.GetUrlAbsolute(picture, size, ssl);
+			return persister.GetUrlAbsolute(picture, size);
 
 		}
 

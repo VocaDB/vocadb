@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
@@ -40,7 +40,6 @@ namespace VocaDb.Model.Database.Queries {
 			NameMatchMode nameMatchMode,
 			EntryOptionalFields fields,
 			ContentLanguagePreference lang,
-			bool ssl,
 			bool searchTags = false,
 			bool searchEvents = false
 			) {
@@ -134,12 +133,12 @@ namespace VocaDb.Model.Database.Queries {
 				var artists = artistIds.Any() ? ctx.OfType<Artist>().Query()
 					.Where(a => artistIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, ssl, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var albums = albumIds.Any() ? ctx.OfType<Album>().Query()
 					.Where(a => albumIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, ssl, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var songs = songIds.Any() ? ctx.OfType<Song>().Query()
 					.Where(a => songIds.Contains(a.Id))
@@ -149,12 +148,12 @@ namespace VocaDb.Model.Database.Queries {
 				var searchedTags = searchTags && searchedTagIds.Any() ? ctx.OfType<Tag>().Query()
 					.Where(a => searchedTagIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryImagePersisterOld, ssl, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryImagePersisterOld, fields)) : new EntryForApiContract[0];
 
 				var events = searchEvents && eventIds.Any() ? ctx.OfType<ReleaseEvent>().Query()
 					.Where(a => eventIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, ssl, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				// Merge and sort the final list
 				var entries = artists.Concat(albums).Concat(songs).Concat(searchedTags).Concat(events);

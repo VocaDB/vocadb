@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -76,7 +76,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.ReleaseEvent) && song.ReleaseEvent != null) {
-				ReleaseEvent = new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null, true);
+				ReleaseEvent = new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null);
 			}
 
 			if (fields.HasFlag(SongOptionalFields.Tags))

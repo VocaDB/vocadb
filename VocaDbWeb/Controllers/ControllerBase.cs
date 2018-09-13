@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -31,7 +31,7 @@ namespace VocaDb.Web.Controllers {
 		protected const int statsCacheDurationSec = 24 * 60 * 60;
 
 		protected ControllerBase() {
-			PageProperties.OpenGraph.Image = VocaUriBuilder.StaticResource("/img/vocaDB-title-large.png", true);
+			PageProperties.OpenGraph.Image = VocaUriBuilder.StaticResource("/img/vocaDB-title-large.png");
 		}
 
 		protected string Hostname => WebHelper.GetRealHost(Request);
@@ -284,7 +284,7 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		protected VocaUrlMapper UrlMapper => new VocaUrlMapper(WebHelper.IsSSL(Request));
+		protected VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		protected ActionResult Xml(string content) {
 

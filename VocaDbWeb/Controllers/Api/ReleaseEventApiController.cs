@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web.Http;
 using VocaDb.Model.Database.Queries;
@@ -75,7 +75,7 @@ namespace VocaDb.Web.Controllers.Api {
 			return repository.HandleQuery(ctx => {
 				
 				var ev = ctx.Load(eventId);
-				return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, thumbPersister, WebHelper.IsSSL(Request), fields, SongOptionalFields.None)).ToArray();
+				return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, thumbPersister, fields, SongOptionalFields.None)).ToArray();
 
 			});
 
@@ -170,7 +170,7 @@ namespace VocaDb.Web.Controllers.Api {
 				SortRule = sort
 			};
 
-			return queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, thumbPersister, WebHelper.IsSSL(Request)), queryParams);
+			return queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, thumbPersister), queryParams);
 
 		}
 
@@ -206,7 +206,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public ReleaseEventForApiContract GetOne(int id, 
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			return queries.GetOne(id, lang, fields, WebHelper.IsSSL(Request));
+			return queries.GetOne(id, lang, fields);
 		}
 
 		/// <summary>

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.SessionState;
@@ -118,14 +118,14 @@ namespace VocaDb.Web.Controllers
 					data = RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id));
 					break;
 				case EntryType.ReleaseEvent:
-					data = RenderPartialViewToString("_EventPopupContent", eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, WebHelper.IsSSL(Request)));
+					data = RenderPartialViewToString("_EventPopupContent", eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series));
 					break;
 				case EntryType.Song:
 					data = RenderPartialViewToString("SongPopupContent", songService.GetSong(id));
 					break;
 				case EntryType.Tag:
 					data = RenderPartialViewToString("_TagPopupContent", tagQueries.LoadTag(id, t => 
-						new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request), ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
+						new TagForApiContract(t, entryThumbPersister, ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
 					break;
 			}
 

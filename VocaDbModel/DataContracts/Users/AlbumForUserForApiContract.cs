@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
@@ -16,11 +16,10 @@ namespace VocaDb.Model.DataContracts.Users {
 			AlbumForUser albumForUser, 
 			ContentLanguagePreference languagePreference, 
 			IEntryThumbPersister thumbPersister,
-			bool ssl,
 			AlbumOptionalFields fields,
 			bool shouldShowCollectionStatus) {
 
-			Album = new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, ssl, fields, SongOptionalFields.None);
+			Album = new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, fields, SongOptionalFields.None);
 			Rating = albumForUser.Rating;
 
 			if (shouldShowCollectionStatus) {

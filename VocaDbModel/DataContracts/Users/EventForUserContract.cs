@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
@@ -11,7 +11,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 			return new EventForUserContract {
 				RelationshipType = link.RelationshipType,
-				ReleaseEvent = new ReleaseEventForApiContract(link.ReleaseEvent, languagePreference, releaseEventFields, entryThumbPersister, true)
+				ReleaseEvent = new ReleaseEventForApiContract(link.ReleaseEvent, languagePreference, releaseEventFields, entryThumbPersister)
 			};
 
 		}

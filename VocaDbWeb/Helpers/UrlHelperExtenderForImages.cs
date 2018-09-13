@@ -67,7 +67,7 @@ namespace VocaDb.Web.Helpers {
 
 			}
 
-			return EntryImagePersisterOld.GetUrlAbsolute(imageInfo, size, WebHelper.IsSSL(HttpContext.Current.Request));
+			return EntryImagePersisterOld.GetUrlAbsolute(imageInfo, size);
 
 		}
 
@@ -126,19 +126,17 @@ namespace VocaDb.Web.Helpers {
 
 			}
 
-			var ssl = WebHelper.IsSSL(HttpContext.Current.Request);
-
 			if (dynamicUrl != null) {				
-				return fullUrl ? VocaUriBuilder.Absolute(dynamicUrl, ssl) : dynamicUrl;
+				return fullUrl ? VocaUriBuilder.Absolute(dynamicUrl) : dynamicUrl;
 			}
 
 			if (!shouldExist) {
 				var unknown = GetUnknownImageUrl(urlHelper);
-				return fullUrl ? VocaUriBuilder.Absolute(unknown, ssl) : unknown;
+				return fullUrl ? VocaUriBuilder.Absolute(unknown) : unknown;
 			}
 
 			// For all other cases use the static file
-			return imagePersister.GetUrlAbsolute(imageInfo, size, ssl);
+			return imagePersister.GetUrlAbsolute(imageInfo, size);
 
 		}
 

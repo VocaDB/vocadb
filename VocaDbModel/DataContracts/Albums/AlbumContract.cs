@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using System.Runtime.Serialization;
@@ -40,7 +40,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			RatingAverage = album.RatingAverage;
 			RatingCount = album.RatingCount;
 			ReleaseDate = new OptionalDateTimeContract(album.OriginalReleaseDate);
-			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null, false) : null;
+			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null) : null;
 			Status = album.Status;
 			Version = album.Version;
 

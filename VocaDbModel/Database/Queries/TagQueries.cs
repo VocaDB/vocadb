@@ -250,11 +250,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields, bool ssl,
+		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields,
 			ContentLanguagePreference lang) {
 
 			return Find(tag => new TagForApiContract(
-				tag, imagePersister, ssl, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
+				tag, imagePersister, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
 
 		}
 

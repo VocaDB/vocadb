@@ -231,8 +231,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields, bool ssl) {
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister, ssl));
+		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields) {
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
 		}
 
 		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
@@ -262,7 +262,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields) {
 
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, imagePersister, true));
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, imagePersister));
 
 		}
 

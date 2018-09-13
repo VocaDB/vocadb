@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web.Http;
 using VocaDb.Model.Database.Repositories;
@@ -66,7 +66,6 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
-			bool ssl = WebHelper.IsSSL(Request);
 
 			return repository.HandleQuery(ctx => {
 				
@@ -98,7 +97,7 @@ namespace VocaDb.Web.Controllers.Api {
 					.ToArray()
 					.Where(a => !a.EntryBase.Deleted)
 					.Select(a => new ActivityEntryForApiContract(a, 
-						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? entryForApiContractFactory.Create(a.EntryBase, entryFields, lang, ssl) : null, 
+						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? entryForApiContractFactory.Create(a.EntryBase, entryFields, lang) : null, 
 						userIconFactory, permissionContext, fields))
 					.ToArray();
 

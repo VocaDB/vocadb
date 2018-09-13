@@ -1,4 +1,4 @@
-﻿using Microsoft.Web.Helpers;
+using Microsoft.Web.Helpers;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Images;
@@ -12,15 +12,9 @@ namespace VocaDb.Web.Code {
 	/// </summary>
 	public class GravatarUserIconFactory : IUserIconFactory {
 
-		private readonly bool ssl;
+		private string GetUrl(IUserWithEmail user, int sizePx) => Gravatar.GetUrl(user.Email, sizePx, scheme: "https");
 
-		private string GetUrl(IUserWithEmail user, int sizePx) {
-			return Gravatar.GetUrl(user.Email, sizePx, scheme: ssl ? "https" : "http");
-        }
-
-		public GravatarUserIconFactory(bool ssl = true) {
-			this.ssl = ssl;
-		}
+		public GravatarUserIconFactory() {}
 
 		public EntryThumbForApiContract GetIcons(IUserWithEmail user, ImageSizes sizes = ImageSizes.All) {
 

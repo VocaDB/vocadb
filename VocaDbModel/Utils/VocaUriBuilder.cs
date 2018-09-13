@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web;
 
 namespace VocaDb.Model.Utils {
@@ -9,25 +9,18 @@ namespace VocaDb.Model.Utils {
 	public static class VocaUriBuilder {
 
 		private static readonly string hostAddress = RemoveTrailingSlash(AppConfig.HostAddress);
-		private static readonly string hostAddressSSL = RemoveTrailingSlash(AppConfig.HostAddressSecure);
 
 		// Path to static files root, for example http://static.vocadb.net. Possible trailing slash is removed.
 		private static readonly string staticResourceBase = RemoveTrailingSlash(AppConfig.StaticContentHost);
-		private static readonly string staticResourceBaseSSL = RemoveTrailingSlash(AppConfig.StaticContentHostSSL);
-
-		private static bool IsSSL(HttpRequest request) {
-			return request != null && request.Url.Scheme == Uri.UriSchemeHttps;
-		}
 
 		/// <summary>
 		/// Returns an absolute URL when the URL is known to be relative.
 		/// </summary>
 		/// <param name="relative"></param>
-		/// <param name="ssl"></param>
 		/// <returns></returns>
-		public static string Absolute(string relative, bool ssl) {
+		public static string Absolute(string relative) {
 			
-			return MergeUrls_BaseNoTrailingSlash(HostAddress(ssl), relative);
+			return MergeUrls_BaseNoTrailingSlash(HostAddress, relative);
 
 		}
 
@@ -36,16 +29,15 @@ namespace VocaDb.Model.Utils {
 		/// If the URL is absolute it will be preserved. Relative URL will be made absolute.
 		/// </summary>
 		/// <param name="relativeOrAbsolute"></param>
-		/// <param name="ssl"></param>
 		/// <returns></returns>
-		public static string AbsoluteFromUnknown(string relativeOrAbsolute, bool preserveAbsolute, bool ssl) {
+		public static string AbsoluteFromUnknown(string relativeOrAbsolute, bool preserveAbsolute) {
 			
 			Uri uri;
 			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out uri)) {
 				if (uri.IsAbsoluteUri)
-					return preserveAbsolute ? relativeOrAbsolute : Absolute(Relative(relativeOrAbsolute), ssl); // URL is absolute, replace it with main site URL or preserve original.
+					return preserveAbsolute ? relativeOrAbsolute : Absolute(Relative(relativeOrAbsolute)); // URL is absolute, replace it with main site URL or preserve original.
 				else
-					return Absolute(relativeOrAbsolute, ssl); // URL is relative, make it absolute
+					return Absolute(relativeOrAbsolute); // URL is relative, make it absolute
 			} else
 				return relativeOrAbsolute;
 
@@ -55,31 +47,21 @@ namespace VocaDb.Model.Utils {
 		/// Creates a full, absolute uri which includes the domain and scheme.
 		/// </summary>
 		/// <param name="relative">Relative address, for example /User/Profile/Test</param>
-		/// <returns>Absolute address, for example http://vocadb.net/User/Profile/Test </returns>
+		/// <returns>Absolute address, for example https://vocadb.net/User/Profile/Test </returns>
 		public static Uri CreateAbsolute(string relative) {
 
-			return new Uri(new Uri(AppConfig.HostAddressSecure), relative);
+			return new Uri(new Uri(HostAddress), relative);
 
 		}
 
 		/// <summary>
-		/// Gets the host address including scheme, for example http://vocadb.net.
+		/// Gets the host address including scheme, for example https://vocadb.net.
 		/// Does not include the trailing slash.
 		/// </summary>
-		/// <param name="ssl">SSL URL.</param>
-		public static string HostAddress(bool ssl) {
-			return ssl ? hostAddressSSL : hostAddress;
-		}
+		public static string HostAddress => hostAddress;
 
-		public static string HostAddress() {
-			return HostAddress(IsSSL(HttpContext.Current.Request));
-		}
-
-		public static string MakeSSL(string relative) {
-			
-			return Absolute(relative, true);
-
-		}
+		[Obsolete]
+		public static string MakeSSL(string relative) => Absolute(relative);
 
 		private static string MergeUrls_BaseNoTrailingSlash(string baseUrl, string relative) {
 			
@@ -138,18 +120,7 @@ namespace VocaDb.Model.Utils {
 		/// Full path to that static resource, for example http://static.vocadb.net/banners/rvocaloid.png
 		/// </returns>
 		public static string StaticResource(string relative) {
-			return StaticResource(relative, false);
-		}
-
-		/// <summary>
-		/// Returns a path to a resource in the static VocaDB domain (static.vocadb.net).
-		/// </summary>
-		/// <param name="relative">Relative URL, for example /banners/rvocaloid.png</param>
-		/// <returns>
-		/// Full path to that static resource, for example http://static.vocadb.net/banners/rvocaloid.png
-		/// </returns>
-		public static string StaticResource(string relative, bool ssl) {
-			return MergeUrls_BaseNoTrailingSlash(ssl ? staticResourceBaseSSL : staticResourceBase, relative);
+			return MergeUrls_BaseNoTrailingSlash(staticResourceBase, relative);
 		}
 
 	}
