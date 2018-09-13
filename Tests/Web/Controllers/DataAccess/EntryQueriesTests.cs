@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
@@ -40,10 +40,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			int start = 0, int maxResults = 10, bool getTotalCount = true,
 			NameMatchMode nameMatchMode = NameMatchMode.Words,
 			EntryOptionalFields fields = EntryOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default,
-			bool ssl = false) {
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
-			return queries.GetList(query, tag, null, false, status, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang, ssl);
+			return queries.GetList(query, tag, null, false, status, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang);
 
 		}
 

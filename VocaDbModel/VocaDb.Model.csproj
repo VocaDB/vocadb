@@ -573,7 +573,6 @@
     <Compile Include="Helpers\EnumerableExtender.cs" />
     <Compile Include="Helpers\HtmlHelperFunctions.cs" />
     <Compile Include="Helpers\HtmlRequestHelper.cs" />
-    <Compile Include="Helpers\HttpRequestExtensions.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\ImpersonateUICulture.cs" />
     <Compile Include="Helpers\JsonRequest.cs" />

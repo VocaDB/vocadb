@@ -32,7 +32,6 @@ namespace VocaDb.Model.DataContracts {
 		/// </summary>
 		/// <param name="image">Image information. Cannot be null.</param>
 		/// <param name="thumbPersister">Thumb persister. Cannot be null.</param>
-		/// <param name="ssl">Whether to generate SSL URLs.</param>
 		/// <param name="sizes">Sizes to generate. If Nothing, no image URLs will be generated.</param>
 		public EntryThumbForApiContract(IEntryImageInformation image, IEntryImagePersister thumbPersister,
 			ImageSizes sizes = ImageSizes.All) {

@@ -23,7 +23,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries, bool ssl) {
+		public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries) {
 
 			if (!PermissionContext.IsLoggedIn)
 				return new PartialFindResult<ActivityEntryForApiContract>();

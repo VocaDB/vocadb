@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.ServiceModel.Channels;
@@ -76,18 +74,6 @@ namespace VocaDb.Web.Helpers {
 			return localhosts.Contains(hostname);
 
 		}
-
-		/*public static bool IsSSL(HttpRequest request) {
-			return request != null && request.Url.Scheme == Uri.UriSchemeHttps;
-		}
-
-		public static bool IsSSL(HttpRequestBase request) {
-			return request != null && request.Url != null && request.Url.Scheme == Uri.UriSchemeHttps;
-		}
-
-		public static bool IsSSL(HttpRequestMessage request) {
-			return request != null && request.RequestUri != null && request.RequestUri.Scheme == Uri.UriSchemeHttps;
-		}*/
 
 		/// <summary>
 		/// Checks whether the request should be counted as a valid hit (view) 

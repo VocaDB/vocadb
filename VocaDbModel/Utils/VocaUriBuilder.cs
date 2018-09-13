@@ -17,7 +17,6 @@ namespace VocaDb.Model.Utils {
 		/// Returns an absolute URL when the URL is known to be relative.
 		/// </summary>
 		/// <param name="relative"></param>
-		/// <param name="ssl"></param>
 		/// <returns></returns>
 		public static string Absolute(string relative) {
 			
@@ -30,7 +29,6 @@ namespace VocaDb.Model.Utils {
 		/// If the URL is absolute it will be preserved. Relative URL will be made absolute.
 		/// </summary>
 		/// <param name="relativeOrAbsolute"></param>
-		/// <param name="ssl"></param>
 		/// <returns></returns>
 		public static string AbsoluteFromUnknown(string relativeOrAbsolute, bool preserveAbsolute) {
 			
