@@ -47,7 +47,7 @@ namespace VocaDb.Model.Utils {
 		/// Creates a full, absolute uri which includes the domain and scheme.
 		/// </summary>
 		/// <param name="relative">Relative address, for example /User/Profile/Test</param>
-		/// <returns>Absolute address, for example http://vocadb.net/User/Profile/Test </returns>
+		/// <returns>Absolute address, for example https://vocadb.net/User/Profile/Test </returns>
 		public static Uri CreateAbsolute(string relative) {
 
 			return new Uri(new Uri(HostAddress), relative);
@@ -55,7 +55,7 @@ namespace VocaDb.Model.Utils {
 		}
 
 		/// <summary>
-		/// Gets the host address including scheme, for example http://vocadb.net.
+		/// Gets the host address including scheme, for example https://vocadb.net.
 		/// Does not include the trailing slash.
 		/// </summary>
 		public static string HostAddress => hostAddress;

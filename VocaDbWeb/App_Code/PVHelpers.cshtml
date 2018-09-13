@@ -72,7 +72,7 @@
 		case PVService.Youtube:
 			var apParam = (autoplay ? 1 : 0);
 			var apiParam = (enableApi ? 1 : 0);
-			var originParam = (enableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress() : string.Empty);
+			var originParam = (enableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress : string.Empty);
 			<iframe id="@id" width="@widthStr" height="@heightStr" src="https://www.youtube.com/embed/@(pv.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
 			break;
 
