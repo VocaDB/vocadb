@@ -71,6 +71,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/mmdwiki.png"));
 	}
 
+	&[href^="https://musicbrainz.org/"] {
+		.extLink(url("/Content/ExtIcons/musicbrainz.png"));
+	}
+
 	&[href^="http://www.pixiv.net/"], &[href^="https://www.pixiv.net/"] {
 		.extLink(url("/Content/ExtIcons/pixiv.png"));
 	}
@@ -158,11 +162,10 @@ a.extLink {
 	&[href^="http://cevio.wikia.com/wiki/"], &[href^="http://alterego.wikia.com/wiki/"] {
 		.extLink(url("/Content/ExtIcons/wikia.png"));
 	}
-	
+
 	&[href^="https://www.vocaloid.com/"] {
 		.extLink(url("/Content/ExtIcons/vocaloidshop.png"));
 	}
-	
 }
 
 a.extLink[href^="mailto:"] {

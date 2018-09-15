@@ -64,6 +64,9 @@ a.extLink[href^="https://www.melonbooks.co.jp/"] {
 a.extLink[href^="http://mikumikudance.wikia.com/wiki/"] {
   background: url("/Content/ExtIcons/mmdwiki.png") no-repeat left 50%;
 }
+a.extLink[href^="https://musicbrainz.org/"] {
+  background: url("/Content/ExtIcons/musicbrainz.png") no-repeat left 50%;
+}
 a.extLink[href^="http://www.pixiv.net/"],
 a.extLink[href^="https://www.pixiv.net/"] {
   background: url("/Content/ExtIcons/pixiv.png") no-repeat left 50%;
@@ -140,6 +143,9 @@ a.extLink[href^="https://weibo.com/"] {
 a.extLink[href^="http://cevio.wikia.com/wiki/"],
 a.extLink[href^="http://alterego.wikia.com/wiki/"] {
   background: url("/Content/ExtIcons/wikia.png") no-repeat left 50%;
+}
+a.extLink[href^="https://www.vocaloid.com/"] {
+  background: url("/Content/ExtIcons/vocaloidshop.png") no-repeat left 50%;
 }
 a.extLink[href^="mailto:"] {
   background: url("/Content/Icons/email.png") no-repeat left 50%;
@@ -255,7 +261,4 @@ a.extLink[href^="https://youtu.be/"] {
 }
 a.extLink[href^="http://vocaloid.wikia.com/wiki/"] {
   background: url("/Content/ExtIcons/vocawiki.png") no-repeat left 50%;
-}
-a.extLink[href^="https://www.vocaloid.com/"] {
-	background: url("/Content/ExtIcons/vocaloidshop.png") no-repeat left 50%;
 }
