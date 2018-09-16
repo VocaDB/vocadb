@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 
 namespace VocaDb.Model.Domain.Users {
 
 	public class PasswordResetRequest {
 
-		public static TimeSpan ExpirationTime = TimeSpan.FromDays(1);
+		public static readonly TimeSpan ExpirationTime = TimeSpan.FromDays(1);
 
 		private User user;
 
@@ -30,14 +30,10 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual Guid Id { get; set; }
 
-		public virtual bool IsValid {
-			get {
-				return Created >= DateTime.Now - ExpirationTime;
-			}
-		}
+		public virtual bool IsValid => Created >= DateTime.Now - ExpirationTime;
 
 		public virtual User User {
-			get { return user; }
+			get => user;
 			set {
 				ParamIs.NotNull(() => value);
 				user = value; 

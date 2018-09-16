@@ -1243,7 +1243,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
 
-				ctx.AuditLogger.SysLog("requested password reset", username);
+				ctx.AuditLogger.SysLog($"requested password reset with ID {CryptoHelper.HashSHA1(request.Id.ToString())}", username);
 
 			});
 
@@ -1255,10 +1255,14 @@ namespace VocaDb.Model.Database.Queries {
 
 			return repository.HandleTransaction(ctx => {
 
+				ctx.AuditLogger.SysLog($"resetting password with ID {CryptoHelper.HashSHA1(requestId.ToString())}");
+
 				var request = ctx.OfType<PasswordResetRequest>().Load(requestId);
 
-				if (!request.IsValid)
+				if (!request.IsValid) {
+					ctx.AuditLogger.SysLog("request has expired");
 					throw new RequestNotValidException("Request has expired");
+				}
 
 				var user = request.User;
 
