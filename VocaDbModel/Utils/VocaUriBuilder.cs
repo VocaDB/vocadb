@@ -10,7 +10,7 @@ namespace VocaDb.Model.Utils {
 
 		private static readonly string hostAddress = RemoveTrailingSlash(AppConfig.HostAddress);
 
-		// Path to static files root, for example http://static.vocadb.net. Possible trailing slash is removed.
+		// Path to static files root, for example https://static.vocadb.net. Possible trailing slash is removed.
 		private static readonly string staticResourceBase = RemoveTrailingSlash(AppConfig.StaticContentHost);
 
 		/// <summary>

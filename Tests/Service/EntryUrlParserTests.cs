@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
@@ -11,8 +11,7 @@ namespace VocaDb.Tests.Service {
 	[TestClass]
 	public class EntryUrlParserTests {
 
-		private const string baseUrl = "http://test.vocadb.net";
-		private const string baseUrlSsl = "https://test.vocadb.net";
+		private const string baseUrl = "https://test.vocadb.net";
 
 		private string GetAbsoluteUrl(string relative) {
 			return VocaUriBuilder.MergeUrls(baseUrl, relative);
@@ -20,7 +19,7 @@ namespace VocaDb.Tests.Service {
 
 		private void TestParseAbsolute(string url, int expectedId, EntryType expectedType) {
 			
-			var result = new EntryUrlParser(baseUrl, baseUrlSsl).Parse(GetAbsoluteUrl(url));
+			var result = new EntryUrlParser(baseUrl).Parse(GetAbsoluteUrl(url));
 
 			Assert.AreEqual(expectedId, result.Id, "Id");
 			Assert.AreEqual(expectedType, result.EntryType, "EntryType");
@@ -29,7 +28,7 @@ namespace VocaDb.Tests.Service {
 
 		private void TestParseRelative(string url, int expectedId, EntryType expectedType) {
 			
-			var result = new EntryUrlParser(baseUrl, baseUrlSsl).Parse(url, true);
+			var result = new EntryUrlParser(baseUrl).Parse(url, true);
 
 			Assert.AreEqual(expectedId, result.Id, "Id");
 			Assert.AreEqual(expectedType, result.EntryType, "EntryType");
@@ -39,7 +38,7 @@ namespace VocaDb.Tests.Service {
 		[TestMethod]
 		public void HostAddressesAreSame() {
 			
-			var result = new EntryUrlParser(baseUrl, baseUrl).Parse(GetAbsoluteUrl("/Artist/Details/39"));
+			var result = new EntryUrlParser(baseUrl).Parse(GetAbsoluteUrl("/Artist/Details/39"));
 			Assert.AreEqual(39, result.Id, "Id");
 			Assert.AreEqual(EntryType.Artist, result.EntryType, "EntryType");
 
@@ -78,6 +77,16 @@ namespace VocaDb.Tests.Service {
 
 			TestParseAbsolute("/al/39", 39, EntryType.Album);
 			
+		}
+
+		[TestMethod]
+		public void Absolute_DifferentScheme() {
+
+			var result = new EntryUrlParser(baseUrl).Parse("http://test.vocadb.net/S/39");
+
+			Assert.AreEqual(39, result.Id, "Id");
+			Assert.AreEqual(EntryType.Song, result.EntryType, "EntryType");
+
 		}
 
 		[TestMethod]

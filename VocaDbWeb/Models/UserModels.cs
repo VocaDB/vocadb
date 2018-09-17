@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -60,16 +60,12 @@ namespace VocaDb.Web.Models {
 
 	public class LoginModel {
 
-		public LoginModel() {
-			this.SecureLogin = true;			
-		}
+		public LoginModel() {}
 
-		public LoginModel(string returnUrl, bool returnToMainSite, bool secureLogin)
-			: this() {
+		public LoginModel(string returnUrl, bool returnToMainSite) {
 
 			this.ReturnUrl = returnUrl;
 			this.ReturnToMainSite = returnToMainSite;
-			this.SecureLogin = secureLogin;
 
 		}
 
@@ -100,11 +96,6 @@ namespace VocaDb.Web.Models {
 		public bool ReturnToMainSite { get; set; }
 
 		public string ReturnUrl { get; set; }
-
-		/// <summary>
-		/// Whether to use the secure (HTTPS) site for logging in (default is true).
-		/// </summary>
-		public bool SecureLogin { get; set; }
 
 	}
 

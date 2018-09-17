@@ -285,18 +285,18 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[RestrictBannedIP]
-		public ActionResult Login(string returnUrl, bool secureLogin = true)
+		public ActionResult Login(string returnUrl = null)
         {
 
 			RestoreErrorsFromTempData();
 
-            return View(new LoginModel(returnUrl, false, secureLogin));
+            return View(new LoginModel(returnUrl, false));
         }
 
 		[RestrictBannedIP]
-		public PartialViewResult LoginForm(string returnUrl, bool secureLogin = true) {
+		public PartialViewResult LoginForm(string returnUrl) {
 
-		   return PartialView("Login", new LoginModel(returnUrl, false, secureLogin));
+		   return PartialView("Login", new LoginModel(returnUrl, false));
 
 		}
 
@@ -352,7 +352,7 @@ namespace VocaDb.Web.Controllers
 
 			if (model.ReturnToMainSite) {
 				SaveErrorsToTempData();
-				return Redirect(VocaUriBuilder.Absolute(Url.Action("Login", new { model.ReturnUrl, model.SecureLogin })));				
+				return Redirect(VocaUriBuilder.Absolute(Url.Action("Login", new { model.ReturnUrl })));				
 			}
 
         	return View(model);
@@ -372,7 +372,7 @@ namespace VocaDb.Web.Controllers
 			var twitterSignIn = new TwitterConsumer().TwitterSignIn;
 
 			var targetUrl = Url.Action("LoginTwitterComplete", new { returnUrl });
-			var uri = new Uri(new Uri(AppConfig.HostAddressSecure), targetUrl);
+			var uri = new Uri(new Uri(AppConfig.HostAddress), targetUrl);
 
 			UserAuthorizationRequest request;
 
@@ -404,14 +404,14 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(param)) {
 				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.SignInCancelled);
-				return View("Login", new LoginModel(string.Empty, false, true));
+				return View("Login", new LoginModel(string.Empty, false));
 			}
 
 			var response = new TwitterConsumer().ProcessUserAuthorization(Hostname);
 
 			if (response == null) {
 				ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
-				return View("Login", new LoginModel(string.Empty, false, true));
+				return View("Login", new LoginModel(string.Empty, false));
 			}
 
 			var culture = WebHelper.GetInterfaceCultureName(Request);

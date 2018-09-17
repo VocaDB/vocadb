@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
@@ -166,16 +166,9 @@ namespace VocaDb.Model.Utils {
 
 		/// <summary>
 		/// Host address of the main site, contains full path to the web application's root, including hostname.
-		/// Could be either HTTP or HTTPS.
-		/// For example http://vocadb.net
-		/// </summary>
-		public static string HostAddress => Val("HostAddress");
-
-		/// <summary>
-		/// Host address of the SSL site, used for sensitive actions such as logging in.
 		/// For example https://vocadb.net
 		/// </summary>
-		public static string HostAddressSecure => Val("HostAddressSecure");
+		public static string HostAddress => Val("HostAddress");
 
 		public static string LockdownMessage => Val("LockdownMessage");
 
@@ -214,8 +207,6 @@ namespace VocaDb.Model.Utils {
 		public static string StaticContentPath => Val("StaticContentPath");
 
 		public static string StaticContentHost => Val("StaticContentHost");
-
-		public static string StaticContentHostSSL => Val("StaticContentHostSSL");
 
 		public static string TwitterConsumerKey => Val("TwitterConsumerKey");
 
