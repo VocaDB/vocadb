@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using NLog;
 using VocaDb.Model.Domain.PVs;
@@ -46,6 +47,10 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			return VideoTitleParseResult.CreateSuccess(name, string.Empty, string.Empty, string.Empty);
 
+		}
+
+		public override Task<VideoTitleParseResult> GetVideoTitleAsync(string id) {
+			return Task.FromResult(GetVideoTitle(id));
 		}
 
 		public override bool IsAuthorized(IUserPermissionContext permissionContext) {

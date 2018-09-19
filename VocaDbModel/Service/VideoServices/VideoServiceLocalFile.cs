@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Utils;
@@ -29,6 +30,10 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		public override VideoTitleParseResult GetVideoTitle(string id) {
+			throw new NotSupportedException();
+		}
+
+		public override Task<VideoTitleParseResult> GetVideoTitleAsync(string id) {
 			throw new NotSupportedException();
 		}
 

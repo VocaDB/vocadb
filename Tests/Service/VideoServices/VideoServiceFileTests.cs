@@ -11,7 +11,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 		private async Task TestGetVideoTitle(string url, string expected) {
 			var actual = await videoService.GetVideoTitleAsync(url);
-			Assert.AreEqual(expected, videoService.GetVideoTitle(url).Title);			
+			Assert.AreEqual(expected, actual.Title);			
 		}
 
 		private void TestIsValidFor(string url, bool expected) {
