@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Repositories;
@@ -65,12 +66,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public PVContract GetPVByUrl(string pvUrl, PVType type = PVType.Original, bool getTitle = true) {
+		public async Task<PVContract> GetPVByUrl(string pvUrl, PVType type = PVType.Original, bool getTitle = true) {
 
 			if (string.IsNullOrEmpty(pvUrl))
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			var result = pvParser.ParseByUrl(pvUrl, getTitle, permissionContext);
+			var result = await pvParser.ParseByUrlAsync(pvUrl, getTitle, permissionContext);
 
 			if (!result.IsOk) {
 				var msg = result.Exception.Message;

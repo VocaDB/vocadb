@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,7 @@ namespace VocaDb.Model.Service.VideoServices {
 	}
 
 	public class PVParser : IPVParser {
+		[Obsolete]
 		public VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext) => VideoServiceHelper.ParseByUrl(url, getTitle, permissionContext);
 		public Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext) => VideoServiceHelper.ParseByUrlAsync(url, getTitle, permissionContext);
 

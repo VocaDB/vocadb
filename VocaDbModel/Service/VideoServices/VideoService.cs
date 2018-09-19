@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -90,6 +91,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) => Enumerable.Empty<string>();
 
+		[Obsolete]
 		public virtual VideoTitleParseResult GetVideoTitle(string id) => (parser != null ? parser.GetTitle(id) : null);
 		public virtual Task<VideoTitleParseResult> GetVideoTitleAsync(string id) => (parser != null ? parser.GetTitleAsync(id) : null);
 
@@ -108,6 +110,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
+		[Obsolete]
 		public virtual VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
 
 			var id = GetIdByUrl(url);
@@ -132,6 +135,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
+		[Obsolete]
 		protected virtual VideoUrlParseResult ParseById(string id, string url, bool getMeta) {
 
 			var meta = (getMeta ? GetVideoTitle(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;

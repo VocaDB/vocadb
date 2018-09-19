@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -94,6 +95,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, 
 				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, uploadDate: created, extendedMetadata: metadata));
 
+		}
+
+		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+			return Task.FromResult(ParseByUrl(url, getTitle));
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId) {

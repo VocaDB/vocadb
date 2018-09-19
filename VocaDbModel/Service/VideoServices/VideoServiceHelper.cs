@@ -156,6 +156,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
+		[Obsolete]
 		public static VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext) {
 			return ParseByUrl(url, getTitle, permissionContext, services);
 		}
@@ -164,6 +165,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return ParseByUrlAsync(url, getTitle, permissionContext, services);
 		}
 
+		[Obsolete]
 		public static VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices) {
 
 			var service = testServices.FirstOrDefault(s => s.IsAuthorized(permissionContext) && s.IsValidFor(url));
