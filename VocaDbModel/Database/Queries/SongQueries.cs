@@ -65,7 +65,6 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly ObjectCache cache;
 		private readonly VdbConfigManager config;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntrySubTypeNameFactory entrySubTypeNameFactory;
 		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly FollowedArtistNotifier followedArtistNotifier;
