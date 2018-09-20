@@ -112,9 +112,9 @@ namespace VocaDb.Web.Controllers.Api {
 		[System.Web.Http.Route("findDuplicate")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[System.Web.Http.HttpGet]
-		public NewSongCheckResultContract GetFindDuplicate([FromUri] string[] term = null, [FromUri] string[] pv = null, [FromUri] int[] artistIds = null, bool getPVInfo = false) {
+		public async Task<NewSongCheckResultContract> GetFindDuplicate([FromUri] string[] term = null, [FromUri] string[] pv = null, [FromUri] int[] artistIds = null, bool getPVInfo = false) {
 
-			var result = queries.FindDuplicates(
+			var result = await queries.FindDuplicates(
 				(term ?? new string[0]).Where(p => p != null).ToArray(),
 				(pv ?? new string[0]).Where(p => p != null).ToArray(),
 				artistIds, getPVInfo);

@@ -703,13 +703,14 @@ namespace VocaDb.Model.Database.Queries {
 		/// If this is false, only matching for duplicates is done (PV duplicates are still checked).
 		/// </param>
 		/// <returns>Result of the check. Cannot be null.</returns>
-		public NewSongCheckResultContract FindDuplicates(string[] anyName, string[] anyPv, int[] artistIds, bool getPVInfo) {
+		public async Task<NewSongCheckResultContract> FindDuplicates(string[] anyName, string[] anyPv, int[] artistIds, bool getPVInfo) {
 
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
 			var checkedPV = getPVInfo ? anyPv.FirstOrDefault(p => VideoService.NicoNicoDouga.IsValidFor(p)) ?? anyPv.FirstOrDefault() : null; // For downloading video info
 
 			// Parse PV URLs (gets ID and service for each PV). Metadata will be parsed only for the first Nico PV, and only if it's needed.
-			var pvs = anyPv.Select(p => pvParser.ParseByUrl(p, getPVInfo && p == checkedPV, PermissionContext)).Where(p => p.IsOk).ToArray();
+			var pvs = await Task.WhenAll(anyPv.Select(p => pvParser.ParseByUrlAsync(p, getPVInfo && p == checkedPV, PermissionContext)));
+			pvs = pvs.Where(p => p.IsOk).ToArray();
 
 			if (!names.Any() && !pvs.Any())
 				return new NewSongCheckResultContract();

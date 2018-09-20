@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.ServiceModel;
 using VocaDb.Model.Database.Queries;
@@ -99,7 +99,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public NewSongCheckResultContract FindDuplicate(string[] names, string[] pvs, int[] artistIds, bool getPVInfo = false) {
 
-			return songQueries.FindDuplicates(names, pvs, artistIds, getPVInfo);
+			return songQueries.FindDuplicates(names, pvs, artistIds, getPVInfo).Result;
 
 		}
 
