@@ -10,8 +10,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		bool IsValidFor(string url);
 
-		[Obsolete]
-		VideoUrlParseResult ParseByUrl(string url, bool getTitle);
 		Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle);
 
 	}

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using NLog;
@@ -37,7 +39,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return id;
 		}
 
-		public override VideoTitleParseResult GetVideoTitle(string id) {
+		private VideoTitleParseResult GetVideoTitle(string id) {
 
 			Uri uri;
 			string name = string.Empty;
@@ -57,7 +59,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return permissionContext != null && permissionContext.HasPermission(PermissionToken.AddRawFileMedia);
 		}
 
-		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
+		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 			
 			url = UrlHelper.MakeLink(url);
 
@@ -70,19 +72,24 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));							
 			}
 
-			var request = WebRequest.CreateHttp(parsedUri);
-			request.UserAgent = "VocaDB";
-			request.Method = "HEAD";
-			request.Timeout = 10000;
+			var request = new HttpRequestMessage(HttpMethod.Head, url);
+			request.Headers.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
 
 			try {
 
-				using (var response = request.GetResponse()) {
-			
-					var mime = response.ContentType;
+				using (var client = new HttpClient()) {
 
-					if (!mimeTypes.Contains(mime)) {
-						return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, string.Format("Unsupported content type: {0}", mime));									
+					client.Timeout = TimeSpan.FromSeconds(10);
+
+					using (var response = await client.SendAsync(request)) {
+						response.EnsureSuccessStatusCode();
+
+						var mime = response.Content.Headers.ContentType?.MediaType;
+
+						if (!mimeTypes.Contains(mime)) {
+							return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, string.Format("Unsupported content type: {0}", mime));
+						}
+
 					}
 
 				}
@@ -93,12 +100,12 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));			
 			}
 
-			return VideoUrlParseResult.CreateOk(url, PVService.File, url, GetVideoTitle(url));
+			return VideoUrlParseResult.CreateOk(url, PVService.File, url, await GetVideoTitleAsync(url));
 
 		}
 
-		protected override VideoUrlParseResult ParseById(string id, string url, bool getMeta) {
-			return ParseByUrl(url, getMeta);
+		protected override Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta) {
+			return ParseByUrlAsync(url, getMeta);
 		}
 
 	}

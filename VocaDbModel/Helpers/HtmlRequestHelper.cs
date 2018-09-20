@@ -36,13 +36,17 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static async Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func, int timeoutSec = 10000) {
+		public static async Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func, int timeoutSec = 10000, string userAgent = "") {
 
 			var uri = new Uri(url);
 
 			using (var client = new HttpClient()) {
 
-				client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
+				if (string.IsNullOrEmpty(userAgent)) {
+					client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
+				} else {
+					client.DefaultRequestHeaders.Add("User-Agent", userAgent);
+				}
 				client.Timeout = TimeSpan.FromSeconds(timeoutSec);
 
 				using (var response = await client.GetAsync(uri)) {

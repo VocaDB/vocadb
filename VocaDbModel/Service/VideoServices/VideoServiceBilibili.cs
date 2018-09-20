@@ -12,6 +12,7 @@ using HtmlAgilityPack;
 using NLog;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 
@@ -36,7 +37,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return doc.XPathSelectElement(xpath)?.Value;
 		}
 
-		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
+		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
 			var id = GetIdByUrl(url);
 
@@ -52,16 +53,10 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var requestUrl = string.Format("https://api.bilibili.com/view?appkey={0}&id={1}&type=xml&sign={2}", AppConfig.BilibiliAppKey, id, paramStrMd5);
 
-			var request = (HttpWebRequest)WebRequest.Create(requestUrl);
-			request.UserAgent = "VocaDB/1.0 (admin@vocadb.net)";
-			request.Timeout = 10000;
 			XDocument doc;
 
 			try {
-				using (var response = request.GetResponse())
-				using (var stream = response.GetResponseStream()) {
-					doc = XDocument.Load(stream);
-				}
+				doc = await HtmlRequestHelper.GetStreamAsync(requestUrl, stream => XDocument.Load(stream), timeoutSec: 10, userAgent: "VocaDB/1.0 (admin@vocadb.net)");
 			} catch (WebException x) {
 				log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
@@ -95,10 +90,6 @@ namespace VocaDb.Model.Service.VideoServices {
 			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, 
 				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, uploadDate: created, extendedMetadata: metadata));
 
-		}
-
-		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
-			return Task.FromResult(ParseByUrl(url, getTitle));
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId) {

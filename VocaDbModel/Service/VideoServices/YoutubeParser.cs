@@ -55,19 +55,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public VideoTitleParseResult GetTitle(string id) {
-
-			YoutubeVideoResponse result;
-			try {
-				result = service.Video(id);
-            } catch (WebException x) {
-				return VideoTitleParseResult.CreateError(x.Message);
-			}
-
-			return GetTitle(result);
-
-		}
-
 		public async Task<VideoTitleParseResult> GetTitleAsync(string id) {
 
 			YoutubeVideoResponse result;

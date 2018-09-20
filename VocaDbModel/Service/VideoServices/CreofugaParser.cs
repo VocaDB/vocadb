@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -53,20 +54,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			return this.ParseDocument(doc, url);
 		}
 
-		public VideoTitleParseResult GetTitle(string id) {
-
+		public Task<VideoTitleParseResult> GetTitleAsync(string id) {
 			var url = string.Format("https://creofuga.net/audios/{0}", id);
-
-			var request = WebRequest.Create(url);
-
-			using (var response = request.GetResponse())
-			using (var stream = response.GetResponseStream()) {
-				return ParseByHtmlStream(stream, Encoding.UTF8, url);
-			}
-				
+			return HtmlRequestHelper.GetStreamAsync(url, stream => ParseByHtmlStream(stream, Encoding.UTF8, url));
 		}
-
-		public Task<VideoTitleParseResult> GetTitleAsync(string id) => Task.FromResult(GetTitle(id));
 
 	}
 

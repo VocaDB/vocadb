@@ -7,7 +7,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	public class VimeoParser : IVideoServiceParser {
 
-		public VideoTitleParseResult GetTitle(string id) {
+		private VideoTitleParseResult GetTitle(string id) {
 
 			var url = string.Format("http://vimeo.com/api/v2/video/{0}.xml", id);
 

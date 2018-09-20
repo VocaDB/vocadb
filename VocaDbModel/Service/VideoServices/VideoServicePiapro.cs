@@ -26,19 +26,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
-
-			PostQueryResult result;
-			try {
-				result = new PiaproClient.PiaproClient().ParseByUrl(url);
-			} catch (PiaproException x) {
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(x.Message, x));
-			}
-
-			return Parse(result, url);
-
-		}
-
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
 			PostQueryResult result;

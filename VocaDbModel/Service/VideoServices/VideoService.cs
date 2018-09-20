@@ -91,8 +91,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) => Enumerable.Empty<string>();
 
-		[Obsolete]
-		public virtual VideoTitleParseResult GetVideoTitle(string id) => (parser != null ? parser.GetTitle(id) : null);
 		public virtual Task<VideoTitleParseResult> GetVideoTitleAsync(string id) => (parser != null ? parser.GetTitleAsync(id) : null);
 
 		/// <summary>
@@ -110,19 +108,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		[Obsolete]
-		public virtual VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
-
-			var id = GetIdByUrl(url);
-
-			if (id == null) {
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher);
-			}
-
-			return ParseById(id, url, getTitle);
-
-		}
-
 		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
 			var id = GetIdByUrl(url);
@@ -132,21 +117,6 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 
 			return ParseByIdAsync(id, url, getTitle);
-
-		}
-
-		[Obsolete]
-		protected virtual VideoUrlParseResult ParseById(string id, string url, bool getMeta) {
-
-			var meta = (getMeta ? GetVideoTitle(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;
-
-			//if (!meta.Success) {
-			//	return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, meta.Error);
-			//}
-
-			// Note that even if meta lookup failed, we're returning Ok here, because for example NND API doesn't support all PVs.
-
-			return VideoUrlParseResult.CreateOk(url, Service, id, meta);
 
 		}
 

@@ -29,20 +29,16 @@ namespace VocaDb.Model.Service.VideoServices {
 			return VocaUriBuilder.StaticResource("/media/" + id);
 		}
 
-		public override VideoTitleParseResult GetVideoTitle(string id) {
-			throw new NotSupportedException();
-		}
-
 		public override Task<VideoTitleParseResult> GetVideoTitleAsync(string id) {
 			throw new NotSupportedException();
 		}
 
-		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
+		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 			throw new NotSupportedException();
 		}
 
-		protected override VideoUrlParseResult ParseById(string id, string url, bool getMeta) {
-			return ParseByUrl(url, getMeta);
+		protected override Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta) {
+			return ParseByUrlAsync(url, getMeta);
 		}
 
 	}

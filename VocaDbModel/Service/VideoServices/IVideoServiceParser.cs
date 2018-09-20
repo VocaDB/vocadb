@@ -6,8 +6,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	public interface IVideoServiceParser {
 
-		[Obsolete]
-		VideoTitleParseResult GetTitle(string id);
 		Task<VideoTitleParseResult> GetTitleAsync(string id);
 
 	}

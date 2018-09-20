@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.Domain.PVs;
@@ -48,11 +49,11 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var compositeId = new SoundCloudId(id);
 			var matcher = linkMatchers.First();
-			return "http://" + matcher.MakeLinkFromId(compositeId.SoundCloudUrl);
+			return $"http://{matcher.MakeLinkFromId(compositeId.SoundCloudUrl)}";
 
 		}
 
-		public VideoUrlParseResult ParseBySoundCloudUrl(string url) {
+		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(string url) {
 
 			var apikey = AppConfig.SoundCloudClientId;
 			var apiUrl = string.Format("http://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
@@ -68,7 +69,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 
 			try {
-				result = JsonRequest.ReadObject<SoundCloudResult>(apiUrl, timeoutMs: 10000);
+				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeoutMs: 10000);
 			} catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden)) {
 				// Forbidden most likely means the artist has prevented API access to their tracks, http://stackoverflow.com/a/36529330
 				return ReturnError(x, "This track cannot be embedded");
@@ -105,7 +106,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
+		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
 			var soundCloudUrl = linkMatchers[0].GetId(url);
 
