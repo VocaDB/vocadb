@@ -69,6 +69,10 @@ namespace VocaDb.Tests.TestSupport {
 			return func(CreateContext());
 		}
 
+		public Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			return func(CreateContext());
+		}
+
 		public List<TEntity> List<TEntity>() {
 			return querySource.List<TEntity>();
 		}

@@ -254,12 +254,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private VideoUrlParseResult ParsePV(IDatabaseContext<PVForSong> ctx, string url) {
+		private Task<VideoUrlParseResult[]> ParsePVs(IDatabaseContext<PVForSong> ctx, string[] urls) {
+			return Task.WhenAll(urls.Select(url => ParsePV(ctx, url)));
+		}
+
+		private async Task<VideoUrlParseResult> ParsePV(IDatabaseContext<PVForSong> ctx, string url) {
 
 			if (string.IsNullOrEmpty(url))
 				return null;
 
-			var pvResult = pvParser.ParseByUrl(url, true, PermissionContext);
+			var pvResult = await pvParser.ParseByUrlAsync(url, true, PermissionContext);
 
 			if (!pvResult.IsOk)
 				throw pvResult.Exception;
@@ -327,7 +331,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public SongContract Create(CreateSongContract contract) {
+		public Task<SongContract> Create(CreateSongContract contract) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -336,10 +340,10 @@ namespace VocaDb.Model.Database.Queries {
 
 			VerifyManageDatabase();
 
-			return repository.HandleTransaction(ctx => {
+			return repository.HandleTransactionAsync(async ctx => {
 
-				var pvResults = contract.PVUrls?.Select(pvUrl => ParsePV(ctx.OfType<PVForSong>(), pvUrl)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
-				var reprintPvResult = ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
+				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), contract.PVUrls)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
+				var reprintPvResult = await ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
 

@@ -553,7 +553,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[HttpPost]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
-		public SongContract PostNewSong(CreateSongContract contract) {
+		public Task<SongContract> PostNewSong(CreateSongContract contract) {
 
 			if (contract == null)
 				throw new HttpBadRequestException("Message was empty");

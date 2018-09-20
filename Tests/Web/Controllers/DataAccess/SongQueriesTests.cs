@@ -55,7 +55,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private Artist vocalist;
 		private Artist vocalist2;
 
-		private SongContract CallCreate() {
+		private Task<SongContract> CallCreate() {
 			return queries.Create(newSongContract);
 		}
 
@@ -142,9 +142,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create() {
+		public async Task Create() {
 
-			var result = CallCreate();
+			var result = await CallCreate();
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual("Resistance", result.Name, "Name");
@@ -286,7 +286,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_Tags_IgnoreCoverIfSongTypeIsCover() {
+		public async Task Create_Tags_IgnoreCoverIfSongTypeIsCover() {
 
 			var coverTag = repository.Save(CreateEntry.Tag("cover", coverTagId));
 			repository.Save(new TagMapping(coverTag, "cover"));
@@ -294,7 +294,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
 			newSongContract.SongType = SongType.Cover;
 
-			var id = CallCreate().Id;
+			var id = (await CallCreate()).Id;
 
 			song = repository.Load(id);
 
@@ -304,11 +304,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_NoPV() {
+		public async Task Create_NoPV() {
 
 			newSongContract.PVUrls = new string[0];
 
-			var result = CallCreate();
+			var result = await CallCreate();
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(PVServices.Nothing, result.PVServices, "PVServices");
@@ -316,11 +316,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_EmptyPV() {
+		public async Task Create_EmptyPV() {
 
 			newSongContract.PVUrls = new[] { string.Empty };
 
-			var result = CallCreate();
+			var result = await CallCreate();
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(PVServices.Nothing, result.PVServices, "PVServices");
