@@ -17,7 +17,7 @@ namespace VocaDb.Tests.TestSupport {
 			MatchedPVs = new Dictionary<string, VideoUrlParseResult>(StringComparer.InvariantCultureIgnoreCase);
 		}
 
-		public VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext) {
+		private VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext) {
 
 			if (!MatchedPVs.ContainsKey(url))
 				return ResultFunc(url, getTitle);
