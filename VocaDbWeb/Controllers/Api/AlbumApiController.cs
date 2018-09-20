@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
@@ -270,7 +271,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("{id:int}/tagSuggestions")]
-		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) {
+		public Task<TagUsageForApiContract[]> GetTagSuggestions(int id) {
 			return queries.GetTagSuggestions(id);
 		}
 

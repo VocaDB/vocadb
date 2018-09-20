@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using NHibernate;
 using NHibernate.Linq;
@@ -398,11 +399,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagUsageForApiContract[] GetTagSuggestions(int albumId) {
+		public Task<TagUsageForApiContract[]> GetTagSuggestions(int albumId) {
 
 			var maxResults = 3;
 
-			return repository.HandleQuery(ctx => {
+			return repository.HandleQueryAsync(async ctx => {
 
 				var album = ctx.Load<Album>(albumId);
 				var albumTags = album.Tags.Tags.Select(t => t.Id);
@@ -426,10 +427,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (songUsages.Length < 3) {
 
-					var pvResults = album.PVs
+					var pvResults = await pvParser.ParseByUrlsAsync(album.PVs
 						.Where(pv => pv.Service == PVService.NicoNicoDouga)
-						.Select(pv => pvParser.ParseByUrl(pv.Url, true, permissionContext))
-						.Where(p => p != null);
+						.Select(pv => pv.Url), true, permissionContext);
 
 					var nicoTags = pvResults.SelectMany(pv => pv.Tags).Distinct().ToArray();
 					var mappedTags = new TagMapper().MapTags(ctx, nicoTags)

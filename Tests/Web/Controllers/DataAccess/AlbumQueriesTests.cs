@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -259,7 +260,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetTagSuggestions() {
+		public async Task GetTagSuggestions() {
 
 			void AddTagUsages(Song[] songs, string[] tagNames) {
 				var (tags, tagUsages, tagVotes) = CreateEntry.TagUsages(songs, tagNames, user, new SongTagUsageFactory(repository.CreateContext(), song));
@@ -272,7 +273,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			repository.Save(album.AddSong(song, 1, 1), album.AddSong(song2, 2, 1));
 
-			var result = queries.GetTagSuggestions(album.Id);
+			var result = await queries.GetTagSuggestions(album.Id);
 
 			Assert.AreEqual(2, result.Length, "Number of tag suggestions");
 			Assert.IsTrue(result.Any(r => r.Tag.Name == "vocarock"), "First tag was returned");

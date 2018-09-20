@@ -16,6 +16,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		/// <param name="getTitle">Whether to load metadata such as title and video author.</param>
 		/// <param name="permissionContext">Permission context. Can be null (if the user is not logged in).</param>
 		/// <returns>Result of PV parsing. Cannot be null.</returns>
+		[Obsolete]
 		VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext);
 
 		/// <summary>
