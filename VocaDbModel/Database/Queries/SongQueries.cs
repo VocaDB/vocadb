@@ -607,11 +607,16 @@ namespace VocaDb.Model.Database.Queries {
 				var nicoTags = pvResults.Where(p => p != null).SelectMany(pv => pv.Tags).Distinct().ToArray();
 				var mappedTags = (await MapTagsAsync(ctx, nicoTags)).Where(t => !tagMapper.TagIsRedundantForSong(song.SongType, t.Id, config.SpecialTags)).Select(t => t.Id);
 
-				if (song.HasOriginalVersion && song.OriginalVersion.LengthSeconds > song.LengthSeconds) {
+				if (song.HasOriginalVersion
+					&& song.LengthSeconds > 0
+				    && song.OriginalVersion.LengthSeconds > song.LengthSeconds + 10) {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.ShortVersion, 1));
 				}
 
-				if (song.SongType != SongType.DramaPV && song.SongType != SongType.Instrumental && !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any() && config.SpecialTags.Instrumental != 0) {
+				if (song.SongType != SongType.DramaPV 
+				    && song.SongType != SongType.Instrumental 
+				    && !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any() 
+				    && config.SpecialTags.Instrumental != 0) {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.Instrumental, 1));
 				}
 
