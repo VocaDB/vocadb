@@ -38,6 +38,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 	public class SongQueriesTests {
 
 		private const int coverTagId = 3939;
+		private const int shortVersionTagId = 4717;
 		private EntryAnchorFactory entryLinkFactory;
 		private FakeUserMessageMailer mailer;
 		private CreateSongContract newSongContract;
@@ -635,6 +636,24 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var result = await queries.GetTagSuggestionsAsync(song.Id);
 
 			Assert.AreEqual(0, result.Count, "Cover tag suggestion ignored");
+
+		}
+
+		[TestMethod]
+		public async Task GetTagSuggestions_ShortVersion() {
+
+			var shortVersionTag = repository.Save(CreateEntry.Tag("short version", shortVersionTagId));
+
+			song.LengthSeconds = 3939;
+
+			var remix = repository.Save(CreateEntry.Song());
+			remix.SongType = SongType.Remix;
+			remix.LengthSeconds = 39;
+			remix.SetOriginalVersion(song);
+
+			var result = await queries.GetTagSuggestionsAsync(remix.Id);
+
+			Assert.AreEqual("short version", result.FirstOrDefault()?.Tag.Name, "Short version tag was returned");
 
 		}
 

@@ -611,7 +611,7 @@ namespace VocaDb.Model.Database.Queries {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.ShortVersion, 1));
 				}
 
-				if (song.SongType != SongType.DramaPV && song.SongType != SongType.Instrumental && !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any()) {
+				if (song.SongType != SongType.DramaPV && song.SongType != SongType.Instrumental && !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any() && config.SpecialTags.Instrumental != 0) {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.Instrumental, 1));
 				}
 
