@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -153,6 +153,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			return query.WhereHasNameGeneric<Song, SongName>(textQuery);
 
+		}
+
+		public static IQueryable<Song> WhereHasName(this IQueryable<Song> query, IEnumerable<SearchTextQuery> names) {
+			return query.WhereHasNameGeneric<Song, SongName>(names);
 		}
 
 		/// <summary>
