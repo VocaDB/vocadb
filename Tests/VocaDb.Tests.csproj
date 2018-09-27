@@ -177,6 +177,7 @@
     <Compile Include="Service\Helpers\UserCommentNotifierTests.cs" />
     <Compile Include="Service\Queries\ArtistRelationsQueryTests.cs" />
     <Compile Include="Service\Queries\TagUsageQueriesTests.cs" />
+    <Compile Include="Service\QueryableExtenders\EntryWithNamesQueryableExtenderTests.cs" />
     <Compile Include="Service\QueryableExtenders\GenericQueryableExtenderTests.cs" />
     <Compile Include="Service\Search\Artists\ArtistSearchTests.cs" />
     <Compile Include="Service\Search\SearchParserTests.cs" />
