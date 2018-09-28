@@ -52,16 +52,6 @@ namespace VocaDb.Model.Database.Queries {
 	/// </summary>
 	public class SongQueries : QueriesBase<ISongRepository, Song> {
 
-		class SongTupleEqualityComparer<T> : IEqualityComparer<Tuple<Song, T>> {
-			public bool Equals(Tuple<Song, T> x, Tuple<Song, T> y) {
-				return Equals(x.Item1, y.Item1);
-			}
-
-			public int GetHashCode(Tuple<Song, T> obj) {
-				return obj.Item1.GetHashCode();
-			}
-		}
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly ObjectCache cache;
 		private readonly VdbConfigManager config;
@@ -649,21 +639,24 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private IEnumerable<Tuple<Song, SongMatchProperty>> GetNameMatches(IDatabaseContext<Song> ctx, string[] names, int[] artistIds) {
+		private IEnumerable<(Song song, SongMatchProperty property)> GetNameMatches(IDatabaseContext<Song> ctx, string[] names, int[] artistIds) {
 			
 			if (names == null || !names.Any())
-				return Enumerable.Empty<Tuple<Song, SongMatchProperty>>();
+				return Enumerable.Empty<ValueTuple<Song, SongMatchProperty>>();
 
 			var nameMatchIds = new int[0];
 
 			var totalCount = 10;
+			var nameQuery = names.Select(n => SearchTextQuery.Create(n, NameMatchMode.Exact));
 
 			if (artistIds != null && artistIds.Any()) {
 				
 				// Try match with both producer and title
-				nameMatchIds = ctx.OfType<SongName>().Query()
-					.Where(n => names.Contains(n.Value) && !n.Song.Deleted && n.Song.AllArtists.Any(a => a.Artist.ArtistType == ArtistType.Producer && artistIds.Contains(a.Artist.Id)))
-					.Select(n => n.Song.Id)
+				nameMatchIds = ctx.OfType<Song>().Query()
+					.WhereNotDeleted()
+					.WhereHasName(nameQuery)
+					.Where(n => n.AllArtists.Any(a => a.Artist.ArtistType == ArtistType.Producer && artistIds.Contains(a.Artist.Id)))
+					.Select(n => n.Id)
 					.OrderBy(s => s)
 					.Distinct()
 					.Take(totalCount)
@@ -673,9 +666,10 @@ namespace VocaDb.Model.Database.Queries {
 
 			if (nameMatchIds.Length < totalCount) {
 
-				nameMatchIds = nameMatchIds.Union(ctx.OfType<SongName>().Query()
-					.Where(n => names.Contains(n.Value) && !n.Song.Deleted)
-					.Select(n => n.Song.Id)
+				nameMatchIds = nameMatchIds.Union(ctx.OfType<Song>().Query()
+					.WhereNotDeleted()
+					.WhereHasName(nameQuery)
+					.Select(n => n.Id)
 					.OrderBy(s => s)
 					.Distinct()
 					.Take(totalCount - nameMatchIds.Length)
@@ -685,7 +679,7 @@ namespace VocaDb.Model.Database.Queries {
 			}
 
 			var nameMatches = (nameMatchIds.Any() ? CollectionHelper.SortByIds(ctx.Query().Where(s => nameMatchIds.Contains(s.Id)).ToArray(), nameMatchIds)
-				.Select(d => new Tuple<Song, SongMatchProperty>(d, SongMatchProperty.Title)) : new Tuple<Song, SongMatchProperty>[] { });
+				.Select(d => (d, SongMatchProperty.Title)) : new ValueTuple<Song, SongMatchProperty>[] { });
 
 			return nameMatches;
 
@@ -752,11 +746,11 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(n => n.Song)
 					.FirstOrDefault(n => !n.Deleted))
 					.Where(p => p != null)
-					.Select(d => new Tuple<Song, SongMatchProperty>(d, SongMatchProperty.PV));
+					.Select(d => (song: d, property: SongMatchProperty.PV));
 
 
-				var matches = pvMatches.Union(nameMatches, new SongTupleEqualityComparer<SongMatchProperty>())
-					.Select(s => new DuplicateEntryResultContract<SongMatchProperty>(new EntryRefWithCommonPropertiesContract(s.Item1, PermissionContext.LanguagePreference), s.Item2))
+				var matches = pvMatches.Union(nameMatches)
+					.Select(s => new DuplicateEntryResultContract<SongMatchProperty>(new EntryRefWithCommonPropertiesContract(s.song, PermissionContext.LanguagePreference), s.property))
 					.ToArray();
 
 				return new NewSongCheckResultContract(matches, titleParseResult, PermissionContext.LanguagePreference);
