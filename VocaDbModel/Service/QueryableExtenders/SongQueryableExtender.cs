@@ -310,6 +310,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Song> WhereHasType(this IQueryable<Song> query, SongType? songType) {
+
+			if (songType == null)
+				return query;
+
+			return query.Where(s => s.SongType == songType);
+
+		}
+
 		public static IQueryable<Song> WhereHasVocalist(this IQueryable<Song> query, SongVocalistSelection vocalist) {
 
 			switch (vocalist) {

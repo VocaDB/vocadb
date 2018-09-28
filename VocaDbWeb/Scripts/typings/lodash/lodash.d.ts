@@ -12684,7 +12684,7 @@ declare module _ {
          * @param value The value to check.
          * @returns Returns true if value is correctly classified, else false.
          */
-        isWeakMap<K, V>(value?: any): value is WeakMap<K, V>;
+        //isWeakMap<K, V>(value?: any): value is WeakMap<K, V>;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -20688,10 +20688,10 @@ declare module "lodash/isUndefined" {
 }
 
 
-declare module "lodash/isWeakMap" {
+/*declare module "lodash/isWeakMap" {
    const isWeakMap: typeof _.isWeakMap;
    export = isWeakMap;
-}
+}*/
 
 
 declare module "lodash/isWeakSet" {
@@ -22525,10 +22525,10 @@ declare module "lodash.isUndefined" {
 }
 
 
-declare module "lodash.isWeakMap" {
+/*declare module "lodash.isWeakMap" {
    const isWeakMap: typeof _.isWeakMap;
    export = isWeakMap;
-}
+}*/
 
 
 declare module "lodash.isWeakSet" {
@@ -22946,4 +22946,4 @@ declare module "lodash.first" {
 interface Set<T> {}
 interface Map<K, V> {}
 interface WeakSet<T> {}
-interface WeakMap<K, V> {}
+//interface WeakMap<K, V> {}

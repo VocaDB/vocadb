@@ -115,6 +115,23 @@
 				<div style="display: inline-block;" class="input-append">
 					@KnockoutHelpers.LockingAutoComplete("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id")
 				</div>
+				<div data-bind="visible: originalVersion.isEmpty">
+					<a href="" data-bind="click: findOriginalSongSuggestions" class="textLink searchLink">Find originals</a>
+					<table data-bind="foreach: originalVersionSuggestions">
+						<tr>
+							<td>
+								<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details_song($data) }, songToolTip: id" href="#" target="_blank"></a>
+								(<span data-bind="text: songType"></span>)
+								<div data-bind="if: $data.artistString">
+									<span data-bind="text: artistString"></span>
+								</div>
+							</td>
+							<td style="max-width: 150px;">
+								<a class="textLink acceptLink" href="#" data-bind="click: $parent.selectOriginalVersion">Select</a>
+							</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 			<!-- /ko -->
 			

@@ -39,6 +39,7 @@ using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
@@ -448,6 +449,23 @@ namespace VocaDb.Model.Database.Queries {
 					(song, reporter, notesTruncated) => new SongReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != SongReportType.Other ? enumTranslations.SongReportTypeNames[reportType] : null,
 					songId, reportType, hostname, notes);
+			});
+
+		}
+
+		public SongForApiContract[] GetByNames(string[] names, SongType? songType, int[] ignoreIds, ContentLanguagePreference lang, int maxResults) {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query<Song>()
+					.WhereNotDeleted()
+					.WhereHasName(names.Select(n => SearchTextQuery.Create(n, NameMatchMode.StartsWith)))
+					.WhereHasType(songType)
+					.Take(maxResults)
+					.ToArray()
+					.Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames))
+					.ToArray();
+
 			});
 
 		}

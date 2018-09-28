@@ -31,6 +31,7 @@ module vdb.viewModels {
 		public notes: globalization.EnglishTranslatedStringEditViewModel;
 		public originalVersion: BasicEntryLinkViewModel<dc.SongContract>;
 		public originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
+		public originalVersionSuggestions = ko.observableArray<dc.SongContract>();
 		public publishDate: KnockoutObservable<Date>;
 		public pvs: pvs.PVListEditViewModel;
 		public releaseEvent: BasicEntryLinkViewModel<dc.ReleaseEventContract>;
@@ -110,12 +111,27 @@ module vdb.viewModels {
 			this.artistRolesEditViewModel.show(artist);
 		}
 
+		public async findOriginalSongSuggestions() {
+
+			this.originalVersionSuggestions.removeAll();
+
+			const names = _.map(this.names.getPrimaryNames(), n => n.value());
+			const suggestions = await this.songRepository.getByNames(names, [this.id]);
+
+			this.originalVersionSuggestions(suggestions);
+
+		}
+
 		public hasAlbums: boolean;
 
 		// Removes an artist from this album.
 		public removeArtist = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistLinks.remove(artist);
 		};
+
+		public selectOriginalVersion = (song: dc.SongContract) => {
+			this.originalVersion.entry(song);
+		}
 
 		public submit = () => {
 
@@ -174,7 +190,7 @@ module vdb.viewModels {
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
 
 		constructor(
-			songRepository: rep.SongRepository,
+			private songRepository: rep.SongRepository,
 			private artistRepository: rep.ArtistRepository,
 			pvRepository: rep.PVRepository,
 			userRepository: rep.UserRepository,

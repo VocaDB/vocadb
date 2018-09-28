@@ -44,6 +44,16 @@ module vdb.repositories {
 
         private get: (relative: string, params: any, callback: any) => void;
 
+	    public getByNames(names: string[], ignoreIds: number[]) {
+
+		    const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/by-names");
+		    const jqueryPromise = $.getJSON(url, { names: names, songType: undefined, lang: this.languagePreferenceStr, ignoreIds: ignoreIds });
+
+		    const promise = Promise.resolve(jqueryPromise);
+		    return promise as Promise<dc.SongApiContract[]>;
+
+	    }
+
 		public getComments = (songId: number, callback: (contract: dc.CommentContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/comments"), callback);
@@ -71,6 +81,19 @@ module vdb.repositories {
 		public getOne = (id: number, callback?: (result: dc.SongContract) => void) => {
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);         
+		}
+
+		public getListByParams(params: SongQueryParams, callback) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs");
+			const jqueryPromise = $.getJSON(url, params);
+
+			const promise = Promise.resolve(jqueryPromise);
+
+			return promise as Promise<dc.PartialFindResultContract<dc.SongApiContract>>;
+
+			//jqueryPromise.then(result => promise.)
+
 		}
 
 		public getList = (paging: dc.PagingProperties, lang: string,
@@ -230,6 +253,8 @@ module vdb.repositories {
 	}
 
 	export interface SongQueryParams extends CommonQueryParams {
+
+		sort?: string;
 
 		songTypes?: string;
 

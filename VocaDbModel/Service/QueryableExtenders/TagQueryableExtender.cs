@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
@@ -88,8 +88,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			names = names ?? new string[0];
 
-			var predicate = names.Aggregate(PredicateBuilder.False<Tag>(), (nameExp, name) => nameExp.Or(q => q.Names.Names.Any(n => n.Value == name)));
-			return query.Where(predicate);
+			var queries = names.Select(n => SearchTextQuery.Create(n, NameMatchMode.Exact));
+			return query.WhereHasNameGeneric<Tag, TagName>(queries);
 
 		}
 

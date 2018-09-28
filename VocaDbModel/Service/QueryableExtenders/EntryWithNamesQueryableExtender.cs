@@ -121,29 +121,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			var nameFilter = textQuery.Query;
+			var expression = WhereHasNameExpression<TEntry, TName>(textQuery);
 
-			switch (textQuery.MatchMode) {
-				case NameMatchMode.Exact:
-					return query.Where(m => m.Names.Names.Any(n => n.Value == nameFilter));
-
-				case NameMatchMode.Partial:
-					return query.Where(m => m.Names.Names.Any(n => n.Value.Contains(nameFilter)));
-
-				case NameMatchMode.StartsWith:
-					return query.Where(m => m.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
-
-				case NameMatchMode.Words:
-					var words = textQuery.Words;
-
-					foreach (var word in words.Take(FindHelpers.MaxSearchWords)) {
-						query = query.Where(q => q.Names.Names.Any(n => n.Value.Contains(word)));
-					}
-
-					return query;
-
-			}
-
-			return query;
+			return query.Where(expression);
 
 		}
 
