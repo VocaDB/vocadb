@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
@@ -21,6 +21,7 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
+using System.Threading.Tasks;
 using System.Web;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain.Security;
@@ -175,7 +176,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(Create model) {
+		public async Task<ActionResult> Create(Create model) {
 
 			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
 				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
@@ -189,7 +190,7 @@ namespace VocaDb.Web.Controllers
 			var contract = model.ToContract();
 
 			try {
-				var song = queries.Create(contract);
+				var song = await queries.Create(contract);
 				return RedirectToAction("Edit", new { id = song.Id });
 			} catch (VideoParseException x) {
 				ModelState.AddModelError("PVUrl", x.Message);
