@@ -50,7 +50,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
-		private readonly FollowedArtistNotifier followedArtistNotifier;
+		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserMessageMailer mailer;
@@ -133,7 +133,7 @@ namespace VocaDb.Model.Database.Queries {
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
 			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
-			FollowedArtistNotifier followedArtistNotifier)
+			IFollowedArtistNotifier followedArtistNotifier)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.VideoServices;
 
@@ -19,8 +20,9 @@ namespace VocaDb.Tests.TestSupport {
 
 		private VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext) {
 
-			if (!MatchedPVs.ContainsKey(url))
-				return ResultFunc(url, getTitle);
+			if (!MatchedPVs.ContainsKey(url)) {
+				return ResultFunc != null ? ResultFunc(url, getTitle) : VideoUrlParseResult.CreateOk(url, PVService.NicoNicoDouga, "sm393939", VideoTitleParseResult.Empty);
+			}
 
 			return MatchedPVs[url];
 

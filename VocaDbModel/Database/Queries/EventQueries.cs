@@ -37,7 +37,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
-		private readonly FollowedArtistNotifier followedArtistNotifier;
+		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IUserMessageMailer mailer;
 		private readonly IUserIconFactory userIconFactory;
@@ -62,7 +62,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
 			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, 
-			IUserMessageMailer mailer, FollowedArtistNotifier followedArtistNotifier)
+			IUserMessageMailer mailer, IFollowedArtistNotifier followedArtistNotifier)
 			: base(eventRepository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;

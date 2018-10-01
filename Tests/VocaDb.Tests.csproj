@@ -189,6 +189,7 @@
     <Compile Include="TestSupport\FakeArtistRepository.cs" />
     <Compile Include="TestSupport\FakeDiscussionFolderRepository.cs" />
     <Compile Include="TestSupport\FakeEventRepository.cs" />
+    <Compile Include="TestSupport\FakeFollowedArtistNotifier.cs" />
     <Compile Include="TestSupport\FakeLanguageDetector.cs" />
     <Compile Include="TestSupport\FakeObjectCache.cs" />
     <Compile Include="TestSupport\FakePVParser.cs" />

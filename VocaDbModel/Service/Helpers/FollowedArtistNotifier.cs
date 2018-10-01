@@ -10,13 +10,17 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers {
 
+	public interface IFollowedArtistNotifier {
+		User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator);
+	}
+
 	/// <summary>
 	/// Sends notifications to users based on artists they're following.
 	/// 
 	/// Notifications will not be sent to users with too many unread messages in their inbox.
 	/// This is to prevent flooding users with too many notifications.
 	/// </summary>
-	public class FollowedArtistNotifier {
+	public class FollowedArtistNotifier : IFollowedArtistNotifier {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory entryLinkFactory;
