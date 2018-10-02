@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -447,9 +447,8 @@ namespace VocaDb.Model.Service {
 
 				if (!string.IsNullOrEmpty(album)) {
 
-					albums = session.Query<AlbumName>()
-						.WhereEntryNameIs(SearchTextQuery.Create(album))
-						.Select(n => n.Album)
+					albums = session.Query<Album>()
+						.WhereHasName(SearchTextQuery.Create(album))
 						.Take(10)
 						.ToArray();
 

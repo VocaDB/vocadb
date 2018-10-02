@@ -77,7 +77,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		private static Expression<Func<TEntry, bool>> WhereHasNameExpression<TEntry, TName>(SearchTextQuery textQuery) where TEntry
+		public static Expression<Func<TEntry, bool>> WhereHasNameExpression<TEntry, TName>(SearchTextQuery textQuery) where TEntry
 			: IEntryWithNames<TName> where TName : LocalizedStringWithId {
 
 			var nameFilter = textQuery.Query;

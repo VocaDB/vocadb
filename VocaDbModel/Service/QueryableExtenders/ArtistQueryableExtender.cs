@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -25,7 +25,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			} else {
 
-				return FindHelpers.AddEntryNameFilter(query, textQuery);
+				return query.WhereEntryNameIs(textQuery);
 
 			}
 

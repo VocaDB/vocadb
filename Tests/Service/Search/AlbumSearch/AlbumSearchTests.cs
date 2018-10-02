@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
+using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.Search.AlbumSearch {
@@ -197,6 +198,25 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 			var result = Find();
 
 			Assert.AreEqual(2, result.TotalCount, "2 results total");
+			Assert.AreEqual(1, result.Items.Length, "1 result");
+			Assert.AreEqual(albumWithArtist, result.Items.First(), "result is expected album");
+
+		}
+
+		[TestMethod]
+		public void QueryCatNum() {
+
+			CreateName(album, "Synthesis", ContentLanguageSelection.Unspecified);
+			CreateName(albumWithArtist, "DIVINE", ContentLanguageSelection.Unspecified);
+			album.OriginalRelease.CatNum = "KRHS-90035";
+			albumWithArtist.OriginalRelease.CatNum = "XMCD-1003";
+			querySource.Add(CreateEntry.Album(name: "Reverberations"));
+
+			queryParams.Common.TextQuery = SearchTextQuery.Create("XMCD-1003");
+
+			var result = Find();
+
+			Assert.AreEqual(1, result.TotalCount, "Total results");
 			Assert.AreEqual(1, result.Items.Length, "1 result");
 			Assert.AreEqual(albumWithArtist, result.Items.First(), "result is expected album");
 

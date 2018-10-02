@@ -450,7 +450,7 @@ namespace VocaDb.Model.Database.Queries {
 				return ctx.Query<Song>()
 					.WhereNotDeleted()
 					.Where(s => !ignoreIds.Contains(s.Id))
-					.WhereHasName(names.Select(n => SearchTextQuery.Create(n, NameMatchMode.StartsWith)))
+					.WhereHasName(SearchTextQuery.Create(names, NameMatchMode.StartsWith))
 					.WhereHasType(songType)
 					.Take(maxResults)
 					.ToArray()

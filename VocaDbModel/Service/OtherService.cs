@@ -393,7 +393,7 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				var eventNames = session.Query<EventName>()
-					.WhereEntryNameIs(tagTextQuery)
+					.WhereEntryNameIs(textQuery)
 					.Where(a => !a.Entry.Deleted)
 					.Select(t => t.Value)
 					.OrderBy(t => t)
