@@ -115,7 +115,7 @@ module vdb.viewModels {
 
 			this.originalVersionSuggestions.removeAll();
 
-			const names = _.map(this.names.getPrimaryNames(), n => n.value());
+			const names = _.map(this.names.getPrimaryNames().length ? this.names.getPrimaryNames() : this.names.getAllNames(), n => n.value());
 			const suggestions = await this.songRepository.getByNames(names, [this.id]);
 
 			this.originalVersionSuggestions(suggestions);
