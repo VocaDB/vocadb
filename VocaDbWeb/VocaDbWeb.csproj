@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VocaDb.Web</RootNamespace>
     <AssemblyName>VocaDb.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <FileUpgradeFlags>
@@ -4897,13 +4897,13 @@
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
-	<TypeScriptLib>es2015,dom</TypeScriptLib>
+    <TypeScriptLib>es2015,dom</TypeScriptLib>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptIncludeComments>false</TypeScriptIncludeComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
-	<TypeScriptLib>es2015,dom</TypeScriptLib>
+    <TypeScriptLib>es2015,dom</TypeScriptLib>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>

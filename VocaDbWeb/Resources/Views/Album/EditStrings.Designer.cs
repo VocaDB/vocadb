@@ -413,7 +413,7 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Supported services: YouTube, NicoNicoDouga, Vimeo, SoundCloud, Piapro, Bilibili and Creofuga..
+        ///   Looks up a localized string similar to Supported services: YouTube, NicoNico, Vimeo, SoundCloud, Piapro, Bilibili and Creofuga..
         /// </summary>
         public static string PvSupportedServices {
             get {

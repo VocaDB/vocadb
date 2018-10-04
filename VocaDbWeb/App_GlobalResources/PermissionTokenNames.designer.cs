@@ -70,11 +70,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add raw media.
+        /// </summary>
+        internal static string AddRawFileMedia {
+            get {
+                return ResourceManager.GetString("AddRawFileMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database admin tasks.
         /// </summary>
         internal static string Admin {
             get {
                 return ResourceManager.GetString("Admin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add any tag to entry.
+        /// </summary>
+        internal static string ApplyAnyTag {
+            get {
+                return ResourceManager.GetString("ApplyAnyTag", resourceCulture);
             }
         }
         
@@ -142,6 +160,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit all song lists.
+        /// </summary>
+        internal static string EditAllSongLists {
+            get {
+                return ResourceManager.GetString("EditAllSongLists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage featured songlists.
         /// </summary>
         internal static string EditFeaturedLists {
@@ -165,6 +192,15 @@ namespace Resources {
         internal static string EditProfile {
             get {
                 return ResourceManager.GetString("EditProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit tags.
+        /// </summary>
+        internal static string EditTags {
+            get {
+                return ResourceManager.GetString("EditTags", resourceCulture);
             }
         }
         
@@ -268,6 +304,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove database editing permissions.
+        /// </summary>
+        internal static string RemoveEditPermission {
+            get {
+                return ResourceManager.GetString("RemoveEditPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove tag usages.
         /// </summary>
         internal static string RemoveTagUsages {
@@ -282,6 +327,15 @@ namespace Resources {
         internal static string RestoreRevisions {
             get {
                 return ResourceManager.GetString("RestoreRevisions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload own media.
+        /// </summary>
+        internal static string UploadMedia {
+            get {
+                return ResourceManager.GetString("UploadMedia", resourceCulture);
             }
         }
         

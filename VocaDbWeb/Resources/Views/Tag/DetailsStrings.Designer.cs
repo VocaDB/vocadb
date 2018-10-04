@@ -169,7 +169,7 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following NicoNicoDouga tags are mapped to this tag.
+        ///   Looks up a localized string similar to The following NicoNico tags are mapped to this tag.
         /// </summary>
         public static string MappedTags {
             get {

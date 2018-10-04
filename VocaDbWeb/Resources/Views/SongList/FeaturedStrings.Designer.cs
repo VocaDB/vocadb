@@ -61,7 +61,7 @@ namespace ViewRes.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import from YouTube or NicoNicoDouga.
+        ///   Looks up a localized string similar to Import from YouTube or NicoNico.
         /// </summary>
         public static string Import {
             get {
