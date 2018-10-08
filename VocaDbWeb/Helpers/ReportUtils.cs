@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace VocaDb.Web.Helpers {
 	public static class ReportUtils {
 
 		public static IEnumerable GetReportTypes<TEnum>(TranslateableEnum<TEnum> translations, HashSet<TEnum> notesRequired) 
-			where TEnum : struct, IConvertible {
+			where TEnum : struct, Enum {
 			
 			return translations.Select(r => new {
 				r.Id,

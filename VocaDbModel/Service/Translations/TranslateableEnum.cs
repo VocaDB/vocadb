@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,7 +10,7 @@ using Newtonsoft.Json.Converters;
 namespace VocaDb.Model.Service.Translations {
 
 	public class TranslateableEnum<TEnum> : ITranslateableEnum, IEnumerable<TranslateableEnumField<TEnum>> 
-		where TEnum : struct, IConvertible {
+		where TEnum : struct, Enum {
 
 		private readonly Func<ResourceManager> resourceManager;
 

@@ -44,6 +44,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

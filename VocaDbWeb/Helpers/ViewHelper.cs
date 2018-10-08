@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -82,7 +82,7 @@ namespace VocaDb.Web.Helpers {
 			return new SelectList(EnumVal<UserEmailOptions>.Values.ToDictionary(s => s, Translate.EmailOptions), "Key", "Value", selectedValue);
 		}
 
-		public static SelectList CreateEnumList<T>(object selectedValue, TranslateableEnum<T> enumType) where T : struct, IConvertible {
+		public static SelectList CreateEnumList<T>(object selectedValue, TranslateableEnum<T> enumType) where T : struct, Enum {
 			return CreateEnumList(selectedValue, enumType.AllFields);
 		}
 
@@ -136,7 +136,7 @@ namespace VocaDb.Web.Helpers {
 
 		public static MvcHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
 			TranslateableEnum<TEnum> enumType, object htmlAttributes = null, object selectedValue = null)
-			where TEnum : struct, IConvertible {
+			where TEnum : struct, Enum {
 
 			return htmlHelper.DropDownList(name, CreateEnumList(selectedValue, enumType), htmlAttributes);
 
@@ -144,7 +144,7 @@ namespace VocaDb.Web.Helpers {
 
 		public static MvcHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
 			IEnumerable<TranslateableEnumField<TEnum>> enumType, object htmlAttributes = null, object selectedValue = null)
-			where TEnum : struct, IConvertible {
+			where TEnum : struct, Enum {
 
 			return htmlHelper.DropDownList(name, CreateEnumList(selectedValue, enumType), htmlAttributes);
 
@@ -153,7 +153,7 @@ namespace VocaDb.Web.Helpers {
 		public static MvcHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper, 
 			Expression<Func<TModel, TEnum>> expression,
 			TranslateableEnum<TEnum> enumType, object htmlAttributes = null, object selectedValue = null) 
-			where TEnum : struct, IConvertible {
+			where TEnum : struct, Enum {
 
 			return htmlHelper.DropDownListFor(expression, CreateEnumList(selectedValue, enumType), htmlAttributes);
 
@@ -162,7 +162,7 @@ namespace VocaDb.Web.Helpers {
 		public static MvcHtmlString EnumDropDownListForDic<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, TEnum>> expression,
 			TranslateableEnum<TEnum> enumType, IDictionary<string, object> htmlAttributes = null, object selectedValue = null)
-			where TEnum : struct, IConvertible {
+			where TEnum : struct, Enum {
 
 			return htmlHelper.DropDownListFor(expression, CreateEnumList(selectedValue, enumType), htmlAttributes);
 

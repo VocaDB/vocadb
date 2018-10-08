@@ -265,7 +265,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, IConvertible {
+		public static TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, Enum {
 			return (TranslateableEnum<TEnum>)allResourceManagers[typeof(TEnum)];
 		}
 

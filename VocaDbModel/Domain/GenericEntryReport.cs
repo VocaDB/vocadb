@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Domain {
 
-	public abstract class GenericEntryReport<TEntry, TReport> : EntryReport where TEntry : class, IEntryWithNames where TReport: struct, IConvertible {
+	public abstract class GenericEntryReport<TEntry, TReport> : EntryReport where TEntry : class, IEntryWithNames where TReport: struct, Enum {
 
 		private TEntry song;
 

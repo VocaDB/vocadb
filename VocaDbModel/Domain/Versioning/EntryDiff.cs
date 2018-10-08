@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace VocaDb.Model.Domain.Versioning {
 
-	public abstract class EntryDiff<T> : IEntryDiff where T : struct, IConvertible {
+	public abstract class EntryDiff<T> : IEntryDiff where T : struct, Enum {
 
 		protected EnumFieldAccessor<T> Field(T field) {
 			return new EnumFieldAccessor<T>(ChangedFields, field);
@@ -93,7 +93,7 @@ namespace VocaDb.Model.Domain.Versioning {
 
 	}
 
-	public struct EnumFieldAccessor<T> where T : struct, IConvertible {
+	public struct EnumFieldAccessor<T> where T : struct, Enum {
 
 		private readonly EnumVal<T> val; 
 		private readonly T field;

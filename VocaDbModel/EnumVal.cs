@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,15 +8,13 @@ namespace VocaDb.Model {
 	/// Type-safe enum
 	/// </summary>
 	/// <typeparam name="T">Enum type</typeparam>
-	public class EnumVal<T> : IEquatable<EnumVal<T>>, IEquatable<T> where T : struct, IConvertible {
+	public class EnumVal<T> : IEquatable<EnumVal<T>>, IEquatable<T> where T : struct, Enum {
 
 		private T val;
 
 		private int ValInt {
-			get { return Convert.ToInt32(val); }
-			set {
-				val = (T)Enum.ToObject(typeof(T), value);
-			}
+			get => Convert.ToInt32(val);
+			set => val = (T)Enum.ToObject(typeof(T), value);
 		}
 
 		public static T All {
@@ -45,9 +43,7 @@ namespace VocaDb.Model {
 			return Values.Where(val => FlagIsSet(flags, val)).ToArray();
 		}
 
-		public static bool IsDefined(string str) {
-			return Enum.IsDefined(typeof(T), str);
-		}
+		public static bool IsDefined(string str) => Enum.IsDefined(typeof(T), str);
 
 		/// <summary>
 		/// List of possible values for this enum.
@@ -77,8 +73,7 @@ namespace VocaDb.Model {
 			var list = new List<T>(values.Length);
 
 			foreach (var name in values) {
-				T field;
-				if (Enum.TryParse(name, true, out field))
+				if (Enum.TryParse(name, true, out T field))
 					list.Add(field);
 			}
 
@@ -95,15 +90,7 @@ namespace VocaDb.Model {
 
 		}
 
-		public static T ParseSafe(string value, T def) {
-			
-			T val;
-			if (Enum.TryParse(value, true, out val))
-				return val;
-			else
-				return def;
-
-		}
+		public static T ParseSafe(string value, T def) => Enum.TryParse(value, true, out T val) ? val : def;
 
 		/// <summary>
 		/// Initializes a new instance of enum
@@ -124,29 +111,19 @@ namespace VocaDb.Model {
 		/// Gets or sets the current value
 		/// </summary>
 		public T Value {
-			get { return val; }
-			set { val = value; }
+			get => val;
+			set => val = value;
 		}
 
-		public void AddFlag(T flag) {
-			ValInt |= Convert.ToInt32(flag);	
-		}
+		public void AddFlag(T flag) => ValInt |= Convert.ToInt32(flag);
 
-		public void Clear() {
-			Value = default(T);
-		}
+		public void Clear() => Value = default;
 
-		public override bool Equals(object obj) {
-			return Equals(obj as EnumVal<T>);
-		}
+		public override bool Equals(object obj) => Equals(obj as EnumVal<T>);
 
-		public bool Equals(EnumVal<T> other) {
-			return other != null && Value.Equals(other.Value);
-		}
+		public bool Equals(EnumVal<T> other) => other != null && Value.Equals(other.Value);
 
-		public bool Equals(T other) {
-			return Value.Equals(other);
-		}
+		public bool Equals(T other) => Value.Equals(other);
 
 		/// <summary>
 		/// Checks whether a flag has been set.
@@ -157,13 +134,9 @@ namespace VocaDb.Model {
 			return (ValInt & Convert.ToInt32(flag)) == Convert.ToInt32(flag);
 		}
 
-		public override int GetHashCode() {
-			return Value.GetHashCode();
-		}
+		public override int GetHashCode() => Value.GetHashCode();
 
-		public void RemoveFlag(T flag) {
-			ValInt -= Convert.ToInt32(flag);
-		}
+		public void RemoveFlag(T flag) => ValInt -= Convert.ToInt32(flag);
 
 		public void SetFlag(T flag, bool val) {
 
