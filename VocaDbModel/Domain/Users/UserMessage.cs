@@ -76,6 +76,10 @@ namespace VocaDb.Model.Domain.Users {
 		/// </remarks>
 		public virtual UserInboxType Inbox { get; set; }
 
+		/// <summary>
+		/// Message body. May contain Markdown markup.
+		/// Cannot be null or empty.
+		/// </summary>
 		public virtual string Message {
 			get => message;
 			set {

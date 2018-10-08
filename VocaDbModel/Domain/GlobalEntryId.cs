@@ -1,4 +1,4 @@
-﻿namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain {
 
 	/// <summary>
 	/// Entry identifier that is a combination of entry type and primary key ID.
@@ -31,7 +31,7 @@
 		}
 
 		public override bool Equals(object obj) {
-			if (ReferenceEquals(null, obj)) return false;
+			if (obj is null) return false;
 			return obj is GlobalEntryId && Equals((GlobalEntryId) obj);
 		}
 
