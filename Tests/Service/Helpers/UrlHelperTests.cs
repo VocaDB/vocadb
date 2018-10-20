@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Tests.Service.Helpers {
@@ -42,6 +42,14 @@ namespace VocaDb.Tests.Service.Helpers {
 			var result = UrlHelper.MakeLink("mailto:miku@vocadb.net");
 
 			Assert.AreEqual("mailto:miku@vocadb.net", result, "result");
+
+		}
+
+		[TestMethod]
+		public void UpgradeToHttps() {
+
+			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=6888548", UrlHelper.UpgradeToHttps("http://tn.smilevideo.jp/smile?i=6888548"), "http://tn.smilevideo.jp was upgraded");
+			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=6888548", UrlHelper.UpgradeToHttps("https://tn.smilevideo.jp/smile?i=6888548"), "Already HTTPS");
 
 		}
 
