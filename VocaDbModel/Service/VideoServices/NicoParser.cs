@@ -19,7 +19,6 @@ using VocaDb.Model.Service.Helpers;
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class NicoParser : IVideoServiceParser {
-		public VideoTitleParseResult GetTitle(string id) => NicoHelper.GetTitleAPI(id);
 		public Task<VideoTitleParseResult> GetTitleAsync(string id) => NicoHelper.GetTitleAPIAsync(id);
 	}
 
@@ -71,8 +70,11 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static string GetUserProfileUrlById(string userId) {
-			return string.Format("http://www.nicovideo.jp/user/{0}", userId);
+		public static IEnumerable<string> GetUserProfileUrlById(string userId) {
+			return new [] {
+				string.Format("http://www.nicovideo.jp/user/{0}", userId),
+				string.Format("https://www.nicovideo.jp/user/{0}", userId),
+			};
 		}
 
 		public static NicoResponse GetResponse(Stream stream) {
@@ -101,32 +103,6 @@ namespace VocaDb.Model.Service.VideoServices {
 			result.Tags = nicoResponse.Thumb.Tags;
 
 			return result;
-
-		}
-
-		public static VideoTitleParseResult GetTitleAPI(string id) {
-
-			var url = string.Format("https://ext.nicovideo.jp/api/getthumbinfo/{0}", id);
-
-			var request = WebRequest.Create(url);
-			request.Timeout = 10000;
-
-			NicoResponse nicoResponse;
-
-			try {
-				using (var response = request.GetResponse())
-				using (var stream = response.GetResponseStream()) {
-					nicoResponse = GetResponse(stream);
-				}
-			} catch (WebException x) {
-				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);
-			} catch (XmlException x) {
-				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);
-			} catch (IOException x) {
-				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);				
-			}
-
-			return ParseResponse(nicoResponse);
 
 		}
 

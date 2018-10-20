@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Domain.PVs;
@@ -24,9 +24,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
-			return Enumerable.Repeat(NicoHelper.GetUserProfileUrlById(authorId), 1);
-		}
+		public override IEnumerable<string> GetUserProfileUrls(string authorId) => NicoHelper.GetUserProfileUrlById(authorId);
 
 	}
 }
