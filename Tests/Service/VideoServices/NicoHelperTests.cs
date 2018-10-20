@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -74,7 +74,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			Assert.IsTrue(result.Success, "Success");
 			Assert.AreEqual("【初音ミク】１７：００【オリジナル曲】", result.Title, "Title");
-			Assert.AreEqual("http://tn-skr1.smilevideo.jp/smile?i=12464004", result.ThumbUrl, "ThumbUrl");
+			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=12464004", result.ThumbUrl, "ThumbUrl");
 			Assert.IsNotNull(result.UploadDate, "UploadDate");
 			Assert.AreEqual(new DateTime(2010, 10, 17).Date, result.UploadDate.Value.Date, "UploadDate");
 			Assert.AreEqual(178, result.LengthSeconds, "LengthSeconds");
