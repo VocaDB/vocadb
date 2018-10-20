@@ -1,4 +1,6 @@
 using System;
+using System.Text.RegularExpressions;
+using NHibernate.Linq.Functions;
 using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -60,13 +62,17 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
+		private static readonly Regex nicoImageRegex = new Regex(@"^http://tn(?:-skr\d)?\.smilevideo\.jp/smile\?i=(\d+)$");
+
 		public static string UpgradeToHttps(string url) {
 
 			if (string.IsNullOrEmpty(url))
 				return url;
 
-			if (url.StartsWith("http://tn.smilevideo.jp/smile")) {
-				return url.Replace("http://", "https://");
+			var nicoRegexMatch = nicoImageRegex.Match(url);
+
+			if (nicoRegexMatch.Success) {
+				return string.Format("https://tn.smilevideo.jp/smile?i=" + nicoRegexMatch.Groups[1]);
 			}
 
 			return url;
