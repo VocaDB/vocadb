@@ -43,7 +43,11 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static string GetUserName(string userId) {
+		/// <summary>
+		/// Legacy method for retrieving user name using HTML parsing.
+		/// This should be included in the API now.
+		/// </summary>
+		private static string GetUserName(string userId) {
 
 			var url = string.Format("http://ext.nicovideo.jp/thumb_user/{0}", userId);
 
@@ -145,8 +149,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (parts.Length != 2)
 				return null;
 
-			int min, sec;
-			if (!int.TryParse(parts[0], out min) || !int.TryParse(parts[1], out sec))
+			if (!int.TryParse(parts[0], out int min) || !int.TryParse(parts[1], out int sec))
 				return null;
 
 			var totalSec = min*60 + sec;

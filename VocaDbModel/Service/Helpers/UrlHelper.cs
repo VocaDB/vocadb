@@ -1,6 +1,5 @@
 using System;
 using System.Text.RegularExpressions;
-using NHibernate.Linq.Functions;
 using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service.Helpers {
