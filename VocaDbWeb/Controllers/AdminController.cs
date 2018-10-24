@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Mvc;
@@ -285,6 +287,19 @@ namespace VocaDb.Web.Controllers
 
 			var count = Service.UpdateTagVoteCounts();
 			TempData.SetStatusMessage(string.Format("Updated tag vote counts, {0} corrections made", count));
+			return RedirectToAction("Index");
+
+		}
+
+		[Authorize]
+		public ActionResult DeployWebsite() {
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			var deployFile = Path.Combine(Server.MapPath("~"), "..", "..", "deploy.cmd");
+
+			Process.Start(deployFile, "doNotPause");
+
 			return RedirectToAction("Index");
 
 		}
