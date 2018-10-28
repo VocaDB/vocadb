@@ -288,6 +288,11 @@ a.extLink[href^="http://vimeo.com/"], a.extLink[href^="https://vimeo.com/"] {
 	background: url("/Content/ExtIcons/vimeo.png") no-repeat left 50%;
 }
 
+/* URLs are lang.wikipedia.org */
+a.extLink[href*="wikipedia.org"] {
+	.extLink(url("/Content/ExtIcons/wikipedia.png"));
+}
+
 a.extLink[href^="http://shop.vocaloidstore.com/"] {
 	background: url("/Content/ExtIcons/vocastore.png") no-repeat left 50%;
 }
