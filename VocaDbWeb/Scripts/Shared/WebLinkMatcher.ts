@@ -102,6 +102,7 @@ module vdb.utils {
 			{ url: "weibo.com/", desc: "Weibo", cat: c.WebLinkCategory.Official },
 			{ url: "en.wikipedia.org/wiki/", desc: "Wikipedia (EN)", cat: c.WebLinkCategory.Reference },
 			{ url: "ja.wikipedia.org/wiki/", desc: "Wikipedia (JP)", cat: c.WebLinkCategory.Reference },
+			{ url: "wikipedia.org/wiki/", desc: "Wikipedia", cat: c.WebLinkCategory.Reference },
             { url: "www.yesasia.com/", desc: "YesAsia", cat: c.WebLinkCategory.Commercial },
             { url: "youtube.com/channel/", desc: "YouTube Channel", cat: c.WebLinkCategory.Official },
             { url: "youtube.com/user/", desc: "YouTube Channel", cat: c.WebLinkCategory.Official }
