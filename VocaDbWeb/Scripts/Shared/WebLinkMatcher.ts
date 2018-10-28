@@ -49,6 +49,7 @@ module vdb.utils {
 			{ url: "www.melonbooks.co.jp/", desc: "Melonbooks", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.metal-archives.com/", desc: "Metal Archives", cat: c.WebLinkCategory.Reference },
             { url: "mikumikudance.wikia.com/wiki/", desc: "MikuMikuDance Wiki", cat: c.WebLinkCategory.Reference },
+			{ url: "mikumikudance.fandom.com/wiki/", desc: "MikuMikuDance Wiki", cat: c.WebLinkCategory.Reference },
             { url: "www5.atwiki.jp/hmiku/", desc: "MikuWiki", cat: c.WebLinkCategory.Reference },
             { url: "mora.jp/", desc: "mora", cat: c.WebLinkCategory.Commercial },
             { url: "musicbrainz.org/", desc: "MusicBrainz", cat: c.WebLinkCategory.Reference },
