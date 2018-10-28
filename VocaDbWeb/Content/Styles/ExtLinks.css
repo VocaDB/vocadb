@@ -63,7 +63,8 @@ a.extLink[href^="http://shop.melonbooks.co.jp/"],
 a.extLink[href^="https://www.melonbooks.co.jp/"] {
   background: url("/Content/ExtIcons/melonbooks.png") no-repeat left 50%;
 }
-a.extLink[href^="http://mikumikudance.wikia.com/wiki/"] {
+a.extLink[href^="http://mikumikudance.wikia.com/wiki/"],
+a.extLink[href^="https://mikumikudance.fandom.com/wiki/"] {
   background: url("/Content/ExtIcons/mmdwiki.png") no-repeat left 50%;
 }
 a.extLink[href^="https://musicbrainz.org/"] {
