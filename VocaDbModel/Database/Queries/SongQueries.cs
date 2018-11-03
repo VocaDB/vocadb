@@ -618,7 +618,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (song.HasOriginalVersion
 					&& song.LengthSeconds > 0
-				    && song.OriginalVersion.LengthSeconds > song.LengthSeconds + 10) {
+				    && song.OriginalVersion.LengthSeconds > song.LengthSeconds + 30) {
 					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.ShortVersion, 1));
 				}
 
