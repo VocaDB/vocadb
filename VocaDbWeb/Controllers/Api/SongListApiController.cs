@@ -149,6 +149,7 @@ namespace VocaDb.Web.Controllers.Api {
 			return queries.HandleQuery(ctx => {
 
 				return ctx.Query()
+					.WhereNotDeleted()
 					.WhereHasFeaturedCategory(featuredCategory, false)
 					.WhereHasName(textQuery)
 					.Select(l => l.Name)
