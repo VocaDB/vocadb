@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
@@ -56,7 +56,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		private Artist[] GetMainArtists(Album album, IEnumerable<IArtistLinkWithRoles> creditableArtists) {
 
-			if (album.ArtistString.Default == ArtistHelper.VariousArtists)
+			if (album.IsVariousArtists)
 				return null;
 
 			return ArtistHelper.GetProducers(creditableArtists, AlbumHelper.GetContentFocus(album.DiscType)).Select(a => a.Artist).ToArray();

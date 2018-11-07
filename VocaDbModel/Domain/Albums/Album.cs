@@ -208,6 +208,11 @@ namespace VocaDb.Model.Domain.Albums {
 		}
 
 		/// <summary>
+		/// Album's artist string is "various artists".
+		/// </summary>
+		public virtual bool IsVariousArtists => ArtistString.Default == ArtistHelper.VariousArtists;
+
+		/// <summary>
 		/// Gets the ordinal number of the last disc for this album, starting from 1.
 		/// </summary>
 		public virtual int LastDiscNumber {

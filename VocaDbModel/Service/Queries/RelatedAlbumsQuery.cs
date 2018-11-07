@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
@@ -15,7 +15,7 @@ namespace VocaDb.Model.Service.Queries {
 		private Artist[] GetMainArtists(Album album, IList<IArtistLinkWithRoles> creditableArtists) {
 
 			// "Various artists" albums will be treated as collaboration albums where only the circle/label is searched.
-			if (album.ArtistString.Default == ArtistHelper.VariousArtists) {
+			if (album.IsVariousArtists) {
 
 				var circles = creditableArtists.Where(a => a.Artist != null && ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Circle)).Select(a => a.Artist).ToArray();
 

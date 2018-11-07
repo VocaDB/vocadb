@@ -799,6 +799,7 @@
     <Compile Include="Service\Exceptions\RequestNotValidException.cs" />
     <Compile Include="Service\Exceptions\DuplicateTagNameException.cs" />
     <Compile Include="Service\Exceptions\TooFastRegistrationException.cs" />
+    <Compile Include="Service\Expressions\AlbumLinkExpressions.cs" />
     <Compile Include="Service\ExtSites\AlbumDescriptionGenerator.cs" />
     <Compile Include="Service\ExtSites\ArtistDescriptionGenerator.cs" />
     <Compile Include="Service\ExtSites\SongDescriptionGenerator.cs" />
