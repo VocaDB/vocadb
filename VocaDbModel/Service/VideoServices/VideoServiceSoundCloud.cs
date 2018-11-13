@@ -56,7 +56,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(string url) {
 
 			var apikey = AppConfig.SoundCloudClientId;
-			var apiUrl = string.Format("http://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
+			var apiUrl = string.Format("https://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
 
 			SoundCloudResult result;
 

@@ -1,4 +1,4 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
+@inherits VocaDb.Web.Code.HelperPage
 @using System.Globalization
 @using System.Web.Mvc;
 @using System.Web.Mvc.Html;
@@ -88,13 +88,13 @@
 
 @helper SongIconLink(SongContract song, int? albumId = null) {
 	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">
-		<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
 	</a>		
 }
 
 @helper SongIconLink(SongForApiContract song) {
 	<a href="@Url.SongDetails(song)">
-		<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
 	</a>
 }
 

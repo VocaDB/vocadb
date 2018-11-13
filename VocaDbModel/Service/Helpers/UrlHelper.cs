@@ -68,6 +68,10 @@ namespace VocaDb.Model.Service.Helpers {
 			if (string.IsNullOrEmpty(url))
 				return url;
 
+			if (url.StartsWith("http://i1.sndcdn.com")) {
+				return url.Replace("http://", "https://");
+			}
+
 			var nicoRegexMatch = nicoImageRegex.Match(url);
 
 			if (nicoRegexMatch.Success) {
