@@ -51,6 +51,7 @@ namespace VocaDb.Tests.Service.Helpers {
 			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=6888548", UrlHelper.UpgradeToHttps("http://tn.smilevideo.jp/smile?i=6888548"), "http://tn.smilevideo.jp was upgraded");
 			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=6888548", UrlHelper.UpgradeToHttps("http://tn-skr1.smilevideo.jp/smile?i=6888548"), "http://tn-skr1.smilevideo.jp was upgraded");
 			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=6888548", UrlHelper.UpgradeToHttps("https://tn.smilevideo.jp/smile?i=6888548"), "https://tn.smilevideo.jp already HTTPS");
+			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=34172016.39165", UrlHelper.UpgradeToHttps("http://tn.smilevideo.jp/smile?i=34172016.39165"), "URL with dot was upgraded");
 
 		}
 

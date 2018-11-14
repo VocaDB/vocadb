@@ -61,7 +61,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		private static readonly Regex nicoImageRegex = new Regex(@"^http://tn(?:-skr\d)?\.smilevideo\.jp/smile\?i=(\d+)$");
+		private static readonly Regex nicoImageRegex = new Regex(@"^http://tn(?:-skr\d)?\.smilevideo\.jp/smile\?i=([\d\.]+)$");
 
 		public static string UpgradeToHttps(string url) {
 
