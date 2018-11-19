@@ -13,7 +13,7 @@
 	var meta = pv.ExtendedMetadata != null ? pv.ExtendedMetadata.GetExtendedMetadata<PiaproMetadata>() : null;
 	if (meta != null && !string.IsNullOrEmpty(meta.Timestamp)) {
 		var prefix = pv.PVId.Substring(0, 2);
-		<audio controls controlsList="nodownload" src="http://c1.piapro.jp/audio_audition/@prefix/@(pv.PVId)_@(meta.Timestamp)_audition.mp3"></audio>
+		<audio controls controlsList="nodownload" src="https://cdn.piapro.jp/mp3_a/@prefix/@(pv.PVId)_@(meta.Timestamp)_audition.mp3"></audio>
 	} else {
 	@* <object> embed instead of iframe because iframe doesn't work with flash disabled *@
 	var piaproSwf = string.Format("//piapro.jp/modpub/swf/player03_h.swf?030503&id={0}&c=1", pv.PVId);
