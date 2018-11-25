@@ -44,10 +44,10 @@ module vdb.repositories {
 
         private get: (relative: string, params: any, callback: any) => void;
 
-	    public getByNames(names: string[], ignoreIds: number[]) {
+	    public getByNames(names: string[], ignoreIds: number[], songType?: cls.songs.SongType) {
 
 		    const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/by-names");
-		    const jqueryPromise = $.getJSON(url, { names: names, songType: undefined, lang: this.languagePreferenceStr, ignoreIds: ignoreIds });
+		    const jqueryPromise = $.getJSON(url, { names: names, songType: songType, lang: this.languagePreferenceStr, ignoreIds: ignoreIds });
 
 		    const promise = Promise.resolve(jqueryPromise);
 		    return promise as Promise<dc.SongApiContract[]>;
