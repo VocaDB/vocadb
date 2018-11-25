@@ -229,9 +229,9 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("by-names")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public SongForApiContract[] GetByNames([FromUri] string[] names, [FromUri] int[] ignoreIds, ContentLanguagePreference lang, SongType? songType = null, int maxResults = 3) {
+		public SongForApiContract[] GetByNames([FromUri] string[] names, [FromUri] int[] ignoreIds, ContentLanguagePreference lang, [FromUri] SongType[] songTypes = null, int maxResults = 3) {
 
-			return queries.GetByNames(names, songType, ignoreIds, lang, maxResults);
+			return queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
 
 		}
 

@@ -443,7 +443,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public SongForApiContract[] GetByNames(string[] names, SongType? songType, int[] ignoreIds, ContentLanguagePreference lang, int maxResults) {
+		public SongForApiContract[] GetByNames(string[] names, SongType[] songTypes, int[] ignoreIds, ContentLanguagePreference lang, int maxResults) {
 
 			return HandleQuery(ctx => {
 
@@ -451,7 +451,7 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereNotDeleted()
 					.Where(s => !ignoreIds.Contains(s.Id))
 					.WhereHasName(SearchTextQuery.Create(names, NameMatchMode.StartsWith))
-					.WhereHasType(songType)
+					.WhereHasType(songTypes)
 					.Take(maxResults)
 					.ToArray()
 					.Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames))

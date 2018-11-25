@@ -116,7 +116,7 @@ module vdb.viewModels {
 			this.originalVersionSuggestions.removeAll();
 
 			const names = _.map(this.names.getPrimaryNames().length ? this.names.getPrimaryNames() : this.names.getAllNames(), n => n.value());
-			const [all, originals] = await Promise.all([this.songRepository.getByNames(names, [this.id]), this.songRepository.getByNames(names, [this.id], cls.songs.SongType.Original)]);
+			const [all, originals] = await Promise.all([this.songRepository.getByNames(names, [this.id]), this.songRepository.getByNames(names, [this.id], [cls.songs.SongType.Original, cls.songs.SongType.Remaster])]);
 
 			const suggestions = _.chain(originals).unionBy(all, i => i.id).take(3).value();
 
