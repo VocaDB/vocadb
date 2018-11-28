@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -73,6 +73,22 @@ namespace VocaDb.Model.Database.Queries.Partial {
 
 		}
 
+		/// <summary>
+		/// Synchronizes names for an event, including possible names inherited from the series.
+		/// </summary>
+		/// <param name="ctx">Database context. Cannot be null.</param>
+		/// <param name="ev">Event to be updated. Cannot be null.</param>
+		/// <param name="seriesLink">Linked series. Can be null.</param>
+		/// <param name="customName">Whether event uses custom name.</param>
+		/// <param name="seriesNumber">Series number.</param>
+		/// <param name="seriesSuffix">Series suffix.</param>
+		/// <param name="nameContracts">Given names for event.</param>
+		/// <returns>True if the names were changed, otherwise false.</returns>
+		/// <remarks>
+		/// If series is specified and custom name setting is disabled, then event names are generated based on series names.
+		/// If custom name is enabled or no series is specified, given names are used.
+		/// Default name language is inherited from series as well, but that setting is not touched by this method.
+		/// </remarks>
 		public bool UpdateNames(IDatabaseContext ctx, ReleaseEvent ev, IEntryWithIntId seriesLink, 
 			bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts) {
 

@@ -324,6 +324,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Updates series default language selection, inherited language to events is updated as well.
+		/// </summary>
+		[TestMethod]
+		public void UpdateSeries_UpdateDefaultLanguage_EventsUpdated() {
+
+			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English) {
+				DefaultNameLanguage = ContentLanguageSelection.Japanese
+			};
+
+			var result = queries.UpdateSeries(contract, null);
+			Assert.AreEqual(ContentLanguageSelection.Japanese, existingEvent.TranslatedName.DefaultLanguage, "Default language");
+
+		}
+
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateEventNameException))]
 		public void UpdateSeries_DuplicateName() {

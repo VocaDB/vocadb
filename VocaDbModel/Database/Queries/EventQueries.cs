@@ -707,6 +707,7 @@ namespace VocaDb.Model.Database.Queries {
 						var eventNamesQuery = new UpdateEventNamesQuery();
 						foreach (var ev in series.Events.Where(e => !e.CustomName)) {
 							eventNamesQuery.UpdateNames(session, ev, series, ev.CustomName, ev.SeriesNumber, ev.SeriesSuffix, ev.Names);
+							ev.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
 							session.Update(ev);
 						}
 					}
