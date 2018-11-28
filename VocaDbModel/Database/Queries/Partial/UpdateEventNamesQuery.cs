@@ -20,6 +20,16 @@ namespace VocaDb.Model.Database.Queries.Partial {
 	/// </remarks>
 	public class UpdateEventNamesQuery {
 
+		/// <summary>
+		/// Checks for duplicate event names.
+		/// </summary>
+		/// <param name="ctx">Database context. Cannot be null.</param>
+		/// <param name="names">List of given names for an event. Cannot be null.</param>
+		/// <param name="eventId">ID of event to be updated.</param>
+		/// <exception cref="DuplicateEventNameException">If duplicate names were detected.</exception>
+		/// <remarks>
+		/// Duplicate names are not allowed in the list of given names for a single event, and no two events may have the same name.
+		/// </remarks>
 		public void CheckDuplicateName(IDatabaseContext ctx, string[] names, int eventId) {
 
 			var duplicateName = names
@@ -84,6 +94,7 @@ namespace VocaDb.Model.Database.Queries.Partial {
 		/// <param name="seriesSuffix">Series suffix.</param>
 		/// <param name="nameContracts">Given names for event.</param>
 		/// <returns>True if the names were changed, otherwise false.</returns>
+		/// <exception cref="DuplicateEventNameException">If duplicate names are detected.</exception>
 		/// <remarks>
 		/// If series is specified and custom name setting is disabled, then event names are generated based on series names.
 		/// If custom name is enabled or no series is specified, given names are used.
