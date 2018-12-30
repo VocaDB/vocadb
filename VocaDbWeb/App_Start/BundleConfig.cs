@@ -325,6 +325,7 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Create").Include(
+				"~/Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.js",
 				"~/Scripts/Helpers/SongHelper.js",
 				"~/Scripts/ViewModels/SongCreateViewModel.js"
 			));
