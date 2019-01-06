@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using NLog;
 using VocaDb.Model.Database.Repositories;
@@ -65,7 +65,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			var q = session.OfType<SongInList>().Query()
 				.Where(a => !a.Song.Deleted && a.List.Id == queryParams.ListId)
-				.WhereChildHasName(queryParams.TextQuery)
+				.WhereSongHasName(queryParams.TextQuery, true)
 				.WhereSongHasPVService(queryParams.PVServices)
 				.WhereSongHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks)
 				.WhereSongHasTags(queryParams.TagIds)

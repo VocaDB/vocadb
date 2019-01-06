@@ -57,6 +57,40 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static Expression<Func<TEntry, bool>> GetChildHasNameExpression<TEntry>(SearchTextQuery textQuery)
+			where TEntry : ISongLink {
+
+			var nameFilter = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
+
+				case NameMatchMode.Exact:
+					return m => m.Song.Names.Names.Any(n => n.Value == nameFilter);
+
+				case NameMatchMode.Partial:
+					return m => m.Song.Names.Names.Any(n => n.Value.Contains(nameFilter));
+
+				case NameMatchMode.StartsWith:
+					return m => m.Song.Names.Names.Any(n => n.Value.StartsWith(nameFilter));
+
+				case NameMatchMode.Words:
+					var words = textQuery.Words;
+
+					Expression<Func<TEntry, bool>> exp = (q => q.Song.Names.Names.Any(n => n.Value.Contains(words[0])));
+
+					foreach (var word in words.Skip(1).Take(10)) {
+						var temp = word;
+						exp = exp.And((q => q.Song.Names.Names.Any(n => n.Value.Contains(temp))));
+					}
+
+					return exp;
+
+			}
+
+			return m => true;
+
+		}
+
 		/// <summary>
 		/// Filters a song link query by a name query.
 		/// </summary>
@@ -74,34 +108,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (textQuery.IsEmpty)
 				return query;
 
-			var nameFilter = textQuery.Query;
-
-			switch (textQuery.MatchMode) {
-
-				case NameMatchMode.Exact:
-					return query.Where(m => m.Song.Names.Names.Any(n => n.Value == nameFilter));
-
-				case NameMatchMode.Partial:
-					return query.Where(m => m.Song.Names.Names.Any(n => n.Value.Contains(nameFilter)));
-
-				case NameMatchMode.StartsWith:
-					return query.Where(m => m.Song.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
-
-				case NameMatchMode.Words:
-					var words = textQuery.Words;
-
-					Expression<Func<T, bool>> exp = (q => q.Song.Names.Names.Any(n => n.Value.Contains(words[0])));
-
-					foreach (var word in words.Skip(1).Take(10)) {
-						var temp = word;
-						exp = exp.And((q => q.Song.Names.Names.Any(n => n.Value.Contains(temp))));
-					}
-
-					return query.Where(exp);
-
-			}
-
-			return query;
+			return query.Where(GetChildHasNameExpression<T>(textQuery));
 
 		}
 
