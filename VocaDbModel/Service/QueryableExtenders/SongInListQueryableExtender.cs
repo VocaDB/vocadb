@@ -15,14 +15,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			switch (textQuery.MatchMode) {
 				case NameMatchMode.Exact:
-					return s => s.Notes == query;
+					return s => s.Notes != null && s.Notes == query;
 				case NameMatchMode.Partial:
-					return s => s.Notes.Contains(query);
+					return s => s.Notes != null && s.Notes.Contains(query);
 				case NameMatchMode.StartsWith:
-					return s => s.Notes.StartsWith(query);
+					return s => s.Notes != null && s.Notes.StartsWith(query);
 				case NameMatchMode.Words:
 					// Note: NHibernate does not support All
-					return textQuery.Words.Aggregate(PredicateBuilder.True<SongInList>(), (nameExp, name) => nameExp.And(song => song.Notes.Contains(name)));
+					return textQuery.Words.Aggregate(PredicateBuilder.True<SongInList>(), (nameExp, name) => nameExp.And(song => song.Notes != null && song.Notes.Contains(name)));
 			}
 
 			return m => true;

@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 
@@ -16,7 +16,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public SearchTextQuery TextQuery { get; set; }
 
-		public PagingProperties Paging { get; set; }
+		public PagingProperties Paging { get; set; } = new PagingProperties(0, 30, true);
 
 		public PVServices? PVServices { get; set; }
 
