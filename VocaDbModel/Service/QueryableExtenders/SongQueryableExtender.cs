@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -9,9 +8,9 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Search;
-using VocaDb.Model.Service.Search.AlbumSearch;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
 	public static class SongQueryableExtender {
 
@@ -157,52 +156,6 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		public static IQueryable<Song> WhereHasName(this IQueryable<Song> query, IEnumerable<SearchTextQuery> names) {
 			return query.WhereHasNameGeneric<Song, SongName>(names);
-		}
-
-		/// <summary>
-		/// Filters a song link query by a name query.
-		/// </summary>
-		/// <param name="query">Song query. Cannot be null.</param>
-		/// <param name="nameFilter">Name filter string. If null or empty, no filtering is done.</param>
-		/// <param name="matchMode">Desired mode for matching names.</param>
-		/// <param name="words">
-		/// List of words for the words search mode. 
-		/// Can be null, in which case the words list will be parsed from <paramref name="nameFilter"/>.
-		/// </param>
-		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<T> WhereChildHasName<T>(this IQueryable<T> query, SearchTextQuery textQuery) where T : ISongLink {
-
-			if (textQuery.IsEmpty)
-				return query;
-
-			var nameFilter = textQuery.Query;
-
-			switch (textQuery.MatchMode) {
-				case NameMatchMode.Exact:
-					return query.Where(m => m.Song.Names.Names.Any(n => n.Value == nameFilter));
-
-				case NameMatchMode.Partial:
-					return query.Where(m => m.Song.Names.Names.Any(n => n.Value.Contains(nameFilter)));
-
-				case NameMatchMode.StartsWith:
-					return query.Where(m => m.Song.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
-
-				case NameMatchMode.Words:
-					var words = textQuery.Words;
-
-					Expression<Func<T, bool>> exp = (q => q.Song.Names.Names.Any(n => n.Value.Contains(words[0])));
-
-					foreach (var word in words.Skip(1).Take(10)) {
-						var temp = word;
-						exp = exp.And((q => q.Song.Names.Names.Any(n => n.Value.Contains(temp))));
-					}
-
-					return query.Where(exp);
-
-			}
-
-			return query;
-
 		}
 
 		public static IQueryable<Song> WhereCreateDateIsWithin(this IQueryable<Song> criteria, TimeSpan timeFilter) {
