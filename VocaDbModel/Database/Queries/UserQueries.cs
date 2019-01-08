@@ -1402,7 +1402,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.GroupId = UserGroupId.Limited;
 
-			}, PermissionToken.RemoveEditPermission, PermissionContext);
+				session.AuditLogger.AuditLog(string.Format("updated user {0} by removing edit permissions", EntryLinkFactory.CreateEntryLink(user)));
+
+			}, PermissionToken.RemoveEditPermission, PermissionContext, skipLog: true);
 
 		}
 
