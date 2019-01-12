@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -103,7 +104,7 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		public static IQueryable<Song> WhereHasArtistParticipationStatus(this IQueryable<Song> query, 
 			ArtistParticipationQueryParams queryParams,
-			Func<int, Artist> artistGetter) {
+			IEntityLoader<Artist> artistGetter) {
 
 			var various = Model.Helpers.ArtistHelper.VariousArtists;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;

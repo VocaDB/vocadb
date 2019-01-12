@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Search;
@@ -86,7 +86,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (participation == ArtistAlbumParticipationStatus.Everything)
 				return WhereHasArtist<TEntry, TArtistLink>(query, artistId, childVoicebanks, queryParams.IncludeMembers);
 
-			var artist = artistGetter(artistId);
+			var artist = artistGetter.Load(artistId);
 			var musicProducerTypes = new[] {ArtistType.Producer, ArtistType.Circle, ArtistType.OtherGroup};
 
 			if (musicProducerTypes.Contains(artist.ArtistType)) {

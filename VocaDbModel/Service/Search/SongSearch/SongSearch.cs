@@ -34,9 +34,9 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			textQuery = ProcessAdvancedSearch(textQuery, queryParams);
 
 			var query = Query<Song>()
-				.Where(s => !s.Deleted)
+				.WhereNotDeleted()
 				.WhereHasName(textQuery)
-				.WhereHasArtistParticipationStatus(queryParams.ArtistParticipation, id => querySource.Load<Artist>(id))
+				.WhereHasArtistParticipationStatus(queryParams.ArtistParticipation, querySource.OfType<Artist>())
 				.WhereHasArtists<Song, ArtistForSong>(queryParams.ArtistNames)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasType(queryParams.SongTypes)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
@@ -28,7 +28,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 				.WhereIsDeleted(queryParams.Deleted)
 				.WhereHasName(textQuery, allowCatNum: true)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
-				.WhereHasArtistParticipationStatus(queryParams.ArtistParticipation, artistIds, id => querySource.Load<Artist>(id))
+				.WhereHasArtistParticipationStatus(queryParams.ArtistParticipation, artistIds, querySource.OfType<Artist>())
 				.WhereHasBarcode(queryParams.Barcode)
 				.WhereHasType(queryParams.AlbumType)
 				.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)

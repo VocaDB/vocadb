@@ -44,31 +44,13 @@ namespace VocaDb.Model.Database.Repositories {
 	/// 
 	/// This might change later with Session Per Request model.
 	/// </remarks>
-	public interface IDatabaseContext<T> : IDatabaseContext {
+	public interface IDatabaseContext<T> : IDatabaseContext, IEntityLoader<T> {
 
 		/// <summary>
 		/// Deletes an entity from the repository.
 		/// </summary>
 		/// <param name="entity">Entity to be deleted. Cannot be null.</param>
 		void Delete(T entity);
-
-		/// <summary>
-		/// Loads an entity from the repository, checking whether the entity exists.
-		/// </summary>
-		/// <param name="id">Entity Id.</param>
-		/// <returns>The loaded entity. Null if not found.</returns>
-		T Get(object id);
-
-		/// <summary>
-		/// Loads an entity from the repository, assuming the entity exists.
-		/// </summary>
-		/// <param name="id">Entity Id.</param>
-		/// <returns>The loaded entity. Cannot be null.</returns>
-		/// <remarks>
-		/// This method returns a proxy that will be loaded when it's first accessed. 
-		/// Accessing the proxy throws a NHibernate exception if the entity is not found.
-		/// </remarks>
-		T Load(object id);
 
 		/// <summary>
 		/// Loads an entity from the repository, assuming the entity exists.
