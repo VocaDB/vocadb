@@ -4,6 +4,14 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2019_01_17_2200)]
+	public class AuditLogEntryEntryLink : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("EntryId").OnTable(TableNames.AuditLogEntries).AsInt32().NotNullable().WithDefaultValue(0);
+			Create.Column("EntryType").OnTable(TableNames.AuditLogEntries).AsString(20).Nullable();
+		}
+	}
+
 	[Migration(2018_11_03_2000)]
 	public class EventNameExtend : AutoReversingMigration {
 		public override void Up() {

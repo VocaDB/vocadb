@@ -1,4 +1,4 @@
-﻿namespace VocaDb.Migrations {
+namespace VocaDb.Migrations {
 
 	public static class TableNames {
 
@@ -19,6 +19,7 @@
 		public const string ArtistNames = nameof(ArtistNames);
 		public const string Artists = "Artists";
 		public const string ArtistTagUsages = "ArtistTagUsages";
+		public const string AuditLogEntries = nameof(AuditLogEntries);
 		public const string EntryReports = "EntryReports";
 		public const string EventNames = nameof(EventNames);
 		public const string EventSeriesNames = nameof(EventSeriesNames);

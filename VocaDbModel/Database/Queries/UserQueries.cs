@@ -1402,7 +1402,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.GroupId = UserGroupId.Limited;
 
-				session.AuditLogger.AuditLog(string.Format("updated user {0} by removing edit permissions", EntryLinkFactory.CreateEntryLink(user)));
+				session.AuditLogger.AuditLog(string.Format("updated user {0} by removing edit permissions", EntryLinkFactory.CreateEntryLink(user)), entryId: user.GlobalId);
 
 			}, PermissionToken.RemoveEditPermission, PermissionContext, skipLog: true);
 
@@ -1447,7 +1447,7 @@ namespace VocaDb.Model.Database.Queries {
 				user.Options.Poisoned = contract.Poisoned;
 				user.Options.Supporter = contract.Supporter;
 
-				session.AuditLogger.AuditLog(string.Format("updated user {0}", EntryLinkFactory.CreateEntryLink(user)));
+				session.AuditLogger.AuditLog(string.Format("updated user {0}", EntryLinkFactory.CreateEntryLink(user)), entryId: user.GlobalId);
 
 			}, PermissionToken.ManageUserPermissions, PermissionContext, skipLog: true);
 

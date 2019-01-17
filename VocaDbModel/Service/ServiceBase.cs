@@ -140,7 +140,7 @@ namespace VocaDb.Model.Service {
 
 			SysLog(doingWhat, who.Name);
 
-			var entry = new AuditLogEntry(who, doingWhat, category);
+			var entry = new AuditLogEntry(who, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
 
@@ -153,7 +153,7 @@ namespace VocaDb.Model.Service {
 			SysLog(doingWhat, who);
 
 			var agentLoginData = new AgentLoginData(who);
-			var entry = new AuditLogEntry(agentLoginData, doingWhat, category);
+			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
 
@@ -165,7 +165,7 @@ namespace VocaDb.Model.Service {
 
 			var agentLoginData = SessionHelper.CreateAgentLoginData(session, PermissionContext, user);
 			SysLog(doingWhat, agentLoginData.Name);
-			var entry = new AuditLogEntry(agentLoginData, doingWhat, category);
+			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
 

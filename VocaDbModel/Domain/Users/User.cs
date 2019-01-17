@@ -266,6 +266,8 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		public  virtual GlobalEntryId GlobalId => new GlobalEntryId(EntryType.User, Id);
+
 		public virtual bool HasPassword => !string.IsNullOrEmpty(Password);
 
 		public virtual int Id { get; set; }
