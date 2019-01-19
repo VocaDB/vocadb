@@ -56,7 +56,8 @@ a.extLink[href^="http://www.hmv.co.jp/"],
 a.extLink[href^="https://www.hmv.co.jp/"] {
   background: url("/Content/ExtIcons/hmv.png") no-repeat left 50%;
 }
-a.extLink[href^="https://www.instagram.com/"] {
+a.extLink[href^="https://www.instagram.com/"],
+a.extLink[href^="https://instagram.com/"] {
   background: url("/Content/ExtIcons/instagram.png") no-repeat left 50%;
 }
 a.extLink[href^="http://shop.melonbooks.co.jp/"],
