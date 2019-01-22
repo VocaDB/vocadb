@@ -82,6 +82,7 @@ module vdb.utils {
 			{ url: "utaulyrics.wikia.com/wiki/", desc: "UTAU Lyrics Wiki", cat: c.WebLinkCategory.Reference },
             { url: "www24.atwiki.jp/utauuuta/", desc: "UTAU Wiki (JP)", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.wikia.com/wiki/", desc: "UTAU Wiki", cat: c.WebLinkCategory.Reference },
+			{ url: "utau.fandom.com/wiki/", desc: "UTAU Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.wikidot.com/", desc: "UTAU wiki 2.0", cat: c.WebLinkCategory.Reference },
 			{ url: "utaite.wikia.com/", desc: "Utaite Wiki", cat: c.WebLinkCategory.Reference }, /* UtaiteDB */
             { url: "vgmdb.net/", desc: "VGMdb", cat: c.WebLinkCategory.Reference },
@@ -92,6 +93,7 @@ module vdb.utils {
 			{ url: "vocaloidlyrics.wikia.com/wiki/", desc: "Vocaloid Lyrics Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "vocaloidlyrics.fandom.com/wiki/", desc: "Vocaloid Lyrics Wiki", cat: c.WebLinkCategory.Reference },
             { url: "vocaloid.wikia.com/wiki/", desc: "Vocaloid Wiki", cat: c.WebLinkCategory.Reference },
+			{ url: "vocaloid.fandom.com/wiki/", desc: "Vocaloid Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "voiceroid.wikia.com/wiki/", desc: "Voiceroid Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "cevio.wikia.com/wiki/", desc: "CeVIO Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "alterego.wikia.com/wiki/", desc: "Alter/Ego Wiki", cat: c.WebLinkCategory.Reference },
