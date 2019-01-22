@@ -284,6 +284,7 @@ a.extLink[href^="http://youtu.be/"],
 a.extLink[href^="https://youtu.be/"] {
   background: url("/Content/youtube.png") no-repeat left 50%;
 }
-a.extLink[href^="http://vocaloid.wikia.com/wiki/"] {
+a.extLink[href^="http://vocaloid.wikia.com/wiki/"],
+a.extLink[href^="https://vocaloid.fandom.com/wiki/"] {
   background: url("/Content/ExtIcons/vocawiki.png") no-repeat left 50%;
 }
