@@ -184,6 +184,7 @@
     <Compile Include="Service\Search\SearchParserTests.cs" />
     <Compile Include="Service\Search\Tags\TagSearchTests.cs" />
     <Compile Include="Service\UserServiceTests.cs" />
+    <Compile Include="Service\VideoServices\SoundCloudIdTests.cs" />
     <Compile Include="Service\VideoServices\VideoServiceFileTests.cs" />
     <Compile Include="TestData\CreateEntry.cs" />
     <Compile Include="TestSupport\DatabaseContextAsRepositoryWrapper.cs" />

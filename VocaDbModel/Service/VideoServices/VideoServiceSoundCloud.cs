@@ -128,13 +128,19 @@ namespace VocaDb.Model.Service.VideoServices {
 	/// </summary>
 	public class SoundCloudId {
 
+		/// <summary>
+		/// Remove query string.
+		/// See https://github.com/VocaDB/vocadb/issues/459
+		/// </summary>
+		private string CleanUrl(string url) => url.Split('?')[0];
+
 		public SoundCloudId(string trackId, string soundCloudUrl) {
 
 			ParamIs.NotNullOrEmpty(() => trackId);
 			ParamIs.NotNullOrEmpty(() => soundCloudUrl);
 
 			TrackId = trackId;
-			SoundCloudUrl = soundCloudUrl;
+			SoundCloudUrl = CleanUrl(soundCloudUrl);
 
 		}
 
