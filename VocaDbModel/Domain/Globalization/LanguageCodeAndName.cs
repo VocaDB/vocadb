@@ -1,11 +1,11 @@
-﻿
+
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
 namespace VocaDb.Model.Domain.Globalization {
 
-	public struct LanguageCodeAndName {
+	public readonly struct LanguageCodeAndName {
 
 		public static LanguageCodeAndName[] Languages(IEnumerable<CultureInfo> cultures, string defaultName = null) {
 

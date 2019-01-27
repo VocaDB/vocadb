@@ -42,7 +42,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	}
 
-	public struct ArtistParticipationQueryParams<TEntry, TArtistLink> 
+	public readonly struct ArtistParticipationQueryParams<TEntry, TArtistLink> 
 		where TEntry : IEntryWithArtistLinks<TArtistLink> 
 		where TArtistLink : IArtistLinkWithRoles {
 		

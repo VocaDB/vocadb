@@ -1,4 +1,4 @@
-﻿
+
 using System.Linq;
 
 namespace VocaDb.Model.Service.Search {
@@ -6,7 +6,7 @@ namespace VocaDb.Model.Service.Search {
 	/// <summary>
 	/// Collection of integer entry IDs, with various helper methods.
 	/// </summary>
-	public struct EntryIdsCollection {
+	public readonly struct EntryIdsCollection {
 
 		public static implicit operator EntryIdsCollection(int[] ids) {
 			return new EntryIdsCollection(ids);
