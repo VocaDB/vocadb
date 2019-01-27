@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Domain.Songs {
@@ -31,11 +31,7 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <summary>
 		/// Track index on the album.
 		/// </summary>
-		public virtual TrackIndex Index {
-			get {
-				return new TrackIndex(DiscNumber, TrackNumber);
-			}
-		}
+		public virtual TrackIndex Index => new TrackIndex(DiscNumber, TrackNumber);
 
 		public virtual string Name { get; set; }
 
