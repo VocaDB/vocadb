@@ -161,7 +161,11 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Requires a text query. Does not support pagination.
 		/// This is mostly useful for autocomplete boxes.
 		/// </param>
-		/// <param name="deleted">Whether to search for deleted entries. If this is true, only deleted entries will be returned.</param>
+		/// <param name="deleted">
+		/// Whether to search for deleted entries.
+		/// If this is true, only deleted entries will be returned.
+		/// If this is false (default), deleted entries are not returned.
+		/// </param>
 		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Exact).</param>
 		/// <param name="fields">
 		/// Optional fields (optional). Possible values are artists, names, pvs, tags, tracks, webLinks.

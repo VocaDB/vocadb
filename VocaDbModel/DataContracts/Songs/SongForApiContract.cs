@@ -17,8 +17,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongForApiContract : IEntryBase {
 
-		bool IDeletableEntry.Deleted => false;
-
 		EntryType IEntryBase.EntryType => EntryType.Song;
 
 		public SongForApiContract() { }
@@ -32,6 +30,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			CreateDate = song.CreateDate;
 			DefaultName = song.DefaultName;
 			DefaultNameLanguage = song.Names.SortNames.DefaultLanguage;
+			Deleted = song.Deleted;
 			FavoritedTimes = song.FavoritedTimes;
 			Id = song.Id;
 			LengthSeconds = song.LengthSeconds;
@@ -136,6 +135,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public bool Deleted { get; set; }
 
 		/// <summary>
 		/// Number of times this song has been favorited.
