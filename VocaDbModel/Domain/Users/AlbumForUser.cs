@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Domain.Users {
 
@@ -27,7 +27,7 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		public virtual Album Album {
-			get { return album; }
+			get => album;
 			set {
 				ParamIs.NotNull(() => value);
 				album = value;
@@ -43,7 +43,7 @@ namespace VocaDb.Model.Domain.Users {
 		public virtual int Rating { get; set; }
 
 		public virtual User User {
-			get { return user; }
+			get => user;
 			set {
 				ParamIs.NotNull(() => value);
 				user = value;
@@ -74,13 +74,9 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public override bool Equals(object obj) {
-			return Equals(obj as AlbumForUser);
-		}
+		public override bool Equals(object obj) => Equals(obj as AlbumForUser);
 
-		public override int GetHashCode() {
-			return base.GetHashCode();
-		}
+		public override int GetHashCode() => base.GetHashCode();
 
 		public virtual void Move(Album target) {
 
@@ -97,9 +93,7 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public override string ToString() {
-			return string.Format("{0} for {1}", Album, User);
-		}
+		public override string ToString() => string.Format("{0} for {1}", Album, User);
 
 	}
 
