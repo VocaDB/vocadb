@@ -247,7 +247,8 @@ namespace VocaDb.Model.Database.Queries {
 						OwnedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
 						WishlistedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
 						CommentCount = a.Comments.Count,
-						Hits = a.Hits.Count
+						Hits = a.Hits.Count,
+						ReviewCount = a.Reviews.Count
 					})
 					.FirstOrDefault();
 
@@ -264,7 +265,8 @@ namespace VocaDb.Model.Database.Queries {
 					OwnedCount = stats.OwnedCount,
 					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,
-					Hits = stats.Hits
+					Hits = stats.Hits,
+					ReviewCount = stats.ReviewCount
 				};
 
 				if (user != null) {

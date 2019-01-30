@@ -145,6 +145,7 @@
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumReleaseContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumReviewContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumWithArchivedVersions.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumContract.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumReleaseContract.cs" />

@@ -17,6 +17,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
+using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
@@ -253,6 +254,13 @@ namespace VocaDb.Web.Controllers.Api {
 			AlbumOptionalFields fields = AlbumOptionalFields.None) {
 
 			return otherService.GetRecentAlbums(languagePreference, fields);
+
+		}
+
+		[Route("{id:int}/reviews")]
+		public IEnumerable<AlbumReviewContract> GetReviews(int id) {
+
+			return queries.HandleQuery(ctx => ctx.Load(id).Reviews.Select(review => new AlbumReviewContract(review, new GravatarUserIconFactory())).ToArray());
 
 		}
 

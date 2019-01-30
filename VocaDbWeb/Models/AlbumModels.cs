@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
@@ -63,6 +63,7 @@ namespace VocaDb.Web.Models {
 			PVs = contract.PVs;
 			RatingAverage = contract.RatingAverage;
 			RatingCount = contract.RatingCount;
+			ReviewCount = contract.ReviewCount;
 			Status = contract.Status;
 			Tags = contract.Tags;
 			TotalLength = contract.TotalLength;
@@ -211,6 +212,8 @@ namespace VocaDb.Web.Models {
 				return FullReleaseDate.HasValue && FullReleaseDate.Value <= DateTime.Now;
 			}
 		}
+
+		public int ReviewCount { get; set; }
 
 		public bool ShowProducerRoles {
 			get {

@@ -58,6 +58,7 @@
 		<li data-tab="Discussion">
 			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
 		</li>
+		<li><a href="#reviewsTab">Reviews (@Model.ReviewCount)</a></li>
 		<li><a href="#picturesTab">@ViewRes.EntryDetailsStrings.PicturesTab (@(Model.Pictures.Length + 1))</a></li>
 		<li><a href="@Url.Action("Related", "Album", new { id = Model.Id })">@R.DetailsStrings.RelatedAlbums</a></li>
 		<li><a href="#shareTab">@R.DetailsStrings.Share</a></li>
@@ -386,6 +387,10 @@
 
 	<div id="discussionTab" data-bind="with: comments">
 		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)
+	</div>
+	
+	<div id="reviewsTab">
+
 	</div>
 
 	<div id="picturesTab">

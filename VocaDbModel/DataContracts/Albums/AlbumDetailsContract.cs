@@ -94,6 +94,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public PVContract[] PVs { get; set; }
 
 		[DataMember]
+		public int ReviewCount { get; set; }
+
+		[DataMember]
 		public SongInAlbumContract[] Songs { get; set; }
 
 		[DataMember]
