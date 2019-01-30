@@ -40,6 +40,9 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual PurchaseStatus PurchaseStatus { get; set; }
 
+		/// <summary>
+		/// Rating score, 0-5 (0 = no rating).
+		/// </summary>
 		public virtual int Rating { get; set; }
 
 		public virtual User User {

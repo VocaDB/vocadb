@@ -9,6 +9,7 @@ namespace VocaDb.Migrations {
 		public const string AlbumsForUsers = "AlbumsForUsers";
 		public const string AlbumReleaseEvents = "AlbumReleaseEvents";
 		public const string AlbumReleaseEventSeries = "AlbumReleaseEventSeries";
+		public const string AlbumReviews = nameof(AlbumReviews);
 		public const string AlbumTagUsages = "AlbumTagUsages";
 		public const string ArchivedAlbumVersions = "ArchivedAlbumVersions";
 		public const string ArchivedArtistVersions = "ArchivedArtistVersions";

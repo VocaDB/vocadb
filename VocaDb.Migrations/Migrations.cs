@@ -4,6 +4,25 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2019_01_27_1700)]
+	public class AlbumReviews : AutoReversingMigration {
+		public override void Up() {
+			Create.Table(TableNames.AlbumReviews)
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Album").AsInt32().NotNullable().ForeignKey(TableNames.Albums, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("[Date]").AsDateTime().NotNullable()
+				.WithColumn("LanguageCode").AsString(8).NotNullable()
+				.WithColumn("Text").AsString(4000).NotNullable()
+				.WithColumn("Title").AsString(200).NotNullable()
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.Cascade);
+			Create.Index("UX_AlbumReviews").OnTable(TableNames.AlbumReviews)
+				.OnColumn("Album").Ascending()
+				.OnColumn("[User]").Ascending()
+				.OnColumn("LanguageCode").Ascending()
+				.WithOptions().Unique();			
+		}
+	}
+
 	[Migration(2019_01_17_2200)]
 	public class AuditLogEntryEntryLink : AutoReversingMigration {
 		public override void Up() {
