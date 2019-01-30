@@ -147,6 +147,38 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			return HandleTransaction(ctx => {
+
+				AlbumReview review = null;
+
+				if (contract.Id != 0) {
+					review = ctx.Load<AlbumReview>(contract.Id);
+				} else {
+					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.Album.Id == albumId && r.User.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
+				}
+
+				if (review == null) {
+					var album = ctx.Load<Album>(albumId);
+					review = new AlbumReview(album, ctx.OfType<User>().GetLoggedUser(PermissionContext), contract.Title, contract.Text, contract.LanguageCode);					
+					album.Reviews.Add(review);
+					ctx.Save(review);
+				} else {
+					review.LanguageCode = contract.LanguageCode;
+					review.Text = contract.Text;
+					review.Title = contract.Title;
+					ctx.Update(review);
+				}
+
+				return new AlbumReviewContract(review, userIconFactory);
+
+			});
+
+		}
+
 		public ArchivedAlbumVersion Archive(IDatabaseContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);

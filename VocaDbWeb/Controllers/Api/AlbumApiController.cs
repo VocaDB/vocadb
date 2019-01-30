@@ -264,6 +264,14 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Authorize]
+		[Route("{id:int}/reviews")]
+		public AlbumReviewContract PostReview(int id, AlbumReviewContract reviewContract) {
+
+			return queries.AddReview(id, reviewContract);
+
+		}
+
 		/// <summary>
 		/// Gets list of top rated albums, same as front page.
 		/// </summary>
