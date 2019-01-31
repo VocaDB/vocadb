@@ -22,6 +22,8 @@ module vdb.viewModels {
 
 		public personalDescription: SelfDescriptionViewModel;
 
+		public reviewsViewModel: AlbumReviewsViewModel;
+
 		public tagsEditViewModel: tags.TagsEditViewModel;
 
 		public tagUsages: tags.TagListViewModel;
@@ -82,6 +84,9 @@ module vdb.viewModels {
 
 			});
 
+			this.reviewsViewModel = new AlbumReviewsViewModel(repo, this.id);
+			this.reviewsViewModel.loadReviews();
+
         }
 
     }
@@ -125,6 +130,27 @@ module vdb.viewModels {
             this.formatString = ko.observable(formatString)
         }
 
-    }
+	}
+
+	export class AlbumReviewsViewModel {
+
+		constructor(private readonly albumRepository: rep.AlbumRepository, private readonly albumId: number) {
+
+		}
+
+		public async loadReviews() {
+			const reviews = await this.albumRepository.getReviews(this.albumId);
+			this.reviews(reviews);
+		}
+
+		public newReviewText = ko.observable("");
+
+		public newReviewTitle = ko.observable("");
+
+		public reviews = ko.observableArray<dc.albums.AlbumReviewContract>();
+
+		public writeReview = ko.observable(false);
+
+	}
 
 }

@@ -109,6 +109,16 @@ module vdb.repositories {
 
 		}
 
+		public async getReviews(albumId: number) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
+			const jqueryPromise = $.getJSON(url);
+
+			const promise = Promise.resolve(jqueryPromise);
+			return promise as Promise<dc.albums.AlbumReviewContract[]>;
+
+		}
+
 		public getTagSuggestions = (albumId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
 			$.getJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/tagSuggestions"), callback);
 		}

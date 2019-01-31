@@ -2449,6 +2449,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumReleaseContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumReviewContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForArtistContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Base\EntryWithTagUsagesContract.ts" />
