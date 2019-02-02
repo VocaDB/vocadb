@@ -40,16 +40,20 @@
 
 		<div class="media-body">
 			<div class="pull-right">
-				<img src="{{ '@Url.StaticResource("/img/languageFlags/")' + languageCode + '.png' }}" />
+				<img src="{{ '@Url.StaticResource("/img/languageFlags/")' + languageCode + '.png' }}" title="{{languageCode}}"/>
 				|
 				<span data-bind="timeAgo: date"></span>
 			</div>
 			<h3 class="media-heading">{{user.name}}</h3>
+			
+			<span data-bind="foreach: $parent.ratingStars($parent.getRatingForUser(user.id))">
+				<img data-bind="attr: { src: enabled ? '/Content/star.png' : '/Content/star_disabled.png' }" />
+			</span>
+
 			<h4 class="album-review-title" visible="{{title}}">{{title}}</h4>
 			
 			<!-- TODO: review score -->
-			<!-- TODO: markdown-->
-			<p>{{text}}</p>
+			<p data-bind="markdown: text"></p>
 		</div>
 	</div>
 </div>

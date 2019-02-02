@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Xml.Linq;
 using NLog;
 using NHibernate;
@@ -280,7 +280,7 @@ namespace VocaDb.Model.Service {
 					.UserCollections
 			        .Where(a => a.PurchaseStatus != PurchaseStatus.Nothing)
 					.OrderBy(u => u.User.Name)
-					.Select(u => new AlbumForUserContract(u, LanguagePreference, u.User.Options.PublicAlbumCollection)).ToArray());
+					.Select(u => new AlbumForUserContract(u, LanguagePreference, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
 
 		}
 

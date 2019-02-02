@@ -133,6 +133,16 @@ module vdb.repositories {
 			$.getJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/tagSuggestions"), callback);
 		}
 
+		public async getUserCollections(albumId: number) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/user-collections");
+			const jqueryPromise = $.getJSON(url);
+
+			const promise = Promise.resolve(jqueryPromise);
+			return promise as Promise<dc.AlbumForUserForApiContract[]>;
+
+		}
+
 		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), contract, callback, 'json');

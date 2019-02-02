@@ -17,7 +17,8 @@ namespace VocaDb.Model.DataContracts.Users {
 			ContentLanguagePreference languagePreference, 
 			IEntryThumbPersister thumbPersister,
 			AlbumOptionalFields fields,
-			bool shouldShowCollectionStatus) {
+			bool shouldShowCollectionStatus,
+			bool includeUser = false) {
 
 			Album = new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, fields, SongOptionalFields.None);
 			Rating = albumForUser.Rating;
@@ -25,6 +26,10 @@ namespace VocaDb.Model.DataContracts.Users {
 			if (shouldShowCollectionStatus) {
 				MediaType = albumForUser.MediaType;
 				PurchaseStatus = albumForUser.PurchaseStatus;
+			}
+
+			if (includeUser) {
+				User = new UserForApiContract(albumForUser.User);
 			}
 
 		}
@@ -50,6 +55,9 @@ namespace VocaDb.Model.DataContracts.Users {
 		/// </summary>
 		[DataMember]
 		public int Rating { get; set; }
+
+		[DataMember]
+		public UserForApiContract User { get; set; }
 
 	}
 

@@ -49,6 +49,7 @@ namespace VocaDb.Model.Database.Queries {
 	public class AlbumQueries : QueriesBase<IAlbumRepository, Album> {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
@@ -57,9 +58,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IPVParser pvParser;
 		private readonly IUserIconFactory userIconFactory;
 
-		private IEntryLinkFactory EntryLinkFactory {
-			get { return entryLinkFactory; }
-		}
+		private IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
 
 		private ArchivedSongVersion ArchiveSong(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
 
@@ -133,7 +132,7 @@ namespace VocaDb.Model.Database.Queries {
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
 			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
-			IFollowedArtistNotifier followedArtistNotifier)
+			IFollowedArtistNotifier followedArtistNotifier, IEntryThumbPersister entryThumbPersister)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -144,6 +143,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.enumTranslations = enumTranslations;
 			this.pvParser = pvParser;
 			this.followedArtistNotifier = followedArtistNotifier;
+			this.entryThumbPersister = entryThumbPersister;
 
 		}
 
@@ -179,11 +179,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public AlbumReviewContract[] GetReviews(int albumId, string languageCode) {
+		public async Task<IEnumerable<AlbumReviewContract>> GetReviews(int albumId, string languageCode) {
 
-			return HandleQuery(ctx => {
+			return await repository.HandleQueryAsync(async ctx => {
 
-				return ctx.Load(albumId).Reviews
+				var album = await ctx.LoadAsync(albumId);
+
+				return album.Reviews
 					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
 					.OrderBy(review => review.Date)
 					.Select(review => new AlbumReviewContract(review, userIconFactory))
@@ -192,6 +194,23 @@ namespace VocaDb.Model.Database.Queries {
 			});
 
 		}
+
+		public async Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int albumId, ContentLanguagePreference languagePreference) {
+
+			return await repository.HandleQueryAsync(async ctx => {
+
+				var album = await ctx.LoadAsync(albumId);
+
+				return album.UserCollections
+					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, entryThumbPersister, AlbumOptionalFields.None,
+						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection, 
+						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection))
+					.ToArray();
+
+			});
+
+		}
+
 		public ArchivedAlbumVersion Archive(IDatabaseContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);

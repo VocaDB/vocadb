@@ -10,6 +10,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
@@ -17,8 +18,6 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
-using VocaDb.Web.Code;
-using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -258,8 +257,13 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("{id:int}/reviews")]
-		public IEnumerable<AlbumReviewContract> GetReviews(int id, string languageCode = null) {
+		public Task<IEnumerable<AlbumReviewContract>> GetReviews(int id, string languageCode = null) {
 			return queries.GetReviews(id, languageCode);
+		}
+
+		[Route("{id:int}/user-collections")]
+		public Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int id, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+			return queries.GetUserCollections(id, languagePreference);
 		}
 
 		[Authorize]

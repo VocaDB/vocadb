@@ -154,9 +154,27 @@ module vdb.viewModels {
 			this.reviews.push(result);
 		}
 
+		public getRatingForUser(userId: number): number {
+			return _.chain(this.userRatings())
+				.filter(rating => rating.user && rating.user.id === userId && rating.rating)
+				.map(rating => rating.rating)
+				.take(1)
+				.value()
+				[0];
+		}
+
+		public ratingStars(userRating: number) {
+
+			var ratings = _.map([1, 2, 3, 4, 5], rating => { return { enabled: (Math.round(userRating) >= rating) } });
+			return ratings;
+
+		}
+
 		public async loadReviews() {
-			const reviews = await this.albumRepository.getReviews(this.albumId);
+			/*const reviews = await this.albumRepository.getReviews(this.albumId);*/
+			const [reviews, ratings] = await Promise.all([this.albumRepository.getReviews(this.albumId), this.albumRepository.getUserCollections(this.albumId)]);
 			this.reviews(reviews);
+			this.userRatings(ratings);
 		}
 
 		public languageCode = ko.observable("");
@@ -174,6 +192,8 @@ module vdb.viewModels {
 		public reviewAlreadySubmitted = ko.computed(() => {
 			return _.some(this.reviews(), review => review.user.id === this.loggedUserId && review.languageCode === this.languageCode());
 		});
+
+		private userRatings = ko.observableArray<dc.AlbumForUserForApiContract>();
 
 	}
 
