@@ -1,0 +1,34 @@
+@inherits VocaDb.Web.Code.VocaDbPage
+
+<!-- Viewmodel: AlbumReviewsViewModel -->
+
+<button data-bind="visible: !showCreateNewReview(), click: function() { showCreateNewReview(true); }" class="btn create-topic">
+	<i class="icon-comment"></i>
+	Write review
+</button>
+
+<form visible="{{showCreateNewReview}}" submit="{{createNewReview}}">
+	<label>Language</label>
+	<select>
+		<option>Choose</option>
+		<option>English</option>
+	</select>
+
+	<label>Title (optional)</label>
+	<input data-bind="textInput: newReviewTitle" type="text" class="input-xlarge" maxlength="200"/>
+
+	<label>Review</label>
+	<textarea data-bind="textInput: newReviewText" cols="60" rows="6" required></textarea>
+
+	<button type="submit" class="btn btn-primary">Post</button>
+</form>
+
+<div data-bind="foreach: reviews">
+	by @UserHelpers.IconAndNameKnockout("user.icon", "user.name")
+
+	<span>{{date}}</span><br />
+	<span>{{languageCode}}</span>
+	
+	<h2 visible="{{title}}">{{title}}</h2>
+	<p>{{text}}</p>
+</div>

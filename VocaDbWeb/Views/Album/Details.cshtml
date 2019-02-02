@@ -389,8 +389,8 @@
 		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)
 	</div>
 	
-	<div id="reviewsTab">
-
+	<div id="reviewsTab" data-bind="with: reviewsViewModel">
+		@{ Html.RenderPartial("Partials/_AlbumReviews"); }
 	</div>
 
 	<div id="picturesTab">
@@ -449,6 +449,7 @@
 		$(document).ready(function() {
 
 			moment.locale('@Culture');
+			ko.punches.enableAll();
 
 			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
 			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);

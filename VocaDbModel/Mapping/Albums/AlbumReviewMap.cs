@@ -6,7 +6,7 @@ namespace VocaDb.Model.Mapping.Albums {
 	public class AlbumReviewMap : ClassMap<AlbumReview> {
 		public AlbumReviewMap() {
 
-			Table("AlbumsForUsers");
+			Table("AlbumReviews");
 			Cache.ReadWrite();
 			Id(m => m.Id);
 

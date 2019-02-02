@@ -84,7 +84,7 @@ module vdb.viewModels {
 
 			});
 
-			this.reviewsViewModel = new AlbumReviewsViewModel(repo, this.id);
+			this.reviewsViewModel = new AlbumReviewsViewModel(repo, this.id, loggedUserId);
 			this.reviewsViewModel.loadReviews();
 
         }
@@ -134,8 +134,21 @@ module vdb.viewModels {
 
 	export class AlbumReviewsViewModel {
 
-		constructor(private readonly albumRepository: rep.AlbumRepository, private readonly albumId: number) {
+		constructor(private readonly albumRepository: rep.AlbumRepository, private readonly albumId: number, private readonly loggedUserId) {
 
+		}
+
+		public async createNewReview() {
+			this.reviews.push({
+				date: new Date().toLocaleDateString(),
+				languageCode: this.languageCode(),
+				text: this.newReviewText(),
+				title: this.newReviewTitle(),
+				user: { id: this.loggedUserId }
+			});
+			this.newReviewText("");
+			this.newReviewTitle("");
+			this.showCreateNewReview(false);
 		}
 
 		public async loadReviews() {
@@ -143,11 +156,15 @@ module vdb.viewModels {
 			this.reviews(reviews);
 		}
 
+		public languageCode = ko.observable("");
+
 		public newReviewText = ko.observable("");
 
 		public newReviewTitle = ko.observable("");
 
 		public reviews = ko.observableArray<dc.albums.AlbumReviewContract>();
+
+		public showCreateNewReview = ko.observable(false);
 
 		public writeReview = ko.observable(false);
 
