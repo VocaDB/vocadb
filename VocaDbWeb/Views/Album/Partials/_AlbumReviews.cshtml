@@ -1,3 +1,4 @@
+@using VocaDb.Model.Domain.Globalization
 @inherits VocaDb.Web.Code.VocaDbPage
 
 <!-- Viewmodel: AlbumReviewsViewModel -->
@@ -8,27 +9,38 @@
 </button>
 
 <form visible="{{showCreateNewReview}}" submit="{{createNewReview}}">
-	<label>Language</label>
-	<select>
-		<option>Choose</option>
-		<option>English</option>
-	</select>
+	<div>
+		<label>Language</label>
+		@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Choose"), "languageCode", cssClass: "input-xlarge", required: true)
 
-	<label>Title (optional)</label>
-	<input data-bind="textInput: newReviewTitle" type="text" class="input-xlarge" maxlength="200"/>
+		<div class="alert alert-danger" visible="{{reviewAlreadySubmitted}}">
+			You have already submitted a review in this language. Multiple reviews in the same language are not allowed.
+		</div>
 
-	<label>Review</label>
-	<textarea data-bind="textInput: newReviewText" cols="60" rows="6" required></textarea>
+		<label>Title (optional)</label>
+		<input data-bind="textInput: newReviewTitle" type="text" class="input-xlarge" maxlength="200"/>
 
-	<button type="submit" class="btn btn-primary">Post</button>
+		<label>Review</label>
+		@Helpers.MarkdownNotice()<br />
+		<textarea data-bind="textInput: newReviewText" class="input-xxlarge" cols="100" rows="6" maxlength="4000" required></textarea>
+		
+		<div>
+			<label>Preview</label>
+			<div data-bind="markdown: newReviewText"></div>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary" enabled="{{ !reviewAlreadySubmitted() }}">Post</button>
 </form>
 
 <div data-bind="foreach: reviews">
-	by @UserHelpers.IconAndNameKnockout("user.icon", "user.name")
+	<div class="album-review">
+		by @UserHelpers.IconAndNameKnockout("user.icon", "user.name")
 
-	<span>{{date}}</span><br />
-	<span>{{languageCode}}</span>
-	
-	<h2 visible="{{title}}">{{title}}</h2>
-	<p>{{text}}</p>
+		<span>{{date | formatDate: 'l'}}</span><br/>
+		<span>{{languageCode}}</span>
+
+		<h2 visible="{{title}}">{{title}}</h2>
+		<p>{{text}}</p>
+	</div>
 </div>

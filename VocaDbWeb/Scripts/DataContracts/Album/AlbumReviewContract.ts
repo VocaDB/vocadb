@@ -5,6 +5,8 @@ namespace vdb.dataContracts.albums {
 
 		date: string;
 
+		id?: number;
+
 		languageCode: string;
 
 		text: string;

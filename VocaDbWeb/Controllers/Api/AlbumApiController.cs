@@ -258,18 +258,14 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("{id:int}/reviews")]
-		public IEnumerable<AlbumReviewContract> GetReviews(int id) {
-
-			return queries.HandleQuery(ctx => ctx.Load(id).Reviews.Select(review => new AlbumReviewContract(review, new GravatarUserIconFactory())).ToArray());
-
+		public IEnumerable<AlbumReviewContract> GetReviews(int id, string languageCode = null) {
+			return queries.GetReviews(id, languageCode);
 		}
 
 		[Authorize]
 		[Route("{id:int}/reviews")]
 		public AlbumReviewContract PostReview(int id, AlbumReviewContract reviewContract) {
-
 			return queries.AddReview(id, reviewContract);
-
 		}
 
 		/// <summary>

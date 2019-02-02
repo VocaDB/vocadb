@@ -1,4 +1,4 @@
-﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper ArtistFilters(bool artistParticipationStatus) {
@@ -74,8 +74,8 @@
 	</div>
 }
 
-@helper DropdownList(Dictionary<string, string> items, string valueBinding, string cssClass = null) {
-	<select data-bind="value: @valueBinding" class="@cssClass">
+@helper DropdownList(Dictionary<string, string> items, string valueBinding, string cssClass = null, bool required = false) {
+	<select data-bind="value: @valueBinding" class="@cssClass" @Html.ConditionalAttribute(required, "required", string.Empty)>
 		@foreach (var item in items) {
 			<option value="@item.Key">@item.Value</option>
 		}

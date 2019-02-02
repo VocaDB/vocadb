@@ -33,6 +33,16 @@ module vdb.repositories {
 
 		}
 
+		public async createOrUpdateReview(albumId: number, reviewContract: dc.albums.AlbumReviewContract) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
+			const jqueryPromise = $.post(url, reviewContract, null, 'json');
+
+			const promise = Promise.resolve(jqueryPromise);
+			return promise as Promise<dc.albums.AlbumReviewContract>;
+
+		}
+
 		public createReport = (albumId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/Album/CreateReport"),

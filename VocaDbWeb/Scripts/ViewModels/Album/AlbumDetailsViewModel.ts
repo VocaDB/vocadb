@@ -139,16 +139,18 @@ module vdb.viewModels {
 		}
 
 		public async createNewReview() {
-			this.reviews.push({
+			const contract = {
 				date: new Date().toLocaleDateString(),
 				languageCode: this.languageCode(),
 				text: this.newReviewText(),
 				title: this.newReviewTitle(),
 				user: { id: this.loggedUserId }
-			});
+			};
 			this.newReviewText("");
 			this.newReviewTitle("");
 			this.showCreateNewReview(false);
+			const result = await this.albumRepository.createOrUpdateReview(this.albumId, contract);
+			this.reviews.push(result);
 		}
 
 		public async loadReviews() {
@@ -167,6 +169,10 @@ module vdb.viewModels {
 		public showCreateNewReview = ko.observable(false);
 
 		public writeReview = ko.observable(false);
+
+		public reviewAlreadySubmitted = ko.computed(() => {
+			return _.some(this.reviews(), review => review.user.id === this.loggedUserId && review.languageCode === this.languageCode());
+		});
 
 	}
 

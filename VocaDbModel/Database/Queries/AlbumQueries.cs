@@ -179,6 +179,18 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public AlbumReviewContract[] GetReviews(int albumId, string languageCode) {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Load(albumId).Reviews
+					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
+					.Select(review => new AlbumReviewContract(review, userIconFactory))
+					.ToArray();
+
+			});
+
+		}
 		public ArchivedAlbumVersion Archive(IDatabaseContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
