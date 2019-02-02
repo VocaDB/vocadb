@@ -149,6 +149,7 @@ module vdb.viewModels {
 			this.newReviewText("");
 			this.newReviewTitle("");
 			this.showCreateNewReview(false);
+			this.languageCode("");
 			const result = await this.albumRepository.createOrUpdateReview(this.albumId, contract);
 			this.reviews.push(result);
 		}

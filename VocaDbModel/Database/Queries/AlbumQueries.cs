@@ -185,6 +185,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				return ctx.Load(albumId).Reviews
 					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
+					.OrderBy(review => review.Date)
 					.Select(review => new AlbumReviewContract(review, userIconFactory))
 					.ToArray();
 

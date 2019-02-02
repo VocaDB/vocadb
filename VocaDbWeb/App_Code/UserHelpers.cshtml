@@ -1,4 +1,4 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
+@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
 @using Autofac.Integration.Mvc
 @using Microsoft.Web.Helpers
@@ -38,14 +38,25 @@ if (user != null) {
 	}
 }
 
+@helper IconAndLinkKnockout(string userBinding, string cssClass) {
+	<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(@(userBinding + ".name")) }" class="pull-left">
+		@ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: userBinding, size: 70)
+	</a>
+}
+
 @helper IconAndNameKnockout(string iconBinding, string nameBinding, int size = 20) {
 	@ProfileIconKnockout(iconBinding, size)
 	<span data-bind="text: @nameBinding"></span>
 }
 
-@helper IconAndNameLinkKnockout(int iconSize = 20) {
+@helper IconAndNameLinkKnockout(string userBinding, string cssClass = "", int iconSize = 20) {
 	@* Has to be one line because of Razor *@
-	<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout("$data.mainPicture != null ? $data.mainPicture.urlThumb : null", iconSize)<span data-bind="text: name"></span></a>
+	<a href="#" class="@cssClass" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout(userBinding + ".mainPicture != null ? " + userBinding + ".mainPicture.urlThumb : null", iconSize)<span data-bind="text: @(userBinding + ".name")"></span></a>
+}
+
+@helper IconAndNameLinkKnockout(int iconSize = 20, string cssClass = "") {
+	@* Has to be one line because of Razor *@
+	<a href="#" class="@cssClass" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout("$data.mainPicture != null ? $data.mainPicture.urlThumb : null", iconSize)<span data-bind="text: name"></span></a>
 }
 
 @helper IconNameAndTypeLinkKnockout(string groupResources, int iconSize = 20) {

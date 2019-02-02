@@ -1,4 +1,5 @@
 @using VocaDb.Model.Domain.Globalization
+@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage
 
 <!-- Viewmodel: AlbumReviewsViewModel -->
@@ -33,14 +34,22 @@
 	<button type="submit" class="btn btn-primary" enabled="{{ !reviewAlreadySubmitted() }}">Post</button>
 </form>
 
-<div data-bind="foreach: reviews">
-	<div class="album-review">
-		by @UserHelpers.IconAndNameKnockout("user.icon", "user.name")
+<div data-bind="foreach: reviews" class="album-reviews">
+	<div class="album-review media">
+		@UserHelpers.IconAndLinkKnockout("user", "pull-left")
 
-		<span>{{date | formatDate: 'l'}}</span><br/>
-		<span>{{languageCode}}</span>
-
-		<h2 visible="{{title}}">{{title}}</h2>
-		<p>{{text}}</p>
+		<div class="media-body">
+			<div class="pull-right">
+				<img src="{{ '@Url.StaticResource("/img/languageFlags/")' + languageCode + '.png' }}" />
+				|
+				<span data-bind="timeAgo: date"></span>
+			</div>
+			<h3 class="media-heading">{{user.name}}</h3>
+			<h4 class="album-review-title" visible="{{title}}">{{title}}</h4>
+			
+			<!-- TODO: review score -->
+			<!-- TODO: markdown-->
+			<p>{{text}}</p>
+		</div>
 	</div>
 </div>
