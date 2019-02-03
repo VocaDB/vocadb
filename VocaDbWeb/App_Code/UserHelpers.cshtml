@@ -25,19 +25,7 @@
 
 }
 
-@helper IconAndName(IUserWithEmail user, int size = 20) {
-	@ProfileIcon(user, size)
-	<span>@user.Name</span>
-}
-
-@helper IconAndName(IUserWithEmail user, string name, int size = 20) {
-if (user != null) {
-		@IconAndName(user, size)
-	} else {
-		@name
-	}
-}
-
+<!-- User icon inside anchor (no name) -->
 @helper IconAndLinkKnockout(string userBinding, string cssClass) {
 	<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(@(userBinding + ".name")) }" class="pull-left">
 		@ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: userBinding, size: 70)
@@ -47,11 +35,6 @@ if (user != null) {
 @helper IconAndNameKnockout(string iconBinding, string nameBinding, int size = 20) {
 	@ProfileIconKnockout(iconBinding, size)
 	<span data-bind="text: @nameBinding"></span>
-}
-
-@helper IconAndNameLinkKnockout(string userBinding, string cssClass = "", int iconSize = 20) {
-	@* Has to be one line because of Razor *@
-	<a href="#" class="@cssClass" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout(userBinding + ".mainPicture != null ? " + userBinding + ".mainPicture.urlThumb : null", iconSize)<span data-bind="text: @(userBinding + ".name")"></span></a>
 }
 
 @helper IconAndNameLinkKnockout(int iconSize = 20, string cssClass = "") {
@@ -66,24 +49,9 @@ if (user != null) {
 	</a>
 }
 
-@helper ProfileIcon(string url, int size = ImageHelper.UserThumbSize) {
-	if (!string.IsNullOrEmpty(url)) {
-		<div style="width: @(size)px; height: @(size)px; display: inline-block">
-			<img src="@url" alt="Icon" />
-		</div>
-	}
-}
-
-@helper ProfileIcon(IUserWithEmail user, int size = 80) {
-	if (user != null && !string.IsNullOrEmpty(user.Email)) {
-		<div style="width: @(size)px; height: @(size)px; display: inline-block">
-			@Gravatar.GetHtml(user.Email, size, scheme: RequestUrlScheme)
-		</div>
-	}
-}
-
-@helper ProfileIconKnockout(ImageSize imageSize = ImageSize.TinyThumb, string binding = "$data", int size = 0) {
-	@ProfileIconKnockout(binding + ".mainPicture != null ? " + binding + ".mainPicture." + GetImageSizeProperty(imageSize) + " : null", size > 0 ? size : ImageHelper.GetUserImageSizePx(imageSize))
+<!-- User name inside anchor -->
+@helper NameLinkKnockout(string userBinding) {
+	<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(@(userBinding + ".name")) }"><span data-bind="text: @(userBinding + ".name")"></span></a>
 }
 
 @helper ProfileIconKnockout(string binding, int size = 80) {
@@ -102,6 +70,40 @@ if (user != null) {
 		<i class="icon-heart"></i>
 		@SongVoteRatingNames.Favorite
 	</button>
+}
+
+
+@helper ProfileIcon(string url, int size = ImageHelper.UserThumbSize) {
+	if (!string.IsNullOrEmpty(url)) {
+		<div style="width: @(size)px; height: @(size)px; display: inline-block">
+			<img src="@url" alt="Icon" />
+		</div>
+	}
+}
+
+@helper IconAndName(IUserWithEmail user, int size = 20) {
+	@ProfileIcon(user, size)
+	<span>@user.Name</span>
+}
+
+@helper IconAndName(IUserWithEmail user, string name, int size = 20) {
+	if (user != null) {
+		@IconAndName(user, size)
+	} else {
+		@name
+	}
+}
+
+@helper ProfileIcon(IUserWithEmail user, int size = 80) {
+	if (user != null && !string.IsNullOrEmpty(user.Email)) {
+		<div style="width: @(size)px; height: @(size)px; display: inline-block">
+			@Gravatar.GetHtml(user.Email, size, scheme: RequestUrlScheme)
+		</div>
+	}
+}
+
+@helper ProfileIconKnockout(ImageSize imageSize = ImageSize.TinyThumb, string binding = "$data", int size = 0) {
+	@ProfileIconKnockout(binding + ".mainPicture != null ? " + binding + ".mainPicture." + GetImageSizeProperty(imageSize) + " : null", size > 0 ? size : ImageHelper.GetUserImageSizePx(imageSize))
 }
 
 @helper UserIconLink(IUserWithEmail user, int size = ImageHelper.UserTinyThumbSize) {

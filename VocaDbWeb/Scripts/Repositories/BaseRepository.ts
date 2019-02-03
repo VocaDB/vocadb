@@ -9,6 +9,12 @@ module vdb.repositories {
 			return date ? date.toISOString() : undefined;
 		}
 
+		protected async getJsonPromise<T>(url: string) {
+			const jqueryPromise = $.getJSON(url);
+			const promise = Promise.resolve(jqueryPromise);
+			return promise as Promise<T>;
+		}
+
 		// todo: protected
 		public languagePreferenceStr: string;
 

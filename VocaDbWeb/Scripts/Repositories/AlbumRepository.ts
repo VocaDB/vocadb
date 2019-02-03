@@ -122,10 +122,7 @@ module vdb.repositories {
 		public async getReviews(albumId: number) {
 
 			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
-			const jqueryPromise = $.getJSON(url);
-
-			const promise = Promise.resolve(jqueryPromise);
-			return promise as Promise<dc.albums.AlbumReviewContract[]>;
+			return await this.getJsonPromise<dc.albums.AlbumReviewContract[]>(url);
 
 		}
 
