@@ -157,6 +157,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (contract.Id != 0) {
 					review = ctx.Load<AlbumReview>(contract.Id);
+					if (!review.User.Equals(PermissionContext.LoggedUser)) {
+						PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+					}
 				} else {
 					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.Album.Id == albumId && r.User.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
 				}
@@ -174,6 +177,24 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				return new AlbumReviewContract(review, userIconFactory);
+
+			});
+
+		}
+
+		public void DeleteReview(int reviewId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			repository.HandleTransaction(ctx => {
+
+				var review = ctx.Load<AlbumReview>(reviewId);
+
+				if (!review.User.Equals(PermissionContext.LoggedUser)) {
+					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+				}
+
+				ctx.Delete(review);
 
 			});
 

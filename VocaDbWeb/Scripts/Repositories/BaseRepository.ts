@@ -5,14 +5,18 @@ module vdb.repositories {
 
 	export class BaseRepository {
 
+		protected handleJqueryPromise<T>(jqueryPromise: JQueryXHR) {
+			const promise = Promise.resolve(jqueryPromise);
+			return promise as Promise<T>;
+		}
+
 		protected getDate(date?: Date) {
 			return date ? date.toISOString() : undefined;
 		}
 
-		protected async getJsonPromise<T>(url: string) {
+		protected getJsonPromise<T>(url: string) {
 			const jqueryPromise = $.getJSON(url);
-			const promise = Promise.resolve(jqueryPromise);
-			return promise as Promise<T>;
+			return this.handleJqueryPromise<T>(jqueryPromise);
 		}
 
 		// todo: protected

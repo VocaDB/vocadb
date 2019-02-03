@@ -272,6 +272,12 @@ namespace VocaDb.Web.Controllers.Api {
 			return queries.AddReview(id, reviewContract);
 		}
 
+		[Authorize]
+		[Route("{id:int}/reviews/{reviewId:int}")]
+		public void DeleteReview(int reviewId) {
+			queries.DeleteReview(reviewId);
+		}
+
 		/// <summary>
 		/// Gets list of top rated albums, same as front page.
 		/// </summary>

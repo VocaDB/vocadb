@@ -33,13 +33,10 @@ module vdb.repositories {
 
 		}
 
-		public async createOrUpdateReview(albumId: number, reviewContract: dc.albums.AlbumReviewContract) {
+		public createOrUpdateReview(albumId: number, reviewContract: dc.albums.AlbumReviewContract) {
 
 			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
-			const jqueryPromise = $.post(url, reviewContract, null, 'json');
-
-			const promise = Promise.resolve(jqueryPromise);
-			return promise as Promise<dc.albums.AlbumReviewContract>;
+			return this.handleJqueryPromise<dc.albums.AlbumReviewContract>($.post(url, reviewContract, null, 'json'));
 
 		}
 
@@ -53,6 +50,13 @@ module vdb.repositories {
 		public deleteComment = (commentId: number, callback?: () => void) => {
 
 			$.ajax(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), { type: 'DELETE', success: callback });
+
+		}
+
+		public deleteReview(albumId: number, reviewId: number) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews/" + reviewId);
+			return this.handleJqueryPromise($.ajax(url, { type: 'DELETE' }));
 
 		}
 

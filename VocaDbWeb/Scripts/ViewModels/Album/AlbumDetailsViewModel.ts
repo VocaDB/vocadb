@@ -171,7 +171,6 @@ module vdb.viewModels {
 		}
 
 		public async loadReviews() {
-			/*const reviews = await this.albumRepository.getReviews(this.albumId);*/
 			const [reviews, ratings] = await Promise.all([this.albumRepository.getReviews(this.albumId), this.albumRepository.getUserCollections(this.albumId)]);
 			this.reviews(reviews);
 			this.userRatings(ratings);
