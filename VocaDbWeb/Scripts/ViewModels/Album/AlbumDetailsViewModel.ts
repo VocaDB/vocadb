@@ -84,7 +84,7 @@ module vdb.viewModels {
 
 			});
 
-			this.reviewsViewModel = new AlbumReviewsViewModel(repo, this.id, loggedUserId);
+			this.reviewsViewModel = new AlbumReviewsViewModel(repo, this.id, false, false, loggedUserId);
 			this.reviewsViewModel.loadReviews();
 
         }
@@ -134,8 +134,22 @@ module vdb.viewModels {
 
 	export class AlbumReviewsViewModel {
 
-		constructor(private readonly albumRepository: rep.AlbumRepository, private readonly albumId: number, private readonly loggedUserId) {
+		constructor(
+			private readonly albumRepository: rep.AlbumRepository,
+			private readonly albumId: number,
+			private readonly canDeleteAllComments: boolean,
+			private readonly canEditAllComments: boolean,
+			private readonly loggedUserId?: number) {
 
+		}
+
+		private canDeleteReview = (comment: dc.albums.AlbumReviewContract) => {
+			// If one can edit they can also delete
+			return (this.canDeleteAllComments || this.canEditAllComments || (comment.user && comment.user.id === this.loggedUserId));
+		}
+
+		private canEditReview = (comment: dc.albums.AlbumReviewContract) => {
+			return (this.canEditAllComments || (comment.user && comment.user.id === this.loggedUserId));
 		}
 
 		public async createNewReview() {
@@ -151,7 +165,15 @@ module vdb.viewModels {
 			this.showCreateNewReview(false);
 			this.languageCode("");
 			const result = await this.albumRepository.createOrUpdateReview(this.albumId, contract);
-			this.reviews.push(result);
+			this.reviews.push(new AlbumReviewViewModel(result, this.canDeleteReview(result), this.canEditReview(result)));
+		}
+
+		public deleteReview = (review: AlbumReviewViewModel) => {
+
+			this.reviews.remove(review);
+
+			this.albumRepository.deleteReview(this.albumId, review.id);
+
 		}
 
 		public getRatingForUser(userId: number): number {
@@ -172,7 +194,8 @@ module vdb.viewModels {
 
 		public async loadReviews() {
 			const [reviews, ratings] = await Promise.all([this.albumRepository.getReviews(this.albumId), this.albumRepository.getUserCollections(this.albumId)]);
-			this.reviews(reviews);
+			const reviewViewModels = _.map(reviews, review => new AlbumReviewViewModel(review, this.canDeleteReview(review), this.canEditReview(review)));
+			this.reviews(reviewViewModels);
 			this.userRatings(ratings);
 		}
 
@@ -182,17 +205,42 @@ module vdb.viewModels {
 
 		public newReviewTitle = ko.observable("");
 
-		public reviews = ko.observableArray<dc.albums.AlbumReviewContract>();
+		public reviews = ko.observableArray<AlbumReviewViewModel>();
 
 		public showCreateNewReview = ko.observable(false);
 
 		public writeReview = ko.observable(false);
 
 		public reviewAlreadySubmitted = ko.computed(() => {
-			return _.some(this.reviews(), review => review.user.id === this.loggedUserId && review.languageCode === this.languageCode());
+			return _.some(this.reviews(), review => review.user.id === this.loggedUserId && review.languageCode() === this.languageCode());
 		});
 
 		private userRatings = ko.observableArray<dc.AlbumForUserForApiContract>();
+
+	}
+
+	export class AlbumReviewViewModel {
+
+		constructor(contract: dc.albums.AlbumReviewContract, public canBeDeleted: boolean, public canBeEdited: boolean) {
+			this.date = new Date(contract.date);
+			this.id = contract.id;
+			this.languageCode = ko.observable(contract.languageCode);
+			this.text = ko.observable(contract.text);
+			this.title = ko.observable(contract.title);
+			this.user = contract.user;
+		}
+
+		public date: Date;
+
+		public id?: number;
+
+		public languageCode: KnockoutObservable<string>;
+
+		public text: KnockoutObservable<string>;
+
+		public title: KnockoutObservable<string>;
+
+		public user: dc.user.UserApiContract;
 
 	}
 

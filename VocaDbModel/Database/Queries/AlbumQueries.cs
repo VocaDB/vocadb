@@ -194,6 +194,7 @@ namespace VocaDb.Model.Database.Queries {
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 				}
 
+				review.Album.Reviews.Remove(review);
 				ctx.Delete(review);
 
 			});
