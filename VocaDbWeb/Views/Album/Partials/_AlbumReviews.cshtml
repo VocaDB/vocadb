@@ -43,6 +43,11 @@
 				<img src="{{ '@Url.StaticResource("/img/languageFlags/")' + languageCode + '.png' }}" title="{{languageCode}}" alt="{{languageCode}}"/>
 				|
 				<span data-bind="timeAgo: date"></span>
+				
+				<!-- ko if: $data.canBeEdited -->
+				@:&nbsp;&nbsp;
+				<a data-bind="click: function() { $parent.beginEditReview($data); }" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
+				<!-- /ko -->
 
 				<!-- ko if: $data.canBeDeleted -->
 				&nbsp;&nbsp;
@@ -56,10 +61,24 @@
 			<span data-bind="foreach: $parent.ratingStars($parent.getRatingForUser(user.id))">
 				<img data-bind="attr: { src: enabled ? '/Content/star.png' : '/Content/star_disabled.png' }" />
 			</span>
-
-			<h4 class="album-review-title" visible="{{title}}">{{title}}</h4>
 			
-			<p data-bind="markdown: text"></p>
+			<div data-bind="visible: $parent.editReviewModel() !== $data">
+				<h4 class="album-review-title" visible="{{title}}">{{title}}</h4>
+				<p data-bind="markdown: text"></p>
+			</div>
+			<form data-bind="visible: $parent.editReviewModel() === $data, submit: $parent.saveEditedReview">
+				
+				<label>Title (optional)</label>
+				<input data-bind="textInput: editedTitle" type="text" class="input-xlarge" maxlength="200"/>
+
+				<label>Review</label>
+				<textarea data-bind="textInput: editedText" rows="6" cols="100" maxlength="4000" class="input-xxlarge" required></textarea>
+
+				<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+				<button data-bind="click: $parent.cancelEditReview" class="btn">@ViewRes.SharedStrings.Cancel</button>
+			</form>
+
+			
 		</div>
 	</div>
 </div>

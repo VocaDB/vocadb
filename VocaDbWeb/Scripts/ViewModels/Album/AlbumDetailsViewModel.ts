@@ -143,6 +143,17 @@ module vdb.viewModels {
 
 		}
 
+		public beginEditReview = (review: AlbumReviewViewModel) => {
+
+			review.beginEdit();
+			this.editReviewModel(review);
+
+		}
+
+		public cancelEditReview = () => {
+			this.editReviewModel(null);
+		}
+
 		private canDeleteReview = (comment: dc.albums.AlbumReviewContract) => {
 			// If one can edit they can also delete
 			return (this.canDeleteAllComments || this.canEditAllComments || (comment.user && comment.user.id === this.loggedUserId));
@@ -192,12 +203,28 @@ module vdb.viewModels {
 
 		}
 
+		public saveEditedReview = () => {
+
+			if (!this.editReviewModel())
+				return;
+
+			this.editReviewModel().saveChanges();
+			var editedContract = this.editReviewModel().toContract();
+
+			this.albumRepository.createOrUpdateReview(this.albumId, editedContract);
+
+			this.editReviewModel(null);
+
+		}
+
 		public async loadReviews() {
 			const [reviews, ratings] = await Promise.all([this.albumRepository.getReviews(this.albumId), this.albumRepository.getUserCollections(this.albumId)]);
 			const reviewViewModels = _.map(reviews, review => new AlbumReviewViewModel(review, this.canDeleteReview(review), this.canEditReview(review)));
 			this.reviews(reviewViewModels);
 			this.userRatings(ratings);
 		}
+
+		public editReviewModel = ko.observable<AlbumReviewViewModel>(null);
 
 		public languageCode = ko.observable("");
 
@@ -230,7 +257,25 @@ module vdb.viewModels {
 			this.user = contract.user;
 		}
 
+		public beginEdit = () => {
+			this.editedTitle(this.title());
+			this.editedText(this.text());
+		}
+
+		public saveChanges = () => {
+			this.text(this.editedText());
+			this.title(this.editedTitle());
+		}
+
+		public toContract: () => dc.albums.AlbumReviewContract = () => {
+			return { date: this.date.toISOString(), id: this.id, languageCode: this.languageCode(), text: this.text(), title: this.title(), user: this.user };
+		}
+
 		public date: Date;
+
+		public editedTitle = ko.observable("");
+
+		public editedText = ko.observable("");
 
 		public id?: number;
 
