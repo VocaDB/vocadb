@@ -79,7 +79,8 @@ a.extLink[href^="http://www.play-asia.com/"],
 a.extLink[href^="https://www.play-asia.com/"] {
   background: url("/Content/ExtIcons/playasia.png") no-repeat left 50%;
 }
-a.extLink[href^="https://play.spotify.com/"] {
+a.extLink[href^="https://play.spotify.com/"],
+a.extLink[href^="https://open.spotify.com/"] {
   background: url("/Content/ExtIcons/spotify.png") no-repeat left 50%;
 }
 a.extLink[href^="http://www.lagoa.jp/"] {
