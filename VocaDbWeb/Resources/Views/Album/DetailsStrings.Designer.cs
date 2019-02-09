@@ -385,6 +385,15 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log in to post a review.
+        /// </summary>
+        public static string ReviewLoginToReview {
+            get {
+                return ResourceManager.GetString("ReviewLoginToReview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Post.
         /// </summary>
         public static string ReviewPost {
@@ -403,7 +412,7 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review.
+        ///   Looks up a localized string similar to Review (minimum 50 characters).
         /// </summary>
         public static string ReviewText {
             get {

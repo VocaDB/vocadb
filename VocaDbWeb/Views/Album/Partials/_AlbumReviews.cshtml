@@ -11,6 +11,8 @@
 		<i class="icon-comment"></i>
 		@Res.ReviewWrite
 	</button>
+} else {
+	<p>@Res.ReviewLoginToReview</p>
 }
 
 <form visible="{{showCreateNewReview}}" submit="{{createNewReview}}">
@@ -27,7 +29,7 @@
 
 		<label>@Res.ReviewText</label>
 		@Helpers.MarkdownNotice()<br />
-		<textarea data-bind="textInput: newReviewText" class="input-xxlarge" cols="100" rows="6" maxlength="4000" required></textarea>
+		<textarea data-bind="textInput: newReviewText" class="input-xxlarge" cols="100" rows="6" maxlength="4000" minlength="50" required></textarea>
 		
 		<div>
 			<label>@Res.ReviewPreview</label>

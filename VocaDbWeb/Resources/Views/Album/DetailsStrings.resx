@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -256,12 +256,15 @@
     <value>Preview</value>
   </data>
   <data name="ReviewText" xml:space="preserve">
-    <value>Review</value>
+    <value>Review (minimum 50 characters)</value>
   </data>
   <data name="ReviewTitle" xml:space="preserve">
     <value>Title (optional)</value>
   </data>
   <data name="ReviewWrite" xml:space="preserve">
     <value>Write review</value>
+  </data>
+  <data name="ReviewLoginToReview" xml:space="preserve">
+    <value>Log in to post a review</value>
   </data>
 </root>
