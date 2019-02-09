@@ -164,17 +164,20 @@ namespace VocaDb.Model.Database.Queries {
 					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.Album.Id == albumId && r.User.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
 				}
 
+				// Create
 				if (review == null) {
 					var album = ctx.Load<Album>(albumId);
 					review = new AlbumReview(album, ctx.OfType<User>().GetLoggedUser(PermissionContext), contract.Title, contract.Text, contract.LanguageCode);					
 					album.Reviews.Add(review);
 					ctx.Save(review);
-				} else {
+				} else { // Update
 					review.LanguageCode = contract.LanguageCode;
 					review.Text = contract.Text;
 					review.Title = contract.Title;
 					ctx.Update(review);
 				}
+
+				ctx.AuditLogger.AuditLog(string.Format("submitted review for {0}", entryLinkFactory.CreateEntryLink(review.Album)));
 
 				return new AlbumReviewContract(review, userIconFactory);
 
