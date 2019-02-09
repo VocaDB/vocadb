@@ -320,6 +320,11 @@ namespace VocaDb.Model.Service {
 				Created = t.Created
 			});
 
+			var albumReviews = session.Query<AlbumReview>().OrderByDescending(r => r.Date).Take(maxComments).ToArray();
+			var albumReviewsAsComments = albumReviews.Select(r => new AlbumComment(r.Album, r.Text, new AgentLoginData(r.User)) {
+				Created = r.Date
+			});
+
 			var combined = albumComments
 				.Concat(artistComments)
 				.Concat(songComments)
@@ -328,6 +333,7 @@ namespace VocaDb.Model.Service {
 				.Concat(discussionTopicsAsComments)
 				.Concat(tagComments)
 				.Concat(eventComments)
+				.Concat(albumReviewsAsComments)
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 				
