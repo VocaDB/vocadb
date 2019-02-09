@@ -145,6 +145,7 @@
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumReleaseContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumReviewContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumWithArchivedVersions.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumContract.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumReleaseContract.cs" />
@@ -472,6 +473,7 @@
     <Compile Include="Domain\Tags\TagTargetTypes.cs" />
     <Compile Include="Domain\Tags\TagWebLink.cs" />
     <Compile Include="Domain\TrashedEntry.cs" />
+    <Compile Include="Domain\Albums\AlbumReview.cs" />
     <Compile Include="Domain\Users\UserAuditEvent.cs" />
     <Compile Include="Domain\Users\ArtistForUser.cs" />
     <Compile Include="Domain\Users\EventForUser.cs" />
@@ -604,6 +606,7 @@
     <Compile Include="Mapping\Albums\AlbumMergeRecordMap.cs" />
     <Compile Include="Mapping\Albums\AlbumNameMap.cs" />
     <Compile Include="Mapping\Albums\AlbumPictureFileMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumReviewMap.cs" />
     <Compile Include="Mapping\Albums\AlbumTagUsageMap.cs" />
     <Compile Include="Mapping\Albums\AlbumTagVoteMap.cs" />
     <Compile Include="Mapping\Albums\AlbumWebLinkMap.cs" />

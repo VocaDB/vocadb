@@ -49,6 +49,7 @@ namespace VocaDb.Model.Database.Queries {
 	public class AlbumQueries : QueriesBase<IAlbumRepository, Album> {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
@@ -57,9 +58,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IPVParser pvParser;
 		private readonly IUserIconFactory userIconFactory;
 
-		private IEntryLinkFactory EntryLinkFactory {
-			get { return entryLinkFactory; }
-		}
+		private IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
 
 		private ArchivedSongVersion ArchiveSong(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
 
@@ -133,7 +132,7 @@ namespace VocaDb.Model.Database.Queries {
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
 			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
-			IFollowedArtistNotifier followedArtistNotifier)
+			IFollowedArtistNotifier followedArtistNotifier, IEntryThumbPersister entryThumbPersister)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -144,6 +143,93 @@ namespace VocaDb.Model.Database.Queries {
 			this.enumTranslations = enumTranslations;
 			this.pvParser = pvParser;
 			this.followedArtistNotifier = followedArtistNotifier;
+			this.entryThumbPersister = entryThumbPersister;
+
+		}
+
+		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			return HandleTransaction(ctx => {
+
+				AlbumReview review = null;
+
+				if (contract.Id != 0) {
+					review = ctx.Load<AlbumReview>(contract.Id);
+					if (!review.User.Equals(PermissionContext.LoggedUser)) {
+						PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+					}
+				} else {
+					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.Album.Id == albumId && r.User.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
+				}
+
+				if (review == null) {
+					var album = ctx.Load<Album>(albumId);
+					review = new AlbumReview(album, ctx.OfType<User>().GetLoggedUser(PermissionContext), contract.Title, contract.Text, contract.LanguageCode);					
+					album.Reviews.Add(review);
+					ctx.Save(review);
+				} else {
+					review.LanguageCode = contract.LanguageCode;
+					review.Text = contract.Text;
+					review.Title = contract.Title;
+					ctx.Update(review);
+				}
+
+				return new AlbumReviewContract(review, userIconFactory);
+
+			});
+
+		}
+
+		public void DeleteReview(int reviewId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			repository.HandleTransaction(ctx => {
+
+				var review = ctx.Load<AlbumReview>(reviewId);
+
+				if (!review.User.Equals(PermissionContext.LoggedUser)) {
+					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+				}
+
+				review.Album.Reviews.Remove(review);
+				ctx.Delete(review);
+
+			});
+
+		}
+
+		public async Task<IEnumerable<AlbumReviewContract>> GetReviews(int albumId, string languageCode) {
+
+			return await repository.HandleQueryAsync(async ctx => {
+
+				var album = await ctx.LoadAsync(albumId);
+
+				return album.Reviews
+					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
+					.OrderBy(review => review.Date)
+					.Select(review => new AlbumReviewContract(review, userIconFactory))
+					.ToArray();
+
+			});
+
+		}
+
+		public async Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int albumId, ContentLanguagePreference languagePreference) {
+
+			return await repository.HandleQueryAsync(async ctx => {
+
+				var album = await ctx.LoadAsync(albumId);
+
+				return album.UserCollections
+					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, entryThumbPersister, AlbumOptionalFields.None,
+						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection, 
+						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection))
+					.ToArray();
+
+			});
 
 		}
 
@@ -247,7 +333,8 @@ namespace VocaDb.Model.Database.Queries {
 						OwnedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
 						WishlistedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
 						CommentCount = a.Comments.Count,
-						Hits = a.Hits.Count
+						Hits = a.Hits.Count,
+						ReviewCount = a.Reviews.Count
 					})
 					.FirstOrDefault();
 
@@ -264,7 +351,8 @@ namespace VocaDb.Model.Database.Queries {
 					OwnedCount = stats.OwnedCount,
 					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,
-					Hits = stats.Hits
+					Hits = stats.Hits,
+					ReviewCount = stats.ReviewCount
 				};
 
 				if (user != null) {

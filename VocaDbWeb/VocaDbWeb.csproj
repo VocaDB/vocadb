@@ -2449,6 +2449,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumReleaseContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumReviewContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForArtistContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Base\EntryWithTagUsagesContract.ts" />
@@ -3494,6 +3495,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Album\Partials\_AlbumReviews.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\SeriesDetails.cshtml" />

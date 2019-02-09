@@ -238,6 +238,15 @@ body {
 .song-lyrics {
   white-space: pre-line;
 }
+.album-reviews {
+  margin-top: 20px;
+}
+.album-reviews .album-review {
+  margin-bottom: 30px;
+}
+.album-reviews .album-review-title {
+  margin-left: 0;
+}
 .razor-whitespace-fix {
   margin-left: -3px;
 }

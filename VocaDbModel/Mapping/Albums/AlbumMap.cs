@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 
@@ -81,6 +81,7 @@ namespace VocaDb.Model.Mapping.Albums {
 			HasMany(m => m.Identifiers).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.OtherArtists).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.PVs).Inverse().Cascade.AllDeleteOrphan();
+			HasMany(m => m.Reviews).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.UserCollections).Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).Table("AlbumWebLinks").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 

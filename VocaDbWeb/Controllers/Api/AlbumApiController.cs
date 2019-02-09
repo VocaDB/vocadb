@@ -10,6 +10,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
@@ -17,7 +18,6 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
-using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -254,6 +254,28 @@ namespace VocaDb.Web.Controllers.Api {
 
 			return otherService.GetRecentAlbums(languagePreference, fields);
 
+		}
+
+		[Route("{id:int}/reviews")]
+		public Task<IEnumerable<AlbumReviewContract>> GetReviews(int id, string languageCode = null) {
+			return queries.GetReviews(id, languageCode);
+		}
+
+		[Route("{id:int}/user-collections")]
+		public Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int id, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+			return queries.GetUserCollections(id, languagePreference);
+		}
+
+		[Authorize]
+		[Route("{id:int}/reviews")]
+		public AlbumReviewContract PostReview(int id, AlbumReviewContract reviewContract) {
+			return queries.AddReview(id, reviewContract);
+		}
+
+		[Authorize]
+		[Route("{id:int}/reviews/{reviewId:int}")]
+		public void DeleteReview(int reviewId) {
+			queries.DeleteReview(reviewId);
 		}
 
 		/// <summary>

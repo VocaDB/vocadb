@@ -134,6 +134,7 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Album/Details").Include(
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
