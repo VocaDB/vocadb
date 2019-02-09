@@ -149,7 +149,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract) {
 
-			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
 			return HandleTransaction(ctx => {
 
