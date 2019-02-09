@@ -84,7 +84,7 @@ module vdb.viewModels {
 
 			});
 
-			this.reviewsViewModel = new AlbumReviewsViewModel(repo, this.id, false, false, loggedUserId);
+			this.reviewsViewModel = new AlbumReviewsViewModel(repo, this.id, canDeleteAllComments, canDeleteAllComments, loggedUserId);
 			this.reviewsViewModel.loadReviews();
 
         }
