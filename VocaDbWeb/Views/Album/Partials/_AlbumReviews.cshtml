@@ -1,37 +1,38 @@
 @using VocaDb.Model.Domain.Globalization
 @using VocaDb.Web.Helpers
+@using Res = ViewRes.Album.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage
 
 <!-- Viewmodel: AlbumReviewsViewModel -->
 
 <button data-bind="visible: !showCreateNewReview(), click: function() { showCreateNewReview(true); }" class="btn create-topic">
 	<i class="icon-comment"></i>
-	Write review
+	@Res.ReviewWrite
 </button>
 
 <form visible="{{showCreateNewReview}}" submit="{{createNewReview}}">
 	<div>
-		<label>Language</label>
+		<label>@Res.ReviewLanguage</label>
 		@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Choose"), "languageCode", cssClass: "input-xlarge", required: true)
 
 		<div class="alert alert-danger" visible="{{reviewAlreadySubmitted}}">
-			You have already submitted a review in this language. Multiple reviews in the same language are not allowed.
+			@Res.ReviewAlreadySubmitted
 		</div>
 
-		<label>Title (optional)</label>
+		<label>@Res.ReviewTitle</label>
 		<input data-bind="textInput: newReviewTitle" type="text" class="input-xlarge" maxlength="200"/>
 
-		<label>Review</label>
+		<label>@Res.ReviewText</label>
 		@Helpers.MarkdownNotice()<br />
 		<textarea data-bind="textInput: newReviewText" class="input-xxlarge" cols="100" rows="6" maxlength="4000" required></textarea>
 		
 		<div>
-			<label>Preview</label>
+			<label>@Res.ReviewPreview</label>
 			<div data-bind="markdown: newReviewText"></div>
 		</div>
 	</div>
 
-	<button type="submit" class="btn btn-primary" enabled="{{ !reviewAlreadySubmitted() }}">Post</button>
+	<button type="submit" class="btn btn-primary" enabled="{{ !reviewAlreadySubmitted() }}">@Res.ReviewPost</button>
 </form>
 
 <div data-bind="foreach: reviews" class="album-reviews">

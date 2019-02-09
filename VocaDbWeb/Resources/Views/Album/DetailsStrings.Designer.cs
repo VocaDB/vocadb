@@ -19,7 +19,7 @@ namespace ViewRes.Album {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class DetailsStrings {
@@ -363,6 +363,69 @@ namespace ViewRes.Album {
         public static string Reset {
             get {
                 return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have already submitted a review in this language. Multiple reviews in the same language are not allowed..
+        /// </summary>
+        public static string ReviewAlreadySubmitted {
+            get {
+                return ResourceManager.GetString("ReviewAlreadySubmitted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string ReviewLanguage {
+            get {
+                return ResourceManager.GetString("ReviewLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post.
+        /// </summary>
+        public static string ReviewPost {
+            get {
+                return ResourceManager.GetString("ReviewPost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string ReviewPreview {
+            get {
+                return ResourceManager.GetString("ReviewPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review.
+        /// </summary>
+        public static string ReviewText {
+            get {
+                return ResourceManager.GetString("ReviewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title (optional).
+        /// </summary>
+        public static string ReviewTitle {
+            get {
+                return ResourceManager.GetString("ReviewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write review.
+        /// </summary>
+        public static string ReviewWrite {
+            get {
+                return ResourceManager.GetString("ReviewWrite", resourceCulture);
             }
         }
         
