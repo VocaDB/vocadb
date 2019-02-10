@@ -115,6 +115,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private void CreateReport(IDatabaseContext ctx, User reportedUser, string hostname, string notes) {
+			var report = new UserReport(reportedUser, UserReportType.Other, ctx.OfType<User>().GetLoggedUser(PermissionContext), hostname, notes);
+			ctx.Save(report);
+		}
+
 		private int[] GetFavoriteTagIds(IDatabaseContext<User> ctx, User user) {
 
 			/* 
@@ -1394,7 +1399,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void SetUserToLimited(int userId) {
+		public void SetUserToLimited(int userId, string reason, string hostname, bool createReport) {
 
 			repository.UpdateEntity<User, IDatabaseContext<User>>(userId, (session, user) => {
 
@@ -1402,7 +1407,12 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.GroupId = UserGroupId.Limited;
 
-				session.AuditLogger.AuditLog(string.Format("updated user {0} by removing edit permissions", EntryLinkFactory.CreateEntryLink(user)), entryId: user.GlobalId);
+				if (createReport) {
+					CreateReport(session, user, hostname, reason);
+				}
+
+				var reasonText = !string.IsNullOrEmpty(reason) ? " because " + reason : string.Empty;
+				session.AuditLogger.AuditLog(string.Format("updated user {0} by removing edit permissions{1}", EntryLinkFactory.CreateEntryLink(user), reasonText), entryId: user.GlobalId);
 
 			}, PermissionToken.RemoveEditPermission, PermissionContext, skipLog: true);
 
