@@ -184,7 +184,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private EntryWithCommentsContract[] GetRecentComments(ISession session) {
+		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session) {
 			
 			var cacheKey = string.Format("OtherService.RecentComments.{0}", LanguagePreference);
 			var item = (EntryWithCommentsContract[])cache.Get(cacheKey);
@@ -192,7 +192,7 @@ namespace VocaDb.Model.Service {
 			if (item != null)
 				return item;
 
-			item = GetRecentComments(session, 9);
+			item = await GetRecentCommentsAsync(session, 9);
 			cache.Add(cacheKey, item, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)));
 
 			return item;
@@ -293,34 +293,34 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private IEnumerable<Comment> GetComments<TEntry, TComment>(ISession session, int maxComments, bool checkDeleted) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames {
+		private async Task<List<Comment>> GetComments<TEntry, TComment>(ISession session, int maxComments, bool checkDeleted) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames {
 
 			var q = session.Query<TComment>();
 
 			if (checkDeleted)
 				q = q.Where(c => !c.EntryForComment.Deleted);
 
-			return q.OrderByDescending(c => c.Created).Take(maxComments).ToArray();
+			return await q.OrderByDescending(c => c.Created).Take(maxComments).Cast<Comment>().VdbToListAsync();
 
 		}
 
-		private EntryWithCommentsContract[] GetRecentComments(ISession session, int maxComments) {
+		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session, int maxComments) {
 
-			var albumComments = GetComments<Album, AlbumComment>(session, maxComments, true);
-			var artistComments = GetComments<Artist, ArtistComment>(session, maxComments, true);
-			var songComments = GetComments<Song, SongComment>(session, maxComments, true);
-			var discussionComments = GetComments<DiscussionTopic, DiscussionComment>(session, maxComments, true);
-			var songListComments = GetComments<SongList, SongListComment>(session, maxComments, false);
-			var tagComments = GetComments<Tag, TagComment>(session, maxComments, true);
-			var eventComments = GetComments<ReleaseEvent, ReleaseEventComment>(session, maxComments, true);
+			var albumComments = await GetComments<Album, AlbumComment>(session, maxComments, true);
+			var artistComments = await GetComments<Artist, ArtistComment>(session, maxComments, true);
+			var songComments = await GetComments<Song, SongComment>(session, maxComments, true);
+			var discussionComments = await GetComments<DiscussionTopic, DiscussionComment>(session, maxComments, true);
+			var songListComments = await GetComments<SongList, SongListComment>(session, maxComments, false);
+			var tagComments = await GetComments<Tag, TagComment>(session, maxComments, true);
+			var eventComments = await GetComments<ReleaseEvent, ReleaseEventComment>(session, maxComments, true);
 
 			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway
-			var discussionTopics = session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).ToArray();			
+			var discussionTopics = await session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).VdbToListAsync();			
 			var discussionTopicsAsComments = discussionTopics.Select(t => new DiscussionComment(t, t.Content, new AgentLoginData(t.Author, t.AuthorName ?? t.Author.Name)) {
 				Created = t.Created
 			});
 
-			var albumReviews = session.Query<AlbumReview>().OrderByDescending(r => r.Date).Take(maxComments).ToArray();
+			var albumReviews = await session.Query<AlbumReview>().OrderByDescending(r => r.Date).Take(maxComments).VdbToListAsync();
 			var albumReviewsAsComments = albumReviews.Select(r => new AlbumComment(r.Album, r.Text, new AgentLoginData(r.User)) {
 				Created = r.Date
 			});
@@ -451,7 +451,7 @@ namespace VocaDb.Model.Service {
 
 				var firstSongVote = (newSongs.Any() ? await session.Query<FavoriteSongForUser>().FirstOrDefaultAsync(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
-				var recentComments = GetRecentComments(session);
+				var recentComments = await GetRecentCommentsAsync(session);
 
 				var recentEvents = GetRecentEvents(session);
 
@@ -465,7 +465,7 @@ namespace VocaDb.Model.Service {
 
 		public IPRule[] GetIPRules() => HandleQuery(session => session.Query<IPRule>().ToArray());
 
-		public EntryWithCommentsContract[] GetRecentComments() => HandleQuery(session => GetRecentComments(session, 50));
+		public Task<EntryWithCommentsContract[]> GetRecentComments() => HandleQueryAsync(session => GetRecentCommentsAsync(session, 50));
 
 	}
 }

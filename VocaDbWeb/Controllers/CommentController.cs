@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
@@ -15,10 +16,10 @@ namespace VocaDb.Web.Controllers {
         //
         // GET: /Comment/
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
-			var comments = otherService.GetRecentComments();
+			var comments = await otherService.GetRecentComments();
 			return View(comments);
 
         }
