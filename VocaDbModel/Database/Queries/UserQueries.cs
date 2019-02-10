@@ -1407,12 +1407,14 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.GroupId = UserGroupId.Limited;
 
+				var reasonText = !string.IsNullOrEmpty(reason) ? ": " + reason : string.Empty;
+
 				if (createReport) {
-					CreateReport(session, user, hostname, reason);
+					CreateReport(session, user, hostname, string.Format("removed edit permissions{0}", reasonText));
 				}
 
-				var reasonText = !string.IsNullOrEmpty(reason) ? " because " + reason : string.Empty;
-				session.AuditLogger.AuditLog(string.Format("updated user {0} by removing edit permissions{1}", EntryLinkFactory.CreateEntryLink(user), reasonText), entryId: user.GlobalId);
+				var message = string.Format("updated user {0} by removing edit permissions{1}", EntryLinkFactory.CreateEntryLink(user), reasonText);
+				session.AuditLogger.AuditLog(message, entryId: user.GlobalId);
 
 			}, PermissionToken.RemoveEditPermission, PermissionContext, skipLog: true);
 

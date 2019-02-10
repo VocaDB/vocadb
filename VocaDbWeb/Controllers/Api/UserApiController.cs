@@ -838,5 +838,19 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		public class PostStatusLimitedModel {
+			public bool CreateReport { get; set; }
+			public string Reason { get; set; }
+		}
+
+		[Authorize]
+		[Route("{id:int}/status-limited")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PostStatusLimited(int id, [FromBody] PostStatusLimitedModel model) {
+
+			queries.SetUserToLimited(id, model.Reason, WebHelper.GetRealHost(Request), model.CreateReport);
+
+		}
+
 	}
 }

@@ -39,6 +39,14 @@ module vdb.viewModels.user {
 		public events = ko.observableArray<dc.ReleaseEventContract>([]);
 		public eventsType = ko.observable(cls.users.UserEventRelationshipType[cls.users.UserEventRelationshipType.Attending]);
 
+		public limitedUserViewModel = new DeleteEntryViewModel(notes => {
+			$.ajax(this.urlMapper.mapRelative("api/users/" + this.userId + "/status-limited"), {
+				type: 'POST', data: { reason: notes, createReport: true }, success: () => {
+					window.location.reload();
+				}
+			});
+		});
+
 		public initComments = () => {
 
 			this.comments.initComments();
@@ -118,7 +126,7 @@ module vdb.viewModels.user {
 		public songLists: UserSongListsViewModel;
 
 		constructor(
-			private userId: number,
+			private readonly userId: number,
 			private loggedUserId: number,
 			private lastLoginAddress: string,
 			private canEditAllComments: boolean,

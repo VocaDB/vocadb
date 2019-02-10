@@ -1,4 +1,4 @@
-﻿@using System.Globalization
+@using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Users;
 @using VocaDb.Model.Domain.Globalization
@@ -72,7 +72,7 @@
 	}
 	@if (Login.Manager.HasPermission(PermissionToken.RemoveEditPermission) && UserContext.LoggedUserId != Model.Id && Model.GroupId != UserGroupId.Limited && Model.Active && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
 		@Html.Raw("&nbsp;")
-		@Html.ActionLink(ViewRes.SharedStrings.SetToLimited, "SetToLimited", new { id = Model.Id }, new { id = "setToLimitedLink" });
+		<a href="" id="setToLimitedLink" data-bind="click: function() { limitedUserViewModel.show(); }">@ViewRes.SharedStrings.SetToLimited</a>
 	}
 	@if (Login.Manager.HasPermission(PermissionToken.DisableUsers) && UserContext.LoggedUserId != Model.Id && Model.Active) {
 		@Html.Raw("&nbsp;")
@@ -417,6 +417,8 @@
 @if (Login.CanManageUsers) {
 	<div id="sfsCheckDialog" title="StopForumSpam check"></div>
 }
+
+@EntryDetailsHelpers.EntryDeletePopupBase("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm")
 
 @section Head {
 	@Styles.Render("~/Scripts/jqwidgets27/styles/css")

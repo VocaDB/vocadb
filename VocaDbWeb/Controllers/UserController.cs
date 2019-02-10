@@ -858,14 +858,5 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		[Authorize]
-		public ActionResult SetToLimited(int id) {
-
-			Data.SetUserToLimited(id, string.Empty, WebHelper.GetRealHost(Request), false);
-
-			return RedirectToAction("Details", new { id });
-
-		}
-
 	}
 }
