@@ -43,7 +43,7 @@ namespace VocaDb.Web.Controllers.Api {
 	[RoutePrefix("api/users")]
 	public class UserApiController : ApiController {
 
-		private const int absoluteMax = 50;
+		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly UserMessageQueries messageQueries;
 		private readonly IUserPermissionContext permissionContext;

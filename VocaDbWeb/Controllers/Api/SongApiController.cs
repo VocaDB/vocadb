@@ -38,7 +38,7 @@ namespace VocaDb.Web.Controllers.Api {
 	public class SongApiController : ApiController {
 
 		private const int hourInSeconds = 3600;
-		private const int absoluteMax = 50;
+		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly OtherService otherService;
