@@ -5,9 +5,11 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web;
 using NHibernate;
+using NHibernate.Criterion;
 using NHibernate.Linq;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -23,6 +25,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -48,6 +51,7 @@ namespace VocaDb.Model.Database.Queries {
 	/// </summary>
 	public class AlbumQueries : QueriesBase<IAlbumRepository, Album> {
 
+		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
@@ -76,6 +80,26 @@ namespace VocaDb.Model.Database.Queries {
 
 		private AlbumMergeRecord GetMergeRecord(IDatabaseContext session, int sourceId) {
 			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
+		}
+
+		/// <summary>
+		/// Stats shared for all users. These are cached for 1 hour.
+		/// </summary>
+		private SharedAlbumStatsContract GetSharedAlbumStats(IDatabaseContext ctx, Album album) {
+
+			var key = string.Format("AlbumQueries.SharedAlbumStatsContract.{0}", album.Id);
+			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
+
+				var latestReview = album.LastReview;
+				var latestRatingScore = latestReview != null ? album.UserCollections.FirstOrDefault(uc => uc.User.Equals(latestReview.User)) : null;
+
+				return new SharedAlbumStatsContract {
+					ReviewCount = album.Reviews.Count,
+					LatestReview = latestReview != null ? new AlbumReviewContract(latestReview, userIconFactory) : null,
+					LatestReviewRatingScore = latestRatingScore?.Rating ?? 0
+				};
+			});
+
 		}
 
 		private ArtistForAlbum RestoreArtistRef(Album album, Artist artist, ArchivedArtistForAlbumContract albumRef) {
@@ -132,7 +156,7 @@ namespace VocaDb.Model.Database.Queries {
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
 			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
-			IFollowedArtistNotifier followedArtistNotifier, IEntryThumbPersister entryThumbPersister)
+			IFollowedArtistNotifier followedArtistNotifier, IEntryThumbPersister entryThumbPersister, ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -144,6 +168,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.pvParser = pvParser;
 			this.followedArtistNotifier = followedArtistNotifier;
 			this.entryThumbPersister = entryThumbPersister;
+			this.cache = cache;
 
 		}
 
@@ -337,7 +362,6 @@ namespace VocaDb.Model.Database.Queries {
 						WishlistedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
 						CommentCount = a.Comments.Count,
 						Hits = a.Hits.Count,
-						ReviewCount = a.Reviews.Count
 					})
 					.FirstOrDefault();
 
@@ -355,8 +379,7 @@ namespace VocaDb.Model.Database.Queries {
 					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits,
-					ReviewCount = stats.ReviewCount,
-					LatestReview = stats.ReviewCount > 0 && album.Reviews.Any() ? new AlbumReviewContract(album.LastReview, userIconFactory) : null
+					Stats = GetSharedAlbumStats(session, album)
 				};
 
 				if (user != null) {

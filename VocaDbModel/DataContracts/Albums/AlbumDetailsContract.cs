@@ -73,9 +73,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public CommentForApiContract[] LatestComments { get; set; }
 
 		[DataMember]
-		public AlbumReviewContract LatestReview { get; set; }
-
-		[DataMember]
 		public AlbumContract MergedTo { get; set; }
 
 		[DataMember]
@@ -97,10 +94,10 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public PVContract[] PVs { get; set; }
 
 		[DataMember]
-		public int ReviewCount { get; set; }
+		public SongInAlbumContract[] Songs { get; set; }
 
 		[DataMember]
-		public SongInAlbumContract[] Songs { get; set; }
+		public SharedAlbumStatsContract Stats { get; set; }
 
 		[DataMember]
 		public TagUsageForApiContract[] Tags { get; set; }
@@ -113,6 +110,20 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public int WishlistCount { get; set; }
+
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	public class SharedAlbumStatsContract {
+
+		[DataMember]
+		public AlbumReviewContract LatestReview { get; set; }
+
+		[DataMember]
+		public int LatestReviewRatingScore { get; set; }
+
+		[DataMember]
+		public int ReviewCount { get; set; }
 
 	}
 

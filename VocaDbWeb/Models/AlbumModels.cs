@@ -54,7 +54,8 @@ namespace VocaDb.Web.Models {
 			Hits = contract.Hits;
 			Id = contract.Id;
 			LatestComments = contract.LatestComments;
-			LatestReview = contract.LatestReview;
+			LatestReview = contract.Stats.LatestReview;
+			LatestReviewRatingScore = contract.Stats.LatestReviewRatingScore;
 			MergedTo = contract.MergedTo;
 			Name = contract.Name;
 			OwnedBy = contract.OwnedCount;
@@ -64,7 +65,7 @@ namespace VocaDb.Web.Models {
 			PVs = contract.PVs;
 			RatingAverage = contract.RatingAverage;
 			RatingCount = contract.RatingCount;
-			ReviewCount = contract.ReviewCount;
+			ReviewCount = contract.Stats.ReviewCount;
 			Status = contract.Status;
 			Tags = contract.Tags;
 			TotalLength = contract.TotalLength;
@@ -169,6 +170,8 @@ namespace VocaDb.Web.Models {
 		public CommentForApiContract[] LatestComments { get; set; }
 
 		public AlbumReviewContract LatestReview { get; set; }
+
+		public int LatestReviewRatingScore { get; set; }
 
 		public AlbumContract MergedTo { get; set; }
 

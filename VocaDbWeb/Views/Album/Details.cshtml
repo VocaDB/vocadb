@@ -400,6 +400,10 @@
 					<h3 class="media-heading">
 						@UserHelpers.UserLink(Model.LatestReview.User)
 					</h3>
+					
+					@if (Model.LatestReviewRatingScore > 0) {
+						@Helpers.Stars(Model.LatestReviewRatingScore, 5)
+					}
 
 					<div>
 						@if (!string.IsNullOrEmpty(Model.LatestReview.Title)) {
