@@ -355,7 +355,8 @@ namespace VocaDb.Model.Database.Queries {
 					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits,
-					ReviewCount = stats.ReviewCount
+					ReviewCount = stats.ReviewCount,
+					LatestReview = stats.ReviewCount > 0 && album.Reviews.Any() ? new AlbumReviewContract(album.LastReview, userIconFactory) : null
 				};
 
 				if (user != null) {

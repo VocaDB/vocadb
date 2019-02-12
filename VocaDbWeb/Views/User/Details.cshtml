@@ -219,12 +219,8 @@
 				<ul class="user-known-languages">
 				@foreach (var lang in Model.KnownLanguages) {
 					<li>
-						@if (!string.IsNullOrEmpty(lang.CultureCode)) {
-							<img src="@Url.StaticResource("/img/languageFlags/" + lang.CultureCode + ".png")" alt="@lang.CultureCode" title="@lang.CultureCode" />
-						} else {
-							<img src="@Url.StaticResource("/img/languageFlags/unknown.png")" alt="@InterfaceLanguageStrings.Other" title="@InterfaceLanguageStrings.Other" />
-						}
-						@GetLanguageName(lang) 
+						@HtmlHelpers.LanguageFlag(lang.CultureCode)
+						@GetLanguageName(lang)
 						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
 							@:(@Translate.UserLanguageProficiencyNames[lang.Proficiency])
 						}

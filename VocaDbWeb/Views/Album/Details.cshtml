@@ -58,7 +58,7 @@
 		<li data-tab="Discussion">
 			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
 		</li>
-		<li><a href="#reviewsTab">Reviews (@Model.ReviewCount)</a></li>
+		<li><a href="#reviewsTab">@ViewRes.Album.DetailsStrings.ReviewsTab (@Model.ReviewCount)</a></li>
 		<li><a href="#picturesTab">@ViewRes.EntryDetailsStrings.PicturesTab (@(Model.Pictures.Length + 1))</a></li>
 		<li><a href="@Url.Action("Related", "Album", new { id = Model.Id })">@R.DetailsStrings.RelatedAlbums</a></li>
 		<li><a href="#shareTab">@R.DetailsStrings.Share</a></li>
@@ -382,7 +382,40 @@
 		<p>
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
 		</p>
+		
+		@if (Model.LatestReview != null) {
+			<h3>@Res.LatestReview</h3>
 
+			<div class="media">
+				<a class="pull-left" href="@Url.UserDetails(Model.LatestReview.User)">
+					@UserHelpers.ProfileIcon(Model.LatestReview.User.MainPicture.UrlThumb, 70)
+				</a>
+
+				<div class="media-body">
+					<div class="pull-right">
+						@HtmlHelpers.LanguageFlag(Model.LatestReview.LanguageCode)
+						|
+						@VocaDb.Web.Code.TimeAgoStringBuilder.FormatTimeAgo(Model.LatestReview.Date)
+					</div>
+					<h3 class="media-heading">
+						@UserHelpers.UserLink(Model.LatestReview.User)
+					</h3>
+
+					<div>
+						@if (!string.IsNullOrEmpty(Model.LatestReview.Title)) {
+							<h4 class="album-review-title">@Model.LatestReview.Title</h4>
+						}
+
+						<p>@HtmlHelpers.FormatMarkdown(Model.LatestReview.Text)</p>
+					</div>
+				</div>
+			</div>
+
+			<p class="withMargin">
+				<a href="#" id="viewReviewsLink">@string.Format(Res.ViewAllReviews, Model.ReviewCount)</a>
+			</p>
+		}
+			
 	</div>
 
 	<div id="discussionTab" data-bind="with: comments">

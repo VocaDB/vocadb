@@ -1,4 +1,4 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
+@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers;
@@ -19,6 +19,14 @@
 @* Transforms Markdown-formatted text into HTML. The input will be sanitized for any HTML tags first. *@
 @helper FormatMarkdown(string text) {
 	@Html.Raw(MarkdownParser.GetHtml(text))
+}
+
+@helper LanguageFlag(string languageCode) {
+	if (!string.IsNullOrEmpty(languageCode)) {
+		 <img src="@Url.StaticResource("/img/languageFlags/" + languageCode + ".png")" alt="@languageCode" title="@languageCode" />
+	} else {
+		 <img src="@Url.StaticResource("/img/languageFlags/unknown.png")" alt="@VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other" title="@VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other" />
+	}
 }
 
 @helper MetaTag(string name, string content) {

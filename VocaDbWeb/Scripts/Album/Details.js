@@ -1,4 +1,4 @@
-﻿
+
 function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 
 	$("#addAlbumLink").button({ disabled: $("#addAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-star'} });
@@ -11,6 +11,10 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 	$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
 	$("#viewCommentsLink").click(function () {
 		$("#tabs").tabs("option", "active", 1);
+		return false;
+	});
+	$("#viewReviewsLink").click(function () {
+		$("#tabs").tabs("option", "active", 2);
 		return false;
 	});
 

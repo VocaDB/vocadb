@@ -267,4 +267,13 @@
   <data name="ReviewLoginToReview" xml:space="preserve">
     <value>Log in to post a review</value>
   </data>
+  <data name="LatestReview" xml:space="preserve">
+    <value>Latest review</value>
+  </data>
+  <data name="ReviewsTab" xml:space="preserve">
+    <value>Reviews</value>
+  </data>
+  <data name="ViewAllReviews" xml:space="preserve">
+    <value>View all reviews ({0})</value>
+  </data>
 </root>

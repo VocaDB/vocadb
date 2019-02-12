@@ -196,6 +196,15 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latest review.
+        /// </summary>
+        public static string LatestReview {
+            get {
+                return ResourceManager.GetString("LatestReview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Matching artists.
         /// </summary>
         public static string MatchingArtists {
@@ -412,6 +421,15 @@ namespace ViewRes.Album {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reviews.
+        /// </summary>
+        public static string ReviewsTab {
+            get {
+                return ResourceManager.GetString("ReviewsTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Review (minimum 50 characters).
         /// </summary>
         public static string ReviewText {
@@ -480,6 +498,15 @@ namespace ViewRes.Album {
         public static string UpdateCollection {
             get {
                 return ResourceManager.GetString("UpdateCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View all reviews ({0}).
+        /// </summary>
+        public static string ViewAllReviews {
+            get {
+                return ResourceManager.GetString("ViewAllReviews", resourceCulture);
             }
         }
         

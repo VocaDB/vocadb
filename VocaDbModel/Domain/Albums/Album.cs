@@ -222,6 +222,8 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
+		public virtual AlbumReview LastReview => Reviews.OrderByDescending(r => r.Date).FirstOrDefault();
+
 		public virtual TranslatedString TranslatedName {
 			get { return Names.SortNames; }
 		}
