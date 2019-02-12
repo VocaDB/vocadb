@@ -55,6 +55,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Advanced/less important statistics.
+		/// These are cached for 24 hours.
+		/// </summary>
 		private AdvancedArtistStatsContract GetAdvancedStats(IDatabaseContext<Artist> ctx, Artist artist) {
 			
 			if (artist.ArtistType != ArtistType.Producer)
@@ -81,6 +85,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Stats related to logged in user.
+		/// These stats are cached for 1 hour.
+		/// </summary>
 		private PersonalArtistStatsContract GetPersonalArtistStats(IDatabaseContext<Artist> ctx, Artist artist) {
 			
 			if (!PermissionContext.IsLoggedIn)
@@ -99,6 +107,9 @@ namespace VocaDb.Model.Database.Queries {
 			
 		}
 
+		/// <summary>
+		/// Stats shared for all users. These are cached for 1 hour.
+		/// </summary>
 		private SharedArtistStatsContract GetSharedArtistStats(IDatabaseContext<Artist> ctx, Artist artist) {
 			
 			var key = string.Format("ArtistQueries.SharedArtistStatsContract.{0}", artist.Id);
