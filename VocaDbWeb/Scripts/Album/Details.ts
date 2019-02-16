@@ -1,5 +1,10 @@
 
-function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
+function initAlbumDetailsPage(
+	albumId: number,
+	collectionRating: number,
+	saveStr,
+	urlMapper: vdb.UrlMapper,
+	viewModel: vdb.viewModels.AlbumDetailsViewModel) {
 
 	$("#addAlbumLink").button({ disabled: $("#addAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-star' } });
 	$("#updateAlbumLink").button({ disabled: $("#updateAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
@@ -39,8 +44,13 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 			vdb.functions.disableTabReload(ui.tab);
 		},
 		activate: function (event, ui) {
-			if (ui.newTab.data('tab') === "Discussion") {
-				viewModel.comments.initComments();
+			switch (ui.newTab.data('tab')) {
+				case "Discussion":
+					viewModel.comments.initComments();
+					break;
+				case "Reviews":
+					viewModel.reviewsViewModel.loadReviews();
+					break;
 			}
 		}
 	});

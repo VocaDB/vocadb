@@ -58,7 +58,9 @@
 		<li data-tab="Discussion">
 			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
 		</li>
-		<li><a href="#reviewsTab">@ViewRes.Album.DetailsStrings.ReviewsTab (@Model.ReviewCount)</a></li>
+		<li data-tab="Reviews">
+			<a href="#reviewsTab">@ViewRes.Album.DetailsStrings.ReviewsTab (@Model.ReviewCount)</a>
+		</li>
 		<li><a href="#picturesTab">@ViewRes.EntryDetailsStrings.PicturesTab (@(Model.Pictures.Length + 1))</a></li>
 		<li><a href="@Url.Action("Related", "Album", new { id = Model.Id })">@R.DetailsStrings.RelatedAlbums</a></li>
 		<li><a href="#shareTab">@R.DetailsStrings.Share</a></li>
@@ -517,7 +519,7 @@
 				canDeleteAllComments, formatString, @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
 			ko.applyBindings(viewModel);
 
-			initPage(@Model.Id, @Model.CollectionRating,
+			initAlbumDetailsPage(@Model.Id, @Model.CollectionRating,
 				"@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 
 		});

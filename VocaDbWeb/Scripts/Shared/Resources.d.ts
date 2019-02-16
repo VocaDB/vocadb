@@ -5,11 +5,8 @@ declare namespace vdb.resources {
 	var entryEdit: any;
 	var shared: any;
 	var song: any;
+	var album: { addedToCollection?: string; };
 
-}
-
-declare namespace vdb.resources.album {
-	export var addedToCollection: string;
 }
 
 declare namespace vdb.resources.albumDetails {

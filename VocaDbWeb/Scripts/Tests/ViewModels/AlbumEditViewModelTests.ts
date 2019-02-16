@@ -1,4 +1,4 @@
-﻿/// <reference path="../../typings/qunit/qunit.d.ts" />
+/// <reference path="../../typings/qunit/qunit.d.ts" />
 /// <reference path="../../Models/WebLinkCategory.ts" />
 /// <reference path="../TestSupport/FakeAlbumRepository.ts" />
 /// <reference path="../TestSupport/FakeSongRepository.ts" />
@@ -34,7 +34,9 @@ module vdb.tests.viewModels {
     var roles: { [key: string]: string; } = { Default: "Default", VoiceManipulator: "Voice manipulator" };
     var webLinkData = { category: "Official", description: "Youtube Channel", id: 123, url: "http://www.youtube.com/user/tripshots" };
     var data: dc.albums.AlbumForEditContract;
-	vdb.resources = { albumDetails: { download: "" }, albumEdit: { addExtraArtist: "" }, entryEdit: {}, shared: null, song: null };
+	vdb.resources = {
+		album: {}, albumDetails: { download: "" }, albumEdit: { addExtraArtist: "" }, entryEdit: {}, shared: null, song: null
+	};
 
     QUnit.module("AlbumEditViewModelTests", {
         setup: () => {
