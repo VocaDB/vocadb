@@ -96,7 +96,9 @@ namespace VocaDb.Model.Database.Queries {
 				return new SharedAlbumStatsContract {
 					ReviewCount = album.Reviews.Count,
 					LatestReview = latestReview != null ? new AlbumReviewContract(latestReview, userIconFactory) : null,
-					LatestReviewRatingScore = latestRatingScore?.Rating ?? 0
+					LatestReviewRatingScore = latestRatingScore?.Rating ?? 0,
+					OwnedCount = album.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
+					WishlistCount = album.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
 				};
 			});
 
@@ -358,8 +360,6 @@ namespace VocaDb.Model.Database.Queries {
 				var stats = session.Query<Album>()
 					.Where(a => a.Id == id)
 					.Select(a => new {
-						OwnedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
-						WishlistedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
 						CommentCount = a.Comments.Count,
 						Hits = a.Hits.Count,
 					})
@@ -375,8 +375,6 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imagePersister, pictureFilePersister, GetRatingFunc) {
-					OwnedCount = stats.OwnedCount,
-					WishlistCount = stats.WishlistedCount,
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits,
 					Stats = GetSharedAlbumStats(session, album)

@@ -58,7 +58,7 @@ namespace VocaDb.Web.Models {
 			LatestReviewRatingScore = contract.Stats.LatestReviewRatingScore;
 			MergedTo = contract.MergedTo;
 			Name = contract.Name;
-			OwnedBy = contract.OwnedCount;
+			OwnedBy = contract.Stats.OwnedCount;
 			PersonalDescriptionText = contract.PersonalDescriptionText;
 			PersonalDescriptionAuthor = contract.PersonalDescriptionAuthor;
 			Pictures = contract.Pictures;
@@ -72,7 +72,7 @@ namespace VocaDb.Web.Models {
 			UserHasAlbum = contract.AlbumForUser != null;
 			Version = contract.Version;
 			WebLinks = contract.WebLinks;
-			WishlistedBy = contract.WishlistCount;
+			WishlistedBy = contract.Stats.WishlistCount;
 			mime = contract.CoverPictureMime;
 
 			var songsByDiscs = contract.Songs.GroupBy(s => s.DiscNumber);

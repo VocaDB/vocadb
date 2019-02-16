@@ -79,9 +79,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public AlbumReleaseContract OriginalRelease { get; set; }
 
 		[DataMember]
-		public int OwnedCount { get; set; }
-
-		[DataMember]
 		public string PersonalDescriptionText { get; set; }
 
 		[DataMember]
@@ -108,9 +105,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
 
-		[DataMember]
-		public int WishlistCount { get; set; }
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
@@ -123,7 +117,13 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public int LatestReviewRatingScore { get; set; }
 
 		[DataMember]
+		public int OwnedCount { get; set; }
+
+		[DataMember]
 		public int ReviewCount { get; set; }
+
+		[DataMember]
+		public int WishlistCount { get; set; }
 
 	}
 
