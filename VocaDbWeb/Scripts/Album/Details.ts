@@ -1,11 +1,11 @@
 
 function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 
-	$("#addAlbumLink").button({ disabled: $("#addAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-star'} });
-	$("#updateAlbumLink").button({ disabled: $("#updateAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
-	$("#editAlbumLink").button({ disabled: $("#editAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
-	$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
-	$("#viewVersions").button({ icons: { primary: 'ui-icon-clock'} });
+	$("#addAlbumLink").button({ disabled: $("#addAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-star' } });
+	$("#updateAlbumLink").button({ disabled: $("#updateAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
+	$("#editAlbumLink").button({ disabled: $("#editAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
+	$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
+	$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
 	$("#downloadTags").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } })
 		.next().button({ text: false, icons: { primary: "ui-icon-triangle-1-s" } }).parent().buttonset();
 	$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
@@ -35,7 +35,7 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 	});
 
 	$("#tabs").tabs({
-		load: function(event, ui) {
+		load: function (event, ui) {
 			vdb.functions.disableTabReload(ui.tab);
 		},
 		activate: function (event, ui) {
@@ -45,27 +45,31 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 		}
 	});
 
-	$("#editCollectionDialog").dialog({ autoOpen: false, width: 320, modal: false, buttons: [{ text: saveStr, click: function () {
+	$("#editCollectionDialog").dialog({
+		autoOpen: false, width: 320, modal: false, buttons: [{
+			text: saveStr, click: function () {
 
-		$("#editCollectionDialog").dialog("close");
+				$("#editCollectionDialog").dialog("close");
 
-		var status = $("#collectionStatusSelect").val();
-		var mediaType = $("#collectionMediaSelect").val();
-		var rating = $("#collectionRating").jqxRating('getValue');
+				var status = $("#collectionStatusSelect").val();
+				var mediaType = $("#collectionMediaSelect").val();
+				var rating = $("#collectionRating").jqxRating('getValue');
 
-		$.post(urlMapper.mapRelative("/User/UpdateAlbumForUser"), { albumId: albumId, collectionStatus: status, mediaType: mediaType, rating: rating }, null);
+				$.post(urlMapper.mapRelative("/User/UpdateAlbumForUser"), { albumId: albumId, collectionStatus: status, mediaType: mediaType, rating: rating }, null);
 
-		if (status == "Nothing") {
-			$("#updateAlbumLink").hide();
-			$("#addAlbumLink").show();
-		} else {
-			$("#addAlbumLink").hide();
-			$("#updateAlbumLink").show();
-		}
+				if (status == "Nothing") {
+					$("#updateAlbumLink").hide();
+					$("#addAlbumLink").show();
+				} else {
+					$("#addAlbumLink").hide();
+					$("#updateAlbumLink").show();
+				}
 
-		vdb.ui.showSuccessMessage(vdb.resources.album.addedToCollection);
+				vdb.ui.showSuccessMessage(vdb.resources.album.addedToCollection);
 
-	}}]});
+			}
+		} as JQueryUI.ButtonOptions]
+	});
 
 	var addAlbumLink;
 	if ($("#addAlbumLink").is(":visible"))
@@ -90,7 +94,7 @@ function initPage(albumId, collectionRating, saveStr, urlMapper, viewModel) {
 	});
 
 	$("td.artistList a").vdbArtistToolTip();
-	
+
 	$("#userCollectionsPopup").dialog({ autoOpen: false, width: 400, position: { my: "left top", at: "left bottom", of: $("#statsLink") } });
 
 }

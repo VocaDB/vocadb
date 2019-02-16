@@ -1,5 +1,5 @@
 
-declare module vdb.resources {
+declare namespace vdb.resources {
 
 	var albumEdit: any;
 	var entryEdit: any;
@@ -8,7 +8,11 @@ declare module vdb.resources {
 
 }
 
-declare module vdb.resources.albumDetails {
+declare namespace vdb.resources.album {
+	export var addedToCollection: string;
+}
+
+declare namespace vdb.resources.albumDetails {
 
 	export var download: string;
 
