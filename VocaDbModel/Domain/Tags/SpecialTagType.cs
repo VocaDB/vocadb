@@ -8,7 +8,8 @@ namespace VocaDb.Model.Domain.Tags {
 		Free,
 		Instrumental,
 		Remix,
-		ShortVersion
+		ShortVersion,
+		OutOfScope
 
 	}
 

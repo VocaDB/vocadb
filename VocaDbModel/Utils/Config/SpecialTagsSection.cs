@@ -6,9 +6,7 @@ namespace VocaDb.Model.Utils.Config {
 
 	public class SpecialTagsSection : ConfigurationSection, ISpecialTags {
 
-		private int TagId(string name) {
-			return this.Properties.Contains(name) ? (int)this[name] : 0;
-		}
+		private int TagId(string name) => this.Properties.Contains(name) ? (int)this[name] : 0;
 
 		[ConfigurationProperty("changedLyrics")]
 		public int ChangedLyrics {
@@ -34,6 +32,12 @@ namespace VocaDb.Model.Utils.Config {
 		{
 			get { return TagId("instrumental"); }
 			set { this["instrumental"] = value; }
+		}
+
+		[ConfigurationProperty("outOfScope")]
+		public int OutOfScope {
+			get { return TagId("outOfScope"); }
+			set { this["outOfScope"] = value; }
 		}
 
 		[ConfigurationProperty("remix")]
@@ -63,6 +67,8 @@ namespace VocaDb.Model.Utils.Config {
 					return Remix;
 				case SpecialTagType.ShortVersion:
 					return ShortVersion;
+				case SpecialTagType.OutOfScope:
+					return OutOfScope;
 				default:
 					return 0;
 			}
