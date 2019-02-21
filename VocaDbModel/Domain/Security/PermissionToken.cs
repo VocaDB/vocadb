@@ -68,6 +68,7 @@ namespace VocaDb.Model.Domain.Security {
 		public static readonly PermissionToken ManageEventSeries =		New("cf39509b-b9c5-4efc-9b13-2743ffec9aac", "ManageEventSeries");
 		public static readonly PermissionToken ManageIPRules =			New("f125fe5b-6474-4d52-823f-955c7d19f7c8", "ManageIPRules");
 		public static readonly PermissionToken ManageUserPermissions =	New("c0eb147e-10f5-4fea-9b19-b412ef613479", "ManageUserPermissions");
+		public static readonly PermissionToken ManageTagMappings =		New("c93667a9-a270-486d-ab00-db3ff390dd83", nameof(ManageTagMappings));
 		public static readonly PermissionToken MergeEntries =			New("eb336a5b-8455-4048-bc3a-8003dc522dc5", "MergeEntries");
 		public static readonly PermissionToken MikuDbImport =			New("0b879c57-5eba-462a-b842-d9f7dd0befd8", "MikuDbImport");
 		public static readonly PermissionToken MoveToTrash =			New("99c333a2-ea0a-4a7b-91cb-ceef6f667389", "MoveToTrash");

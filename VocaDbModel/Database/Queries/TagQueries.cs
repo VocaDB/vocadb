@@ -775,7 +775,7 @@ namespace VocaDb.Model.Database.Queries {
 				return ctx.LoadEntry<Tag>(contract.Tag).CreateMapping(contract.SourceTag);
 			}
 
-			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+			PermissionContext.VerifyPermission(PermissionToken.ManageTagMappings);
 
 			HandleTransaction(ctx => {
 

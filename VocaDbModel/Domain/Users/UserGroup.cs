@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Security;
 
@@ -44,6 +44,7 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.EditAllSongLists, 
 			PermissionToken.LockEntries, 
 			PermissionToken.ManageIPRules, 
+			PermissionToken.ManageTagMappings,
 			PermissionToken.ManageUserPermissions, 
 			PermissionToken.MikuDbImport, 
 			PermissionToken.MoveToTrash, 
