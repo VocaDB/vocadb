@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
@@ -33,6 +33,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		/// <summary>
 		/// List of all tag usages. Cannot be null.
+		/// This property is mapped to database.
 		/// </summary>
 		public virtual ISet<T> Usages {
 			get { return tags; }
