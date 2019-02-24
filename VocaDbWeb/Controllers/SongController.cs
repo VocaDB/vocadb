@@ -524,7 +524,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult UpdateArtistString(int id) {
 
-			PermissionContext.VerifyPermission(PermissionToken.Admin);
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
 			queries.HandleTransaction(ctx => {
 				var song = ctx.Load(id);
@@ -542,7 +542,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult UpdateThumbUrl(int id) {
 
-			PermissionContext.VerifyPermission(PermissionToken.Admin);
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
 			queries.HandleTransaction(ctx => {
 				var song = ctx.Load(id);
