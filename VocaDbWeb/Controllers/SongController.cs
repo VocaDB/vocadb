@@ -533,6 +533,8 @@ namespace VocaDb.Web.Controllers
 				ctx.AuditLogger.SysLog("Updated artist string for " + song);
 			});
 
+			TempData.SetSuccessMessage("Artist string refreshed");
+
 			return RedirectToAction("Details", new { id });
 
 		}
@@ -548,6 +550,8 @@ namespace VocaDb.Web.Controllers
 				ctx.Update(song);
 				ctx.AuditLogger.SysLog("Updated thumbnail URL for " + song);
 			});
+
+			TempData.SetSuccessMessage("Thumbnail refreshed");
 
 			return RedirectToAction("Details", new { id });
 
