@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
@@ -79,6 +79,18 @@ namespace VocaDb.Tests.Service.VideoServices {
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
 			Assert.AreEqual(nicoThumb, result, "result");
+
+		}
+
+		[TestMethod]
+		public void GetThumbUrl_Disabled() {
+
+			originalWithThumb.Disabled = true;
+			var pvs = new[] { reprintWithThumb, originalWithThumb };
+
+			var result = VideoServiceHelper.GetThumbUrl(pvs);
+
+			Assert.AreEqual("reprint", result, "result");
 
 		}
 

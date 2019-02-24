@@ -81,10 +81,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (!pvs.Any())
 				return string.Empty;
 
-			var pv = pvs.FirstOrDefault(p => p.PVType == PVType.Original && !string.IsNullOrEmpty(p.ThumbUrl));
+			var pv = pvs.FirstOrDefault(p => p.PVType == PVType.Original && !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled);
 
 			if (pv == null)
-				pv = pvs.FirstOrDefault(p => p.PVType == PVType.Reprint && !string.IsNullOrEmpty(p.ThumbUrl));
+				pv = pvs.FirstOrDefault(p => p.PVType == PVType.Reprint && !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled);
 
 			if (pv == null)
 				pv = pvs.FirstOrDefault(p => p.PVType == PVType.Original);
@@ -110,13 +110,13 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var notNico = pvs.Where(p => p.Service != PVService.NicoNicoDouga).ToArray();
 
-			var pv = notNico.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl) && (p.PVType == PVType.Original || p.PVType == PVType.Reprint));
+			var pv = notNico.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl) && (p.PVType == PVType.Original || p.PVType == PVType.Reprint) && !p.Disabled);
 
 			if (pv == null)
-				pv = notNico.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl));
+				pv = notNico.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled);
 
 			if (pv == null)
-				pv = pvs.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl));
+				pv = pvs.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled);
 
 			if (pv == null)
 				pv = pvs.FirstOrDefault();
