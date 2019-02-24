@@ -65,6 +65,19 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 		}
 
+		[TestMethod]
+		public void GetThumbUrl_HasOtherWithThumb() {
+
+			originalWithThumb.ThumbUrl = string.Empty;
+			reprintWithThumb.PVType = PVType.Other;
+			var pvs = new[] { reprintWithThumb, originalWithThumb };
+
+			var result = VideoServiceHelper.GetThumbUrl(pvs);
+
+			Assert.AreEqual("reprint", result, "result");
+
+		}
+
 		/// <summary>
 		/// PV Id with default thumbnail path will be used as fallback when there's no PVs with thumbnail URL.
 		/// </summary>

@@ -68,11 +68,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static string GetThumbUrl(IPVWithThumbnail pv) {
-
-			return Services[pv.Service].GetThumbUrlById(pv.PVId);
-
-		}
+		public static string GetThumbUrl(IPVWithThumbnail pv) => Services[pv.Service].GetThumbUrlById(pv.PVId);
 
 		public static string GetThumbUrl<T>(IList<T> pvs) where T: class, IPVWithThumbnail {
 
@@ -81,16 +77,12 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (!pvs.Any())
 				return string.Empty;
 
-			var pv = pvs.FirstOrDefault(p => p.PVType == PVType.Original && !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled);
-
-			if (pv == null)
-				pv = pvs.FirstOrDefault(p => p.PVType == PVType.Reprint && !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled);
-
-			if (pv == null)
-				pv = pvs.FirstOrDefault(p => p.PVType == PVType.Original);
-
-			if (pv == null)
-				pv = pvs.FirstOrDefault();
+			var pv = pvs
+				.Where(p => !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled)
+				.OrderBy(p => (int)p.PVType)
+				.FirstOrDefault() ??
+					 pvs.FirstOrDefault(p => p.PVType == PVType.Original) ??
+			         pvs.FirstOrDefault();
 
 			return (pv != null ? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv)) : string.Empty);
 
