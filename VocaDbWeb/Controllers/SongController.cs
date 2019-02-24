@@ -537,6 +537,22 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		[Authorize]
+		public ActionResult UpdateThumbUrl(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			queries.HandleTransaction(ctx => {
+				var song = ctx.Load(id);
+				song.UpdateThumbUrl();
+				ctx.Update(song);
+				ctx.AuditLogger.SysLog("Updated thumbnail URL for " + song);
+			});
+
+			return RedirectToAction("Details", new { id });
+
+		}
+
 		public ActionResult Versions(int id = invalidId) {
 
 			if (id == invalidId)

@@ -67,6 +67,8 @@ module vdb.viewModels {
 
 		}
 
+		public maintenanceDialogVisible = ko.observable(false);
+
 		public originalVersion: KnockoutObservable<SongLinkWithUrl>;
 
 		public reportViewModel: ReportEntryViewModel;

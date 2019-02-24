@@ -105,8 +105,8 @@
 
 <a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 	
-@if (UserContext.HasPermission(PermissionToken.Admin)) {
-	<a data-bind="jqButton: { icon: 'ui-icon-wrench' }" href="@Url.Action("UpdateArtistString", new { id = Model.Id})">Update artist string</a>			 
+@if (UserContext.HasPermission(PermissionToken.AccessManageMenu)) {
+	<a data-bind="jqButton: { icon: 'ui-icon-wrench' }, click: function() { maintenanceDialogVisible(true); }" id="maintenanceActions" href="#">Maintenance actions</a>			 
 }
 	
 @Helpers.EntryStatusMessage(Model.Status)
@@ -512,6 +512,22 @@
 @{ Html.RenderPartial("Partials/_SongInListsDialog"); }
 
 @EntryDetailsHelpers.ReportEntryPopupKnockout()
+
+<div 
+	data-bind="
+		dialog: {
+			autoOpen: false, width: 400,
+			position: { my: 'left top', at: 'left bottom', of: $('#maintenanceActions') }
+		},
+		dialogVisible: maintenanceDialogVisible"
+	title="Maintenance actions" style="display: none;">
+	
+	<div>			
+		<p><a data-bind="jqButton" href="@Url.Action("UpdateArtistString", new { id = Model.Id})">Update artist string</a></p>
+		<p><a data-bind="jqButton" href="@Url.Action("UpdateThumbUrl", new { id = Model.Id})">Update thumbnail URL</a></p>
+	</div>
+
+</div>
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Song/Details")
