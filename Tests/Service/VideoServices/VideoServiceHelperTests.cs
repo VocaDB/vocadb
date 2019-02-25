@@ -108,6 +108,19 @@ namespace VocaDb.Tests.Service.VideoServices {
 		}
 
 		[TestMethod]
+		public void GetThumbUrl_OnlyDisabledWithThumb() {
+
+			originalWithThumb.ThumbUrl = string.Empty;
+			reprintWithThumb.Disabled = true;
+			var pvs = new[] { reprintWithThumb, originalWithThumb };
+
+			var result = VideoServiceHelper.GetThumbUrl(pvs);
+
+			Assert.AreEqual("reprint", result, "result");
+
+		}
+
+		[TestMethod]
 		public void GetThumbUrl_PreferNotNico() {
 
 			var pvs = new[] { reprintWithThumb, originalWithThumb };
