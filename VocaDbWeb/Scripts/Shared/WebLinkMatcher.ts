@@ -84,6 +84,7 @@ module vdb.utils {
 			{ url: "utau.wikia.com/wiki/", desc: "UTAU Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.fandom.com/wiki/", desc: "UTAU Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.wikidot.com/", desc: "UTAU wiki 2.0", cat: c.WebLinkCategory.Reference },
+			{ url: "utau.wiki/", desc: "UTAU wiki 2.0", cat: c.WebLinkCategory.Reference },
 			{ url: "utaite.wikia.com/", desc: "Utaite Wiki", cat: c.WebLinkCategory.Reference }, /* UtaiteDB */
             { url: "vgmdb.net/", desc: "VGMdb", cat: c.WebLinkCategory.Reference },
             { url: "vimeo.com/", desc: "Vimeo", cat: c.WebLinkCategory.Official },
@@ -96,6 +97,7 @@ module vdb.utils {
 			{ url: "vocaloid.fandom.com/wiki/", desc: "Vocaloid Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "voiceroid.wikia.com/wiki/", desc: "Voiceroid Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "cevio.wikia.com/wiki/", desc: "CeVIO Wiki", cat: c.WebLinkCategory.Reference },
+			{ url: "cevio.fandom.com/wiki/", desc: "CeVIO Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "alterego.wikia.com/wiki/", desc: "Alter/Ego Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "www.vocaloid.com/products/", desc: "VOCALOID SHOP (JPN)", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.vocaloid.com/en/products/", desc: "VOCALOID SHOP (ENG)", cat: c.WebLinkCategory.Commercial },
