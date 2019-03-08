@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using PiaproClient;
@@ -22,7 +23,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			});
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Piapro, result.Id,
-				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, string.Empty, string.Empty, result.LengthSeconds, uploadDate: result.Date, extendedMetadata: piaproMetadata));
+				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, result.AuthorId, string.Empty, result.LengthSeconds, uploadDate: result.Date, extendedMetadata: piaproMetadata));
 
 		}
 
@@ -39,6 +40,12 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
+		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
+			return new[] {
+				string.Format("http://piapro.jp/{0}", authorId),
+				string.Format("https://piapro.jp/{0}", authorId),
+			};
+		}
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
