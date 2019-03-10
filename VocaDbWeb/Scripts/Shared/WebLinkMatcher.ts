@@ -51,7 +51,9 @@ module vdb.utils {
             { url: "mikumikudance.wikia.com/wiki/", desc: "MikuMikuDance Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "mikumikudance.fandom.com/wiki/", desc: "MikuMikuDance Wiki", cat: c.WebLinkCategory.Reference },
             { url: "www5.atwiki.jp/hmiku/", desc: "MikuWiki", cat: c.WebLinkCategory.Reference },
+			{ url: "www.mixcloud.com/", desc: "Mixcloud", cat: c.WebLinkCategory.Official },
             { url: "mora.jp/", desc: "mora", cat: c.WebLinkCategory.Commercial },
+			{ url: "mqube.net/user/", desc: "MQube", cat: c.WebLinkCategory.Official },
             { url: "musicbrainz.org/", desc: "MusicBrainz", cat: c.WebLinkCategory.Reference },
 			{ url: "www.muzie.ne.jp/", desc: "Muzie", cat: c.WebLinkCategory.Official },
 			{ url: "myfigurecollection.net/", desc: "MyFigureCollection", cat: c.WebLinkCategory.Reference },
@@ -61,6 +63,7 @@ module vdb.utils {
             { url: "com.nicovideo.jp/community/", desc: "NND Community", cat: c.WebLinkCategory.Official },
             { url: "nicovideo.jp/mylist/", desc: "NND MyList", cat: c.WebLinkCategory.Official },
             { url: "nicovideo.jp/tag/", desc: "NND Tag", cat: c.WebLinkCategory.Reference },
+			{ url: "otoyapage.jp/user/", desc: "Otoya Page", cat: c.WebLinkCategory.Official },
 			{ url: "www.patreon.com/", desc: "Patreon", cat: c.WebLinkCategory.Official },
             { url: "piapro.jp/", desc: "Piapro", cat: c.WebLinkCategory.Official },
 			{ url: "www.poppro.cn/", desc: "Poppro", cat: c.WebLinkCategory.Official },
@@ -72,6 +75,7 @@ module vdb.utils {
 			{ url: "item.taobao.com/item.htm", desc: "Taobao", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.lagoa.jp/", desc: "THREE!", cat: c.WebLinkCategory.Commercial }, /* UtaiteDB */
 			{ url: "item.taobao.com", desc: "Taobao", cat: c.WebLinkCategory.Commercial },
+			{ url: "thwiki.cc/", desc: "THBWiki", cat: c.WebLinkCategory.Reference }, /* TouhouDB */
             { url: "toranoana.jp/mailorder/article/", desc: "Toranoana", cat: c.WebLinkCategory.Commercial },
 			{ url: "touhoudb.com/", desc: "TouhouDB", cat: c.WebLinkCategory.Reference },
 			{ url: "en.touhouwiki.net/wiki/", desc: "Touhou Wiki", cat: c.WebLinkCategory.Reference },
@@ -109,6 +113,7 @@ module vdb.utils {
 			{ url: "en.wikipedia.org/wiki/", desc: "Wikipedia (EN)", cat: c.WebLinkCategory.Reference },
 			{ url: "ja.wikipedia.org/wiki/", desc: "Wikipedia (JP)", cat: c.WebLinkCategory.Reference },
 			{ url: "wikipedia.org/wiki/", desc: "Wikipedia", cat: c.WebLinkCategory.Reference },
+			{ url: "wixsite.com/", desc: "Website", cat: c.WebLinkCategory.Official },
             { url: "www.yesasia.com/", desc: "YesAsia", cat: c.WebLinkCategory.Commercial },
             { url: "youtube.com/channel/", desc: "YouTube Channel", cat: c.WebLinkCategory.Official },
             { url: "youtube.com/user/", desc: "YouTube Channel", cat: c.WebLinkCategory.Official }
