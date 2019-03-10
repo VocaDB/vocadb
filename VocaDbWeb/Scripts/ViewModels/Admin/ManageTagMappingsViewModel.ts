@@ -2,11 +2,16 @@
 namespace vdb.viewModels.admin {
 
 	import dc = dataContracts;
+	import vm = viewModels;
 
 	export class ManageTagMappingsViewModel {
 
 		constructor(
 			private readonly tagRepo: vdb.repositories.TagRepository) {
+			this.filter.subscribe(() => {
+				this.paging.totalItems(this.filteredMappings().length);
+				this.paging.goToFirstPage();
+			})
 			this.loadMappings();
 		}
 
@@ -30,6 +35,8 @@ namespace vdb.viewModels.admin {
 			mapping.isDeleted(true);
 		}
 
+		public filter = ko.observable("");
+
 		public getSourceTagUrl = (tag: EditTagMappingViewModel) => {
 			return "http://www.nicovideo.jp/tag/" + encodeURIComponent(tag.sourceTag);
 		}
@@ -42,10 +49,21 @@ namespace vdb.viewModels.admin {
 
 			const result = await this.tagRepo.getMappings({ start: 0, maxEntries: 1000, getTotalCount: false });
 			this.mappings(_.map(result.items, t => new EditTagMappingViewModel(t)));
+			this.paging.totalItems(this.filteredMappings().length);
+			this.paging.goToFirstPage();
 
 		}
 
 		public mappings = ko.observableArray<EditTagMappingViewModel>();
+
+		public filteredMappings = ko.computed(() => {
+			const filter = this.filter().toLowerCase();
+			if (!filter)
+				return this.mappings();
+			return _.filter(this.mappings(), mapping => _.includes(mapping.sourceTag.toLowerCase(), filter) || _.includes(mapping.tag.name.toLowerCase(), filter));
+		});
+
+		public paging = new vm.ServerSidePagingViewModel(50);
 
 		public activeMappings = ko.computed(() => _.filter(this.mappings(), m => !m.isDeleted()));
 
@@ -61,7 +79,11 @@ namespace vdb.viewModels.admin {
 
 		}
 
-		public sortedMappings = ko.computed(() => _.sortBy(this.mappings(), m => m.tag.name.toLowerCase()));
+		public sortedMappings = ko.computed(() => _.sortBy(this.filteredMappings(), m => m.tag.name.toLowerCase()));
+
+		public sortedMappingsPage = ko.computed(() => {
+			return this.sortedMappings().slice(this.paging.firstItem(), this.paging.firstItem() + this.paging.pageSize());
+		});
 
 	}
 

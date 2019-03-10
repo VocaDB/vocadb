@@ -41,10 +41,22 @@
 <form data-bind="submit: save, show" class="js-cloak">
 	
 	<h3>Mappings</h3>
+	
+	<div class="input-append input-prepend">
+		<span class="add-on"><i class="icon-search"></i></span>
+		<input type="text" data-bind="textInput: filter" placeholder="Search"/>
+		<button class="btn btn-danger" type="button" data-bind="click: function() { filter(''); }, enable: filter()">Clear</button>
+	</div>	
+
+	<br />
+	<br />
 
 	@Helpers.SaveBtn()
 
-	<br />
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+
 	<table>
 		<thead>
 			<tr>
@@ -53,7 +65,7 @@
 				<th></th>
 			</tr>
 		</thead>
-		<tbody data-bind="foreach: sortedMappings">
+		<tbody data-bind="foreach: sortedMappingsPage">
 			<tr data-bind="css: { 'row-new': $data.isNew, 'row-deleted': $data.isDeleted }">
 				<td>
 					<a class="extLink" href="{{$parent.getSourceTagUrl($data)}}" target="_blank">{{sourceTag}}</a>
@@ -68,6 +80,10 @@
 		</tbody>
 	</table>
 	<br />
+	
+	<div data-bind="with: paging">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
 
 	@Helpers.SaveBtn()
 
