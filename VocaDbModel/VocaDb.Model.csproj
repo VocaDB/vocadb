@@ -68,6 +68,9 @@
     <Reference Include="NHibernate.Caches.SysCache2, Version=5.5.0.0, Culture=neutral, PublicKeyToken=6876f2ea66c9f443, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.Caches.SysCache2.5.5.1\lib\net461\NHibernate.Caches.SysCache2.dll</HintPath>
     </Reference>
+    <Reference Include="NicoApiClient, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NicoApiClient.1.0.1\lib\netstandard2.0\NicoApiClient.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
     </Reference>
