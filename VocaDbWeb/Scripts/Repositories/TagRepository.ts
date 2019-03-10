@@ -1,11 +1,16 @@
-﻿
+
 module vdb.repositories {
 
 	import dc = vdb.dataContracts;
 
-	export class TagRepository {
-		
-		constructor(private baseUrl: string) { }
+	export class TagRepository extends BaseRepository {
+
+		private readonly urlMapper: UrlMapper;
+
+		constructor(baseUrl: string) {
+			super(baseUrl);
+			this.urlMapper = new UrlMapper(baseUrl);
+		}
 
 		public create = (name: string, callback?: (result: dc.TagBaseContract) => void) => {
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags?name=" + name);
@@ -47,6 +52,10 @@ module vdb.repositories {
 
 		}
 
+		public getMappings = (paging: dc.PagingProperties): Promise<dc.PartialFindResultContract<dc.tags.TagMappingContract>> => {
+			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/mappings"), paging);
+		}
+
 		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: dc.TagBaseContract[]) => void) => {
 			
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/top");
@@ -54,6 +63,11 @@ module vdb.repositories {
 
 			$.getJSON(url, data, callback);
 
+		}
+
+		public saveMappings = (mappings: dc.tags.TagMappingContract[]): Promise<any> => {
+			var url = this.urlMapper.mapRelative("/api/tags/mappings");
+			return Promise.resolve(helpers.AjaxHelper.putJSON(url, mappings));
 		}
 
 	}

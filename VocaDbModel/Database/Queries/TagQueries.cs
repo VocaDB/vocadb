@@ -24,6 +24,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -337,9 +338,22 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagMappingContract[] GetMappings() {
+		public PartialFindResult<TagMappingContract> GetMappings(PagingProperties paging) {
 
-			return HandleQuery(ctx => ctx.Query<TagMapping>().ToArray().Select(t => new TagMappingContract(t, LanguagePreference)).ToArray());
+			return HandleQuery(ctx => {
+
+				var query = ctx.Query<TagMapping>();
+
+				var result = query
+					.OrderByName(LanguagePreference)
+					.Paged(paging)
+					.ToArray()
+					.Select(t => new TagMappingContract(t, LanguagePreference))
+					.ToArray();
+
+				return PartialFindResult.Create(result, paging.GetTotalCount ? query.Count() : 0);
+
+			});
 
 		}
 

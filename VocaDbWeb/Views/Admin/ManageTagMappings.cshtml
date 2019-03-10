@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+@using System.Web.Optimization
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
@@ -77,14 +77,16 @@
 	@Scripts.Render("~/bundles/shared/edit")
 	<script type="text/javascript" src="@Url.Content("~/Scripts/KnockoutExtensions/TagAutoComplete.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Admin/ManageTagMappingsViewModel.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/Repositories/TagRepository.js")"></script>
 	<script type="text/javascript">
 		$(function () {
 
 			ko.punches.enableAll();
 
 			var urlMapper = new vdb.UrlMapper('@RootPath');
+			var tagRepo = new vdb.repositories.TagRepository('@RootPath');
 
-			var viewModel = new vdb.viewModels.admin.ManageTagMappingsViewModel(urlMapper);
+			var viewModel = new vdb.viewModels.admin.ManageTagMappingsViewModel(tagRepo);
 			ko.applyBindings(viewModel);
 
 		});

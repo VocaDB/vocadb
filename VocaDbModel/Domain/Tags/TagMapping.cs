@@ -5,7 +5,7 @@ namespace VocaDb.Model.Domain.Tags {
 	/// <summary>
 	/// Defines tag mapping from an external source system such as NicoNicoDouga to VocaDB.
 	/// </summary>
-	public class TagMapping : IEntryWithIntId {
+	public class TagMapping : IEntryWithIntId, ITagLink {
 
 		public TagMapping() {
 			CreateDate = DateTime.Now;

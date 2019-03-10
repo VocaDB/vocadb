@@ -1,11 +1,12 @@
-﻿
+
 namespace vdb.viewModels.admin {
 
 	import dc = dataContracts;
 
 	export class ManageTagMappingsViewModel {
 
-		constructor(private urlMapper: vdb.UrlMapper) {
+		constructor(
+			private readonly tagRepo: vdb.repositories.TagRepository) {
 			this.loadMappings();
 		}
 
@@ -37,11 +38,10 @@ namespace vdb.viewModels.admin {
 			return vdb.functions.mapFullUrl(utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
-		private loadMappings = () => {
+		private loadMappings = async () => {
 
-			$.getJSON(this.urlMapper.mapRelative("/api/tags/mappings"), (result: dc.tags.TagMappingContract[]) => {
-				this.mappings(_.map(result, t => new EditTagMappingViewModel(t)));
-			});
+			const result = await this.tagRepo.getMappings({ start: 0, maxEntries: 1000, getTotalCount: false });
+			this.mappings(_.map(result.items, t => new EditTagMappingViewModel(t)));
 
 		}
 
@@ -52,14 +52,12 @@ namespace vdb.viewModels.admin {
 		public newSourceName = ko.observable("");
 		public newTargetTag = new BasicEntryLinkViewModel<dc.TagBaseContract>();
 
-		public save = () => {
+		public save = async () => {
 
-			var url = this.urlMapper.mapRelative("/api/tags/mappings");
-			var mappings = ko.toJS(this.activeMappings());
-			helpers.AjaxHelper.putJSON(url, mappings, () => {
-				ui.showSuccessMessage("Saved");
-				this.loadMappings();
-			});
+			const mappings = this.activeMappings();
+			await this.tagRepo.saveMappings(mappings);
+			ui.showSuccessMessage("Saved");
+			await this.loadMappings();
 
 		}
 

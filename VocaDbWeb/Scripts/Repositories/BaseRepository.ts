@@ -14,8 +14,8 @@ module vdb.repositories {
 			return date ? date.toISOString() : undefined;
 		}
 
-		protected getJsonPromise<T>(url: string) {
-			const jqueryPromise = $.getJSON(url);
+		protected getJsonPromise<T>(url: string, data?: any) {
+			const jqueryPromise = $.getJSON(url, data);
 			return this.handleJqueryPromise<T>(jqueryPromise);
 		}
 

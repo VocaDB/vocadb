@@ -208,8 +208,11 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IEnumerable<TagMappingContract> GetMappings() {
-			return queries.GetMappings();
+		public PartialFindResult<TagMappingContract> GetMappings(
+			int start = 0, int maxEntries = defaultMax, bool getTotalCount = false) {
+
+			return queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
+
 		}
 
 		/// <summary>
