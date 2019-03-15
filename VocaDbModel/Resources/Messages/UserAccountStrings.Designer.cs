@@ -19,7 +19,7 @@ namespace VocaDb.Model.Resources.Messages {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UserAccountStrings {
@@ -71,7 +71,7 @@ namespace VocaDb.Model.Resources.Messages {
         
         /// <summary>
         ///   Looks up a localized string similar to You (or someone who knows your email address) has requested to reset your password on VocaDB.
-        ///You can perform this action at {0}. If you did not request this action, you can ignore this message..
+        ///You can perform this action at {0} . If the link doesn&apos;t work, try copying it to the address bar. If you did not request this action, you can ignore this message..
         /// </summary>
         public static string PasswordResetBody {
             get {

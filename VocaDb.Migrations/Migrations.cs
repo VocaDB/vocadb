@@ -4,6 +4,15 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2019_03_12_2100)]
+	public class SongNameIndex : AutoReversingMigration {
+		public override void Up() {
+			if (!Schema.Table(TableNames.SongNames).Index("IX_SongNames").Exists()) {
+				Create.Index("IX_SongNames").OnTable(TableNames.SongNames).OnColumn("Song").Ascending();
+			}
+		}
+	}
+
 	[Migration(2019_01_27_1700)]
 	public class AlbumReviews : AutoReversingMigration {
 		public override void Up() {
