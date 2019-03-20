@@ -12,12 +12,14 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public static readonly RegexLinkMatcher[] Matchers =
 		{
-			new RegexLinkMatcher(".bandcamp.com/album/{0}", @".bandcamp.com/album/([\w\-]+)")
+			new RegexLinkMatcher(".bandcamp.com/album/{0}", @".bandcamp.com/album/([\w\-]+)"),
+			new RegexLinkMatcher(".bandcamp.com/track/{0}", @".bandcamp.com/track/([\w\-]+)")
 		};
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 			var youtubeDl = new YoutubeDL();
-			var info = await youtubeDl.GetDownloadInfoAsync(url) as VideoDownloadInfo;
+			var result = await youtubeDl.GetDownloadInfoAsync(url);
+			var info = result as VideoDownloadInfo;
 			DateTime? date = null;
 			if (DateTime.TryParse(info.UploadDate, out var parsedDate)) {
 				date = parsedDate;
