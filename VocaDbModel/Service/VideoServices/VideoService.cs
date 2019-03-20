@@ -9,6 +9,8 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	public class VideoService : IVideoService {
 
+		public static readonly VideoService Bandcamp = new VideoServiceBandcamp();
+
 		public static readonly VideoService Bilibili = new VideoServiceBilibili();
 
 		public static readonly VideoService NicoNicoDouga =

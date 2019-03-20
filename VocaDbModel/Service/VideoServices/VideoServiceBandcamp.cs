@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
 		}
 
-		protected VideoServiceBandcamp() : base(PVService.Bandcamp, null, Matchers) {}
+		public VideoServiceBandcamp() : base(PVService.Bandcamp, null, Matchers) {}
 
 	}
 }
