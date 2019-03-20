@@ -23,7 +23,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				date = parsedDate;
 			}
 			var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, info.Duration, uploadDate: date);
-			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id,);
+			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
 		}
 
 		protected VideoServiceBandcamp() : base(PVService.Bandcamp, null, Matchers) {}
