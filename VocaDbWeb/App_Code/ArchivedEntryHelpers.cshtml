@@ -1,4 +1,4 @@
-﻿@using System.Web.Mvc;
+@using System.Web.Mvc;
 @using VocaDb.Model.DataContracts;
 @using VocaDb.Model.DataContracts.PVs;
 @using VocaDb.Model.DataContracts.Versioning
@@ -308,7 +308,7 @@ VocaDb.Web.Models.Shared.ArchivedObjectVersion compareTo = null) {
 
 @helper PVInfo(ArchivedPVContract pv) {
 	@:@pv.Service (@pv.PVType):
-	<a href="@VocaDb.Model.Domain.PVs.PV.GetUrl(pv.Service, pv.PVId)">@pv.PVId</a> 
+	<a href="@VocaDb.Model.Domain.PVs.PV.GetUrl(pv.Service, pv.PVId, pv.ExtendedMetadata)">@pv.PVId</a> 
 	@:by @pv.Author
 	@:(@DateTimeUtils.FormatFromSeconds(pv.Length))
 	if (pv.PublishDate != null) {

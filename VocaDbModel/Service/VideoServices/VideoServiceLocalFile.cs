@@ -25,7 +25,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return string.Empty;
 		}
 
-		public override string GetUrlById(string id) {
+		public override string GetUrlById(string id, PVExtendedMetadata _) {
 			return VocaUriBuilder.StaticResource("/media/" + id);
 		}
 

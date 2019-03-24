@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -24,7 +25,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var result = await youtubeDl.GetDownloadInfoAsync(url);
 			var info = result as VideoDownloadInfo;
 			DateTime? date = null;
-			if (DateTime.TryParse(info.UploadDate, out var parsedDate)) {
+			if (DateTime.TryParseExact(info.UploadDate, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsedDate)) {
 				date = parsedDate;
 			}
 
@@ -35,6 +36,11 @@ namespace VocaDb.Model.Service.VideoServices {
 			var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, (int?)info.Duration, uploadDate: date, extendedMetadata: bandcampMetadata);
 			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
 
+		}
+
+		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
+			var bandcampMetadata = extendedMetadata?.GetExtendedMetadata<BandcampMetadata>();
+			return bandcampMetadata?.Url ?? base.GetUrlById(id, extendedMetadata);
 		}
 
 		public VideoServiceBandcamp() : base(PVService.Bandcamp, null, Matchers) {}
