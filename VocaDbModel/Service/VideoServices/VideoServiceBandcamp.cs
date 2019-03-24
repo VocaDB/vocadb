@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using NYoutubeDL;
 using NYoutubeDL.Models;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -17,18 +19,31 @@ namespace VocaDb.Model.Service.VideoServices {
 		};
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
-			var youtubeDl = new YoutubeDL();
+
+			var youtubeDl = new YoutubeDL { RetrieveAllInfo = true };			
 			var result = await youtubeDl.GetDownloadInfoAsync(url);
 			var info = result as VideoDownloadInfo;
 			DateTime? date = null;
 			if (DateTime.TryParse(info.UploadDate, out var parsedDate)) {
 				date = parsedDate;
 			}
-			var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, info.Duration, uploadDate: date);
+
+			var bandcampMetadata = new PVExtendedMetadata(new BandcampMetadata {
+				Url = info.WebpageUrl
+			});
+
+			var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, (int?)info.Duration, uploadDate: date, extendedMetadata: bandcampMetadata);
 			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
+
 		}
 
 		public VideoServiceBandcamp() : base(PVService.Bandcamp, null, Matchers) {}
 
+	}
+
+	[DataContract(Namespace = Schemas.VocaDb)]
+	public class BandcampMetadata {
+		[DataMember]
+		public string Url { get; set; }
 	}
 }
