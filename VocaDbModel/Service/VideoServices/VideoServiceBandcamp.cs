@@ -15,7 +15,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public static readonly RegexLinkMatcher[] Matchers =
 		{
-			new RegexLinkMatcher(".bandcamp.com/album/{0}", @".bandcamp.com/album/([\w\-]+)"),
 			new RegexLinkMatcher(".bandcamp.com/track/{0}", @".bandcamp.com/track/([\w\-]+)")
 		};
 
@@ -23,7 +22,12 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var youtubeDl = new YoutubeDL { RetrieveAllInfo = true };			
 			var result = await youtubeDl.GetDownloadInfoAsync(url);
-			var info = result as VideoDownloadInfo;
+
+			if (!(result is VideoDownloadInfo info)) {
+				var errors = string.Join(", ", result.Errors);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to retrieve video information. Error list: " + errors);
+			}
+
 			DateTime? date = null;
 			if (DateTime.TryParseExact(info.UploadDate, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsedDate)) {
 				date = parsedDate;

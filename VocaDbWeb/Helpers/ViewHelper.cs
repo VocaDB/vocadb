@@ -308,6 +308,8 @@ namespace VocaDb.Web.Helpers {
 		public static string VideoServiceLinkUrl(this HtmlHelper htmlHelper, PVService service) {
 
 			switch (service) {
+				case PVService.Bandcamp:
+					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bandcamp.png", new HttpContextWrapper(HttpContext.Current));
 				case PVService.Bilibili:
 					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bilibili.png", new HttpContextWrapper(HttpContext.Current));
 				case PVService.File:
