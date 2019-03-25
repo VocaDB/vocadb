@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -65,7 +65,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			ThumbUrl = parseResult.ThumbUrl;
 			PVType = type;
 
-			Url = PV.GetUrl(Service, PVId);
+			Url = PV.GetUrl(Service, PVId, ExtendedMetadata);
 			
 		}
 

@@ -74,6 +74,9 @@
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="NYoutubeDL, Version=0.10.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NYoutubeDL.0.10.4\lib\netstandard2.0\NYoutubeDL.dll</HintPath>
+    </Reference>
     <Reference Include="PiaproClient, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PiaproClient.2.1.0\lib\netstandard2.0\PiaproClient.dll</HintPath>
     </Reference>
@@ -986,6 +989,7 @@
     <Compile Include="Service\Helpers\SessionHelper.cs" />
     <Compile Include="Service\VideoServices\VideoParseException.cs" />
     <Compile Include="Service\VideoServices\VideoService.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceBandcamp.cs" />
     <Compile Include="Service\VideoServices\VideoServiceBilibili.cs" />
     <Compile Include="Service\VideoServices\CreofugaParser.cs" />
     <Compile Include="Service\VideoServices\VideoServiceHelper.cs" />

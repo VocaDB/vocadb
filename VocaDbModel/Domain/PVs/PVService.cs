@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,7 +28,9 @@ namespace VocaDb.Model.Domain.PVs {
 
 		LocalFile		= 128,
 
-		Creofuga		= 256
+		Creofuga		= 256,
+
+		Bandcamp		= 512
 
 	}
 

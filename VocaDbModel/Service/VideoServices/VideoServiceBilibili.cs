@@ -99,7 +99,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			};
 		}
 
-		public override string GetUrlById(string id) => $"https://www.bilibili.com/video/av{id}";
+		public override string GetUrlById(string id, PVExtendedMetadata _) => $"https://www.bilibili.com/video/av{id}";
 
 	}
 

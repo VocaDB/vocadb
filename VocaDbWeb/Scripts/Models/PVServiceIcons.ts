@@ -1,4 +1,4 @@
-﻿
+
 module vdb.models {
 	
 	// Class for getting URLs of PV service icons.
@@ -16,6 +16,7 @@ module vdb.models {
 				SoundCloud: urlMapper.mapRelative("/Content/Icons/soundcloud.png"),
 				Vimeo: urlMapper.mapRelative("/Content/ExtIcons/vimeo.png"),
 				Piapro: urlMapper.mapRelative("/Content/ExtIcons/piapro.png"),
+				Bandcamp: urlMapper.mapRelative("/Content/ExtIcons/bandcamp.png"),
 				Bilibili: urlMapper.mapRelative("/Content/ExtIcons/bilibili.png"),
 				Creofuga: urlMapper.mapRelative("/Content/ExtIcons/creofuga.png")
 			};

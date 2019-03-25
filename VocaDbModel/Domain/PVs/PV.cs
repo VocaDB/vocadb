@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Service.VideoServices;
 
@@ -6,8 +6,8 @@ namespace VocaDb.Model.Domain.PVs {
 
 	public class PV : IEquatable<PV>, IEditablePV {
 
-		public static string GetUrl(PVService service, string pvId) {
-			return VideoServiceHelper.Services[service].GetUrlById(pvId);
+		public static string GetUrl(PVService service, string pvId, PVExtendedMetadata extendedMetadata = null) {
+			return VideoServiceHelper.Services[service].GetUrlById(pvId, extendedMetadata);
 		}
 
 		private string author;
@@ -80,7 +80,7 @@ namespace VocaDb.Model.Domain.PVs {
 
 		public virtual PVType PVType { get; set; }
 
-		public virtual string Url => GetUrl(Service, PVId);
+		public virtual string Url => GetUrl(Service, PVId, ExtendedMetadata);
 
 		public virtual bool ContentEquals(PVContract pv) {
 

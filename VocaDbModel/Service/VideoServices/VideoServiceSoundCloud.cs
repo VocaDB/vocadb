@@ -45,7 +45,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
 			: base(service, parser, linkMatchers) {}
 
-		public override string GetUrlById(string id) {
+		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
 
 			var compositeId = new SoundCloudId(id);
 			var matcher = linkMatchers.First();

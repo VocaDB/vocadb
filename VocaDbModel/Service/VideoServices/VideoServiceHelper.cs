@@ -11,6 +11,7 @@ namespace VocaDb.Model.Service.VideoServices {
 	public static class VideoServiceHelper {
 
 		private static readonly VideoService[] services = {
+			VideoService.Bandcamp,
  			VideoService.Bilibili,
 			VideoService.NicoNicoDouga,
 			VideoService.Piapro,
