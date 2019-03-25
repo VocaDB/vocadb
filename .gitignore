@@ -27,3 +27,4 @@ TestResults/
 /.vs
 VocaDb.TouhouDb.Resources/bin/
 VocaDb.TouhouDb.Resources/obj/
+*.exe

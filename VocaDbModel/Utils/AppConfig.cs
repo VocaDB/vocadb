@@ -1,4 +1,5 @@
 using System.Configuration;
+using NHibernate.Linq.Functions;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
@@ -213,6 +214,8 @@ namespace VocaDb.Model.Utils {
 		public static string TwitterConsumerSecret => Val("TwitterConsumerSecret");
 
 		public static string YoutubeApiKey => Val("YoutubeApiKey");
+
+		public static string YoutubeDLPath => Val("YoutubeDLPath");
 
 	}
 }

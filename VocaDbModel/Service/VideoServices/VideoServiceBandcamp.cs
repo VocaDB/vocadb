@@ -5,10 +5,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using NYoutubeDL;
 using NYoutubeDL.Models;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices {
 	public class VideoServiceBandcamp : VideoService {
@@ -20,7 +22,9 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
-			var youtubeDl = new YoutubeDL { RetrieveAllInfo = true };			
+			var youtubeDl = new YoutubeDL { RetrieveAllInfo = true };
+			// TODO: inject this.
+			youtubeDl.YoutubeDlPath = HttpContext.Current.Server.MapPath(AppConfig.YoutubeDLPath);
 			var result = await youtubeDl.GetDownloadInfoAsync(url);
 
 			if (!(result is VideoDownloadInfo info)) {
