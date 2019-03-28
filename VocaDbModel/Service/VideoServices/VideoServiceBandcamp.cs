@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using FluentNHibernate.Utils;
 using NYoutubeDL;
 using NYoutubeDL.Models;
 using VocaDb.Model.DataContracts;
@@ -25,11 +26,24 @@ namespace VocaDb.Model.Service.VideoServices {
 			var youtubeDl = new YoutubeDL { RetrieveAllInfo = true };
 			// TODO: inject this.
 			youtubeDl.YoutubeDlPath = HttpContext.Current.Server.MapPath(AppConfig.YoutubeDLPath);
-			var result = await youtubeDl.GetDownloadInfoAsync(url);
+
+			DownloadInfo result = null;
+			try {
+				result = await youtubeDl.GetDownloadInfoAsync(url);
+			} catch (TaskCanceledException) {
+				var warnings = string.Join("\n", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors));
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Timeout: " + warnings);
+			}
+
+
+			if (result == null) {
+				var warnings = youtubeDl.Info != null ? string.Join("\n", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors)) : string.Empty;
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Result is empty: " + warnings);
+			}
 
 			if (!(result is VideoDownloadInfo info)) {
-				var errors = string.Join(", ", result.Errors);
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to retrieve video information. Error list: " + errors);
+				var warnings = string.Join("\n", result.Warnings.Concat(youtubeDl.Info.Errors));
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to retrieve video information. Error list: " + warnings);
 			}
 
 			DateTime? date = null;
