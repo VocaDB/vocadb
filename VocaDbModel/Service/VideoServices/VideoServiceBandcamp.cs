@@ -43,7 +43,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			if (!(result is VideoDownloadInfo info)) {
 				var warnings = string.Join("\n", result.Warnings.Concat(youtubeDl.Info.Errors));
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to retrieve video information. Error list: " + warnings);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to retrieve video information. Error list: " + warnings + ". Result type is " + result.GetType().Name + ". Title is " + result.Title);
 			}
 
 			DateTime? date = null;
