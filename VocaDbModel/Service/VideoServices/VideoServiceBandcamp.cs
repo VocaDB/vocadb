@@ -31,18 +31,18 @@ namespace VocaDb.Model.Service.VideoServices {
 			try {
 				result = await youtubeDl.GetDownloadInfoAsync(url);
 			} catch (TaskCanceledException) {
-				var warnings = string.Join("\n", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors));
+				var warnings = string.Join(" - ", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors));
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Timeout: " + warnings);
 			}
 
 
 			if (result == null) {
-				var warnings = youtubeDl.Info != null ? string.Join("\n", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors)) : string.Empty;
+				var warnings = youtubeDl.Info != null ? string.Join(" - ", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors)) : string.Empty;
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Result is empty: " + warnings);
 			}
 
 			if (!(result is VideoDownloadInfo info)) {
-				var warnings = string.Join("\n", result.Warnings.Concat(youtubeDl.Info.Errors));
+				var warnings = string.Join(" - ", result.Warnings.Concat(result.Errors));
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to retrieve video information. Error list: " + warnings + ". Result type is " + result.GetType().Name + ". Title is " + result.Title);
 			}
 
