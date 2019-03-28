@@ -72,6 +72,7 @@ module vdb.utils {
 			{ url: "spotify.com/", desc: "Spotify", cat: c.WebLinkCategory.Commercial },
 			{ url: "soundcloud.com/", desc: "SoundCloud", cat: c.WebLinkCategory.Official },
 			{ url: "www.suruga-ya.jp/", desc: "Suruga-ya", cat: c.WebLinkCategory.Commercial },
+			{ url: "synthv.fandom.com/wiki/", desc: "SynthV Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "item.taobao.com/item.htm", desc: "Taobao", cat: c.WebLinkCategory.Commercial },
 			{ url: "www.lagoa.jp/", desc: "THREE!", cat: c.WebLinkCategory.Commercial }, /* UtaiteDB */
 			{ url: "item.taobao.com", desc: "Taobao", cat: c.WebLinkCategory.Commercial },
@@ -84,12 +85,14 @@ module vdb.utils {
             { url: "twipla.jp/", desc: "TwiPla", cat: c.WebLinkCategory.Official },
 			{ url: "utaitedb.net/", desc: "UtaiteDB", cat: c.WebLinkCategory.Reference },
 			{ url: "utaulyrics.wikia.com/wiki/", desc: "UTAU Lyrics Wiki", cat: c.WebLinkCategory.Reference },
+			{ url: "utaulyrics.fandom.com/wiki/", desc: "UTAU Lyrics Wiki", cat: c.WebLinkCategory.Reference },
             { url: "www24.atwiki.jp/utauuuta/", desc: "UTAU Wiki (JP)", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.wikia.com/wiki/", desc: "UTAU Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.fandom.com/wiki/", desc: "UTAU Wiki", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.wikidot.com/", desc: "UTAU wiki 2.0", cat: c.WebLinkCategory.Reference },
 			{ url: "utau.wiki/", desc: "UTAU wiki 2.0", cat: c.WebLinkCategory.Reference },
 			{ url: "utaite.wikia.com/", desc: "Utaite Wiki", cat: c.WebLinkCategory.Reference }, /* UtaiteDB */
+			{ url: "utaite.fandom.com/", desc: "Utaite Wiki", cat: c.WebLinkCategory.Reference }, /* UtaiteDB */
             { url: "vgmdb.net/", desc: "VGMdb", cat: c.WebLinkCategory.Reference },
             { url: "vimeo.com/", desc: "Vimeo", cat: c.WebLinkCategory.Official },
 			{ url: "://vk.com/", desc: "VK", cat: c.WebLinkCategory.Official },
