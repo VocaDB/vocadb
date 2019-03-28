@@ -122,7 +122,8 @@ a.extLink[href^="http://utaitedb.net/"],
 a.extLink[href^="https://utaitedb.net/"] {
   background: url("/Content/ExtIcons/utaitedb.png") no-repeat left 50%;
 }
-a.extLink[href^="http://utaite.wikia.com/wiki/"] {
+a.extLink[href^="http://utaite.wikia.com/wiki/"],
+a.extLink[href^="https://utaite.fandom.com/wiki/"] {
   background: url("/Content/ExtIcons/utaitewikia.png") no-repeat left 50%;
 }
 a.extLink[href^="http://vgmdb.net/"],
