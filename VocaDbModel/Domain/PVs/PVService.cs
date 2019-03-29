@@ -63,6 +63,8 @@ namespace VocaDb.Model.Domain.PVs {
 
 		Creofuga        = PVService.Creofuga,
 
+		Bandcamp		= PVService.Bandcamp
+
 	}
 
 	public static class PVServicesExtender {

@@ -61,7 +61,8 @@
 	<div data-bind="slideVisible: preview, complete: destroyPV" class="pvPreview" style="display: none;">
 		<div data-bind="with: ratingButtons" class="pull-right">
 			@{ Html.RenderPartial("Partials/_PVRatingButtonsForIndex"); }
-
+			
+			<!-- Binding context: SongWithPreviewViewModel -->
 			@* PV service switcher *@
 			<div class="btn-toolbar">
 				<div class="btn-group">
