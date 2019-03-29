@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -79,7 +79,8 @@ namespace VocaDb.Web.Models {
 			Illustrators = ContentFocus == ContentFocus.Illustration ? contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Illustrator)).ToArray() : null;
 			Performers = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Vocalist)).ToArray();
 			Producers = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
-			Subject = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Subject)).Concat(contract.SubjectsFromParents).ToArray();
+			var subjectsForThis = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Subject)).ToArray();
+			Subject = subjectsForThis.Any() ? subjectsForThis : contract.SubjectsFromParents;
 			OtherArtists = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Circle)  
 				|| a.Categories.HasFlag(ArtistCategories.Label) 
 				|| a.Categories.HasFlag(ArtistCategories.Other)

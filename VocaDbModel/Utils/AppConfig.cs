@@ -140,6 +140,10 @@ namespace VocaDb.Model.Utils {
 
 		public static string DbDumpFolder => Val("DbDumpFolder");
 
+		/// <summary>
+		/// Enable inheriting artists for certain situations.
+		/// Currently only Subject artist type is inherited.
+		/// </summary>
 		public static bool EnableArtistInheritance => Val(nameof(EnableArtistInheritance), false);
 
 		public static string ExternalHelpPath => Val(nameof(ExternalHelpPath));
