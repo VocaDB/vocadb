@@ -184,6 +184,15 @@ namespace VocaDb.Model.Utils {
 			}
 		}
 
+		/// <summary>
+		/// Path to Python.exe.
+		/// Virtual paths are supported.
+		/// For example "C:\Program Files\Python\python.exe" or "~\App_Data\python.exe"
+		/// Python is required for NYoutubeDL to work on Windows Server.
+		/// See https://gitlab.com/BrianAllred/NYoutubeDL/issues/25
+		/// </summary>
+		public static string PythonPath => Val(nameof(PythonPath));
+
 		public static string ReCAPTCHAKey => Val("ReCAPTCHAKey");
 
 		public static string ReCAPTCHAPublicKey => Val("ReCAPTCHAPublicKey");
@@ -215,9 +224,12 @@ namespace VocaDb.Model.Utils {
 
 		public static string YoutubeApiKey => Val("YoutubeApiKey");
 
-		public static string YoutubeDLPath => Val("YoutubeDLPath");
-
-		public static string PythonPath => Val(nameof(PythonPath));
+		/// <summary>
+		/// Path to youtube-dl (either .exe or Python file).
+		/// Virtual paths are supported.
+		/// For example "C:\Tools\youtube-dl\youtube-dl.py" or "~\App_Data\youtube-dl.py"
+		/// </summary>
+		public static string YoutubeDLPath => Val(nameof(YoutubeDLPath));
 
 	}
 }

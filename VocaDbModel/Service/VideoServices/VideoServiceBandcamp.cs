@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using FluentNHibernate.Utils;
+using NLog;
 using NYoutubeDL;
 using NYoutubeDL.Models;
 using VocaDb.Model.DataContracts;
@@ -21,6 +22,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			new RegexLinkMatcher(".bandcamp.com/track/{0}", @".bandcamp.com/track/([\w\-]+)")
 		};
 
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
+		private string GetErrorString(DownloadInfo info) => info != null ? string.Join(", ", info.Warnings.Concat(info.Errors)) : string.Empty;
+
 		private string GetPath(string path) {
 			// TODO: inject this.
 			return path.Contains("~") ? HttpContext.Current.Server.MapPath(path) : path;
@@ -28,26 +33,31 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
-			var youtubeDl = new YoutubeDL { RetrieveAllInfo = true };
-			youtubeDl.YoutubeDlPath = GetPath(AppConfig.YoutubeDLPath);
-			youtubeDl.PythonPath = GetPath(AppConfig.PythonPath);
+			var youtubeDl = new YoutubeDL {
+				RetrieveAllInfo = true,
+				YoutubeDlPath = GetPath(AppConfig.YoutubeDLPath),
+				PythonPath = GetPath(AppConfig.PythonPath)
+			};
 
 			DownloadInfo result;
 			try {
 				result = await youtubeDl.GetDownloadInfoAsync(url);
 			} catch (TaskCanceledException) {
-				var warnings = string.Join(" - ", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors));
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Timeout: " + warnings);
+				var warnings = GetErrorString(youtubeDl.Info);
+				_log.Error("Timeout. Error list: {0}", warnings);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Timeout");
 			}
 
 			if (result == null) {
-				var warnings = youtubeDl.Info != null ? string.Join(" - ", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors)) : string.Empty;
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Result is empty: " + warnings);
+				var warnings = GetErrorString(youtubeDl.Info);
+				_log.Error("Result from parser is empty. Error list: {0}", warnings);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Result from parser is empty");
 			}
 
 			if (!(result is VideoDownloadInfo info)) {
-				var warnings = string.Join(" - ", result.Warnings.Concat(result.Errors));
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unable to retrieve video information. Error list: " + warnings + ". Result type is " + result.GetType().Name + ". Title is " + result.Title);
+				var warnings = GetErrorString(youtubeDl.Info);
+				_log.Error("Unexpected result from parser. Error list: {0}. Result type is {1}. Title is {2}", warnings, result.GetType().Name, result.Title);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unexpected result from parser.");
 			}
 
 			DateTime? date = null;
