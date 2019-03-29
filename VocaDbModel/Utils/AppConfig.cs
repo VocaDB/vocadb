@@ -217,5 +217,7 @@ namespace VocaDb.Model.Utils {
 
 		public static string YoutubeDLPath => Val("YoutubeDLPath");
 
+		public static string PythonPath => Val(nameof(PythonPath));
+
 	}
 }

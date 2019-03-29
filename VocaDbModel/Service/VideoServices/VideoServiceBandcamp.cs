@@ -21,20 +21,24 @@ namespace VocaDb.Model.Service.VideoServices {
 			new RegexLinkMatcher(".bandcamp.com/track/{0}", @".bandcamp.com/track/([\w\-]+)")
 		};
 
+		private string GetPath(string path) {
+			// TODO: inject this.
+			return path.Contains("~") ? HttpContext.Current.Server.MapPath(path) : path;
+		}
+
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
 			var youtubeDl = new YoutubeDL { RetrieveAllInfo = true };
-			// TODO: inject this.
-			youtubeDl.YoutubeDlPath = HttpContext.Current.Server.MapPath(AppConfig.YoutubeDLPath);
+			youtubeDl.YoutubeDlPath = GetPath(AppConfig.YoutubeDLPath);
+			youtubeDl.PythonPath = GetPath(AppConfig.PythonPath);
 
-			DownloadInfo result = null;
+			DownloadInfo result;
 			try {
 				result = await youtubeDl.GetDownloadInfoAsync(url);
 			} catch (TaskCanceledException) {
 				var warnings = string.Join(" - ", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors));
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Timeout: " + warnings);
 			}
-
 
 			if (result == null) {
 				var warnings = youtubeDl.Info != null ? string.Join(" - ", youtubeDl.Info.Warnings.Concat(youtubeDl.Info.Errors)) : string.Empty;
