@@ -73,6 +73,10 @@ namespace VocaDb.Tests.TestSupport {
 			return func(CreateContext());
 		}
 
+		public Task HandleTransactionAsync(Func<IDatabaseContext<T>, Task> func, string failMsg = "Unexpected database error") {
+			return func(CreateContext());
+		}
+
 		public List<TEntity> List<TEntity>() {
 			return querySource.List<TEntity>();
 		}
@@ -222,13 +226,9 @@ namespace VocaDb.Tests.TestSupport {
 
 		public IAuditLogger AuditLogger => new FakeAuditLogger();
 
-		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
-			return new FakeTransaction();
-		}
+		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) => new FakeTransaction();
 
-		public void Delete(T entity) {
-			querySource.List<T>().Remove(entity);
-		}
+		public void Delete(T entity) => querySource.List<T>().Remove(entity);
 
 		public void Dispose() {
 			
@@ -256,21 +256,13 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public Task<T> LoadAsync(object id) {
-			return Task.FromResult(Load(id));
-		}
+		public Task<T> LoadAsync(object id) => Task.FromResult(Load(id));
 
-		public virtual IDatabaseContext<T2> OfType<T2>() {
-			return new ListDatabaseContext<T2>(querySource);
-		}
+		public virtual IDatabaseContext<T2> OfType<T2>() => new ListDatabaseContext<T2>(querySource);
 
-		public IQueryable<T> Query() {
-			return querySource.Query<T>();
-		}
+		public IQueryable<T> Query() => querySource.Query<T>();
 
-		public IQueryable<T2> Query<T2>() {
-			return OfType<T2>().Query();
-		}
+		public IQueryable<T2> Query<T2>() => OfType<T2>().Query();
 
 		public T Save(T obj) {
 
@@ -283,6 +275,8 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
+		public Task<T> SaveAsync(T obj) => Task.FromResult(Save(obj));
+
 		public virtual void Update(T obj) {
 
 			var existing = Load(GetId(obj));
@@ -291,6 +285,10 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
+		public Task UpdateAsync(T obj) {
+			Update(obj);
+			return Task.CompletedTask;
+		}
 	}
 
 }

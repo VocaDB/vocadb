@@ -32,6 +32,10 @@ namespace VocaDb.Tests.TestSupport {
 			return func(dbContext);
 		}
 
+		public Task HandleTransactionAsync(Func<IDatabaseContext, Task> func, string failMsg = "Unexpected database error") {
+			return func(dbContext);
+		}
+
 	}
 
 	public class DatabaseContextAsRepositoryWrapper<TRepo> : IRepository<TRepo> {
@@ -59,6 +63,10 @@ namespace VocaDb.Tests.TestSupport {
 		}
 
 		public Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<TRepo>, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			return func(dbContext);
+		}
+
+		public Task HandleTransactionAsync(Func<IDatabaseContext<TRepo>, Task> func, string failMsg = "Unexpected database error") {
 			return func(dbContext);
 		}
 

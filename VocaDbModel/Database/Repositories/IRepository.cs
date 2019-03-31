@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace VocaDb.Model.Database.Repositories {
 
 	public interface IRepositoryBase {
-		
+
 	}
 
 	public interface IRepositoryBase<TRepositoryContext> : IRepositoryBase {
@@ -34,6 +34,8 @@ namespace VocaDb.Model.Database.Repositories {
 		/// <param name="failMsg">Failure message. Cannot be null.</param>
 		/// <returns>Result. Can be null.</returns>
 		void HandleTransaction(Action<TRepositoryContext> func, string failMsg = "Unexpected database error");
+
+		Task HandleTransactionAsync(Func<TRepositoryContext, Task> func, string failMsg = "Unexpected database error");
 
 		/// <summary>
 		/// Runs an unit of work that queries the database, inside an explicit transaction.

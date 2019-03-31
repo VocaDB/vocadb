@@ -134,21 +134,15 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
-		public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) {
-			return ctx.OfType<T2>().Save(obj);
-		}
+		public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) => ctx.OfType<T2>().Save(obj);
 
-		public static T Save<T>(this IDatabaseContext ctx, T obj) {
-			return ctx.OfType<T>().Save(obj);
-		}
+		public static T Save<T>(this IDatabaseContext ctx, T obj) => ctx.OfType<T>().Save(obj);
 
-		public static void Update<T>(this IDatabaseContext ctx, T obj) {
-			ctx.OfType<T>().Update(obj);
-		}
+		public static void Update<T>(this IDatabaseContext ctx, T obj) => ctx.OfType<T>().Update(obj);
 
-		public static void Update<T, T2>(this IDatabaseContext<T> ctx, T2 obj) {
-			ctx.OfType<T2>().Update(obj);
-		}
+		public static void Update<T, T2>(this IDatabaseContext<T> ctx, T2 obj) => ctx.OfType<T2>().Update(obj);
+
+		public static Task UpdateAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) => ctx.OfType<T2>().UpdateAsync(obj);
 
 	}
 

@@ -86,6 +86,21 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 		}
 
+		public async Task HandleTransactionAsync(Func<IDatabaseContext, Task> func, string failMsg = "Unexpected database error") {
+			
+			try {
+				using (var ctx = OpenSessionForContext())
+				using (var tx = ctx.Session.BeginTransaction()) {
+					await func(ctx);
+					await tx.CommitAsync();
+				}
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+
+		}
+
 		public void HandleTransaction(Action<IDatabaseContext> func, string failMsg = "Unexpected NHibernate error") {
 
 			try {
@@ -199,6 +214,21 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 				log.Error(x, failMsg);
 				throw;
 			}
+
+		}
+
+		public async Task HandleTransactionAsync(Func<IDatabaseContext<T>, Task> func, string failMsg = "Unexpected database error") {
+
+			try {
+				using (var ctx = OpenSessionForContext())
+				using (var tx = ctx.Session.BeginTransaction()) {
+					await func(ctx);
+					await tx.CommitAsync();
+				}
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}			
 
 		}
 

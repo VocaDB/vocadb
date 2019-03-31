@@ -24,6 +24,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code;
@@ -552,6 +553,20 @@ namespace VocaDb.Web.Controllers
 			});
 
 			TempData.SetSuccessMessage("Thumbnail refreshed");
+
+			return RedirectToAction("Details", new { id });
+
+		}
+
+		/// <summary>
+		/// Refresh PV metadata.
+		/// </summary>
+		[Authorize]
+		public async Task<ActionResult> RefreshPVMetadatas(int id) {
+
+			await queries.RefreshPVMetadatas(id);
+
+			TempData.SetSuccessMessage("PV metadata refreshed");
 
 			return RedirectToAction("Details", new { id });
 

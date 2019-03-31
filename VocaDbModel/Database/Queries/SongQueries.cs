@@ -929,6 +929,23 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public async Task RefreshPVMetadatas(int songId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+			await repository.HandleTransactionAsync(async ctx => {
+
+				var song = await ctx.LoadAsync(songId);
+				foreach (var pv in song.PVs) {
+					await pv.RefreshMetadata(pvParser, PermissionContext);
+					await ctx.UpdateAsync(pv);
+				}
+				ctx.AuditLogger.SysLog("Updated PV metadata for " + song);
+
+			});
+
+		}
+
 		public int RemoveTagUsage(long tagUsageId) {
 
 			return new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, repository);

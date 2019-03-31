@@ -75,11 +75,15 @@ namespace VocaDb.Model.Database.Repositories {
 		/// <param name="obj">Entity to be saved. Cannot be null.</param>
 		T Save(T obj);
 
+		Task<T> SaveAsync(T obj);
+
 		/// <summary>
 		/// Updates an existing entity in the repository.
 		/// </summary>
 		/// <param name="obj">Entity to be updated. Cannot be null.</param>
 		void Update(T obj);
+
+		Task UpdateAsync(T obj);
 
 	}
 

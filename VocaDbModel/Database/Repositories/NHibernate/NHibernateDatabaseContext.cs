@@ -59,7 +59,14 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			return obj;
 		}
 
+		public async Task<T> SaveAsync(T obj) {
+			await Session.SaveAsync(obj);
+			return obj;
+		}
+
 		public void Update(T obj) => Session.Update(obj);
+
+		public Task UpdateAsync(T obj) => Session.UpdateAsync(obj);
 
 	}
 
