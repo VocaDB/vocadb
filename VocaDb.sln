@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28721.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDbWeb", "VocaDbWeb\VocaDbWeb.csproj", "{543CB31E-8641-44AA-95D4-DF0E06D41D02}"
 EndProject
@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		VocaDbWeb\appsettings.config = VocaDbWeb\appsettings.config
 		README.md = README.md
 		Docs\API\VocaDBTooltips.ts = Docs\API\VocaDBTooltips.ts
 	EndProjectSection

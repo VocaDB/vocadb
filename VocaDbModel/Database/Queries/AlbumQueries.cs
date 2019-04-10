@@ -328,14 +328,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public bool CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber) {
+		public (bool created, int reportId) CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber) {
 
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
 			return HandleTransaction(ctx => {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory, report => report.Entry.Id == albumId, 
+					entryLinkFactory,
 					(album, reporter, notesTruncated) => new AlbumReport(album, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != AlbumReportType.Other ? enumTranslations.AlbumReportTypeNames[reportType] : null,
 					albumId, reportType, hostname, notes);
