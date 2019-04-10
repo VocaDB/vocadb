@@ -345,6 +345,7 @@
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
     <Compile Include="Domain\Globalization\OptionalCultureCode.cs" />
     <Compile Include="Domain\Globalization\TranslationType.cs" />
+    <Compile Include="Domain\IEntryLink.cs" />
     <Compile Include="Domain\IEntrySubTypeNameFactory.cs" />
     <Compile Include="Domain\IEntryWithArtists.cs" />
     <Compile Include="Domain\Images\ImageSize.cs" />

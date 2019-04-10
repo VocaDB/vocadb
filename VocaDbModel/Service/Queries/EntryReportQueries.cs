@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
@@ -11,17 +10,43 @@ using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Queries {
 
+	/// <summary>
+	/// Creates <see cref="EntryReport"/>s.
+	/// </summary>
+	/// <remarks>
+	/// Note: this class is tested through <see cref="SongQueriesTests"/>.
+	/// </remarks>
 	public class EntryReportQueries {
 
-		public bool CreateReport<TEntry, TReport, TReportType>(IDatabaseContext<TEntry> ctx, 
+		/// <summary>
+		/// Creates entry report.
+		/// </summary>
+		/// <typeparam name="TEntry">Entry type.</typeparam>
+		/// <typeparam name="TReport">Report type (class).</typeparam>
+		/// <typeparam name="TReportType">Report subtype (enum).</typeparam>
+		/// <param name="ctx">Query context.</param>
+		/// <param name="permissionContext">Permission context.</param>
+		/// <param name="entryLinkFactory">Entry link factory.</param>
+		/// <param name="reportFunc">Factory for creating report.</param>
+		/// <param name="reportNameFunc">Report name getter.</param>
+		/// <param name="entryId">Entry Id.</param>
+		/// <param name="reportType">Report subtype.</param>
+		/// <param name="hostname">Reporter's hostname (IP address).</param>
+		/// <param name="notes">Report notes, if any. Can be empty.</param>
+		/// <returns>Tuple informing whether report was created, and report Id.</returns>
+		public (bool created, int reportId) CreateReport<TEntry, TReport, TReportType>(
+			IDatabaseContext<TEntry> ctx, 
 			IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory,
-			Expression<Func<TReport, bool>> addExistingEntryFunc, 
 			Func<TEntry, User, string, TReport> reportFunc, 
 			Func<string> reportNameFunc, 
-			int entryId, TReportType reportType, string hostname, string notes)
-			where TEntry : IEntryWithVersions
-			where TReport : EntryReport {
+			int entryId, 
+			TReportType reportType, 
+			string hostname, 
+			string notes)
+			where TEntry : class, IEntryWithVersions, IEntryWithNames
+			where TReport : GenericEntryReport<TEntry, TReportType>
+			where TReportType: struct, Enum {
 
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
@@ -30,13 +55,16 @@ namespace VocaDb.Model.Service.Queries {
 			ctx.AuditLogger.SysLog(msg, hostname);
 
 			var loggedUserId = permissionContext.LoggedUserId;
-			var existing = ctx.Query<TReport>()
-				.Where(addExistingEntryFunc)
-				.Where(r => (loggedUserId != 0 && r.User.Id == loggedUserId) || r.Hostname == hostname)
+			var existing = ctx.Query<TReport>()				
+				.Where(r => r.Entry.Id == entryId && (loggedUserId != 0 && r.User.Id == loggedUserId) || r.Hostname == hostname)
+				.OrderByDescending(r => r.Created)
+				.ThenByDescending(r => r.Id)
 				.FirstOrDefault();
 
-			if (existing != null && !permissionContext.IsLoggedIn)
-				return false;
+			var duplicate = existing != null;
+
+			if (duplicate && (!permissionContext.IsLoggedIn || existing.Status == ReportStatus.Open))
+				return (false, existing.Id);
 
 			var entry = ctx.Load(entryId);
 			var reporter = ctx.OfType<User>().GetLoggedUserOrNull(permissionContext);
@@ -71,14 +99,11 @@ namespace VocaDb.Model.Service.Queries {
 
 			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory, reportName);
 
-			if (existing != null)
-				return false;
-
 			msg =  string.Format("reported {0} as {1} ({2})", entryLinkFactory.CreateEntryLink(entry), reportType, HttpUtility.HtmlEncode(notes));
 			ctx.AuditLogger.AuditLog(msg.Truncate(200), new AgentLoginData(reporter, hostname));
 
 			ctx.Save(report);
-			return true;
+			return (true, report.Id);
 
 		}
 

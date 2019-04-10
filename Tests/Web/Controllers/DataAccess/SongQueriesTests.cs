@@ -66,6 +66,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		private (bool created, int reportId) CallCreateReport(SongReportType reportType, int? versionNumber = null) {
+			return queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
+		}
+
 		private SongForEditContract EditContract() {
 			return new SongForEditContract(song, ContentLanguagePreference.English);
 		}
@@ -331,7 +335,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateReport() {
 			
-			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+			CallCreateReport(SongReportType.InvalidInfo);
 
 			var report = repository.List<SongReport>().FirstOrDefault();
 
@@ -347,7 +351,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			
 			var version = ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user), SongArchiveReason.PropertiesUpdated, String.Empty);
 			repository.Save(version);
-			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", version.Version);
+			CallCreateReport(SongReportType.Other, version.Version);
 
 			var report = repository.List<SongReport>().First();
 
@@ -367,14 +371,63 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		public void CreateReport_Duplicate() {
-			
-			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
-			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
+		
+			var (_, reportId) = CallCreateReport(SongReportType.InvalidInfo);
+			var secondResult = CallCreateReport(SongReportType.Other);
 
 			var reports = repository.List<SongReport>();
 
 			Assert.AreEqual(1, reports.Count, "Number of reports");
-			Assert.AreEqual(SongReportType.InvalidInfo, reports.First().ReportType, "Report type");
+			var report = repository.Load<SongReport>(reportId);
+			Assert.AreEqual(SongReportType.InvalidInfo, report.ReportType, "Report type");
+			Assert.IsFalse(secondResult.created, "Second report was not created");
+
+		}
+
+		[TestMethod]
+		public void CreateReport_Duplicate_Closed() {
+			
+			var(_, reportId) = CallCreateReport(SongReportType.InvalidInfo);
+			var report = repository.Load<SongReport>(reportId);
+			report.Status = ReportStatus.Closed;
+			var(secondCreated, _) = CallCreateReport(SongReportType.Other);
+
+			var reports = repository.List<SongReport>();
+
+			Assert.AreEqual(2, reports.Count, "Number of reports");
+			Assert.IsTrue(secondCreated, "Second report was created");
+
+		}
+
+		[TestMethod]
+		public void CreateReport_Duplicate_Closed_NotLoggedIn() {
+			
+			permissionContext.LoggedUser = null;
+			var (_, reportId) = CallCreateReport(SongReportType.InvalidInfo);
+			var report = repository.Load<SongReport>(reportId);
+			report.Status = ReportStatus.Closed;
+			var (secondCreated, _) = CallCreateReport(SongReportType.Other);
+
+			var reports = repository.List<SongReport>();
+
+			Assert.AreEqual(1, reports.Count, "Number of reports");
+			Assert.IsFalse(secondCreated, "Second report was not created");
+
+		}
+
+		[TestMethod]
+		public void CreateReport_Duplicate_Closed_Then_Open() {
+			
+			var(_, reportId) = CallCreateReport(SongReportType.InvalidInfo);
+			var report = repository.Load<SongReport>(reportId);
+			report.Status = ReportStatus.Closed;
+			CallCreateReport(SongReportType.Other);
+			var (thirdCreated, _) = CallCreateReport(SongReportType.Other);
+
+			var reports = repository.List<SongReport>();
+
+			Assert.AreEqual(2, reports.Count, "Number of reports");
+			Assert.IsFalse(thirdCreated, "Second report was created");
 
 		}
 
@@ -382,7 +435,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void CreateReport_NotLoggedIn() {
 			
 			permissionContext.LoggedUser = null;
-			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
+			CallCreateReport(SongReportType.Other);
 
 			var report = repository.List<SongReport>().FirstOrDefault();
 
