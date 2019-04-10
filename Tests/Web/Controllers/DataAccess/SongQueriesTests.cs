@@ -66,8 +66,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private (bool created, int reportId) CallCreateReport(SongReportType reportType, int? versionNumber = null) {
-			return queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
+		private (bool created, SongReport report) CallCreateReport(SongReportType reportType, int? versionNumber = null) {
+			var result = queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
+			return (result.created, repository.Load<SongReport>(result.reportId));
 		}
 
 		private SongForEditContract EditContract() {
@@ -335,11 +336,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateReport() {
 			
-			CallCreateReport(SongReportType.InvalidInfo);
+			var (created, report) = CallCreateReport(SongReportType.InvalidInfo);
 
-			var report = repository.List<SongReport>().FirstOrDefault();
-
-			Assert.IsNotNull(report, "Report was saved");
+			Assert.IsTrue(created, "Report was created");
 			Assert.AreEqual(song.Id, report.EntryBase.Id, "Entry Id");
 			Assert.AreEqual(user, report.User, "Report author");
 			Assert.AreEqual(SongReportType.InvalidInfo, report.ReportType, "Report type");
@@ -372,13 +371,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateReport_Duplicate() {
 		
-			var (_, reportId) = CallCreateReport(SongReportType.InvalidInfo);
+			var (_, report) = CallCreateReport(SongReportType.InvalidInfo);
 			var secondResult = CallCreateReport(SongReportType.Other);
 
 			var reports = repository.List<SongReport>();
 
 			Assert.AreEqual(1, reports.Count, "Number of reports");
-			var report = repository.Load<SongReport>(reportId);
 			Assert.AreEqual(SongReportType.InvalidInfo, report.ReportType, "Report type");
 			Assert.IsFalse(secondResult.created, "Second report was not created");
 
@@ -387,8 +385,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateReport_Duplicate_Closed() {
 			
-			var(_, reportId) = CallCreateReport(SongReportType.InvalidInfo);
-			var report = repository.Load<SongReport>(reportId);
+			var(_, report) = CallCreateReport(SongReportType.InvalidInfo);
 			report.Status = ReportStatus.Closed;
 			var(secondCreated, _) = CallCreateReport(SongReportType.Other);
 
@@ -403,8 +400,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void CreateReport_Duplicate_Closed_NotLoggedIn() {
 			
 			permissionContext.LoggedUser = null;
-			var (_, reportId) = CallCreateReport(SongReportType.InvalidInfo);
-			var report = repository.Load<SongReport>(reportId);
+			var (_, report) = CallCreateReport(SongReportType.InvalidInfo);
 			report.Status = ReportStatus.Closed;
 			var (secondCreated, _) = CallCreateReport(SongReportType.Other);
 
@@ -418,8 +414,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateReport_Duplicate_Closed_Then_Open() {
 			
-			var(_, reportId) = CallCreateReport(SongReportType.InvalidInfo);
-			var report = repository.Load<SongReport>(reportId);
+			var(_, report) = CallCreateReport(SongReportType.InvalidInfo);
 			report.Status = ReportStatus.Closed;
 			CallCreateReport(SongReportType.Other);
 			var (thirdCreated, _) = CallCreateReport(SongReportType.Other);
