@@ -132,7 +132,7 @@ namespace VocaDb.Model.Mapping.Albums {
 			});
 
 			Component(m => m.Diff, c => {
-				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
+				c.Map(m => m.ChangedFieldsString, ClassConventions.EscapeColumn("ChangedFields")).Length(1000).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
 

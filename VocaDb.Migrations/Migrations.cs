@@ -4,6 +4,15 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	[Migration(2019_04_14_1300)]
+	public class ArchivedEntryVersionChangedFieldsLength : AutoReversingMigration {
+		public override void Up() {
+			Alter.Column("ChangedFields").OnTable(TableNames.ArchivedAlbumVersions).AsAnsiString(1000).NotNullable().WithDefaultValue(string.Empty);
+			Alter.Column("ChangedFields").OnTable(TableNames.ArchivedArtistVersions).AsAnsiString(1000).NotNullable().WithDefaultValue(string.Empty);
+			Alter.Column("ChangedFields").OnTable(TableNames.ArchivedSongVersions).AsAnsiString(1000).NotNullable().WithDefaultValue(string.Empty);
+		}
+	}
+
 	[Migration(2019_03_12_2100)]
 	public class SongNameIndex : AutoReversingMigration {
 		public override void Up() {
