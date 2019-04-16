@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
@@ -35,6 +36,24 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		private string GetValue(XDocument doc, string xpath) {
 			return doc.XPathSelectElement(xpath)?.Value;
+		}
+
+		private async Task<int?> GetLength(string id) {
+
+			var requestUrl = string.Format("https://api.bilibili.com/x/player/pagelist?aid={0}", id);
+
+			PlayerResponse result;
+
+			try {
+				result = await JsonRequest.ReadObjectAsync<PlayerResponse>(requestUrl);
+			} catch (WebException) {
+				return null;
+			} catch (JsonSerializationException) {
+				return null;
+			}
+
+			return result?.Data.FirstOrDefault()?.Duration;
+
 		}
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
@@ -82,13 +101,14 @@ namespace VocaDb.Model.Service.VideoServices {
 			var thumb = thumbElem?.Value ?? string.Empty;
 			var author = authorElem?.Value ?? string.Empty;
 			var created = createdElem != null ? (DateTime?)DateTime.Parse(createdElem.Value) : null;
+			var length = await GetLength(id);
 
 			var metadata = new PVExtendedMetadata(new BiliMetadata {
 				Cid = cid
 			});
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, 
-				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, uploadDate: created, extendedMetadata: metadata));
+				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, length: length, uploadDate: created, extendedMetadata: metadata));
 
 		}
 
@@ -108,4 +128,13 @@ namespace VocaDb.Model.Service.VideoServices {
 		[DataMember]
 		public int Cid { get; set; }
 	}
+
+	class PlayerResponse {
+		public PlayerResponseData[] Data { get; set; }
+	}
+
+	class PlayerResponseData {
+		public int Duration { get; set; }
+	}
+
 }
