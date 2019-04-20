@@ -5,6 +5,7 @@
 @using VocaDb.Model.DataContracts.PVs
 @using VocaDb.Model.DataContracts.Songs
 @using VocaDb.Model.Domain.Globalization
+@using VocaDb.Model.Domain.PVs
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Models;
@@ -584,8 +585,17 @@
 		</a>
 		if (VideoServiceHelper.ShowExternalSiteLink(pv.Service)) {
 			@Html.Raw("&nbsp;")
-			@("(")<a href="@pv.Url" onclick="vdb.functions.trackOutboundLink(event)">@Res.ViewExternal</a>@(")")			 
+			<a href="@pv.Url" onclick="vdb.functions.trackOutboundLink(event)" target="_blank">
+				<i class="icon-eye-open"></i>
+				@Res.ViewExternal
+			</a>
 		}
+		if (pv.Service == PVService.NicoNicoDouga) {
+			 <a href="http://nicodata.vocaloid.eu/?NicoUrl=@pv.Url" target="_blank">
+				 <i class="icon-info-sign"></i>
+				 View info
+			 </a>
+		 }
 		<br />
 	}
 
