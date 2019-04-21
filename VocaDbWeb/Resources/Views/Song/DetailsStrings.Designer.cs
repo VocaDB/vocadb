@@ -565,6 +565,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View info.
+        /// </summary>
+        public static string ViewInfo {
+            get {
+                return ResourceManager.GetString("ViewInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vocalists.
         /// </summary>
         public static string Vocalists {
