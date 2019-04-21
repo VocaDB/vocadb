@@ -36,7 +36,7 @@ module vdb.tests.viewModels {
         ok(target.userRating, "userRating");
         equal(target.userRating.rating(), cls.SongVoteRating['Nothing'], "userRating.rating");
 
-    });
+	});
 
     QUnit.test("showSongLists has lists", () => {
 
@@ -58,15 +58,56 @@ module vdb.tests.viewModels {
 
     });
 
+	QUnit.test("showSongLists only featured lists", () => {
+
+	    rep.songLists = [
+		    { id: 1, name: "Mikupa 2013", featuredCategory: "Concerts" }
+	    ];
+
+		target.songListDialog.showSongLists();
+
+		equal(target.songListDialog.songLists().length, 1, "songListDialog.songLists.length");
+		equal(target.songListDialog.songLists()[0].name, "Mikupa 2013", "songListDialog.songLists[0].name");
+		equal(target.songListDialog.selectedListId(), 1, "songListDialog.selectedListId");
+		equal(target.songListDialog.tabName(), vm.SongListsViewModel.tabName_Featured, "target.songListDialog.tabName");
+
+	});
+
     QUnit.test("addSongToList", () => {
 
         target.songListDialog.showSongLists();
 
         target.songListDialog.addSongToList();
 
-        equal(rep.addedSongId, 39, "rep.addedSongId");
+        equal(rep.songLists.length, 3, "rep.songLists.length");
+        var songInList = rep.songsInLists[0];
+        equal(songInList.songId, 39, "songInList.songId: Song as expected");
+        equal(songInList.listId, 1, "songInList.listId: List as expected");
 
-    });
+	});
+
+	QUnit.test("addSongToList custom list when there are only featured lists", () => {
+
+		rep.songLists = [
+			{ id: 1, name: "Mikupa 2013", featuredCategory: "Concerts" },
+			{ id: 2, name: "Mikupa 2014", featuredCategory: "Concerts" },
+		];
+
+		target.songListDialog.showSongLists();
+		target.songListDialog.tabName(vm.SongListsViewModel.tabName_New);
+		target.songListDialog.newListName("Favorite Rinnssss");
+
+		target.songListDialog.addSongToList();
+
+		equal(rep.songLists.length, 3, "rep.songLists.length: New list was created");
+		var newList = _.find(rep.songLists, sl => sl.name === "Favorite Rinnssss");
+		ok(newList, "newList: New list was created");
+		equal(rep.songsInLists.length, 1, "rep.songsInLists: Song was added to list");
+		var songInList = rep.songsInLists[0];
+		equal(songInList.songId, 39, "songInList.songId: Song as expected");
+		equal(songInList.listId, newList.id, "songInList.listId: List as expected");
+
+	});
 
 	QUnit.test("tabName featured lists tab", () => {
 

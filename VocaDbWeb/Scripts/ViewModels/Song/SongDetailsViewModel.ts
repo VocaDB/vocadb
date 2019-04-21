@@ -198,9 +198,9 @@ module vdb.viewModels {
 
     export class SongListsViewModel {
         
-		private tabName_Personal = "Personal";
-		private tabName_Featured = "Featured";
-		private tabName_New = "New";
+		public static readonly tabName_Personal = "Personal";
+		public static readonly tabName_Featured = "Featured";
+		public static readonly tabName_New = "New";
 
         public addedToList: () => void;
 
@@ -220,9 +220,9 @@ module vdb.viewModels {
 
         public showSongLists: () => void;
 
-		public tabName = ko.observable(this.tabName_Personal);
+		public tabName = ko.observable(SongListsViewModel.tabName_Personal);
 
-        public songLists = ko.computed(() => this.tabName() === this.tabName_Personal ? this.personalLists() : this.featuredLists());
+		public songLists = ko.computed(() => this.tabName() === SongListsViewModel.tabName_Personal ? this.personalLists() : this.featuredLists());
 
         constructor(repository: rep.SongRepository, resources: SongDetailsResources, songId: number) {
             
@@ -231,8 +231,9 @@ module vdb.viewModels {
             };
 
             this.addSongToList = () => {
-                if (isValid()) {
-                    repository.addSongToList(this.selectedListId() || 0, songId, this.notes(), this.newListName(), () => {
+				if (isValid()) {
+					const listId = this.tabName() !== SongListsViewModel.tabName_New ? this.selectedListId() || 0 : 0;
+					repository.addSongToList(listId, songId, this.notes(), this.newListName(), () => {
 
 						this.notes("");
                         this.dialogVisible(false);
@@ -254,11 +255,11 @@ module vdb.viewModels {
 					this.featuredLists(featuredLists);
 
 					if (personalLists.length)
-						this.tabName(this.tabName_Personal);
+						this.tabName(SongListsViewModel.tabName_Personal);
 					else if (featuredLists.length)
-						this.tabName(this.tabName_Featured);
+						this.tabName(SongListsViewModel.tabName_Featured);
 					else
-						this.tabName(this.tabName_New);
+						this.tabName(SongListsViewModel.tabName_New);
 
                     this.newListName("");
                     this.selectedListId(this.songLists().length > 0 ? this.songLists()[0].id : null);
