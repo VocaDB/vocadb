@@ -36,6 +36,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		/// <exception cref="HttpRequestException">If the request failed</exception>
 		public static async Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func, int timeoutSec = 10000, string userAgent = "") {
 
 			var uri = new Uri(url);

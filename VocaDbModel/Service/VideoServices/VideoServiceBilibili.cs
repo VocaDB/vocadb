@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Xml;
@@ -76,6 +77,9 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			try {
 				doc = await HtmlRequestHelper.GetStreamAsync(requestUrl, stream => XDocument.Load(stream), timeoutSec: 10, userAgent: "VocaDB/1.0 (admin@vocadb.net)");
+			} catch (HttpRequestException x) {
+				log.Warn(x, "Unable to load Bilibili URL {0}", url);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
 			} catch (WebException x) {
 				log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));

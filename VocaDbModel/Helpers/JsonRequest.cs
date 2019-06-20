@@ -41,6 +41,7 @@ namespace VocaDb.Model.Helpers {
 		/// <returns>The read object.</returns>
 		/// <exception cref="WebException">If a web request error occurred.</exception>
 		/// <exception cref="JsonSerializationException">If the response wasn't valid JSON.</exception>
+		/// <exception cref="HttpRequestException">If the request failed.</exception>
 		public static async Task<T> ReadObjectAsync<T>(string url, int timeoutMs = 100000) {
 
 			return await HtmlRequestHelper.GetStreamAsync(url, stream => {
