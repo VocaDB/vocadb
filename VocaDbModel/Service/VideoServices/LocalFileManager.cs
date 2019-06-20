@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 using File = System.IO.File;
@@ -33,7 +34,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return imageExtensions.Contains(ext);
 		}
 
-		public PVContract CreatePVContract(HttpPostedFileBase file, IIdentity user, IUser loggedInUser) {
+		public PVContract CreatePVContract(IHttpPostedFile file, IIdentity user, IUser loggedInUser) {
 
 			var tempFile = Path.ChangeExtension(Path.GetTempFileName(), ImageHelper.GetExtensionFromMime(file.ContentType));
 			file.SaveAs(tempFile);

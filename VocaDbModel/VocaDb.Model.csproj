@@ -573,6 +573,8 @@
     <Compile Include="Domain\Songs\SongName.cs" />
     <Compile Include="Domain\Songs\SongWebLink.cs" />
     <Compile Include="Domain\ExtLinks\WebLink.cs" />
+    <Compile Include="Domain\Web\IHttpContext.cs" />
+    <Compile Include="Domain\Web\IHttpPostedFile.cs" />
     <Compile Include="EnumVal.cs" />
     <Compile Include="Helpers\AlbumHelper.cs" />
     <Compile Include="Helpers\AlphaPassGenerator.cs" />
@@ -581,6 +583,7 @@
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\DictionaryExtensions.cs" />
     <Compile Include="Helpers\EnumerableExtender.cs" />
     <Compile Include="Helpers\HtmlHelperFunctions.cs" />
     <Compile Include="Helpers\HtmlRequestHelper.cs" />

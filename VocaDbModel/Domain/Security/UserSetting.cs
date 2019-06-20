@@ -1,8 +1,9 @@
 using System;
-using System.Web;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Web;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Security {
 
@@ -28,12 +29,12 @@ namespace VocaDb.Model.Domain.Security {
 
 	public abstract class UserSetting<T> : IUserSetting {
 
-		private static string GetCookieValue(HttpRequest request, string cookieName) {
+		private string GetCookieValue(IHttpRequest request, string cookieName) {
 			
-			if (HttpContext.Current == null)
+			if (context == null)
 				return null;
 
-			var cookie = request.Cookies.Get(cookieName);
+			var cookie = request.Cookies.GetValueOrDefault(cookieName);
 
 			if (cookie == null || string.IsNullOrEmpty(cookie.Value))
 				return null;
@@ -42,16 +43,15 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		private static void SetCookie(HttpContext context, string cookieName, string value, TimeSpan expires) {
+		private void SetCookie(IHttpContext context, string cookieName, string value, TimeSpan expires) {
 			
 			if (context != null) {
-				var cookie = new HttpCookie(cookieName, value) { Expires = DateTime.Now + expires };
-				context.Response.Cookies.Add(cookie);
+				context.Response.AddCookie(cookieName, value, DateTime.Now + expires);
 			}
 
 		}
 
-		private static bool TryGetCookieValue(HttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter) {
+		private bool TryGetCookieValue(IHttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter) {
 			
 			var cookieValue = GetCookieValue(request, cookieName);
 
@@ -66,7 +66,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		delegate bool ValueGetterDelegate(string str, out T val);
 
-		private static bool TryGetFromQueryString(HttpRequest request, string paramName, ref T value, ValueGetterDelegate valueGetter) {
+		private static bool TryGetFromQueryString(IHttpRequest request, string paramName, ref T value, ValueGetterDelegate valueGetter) {
 
 			if (request == null || string.IsNullOrEmpty(paramName) || string.IsNullOrEmpty(request.QueryString[paramName]))
 				return false;
@@ -75,7 +75,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		private readonly HttpContext context;
+		private readonly IHttpContext context;
 		private readonly IUserPermissionContext permissionContext;
 
 		protected virtual TimeSpan CookieExpires => TimeSpan.FromHours(24);
@@ -93,7 +93,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		private HttpRequest Request => context != null ? context.Request : null;
+		private IHttpRequest Request => context != null ? context.Request : null;
 
 		protected virtual string RequestParamName => null;
 
@@ -102,18 +102,18 @@ namespace VocaDb.Model.Domain.Security {
 		private T RequestValue {
 			get {
 
-				if (HttpContext.Current == null)
+				if (context == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
-				return (T)HttpContext.Current.Items[RequestItemName];
+				return (T)context.Items[RequestItemName];
 
 			}
 			set {
 
-				if (HttpContext.Current == null)
+				if (context == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
-				HttpContext.Current.Items[RequestItemName] = value;
+				context.Items[RequestItemName] = value;
 
 			}			
 		}
@@ -140,7 +140,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		protected abstract bool TryParseValue(string str, out T val);
 
-		protected UserSetting(HttpContext context, IUserPermissionContext permissionContext) {
+		protected UserSetting(IHttpContext context, IUserPermissionContext permissionContext) {
 			this.context = context;
 			this.permissionContext = permissionContext;
 		}
@@ -189,7 +189,7 @@ namespace VocaDb.Model.Domain.Security {
 
 	public class UserSettingLanguagePreference : UserSetting<ContentLanguagePreference> {
 		
-		public UserSettingLanguagePreference(HttpContext context, IUserPermissionContext permissionContext) 
+		public UserSettingLanguagePreference(IHttpContext context, IUserPermissionContext permissionContext) 
 			: base(context, permissionContext) {}
 
 		protected override ContentLanguagePreference Default => ContentLanguagePreference.Default;

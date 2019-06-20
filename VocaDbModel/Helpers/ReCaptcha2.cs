@@ -1,7 +1,7 @@
-﻿using System.Net;
+using System.Net;
 using System.Runtime.Serialization;
-using System.Web;
 using NLog;
+using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Model.Helpers {
 
@@ -11,7 +11,7 @@ namespace VocaDb.Model.Helpers {
 		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 		private const string VerifyApi = "https://www.google.com/recaptcha/api/siteverify";
 
-		public static ValidateCaptchaResponse Validate(HttpRequestBase request, string privateKey) {
+		public static ValidateCaptchaResponse Validate(IHttpRequest request, string privateKey) {
 			
 			var userResponse = request.Form[ResponseFieldName];
 

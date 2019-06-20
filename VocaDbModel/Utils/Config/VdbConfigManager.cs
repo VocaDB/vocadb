@@ -1,4 +1,4 @@
-﻿using System.Web.Configuration;
+using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config {
 
@@ -9,20 +9,20 @@ namespace VocaDb.Model.Utils.Config {
 
 		public AffiliatesSection Affiliates {
 			get {
-				var section = (AffiliatesSection)WebConfigurationManager.GetSection("vocaDb/affiliates");
+				var section = (AffiliatesSection)ConfigurationManager.GetSection("vocaDb/affiliates");
 				return section ?? new AffiliatesSection();
 			}
 		}
 
-		public AssetsSection Assets => (AssetsSection)WebConfigurationManager.GetSection("vocaDb/assets") ?? new AssetsSection();
+		public AssetsSection Assets => (AssetsSection)ConfigurationManager.GetSection("vocaDb/assets") ?? new AssetsSection();
 
-		public SiteSettingsSection SiteSettings => (SiteSettingsSection)WebConfigurationManager.GetSection("vocaDb/siteSettings") ?? new SiteSettingsSection();
+		public SiteSettingsSection SiteSettings => (SiteSettingsSection)ConfigurationManager.GetSection("vocaDb/siteSettings") ?? new SiteSettingsSection();
 
 		public SpecialTagsSection SpecialTags
 		{
 			get
 			{
-				var section = (SpecialTagsSection)WebConfigurationManager.GetSection("vocaDb/specialTags");
+				var section = (SpecialTagsSection)ConfigurationManager.GetSection("vocaDb/specialTags");
 				return section ?? new SpecialTagsSection();
 			}
 		}
