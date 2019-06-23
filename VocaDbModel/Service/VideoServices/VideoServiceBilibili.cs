@@ -6,9 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using NLog;
@@ -34,10 +31,6 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public VideoServiceBilibili() 
 			: base(PVService.Bilibili, null, Matchers) {}
-
-		private string GetValue(XDocument doc, string xpath) {
-			return doc.XPathSelectElement(xpath)?.Value;
-		}
 
 		private async Task<int?> GetLength(string id) {
 
@@ -68,22 +61,19 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, VideoTitleParseResult.Empty);
 			}
 
-			var paramStr = string.Format("appkey={0}&id={1}&type=xml{2}", AppConfig.BilibiliAppKey, id, AppConfig.BilibiliSecretKey);
+			var paramStr = string.Format("appkey={0}&id={1}&type=json{2}", AppConfig.BilibiliAppKey, id, AppConfig.BilibiliSecretKey);
 			var paramStrMd5 = CryptoHelper.HashString(paramStr, CryptoHelper.MD5).ToLowerInvariant();
 
-			var requestUrl = string.Format("https://api.bilibili.com/view?appkey={0}&id={1}&type=xml&sign={2}", AppConfig.BilibiliAppKey, id, paramStrMd5);
+			var requestUrl = string.Format("https://api.bilibili.com/view?appkey={0}&id={1}&type=json&sign={2}", AppConfig.BilibiliAppKey, id, paramStrMd5);
 
-			XDocument doc;
+			BilibiliResponse response;
 
 			try {
-				doc = await HtmlRequestHelper.GetStreamAsync(requestUrl, stream => XDocument.Load(stream), timeoutSec: 10, userAgent: "VocaDB/1.0 (admin@vocadb.net)");
+				response = await JsonRequest.ReadObjectAsync<BilibiliResponse>(requestUrl, timeoutMs: 10_000, userAgent: "VocaDB/1.0 (admin@vocadb.net)");
 			} catch (HttpRequestException x) {
 				log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
 			} catch (WebException x) {
-				log.Warn(x, "Unable to load Bilibili URL {0}", url);
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
-			} catch (XmlException x) {
 				log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
 			} catch (IOException x) {
@@ -91,20 +81,16 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
 			}
 
-			var titleElem = doc.XPathSelectElement("/info/title");
-			var thumbElem = doc.XPathSelectElement("/info/pic");
-			var authorElem = doc.XPathSelectElement("/info/author");
-			var authorId = GetValue(doc, "/info/mid");
-			var createdElem = doc.XPathSelectElement("/info/created_at");
-			int.TryParse(GetValue(doc, "/info/cid"), out var cid); // Unsure what this is, but it's required for embedding
+			var authorId = response.Mid.ToString();
+            int cid = response.Cid;
 
-			if (titleElem == null)
+			if (string.IsNullOrEmpty(response.Title))
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "No title element");
 
-			var title = HtmlEntity.DeEntitize(titleElem.Value);
-			var thumb = thumbElem?.Value ?? string.Empty;
-			var author = authorElem?.Value ?? string.Empty;
-			var created = createdElem != null ? (DateTime?)DateTime.Parse(createdElem.Value) : null;
+			var title = HtmlEntity.DeEntitize(response.Title);
+			var thumb = response.Pic ?? string.Empty;
+			var author = response.Author ?? string.Empty;
+			var created = response.CreatedAt;
 			var length = await GetLength(id);
 
 			var metadata = new PVExtendedMetadata(new BiliMetadata {
@@ -139,6 +125,16 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	class PlayerResponseData {
 		public int Duration { get; set; }
+	}
+
+	class BilibiliResponse {
+		public string Author { get; set; }
+		public int Cid { get; set; }
+		[JsonProperty("created_at")]
+		public DateTime? CreatedAt { get; set; }
+		public int Mid { get; set; }
+		public string Pic { get; set; }
+		public string Title { get; set; }
 	}
 
 }
