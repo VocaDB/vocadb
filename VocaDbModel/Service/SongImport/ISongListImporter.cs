@@ -1,13 +1,14 @@
-﻿using System.Linq;
+using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.DataContracts.SongImport;
 
 namespace VocaDb.Model.Service.SongImport {
 
 	public interface ISongListImporter {
 
-		PartialImportedSongs GetSongs(string url, string nextPageToken, int maxResults, bool parseAll);
+		Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll);
 			
-		ImportedSongListContract Parse(string url, bool parseAll);
+		Task<ImportedSongListContract> ParseAsync(string url, bool parseAll);
 
 		bool MatchUrl(string url);
 
@@ -31,15 +32,15 @@ namespace VocaDb.Model.Service.SongImport {
 
 		}
 
-		public PartialImportedSongs GetSongs(string url, string pageToken, int maxResults, bool parseAll) {
+		public Task<PartialImportedSongs> GetSongs(string url, string pageToken, int maxResults, bool parseAll) {
 			
-			return GetImporter(url).GetSongs(url, pageToken, maxResults, parseAll);
+			return GetImporter(url).GetSongsAsync(url, pageToken, maxResults, parseAll);
 
 		}
 
-		public ImportedSongListContract Parse(string url, bool parseAll) {
+		public Task<ImportedSongListContract> Parse(string url, bool parseAll) {
 			
-			return GetImporter(url).Parse(url, parseAll);
+			return GetImporter(url).ParseAsync(url, parseAll);
 
 		}
 

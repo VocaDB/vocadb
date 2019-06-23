@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -263,9 +264,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ImportedSongListContract Import(string url, bool parseAll) {
+		public async Task<ImportedSongListContract> Import(string url, bool parseAll) {
 
-			var parsed = new SongListImporters().Parse(url, parseAll);
+			var parsed = await new SongListImporters().Parse(url, parseAll);
 
 			FindSongs(parsed.Songs);
 
@@ -273,9 +274,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialImportedSongs ImportSongs(string url, string pageToken, int maxResults, bool parseAll) {
+		public async Task<PartialImportedSongs> ImportSongs(string url, string pageToken, int maxResults, bool parseAll) {
 
-			var songs = new SongListImporters().GetSongs(url, pageToken, maxResults, parseAll);
+			var songs = await new SongListImporters().GetSongs(url, pageToken, maxResults, parseAll);
 			return FindSongs(songs);
 
 		}
