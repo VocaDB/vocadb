@@ -76,6 +76,9 @@ namespace VocaDb.Model.Service.VideoServices {
 			} catch (WebException x) {
 				log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
+			} catch (JsonSerializationException x) {
+				log.Warn(x, "Unable to load Bilibili URL {0}", url);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
 			} catch (IOException x) {
 				log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
