@@ -257,6 +257,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Filtered song types (optional). 
 		/// Possible values are Original, Remaster, Remix, Cover, Instrumental, Mashup, MusicPV, DramaPV, Other.
 		/// </param>
+		/// <param name="afterDate">Filter by songs published after this date (inclusive).</param>
+		/// <param name="beforeDate">Filter by songs published before this date (exclusive).</param>
 		/// <param name="tagName">Filter by one or more tag names (optional).</param>
 		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
 		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
@@ -298,6 +300,8 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongForApiContract> GetList(
 			string query = "", 
 			string songTypes = null,
+			DateTime? afterDate = null,
+			DateTime? beforeDate = null,
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
@@ -330,6 +334,8 @@ namespace VocaDb.Web.Controllers.Api {
 					ChildVoicebanks = childVoicebanks,
 					IncludeMembers = includeMembers
 				},
+                AfterDate = afterDate,
+                BeforeDate = beforeDate,
 				TagIds = tagId,
 				Tags = tagName, 
 				ChildTags = childTags,
