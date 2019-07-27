@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.songs {
 	
 	import cls = vdb.models;
@@ -10,6 +10,8 @@ module vdb.viewModels.songs {
 			private query: KnockoutObservable<string>,
 			private sort: KnockoutObservable<string>,
 			private songType: KnockoutObservable<string>,
+			private afterDate: KnockoutObservable<Date>,
+			private beforeDate: () => Date,
 			private tagIds: KnockoutObservable<number[]>,
 			private childTags: KnockoutObservable<boolean>,
 			private artistIds: KnockoutComputed<number[]>,
@@ -35,6 +37,8 @@ module vdb.viewModels.songs {
 
 			this.songRepo.getList(paging, cls.globalization.ContentLanguagePreference[lang], this.query(), this.sort(),
 				this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+				this.afterDate(),
+				this.beforeDate(),
 				this.tagIds(),
 				this.childTags(),
 				this.artistIds(),

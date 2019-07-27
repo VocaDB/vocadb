@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.search {
 
 	import cls = vdb.models;
@@ -71,6 +71,7 @@ module vdb.viewModels.search {
 
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
+			this.afterDate.subscribe(this.updateResultsWithTotalCount);
 			this.releaseEvent.subscribe(this.updateResultsWithTotalCount);
 			this.minScore.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
@@ -84,6 +85,8 @@ module vdb.viewModels.search {
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
 			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
+				this.afterDate,
+                this.beforeDate,
 				this.tagIds, this.childTags,
 				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus,
 				this.artistFilters.childVoicebanks,
@@ -105,6 +108,8 @@ module vdb.viewModels.search {
 
 					this.songRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
 						this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+						this.afterDate(),
+                        this.beforeDate(),
 						tag,
 						childTags,
 						this.artistFilters.artistIds(),
@@ -144,6 +149,8 @@ module vdb.viewModels.search {
 		}
 
 		public artistFilters: ArtistFilters;
+		public dateMonth = ko.observable<number>(null);
+		public dateYear = ko.observable<number>(null);
 		public releaseEvent: BasicEntryLinkViewModel<cls.IEntryWithIdAndName>;
 		public minScore: KnockoutObservable<number>;
 		public onlyRatedSongs = ko.observable(false);
@@ -157,6 +164,11 @@ module vdb.viewModels.search {
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
 		public viewMode: KnockoutObservable<string>;
+
+        // Remember, JavaScript months start from 0 (who came up with that??)
+		private toDateOrNull = (mom: moment.Moment) => mom.isValid() ? mom.toDate() : null;
+		private afterDate = ko.computed(() => this.dateYear() ? this.toDateOrNull(moment.utc([this.dateYear(), (this.dateMonth() || 1) - 1, 1])) : null);
+		private beforeDate = () => this.dateYear() ? this.toDateOrNull(moment.utc([this.dateYear(), (this.dateMonth() || 12) - 1, 1]).add(1, 'M')) : null;
 
 		public fields = ko.computed(() => this.showTags() ? "AdditionalNames,ThumbUrl,Tags" : "AdditionalNames,ThumbUrl");
 
