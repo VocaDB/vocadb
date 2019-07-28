@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -60,7 +60,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private UserContract CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, 
 			string culture = defaultCulture, TimeSpan? timeSpan = null) {
 
-			return data.Create(name, pass, email, hostname, 
+			return data.Create(name, pass, email, hostname, null, 
 				culture,
 				timeSpan ?? TimeSpan.FromMinutes(39), softBannedIPs, string.Empty);
 

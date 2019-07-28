@@ -602,7 +602,8 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="name">User name. Must be unique. Cannot be null or empty.</param>
 		/// <param name="pass">Password. Cannot be null or empty.</param>
 		/// <param name="email">Email address. Must be unique if specified. Cannot be null.</param>
-		/// <param name="hostname">Host name where the registration is from.</param>
+		/// <param name="hostname">Host name (usually IP address) where the registration is from.</param>
+		/// <param name="userAgent">User agent. Can be empty.</param>
 		/// <param name="culture">User culture name. Can be empty.</param>
 		/// <param name="timeSpan">Time in which the user filled the registration form.</param>
 		/// <param name="softbannedIPs">List of application's soft-banned IPs. Soft-banned IPs are cleared when the application restarts.</param>
@@ -613,6 +614,7 @@ namespace VocaDb.Model.Database.Queries {
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
 		/// <exception cref="TooFastRegistrationException">If the user registered too fast.</exception>
 		public UserContract Create(string name, string pass, string email, string hostname, 
+			string userAgent,
 			string culture,
 			TimeSpan timeSpan,
 			HostCollection softbannedIPs, string verifyEmailUrl) {
@@ -679,7 +681,7 @@ namespace VocaDb.Model.Database.Queries {
 					SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
 				}
 
-				ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}).", MakeGeoIpToolLink(hostname), timeSpan, sfsStr), user);
+				ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}, UA '{3}').", MakeGeoIpToolLink(hostname), timeSpan, sfsStr, userAgent), user);
 
 				return new UserContract(user);
 
