@@ -1,11 +1,14 @@
 /* External links */
 .extLink (@linkUrl) {
-	background: @linkUrl no-repeat left 50%;
+	background: @linkUrl;
 }
 
 a.extLink {
-	.extLink(url("/Content/Icons/world.png"));
 	padding: 2px 0 2px 20px;
+	background: url("/Content/Icons/world.png");
+	background-repeat: no-repeat;
+	background-position-y: 50%;
+	background-position-x: left;
 
 	&[href^="http://about.me/"], &[href^="https://about.me/"] {
 		.extLink(url("/Content/ExtIcons/aboutme.png"));
