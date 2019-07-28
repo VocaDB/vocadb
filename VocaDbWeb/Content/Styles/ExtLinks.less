@@ -1,17 +1,21 @@
 /* External links */
 .extLink (@linkUrl) {
-	background: @linkUrl;
+	background-image: @linkUrl;
 }
 
 a.extLink {
 	padding: 2px 0 2px 20px;
 	background: url("/Content/Icons/world.png");
 	background-repeat: no-repeat;
-	background-position-y: 50%;
 	background-position-x: left;
+	background-position-y: 50%;
 
 	&[href^="http://about.me/"], &[href^="https://about.me/"] {
 		.extLink(url("/Content/ExtIcons/aboutme.png"));
+	}
+
+	&[href^="http://ec.akbh.jp/products/detail.php"], &[href^="https://ec.akbh.jp/products/detail.php"] {
+		background-image: url("/Content/ExtIcons/akibahobby.png");
 	}
 
 	&[href^="http://www.amazon.co.jp/"], &[href^="https://www.amazon.co.jp/"], &[href^="http://www.amazon.com/"], &[href^="https://www.amazon.com/"] {
