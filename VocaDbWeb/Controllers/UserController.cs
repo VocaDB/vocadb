@@ -34,6 +34,7 @@ using VocaDb.Web.Models;
 using VocaDb.Web.Models.User;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Code.Exceptions;
+using System.Net;
 
 namespace VocaDb.Web.Controllers
 {
@@ -373,6 +374,10 @@ namespace VocaDb.Web.Controllers
 
 			var targetUrl = Url.Action("LoginTwitterComplete", new { returnUrl });
 			var uri = new Uri(new Uri(AppConfig.HostAddress), targetUrl);
+
+			// https://twittercommunity.com/t/removing-support-for-legacy-tls-versions-1-0-1-1-on-twitter/126648
+			// TODO: TLS 1.2 should already be default in .NET 4.8. Figure out why not.
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
 
 			UserAuthorizationRequest request;
 
