@@ -25,7 +25,8 @@ a.extLink[href^="https://www.animate-onlineshop.jp/"] {
   background-image: url("/Content/ExtIcons/animate.png");
 }
 a.extLink[href^="http://www5.atwiki.jp/hmiku/"],
-a.extLink[href^="https://www5.atwiki.jp/hmiku/"] {
+a.extLink[href^="https://www5.atwiki.jp/hmiku/"],
+a.extLink[href^="https://w.atwiki.jp/hmiku/"] {
   background-image: url("/Content/ExtIcons/atwiki.png");
 }
 a.extLink[href^="http://space.bilibili.tv/"],
@@ -267,7 +268,8 @@ a.extLink[href*="twitter.com/"] {
   background: url("/Content/ExtIcons/twitter.png") no-repeat left 50%;
 }
 a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"],
-a.extLink[href^="https://www24.atwiki.jp/utauuuta/pages/"] {
+a.extLink[href^="https://www24.atwiki.jp/utauuuta/pages/"],
+a.extLink[href^="https://w.atwiki.jp/utauuuta/pages/"] {
   background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
 }
 a.extLink[href^="http://vimeo.com/"],
