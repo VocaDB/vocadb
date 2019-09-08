@@ -484,6 +484,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 					if (!startDate.HasValue) {
 						startDate = DateTime.Now - timeSpan;
+						endDate = DateTime.Now.AddDays(1);
 					} else {
 						endDate = startDate + timeSpan;
 					}
