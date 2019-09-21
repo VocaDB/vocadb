@@ -38,12 +38,7 @@ namespace VocaDb.Model.Domain.ExtLinks {
 			if (string.IsNullOrEmpty(trimmed))
 				return new string[0];
 
-			if (variationTypes == WebLinkVariationTypes.Nothing)
-			{
-				return new[] { trimmed };
-			}
-
-			var variations = Enumerable.Empty<string>();
+			var variations = Enumerable.Repeat(trimmed, 1);
 
 			if (variationTypes.HasFlag(WebLinkVariationTypes.IgnoreScheme))
 			{
