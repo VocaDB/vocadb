@@ -33,7 +33,7 @@ namespace VocaDb.Model.Service.Helpers {
 		};
 
 		/// <summary>
-		/// Get full external URL from a possible external URL fragment.
+		/// Attempts to identify a string as possible artist URL and gets full external URL.
 		/// For example both /mylist/6667938 and http://www.nicovideo.jp/mylist/6667938 will be identified as http://www.nicovideo.jp/mylist/6667938
 		/// </summary>
 		/// <param name="possibleUrl">
@@ -44,6 +44,11 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Full external URL, if matched. For example, https://www.nicovideo.jp/mylist/6667938.
 		/// Can be null if there was no match.
 		/// </returns>
+		/// <remarks>
+		/// This is generally needed if it's uncertain whether <paramref name="possibleUrl"/> is a URL or something else
+		/// (such as artist name).
+		/// For internal URLs <see cref="EntryUrlParser"/> can be used.
+		/// </remarks>
 		public string GetExternalUrl(string possibleUrl) {
 			
 			if (string.IsNullOrEmpty(possibleUrl))
@@ -57,7 +62,7 @@ namespace VocaDb.Model.Service.Helpers {
 			var match = linkMatchers
 				.Select(matcher => new {
 					matcher.Template,
-					Result = matcher.Regex.Match(possibleUrl)
+					Result = matcher.Regex.Match(lowercase)
 				})
 				.FirstOrDefault(m => m.Result.Success);
 

@@ -34,6 +34,11 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
+		public void UpperCase() {
+			TestGetExternalUrl("HTTP://WWW.NicoVideo.jp/MyList/6667938", "https://www.nicovideo.jp/mylist/6667938");
+		}
+
+		[TestMethod]
 		public void NoMatch_SameDomain() {
 			
 			TestGetExternalUrl("http://www.nicovideo.jp", null);

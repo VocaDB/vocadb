@@ -39,6 +39,8 @@ namespace VocaDb.Model.Domain.Images {
 		}
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size) {
+			if (string.IsNullOrEmpty(staticRoot))
+				return string.Empty;
 			var relative = string.Format(@"img\{0}\main{1}\{2}{3}", picture.EntryType, GetDir(size), picture.Id, ImageHelper.GetExtensionFromMime(picture.Mime));
 			return Path.Combine(staticRoot, relative);
 		}

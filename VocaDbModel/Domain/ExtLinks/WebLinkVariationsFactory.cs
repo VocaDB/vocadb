@@ -26,10 +26,10 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public static string[] GetWebLinkVariations(string originalUrl, WebLinkVariationTypes variationTypes) {
 
-			if (string.IsNullOrEmpty(originalUrl))
-				return new string[0];
+			var trimmed = originalUrl?.Trim();
 
-			var trimmed = originalUrl.Trim();
+			if (string.IsNullOrEmpty(trimmed))
+				return new string[0];
 
 			if (variationTypes == WebLinkVariationTypes.Nothing)
 			{
