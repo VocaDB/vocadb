@@ -35,7 +35,7 @@ namespace VocaDb.Tests.Service.Helpers {
 
 		[TestMethod]
 		public void UpperCase() {
-			TestGetExternalUrl("HTTP://WWW.NicoVideo.jp/MyList/6667938", "https://www.nicovideo.jp/mylist/6667938");
+			TestGetExternalUrl("HTTP://WWW.NicoVideo.jp/mylist/6667938", "https://www.nicovideo.jp/mylist/6667938");
 		}
 
 		[TestMethod]

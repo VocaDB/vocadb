@@ -15,7 +15,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 			public Matcher(string template, string regex) {
 				Template = template;
-				Regex = new Regex(regex);
+				Regex = new Regex(regex, RegexOptions.IgnoreCase);
 			}
 
 			public string Template { get; }
@@ -59,10 +59,12 @@ namespace VocaDb.Model.Service.Helpers {
 				return possibleUrl;
 			}
 
+			// For now keep original case, although database collation is case-insensitive, so lowercase should work too
+			// Regex matching ignores case.
 			var match = linkMatchers
 				.Select(matcher => new {
 					matcher.Template,
-					Result = matcher.Regex.Match(lowercase)
+					Result = matcher.Regex.Match(possibleUrl)
 				})
 				.FirstOrDefault(m => m.Result.Success);
 
