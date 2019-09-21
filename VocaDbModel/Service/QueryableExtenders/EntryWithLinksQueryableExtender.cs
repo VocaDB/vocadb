@@ -1,12 +1,17 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
+	/// <summary>
+	/// Extension methods for <see cref="IQueryable{IEntryWithLinks{TLink}}"/>.
+	/// Also see <see cref="WebLinkQueryableExtender"/>.
+	/// </summary>
 	public static class EntryWithLinksQueryableExtender {
 
-		public static IQueryable<T> WhereHasLink<T, TLink>(this IQueryable<T> query, string url) where T : IEntryWithLinks<TLink> where TLink : WebLink {
+		public static IQueryable<T> WhereHasLink<T, TLink>(this IQueryable<T> query, string url) 
+			where T : IEntryWithLinks<TLink> where TLink : WebLink {
 			return WhereHasLink<T, TLink>(query, url, NameMatchMode.Exact);
 		}
 

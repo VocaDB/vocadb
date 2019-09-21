@@ -275,7 +275,6 @@ namespace VocaDb.Model.Database.Queries {
 		public EntryRefWithCommonPropertiesContract[] FindDuplicates(string[] anyName, string url) {
 
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
-			var urlTrimmed = url != null ? UrlHelper.RemoveScheme(url.Trim()) : null;
 
 			if (!names.Any() && string.IsNullOrEmpty(url))
 				return new EntryRefWithCommonPropertiesContract[] { };
@@ -291,9 +290,9 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray()
 					.Distinct() : new Artist[] { });
 
-				var linkMatches = !string.IsNullOrEmpty(urlTrimmed) ?
-					session.Query<ArtistWebLink>()
-					.Where(w => !w.Entry.Deleted && (w.Url == urlTrimmed || w.Url == "http://" + urlTrimmed || w.Url == "https://" + urlTrimmed))
+				var linkMatches = !string.IsNullOrWhiteSpace(url) ? session.Query<ArtistWebLink>()				
+					.Where(w => !w.Entry.Deleted)
+					.WhereUrlIs(url)
 					.Select(w => w.Entry)
 					.Take(10)
 					.ToArray()

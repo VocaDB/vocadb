@@ -911,6 +911,7 @@
     <Compile Include="Database\Repositories\NHibernate\SongListNHibernateRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\UserMessageNHibernateRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\UserNHibernateRepository.cs" />
+    <Compile Include="Service\QueryableExtenders\WebLinkQueryableExtender.cs" />
     <Compile Include="Service\Search\AdvancedFilterType.cs" />
     <Compile Include="Service\Search\AdvancedSearchFilter.cs" />
     <Compile Include="Service\Search\AdvancedSearchFilters.cs" />
