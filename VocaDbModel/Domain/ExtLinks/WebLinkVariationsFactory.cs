@@ -2,9 +2,16 @@ using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Service.Helpers;
 
-namespace VocaDb.Model.Domain.ExtLinks
-{
+namespace VocaDb.Model.Domain.ExtLinks {
 
+	/// <summary>
+	/// Gets variations of a web link URL based on <see cref="WebLinkVariationTypes"/>,
+	/// for example scheme variations (http/https).
+	/// </summary>
+	/// <remarks>
+	/// The result is intended to be used in "IN" SQL query for exact matches.
+	/// SQL "LIKE" query could also be used, but it may provide unexpected results unless escaped properly.
+	/// </remarks>
 	public static class WebLinkVariationsFactory {
 
 		private static IEnumerable<string> GetSchemeAgnostic(string url) {
