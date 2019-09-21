@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Tests.Service.Helpers {
@@ -17,15 +17,25 @@ namespace VocaDb.Tests.Service.Helpers {
 		[TestMethod]
 		public void Partial() {
 			
-			TestGetExternalUrl("mylist/6667938", "http://www.nicovideo.jp/mylist/6667938");
+			TestGetExternalUrl("mylist/6667938", "https://www.nicovideo.jp/mylist/6667938");
 
 		}
 
 		[TestMethod]
 		public void Full() {
 			
-			TestGetExternalUrl("http://www.nicovideo.jp/mylist/6667938", "http://www.nicovideo.jp/mylist/6667938");
+			TestGetExternalUrl("http://www.nicovideo.jp/mylist/6667938", "https://www.nicovideo.jp/mylist/6667938");
 
+		}
+
+		[TestMethod]
+		public void NicoHttps() {
+			TestGetExternalUrl("https://www.nicovideo.jp/mylist/6667938", "https://www.nicovideo.jp/mylist/6667938");
+		}
+
+		[TestMethod]
+		public void UpperCase() {
+			TestGetExternalUrl("HTTP://WWW.NicoVideo.jp/mylist/6667938", "https://www.nicovideo.jp/mylist/6667938");
 		}
 
 		[TestMethod]

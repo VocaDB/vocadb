@@ -19,15 +19,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// https://www.nicovideo.jp/user/9979822 (https)
 		/// http://www.nicovideo.jp/user/9979822 (http)
 		/// </remarks>
-		public static IQueryable<TLink> WhereUrlIs<TLink>(this IQueryable<TLink> query, string url)
+		public static IQueryable<TLink> WhereUrlIs<TLink>(this IQueryable<TLink> query, string url, WebLinkVariationTypes variationTypes)
 			where TLink : class, IWebLink { 
 
-			var urlTrimmed = url != null ? UrlHelper.RemoveScheme(url.Trim()) : null;
-
-			if (string.IsNullOrEmpty(urlTrimmed))
-				return query;
-
-			return query.Where(w => w.Url == urlTrimmed || w.Url == "http://" + urlTrimmed || w.Url == "https://" + urlTrimmed);
+			var variations = WebLinkVariationsFactory.GetWebLinkVariations(url, variationTypes);
+			return query.Where(w => variations.Contains(w.Url));
 
 		}
 

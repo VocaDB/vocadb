@@ -341,6 +341,9 @@
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
     <Compile Include="Domain\Artists\ArtistHit.cs" />
+    <Compile Include="Domain\ExtLinks\WebLinkCategory.cs" />
+    <Compile Include="Domain\ExtLinks\WebLinkVariationTypes.cs" />
+    <Compile Include="Domain\ExtLinks\WebLinkVariationsFactory.cs" />
     <Compile Include="Domain\Globalization\CultureCollection.cs" />
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
     <Compile Include="Domain\Globalization\OptionalCultureCode.cs" />
