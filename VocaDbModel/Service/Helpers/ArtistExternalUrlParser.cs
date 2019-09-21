@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -25,7 +24,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 		private static readonly Matcher[] linkMatchers = {
 			new Matcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
-			new Matcher("https://twitter.com/{0}", @"^https://twitter\.com/(\w+)")
+			new Matcher("https://twitter.com/{0}", @"^http(?:s)?://twitter\.com/(\w+)")
 		};
 
 		private static readonly string[] whitelistedUrls = {
