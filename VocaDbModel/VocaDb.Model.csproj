@@ -342,7 +342,7 @@
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
     <Compile Include="Domain\Artists\ArtistHit.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkCategory.cs" />
-    <Compile Include="Domain\ExtLinks\WebLinkFilterTypes.cs" />
+    <Compile Include="Domain\ExtLinks\WebLinkVariationTypes.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkVariationsFactory.cs" />
     <Compile Include="Domain\Globalization\CultureCollection.cs" />
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
