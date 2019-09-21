@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
@@ -41,6 +41,32 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		}
 
+		private ParsedArtistQuery FindInternalUrl(string trimmed, string trimmedLc)
+		{
+			if (trimmedLc.StartsWith("/ar/") || trimmedLc.StartsWith("http")) {
+
+				var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
+
+				if (entryId.EntryType == EntryType.Artist)
+					return new ParsedArtistQuery { Id = entryId.Id };
+					
+			}
+			return null;
+		}
+
+		private ParsedArtistQuery FindExternalUrl(string trimmed, string trimmedLc)
+		{
+			if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("mylist/") || trimmedLc.StartsWith("user/")) {
+					
+				var extUrl = new ArtistExternalUrlParser().GetExternalUrl(trimmed);
+
+				if (extUrl != null)
+					return new ParsedArtistQuery { ExternalLinkUrl = extUrl };
+
+			}
+			return null;
+		}
+
 		private ParsedArtistQuery ParseTextQuery(SearchTextQuery textQuery) {
 			
 			if (textQuery.IsEmpty)
@@ -55,23 +81,15 @@ namespace VocaDb.Model.Service.Search.Artists {
 				var trimmedLc = trimmed.ToLowerInvariant();
 
 				// Optimization: check prefix, in most cases the user won't be searching by URL
-				if (trimmedLc.StartsWith("/ar/") || trimmedLc.StartsWith("http")) {
+				var result = FindInternalUrl(trimmed, trimmedLc);
 
-					var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
+				if (result != null)
+					return result;
 
-					if (entryId.EntryType == EntryType.Artist)
-						return new ParsedArtistQuery { Id = entryId.Id };
-					
-				}
+				result = FindExternalUrl(trimmed, trimmedLc);
 
-				if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("mylist/") || trimmedLc.StartsWith("user/")) {
-					
-					var extUrl = new ArtistExternalUrlParser().GetExternalUrl(trimmed);
-
-					if (extUrl != null)
-						return new ParsedArtistQuery { ExternalLinkUrl = extUrl };
-
-				}
+				if (result != null)
+					return result;
 
 			} else {
 
