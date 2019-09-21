@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Service.VideoServices;
 
@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.Helpers {
 		}
 
 		private static readonly Matcher[] linkMatchers = {
-			new Matcher("http://www.nicovideo.jp/{0}/{1}", @"^(?:http://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
+			new Matcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
 			new Matcher("https://twitter.com/{0}", @"^https://twitter\.com/(\w+)")
 		};
 
@@ -41,7 +41,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Can be null or empty, but obviously those don't match anything.
 		/// </param>
 		/// <returns>
-		/// Full external URL, if matched. For example, http://www.nicovideo.jp/mylist/6667938.
+		/// Full external URL, if matched. For example, https://www.nicovideo.jp/mylist/6667938.
 		/// Can be null if there was no match.
 		/// </returns>
 		public string GetExternalUrl(string possibleUrl) {

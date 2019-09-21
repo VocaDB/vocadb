@@ -15,6 +15,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return WhereHasLink<T, TLink>(query, url, NameMatchMode.Exact);
 		}
 
+		public static IQueryable<T> WhereHasLink<T, TLink>(this IQueryable<T> query, string url, WebLinkVariationTypes variationTypes) 
+			where T : IEntryWithLinks<TLink> where TLink : WebLink {
+			
+			var variations = WebLinkVariationsFactory.GetWebLinkVariations(url, variationTypes);
+			return query.Where(e => e.WebLinks.Any(w => variations.Contains(w.Url)));
+
+		}
+
 		public static IQueryable<T> WhereHasLink<T, TLink>(this IQueryable<T> query, string url, NameMatchMode matchMode) 
 			where T : IEntryWithLinks<TLink> where TLink : WebLink {
 			

@@ -292,7 +292,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var linkMatches = !string.IsNullOrWhiteSpace(url) ? session.Query<ArtistWebLink>()				
 					.Where(w => !w.Entry.Deleted)
-					.WhereUrlIs(url)
+					.WhereUrlIs(url, WebLinkVariationTypes.IgnoreScheme)
 					.Select(w => w.Entry)
 					.Take(10)
 					.ToArray()
