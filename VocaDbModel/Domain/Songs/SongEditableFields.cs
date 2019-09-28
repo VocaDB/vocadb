@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -10,31 +10,33 @@ namespace VocaDb.Model.Domain.Songs {
 
 		Nothing			= 0,
 
-		Artists			= 1,
+		Albums			= 1,
 
-		Length			= 2,
+		Artists			= 2,
 
-		Lyrics			= 4,
+		Length			= 4,
 
-		Names			= 8,
+		Lyrics			= 8,
 
-		Notes			= 16,
+		Names			= 16,
 
-		OriginalName	= 32,
+		Notes			= 32,
 
-		OriginalVersion	= 64,
+		OriginalName	= 64,
 
-		PublishDate		= 128,
+		OriginalVersion	= 128,
 
-		PVs				= 256,
+		PublishDate		= 256,
 
-		ReleaseEvent	= 512,
+		PVs				= 512,
 
-		SongType		= 1024,
+		ReleaseEvent	= 1024,
 
-		Status			= 2048,
+		SongType		= 2048,
 
-		WebLinks		= 4096
+		Status			= 4096,
+
+		WebLinks		= 8192
 
 	}
 
