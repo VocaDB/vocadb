@@ -332,7 +332,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>List of songs with the specified fields.</returns>
 		/// <example>https://vocadb.net/api/albums/5111/tracks/fields?field=title&field=featvocalists</example>
 		[Route("{id:int}/tracks/fields")]
-		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, [FromUri] string[] field = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public IEnumerable<Dictionary<string, string>> GetTracksFields(int id, [FromUri] string[] field = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			return queries.GetTracksFormatted(id, field, lang);
 
