@@ -845,6 +845,7 @@
     <Compile Include="Service\Helpers\MarkdownHelper.cs" />
     <Compile Include="Service\QueryableExtenders\OtherEntryQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\ReleaseEventSeriesQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\SongInAlbumEnumerableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongInListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\TagLinkQueryableExtender.cs" />

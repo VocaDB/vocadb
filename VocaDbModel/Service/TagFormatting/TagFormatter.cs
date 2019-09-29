@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.TagFormatting {
 
@@ -87,15 +88,15 @@ namespace VocaDb.Model.Service.TagFormatting {
 		public TagFormatter(IEntryLinkFactory entryLinkFactory) 
 			: base(entryLinkFactory) {}
 
-		public string ApplyFormat(Album album, string format, ContentLanguagePreference languagePreference, bool includeHeader) {
+		public string ApplyFormat(Album album, string format, int? discNumber, ContentLanguagePreference languagePreference, bool includeHeader) {
 
-			return ApplyFormat(album.Songs, format, languagePreference, includeHeader);
+			return ApplyFormat(album.Songs.WhereDiscNumberIs(discNumber), format, languagePreference, includeHeader);
 
 		}
 
-		public Dictionary<string, string>[] ApplyFormatDict(Album album, string[] fields, ContentLanguagePreference languagePreference) {
+		public Dictionary<string, string>[] ApplyFormatDict(Album album, string[] fields, int? discNumber, ContentLanguagePreference languagePreference) {
 
-			return ApplyFormatDict(album.Songs, fields, languagePreference);
+			return ApplyFormatDict(album.Songs.WhereDiscNumberIs(discNumber), fields, languagePreference);
 
 		}
 

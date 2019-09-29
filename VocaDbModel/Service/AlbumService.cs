@@ -219,10 +219,10 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string GetAlbumTagString(int id, string format, bool includeHeader) {
+		public string GetAlbumTagString(int id, string format, int? discNumber, bool includeHeader) {
 
 			return GetAlbum(id, a => new TagFormatter(EntryLinkFactory)
-				.ApplyFormat(a, format, PermissionContext.LanguagePreference, includeHeader));
+				.ApplyFormat(a, format, discNumber, PermissionContext.LanguagePreference, includeHeader));
 
 		}
 

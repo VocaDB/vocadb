@@ -328,13 +328,16 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="id">Album ID.</param>
 		/// <param name="field">Field to be included, for example "featvocalists" or "url". Can be specified multiple times.</param>
+        /// <param name="discNumber">Disc number to filter by. If not specified, all discs are included.</param>
 		/// <param name="lang">Language preference.</param>
 		/// <returns>List of songs with the specified fields.</returns>
 		/// <example>https://vocadb.net/api/albums/5111/tracks/fields?field=title&field=featvocalists</example>
 		[Route("{id:int}/tracks/fields")]
-		public IEnumerable<Dictionary<string, string>> GetTracksFields(int id, [FromUri] string[] field = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public IEnumerable<Dictionary<string, string>> GetTracksFields(int id, [FromUri] string[] field = null,
+			int? discNumber = null,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.GetTracksFormatted(id, field, lang);
+			return queries.GetTracksFormatted(id, discNumber, field, lang);
 
 		}
 

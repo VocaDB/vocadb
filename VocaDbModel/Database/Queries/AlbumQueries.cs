@@ -560,12 +560,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, string[] fields, ContentLanguagePreference lang) {
+		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, int? discNumber, string[] fields, ContentLanguagePreference lang) {
 
 			if (fields == null || fields.Length == 0)
 				fields = new[] { "id", "title" };
 
-			return HandleQuery(db => new TagFormatter(entryLinkFactory).ApplyFormatDict(db.Load(id), fields, lang));
+			return HandleQuery(db => new TagFormatter(entryLinkFactory).ApplyFormatDict(db.Load(id), fields, discNumber, lang));
 
 		}
 

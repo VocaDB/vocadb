@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -22,7 +22,7 @@ namespace VocaDb.Tests.Service.TagFormatting {
 		private Artist vocalist;
 
 		private string ApplyFormat(string format, ContentLanguagePreference languageSelection) {
-			return target.ApplyFormat(album, format, languageSelection, false);
+			return target.ApplyFormat(album, format, null, languageSelection, false);
 		}
 
 		[TestInitialize]
