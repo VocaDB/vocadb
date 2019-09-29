@@ -84,7 +84,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public PartialFindResult<EntryForApiContract> FindAll(string term, int maxResults, ContentLanguagePreference languagePreference) {
 
-			return entryQueries.GetList(term, null, null, false, null, 0, maxResults, true, EntrySortRule.Name, 
+			return entryQueries.GetList(term, null, null, false, null, null, 0, maxResults, true, EntrySortRule.Name, 
 				NameMatchMode.Auto, EntryOptionalFields.AdditionalNames, languagePreference, false);
 
 		}

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using NHibernate.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
@@ -79,6 +80,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			return Task.FromResult(source.ToList());
 
+		}
+
+		public static IQueryable<T> WhereEntryTypeIsIncluded<T>(this IQueryable<T> source, EntryTypes? entryTypes, EntryType entryType)
+		{
+			if (entryTypes == null || entryTypes.Value.HasFlag((EntryTypes)entryType))
+				return source;
+			return new List<T>().AsQueryable();
 		}
 
 	}

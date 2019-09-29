@@ -1,10 +1,9 @@
-﻿using VocaDb.Model.Domain.Tags;
+using System;
 
 namespace VocaDb.Model.Domain {
 
 	/// <summary>
 	/// Do not change the numeric values here.
-	/// At least <see cref="TagTargetTypes"/> is using the integer values.
 	/// </summary>
 	public enum EntryType {
 
@@ -31,4 +30,20 @@ namespace VocaDb.Model.Domain {
 		User				= 512
 
 	}
+
+	[Flags]
+	public enum EntryTypes {
+		Nothing				= 0,
+		Album				= EntryType.Album,
+		Artist				= EntryType.Artist,
+		DiscussionTopic		= EntryType.DiscussionTopic,
+		PV					= EntryType.PV,
+		ReleaseEvent		= EntryType.ReleaseEvent,
+		ReleaseEventSeries	= EntryType.ReleaseEventSeries,
+		Song				= EntryType.Song,
+		SongList			= EntryType.SongList,
+		Tag					= EntryType.Tag,
+		User				= EntryType.User
+	}
+
 }
