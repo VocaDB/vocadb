@@ -221,7 +221,7 @@ namespace VocaDb.Model.Service {
 
 		public string GetAlbumTagString(int id, string format, int? discNumber, bool includeHeader) {
 
-			return GetAlbum(id, a => new TagFormatter(EntryLinkFactory)
+			return GetAlbum(id, a => new AlbumSongFormatter(EntryLinkFactory)
 				.ApplyFormat(a, format, discNumber, PermissionContext.LanguagePreference, includeHeader));
 
 		}

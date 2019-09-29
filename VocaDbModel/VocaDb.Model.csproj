@@ -985,7 +985,7 @@
     <Compile Include="Service\Search\User\AlbumCollectionQueryParams.cs" />
     <Compile Include="Service\Search\User\RatedSongQueryParams.cs" />
     <Compile Include="Service\Security\CryptoHelper.cs" />
-    <Compile Include="Service\TagFormatting\TagFormatter.cs" />
+    <Compile Include="Service\TagFormatting\AlbumSongFormatter.cs" />
     <Compile Include="Service\VideoServices\IPVParser.cs" />
     <Compile Include="Service\VideoServices\IVideoService.cs" />
     <Compile Include="Service\VideoServices\IVideoServiceParser.cs" />

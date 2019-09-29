@@ -176,7 +176,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (string.IsNullOrEmpty(formatString))
-				formatString = TagFormatter.TagFormatStrings[0];
+				formatString = AlbumSongFormatter.TagFormatStrings[0];
 
 			var album = Service.GetAlbum(id);
 			var tagString = Service.GetAlbumTagString(id, formatString, discNumber, includeHeader);

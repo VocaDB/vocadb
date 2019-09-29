@@ -9,16 +9,16 @@ using VocaDb.Tests.TestSupport;
 namespace VocaDb.Tests.Service.TagFormatting {
 	
 	/// <summary>
-	/// Tests for <see cref="TagFormatter"/>.
+	/// Tests for <see cref="AlbumSongFormatter"/>.
 	/// </summary>
 	[TestClass]
-	public class TagFormatterTests {
+	public class AlbumSongFormatterTests {
 
 		private const string defaultFormat = "%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%";
 		private Album album;
 		private Artist producer;
 		private Song song;
-		private TagFormatter target;
+		private AlbumSongFormatter target;
 		private Artist vocalist;
 
 		private string ApplyFormat(string format, ContentLanguagePreference languageSelection) {
@@ -39,7 +39,7 @@ namespace VocaDb.Tests.Service.TagFormatting {
 			album = new Album(new LocalizedString("Synthesis", ContentLanguageSelection.English));
 			album.AddSong(song, trackNum: 5, discNum: 1);
 
-			target = new TagFormatter(new FakeEntryLinkFactory());
+			target = new AlbumSongFormatter(new FakeEntryLinkFactory());
 
 		}
 

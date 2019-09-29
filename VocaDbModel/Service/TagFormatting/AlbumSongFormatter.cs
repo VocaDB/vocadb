@@ -8,7 +8,7 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.TagFormatting {
 
-	public class TagFormatter : SongCsvFileFormatter<SongInAlbum> {
+	public class AlbumSongFormatter : SongCsvFileFormatter<SongInAlbum> {
 
 		public static readonly string[] TagFormatStrings = {
 			"%title%;%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%",
@@ -35,7 +35,6 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 				// Artists for album
 				case "albumartist":
-					return album.ArtistString[languagePreference];
 				case "album artist": // foobar style
 					return album.ArtistString[languagePreference];
 
@@ -75,7 +74,6 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 				// Track number
 				case "track":			
-					return track.TrackNumber.ToString();
 				case "tracknumber": // foobar style
 					return track.TrackNumber.ToString();
 
@@ -85,7 +83,7 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 		}
 
-		public TagFormatter(IEntryLinkFactory entryLinkFactory) 
+		public AlbumSongFormatter(IEntryLinkFactory entryLinkFactory) 
 			: base(entryLinkFactory) {}
 
 		public string ApplyFormat(Album album, string format, int? discNumber, ContentLanguagePreference languagePreference, bool includeHeader) {

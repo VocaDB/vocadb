@@ -565,7 +565,7 @@ namespace VocaDb.Model.Database.Queries {
 			if (fields == null || fields.Length == 0)
 				fields = new[] { "id", "title" };
 
-			return HandleQuery(db => new TagFormatter(entryLinkFactory).ApplyFormatDict(db.Load(id), fields, discNumber, lang));
+			return HandleQuery(db => new AlbumSongFormatter(entryLinkFactory).ApplyFormatDict(db.Load(id), fields, discNumber, lang));
 
 		}
 
