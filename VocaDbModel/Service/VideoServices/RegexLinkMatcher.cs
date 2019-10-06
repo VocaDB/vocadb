@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
 using System.Text.RegularExpressions;
-using NHibernate.Linq.Functions;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -31,23 +27,11 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public bool IsMatch(string url) {
+		public bool IsMatch(string url) => regex.IsMatch(url);
 
-			return regex.IsMatch(url);
+		public string MakeLinkFromUrl(string url) => MakeLinkFromId(GetId(url));
 
-		}
-
-		public string MakeLinkFromUrl(string url) {
-
-			return MakeLinkFromId(GetId(url));
-
-		}
-
-		public string MakeLinkFromId(string id) {
-
-			return string.Format(baseUrl, id);
-
-		}
+		public string MakeLinkFromId(string id) => string.Format(baseUrl, id);
 
 	}
 
