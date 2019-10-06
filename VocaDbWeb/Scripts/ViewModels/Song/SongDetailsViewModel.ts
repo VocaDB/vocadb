@@ -8,7 +8,8 @@ module vdb.viewModels {
 
 	import cls = models;
     import dc = vdb.dataContracts;
-    import rep = vdb.repositories;
+	import rep = vdb.repositories;
+	import SongType = cls.songs.SongType;
 
     // View model for the song details view.
     export class SongDetailsViewModel {
@@ -49,7 +50,7 @@ module vdb.viewModels {
 			const repo = new rep.SongRepository(siteUrl, this.languagePreference);
 			// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 			repo.getOneWithComponents(id, 'Nothing', null, song => {
-				if (song.songType === "Original")
+				if (song.songType === SongType[SongType.Original])
 					this.originalVersion({ entry: song, url: page, domain: siteUrl });
 			});
 
@@ -160,7 +161,7 @@ module vdb.viewModels {
 
 			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
 
-			if (data.songType !== 'Original' && this.originalVersion().entry == null) {
+			if (data.songType !== SongType[SongType.Original] && this.originalVersion().entry == null) {
 				this.getOriginal(data.linkedPages);
 			}
 
