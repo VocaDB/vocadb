@@ -1,5 +1,5 @@
 using System.Linq;
-using System.Text.RegularExpressions;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Helpers {
 
@@ -10,21 +10,9 @@ namespace VocaDb.Model.Service.Helpers {
 	/// </summary>
 	public class ArtistExternalUrlParser {
 
-		private class Matcher {
-
-			public Matcher(string template, string regex) {
-				Template = template;
-				Regex = new Regex(regex, RegexOptions.IgnoreCase);
-			}
-
-			public string Template { get; }
-			public Regex Regex { get; }
-
-		}
-
-		private static readonly Matcher[] linkMatchers = {
-			new Matcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
-			new Matcher("https://twitter.com/{0}", @"^http(?:s)?://twitter\.com/(\w+)")
+		private static readonly RegexLinkMatcher[] linkMatchers = {
+			new RegexLinkMatcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
+			new RegexLinkMatcher("https://twitter.com/{0}", @"^http(?:s)?://twitter\.com/(\w+)")
 		};
 
 		private static readonly string[] whitelistedUrls = {
@@ -62,16 +50,12 @@ namespace VocaDb.Model.Service.Helpers {
 			// Regex matching ignores case.
 			var match = linkMatchers
 				.Select(matcher => new {
-					matcher.Template,
-					Result = matcher.Regex.Match(possibleUrl)
+					Success = matcher.TryGetLinkFromUrl(possibleUrl, out var formattedUrl),
+					FormattedUrl = formattedUrl
 				})
-				.FirstOrDefault(m => m.Result.Success);
+				.FirstOrDefault(m => m.Success);
 
-			if (match == null)
-				return null;
-
-			var values = match.Result.Groups.Cast<Group>().Skip(1).Select(g => g.Value).ToArray();
-			return string.Format(match.Template, values);
+			return match?.FormattedUrl;
 
 		}
 

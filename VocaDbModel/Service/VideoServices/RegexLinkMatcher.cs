@@ -44,12 +44,17 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public string MakeLinkFromId(string id) => string.Format(template, id);
 
+		public (bool success, string formattedUrl) GetLinkFromUrl(string url) {
+            var success = TryGetLinkFromUrl(url, out var formattedUrl);
+            return (success, formattedUrl);
+		}
+
 		public bool TryGetLinkFromUrl(string url, out string formattedUrl) {
 
 	        var match = regex.Match(url);
 
             if (match.Success) {
-	            var values = match.Groups.Cast<Group>().Skip(1).Select(g => g.Value);
+	            var values = match.Groups.Cast<Group>().Skip(1).Select(g => g.Value).ToArray();
 	            formattedUrl = string.Format(template, values);
 	            return true;
 			} else {
