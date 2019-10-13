@@ -79,7 +79,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 		public static string UpgradeToHttps(string url) {
 
-			if (string.IsNullOrEmpty(url))
+			if (string.IsNullOrEmpty(url) || url.StartsWith("https://"))
 				return url;
 
 			if (httpUpgradeDomains.Any(m => url.StartsWith(m))) {
