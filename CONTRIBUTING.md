@@ -1,10 +1,3 @@
-# How to contribute
-Take a look at the code and [instructions for setting up the development environment](https://github.com/VocaDB/vocadb/wiki/VocaDB-development-environment).
-
-Any bugs and change requests are to be reported here, on the issues tab. 
-If you think you could help, take a look at the list of reported issues, 
-create a fork and you can fix it there and create a pull request back to the main repository.
-
 # Feature requests
 VocaDB's new feature development is tracked as GitHub issues. This includes bug fixes.
 If VocaDB is lacking a feature that you are expecting, you may submit a feature request on GitHub. 
@@ -19,6 +12,14 @@ and my time for working on hobby projects is very limited.
 
 You're more than welcome to recruit another programmer to help with the implementation, if you cannot do it yourself. 
 VocaDB is open source, just fork and send a pull request.
+
+# If you are a programmer
+
+Take a look at the code and [instructions for setting up the development environment](https://github.com/VocaDB/vocadb/wiki/VocaDB-development-environment).
+
+Any bugs and change requests are to be reported here, on the issues tab. 
+If you think you could help, take a look at the list of reported issues, 
+create a fork and you can fix it there and create a pull request back to the main repository.
 
 # Commissioned features
 I'm open for commission to work on a feature based on agreed payment. 
