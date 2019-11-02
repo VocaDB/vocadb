@@ -66,7 +66,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private (bool created, SongReport report) CallCreateReport(SongReportType reportType, int? versionNumber = null) {
+		private (bool created, SongReport report) CallCreateReport(SongReportType reportType, int? versionNumber = null, Song song = null) {
+			song ??= this.song;
 			var result = queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
 			return (result.created, repository.Load<SongReport>(result.reportId));
 		}
@@ -333,6 +334,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Basic report, no existing reports.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport() {
 			
@@ -345,6 +349,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Report specific version.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_Version() {
 			
@@ -368,6 +375,26 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Open report exists for another entry.
+		/// </summary>
+		[TestMethod]
+		public void CreateReport_OtherEntry() {
+
+			var song2 = repository.Save(CreateEntry.Song());
+			CallCreateReport(SongReportType.InvalidInfo, song: song2);
+			var secondResult = CallCreateReport(SongReportType.Other);
+
+			var reports = repository.List<SongReport>();
+
+			Assert.AreEqual(2, reports.Count, "Number of reports");
+			Assert.IsTrue(secondResult.created, "Second report was created");
+
+		}
+
+		/// <summary>
+		/// Duplicate report exists: skip.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_Duplicate() {
 		
@@ -382,6 +409,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Duplicate report exists, but it closed.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_Duplicate_Closed() {
 			
@@ -396,6 +426,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Duplicate report exists. It is closed, but current user is not logged in. Skip.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_Duplicate_Closed_NotLoggedIn() {
 			
@@ -411,6 +444,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Duplicate reports exist. One is closed, the other one open.
+		/// Skip creating third report because of open report.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_Duplicate_Closed_Then_Open() {
 			
@@ -422,10 +459,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var reports = repository.List<SongReport>();
 
 			Assert.AreEqual(2, reports.Count, "Number of reports");
-			Assert.IsFalse(thirdCreated, "Second report was created");
+			Assert.IsFalse(thirdCreated, "Third report was not created");
 
 		}
 
+		/// <summary>
+		/// Create report when not logged in.
+		/// Report is created using hostname.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_NotLoggedIn() {
 			
