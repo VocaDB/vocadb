@@ -60,17 +60,9 @@ namespace VocaDb.Model.Helpers {
 
 		} 
 
-		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T top) {
+		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T top) => Enumerable.Repeat(top, 1).Concat(source.Except(Enumerable.Repeat(top, 1)));
 
-			return Enumerable.Repeat(top, 1).Concat(source.Except(Enumerable.Repeat(top, 1)));
-
-		}
-
-		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T[] top) {
-
-			return top.Concat(source.Except(top));
-
-		}
+		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T[] top) => top.Concat(source.Except(top));
 
 		/// <summary>
 		/// Randomly sort a list.
@@ -120,23 +112,11 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static IEnumerable<T> RemovedItems<T>(IEnumerable<T> old, IEnumerable<T> newItems) {
+		public static IEnumerable<T> RemovedItems<T>(IEnumerable<T> old, IEnumerable<T> newItems) => old.Where(i => !newItems.Contains(i));
 
-			return old.Where(i => !newItems.Contains(i));
+		public static IEnumerable<T> RemovedItems<T, T2>(IEnumerable<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality) => old.Where(i => !newItems.Any(i2 => equality(i, i2)));
 
-		}
-
-		public static IEnumerable<T> RemovedItems<T, T2>(IEnumerable<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality) {
-
-			return old.Where(i => !newItems.Any(i2 => equality(i, i2)));
-
-		}
-
-		public static IEnumerable<T> SkipNull<T>(params T[] items) where T : class {
-
-			return items.Where(i => i != null);
-
-		}
+		public static IEnumerable<T> SkipNull<T>(params T[] items) where T : class => items.Where(i => i != null);
 
 		public static T[] SortByIds<T>(IEnumerable<T> entries, int[] idList) where T : IEntryWithIntId {
 			
@@ -174,11 +154,7 @@ namespace VocaDb.Model.Helpers {
 		/// Can be null.
 		/// </param>
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
-		public static CollectionDiff<T> Sync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Action<T> remove = null) {
-
-			return Sync(oldItems, newItems, equality.Equals, t => t, remove);
-
-		}
+		public static CollectionDiff<T> Sync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Action<T> remove = null) => Sync(oldItems, newItems, equality.Equals, t => t, remove);
 
 		/// <summary>
 		/// Syncs items in one collection with a new set (create and delete, CD).
