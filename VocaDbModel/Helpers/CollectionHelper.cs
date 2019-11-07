@@ -206,8 +206,7 @@ namespace VocaDb.Model.Helpers {
 
 			foreach (var removed in diff.Removed) {
 
-				if (remove != null)
-					remove(removed);
+				remove?.Invoke(removed);
 
 				// Note: this removes the item from the source collection directly, but not from any other collections.
 				old.Remove(removed);
@@ -216,7 +215,9 @@ namespace VocaDb.Model.Helpers {
 
 			foreach (var linkEntry in diff.Added) {
 				var link = create(linkEntry);
-				created.Add(link);
+
+				if (link != null)
+					created.Add(link);
 			}
 
 			return new CollectionDiff<T>(created, diff.Removed, diff.Unchanged);
@@ -263,27 +264,8 @@ namespace VocaDb.Model.Helpers {
 			ParamIs.NotNull(() => newItems);
 			ParamIs.NotNull(() => identityEquality);
 
-			var diff = Diff(oldItems, newItems, identityEquality);
-			var created = new List<T>();
+			var diff = Sync(oldItems, newItems, identityEquality, create, remove);
 			var edited = new List<T>();
-
-			foreach (var removed in diff.Removed) {
-
-				if (remove != null)
-					remove(removed);
-
-				oldItems.Remove(removed);
-
-			}
-
-			foreach (var added in diff.Added) {
-
-				var newObject = create(added);
-
-				if (newObject != null)
-					created.Add(newObject);
-
-			}
 
 			foreach (var oldItem in diff.Unchanged) {
 
@@ -295,7 +277,7 @@ namespace VocaDb.Model.Helpers {
 
 			}
 
-			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
+			return new CollectionDiffWithValue<T, T>(diff.Added, diff.Removed, diff.Unchanged, edited);
 
 		}
 
