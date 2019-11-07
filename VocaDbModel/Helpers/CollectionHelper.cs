@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Helpers {
@@ -329,11 +328,7 @@ namespace VocaDb.Model.Helpers {
 		/// <summary>
 		/// Whether the contents of the sets were changed.
 		/// </summary>
-		public virtual bool Changed {
-			get {
-				return (Added.Any() || Removed.Any());
-			}
-		}
+		public virtual bool Changed => Added.Any() || Removed.Any();
 
 		/// <summary>
 		/// Entries that existed in the old set but not in the new.
@@ -376,11 +371,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public override bool Changed {
-			get {
-				return (base.Changed || Edited.Any());
-			}
-		}
+		public override bool Changed => base.Changed || Edited.Any();
 
 		/// <summary>
 		/// Entries that existed in both old and new sets AND whose contents were changed.
