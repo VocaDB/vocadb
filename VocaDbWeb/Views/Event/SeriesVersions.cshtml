@@ -1,4 +1,4 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.Versions<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesContract>>
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.Versions<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesContract>>
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
@@ -8,4 +8,4 @@
 	};
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, null)
+@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, id => Url.Action("ViewSeriesVersion", new { id = id }))

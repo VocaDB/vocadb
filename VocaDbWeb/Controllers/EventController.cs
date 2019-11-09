@@ -318,6 +318,14 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult ViewSeriesVersion(int id, int? ComparedVersionId) {
+
+			var contract = queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
+
+			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
+
+		}
+
 		public ActionResult Versions(int id = invalidId) {
 
 			if (id == invalidId)
