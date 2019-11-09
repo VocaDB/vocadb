@@ -848,7 +848,8 @@ namespace VocaDb.Model.Database.Queries {
 				var query = ctx.OfType<ArtistForUser>().Query()
 					.Where(a => !a.Artist.Deleted && a.User.Id == queryParams.UserId)
 					.WhereArtistHasName(queryParams.TextQuery)
-					.WhereArtistHasType(queryParams.ArtistType);
+					.WhereArtistHasType(queryParams.ArtistType)
+					.WhereArtistHasTags(queryParams.TagIds);
 
 				var artists = query
 					.OrderBy(queryParams.SortRule, LanguagePreference)
