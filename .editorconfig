@@ -11,8 +11,9 @@ charset = utf-8
 [*.cshtml]
 charset = utf-8-bom
 
+# Code file formatting
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-formatting-conventions?view=vs-2019
-[*.cs]
+[*.{cs,cshtml}]
 csharp_new_line_before_open_brace = none
 csharp_new_line_before_else = false
 csharp_new_line_before_catch = false
