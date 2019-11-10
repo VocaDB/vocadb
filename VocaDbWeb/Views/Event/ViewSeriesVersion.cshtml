@@ -19,10 +19,8 @@
 
 }
 
-@if (Model.Entry.ComparableVersions.Any())
-{
-	using (Html.BeginForm("ViewSeriesVersion", "Event", FormMethod.Post, new { @class = "form form-inline" }))
-	{
+@if (Model.Entry.ComparableVersions.Any()) {
+	using (Html.BeginForm("ViewSeriesVersion", "Event", FormMethod.Post, new { @class = "form form-inline" })) {
 		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.Entry.ComparableVersions, i => i.Id, i => i.Version + " (" + i.TranslateChangedFields(Model.EnumTranslations) + " by " + i.AgentName + ")", Model.Entry.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
 		<button type="submit" class="btn btn-primary">Compare</button>
 	}
