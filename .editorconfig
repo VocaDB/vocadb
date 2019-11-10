@@ -10,3 +10,10 @@ charset = utf-8
 # https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.globalizationsection.fileencoding?view=netframework-4.8
 [*.cshtml]
 charset = utf-8-bom
+
+# https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-formatting-conventions?view=vs-2019
+[*.cs]
+csharp_new_line_before_open_brace = none
+csharp_new_line_before_else = false
+csharp_new_line_before_catch = false
+csharp_new_line_before_finally = false
