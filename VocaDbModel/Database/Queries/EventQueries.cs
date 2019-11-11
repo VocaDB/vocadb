@@ -698,7 +698,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (weblinksDiff.Changed) {
 						diff.WebLinks.Set();
-						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
+						session.Sync(weblinksDiff);
 					}
 
 					session.Update(series);

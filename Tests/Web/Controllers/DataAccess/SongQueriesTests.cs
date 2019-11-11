@@ -28,6 +28,7 @@ using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Model.Service;
 using VocaDb.Web.Helpers;
+using FluentAssertions;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
@@ -66,10 +67,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private (bool created, SongReport report) CallCreateReport(SongReportType reportType, int? versionNumber = null, Song song = null) {
+		private (bool created, SongReport report) CallCreateReport(SongReportType reportType, int? versionNumber = null, Song song = null, DateTime? created = null) {
 			song ??= this.song;
 			var result = queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
-			return (result.created, repository.Load<SongReport>(result.reportId));
+			var report = repository.Load<SongReport>(result.reportId);
+			if (created != null)
+				report.Created = created.Value;
+			return (result.created, report);
 		}
 
 		private SongForEditContract EditContract() {
@@ -451,14 +455,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public void CreateReport_Duplicate_Closed_Then_Open() {
 			
-			var(_, report) = CallCreateReport(SongReportType.InvalidInfo);
+			var(_, report) = CallCreateReport(SongReportType.InvalidInfo, created: DateTime.UtcNow.AddDays(-2));
 			report.Status = ReportStatus.Closed;
-			CallCreateReport(SongReportType.Other);
+			CallCreateReport(SongReportType.Other, created: DateTime.UtcNow.AddDays(-1));
 			var (thirdCreated, _) = CallCreateReport(SongReportType.Other);
 
 			var reports = repository.List<SongReport>();
 
-			Assert.AreEqual(2, reports.Count, "Number of reports");
+			reports.Should().HaveCount(2);
 			Assert.IsFalse(thirdCreated, "Third report was not created");
 
 		}
