@@ -252,6 +252,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public XDocument GetSeriesVersionXml(int id) {
+			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventSeriesVersion>(id).Data);
+		}
+
 		public XDocument GetVersionXml(int id) {
 			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventVersion>(id).Data);
 		}
