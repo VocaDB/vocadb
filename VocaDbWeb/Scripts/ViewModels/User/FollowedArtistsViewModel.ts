@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.user {
 
 	import dc = vdb.dataContracts;
@@ -8,11 +8,15 @@ module vdb.viewModels.user {
 
 		constructor(private userRepo: rep.UserRepository,
 			private resourceRepo: rep.ResourceRepository,
+			tagRepo: rep.TagRepository,
 			private languageSelection: string, private loggedUserId: number, private cultureCode: string) {
+
+			this.tagFilters = new viewModels.search.TagFilters(tagRepo, languageSelection);
 
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 			this.artistType.subscribe(this.updateResultsWithTotalCount);
+			this.tagFilters.tags.subscribe(this.updateResultsWithTotalCount);
 
 		}
 
@@ -36,6 +40,7 @@ module vdb.viewModels.user {
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
 		public resources = ko.observable<any>();
+		public tagFilters: viewModels.search.TagFilters;
 
 		public updateResultsWithTotalCount = () => this.updateResults(true);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);
@@ -55,6 +60,7 @@ module vdb.viewModels.user {
 			var pagingProperties = this.paging.getPagingProperties(clearResults);
 
 			this.userRepo.getFollowedArtistsList(this.loggedUserId, pagingProperties, this.languageSelection,
+				this.tagFilters.tagIds(),
 				this.artistType(),
 				(result: any) => {
 

@@ -193,8 +193,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of artists followed by a user.
 		/// </summary>
-		/// <param name="query">Artist name query (optional).</param>
 		/// <param name="id">ID of the user whose followed artists are to be browsed.</param>
+		/// <param name="query">Artist name query (optional).</param>
+		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
 		/// <param name="artistType">Filter by artist type.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
@@ -208,6 +209,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<ArtistForUserForApiContract> GetFollowedArtists(
 			int id,
 			string query = "",
+			[FromUri] int[] tagId = null,
 			ArtistType artistType = ArtistType.Unknown,
 			int start = 0, 
 			int maxResults = defaultMax,
@@ -225,6 +227,7 @@ namespace VocaDb.Web.Controllers.Api {
 				ArtistType = artistType,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
 				SortRule = sort,
+				TagIds = tagId,
 				TextQuery = textQuery
 			};
 

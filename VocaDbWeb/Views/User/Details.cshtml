@@ -1,4 +1,4 @@
-@using System.Globalization
+﻿@using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Users;
 @using VocaDb.Model.Domain.Globalization
@@ -459,7 +459,7 @@
 			var sort = 'RatingDate';
 			var groupByRating = true;
 
-			var followedArtistsViewModel = new vdb.viewModels.user.FollowedArtistsViewModel(userRepo, resourceRepo, languageSelection, userId, cultureCode);
+			var followedArtistsViewModel = new vdb.viewModels.user.FollowedArtistsViewModel(userRepo, resourceRepo, tagRepo, languageSelection, userId, cultureCode);
 
 			var albumCollectionViewModel = new vdb.viewModels.user.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, userId, cultureCode,
 				publicCollection, false);
