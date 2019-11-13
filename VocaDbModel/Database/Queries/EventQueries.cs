@@ -644,7 +644,7 @@ namespace VocaDb.Model.Database.Queries {
 					};
 					session.Save(series);
 
-					var diff = new ReleaseEventSeriesDiff();
+					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.OriginalName | ReleaseEventSeriesEditableFields.Names);
 
 					diff.Description.Set(!string.IsNullOrEmpty(contract.Description));
 
