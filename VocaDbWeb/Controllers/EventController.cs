@@ -44,6 +44,15 @@ namespace VocaDb.Web.Controllers
 			this.thumbPersister = thumbPersister;
 		}
 
+		public ActionResult ArchivedSeriesVersionXml(int id) {
+
+			var doc = queries.GetSeriesVersionXml(id);
+			var contract = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
+
+			return Xml(contract);
+
+		}
+
 	    public ActionResult ArchivedVersionXml(int id) {
 
 		    var doc = queries.GetVersionXml(id);
@@ -315,6 +324,14 @@ namespace VocaDb.Web.Controllers
 			var contract = Service.GetReleaseEventSeriesWithArchivedVersions(id);
 
 			return View(new Versions<ReleaseEventSeriesContract>(contract, enumTranslations));
+
+		}
+
+		public ActionResult ViewSeriesVersion(int id, int? ComparedVersionId) {
+
+			var contract = queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
+
+			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 
 		}
 

@@ -235,6 +235,14 @@ namespace VocaDb.Model.Database.Queries {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
 		}
 
+		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {
+
+			return HandleQuery(session =>
+				new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
+					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
+					PermissionContext.LanguagePreference));
+		}
+
 		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
 			return HandleQuery(session =>
@@ -242,6 +250,10 @@ namespace VocaDb.Model.Database.Queries {
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
 					PermissionContext.LanguagePreference));
 
+		}
+
+		public XDocument GetSeriesVersionXml(int id) {
+			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventSeriesVersion>(id).Data);
 		}
 
 		public XDocument GetVersionXml(int id) {
@@ -659,7 +671,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					series = session.Load<ReleaseEventSeries>(contract.Id);
 					permissionContext.VerifyEntryEdit(series);
-					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Nothing);
+					var diff = new ReleaseEventSeriesDiff(DoSnapshot(series, session));
 
 					if (series.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
 						series.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;

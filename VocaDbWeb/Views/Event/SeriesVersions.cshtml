@@ -2,10 +2,12 @@
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
-	ViewBag.Parents = new[] { 
-		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index"), 
-		Html.ActionLink(Model.Entry.Name, "SeriesDetails", new { id = Model.Entry.Id }) 
+	ViewBag.Parents = new[] {
+		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index"),
+		Html.ActionLink(Model.Entry.Name, "SeriesDetails", new { id = Model.Entry.Id })
 	};
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, null)
+@ArchivedEntryHelpers.CurrentVersionMessage(Model.Entry.Version, Model.Entry.Status)
+
+@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, id => Url.Action("ViewSeriesVersion", new { id = id }))

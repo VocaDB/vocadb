@@ -3596,6 +3596,7 @@
     <Content Include="Views\Shared\Partials\_CustomNameEdit.cshtml" />
     <Content Include="Views\Ext\OEmbedResponsive.cshtml" />
     <Content Include="Views\Search\Partials\_EventSearchOptions.cshtml" />
+    <Content Include="Views\Event\ViewSeriesVersion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

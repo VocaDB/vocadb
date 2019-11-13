@@ -19,7 +19,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.Version).Not.Nullable();
 
 			Component(m => m.ArchivedVersionsManager,
-				c => c.HasMany(m => m.Versions).KeyColumn("[Series]").Inverse().Cascade.All());
+				c => c.HasMany(m => m.Versions).KeyColumn("[Series]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
 			Component(m => m.Names, c => {
 				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
