@@ -651,6 +651,8 @@
     <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventSeriesMap.cs" />
+    <Compile Include="Mapping\Songs\SongListTagUsageMap.cs" />
+    <Compile Include="Mapping\Songs\SongListTagVoteMap.cs" />
     <Compile Include="Mapping\Tags\TagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\Users\EventForUserMap.cs" />

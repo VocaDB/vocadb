@@ -5,6 +5,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 	public class SongListTagUsage : GenericTagUsage<SongList, SongListTagVote> {
 
+		public SongListTagUsage() { }
+
 		public SongListTagUsage(SongList songList, Tag tag) : base(songList, tag) { }
 
 		public override TagVote CreateVote(User user) {
