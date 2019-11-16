@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using NLog;
 using PiaproClient;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
@@ -8,6 +9,8 @@ using VocaDb.Model.Domain.PVs;
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class VideoServicePiapro : VideoService {
+
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public VideoServicePiapro(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
 			: base(service, parser, linkMatchers) {}
@@ -33,6 +36,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			try {
 				result = await new PiaproClient.PiaproClient().ParseByUrlAsync(url);
 			} catch (PiaproException x) {
+				log.Warn(x, "Unable to load Piapro URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(x.Message, x));
 			}
 
