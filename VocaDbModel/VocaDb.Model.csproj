@@ -463,6 +463,8 @@
     <Compile Include="Domain\Songs\SongListDiff.cs" />
     <Compile Include="Domain\Songs\SongListEditableFields.cs" />
     <Compile Include="Domain\Songs\SongListFeaturedCategory.cs" />
+    <Compile Include="Domain\Songs\SongListTagUsage.cs" />
+    <Compile Include="Domain\Songs\SongListTagVote.cs" />
     <Compile Include="Domain\Songs\SongMergeRecord.cs" />
     <Compile Include="Domain\Songs\SongReport.cs" />
     <Compile Include="Domain\Songs\SongTagUsage.cs" />

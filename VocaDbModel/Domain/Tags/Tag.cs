@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -49,6 +49,7 @@ namespace VocaDb.Model.Domain.Tags {
 		private NameManager<TagName> names = new NameManager<TagName>();
 		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
+		private ISet<SongListTagUsage> songListTagUsages = new HashSet<SongListTagUsage>();
 		private IList<TagForUser> tagsForUsers = new List<TagForUser>();
 		private WebLinkManager<TagWebLink> webLinks = new WebLinkManager<TagWebLink>();
 
@@ -401,6 +402,14 @@ namespace VocaDb.Model.Domain.Tags {
 			}
 		}
 
+		public virtual ISet<SongListTagUsage> AllSongListTagUsages {
+			get => songListTagUsages;
+			set {
+				ParamIs.NotNull(() => value);
+				songListTagUsages = value;
+			}
+		}
+
 		public virtual IEnumerable<EventTagUsage> EventTagUsages => AllEventTagUsages.Where(a => !a.Entry.Deleted);
 
 		public virtual IEnumerable<EventSeriesTagUsage> EventSeriesTagUsages => AllEventSeriesTagUsages.Where(a => !a.Entry.Deleted);
@@ -432,11 +441,9 @@ namespace VocaDb.Model.Domain.Tags {
 		/// List of all song tag usages (not including deleted songs) for this tag.
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
-		public virtual IEnumerable<SongTagUsage> SongTagUsages {
-			get {
-				return AllSongTagUsages.Where(a => !a.Song.Deleted);
-			}
-		}
+		public virtual IEnumerable<SongTagUsage> SongTagUsages => AllSongTagUsages.Where(a => !a.Song.Deleted);
+
+		public virtual IEnumerable<SongListTagUsage> SongListTagUsages => AllSongListTagUsages.Where(a => !a.Entry.Deleted);
 
 		public virtual EntryStatus Status { get; set; }
 
