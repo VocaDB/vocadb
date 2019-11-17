@@ -196,14 +196,15 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SearchTextQuery textQuery, SongListFeaturedCategory? featuredCategory,
-			int start, int maxResults, bool getTotalCount, SongListSortRule sort) {
+			int start, int maxResults, bool getTotalCount, SongListSortRule sort, int[] tagIds, bool childTags) {
 
 			return HandleQuery(ctx => {
 
 				var listQuery = ctx.Query()
 					.WhereNotDeleted()
 					.WhereHasFeaturedCategory(featuredCategory, false)
-					.WhereHasName(textQuery);
+					.WhereHasName(textQuery)
+					.WhereHasTags(tagIds, childTags);
 
 				var count = getTotalCount ? listQuery.Count() : 0;
 

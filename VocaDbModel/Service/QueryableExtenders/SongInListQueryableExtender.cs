@@ -38,6 +38,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<SongList> WhereHasTags(this IQueryable<SongList> query, int[] tagId, bool childTags = false) {
+			return query.WhereHasTags<SongList, SongListTagUsage>(tagId, childTags);
+		}
+
 		public static IQueryable<SongInList> WhereSongHasName(this IQueryable<SongInList> query, SearchTextQuery textQuery, bool includeDescription) {
 
 			if (textQuery.IsEmpty)
