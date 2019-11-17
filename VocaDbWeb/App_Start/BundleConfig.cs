@@ -418,6 +418,9 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/SongListRepository.js",
+				"~/Scripts/Repositories/TagRepository.js",
+				"~/Scripts/ViewModels/Search/TagFilter.js",
+				"~/Scripts/ViewModels/Search/TagFilters.js",
 				"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
                 "~/Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
 			));

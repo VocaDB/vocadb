@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.user {
 
 	import cls = vdb.models;
@@ -100,7 +100,7 @@ module vdb.viewModels.user {
 			if (this.isInit)
 				return;
 
-			this.userRepo.getSongLists(this.loggedUserId, null, { start: 0, maxEntries: 50, getTotalCount: false }, "Name", null, songLists => this.songLists(songLists.items));
+			this.userRepo.getSongLists(this.loggedUserId, null, { start: 0, maxEntries: 50, getTotalCount: false }, [], "Name", null, songLists => this.songLists(songLists.items));
 
 			this.resourceRepo.getList(this.cultureCode, ['songSortRuleNames', 'user_ratedSongForUserSortRuleNames', 'songTypeNames'], resources => {
 				this.resources(resources);

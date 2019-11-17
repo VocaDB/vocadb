@@ -469,7 +469,7 @@
 				sort, groupByRating, pvPlayersFactory, false, artistId, childVoicebanks);
 
 			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, cultureCode, loggedUserId, lastLoginAddress, canDeleteComments, urlMapper, 
-				userRepo, adminRepo, resourceRepo, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
+				userRepo, adminRepo, resourceRepo, tagRepo, languageSelection, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
 			ko.applyBindings(viewModel);
 
 			if (window.location.hash && window.location.hash.length >= 1) {

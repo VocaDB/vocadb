@@ -14,7 +14,12 @@ module vdb.repositories {
 
 		public getComments = () => new EntryCommentRepository(this.urlMapper, "/songLists/");
 
-		public getFeatured = (query: string, category: string, paging: dc.PagingProperties, sort: string,
+		public getFeatured = (
+			query: string,
+			category: string,
+			paging: dc.PagingProperties,
+			tagIds: number[],
+			sort: string,
 			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
 			
 			var url = this.urlMapper.mapRelative("/api/songLists/featured");
@@ -22,6 +27,7 @@ module vdb.repositories {
 				query: query,
 				featuredCategory: category,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
+				tagId: tagIds,
 				sort: sort
 			}, callback);
 

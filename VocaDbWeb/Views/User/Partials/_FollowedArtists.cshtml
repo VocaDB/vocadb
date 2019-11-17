@@ -1,6 +1,4 @@
-﻿@using SharedRes = ViewRes.SharedStrings;
-
-<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
+﻿<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
 	
 	<div class="control-group">
 		<div class="control-label">@ViewRes.Search.IndexStrings.ArtistType</div>
@@ -10,7 +8,7 @@
 	</div>
 
 	<div class="control-group">
-		<div class="control-label">@SharedRes.Tag</div>
+		<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 		<div class="controls" data-bind="with: tagFilters">
 			@{ Html.RenderPartial("Partials/_TagFilters"); }
 			<div>

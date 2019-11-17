@@ -55,13 +55,16 @@
 		
 		var cultureCode = '@UICulture';
 
+		var languageSelection = '@UserContext.LanguagePreference';
 		var rootPath = '@RootPath';
 		var urlMapper = new vdb.UrlMapper(rootPath);
 		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
+		var tagRepo = repoFactory.tagRepository();
+		var languageSelection = '';
 		var categories = @ToJS(categories.Select(c => c.Id.ToString()));
-		var viewModel = new vdb.viewModels.songList.FeaturedSongListsViewModel(songListRepo, resourceRepo, cultureCode, categories);
+		var viewModel = new vdb.viewModels.songList.FeaturedSongListsViewModel(songListRepo, resourceRepo, tagRepo, languageSelection, cultureCode, categories);
 		ko.applyBindings(viewModel);
 
 	});
