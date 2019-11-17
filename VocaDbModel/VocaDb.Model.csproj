@@ -937,6 +937,7 @@
     <Compile Include="Service\Search\ReleaseEventSearch.cs" />
     <Compile Include="Service\Search\SearchTextQuery.cs" />
     <Compile Include="Service\Search\SongSearch\ParsedSongQuery.cs" />
+    <Compile Include="Service\Search\SongSearch\SongInListQueryParams.cs" />
     <Compile Include="Service\Search\SongSearch\SongListQueryParams.cs" />
     <Compile Include="Service\Search\Tags\TagQueryParams.cs" />
     <Compile Include="Service\Search\Tags\TagSearch.cs" />

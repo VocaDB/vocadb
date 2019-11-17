@@ -129,9 +129,15 @@ namespace VocaDb.Web.Controllers.Api {
 			SongListSortRule sort = SongListSortRule.Name) {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var queryParams = new SongListQueryParams {
+				TextQuery = textQuery,
+				FeaturedCategory = featuredCategory,
+				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				TagIds = tagId,
+				ChildTags = childTags
+			};
 
-			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture),
-				textQuery, featuredCategory, start, maxResults, getTotalCount, sort, tagId, childTags);
+			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture), queryParams);
 
 		}
 
