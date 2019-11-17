@@ -70,6 +70,15 @@
 		@if (!string.IsNullOrWhiteSpace(Model.SongList.Description)) {
 			@Html.Raw(descriptionHtml)
 		}
+	
+		<p>
+			<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
+			<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
+				@{ Html.RenderPartial("Partials/_TagList"); }
+			</div>
+			<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
+		</p>
+
 		@if (Model.SongList.Events.Any()) {
 			<p>
 				<h4>@Res.Events</h4>				
@@ -231,6 +240,10 @@
 
 @CommentHelpers.LatestCommentsKnockout()
 
+<div data-bind="with: tagsEditViewModel">
+	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+</div>
+
 @section BodyScripts {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
@@ -260,9 +273,23 @@
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 			var latestComments = @ToJS(Model.SongList.LatestComments);
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+			var tagUsages = @ToJS(Model.SongList.Tags);
 
-			var vm = new vdb.viewModels.songList.SongListViewModel(urlMapper, songListRepo, songRepo, userRepo, artistRepo,
-				resourceRepo, defaultSortRuleName, latestComments, @UserContext.LoggedUserId, languageSelection, cultureCode, listId, pvPlayersFactory,
+			var vm = new vdb.viewModels.songList.SongListViewModel(
+				urlMapper,
+				songListRepo,
+				songRepo,
+				userRepo,
+				artistRepo,
+				resourceRepo,
+				defaultSortRuleName,
+				latestComments,
+				@UserContext.LoggedUserId,
+				languageSelection,
+				cultureCode,
+				listId,
+				tagUsages,
+				pvPlayersFactory,
 				canDeleteAllComments);
 			ko.applyBindings(vm);
 

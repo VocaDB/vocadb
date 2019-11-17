@@ -1,4 +1,4 @@
-﻿
+
 module vdb.repositories {
 
 	import cls = vdb.models;
@@ -71,6 +71,10 @@ module vdb.repositories {
 			$.getJSON(url, data, callback);
 
 		};
+
+		public getTagSuggestions = (songId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
+			$.getJSON(this.urlMapper.mapRelative("/api/songLists/" + songId + "/tagSuggestions"), callback);
+		}
 
 	}
 

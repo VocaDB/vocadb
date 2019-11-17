@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
 
@@ -26,6 +26,7 @@ namespace VocaDb.Model.Mapping.Tags {
 			HasMany(m => m.AllArtistTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllEventTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllEventSeriesTagUsages).Cascade.AllDeleteOrphan().Inverse();
+			HasMany(m => m.AllSongListTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllSongTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllChildren).KeyColumn("[Parent]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.Comments).Inverse().KeyColumn("[Tag]").Cascade.AllDeleteOrphan();

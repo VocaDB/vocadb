@@ -1096,6 +1096,10 @@ namespace VocaDb.Model.Database.Queries {
 			return GetTagSelections<ReleaseEventSeries, EventSeriesTagUsage, EventSeriesTagVote>(seriesId, userId);
 		}
 
+		public TagSelectionContract[] GetSongListTagSelection(int songListId, int userId) {
+			return GetTagSelections<SongList, SongListTagUsage, SongListTagVote>(songListId, userId);
+		}
+
 		public TagSelectionContract[] GetSongTagSelections(int songId, int userId) {
 
 			return HandleQuery(session => {
@@ -1321,6 +1325,15 @@ namespace VocaDb.Model.Database.Queries {
 				seriesId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				releaseEvent => releaseEvent.Tags,
 				(releaseEvent, ctx) => new EventSeriesTagUsageFactory(ctx, releaseEvent));
+
+		}
+
+		public TagUsageForApiContract[] SaveSongListTags(int songListId, TagBaseContract[] tags, bool onlyAdd) {
+
+			return new TagUsageQueries(permissionContext).AddTags<SongList, SongListTagUsage>(
+				songListId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
+				songList => songList.Tags,
+				(songList, ctx) => new SongListTagUsageFactory(ctx, songList));
 
 		}
 
@@ -1872,6 +1885,36 @@ namespace VocaDb.Model.Database.Queries {
 		public EventSeriesTagUsage CreateTagUsage(Tag tag, EventSeriesTagUsage oldUsage) {
 
 			var usage = new EventSeriesTagUsage(oldUsage.Entry, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+	}
+
+	public class SongListTagUsageFactory : ITagUsageFactory<SongListTagUsage> {
+
+		private readonly SongList songList;
+		private readonly IDatabaseContext ctx;
+
+		public SongListTagUsageFactory(IDatabaseContext ctx, SongList songList) {
+			this.ctx = ctx;
+			this.songList = songList;
+		}
+
+		public SongListTagUsage CreateTagUsage(Tag tag) {
+
+			var usage = new SongListTagUsage(songList, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+		public SongListTagUsage CreateTagUsage(Tag tag, SongListTagUsage oldUsage) {
+
+			var usage = new SongListTagUsage(oldUsage.Entry, tag);
 			ctx.Save(usage);
 
 			return usage;

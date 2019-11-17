@@ -402,6 +402,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
 				"~/Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
 				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter.js",
+				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
+				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/SongList/SongListViewModel.js"
 			));
 
