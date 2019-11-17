@@ -1,11 +1,11 @@
-﻿
+
 module vdb.viewModels.songList {
 
 	import dc = vdb.dataContracts;
 
 	export class SongListsBaseViewModel extends PagedItemsViewModel<dc.SongListContract> {
 
-		constructor(public showEventDateSort: boolean) {
+		constructor(resourceRepo: rep.ResourceRepository, cultureCode: string, public showEventDateSort: boolean) {
 
 			super();
 
@@ -14,6 +14,11 @@ module vdb.viewModels.songList {
 
 			this.query.subscribe(this.clear);
 			this.sort.subscribe(this.clear);
+
+			resourceRepo.getList(cultureCode, ['songListSortRuleNames'], resources => {
+				this.resources(resources);
+				this.clear();
+			});
 
 		}
 
@@ -41,8 +46,9 @@ module vdb.viewModels.songList {
 		}
 
 		public query = ko.observable("");
-
+		public resources = ko.observable<dc.ResourcesContract>();
 		public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
+		public sortName = ko.computed(() => this.resources() != null ? this.resources().songListSortRuleNames[this.sort()] : "");
 
 	}
 

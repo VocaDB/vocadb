@@ -52,10 +52,16 @@
 		$("#createLink").button({ icons: { primary: 'ui-icon-plusthick' } });
 		$("#importLink").button({ icons: { primary: 'ui-icon-plusthick' } });
 		$("#tabs").tabs();
+		
+		var cultureCode = '@UICulture';
 
-		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var rootPath = '@RootPath';
+		var urlMapper = new vdb.UrlMapper(rootPath);
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
+		var songListRepo = repoFactory.songListRepository();
+		var resourceRepo = repoFactory.resourceRepository();
 		var categories = @ToJS(categories.Select(c => c.Id.ToString()));
-		var viewModel = new vdb.viewModels.songList.FeaturedSongListsViewModel(new vdb.repositories.SongListRepository(urlMapper), categories);
+		var viewModel = new vdb.viewModels.songList.FeaturedSongListsViewModel(songListRepo, resourceRepo, cultureCode, categories);
 		ko.applyBindings(viewModel);
 
 	});

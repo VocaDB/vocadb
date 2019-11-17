@@ -416,6 +416,7 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Featured").Include(
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
+				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/SongListRepository.js",
 				"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
                 "~/Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
