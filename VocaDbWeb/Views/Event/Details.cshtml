@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.ReleaseEvents
 @using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
@@ -232,7 +232,8 @@
 		$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
 
 		var loggedUserId = @UserContext.LoggedUserId;
-		var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
+		var rootPath = '/';
+		var urlMapper = new vdb.UrlMapper(rootPath);
 		var eventRepo = new vdb.repositories.ReleaseEventRepository(urlMapper);
 		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
 		var latestComments = @ToJS(Model.LatestComments);

@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Resources.Views.Event
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
@@ -97,7 +97,8 @@
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
 
 		var loggedUserId = @UserContext.LoggedUserId;
-		var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
+		var rootPath = '/';
+		var urlMapper = new vdb.UrlMapper(rootPath);
 		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
 		var tags = @ToJS(Model.Tags);
 
