@@ -209,7 +209,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			return queries.GetSongsInList(
-				new SongListQueryParams {
+				new SongInListQueryParams {
 					TextQuery = SearchTextQuery.Create(query, nameMatchMode),
 					ListId = listId, 
 					Paging = new PagingProperties(start, maxResults, getTotalCount),

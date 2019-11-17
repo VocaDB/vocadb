@@ -61,7 +61,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongListQueryParams queryParams,
+		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongInListQueryParams queryParams,
 			Func<SongInList, T> fac) {
 
 			var q = session.OfType<SongInList>().Query()
@@ -235,13 +235,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<SongInListContract> GetSongsInList(SongListQueryParams queryParams) {
+		public PartialFindResult<SongInListContract> GetSongsInList(SongInListQueryParams queryParams) {
 
 			return repository.HandleQuery(session => GetSongsInList(session, queryParams, s => new SongInListContract(s, PermissionContext.LanguagePreference)));
 
 		}
 
-		public PartialFindResult<T> GetSongsInList<T>(SongListQueryParams queryParams, Func<SongInList, T> fac) {
+		public PartialFindResult<T> GetSongsInList<T>(SongInListQueryParams queryParams, Func<SongInList, T> fac) {
 
 			return repository.HandleQuery(ctx => GetSongsInList(ctx, queryParams, fac));
 

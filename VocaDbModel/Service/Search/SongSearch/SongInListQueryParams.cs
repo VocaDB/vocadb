@@ -4,7 +4,7 @@ using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.SongSearch {
 
-	public class SongListQueryParams {
+	public class SongInListQueryParams {
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
 
