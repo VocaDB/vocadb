@@ -29,6 +29,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
@@ -474,6 +475,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="id">User whose song lists are to be loaded.</param>
 		/// <param name="query">Song list name query (optional).</param>
+		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</p
 		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Auto).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
@@ -485,15 +488,23 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongListForApiContract> GetSongLists(
 			int id,
 			string query = "",
+			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,
 			SongListOptionalFields? fields = null) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var queryParams = new SongListQueryParams {
+				TextQuery = textQuery,
+				SortRule = sort,
+				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				TagIds = tagId,
+				ChildTags = childTags
+			};
 
-			return queries.GetCustomSongLists(id, textQuery, sort, 
-				new PagingProperties(start, maxResults, getTotalCount), fields ?? SongListOptionalFields.None);
+			return queries.GetCustomSongLists(id, queryParams, fields ?? SongListOptionalFields.None);
 
 		}
 

@@ -40,6 +40,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Security.StopForumSpam;
@@ -1018,21 +1019,22 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SearchTextQuery textQuery, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
+		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SongListQueryParams queryParams, SongListOptionalFields fields) {
 			
 			return HandleQuery(ctx => { 
 				
 				var query = ctx.Query<SongList>()
 					.WhereNotDeleted()
 					.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing)
-					.WhereHasName(textQuery);
+					.WhereHasName(queryParams.TextQuery)
+					.WhereHasTags(queryParams.TagIds, queryParams.ChildTags);
 
-				var items = query.OrderBy(sort)
-					.Paged(paging)
+				var items = query.OrderBy(queryParams.SortRule)
+					.Paged(queryParams.Paging)
 					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, fields))
 					.ToArray();
 
-				var count = paging.GetTotalCount ? query.Count() : 0;
+				var count = queryParams.Paging.GetTotalCount ? query.Count() : 0;
 
 				return new PartialFindResult<SongListForApiContract>(items, count);
 
