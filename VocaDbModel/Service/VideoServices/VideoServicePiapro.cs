@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -33,8 +34,9 @@ namespace VocaDb.Model.Service.VideoServices {
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
 			PostQueryResult result;
+			var client = new PiaproClient.PiaproClient { RequestTimeout = TimeSpan.FromMilliseconds(3900) /* Value chosen after careful consideration */ };
 			try {
-				result = await new PiaproClient.PiaproClient().ParseByUrlAsync(url);
+				result = await client.ParseByUrlAsync(url);
 			} catch (PiaproException x) {
 				log.Warn(x, "Unable to load Piapro URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(x.Message, x));
