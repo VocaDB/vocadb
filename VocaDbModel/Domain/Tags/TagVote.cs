@@ -1,7 +1,10 @@
-﻿using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Tags {
 
+	/// <summary>
+	/// User's vote for a particular tag for a particular entry.
+	/// </summary>
 	public abstract class TagVote {
 
 		private User user;
@@ -39,13 +42,9 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		public override bool Equals(object obj) {
-			return Equals(obj as TagVote);
-		}
+		public override bool Equals(object obj) => Equals(obj as TagVote);
 
-		public override int GetHashCode() {
-			return Id.GetHashCode();
-		}
+		public override int GetHashCode() => Id.GetHashCode();
 
 		public override string ToString() {
 			return string.Format("Vote for {0} by {1}", UsageBase, User);
