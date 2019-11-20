@@ -47,13 +47,13 @@ module vdb.viewModels.user {
 			});
 		});
 
-        public reportUserViewModel = new DeleteEntryViewModel(notes => {
-            $.ajax(this.urlMapper.mapRelative("api/users/" + this.userId + "/reports"), {
-                type: 'POST', data: { reason: notes, reportType: 'Spamming' }, success: () => {
-                    window.location.reload();
-                }
-            });
-        });
+		public reportUserViewModel = new DeleteEntryViewModel(notes => {
+			$.ajax(this.urlMapper.mapRelative("api/users/" + this.userId + "/reports"), {
+				type: 'POST', data: { reason: notes, reportType: 'Spamming' }, success: () => {
+					window.location.reload();
+				}
+			});
+		});
 
 		public initComments = () => {
 
