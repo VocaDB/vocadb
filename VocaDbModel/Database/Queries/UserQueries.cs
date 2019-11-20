@@ -521,6 +521,11 @@ namespace VocaDb.Model.Database.Queries {
 
 			PermissionContext.VerifyPermission(PermissionToken.ReportUser);
 
+			if (string.IsNullOrEmpty(notes)) {
+				log.Error("Notes are required");
+				return (false, 0);
+			}
+
 			return repository.HandleTransaction(ctx => {
 				var user = ctx.Load(userId);
 
