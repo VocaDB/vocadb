@@ -70,6 +70,10 @@
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editUserLink" });
 	}
+	@if (Login.Manager.HasPermission(PermissionToken.ReportUser) && UserContext.LoggedUserId != Model.Id && Model.GroupId <= UserGroupId.Regular && Model.Active) {
+		@Html.Raw("&nbsp;")
+		<a href="" id="reportUser" data-bind="click: function() { reportUserViewModel.show(); }">@Res.ReportSpamming</a>
+	}
 	@if (Login.Manager.HasPermission(PermissionToken.RemoveEditPermission) && UserContext.LoggedUserId != Model.Id && Model.GroupId != UserGroupId.Limited && Model.Active && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
 		@Html.Raw("&nbsp;")
 		<a href="" id="setToLimitedLink" data-bind="click: function() { limitedUserViewModel.show(); }">@ViewRes.SharedStrings.SetToLimited</a>
