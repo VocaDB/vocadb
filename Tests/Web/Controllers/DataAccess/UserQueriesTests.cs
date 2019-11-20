@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VocaDb.Model.Database.Queries;
@@ -365,6 +366,33 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void CreateTwitter_InvalidEmailFormat() {
 
 			data.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
+
+		}
+
+		[TestMethod]
+		public void CreateReport() {
+
+			var user = repository.Save(CreateEntry.User());
+
+			data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!");
+
+			repository.List<UserReport>().Should().Contain(rep => rep.Entry.Id == user.Id && rep.User.Id == userWithEmail.Id);
+
+		}
+
+		[TestMethod]
+		public void CreateReport_Limited() {
+
+			var user = repository.Save(CreateEntry.User());
+
+			for (int i = 0; i < 10; ++i) {
+				var reporter = repository.Save(CreateEntry.User());
+				permissionContext.SetLoggedUser(reporter);
+				permissionContext.RefreshLoggedUser(repository);
+				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!");
+			}
+
+			user.GroupId.Should().Be(UserGroupId.Limited);
 
 		}
 
