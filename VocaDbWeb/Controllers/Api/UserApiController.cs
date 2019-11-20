@@ -675,6 +675,19 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		public class CreateReportModel {
+			public UserReportType ReportType { get; set; }
+			public string Reason { get; set; }
+		}
+
+		[Authorize]
+		[Route("{id:int}/reports")]
+		public void PostReport(int id, [FromBody] CreateReportModel model) {
+
+			queries.CreateReport(id, model.ReportType, WebHelper.GetRealHost(Request), model.Reason);
+
+		}
+
 		[Route("current/followedTags/{tagId:int}")]
 		[Authorize]
 		public void PostFollowedTag(int tagId) {

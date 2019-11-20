@@ -115,9 +115,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void CreateReport(IDatabaseContext ctx, User reportedUser, string hostname, string notes) {
-			var report = new UserReport(reportedUser, UserReportType.Other, ctx.OfType<User>().GetLoggedUser(PermissionContext), hostname, notes);
+		private UserReport CreateReport(IDatabaseContext ctx, User reportedUser, UserReportType reportType, string hostname, string notes) {
+			var report = new UserReport(reportedUser, reportType, ctx.OfType<User>().GetLoggedUser(PermissionContext), hostname, notes);
 			ctx.Save(report);
+			return report;
 		}
 
 		private int[] GetFavoriteTagIds(IDatabaseContext<User> ctx, User user) {
@@ -511,6 +512,52 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.OfType<UserMessage>().Save(notification);
 
 				return new CommentForApiContract(comment, userIconFactory);
+
+			});
+
+		}
+
+		public (bool created, int reportId) CreateReport(int userId, UserReportType reportType, string hostname, string notes) {
+
+			PermissionContext.VerifyPermission(PermissionToken.ReportUser);
+
+			if (string.IsNullOrEmpty(notes)) {
+				log.Error("Notes are required");
+				return (false, 0);
+			}
+
+			return repository.HandleTransaction(ctx => {
+				var user = ctx.Load(userId);
+
+				ctx.AuditLogger.SysLog($"reporting {user} as {reportType}");
+
+				if (user.GroupId >= UserGroupId.Moderator) {
+					log.Error("Cannot report user with group " + user.GroupId);
+					return (false, 0);
+				}
+
+				if (user.GroupId <= UserGroupId.Regular && reportType == UserReportType.Spamming) {
+					var activeReportCount = ctx.Query<UserReport>()
+						.Where(ur => ur.Entry.Id == userId && ur.Status == ReportStatus.Open && ur.ReportType == UserReportType.Spamming)
+						.ToArray()
+						.Distinct(ur => ur.User.Id)
+						.Count();
+					if (activeReportCount >= 10) {
+						log.Info("User disabled");
+						user.Active = false;
+						ctx.Update(user);
+					} else if (activeReportCount >= 5) {
+						log.Info("User set to limited");
+						user.GroupId = UserGroupId.Limited;
+						ctx.Update(user);
+					}
+				}
+
+				var report = CreateReport(ctx, user, reportType, hostname, notes);
+
+				ctx.AuditLogger.AuditLog($"reported {user} as {reportType}");
+
+				return (true, report.Id);
 
 			});
 
@@ -1413,7 +1460,7 @@ namespace VocaDb.Model.Database.Queries {
 				var reasonText = !string.IsNullOrEmpty(reason) ? ": " + reason : string.Empty;
 
 				if (createReport) {
-					CreateReport(session, user, hostname, string.Format("removed edit permissions{0}", reasonText));
+					CreateReport(session, user, UserReportType.Other, hostname, string.Format("removed edit permissions{0}", reasonText));
 				}
 
 				var message = string.Format("updated user {0} by removing edit permissions{1}", EntryLinkFactory.CreateEntryLink(user), reasonText);

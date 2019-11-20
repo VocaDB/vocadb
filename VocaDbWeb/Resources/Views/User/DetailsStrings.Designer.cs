@@ -377,6 +377,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report user for spamming.
+        /// </summary>
+        public static string ReportSpamming {
+            get {
+                return ResourceManager.GetString("ReportSpamming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set your avatar at gravatar.com.
         /// </summary>
         public static string SetAvatar {
