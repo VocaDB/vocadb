@@ -538,9 +538,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (user.GroupId <= UserGroupId.Regular && reportType == UserReportType.Spamming) {
 					var activeReportCount = ctx.Query<UserReport>()
-						.Where(ur => ur.User.Id == userId && ur.Status == ReportStatus.Open && ur.ReportType == UserReportType.Spamming)
+						.Where(ur => ur.Entry.Id == userId && ur.Status == ReportStatus.Open && ur.ReportType == UserReportType.Spamming)
 						.ToArray()
-						.Distinct(ur => ur.Hostname)
+						.Distinct(ur => ur.User.Id)
 						.Count();
 					if (activeReportCount >= 10) {
 						log.Info("User disabled");
