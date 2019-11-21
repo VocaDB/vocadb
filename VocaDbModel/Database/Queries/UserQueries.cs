@@ -536,7 +536,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (user.GroupId <= UserGroupId.Regular && reportType == UserReportType.Spamming) {
 					var activeReportCount = ctx.Query<UserReport>()
-						.Where(ur => ur.Entry.Id == userId && ur.Status == ReportStatus.Open && ur.ReportType == UserReportType.Spamming)
+						.Where(ur => ur.Entry.Id == userId 
+							&& ur.Status == ReportStatus.Open 
+							&& ur.ReportType == UserReportType.Spamming
+							&& ur.User != null)
 						.ToArray()
 						.Distinct(ur => ur.User.Id)
 						.Count();
