@@ -682,9 +682,9 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Authorize]
 		[Route("{id:int}/reports")]
-		public void PostReport(int id, [FromBody] CreateReportModel model) {
+		public bool PostReport(int id, [FromBody] CreateReportModel model) {
 
-			queries.CreateReport(id, model.ReportType, WebHelper.GetRealHost(Request), model.Reason);
+			return queries.CreateReport(id, model.ReportType, WebHelper.GetRealHost(Request), model.Reason).created;
 
 		}
 
