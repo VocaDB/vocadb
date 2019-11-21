@@ -725,8 +725,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (sfsCheckResult != null && sfsCheckResult.Appears) {
 
 					var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
-						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}.", 
-						sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString()));
+						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
+						sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
 
 					ctx.OfType<UserReport>().Save(report);
 
