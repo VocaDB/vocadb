@@ -385,7 +385,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var user = repository.Save(CreateEntry.User());
 
-			for (int i = 0; i < 10; ++i) {
+			for (int i = 0; i < 6; ++i) {
 				var reporter = repository.Save(CreateEntry.User());
 				permissionContext.SetLoggedUser(reporter);
 				permissionContext.RefreshLoggedUser(repository);

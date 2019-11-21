@@ -531,10 +531,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.SysLog($"reporting {user} as {reportType}");
 
-				if (user.GroupId >= UserGroupId.Moderator) {
-					log.Error("Cannot report user with group " + user.GroupId);
-					return (false, 0);
-				}
+				var report = CreateReport(ctx, user, reportType, hostname, notes);
 
 				if (user.GroupId <= UserGroupId.Regular && reportType == UserReportType.Spamming) {
 					var activeReportCount = ctx.Query<UserReport>()
@@ -552,8 +549,6 @@ namespace VocaDb.Model.Database.Queries {
 						ctx.Update(user);
 					}
 				}
-
-				var report = CreateReport(ctx, user, reportType, hostname, notes);
 
 				ctx.AuditLogger.AuditLog($"reported {user} as {reportType}");
 

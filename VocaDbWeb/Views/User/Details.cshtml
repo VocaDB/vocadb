@@ -70,7 +70,7 @@
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editUserLink" });
 	}
-	@if (Login.Manager.HasPermission(PermissionToken.ReportUser) && UserContext.LoggedUserId != Model.Id && Model.GroupId <= UserGroupId.Trusted && Model.Active) {
+	@if (Login.Manager.HasPermission(PermissionToken.ReportUser) && UserContext.LoggedUserId != Model.Id && Model.Active) {
 		@Html.Raw("&nbsp;")
 		<a href="" id="reportUserLink" data-bind="click: function() { reportUserViewModel.show(); }">@Res.ReportSpamming</a>
 	}
