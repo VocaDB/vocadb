@@ -117,6 +117,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// User account is active. Setting this to false will prevent them from logging in.
+		/// </summary>
 		public virtual bool Active { get; set; }
 
 		/// <summary>
