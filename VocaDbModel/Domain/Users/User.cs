@@ -221,6 +221,10 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual bool Deleted => !Active;
 
+		/// <summary>
+		/// All currently effective permissions, considering user status,
+		/// group and given additional permissions.
+		/// </summary>
 		public virtual PermissionCollection EffectivePermissions {
 			get {
 
