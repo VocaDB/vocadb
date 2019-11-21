@@ -377,6 +377,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!");
 
 			repository.List<UserReport>().Should().Contain(rep => rep.Entry.Id == user.Id && rep.User.Id == userWithEmail.Id);
+			user.GroupId.Should().Be(UserGroupId.Regular);
+			user.Active.Should().BeTrue();
 
 		}
 
@@ -388,7 +390,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			for (int i = 0; i < 2; ++i) {
 				var reporter = repository.Save(CreateEntry.User());
 				permissionContext.SetLoggedUser(reporter);
-				permissionContext.RefreshLoggedUser(repository);
 				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!", reportCountLimit: 2, reportCountDisable: 3);
 			}
 
@@ -404,7 +405,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			for (int i = 0; i < 3; ++i) {
 				var reporter = repository.Save(CreateEntry.User());
 				permissionContext.SetLoggedUser(reporter);
-				permissionContext.RefreshLoggedUser(repository);
 				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!", reportCountLimit: 2, reportCountDisable: 3);
 			}
 
