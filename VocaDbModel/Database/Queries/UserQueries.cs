@@ -338,6 +338,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Validates email address.
+		/// </summary>
+		/// <param name="email">Email to be validated.</param>
+		/// <exception cref="InvalidEmailFormatException">If <paramref name="email"/> is not valid email.</exception>
 		private void ValidateEmail(string email) {
 			
 			try {
@@ -717,7 +722,7 @@ namespace VocaDb.Model.Database.Queries {
 				user.UpdateLastLogin(hostname, culture);
 				ctx.Save(user);
 
-				if (sfsCheckResult != null && sfsCheckResult.Conclusion == SFSCheckResultType.Malicious) {
+				if (sfsCheckResult != null && sfsCheckResult.Appears) {
 
 					var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
 						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}.", 
@@ -725,8 +730,10 @@ namespace VocaDb.Model.Database.Queries {
 
 					ctx.OfType<UserReport>().Save(report);
 
-					user.GroupId = UserGroupId.Limited;
-					ctx.Update(user);
+					if (sfsCheckResult.Conclusion == SFSCheckResultType.Malicious) {
+						user.GroupId = UserGroupId.Limited;
+						ctx.Update(user);
+					}
 
 				}
 
