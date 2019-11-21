@@ -517,7 +517,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public (bool created, int reportId) CreateReport(int userId, UserReportType reportType, string hostname, string notes) {
+		public (bool created, int reportId) CreateReport(int userId, UserReportType reportType, string hostname, string notes,
+			int reportCountDisable = 10, int reportCountLimit = 5) {
 
 			PermissionContext.VerifyPermission(PermissionToken.ReportUser);
 
@@ -539,11 +540,11 @@ namespace VocaDb.Model.Database.Queries {
 						.ToArray()
 						.Distinct(ur => ur.User.Id)
 						.Count();
-					if (activeReportCount >= 10) {
+					if (activeReportCount >= reportCountDisable) {
 						log.Info("User disabled");
 						user.Active = false;
 						ctx.Update(user);
-					} else if (activeReportCount >= 5) {
+					} else if (activeReportCount >= reportCountLimit) {
 						log.Info("User set to limited");
 						user.GroupId = UserGroupId.Limited;
 						ctx.Update(user);

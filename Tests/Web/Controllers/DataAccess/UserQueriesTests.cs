@@ -385,14 +385,44 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var user = repository.Save(CreateEntry.User());
 
-			for (int i = 0; i < 6; ++i) {
+			for (int i = 0; i < 2; ++i) {
 				var reporter = repository.Save(CreateEntry.User());
 				permissionContext.SetLoggedUser(reporter);
 				permissionContext.RefreshLoggedUser(repository);
-				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!");
+				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!", reportCountLimit: 2, reportCountDisable: 3);
 			}
 
 			user.GroupId.Should().Be(UserGroupId.Limited);
+
+		}
+
+		[TestMethod]
+		public void CreateReport_Disabled() {
+
+			var user = repository.Save(CreateEntry.User());
+
+			for (int i = 0; i < 3; ++i) {
+				var reporter = repository.Save(CreateEntry.User());
+				permissionContext.SetLoggedUser(reporter);
+				permissionContext.RefreshLoggedUser(repository);
+				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!", reportCountLimit: 2, reportCountDisable: 3);
+			}
+
+			user.Active.Should().BeFalse();
+
+		}
+
+		[TestMethod]
+		public void CreateReport_IgnoreDuplicates() {
+
+			var user = repository.Save(CreateEntry.User());
+
+			for (int i = 0; i < 3; ++i) {
+				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!", reportCountLimit: 2, reportCountDisable: 3);
+			}
+
+			user.GroupId.Should().Be(UserGroupId.Regular);
+			user.Active.Should().BeTrue();
 
 		}
 
