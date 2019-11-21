@@ -22,6 +22,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Exceptions;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -1416,6 +1417,16 @@ namespace VocaDb.Model.Database.Queries {
 				VerifyResourceAccess(sender);
 
 				session.AuditLogger.SysLog("sending message from " + sender + " to " + receiver);
+
+				if (sender.CreateDate >= DateTime.Now.AddDays(-7)) {
+					var cutoffTime = DateTime.Now.AddHours(-1);
+					var sentMessageCount = session.Query<UserMessage>()
+						.Count(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime);
+					log.Debug($"Sent messages count for sender {sender} is {sentMessageCount}");
+					if (sentMessageCount > 10) {
+						throw new RateLimitException("Too many messages");
+					}
+				}
 
 				var messages = sender.SendMessage(receiver, contract.Subject, contract.Body, contract.HighPriority);
 

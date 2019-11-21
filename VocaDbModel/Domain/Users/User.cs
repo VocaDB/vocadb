@@ -198,6 +198,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// Date when user account was created (signed up).
+		/// </summary>
 		public virtual DateTime CreateDate { get; set; }
 
 		/// <summary>
