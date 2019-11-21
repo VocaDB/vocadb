@@ -394,6 +394,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			}
 
 			user.GroupId.Should().Be(UserGroupId.Limited);
+			repository.List<UserReport>().Should().HaveCount(2);
 
 		}
 
@@ -409,6 +410,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			}
 
 			user.Active.Should().BeFalse();
+			repository.List<UserReport>().Should().HaveCount(3);
 
 		}
 
@@ -423,6 +425,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			user.GroupId.Should().Be(UserGroupId.Regular);
 			user.Active.Should().BeTrue();
+			repository.List<UserReport>().Should().HaveCount(1);
 
 		}
 

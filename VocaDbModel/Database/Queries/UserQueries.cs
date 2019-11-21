@@ -532,6 +532,14 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.SysLog($"reporting {user} as {reportType}");
 
+				var existing = ctx.Query<UserReport>()
+					.FirstOrDefault(ur => ur.Entry.Id == userId && ur.Status == ReportStatus.Open && ur.User.Id == PermissionContext.LoggedUserId);
+
+				if (existing != null) {
+					log.Info("Report already exists");
+					return (false, existing.Id);
+				}
+
 				var report = CreateReport(ctx, user, reportType, hostname, notes);
 
 				if (user.GroupId <= UserGroupId.Regular && reportType == UserReportType.Spamming) {
