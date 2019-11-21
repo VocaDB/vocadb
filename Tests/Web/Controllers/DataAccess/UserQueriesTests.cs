@@ -214,7 +214,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(name, user.Name, "Name");
 			Assert.AreEqual("mikumiku@crypton.jp", user.Email, "Email");
 			Assert.AreEqual(UserGroupId.Regular, user.GroupId, "GroupId");
-			Assert.IsFalse(repository.List<UserReport>().Any(), "No reports");
+			repository.List<UserReport>().Should().BeEmpty();
 
 			var verificationRequest = repository.List<PasswordResetRequest>().FirstOrDefault(r => r.User.Equals(user));
 			Assert.IsNotNull(verificationRequest, "Verification request was created");
@@ -265,6 +265,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Create_PossibleSpammer() {
+
+			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 50d, Frequency = 50 };
+			var result = CallCreate();
+
+			result.Should().NotBeNull();
+			var report = repository.List<UserReport>().FirstOrDefault();
+			report.Should().NotBeNull(because: "User was reported");
+			report.ReportType.Should().Be(UserReportType.MaliciousIP);
+			report.Hostname.Should().Be(defaultHostname);
+
+			var user = GetUserFromRepo(result.Name);
+			user.GroupId.Should().Be(UserGroupId.Regular, because: "User is not limited");
+
+		}
+
+		[TestMethod]
 		public void Create_MalicousIP() {
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
@@ -277,7 +294,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(defaultHostname, report.Hostname, "Hostname");
 
 			var user = GetUserFromRepo(result.Name);
-			Assert.AreEqual(UserGroupId.Limited, user.GroupId, "GroupId");
+			user.GroupId.Should().Be(UserGroupId.Limited, because: "User was limited");
 		
 		}
 
