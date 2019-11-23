@@ -78,10 +78,6 @@ module vdb.repositories {
 
 		};
 
-		public getTagSuggestions = (songId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
-			$.getJSON(this.urlMapper.mapRelative("/api/songLists/" + songId + "/tagSuggestions"), callback);
-		}
-
 	}
 
 }
