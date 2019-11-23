@@ -62,7 +62,6 @@
 		var songListRepo = repoFactory.songListRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 		var tagRepo = repoFactory.tagRepository();
-		var languageSelection = '';
 		var categories = @ToJS(categories.Select(c => c.Id.ToString()));
 		var viewModel = new vdb.viewModels.songList.FeaturedSongListsViewModel(songListRepo, resourceRepo, tagRepo, languageSelection, cultureCode, categories);
 		ko.applyBindings(viewModel);

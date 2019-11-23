@@ -97,7 +97,7 @@
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
 
 		var loggedUserId = @UserContext.LoggedUserId;
-		var rootPath = '/';
+		var rootPath = '@RootPath';
 		var urlMapper = new vdb.UrlMapper(rootPath);
 		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
 		var tags = @ToJS(Model.Tags);

@@ -589,7 +589,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagSelectionContract[] GetSongListTags(int songListId) {
 
-			return queries.GetSongListTagSelection(songListId, permissionContext.LoggedUserId);
+			return queries.GetSongListTagSelections(songListId, permissionContext.LoggedUserId);
 
 		}
 

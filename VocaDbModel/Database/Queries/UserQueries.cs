@@ -1098,7 +1098,7 @@ namespace VocaDb.Model.Database.Queries {
 			return GetTagSelections<ReleaseEventSeries, EventSeriesTagUsage, EventSeriesTagVote>(seriesId, userId);
 		}
 
-		public TagSelectionContract[] GetSongListTagSelection(int songListId, int userId) {
+		public TagSelectionContract[] GetSongListTagSelections(int songListId, int userId) {
 			return GetTagSelections<SongList, SongListTagUsage, SongListTagVote>(songListId, userId);
 		}
 
