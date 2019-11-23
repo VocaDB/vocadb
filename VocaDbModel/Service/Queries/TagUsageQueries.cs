@@ -142,7 +142,7 @@ namespace VocaDb.Model.Service.Queries {
 				Id = t.Id,
 				Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count 
 					+ t.AllSongTagUsages.Count + t.AllEventTagUsages.Count 
-					+ t.AllEventSeriesTagUsages.Count
+					+ t.AllEventSeriesTagUsages.Count + t.AllSongListTagUsages.Count
 			}).ToDictionary(t => t.Id, t => t.Count);
 
 			return result;
