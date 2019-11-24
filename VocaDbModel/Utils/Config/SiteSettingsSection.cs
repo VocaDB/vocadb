@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config {
 
@@ -13,7 +13,7 @@ namespace VocaDb.Model.Utils.Config {
 			set => this["bannerUrl"] = value;
 		}
 
-		[ConfigurationProperty("blogUrl", DefaultValue = "blog.vocadb.net")]
+		[ConfigurationProperty("blogUrl", DefaultValue = "")]
 		public string BlogUrl {
 			get => (string)this["blogUrl"];
 			set => this["blogUrl"] = value;
