@@ -77,8 +77,8 @@
     <Reference Include="NYoutubeDL, Version=0.10.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NYoutubeDL.0.10.5\lib\netstandard2.0\NYoutubeDL.dll</HintPath>
     </Reference>
-    <Reference Include="PiaproClient, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PiaproClient.2.1.0\lib\netstandard2.0\PiaproClient.dll</HintPath>
+    <Reference Include="PiaproClient, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PiaproClient.2.2.0\lib\netstandard2.0\PiaproClient.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
@@ -344,6 +344,7 @@
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
     <Compile Include="Domain\Artists\ArtistHit.cs" />
+    <Compile Include="Domain\Exceptions\RateLimitException.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkCategory.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkVariationTypes.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkVariationsFactory.cs" />

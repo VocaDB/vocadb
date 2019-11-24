@@ -61,6 +61,9 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
+		/// <summary>
+		/// Timestamp when message was created (sent).
+		/// </summary>
 		public virtual DateTime Created { get; set; }
 
 		public virtual bool HighPriority { get; set; }

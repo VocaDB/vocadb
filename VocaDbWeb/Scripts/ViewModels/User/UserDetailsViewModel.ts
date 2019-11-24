@@ -47,6 +47,15 @@ module vdb.viewModels.user {
 			});
 		});
 
+		public reportUserViewModel = new DeleteEntryViewModel(notes => {
+			$.ajax(this.urlMapper.mapRelative("api/users/" + this.userId + "/reports"), {
+                type: 'POST', data: { reason: notes, reportType: 'Spamming' }, success: () => {
+                    vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+                    this.reportUserViewModel.notes("");
+				}
+			});
+		});
+
 		public initComments = () => {
 
 			this.comments.initComments();

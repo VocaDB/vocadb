@@ -445,6 +445,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// List of all song tag usages (not including deleted songs) for this tag.
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
+		/// The list exists mainly so that it can be queried with NHibernate.
 		/// </summary>
 		public virtual IEnumerable<SongTagUsage> SongTagUsages => AllSongTagUsages.Where(a => !a.Song.Deleted);
 

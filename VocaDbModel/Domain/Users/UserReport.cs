@@ -1,4 +1,4 @@
-﻿namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users {
 
 	public class UserReport : GenericEntryReport<User, UserReportType> {
 
@@ -16,7 +16,9 @@
 		/// </summary>
 		MaliciousIP = 1,
 
-		Other = 2
+		Spamming	= 2,
+
+		Other		= 4
 
 	}
 }

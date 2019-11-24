@@ -138,4 +138,7 @@
   <data name="OwnershipClaim" xml:space="preserve">
     <value>Ownership claim</value>
   </data>
+  <data name="Spamming" xml:space="preserve">
+    <value>Spamming</value>
+  </data>
 </root>

@@ -22,6 +22,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Exceptions;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -116,9 +117,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void CreateReport(IDatabaseContext ctx, User reportedUser, string hostname, string notes) {
-			var report = new UserReport(reportedUser, UserReportType.Other, ctx.OfType<User>().GetLoggedUser(PermissionContext), hostname, notes);
+		private UserReport CreateReport(IDatabaseContext ctx, User reportedUser, UserReportType reportType, string hostname, string notes) {
+			var report = new UserReport(reportedUser, reportType, ctx.OfType<User>().GetLoggedUser(PermissionContext), hostname, notes);
 			ctx.Save(report);
+			return report;
 		}
 
 		private int[] GetFavoriteTagIds(IDatabaseContext<User> ctx, User user) {
@@ -338,6 +340,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Validates email address.
+		/// </summary>
+		/// <param name="email">Email to be validated.</param>
+		/// <exception cref="InvalidEmailFormatException">If <paramref name="email"/> is not valid email.</exception>
 		private void ValidateEmail(string email) {
 			
 			try {
@@ -517,6 +524,59 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public (bool created, int reportId) CreateReport(int userId, UserReportType reportType, string hostname, string notes,
+			int reportCountDisable = 10, int reportCountLimit = 5) {
+
+			PermissionContext.VerifyPermission(PermissionToken.ReportUser);
+
+			if (string.IsNullOrEmpty(notes)) {
+				log.Error("Notes are required");
+				return (false, 0);
+			}
+
+			return repository.HandleTransaction(ctx => {
+				var user = ctx.Load(userId);
+
+				ctx.AuditLogger.SysLog($"reporting {user} as {reportType}");
+
+				var existing = ctx.Query<UserReport>()
+					.FirstOrDefault(ur => ur.Entry.Id == userId && ur.Status == ReportStatus.Open && ur.User.Id == PermissionContext.LoggedUserId);
+
+				if (existing != null) {
+					log.Info("Report already exists");
+					return (false, existing.Id);
+				}
+
+				var report = CreateReport(ctx, user, reportType, hostname, notes);
+
+				if (user.GroupId <= UserGroupId.Regular && reportType == UserReportType.Spamming) {
+					var activeReportCount = ctx.Query<UserReport>()
+						.Where(ur => ur.Entry.Id == userId 
+							&& ur.Status == ReportStatus.Open 
+							&& ur.ReportType == UserReportType.Spamming
+							&& ur.User != null)
+						.ToArray()
+						.Distinct(ur => ur.User.Id)
+						.Count();
+					if (activeReportCount >= reportCountDisable) {
+						log.Info("User disabled");
+						user.Active = false;
+						ctx.Update(user);
+					} else if (activeReportCount >= reportCountLimit) {
+						log.Info("User set to limited");
+						user.GroupId = UserGroupId.Limited;
+						ctx.Update(user);
+					}
+				}
+
+				ctx.AuditLogger.AuditLog($"reported {user} as {reportType}");
+
+				return (true, report.Id);
+
+			});
+
+		}
+
 		/// <summary>
 		/// Disconnects Twitter account for the currently logged in user.
 		/// Twitter account can NOT be disconnected if the user has not set a VocaDB password.
@@ -664,16 +724,18 @@ namespace VocaDb.Model.Database.Queries {
 				user.UpdateLastLogin(hostname, culture);
 				ctx.Save(user);
 
-				if (sfsCheckResult != null && sfsCheckResult.Conclusion == SFSCheckResultType.Malicious) {
+				if (sfsCheckResult != null && sfsCheckResult.Appears) {
 
 					var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
-						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}.", 
-						sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString()));
+						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
+						sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
 
 					ctx.OfType<UserReport>().Save(report);
 
-					user.GroupId = UserGroupId.Limited;
-					ctx.Update(user);
+					if (sfsCheckResult.Conclusion == SFSCheckResultType.Malicious) {
+						user.GroupId = UserGroupId.Limited;
+						ctx.Update(user);
+					}
 
 				}
 
@@ -1371,6 +1433,16 @@ namespace VocaDb.Model.Database.Queries {
 
 				session.AuditLogger.SysLog("sending message from " + sender + " to " + receiver);
 
+				if (sender.CreateDate >= DateTime.Now.AddDays(-7)) {
+					var cutoffTime = DateTime.Now.AddHours(-1);
+					var sentMessageCount = session.Query<UserMessage>()
+						.Count(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime);
+					log.Debug($"Sent messages count for sender {sender} is {sentMessageCount}");
+					if (sentMessageCount > 10) {
+						throw new RateLimitException("Too many messages");
+					}
+				}
+
 				var messages = sender.SendMessage(receiver, contract.Subject, contract.Body, contract.HighPriority);
 
 				if (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAll
@@ -1428,7 +1500,7 @@ namespace VocaDb.Model.Database.Queries {
 				var reasonText = !string.IsNullOrEmpty(reason) ? ": " + reason : string.Empty;
 
 				if (createReport) {
-					CreateReport(session, user, hostname, string.Format("removed edit permissions{0}", reasonText));
+					CreateReport(session, user, UserReportType.Other, hostname, string.Format("removed edit permissions{0}", reasonText));
 				}
 
 				var message = string.Format("updated user {0} by removing edit permissions{1}", EntryLinkFactory.CreateEntryLink(user), reasonText);

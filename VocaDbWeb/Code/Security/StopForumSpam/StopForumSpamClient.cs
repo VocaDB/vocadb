@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Net;
 using NLog;
 using Newtonsoft.Json;
@@ -12,7 +12,7 @@ namespace VocaDb.Web.Code.Security {
 	/// </summary>
 	public class StopForumSpamClient : IStopForumSpamClient {
 
-		private const string apiUrl = "http://www.stopforumspam.com/api?ip={0}&confidence&f=json";
+		private const string apiUrl = "https://www.stopforumspam.com/api?ip={0}&confidence&f=json";
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public SFSResponseContract CallApi(string ip) {

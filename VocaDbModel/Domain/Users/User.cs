@@ -117,6 +117,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// User account is active. Setting this to false will prevent them from logging in.
+		/// </summary>
 		public virtual bool Active { get; set; }
 
 		/// <summary>
@@ -195,6 +198,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// Date when user account was created (signed up).
+		/// </summary>
 		public virtual DateTime CreateDate { get; set; }
 
 		/// <summary>
@@ -218,6 +224,10 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual bool Deleted => !Active;
 
+		/// <summary>
+		/// All currently effective permissions, considering user status,
+		/// group and given additional permissions.
+		/// </summary>
 		public virtual PermissionCollection EffectivePermissions {
 			get {
 
