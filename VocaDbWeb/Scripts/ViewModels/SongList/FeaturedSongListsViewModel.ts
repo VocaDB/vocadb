@@ -11,10 +11,11 @@ module vdb.viewModels.songList {
 			tagRepo: rep.TagRepository,
 			languageSelection: string,
 			cultureCode: string,
+			tagIds: number[],
 			categoryNames: string[]) {
 			
 			_.forEach(categoryNames, (categoryName) => {
-				this.categories[categoryName] = new FeaturedSongListCategoryViewModel(listRepo, resourceRepo, tagRepo, languageSelection, cultureCode, categoryName);
+				this.categories[categoryName] = new FeaturedSongListCategoryViewModel(listRepo, resourceRepo, tagRepo, languageSelection, cultureCode, tagIds, categoryName);
 			});
 
 		}
@@ -30,10 +31,11 @@ module vdb.viewModels.songList {
 			tagRepo: rep.TagRepository,
 			languageSelection: string,
 			cultureCode: string,
+			tagIds: number[],
 			private category: string) {
 
 			// Should figure out a better way for this.
-			super(resourceRepo, tagRepo, languageSelection, cultureCode, category === "Concerts" || category === "VocaloidRanking");
+			super(resourceRepo, tagRepo, languageSelection, cultureCode, tagIds, category === "Concerts" || category === "VocaloidRanking");
 
 		}
 

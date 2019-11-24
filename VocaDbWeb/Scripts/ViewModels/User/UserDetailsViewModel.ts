@@ -183,7 +183,7 @@ module vdb.viewModels.user {
 			tagRepo: rep.TagRepository,
 			languageSelection: string,
 			cultureCode: string) {
-			super(resourceRepo, tagRepo, languageSelection, cultureCode, true);
+			super(resourceRepo, tagRepo, languageSelection, cultureCode, [], true);
 		}
 
 		public loadMoreItems = (callback) => {

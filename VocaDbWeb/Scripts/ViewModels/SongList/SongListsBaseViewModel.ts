@@ -9,6 +9,7 @@ module vdb.viewModels.songList {
 			tagRepo: rep.TagRepository,
 			languageSelection: string,
 			cultureCode: string,
+			tagIds: number[],
 			public showEventDateSort: boolean) {
 
 			super();
@@ -17,6 +18,9 @@ module vdb.viewModels.songList {
 				this.sort(SongListSortRule[SongListSortRule.Name]);
 
 			this.tagFilters = new viewModels.search.TagFilters(tagRepo, languageSelection);
+
+			if (tagIds)
+				this.tagFilters.addTags(tagIds);
 
 			this.query.subscribe(this.clear);
 			this.sort.subscribe(this.clear);
