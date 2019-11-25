@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Mapping.Songs {
@@ -22,6 +22,10 @@ namespace VocaDb.Model.Mapping.Songs {
 				c => c.HasMany(m => m.Versions).KeyColumn("[SongList]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
 			Component(m => m.EventDate, c => c.Map(m => m.DateTime).Column("EventDate").Nullable());
+
+			Component(m => m.Tags, c => {
+				c.HasMany(m => m.Usages).KeyColumn("[SongList]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
+			});
 
 			Component(m => m.Thumb, c => {
 				c.Map(m => m.Mime).Column("ThumbMime").Length(30);

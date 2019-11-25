@@ -402,6 +402,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
 				"~/Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
 				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter.js",
+				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
+				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/SongList/SongListViewModel.js"
 			));
 
@@ -414,7 +416,11 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Featured").Include(
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
+				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/SongListRepository.js",
+				"~/Scripts/Repositories/TagRepository.js",
+				"~/Scripts/ViewModels/Search/TagFilter.js",
+				"~/Scripts/ViewModels/Search/TagFilters.js",
 				"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
                 "~/Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
 			));

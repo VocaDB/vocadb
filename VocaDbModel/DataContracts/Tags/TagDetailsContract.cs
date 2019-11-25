@@ -25,6 +25,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagDetailsContract(Tag tag, 
 			IEnumerable<Artist> artists, int artistCount, IEnumerable<Album> albums, int albumCount,
+			IEnumerable<SongList> songLists, int songListCount,
 			IEnumerable<Song> songs, int songCount,
 			IEnumerable<ReleaseEventSeries> eventSeries, int eventSeriesCount,
 			IEnumerable<ReleaseEvent> events, int eventCount, 
@@ -63,6 +64,9 @@ namespace VocaDb.Model.DataContracts.Tags {
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
 				.ToArray();
+
+			SongLists = songLists.Select(a => new SongListBaseContract(a)).ToArray();
+			SongListCount = songListCount;
 
 			Songs = songs.Select(a => new SongForApiContract(a, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 			SongCount = songCount;
@@ -106,6 +110,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagBaseContract[] RelatedTags { get; set; }
 
 		public TagBaseContract[] Siblings { get; set; }
+
+		public int SongListCount { get; set; }
+
+		public SongListBaseContract[] SongLists { get; set; }
 
 		public SongForApiContract[] Songs { get; set; }
 

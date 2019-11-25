@@ -61,7 +61,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongListQueryParams queryParams,
+		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongInListQueryParams queryParams,
 			Func<SongInList, T> fac) {
 
 			var q = session.OfType<SongInList>().Query()
@@ -195,21 +195,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SearchTextQuery textQuery, SongListFeaturedCategory? featuredCategory,
-			int start, int maxResults, bool getTotalCount, SongListSortRule sort) {
+		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SongListQueryParams queryParams) {
 
 			return HandleQuery(ctx => {
 
 				var listQuery = ctx.Query()
 					.WhereNotDeleted()
-					.WhereHasFeaturedCategory(featuredCategory, false)
-					.WhereHasName(textQuery);
+					.WhereHasFeaturedCategory(queryParams.FeaturedCategory, false)
+					.WhereHasName(queryParams.TextQuery)
+					.WhereHasTags(queryParams.TagIds, queryParams.ChildTags);
 
-				var count = getTotalCount ? listQuery.Count() : 0;
+				var count = queryParams.Paging.GetTotalCount ? listQuery.Count() : 0;
 
 				return new PartialFindResult<TResult>(listQuery
-					.OrderBy(sort)
-					.Paged(new PagingProperties(start, maxResults, getTotalCount))
+					.OrderBy(queryParams.SortRule)
+					.Paged(queryParams.Paging)
 					.ToArray()
 					.Select(s => fac(s))
 					.ToArray(), count);
@@ -234,13 +234,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<SongInListContract> GetSongsInList(SongListQueryParams queryParams) {
+		public PartialFindResult<SongInListContract> GetSongsInList(SongInListQueryParams queryParams) {
 
 			return repository.HandleQuery(session => GetSongsInList(session, queryParams, s => new SongInListContract(s, PermissionContext.LanguagePreference)));
 
 		}
 
-		public PartialFindResult<T> GetSongsInList<T>(SongListQueryParams queryParams, Func<SongInList, T> fac) {
+		public PartialFindResult<T> GetSongsInList<T>(SongInListQueryParams queryParams, Func<SongInList, T> fac) {
 
 			return repository.HandleQuery(ctx => GetSongsInList(ctx, queryParams, fac));
 

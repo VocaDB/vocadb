@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.Mvc;
@@ -119,9 +119,9 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Featured() {
+		public ActionResult Featured(FeaturedViewModel viewModel) {
 
-			return View();
+			return View(viewModel);
 
 		}
 

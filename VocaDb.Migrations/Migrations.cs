@@ -1,8 +1,28 @@
-using System;
 using System.Data;
 using FluentMigrator;
 
 namespace VocaDb.Migrations {
+
+	[Migration(2019_11_17_0100)]
+	public class SongListTags : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Table("SongListTagUsages")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Count").AsInt32().NotNullable()
+				.WithColumn("SongList").AsInt32().NotNullable().ForeignKey(TableNames.SongLists, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id")
+				.WithColumn("Date").AsDateTime().NotNullable();
+			Create.Table("SongListTagVotes")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Usage").AsInt64().NotNullable().ForeignKey("SongListTagUsages", "Id").OnDelete(Rule.Cascade)
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
+			Create.Index("UX_SongListTagUsages").OnTable("SongListTagUsages").OnColumn("SongList").Ascending()
+				.OnColumn("Tag").Ascending().WithOptions().Unique();
+			Create.Index("IX_SongListTagUsages_Tag").OnTable("SongListTagUsages").OnColumn("Tag").Ascending();
+		}
+
+	}
 
 	[Migration(2019_04_14_1300)]
 	public class ArchivedEntryVersionChangedFieldsLength : AutoReversingMigration {

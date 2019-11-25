@@ -41,6 +41,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Security.StopForumSpam;
@@ -1080,21 +1081,22 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SearchTextQuery textQuery, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
+		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SongListQueryParams queryParams, SongListOptionalFields fields) {
 			
 			return HandleQuery(ctx => { 
 				
 				var query = ctx.Query<SongList>()
 					.WhereNotDeleted()
 					.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing)
-					.WhereHasName(textQuery);
+					.WhereHasName(queryParams.TextQuery)
+					.WhereHasTags(queryParams.TagIds, queryParams.ChildTags);
 
-				var items = query.OrderBy(sort)
-					.Paged(paging)
+				var items = query.OrderBy(queryParams.SortRule)
+					.Paged(queryParams.Paging)
 					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, fields))
 					.ToArray();
 
-				var count = paging.GetTotalCount ? query.Count() : 0;
+				var count = queryParams.Paging.GetTotalCount ? query.Count() : 0;
 
 				return new PartialFindResult<SongListForApiContract>(items, count);
 
@@ -1156,6 +1158,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagSelectionContract[] GetEventSeriesTagSelections(int seriesId, int userId) {
 			return GetTagSelections<ReleaseEventSeries, EventSeriesTagUsage, EventSeriesTagVote>(seriesId, userId);
+		}
+
+		public TagSelectionContract[] GetSongListTagSelections(int songListId, int userId) {
+			return GetTagSelections<SongList, SongListTagUsage, SongListTagVote>(songListId, userId);
 		}
 
 		public TagSelectionContract[] GetSongTagSelections(int songId, int userId) {
@@ -1383,6 +1389,15 @@ namespace VocaDb.Model.Database.Queries {
 				seriesId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				releaseEvent => releaseEvent.Tags,
 				(releaseEvent, ctx) => new EventSeriesTagUsageFactory(ctx, releaseEvent));
+
+		}
+
+		public TagUsageForApiContract[] SaveSongListTags(int songListId, TagBaseContract[] tags, bool onlyAdd) {
+
+			return new TagUsageQueries(permissionContext).AddTags<SongList, SongListTagUsage>(
+				songListId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
+				songList => songList.Tags,
+				(songList, ctx) => new SongListTagUsageFactory(ctx, songList));
 
 		}
 
@@ -1944,6 +1959,36 @@ namespace VocaDb.Model.Database.Queries {
 		public EventSeriesTagUsage CreateTagUsage(Tag tag, EventSeriesTagUsage oldUsage) {
 
 			var usage = new EventSeriesTagUsage(oldUsage.Entry, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+	}
+
+	public class SongListTagUsageFactory : ITagUsageFactory<SongListTagUsage> {
+
+		private readonly SongList songList;
+		private readonly IDatabaseContext ctx;
+
+		public SongListTagUsageFactory(IDatabaseContext ctx, SongList songList) {
+			this.ctx = ctx;
+			this.songList = songList;
+		}
+
+		public SongListTagUsage CreateTagUsage(Tag tag) {
+
+			var usage = new SongListTagUsage(songList, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+		public SongListTagUsage CreateTagUsage(Tag tag, SongListTagUsage oldUsage) {
+
+			var usage = new SongListTagUsage(oldUsage.Entry, tag);
 			ctx.Save(usage);
 
 			return usage;

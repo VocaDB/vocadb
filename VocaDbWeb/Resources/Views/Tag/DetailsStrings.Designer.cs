@@ -115,6 +115,15 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All song lists.
+        /// </summary>
+        public static string AllSongLists {
+            get {
+                return ResourceManager.GetString("AllSongLists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All songs.
         /// </summary>
         public static string AllSongs {

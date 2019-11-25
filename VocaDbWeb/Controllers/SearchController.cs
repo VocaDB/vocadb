@@ -130,7 +130,7 @@ namespace VocaDb.Web.Controllers
 					break;
 
 				case EntryType.SongList:
-					var list = songListQueries.Find(s => s.Id, textQuery, null, 0, 2, false, SongListSortRule.Name);
+					var list = songListQueries.Find(s => s.Id, new SongListQueryParams { TextQuery = textQuery, Paging = new PagingProperties(0, 2, false), SortRule = SongListSortRule.Name });
 					if (list.Items.Length == 1) {
 						return RedirectToSongList(list.Items[0]);
 					}

@@ -136,12 +136,16 @@ module vdb.viewModels.user {
 
 		constructor(
 			private readonly userId: number,
+			cultureCode: string,
 			private loggedUserId: number,
 			private lastLoginAddress: string,
 			private canEditAllComments: boolean,
 			private urlMapper: UrlMapper,
 			private userRepo: rep.UserRepository,
 			private adminRepo: rep.AdminRepository,
+			resourceRepo: rep.ResourceRepository,
+			tagRepo: rep.TagRepository,
+			languageSelection: string,
 			public followedArtistsViewModel: FollowedArtistsViewModel,
 			public albumCollectionViewModel: AlbumCollectionViewModel,
 			public ratedSongsViewModel: RatedSongsSearchViewModel,
@@ -150,7 +154,7 @@ module vdb.viewModels.user {
 			var canDeleteAllComments = (userId === loggedUserId);
 
 			this.comments = new EditableCommentsViewModel(userRepo, userId, loggedUserId, canDeleteAllComments, canEditAllComments, false, latestComments, true);
-			this.songLists = new UserSongListsViewModel(userId, userRepo);
+			this.songLists = new UserSongListsViewModel(userId, userRepo, resourceRepo, tagRepo, languageSelection, cultureCode);
 
 			window.onhashchange = () => {
 				if (window.location.hash && window.location.hash.length >= 1)
@@ -172,13 +176,18 @@ module vdb.viewModels.user {
     }
 
 	export class UserSongListsViewModel extends songList.SongListsBaseViewModel {
-		
-		constructor(private readonly userId, private readonly userRepo: rep.UserRepository) {			
-			super(true);
+
+		constructor(private readonly userId,
+			private readonly userRepo: rep.UserRepository,
+			resourceRepo: rep.ResourceRepository,
+			tagRepo: rep.TagRepository,
+			languageSelection: string,
+			cultureCode: string) {
+			super(resourceRepo, tagRepo, languageSelection, cultureCode, [], true);
 		}
 
-		public loadMoreItems = (callback) => {			
-			this.userRepo.getSongLists(this.userId, this.query(), { start: this.start, maxEntries: 50, getTotalCount: true }, this.sort(), 'MainPicture', callback);
+		public loadMoreItems = (callback) => {
+			this.userRepo.getSongLists(this.userId, this.query(), { start: this.start, maxEntries: 50, getTotalCount: true }, this.tagFilters.tagIds(), this.sort(), 'MainPicture', callback);
 		}
 
 	}

@@ -135,6 +135,9 @@
   <data name="AllEvents" xml:space="preserve">
     <value>All events</value>
   </data>
+  <data name="AllSongLists" xml:space="preserve">
+    <value>All song lists</value>
+  </data>
   <data name="AllSongs" xml:space="preserve">
     <value>All songs</value>
   </data>

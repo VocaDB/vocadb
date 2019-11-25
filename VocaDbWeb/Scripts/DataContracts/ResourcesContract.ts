@@ -1,4 +1,4 @@
-﻿
+
 module vdb.dataContracts {
 	
 	// From ResourcesApiController
@@ -23,6 +23,7 @@ module vdb.dataContracts {
 		entryTypeNames?: { [key: string]: string; }
 		eventCategoryNames?: { [key: string]: string; }
 		eventSortRuleNames?: { [key: string]: string; }
+		songListSortRuleNames?: { [key: string]: string; }
 		songSortRuleNames?: { [key: string]: string; }
 		songTypeNames?: { [key: string]: string; }
 		userGroupNames?: { [key: string]: string; }

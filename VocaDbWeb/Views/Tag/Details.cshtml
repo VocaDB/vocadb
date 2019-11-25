@@ -168,6 +168,12 @@
 					@Html.ActionLink(Res.AllEvents + " (" + Model.EventCount + ")", "Index", "Search", UrlMapper.Search.Events(tagId: Model.Id), null)
 				</div>
 			}
+
+			@if (Model.SongListCount > 0) {
+				<div>
+					@Html.ActionLink(Res.AllSongLists + " (" + Model.SongListCount + ")", "Featured", "SongList", new { tagId = Model.Id }, null)
+				</div>
+			}
 		</div>
 	</div>
 </div>

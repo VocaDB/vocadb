@@ -310,6 +310,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
+				var songLists = GetTopUsagesAndCount<SongListTagUsage, SongList, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(ctx, tagId, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
 				var eventSeries = GetTopUsagesAndCount<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var seriesIds = eventSeries.TopUsages.Select(e => e.Id).ToArray();
@@ -323,6 +324,7 @@ namespace VocaDb.Model.Database.Queries {
 				return new TagDetailsContract(tag,
 					artists.TopUsages, artists.TotalCount,
 					albums.TopUsages, albums.TotalCount,
+					songLists.TopUsages, songLists.TotalCount,
 					songs.TopUsages, songs.TotalCount,
 					eventSeries.TopUsages, eventSeries.TotalCount,
 					events.TopUsages, events.TotalCount,

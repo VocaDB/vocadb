@@ -109,6 +109,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a list of featured song lists.
 		/// </summary>
 		/// <param name="query">Song list name query (optional).</param>
+		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="nameMatchMode">Match mode for list name (optional, defaults to Auto).</param>
 		/// <param name="featuredCategory">Filter by a specific featured category. If empty, all categories are returned.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
@@ -119,15 +121,23 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("featured")]
 		public PartialFindResult<SongListForApiContract> GetFeaturedLists(
 			string query = "",
+			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name) {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var queryParams = new SongListQueryParams {
+				TextQuery = textQuery,
+				FeaturedCategory = featuredCategory,
+				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				TagIds = tagId,
+				ChildTags = childTags
+			};
 
-			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture),
-				textQuery, featuredCategory, start, maxResults, getTotalCount, sort);
+			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture), queryParams);
 
 		}
 
@@ -205,7 +215,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			return queries.GetSongsInList(
-				new SongListQueryParams {
+				new SongInListQueryParams {
 					TextQuery = SearchTextQuery.Create(query, nameMatchMode),
 					ListId = listId, 
 					Paging = new PagingProperties(start, maxResults, getTotalCount),

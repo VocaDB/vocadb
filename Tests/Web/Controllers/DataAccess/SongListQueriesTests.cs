@@ -105,7 +105,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(list.AddSong(song1));
 			repository.Save(list.AddSong(song2));
 
-			var result = queries.GetSongsInList(new SongListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("Diva") });
+			var result = queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("Diva") });
 
 			Assert.AreEqual(1, result.Items.Length);
 			Assert.AreEqual(song1.DefaultName, result.Items[0].Song.Name);
@@ -119,7 +119,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(list.AddSong(song1, 1, "encore"));
 			repository.Save(list.AddSong(song2, 2, "encore"));
 
-			var result = queries.GetSongsInList(new SongListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("enc") });
+			var result = queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("enc") });
 
 			Assert.AreEqual(2, result.Items.Length);
 

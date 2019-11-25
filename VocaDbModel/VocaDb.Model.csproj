@@ -464,6 +464,8 @@
     <Compile Include="Domain\Songs\SongListDiff.cs" />
     <Compile Include="Domain\Songs\SongListEditableFields.cs" />
     <Compile Include="Domain\Songs\SongListFeaturedCategory.cs" />
+    <Compile Include="Domain\Songs\SongListTagUsage.cs" />
+    <Compile Include="Domain\Songs\SongListTagVote.cs" />
     <Compile Include="Domain\Songs\SongMergeRecord.cs" />
     <Compile Include="Domain\Songs\SongReport.cs" />
     <Compile Include="Domain\Songs\SongTagUsage.cs" />
@@ -650,6 +652,8 @@
     <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventSeriesMap.cs" />
+    <Compile Include="Mapping\Songs\SongListTagUsageMap.cs" />
+    <Compile Include="Mapping\Songs\SongListTagVoteMap.cs" />
     <Compile Include="Mapping\Tags\TagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\Users\EventForUserMap.cs" />
@@ -934,6 +938,7 @@
     <Compile Include="Service\Search\ReleaseEventSearch.cs" />
     <Compile Include="Service\Search\SearchTextQuery.cs" />
     <Compile Include="Service\Search\SongSearch\ParsedSongQuery.cs" />
+    <Compile Include="Service\Search\SongSearch\SongInListQueryParams.cs" />
     <Compile Include="Service\Search\SongSearch\SongListQueryParams.cs" />
     <Compile Include="Service\Search\Tags\TagQueryParams.cs" />
     <Compile Include="Service\Search\Tags\TagSearch.cs" />
