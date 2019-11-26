@@ -79,6 +79,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public int AlbumCount { get; set; }
 
+		public int AllUsageCount => ArtistCount + AlbumCount + SongCount + EventCount + SongListCount;
+
 		public int ArtistCount { get; set; }
 
 		public AlbumContract[] Albums { get; set; }

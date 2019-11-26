@@ -142,7 +142,7 @@
 			<br />
 
 			<div>
-				@Html.ActionLink(Res.AllEntries + " (" + (Model.ArtistCount + Model.AlbumCount + Model.SongCount + Model.EventCount) + ")", "Index", "Search", UrlMapper.Search.Entries(tagId: Model.Id), null)
+				@Html.ActionLink(Res.AllEntries + " (" + Model.AllUsageCount + ")", "Index", "Search", UrlMapper.Search.Entries(tagId: Model.Id), null)
 			</div>
 
 			@if (Model.ArtistCount > 0) {
