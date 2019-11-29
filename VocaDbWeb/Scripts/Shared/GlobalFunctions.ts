@@ -1,5 +1,7 @@
 /// <reference path="GlobalValues.ts" />
 
+import { baseAddress, hostAddress } from './GlobalValues';
+
 //module vdb.functions {
 
 	export function getId(elem: HTMLElement) {
@@ -21,13 +23,13 @@
 
     export function mapAbsoluteUrl(relative: string) {
 
-        return mergeUrls(vdb.values.baseAddress, relative);
+        return mergeUrls(baseAddress, relative);
 
     };
 
     export function mapFullUrl(relative: string) {
 
-        return mergeUrls(vdb.values.hostAddress, relative);
+        return mergeUrls(hostAddress, relative);
 
     };
 

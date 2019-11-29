@@ -1,5 +1,7 @@
 /// <reference path="GlobalFunctions.ts" />
 
+import { mergeUrls } from './GlobalFunctions';
+
 //module vdb {
 
     export class UrlMapper {
@@ -28,7 +30,7 @@
         constructor(public baseUrl: string) { }
 
         public mapRelative(relative: string) {
-            return vdb.functions.mergeUrls(this.baseUrl, relative);
+            return mergeUrls(this.baseUrl, relative);
         }
 
     }

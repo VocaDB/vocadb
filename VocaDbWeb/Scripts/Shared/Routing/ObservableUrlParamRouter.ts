@@ -1,6 +1,8 @@
 
-interface JQueryStatic {
-	url: (param: string) => string;
+declare global {
+	interface JQueryStatic {
+		url: (param: string) => string;
+	}
 }
 
 //module vdb.routing {
