@@ -1,5 +1,5 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 	
 	export class EntryMergeValidationHelper {
 
@@ -45,4 +45,4 @@ module vdb.helpers {
 		validationError_targetIsNewer: boolean;
 	}
 
-}
+//}

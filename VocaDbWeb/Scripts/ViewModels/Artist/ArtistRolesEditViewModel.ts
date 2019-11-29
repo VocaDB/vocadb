@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.artists {
+
+//module vdb.viewModels.artists {
 
 	export class ArtistRolesEditViewModel {
 		
@@ -73,4 +73,4 @@ module vdb.viewModels.artists {
 
 	}
 
-} 
+//} 

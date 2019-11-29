@@ -1,5 +1,5 @@
-﻿
-namespace vdb.models.globalization {
+
+//namespace vdb.models.globalization {
 
 	export enum TranslationType {
 		Original,
@@ -7,4 +7,4 @@ namespace vdb.models.globalization {
 		Translation
 	}
 
-}
+//}

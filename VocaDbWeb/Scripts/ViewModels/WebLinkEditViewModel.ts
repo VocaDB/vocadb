@@ -3,7 +3,7 @@
 /// <reference path="../Models/WebLinkCategory.ts" />
 /// <reference path="../Shared/WebLinkMatcher.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
     import cls = vdb.models;
 
@@ -54,4 +54,4 @@ module vdb.viewModels {
     
     }
 
-}
+//}

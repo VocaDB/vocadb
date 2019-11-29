@@ -1,5 +1,5 @@
 
-module vdb.dataContracts {
+//module vdb.dataContracts {
 	
 	// From ResourcesApiController
 	export interface ResourcesContract {
@@ -30,4 +30,4 @@ module vdb.dataContracts {
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.pvs {
+
+//module vdb.viewModels.pvs {
 
 	import cls = vdb.models;
 
@@ -86,4 +86,4 @@ module vdb.viewModels.pvs {
 
 	}
 
-}
+//}

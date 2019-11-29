@@ -1,5 +1,5 @@
 
-module vdb.models {
+//module vdb.models {
 
     export enum WebLinkCategory {
         Official,
@@ -19,4 +19,4 @@ module vdb.models {
 
     }
 
-}
+//}

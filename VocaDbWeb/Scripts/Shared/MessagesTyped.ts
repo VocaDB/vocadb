@@ -1,5 +1,5 @@
-﻿
-module vdb {
+
+//module vdb {
 	
 	export class ui {
 
@@ -69,4 +69,4 @@ module vdb {
 
 	}
 
-} 
+//} 

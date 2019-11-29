@@ -1,5 +1,5 @@
-﻿
-module vdb.models {
+
+//module vdb.models {
 	
 	export enum EntryStatus {
 
@@ -13,4 +13,4 @@ module vdb.models {
 
 	}
 
-}
+//}

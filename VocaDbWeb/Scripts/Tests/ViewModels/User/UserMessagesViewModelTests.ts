@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/qunit/qunit.d.ts" />
 /// <reference path="../../TestSupport/FakeUserRepository.ts" />
 
-module vdb.tests.viewModels {
+//module vdb.tests.viewModels {
 
     import dc = vdb.dataContracts;
     import vm = vdb.viewModels;
@@ -86,4 +86,4 @@ module vdb.tests.viewModels {
 
     });
 
-}
+//}

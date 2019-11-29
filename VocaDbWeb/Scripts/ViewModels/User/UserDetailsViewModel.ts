@@ -1,7 +1,7 @@
 /// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../Repositories/AdminRepository.ts" />
 
-module vdb.viewModels.user {
+//module vdb.viewModels.user {
 
 	import cls = models;
 	import dc = vdb.dataContracts;
@@ -192,4 +192,4 @@ module vdb.viewModels.user {
 
 	}
 
-}
+//}

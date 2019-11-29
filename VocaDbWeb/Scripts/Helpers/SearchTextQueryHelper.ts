@@ -1,5 +1,5 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 	
 	export class SearchTextQueryHelper {
 		
@@ -15,4 +15,4 @@ module vdb.helpers {
 
 	}
 
-} 
+//} 

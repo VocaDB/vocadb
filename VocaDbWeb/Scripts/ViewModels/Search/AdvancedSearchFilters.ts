@@ -1,5 +1,5 @@
-﻿
-namespace vdb.viewModels.search {
+
+//namespace vdb.viewModels.search {
 
 	export class AdvancedSearchFilters {
 
@@ -16,4 +16,4 @@ namespace vdb.viewModels.search {
 
 	}
 
-}
+//}

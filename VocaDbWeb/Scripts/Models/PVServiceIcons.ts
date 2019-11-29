@@ -1,5 +1,5 @@
 
-module vdb.models {
+//module vdb.models {
 	
 	// Class for getting URLs of PV service icons.
 	export class PVServiceIcons {
@@ -48,4 +48,4 @@ module vdb.models {
 
 	}
 
-}
+//}

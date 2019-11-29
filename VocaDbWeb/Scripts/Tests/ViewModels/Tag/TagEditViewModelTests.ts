@@ -1,5 +1,5 @@
-﻿
-namespace vdb.tests.viewModels.tags {
+
+//namespace vdb.tests.viewModels.tags {
 
 	import cls = vdb.models;
 	import vm = vdb.viewModels;
@@ -41,4 +41,4 @@ namespace vdb.tests.viewModels.tags {
 		QUnit.equal(viewModel.targets(), vm.tags.TagEditViewModel.allEntryTypes, "targets"); // When all entry types are selected, flags mask is set to all
 	});
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.songs {
+
+//module vdb.viewModels.songs {
 	
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
@@ -47,4 +47,4 @@ module vdb.viewModels.songs {
 
 	}
 
-}
+//}

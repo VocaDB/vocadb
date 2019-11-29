@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 	
 	// Note: matches C# class EntryThumbForApiContract
 	export interface EntryThumbContract {
@@ -12,4 +12,4 @@ module vdb.dataContracts {
 
 	}
 
-}
+//}

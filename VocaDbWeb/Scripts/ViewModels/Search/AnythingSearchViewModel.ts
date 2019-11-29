@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.search {
+
+//module vdb.viewModels.search {
 
 	import dc = vdb.dataContracts;
 
@@ -41,4 +41,4 @@ module vdb.viewModels.search {
 
 	}
 
-}
+//}

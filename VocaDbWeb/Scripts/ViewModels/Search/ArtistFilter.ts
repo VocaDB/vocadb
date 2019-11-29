@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.search {
+
+//module vdb.viewModels.search {
 	
 	export class ArtistFilter {
 		
@@ -11,4 +11,4 @@ module vdb.viewModels.search {
 
 	}
 
-} 
+//} 

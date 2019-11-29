@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.artists {
+
+//module vdb.dataContracts.artists {
 	
 	export interface ArtistForArtistContract {
 
@@ -12,4 +12,4 @@ module vdb.dataContracts.artists {
 
 	}
 
-}
+//}

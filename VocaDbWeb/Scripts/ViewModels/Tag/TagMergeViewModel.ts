@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.tags {
+
+//module vdb.viewModels.tags {
 
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
@@ -31,4 +31,4 @@ module vdb.viewModels.tags {
 
 	}
 
-}
+//}

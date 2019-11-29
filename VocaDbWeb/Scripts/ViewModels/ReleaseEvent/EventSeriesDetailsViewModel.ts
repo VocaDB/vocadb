@@ -1,5 +1,5 @@
-﻿
-namespace vdb.viewModels.releaseEvents {
+
+//namespace vdb.viewModels.releaseEvents {
 
 	import cls = vdb.models;
 
@@ -26,4 +26,4 @@ namespace vdb.viewModels.releaseEvents {
 
 	}
 
-}
+//}

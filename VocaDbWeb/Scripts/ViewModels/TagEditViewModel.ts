@@ -1,6 +1,6 @@
 /// <reference path="../typings/knockout/knockout.d.ts" />
 
-namespace vdb.viewModels.tags {
+//namespace vdb.viewModels.tags {
 
 	import dc = vdb.dataContracts;
 
@@ -108,4 +108,4 @@ namespace vdb.viewModels.tags {
 		});
 	}
 
-}
+//}

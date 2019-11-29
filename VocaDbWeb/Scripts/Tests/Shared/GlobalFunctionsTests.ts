@@ -1,7 +1,7 @@
 /// <reference path="../../typings/qunit/qunit.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
-module vdb.tests.functions {
+//module vdb.tests.functions {
 
     import fu = vdb.functions;
 
@@ -42,4 +42,4 @@ module vdb.tests.functions {
         equal(result, "/Song", "result")
 
     });
-}
+//}

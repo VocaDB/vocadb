@@ -1,5 +1,5 @@
-﻿
-module vdb.models.albums {
+
+//module vdb.models.albums {
 
 	export enum AlbumType {
 		
@@ -29,4 +29,4 @@ module vdb.models.albums {
 
 	}
 
-}
+//}

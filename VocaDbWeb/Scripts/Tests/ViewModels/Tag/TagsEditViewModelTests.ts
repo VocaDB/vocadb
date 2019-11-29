@@ -1,5 +1,5 @@
-﻿
-namespace vdb.tests.viewModels.tags {
+
+//namespace vdb.tests.viewModels.tags {
 	
 	import vm = vdb.viewModels;
 
@@ -42,4 +42,4 @@ namespace vdb.tests.viewModels.tags {
 
 	});
 
-} 
+//} 

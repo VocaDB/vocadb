@@ -1,10 +1,10 @@
-﻿
+
 interface KnockoutBindingHandlers {
 	// Album autocomplete search box.
 	albumAutoComplete: KnockoutBindingHandler;
 }
 
-module vdb.knockoutExtensions {
+//module vdb.knockoutExtensions {
 	
 	import dc = vdb.dataContracts;
 
@@ -52,7 +52,7 @@ module vdb.knockoutExtensions {
 
 	}
 
-}
+//}
 
 ko.bindingHandlers.albumAutoComplete = {
 	init: vdb.knockoutExtensions.albumAutoComplete

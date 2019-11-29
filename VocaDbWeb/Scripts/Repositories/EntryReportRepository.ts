@@ -1,7 +1,7 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../Shared/UrlMapper.ts" />
 
-module vdb.repositories {
+//module vdb.repositories {
 
     export class EntryReportRepository {
 
@@ -14,4 +14,4 @@ module vdb.repositories {
 
     }
 
-}
+//}

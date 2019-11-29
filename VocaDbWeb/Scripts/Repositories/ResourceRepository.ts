@@ -1,5 +1,5 @@
-﻿
-module vdb.repositories {
+
+//module vdb.repositories {
 
 	import dc = vdb.dataContracts;
 
@@ -16,4 +16,4 @@ module vdb.repositories {
 
 	}
 
-} 
+//} 

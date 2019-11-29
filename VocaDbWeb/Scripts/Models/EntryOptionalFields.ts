@@ -1,5 +1,5 @@
-﻿
-module vdb.models {
+
+//module vdb.models {
 	
 	export class EntryOptionalFields<T> {
 
@@ -39,4 +39,4 @@ module vdb.models {
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
 
-namespace vdb.dataContracts.albums {
+//namespace vdb.dataContracts.albums {
 
 	export interface AlbumReviewContract {
 
@@ -17,4 +17,4 @@ namespace vdb.dataContracts.albums {
 
 	}
 
-}
+//}

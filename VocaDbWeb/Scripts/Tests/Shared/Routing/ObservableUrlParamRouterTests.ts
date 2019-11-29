@@ -1,5 +1,5 @@
-﻿
-module vdb.tests.shared.routing {
+
+//module vdb.tests.shared.routing {
 
 	interface HistoryEntry {
 		data: any;
@@ -102,4 +102,4 @@ module vdb.tests.shared.routing {
 		QUnit.equal(testObject.song(), "Becoming Round", "testObject.song");
 
 	});
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.releaseEvents {
+
+//module vdb.viewModels.releaseEvents {
 
 	import rep = repositories;
 
@@ -71,4 +71,4 @@ module vdb.viewModels.releaseEvents {
 
 	}
 
-}
+//}

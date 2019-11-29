@@ -1,5 +1,5 @@
-﻿
-module vdb.tests.viewModels.globalization {
+
+//module vdb.tests.viewModels.globalization {
 
 	import vm = vdb.viewModels;
 	import LocalizedStringWithIdEditViewModel = vm.globalization.LocalizedStringWithIdEditViewModel;
@@ -56,4 +56,4 @@ module vdb.tests.viewModels.globalization {
 
 	});
 
-} 
+//} 

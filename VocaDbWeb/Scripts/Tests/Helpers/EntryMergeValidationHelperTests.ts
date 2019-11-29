@@ -1,5 +1,5 @@
-﻿
-module vdb.tests.helpers {
+
+//module vdb.tests.helpers {
 	
 	import cls = vdb.models;
 
@@ -47,4 +47,4 @@ module vdb.tests.helpers {
 		testValidate(false, true, cls.EntryStatus.Finished, cls.EntryStatus.Draft, moment(39), moment(3939));
 	});
 
-}
+//}

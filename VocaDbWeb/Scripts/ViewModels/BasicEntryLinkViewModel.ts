@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels {
+
+//module vdb.viewModels {
 	
 	// Basic link to an entry with ID and name.
 	// Allows changing the link by setting the ID.
@@ -46,4 +46,4 @@ module vdb.viewModels {
 
 	}
 
-}
+//}

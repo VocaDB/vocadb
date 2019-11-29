@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 
 	export interface AlbumContract extends CommonEntryContract, EntryWithTagUsagesContract {
 
@@ -19,4 +19,4 @@ module vdb.dataContracts {
 
 	}
 
-} 
+//} 

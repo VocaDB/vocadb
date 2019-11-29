@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.discussions {
+
+//module vdb.viewModels.discussions {
 	
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
@@ -193,4 +193,4 @@ module vdb.viewModels.discussions {
 
 	}
 
-} 
+//} 

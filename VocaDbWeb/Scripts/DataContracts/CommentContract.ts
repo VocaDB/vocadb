@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 	
 	export interface CommentContract {
 
@@ -21,4 +21,4 @@ module vdb.dataContracts {
 
 	}
 
-}
+//}

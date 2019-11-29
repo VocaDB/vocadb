@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.albums {
+
+//module vdb.viewModels.albums {
 	
 	import dc = vdb.dataContracts;
 
@@ -34,4 +34,4 @@ module vdb.viewModels.albums {
 
 	}
 
-}
+//}

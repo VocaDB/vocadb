@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.pvs {
+
+//module vdb.viewModels.pvs {
 	
 	export class PVPlayersFactory {
 		
@@ -24,4 +24,4 @@ module vdb.viewModels.pvs {
 
 	}
 
-}
+//}

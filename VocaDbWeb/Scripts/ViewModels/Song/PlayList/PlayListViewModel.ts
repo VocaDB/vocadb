@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/youtube/youtube.d.ts" />
+/// <reference path="../../../typings/youtube/youtube.d.ts" />
 
-module vdb.viewModels.songs {
+//module vdb.viewModels.songs {
 
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
@@ -225,4 +225,4 @@ module vdb.viewModels.songs {
 
 	}
 
-}
+//}

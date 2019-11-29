@@ -1,5 +1,5 @@
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
     import dc = vdb.dataContracts;
 
@@ -31,5 +31,5 @@ module vdb.viewModels {
 
     }
 
-}
+//}
 

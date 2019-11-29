@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.discussions {
+
+//module vdb.dataContracts.discussions {
 	
 	export interface DiscussionTopicContract {
 		
@@ -29,4 +29,4 @@ module vdb.dataContracts.discussions {
 
 	}
 
-} 
+//} 

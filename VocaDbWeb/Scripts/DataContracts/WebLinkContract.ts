@@ -1,5 +1,5 @@
 
-module vdb.dataContracts {
+//module vdb.dataContracts {
 
     export interface WebLinkContract {
         
@@ -13,4 +13,4 @@ module vdb.dataContracts {
     
     }
 
-}
+//}

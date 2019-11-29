@@ -1,5 +1,5 @@
-﻿
-namespace vdb.dataContracts {
+
+//namespace vdb.dataContracts {
 
 	export interface UserKnownLanguageContract {
 
@@ -8,4 +8,4 @@ namespace vdb.dataContracts {
 
 	}
 
-}
+//}

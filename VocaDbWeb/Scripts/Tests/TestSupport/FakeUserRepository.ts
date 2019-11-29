@@ -1,6 +1,6 @@
 /// <reference path="../../Repositories/UserRepository.ts" />
 
-module vdb.tests.testSupport {
+//module vdb.tests.testSupport {
 
     import cls = vdb.models;
     import dc = vdb.dataContracts;
@@ -47,4 +47,4 @@ module vdb.tests.testSupport {
     
     }
 
-}
+//}

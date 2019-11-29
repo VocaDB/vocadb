@@ -1,9 +1,9 @@
-﻿
+
 interface KnockoutBindingHandlers {
 	userAutocomplete: KnockoutBindingHandler;
 }
 
-module vdb.knockoutExtensions.bindingHandlers {
+//module vdb.knockoutExtensions.bindingHandlers {
 
 	export function userAutocomplete(element: HTMLElement, valueAccessor: () => any) {
 
@@ -22,7 +22,7 @@ module vdb.knockoutExtensions.bindingHandlers {
 
 	}
 
-}
+//}
 
 ko.bindingHandlers.userAutocomplete = {
 	init: vdb.knockoutExtensions.bindingHandlers.userAutocomplete

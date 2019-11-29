@@ -1,4 +1,4 @@
-﻿namespace vdb.viewModels {
+//namespace vdb.viewModels {
 
 	import dc = vdb.dataContracts;
 
@@ -31,4 +31,4 @@
 
 	}
 
-}
+//}

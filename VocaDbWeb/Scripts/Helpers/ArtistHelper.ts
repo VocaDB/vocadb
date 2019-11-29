@@ -1,5 +1,5 @@
  
-module vdb.helpers {
+//module vdb.helpers {
 
 	import dc = vdb.dataContracts;
 	import cls = vdb.models;
@@ -167,4 +167,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

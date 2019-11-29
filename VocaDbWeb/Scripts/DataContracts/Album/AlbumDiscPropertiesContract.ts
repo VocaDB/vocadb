@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.albums {
+
+//module vdb.dataContracts.albums {
 	
 	export interface AlbumDiscPropertiesContract {
 
@@ -13,4 +13,4 @@ module vdb.dataContracts.albums {
 		
 	}
 
-}
+//}

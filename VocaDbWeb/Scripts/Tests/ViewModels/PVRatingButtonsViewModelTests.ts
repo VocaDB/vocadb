@@ -2,7 +2,7 @@
 /// <reference path="../../ViewModels/PVRatingButtonsViewModel.ts" />
 /// <reference path="../TestSupport/FakeUserRepository.ts" />
 
-module vdb.tests.viewModels {
+//module vdb.tests.viewModels {
 
     import cls = vdb.models;
     import vm = vdb.viewModels;
@@ -40,4 +40,4 @@ module vdb.tests.viewModels {
 
     });
 
-}
+//}

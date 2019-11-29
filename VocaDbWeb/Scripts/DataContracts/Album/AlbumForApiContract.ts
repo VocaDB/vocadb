@@ -1,4 +1,4 @@
-﻿module vdb.dataContracts {
+//module vdb.dataContracts {
 
 	export interface AlbumForApiContract extends AlbumContract {
 
@@ -6,4 +6,4 @@
 
 	}
 
-} 
+//} 

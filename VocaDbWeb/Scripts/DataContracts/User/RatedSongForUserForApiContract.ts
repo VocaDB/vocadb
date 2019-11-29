@@ -1,5 +1,5 @@
-﻿
-namespace vdb.dataContracts {
+
+//namespace vdb.dataContracts {
 	
 	export interface RatedSongForUserForApiContract {
 
@@ -11,4 +11,4 @@ namespace vdb.dataContracts {
 
 	}
 
-}
+//}

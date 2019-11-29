@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 	
 	export interface SongApiContract extends SongContract, EntryWithTagUsagesContract {
 
@@ -14,4 +14,4 @@ module vdb.dataContracts {
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-namespace vdb.models.events {
+
+//namespace vdb.models.events {
 	
 	export enum ArtistEventRoles {
 		
@@ -45,4 +45,4 @@ namespace vdb.models.events {
 
 	}
 
-}
+//}

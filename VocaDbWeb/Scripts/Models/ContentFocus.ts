@@ -1,5 +1,5 @@
-﻿
-namespace vdb.models {
+
+//namespace vdb.models {
 
 	export enum ContentFocus {
 		Music,
@@ -7,4 +7,4 @@ namespace vdb.models {
 		Illustration
 	}
 
-}
+//}

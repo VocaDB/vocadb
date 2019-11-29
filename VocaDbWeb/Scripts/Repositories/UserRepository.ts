@@ -2,7 +2,7 @@
 /// <reference path="../DataContracts/User/UserMessageSummaryContract.ts" />
 /// <reference path="../Models/SongVoteRating.ts" />
 
-module vdb.repositories {
+//module vdb.repositories {
 
     import cls = vdb.models;
     import dc = vdb.dataContracts;
@@ -420,4 +420,4 @@ module vdb.repositories {
 		Notifications			
 	}
 
-}
+//}

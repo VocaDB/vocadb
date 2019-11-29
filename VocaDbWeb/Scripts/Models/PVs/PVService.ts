@@ -1,5 +1,5 @@
 
-module vdb.models.pvs {
+//module vdb.models.pvs {
 	
 	export enum PVService {
 		
@@ -25,4 +25,4 @@ module vdb.models.pvs {
 
 	}
 
-}
+//}

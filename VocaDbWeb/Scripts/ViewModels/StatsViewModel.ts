@@ -1,5 +1,5 @@
 
-module vdb.viewModels {
+//module vdb.viewModels {
 	
 	export class StatsViewModel {
 
@@ -109,4 +109,4 @@ module vdb.viewModels {
 
 	}
 
-} 
+//} 

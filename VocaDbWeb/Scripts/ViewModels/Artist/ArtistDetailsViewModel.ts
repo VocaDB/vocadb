@@ -1,7 +1,7 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" /> 
 /// <reference path="../../Repositories/UserRepository.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
 	import cls = vdb.models;
 	import dc = dataContracts;
@@ -175,4 +175,4 @@ module vdb.viewModels {
 
 	}
 
-}
+//}

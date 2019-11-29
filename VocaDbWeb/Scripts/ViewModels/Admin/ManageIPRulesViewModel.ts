@@ -1,7 +1,7 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
     export class ManageIPRulesViewModel {
 
@@ -94,4 +94,4 @@ module vdb.viewModels {
 
     };
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-namespace vdb.viewModels.events {
+
+//namespace vdb.viewModels.events {
 
 	import dc = vdb.dataContracts;
 
@@ -57,4 +57,4 @@ namespace vdb.viewModels.events {
 
 	}
 
-}
+//}

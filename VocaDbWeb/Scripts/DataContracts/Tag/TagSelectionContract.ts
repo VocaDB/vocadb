@@ -1,5 +1,5 @@
-﻿ 
-module vdb.dataContracts.tags {
+ 
+//module vdb.dataContracts.tags {
 	
 	export interface TagSelectionContract {
 
@@ -9,4 +9,4 @@ module vdb.dataContracts.tags {
 
 	}
 
-}
+//}

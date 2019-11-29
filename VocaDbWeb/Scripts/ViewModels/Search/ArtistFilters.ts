@@ -1,5 +1,5 @@
-﻿
-namespace vdb.viewModels.search {
+
+//namespace vdb.viewModels.search {
 	
 	// Manages artist filters for search
 	// These can be used wherever artist filtering is needed - search page, rated songs page, song list page
@@ -70,4 +70,4 @@ namespace vdb.viewModels.search {
 
 	}
 
-}
+//}

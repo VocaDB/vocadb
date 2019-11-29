@@ -3,7 +3,7 @@
 /// <reference path="../TestSupport/FakeEntryReportRepository.ts" />
 /// <reference path="../TestSupport/FakeUserRepository.ts" />
 
-module vdb.tests.viewModels {
+//module vdb.tests.viewModels {
 
     import dc = vdb.dataContracts;
     import sup = vdb.tests.testSupport;
@@ -61,4 +61,4 @@ module vdb.tests.viewModels {
 
     });
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 	
 	export interface EntryPictureFileContract {
 
@@ -17,4 +17,4 @@ module vdb.dataContracts {
 
 	}
 
-}
+//}

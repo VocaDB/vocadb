@@ -1,4 +1,4 @@
-module vdb.dataContracts {
+//module vdb.dataContracts {
 
     // Matches .NET class EntryRefContract.
     export interface EntryRefContract {
@@ -9,4 +9,4 @@ module vdb.dataContracts {
 
     }
 
-}
+//}

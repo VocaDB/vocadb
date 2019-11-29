@@ -1,5 +1,5 @@
 
-module vdb.models {
+//module vdb.models {
 
     // Song vote values.
     // Corresponds to the enum SongVoteRating.
@@ -19,5 +19,5 @@ module vdb.models {
     
     }
 
-}
+//}
 

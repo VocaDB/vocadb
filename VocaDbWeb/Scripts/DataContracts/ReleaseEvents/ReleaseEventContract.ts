@@ -1,5 +1,5 @@
-﻿
-namespace vdb.dataContracts {
+
+//namespace vdb.dataContracts {
 
 	// Matches ReleaseEventForApiContract
 	export interface ReleaseEventContract {
@@ -32,4 +32,4 @@ namespace vdb.dataContracts {
 
 	}
 
-}
+//}

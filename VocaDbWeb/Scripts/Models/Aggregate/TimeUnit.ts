@@ -1,9 +1,9 @@
-﻿
-module vdb.models.aggregate {
+
+//module vdb.models.aggregate {
 	
 	export enum TimeUnit {
 		month,
 		day
 	}
 
-}
+//}

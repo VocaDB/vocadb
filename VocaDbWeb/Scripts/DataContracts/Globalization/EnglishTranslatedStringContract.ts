@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.globalization {
+
+//module vdb.dataContracts.globalization {
 	
 	export interface EnglishTranslatedStringContract {
 		
@@ -9,4 +9,4 @@ module vdb.dataContracts.globalization {
 
 	}
 
-}
+//}

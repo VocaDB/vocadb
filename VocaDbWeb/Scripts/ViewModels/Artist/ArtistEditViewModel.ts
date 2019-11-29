@@ -2,7 +2,7 @@
 /// <reference path="../../DataContracts/WebLinkContract.ts" />
 /// <reference path="../WebLinksEditViewModel.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
@@ -247,4 +247,4 @@ module vdb.viewModels {
 
 	}
 
-}
+//}

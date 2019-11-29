@@ -3,7 +3,7 @@
 /// <reference path="../../DataContracts/TranslatedEnumField.ts" />
 /// <reference path="../../ViewModels/WebLinksEditViewModel.ts" />
 
-module vdb.tests.viewModels {
+//module vdb.tests.viewModels {
 
     import dc = vdb.dataContracts;
     import vm = vdb.viewModels;
@@ -42,4 +42,4 @@ module vdb.tests.viewModels {
 
     });
 
-}
+//}

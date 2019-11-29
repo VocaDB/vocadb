@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.activityEntry {
+
+//module vdb.viewModels.activityEntry {
 	
 	import cls = models;
 	import dc = dataContracts;
@@ -162,4 +162,4 @@ module vdb.viewModels.activityEntry {
 
 	}
 
-} 
+//} 

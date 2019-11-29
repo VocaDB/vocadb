@@ -1,5 +1,5 @@
-﻿
-module vdb.models.songs {
+
+//module vdb.models.songs {
 	
 	export enum SongType {
 		
@@ -31,4 +31,4 @@ module vdb.models.songs {
 
 	}
 
-} 
+//} 

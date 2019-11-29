@@ -1,5 +1,5 @@
 
-module vdb.dataContracts {
+//module vdb.dataContracts {
 
     export interface SongContract extends CommonEntryContract {
 
@@ -22,5 +22,5 @@ module vdb.dataContracts {
 
     }
 
-}
+//}
 

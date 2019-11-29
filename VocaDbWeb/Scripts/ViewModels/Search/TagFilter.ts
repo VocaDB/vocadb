@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.search {
+
+//module vdb.viewModels.search {
 
 	export class TagFilter {
 
@@ -18,4 +18,4 @@ module vdb.viewModels.search {
 
 	}
 
-} 
+//} 

@@ -1,6 +1,6 @@
 /// <reference path="GlobalValues.ts" />
 
-module vdb.functions {
+//module vdb.functions {
 
 	export function getId(elem: HTMLElement) {
 		if ($(elem) == null || $(elem).attr('id') == null)
@@ -75,7 +75,7 @@ module vdb.functions {
 
 	}
 
-}
+//}
 
 interface Navigator {
 	// sendBeacon is not available in older TS versions

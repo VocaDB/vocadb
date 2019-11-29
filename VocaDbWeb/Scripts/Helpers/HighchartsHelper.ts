@@ -1,5 +1,5 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 	
 	export interface Tuple2<T1, T2> {
 		item1: T1;
@@ -106,4 +106,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

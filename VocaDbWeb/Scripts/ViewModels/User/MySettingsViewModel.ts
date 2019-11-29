@@ -1,7 +1,7 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" />
 /// <reference path="../WebLinksEditViewModel.ts" />
 
-namespace vdb.viewModels {
+//namespace vdb.viewModels {
 
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
@@ -67,4 +67,4 @@ namespace vdb.viewModels {
 
 	}
 
-}
+//}

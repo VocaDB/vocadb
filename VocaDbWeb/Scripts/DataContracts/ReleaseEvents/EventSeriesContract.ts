@@ -1,5 +1,5 @@
-﻿
-namespace vdb.dataContracts {
+
+//namespace vdb.dataContracts {
 
 	// Matches ReleaseEventForApiContract
 	export interface EventSeriesContract extends models.IEntryWithIdAndName {
@@ -18,4 +18,4 @@ namespace vdb.dataContracts {
 
 	}
 
-}
+//}

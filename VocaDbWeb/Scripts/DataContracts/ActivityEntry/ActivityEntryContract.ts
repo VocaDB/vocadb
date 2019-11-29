@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.activityEntry {
+
+//module vdb.dataContracts.activityEntry {
 	
 	export interface ActivityEntryContract {
 		
@@ -15,4 +15,4 @@ module vdb.dataContracts.activityEntry {
 
 	}
 
-} 
+//} 

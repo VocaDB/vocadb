@@ -1,5 +1,5 @@
 
-module vdb.models.artists {
+//module vdb.models.artists {
 	
 	export enum ArtistType {
 		
@@ -50,4 +50,4 @@ module vdb.models.artists {
 
 	}
 
-}
+//}

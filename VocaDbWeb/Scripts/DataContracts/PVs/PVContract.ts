@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.pvs {
+
+//module vdb.dataContracts.pvs {
 	
 	export interface PVContract {
 
@@ -31,4 +31,4 @@ module vdb.dataContracts.pvs {
 
 	}
 
-}
+//}

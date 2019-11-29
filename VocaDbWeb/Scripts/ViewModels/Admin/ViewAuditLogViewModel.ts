@@ -2,7 +2,7 @@
 /// <reference path="../../typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
     export class ViewAuditLogViewModel {
 
@@ -100,4 +100,4 @@ module vdb.viewModels {
 
     }
 
-}
+//}

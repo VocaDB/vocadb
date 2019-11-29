@@ -1,5 +1,5 @@
 
-module vdb.helpers {
+//module vdb.helpers {
 	
 	export class DateTimeHelper {
 		
@@ -31,4 +31,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

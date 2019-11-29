@@ -1,7 +1,7 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../Shared/GlobalFunctions.ts" />
 
-module vdb.repositories {
+//module vdb.repositories {
 
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
@@ -164,4 +164,4 @@ module vdb.repositories {
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.tests.viewModels.artists {
+
+//module vdb.tests.viewModels.artists {
 	
 	import vm = vdb.viewModels;
 
@@ -39,4 +39,4 @@ module vdb.tests.viewModels.artists {
 
 	});
 
-} 
+//} 

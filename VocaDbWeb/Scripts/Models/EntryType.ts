@@ -1,5 +1,5 @@
 
-module vdb.models {
+//module vdb.models {
 
     // Identifies common entry type.
     // Corresponds to the EntryType enum C#.
@@ -29,4 +29,4 @@ module vdb.models {
 		
     }
 
-}
+//}

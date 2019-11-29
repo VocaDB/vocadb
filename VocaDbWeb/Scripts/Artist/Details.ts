@@ -1,5 +1,5 @@
-﻿
-module vdb.views.artist {
+
+//module vdb.views.artist {
 
 	export function initPage(artistId: number, saveStr, urlMapper, viewModel: viewModels.ArtistDetailsViewModel, songRepo: repositories.SongRepository) {
 
@@ -45,4 +45,4 @@ module vdb.views.artist {
 
 	}
 
-}
+//}

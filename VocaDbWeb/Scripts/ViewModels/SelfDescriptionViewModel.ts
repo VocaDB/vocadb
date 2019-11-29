@@ -1,5 +1,5 @@
-﻿
-namespace vdb.viewModels {
+
+//namespace vdb.viewModels {
 
 	export class SelfDescriptionViewModel {
 
@@ -55,4 +55,4 @@ namespace vdb.viewModels {
 
 	}
 
-}
+//}

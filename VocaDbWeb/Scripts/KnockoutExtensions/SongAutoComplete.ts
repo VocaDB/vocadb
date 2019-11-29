@@ -8,7 +8,7 @@ interface KnockoutBindingHandlers {
     songAutoComplete: KnockoutBindingHandler;
 }
 
-module vdb.knockoutExtensions {
+//module vdb.knockoutExtensions {
 
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
@@ -59,7 +59,7 @@ module vdb.knockoutExtensions {
 
 	}
 
-}
+//}
 
 ko.bindingHandlers.songAutoComplete = {
 	init: vdb.knockoutExtensions.songAutoComplete

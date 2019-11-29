@@ -1,5 +1,5 @@
 
-module vdb.tests.helpers {
+//module vdb.tests.helpers {
 
 	QUnit.module("DateTimeHelper");
 
@@ -40,4 +40,4 @@ module vdb.tests.helpers {
 
 	});
 
-}
+//}

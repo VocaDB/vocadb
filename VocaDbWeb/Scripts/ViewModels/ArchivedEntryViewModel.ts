@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels {
+
+//module vdb.viewModels {
 
 	import rep = repositories;
 
@@ -25,4 +25,4 @@ module vdb.viewModels {
 		createReport(entryId: number, reportType: string, notes: string, version?: number);
 	}
 
-} 
+//} 

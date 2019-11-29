@@ -1,5 +1,5 @@
-﻿
-namespace vdb.repositories {
+
+//namespace vdb.repositories {
 
 	import cls = vdb.models;
 
@@ -39,4 +39,4 @@ namespace vdb.repositories {
 		}
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.pvs {
+
+//module vdb.viewModels.pvs {
 
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
@@ -178,4 +178,4 @@ module vdb.viewModels.pvs {
 
 	}
 
-}
+//}

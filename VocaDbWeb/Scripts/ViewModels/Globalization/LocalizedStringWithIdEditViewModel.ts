@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.globalization {
+
+//module vdb.viewModels.globalization {
 
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
@@ -25,4 +25,4 @@ module vdb.viewModels.globalization {
 
 	}
 
-}
+//}

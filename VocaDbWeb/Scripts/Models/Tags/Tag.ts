@@ -1,5 +1,5 @@
-﻿
-module vdb.models.tags {
+
+//module vdb.models.tags {
 	
 	export class Tag {
 
@@ -7,4 +7,4 @@ module vdb.models.tags {
 
 	}
 
-}
+//}

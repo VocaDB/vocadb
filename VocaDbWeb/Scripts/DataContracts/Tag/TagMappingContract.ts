@@ -1,5 +1,5 @@
-﻿
-namespace vdb.dataContracts.tags {
+
+//namespace vdb.dataContracts.tags {
 
 	export interface TagMappingContract {
 
@@ -8,4 +8,4 @@ namespace vdb.dataContracts.tags {
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.globalization {
+
+//module vdb.viewModels.globalization {
 	
 	export class EnglishTranslatedStringViewModel {
 
@@ -17,4 +17,4 @@ module vdb.viewModels.globalization {
 
 	}
 
-}
+//}

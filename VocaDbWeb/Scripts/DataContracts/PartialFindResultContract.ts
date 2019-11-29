@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 	
 	export interface PartialFindResultContract<T> {
 
@@ -9,4 +9,4 @@ module vdb.dataContracts {
 
 	}
 
-}
+//}

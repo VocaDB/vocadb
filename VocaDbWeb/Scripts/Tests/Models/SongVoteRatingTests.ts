@@ -1,7 +1,7 @@
 /// <reference path="../../typings/qunit/qunit.d.ts" />
 /// <reference path="../../Models/SongVoteRating.ts" />
 
-module vdb.tests.models {
+//module vdb.tests.models {
 
     import cls = vdb.models;
 
@@ -23,4 +23,4 @@ module vdb.tests.models {
 
     });
 
-}
+//}

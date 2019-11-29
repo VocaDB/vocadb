@@ -3,7 +3,7 @@
 /// <reference path="../../TestSupport/FakeUserRepository.ts" />
 /// <reference path="../../../ViewModels/Song/SongDetailsViewModel.ts" />
 
-module vdb.tests.viewModels {
+//module vdb.tests.viewModels {
 
     import cls = vdb.models;
     import sup = vdb.tests.testSupport;
@@ -157,4 +157,4 @@ module vdb.tests.viewModels {
 
 	});
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.tests.helpers {
+
+//module vdb.tests.helpers {
 
 	QUnit.module("AjaxHelper");
 
@@ -16,4 +16,4 @@ module vdb.tests.helpers {
 		testCreateUrl({ vocaloid: ["miku"], song: ["Nebula"] }, "vocaloid=miku&song=Nebula");
 	});
 
-}
+//}

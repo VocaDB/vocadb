@@ -1,6 +1,6 @@
 /// <reference path="DuplicateEntryResultContract.ts" />
 
-module vdb.dataContracts {
+//module vdb.dataContracts {
 
     export interface NewSongCheckResultContract {
 
@@ -16,4 +16,4 @@ module vdb.dataContracts {
 
     }
 
-}
+//}

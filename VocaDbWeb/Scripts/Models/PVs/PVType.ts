@@ -1,5 +1,5 @@
-﻿
-namespace vdb.models.pvs {
+
+//namespace vdb.models.pvs {
 
 	export enum PVType {
 
@@ -11,4 +11,4 @@ namespace vdb.models.pvs {
 
 	}
 
-}
+//}

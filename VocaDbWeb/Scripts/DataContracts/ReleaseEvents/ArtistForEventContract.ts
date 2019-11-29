@@ -1,5 +1,5 @@
-﻿
-namespace vdb.dataContracts.events {
+
+//namespace vdb.dataContracts.events {
 
 	export interface ArtistForEventContract {
 
@@ -13,4 +13,4 @@ namespace vdb.dataContracts.events {
 
 	}
 
-}
+//}

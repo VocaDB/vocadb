@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 	
 	export interface OptionalDateTimeContract {
 
@@ -13,4 +13,4 @@ module vdb.dataContracts {
 
 	}
 
-} 
+//} 

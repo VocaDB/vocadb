@@ -2,7 +2,7 @@
 /// <reference path="../../Models/WebLinkCategory.ts" />
 /// <reference path="../../Shared/WebLinkMatcher.ts" />
 
-namespace vdb.tests.utils {
+//namespace vdb.tests.utils {
 
     import uti = vdb.utils;
 
@@ -26,4 +26,4 @@ namespace vdb.tests.utils {
 
     });
 
-}
+//}

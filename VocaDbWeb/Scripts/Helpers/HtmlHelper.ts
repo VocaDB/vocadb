@@ -1,5 +1,5 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 	
 	export class HtmlHelper {
 		
@@ -29,4 +29,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

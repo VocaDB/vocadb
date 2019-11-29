@@ -1,5 +1,5 @@
-﻿
-namespace vdb.models {
+
+//namespace vdb.models {
 
 	import dc = vdb.dataContracts;
 
@@ -88,4 +88,4 @@ namespace vdb.models {
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.songList {
+
+//module vdb.dataContracts.songList {
 	
 	export interface PartialImportedSongs {
 
@@ -11,4 +11,4 @@ module vdb.dataContracts.songList {
 		
 	}
 
-} 
+//} 

@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels {
+
+//module vdb.viewModels {
 	
 	export class ReportEntryViewModel {
 		
@@ -47,4 +47,4 @@ module vdb.viewModels {
 
 	}
 
-} 
+//} 

@@ -1,5 +1,5 @@
-﻿
-module vdb.tests.helpers {
+
+//module vdb.tests.helpers {
 	
 	QUnit.module("HtmlHelper");
 
@@ -38,4 +38,4 @@ module vdb.tests.helpers {
 
 	});
 
-}
+//}

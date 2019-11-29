@@ -1,10 +1,10 @@
-﻿/// <reference path="../typings/highcharts/highcharts.d.ts" />
+/// <reference path="../typings/highcharts/highcharts.d.ts" />
 
 interface KnockoutBindingHandlers {
 	highcharts: KnockoutBindingHandler;
 }
 
-module vdb.knockoutExtensions.highcharts {
+//module vdb.knockoutExtensions.highcharts {
 
 	export function setHighcharts(element: HTMLElement, result: HighchartsOptions) {
 	
@@ -16,7 +16,7 @@ module vdb.knockoutExtensions.highcharts {
 			
 	}
 
-}
+//}
 
 ko.bindingHandlers.highcharts = {
 	update: (element: HTMLElement, valueAccessor) => {

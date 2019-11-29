@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.user {
+
+//module vdb.dataContracts.user {
 	
 	export interface UserApiContract extends UserBaseContract {
 		
@@ -7,4 +7,4 @@ module vdb.dataContracts.user {
 
 	}
 
-}
+//}

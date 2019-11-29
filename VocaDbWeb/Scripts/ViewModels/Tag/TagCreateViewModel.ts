@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.tags {
+
+//module vdb.viewModels.tags {
 	
 	export class TagCreateViewModel {
 
@@ -33,4 +33,4 @@ module vdb.viewModels.tags {
 
 	}
 
-}
+//}

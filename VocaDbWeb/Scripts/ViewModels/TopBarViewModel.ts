@@ -3,7 +3,7 @@
 /// <reference path="../Repositories/EntryReportRepository.ts" />
 /// <reference path="../Repositories/UserRepository.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
     import dc = vdb.dataContracts;
 
@@ -73,4 +73,4 @@ module vdb.viewModels {
 
     }
 
-}
+//}

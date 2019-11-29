@@ -1,6 +1,6 @@
 /// <reference path="GlobalFunctions.ts" />
 
-module vdb {
+//module vdb {
 
     export class UrlMapper {
 
@@ -33,4 +33,4 @@ module vdb {
 
     }
 
-}
+//}

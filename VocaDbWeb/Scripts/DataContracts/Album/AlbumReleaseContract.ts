@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.albums {
+
+//module vdb.dataContracts.albums {
 	
 	export interface AlbumReleaseContract {
 
@@ -11,4 +11,4 @@ module vdb.dataContracts.albums {
 
 	}
 
-}
+//}

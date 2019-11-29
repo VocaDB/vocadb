@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 	
 	// Base data contract for entries from the API.
 	// Corresponds to C# datacontract EntryForApiContract.
@@ -33,4 +33,4 @@ module vdb.dataContracts {
 
 	}
 
-}
+//}

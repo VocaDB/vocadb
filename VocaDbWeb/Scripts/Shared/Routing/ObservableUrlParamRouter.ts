@@ -1,9 +1,9 @@
-﻿
+
 interface JQueryStatic {
 	url: (param: string) => string;
 }
 
-module vdb.routing {
+//module vdb.routing {
 
 	// Uses HTML5 history API to update URL query string from a set of observables
 	export class ObservableUrlParamRouter {
@@ -84,4 +84,4 @@ module vdb.routing {
 
 	}
 
-}
+//}

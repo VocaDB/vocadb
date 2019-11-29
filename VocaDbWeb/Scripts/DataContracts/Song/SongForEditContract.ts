@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.songs {
+
+//module vdb.dataContracts.songs {
 	
 	export interface SongForEditContract {
 
@@ -46,4 +46,4 @@ module vdb.dataContracts.songs {
 
 	}
 
-}
+//}

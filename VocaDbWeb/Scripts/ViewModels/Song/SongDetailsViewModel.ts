@@ -4,7 +4,7 @@
 /// <reference path="../../Repositories/UserRepository.ts" />
 /// <reference path="../PVRatingButtonsViewModel.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
 	import cls = models;
     import dc = vdb.dataContracts;
@@ -383,4 +383,4 @@ module vdb.viewModels {
 
 	}
 
-}
+//}

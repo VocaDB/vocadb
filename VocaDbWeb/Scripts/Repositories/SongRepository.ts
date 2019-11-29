@@ -6,7 +6,7 @@
 /// <reference path="../DataContracts/Song/SongWithPVPlayerAndVoteContract.ts" />
 /// <reference path="../Shared/GlobalFunctions.ts" />
 
-module vdb.repositories {
+//module vdb.repositories {
 
     import dc = vdb.dataContracts;
 	import cls = vdb.models;
@@ -264,4 +264,4 @@ module vdb.repositories {
 
 	}
 
-}
+//}

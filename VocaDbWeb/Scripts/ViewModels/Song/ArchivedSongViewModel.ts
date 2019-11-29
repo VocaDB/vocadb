@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.songs {
+
+//module vdb.viewModels.songs {
 
 	import rep = repositories;
 
@@ -21,4 +21,4 @@ module vdb.viewModels.songs {
 
 	}
 
-} 
+//} 

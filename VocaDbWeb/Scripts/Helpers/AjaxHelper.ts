@@ -1,5 +1,5 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 	
 	export class AjaxHelper {
 		
@@ -55,4 +55,4 @@ module vdb.helpers {
 		}
 	}
 
-} 
+//} 

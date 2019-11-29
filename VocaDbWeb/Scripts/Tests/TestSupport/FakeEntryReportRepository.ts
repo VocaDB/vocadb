@@ -1,7 +1,7 @@
 /// <reference path="../../Shared/UrlMapper.ts" />
 /// <reference path="../../Repositories/EntryReportRepository.ts" />
 
-module vdb.tests.testSupport {
+//module vdb.tests.testSupport {
 
     export class FakeEntryReportRepository extends vdb.repositories.EntryReportRepository {
 
@@ -20,4 +20,4 @@ module vdb.tests.testSupport {
 
     }
 
-}
+//}

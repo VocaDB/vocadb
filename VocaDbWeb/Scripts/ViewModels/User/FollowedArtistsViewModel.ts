@@ -1,5 +1,5 @@
 
-module vdb.viewModels.user {
+//module vdb.viewModels.user {
 
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
@@ -78,4 +78,4 @@ module vdb.viewModels.user {
 
 	}
 
-}
+//}

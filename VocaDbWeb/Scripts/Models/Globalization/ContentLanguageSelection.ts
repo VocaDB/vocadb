@@ -1,5 +1,5 @@
-﻿
-module vdb.models.globalization {
+
+//module vdb.models.globalization {
 	
 	export enum ContentLanguageSelection {
 
@@ -13,4 +13,4 @@ module vdb.models.globalization {
 
 	}
 
-} 
+//} 

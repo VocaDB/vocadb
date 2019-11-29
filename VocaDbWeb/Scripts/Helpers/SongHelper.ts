@@ -1,5 +1,5 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 
 	import cls = vdb.models;
 	import SongType = cls.songs.SongType;
@@ -24,4 +24,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

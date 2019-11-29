@@ -1,6 +1,6 @@
 /// <reference path="../../Repositories/ArtistRepository.ts" />
 
-module vdb.tests.testSupport {
+//module vdb.tests.testSupport {
 
     import dc = vdb.dataContracts;
 
@@ -21,4 +21,4 @@ module vdb.tests.testSupport {
 
     }
 
-}
+//}

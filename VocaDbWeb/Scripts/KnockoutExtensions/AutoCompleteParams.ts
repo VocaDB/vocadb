@@ -1,5 +1,5 @@
 
-module vdb.knockoutExtensions {
+//module vdb.knockoutExtensions {
 
 	import rep = vdb.repositories;
 
@@ -37,5 +37,5 @@ module vdb.knockoutExtensions {
 
 	export interface SongAutoCompleteParams extends AutoCompleteParamsGeneric<vdb.dataContracts.SongContract, rep.SongQueryParams> { }
 
-}
+//}
 

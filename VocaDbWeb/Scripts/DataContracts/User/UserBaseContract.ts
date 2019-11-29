@@ -1,5 +1,5 @@
 
-module vdb.dataContracts {
+//module vdb.dataContracts {
 
 	export interface UserBaseContract extends vdb.models.IEntryWithIdAndName {
         
@@ -9,4 +9,4 @@ module vdb.dataContracts {
     
     }
 
-}
+//}

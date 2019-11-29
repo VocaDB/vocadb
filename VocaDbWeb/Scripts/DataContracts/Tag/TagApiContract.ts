@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 
 	export interface TagApiContract {
 
@@ -37,4 +37,4 @@ module vdb.dataContracts {
 
 	}
 
-} 
+//} 

@@ -1,5 +1,5 @@
 
-namespace vdb.viewModels.admin {
+//namespace vdb.viewModels.admin {
 
 	import dc = dataContracts;
 	import vm = viewModels;
@@ -104,4 +104,4 @@ namespace vdb.viewModels.admin {
 
 	}
 
-}
+//}

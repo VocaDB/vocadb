@@ -1,5 +1,5 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 	
 	export class KnockoutHelper {
 
@@ -17,4 +17,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

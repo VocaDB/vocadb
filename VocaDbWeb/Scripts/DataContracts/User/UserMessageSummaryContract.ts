@@ -1,5 +1,5 @@
 
-module vdb.dataContracts {
+//module vdb.dataContracts {
 
     export interface UserMessageSummaryContract {
 
@@ -27,4 +27,4 @@ module vdb.dataContracts {
 
     }
 
-}
+//}

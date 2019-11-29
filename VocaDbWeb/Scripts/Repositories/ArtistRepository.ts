@@ -2,7 +2,7 @@
 /// <reference path="../Shared/GlobalFunctions.ts" />
 /// <reference path="../DataContracts/DuplicateEntryResultContract.ts" />
 
-module vdb.repositories {
+//module vdb.repositories {
 
 	import cls = vdb.models;
     import dc = vdb.dataContracts;
@@ -128,4 +128,4 @@ module vdb.repositories {
 
 	}
 
-}
+//}

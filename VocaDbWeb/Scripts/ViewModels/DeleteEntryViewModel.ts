@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels {
+
+//module vdb.viewModels {
 	
 	export class DeleteEntryViewModel {
 		
@@ -18,4 +18,4 @@ module vdb.viewModels {
 
 	}
 
-} 
+//} 

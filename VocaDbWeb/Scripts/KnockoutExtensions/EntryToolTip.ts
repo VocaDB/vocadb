@@ -13,7 +13,7 @@ interface KnockoutBindingHandlers {
 	userToolTip: KnockoutBindingHandler;
 }
 
-module vdb.knockoutExtensions {
+//module vdb.knockoutExtensions {
 
 	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number, params?: any, foreignDomain?: string) {
 
@@ -47,7 +47,7 @@ module vdb.knockoutExtensions {
 		version?: number;
 	}
 
-}
+//}
 
 ko.bindingHandlers.entryToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<vdb.dataContracts.EntryRefContract>) => {

@@ -1,5 +1,5 @@
-﻿
-namespace vdb.viewModels.songs {
+
+//namespace vdb.viewModels.songs {
 
 	import cls = models;
 	import dc = vdb.dataContracts;
@@ -118,4 +118,4 @@ namespace vdb.viewModels.songs {
 
 	}
 
-}
+//}

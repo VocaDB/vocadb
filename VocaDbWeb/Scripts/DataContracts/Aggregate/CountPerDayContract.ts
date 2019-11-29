@@ -1,5 +1,5 @@
-﻿
-module vdb.dataContracts.aggregate {
+
+//module vdb.dataContracts.aggregate {
 	
 	export interface CountPerDayContract {
 		
@@ -10,4 +10,4 @@ module vdb.dataContracts.aggregate {
 
 	}
 
-}
+//}

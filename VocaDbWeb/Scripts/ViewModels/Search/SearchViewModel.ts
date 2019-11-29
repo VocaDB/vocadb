@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.search {
+
+//module vdb.viewModels.search {
 
 	import dc = vdb.dataContracts;
 	import rep = vdb.repositories;
@@ -204,4 +204,4 @@ module vdb.viewModels.search {
 		public static Tag = "Tag";
 	}
 
-}
+//}

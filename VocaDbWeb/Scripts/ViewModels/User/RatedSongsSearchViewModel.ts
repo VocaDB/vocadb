@@ -1,5 +1,5 @@
 
-module vdb.viewModels.user {
+//module vdb.viewModels.user {
 
 	import cls = vdb.models;
 	import dc = vdb.dataContracts;
@@ -189,4 +189,4 @@ module vdb.viewModels.user {
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.ui_dialog {
+
+//module vdb.ui_dialog {
 	
 	export interface IDialogService {
 		
@@ -13,4 +13,4 @@ module vdb.ui_dialog {
 
 	}
 
-}
+//}

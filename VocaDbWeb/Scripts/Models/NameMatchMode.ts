@@ -1,5 +1,5 @@
-﻿
-module vdb.models {
+
+//module vdb.models {
 	
 	export enum NameMatchMode {
 		
@@ -22,4 +22,4 @@ module vdb.models {
 
 	}
 
-}
+//}

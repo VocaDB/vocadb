@@ -1,4 +1,4 @@
-﻿module vdb {
+//module vdb {
 
 	export interface EntryAutoCompleteParams<TContract> {
 
@@ -158,4 +158,4 @@
 
 	}
 
-}
+//}

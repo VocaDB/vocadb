@@ -1,5 +1,5 @@
-﻿
-module vdb.models {
+
+//module vdb.models {
 	
 	export interface IEntryWithIdAndName {
 
@@ -9,4 +9,4 @@ module vdb.models {
 
 	}
 
-}
+//}

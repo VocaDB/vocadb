@@ -1,7 +1,7 @@
 /// <reference path="../DataContracts/EntryRefContract.ts" />
 /// <reference path="GlobalFunctions.ts" />
 
-module vdb.utils {
+//module vdb.utils {
 
 	import cls = models;
 	import dc = vdb.dataContracts;
@@ -82,4 +82,4 @@ module vdb.utils {
 		}
     }
 
-}
+//}

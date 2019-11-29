@@ -1,5 +1,5 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 
 	import cls = vdb.models;
 
@@ -19,4 +19,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.viewModels.search {
+
+//module vdb.viewModels.search {
 	
 	// Manages tag filters for search
 	export class TagFilters {
@@ -61,4 +61,4 @@ module vdb.viewModels.search {
 
 	}
 
-}
+//}

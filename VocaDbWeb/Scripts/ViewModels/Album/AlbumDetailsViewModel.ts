@@ -2,7 +2,7 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
 	import cls = vdb.models;
 	import dc = dataContracts;
@@ -288,4 +288,4 @@ module vdb.viewModels {
 
 	}
 
-}
+//}

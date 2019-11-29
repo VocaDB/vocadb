@@ -1,5 +1,5 @@
 
-module vdb.viewModels.songList {
+//module vdb.viewModels.songList {
 
 	import dc = vdb.dataContracts;
 
@@ -70,4 +70,4 @@ module vdb.viewModels.songList {
 		CreateDate
 	}
 
-}
+//}

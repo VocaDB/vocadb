@@ -2,7 +2,7 @@
 /// <reference path="../../Models/WebLinkCategory.ts" />
 /// <reference path="../../ViewModels/Song/SongEditViewModel.ts" />
 
-module vdb.tests.viewModels {
+//module vdb.tests.viewModels {
 
 	import cls = vdb.models;
 	import vm = vdb.viewModels;
@@ -147,4 +147,4 @@ module vdb.tests.viewModels {
 
 	});
 
-}
+//}

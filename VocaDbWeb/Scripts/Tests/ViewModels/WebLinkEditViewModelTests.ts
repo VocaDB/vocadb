@@ -2,7 +2,7 @@
 /// <reference path="../../Models/WebLinkCategory.ts" />
 /// <reference path="../../ViewModels/WebLinkEditViewModel.ts" />
 
-module vdb.tests.viewModels {
+//module vdb.tests.viewModels {
 
     import vm = vdb.viewModels;
 
@@ -31,4 +31,4 @@ module vdb.tests.viewModels {
 
     });
 
-}
+//}

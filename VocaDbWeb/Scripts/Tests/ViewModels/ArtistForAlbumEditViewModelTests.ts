@@ -2,7 +2,7 @@
 /// <reference path="../TestSupport/FakeAlbumRepository.ts" />
 /// <reference path="../../ViewModels/ArtistForAlbumEditViewModel.ts" />
 
-module vdb.tests.viewModels {
+//module vdb.tests.viewModels {
 
     import vm = vdb.viewModels;
     import dc = vdb.dataContracts;
@@ -64,4 +64,4 @@ module vdb.tests.viewModels {
 
     });
 
-}
+//}

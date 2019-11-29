@@ -8,7 +8,7 @@ interface KnockoutBindingHandlers {
     artistAutoComplete: KnockoutBindingHandler;
 }
 
-module vdb.knockoutExtensions {
+//module vdb.knockoutExtensions {
 
 	import cls = vdb.models;
 
@@ -55,7 +55,7 @@ module vdb.knockoutExtensions {
 		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/artists"), params);
 
 	}
-}
+//}
 
 ko.bindingHandlers.artistAutoComplete = {
     init: vdb.knockoutExtensions.artistAutoComplete
