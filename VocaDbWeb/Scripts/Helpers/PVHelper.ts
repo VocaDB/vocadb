@@ -1,7 +1,7 @@
 
-//module vdb.helpers {
+import PVService from '../Models/PVs/PVService';
 
-	import cls = vdb.models;
+//module vdb.helpers {
 
 	export class PVHelper {
 		
@@ -11,7 +11,7 @@
 				return [];
 
 			var values = pvServices.split(",");
-			var services: cls.pvs.PVService[] = _.map(values, val => cls.pvs.PVService[val.trim()]);
+			var services: PVService[] = _.map(values, val => PVService[val.trim()]);
 
 			return services;
 

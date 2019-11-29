@@ -1,26 +1,28 @@
 
+import EntryStatus from '../Models/EntryStatus';
+
 //module vdb.helpers {
 	
 	export class EntryMergeValidationHelper {
 
-		private static toEnum(statusStr: string | models.EntryStatus): models.EntryStatus {
+		private static toEnum(statusStr: string | EntryStatus): EntryStatus {
 		
 			if (typeof statusStr === "string") {
-				return models.EntryStatus[statusStr];
+				return EntryStatus[statusStr];
 			} else {
 				return statusStr;
 			}
 				 
 		}
 
-		public static validate(baseStatus: string | models.EntryStatus, targetStatus: string | models.EntryStatus, baseCreated: string, targetCreated: string) {
+		public static validate(baseStatus: string | EntryStatus, targetStatus: string | EntryStatus, baseCreated: string, targetCreated: string) {
 
 			var baseStatusEnum = EntryMergeValidationHelper.toEnum(baseStatus);
 			var targetStatusEnum = EntryMergeValidationHelper.toEnum(targetStatus);
 
 			return {
-				validationError_targetIsLessComplete: moment(targetCreated) <= moment(baseCreated) && targetStatusEnum === models.EntryStatus.Draft && baseStatusEnum > models.EntryStatus.Draft,
-				validationError_targetIsNewer: !(targetStatusEnum > models.EntryStatus.Draft && baseStatusEnum === models.EntryStatus.Draft) && moment(targetCreated) > moment(baseCreated)
+				validationError_targetIsLessComplete: moment(targetCreated) <= moment(baseCreated) && targetStatusEnum === EntryStatus.Draft && baseStatusEnum > EntryStatus.Draft,
+				validationError_targetIsNewer: !(targetStatusEnum > EntryStatus.Draft && baseStatusEnum === EntryStatus.Draft) && moment(targetCreated) > moment(baseCreated)
 			};
 
 		}

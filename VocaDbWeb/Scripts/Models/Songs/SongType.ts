@@ -1,7 +1,7 @@
 
 //module vdb.models.songs {
 	
-	export enum SongType {
+	enum SongType {
 		
 		Unspecified = 0,
 
@@ -30,5 +30,7 @@
 		Other = 2048
 
 	}
+
+	export default SongType;
 
 //} 

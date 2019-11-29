@@ -1,7 +1,7 @@
 
 //module vdb.models.artists {
 	
-	export enum ArtistType {
+	enum ArtistType {
 		
 		Unknown,
 
@@ -49,5 +49,7 @@
 		Character
 
 	}
+
+	export default ArtistType;
 
 //}

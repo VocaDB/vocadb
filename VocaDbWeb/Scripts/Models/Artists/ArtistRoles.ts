@@ -1,7 +1,7 @@
 
 //namespace vdb.models.artists {
 	
-	export enum ArtistRoles {
+	enum ArtistRoles {
 		
 		Default				= 0,
 
@@ -66,5 +66,7 @@
 		VocalDataProvider	= 32768
 
 	}
+
+	export default ArtistRoles;
 
 //}

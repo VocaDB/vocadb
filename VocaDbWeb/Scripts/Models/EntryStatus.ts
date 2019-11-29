@@ -1,7 +1,7 @@
 
 //module vdb.models {
 	
-	export enum EntryStatus {
+	enum EntryStatus {
 
 		Draft = 0,
 
@@ -12,5 +12,7 @@
 		Locked = 4
 
 	}
+
+	export default EntryStatus;
 
 //}

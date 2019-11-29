@@ -1,4 +1,6 @@
 
+import CountPerDayContract from '../DataContracts/Aggregate/CountPerDayContract';
+
 //module vdb.helpers {
 	
 	export interface Tuple2<T1, T2> {
@@ -8,7 +10,7 @@
 
 	export class HighchartsHelper {
 
-		public static dateLineChartWithAverage = (title: string, pointsTitle: string, yAxisTitle: string, points: dataContracts.aggregate.CountPerDayContract[]): HighchartsOptions => {
+		public static dateLineChartWithAverage = (title: string, pointsTitle: string, yAxisTitle: string, points: CountPerDayContract[]): HighchartsOptions => {
 			
 			var dataSeries: HighchartsSeriesOptions = {
 				animation: false,
