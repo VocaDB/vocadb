@@ -1,7 +1,7 @@
 
 //module vdb.models {
 	
-	export interface IEntryWithIdAndName {
+	export default interface IEntryWithIdAndName {
 
 		id: number;
 

@@ -1,7 +1,7 @@
 //module vdb.dataContracts {
 
     // Matches .NET class EntryRefContract.
-    export interface EntryRefContract {
+    export default interface EntryRefContract {
 
         entryType: string;
 

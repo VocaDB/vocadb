@@ -1,7 +1,9 @@
 
+import SongInListContract from './SongInListContract';
+
 //module vdb.dataContracts.songs {
 	
-	export interface SongInListEditContract extends SongInListContract {
+	export default interface SongInListEditContract extends SongInListContract {
 
 		songInListId: number;
 

@@ -1,4 +1,6 @@
 
+import UserApiContract from './UserApiContract';
+
 //module vdb.dataContracts {
 
     export interface UserMessageSummaryContract {
@@ -19,9 +21,9 @@
 
         read: boolean;
 
-        receiver: vdb.dataContracts.user.UserApiContract;
+        receiver: UserApiContract;
 
-        sender?: vdb.dataContracts.user.UserApiContract;
+        sender?: UserApiContract;
 
         subject: string;
 

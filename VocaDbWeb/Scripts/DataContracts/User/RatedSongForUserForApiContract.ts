@@ -1,4 +1,7 @@
 
+import SongApiContract from '../Song/SongApiContract';
+import UserApiContract from './UserApiContract';
+
 //namespace vdb.dataContracts {
 	
 	export interface RatedSongForUserForApiContract {
@@ -7,7 +10,7 @@
 
 		song?: SongApiContract;
 
-		user?: user.UserApiContract;
+		user?: UserApiContract;
 
 	}
 

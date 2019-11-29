@@ -3,7 +3,7 @@
 
     // Identifies common entry type.
     // Corresponds to the EntryType enum C#.
-    export enum EntryType {
+    enum EntryType {
         
 		Undefined			= 0,
 
@@ -28,5 +28,7 @@
 		User                = 512
 		
     }
+
+	export default EntryType;
 
 //}

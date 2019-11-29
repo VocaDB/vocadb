@@ -1,7 +1,7 @@
 
 //module vdb.models.pvs {
 	
-	export enum PVService {
+	enum PVService {
 		
 		NicoNicoDouga	= 1,
 
@@ -24,5 +24,7 @@
 		Bandcamp		= 512
 
 	}
+
+	export default PVService;
 
 //}

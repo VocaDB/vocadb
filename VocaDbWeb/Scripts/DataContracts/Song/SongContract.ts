@@ -1,7 +1,9 @@
 
+import CommonEntryContract from '../CommonEntryContract';
+
 //module vdb.dataContracts {
 
-    export interface SongContract extends CommonEntryContract {
+    export default interface SongContract extends CommonEntryContract {
 
         additionalNames: string;
 

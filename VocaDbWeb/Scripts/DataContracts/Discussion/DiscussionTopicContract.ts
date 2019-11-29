@@ -1,9 +1,12 @@
 
+import CommentContract from '../CommentContract';
+import UserApiContract from '../User/UserApiContract';
+
 //module vdb.dataContracts.discussions {
 	
 	export interface DiscussionTopicContract {
 		
-		author: user.UserApiContract;
+		author: UserApiContract;
 
 		canBeDeleted?: boolean;
 

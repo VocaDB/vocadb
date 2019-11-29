@@ -1,4 +1,7 @@
 
+import AlbumContract from '../Album/AlbumContract';
+import UserApiContract from './UserApiContract';
+
 //module vdb.dataContracts {
 	
 	export interface AlbumForUserForApiContract {
@@ -11,7 +14,7 @@
 
 		rating: number;
 
-		user?: user.UserApiContract;
+		user?: UserApiContract;
 
 	}
 

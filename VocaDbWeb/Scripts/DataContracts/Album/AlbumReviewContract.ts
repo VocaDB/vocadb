@@ -1,4 +1,6 @@
 
+import UserApiContract from '../User/UserApiContract';
+
 //namespace vdb.dataContracts.albums {
 
 	export interface AlbumReviewContract {
@@ -13,7 +15,7 @@
 
 		title: string;
 
-		user: user.UserApiContract;
+		user: UserApiContract;
 
 	}
 

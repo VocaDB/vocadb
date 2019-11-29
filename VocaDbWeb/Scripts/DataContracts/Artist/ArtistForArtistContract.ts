@@ -1,7 +1,9 @@
 
+import ArtistContract from './ArtistContract';
+
 //module vdb.dataContracts.artists {
 	
-	export interface ArtistForArtistContract {
+	export default interface ArtistForArtistContract {
 
 		parent: ArtistContract;
 

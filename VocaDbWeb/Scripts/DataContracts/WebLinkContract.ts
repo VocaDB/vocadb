@@ -1,7 +1,7 @@
 
 //module vdb.dataContracts {
 
-    export interface WebLinkContract {
+    export default interface WebLinkContract {
         
         category: string;
 

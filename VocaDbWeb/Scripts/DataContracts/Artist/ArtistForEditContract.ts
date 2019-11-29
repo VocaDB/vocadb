@@ -1,4 +1,11 @@
 
+import ArtistContract from './ArtistContract';
+import ArtistForArtistContract from './ArtistForArtistContract';
+import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
+import EntryPictureFileContract from '../EntryPictureFileContract';
+import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '../WebLinkContract';
+
 //module vdb.dataContracts.artists {
 	
 	export interface ArtistForEditContract {
@@ -11,7 +18,7 @@
 
 		defaultNameLanguage: string;
 
-		description: globalization.EnglishTranslatedStringContract;
+		description: EnglishTranslatedStringContract;
 
 		groups: ArtistForArtistContract[];
 
@@ -19,7 +26,7 @@
 
 		illustrator: ArtistContract;
 
-		names: globalization.LocalizedStringWithIdContract[];
+		names: LocalizedStringWithIdContract[];
 
 		pictureMime: string;
 
@@ -33,7 +40,7 @@
 
 		voiceProvider: ArtistContract;
 
-		webLinks: vdb.dataContracts.WebLinkContract[];
+		webLinks: WebLinkContract[];
 
 	}
 

@@ -1,7 +1,7 @@
 
 //module vdb.dataContracts {
 	
-	export interface PagingProperties {
+	export default interface PagingProperties {
 
 		getTotalCount?: boolean;
 

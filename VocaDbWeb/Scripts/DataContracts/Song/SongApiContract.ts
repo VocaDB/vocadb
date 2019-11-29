@@ -1,14 +1,20 @@
 
+import ArtistForAlbumContract from '../ArtistForAlbumContract';
+import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
+import LocalizedStringContract from '../Globalization/LocalizedStringContract';
+import PVService from '../../Models/PVs/PVService';
+import SongContract from './SongContract';
+
 //module vdb.dataContracts {
 	
-	export interface SongApiContract extends SongContract, EntryWithTagUsagesContract {
+	export default interface SongApiContract extends SongContract, EntryWithTagUsagesContract {
 
 		artists?: ArtistForAlbumContract[];
 
-		names?: globalization.LocalizedStringContract[];
+		names?: LocalizedStringContract[];
 
 		// Not returned from the API, but can be used to cache the list of PV services client side
-		pvServicesArray?: vdb.models.pvs.PVService[];
+		pvServicesArray?: PVService[];
 
 		urlFriendlyName?: string;
 

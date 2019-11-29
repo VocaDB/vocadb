@@ -1,9 +1,12 @@
 
+import EntryRefContract from './EntryRefContract';
+import UserApiContract from './User/UserApiContract';
+
 //module vdb.dataContracts {
 	
-	export interface CommentContract {
+	export default interface CommentContract {
 
-		author: user.UserApiContract;
+		author: UserApiContract;
 
 		authorName?: string;
 

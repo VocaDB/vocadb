@@ -1,4 +1,13 @@
 
+import ArtistForAlbumContract from '../ArtistForAlbumContract';
+import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
+import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
+import LyricsForSongContract from './LyricsForSongContract';
+import PVContract from '../PVs/PVContract';
+import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
+import SongContract from './SongContract';
+import WebLinkContract from '../WebLinkContract';
+
 //module vdb.dataContracts.songs {
 	
 	export interface SongForEditContract {
@@ -21,16 +30,16 @@
 
 		lyrics: LyricsForSongContract[];
 
-		names: globalization.LocalizedStringWithIdContract[];
+		names: LocalizedStringWithIdContract[];
 
-		notes: globalization.EnglishTranslatedStringContract;
+		notes: EnglishTranslatedStringContract;
 
 		originalVersion: SongContract;
 
 		// Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
 		publishDate?: string;
 
-		pvs: pvs.PVContract[];
+		pvs: PVContract[];
 
 		releaseEvent?: ReleaseEventContract;
 
@@ -42,7 +51,7 @@
 
 		updateNotes?: string;
 
-		webLinks: vdb.dataContracts.WebLinkContract[];
+		webLinks: WebLinkContract[];
 
 	}
 

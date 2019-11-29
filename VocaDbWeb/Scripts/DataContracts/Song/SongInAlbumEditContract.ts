@@ -1,7 +1,9 @@
 
+import ArtistContract from '../Artist/ArtistContract';
+
 //module vdb.dataContracts.songs {
 	
-	export interface SongInAlbumEditContract {
+	export default interface SongInAlbumEditContract {
 
 		artists: ArtistContract[];
 

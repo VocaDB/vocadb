@@ -1,7 +1,7 @@
 
 //module vdb.dataContracts.aggregate {
 	
-	export interface CountPerDayContract {
+	export default interface CountPerDayContract {
 		
 		year: number;
 		month: number;

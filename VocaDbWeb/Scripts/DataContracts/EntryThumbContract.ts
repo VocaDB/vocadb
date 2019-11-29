@@ -2,7 +2,7 @@
 //module vdb.dataContracts {
 	
 	// Note: matches C# class EntryThumbForApiContract
-	export interface EntryThumbContract {
+	export default interface EntryThumbContract {
 
 		urlSmallThumb?: string;
 
