@@ -1,12 +1,13 @@
 
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForEventContract';
+
 //namespace vdb.viewModels.events {
 
-	import dc = vdb.dataContracts;
-
 	// View model for editing artist for album link.
-	export class ArtistForEventEditViewModel implements IEditableArtistWithSupport {
+	export default class ArtistForEventEditViewModel implements IEditableArtistWithSupport {
 
-		public artist: dc.ArtistContract;
+		public artist: ArtistContract;
 
 		// Unique link Id.
 		public id: number;
@@ -19,7 +20,7 @@
 		// List of roles for this artist.
 		public rolesArray: KnockoutObservableArray<string>;
 
-		public toContract: () => dc.events.ArtistForEventContract = () => {
+		public toContract: () => ArtistForEventContract = () => {
 			return {
 				artist: this.artist,
 				id: this.id,
@@ -28,7 +29,7 @@
 			};
 		}
 
-		constructor(data: dc.events.ArtistForEventContract) {
+		constructor(data: ArtistForEventContract) {
 
 			this.artist = data.artist;
 			this.id = data.id;

@@ -3,7 +3,7 @@
 	
 	// Basic list view model implementation where items are constructed from data contracts.
 	// Item type can be constructed from a contract, or with default parameters (for new items).
-	export class BasicListEditViewModel<TItem, TContract> {
+	export default class BasicListEditViewModel<TItem, TContract> {
 		
 		// type: item constructor, optionally receiving a data contract parameter.
 		// contracts: list of data contracts for current items.

@@ -1,20 +1,30 @@
 
-//module vdb.viewModels {
+import { ArtistAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import ArtistForAlbumContract from '../DataContracts/ArtistForAlbumContract';
+import ArtistRepository from '../Repositories/ArtistRepository';
+import ArtistRoles from '../Models/Artists/ArtistRoles';
+import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
+import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
+import { SongAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
+import SongContract from '../DataContracts/Song/SongContract';
+import SongHelper from '../Helpers/SongHelper';
+import SongRepository from '../Repositories/SongRepository';
+import SongType from '../Models/Songs/SongType';
 
-	import cls = models;
-    import dc = vdb.dataContracts;
+//module vdb.viewModels {
 
     // View model for song creation view
     export class SongCreateViewModel {
         
         addArtist: (artistId: number) => void;
 
-        artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
+        artistSearchParams: ArtistAutoCompleteParams;
 
-		artists = ko.observableArray<dc.ArtistContract>([]);
+		artists = ko.observableArray<ArtistContract>([]);
 
-		public artistsWithRoles: KnockoutComputed<dc.ArtistForAlbumContract[]> = ko.computed(() => _.map(this.artists(), a => {
-			return { artist: a, roles: cls.artists.ArtistRoles[cls.artists.ArtistRoles.Default] }
+		public artistsWithRoles: KnockoutComputed<ArtistForAlbumContract[]> = ko.computed(() => _.map(this.artists(), a => {
+			return { artist: a, roles: ArtistRoles[ArtistRoles.Default] }
 		}));
 
 		private getArtistIds = () => {
@@ -71,7 +81,7 @@
 			 
 		}
 
-        dupeEntries = ko.observableArray<dc.DuplicateEntryResultContract>([]);
+        dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
         isDuplicatePV: KnockoutComputed<boolean>;
 
@@ -79,20 +89,20 @@
         nameRomaji = ko.observable("");
         nameEnglish = ko.observable("");
 
-		originalSongSuggestions: KnockoutComputed<dc.DuplicateEntryResultContract[]>;
+		originalSongSuggestions: KnockoutComputed<DuplicateEntryResultContract[]>;
 
-		originalVersion: BasicEntryLinkViewModel<dc.SongContract>;
-		originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
+		originalVersion: BasicEntryLinkViewModel<SongContract>;
+		originalVersionSearchParams: SongAutoCompleteParams;
 
         pv1 = ko.observable("");
         pv2 = ko.observable("");
         songType = ko.observable("Original");
 
-		canHaveOriginalVersion = ko.computed(() => cls.songs.SongType[this.songType()] !== cls.songs.SongType.Original);
+		canHaveOriginalVersion = ko.computed(() => SongType[this.songType()] !== SongType.Original);
 
         hasName: KnockoutComputed<boolean>;
 
-		selectOriginal = (dupe: dc.DuplicateEntryResultContract) => {
+		selectOriginal = (dupe: DuplicateEntryResultContract) => {
 			this.songRepository.getOne(dupe.entry.id, song => this.originalVersion.entry(song));
 		}
 
@@ -103,9 +113,9 @@
 
         public submitting = ko.observable(false);
 
-        removeArtist: (artist: dc.ArtistContract) => void;
+        removeArtist: (artist: ArtistContract) => void;
 
-        constructor(private songRepository: vdb.repositories.SongRepository, artistRepository: vdb.repositories.ArtistRepository, data?) {
+        constructor(private songRepository: SongRepository, artistRepository: ArtistRepository, data?) {
 
             if (data) {
                 this.nameOriginal(data.nameOriginal || "");
@@ -140,11 +150,11 @@
                 return _.some(this.dupeEntries(), item => { return item.matchProperty === 'PV' });
             });
             
-			this.originalVersion = new BasicEntryLinkViewModel<dc.SongContract>(null, songRepository.getOne);
+			this.originalVersion = new BasicEntryLinkViewModel<SongContract>(null, songRepository.getOne);
 
 			this.originalVersionSearchParams = {
 				acceptSelection: this.originalVersion.id,
-				extraQueryParams: { songTypes: helpers.SongHelper.originalVersionTypesString() }
+				extraQueryParams: { songTypes: SongHelper.originalVersionTypesString() }
 			};
 
 			this.originalSongSuggestions = ko.computed(() => {
@@ -156,7 +166,7 @@
 
 			});
 
-            this.removeArtist = (artist: dc.ArtistContract) => {
+            this.removeArtist = (artist: ArtistContract) => {
                 this.artists.remove(artist);
             };
             

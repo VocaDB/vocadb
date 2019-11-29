@@ -7,7 +7,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 //namespace vdb.repositories {
 
-	export class CommentRepository extends BaseRepository implements ICommentRepository {
+	export default class CommentRepository extends BaseRepository implements ICommentRepository {
 
 		constructor(private urlMapper: UrlMapper, private entryType: EntryType) {
 			super(urlMapper.baseUrl);

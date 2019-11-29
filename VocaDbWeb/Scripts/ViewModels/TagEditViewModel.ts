@@ -1,8 +1,17 @@
 /// <reference path="../typings/knockout/knockout.d.ts" />
 
-//namespace vdb.viewModels.tags {
+import DeleteEntryViewModel from './DeleteEntryViewModel';
+import EnglishTranslatedStringEditViewModel from './Globalization/EnglishTranslatedStringEditViewModel';
+import EntryType from '../Models/EntryType';
+import EntryUrlMapper from '../Shared/EntryUrlMapper';
+import NamesEditViewModel from './Globalization/NamesEditViewModel';
+import TagApiContract from '../DataContracts/Tag/TagApiContract';
+import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
+import UrlMapper from '../Shared/UrlMapper';
+import UserRepository from '../Repositories/UserRepository';
+import WebLinksEditViewModel from './WebLinksEditViewModel';
 
-	import dc = vdb.dataContracts;
+//namespace vdb.viewModels.tags {
 
 	export class TagEditViewModel {
 
@@ -10,15 +19,15 @@
 		public static readonly allEntryTypes = 1073741823;
 
 		constructor(
-			private readonly urlMapper: vdb.UrlMapper,
-			userRepository: vdb.repositories.UserRepository,
-			contract: dc.TagApiContract) {
+			private readonly urlMapper: UrlMapper,
+			userRepository: UserRepository,
+			contract: TagApiContract) {
 
 			this.categoryName = ko.observable(contract.categoryName);
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
-			this.description = new globalization.EnglishTranslatedStringEditViewModel(contract.translatedDescription);
+			this.description = new EnglishTranslatedStringEditViewModel(contract.translatedDescription);
 			this.id = contract.id;
-			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
+			this.names = NamesEditViewModel.fromContracts(contract.names);
 			this.parent = ko.observable(contract.parent);
 			this.relatedTags = ko.observableArray(contract.relatedTags);
 			this.targets = ko.observable(contract.targets);
@@ -35,48 +44,48 @@
 				this.validationError_needDescription()
 			);
 
-			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Tag, contract.id), 10000);
+			window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Tag, contract.id), 10000);
 
 		}
 
 		public categoryName: KnockoutObservable<string>;
 		public defaultNameLanguage: KnockoutObservable<string>;
-		public description: globalization.EnglishTranslatedStringEditViewModel;
+		public description: EnglishTranslatedStringEditViewModel;
 		public hasValidationErrors: KnockoutComputed<boolean>;
 		private id: number;
-		public names: globalization.NamesEditViewModel;
-		public parent: KnockoutObservable<dc.TagBaseContract>;
+		public names: NamesEditViewModel;
+		public parent: KnockoutObservable<TagBaseContract>;
 		public parentName: KnockoutComputed<string>;
-		public relatedTags: KnockoutObservableArray<dc.TagBaseContract>;
+		public relatedTags: KnockoutObservableArray<TagBaseContract>;
 		public submitting = ko.observable(false);
-		public targets: KnockoutObservable<models.EntryType>;
+		public targets: KnockoutObservable<EntryType>;
 		public validationExpanded = ko.observable(false);
 		public validationError_needDescription: KnockoutComputed<boolean>;
         public webLinks: WebLinksEditViewModel;
 
-		public addRelatedTag = (tag: dc.TagBaseContract) => this.relatedTags.push(tag);		
+		public addRelatedTag = (tag: TagBaseContract) => this.relatedTags.push(tag);		
 
-		public allowRelatedTag = (tag: dc.TagBaseContract) => this.denySelf(tag) && _.every(this.relatedTags(), t => t.id !== tag.id);
+		public allowRelatedTag = (tag: TagBaseContract) => this.denySelf(tag) && _.every(this.relatedTags(), t => t.id !== tag.id);
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
 			$.ajax(this.urlMapper.mapRelative("api/tags/" + this.id + "?hardDelete=false&notes=" + encodeURIComponent(notes)), {
 				type: 'DELETE', success: () => {
-					window.location.href = vdb.utils.EntryUrlMapper.details_tag(this.id);
+					window.location.href = EntryUrlMapper.details_tag(this.id);
 				}
 			});
 		});
 
-		public denySelf = (tag: dc.TagBaseContract) => (tag && tag.id !== this.id);
+		public denySelf = (tag: TagBaseContract) => (tag && tag.id !== this.id);
 
 		public submit = () => {
 			this.submitting(true);
 			return true;
 		}
 
-		public hasTargetType = (target: models.EntryType) => {		
+		public hasTargetType = (target: EntryType) => {		
 			const hasFlag = (t) => (this.targets() & t) === t;
 			const checkFlags = () => {
-				const types = [models.EntryType.Album, models.EntryType.Artist, models.EntryType.ReleaseEvent, models.EntryType.Song];
+				const types = [EntryType.Album, EntryType.Artist, EntryType.ReleaseEvent, EntryType.Song];
 				if (this.targets() === _.sum(types)) {
 					this.targets(TagEditViewModel.allEntryTypes);
 				} else {

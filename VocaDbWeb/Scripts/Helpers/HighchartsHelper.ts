@@ -8,7 +8,7 @@ import CountPerDayContract from '../DataContracts/Aggregate/CountPerDayContract'
 		item2: T2;
 	}
 
-	export class HighchartsHelper {
+	export default class HighchartsHelper {
 
 		public static dateLineChartWithAverage = (title: string, pointsTitle: string, yAxisTitle: string, points: CountPerDayContract[]): HighchartsOptions => {
 			

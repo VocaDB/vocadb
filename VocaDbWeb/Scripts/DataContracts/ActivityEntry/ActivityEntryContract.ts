@@ -5,7 +5,7 @@ import UserApiContract from '../User/UserApiContract';
 
 //module vdb.dataContracts.activityEntry {
 	
-	export interface ActivityEntryContract {
+	export default interface ActivityEntryContract {
 		
 		archivedVersion: ArchivedVersionContract;
 

@@ -1,21 +1,26 @@
 
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import ImportedSongInListContract from '../../DataContracts/SongList/ImportedSongInListContract';
+import ImportedSongListContract from '../../DataContracts/SongList/ImportedSongListContract';
+import PartialImportedSongs from '../../DataContracts/SongList/PartialImportedSongs';
+import SongListForEditContract from '../../DataContracts/Song/SongListForEditContract';
+import UrlMapper from '../../Shared/UrlMapper';
+
 //module vdb.viewModels.songList {
 	
-	import dc = vdb.dataContracts;
-
 	export class ImportSongListViewModel {
 		
-		constructor(private urlMapper: vdb.UrlMapper) {}
+		constructor(private urlMapper: UrlMapper) {}
 
 		public description = ko.observable("");
 
-		public items = ko.observableArray<dc.songList.ImportedSongInListContract>([]);
+		public items = ko.observableArray<ImportedSongInListContract>([]);
 
 		public loadMore = () => {
 			
 			$.getJSON(this.urlMapper.mapRelative('/api/songLists/import-songs'),
 				{ url: this.url(), pageToken: this.nextPageToken(), parseAll: !this.onlyRanked() },
-				(result: dc.songList.PartialImportedSongs) => {
+				(result: PartialImportedSongs) => {
 
 				this.nextPageToken(result.nextPageToken);
 				ko.utils.arrayPushAll(this.items, result.items);
@@ -41,7 +46,7 @@
 
 		public parse = () => {
 
-			$.getJSON(this.urlMapper.mapRelative('/api/songLists/import'), { url: this.url(), parseAll: !this.onlyRanked() },(songList: dc.songList.ImportedSongListContract) => {
+			$.getJSON(this.urlMapper.mapRelative('/api/songLists/import'), { url: this.url(), parseAll: !this.onlyRanked() },(songList: ImportedSongListContract) => {
 
 				this.name(songList.name);
 				this.description(songList.description);
@@ -64,7 +69,7 @@
 		public submit = () => {
 
 			var order = 1;
-			var songs = _.chain(this.items()).filter(i => i.matchedSong != null).map((i: dc.songList.ImportedSongInListContract) => {
+			var songs = _.chain(this.items()).filter(i => i.matchedSong != null).map((i: ImportedSongInListContract) => {
 				return {
 					order: order++,
 					notes: '',
@@ -73,7 +78,7 @@
 				};
 			}).value();
 
-			var contract: dc.songs.SongListForEditContract = {
+			var contract: SongListForEditContract = {
 				id: null,
 				author: null,
 				name: this.name(),
@@ -84,7 +89,7 @@
 			};
 
 			$.post(this.urlMapper.mapRelative('/api/songLists'), contract, (listId: number) => {
-				window.location.href = vdb.utils.EntryUrlMapper.details('SongList', listId);
+				window.location.href = EntryUrlMapper.details('SongList', listId);
 			}, 'json');
 
 		}

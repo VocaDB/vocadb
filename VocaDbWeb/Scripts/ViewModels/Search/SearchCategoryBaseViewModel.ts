@@ -1,9 +1,14 @@
 
-//module vdb.viewModels.search {
+import AdvancedSearchFilters from './AdvancedSearchFilters';
+import EntryContract from '../../DataContracts/EntryContract';
+import EntryWithTagUsagesContract from '../../DataContracts/Base/EntryWithTagUsagesContract';
+import PagingProperties from '../../DataContracts/PagingPropertiesContract';
+import SearchViewModel from './SearchViewModel';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import TagFilter from './TagFilter';
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+//module vdb.viewModels.search {
 
 	export interface ISearchCategoryBaseViewModel {
 
@@ -12,7 +17,7 @@
 	}
 
 	// Base class for different types of searches.
-	export class SearchCategoryBaseViewModel<TEntry> implements ISearchCategoryBaseViewModel {
+	export default class SearchCategoryBaseViewModel<TEntry> implements ISearchCategoryBaseViewModel {
 
 		constructor(public searchViewModel: SearchViewModel) {
 
@@ -55,18 +60,18 @@
 		}
 
 		// Method for loading a page of results.
-		public loadResults: (pagingProperties: dc.PagingProperties, searchTerm: string, tags: number[],
+		public loadResults: (pagingProperties: PagingProperties, searchTerm: string, tags: number[],
 			childTags: boolean, status: string, callback: (result: any) => void) => void;
 
 		public loading = ko.observable(true); // Currently loading for data
 
-		public page = ko.observableArray<dc.EntryContract>([]); // Current page of items
+		public page = ko.observableArray<EntryContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(); // Paging view model
 		public pauseNotifications = false;
 
 		public searchTerm: KnockoutObservable<string>;
 
-		public selectTag = (tag: dc.TagBaseContract) => {
+		public selectTag = (tag: TagBaseContract) => {
 			this.tags([ TagFilter.fromContract(tag) ]);
 		}
 
@@ -104,7 +109,7 @@
 
 					if (this.showTags()) {
 
-						_.forEach(result.items, (item: dc.EntryWithTagUsagesContract) => {
+						_.forEach(result.items, (item: EntryWithTagUsagesContract) => {
 
 							if (item.tags)
 								item.tags = _.take(_.sortBy(item.tags, t => t.tag.name.toLowerCase()), 10);

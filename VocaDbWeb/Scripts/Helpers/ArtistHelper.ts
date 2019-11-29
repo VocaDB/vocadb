@@ -7,7 +7,7 @@ import ContentFocus from '../Models/ContentFocus';
 
 //module vdb.helpers {
 
-	export class ArtistHelper {
+	export default class ArtistHelper {
 		
 		/// <summary>
 		/// The roles of these artists can be customized

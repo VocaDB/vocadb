@@ -1,12 +1,14 @@
 
-//namespace vdb.viewModels.songs {
+import BasicListEditViewModel from '../BasicListEditViewModel';
+import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
+import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';
+import TranslationType from '../../Models/Globalization/TranslationType';
 
-	import cls = models;
-	import dc = vdb.dataContracts;
+//namespace vdb.viewModels.songs {
 
 	export class LyricsForSongEditViewModel {
 
-		constructor(contract?: dc.songs.LyricsForSongContract) {
+		constructor(contract?: LyricsForSongContract) {
 			
 			if (contract) {
 				this.id = ko.observable(contract.id);
@@ -19,9 +21,9 @@
 			} else {
 				this.id = ko.observable(0);
 				this.cultureCode = ko.observable("");
-				this.language = ko.observable(vdb.models.globalization.ContentLanguageSelection[vdb.models.globalization.ContentLanguageSelection.Unspecified]);
+				this.language = ko.observable(ContentLanguageSelection[ContentLanguageSelection.Unspecified]);
 				this.source = ko.observable("");
-				this.translationType = ko.observable(cls.globalization.TranslationType[cls.globalization.TranslationType.Translation]);
+				this.translationType = ko.observable(TranslationType[TranslationType.Translation]);
 				this.url = ko.observable("");
 				this.value = ko.observable("");
 			}
@@ -43,7 +45,7 @@
 
 		public language: KnockoutObservable<string>;
 
-		public showLanguageSelection = () => this.translationType() !== cls.globalization.TranslationType[cls.globalization.TranslationType.Romanized];
+		public showLanguageSelection = () => this.translationType() !== TranslationType[TranslationType.Romanized];
 
 		public source: KnockoutObservable<string>;
 
@@ -55,7 +57,7 @@
 
 	}
 
-	export class LyricsForSongListEditViewModel extends BasicListEditViewModel<LyricsForSongEditViewModel, dc.songs.LyricsForSongContract> {
+	export class LyricsForSongListEditViewModel extends BasicListEditViewModel<LyricsForSongEditViewModel, LyricsForSongContract> {
 
 		private find = (translationType: string) => {
 			var vm = _.find(this.items(), i => i.translationType() === translationType);
@@ -67,7 +69,7 @@
 			return vm;
 		}
 
-		constructor(contracts: dc.songs.LyricsForSongContract[]) {
+		constructor(contracts: LyricsForSongContract[]) {
 			super(LyricsForSongEditViewModel, contracts);
 			this.original = this.find("Original");
 			this.romanized = this.find("Romanized");
@@ -91,7 +93,7 @@
 					source: this.original.source(),
 					url: this.original.url(),
 					value: this.original.value(),
-					translationType: cls.globalization.TranslationType[cls.globalization.TranslationType.Translation]
+					translationType: TranslationType[TranslationType.Translation]
 				});
 
 				this.items.push(newLyrics);
@@ -103,7 +105,7 @@
 				this.original.url("");
 
 			} else {
-				lyrics.translationType(cls.globalization.TranslationType[cls.globalization.TranslationType.Translation]);
+				lyrics.translationType(TranslationType[TranslationType.Translation]);
 			}
 
 		}
@@ -111,7 +113,7 @@
 		public original: LyricsForSongEditViewModel;
 		public romanized: LyricsForSongEditViewModel;
 
-		public toContracts: () => dc.songs.LyricsForSongContract[] = () => {
+		public toContracts: () => LyricsForSongContract[] = () => {
 			var result = ko.toJS(_.chain([this.original, this.romanized]).concat(this.items()).filter(i => i.value()).value());
 			return result;
 		}

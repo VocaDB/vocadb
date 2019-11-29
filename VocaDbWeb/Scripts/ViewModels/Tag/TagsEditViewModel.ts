@@ -1,14 +1,16 @@
 
+import EntryType from '../../Models/EntryType';
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import TagSelectionContract from '../../DataContracts/Tag/TagSelectionContract';
+import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+
 //module vdb.viewModels.tags {
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-
-	export class TagsEditViewModel {
+	export default class TagsEditViewModel {
 
 		constructor(private readonly repo: ITagSelectionsRepository, 
-			public readonly target?: cls.EntryType, 
-			private readonly getSuggestions?: (callback: (result: dc.tags.TagUsageForApiContract[]) => void) => void) { }
+			public readonly target?: EntryType, 
+			private readonly getSuggestions?: (callback: (result: TagUsageForApiContract[]) => void) => void) { }
 		
 		public addTag = () => {
 			
@@ -32,7 +34,7 @@
 
 		}
 
-		public autoCompletedTag = (tag: dc.TagBaseContract) => {
+		public autoCompletedTag = (tag: TagBaseContract) => {
 
 			var selection = _.find(this.selections(), sel => sel.tag.id === tag.id);
 
@@ -46,7 +48,7 @@
 
         public dialogVisible = ko.observable(false);
 
-		public getSuggestionText = (suggestion: dc.tags.TagUsageForApiContract, countText: string) => {
+		public getSuggestionText = (suggestion: TagUsageForApiContract, countText: string) => {
 
 			var text = "";
 
@@ -96,14 +98,14 @@
 
 		}
 
-		public suggestions = ko.observableArray<dc.tags.TagUsageForApiContract>();
+		public suggestions = ko.observableArray<TagUsageForApiContract>();
 		public suggestionsLoaded = ko.observable(false);
 		
 	}
 
 	export class TagSelectionViewModel {
 		
-		constructor(contract: dataContracts.tags.TagSelectionContract) {
+		constructor(contract: TagSelectionContract) {
 		
 			this.tag = contract.tag;
 			this.selected = ko.observable(contract.selected || false);
@@ -112,15 +114,15 @@
 
 		selected: KnockoutObservable<boolean>;
 
-		tag: dc.TagBaseContract;
+		tag: TagBaseContract;
 
 	}
 
 	export interface ITagSelectionsRepository {
 		
-		getTagSelections(callback: (selections: dataContracts.tags.TagSelectionContract[]) => void): void;
+		getTagSelections(callback: (selections: TagSelectionContract[]) => void): void;
 
-		saveTagSelections(tags: dc.TagBaseContract[]): void;
+		saveTagSelections(tags: TagBaseContract[]): void;
 
 	}
 

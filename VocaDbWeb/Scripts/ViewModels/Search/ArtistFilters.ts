@@ -1,12 +1,18 @@
 
+import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import ArtistFilter from './ArtistFilter';
+import ArtistHelper from '../../Helpers/ArtistHelper';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ArtistType from '../../Models/Artists/ArtistType';
+
 //namespace vdb.viewModels.search {
 	
 	// Manages artist filters for search
 	// These can be used wherever artist filtering is needed - search page, rated songs page, song list page
-	export class ArtistFilters {
+	export default class ArtistFilters {
 
 		constructor(
-			private readonly artistRepo: repositories.ArtistRepository, 
+			private readonly artistRepo: ArtistRepository, 
 			childVoicebanks?: boolean) {
 
 			this.artistSearchParams = { acceptSelection: this.selectArtist };
@@ -20,15 +26,15 @@
 				this.includeMembers();
 			}).extend({ notify: 'always' });
 
-			this.showChildVoicebanks = ko.computed(() => this.hasSingleArtist() && helpers.ArtistHelper.canHaveChildVoicebanks(this.artists()[0].artistType()));
-			this.showMembers = ko.computed(() => this.hasSingleArtist() && _.includes(helpers.ArtistHelper.groupTypes, this.firstArtist().artistType()));
+			this.showChildVoicebanks = ko.computed(() => this.hasSingleArtist() && ArtistHelper.canHaveChildVoicebanks(this.artists()[0].artistType()));
+			this.showMembers = ko.computed(() => this.hasSingleArtist() && _.includes(ArtistHelper.groupTypes, this.firstArtist().artistType()));
 
 		}
 
 		public artists = ko.observableArray<ArtistFilter>();
 		public artistIds = ko.computed(() => _.map(this.artists(), a => a.id));
 		public artistParticipationStatus = ko.observable("Everything");
-		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
+		public artistSearchParams: ArtistAutoCompleteParams;
 		public childVoicebanks: KnockoutObservable<boolean>;
 		public filters: KnockoutComputed<void>;
 		public hasMultipleArtists = ko.computed(() => this.artists().length > 1);
@@ -58,7 +64,7 @@
 
 				this.artistRepo.getOne(selectedArtistId, artist => {
 					newArtist.name(artist.name);
-					newArtist.artistType(models.artists.ArtistType[artist.artistType]);
+					newArtist.artistType(ArtistType[artist.artistType]);
 				});
 
 			});

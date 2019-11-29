@@ -1,21 +1,40 @@
 
+import ArtistFilters from './ArtistFilters';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
+import PlayListRepositoryForSongsAdapter from '../Song/PlayList/PlayListRepositoryForSongsAdapter';
+import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
+import PVPlayersFactory from '../PVs/PVPlayersFactory';
+import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
+import PVServiceIcons from '../../Models/PVServiceIcons';
+import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import ResourcesManager from '../../Models/ResourcesManager';
+import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
+import SearchViewModel from './SearchViewModel';
+import SongApiContract from '../../DataContracts/Song/SongApiContract';
+import SongRepository from '../../Repositories/SongRepository';
+import SongType from '../../Models/Songs/SongType';
+import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
+import ui from '../../Shared/MessagesTyped';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
+
 //module vdb.viewModels.search {
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-
-	export class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
+	export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 
 		constructor(
 			searchViewModel: SearchViewModel,
-			urlMapper: vdb.UrlMapper,
+			urlMapper: UrlMapper,
 			lang: string,
-			private songRepo: rep.SongRepository,
-			private artistRepo: rep.ArtistRepository,
-			private userRepo: rep.UserRepository,
-			private eventRepo: rep.ReleaseEventRepository,
-			resourceRep: rep.ResourceRepository,
+			private songRepo: SongRepository,
+			private artistRepo: ArtistRepository,
+			private userRepo: UserRepository,
+			private eventRepo: ReleaseEventRepository,
+			resourceRep: ResourceRepository,
 			cultureCode: string,
 			private loggedUserId: number,
 			sort: string,
@@ -30,7 +49,7 @@
 			viewMode: string,
 			autoplay: boolean,
 			shuffle: boolean,
-			pvPlayersFactory: pvs.PVPlayersFactory) {
+			pvPlayersFactory: PVPlayersFactory) {
 
 			super(searchViewModel);
 
@@ -38,17 +57,17 @@
 				this.resourceManager = searchViewModel.resourcesManager;
 				this.showTags = this.searchViewModel.showTags;
 			} else {
-				this.resourceManager = new cls.ResourcesManager(resourceRep, cultureCode);
+				this.resourceManager = new ResourcesManager(resourceRep, cultureCode);
 				this.resourceManager.loadResources(null, "songSortRuleNames");
 				this.showTags = ko.observable(false);
 			}
 
-			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
+			this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
 			this.artistFilters = new ArtistFilters(this.artistRepo, childVoicebanks);
 			this.artistFilters.selectArtists(artistId);
 
-			this.releaseEvent = new BasicEntryLinkViewModel<cls.IEntryWithIdAndName>({ id: eventId, name: null }, this.eventRepo ? this.eventRepo.getOne : null);
+			this.releaseEvent = new BasicEntryLinkViewModel<IEntryWithIdAndName>({ id: eventId, name: null }, this.eventRepo ? this.eventRepo.getOne : null);
 
 			if (eventId)
 				this.releaseEvent.id(eventId);
@@ -75,7 +94,7 @@
 			this.releaseEvent.subscribe(this.updateResultsWithTotalCount);
 			this.minScore.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
-			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory, autoplay, shuffle);
+			this.pvPlayerViewModel = new PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory, autoplay, shuffle);
 			this.pvsOnly.subscribe(this.updateResultsWithTotalCount);
 			this.since.subscribe(this.updateResultsWithTotalCount);
 			this.songType.subscribe(this.updateResultsWithTotalCount);
@@ -84,7 +103,7 @@
 
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
-			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
+			var songsRepoAdapter = new PlayListRepositoryForSongsAdapter(songRepo, this.searchTerm, this.sort, this.songType,
 				this.afterDate,
                 this.beforeDate,
 				this.tagIds, this.childTags,
@@ -96,8 +115,8 @@
 				this.minScore,
 				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly, this.advancedFilters.filters);
 
-			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
-				cls.globalization.ContentLanguagePreference[lang]);
+			this.playListViewModel = new PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
+				ContentLanguagePreference[lang]);
 
 			this.loadResults = (pagingProperties, searchTerm, tag, childTags, status, callback) => {
 
@@ -107,7 +126,7 @@
 				} else {
 
 					this.songRepo.getList(pagingProperties, lang, searchTerm, this.sort(),
-						this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+						this.songType() != SongType[SongType.Unspecified] ? this.songType() : null,
 						this.afterDate(),
                         this.beforeDate(),
 						tag,
@@ -131,7 +150,7 @@
 
 								if (song.pvServices && song.pvServices != 'Nothing') {
 									song.previewViewModel = new SongWithPreviewViewModel(this.songRepo, this.userRepo, song.id, song.pvServices);
-									song.previewViewModel.ratingComplete = vdb.ui.showThankYouForRatingMessage;
+									song.previewViewModel.ratingComplete = ui.showThankYouForRatingMessage;
 								} else {
 									song.previewViewModel = null;
 								}
@@ -151,14 +170,14 @@
 		public artistFilters: ArtistFilters;
 		public dateMonth = ko.observable<number>(null);
 		public dateYear = ko.observable<number>(null);
-		public releaseEvent: BasicEntryLinkViewModel<cls.IEntryWithIdAndName>;
+		public releaseEvent: BasicEntryLinkViewModel<IEntryWithIdAndName>;
 		public minScore: KnockoutObservable<number>;
 		public onlyRatedSongs = ko.observable(false);
-		public playListViewModel: vdb.viewModels.songs.PlayListViewModel;
-		public pvPlayerViewModel: pvs.PVPlayerViewModel;
+		public playListViewModel: PlayListViewModel;
+		public pvPlayerViewModel: PVPlayerViewModel;
 		public pvsOnly = ko.observable(false);
-		private pvServiceIcons: vdb.models.PVServiceIcons;
-		private resourceManager: cls.ResourcesManager;
+		private pvServiceIcons: PVServiceIcons;
+		private resourceManager: ResourcesManager;
 		public since: KnockoutObservable<number>;
 		public songType = ko.observable("Unspecified");
 		public sort = ko.observable("Name");
@@ -180,7 +199,7 @@
 
 	}
 
-	export interface ISongSearchItem extends dc.SongApiContract {
+	export interface ISongSearchItem extends SongApiContract {
 
 		previewViewModel?: SongWithPreviewViewModel;
 

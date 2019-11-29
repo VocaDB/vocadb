@@ -4,7 +4,7 @@ import SongType from '../Models/Songs/SongType';
 
 //module vdb.helpers {
 
-	export class SongHelper {
+	export default class SongHelper {
 
 		public static originalVersionTypes = [
 			SongType.Unspecified, SongType.Original, SongType.Remaster, SongType.Remix, SongType.Cover, SongType.Mashup, SongType.DramaPV, SongType.Other

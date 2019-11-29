@@ -1,35 +1,41 @@
 
+import ActivityEntryContract from '../../DataContracts/ActivityEntry/ActivityEntryContract';
+import ArchivedVersionContract from '../../DataContracts/Versioning/ArchivedVersionContract';
+import EntryContract from '../../DataContracts/EntryContract';
+import EntryEditEvent from '../../Models/ActivityEntries/EntryEditEvent';
+import EntryType from '../../Models/EntryType';
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import ResourcesManager from '../../Models/ResourcesManager';
+import { ResourceSetNames } from '../../Models/ResourcesManager';
+import UrlMapper from '../../Shared/UrlMapper';
+
 //module vdb.viewModels.activityEntry {
 	
-	import cls = models;
-	import dc = dataContracts;
-	import EntryType = models.EntryType;
-	import rep = repositories;
-	import resSets = models.ResourceSetNames;
-
 	export class ActivityEntryListViewModel {
 		
 		constructor(private urlMapper: UrlMapper,
-			resourceRepo: rep.ResourceRepository,
+			resourceRepo: ResourceRepository,
 			private languageSelection: string,
 			cultureCode: string,
 			private userId?: number,
-			editEvent?: cls.activityEntries.EntryEditEvent) {
+			editEvent?: EntryEditEvent) {
 			
 			this.editEvent = ko.observable(editEvent);
 			this.editEvent.subscribe(this.clear);
 
 			this.editEventFilter_all = ko.computed({
 				read: () => this.editEvent() == null,
-				write: (val: boolean) => this.editEvent(val ? null : cls.activityEntries.EntryEditEvent.Created)
+				write: (val: boolean) => this.editEvent(val ? null : EntryEditEvent.Created)
 			});
 
-			this.resources = new models.ResourcesManager(resourceRepo, cultureCode);
-			this.resources.loadResources(this.loadMore, resSets.artistTypeNames, resSets.discTypeNames, resSets.songTypeNames,
-				resSets.userGroupNames, resSets.activityEntry.activityFeedEventNames, resSets.album.albumEditableFieldNames, resSets.artist.artistEditableFieldNames,
-				resSets.releaseEvent.releaseEventEditableFieldNames,
-				resSets.song.songEditableFieldNames, resSets.songList.songListEditableFieldNames, resSets.songList.songListFeaturedCategoryNames,
-				resSets.tag.tagEditableFieldNames);
+			this.resources = new ResourcesManager(resourceRepo, cultureCode);
+			this.resources.loadResources(this.loadMore, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
+				ResourceSetNames.userGroupNames, ResourceSetNames.activityEntry.activityFeedEventNames, ResourceSetNames.album.albumEditableFieldNames, ResourceSetNames.artist.artistEditableFieldNames,
+				ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
+				ResourceSetNames.song.songEditableFieldNames, ResourceSetNames.songList.songListEditableFieldNames, ResourceSetNames.songList.songListFeaturedCategoryNames,
+				ResourceSetNames.tag.tagEditableFieldNames);
 
 
 		}
@@ -40,19 +46,19 @@
 			this.loadMore();
 		}
 
-		public entries = ko.observableArray<dc.activityEntry.ActivityEntryContract>([]);
+		public entries = ko.observableArray<ActivityEntryContract>([]);
 
-		public editEvent: KnockoutObservable<cls.activityEntries.EntryEditEvent>;
+		public editEvent: KnockoutObservable<EntryEditEvent>;
 
 		public editEventFilter_all: KnockoutComputed<boolean>;
 
-		public getActivityFeedEventName = (activityEntry: dc.activityEntry.ActivityEntryContract) => {
+		public getActivityFeedEventName = (activityEntry: ActivityEntryContract) => {
 			
 			var activityFeedEventNames = this.resources.resources().activityEntry_activityFeedEventNames;
 
 			if (activityFeedEventNames[activityEntry.editEvent + activityEntry.entry.entryType]) {
 				return activityFeedEventNames[activityEntry.editEvent + activityEntry.entry.entryType];
-			} else if (activityEntry.editEvent === cls.activityEntries.EntryEditEvent[cls.activityEntries.EntryEditEvent.Created]) {
+			} else if (activityEntry.editEvent === EntryEditEvent[EntryEditEvent.Created]) {
 				return activityFeedEventNames["CreatedNew"].replace("{0}", activityFeedEventNames["Entry" + activityEntry.entry.entryType]);
 			} else {
 				return activityFeedEventNames["Updated"].replace("{0}", activityFeedEventNames["Entry" + activityEntry.entry.entryType]);				
@@ -60,7 +66,7 @@
 
 		}
 
-		public getChangedFieldNames = (entry: dc.EntryContract, archivedVersion: dc.versioning.ArchivedVersionContract) => {
+		public getChangedFieldNames = (entry: EntryContract, archivedVersion: ArchivedVersionContract) => {
 			
 			if (archivedVersion == null || archivedVersion.changedFields == null || archivedVersion.changedFields.length === 0)
 				return null;
@@ -102,7 +108,7 @@
 
 		}
 
-		public getEntryTypeName = (entry: dc.EntryContract) => {
+		public getEntryTypeName = (entry: EntryContract) => {
 			
 			var sets = this.resources.resources();
 
@@ -128,8 +134,8 @@
 
 		}
 
-		public getEntryUrl = (entry: dc.EntryContract) => {
-			return utils.EntryUrlMapper.details_entry(entry, entry.urlSlug);
+		public getEntryUrl = (entry: EntryContract) => {
+			return EntryUrlMapper.details_entry(entry, entry.urlSlug);
 		}
 
 		private lastEntryDate: Date;
@@ -143,8 +149,8 @@
 				lang: this.languageSelection,
 				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
 				userId: this.userId,
-				editEvent: this.editEvent() ? cls.activityEntries.EntryEditEvent[this.editEvent()] : null
-			}, (result: dc.PartialFindResultContract<dc.activityEntry.ActivityEntryContract>) => {
+				editEvent: this.editEvent() ? EntryEditEvent[this.editEvent()] : null
+			}, (result: PartialFindResultContract<ActivityEntryContract>) => {
 
 				var entries = result.items;
 
@@ -158,7 +164,7 @@
 
 		}
 
-		public resources: vdb.models.ResourcesManager;
+		public resources: ResourcesManager;
 
 	}
 

@@ -1,28 +1,32 @@
 
-//namespace vdb.viewModels.releaseEvents {
+import EntryType from '../../Models/EntryType';
+import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import TagListViewModel from '../Tag/TagListViewModel';
+import TagsEditViewModel from '../Tag/TagsEditViewModel';
+import UserRepository from '../../Repositories/UserRepository';
 
-	import cls = vdb.models;
+//namespace vdb.viewModels.releaseEvents {
 
 	export class EventSeriesDetailsViewModel {
 
 		constructor(
-			private readonly userRepo: rep.UserRepository,
+			private readonly userRepo: UserRepository,
 			private readonly seriesId: number,
-			tagUsages: dc.tags.TagUsageForApiContract[]
+			tagUsages: TagUsageForApiContract[]
 		) {
 
-			this.tagsEditViewModel = new tags.TagsEditViewModel({
+			this.tagsEditViewModel = new TagsEditViewModel({
 				getTagSelections: callback => userRepo.getEventSeriesTagSelections(this.seriesId, callback),
 				saveTagSelections: tags => userRepo.updateEventSeriesTags(this.seriesId, tags, this.tagUsages.updateTagUsages)
-			}, cls.EntryType.ReleaseEvent /* Event series use event tags for now */);
+			}, EntryType.ReleaseEvent /* Event series use event tags for now */);
 
-			this.tagUsages = new tags.TagListViewModel(tagUsages);
+			this.tagUsages = new TagListViewModel(tagUsages);
 
 		}
 
-		public tagsEditViewModel: tags.TagsEditViewModel;
+		public tagsEditViewModel: TagsEditViewModel;
 
-		public tagUsages: tags.TagListViewModel;
+		public tagUsages: TagListViewModel;
 
 	}
 

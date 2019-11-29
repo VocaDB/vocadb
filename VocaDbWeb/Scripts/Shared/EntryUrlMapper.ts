@@ -10,7 +10,7 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 //module vdb.utils {
 
     // Maps view URLs for common entry types.
-    export class EntryUrlMapper {
+    export default class EntryUrlMapper {
     
         // URL to details view.
         // typeName: entry type name.

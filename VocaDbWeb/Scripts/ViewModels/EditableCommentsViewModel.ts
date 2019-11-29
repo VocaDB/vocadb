@@ -1,20 +1,22 @@
 
+import CommentContract from '../DataContracts/CommentContract';
+import CommentViewModel from './CommentViewModel';
+import ICommentRepository from '../Repositories/ICommentRepository';
+import ServerSidePagingViewModel from './ServerSidePagingViewModel';
+
 //module vdb.viewModels {
 	
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-
 	// Viewmodel for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
-	export class EditableCommentsViewModel {
+	export default class EditableCommentsViewModel {
 
 		constructor(
-			private repo: rep.ICommentRepository,			
+			private repo: ICommentRepository,			
 			private entryId: number,
 			private loggedUserId: number,
 			private canDeleteAllComments: boolean,
 			private canEditAllComments: boolean,
 			private ascending: boolean,
-			commentContracts?: dc.CommentContract[],
+			commentContracts?: CommentContract[],
 			hasMoreComments: boolean = false) {
 			
 			this.comments = ko.observableArray<CommentViewModel>(null);
@@ -39,12 +41,12 @@
 			this.editCommentModel(null);
 		}
 
-		private canDeleteComment = (comment: dc.CommentContract) => {
+		private canDeleteComment = (comment: CommentContract) => {
 			// If one can edit they can also delete
 			return (this.canDeleteAllComments || this.canEditAllComments || (comment.author && comment.author.id === this.loggedUserId));
 		}
 
-		private canEditComment = (comment: dc.CommentContract) => {
+		private canEditComment = (comment: CommentContract) => {
 			return (this.canEditAllComments || (comment.author && comment.author.id === this.loggedUserId));
 		}
 			
@@ -62,7 +64,7 @@
 
 			this.newComment("");
 
-			var commentContract: dc.CommentContract = {
+			var commentContract: CommentContract = {
 				author: { id: this.loggedUserId },
 				message: comment
 			}
@@ -119,7 +121,7 @@
 
 		public pageOfComments: KnockoutComputed<CommentViewModel[]>;
 
-		private processComment = (contract: dc.CommentContract) => {
+		private processComment = (contract: CommentContract) => {
 
 			return new CommentViewModel(contract, this.canDeleteComment(contract), this.canEditComment(contract));
 
@@ -139,7 +141,7 @@
 
 		}
 
-		private setComments = (commentContracts: dc.CommentContract[]) => {
+		private setComments = (commentContracts: CommentContract[]) => {
 			
 			var commentViewModels = _.sortBy(_.map(commentContracts, comment => this.processComment(comment)), comment => comment.created);
 

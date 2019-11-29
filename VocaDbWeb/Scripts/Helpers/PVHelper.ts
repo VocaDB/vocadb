@@ -3,7 +3,7 @@ import PVService from '../Models/PVs/PVService';
 
 //module vdb.helpers {
 
-	export class PVHelper {
+	export default class PVHelper {
 		
 		public static pvServicesArrayFromString = (pvServices: string) => {
 

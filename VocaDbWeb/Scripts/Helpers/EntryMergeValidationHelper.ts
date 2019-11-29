@@ -3,7 +3,7 @@ import EntryStatus from '../Models/EntryStatus';
 
 //module vdb.helpers {
 	
-	export class EntryMergeValidationHelper {
+	export default class EntryMergeValidationHelper {
 
 		private static toEnum(statusStr: string | EntryStatus): EntryStatus {
 		

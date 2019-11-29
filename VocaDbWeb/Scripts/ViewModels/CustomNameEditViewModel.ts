@@ -1,8 +1,8 @@
+import ArtistForAlbumEditViewModel from './ArtistForAlbumEditViewModel';
+
 //namespace vdb.viewModels {
 
-	import dc = vdb.dataContracts;
-
-	export class CustomNameEditViewModel {
+	export default class CustomNameEditViewModel {
 
 		public artistLink = ko.observable<ArtistForAlbumEditViewModel>();
 		public dialogVisible = ko.observable(false);

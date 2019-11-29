@@ -3,7 +3,7 @@ import WebLinkCategory from '../Models/WebLinkCategory';
 
 //module vdb.utils {
 
-    export class WebLinkMatcher {
+    export default class WebLinkMatcher {
         
 		static matchers: WebLinkMatcher[] = [
 			{ url: "www.5sing.com/", desc: "5SING", cat: WebLinkCategory.Official },

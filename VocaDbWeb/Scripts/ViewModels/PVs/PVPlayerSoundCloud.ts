@@ -1,10 +1,11 @@
 /// <reference path="../../typings/soundcloud/soundcloud.d.ts" />
 
+import { IPVPlayer } from './PVPlayerViewModel';
+import PVService from '../../Models/PVs/PVService';
+
 //module vdb.viewModels.pvs {
 
-	import cls = vdb.models;
-
-	export class PVPlayerSoundCloud implements IPVPlayer {
+	export default class PVPlayerSoundCloud implements IPVPlayer {
 
 		constructor(
 			private playerElementId: string,
@@ -89,7 +90,7 @@
 
 		}
 
-		public service = cls.pvs.PVService.SoundCloud;
+		public service = PVService.SoundCloud;
 
 	}
 

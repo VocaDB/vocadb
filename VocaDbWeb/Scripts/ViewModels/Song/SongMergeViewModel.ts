@@ -1,12 +1,15 @@
 
-//module vdb.viewModels.songs {
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
+import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import SongContract from '../../DataContracts/Song/SongContract';
+import SongRepository from '../../Repositories/SongRepository';
 
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+//module vdb.viewModels.songs {
 
 	export class SongMergeViewModel {
 
-		constructor(songRepo: rep.SongRepository, private base: dc.SongContract) {
+		constructor(songRepo: SongRepository, private base: SongContract) {
 
 			this.target = new BasicEntryLinkViewModel(null, songRepo.getOne);
 
@@ -17,7 +20,7 @@
 
 			ko.computed(() => {
 
-				var result = helpers.EntryMergeValidationHelper.validateEntry(this.base, this.target.entry());
+				var result = EntryMergeValidationHelper.validateEntry(this.base, this.target.entry());
 				this.validationError_targetIsLessComplete(result.validationError_targetIsLessComplete);
 				this.validationError_targetIsNewer(result.validationError_targetIsNewer);
 
@@ -31,8 +34,8 @@
 
 		}
 
-		public target: BasicEntryLinkViewModel<dc.SongContract>;
-		public targetSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
+		public target: BasicEntryLinkViewModel<SongContract>;
+		public targetSearchParams: SongAutoCompleteParams;
 
 		public validationError_targetIsLessComplete = ko.observable(false);
 		public validationError_targetIsNewer = ko.observable(false);

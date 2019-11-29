@@ -1,9 +1,9 @@
 
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
+
 //module vdb.viewModels {
 
-	import dc = vdb.dataContracts;
-
-	export class ServerSidePagingViewModel {
+	export default class ServerSidePagingViewModel {
 		
 		constructor(pageSize: number = 10) {
 
@@ -22,7 +22,7 @@
 
 		}
 
-		getItemsCallback: (paging: dc.PagingProperties) => void;
+		getItemsCallback: (paging: PagingProperties) => void;
 
 
 		page = ko.observable(1);

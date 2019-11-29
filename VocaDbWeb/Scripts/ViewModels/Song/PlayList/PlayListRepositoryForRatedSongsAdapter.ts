@@ -1,10 +1,16 @@
 
+import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
+import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
+import { IPlayListRepository } from './PlayListViewModel';
+import { ISongForPlayList } from './PlayListViewModel';
+import PagingProperties from '../../../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
+import RatedSongForUserForApiContract from '../../../DataContracts/User/RatedSongForUserForApiContract';
+import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
+
 //module vdb.viewModels.songs {
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-
-	export class PlayListRepositoryForRatedSongsAdapter implements IPlayListRepository {
+	export default class PlayListRepositoryForRatedSongsAdapter implements IPlayListRepository {
 
 		constructor(private userRepo: rep.UserRepository,
 			private userId: number,
@@ -15,18 +21,18 @@
 			private childVoicebanks: KnockoutObservable<boolean>,
 			private rating: KnockoutObservable<string>,
 			private songListId: KnockoutObservable<number>,
-			private advancedFilters: KnockoutObservableArray<vdb.viewModels.search.AdvancedSearchFilter>,
+			private advancedFilters: KnockoutObservableArray<AdvancedSearchFilter>,
 			private groupByRating: KnockoutObservable<boolean>,
 			private fields: KnockoutObservable<string>) { }
 
 		public getSongs = (
 			pvServices: string,
-			paging: dc.PagingProperties,
-			fields: cls.SongOptionalFields,
-			lang: cls.globalization.ContentLanguagePreference,
-			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void) => {
+			paging: PagingProperties,
+			fields: SongOptionalFields,
+			lang: ContentLanguagePreference,
+			callback: (result: PartialFindResultContract<ISongForPlayList>) => void) => {
 
-			this.userRepo.getRatedSongsList(this.userId, paging, cls.globalization.ContentLanguagePreference[lang],
+			this.userRepo.getRatedSongsList(this.userId, paging, ContentLanguagePreference[lang],
 				this.query(),
 				this.tagIds(),
 				this.artistIds(),
@@ -38,7 +44,7 @@
 				pvServices,
 				"ThumbUrl",
 				this.sort(),
-				(result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => {
+				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
 
 					var mapped = _.map(result.items, (song, idx) => {
 						return {

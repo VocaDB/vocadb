@@ -5,7 +5,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 //module vdb.repositories {
 
-    export class EntryReportRepository {
+    export default class EntryReportRepository {
 
         public getNewReportCount = (callback: (count) => void) => {
             var url = this.urlMapper.mapRelative("/entryReports/newReportsCount");

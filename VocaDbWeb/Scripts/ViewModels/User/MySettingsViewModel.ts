@@ -1,10 +1,13 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" />
 /// <reference path="../WebLinksEditViewModel.ts" />
 
-//namespace vdb.viewModels {
+import ui from '../../Shared/MessagesTyped';
+import UserKnownLanguageContract from '../../DataContracts/User/UserKnownLanguageContract';
+import UserRepository from '../../Repositories/UserRepository';
+import WebLinkContract from '../../DataContracts/WebLinkContract';
+import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+//namespace vdb.viewModels {
 
 	// User my settings view model
 	export class MySettingsViewModel {
@@ -24,9 +27,9 @@
 		webLinksViewModel: WebLinksEditViewModel;
 
 		constructor(
-			private userRepository: rep.UserRepository,
-			aboutMe: string, email: string, emailVerified: boolean, webLinkContracts: dc.WebLinkContract[],
-			knownLanguages: dc.UserKnownLanguageContract[]) {
+			private userRepository: UserRepository,
+			aboutMe: string, email: string, emailVerified: boolean, webLinkContracts: WebLinkContract[],
+			knownLanguages: UserKnownLanguageContract[]) {
 
 			this.aboutMe = ko.observable(aboutMe);
 			this.email = ko.observable(email);
@@ -47,7 +50,7 @@
 
 			this.emailVerificationSent(true);
 			this.userRepository.requestEmailVerification(() => {
-				vdb.ui.showSuccessMessage("Message sent, please check your email");
+				ui.showSuccessMessage("Message sent, please check your email");
 			});
 
 		}
@@ -56,7 +59,7 @@
 
 	export class UserKnownLanguageEditViewModel {
 
-		constructor(contract?: dc.UserKnownLanguageContract) {
+		constructor(contract?: UserKnownLanguageContract) {
 			this.cultureCode = ko.observable(contract != null ? contract.cultureCode : "");
 			this.proficiency = ko.observable(contract != null ? contract.proficiency : "");
 		}

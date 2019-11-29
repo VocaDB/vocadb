@@ -3,9 +3,12 @@
 /// <reference path="../Repositories/EntryReportRepository.ts" />
 /// <reference path="../Repositories/UserRepository.ts" />
 
-//module vdb.viewModels {
+import EntryReportRepository from '../Repositories/EntryReportRepository';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummaryContract';
+import UserRepository from '../Repositories/UserRepository';
 
-    import dc = vdb.dataContracts;
+//module vdb.viewModels {
 
     // View model for the top bar.
     export class TopBarViewModel {
@@ -16,7 +19,7 @@
                 return;
 
             this.userRepository.getMessageSummaries(null, null, { maxEntries: 3, start: 0, getTotalCount: false }, true, null, 40,
-				(messages: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => {
+				(messages: PartialFindResultContract<UserMessageSummaryContract>) => {
 
                 this.unreadMessages(messages.items);
                 this.isLoaded(true);
@@ -37,7 +40,7 @@
 
         public entryTypeName: KnockoutComputed<string>;
 
-        public unreadMessages = ko.observableArray<dc.UserMessageSummaryContract>();
+        public unreadMessages = ko.observableArray<UserMessageSummaryContract>();
 
         public unreadMessagesCount: KnockoutObservable<number>;
 
@@ -49,7 +52,7 @@
         // entryReportRepository: entry reports repository.
         // userRepository: user repository.
         constructor(entryTypeTranslations, entryType: string, searchTerm: string, unreadMessagesCount: number,
-            getNewReportsCount: boolean, entryReportRepository: vdb.repositories.EntryReportRepository, private userRepository: vdb.repositories.UserRepository) {
+            getNewReportsCount: boolean, entryReportRepository: EntryReportRepository, private userRepository: UserRepository) {
             
             this.entryType = ko.observable(entryType);
             this.searchTerm = ko.observable(searchTerm);

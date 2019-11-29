@@ -1,6 +1,8 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
+import ui from '../../Shared/MessagesTyped';
+
 //module vdb.viewModels {
 
     export class ManageIPRulesViewModel {

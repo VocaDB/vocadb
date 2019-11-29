@@ -1,11 +1,12 @@
 
+import AlbumDiscPropertiesContract from '../../DataContracts/Album/AlbumDiscPropertiesContract';
+import BasicListEditViewModel from '../BasicListEditViewModel';
+
 //module vdb.viewModels.albums {
 	
-	import dc = vdb.dataContracts;
-
 	export class AlbumDiscPropertiesEditViewModel {
 		
-		constructor(contract: dc.albums.AlbumDiscPropertiesContract) {
+		constructor(contract: AlbumDiscPropertiesContract) {
 
 			if (contract) {
 				this.id = contract.id;
@@ -26,9 +27,9 @@
 
 	}
 
-	export class AlbumDiscPropertiesListEditViewModel extends BasicListEditViewModel<AlbumDiscPropertiesEditViewModel, dc.albums.AlbumDiscPropertiesContract> {
+	export class AlbumDiscPropertiesListEditViewModel extends BasicListEditViewModel<AlbumDiscPropertiesEditViewModel, AlbumDiscPropertiesContract> {
 		
-		constructor(contracts: dc.albums.AlbumDiscPropertiesContract[]) {
+		constructor(contracts: AlbumDiscPropertiesContract[]) {
 			super(AlbumDiscPropertiesEditViewModel, contracts);
 		}
 

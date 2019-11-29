@@ -1,7 +1,8 @@
 
-//module vdb.viewModels {
+import ReportEntryViewModel from './ReportEntryViewModel';
+import ui from '../Shared/MessagesTyped';
 
-	import rep = repositories;
+//module vdb.viewModels {
 
 	export class ArchivedEntryViewModel {
 		
@@ -11,7 +12,7 @@
 
 				repository.createReport(entryId, reportType, notes, versionNumber);
 
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 
 			}, { notesRequired: true, id: 'Other', name: null });
 

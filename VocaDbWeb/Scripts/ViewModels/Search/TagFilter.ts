@@ -1,9 +1,11 @@
 
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+
 //module vdb.viewModels.search {
 
-	export class TagFilter {
+	export default class TagFilter {
 
-		public static fromContract = (tag: dc.TagBaseContract) => {
+		public static fromContract = (tag: TagBaseContract) => {
 			return new TagFilter(tag.id, tag.name, tag.urlSlug);
 		}
 

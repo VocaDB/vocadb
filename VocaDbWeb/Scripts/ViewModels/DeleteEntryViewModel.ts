@@ -1,7 +1,7 @@
 
 //module vdb.viewModels {
 	
-	export class DeleteEntryViewModel {
+	export default class DeleteEntryViewModel {
 		
 		constructor(private deleteCallback: (notes: string) => void) {}
 

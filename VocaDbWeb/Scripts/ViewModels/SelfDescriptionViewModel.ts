@@ -1,12 +1,16 @@
 
+import ArtistApiContract from '../DataContracts/Artist/ArtistApiContract';
+import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
+
 //namespace vdb.viewModels {
 
-	export class SelfDescriptionViewModel {
+	export default class SelfDescriptionViewModel {
 
-		constructor(author: dc.ArtistApiContract, text: string, artistRepo: rep.ArtistRepository, private getArtists: (callback: (result: dc.ArtistContract[]) => void) => void,
+		constructor(author: ArtistApiContract, text: string, artistRepo: rep.ArtistRepository, private getArtists: (callback: (result: ArtistContract[]) => void) => void,
 			private saveFunc: ((vm: SelfDescriptionViewModel) => void)) {
 			
-			this.author = new BasicEntryLinkViewModel<dc.ArtistApiContract>(author, (artistId, callback) => {
+			this.author = new BasicEntryLinkViewModel<ArtistApiContract>(author, (artistId, callback) => {
 				artistRepo.getOneWithComponents(artistId, 'MainPicture', artist => {
 					callback(artist);
 				});
@@ -15,9 +19,9 @@
 
 		}
 
-		public artists = ko.observableArray<dc.ArtistContract>();
+		public artists = ko.observableArray<ArtistContract>();
 
-		public author: BasicEntryLinkViewModel<dc.ArtistApiContract>;
+		public author: BasicEntryLinkViewModel<ArtistApiContract>;
 
 		public beginEdit = () => {
 

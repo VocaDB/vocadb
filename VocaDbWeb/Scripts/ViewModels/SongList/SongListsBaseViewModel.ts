@@ -1,12 +1,17 @@
 
+import PagedItemsViewModel from '../PagedItemsViewModel';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import ResourcesContract from '../../DataContracts/ResourcesContract';
+import SongListContract from '../../DataContracts/Song/SongListContract';
+import TagFilters from '../Search/TagFilters';
+import TagRepository from '../../Repositories/TagRepository';
+
 //module vdb.viewModels.songList {
 
-	import dc = vdb.dataContracts;
+	export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
 
-	export class SongListsBaseViewModel extends PagedItemsViewModel<dc.SongListContract> {
-
-		constructor(resourceRepo: rep.ResourceRepository,
-			tagRepo: rep.TagRepository,
+		constructor(resourceRepo: ResourceRepository,
+			tagRepo: TagRepository,
 			languageSelection: string,
 			cultureCode: string,
 			tagIds: number[],
@@ -17,7 +22,7 @@
 			if (!this.showEventDateSort)
 				this.sort(SongListSortRule[SongListSortRule.Name]);
 
-			this.tagFilters = new viewModels.search.TagFilters(tagRepo, languageSelection);
+			this.tagFilters = new TagFilters(tagRepo, languageSelection);
 
 			if (tagIds)
 				this.tagFilters.addTags(tagIds);
@@ -33,7 +38,7 @@
 
 		}
 
-		public isFirstForYear = (current: dc.SongListContract, index: number) => {
+		public isFirstForYear = (current: SongListContract, index: number) => {
 
 			if (this.sort() !== SongListSortRule[SongListSortRule.Date])
 				return false;
@@ -57,10 +62,10 @@
 		}
 
 		public query = ko.observable("");
-		public resources = ko.observable<dc.ResourcesContract>();
+		public resources = ko.observable<ResourcesContract>();
 		public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
 		public sortName = ko.computed(() => this.resources() != null ? this.resources().songListSortRuleNames[this.sort()] : "");
-		public tagFilters: viewModels.search.TagFilters;
+		public tagFilters: TagFilters;
 
 	}
 

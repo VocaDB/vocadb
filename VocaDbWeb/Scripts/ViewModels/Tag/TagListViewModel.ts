@@ -1,13 +1,14 @@
 
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+
 //module vdb.viewModels.tags {
 	
-	import dc = dataContracts;
-
-	export class TagListViewModel {
+	export default class TagListViewModel {
 		
 		private static maxDisplayedTags = 4;
 
-		constructor(tagUsages: dc.tags.TagUsageForApiContract[]) {
+		constructor(tagUsages: TagUsageForApiContract[]) {
 			
 			this.tagUsages = ko.observableArray([]);
 			this.updateTagUsages(tagUsages);
@@ -21,17 +22,17 @@
 
 		}
 
-		public displayedTagUsages: KnockoutComputed<dc.tags.TagUsageForApiContract[]>;
+		public displayedTagUsages: KnockoutComputed<TagUsageForApiContract[]>;
 
-		public getTagUrl = (tag: dc.tags.TagUsageForApiContract) => {
-			return utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
+		public getTagUrl = (tag: TagUsageForApiContract) => {
+			return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 		}
 
 		public expanded = ko.observable(false);
 
-		public tagUsages: KnockoutObservableArray<dc.tags.TagUsageForApiContract>;
+		public tagUsages: KnockoutObservableArray<TagUsageForApiContract>;
 
-		public updateTagUsages = (usages: dc.tags.TagUsageForApiContract[]) => {
+		public updateTagUsages = (usages: TagUsageForApiContract[]) => {
 			this.tagUsages(_.chain(usages).sortBy(u => u.tag.name.toLowerCase()).sortBy(u => -u.count).value());
 		}
 

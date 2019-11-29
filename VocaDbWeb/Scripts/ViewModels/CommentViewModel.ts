@@ -1,11 +1,12 @@
 
+import CommentContract from '../DataContracts/CommentContract';
+import UserApiContract from '../DataContracts/User/UserApiContract';
+
 //module vdb.viewModels {
 	
-	import dc = dataContracts;
-
-	export class CommentViewModel {
+	export default class CommentViewModel {
 		
-		constructor(contract: dc.CommentContract, public canBeDeleted: boolean, public canBeEdited: boolean) {
+		constructor(contract: CommentContract, public canBeDeleted: boolean, public canBeEdited: boolean) {
 
 			this.author = contract.author;
 			this.authorName = contract.authorName;
@@ -17,7 +18,7 @@
 			
 		}
 
-		public author: dc.user.UserApiContract;
+		public author: UserApiContract;
 
 		public authorName: string;
 
@@ -37,7 +38,7 @@
 			this.message(this.editedMessage());
 		}
 
-		public toContract: () => dc.CommentContract = () => {
+		public toContract: () => CommentContract = () => {
 			return { id: this.id, message: this.message(), author: this.author };
 		}
 

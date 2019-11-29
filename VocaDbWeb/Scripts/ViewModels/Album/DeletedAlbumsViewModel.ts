@@ -1,11 +1,13 @@
 
-//module vdb.viewModels {
+import AlbumContract from '../../DataContracts/Album/AlbumContract';
+import AlbumRepository from '../../Repositories/AlbumRepository';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
-	import dc = vdb.dataContracts;
+//module vdb.viewModels {
 
 	export class DeletedAlbumsViewModel {
 
-		constructor(private albumRepo: repositories.AlbumRepository) {
+		constructor(private albumRepo: AlbumRepository) {
 			this.updateResults(true);
 			this.paging.page.subscribe(() => this.updateResults(false));
 			this.paging.pageSize.subscribe(() => this.updateResults(true));
@@ -14,7 +16,7 @@
 
 		public discTypeName = (discType: string) => discType;
 		public loading = ko.observable(false);
-		public page = ko.observableArray<dc.AlbumContract>([]); // Current page of items
+		public page = ko.observableArray<AlbumContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public ratingStars = () => [];
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });

@@ -4,12 +4,33 @@
 /// <reference path="../../Repositories/UserRepository.ts" />
 /// <reference path="../PVRatingButtonsViewModel.ts" />
 
-//module vdb.viewModels {
+import ArtistApiContract from '../../DataContracts/Artist/ArtistApiContract';
+import ArtistHelper from '../../Helpers/ArtistHelper';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import CommentContract from '../../DataContracts/CommentContract';
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
+import EntryType from '../../Models/EntryType';
+import { IEntryReportType } from '../ReportEntryViewModel';
+import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';
+import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
+import RatedSongForUserForApiContract from '../../DataContracts/User/RatedSongForUserForApiContract';
+import ReportEntryViewModel from '../ReportEntryViewModel';
+import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
+import SongApiContract from '../../DataContracts/Song/SongApiContract';
+import SongListBaseContract from '../../DataContracts/SongListBaseContract';
+import SongVoteRating from '../../Models/SongVoteRating';
+import SongRepository from '../../Repositories/SongRepository';
+import SongType from '../../Models/Songs/SongType';
+import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import TagListViewModel from '../Tag/TagListViewModel';
+import TagsEditViewModel from '../Tag/TagsEditViewModel';
+import ui from '../../Shared/MessagesTyped';
+import UserApiContract from '../../DataContracts/User/UserApiContract';
+import UserRepository from '../../Repositories/UserRepository';
 
-	import cls = models;
-    import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-	import SongType = cls.songs.SongType;
+//module vdb.viewModels {
 
     // View model for the song details view.
     export class SongDetailsViewModel {
@@ -47,7 +68,7 @@
 
 			const {siteUrl, id} = match;
 
-			const repo = new rep.SongRepository(siteUrl, this.languagePreference);
+			const repo = new SongRepository(siteUrl, this.languagePreference);
 			// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 			repo.getOneWithComponents(id, 'Nothing', null, song => {
 				if (song.songType === SongType[SongType.Original])
@@ -74,7 +95,7 @@
 
 		public reportViewModel: ReportEntryViewModel;
 
-		public selectedLyrics = ko.observable<dc.songs.LyricsForSongContract>();
+		public selectedLyrics = ko.observable<LyricsForSongContract>();
 
 		public selectedLyricsId: KnockoutObservable<number>;
 
@@ -84,30 +105,30 @@
 
         public showAllVersions: () => void;
 
-		public description: globalization.EnglishTranslatedStringViewModel;
+		public description: EnglishTranslatedStringViewModel;
 
         public songInListsDialog: SongInListsViewModel;
 
         public songListDialog: SongListsViewModel;
 
-		public tagsEditViewModel: tags.TagsEditViewModel;
+		public tagsEditViewModel: TagsEditViewModel;
 
-		public tagUsages: tags.TagListViewModel;
+		public tagUsages: TagListViewModel;
 
         public ratingsDialogViewModel = new RatingsViewModel();
 
         public userRating: PVRatingButtonsViewModel;
 
         constructor(
-            private repository: rep.SongRepository,
-			userRepository: rep.UserRepository,
-			artistRepository: rep.ArtistRepository,
+            private repository: SongRepository,
+			userRepository: UserRepository,
+			artistRepository: ArtistRepository,
             resources: SongDetailsResources,
 			showTranslatedDescription: boolean,
 			data: SongDetailsAjax,
 			reportTypes: IEntryReportType[],
 			loggedUserId: number,
-			private languagePreference: models.globalization.ContentLanguagePreference,
+			private languagePreference: ContentLanguagePreference,
 			canDeleteAllComments: boolean,
             ratingCallback: () => void) {
             
@@ -131,14 +152,14 @@
 
 				repository.createReport(this.id, reportType, notes, null);
 
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 
 			});
 
 			this.personalDescription = new SelfDescriptionViewModel(data.personalDescriptionAuthor, data.personalDescriptionText, artistRepository, callback => {
-				repository.getOneWithComponents(this.id, 'Artists', cls.globalization.ContentLanguagePreference[this.languagePreference], result => {
+				repository.getOneWithComponents(this.id, 'Artists', ContentLanguagePreference[this.languagePreference], result => {
 					var artists = _.chain(result.artists)
-						.filter(helpers.ArtistHelper.isValidForPersonalDescription)
+						.filter(ArtistHelper.isValidForPersonalDescription)
 						.map(a => a.artist).value();
 					callback(artists);
 				});
@@ -152,14 +173,14 @@
             this.songListDialog = new SongListsViewModel(repository, resources, this.id);
 			this.selectedLyricsId = ko.observable(data.selectedLyricsId);
 			this.selectedPvId = ko.observable(data.selectedPvId);
-			this.description = new globalization.EnglishTranslatedStringViewModel(showTranslatedDescription);
+			this.description = new EnglishTranslatedStringViewModel(showTranslatedDescription);
 
-			this.tagsEditViewModel = new tags.TagsEditViewModel({
+			this.tagsEditViewModel = new TagsEditViewModel({
 				getTagSelections: callback => userRepository.getSongTagSelections(this.id, callback),
 				saveTagSelections: tags => userRepository.updateSongTags(this.id, tags, this.tagUsages.updateTagUsages)
-			}, cls.EntryType.Song, callback => repository.getTagSuggestions(this.id, callback));
+			}, EntryType.Song, callback => repository.getTagSuggestions(this.id, callback));
 
-			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
+			this.tagUsages = new TagListViewModel(data.tagUsages);
 
 			if (data.songType !== SongType[SongType.Original] && this.originalVersion().entry == null) {
 				this.getOriginal(data.linkedPages);
@@ -182,7 +203,7 @@
 
         public show: () => void;
 
-        constructor(repository: rep.SongRepository, songId: number) {
+        constructor(repository: SongRepository, songId: number) {
             
             this.show = () => {
 
@@ -209,13 +230,13 @@
 
         public dialogVisible = ko.observable(false);
 
-		private featuredLists = ko.observableArray<dc.SongListBaseContract>();
+		private featuredLists = ko.observableArray<SongListBaseContract>();
 
         public newListName = ko.observable("");
 
 		public notes = ko.observable("");
 
-		private personalLists = ko.observableArray<dc.SongListBaseContract>()
+		private personalLists = ko.observableArray<SongListBaseContract>()
 
         public selectedListId: KnockoutObservable<number> = ko.observable(null);
 
@@ -225,7 +246,7 @@
 
 		public songLists = ko.computed(() => this.tabName() === SongListsViewModel.tabName_Personal ? this.personalLists() : this.featuredLists());
 
-        constructor(repository: rep.SongRepository, resources: SongDetailsResources, songId: number) {
+        constructor(repository: SongRepository, resources: SongDetailsResources, songId: number) {
             
             var isValid = () => {
                 return (this.selectedListId() != null || this.newListName().length > 0);
@@ -277,8 +298,8 @@
 
 		constructor() {
 
-			const fav = cls.SongVoteRating[cls.SongVoteRating.Favorite];
-			const like = cls.SongVoteRating[cls.SongVoteRating.Like];
+			const fav = SongVoteRating[SongVoteRating.Favorite];
+			const like = SongVoteRating[SongVoteRating.Like];
 
 			this.favorites = ko.computed(() => _
 				.chain(this.ratings())
@@ -319,19 +340,19 @@
 
 		}
 
-		public readonly favorites: KnockoutComputed<dc.user.UserApiContract[]>;
+		public readonly favorites: KnockoutComputed<UserApiContract[]>;
 
 		public readonly favoritesCount: KnockoutComputed<number>;
 
 		public readonly hiddenRatingsCount: KnockoutComputed<number>;
 
-		public readonly likes: KnockoutComputed<dc.user.UserApiContract[]>;
+		public readonly likes: KnockoutComputed<UserApiContract[]>;
 
 		public readonly likesCount: KnockoutComputed<number>;
 
 		public readonly popupVisible = ko.observable(false);
 
-		public readonly ratings = ko.observableArray<dc.RatedSongForUserForApiContract>();
+		public readonly ratings = ko.observableArray<RatedSongForUserForApiContract>();
 
 		public readonly showFavorites: KnockoutComputed<boolean>;
 
@@ -343,11 +364,11 @@
         
         id: number;
 
-		latestComments: dc.CommentContract[];
+		latestComments: CommentContract[];
 
 		linkedPages?: string[];
 
-		originalVersion?: dc.SongApiContract;
+		originalVersion?: SongApiContract;
 
 		selectedLyricsId: number;
 
@@ -355,11 +376,11 @@
 
 		personalDescriptionText?: string;
 
-		personalDescriptionAuthor?: dc.ArtistApiContract;
+		personalDescriptionAuthor?: ArtistApiContract;
 
 		songType: string;
 
-		tagUsages: dc.tags.TagUsageForApiContract[];
+		tagUsages: TagUsageForApiContract[];
 
         userRating: string;
 
@@ -375,7 +396,7 @@
 
 	export interface SongLinkWithUrl {
 		
-		entry: dc.SongApiContract;
+		entry: SongApiContract;
 
 		url?: string;
 
