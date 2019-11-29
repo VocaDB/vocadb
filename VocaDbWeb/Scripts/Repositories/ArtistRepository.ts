@@ -2,16 +2,28 @@
 /// <reference path="../Shared/GlobalFunctions.ts" />
 /// <reference path="../DataContracts/DuplicateEntryResultContract.ts" />
 
-//module vdb.repositories {
+import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
+import ArtistApiContract from '../DataContracts/Artist/ArtistApiContract';
+import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import ArtistForEditContract from '../DataContracts/Artist/ArtistForEditContract';
+import BaseRepository from './BaseRepository';
+import CommentContract from '../DataContracts/CommentContract';
+import { CommonQueryParams } from './BaseRepository';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
+import ICommentRepository from './ICommentRepository';
+import { mergeUrls } from '../Shared/GlobalFunctions';
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
+import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
+import UrlMapper from '../Shared/UrlMapper';
 
-	import cls = vdb.models;
-    import dc = vdb.dataContracts;
+//module vdb.repositories {
 
     // Repository for managing artists and related objects.
     // Corresponds to the ArtistController class.
-    export class ArtistRepository extends BaseRepository implements ICommentRepository {
+    export default class ArtistRepository extends BaseRepository implements ICommentRepository {
 
-		public createComment = (artistId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+		public createComment = (artistId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/artists/" + artistId + "/comments"), contract, callback, 'json');
 
@@ -30,45 +42,45 @@
 
 		}
 
-        public findDuplicate: (params, callback: (result: dc.DuplicateEntryResultContract[]) => void ) => void;
+        public findDuplicate: (params, callback: (result: DuplicateEntryResultContract[]) => void ) => void;
 
-		public getComments = (artistId: number, callback: (contract: dc.CommentContract[]) => void) => {
+		public getComments = (artistId: number, callback: (contract: CommentContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/artists/" + artistId + "/comments"), callback);
 
 		}
 
-		public getForEdit = (id: number, callback: (result: dc.artists.ArtistForEditContract) => void) => {
+		public getForEdit = (id: number, callback: (result: ArtistForEditContract) => void) => {
 	
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists/" + id + "/for-edit");
+			var url = mergeUrls(this.baseUrl, "/api/artists/" + id + "/for-edit");
 			$.getJSON(url, callback);
 					
 		}
 
-		public getOne = (id: number, callback: (result: dc.ArtistContract) => void) => {
+		public getOne = (id: number, callback: (result: ArtistContract) => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists/" + id);
+			var url = mergeUrls(this.baseUrl, "/api/artists/" + id);
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);
 
 		};
 
-		public getOneWithComponents = (id: number, fields: string, callback: (result: dc.ArtistApiContract) => void) => {
+		public getOneWithComponents = (id: number, fields: string, callback: (result: ArtistApiContract) => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists/" + id);
+			var url = mergeUrls(this.baseUrl, "/api/artists/" + id);
 			$.getJSON(url, { fields: fields, lang: this.languagePreferenceStr }, callback);
 
 		};
 
-		public getList = (paging: dc.PagingProperties, lang: string, query: string, sort: string,
+		public getList = (paging: PagingProperties, lang: string, query: string, sort: string,
 			artistTypes: string,
 			allowBaseVoicebanks: boolean,
 			tags: number[],
 			childTags: boolean,
 			followedByUserId: number, fields: string, status: string,
-			advancedFilters: viewModels.search.AdvancedSearchFilter[],
+			advancedFilters: AdvancedSearchFilter[],
 			callback) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists");
+			var url = mergeUrls(this.baseUrl, "/api/artists");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
@@ -85,7 +97,7 @@
 
 		}
 
-		public getTagSuggestions = (artistId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
+		public getTagSuggestions = (artistId: number, callback: (contract: TagUsageForApiContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/artists/" + artistId + "/tagSuggestions"), callback);
 
@@ -96,23 +108,23 @@
 
 		private urlMapper: UrlMapper;
 
-		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
+		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/artists/comments/" + commentId), contract, callback, 'json');
 
 		}
 
-        constructor(baseUrl: string, lang?: cls.globalization.ContentLanguagePreference) {
+        constructor(baseUrl: string, lang?: ContentLanguagePreference) {
 
 			super(baseUrl, lang);
 
 			this.urlMapper = new UrlMapper(baseUrl);
 
             this.mapUrl = (relative: string) => {
-                return vdb.functions.mergeUrls(baseUrl, "/Artist") + relative;
+                return mergeUrls(baseUrl, "/Artist") + relative;
             };
 
-            this.findDuplicate = (params, callback: (result: dc.DuplicateEntryResultContract[]) => void ) => {
+            this.findDuplicate = (params, callback: (result: DuplicateEntryResultContract[]) => void ) => {
 
                 $.post(this.mapUrl("/FindDuplicate"), params, callback);
 

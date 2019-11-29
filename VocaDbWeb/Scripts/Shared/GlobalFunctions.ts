@@ -1,6 +1,7 @@
 /// <reference path="GlobalValues.ts" />
 
-import { baseAddress, hostAddress } from './GlobalValues';
+import { baseAddress } from './GlobalValues';
+import { hostAddress } from './GlobalValues';
 
 //module vdb.functions {
 

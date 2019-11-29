@@ -11,7 +11,7 @@ import WebLinkContract from '../WebLinkContract';
 
 //module vdb.dataContracts.albums {
 	
-	export interface AlbumForEditContract {
+	export default interface AlbumForEditContract {
 
 		artistLinks: ArtistForAlbumContract[];
 

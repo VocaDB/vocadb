@@ -4,7 +4,7 @@ import UserApiContract from './UserApiContract';
 
 //namespace vdb.dataContracts {
 	
-	export interface RatedSongForUserForApiContract {
+	export default interface RatedSongForUserForApiContract {
 
 		rating: string;
 

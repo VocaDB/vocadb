@@ -1,7 +1,7 @@
 
 //module vdb.helpers {
 	
-	export class AjaxHelper {
+	export default class AjaxHelper {
 		
 		public static createUrl = (params: { [key: string]: string[] | number[]; }) => {
 			

@@ -1,9 +1,20 @@
 
+import AjaxHelper from '../Helpers/AjaxHelper';
+import BaseRepository from './BaseRepository';
+import { CommonQueryParams } from './BaseRepository';
+import EntryCommentRepository from './EntryCommentRepository';
+import { mergeUrls } from '../Shared/GlobalFunctions';
+import NameMatchMode from '../Models/NameMatchMode';
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import TagApiContract from '../DataContracts/Tag/TagApiContract';
+import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
+import TagMappingContract from '../DataContracts/Tag/TagMappingContract';
+import UrlMapper from '../Shared/UrlMapper';
+
 //module vdb.repositories {
 
-	import dc = vdb.dataContracts;
-
-	export class TagRepository extends BaseRepository {
+	export default class TagRepository extends BaseRepository {
 
 		private readonly urlMapper: UrlMapper;
 
@@ -12,36 +23,36 @@
 			this.urlMapper = new UrlMapper(baseUrl);
 		}
 
-		public create = (name: string, callback?: (result: dc.TagBaseContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags?name=" + name);
+		public create = (name: string, callback?: (result: TagBaseContract) => void) => {
+			var url = mergeUrls(this.baseUrl, "/api/tags?name=" + name);
 			$.post(url, callback);
 		}
 
 		public createReport = (tagId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + helpers.AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
+			var url = mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
 			$.post(url, callback);
 
 		}
 
-		public getById = (id: number, fields: string, lang: string, callback?: (result: dc.TagApiContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
+		public getById = (id: number, fields: string, lang: string, callback?: (result: TagApiContract) => void) => {
+			var url = mergeUrls(this.baseUrl, "/api/tags/" + id);
 			$.getJSON(url, { fields: fields || undefined, lang: lang }, callback);
 		}
 
 		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
 
 		public getList = (queryParams: TagQueryParams,
-			callback?: (result: dc.PartialFindResultContract<dc.TagApiContract>) => void) => {
+			callback?: (result: PartialFindResultContract<TagApiContract>) => void) => {
 
-			var nameMatchMode = queryParams.nameMatchMode || models.NameMatchMode.Auto;
+			var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags");
+			var url = mergeUrls(this.baseUrl, "/api/tags");
 			var data = {
 				start: queryParams.start, getTotalCount: queryParams.getTotalCount, maxResults: queryParams.maxResults,
 				query: queryParams.query,
 				fields: queryParams.fields || undefined,
-				nameMatchMode: models.NameMatchMode[nameMatchMode],
+				nameMatchMode: NameMatchMode[nameMatchMode],
 				allowAliases: queryParams.allowAliases,
 				categoryName: queryParams.categoryName,
 				lang: queryParams.lang,
@@ -52,22 +63,22 @@
 
 		}
 
-		public getMappings = (paging: dc.PagingProperties): Promise<dc.PartialFindResultContract<dc.tags.TagMappingContract>> => {
+		public getMappings = (paging: PagingProperties): Promise<PartialFindResultContract<TagMappingContract>> => {
 			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/mappings"), paging);
 		}
 
-		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: dc.TagBaseContract[]) => void) => {
+		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: TagBaseContract[]) => void) => {
 			
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/top");
+			var url = mergeUrls(this.baseUrl, "/api/tags/top");
 			var data = { lang: lang, categoryName: categoryName };
 
 			$.getJSON(url, data, callback);
 
 		}
 
-		public saveMappings = (mappings: dc.tags.TagMappingContract[]): Promise<any> => {
+		public saveMappings = (mappings: TagMappingContract[]): Promise<any> => {
 			var url = this.urlMapper.mapRelative("/api/tags/mappings");
-			return Promise.resolve(helpers.AjaxHelper.putJSON(url, mappings));
+			return Promise.resolve(AjaxHelper.putJSON(url, mappings));
 		}
 
 	}

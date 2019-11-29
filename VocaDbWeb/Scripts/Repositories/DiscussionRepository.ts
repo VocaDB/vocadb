@@ -1,23 +1,29 @@
 
+import CommentContract from '../DataContracts/CommentContract';
+import DiscussionFolderContract from '../DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '../DataContracts/Discussion/DiscussionTopicContract';
+import ICommentRepository from './ICommentRepository';
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import UrlMapper from '../Shared/UrlMapper';
+
 //module vdb.repositories {
 	
-	import dc = vdb.dataContracts;
-
-	export class DiscussionRepository implements ICommentRepository {
+	export default class DiscussionRepository implements ICommentRepository {
 		
-		constructor(private urlMapper: vdb.UrlMapper) { }
+		constructor(private urlMapper: UrlMapper) { }
 
 		private mapUrl = (relative: string) => {
 			return this.urlMapper.mapRelative(UrlMapper.mergeUrls("/api/discussions", relative));
 		}
 
-		public createComment = (topicId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+		public createComment = (topicId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
 			$.post(this.mapUrl("topics/" + topicId + "/comments"), contract, callback, 'json');
 
 		}
 
-		public createTopic = (folderId: number, contract: dc.discussions.DiscussionTopicContract, callback: (contract: dc.discussions.DiscussionTopicContract) => void) => {
+		public createTopic = (folderId: number, contract: DiscussionTopicContract, callback: (contract: DiscussionTopicContract) => void) => {
 
 			$.post(this.mapUrl("folders/" + folderId + "/topics"), contract, callback, 'json');
 
@@ -35,31 +41,31 @@
 
 		}
 
-		public getComments = (topicId: number, callback: (contract: dc.CommentContract[]) => void) => {
+		public getComments = (topicId: number, callback: (contract: CommentContract[]) => void) => {
 
 			// Not supported
 
 		}
 
-		public getFolders = (callback: (folders: dc.discussions.DiscussionFolderContract[]) => void) => {
+		public getFolders = (callback: (folders: DiscussionFolderContract[]) => void) => {
 			
 			$.getJSON(this.mapUrl("folders"), { fields: 'LastTopic,TopicCount' }, callback);
 
 		}
 
-		public getTopic = (topicId: number, callback: (topics: dc.discussions.DiscussionTopicContract) => void) => {
+		public getTopic = (topicId: number, callback: (topics: DiscussionTopicContract) => void) => {
 
 			$.getJSON(this.mapUrl("topics/" + topicId), { fields: 'All' }, callback);
 
 		}
 
-		public getTopics = (callback: (result: dc.PartialFindResultContract<dc.discussions.DiscussionTopicContract>) => void) => {
+		public getTopics = (callback: (result: PartialFindResultContract<DiscussionTopicContract>) => void) => {
 		
 			$.getJSON(this.mapUrl("topics"), { fields: 'CommentCount', maxResults: 5 }, callback);
 				
 		}
 
-		public getTopicsForFolder = (folderId: number, paging: dc.PagingProperties, callback: (topics: dc.PartialFindResultContract<dc.discussions.DiscussionTopicContract>) => void) => {
+		public getTopicsForFolder = (folderId: number, paging: PagingProperties, callback: (topics: PartialFindResultContract<DiscussionTopicContract>) => void) => {
 
 			$.getJSON(this.mapUrl("topics"), {
 				folderId: folderId,
@@ -69,13 +75,13 @@
 
 		}
 
-		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
+		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
 			$.post(this.mapUrl("comments/" + commentId), contract, callback, 'json');
 
 		}
 
-		public updateTopic = (topicId: number, contract: dc.discussions.DiscussionTopicContract, callback?: () => void) => {
+		public updateTopic = (topicId: number, contract: DiscussionTopicContract, callback?: () => void) => {
 
 			$.post(this.mapUrl("topics/" + topicId), contract, callback, 'json');
 

@@ -3,7 +3,7 @@ import UserApiContract from './UserApiContract';
 
 //module vdb.dataContracts {
 
-    export interface UserMessageSummaryContract {
+    export default interface UserMessageSummaryContract {
 
 		/* 
 			Message body, optional field. 

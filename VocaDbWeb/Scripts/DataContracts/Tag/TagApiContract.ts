@@ -7,7 +7,7 @@ import TagBaseContract from './TagBaseContract';
 
 //module vdb.dataContracts {
 
-	export interface TagApiContract {
+	export default interface TagApiContract {
 
 		additionalNames?: string;
 

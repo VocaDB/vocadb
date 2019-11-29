@@ -2,14 +2,31 @@
 /// <reference path="../DataContracts/User/UserMessageSummaryContract.ts" />
 /// <reference path="../Models/SongVoteRating.ts" />
 
-//module vdb.repositories {
+import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
+import AjaxHelper from '../Helpers/AjaxHelper';
+import CommentContract from '../DataContracts/CommentContract';
+import EntryType from '../Models/EntryType';
+import ICommentRepository from './ICommentRepository';
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import RatedSongForUserForApiContract from '../DataContracts/User/RatedSongForUserForApiContract';
+import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventContract';
+import SongListContract from '../DataContracts/Song/SongListContract';
+import SongVoteRating from '../Models/SongVoteRating';
+import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
+import TagSelectionContract from '../DataContracts/Tag/TagSelectionContract';
+import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
+import { Tuple2 } from '../Helpers/HighchartsHelper';
+import UrlMapper from '../Shared/UrlMapper';
+import UserApiContract from '../DataContracts/User/UserApiContract';
+import UserEventRelationshipType from '../Models/Users/UserEventRelationshipType';
+import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummaryContract';
 
-    import cls = vdb.models;
-    import dc = vdb.dataContracts;
+//module vdb.repositories {
 
     // Repository for managing users and related objects.
     // Corresponds to the UserController class.
-	export class UserRepository implements ICommentRepository {
+	export default class UserRepository implements ICommentRepository {
 
 		public addFollowedTag = (tagId: number, callback?: () => void) => {
 			$.post(this.urlMapper.mapRelative("/api/users/current/followedTags/" + tagId), callback);
@@ -21,13 +38,13 @@
 
 		};
 
-		public createComment = (userId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+		public createComment = (userId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/users/" + userId + "/profileComments"), contract, callback, 'json');
 
 		}
 
-		public createMessage = (userId: number, contract: dc.user.UserApiContract, callback: (result: dc.UserMessageSummaryContract) => void) => {
+		public createMessage = (userId: number, contract: UserApiContract, callback: (result: UserMessageSummaryContract) => void) => {
 
 			return $.post(this.urlMapper.mapRelative("/api/users/" + userId + "/messages"), contract, callback, 'json');
 			
@@ -66,19 +83,19 @@
 		public deleteMessages = (userId: number, messageIds: number[]) => {
 			
             var url = this.urlMapper.mapRelative("/api/users/" + userId + "/messages");
-			helpers.AjaxHelper.deleteJSON_Url(url, "messageId", messageIds);
+			AjaxHelper.deleteJSON_Url(url, "messageId", messageIds);
 
 		}
 
 		public getAlbumCollectionList = (
 			userId: number,
-			paging: dc.PagingProperties, lang: string, query: string,
+			paging: PagingProperties, lang: string, query: string,
 			tag: number,
 			albumType: string,
 			artistId: number,
 			purchaseStatuses: string,
 			releaseEventId: number,
-			advancedFilters: viewModels.search.AdvancedSearchFilter[],
+			advancedFilters: AdvancedSearchFilter[],
 			sort: string,
 			callback) => {
 
@@ -114,7 +131,7 @@
 
 		};
 
-		public getEvents = (userId: number, relationshipType: cls.users.UserEventRelationshipType, callback: (result: dc.ReleaseEventContract[]) => void) => {
+		public getEvents = (userId: number, relationshipType: UserEventRelationshipType, callback: (result: ReleaseEventContract[]) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/events");
 			$.getJSON(url, { relationshipType: relationshipType }, callback);
@@ -123,7 +140,7 @@
 
 		public getFollowedArtistsList = (
 			userId: number,
-			paging: dc.PagingProperties, lang: string,
+			paging: PagingProperties, lang: string,
 			tagIds: number[],
 			artistType: string,
 			callback) => {
@@ -143,7 +160,7 @@
 		}
 
 		public getList = (
-			paging: dc.PagingProperties,
+			paging: PagingProperties,
 			query: string,
 			sort: string,
 			groups: string,
@@ -152,7 +169,7 @@
 			knowsLanguage: string,
 			nameMatchMode: string,
 			fields: string,
-			callback: (result: dc.PartialFindResultContract<dc.user.UserApiContract>) => void) => {
+			callback: (result: PartialFindResultContract<UserApiContract>) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users");
 			var data = {
@@ -169,28 +186,28 @@
 
 		}
 
-		public getOne = (id: number, fields: string, callback: (result: dc.user.UserApiContract) => void) => {
+		public getOne = (id: number, fields: string, callback: (result: UserApiContract) => void) => {
 			var url = this.urlMapper.mapRelative("/api/users/" + id);
 			$.getJSON(url, { fields: fields || undefined }, callback);
 		}
 
-		public getOneByName = (username: string, callback: (result: dc.user.UserApiContract) => void) => {
+		public getOneByName = (username: string, callback: (result: UserApiContract) => void) => {
 			this.getList({}, username, null, null, false, false, null, "Exact", null, result => {
 				callback(result.items.length === 1 ? result.items[0] : null);
 			});
 		}
 
-        public getMessage = (messageId: number, callback?: (result: dc.UserMessageSummaryContract) => void) => {
+        public getMessage = (messageId: number, callback?: (result: UserMessageSummaryContract) => void) => {
 
             var url = this.urlMapper.mapRelative("/api/users/messages/" + messageId);
             $.getJSON(url, callback);
 
         };
 
-		public getMessageSummaries = (userId: number, inbox: UserInboxType, paging: dc.PagingProperties, unread: boolean = false,
+		public getMessageSummaries = (userId: number, inbox: UserInboxType, paging: PagingProperties, unread: boolean = false,
 			anotherUserId?: number,
 			iconSize: number = 40,
-			callback?: (result: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => void) => {
+			callback?: (result: PartialFindResultContract<UserMessageSummaryContract>) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users/" + (userId || this.loggedUserId) + "/messages");
 			$.getJSON(url, { inbox: UserInboxType[inbox], start: paging.start, maxResults: paging.maxEntries, getTotalCount: paging.getTotalCount, unread: unread, anotherUserId: anotherUserId }, callback);
@@ -199,18 +216,18 @@
 
 		public getRatedSongsList = (
 			userId: number,
-			paging: dc.PagingProperties, lang: string, query: string,
+			paging: PagingProperties, lang: string, query: string,
 			tagIds: number[],
 			artistIds: number[],
 			childVoicebanks: boolean,
 			rating: string,
 			songListId: number,
-			advancedFilters: viewModels.search.AdvancedSearchFilter[],
+			advancedFilters: AdvancedSearchFilter[],
 			groupByRating: boolean,
 			pvServices: string,
 			fields: string,
 			sort: string,
-			callback: (result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => void) => {
+			callback: (result: PartialFindResultContract<RatedSongForUserForApiContract>) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/ratedSongs");
 			var data = {
@@ -230,7 +247,7 @@
 
 		}
 
-		public getRatingsByGenre = (userId: number, callback: (points: vdb.helpers.Tuple2<string, number>[]) => void) => {
+		public getRatingsByGenre = (userId: number, callback: (points: Tuple2<string, number>[]) => void) => {
 	    
 			var url = this.urlMapper.mapRelative('/api/users/' + userId + '/songs-per-genre/');
 			$.getJSON(url, data => {
@@ -242,11 +259,11 @@
 		public getSongLists = (
 			userId: number,
 			query: string,
-			paging: dc.PagingProperties,
+			paging: PagingProperties,
 			tagIds: number[],
 			sort: string,
 			fields: string,
-			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
+			callback: (result: PartialFindResultContract<SongListContract>) => void) => {
 	    
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/songLists");
 			$.getJSON(url, {
@@ -277,44 +294,44 @@
 
 		}
 
-        public getAlbumTagSelections = (albumId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+        public getAlbumTagSelections = (albumId: number, callback: (tags: TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/albumTags/" + albumId), callback);
 
         }
 
-        public getArtistTagSelections = (artistId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+        public getArtistTagSelections = (artistId: number, callback: (tags: TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/artistTags/" + artistId), callback);
 
         }
 
-		public getEventTagSelections = (eventId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+		public getEventTagSelections = (eventId: number, callback: (tags: TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/eventTags/" + eventId), callback);
 
 		}
 
-		public getEventSeriesTagSelections = (seriesId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+		public getEventSeriesTagSelections = (seriesId: number, callback: (tags: TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/eventSeriesTags/" + seriesId), callback);
 
 		}
 
-		public getSongListTagSelections = (songListId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+		public getSongListTagSelections = (songListId: number, callback: (tags: TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/songListTags/" + songListId), callback);
 
 		}
 
-        public getSongTagSelections = (songId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+        public getSongTagSelections = (songId: number, callback: (tags: TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), callback);
 
         }
 
-		public refreshEntryEdit = (entryType: models.EntryType, entryId: number) => {
-			$.post(this.urlMapper.mapRelative("/api/users/current/refreshEntryEdit/?entryType=" + models.EntryType[entryType] + "&entryId=" + entryId));
+		public refreshEntryEdit = (entryType: EntryType, entryId: number) => {
+			$.post(this.urlMapper.mapRelative("/api/users/current/refreshEntryEdit/?entryType=" + EntryType[entryType] + "&entryId=" + entryId));
 		}
 
 		public requestEmailVerification = (callback?: () => void) => {
@@ -324,9 +341,9 @@
 
 		};
 
-        public updateAlbumTags = (albumId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+        public updateAlbumTags = (albumId: number, tags: TagBaseContract[], callback: (usages: TagUsageForApiContract[]) => void) => {
 
-			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/albumTags/" + albumId), tags, callback);
+			AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/albumTags/" + albumId), tags, callback);
 
         }
 
@@ -339,36 +356,36 @@
 
 		};
 
-        public updateArtistTags = (artistId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+        public updateArtistTags = (artistId: number, tags: TagBaseContract[], callback: (usages: TagUsageForApiContract[]) => void) => {
 
-			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/artistTags/" + artistId), tags, callback);
+			AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/artistTags/" + artistId), tags, callback);
 
         }
 
-		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
+		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/users/profileComments/" + commentId), contract, callback, 'json');
 
 		}
 
-		public updateEventForUser = (eventId: number, associationType: vdb.models.users.UserEventRelationshipType, callback?: () => void) => {
+		public updateEventForUser = (eventId: number, associationType: UserEventRelationshipType, callback?: () => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users/current/events/" + eventId);
-			return $.post(url, { associationType: vdb.models.users.UserEventRelationshipType[associationType] }, callback) as JQueryPromise<{}>;
+			return $.post(url, { associationType: UserEventRelationshipType[associationType] }, callback) as JQueryPromise<{}>;
 
 		}
 
-		public updateEventTags = (eventId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
-			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/eventTags/" + eventId), tags, callback);
+		public updateEventTags = (eventId: number, tags: TagBaseContract[], callback: (usages: TagUsageForApiContract[]) => void) => {
+			AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/eventTags/" + eventId), tags, callback);
 		}
 
-		public updateEventSeriesTags = (seriesId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
-			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/eventSeriesTags/" + seriesId), tags, callback);
+		public updateEventSeriesTags = (seriesId: number, tags: TagBaseContract[], callback: (usages: TagUsageForApiContract[]) => void) => {
+			AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/eventSeriesTags/" + seriesId), tags, callback);
 		}
 
-		public updateSongListTags = (songListId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+		public updateSongListTags = (songListId: number, tags: TagBaseContract[], callback: (usages: TagUsageForApiContract[]) => void) => {
 
-			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songListTags/" + songListId), tags, callback);
+			AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songListTags/" + songListId), tags, callback);
 
 		}
 
@@ -376,16 +393,16 @@
         // songId: Id of the song to be updated.
         // rating: Song rating.
         // callback: Callback function to be executed when the operation is complete.
-        public updateSongRating = (songId: number, rating: vdb.models.SongVoteRating, callback: () => void) => {
+        public updateSongRating = (songId: number, rating: SongVoteRating, callback: () => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings");
-			return $.post(url, { rating: vdb.models.SongVoteRating[rating] }, callback) as JQueryPromise<any>;
+			return $.post(url, { rating: SongVoteRating[rating] }, callback) as JQueryPromise<any>;
 
         }
 
-        public updateSongTags = (songId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+        public updateSongTags = (songId: number, tags: TagBaseContract[], callback: (usages: TagUsageForApiContract[]) => void) => {
 
-			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), tags, callback);
+			AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songTags/" + songId), tags, callback);
 			 
         }
 
@@ -403,7 +420,7 @@
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
 
-        constructor(private urlMapper: vdb.UrlMapper, private loggedUserId?: number) {
+        constructor(private urlMapper: UrlMapper, private loggedUserId?: number) {
 
             this.mapUrl = (relative: string) => {
                 return urlMapper.mapRelative("/User") + relative;

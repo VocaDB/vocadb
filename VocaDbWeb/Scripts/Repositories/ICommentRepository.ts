@@ -1,18 +1,18 @@
 
+import CommentContract from '../DataContracts/CommentContract';
+
 //module vdb.repositories {
 	
-	import dc = vdb.dataContracts;
-
 	// Repository for managing comments
-	export interface ICommentRepository {
+	export default interface ICommentRepository {
 		
-		createComment(entryId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void): void;
+		createComment(entryId: number, contract: CommentContract, callback: (contract: CommentContract) => void): void;
 
 		deleteComment(commentId: number, callback?: () => void): void;
 
-		getComments(entryId: number, callback: (contract: dc.CommentContract[]) => void): void;
+		getComments(entryId: number, callback: (contract: CommentContract[]) => void): void;
 
-		updateComment(commentId: number, contract: dc.CommentContract, callback?: () => void): void;
+		updateComment(commentId: number, contract: CommentContract, callback?: () => void): void;
 
 	}
 

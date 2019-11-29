@@ -5,7 +5,7 @@ import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 
 //module vdb.dataContracts {
 
-	export interface ArtistApiContract extends CommonEntryContract, EntryWithTagUsagesContract {
+	export default interface ArtistApiContract extends CommonEntryContract, EntryWithTagUsagesContract {
 
 		additionalNames: string;
 

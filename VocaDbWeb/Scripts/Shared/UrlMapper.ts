@@ -4,7 +4,7 @@ import { mergeUrls } from './GlobalFunctions';
 
 //module vdb {
 
-    export class UrlMapper {
+    export default class UrlMapper {
 
 		public static buildUrl = (...args: string[]): string => {
 

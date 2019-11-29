@@ -10,7 +10,7 @@ import WebLinkContract from '../WebLinkContract';
 
 //module vdb.dataContracts.songs {
 	
-	export interface SongForEditContract {
+	export default interface SongForEditContract {
 
 		albumEventId?: number;
 

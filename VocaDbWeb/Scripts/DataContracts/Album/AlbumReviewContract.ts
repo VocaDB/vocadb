@@ -3,7 +3,7 @@ import UserApiContract from '../User/UserApiContract';
 
 //namespace vdb.dataContracts.albums {
 
-	export interface AlbumReviewContract {
+	export default interface AlbumReviewContract {
 
 		date: string;
 

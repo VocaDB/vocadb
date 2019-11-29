@@ -5,7 +5,7 @@ import DuplicateEntryResultContract from './DuplicateEntryResultContract';
 
 //module vdb.dataContracts {
 
-    export interface NewSongCheckResultContract {
+    export default interface NewSongCheckResultContract {
 
 		artists: ArtistContract[];
 

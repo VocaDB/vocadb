@@ -1,22 +1,23 @@
 
-//module vdb.repositories {
+import { mergeUrls } from '../Shared/GlobalFunctions';
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
 
-	import dc = vdb.dataContracts;
+//module vdb.repositories {
 
 	// Repository for finding base class of common entry types.
 	// Corresponds to the EntryApiController.
-	export class EntryRepository {
+	export default class EntryRepository {
 
 		// Maps a relative URL to an absolute one.
 		private mapUrl = (relative: string) => {
-			return vdb.functions.mergeUrls(vdb.functions.mergeUrls(this.baseUrl, "/api/entries"), relative);
+			return mergeUrls(mergeUrls(this.baseUrl, "/api/entries"), relative);
 		};
 
 		constructor(private baseUrl: string) {
 
 		}
 
-		getList = (paging: dc.PagingProperties, lang: string, query: string, tags: number[],
+		getList = (paging: PagingProperties, lang: string, query: string, tags: number[],
 			childTags: boolean,
 			fields: string, status: string, callback) => {
 

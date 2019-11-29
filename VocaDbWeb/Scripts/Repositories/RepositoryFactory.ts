@@ -1,13 +1,26 @@
 
-//module vdb.repositories {
+import AdminRepository from './AdminRepository';
+import AlbumRepository from './AlbumRepository';
+import ArtistRepository from './ArtistRepository';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import DiscussionRepository from './DiscussionRepository';
+import EntryRepository from './EntryRepository';
+import ReleaseEventRepository from './ReleaseEventRepository';
+import PVRepository from './PVRepository';
+import ResourceRepository from './ResourceRepository';
+import SongListRepository from './SongListRepository';
+import SongRepository from './SongRepository';
+import TagRepository from './TagRepository';
+import UrlMapper from '../Shared/UrlMapper';
+import UserRepository from './UserRepository';
 
-	import cls = vdb.models;
+//module vdb.repositories {
 
 	export class RepositoryFactory {
 		
 		constructor(
-			private readonly urlMapper: vdb.UrlMapper,
-			private readonly lang: cls.globalization.ContentLanguagePreference,
+			private readonly urlMapper: UrlMapper,
+			private readonly lang: ContentLanguagePreference,
 			private readonly loggedUserId: number) { }
 
 		public adminRepository = () => {

@@ -1,9 +1,11 @@
 
 //module vdb.models.aggregate {
 	
-	export enum TimeUnit {
+	enum TimeUnit {
 		month,
 		day
 	}
+
+	export default TimeUnit;
 
 //}

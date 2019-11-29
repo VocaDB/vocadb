@@ -4,7 +4,7 @@ import UserApiContract from '../User/UserApiContract';
 
 //module vdb.dataContracts.discussions {
 	
-	export interface DiscussionTopicContract {
+	export default interface DiscussionTopicContract {
 		
 		author: UserApiContract;
 

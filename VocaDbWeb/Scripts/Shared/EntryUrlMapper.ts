@@ -1,9 +1,9 @@
 /// <reference path="../DataContracts/EntryRefContract.ts" />
 /// <reference path="GlobalFunctions.ts" />
 
-import { mapAbsoluteUrl } from './GlobalFunctions';
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import EntryType from '../Models/EntryType';
+import { mapAbsoluteUrl } from './GlobalFunctions';
 import SongApiContract from '../DataContracts/Song/SongApiContract';
 import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 

@@ -8,7 +8,7 @@ import WebLinkContract from '../WebLinkContract';
 
 //module vdb.dataContracts.artists {
 	
-	export interface ArtistForEditContract {
+	export default interface ArtistForEditContract {
 
 		artistType: string;
 
