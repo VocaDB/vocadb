@@ -1,16 +1,17 @@
 
+import { AlbumArtistRolesEditViewModel } from '../../../ViewModels/Artist/ArtistRolesEditViewModel';
+import { IEditableArtistWithSupport } from '../../../ViewModels/ArtistForAlbumEditViewModel';
+
 //module vdb.tests.viewModels.artists {
 	
-	import vm = vdb.viewModels;
-
 	var roleNames: { [key: string]: string; } = { 'Arranger': 'Arranger', 'Composer': 'Composer', 'VoiceManipulator': 'Voice manipulator' };
-	var viewModel: vm.artists.AlbumArtistRolesEditViewModel;
-	var artist: vm.IEditableArtistWithSupport = { rolesArray: ko.observableArray<string>(['Arranger']) };
+	var viewModel: AlbumArtistRolesEditViewModel;
+	var artist: IEditableArtistWithSupport = { rolesArray: ko.observableArray<string>(['Arranger']) };
 
 	QUnit.module("ArtistRolesEditViewModel", {
 		setup: () => {
 
-			viewModel = new vm.artists.AlbumArtistRolesEditViewModel(roleNames);
+			viewModel = new AlbumArtistRolesEditViewModel(roleNames);
 
 		}
 	});

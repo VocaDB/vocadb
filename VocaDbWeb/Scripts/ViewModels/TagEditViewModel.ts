@@ -13,7 +13,7 @@ import WebLinksEditViewModel from './WebLinksEditViewModel';
 
 //namespace vdb.viewModels.tags {
 
-	export class TagEditViewModel {
+	export default class TagEditViewModel {
 
 		// Bitmask for all possible entry types (all bits 1)
 		public static readonly allEntryTypes = 1073741823;

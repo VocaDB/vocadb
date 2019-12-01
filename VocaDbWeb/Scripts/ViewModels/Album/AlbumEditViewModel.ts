@@ -32,7 +32,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 //module vdb.viewModels {
 
     // Edit view model for album.
-    export class AlbumEditViewModel {
+    export default class AlbumEditViewModel {
         
         // Adds a song to the album, by either id (existing song) or name (new song).
         public acceptTrackSelection: (songId: number, songName: string, itemType?: string) => void;

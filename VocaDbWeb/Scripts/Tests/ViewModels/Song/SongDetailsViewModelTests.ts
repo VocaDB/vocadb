@@ -3,29 +3,33 @@
 /// <reference path="../../TestSupport/FakeUserRepository.ts" />
 /// <reference path="../../../ViewModels/Song/SongDetailsViewModel.ts" />
 
+import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
+import FakeSongRepository from '../../TestSupport/FakeSongRepository';
+import FakeUserRepository from '../../TestSupport/FakeUserRepository';
+import { SongDetailsAjax } from '../../../ViewModels/Song/SongDetailsViewModel';
+import { SongDetailsResources } from '../../../ViewModels/Song/SongDetailsViewModel';
+import SongDetailsViewModel from '../../../ViewModels/Song/SongDetailsViewModel';
+import { SongListsViewModel } from '../../../ViewModels/Song/SongDetailsViewModel';
+import SongVoteRating from '../../../Models/SongVoteRating';
+
 //module vdb.tests.viewModels {
 
-    import cls = vdb.models;
-    import sup = vdb.tests.testSupport;
-    import vm = vdb.viewModels;
-    import dc = vdb.dataContracts;
+    var rep: FakeSongRepository;
+    var userRep = new FakeUserRepository();
+    var res: SongDetailsResources = { createNewList: "Create new list" };
+    var data: SongDetailsAjax = { id: 39, version: 0, selectedLyricsId: 0, selectedPvId: 0, songType: 'Original', tagUsages: [], userRating: "Nothing", latestComments: [] };
 
-    var rep: sup.FakeSongRepository;
-    var userRep = new sup.FakeUserRepository();
-    var res: vm.SongDetailsResources = { createNewList: "Create new list" };
-    var data: vm.SongDetailsAjax = { id: 39, version: 0, selectedLyricsId: 0, selectedPvId: 0, songType: 'Original', tagUsages: [], userRating: "Nothing", latestComments: [] };
-
-    var target: vm.SongDetailsViewModel;
+    var target: SongDetailsViewModel;
 
     QUnit.module("SongDetailsViewModelTests", {
         setup: () => {
-			rep = new sup.FakeSongRepository();
+			rep = new FakeSongRepository();
             rep.songLists = [
 				{ id: 1, name: "Favorite Mikus", featuredCategory: "Nothing" },
 				{ id: 2, name: "Favorite Lukas", featuredCategory: "Nothing" },
 				{ id: 3, name: "Mikupa 2013", featuredCategory: "Concerts" }
 			];
-            target = new vm.SongDetailsViewModel(rep, userRep, null, res, false, data, [], 0, vdb.models.globalization.ContentLanguagePreference.Default, false, null);
+            target = new SongDetailsViewModel(rep, userRep, null, res, false, data, [], 0, ContentLanguagePreference.Default, false, null);
         }
     });
 
@@ -34,7 +38,7 @@
         equal(target.id, 39, "id");
         ok(target.songListDialog, "songListDialog");
         ok(target.userRating, "userRating");
-        equal(target.userRating.rating(), cls.SongVoteRating['Nothing'], "userRating.rating");
+        equal(target.userRating.rating(), SongVoteRating['Nothing'], "userRating.rating");
 
 	});
 
@@ -69,7 +73,7 @@
 		equal(target.songListDialog.songLists().length, 1, "songListDialog.songLists.length");
 		equal(target.songListDialog.songLists()[0].name, "Mikupa 2013", "songListDialog.songLists[0].name");
 		equal(target.songListDialog.selectedListId(), 1, "songListDialog.selectedListId");
-		equal(target.songListDialog.tabName(), vm.SongListsViewModel.tabName_Featured, "target.songListDialog.tabName");
+		equal(target.songListDialog.tabName(), SongListsViewModel.tabName_Featured, "target.songListDialog.tabName");
 
 	});
 
@@ -94,7 +98,7 @@
 		];
 
 		target.songListDialog.showSongLists();
-		target.songListDialog.tabName(vm.SongListsViewModel.tabName_New);
+		target.songListDialog.tabName(SongListsViewModel.tabName_New);
 		target.songListDialog.newListName("Favorite Rinnssss");
 
 		target.songListDialog.addSongToList();

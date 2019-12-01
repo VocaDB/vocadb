@@ -34,7 +34,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 //module vdb.viewModels {
 
-    export class SongEditViewModel {
+    export default class SongEditViewModel {
 
 		private albumEventId: number;
 		public albumReleaseDate: moment.Moment;

@@ -33,7 +33,7 @@ import UserRepository from '../../Repositories/UserRepository';
 //module vdb.viewModels {
 
     // View model for the song details view.
-    export class SongDetailsViewModel {
+    export default class SongDetailsViewModel {
         
         public allVersionsVisible: KnockoutObservable<boolean>;
 

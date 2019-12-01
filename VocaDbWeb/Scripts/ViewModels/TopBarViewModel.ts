@@ -11,7 +11,7 @@ import UserRepository from '../Repositories/UserRepository';
 //module vdb.viewModels {
 
     // View model for the top bar.
-    export class TopBarViewModel {
+    export default class TopBarViewModel {
 
         public ensureMessagesLoaded = () => {
 

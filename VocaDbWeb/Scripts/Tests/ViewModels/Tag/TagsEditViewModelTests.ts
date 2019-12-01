@@ -1,14 +1,15 @@
 
+import TagsEditViewModel from '../../../ViewModels/Tag/TagsEditViewModel';
+import { TagSelectionViewModel } from '../../../ViewModels/Tag/TagsEditViewModel';
+
 //namespace vdb.tests.viewModels.tags {
 	
-	import vm = vdb.viewModels;
-
-	var viewModel: vm.tags.TagsEditViewModel;
+	var viewModel: TagsEditViewModel;
 
 	QUnit.module("TagsEditViewModel", {
 		setup: () => {
 
-			viewModel = new vm.tags.TagsEditViewModel(null);
+			viewModel = new TagsEditViewModel(null);
 
 		}
 	});
@@ -31,7 +32,7 @@
 
 	QUnit.test("addTag - already exists", () => {
 
-		var selection = new vm.tags.TagSelectionViewModel({ tag: { name: 'Miku', id: 39 } });
+		var selection = new TagSelectionViewModel({ tag: { name: 'Miku', id: 39 } });
 		viewModel.selections.push(selection);
 		QUnit.equal(selection.selected(), false, "selection.selected");
 		viewModel.newTagName("Miku");

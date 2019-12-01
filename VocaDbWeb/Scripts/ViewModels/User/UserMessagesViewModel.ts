@@ -8,7 +8,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //module vdb.viewModels {
 
-	export class UserMessagesViewModel {
+	export default class UserMessagesViewModel {
 
 		constructor(
 			private readonly userRepository: UserRepository,

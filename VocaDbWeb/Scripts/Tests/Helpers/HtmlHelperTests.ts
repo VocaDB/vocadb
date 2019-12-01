@@ -1,10 +1,12 @@
 
+import HtmlHelper from '../../Helpers/HtmlHelper';
+
 //module vdb.tests.helpers {
 	
 	QUnit.module("HtmlHelper");
 
 	var testBoldAndHtmlEncode = (text: string, term: string, expected: string) => {
-		var actual = vdb.helpers.HtmlHelper.boldAndHtmlEncode(text, term);
+		var actual = HtmlHelper.boldAndHtmlEncode(text, term);
 		equal(actual, expected, "with term " + term);
 	}
 

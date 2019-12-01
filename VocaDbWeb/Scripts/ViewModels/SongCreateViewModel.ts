@@ -15,7 +15,7 @@ import SongType from '../Models/Songs/SongType';
 //module vdb.viewModels {
 
     // View model for song creation view
-    export class SongCreateViewModel {
+    export default class SongCreateViewModel {
         
         addArtist: (artistId: number) => void;
 
