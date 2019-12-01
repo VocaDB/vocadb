@@ -43,7 +43,7 @@ namespace VocaDb.Model.Database.Queries.Partial {
 
 			if (duplicateName != null) {
 				log.Info($"Duplicate name '{duplicateName}' for event {eventId}.");
-				throw new DuplicateEventNameException(duplicateName);
+				throw new DuplicateEventNameException(duplicateName, eventId);
 			}
 
 			var duplicate = ctx.Query<EventName>()
@@ -51,7 +51,7 @@ namespace VocaDb.Model.Database.Queries.Partial {
 
 			if (duplicate != null) {
 				log.Info($"Duplicate name '{duplicateName}' for event {eventId}. Also used for {duplicate.Entry}.");
-				throw new DuplicateEventNameException(duplicate.Value);
+				throw new DuplicateEventNameException(duplicate.Value, duplicate.Entry.Id);
 			}
 
 		}
