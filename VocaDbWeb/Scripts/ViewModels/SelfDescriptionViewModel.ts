@@ -1,13 +1,14 @@
 
 import ArtistApiContract from '../DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import ArtistRepository from '../Repositories/ArtistRepository';
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 
 //namespace vdb.viewModels {
 
 	export default class SelfDescriptionViewModel {
 
-		constructor(author: ArtistApiContract, text: string, artistRepo: rep.ArtistRepository, private getArtists: (callback: (result: ArtistContract[]) => void) => void,
+		constructor(author: ArtistApiContract, text: string, artistRepo: ArtistRepository, private getArtists: (callback: (result: ArtistContract[]) => void) => void,
 			private saveFunc: ((vm: SelfDescriptionViewModel) => void)) {
 			
 			this.author = new BasicEntryLinkViewModel<ArtistApiContract>(author, (artistId, callback) => {

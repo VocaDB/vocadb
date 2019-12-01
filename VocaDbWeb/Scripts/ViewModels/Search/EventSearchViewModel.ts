@@ -1,7 +1,9 @@
 
 import ArtistFilters from './ArtistFilters';
+import ArtistRepository from '../../Repositories/ArtistRepository';
 import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
 import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
@@ -12,8 +14,8 @@ import SearchViewModel from './SearchViewModel';
 		constructor(
 			searchViewModel: SearchViewModel,
 			lang: ContentLanguagePreference,
-			private readonly eventRepo: rep.ReleaseEventRepository,
-			artistRepo: rep.ArtistRepository,
+			private readonly eventRepo: ReleaseEventRepository,
+			artistRepo: ArtistRepository,
 			public loggedUserId: number,
 			sort: string,
 			artistId: number[],

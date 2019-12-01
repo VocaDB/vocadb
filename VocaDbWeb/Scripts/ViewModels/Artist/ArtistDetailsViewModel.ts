@@ -27,7 +27,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //module vdb.viewModels {
 
-	export class ArtistDetailsViewModel {
+	export default class ArtistDetailsViewModel {
 
 		constructor(
 			repo: ArtistRepository,

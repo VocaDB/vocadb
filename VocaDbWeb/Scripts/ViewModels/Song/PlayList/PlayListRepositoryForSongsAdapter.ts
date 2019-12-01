@@ -7,13 +7,14 @@ import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
 import PagingProperties from '../../../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
 import SongApiContract from '../../../DataContracts/Song/SongApiContract';
+import SongRepository from '../../../Repositories/SongRepository';
 import SongType from '../../../Models/Songs/SongType';
 
 //module vdb.viewModels.songs {
 	
 	export default class PlayListRepositoryForSongsAdapter implements IPlayListRepository {
 
-		constructor(private songRepo: rep.SongRepository,
+		constructor(private songRepo: SongRepository,
 			private query: KnockoutObservable<string>,
 			private sort: KnockoutObservable<string>,
 			private songType: KnockoutObservable<string>,

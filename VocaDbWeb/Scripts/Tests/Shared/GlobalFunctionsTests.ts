@@ -1,15 +1,11 @@
 /// <reference path="../../typings/qunit/qunit.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
+import { mergeUrls } from '../../Shared/GlobalFunctions';
+
 //module vdb.tests.functions {
 
-    import fu = vdb.functions;
-
     QUnit.module("GlobalFunctions");
-
-    function mergeUrls(base: string, relative: string) {
-        return fu.mergeUrls(base, relative);
-    }
 
     test("mergeUrls bothWithSlash", () => {
         

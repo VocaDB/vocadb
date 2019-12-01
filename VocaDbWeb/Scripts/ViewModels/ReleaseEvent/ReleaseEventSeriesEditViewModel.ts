@@ -8,6 +8,7 @@ import NameMatchMode from '../../Models/NameMatchMode';
 import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
+import WebLinkContract from '../../DataContracts/WebLinkContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 //module vdb.viewModels.releaseEvents {
@@ -21,7 +22,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			private readonly id: number,
 			defaultNameLanguage: string,
 			names: LocalizedStringWithIdContract[],
-			webLinks: dc.WebLinkContract[]) {
+			webLinks: WebLinkContract[]) {
 
 			this.defaultNameLanguage = ko.observable(defaultNameLanguage);
 			this.names = NamesEditViewModel.fromContracts(names);

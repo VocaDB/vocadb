@@ -3,6 +3,7 @@ import ContentLanguagePreference from '../../Models/Globalization/ContentLanguag
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 import TagApiContract from '../../DataContracts/Tag/TagApiContract';
+import TagRepository from '../../Repositories/TagRepository';
 
 //module vdb.viewModels.search {
 
@@ -10,7 +11,7 @@ import TagApiContract from '../../DataContracts/Tag/TagApiContract';
 
 		constructor(searchViewModel: SearchViewModel,
 			lang: ContentLanguagePreference,
-			private tagRepo: rep.TagRepository) {
+			private tagRepo: TagRepository) {
 
 			super(searchViewModel);
 

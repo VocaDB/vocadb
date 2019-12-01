@@ -3,14 +3,23 @@
 /// <reference path="../Shared/GlobalFunctions.ts" />
 /// <reference path="../DataContracts/EntryRefContract.ts" />
 
-interface KnockoutBindingHandlers {
-	albumToolTip: KnockoutBindingHandler;
-    artistToolTip: KnockoutBindingHandler;
-    entryToolTip: KnockoutBindingHandler;
-	eventToolTip: KnockoutBindingHandler;
-	songToolTip: KnockoutBindingHandler;
-	tagToolTip: KnockoutBindingHandler;
-	userToolTip: KnockoutBindingHandler;
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import EntryRefContract from '../DataContracts/EntryRefContract';
+import { languagePreference } from '../Shared/GlobalValues';
+import { mapAbsoluteUrl } from '../Shared/GlobalFunctions';
+import { mergeUrls } from '../Shared/GlobalFunctions';
+import { uiLanguage } from '../Shared/GlobalValues';
+
+declare global {
+	interface KnockoutBindingHandlers {
+		albumToolTip: KnockoutBindingHandler;
+		artistToolTip: KnockoutBindingHandler;
+		entryToolTip: KnockoutBindingHandler;
+		eventToolTip: KnockoutBindingHandler;
+		songToolTip: KnockoutBindingHandler;
+		tagToolTip: KnockoutBindingHandler;
+		userToolTip: KnockoutBindingHandler;
+	}
 }
 
 //module vdb.knockoutExtensions {
@@ -19,7 +28,7 @@ interface KnockoutBindingHandlers {
 
 		const whitelistedDomains = ["http://vocadb.net", "https://vocadb.net", "http://utaitedb.net", "https://utaitedb.net", "https://touhoudb.com"];
 		const url = foreignDomain && _.some(whitelistedDomains, domain => _.includes(foreignDomain.toLocaleLowerCase(), domain)) ?
-			vdb.functions.mergeUrls(foreignDomain, relativeUrl) : vdb.functions.mapAbsoluteUrl(relativeUrl);
+			mergeUrls(foreignDomain, relativeUrl) : mapAbsoluteUrl(relativeUrl);
 		const data = _.assign({ id: id }, params);
 
         $(element).qtip({
@@ -50,16 +59,16 @@ interface KnockoutBindingHandlers {
 //}
 
 ko.bindingHandlers.entryToolTip = {
-	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<vdb.dataContracts.EntryRefContract>) => {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<EntryRefContract>) => {
 
-		var value: vdb.dataContracts.EntryRefContract = ko.unwrap(valueAccessor());
+		var value: EntryRefContract = ko.unwrap(valueAccessor());
 
 		switch (value.entryType) {
 			case "Album":
-				vdb.knockoutExtensions.initToolTip(element, '/Album/PopupContent', value.id);
+				initToolTip(element, '/Album/PopupContent', value.id);
 				break;
 			case "Artist":
-				vdb.knockoutExtensions.initToolTip(element, '/Artist/PopupContent', value.id);
+				initToolTip(element, '/Artist/PopupContent', value.id);
 				break;
 		}
 
@@ -68,41 +77,41 @@ ko.bindingHandlers.entryToolTip = {
 
 ko.bindingHandlers.albumToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		vdb.knockoutExtensions.initToolTip(element, '/Album/PopupContent', ko.unwrap(valueAccessor()));
+		initToolTip(element, '/Album/PopupContent', ko.unwrap(valueAccessor()));
 	}
 };
 
 ko.bindingHandlers.artistToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		vdb.knockoutExtensions.initToolTip(element, '/Artist/PopupContent', ko.unwrap(valueAccessor()));
+		initToolTip(element, '/Artist/PopupContent', ko.unwrap(valueAccessor()));
     }
 }
 
 ko.bindingHandlers.eventToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		const culture = vdb.values.uiLanguage || undefined;
-		vdb.knockoutExtensions.initToolTip(element, '/Event/PopupContent', ko.unwrap(valueAccessor()), { culture: culture });
+		const culture = uiLanguage || undefined;
+		initToolTip(element, '/Event/PopupContent', ko.unwrap(valueAccessor()), { culture: culture });
 	}
 }
 
 ko.bindingHandlers.songToolTip = {
-	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>, allPropertiesAccessor: () => vdb.knockoutExtensions.TooltipOptions) => {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>, allPropertiesAccessor: () => TooltipOptions) => {
 		const allProps = allPropertiesAccessor();
-		vdb.knockoutExtensions.initToolTip(element, '/Song/PopupContentWithVote', ko.unwrap(valueAccessor()), { version: allProps.version }, allProps.toolTipDomain);
+		initToolTip(element, '/Song/PopupContentWithVote', ko.unwrap(valueAccessor()), { version: allProps.version }, allProps.toolTipDomain);
 	}
 }
 
 ko.bindingHandlers.tagToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		var culture = vdb.values.uiLanguage || undefined;
-		var lang = vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference] || undefined;
-		vdb.knockoutExtensions.initToolTip(element, '/Tag/PopupContent', ko.unwrap(valueAccessor()), { culture: culture, lang: lang });
+		var culture = uiLanguage || undefined;
+		var lang = ContentLanguagePreference[languagePreference] || undefined;
+		initToolTip(element, '/Tag/PopupContent', ko.unwrap(valueAccessor()), { culture: culture, lang: lang });
 	}
 }
 
 ko.bindingHandlers.userToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		var culture = vdb.values.uiLanguage || undefined;
-		vdb.knockoutExtensions.initToolTip(element, '/User/PopupContent', ko.unwrap(valueAccessor()), { culture: culture });
+		var culture = uiLanguage || undefined;
+		initToolTip(element, '/User/PopupContent', ko.unwrap(valueAccessor()), { culture: culture });
 	}
 }

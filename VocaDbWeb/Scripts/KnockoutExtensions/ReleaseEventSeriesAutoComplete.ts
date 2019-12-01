@@ -1,6 +1,15 @@
-﻿
-interface KnockoutBindingHandlers {
-	releaseEventSeriesAutoComplete: KnockoutBindingHandler;
+
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import { EntryAutoCompleteParams } from '../Shared/EntryAutoComplete';
+import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
+import { initEntrySearch } from '../Shared/EntryAutoComplete';
+import { languagePreference } from '../Shared/GlobalValues';
+import { mapAbsoluteUrl } from '../Shared/GlobalFunctions';
+
+declare global {
+	interface KnockoutBindingHandlers {
+		releaseEventSeriesAutoComplete: KnockoutBindingHandler;
+	}
 }
 
 // Release event series autocomplete search box.
@@ -16,12 +25,12 @@ ko.bindingHandlers.releaseEventSeriesAutoComplete = {
 		var queryParams = {
 			nameMatchMode: 'Auto',
 			preferAccurateMatches: true,
-			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			lang: ContentLanguagePreference[languagePreference],
 			maxResults: 20,
 			sort: 'Name'
 		};
 
-		var params: vdb.EntryAutoCompleteParams<vdb.models.IEntryWithIdAndName> = {
+		var params: EntryAutoCompleteParams<IEntryWithIdAndName> = {
 			acceptSelection: (id, term, itemType, item) => {
 				valueAccessor()(item);
 			},
@@ -33,7 +42,7 @@ ko.bindingHandlers.releaseEventSeriesAutoComplete = {
 			termParamName: 'query'
 		};
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/releaseEventSeries"), params);
+		initEntrySearch(element, mapAbsoluteUrl("/api/releaseEventSeries"), params);
 
 	}
 }

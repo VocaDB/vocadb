@@ -7,12 +7,13 @@ import PagingProperties from '../../../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
 import RatedSongForUserForApiContract from '../../../DataContracts/User/RatedSongForUserForApiContract';
 import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
+import UserRepository from '../../../Repositories/UserRepository';
 
 //module vdb.viewModels.songs {
 
 	export default class PlayListRepositoryForRatedSongsAdapter implements IPlayListRepository {
 
-		constructor(private userRepo: rep.UserRepository,
+		constructor(private userRepo: UserRepository,
 			private userId: number,
 			private query: KnockoutObservable<string>,
 			private sort: KnockoutObservable<string>,

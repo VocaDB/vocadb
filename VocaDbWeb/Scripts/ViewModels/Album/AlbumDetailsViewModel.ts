@@ -26,7 +26,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //module vdb.viewModels {
 
-    export class AlbumDetailsViewModel {
+    export default class AlbumDetailsViewModel {
 
 		public comments: EditableCommentsViewModel;
 

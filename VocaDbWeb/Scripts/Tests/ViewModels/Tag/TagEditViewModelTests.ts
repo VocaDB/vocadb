@@ -1,6 +1,7 @@
 
 import EntryType from '../../../Models/EntryType';
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';
+import TagApiContract from '../../../DataContracts/Tag/TagApiContract';
 import TagEditViewModel from '../../../ViewModels/TagEditViewModel';
 
 //namespace vdb.tests.viewModels.tags {
@@ -10,7 +11,7 @@ import TagEditViewModel from '../../../ViewModels/TagEditViewModel';
 	QUnit.module("TagEditViewModel", {
 		setup: () => {
 
-			viewModel = new TagEditViewModel(null, new FakeUserRepository(), { targets: EntryType.Artist } as dc.TagApiContract);
+			viewModel = new TagEditViewModel(null, new FakeUserRepository(), { targets: EntryType.Artist } as TagApiContract);
 
 		}
 	});
