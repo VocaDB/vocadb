@@ -1,13 +1,20 @@
 
-interface KnockoutBindingHandlers {
-	// Album autocomplete search box.
-	albumAutoComplete: KnockoutBindingHandler;
+import { AlbumAutoCompleteParams } from './AutoCompleteParams';
+import AlbumContract from '../DataContracts/Album/AlbumContract';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import { initEntrySearch } from '../Shared/EntryAutoComplete';
+import { languagePreference } from '../Shared/GlobalValues';
+import { mapAbsoluteUrl } from '../Shared/GlobalFunctions';
+
+declare global {
+	interface KnockoutBindingHandlers {
+		// Album autocomplete search box.
+		albumAutoComplete: KnockoutBindingHandler;
+	}
 }
 
 //module vdb.knockoutExtensions {
 	
-	import dc = vdb.dataContracts;
-
 	export function albumAutoComplete(element: HTMLElement, valueAccessor) {
 
 		var properties: AlbumAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
@@ -30,20 +37,20 @@ interface KnockoutBindingHandlers {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			lang: ContentLanguagePreference[languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 15
 		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/albums"),
+		initEntrySearch(element, mapAbsoluteUrl("/api/albums"),
 			{
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,
 				createCustomItem: properties.createCustomItem,
-				createOptionFirstRow: (item: dc.AlbumContract) => (item.name + " (" + item.discType + ")"),
-				createOptionSecondRow: (item: dc.AlbumContract) => (item.artistString),
+				createOptionFirstRow: (item: AlbumContract) => (item.name + " (" + item.discType + ")"),
+				createOptionSecondRow: (item: AlbumContract) => (item.artistString),
 				extraQueryParams: queryParams,
 				filter: filter,
 				termParamName: 'query'
@@ -55,5 +62,5 @@ interface KnockoutBindingHandlers {
 //}
 
 ko.bindingHandlers.albumAutoComplete = {
-	init: vdb.knockoutExtensions.albumAutoComplete
+	init: albumAutoComplete
 }

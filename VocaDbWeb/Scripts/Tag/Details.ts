@@ -1,6 +1,8 @@
-﻿import dc = vdb.dataContracts;
+import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
+import TagDetailsViewModel from '../ViewModels/Tag/TagDetailsViewModel';
+import UrlMapper from '../Shared/UrlMapper';
 
-function initTagsPage(vm: vdb.viewModels.tags.TagDetailsViewModel) {
+function initTagsPage(vm: TagDetailsViewModel) {
 
 	$("#tabs").tabs({
 		activate: (event, ui) => {
@@ -22,15 +24,15 @@ function initTagsPage(vm: vdb.viewModels.tags.TagDetailsViewModel) {
 
 }
 
-function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBaseContract, siblings: dc.TagBaseContract[], children: dc.TagBaseContract[]) {
+function initChart(urlMapper: UrlMapper, thisTag: string, parent: TagBaseContract, siblings: TagBaseContract[], children: TagBaseContract[]) {
 
-	var tagUrl = (tag: dc.TagBaseContract) => urlMapper.mapRelative("/T/" + tag.id + "/" + tag.urlSlug);
-	var tagLink = (tag: dc.TagBaseContract) => {
+	var tagUrl = (tag: TagBaseContract) => urlMapper.mapRelative("/T/" + tag.id + "/" + tag.urlSlug);
+	var tagLink = (tag: TagBaseContract) => {
 		var link = '<a href="' + tagUrl(tag) + '">' + tag.name + '</a>';
 		return link;
 	};
 
-	var tagLinks = (tagList: dc.TagBaseContract[]) => {
+	var tagLinks = (tagList: TagBaseContract[]) => {
 
 		var str = "";
 		var links = _.map(tagList, item => tagLink(item));

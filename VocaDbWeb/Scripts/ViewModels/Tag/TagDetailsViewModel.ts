@@ -10,7 +10,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //module vdb.viewModels.tags {
 	
-	export class TagDetailsViewModel {
+	export default class TagDetailsViewModel {
 		
 		constructor(
 			repo: TagRepository,

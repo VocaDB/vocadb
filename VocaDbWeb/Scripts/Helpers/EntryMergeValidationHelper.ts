@@ -1,4 +1,5 @@
 
+import CommonEntryContract from '../DataContracts/CommonEntryContract';
 import EntryStatus from '../Models/EntryStatus';
 
 //module vdb.helpers {
@@ -27,7 +28,7 @@ import EntryStatus from '../Models/EntryStatus';
 
 		}
 
-		public static validateEntry(base: dc.CommonEntryContract, target: dc.CommonEntryContract) {
+		public static validateEntry(base: CommonEntryContract, target: CommonEntryContract) {
 
 			if (base == null || target == null) {
 				return {

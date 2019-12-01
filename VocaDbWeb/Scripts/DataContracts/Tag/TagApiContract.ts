@@ -4,6 +4,7 @@ import EntryThumbContract from '../EntryThumbContract';
 import EntryType from '../../Models/EntryType';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import TagBaseContract from './TagBaseContract';
+import WebLinkContract from '../WebLinkContract';
 
 //module vdb.dataContracts {
 
@@ -39,7 +40,7 @@ import TagBaseContract from './TagBaseContract';
 
 		usageCount: number;
 
-		webLinks: dc.WebLinkContract[];
+		webLinks: WebLinkContract[];
 
 	}
 

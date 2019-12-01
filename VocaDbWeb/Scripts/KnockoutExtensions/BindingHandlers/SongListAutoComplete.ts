@@ -1,25 +1,34 @@
-﻿
-interface KnockoutBindingHandlers {
-	songListAutoComplete: KnockoutBindingHandler;
+
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import { EntryAutoCompleteParams } from '../../Shared/EntryAutoComplete';
+import { initEntrySearch } from '../../Shared/EntryAutoComplete';
+import { languagePreference } from '../../Shared/GlobalValues';
+import { mapAbsoluteUrl } from '../../Shared/GlobalFunctions';
+import SongListContract from '../../DataContracts/Song/SongListContract';
+
+declare global {
+	interface KnockoutBindingHandlers {
+		songListAutoComplete: KnockoutBindingHandler;
+	}
 }
 
 // Tag autocomplete search box.
 ko.bindingHandlers.songListAutoComplete = {
-	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<dc.SongListContract>, allBindingsAccessor: () => any) => {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<SongListContract>, allBindingsAccessor: () => any) => {
 
 		var allBindings = allBindingsAccessor();
 		var category: string = allBindings.songListCategory;
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			lang: ContentLanguagePreference[languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 20,
 			sort: 'Name',
 			featuredCategory: category
 		};	
 
-		var params: vdb.EntryAutoCompleteParams<dc.SongListContract> = {
+		var params: EntryAutoCompleteParams<SongListContract> = {
 			acceptSelection: (id, term, itemType, item) => {
 				valueAccessor()(item || { id: id, name: term, author: null, description: null, featuredCategory: null, status: null });
 			},
@@ -28,7 +37,7 @@ ko.bindingHandlers.songListAutoComplete = {
 			extraQueryParams: queryParams
 		};
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/songLists/featured"), params);
+		initEntrySearch(element, mapAbsoluteUrl("/api/songLists/featured"), params);
 
 	}
 
