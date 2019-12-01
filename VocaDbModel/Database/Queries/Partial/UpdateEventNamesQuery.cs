@@ -1,3 +1,4 @@
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
@@ -20,6 +21,8 @@ namespace VocaDb.Model.Database.Queries.Partial {
 	/// </remarks>
 	public class UpdateEventNamesQuery {
 
+		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
+
 		/// <summary>
 		/// Checks for duplicate event names.
 		/// </summary>
@@ -39,6 +42,7 @@ namespace VocaDb.Model.Database.Queries.Partial {
 				.FirstOrDefault();
 
 			if (duplicateName != null) {
+				log.Info($"Duplicate name '{duplicateName}' for event {eventId}.");
 				throw new DuplicateEventNameException(duplicateName);
 			}
 
@@ -46,6 +50,7 @@ namespace VocaDb.Model.Database.Queries.Partial {
 				.FirstOrDefault(e => e.Entry.Id != eventId && names.Contains(e.Value));
 
 			if (duplicate != null) {
+				log.Info($"Duplicate name '{duplicateName}' for event {eventId}. Also used for {duplicate.Entry}.");
 				throw new DuplicateEventNameException(duplicate.Value);
 			}
 
