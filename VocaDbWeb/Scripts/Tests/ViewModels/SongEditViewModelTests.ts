@@ -23,7 +23,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 	var artistRepo = new FakeArtistRepository();
 	var pvRepo = null;
 	var userRepo = new FakeUserRepository();
-	resources.song = { addExtraArtist: 'Add extra artist' };
+	vdb.resources.song = { addExtraArtist: 'Add extra artist' };
 
 	function addArtist(viewModel: SongEditViewModel, artistType: ArtistType, roles: ArtistRoles) {		
 		const artist = artistType != null ? { id: 39, name: 'Clean Tears', artistType: ArtistType[artistType] } : null;
