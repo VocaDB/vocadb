@@ -93,7 +93,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual IEnumerable<AlbumTagUsage> AlbumTagUsages {
 			get {
-				return AllAlbumTagUsages.Where(a => !a.Album.Deleted);
+				return AllAlbumTagUsages.Where(a => !a.Entry.Deleted);
 			}
 		}
 
@@ -143,7 +143,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual IEnumerable<ArtistTagUsage> ArtistTagUsages {
 			get {
-				return AllArtistTagUsages.Where(a => !a.Artist.Deleted);
+				return AllArtistTagUsages.Where(a => !a.Entry.Deleted);
 			}
 		}
 
@@ -447,7 +447,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// The list exists mainly so that it can be queried with NHibernate.
 		/// </summary>
-		public virtual IEnumerable<SongTagUsage> SongTagUsages => AllSongTagUsages.Where(a => !a.Song.Deleted);
+		public virtual IEnumerable<SongTagUsage> SongTagUsages => AllSongTagUsages.Where(a => !a.Entry.Deleted);
 
 		public virtual IEnumerable<SongListTagUsage> SongListTagUsages => AllSongListTagUsages.Where(a => !a.Entry.Deleted);
 
