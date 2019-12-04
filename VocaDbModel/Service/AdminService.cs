@@ -553,7 +553,7 @@ namespace VocaDb.Model.Service {
 
 			HandleTransaction(session => {
 
-				var artistUsages = session.Query<ArtistTagUsage>().Where(a => !a.Artist.Deleted).ToArray();
+				var artistUsages = session.Query<ArtistTagUsage>().Where(a => !a.Entry.Deleted).ToArray();
 				UpdateVoteCounts(session, artistUsages, ref count);
 
 				var albumUsages = session.Query<AlbumTagUsage>().Where(a => !a.Entry.Deleted).ToArray();

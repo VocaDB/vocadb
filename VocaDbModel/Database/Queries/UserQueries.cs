@@ -1140,8 +1140,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<ArtistTagUsage>().Where(a => a.Artist.Id == artistId && !a.Tag.Deleted).ToArray();
-				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Artist.Id == artistId).ToArray();
+				var tagsInUse = session.Query<ArtistTagUsage>().Where(a => a.Entry.Id == artistId && !a.Tag.Deleted).ToArray();
+				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Entry.Id == artistId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
 					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
@@ -1898,7 +1898,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArtistTagUsage CreateTagUsage(Tag tag, ArtistTagUsage oldUsage) {
 
-			var usage = new ArtistTagUsage(oldUsage.Artist, tag);
+			var usage = new ArtistTagUsage(oldUsage.Entry, tag);
 			session.Save(usage);
 
 			return usage;

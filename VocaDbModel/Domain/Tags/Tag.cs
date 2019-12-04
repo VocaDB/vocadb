@@ -143,7 +143,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		public virtual IEnumerable<ArtistTagUsage> ArtistTagUsages {
 			get {
-				return AllArtistTagUsages.Where(a => !a.Artist.Deleted);
+				return AllArtistTagUsages.Where(a => !a.Entry.Deleted);
 			}
 		}
 
