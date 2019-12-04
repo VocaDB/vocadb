@@ -13,7 +13,7 @@ namespace VocaDb.Model.Mapping.Songs {
 			Map(m => m.Count).Not.Nullable();
 			Map(m => m.Date).Not.Nullable();
 
-			References(m => m.Entry).Not.Nullable();
+			References(m => m.Entry).Column("[Song]").Not.Nullable();
 			References(m => m.Tag).Not.Nullable();
 			HasMany(m => m.Votes).KeyColumn("[Usage]").Inverse().Cascade.AllDeleteOrphan();
 
