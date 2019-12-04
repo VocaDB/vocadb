@@ -1124,8 +1124,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<AlbumTagUsage>().Where(a => a.Album.Id == albumId && !a.Tag.Deleted).ToArray();
-				var tagVotes = session.Query<AlbumTagVote>().Where(a => a.User.Id == userId && a.Usage.Album.Id == albumId).ToArray();
+				var tagsInUse = session.Query<AlbumTagUsage>().Where(a => a.Entry.Id == albumId && !a.Tag.Deleted).ToArray();
+				var tagVotes = session.Query<AlbumTagVote>().Where(a => a.User.Id == userId && a.Usage.Entry.Id == albumId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
 					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
@@ -1868,7 +1868,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public AlbumTagUsage CreateTagUsage(Tag tag, AlbumTagUsage oldUsage) {
 
-			var usage = new AlbumTagUsage(oldUsage.Album, tag);
+			var usage = new AlbumTagUsage(oldUsage.Entry, tag);
 			session.Save(usage);
 
 			return usage;
