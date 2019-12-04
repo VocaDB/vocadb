@@ -448,7 +448,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => !artistTags.Contains(u.Tag.Id)
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
-						&& u.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+						&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })

@@ -525,7 +525,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => !albumTags.Contains(u.Tag.Id)
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
-						&& u.Song.AllAlbums.Any(a => a.Album.Id == albumId))
+						&& u.Entry.AllAlbums.Any(a => a.Album.Id == albumId))
 					.WhereTagHasTarget(TagTargetTypes.Album)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })

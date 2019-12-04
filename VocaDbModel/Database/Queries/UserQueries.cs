@@ -136,7 +136,7 @@ namespace VocaDb.Model.Database.Queries {
 				.Where(t => t.CategoryName != TagCommonCategoryNames.Lyrics && t.CategoryName != TagCommonCategoryNames.Distribution)
 				.Select(t => new {
 					Id = t.Id,
-					Count = t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id))
+					Count = t.AllSongTagUsages.Count(u => u.Entry.UserFavorites.Any(f => f.User.Id == user.Id))
 				})
 				.ToArray()
 				.Where(t => t.Count > 0)
@@ -1025,7 +1025,7 @@ namespace VocaDb.Model.Database.Queries {
 				var genres = ctx
 					.OfType<SongTagUsage>()
 					.Query()
-					.Where(u => u.Song.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == TagCommonCategoryNames.Genres)
+					.Where(u => u.Entry.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == TagCommonCategoryNames.Genres)
 					// NH doesn't support ? operator, instead casting ID to nullable works
 					.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id })
 					.Select(g => new {
@@ -1168,8 +1168,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<SongTagUsage>().Where(a => a.Song.Id == songId && !a.Tag.Deleted).ToArray();
-				var tagVotes = session.Query<SongTagVote>().Where(a => a.User.Id == userId && a.Usage.Song.Id == songId).ToArray();
+				var tagsInUse = session.Query<SongTagUsage>().Where(a => a.Entry.Id == songId && !a.Tag.Deleted).ToArray();
+				var tagVotes = session.Query<SongTagVote>().Where(a => a.User.Id == userId && a.Usage.Entry.Id == songId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
 					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
@@ -2018,7 +2018,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public SongTagUsage CreateTagUsage(Tag tag, SongTagUsage oldUsage) {
 
-			var usage = new SongTagUsage(oldUsage.Song, tag);
+			var usage = new SongTagUsage(oldUsage.Entry, tag);
 			ctx.Save(usage);
 
 			return usage;
