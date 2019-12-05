@@ -15,10 +15,10 @@
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 
-	@Scripts.Render("~/bundles/shared/libs", "~/bundles/shared/jqui", "~/bundles/VocaDB", "~/bundles/shared/common", "~/bundles/shared/main")
+	@Scripts.Render("~/bundles/shared/libs.js", "~/bundles/shared/jqui.js", "~/bundles/VocaDB.js", "~/bundles/shared/common.js", "~/bundles/shared/main.js")
 	<script src="@Url.Content("~/Scripts/Models/SongVoteRating.js")"></script>
 	<script src="@Url.Content("~/Scripts/ViewModels/PVRatingButtonsViewModel.js")"></script>
 	<script src="@Url.Content("~/Scripts/Libraries/qunit-1.19.0.js")"></script>
-	@Scripts.Render("~/bundles/tests")
+	@Scripts.Render("~/bundles/tests.js")
 </body>
 </html>
