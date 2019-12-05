@@ -14,10 +14,10 @@ const mix = require('laravel-mix');
  mix
 
 	.scripts([
-		"Scripts/jquery-{version}.js", 
+		"Scripts/jquery-2.2.1.js", 
 		"Scripts/bootstrap.js",
 		//"Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
-		"Scripts/knockout-{version}.js",
+		"Scripts/knockout-3.4.1.js",
 		"Scripts/knockout.punches.min.js",
 		"Scripts/lodash.js", 
 		"Scripts/qTip/jquery.qtip.js",
@@ -25,7 +25,7 @@ const mix = require('laravel-mix');
 	], "bundles/shared/libs.js")
 
 	.scripts([
-		"Scripts/jquery-ui-{version}.js"
+		"Scripts/jquery-ui-1.10.4.js"
 	], "bundles/shared/jqui.js")
 
 	// SHARED BUNDLES
