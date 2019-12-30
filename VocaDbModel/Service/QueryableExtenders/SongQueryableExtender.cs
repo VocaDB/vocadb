@@ -179,6 +179,19 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		}
 
+		public static IQueryable<Song> WhereHasParentSong(this IQueryable<Song> query, int parentSongId) {
+
+			if (parentSongId == 0)
+				return query;
+
+			query = query.Where(s => s.OriginalVersion.Id == parentSongId 
+				|| s.OriginalVersion.OriginalVersion.Id == parentSongId 
+				|| s.OriginalVersion.OriginalVersion.OriginalVersion.Id == parentSongId);
+
+			return query;
+
+		}
+
 		public static IQueryable<Song> WhereHasPublishDate(this IQueryable<Song> query, bool hasPublishDate) {
 
 			return hasPublishDate ? query.Where(s => s.PublishDate.DateTime != null) : query.Where(s => s.PublishDate.DateTime == null);
