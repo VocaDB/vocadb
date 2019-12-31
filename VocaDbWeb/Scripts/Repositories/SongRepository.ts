@@ -114,6 +114,7 @@ module vdb.repositories {
 			since: number,
 			minScore: number,
 			userCollectionId: number,
+			parentSongId: number,
 			fields: string,
 			status: string,
 			advancedFilters: viewModels.search.AdvancedSearchFilter[],
@@ -138,6 +139,7 @@ module vdb.repositories {
 				since: since,
 				minScore: minScore,
 				userCollectionId: userCollectionId,
+				parentSongId: parentSongId || undefined,
 				status: status,
 				advancedFilters: advancedFilters
 			};

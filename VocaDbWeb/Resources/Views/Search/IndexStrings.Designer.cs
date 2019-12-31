@@ -223,6 +223,15 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent version:.
+        /// </summary>
+        public static string ParentVersion {
+            get {
+                return ResourceManager.GetString("ParentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Playlist.
         /// </summary>
         public static string Playlist {

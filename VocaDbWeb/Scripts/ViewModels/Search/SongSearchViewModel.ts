@@ -69,12 +69,15 @@ module vdb.viewModels.search {
 			this.since = ko.observable(since);
 			this.viewMode = ko.observable(viewMode || "Details");
 
+			this.parentVersion = new BasicEntryLinkViewModel<cls.IEntryWithIdAndName>(null, this.songRepo.getOne);
+
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.afterDate.subscribe(this.updateResultsWithTotalCount);
 			this.releaseEvent.subscribe(this.updateResultsWithTotalCount);
 			this.minScore.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
+			this.parentVersion.subscribe(this.updateResultsWithTotalCount);
 			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory, autoplay, shuffle);
 			this.pvsOnly.subscribe(this.updateResultsWithTotalCount);
 			this.since.subscribe(this.updateResultsWithTotalCount);
@@ -94,7 +97,10 @@ module vdb.viewModels.search {
 				this.releaseEvent.id,
 				this.pvsOnly, this.since,
 				this.minScore,
-				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly, this.advancedFilters.filters);
+				this.onlyRatedSongs,
+				this.loggedUserId,
+				this.parentVersion.id,
+				this.fields, this.draftsOnly, this.advancedFilters.filters);
 
 			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				cls.globalization.ContentLanguagePreference[lang]);
@@ -122,6 +128,7 @@ module vdb.viewModels.search {
 						this.since(),
 						this.minScore(),
 						this.onlyRatedSongs() ? this.loggedUserId : null,
+						this.parentVersion.id(),
 						this.fields(),
 						status,
 						this.advancedFilters.filters(),
@@ -154,6 +161,7 @@ module vdb.viewModels.search {
 		public releaseEvent: BasicEntryLinkViewModel<cls.IEntryWithIdAndName>;
 		public minScore: KnockoutObservable<number>;
 		public onlyRatedSongs = ko.observable(false);
+		public parentVersion: BasicEntryLinkViewModel<cls.IEntryWithIdAndName>;
 		public playListViewModel: vdb.viewModels.songs.PlayListViewModel;
 		public pvPlayerViewModel: pvs.PVPlayerViewModel;
 		public pvsOnly = ko.observable(false);

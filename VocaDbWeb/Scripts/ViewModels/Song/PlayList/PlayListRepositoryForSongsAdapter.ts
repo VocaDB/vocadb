@@ -24,6 +24,7 @@ module vdb.viewModels.songs {
 			private minScore: KnockoutObservable<number>,
 			private onlyRatedSongs: KnockoutObservable<boolean>,
 			private userCollectionId: number,
+			private parentVersionId: KnockoutComputed<number>,
 			private fields: KnockoutObservable<string>,
 			private draftsOnly: KnockoutObservable<boolean>,
 			private advancedFilters: KnockoutObservableArray<search.AdvancedSearchFilter>) { }
@@ -51,6 +52,7 @@ module vdb.viewModels.songs {
 				this.since(),
 				this.minScore(),
 				this.onlyRatedSongs() ? this.userCollectionId : null,
+				this.parentVersionId(),
 				this.fields(),
 				this.draftsOnly() ? "Draft" : null,
 				this.advancedFilters ? this.advancedFilters() : null,

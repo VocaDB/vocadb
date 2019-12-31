@@ -1,4 +1,5 @@
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Model.Domain.Songs
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper ArtistFilters(bool artistParticipationStatus) {
@@ -218,6 +219,12 @@
 		</ul>
 	</div>
 
+}
+
+<!-- Locking autocomplete for song selection. Allows selection of one (existing) song. When song is selected, clear button is displayed. -->
+@helper SongLockingAutoComplete(string binding, SongTypes songTypes = SongTypes.Unspecified, int ignoreId = 0) {
+	var songTypesStr = songTypes != SongTypes.Unspecified ? string.Join(",", songTypes.ToIndividualSelections().Select(t => t.ToString())) : "";
+	@LockingAutoComplete("songAutoComplete", "{ acceptSelection: " + binding + ".id, extraQueryParams: { songTypes: '" + songTypesStr + "' }, ignoreId: " + ignoreId + " }", textBinding: binding + ".name", valBinding: binding + ".id")
 }
 
 @helper TagFilters(bool topGenres = false) {

@@ -222,4 +222,7 @@
   <data name="Today" xml:space="preserve">
     <value>Today</value>
   </data>
+  <data name="ParentVersion" xml:space="preserve">
+    <value>Parent version:</value>
+  </data>
 </root>
