@@ -124,6 +124,15 @@ namespace VocaDb.Web.Resources.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restricted editing.
+        /// </summary>
+        public static string RemovePermissions {
+            get {
+                return ResourceManager.GetString("RemovePermissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spamming.
         /// </summary>
         public static string Spamming {

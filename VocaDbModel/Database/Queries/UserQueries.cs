@@ -1497,12 +1497,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.GroupId = UserGroupId.Limited;
 
-				var reasonText = !string.IsNullOrEmpty(reason) ? ": " + reason : string.Empty;
-
 				if (createReport) {
-					CreateReport(session, user, UserReportType.Other, hostname, string.Format("removed edit permissions{0}", reasonText));
+					CreateReport(session, user, UserReportType.RemovePermissions, hostname, reason);
 				}
 
+				var reasonText = !string.IsNullOrEmpty(reason) ? ": " + reason : string.Empty;
 				var message = string.Format("updated user {0} by removing edit permissions{1}", EntryLinkFactory.CreateEntryLink(user), reasonText);
 				session.AuditLogger.AuditLog(message, entryId: user.GlobalId);
 
