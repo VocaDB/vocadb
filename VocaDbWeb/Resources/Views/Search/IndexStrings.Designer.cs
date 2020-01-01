@@ -223,7 +223,7 @@ namespace ViewRes.Search {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parent version:.
+        ///   Looks up a localized string similar to Parent version.
         /// </summary>
         public static string ParentVersion {
             get {
