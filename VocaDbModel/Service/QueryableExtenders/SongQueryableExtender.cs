@@ -217,15 +217,12 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// <summary>
 		/// Filter query including only songs with a PV.
 		/// </summary>
-		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> criteria) => WhereHasPV(criteria, true);
+		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> query) {
+			return query.Where(t => t.PVServices != PVServices.Nothing);
+		}
 
 		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> criteria, bool onlyWithPVs) {
-
-			if (onlyWithPVs)
-				return criteria.Where(t => t.PVServices != PVServices.Nothing);
-			else
-				return criteria;
-
+			return onlyWithPVs ? WhereHasPV(criteria) : criteria;
 		}
 
 		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> query, PVService? service, string pvId) {
