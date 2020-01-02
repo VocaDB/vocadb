@@ -215,7 +215,11 @@ namespace VocaDb.Model.Service {
 			var cachedSongIds = (int[])cache.Get(cacheKey);
 
 			if (cachedSongIds != null) {
-				return (await session.Query<Song>().Where(s => cachedSongIds.Contains(s.Id)).ToListAsync()).OrderByIds(cachedSongIds);
+				var cachedSongs = await session.Query<Song>()
+					.WhereIdIn(cachedSongIds)
+					.WhereHasPV()
+					.ToListAsync();
+				return cachedSongs.OrderByIds(cachedSongIds);
 			}
 
 			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
@@ -226,10 +230,9 @@ namespace VocaDb.Model.Service {
 			var recentSongIdAndScore =
 				session.Query<Song>()
 				.WhereHasArtist(AppConfig.FilteredArtistId)
-				.Where(s => !s.Deleted 
-					&& s.PVServices != PVServices.Nothing 
-					&& s.CreateDate >= cutoffDate
-				)
+				.WhereNotDeleted()
+				.WhereHasPV()
+				.Where(s => s.CreateDate >= cutoffDate)
 				.OrderByDescending(s => s.CreateDate)
 				.Take(maxSongs)
 				.Select(s => new {
@@ -263,10 +266,9 @@ namespace VocaDb.Model.Service {
 				var moreSongs =
 					session.Query<Song>()
 					.WhereHasArtist(AppConfig.FilteredArtistId)
-					.Where(s => !s.Deleted 
-						&& s.PVServices != PVServices.Nothing 						
-						&& s.CreateDate < cutoffDate
-					)
+					.WhereNotDeleted()
+					.WhereHasPV()
+					.Where(s => s.CreateDate < cutoffDate)
 					.OrderByDescending(s => s.CreateDate)
 					.Take(songCount - recentSongs.Length)
 					.ToArray();
