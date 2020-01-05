@@ -267,7 +267,7 @@ namespace VocaDb.Model.Database.Queries {
 					entryLinkFactory,
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != ArtistReportType.Other ? enumTranslations.ArtistReportTypeNames[reportType] : null,
-					artistId, reportType, hostname, notes);
+					artistId, reportType, hostname, notes, reportType != ArtistReportType.OwnershipClaim);
 			});
 
 		}
