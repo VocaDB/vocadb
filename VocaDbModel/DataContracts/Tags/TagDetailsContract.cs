@@ -109,6 +109,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public string[] MappedNicoTags { get; set; }
 
+		public EntryType RelatedEntryType { get; set; }
+
+		public string RelatedEntrySubType { get; set; }
+
 		public TagBaseContract[] RelatedTags { get; set; }
 
 		public TagBaseContract[] Siblings { get; set; }

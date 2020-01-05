@@ -134,7 +134,11 @@
 					@Res.ValidFor: @string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined && Model.Targets.HasFlag((TagTargetTypes)e)))
 				</p>
 			}
-			
+
+			@if (Model.RelatedEntryType != EntryType.Undefined) {
+				@Url.Sea
+			}
+
 			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
 
 			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Helpers.UniversalTimeLabel(Model.CreateDate)</p>

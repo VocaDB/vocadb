@@ -321,6 +321,8 @@ namespace VocaDb.Model.Database.Queries {
 				var latestComments = Comments(ctx).GetList(tag.Id, 3);
 				var followerCount = ctx.Query<TagForUser>().Count(t => t.Tag.Id == tagId);
 
+				var entryTypeMapping = ctx.Query<EntryTypeToTagMapping>().FirstOrDefault(etm => etm.Tag == tag);
+
 				return new TagDetailsContract(tag,
 					artists.TopUsages, artists.TotalCount,
 					albums.TopUsages, albums.TotalCount,
@@ -333,7 +335,9 @@ namespace VocaDb.Model.Database.Queries {
 					CommentCount = Comments(ctx).GetCount(tag.Id),
 					FollowerCount = followerCount,
 					LatestComments = latestComments,
-					IsFollowing = permissionContext.IsLoggedIn && ctx.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId)
+					IsFollowing = permissionContext.IsLoggedIn && ctx.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId),
+					RelatedEntryType = entryTypeMapping?.EntryType ?? EntryType.Undefined,
+					RelatedEntrySubType = entryTypeMapping?.SubType ?? string.Empty
 				};
 				
 			});
