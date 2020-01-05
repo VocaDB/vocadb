@@ -472,6 +472,7 @@
     <Compile Include="Domain\Songs\SongTagVote.cs" />
     <Compile Include="Domain\Songs\SongVoteRating.cs" />
     <Compile Include="Domain\Tags\ArchivedTagVersion.cs" />
+    <Compile Include="Domain\Tags\EntryTypeToTagMapping.cs" />
     <Compile Include="Domain\Tags\GenericTagUsage.cs" />
     <Compile Include="Domain\Tags\GenericTagVote.cs" />
     <Compile Include="Domain\Tags\IEntryWithTags.cs" />
