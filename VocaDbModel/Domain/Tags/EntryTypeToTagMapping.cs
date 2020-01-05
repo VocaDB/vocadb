@@ -4,6 +4,8 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual EntryType EntryType { get; set; }
 
+		public virtual EntryTypeAndSubType EntryTypeAndSubType => new EntryTypeAndSubType(EntryType, SubType);
+
 		public virtual int Id { get; set; }
 
 		/// <summary>

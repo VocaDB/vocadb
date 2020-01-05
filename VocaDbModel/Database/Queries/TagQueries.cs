@@ -336,8 +336,7 @@ namespace VocaDb.Model.Database.Queries {
 					FollowerCount = followerCount,
 					LatestComments = latestComments,
 					IsFollowing = permissionContext.IsLoggedIn && ctx.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId),
-					RelatedEntryType = entryTypeMapping?.EntryType ?? EntryType.Undefined,
-					RelatedEntrySubType = entryTypeMapping?.SubType ?? string.Empty
+					RelatedEntryType = entryTypeMapping?.EntryTypeAndSubType ?? new EntryTypeAndSubType()
 				};
 				
 			});

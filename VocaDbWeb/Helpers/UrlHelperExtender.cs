@@ -1,9 +1,13 @@
-﻿using System.Web.Mvc;
+using System.Web.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Utils;
+using VocaDb.Model.Utils.Search;
 
 namespace VocaDb.Web.Helpers {
 
@@ -43,6 +47,35 @@ namespace VocaDb.Web.Helpers {
 			ParamIs.NotNull(() => entry);
 
 			return EntryDetails(urlHelper, entry.EntryType, entry.Id, entry.UrlSlug);
+
+		}
+
+		public static string EntryIndex(this UrlHelper urlHelper, EntryTypeAndSubType fullEntryType) {
+
+			SearchRouteParams searchRouteParams = null;
+			switch (fullEntryType.EntryType) {
+				case EntryType.Artist:
+					searchRouteParams = new SearchRouteParams(EntryType.Artist) { artistType = EnumVal<ArtistType>.ParseSafe(fullEntryType.SubType) };
+					break;
+				case EntryType.Album:
+					searchRouteParams = new SearchRouteParams(EntryType.Album) { discType = EnumVal<DiscType>.ParseSafe(fullEntryType.SubType) };
+					break;
+				case EntryType.Song:
+					searchRouteParams = new SearchRouteParams(EntryType.Song) { songType = EnumVal<SongType>.ParseSafe(fullEntryType.SubType) };
+					break;
+				case EntryType.ReleaseEvent:
+					searchRouteParams = new SearchRouteParams(EntryType.ReleaseEvent);
+					break;
+				case EntryType.Tag:
+					searchRouteParams = new SearchRouteParams(EntryType.Tag);
+					break;
+			}
+
+			if (searchRouteParams != null) {
+				return urlHelper.Action("Index", "Search", searchRouteParams);
+			}
+
+			return "";
 
 		}
 

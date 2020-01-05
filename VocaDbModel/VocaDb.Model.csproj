@@ -344,6 +344,7 @@
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
     <Compile Include="Domain\Artists\ArtistHit.cs" />
+    <Compile Include="Domain\EntryTypeAndSubType.cs" />
     <Compile Include="Domain\Exceptions\RateLimitException.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkCategory.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkVariationTypes.cs" />
@@ -655,6 +656,7 @@
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventSeriesMap.cs" />
     <Compile Include="Mapping\Songs\SongListTagUsageMap.cs" />
     <Compile Include="Mapping\Songs\SongListTagVoteMap.cs" />
+    <Compile Include="Mapping\Tags\EntryTypeToTagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\Users\EventForUserMap.cs" />

@@ -11,13 +11,13 @@ namespace VocaDb.Migrations {
 			var tableName = "EntryTypeToTagMappings";
 			Create.Table(tableName)
 				.WithColumn(ColumnNames.Id).AsInt32().NotNullable().PrimaryKey().Identity()
-				.WithColumn("EntryType").AsString().NotNullable()
-				.WithColumn("EntrySubType").AsString().NotNullable()
+				.WithColumn("EntryType").AsString(20).NotNullable()
+				.WithColumn("SubType").AsString(30).NotNullable()
 				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, ColumnNames.Id).OnDelete(Rule.Cascade);
 
 			Create.Index("UX_EntryTypeToTagMappings_EntryType").OnTable(tableName)
 				.OnColumn("EntryType").Ascending()
-				.OnColumn("EntrySubType").Ascending()
+				.OnColumn("SubType").Ascending()
 				.WithOptions().Unique();
 
 			Create.Index("UX_EntryTypeToTagMappings_Tag").OnTable(tableName)
