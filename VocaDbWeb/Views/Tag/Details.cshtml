@@ -44,10 +44,10 @@
 		$(function () {
 
 			var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
-			var jsonModel = @ToJS(new { Model.Name, Model.Parent, Model.Children, Model.Siblings });
+			var jsonModel = @ToJS(Model.JsonModel);
 			var vm;
 
-			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children);
+			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children, jsonModel.hasMoreSiblings, jsonModel.hasMoreChildren);
 
 			var repo = new vdb.repositories.TagRepository('@RootPath');
 			var userRepo = new vdb.repositories.UserRepository(urlMapper);

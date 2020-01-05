@@ -1,4 +1,4 @@
-﻿import dc = vdb.dataContracts;
+import dc = vdb.dataContracts;
 
 function initTagsPage(vm: vdb.viewModels.tags.TagDetailsViewModel) {
 
@@ -22,7 +22,14 @@ function initTagsPage(vm: vdb.viewModels.tags.TagDetailsViewModel) {
 
 }
 
-function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBaseContract, siblings: dc.TagBaseContract[], children: dc.TagBaseContract[]) {
+function initChart(
+	urlMapper: vdb.UrlMapper,
+	thisTag: string,
+	parent: dc.TagBaseContract,
+	siblings: dc.TagBaseContract[],
+	children: dc.TagBaseContract[],
+	hasMoreSiblings: boolean,
+	hasMoreChildren: boolean) {
 
 	var tagUrl = (tag: dc.TagBaseContract) => urlMapper.mapRelative("/T/" + tag.id + "/" + tag.urlSlug);
 	var tagLink = (tag: dc.TagBaseContract) => {
@@ -33,13 +40,14 @@ function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBase
 	var tagLinks = (tagList: dc.TagBaseContract[]) => {
 
 		var str = "";
-		var links = _.map(tagList, item => tagLink(item));
+		const links = _.map(tagList, item => tagLink(item));
+		const tagsPerRow = 7;
 
-		for (var i = 0; i < tagList.length; i += 7) {
+		for (var i = 0; i < tagList.length; i += tagsPerRow) {
 			
-			str += _.reduce<string, string>(_.take(_.drop(links, i), 7), (list, item) => list + ", " + item);
+			str += _.reduce<string, string>(_.take(_.drop(links, i), tagsPerRow), (list, item) => list + ", " + item);
 
-			if (i < tagList.length + 7)
+			if (i < tagList.length + tagsPerRow)
 				str += "<br/>";
 
 		}
@@ -100,7 +108,9 @@ function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBase
 								})
 								.add();
 
-							ren.label("Siblings:<br/>" + tagLinks(siblings), 150, y + 115)
+							const siblingsText = "Siblings:<br/>" + tagLinks(siblings) + (hasMoreSiblings ? " (+ more)" : "");
+
+							ren.label(siblingsText, 150, y + 115)
 								.attr({
 									fill: colors[4],
 									stroke: 'white',
@@ -145,7 +155,9 @@ function initChart(urlMapper: vdb.UrlMapper, thisTag: string, parent: dc.TagBase
 							})
 							.add();
 
-						ren.label("Children:<br/>" + tagLinks(children), 10, y + 115)
+						const childrenText = "Children:<br/>" + tagLinks(children) + (hasMoreChildren ? " (+ more)" : "");
+
+						ren.label(childrenText, 10, y + 115)
 							.attr({
 								fill: colors[4],
 								stroke: 'white',
