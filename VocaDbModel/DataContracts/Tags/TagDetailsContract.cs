@@ -127,6 +127,15 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public WebLinkContract[] WebLinks { get; set; }
 
+		public object JsonModel => new {
+			Name, 
+			Parent, 
+			Children = Children.Take(20),
+			Siblings = Siblings.Take(20),
+			HasMoreChildren = Children.Length > 20,
+			HasMoreSiblings = Siblings.Length > 20
+		};
+
 	}
 
 }

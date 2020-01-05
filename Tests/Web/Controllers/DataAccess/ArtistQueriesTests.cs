@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Runtime.Caching;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -15,6 +16,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Resources.Messages;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
@@ -33,7 +35,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private FakePermissionContext permissionContext;
 		private ArtistQueries queries;
 		private FakeArtistRepository repository;
-		private User user;
+		/// <summary>
+		/// Logged in user
+		/// </summary>
+		private User user; 
+		private User user2;
 		private Artist vocalist;
 
 		private ArtistForEditContract CallUpdate(ArtistForEditContract contract) {
@@ -61,6 +67,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.SaveNames(artist, vocalist);
 
 			user = CreateEntry.User(name: "Miku", group: UserGroupId.Moderator);
+			user2 = CreateEntry.User(name: "Rin", group: UserGroupId.Regular);
 			repository.Save(user);
 			permissionContext = new FakePermissionContext(user);
 			imagePersister = new InMemoryImagePersister();
@@ -77,6 +84,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				WebLink = new WebLinkContract("http://tripshots.net/", "Website", WebLinkCategory.Official)
 			};
 
+		}
+
+		private (bool created, ArtistReport report) CallCreateReport(ArtistReportType reportType, int? versionNumber = null, Artist artist = null) {
+			artist ??= this.artist;
+			var result = queries.CreateReport(artist.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
+			var report = repository.Load<ArtistReport>(result.reportId);
+			return (result.created, report);
 		}
 
 		[TestMethod]
@@ -116,6 +130,38 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext.RefreshLoggedUser(repository);
 
 			queries.Create(newArtistContract);
+
+		}
+
+		[TestMethod]
+		public void CreateReport() {
+			
+			var editor = user2;
+			repository.Save(ArchivedArtistVersion.Create(artist, new ArtistDiff(), new AgentLoginData(editor), ArtistArchiveReason.PropertiesUpdated, string.Empty));
+			var (created, report) = CallCreateReport(ArtistReportType.InvalidInfo);
+
+			created.Should().BeTrue("Report was created");
+			report.EntryBase.Id.Should().Be(artist.Id);
+			report.User.Should().Be(user);
+			report.ReportType.Should().Be(ArtistReportType.InvalidInfo);
+
+			var notification = repository.List<UserMessage>().FirstOrDefault();
+			notification.Should().NotBeNull("notification was created");
+			notification.Receiver.Should().Be(editor, "notification receiver is editor");
+			notification.Subject.Should().Be(string.Format(EntryReportStrings.EntryVersionReportTitle, artist.DefaultName));
+
+		}
+
+		[TestMethod]
+		public void CreateReport_OwnershipClaim() {
+			
+			var editor = user2;
+			repository.Save(ArchivedArtistVersion.Create(artist, new ArtistDiff(), new AgentLoginData(editor), ArtistArchiveReason.PropertiesUpdated, string.Empty));
+			var (created, _) = CallCreateReport(ArtistReportType.OwnershipClaim);
+
+			created.Should().BeTrue("Report was created");
+
+			repository.List<UserMessage>().Should().BeEmpty("No notification created");
 
 		}
 

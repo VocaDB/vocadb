@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
@@ -46,7 +47,8 @@ namespace VocaDb.Model.Service.Queries {
 			int entryId, 
 			TReportType reportType, 
 			string hostname, 
-			string notes)
+			string notes,
+			bool allowNotification = true)
 			where TEntry : class, IEntryWithVersions, IEntryWithNames
 			where TReport : GenericEntryReport<TEntry, TReportType>
 			where TReportType: struct, Enum {
@@ -102,7 +104,9 @@ namespace VocaDb.Model.Service.Queries {
 				}				
 			}
 
-			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory, reportName);
+			if (allowNotification) {
+				new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory, reportName);
+			}
 
 			msg =  string.Format("reported {0} as {1} ({2})", entryLinkFactory.CreateEntryLink(entry), reportType, HttpUtility.HtmlEncode(notes));
 			ctx.AuditLogger.AuditLog(msg.Truncate(200), new AgentLoginData(reporter, hostname));
