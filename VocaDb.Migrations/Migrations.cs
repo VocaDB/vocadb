@@ -3,6 +3,29 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
+	// Migration version format: YYYY_MM_DD_HHmm
+
+	[Migration(2020_01_05_1600)]
+	public class TagRelatedEntries : AutoReversingMigration {
+		public override void Up() {
+			var tableName = "EntryTypeToTagMappings";
+			Create.Table(tableName)
+				.WithColumn(ColumnNames.Id).AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("EntryType").AsString(20).NotNullable()
+				.WithColumn("SubType").AsString(30).NotNullable()
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, ColumnNames.Id).OnDelete(Rule.Cascade);
+
+			Create.Index("UX_EntryTypeToTagMappings_EntryType").OnTable(tableName)
+				.OnColumn("EntryType").Ascending()
+				.OnColumn("SubType").Ascending()
+				.WithOptions().Unique();
+
+			Create.Index("UX_EntryTypeToTagMappings_Tag").OnTable(tableName)
+				.OnColumn("Tag").Ascending()
+				.WithOptions().Unique();
+		}
+	}
+
 	[Migration(2019_11_17_0100)]
 	public class SongListTags : AutoReversingMigration {
 

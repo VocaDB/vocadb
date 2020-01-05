@@ -51,4 +51,8 @@ namespace VocaDb.Migrations {
 
 	}
 
+	public static class ColumnNames {
+		public const string Id = nameof(Id);
+	}
+
 }

@@ -134,7 +134,14 @@
 					@Res.ValidFor: @string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined && Model.Targets.HasFlag((TagTargetTypes)e)))
 				</p>
 			}
-			
+
+			@if (Model.RelatedEntryType.HasValue) {
+				var text = "Show entries of type " + Model.RelatedEntryType.EntryType + (Model.RelatedEntryType.HasSubType ? " (" + Model.RelatedEntryType.SubType + ")" : "");
+				<p>
+					<a href="@Url.EntryIndex(Model.RelatedEntryType)">@text</a>
+				</p>
+			}
+
 			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
 
 			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Helpers.UniversalTimeLabel(Model.CreateDate)</p>
