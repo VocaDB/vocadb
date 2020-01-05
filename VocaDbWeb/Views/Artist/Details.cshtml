@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Artists;
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Artists
@@ -136,7 +136,7 @@
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
 						@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
-						@Html.ActionLink(Translate.ArtistTypeName(Model.ArtistType), "Index", new { artistType = Model.ArtistType })<br />
+						<a href="@Url.TagUrlForEntryType(EntryType.Artist, Model.ArtistType)">@Translate.ArtistTypeName(Model.ArtistType)</a>
 					</td>
 				</tr>
 

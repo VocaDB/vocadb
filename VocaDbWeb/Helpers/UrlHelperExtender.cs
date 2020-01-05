@@ -1,3 +1,4 @@
+using System;
 using System.Web.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Api;
@@ -89,6 +90,15 @@ namespace VocaDb.Web.Helpers {
 
 		public static string StaticResource(this UrlHelper urlHelper, string url) {
 			return VocaUriBuilder.StaticResource(url);
+		}
+
+		public static string TagUrlForEntryType<TSubType>(this UrlHelper urlHelper, EntryType entryType, TSubType subType)
+			where TSubType : Enum {
+			return TagUrlForEntryType(urlHelper, new EntryTypeAndSubType(entryType, subType.ToString()));
+		}
+
+		public static string TagUrlForEntryType(this UrlHelper urlHelper, EntryTypeAndSubType entryType) {
+			return urlHelper.Action("DetailsByEntryType", "Tag", new { entryType = entryType.EntryType, subType = entryType.SubType });
 		}
 
 		public static string UserDetails(this UrlHelper urlHelper, IUser user) {

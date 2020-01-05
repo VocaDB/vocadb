@@ -296,6 +296,34 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public TagContract FindTagForEntryType(EntryTypeAndSubType entryType) {
+
+			return HandleQuery(ctx => {
+
+				var tag = ctx.Query<EntryTypeToTagMapping>()
+					.Where(m => m.EntryType == entryType.EntryType && m.SubType == entryType.SubType)				
+					.Select(m => m.Tag)
+					.FirstOrDefault();
+
+				if (tag == null) {
+					tag = ctx.Query<EntryTypeToTagMapping>()
+						.Where(m => m.EntryType == entryType.EntryType && m.SubType == "")
+						.Select(m => m.Tag)
+						.FirstOrDefault();
+				}
+
+				if (tag == null) {
+					tag = ctx.Query<EntryTypeToTagMapping>()
+						.Where(m => m.EntryType == EntryType.Undefined)				
+						.Select(m => m.Tag)
+						.FirstOrDefault();
+				}
+
+				return tag != null ? new TagContract(tag, LanguagePreference) : null;
+			});
+
+		}
+
 		public CommentForApiContract[] GetComments(int tagId) {
 
 			return HandleQuery(ctx => Comments(ctx).GetAll(tagId));
