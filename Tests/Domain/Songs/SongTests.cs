@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Tests.TestData;
 
@@ -23,14 +24,19 @@ namespace VocaDb.Tests.Domain.Songs {
 
 		private class SpecialTags : ISpecialTags {
 			public int ChangedLyrics { get; set; }
+		}
+
+		private class EntryTypeTags : IEntryTypeTags {
 			public int Cover { get; set; }
 			public int Instrumental { get; set; }
 			public int Remix { get; set; }
+			public int SongTypeTag(SongType songType) => 0;
 		}
 
 		private Artist artist;
 		private readonly List<Artist> artists = new List<Artist>();
 		private Tag changedLyricsTag;
+		private EntryTypeTags entryTypeTags;
 		private Tag instrumentalTag;
 		private LyricsForSong lyrics;
 		private Song song;
@@ -38,6 +44,10 @@ namespace VocaDb.Tests.Domain.Songs {
 		private Artist vocalist;
 
 		private Func<ArtistForSongContract, Artist> artistFunc;
+
+		private IList<LyricsForSong> CallGetLyricsFromParents(Song song) {
+			return song.GetLyricsFromParents(specialTags, entryTypeTags);
+		}
 
 		private PVForSong CreatePV(PVService service = PVService.Youtube, PVType pvType = PVType.Original, DateTime? publishDate = null) {
 			return song.CreatePV(new PVContract { Service = service, PVId = "test", Name = "test", PublishDate = publishDate, PVType = pvType });
@@ -63,8 +73,10 @@ namespace VocaDb.Tests.Domain.Songs {
 			instrumentalTag = CreateEntry.Tag("instrumental", 1);
 			changedLyricsTag = CreateEntry.Tag("changed lyrics", 2);
 			specialTags = new SpecialTags {
-				Instrumental = instrumentalTag.Id,
 				ChangedLyrics = changedLyricsTag.Id
+			};
+			entryTypeTags = new EntryTypeTags {
+				Instrumental = instrumentalTag.Id,
 			};
 			artistFunc = (contract => artists.FirstOrDefault(a => a.Id == contract.Artist?.Id));
 
@@ -114,7 +126,7 @@ namespace VocaDb.Tests.Domain.Songs {
 		[TestMethod]
 		public void LyricsFromParents_NoLyrics() {
 
-			var result = new Song().GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(new Song());
 
 			Assert.AreEqual(0, result.Count, "no lyrics");
 
@@ -123,7 +135,7 @@ namespace VocaDb.Tests.Domain.Songs {
 		[TestMethod]
 		public void LyricsFromParents_NoParent() {
 
-			var result = song.GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(song);
 
 			Assert.AreEqual(1, result.Count, "one entry");
 			Assert.AreSame(lyrics, result.First(), "returned lyrics from entry");
@@ -138,7 +150,7 @@ namespace VocaDb.Tests.Domain.Songs {
 				OriginalVersion = song
 			};
 
-			var result = derived.GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(derived);
 			Assert.AreEqual(0, result.Count, "No lyrics inherited for instrumental");
 
 		}
@@ -149,7 +161,7 @@ namespace VocaDb.Tests.Domain.Songs {
 			var derived = new Song {
 				OriginalVersion = song
 			};
-			var result = derived.GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(derived);
 
 			Assert.AreEqual(1, result.Count, "one entry");
 			Assert.AreSame(lyrics, result.First(), "returned lyrics from entry");
@@ -169,7 +181,7 @@ namespace VocaDb.Tests.Domain.Songs {
 				OriginalVersion = instrumental
 			};
 
-			var result = derived.GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(derived);
 			Assert.AreSame(lyrics, result.FirstOrDefault(), "returned lyrics from entry");
 
 		}

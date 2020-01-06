@@ -22,13 +22,6 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["free"] = value; }
 		}
 
-		[ConfigurationProperty("instrumental")]
-		public int Instrumental
-		{
-			get { return TagId("instrumental"); }
-			set { this["instrumental"] = value; }
-		}
-
 		[ConfigurationProperty("shortVersion")]
 		public int ShortVersion {
 			get { return TagId("shortVersion"); }
@@ -39,8 +32,6 @@ namespace VocaDb.Model.Utils.Config {
 
 	public interface ISpecialTags {
 		int ChangedLyrics { get; }
-		[Obsolete("IEntryTypeTags")]
-		int Instrumental { get; }
 	}
 
 }

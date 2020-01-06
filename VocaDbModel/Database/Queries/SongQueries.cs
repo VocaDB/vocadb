@@ -395,7 +395,8 @@ namespace VocaDb.Model.Database.Queries {
 					diff.Lyrics.Set();
 				}
 
-				song.Status = (contract.Draft || !(new SongValidator().IsValid(song, config.SpecialTags.Instrumental))) ? EntryStatus.Draft : EntryStatus.Finished;
+				var instrumentalTagId = new EntryTypeTags(ctx).Instrumental;
+				song.Status = (contract.Draft || !(new SongValidator().IsValid(song, instrumentalTagId))) ? EntryStatus.Draft : EntryStatus.Finished;
 
 				song.UpdateArtistString();
 
@@ -488,7 +489,7 @@ namespace VocaDb.Model.Database.Queries {
 				var lang = languagePreference ?? PermissionContext.LanguagePreference;
 				var song = session.Load<Song>(songId);
 				var contract = new SongDetailsContract(song, lang, GetSongPools(session, songId), 
-					config.SpecialTags, PermissionContext, entryThumbPersister);
+					config.SpecialTags, new EntryTypeTags(session), PermissionContext, entryThumbPersister);
 				var user = PermissionContext.LoggedUser;
 
 				if (user != null) {
@@ -622,14 +623,15 @@ namespace VocaDb.Model.Database.Queries {
 				if (song.HasOriginalVersion
 					&& song.LengthSeconds > 0
 				    && song.OriginalVersion.LengthSeconds > song.LengthSeconds + 30) {
-					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.ShortVersion, 1));
+					mappedTags = mappedTags.Append(config.SpecialTags.ShortVersion);
 				}
 
+				var instrumentalTagId = entryTypeTags.Instrumental;
 				if (song.SongType != SongType.DramaPV 
 				    && song.SongType != SongType.Instrumental 
 				    && !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any() 
-				    && config.SpecialTags.Instrumental != 0) {
-					mappedTags = mappedTags.Concat(Enumerable.Repeat(config.SpecialTags.Instrumental, 1));
+				    && instrumentalTagId != 0) {
+					mappedTags = mappedTags.Append(instrumentalTagId);
 				}
 
 				mappedTags = mappedTags.Where(t => !songTags.Contains(t)).Take(maxResults).ToArray();

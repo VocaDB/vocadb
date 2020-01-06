@@ -1,5 +1,7 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Web.Mvc;
+using VocaDb.Model.Database.Queries;
+using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 
@@ -9,9 +11,11 @@ namespace VocaDb.Web.Controllers
     {
 
 		private readonly VdbConfigManager config;
+		private readonly TagQueries tagQueries;
 
-		public HelpController(VdbConfigManager config) {
+		public HelpController(VdbConfigManager config, TagQueries tagQueries) {
 			this.config = config;
+			this.tagQueries = tagQueries;
 		}
 
         //
@@ -24,7 +28,7 @@ namespace VocaDb.Web.Controllers
 				return View("External");
 
 			ViewBag.FreeTagId = config.SpecialTags.Free;
-			ViewBag.InstrumentalTagId = config.SpecialTags.Instrumental;
+			ViewBag.InstrumentalTagId = tagQueries.HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
 
 			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName) {
 				case "ja":
