@@ -109,6 +109,15 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
+		/// <summary>
+		/// Synchronizes the given changes to database, meaning calls
+		/// insert, update and delete as appropriate.
+		/// </summary>
+		/// <typeparam name="T">Context type.</typeparam>
+		/// <typeparam name="T2">Element type.</typeparam>
+		/// <param name="ctx">Database context.</param>
+		/// <param name="diff">Element diff.</param>
+		/// <returns><paramref name="diff"/></returns>
 		public static CollectionDiff<T2, T2> Sync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff) {
 
 			ParamIs.NotNull(() => ctx);

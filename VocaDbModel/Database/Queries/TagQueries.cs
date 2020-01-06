@@ -371,6 +371,17 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public TagEntryMappingContract[] GetEntryMappings() {
+
+			return HandleQuery(ctx => {
+				return ctx.Query<EntryTypeToTagMapping>()
+					.ToArray()
+					.Select(t => new TagEntryMappingContract(t, LanguagePreference))
+					.ToArray();
+			});
+
+		}
+
 		public PartialFindResult<TagMappingContract> GetMappings(PagingProperties paging) {
 
 			return HandleQuery(ctx => {
@@ -813,6 +824,28 @@ namespace VocaDb.Model.Database.Queries {
 				return new TagBaseContract(tag, LanguagePreference);
 
 			});
+
+		}
+
+		public void UpdateEntryMappings(TagEntryMappingContract[] mappings) {
+
+			PermissionContext.VerifyPermission(PermissionToken.ManageTagMappings);
+
+			HandleTransaction(ctx => {
+
+				ctx.AuditLogger.SysLog("updating entry type / tag mappings");
+
+				var existing = ctx.Query<EntryTypeToTagMapping>().ToList();
+				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.EntryType.Equals(m2.EntryType) && m.Tag.IdEquals(m2.Tag), 
+					create: t => new EntryTypeToTagMapping(t.EntryType, ctx.Load<Tag>(t.Tag.Id)));
+
+				ctx.Sync(diff);
+
+				ctx.AuditLogger.AuditLog(string.Format("updated entry type / tag mappings ({0} additions, {1} deletions)", diff.Added.Length, diff.Removed.Length));
+				ctx.AuditLogger.SysLog(string.Format("added [{0}], deleted [{1}]", string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName)), string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))));
+
+			});
+
 
 		}
 

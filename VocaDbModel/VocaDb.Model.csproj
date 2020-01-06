@@ -197,6 +197,7 @@
     <Compile Include="DataContracts\Tags\ArchivedTagVersionDetailsContract.cs" />
     <Compile Include="DataContracts\Tags\ComparedTagsContract.cs" />
     <Compile Include="DataContracts\Tags\TagBaseContract.cs" />
+    <Compile Include="DataContracts\Tags\TagEntryMappingContract.cs" />
     <Compile Include="DataContracts\Tags\TagForApiContract.cs" />
     <Compile Include="DataContracts\Tags\TagMappingContract.cs" />
     <Compile Include="DataContracts\Tags\TagUsageForApiContract.cs" />
