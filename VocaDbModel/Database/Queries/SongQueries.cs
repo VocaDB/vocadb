@@ -194,8 +194,8 @@ namespace VocaDb.Model.Database.Queries {
 			if (coverTagId == 0)
 				return false;
 
-			var coverSourceTag = ctx.Query<TagMapping>().FirstOrDefault(t => t.Tag.Id == coverTagId)?.SourceTag;
-			return coverSourceTag != null && res.Tags.Contains(coverSourceTag, StringComparer.InvariantCultureIgnoreCase);
+			var coverSourceTags = ctx.Query<TagMapping>().Where(t => t.Tag.Id == coverTagId).Select(t => t.SourceTag).ToArray();
+			return coverSourceTags.Any(coverSourceTag => res.Tags.Contains(coverSourceTag, StringComparer.InvariantCultureIgnoreCase));
 
 		}
 
