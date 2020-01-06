@@ -38,7 +38,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 	[TestClass]
 	public class SongQueriesTests {
 
-		private const int coverTagId = 3939;
 		private const int shortVersionTagId = 4717;
 		private EntryAnchorFactory entryLinkFactory;
 		private FakeUserMessageMailer mailer;
@@ -120,7 +119,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Add(producer, vocalist);
 
 			tag = new Tag("vocarock");
-			repository.Add(tag, new Tag("vocaloud"));
+			repository.Save(tag, new Tag("vocaloud"));
 
 			releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
 
@@ -299,8 +298,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public async Task Create_Tags_IgnoreCoverIfSongTypeIsCover() {
 
-			var coverTag = repository.Save(CreateEntry.Tag("cover", coverTagId));
+			var coverTag = repository.Save(CreateEntry.Tag("cover"));
 			repository.Save(new TagMapping(coverTag, "cover"));
+			repository.Save(new EntryTypeToTagMapping(new EntryTypeAndSubType(EntryType.Song, SongType.Cover.ToString()), coverTag));
 
 			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
 			newSongContract.SongType = SongType.Cover;
@@ -719,8 +719,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public async Task GetTagSuggestions_IgnoreCoverTagIfTypeIsCover() {
 
-			var coverTag = repository.Save(CreateEntry.Tag("cover", coverTagId));
+			var coverTag = repository.Save(CreateEntry.Tag("cover"));
 			repository.Save(new TagMapping(coverTag, "cover"));
+			repository.Save(new EntryTypeToTagMapping(new EntryTypeAndSubType(EntryType.Song, SongType.Cover.ToString()), coverTag));
 
 			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
 			song.SongType = SongType.Cover;

@@ -81,7 +81,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			foreach (var tag in tags) {
 
-				if (tagMapper.TagIsRedundantForSong(song.SongType, tag.Id, config.SpecialTags)) {
+				if (tagMapper.TagIsRedundantForSong(song.SongType, tag.Id, new EntryTypeTags(ctx))) {
 					continue;
 				}
 							
@@ -185,14 +185,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		private bool HasCoverTag(IDatabaseContext<PVForSong> ctx, VideoUrlParseResult res) {
 
-			if (config.SpecialTags.Cover == 0)
-				return false;
-
 			// Tag mappings are only supported for nico for now.
 			if (res.Service != PVService.NicoNicoDouga)
 				return false;
 
-			var coverSourceTag = ctx.Query<TagMapping>().FirstOrDefault(t => t.Tag.Id == config.SpecialTags.Cover)?.SourceTag;
+			var coverTagId = new EntryTypeTags(ctx).Cover;
+
+			if (coverTagId == 0)
+				return false;
+
+			var coverSourceTag = ctx.Query<TagMapping>().FirstOrDefault(t => t.Tag.Id == coverTagId)?.SourceTag;
 			return coverSourceTag != null && res.Tags.Contains(coverSourceTag, StringComparer.InvariantCultureIgnoreCase);
 
 		}
@@ -614,7 +616,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tagMapper = new TagMapper();
 				var nicoTags = pvResults.Where(p => p != null).SelectMany(pv => pv.Tags).Distinct().ToArray();
-				var mappedTags = (await MapTagsAsync(ctx, nicoTags)).Where(t => !tagMapper.TagIsRedundantForSong(song.SongType, t.Id, config.SpecialTags)).Select(t => t.Id);
+				var entryTypeTags = new EntryTypeTags(ctx);
+				var mappedTags = (await MapTagsAsync(ctx, nicoTags)).Where(t => !tagMapper.TagIsRedundantForSong(song.SongType, t.Id, entryTypeTags)).Select(t => t.Id);
 
 				if (song.HasOriginalVersion
 					&& song.LengthSeconds > 0
