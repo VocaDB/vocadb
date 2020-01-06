@@ -2483,6 +2483,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongInListEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVAndVoteContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Tag\EntryTagMappingContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagBaseContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagMappingContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagSelectionContract.ts" />
@@ -2954,7 +2955,9 @@
     <TypeScriptCompile Include="Scripts\DataContracts\CommonEntryContract.ts" />
     <TypeScriptCompile Include="Scripts\Models\ContentFocus.ts" />
     <TypeScriptCompile Include="Scripts\Models\EntryStatus.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\EntryTypeAndSubTypeContract.ts" />
     <TypeScriptCompile Include="Scripts\Models\Events\ArtistEventRoles.ts" />
+    <TypeScriptCompile Include="Scripts\Models\Events\EventCategory.ts" />
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguagePreference.ts" />
     <TypeScriptCompile Include="Scripts\Models\Globalization\TranslationType.ts" />
     <TypeScriptCompile Include="Scripts\Models\IEntryWithIdAndName.ts" />
@@ -3006,6 +3009,7 @@
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
     <TypeScriptCompile Include="Scripts\User\Details.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ActivityEntry\ActivityEntryListViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Admin\ManageEntryTagMappingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Admin\ManageTagMappingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumDiscPropertiesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
@@ -3503,6 +3507,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Album\Partials\_AlbumReviews.cshtml" />
+    <Content Include="Views\Admin\ManageEntryTagMappings.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\SeriesDetails.cshtml" />

@@ -52,6 +52,10 @@ module vdb.repositories {
 
 		}
 
+		public getEntryTagMappings = (): Promise<dc.tags.EntryTagMappingContract[]> => {
+			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/entry-type-mappings"));
+		}
+
 		public getMappings = (paging: dc.PagingProperties): Promise<dc.PartialFindResultContract<dc.tags.TagMappingContract>> => {
 			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/mappings"), paging);
 		}
@@ -63,6 +67,11 @@ module vdb.repositories {
 
 			$.getJSON(url, data, callback);
 
+		}
+
+		public saveEntryMappings = (mappings: dc.tags.EntryTagMappingContract[]): Promise<any> => {
+			var url = this.urlMapper.mapRelative("/api/tags/entry-type-mappings");
+			return Promise.resolve(helpers.AjaxHelper.putJSON(url, mappings));
 		}
 
 		public saveMappings = (mappings: dc.tags.TagMappingContract[]): Promise<any> => {

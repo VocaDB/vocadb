@@ -1,4 +1,4 @@
-@using VocaDb.Model.Domain.Security;
+﻿@using VocaDb.Model.Domain.Security;
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
@@ -25,6 +25,7 @@
 
 @if (HasPermission(PermissionToken.ManageTagMappings)) {
 	<p>@Html.ActionLink("Manage tag mappings", "ManageTagMappings")</p>
+	<p>@Html.ActionLink("Manage entry type to tag mappings", "ManageEntryTagMappings")</p>
 }
 
 @if (UserContext.HasPermission(PermissionToken.ManageEntryReports)) {

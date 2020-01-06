@@ -836,7 +836,7 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.SysLog("updating entry type / tag mappings");
 
 				var existing = ctx.Query<EntryTypeToTagMapping>().ToList();
-				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.EntryType.Equals(m2.EntryType) && m.Tag.IdEquals(m2.Tag), 
+				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.EntryTypeAndSubType.Equals(m2.EntryType) && m.Tag.IdEquals(m2.Tag), 
 					create: t => new EntryTypeToTagMapping(t.EntryType, ctx.Load<Tag>(t.Tag.Id)));
 
 				ctx.Sync(diff);
