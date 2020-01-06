@@ -376,6 +376,8 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(ctx => {
 				return ctx.Query<EntryTypeToTagMapping>()
 					.ToArray()
+					.OrderBy(t => t.EntryType)
+					.ThenBy(t => t.SubType)
 					.Select(t => new TagEntryMappingContract(t, LanguagePreference))
 					.ToArray();
 			});

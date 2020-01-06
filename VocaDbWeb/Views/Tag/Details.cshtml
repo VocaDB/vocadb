@@ -136,9 +136,9 @@
 			}
 
 			@if (Model.RelatedEntryType.HasValue) {
-				var text = "Show entries of type " + Model.RelatedEntryType.EntryType + (Model.RelatedEntryType.HasSubType ? " (" + Model.RelatedEntryType.SubType + ")" : "");
+				var text = Model.RelatedEntryType.EntryType.ToString() + (Model.RelatedEntryType.HasSubType ? " (" + Model.RelatedEntryType.SubType + ")" : "");
 				<p>
-					<a href="@Url.EntryIndex(Model.RelatedEntryType)">@text</a>
+					Associated entry type: <a href="@Url.EntryIndex(Model.RelatedEntryType)">@text</a>
 				</p>
 			}
 
