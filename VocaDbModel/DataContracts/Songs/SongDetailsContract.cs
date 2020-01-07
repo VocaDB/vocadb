@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Utils.Config;
 
@@ -22,7 +23,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
 			SongListBaseContract[] pools, ISpecialTags specialTags, IEntryTypeTags entryTypeTags, IUserPermissionContext userContext, 
-			IEntryThumbPersister thumbPersister) {
+			IEntryThumbPersister thumbPersister, Tag songTypeTag = null) {
 
 			Song = new SongContract(song, languagePreference);
 
@@ -46,6 +47,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			PersonalDescriptionText = song.PersonalDescriptionText;
 			var author = song.PersonalDescriptionAuthor;
 			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, ArtistOptionalFields.MainPicture) : null;
+			SongTypeTag = songTypeTag != null ? new TagBaseContract(songTypeTag, languagePreference) : null;
 			SubjectsFromParents = song.GetCharactersFromParents().Select(c => new ArtistForSongContract(c, languagePreference)).ToArray();
 			Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(song.TranslatedName);
@@ -149,6 +151,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public SongContract Song { get; set; }
+
+		[DataMember]
+		public TagBaseContract SongTypeTag { get; set; }
 
 		[DataMember]
 		public ArtistForSongContract[] SubjectsFromParents { get; set; }

@@ -140,7 +140,7 @@ namespace VocaDb.Model.Service {
 		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery) {
 
 			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0], 
-				config.SpecialTags, GetEntryTypeTags(session), PermissionContext, null), 
+				config.SpecialTags, GetEntryTypeTags(session), PermissionContext, null, null), 
 				new[]{ textQuery.Query }, textQuery.MatchMode);
 
 		}

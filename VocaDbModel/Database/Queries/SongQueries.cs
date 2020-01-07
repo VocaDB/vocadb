@@ -168,6 +168,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private Tag GetSongTypeTag(IDatabaseContext ctx, SongType songType) {
+			return ctx.NullSafeLoad<Tag>(new EntryTypeTags(ctx).SongTypeTag(songType));
+		}
+
 		private Tag[] GetTags(IDatabaseContext<Tag> session, string[] tagNames) {
 
 			var direct = session.Query().WhereHasName(tagNames).ToArray();
@@ -489,7 +493,9 @@ namespace VocaDb.Model.Database.Queries {
 				var lang = languagePreference ?? PermissionContext.LanguagePreference;
 				var song = session.Load<Song>(songId);
 				var contract = new SongDetailsContract(song, lang, GetSongPools(session, songId), 
-					config.SpecialTags, new EntryTypeTags(session), PermissionContext, entryThumbPersister);
+					config.SpecialTags, new EntryTypeTags(session), PermissionContext, entryThumbPersister,
+					GetSongTypeTag(session, song.SongType)
+					);
 				var user = PermissionContext.LoggedUser;
 
 				if (user != null) {

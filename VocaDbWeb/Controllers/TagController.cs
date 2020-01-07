@@ -91,6 +91,10 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
+		/// <summary>
+		/// Redirects to entry type tag based on entry type and possible sub-type.
+		/// As fallback, redirects to tags index if no tag is found.
+		/// </summary>
 		public ActionResult DetailsByEntryType(EntryType entryType, string subType = "") {
 
 			var tag = queries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType));

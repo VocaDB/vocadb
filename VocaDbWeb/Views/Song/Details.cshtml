@@ -220,7 +220,11 @@
 				<td>@ViewRes.SharedStrings.Type</td>
 				<td>
 					@SongHelpers.SongTypeLabel(Model.SongType)
-					<a href="@Url.TagUrlForEntryType(VocaDb.Model.Domain.EntryType.Song, Model.SongType)">@Translate.SongTypeNames[Model.SongType]</a>
+					@if (Model.SongTypeTag != null) {
+						<a href="@Url.TagDetails(Model.SongTypeTag)">@Translate.SongTypeNames[Model.SongType]</a>
+					} else {
+						<a href="@Url.TagUrlForEntryType(VocaDb.Model.Domain.EntryType.Song, Model.SongType)">@Translate.SongTypeNames[Model.SongType]</a>
+					}
 				</td>
 			</tr>
 			

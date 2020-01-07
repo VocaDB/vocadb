@@ -2,6 +2,7 @@ using System;
 using System.Web.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Api;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -90,6 +91,14 @@ namespace VocaDb.Web.Helpers {
 
 		public static string StaticResource(this UrlHelper urlHelper, string url) {
 			return VocaUriBuilder.StaticResource(url);
+		}
+
+		public static string TagDetails(this UrlHelper urlHelper, TagBaseContract tagContract) {
+
+			ParamIs.NotNull(() => tagContract);
+
+			return EntryDetails(urlHelper, EntryType.Tag, tagContract.Id, tagContract.UrlSlug);
+
 		}
 
 		public static string TagUrlForEntryType<TSubType>(this UrlHelper urlHelper, EntryType entryType, TSubType subType)
