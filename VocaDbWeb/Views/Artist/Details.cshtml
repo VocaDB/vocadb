@@ -136,7 +136,11 @@
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
 						@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
-						<a href="@Url.TagUrlForEntryType(EntryType.Artist, Model.ArtistType)">@Translate.ArtistTypeName(Model.ArtistType)</a>
+						@if (Model.ArtistTypeTag != null) {
+							<a href="@Url.TagDetails(Model.ArtistTypeTag)">@Translate.ArtistTypeName(Model.ArtistType)</a>
+						} else {
+							<a href="@Url.TagUrlForEntryType(EntryType.Artist, Model.ArtistType)">@Translate.ArtistTypeName(Model.ArtistType)</a>
+						}
 					</td>
 				</tr>
 

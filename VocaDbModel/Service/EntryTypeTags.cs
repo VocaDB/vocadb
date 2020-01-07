@@ -11,7 +11,8 @@ namespace VocaDb.Model.Service {
 		int Cover { get; }
 		int Instrumental { get; }
 		int Remix { get; }
-		int SongTypeTag(SongType songType);
+		Tag GetTag<TSubType>(EntryType entryType, TSubType subType) where TSubType : Enum;
+		int SongTypeTagId(SongType songType);
 	}
 
 	public class EntryTypeTags : IEntryTypeTags {
@@ -29,10 +30,10 @@ namespace VocaDb.Model.Service {
 
 		private readonly IDatabaseContext ctx;
 
-		public int Cover => SongTypeTag(SongType.Cover);
-		public int Instrumental => SongTypeTag(SongType.Instrumental);
-		public int Remix => SongTypeTag(SongType.Remix);
-		public int SongTypeTag(SongType songType) => GetTagId(EntryType.Song, songType);
-
+		public int Cover => SongTypeTagId(SongType.Cover);
+		public int Instrumental => SongTypeTagId(SongType.Instrumental);
+		public int Remix => SongTypeTagId(SongType.Remix);
+		public Tag GetTag<TSubType>(EntryType entryType, TSubType subType) where TSubType : Enum => ctx.NullSafeLoad<Tag>(GetTagId(entryType, subType));
+		public int SongTypeTagId(SongType songType) => GetTagId(EntryType.Song, songType);
 	}
 }

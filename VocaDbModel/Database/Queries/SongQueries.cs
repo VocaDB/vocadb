@@ -169,14 +169,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		private Tag GetSongTypeTag(IDatabaseContext ctx, SongType songType) {
-			return ctx.NullSafeLoad<Tag>(new EntryTypeTags(ctx).SongTypeTag(songType));
-		}
-
-		private Tag[] GetTags(IDatabaseContext<Tag> session, string[] tagNames) {
-
-			var direct = session.Query().WhereHasName(tagNames).ToArray();
-			return direct;
-
+			return new EntryTypeTags(ctx).GetTag(EntryType.Song, songType);
 		}
 
 		private Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {

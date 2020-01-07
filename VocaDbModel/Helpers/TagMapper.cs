@@ -16,7 +16,7 @@ namespace VocaDb.Model.Helpers {
 		/// </summary>
 		public bool TagIsRedundantForSong(SongType songType, int tagId, IEntryTypeTags specialTags) {
 
-			if (tagId == specialTags.SongTypeTag(songType))
+			if (tagId == specialTags.SongTypeTagId(songType))
 				return true;
 
 			return false;

@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -30,7 +31,8 @@ namespace VocaDb.Tests.Domain.Songs {
 			public int Cover { get; set; }
 			public int Instrumental { get; set; }
 			public int Remix { get; set; }
-			public int SongTypeTag(SongType songType) => 0;
+			public int SongTypeTagId(SongType songType) => 0;
+			Tag IEntryTypeTags.GetTag<TSubType>(EntryType entryType, TSubType subType) => null;
 		}
 
 		private Artist artist;

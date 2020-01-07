@@ -1,10 +1,14 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
 
+	/// <summary>
+	/// Minimal tag details: Id, Name (translated), UrlSlug.
+	/// Optionally includes AdditionalNames and Category.
+	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class TagBaseContract : ITag, IEntryWithIntId {
 
