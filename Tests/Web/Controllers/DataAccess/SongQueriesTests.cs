@@ -300,7 +300,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var coverTag = repository.Save(CreateEntry.Tag("cover"));
 			repository.Save(new TagMapping(coverTag, "cover"));
-			repository.Save(new EntryTypeToTagMapping(new EntryTypeAndSubType(EntryType.Song, SongType.Cover.ToString()), coverTag));
+			repository.Save(new EntryTypeToTagMapping(EntryTypeAndSubType.Create(EntryType.Song, SongType.Cover), coverTag));
 
 			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
 			newSongContract.SongType = SongType.Cover;
@@ -721,7 +721,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var coverTag = repository.Save(CreateEntry.Tag("cover"));
 			repository.Save(new TagMapping(coverTag, "cover"));
-			repository.Save(new EntryTypeToTagMapping(new EntryTypeAndSubType(EntryType.Song, SongType.Cover.ToString()), coverTag));
+			repository.Save(new EntryTypeToTagMapping(EntryTypeAndSubType.Create(EntryType.Song, SongType.Cover), coverTag));
 
 			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
 			song.SongType = SongType.Cover;

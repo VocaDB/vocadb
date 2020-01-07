@@ -93,8 +93,8 @@ namespace VocaDb.Web.Helpers {
 		}
 
 		public static string TagUrlForEntryType<TSubType>(this UrlHelper urlHelper, EntryType entryType, TSubType subType)
-			where TSubType : Enum {
-			return TagUrlForEntryType(urlHelper, new EntryTypeAndSubType(entryType, subType.ToString()));
+			where TSubType : struct, Enum {
+			return TagUrlForEntryType(urlHelper, EntryTypeAndSubType.Create(entryType, subType));
 		}
 
 		public static string TagUrlForEntryType(this UrlHelper urlHelper, EntryTypeAndSubType entryType) {
