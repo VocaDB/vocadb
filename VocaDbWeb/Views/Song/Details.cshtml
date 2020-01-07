@@ -221,7 +221,7 @@
 				<td>
 					@SongHelpers.SongTypeLabel(Model.SongType)
 					@if (Model.SongTypeTag != null) {
-						<a href="@Url.TagDetails(Model.SongTypeTag)">@Translate.SongTypeNames[Model.SongType]</a>
+						<a href="@Url.TagDetails(Model.SongTypeTag)" data-bind="tagToolTip: @Model.SongTypeTag.Id">@Translate.SongTypeNames[Model.SongType]</a>
 					} else {
 						<a href="@Url.TagUrlForEntryType(VocaDb.Model.Domain.EntryType.Song, Model.SongType)">@Translate.SongTypeNames[Model.SongType]</a>
 					}
