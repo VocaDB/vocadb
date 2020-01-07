@@ -137,7 +137,7 @@
 					<td>
 						@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
 						@if (Model.ArtistTypeTag != null) {
-							<a href="@Url.TagDetails(Model.ArtistTypeTag)">@Translate.ArtistTypeName(Model.ArtistType)</a>
+							<a href="@Url.TagDetails(Model.ArtistTypeTag)" data-bind="tagToolTip: @Model.ArtistTypeTag.Id">@Translate.ArtistTypeName(Model.ArtistType)</a>
 						} else {
 							<a href="@Url.TagUrlForEntryType(EntryType.Artist, Model.ArtistType)">@Translate.ArtistTypeName(Model.ArtistType)</a>
 						}
