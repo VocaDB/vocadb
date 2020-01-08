@@ -195,7 +195,11 @@
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
-						<a href="@Url.TagUrlForEntryType(VocaDb.Model.Domain.EntryType.Album, Model.DiscType)">@Translate.DiscTypeName(Model.DiscType)</a>
+						@if (Model.DiscTypeTypeTag != null) {
+							<a href="@Url.TagDetails(Model.DiscTypeTypeTag)" data-bind="tagToolTip: @Model.DiscTypeTypeTag.Id">@Translate.DiscTypeName(Model.DiscType)</a>
+						} else {
+							<a href="@Url.TagUrlForEntryType(EntryType.Album, Model.DiscType)">@Translate.DiscTypeName(Model.DiscType)</a>
+						}
 					</td>
 				</tr>
 
