@@ -116,7 +116,7 @@ namespace VocaDb.Model.Helpers {
 
 		public static IEnumerable<T> RemovedItems<T, T2>(IEnumerable<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality) => old.Where(i => !newItems.Any(i2 => equality(i, i2)));
 
-		public static IEnumerable<T> SkipNull<T>(params T[] items) where T : class => items.Where(i => i != null);
+		public static IEnumerable<T> SkipNull<T>(params T[] items) where T : class => items.WhereNotNull();
 
 		public static T[] SortByIds<T>(IEnumerable<T> entries, int[] idList) where T : IEntryWithIntId {
 			

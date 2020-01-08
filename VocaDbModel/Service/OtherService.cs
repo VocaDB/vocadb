@@ -219,7 +219,7 @@ namespace VocaDb.Model.Service {
 					.WhereIdIn(cachedSongIds)
 					.WhereHasPV()
 					.ToListAsync();
-				return cachedSongs.OrderByIds(cachedSongIds);
+				return cachedSongs.OrderByIds(cachedSongIds).WhereNotNull().ToArray();
 			}
 
 			var cutoffDate = DateTime.Now - TimeSpan.FromDays(2);
