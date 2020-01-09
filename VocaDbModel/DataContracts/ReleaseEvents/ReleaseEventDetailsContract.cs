@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
@@ -9,6 +10,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
@@ -20,7 +22,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			WebLinks = new WebLinkContract[0];
 		}
 
-		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IUserIconFactory userIconFactory) 
+		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, 
+			IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryTypeTags entryTypeTags = null) 
 			: base(releaseEvent, languagePreference, true, true) {
 
 			ParamIs.NotNull(() => releaseEvent);
@@ -33,6 +36,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Tags = releaseEvent.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(releaseEvent.TranslatedName);
 			WebLinks = releaseEvent.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
+
+			var categoryTag = entryTypeTags?.GetTag(Domain.EntryType.ReleaseEvent, InheritedCategory);
+			InheritedCategoryTag = categoryTag != null ? new TagBaseContract(categoryTag, languagePreference) : null;
 
 			Albums = releaseEvent.Albums
 				.Select(a => new AlbumContract(a, languagePreference))
@@ -71,6 +77,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		public UserEventRelationshipType? EventAssociationType { get; set; }
+
+		public TagBaseContract InheritedCategoryTag { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
 
