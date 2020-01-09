@@ -206,6 +206,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("entry-type-mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagEntryMappingContract[] GetEntryMappings() {
+			return queries.GetEntryMappings();
+		}
+
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public PartialFindResult<TagMappingContract> GetMappings(
@@ -318,6 +324,19 @@ namespace VocaDb.Web.Controllers.Api {
 		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) {
 
 			return queries.CreateComment(tagId, contract);
+
+		}
+
+		[Authorize]
+		[Route("entry-type-mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings) {
+
+			if (mappings == null) {
+				throw new HttpBadRequestException("Mappings cannot be null");
+			}
+
+			queries.UpdateEntryMappings(mappings.ToArray());
 
 		}
 

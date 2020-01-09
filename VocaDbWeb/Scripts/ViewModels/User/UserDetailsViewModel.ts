@@ -54,7 +54,7 @@ module vdb.viewModels.user {
                     this.reportUserViewModel.notes("");
 				}
 			});
-		});
+		}, true);
 
 		public initComments = () => {
 

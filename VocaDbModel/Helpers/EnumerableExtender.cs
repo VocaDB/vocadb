@@ -64,6 +64,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable) => enumerable.Where(i => i != null);
+
 		public static IEnumerable<string> WhereIsNotNullOrEmpty(this IEnumerable<string> enumerable) {
 			return enumerable.Where(s => !string.IsNullOrEmpty(s));
 		}

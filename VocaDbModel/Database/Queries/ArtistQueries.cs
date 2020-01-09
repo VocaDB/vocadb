@@ -267,7 +267,7 @@ namespace VocaDb.Model.Database.Queries {
 					entryLinkFactory,
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != ArtistReportType.Other ? enumTranslations.ArtistReportTypeNames[reportType] : null,
-					artistId, reportType, hostname, notes);
+					artistId, reportType, hostname, notes, reportType != ArtistReportType.OwnershipClaim);
 			});
 
 		}
@@ -342,7 +342,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (stats == null)
 					EntityNotFoundException.Throw<Artist>(id);
 
-				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imagePersister) {
+				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imagePersister,
+					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType)) {
 					CommentCount = stats.CommentCount,
 					SharedStats = GetSharedArtistStats(session, artist),
 					PersonalStats = GetPersonalArtistStats(session, artist),
@@ -435,7 +436,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => !artistTags.Contains(u.Tag.Id) 
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions 
-						&& u.Album.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+						&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
@@ -448,7 +449,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => !artistTags.Contains(u.Tag.Id)
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
-						&& u.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+						&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })

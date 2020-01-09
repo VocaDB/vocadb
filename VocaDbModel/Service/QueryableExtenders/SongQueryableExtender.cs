@@ -179,6 +179,19 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		}
 
+		public static IQueryable<Song> WhereHasParentSong(this IQueryable<Song> query, int parentSongId) {
+
+			if (parentSongId == 0)
+				return query;
+
+			query = query.Where(s => s.OriginalVersion.Id == parentSongId 
+				|| s.OriginalVersion.OriginalVersion.Id == parentSongId 
+				|| s.OriginalVersion.OriginalVersion.OriginalVersion.Id == parentSongId);
+
+			return query;
+
+		}
+
 		public static IQueryable<Song> WhereHasPublishDate(this IQueryable<Song> query, bool hasPublishDate) {
 
 			return hasPublishDate ? query.Where(s => s.PublishDate.DateTime != null) : query.Where(s => s.PublishDate.DateTime == null);
@@ -199,15 +212,17 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 			return query.Where(s => (s.PVServices & pvServices) != PVServices.Nothing);
 
-		} 
+		}
+
+		/// <summary>
+		/// Filter query including only songs with a PV.
+		/// </summary>
+		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> query) {
+			return query.Where(t => t.PVServices != PVServices.Nothing);
+		}
 
 		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> criteria, bool onlyWithPVs) {
-
-			if (onlyWithPVs)
-				return criteria.Where(t => t.PVServices != PVServices.Nothing);
-			else
-				return criteria;
-
+			return onlyWithPVs ? WhereHasPV(criteria) : criteria;
 		}
 
 		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> query, PVService? service, string pvId) {

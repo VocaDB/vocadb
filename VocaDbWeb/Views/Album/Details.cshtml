@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
@@ -195,7 +195,11 @@
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
-						@Html.ActionLink(Translate.DiscTypeName(Model.DiscType), "Index", new { discType = Model.DiscType })<br />
+						@if (Model.DiscTypeTypeTag != null) {
+							<a href="@Url.TagDetails(Model.DiscTypeTypeTag)" data-bind="tagToolTip: @Model.DiscTypeTypeTag.Id">@Translate.DiscTypeName(Model.DiscType)</a>
+						} else {
+							<a href="@Url.TagUrlForEntryType(EntryType.Album, Model.DiscType)">@Translate.DiscTypeName(Model.DiscType)</a>
+						}
 					</td>
 				</tr>
 

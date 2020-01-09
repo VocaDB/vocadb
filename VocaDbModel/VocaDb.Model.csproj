@@ -197,6 +197,7 @@
     <Compile Include="DataContracts\Tags\ArchivedTagVersionDetailsContract.cs" />
     <Compile Include="DataContracts\Tags\ComparedTagsContract.cs" />
     <Compile Include="DataContracts\Tags\TagBaseContract.cs" />
+    <Compile Include="DataContracts\Tags\TagEntryMappingContract.cs" />
     <Compile Include="DataContracts\Tags\TagForApiContract.cs" />
     <Compile Include="DataContracts\Tags\TagMappingContract.cs" />
     <Compile Include="DataContracts\Tags\TagUsageForApiContract.cs" />
@@ -344,6 +345,7 @@
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
     <Compile Include="Domain\Artists\ArtistHit.cs" />
+    <Compile Include="Domain\EntryTypeAndSubType.cs" />
     <Compile Include="Domain\Exceptions\RateLimitException.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkCategory.cs" />
     <Compile Include="Domain\ExtLinks\WebLinkVariationTypes.cs" />
@@ -472,6 +474,7 @@
     <Compile Include="Domain\Songs\SongTagVote.cs" />
     <Compile Include="Domain\Songs\SongVoteRating.cs" />
     <Compile Include="Domain\Tags\ArchivedTagVersion.cs" />
+    <Compile Include="Domain\Tags\EntryTypeToTagMapping.cs" />
     <Compile Include="Domain\Tags\GenericTagUsage.cs" />
     <Compile Include="Domain\Tags\GenericTagVote.cs" />
     <Compile Include="Domain\Tags\IEntryWithTags.cs" />
@@ -654,6 +657,7 @@
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventSeriesMap.cs" />
     <Compile Include="Mapping\Songs\SongListTagUsageMap.cs" />
     <Compile Include="Mapping\Songs\SongListTagVoteMap.cs" />
+    <Compile Include="Mapping\Tags\EntryTypeToTagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\Users\EventForUserMap.cs" />
@@ -809,6 +813,7 @@
     <Compile Include="Service\BrandableStrings\Collections\UserStrings.cs" />
     <Compile Include="Service\BrandableStrings\IBrandedStringsAssemblyHeader.cs" />
     <Compile Include="Service\EntrySortRule.cs" />
+    <Compile Include="Service\EntryTypeTags.cs" />
     <Compile Include="Service\EntryUrlFriendlyNameFactory.cs" />
     <Compile Include="Service\EntryUrlParser.cs" />
     <Compile Include="Service\EntryValidators\ArtistValidator.cs" />

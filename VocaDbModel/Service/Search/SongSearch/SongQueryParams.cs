@@ -89,6 +89,12 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public PagingProperties Paging { get; set; }
 
+		/// <summary>
+		/// ID of parent song to filter.
+		/// 0 = no filter.
+		/// </summary>
+		public int ParentSongId { get; set; }
+
 		public PVServices? PVServices { get; set; }
 
 		/// <summary>

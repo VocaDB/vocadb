@@ -374,7 +374,8 @@ namespace VocaDb.Model.Database.Queries {
 					return user != null && song != null ? (SongVoteRating?) session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imagePersister, pictureFilePersister, GetRatingFunc) {
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imagePersister, pictureFilePersister, GetRatingFunc,
+					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType)) {
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits,
 					Stats = GetSharedAlbumStats(session, album)
@@ -525,7 +526,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => !albumTags.Contains(u.Tag.Id)
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
-						&& u.Song.AllAlbums.Any(a => a.Album.Id == albumId))
+						&& u.Entry.AllAlbums.Any(a => a.Album.Id == albumId))
 					.WhereTagHasTarget(TagTargetTypes.Album)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
