@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		}
 
 		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, 
-			IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryTypeTags entryTypeTags = null) 
+			IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryTypeTagRepository entryTypeTags = null) 
 			: base(releaseEvent, languagePreference, true, true) {
 
 			ParamIs.NotNull(() => releaseEvent);
