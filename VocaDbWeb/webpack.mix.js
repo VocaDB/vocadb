@@ -11,15 +11,15 @@ const mix = require('laravel-mix');
  |
  */
 
- mix
+mix
 
 	.scripts([
-		"Scripts/jquery-2.2.1.js", 
+		"Scripts/jquery-2.2.1.js",
 		"Scripts/bootstrap.js",
 		//"Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
 		"Scripts/knockout-3.4.1.js",
 		"Scripts/knockout.punches.min.js",
-		"Scripts/lodash.js", 
+		"Scripts/lodash.js",
 		"Scripts/qTip/jquery.qtip.js",
 		"Scripts/marked.js"
 	], "bundles/shared/libs.js")
@@ -35,91 +35,91 @@ const mix = require('laravel-mix');
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
 	/*.scripts([
-		"Scripts/Shared/TopBar.js", 
-		"Scripts/Shared/MessagesTyped.js",
-		"Scripts/Shared/GlobalFunctions.js",
-		"Scripts/Shared/UrlMapper.js",
-		"Scripts/Helpers/AjaxHelper.js", 
-		"Scripts/KnockoutExtensions/StopBinding.js",
-		"Scripts/KnockoutExtensions/Show.js",
-		"Scripts/Repositories/EntryReportRepository.js",
-		"Scripts/Repositories/UserRepository.js",
-		"Scripts/Models/SongVoteRating.js",               // Referred by UserRepository
-		"Scripts/ViewModels/TopBarViewModel.js",
-		"Scripts/ViewModels/PVRatingButtonsViewModel.js"
+		"Scripts/Shared/TopBar.ts", 
+		"Scripts/Shared/MessagesTyped.ts",
+		"Scripts/Shared/GlobalFunctions.ts",
+		"Scripts/Shared/UrlMapper.ts",
+		"Scripts/Helpers/AjaxHelper.ts", 
+		"Scripts/KnockoutExtensions/StopBinding.ts",
+		"Scripts/KnockoutExtensions/Show.ts",
+		"Scripts/Repositories/EntryReportRepository.ts",
+		"Scripts/Repositories/UserRepository.ts",
+		"Scripts/Models/SongVoteRating.ts",               // Referred by UserRepository
+		"Scripts/ViewModels/TopBarViewModel.ts",
+		"Scripts/ViewModels/PVRatingButtonsViewModel.ts"
 	], "bundles/shared/common.js")*/
 
 	// Included on all pages except the front page (to optimize front page load time).
 	/*.scripts([
 		"Scripts/moment-with-locales.js",
-		"Scripts/Helpers/HtmlHelper.js",
-		"Scripts/Helpers/DateTimeHelper.js",
-		"Scripts/Models/EntryType.js",
-		"Scripts/Shared/EntryUrlMapper.js",
-		"Scripts/Shared/EntryAutoComplete.js",
-		"Scripts/KnockoutExtensions/ConfirmClick.js",
-		"Scripts/KnockoutExtensions/Dialog.js",
-		"Scripts/KnockoutExtensions/EntryToolTip.js",
-		"Scripts/KnockoutExtensions/jqButton.js",
-		"Scripts/KnockoutExtensions/jqButtonset.js",
-		"Scripts/KnockoutExtensions/Markdown.js",
-		"Scripts/KnockoutExtensions/ToggleClick.js",
-		"Scripts/KnockoutExtensions/Song/SongTypeLabel.js",
-		"Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
-		"Scripts/KnockoutExtensions/qTip.js",
-		"Scripts/KnockoutExtensions/TagAutoComplete.js",
-		"Scripts/KnockoutExtensions/Filters/Truncate.js",
-		"Scripts/Models/Songs/SongType.js",
-		"Scripts/Models/NameMatchMode.js",
-		"Scripts/Models/Artists/ArtistType.js",
-		"Scripts/Models/PVs/PVService.js",
-		"Scripts/Models/PVServiceIcons.js",				
-		"Scripts/Models/Globalization/ContentLanguagePreference.js",
-		"Scripts/Models/EntryOptionalFields.js",
-		"Scripts/Models/Artists/ArtistRoles.js",
-		"Scripts/Models/ContentFocus.js",
-		"Scripts/Helpers/ArtistHelper.js", // Depends on ArtistType, ArtistRoles
-		"Scripts/Repositories/EntryCommentRepository.js",
-		"Scripts/Repositories/BaseRepository.js",
-		"Scripts/Repositories/RepositoryFactory.js",
-		"Scripts/Repositories/AdminRepository.js",
-		"Scripts/Repositories/SongRepository.js",
-		"Scripts/Repositories/ArtistRepository.js",
-		"Scripts/ViewModels/BasicEntryLinkViewModel.js",
-		"Scripts/ViewModels/CommentViewModel.js",
-		"Scripts/ViewModels/EditableCommentsViewModel.js",
-		"Scripts/ViewModels/PagedItemsViewModel.js",
-		"Scripts/ViewModels/ServerSidePagingViewModel.js",
-		"Scripts/ViewModels/ReportEntryViewModel.js",
-		"Scripts/ViewModels/Globalization/EnglishTranslatedStringViewModel.js",
-		"Scripts/ViewModels/SelfDescriptionViewModel.js"
+		"Scripts/Helpers/HtmlHelper.ts",
+		"Scripts/Helpers/DateTimeHelper.ts",
+		"Scripts/Models/EntryType.ts",
+		"Scripts/Shared/EntryUrlMapper.ts",
+		"Scripts/Shared/EntryAutoComplete.ts",
+		"Scripts/KnockoutExtensions/ConfirmClick.ts",
+		"Scripts/KnockoutExtensions/Dialog.ts",
+		"Scripts/KnockoutExtensions/EntryToolTip.ts",
+		"Scripts/KnockoutExtensions/jqButton.ts",
+		"Scripts/KnockoutExtensions/jqButtonset.ts",
+		"Scripts/KnockoutExtensions/Markdown.ts",
+		"Scripts/KnockoutExtensions/ToggleClick.ts",
+		"Scripts/KnockoutExtensions/Song/SongTypeLabel.ts",
+		"Scripts/KnockoutExtensions/Bootstrap/Tooltip.ts",
+		"Scripts/KnockoutExtensions/qTip.ts",
+		"Scripts/KnockoutExtensions/TagAutoComplete.ts",
+		"Scripts/KnockoutExtensions/Filters/Truncate.ts",
+		"Scripts/Models/Songs/SongType.ts",
+		"Scripts/Models/NameMatchMode.ts",
+		"Scripts/Models/Artists/ArtistType.ts",
+		"Scripts/Models/PVs/PVService.ts",
+		"Scripts/Models/PVServiceIcons.ts",				
+		"Scripts/Models/Globalization/ContentLanguagePreference.ts",
+		"Scripts/Models/EntryOptionalFields.ts",
+		"Scripts/Models/Artists/ArtistRoles.ts",
+		"Scripts/Models/ContentFocus.ts",
+		"Scripts/Helpers/ArtistHelper.ts", // Depends on ArtistType, ArtistRoles
+		"Scripts/Repositories/EntryCommentRepository.ts",
+		"Scripts/Repositories/BaseRepository.ts",
+		"Scripts/Repositories/RepositoryFactory.ts",
+		"Scripts/Repositories/AdminRepository.ts",
+		"Scripts/Repositories/SongRepository.ts",
+		"Scripts/Repositories/ArtistRepository.ts",
+		"Scripts/ViewModels/BasicEntryLinkViewModel.ts",
+		"Scripts/ViewModels/CommentViewModel.ts",
+		"Scripts/ViewModels/EditableCommentsViewModel.ts",
+		"Scripts/ViewModels/PagedItemsViewModel.ts",
+		"Scripts/ViewModels/ServerSidePagingViewModel.ts",
+		"Scripts/ViewModels/ReportEntryViewModel.ts",
+		"Scripts/ViewModels/Globalization/EnglishTranslatedStringViewModel.ts",
+		"Scripts/ViewModels/SelfDescriptionViewModel.ts"
 	], "bundles/shared/main.js")*/
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
 	/*.scripts([
 		"Scripts/knockout-sortable.js",
-		"Scripts/Models/WebLinkCategory.js",
-		"Scripts/Models/EntryStatus.js",
-		"Scripts/Models/Globalization/ContentLanguageSelection.js",
-		"Scripts/Models/Albums/AlbumType.js",
-		"Scripts/Models/Events/EventCategory.js",
-		"Scripts/Shared/WebLinkMatcher.js",
-		"Scripts/Shared/DialogService.js",
-		"Scripts/Helpers/SearchTextQueryHelper.js",
-		"Scripts/ViewModels/DeleteEntryViewModel.js",
-		"Scripts/ViewModels/WebLinkEditViewModel.js",
-		"Scripts/ViewModels/WebLinksEditViewModel.js",
-		"Scripts/ViewModels/Globalization/EnglishTranslatedStringEditViewModel.js",
-		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-		"Scripts/KnockoutExtensions/SongAutoComplete.js",
-		"Scripts/KnockoutExtensions/FocusOut.js",
-		"Scripts/KnockoutExtensions/InitialValue.js"
+		"Scripts/Models/WebLinkCategory.ts",
+		"Scripts/Models/EntryStatus.ts",
+		"Scripts/Models/Globalization/ContentLanguageSelection.ts",
+		"Scripts/Models/Albums/AlbumType.ts",
+		"Scripts/Models/Events/EventCategory.ts",
+		"Scripts/Shared/WebLinkMatcher.ts",
+		"Scripts/Shared/DialogService.ts",
+		"Scripts/Helpers/SearchTextQueryHelper.ts",
+		"Scripts/ViewModels/DeleteEntryViewModel.ts",
+		"Scripts/ViewModels/WebLinkEditViewModel.ts",
+		"Scripts/ViewModels/WebLinksEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/EnglishTranslatedStringEditViewModel.ts",
+		"Scripts/KnockoutExtensions/ArtistAutoComplete.ts",
+		"Scripts/KnockoutExtensions/SongAutoComplete.ts",
+		"Scripts/KnockoutExtensions/FocusOut.ts",
+		"Scripts/KnockoutExtensions/InitialValue.ts"
 	], "bundles/shared/edit.js")*/
 
 	/*.scripts([
 		"Scripts/jquery.tools.min.js",
-		"Scripts/ViewModels/NewsListViewModel.js",
-		"Scripts/Home/Index.js"
+		"Scripts/ViewModels/NewsListViewModel.ts",
+		"Scripts/Home/Index.ts"
 	], "bundles/Home/Index.js")*/
 
 	.scripts([
@@ -129,446 +129,446 @@ const mix = require('laravel-mix');
 
 	// VIEW-SPECIFIC BUNDLES
 	/*.scripts([
-		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-		"Scripts/Models/ActivityEntries/EntryEditEvent.js",
-		"Scripts/Models/ResourcesManager.js",
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/ViewModels/ActivityEntry/ActivityEntryListViewModel.js"
+		"Scripts/KnockoutExtensions/MomentJsTimeAgo.ts",
+		"Scripts/Models/ActivityEntries/EntryEditEvent.ts",
+		"Scripts/Models/ResourcesManager.ts",
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/ViewModels/ActivityEntry/ActivityEntryListViewModel.ts"
 	], "bundles/ActivityEntry/Index.js")*/
 
 
 	/*.scripts([
-		"Scripts/Repositories/AlbumRepository.js",
-		"Scripts/ViewModels/Album/AlbumCreateViewModel.js"
+		"Scripts/Repositories/AlbumRepository.ts",
+		"Scripts/ViewModels/Album/AlbumCreateViewModel.ts"
 	], "bundles/Album/Create.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-		"Scripts/KnockoutExtensions/FormatDateFilter.js",
-		"Scripts/Repositories/AlbumRepository.js",
-		"Scripts/ViewModels/Tag/TagListViewModel.js",
-		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
-		"Scripts/ViewModels/Album/AlbumDetailsViewModel.js",
-		"Scripts/Album/Details.js"
+		"Scripts/KnockoutExtensions/MomentJsTimeAgo.ts",
+		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
+		"Scripts/Repositories/AlbumRepository.ts",
+		"Scripts/ViewModels/Tag/TagListViewModel.ts",
+		"Scripts/ViewModels/Tag/TagsEditViewModel.ts",
+		"Scripts/ViewModels/Album/AlbumDetailsViewModel.ts",
+		"Scripts/Album/Details.ts"
 	], "bundles/Album/Details.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/ParseInteger.js",
-		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
-		"Scripts/KnockoutExtensions/FormatDateFilter.js",
-		"Scripts/Helpers/KnockoutHelper.js",
-		"Scripts/Repositories/AlbumRepository.js",
-		"Scripts/Repositories/PVRepository.js",
-		"Scripts/Repositories/ReleaseEventRepository.js",
-		"Scripts/ViewModels/BasicListEditViewModel.js",
-		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
-		"Scripts/ViewModels/Globalization/NamesEditViewModel.js",
-		"Scripts/ViewModels/PVs/PVEditViewModel.js",
-		"Scripts/ViewModels/PVs/PVListEditViewModel.js",
-		"Scripts/ViewModels/EntryPictureFileEditViewModel.js",
-		"Scripts/ViewModels/EntryPictureFileListEditViewModel.js",
-		"Scripts/ViewModels/Artist/ArtistRolesEditViewModel.js",
-		"Scripts/ViewModels/ArtistForAlbumEditViewModel.js",
-		"Scripts/ViewModels/CustomNameEditViewModel.js",
-		"Scripts/ViewModels/SongInAlbumEditViewModel.js",
-		"Scripts/ViewModels/Album/AlbumDiscPropertiesEditViewModel.js",
-		"Scripts/ViewModels/Album/AlbumEditViewModel.js",
+		"Scripts/KnockoutExtensions/ParseInteger.ts",
+		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.ts",
+		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
+		"Scripts/Helpers/KnockoutHelper.ts",
+		"Scripts/Repositories/AlbumRepository.ts",
+		"Scripts/Repositories/PVRepository.ts",
+		"Scripts/Repositories/ReleaseEventRepository.ts",
+		"Scripts/ViewModels/BasicListEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/NamesEditViewModel.ts",
+		"Scripts/ViewModels/PVs/PVEditViewModel.ts",
+		"Scripts/ViewModels/PVs/PVListEditViewModel.ts",
+		"Scripts/ViewModels/EntryPictureFileEditViewModel.ts",
+		"Scripts/ViewModels/EntryPictureFileListEditViewModel.ts",
+		"Scripts/ViewModels/Artist/ArtistRolesEditViewModel.ts",
+		"Scripts/ViewModels/ArtistForAlbumEditViewModel.ts",
+		"Scripts/ViewModels/CustomNameEditViewModel.ts",
+		"Scripts/ViewModels/SongInAlbumEditViewModel.ts",
+		"Scripts/ViewModels/Album/AlbumDiscPropertiesEditViewModel.ts",
+		"Scripts/ViewModels/Album/AlbumEditViewModel.ts",
 		"Scripts/Album/Edit.js"
 	], "bundles/Album/Edit.js")*/
 
 	/*.scripts([
-		"Scripts/Helpers/EntryMergeValidationHelper.js",
-		"Scripts/KnockoutExtensions/AlbumAutoComplete.js",
-		"Scripts/Repositories/AlbumRepository.js",
-		"Scripts/ViewModels/Album/AlbumMergeViewModel.js"
+		"Scripts/Helpers/EntryMergeValidationHelper.ts",
+		"Scripts/KnockoutExtensions/AlbumAutoComplete.ts",
+		"Scripts/Repositories/AlbumRepository.ts",
+		"Scripts/ViewModels/Album/AlbumMergeViewModel.ts"
 	], "bundles/Album/Merge.js")*/
 
 	/*.scripts([
-		"Scripts/ViewModels/ArtistCreateViewModel.js"
+		"Scripts/ViewModels/ArtistCreateViewModel.ts"
 	], "bundles/Artist/Create.js")*/
 
 	/*.scripts([
 		"Scripts/soundcloud-api.js",				
-		"Scripts/Repositories/AlbumRepository.js",
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/Models/ResourcesManager.js",
-		"Scripts/Models/Aggregate/TimeUnit.js",
-		"Scripts/Helpers/PVHelper.js",
-		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-		"Scripts/KnockoutExtensions/SlideVisible.js",				
-		"Scripts/KnockoutExtensions/ScrollEnd.js",
-		"Scripts/KnockoutExtensions/Highcharts.js",
-		"Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
-		"Scripts/ViewModels/PVs/PVPlayersFactory.js",
-		"Scripts/ViewModels/PVs/PVPlayerFile.js",
-		"Scripts/ViewModels/PVs/PVPlayerNico.js",
-		"Scripts/ViewModels/PVs/PVPlayerYoutube.js",
-		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
-		"Scripts/ViewModels/PVs/PVPlayerViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongsAdapter.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilter.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilters.js",
-		"Scripts/ViewModels/Search/ArtistFilter.js",
-		"Scripts/ViewModels/Search/ArtistFilters.js",
-		"Scripts/ViewModels/Search/TagFilter.js",
-		"Scripts/ViewModels/Search/TagFilters.js",
-		"Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js",
-		"Scripts/ViewModels/Search/AlbumSearchViewModel.js",
-		"Scripts/ViewModels/Search/SongSearchViewModel.js",
-		"Scripts/ViewModels/Tag/TagListViewModel.js",
-		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
-		"Scripts/ViewModels/Artist/ArtistDetailsViewModel.js",
-		"Scripts/Artist/Details.js"
+		"Scripts/Repositories/AlbumRepository.ts",
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/Models/ResourcesManager.ts",
+		"Scripts/Models/Aggregate/TimeUnit.ts",
+		"Scripts/Helpers/PVHelper.ts",
+		"Scripts/KnockoutExtensions/MomentJsTimeAgo.ts",
+		"Scripts/KnockoutExtensions/SlideVisible.ts",				
+		"Scripts/KnockoutExtensions/ScrollEnd.ts",
+		"Scripts/KnockoutExtensions/Highcharts.ts",
+		"Scripts/ViewModels/Song/SongWithPreviewViewModel.ts",
+		"Scripts/ViewModels/PVs/PVPlayersFactory.ts",
+		"Scripts/ViewModels/PVs/PVPlayerFile.ts",
+		"Scripts/ViewModels/PVs/PVPlayerNico.ts",
+		"Scripts/ViewModels/PVs/PVPlayerYoutube.ts",
+		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts",
+		"Scripts/ViewModels/PVs/PVPlayerViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongsAdapter.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilter.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilters.ts",
+		"Scripts/ViewModels/Search/ArtistFilter.ts",
+		"Scripts/ViewModels/Search/ArtistFilters.ts",
+		"Scripts/ViewModels/Search/TagFilter.ts",
+		"Scripts/ViewModels/Search/TagFilters.ts",
+		"Scripts/ViewModels/Search/SearchCategoryBaseViewModel.ts",
+		"Scripts/ViewModels/Search/AlbumSearchViewModel.ts",
+		"Scripts/ViewModels/Search/SongSearchViewModel.ts",
+		"Scripts/ViewModels/Tag/TagListViewModel.ts",
+		"Scripts/ViewModels/Tag/TagsEditViewModel.ts",
+		"Scripts/ViewModels/Artist/ArtistDetailsViewModel.ts",
+		"Scripts/Artist/Details.ts"
 	], "bundles/Artist/Details.js")*/
 
 	/*.scripts([
-		"Scripts/Helpers/KnockoutHelper.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
-		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
-		"Scripts/ViewModels/Globalization/NamesEditViewModel.js",
-		"Scripts/ViewModels/EntryPictureFileEditViewModel.js",
-		"Scripts/ViewModels/EntryPictureFileListEditViewModel.js",
-		"Scripts/ViewModels/Artist/ArtistEditViewModel.js",
+		"Scripts/Helpers/KnockoutHelper.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
+		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/NamesEditViewModel.ts",
+		"Scripts/ViewModels/EntryPictureFileEditViewModel.ts",
+		"Scripts/ViewModels/EntryPictureFileListEditViewModel.ts",
+		"Scripts/ViewModels/Artist/ArtistEditViewModel.ts",
 		"Scripts/Artist/Edit.js"
 	], "bundles/Artist/Edit.js")*/
 
 	/*.scripts([
-		"Scripts/Helpers/EntryMergeValidationHelper.js",
-		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-		"Scripts/ViewModels/Artist/ArtistMergeViewModel.js"
+		"Scripts/Helpers/EntryMergeValidationHelper.ts",
+		"Scripts/KnockoutExtensions/ArtistAutoComplete.ts",
+		"Scripts/ViewModels/Artist/ArtistMergeViewModel.ts"
 	], "bundles/Artist/Merge.js")*/
 
 	/*.scripts([
 		"Scripts/page.js",
-		"Scripts/KnockoutExtensions/FormatDateFilter.js",
-		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-		"Scripts/Repositories/DiscussionRepository.js",
-		"Scripts/ViewModels/Discussion/DiscussionTopicViewModel.js",
-		"Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
+		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
+		"Scripts/KnockoutExtensions/MomentJsTimeAgo.ts",
+		"Scripts/Repositories/DiscussionRepository.ts",
+		"Scripts/ViewModels/Discussion/DiscussionTopicViewModel.ts",
+		"Scripts/ViewModels/Discussion/DiscussionIndexViewModel.ts"
 	], "bundles/Discussion/Index.js")*/
 
 	/*.scripts([
-		"Scripts/ViewModels/Tag/TagListViewModel.js",
-		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
-		"Scripts/ViewModels/ReleaseEvent/EventSeriesDetailsViewModel.js"
+		"Scripts/ViewModels/Tag/TagListViewModel.ts",
+		"Scripts/ViewModels/Tag/TagsEditViewModel.ts",
+		"Scripts/ViewModels/ReleaseEvent/EventSeriesDetailsViewModel.ts"
 	], "bundles/EventSeries/Details.js")*/
 
 	/*.scripts([
-		"Scripts/Helpers/KnockoutHelper.js",
-		"Scripts/Repositories/ReleaseEventRepository.js",
-		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
-		"Scripts/ViewModels/Globalization/NamesEditViewModel.js",
-		"Scripts/ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel.js",
+		"Scripts/Helpers/KnockoutHelper.ts",
+		"Scripts/Repositories/ReleaseEventRepository.ts",
+		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/NamesEditViewModel.ts",
+		"Scripts/ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel.ts",
 		"Scripts/Event/SeriesEdit.js"
 	], "bundles/EventSeries/Edit.js")*/
 
 	/*.scripts([
-		"Scripts/Models/Users/UserEventRelationshipType.js",
-		"Scripts/Repositories/CommentRepository.js",
-		"Scripts/Repositories/ReleaseEventRepository.js",
-		"Scripts/ViewModels/Tag/TagListViewModel.js",
-		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
-		"Scripts/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel.js"
+		"Scripts/Models/Users/UserEventRelationshipType.ts",
+		"Scripts/Repositories/CommentRepository.ts",
+		"Scripts/Repositories/ReleaseEventRepository.ts",
+		"Scripts/ViewModels/Tag/TagListViewModel.ts",
+		"Scripts/ViewModels/Tag/TagsEditViewModel.ts",
+		"Scripts/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel.ts"
 	], "bundles/ReleaseEvent/Details.js")*/
 
 	/*.scripts([
-		"Scripts/Helpers/KnockoutHelper.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
-		"Scripts/KnockoutExtensions/ReleaseEventSeriesAutoComplete.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/SongListAutoComplete.js",
-		"Scripts/KnockoutExtensions/FormatDateFilter.js",
-		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
-		"Scripts/Repositories/PVRepository.js",
-		"Scripts/Repositories/ReleaseEventRepository.js",
-		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
-		"Scripts/ViewModels/Globalization/NamesEditViewModel.js",
-		"Scripts/ViewModels/PVs/PVEditViewModel.js",
-		"Scripts/ViewModels/PVs/PVListEditViewModel.js",
-		"Scripts/ViewModels/Artist/ArtistRolesEditViewModel.js",
-		"Scripts/ViewModels/ReleaseEvent/ArtistForEventEditViewModel.js",
-		"Scripts/ViewModels/ReleaseEvent/ReleaseEventEditViewModel.js",
+		"Scripts/Helpers/KnockoutHelper.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
+		"Scripts/KnockoutExtensions/ReleaseEventSeriesAutoComplete.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/SongListAutoComplete.ts",
+		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
+		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.ts",
+		"Scripts/Repositories/PVRepository.ts",
+		"Scripts/Repositories/ReleaseEventRepository.ts",
+		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/NamesEditViewModel.ts",
+		"Scripts/ViewModels/PVs/PVEditViewModel.ts",
+		"Scripts/ViewModels/PVs/PVListEditViewModel.ts",
+		"Scripts/ViewModels/Artist/ArtistRolesEditViewModel.ts",
+		"Scripts/ViewModels/ReleaseEvent/ArtistForEventEditViewModel.ts",
+		"Scripts/ViewModels/ReleaseEvent/ReleaseEventEditViewModel.ts",
 		"Scripts/Event/Edit.js"
 	], "bundles/ReleaseEvent/Edit.js")*/
 
 	/*.scripts([
 		"Scripts/soundcloud-api.js",				
-		"Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.js",
-		"Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",
-		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-		"Scripts/KnockoutExtensions/SlideVisible.js",				
-		"Scripts/KnockoutExtensions/ScrollEnd.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
-		"Scripts/KnockoutExtensions/SongAutoComplete.js",
-		"Scripts/Models/ResourcesManager.js",
-		"Scripts/Models/Tags/Tag.js",
-		"Scripts/Helpers/PVHelper.js",
-		"Scripts/Helpers/SearchTextQueryHelper.js",
-		"Scripts/Repositories/AlbumRepository.js",
-		"Scripts/Repositories/EntryRepository.js",
-		"Scripts/Repositories/ReleaseEventRepository.js",
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/Repositories/TagRepository.js",
-		"Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
-		"Scripts/ViewModels/PVs/PVPlayersFactory.js",
-		"Scripts/ViewModels/PVs/PVPlayerFile.js",
-		"Scripts/ViewModels/PVs/PVPlayerNico.js",
-		"Scripts/ViewModels/PVs/PVPlayerYoutube.js",
-		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
-		"Scripts/ViewModels/PVs/PVPlayerViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongsAdapter.js",
-		"Scripts/ViewModels/Search/ArtistFilter.js",
-		"Scripts/ViewModels/Search/ArtistFilters.js",
-		"Scripts/ViewModels/Search/TagFilter.js",
-		"Scripts/ViewModels/Search/TagFilters.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilter.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilters.js",
-		"Scripts/ViewModels/Search/SearchViewModel.js",
-		"Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js",
-		"Scripts/ViewModels/Search/AnythingSearchViewModel.js",
-		"Scripts/ViewModels/Search/ArtistSearchViewModel.js",
-		"Scripts/ViewModels/Search/AlbumSearchViewModel.js",
-		"Scripts/ViewModels/Search/EventSearchViewModel.js",
-		"Scripts/ViewModels/Search/SongSearchViewModel.js",
-		"Scripts/ViewModels/Search/TagSearchViewModel.js"
+		"Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.ts",
+		"Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.ts",
+		"Scripts/KnockoutExtensions/ArtistAutoComplete.ts",
+		"Scripts/KnockoutExtensions/SlideVisible.ts",				
+		"Scripts/KnockoutExtensions/ScrollEnd.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
+		"Scripts/KnockoutExtensions/SongAutoComplete.ts",
+		"Scripts/Models/ResourcesManager.ts",
+		"Scripts/Models/Tags/Tag.ts",
+		"Scripts/Helpers/PVHelper.ts",
+		"Scripts/Helpers/SearchTextQueryHelper.ts",
+		"Scripts/Repositories/AlbumRepository.ts",
+		"Scripts/Repositories/EntryRepository.ts",
+		"Scripts/Repositories/ReleaseEventRepository.ts",
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/Repositories/TagRepository.ts",
+		"Scripts/ViewModels/Song/SongWithPreviewViewModel.ts",
+		"Scripts/ViewModels/PVs/PVPlayersFactory.ts",
+		"Scripts/ViewModels/PVs/PVPlayerFile.ts",
+		"Scripts/ViewModels/PVs/PVPlayerNico.ts",
+		"Scripts/ViewModels/PVs/PVPlayerYoutube.ts",
+		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts",
+		"Scripts/ViewModels/PVs/PVPlayerViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongsAdapter.ts",
+		"Scripts/ViewModels/Search/ArtistFilter.ts",
+		"Scripts/ViewModels/Search/ArtistFilters.ts",
+		"Scripts/ViewModels/Search/TagFilter.ts",
+		"Scripts/ViewModels/Search/TagFilters.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilter.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilters.ts",
+		"Scripts/ViewModels/Search/SearchViewModel.ts",
+		"Scripts/ViewModels/Search/SearchCategoryBaseViewModel.ts",
+		"Scripts/ViewModels/Search/AnythingSearchViewModel.ts",
+		"Scripts/ViewModels/Search/ArtistSearchViewModel.ts",
+		"Scripts/ViewModels/Search/AlbumSearchViewModel.ts",
+		"Scripts/ViewModels/Search/EventSearchViewModel.ts",
+		"Scripts/ViewModels/Search/SongSearchViewModel.ts",
+		"Scripts/ViewModels/Search/TagSearchViewModel.ts"
 	], "bundles/Search/Index.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.js",
-		"Scripts/Helpers/SongHelper.js",
-		"Scripts/ViewModels/SongCreateViewModel.js"
+		"Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.ts",
+		"Scripts/Helpers/SongHelper.ts",
+		"Scripts/ViewModels/SongCreateViewModel.ts"
 	], "bundles/Song/Create.js")*/
 
 	/*.scripts([
 		"Scripts/MediaElement/mediaelement-and-player.min.js",
-		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-		"Scripts/ViewModels/Tag/TagListViewModel.js",
-		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
-		"Scripts/ViewModels/Song/SongDetailsViewModel.js",
+		"Scripts/KnockoutExtensions/MomentJsTimeAgo.ts",
+		"Scripts/ViewModels/Tag/TagListViewModel.ts",
+		"Scripts/ViewModels/Tag/TagsEditViewModel.ts",
+		"Scripts/ViewModels/Song/SongDetailsViewModel.ts",
 		"Scripts/Song/Details.js"
 	], "bundles/Song/Details.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/FormatDateFilter.js",
-		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
-		"Scripts/Models/Globalization/TranslationType.js",
-		"Scripts/Models/Tags/Tag.js",
-		"Scripts/Models/PVs/PVType.js",
-		"Scripts/Helpers/KnockoutHelper.js",
-		"Scripts/Helpers/SongHelper.js",
-		"Scripts/Repositories/PVRepository.js",
-		"Scripts/ViewModels/BasicListEditViewModel.js",
-		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
-		"Scripts/ViewModels/Globalization/NamesEditViewModel.js",
-		"Scripts/ViewModels/Artist/ArtistRolesEditViewModel.js",
-		"Scripts/ViewModels/ArtistForAlbumEditViewModel.js",
-		"Scripts/ViewModels/CustomNameEditViewModel.js",
-		"Scripts/ViewModels/PVs/PVEditViewModel.js",
-		"Scripts/ViewModels/PVs/PVListEditViewModel.js",
-		"Scripts/ViewModels/Song/LyricsForSongEditViewModel.js",
-		"Scripts/ViewModels/Song/SongEditViewModel.js",
+		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
+		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.ts",
+		"Scripts/Models/Globalization/TranslationType.ts",
+		"Scripts/Models/Tags/Tag.ts",
+		"Scripts/Models/PVs/PVType.ts",
+		"Scripts/Helpers/KnockoutHelper.ts",
+		"Scripts/Helpers/SongHelper.ts",
+		"Scripts/Repositories/PVRepository.ts",
+		"Scripts/ViewModels/BasicListEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/NamesEditViewModel.ts",
+		"Scripts/ViewModels/Artist/ArtistRolesEditViewModel.ts",
+		"Scripts/ViewModels/ArtistForAlbumEditViewModel.ts",
+		"Scripts/ViewModels/CustomNameEditViewModel.ts",
+		"Scripts/ViewModels/PVs/PVEditViewModel.ts",
+		"Scripts/ViewModels/PVs/PVListEditViewModel.ts",
+		"Scripts/ViewModels/Song/LyricsForSongEditViewModel.ts",
+		"Scripts/ViewModels/Song/SongEditViewModel.ts",
 		"Scripts/Song/Edit.js"
 	], "bundles/Song/Edit.js")*/
 
 	/*.scripts([
-		"Scripts/Helpers/EntryMergeValidationHelper.js",
-		"Scripts/ViewModels/Song/SongMergeViewModel.js"
+		"Scripts/Helpers/EntryMergeValidationHelper.ts",
+		"Scripts/ViewModels/Song/SongMergeViewModel.ts"
 	], "bundles/Song/Merge.js")*/
 
 	/*.scripts([
 		"Scripts/url.js",
-		"Scripts/Shared/Routing/ObservableUrlParamRouter.js",
-		"Scripts/KnockoutExtensions/SlideVisible.js",				
-		"Scripts/KnockoutExtensions/FormatDateFilter.js",
-		"Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
-		"Scripts/ViewModels/Song/RankingsViewModel.js"
+		"Scripts/Shared/Routing/ObservableUrlParamRouter.ts",
+		"Scripts/KnockoutExtensions/SlideVisible.ts",				
+		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
+		"Scripts/ViewModels/Song/SongWithPreviewViewModel.ts",
+		"Scripts/ViewModels/Song/RankingsViewModel.ts"
 	], "bundles/Song/TopRated.js")*/
 
 	/*.scripts([
 		"Scripts/soundcloud-api.js",				
-		"Scripts/KnockoutExtensions/SlideVisible.js",				
-		"Scripts/KnockoutExtensions/ScrollEnd.js",
-		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-		"Scripts/Helpers/PVHelper.js",
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/Repositories/SongListRepository.js",
-		"Scripts/Models/ResourcesManager.js",
-		"Scripts/ViewModels/Search/ArtistFilter.js",
-		"Scripts/ViewModels/Search/ArtistFilters.js",
-		"Scripts/ViewModels/Search/TagFilter.js",
-		"Scripts/ViewModels/Search/TagFilters.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilter.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilters.js",
-		"Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
-		"Scripts/ViewModels/PVs/PVPlayersFactory.js",
-		"Scripts/ViewModels/PVs/PVPlayerFile.js",
-		"Scripts/ViewModels/PVs/PVPlayerNico.js",
-		"Scripts/ViewModels/PVs/PVPlayerYoutube.js",
-		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
-		"Scripts/ViewModels/PVs/PVPlayerViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter.js",
-		"Scripts/ViewModels/Tag/TagListViewModel.js",
-		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
-		"Scripts/ViewModels/SongList/SongListViewModel.js"
+		"Scripts/KnockoutExtensions/SlideVisible.ts",				
+		"Scripts/KnockoutExtensions/ScrollEnd.ts",
+		"Scripts/KnockoutExtensions/ArtistAutoComplete.ts",
+		"Scripts/Helpers/PVHelper.ts",
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/Repositories/SongListRepository.ts",
+		"Scripts/Models/ResourcesManager.ts",
+		"Scripts/ViewModels/Search/ArtistFilter.ts",
+		"Scripts/ViewModels/Search/ArtistFilters.ts",
+		"Scripts/ViewModels/Search/TagFilter.ts",
+		"Scripts/ViewModels/Search/TagFilters.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilter.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilters.ts",
+		"Scripts/ViewModels/Song/SongWithPreviewViewModel.ts",
+		"Scripts/ViewModels/PVs/PVPlayersFactory.ts",
+		"Scripts/ViewModels/PVs/PVPlayerFile.ts",
+		"Scripts/ViewModels/PVs/PVPlayerNico.ts",
+		"Scripts/ViewModels/PVs/PVPlayerYoutube.ts",
+		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts",
+		"Scripts/ViewModels/PVs/PVPlayerViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter.ts",
+		"Scripts/ViewModels/Tag/TagListViewModel.ts",
+		"Scripts/ViewModels/Tag/TagsEditViewModel.ts",
+		"Scripts/ViewModels/SongList/SongListViewModel.ts"
 	], "bundles/SongList/Details.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
-		"Scripts/Repositories/SongListRepository.js",
-		"Scripts/ViewModels/SongList/SongListEditViewModel.js",
+		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
+		"Scripts/Repositories/SongListRepository.ts",
+		"Scripts/ViewModels/SongList/SongListEditViewModel.ts",
 		"Scripts/SongList/Edit.js"
 	], "bundles/SongList/Edit.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/FormatDateFilter.js",
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/Repositories/SongListRepository.js",
-		"Scripts/Repositories/TagRepository.js",
-		"Scripts/ViewModels/Search/TagFilter.js",
-		"Scripts/ViewModels/Search/TagFilters.js",
-		"Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
-		"Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
+		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/Repositories/SongListRepository.ts",
+		"Scripts/Repositories/TagRepository.ts",
+		"Scripts/ViewModels/Search/TagFilter.ts",
+		"Scripts/ViewModels/Search/TagFilters.ts",
+		"Scripts/ViewModels/SongList/SongListsBaseViewModel.ts",
+		"Scripts/ViewModels/SongList/FeaturedSongListsViewModel.ts"
 	], "bundles/SongList/Featured.js")*/
 
 	/*.scripts([
-		"Scripts/ViewModels/SongList/ImportSongListViewModel.js"
+		"Scripts/ViewModels/SongList/ImportSongListViewModel.ts"
 	], "bundles/SongList/Import.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-		"Scripts/Repositories/TagRepository.js",
-		"Scripts/ViewModels/Tag/TagDetailsViewModel.js",
-		"Scripts/Tag/Details.js"
+		"Scripts/KnockoutExtensions/MomentJsTimeAgo.ts",
+		"Scripts/Repositories/TagRepository.ts",
+		"Scripts/ViewModels/Tag/TagDetailsViewModel.ts",
+		"Scripts/Tag/Details.ts"
 	], "bundles/Tag/Details.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",
-		"Scripts/Repositories/TagRepository.js",
-		"Scripts/Helpers/KnockoutHelper.js",
-		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
-		"Scripts/ViewModels/Globalization/NamesEditViewModel.js",
-		"Scripts/ViewModels/TagEditViewModel.js",
+		"Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.ts",
+		"Scripts/Repositories/TagRepository.ts",
+		"Scripts/Helpers/KnockoutHelper.ts",
+		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.ts",
+		"Scripts/ViewModels/Globalization/NamesEditViewModel.ts",
+		"Scripts/ViewModels/TagEditViewModel.ts",
 		"Scripts/Tag/Edit.js"
 	], "bundles/Tag/Edit.js")*/
 
 	/*.scripts([
-		"Scripts/Repositories/TagRepository.js",
-		"Scripts/ViewModels/Tag/TagCreateViewModel.js"
+		"Scripts/Repositories/TagRepository.ts",
+		"Scripts/ViewModels/Tag/TagCreateViewModel.ts"
 	], "bundles/Tag/Index.js")*/
 
 	/*.scripts([
-		"Scripts/Helpers/EntryMergeValidationHelper.js",
-		"Scripts/Repositories/TagRepository.js",
-		"Scripts/ViewModels/Tag/TagMergeViewModel.js"
+		"Scripts/Helpers/EntryMergeValidationHelper.ts",
+		"Scripts/Repositories/TagRepository.ts",
+		"Scripts/ViewModels/Tag/TagMergeViewModel.ts"
 	], "bundles/Tag/Merge.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilter.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilters.js",
-		"Scripts/ViewModels/User/AlbumCollectionViewModel.js"
+		"Scripts/KnockoutExtensions/ArtistAutoComplete.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.ts",
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilter.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilters.ts",
+		"Scripts/ViewModels/User/AlbumCollectionViewModel.ts"
 	], "bundles/User/AlbumCollection.js")*/
 
 	/*.scripts([
 		"Scripts/soundcloud-api.js",
-		"Scripts/Models/Users/UserEventRelationshipType.js",
-		"Scripts/KnockoutExtensions/SlideVisible.js",				
-		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
-		"Scripts/KnockoutExtensions/Highcharts.js",				
-		"Scripts/KnockoutExtensions/ScrollEnd.js",
-		"Scripts/KnockoutExtensions/FormatDateFilter.js",
-		"Scripts/Helpers/HighchartsHelper.js",				
-		"Scripts/Helpers/PVHelper.js",
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/Repositories/TagRepository.js",
-		"Scripts/ViewModels/DeleteEntryViewModel.js",
-		"Scripts/ViewModels/PVs/PVPlayersFactory.js",
-		"Scripts/ViewModels/PVs/PVPlayerFile.js",
-		"Scripts/ViewModels/PVs/PVPlayerNico.js",
-		"Scripts/ViewModels/PVs/PVPlayerYoutube.js",
-		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
-		"Scripts/ViewModels/PVs/PVPlayerViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.js",
-		"Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
-		"Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilter.js",
-		"Scripts/ViewModels/Search/AdvancedSearchFilters.js",
-		"Scripts/ViewModels/Search/ArtistFilter.js",
-		"Scripts/ViewModels/Search/ArtistFilters.js",
-		"Scripts/ViewModels/Search/TagFilter.js",
-		"Scripts/ViewModels/Search/TagFilters.js",
-		"Scripts/ViewModels/User/FollowedArtistsViewModel.js",
-		"Scripts/ViewModels/User/RatedSongsSearchViewModel.js",
-		"Scripts/ViewModels/User/AlbumCollectionViewModel.js",
-		"Scripts/ViewModels/User/UserDetailsViewModel.js",
-		"Scripts/User/Details.js"
+		"Scripts/Models/Users/UserEventRelationshipType.ts",
+		"Scripts/KnockoutExtensions/SlideVisible.ts",				
+		"Scripts/KnockoutExtensions/ArtistAutoComplete.ts",
+		"Scripts/KnockoutExtensions/MomentJsTimeAgo.ts",
+		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.ts",
+		"Scripts/KnockoutExtensions/Highcharts.ts",				
+		"Scripts/KnockoutExtensions/ScrollEnd.ts",
+		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
+		"Scripts/Helpers/HighchartsHelper.ts",				
+		"Scripts/Helpers/PVHelper.ts",
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/Repositories/TagRepository.ts",
+		"Scripts/ViewModels/DeleteEntryViewModel.ts",
+		"Scripts/ViewModels/PVs/PVPlayersFactory.ts",
+		"Scripts/ViewModels/PVs/PVPlayerFile.ts",
+		"Scripts/ViewModels/PVs/PVPlayerNico.ts",
+		"Scripts/ViewModels/PVs/PVPlayerYoutube.ts",
+		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts",
+		"Scripts/ViewModels/PVs/PVPlayerViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.ts",
+		"Scripts/ViewModels/Song/SongWithPreviewViewModel.ts",
+		"Scripts/ViewModels/SongList/SongListsBaseViewModel.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilter.ts",
+		"Scripts/ViewModels/Search/AdvancedSearchFilters.ts",
+		"Scripts/ViewModels/Search/ArtistFilter.ts",
+		"Scripts/ViewModels/Search/ArtistFilters.ts",
+		"Scripts/ViewModels/Search/TagFilter.ts",
+		"Scripts/ViewModels/Search/TagFilters.ts",
+		"Scripts/ViewModels/User/FollowedArtistsViewModel.ts",
+		"Scripts/ViewModels/User/RatedSongsSearchViewModel.ts",
+		"Scripts/ViewModels/User/AlbumCollectionViewModel.ts",
+		"Scripts/ViewModels/User/UserDetailsViewModel.ts",
+		"Scripts/User/Details.ts"
 	], "bundles/User/Details.js")*/
 
 	/*.scripts([
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/Models/ResourcesManager.js",
-		"Scripts/ViewModels/User/ListUsersViewModel.js"
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/Models/ResourcesManager.ts",
+		"Scripts/ViewModels/User/ListUsersViewModel.ts"
 	], "bundles/User/Index.js")*/
 
 	/*.scripts([
-		"Scripts/KnockoutExtensions/BindingHandlers/UserAutocomplete.js",
-		"Scripts/ViewModels/User/UserMessagesViewModel.js"
+		"Scripts/KnockoutExtensions/BindingHandlers/UserAutocomplete.ts",
+		"Scripts/ViewModels/User/UserMessagesViewModel.ts"
 	], "bundles/User/Messages.js")*/
 
 	/*.scripts([
-		"Scripts/ViewModels/User/MySettingsViewModel.js"
+		"Scripts/ViewModels/User/MySettingsViewModel.ts"
 	], "bundles/User/MySettings.js")*/
 
 	/*.scripts([
 		"Scripts/soundcloud-api.js",				
-		"Scripts/KnockoutExtensions/SlideVisible.js",				
-		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
-		"Scripts/KnockoutExtensions/ScrollEnd.js",
-		"Scripts/Helpers/PVHelper.js",
-		"Scripts/Repositories/ResourceRepository.js",
-		"Scripts/ViewModels/PVs/PVPlayersFactory.js",
-		"Scripts/ViewModels/PVs/PVPlayerFile.js",
-		"Scripts/ViewModels/PVs/PVPlayerNico.js",
-		"Scripts/ViewModels/PVs/PVPlayerYoutube.js",
-		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
-		"Scripts/ViewModels/PVs/PVPlayerViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
-		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.js",
-		"Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
-		"Scripts/ViewModels/User/RatedSongsSearchViewModel.js"
+		"Scripts/KnockoutExtensions/SlideVisible.ts",				
+		"Scripts/KnockoutExtensions/ArtistAutoComplete.ts",
+		"Scripts/KnockoutExtensions/ScrollEnd.ts",
+		"Scripts/Helpers/PVHelper.ts",
+		"Scripts/Repositories/ResourceRepository.ts",
+		"Scripts/ViewModels/PVs/PVPlayersFactory.ts",
+		"Scripts/ViewModels/PVs/PVPlayerFile.ts",
+		"Scripts/ViewModels/PVs/PVPlayerNico.ts",
+		"Scripts/ViewModels/PVs/PVPlayerYoutube.ts",
+		"Scripts/ViewModels/PVs/PVPlayerSoundCloud.ts",
+		"Scripts/ViewModels/PVs/PVPlayerViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListViewModel.ts",
+		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.ts",
+		"Scripts/ViewModels/Song/SongWithPreviewViewModel.ts",
+		"Scripts/ViewModels/User/RatedSongsSearchViewModel.ts"
 	], "bundles/User/RatedSongs.js")*/
 
 
 	// TODO
 
 
-	 // Base CSS
+	// Base CSS
 	.styles([
-		"Content/bootstrap.css", 
-		"Content/bootstrap-responsive.css", 
-		"Content/Site.css", 
-		"Content/Styles/base.css", 
+		"Content/bootstrap.css",
+		"Content/bootstrap-responsive.css",
+		"Content/Site.css",
+		"Content/Styles/base.css",
 		//"Content/Styles/Snow2013.css",
 		"Content/Styles/PVViewer_Black.css",
-		"Content/Styles/ExtLinks.css", 
+		"Content/Styles/ExtLinks.css",
 		"Content/Styles/Overrides.css",
 		"Content/Styles/StyleOverrides.css",
 		"Content/Styles/Search.css",
 		"Content/Styles/song.css",
 		"Content/Styles/userpage.css"
 	], "Content/css.css")
-	
+
 	.styles([
 		"Content/bootstrap.css", "Content/Styles/embedSong.css"], "Content/embedSong.css")
 
