@@ -3,7 +3,7 @@
 <tr>
 	<td>
 		<div data-bind="with: artist">
-			<a data-bind="text: $parent.name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
+			<a data-bind="text: $parent.name, attr: { href: app.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
 			<br />
 			<span data-bind="text: additionalNames" class="extraInfo"></span>
 		</div>

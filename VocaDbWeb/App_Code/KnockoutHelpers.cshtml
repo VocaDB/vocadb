@@ -155,7 +155,7 @@
 	<input type="text" class="input-large" data-bind="@bindingHandler: @binding, visible: !@(valBinding ?? binding)()@(!string.IsNullOrEmpty(extraBindings) ? ", " + extraBindings : "")" placeholder="@ViewRes.SharedStrings.Search" />
 	<div class="input-append" data-bind="visible: @(valBinding ?? binding)()" style="display: none;">
 		@if (entryType != EntryType.Undefined) {
-			<a href="#" class="btn btn-nomargin" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('@entryType', @(valBinding ?? binding)()) }">
+			<a href="#" class="btn btn-nomargin" data-bind="attr: { href: app.EntryUrlMapper.details('@entryType', @(valBinding ?? binding)()) }">
 				<i class="icon icon-info-sign"></i>
 			</a>
 		}
@@ -238,7 +238,7 @@
 	<!-- ko foreach: tags -->
 	<div class="control-group">
 		<div style="display: inline-block;" class="input-append input-prepend">
-			<a href="#" class="btn btn-nomargin" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag(id, urlSlug()) }">
+			<a href="#" class="btn btn-nomargin" data-bind="attr: { href: app.EntryUrlMapper.details_tag(id, urlSlug()) }">
 				<i class="icon icon-info-sign"></i>
 			</a>
 			<div class="input-append">
@@ -268,7 +268,7 @@
 			</button>
 			<ul data-bind="foreach: $parent.genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 				<li>
-					<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag_contract($data) }, text: name, click: function(selectedTag) { $parent.addTag(selectedTag); }"></a>
+					<a href="#" data-bind="attr: { href: app.EntryUrlMapper.details_tag_contract($data) }, text: name, click: function(selectedTag) { $parent.addTag(selectedTag); }"></a>
 				</li>
 			</ul>
 		</div>

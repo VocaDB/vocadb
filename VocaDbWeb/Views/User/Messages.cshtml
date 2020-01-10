@@ -125,12 +125,12 @@
 
 			$("#tabs").tabs();
 
-			var urlMapper = new vdb.UrlMapper('@RootPath');
-			var repository = new vdb.repositories.UserRepository(urlMapper);
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var repository = new app.UserRepository(urlMapper);
 			var receiverName = @ToJS(Model.ReceiverName);
-			var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @((int)Model.Inbox), @ToJS(Model.SelectedMessageId), receiverName);
+			var viewModel = new app.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @((int)Model.Inbox), @ToJS(Model.SelectedMessageId), receiverName);
 			viewModel.messageSent = function () {
-				vdb.ui.showSuccessMessage(@ToJS(Res.MessageSent));
+				app.ui.showSuccessMessage(@ToJS(Res.MessageSent));
 			};
 			ko.applyBindings(viewModel);
 

@@ -46,8 +46,8 @@
 
 	    $(function() { 
 		    
-	    	var repo = new vdb.repositories.AlbumRepository('@RootPath', @LanguagePreferenceInt);
-	    	var vm = new vdb.viewModels.albums.AlbumMergeViewModel(repo, @Model.Id);
+	    	var repo = new app.AlbumRepository('@RootPath', @LanguagePreferenceInt);
+	    	var vm = new app.AlbumMergeViewModel(repo, @Model.Id);
 	    	ko.applyBindings(vm);
 
 	    	$("#mergeBtn").click(function () {

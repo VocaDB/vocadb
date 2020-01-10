@@ -63,7 +63,7 @@
 					<tbody data-bind="foreach: artists">
 						<tr>
 							<td>
-								<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, text: name, artistToolTip: id"></a>
+								<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', id) }, text: name, artistToolTip: id"></a>
 							</td>
 							<td>
 								<a data-bind="click: $parent.removeArtist" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
@@ -104,12 +104,12 @@
 
 		$(function () {
 
-        	var urlMapper = new vdb.UrlMapper('@RootPath');
-        	var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+        	var urlMapper = new app.UrlMapper('@RootPath');
+        	var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
         	var albumRepo = repoFactory.albumRepository();
         	var artistRepo = repoFactory.artistRepository();
 
-        	ko.applyBindings(new vdb.viewModels.AlbumCreateViewModel(albumRepo, artistRepo));
+        	ko.applyBindings(new app.AlbumCreateViewModel(albumRepo, artistRepo));
 
         });
 

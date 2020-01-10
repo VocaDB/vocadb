@@ -46,9 +46,9 @@
             $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
             $("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
 
-            var rep = new vdb.repositories.ArtistRepository('@RootPath', @LanguagePreferenceInt);
+            var rep = new app.ArtistRepository('@RootPath', @LanguagePreferenceInt);
 
-            var viewModel = new vdb.viewModels.artists.ArchivedArtistViewModel(@Model.Artist.Id, @Model.ArchivedVersion.Version, rep);
+            var viewModel = new app.ArchivedArtistViewModel(@Model.Artist.Id, @Model.ArchivedVersion.Version, rep);
             ko.applyBindings(viewModel);
 
         });

@@ -355,7 +355,7 @@
 				@EntryRes.PersonalDescription
 			</h3>
 			<div class="media" data-bind="with: personalDescription">
-				<a data-bind="visible: !author.isEmpty(), attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
+				<a data-bind="visible: !author.isEmpty(), attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
 					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() ? author.entry().mainPicture.urlSmallThumb : null }" />
 				</a>
 
@@ -366,7 +366,7 @@
 					</div>
 					}
 					<h3 class="media-heading" data-bind="visible: !author.isEmpty()">
-						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
+						<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
 					</h3>
 					<div data-bind="visible: !editing()">
 						<p data-bind="markdown: text"></p>
@@ -494,8 +494,8 @@
 			moment.locale('@Culture');
 			ko.punches.enableAll();
 
-			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
+			var urlMapper = new app.UrlMapper("@Url.Content("~/")");
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
 			var albumRepo = repoFactory.albumRepository();
 			var userRepo = repoFactory.userRepository();
 			var artistRepo = repoFactory.artistRepository();
@@ -514,7 +514,7 @@
 			var jsonModel = @Html.Raw(Model.Json);
 			var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var viewModel = new vdb.viewModels.AlbumDetailsViewModel(albumRepo, userRepo,
+			var viewModel = new app.AlbumDetailsViewModel(albumRepo, userRepo,
 				artistRepo,
 				jsonModel,
 				reportTypes,

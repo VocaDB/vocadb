@@ -99,10 +99,10 @@
 
 			ko.punches.enableAll();
 
-			var urlMapper = new vdb.UrlMapper('@RootPath');
-			var tagRepo = new vdb.repositories.TagRepository('@RootPath');
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var tagRepo = new app.TagRepository('@RootPath');
 
-			var viewModel = new vdb.viewModels.admin.ManageTagMappingsViewModel(tagRepo);
+			var viewModel = new app.ManageTagMappingsViewModel(tagRepo);
 			ko.applyBindings(viewModel);
 
 		});

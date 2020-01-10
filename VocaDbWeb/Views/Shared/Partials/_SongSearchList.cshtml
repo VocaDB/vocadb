@@ -35,7 +35,7 @@
 	<tbody data-bind="foreach: page">
 		<tr>
 			<td style="width: 80px">
-				<a data-bind="visible: $data.thumbUrl, attr: { href: vdb.utils.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#">
+				<a data-bind="visible: $data.thumbUrl, attr: { href: app.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#">
 					<img data-bind="attr: { src: $data.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" />
 				</a>
 			</td>
@@ -48,7 +48,7 @@
 					</a>
 				</div>
 
-				<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#"></a>
+				<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#"></a>
 				<span data-bind="songTypeLabel: $data.songType"></span>
 				<!-- ko foreach: $parent.getPVServiceIcons($data.pvServices) -->
 				<img data-bind="attr: { src: url, title: service }" />

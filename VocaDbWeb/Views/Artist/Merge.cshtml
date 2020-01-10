@@ -46,9 +46,9 @@
 
 		$(function() {
 
-			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var repo = repoFactory.artistRepository();
-			var vm = new vdb.viewModels.artists.ArtistMergeViewModel(repo, @Model.Id);
+			var vm = new app.ArtistMergeViewModel(repo, @Model.Id);
 			ko.applyBindings(vm);
 
 			$("#mergeBtn").click(function () {

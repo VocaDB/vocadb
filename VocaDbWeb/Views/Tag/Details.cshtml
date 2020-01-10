@@ -43,19 +43,19 @@
 
 		$(function () {
 
-			var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
+			var urlMapper = new app.UrlMapper('@UrlMapper.HostAddress');
 			var jsonModel = @ToJS(Model.JsonModel);
 			var vm;
 
 			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children, jsonModel.hasMoreSiblings, jsonModel.hasMoreChildren);
 
-			var repo = new vdb.repositories.TagRepository('@RootPath');
-			var userRepo = new vdb.repositories.UserRepository(urlMapper);
+			var repo = new app.TagRepository('@RootPath');
+			var userRepo = new app.UserRepository(urlMapper);
 			var latestComments = @ToJS(Model.LatestComments);
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 			var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.TagReportTypeNames, TagReport.ReportTypesWithRequiredNotes));
 
-			vm = new vdb.viewModels.tags.TagDetailsViewModel(repo, userRepo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
+			vm = new app.TagDetailsViewModel(repo, userRepo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
 				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)), @ToJS(Model.IsFollowing));
 			ko.applyBindings(vm);
 			initTagsPage(vm);

@@ -47,9 +47,9 @@
 
 		$(function () {
 
-			var repo = new vdb.repositories.SongRepository('@RootPath', @LanguagePreferenceInt);
+			var repo = new app.SongRepository('@RootPath', @LanguagePreferenceInt);
 			var data = @ToJS(Model);
-			var vm = new vdb.viewModels.songs.SongMergeViewModel(repo, data);
+			var vm = new app.SongMergeViewModel(repo, data);
 			ko.applyBindings(vm);
 
 			$("#mergeBtn").click(function () {

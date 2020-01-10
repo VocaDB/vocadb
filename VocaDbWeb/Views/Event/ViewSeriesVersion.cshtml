@@ -47,8 +47,8 @@
 			$("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
 			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
 
-			var rep = new vdb.repositories.ReleaseEventRepository(new vdb.UrlMapper('@RootPath'));
-			var viewModel = new vdb.viewModels.ArchivedEntryViewModel(@Model.Entry.ReleaseEventSeries.Id, @Model.Entry.ArchivedVersion.Version, rep);
+			var rep = new app.ReleaseEventRepository(new app.UrlMapper('@RootPath'));
+			var viewModel = new app.ArchivedEntryViewModel(@Model.Entry.ReleaseEventSeries.Id, @Model.Entry.ArchivedVersion.Version, rep);
 			ko.applyBindings(viewModel);
 
 		});

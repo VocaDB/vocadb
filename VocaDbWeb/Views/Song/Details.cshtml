@@ -403,7 +403,7 @@
 				@EntryRes.PersonalDescription
 			</h3>
 			<div class="media" data-bind="with: personalDescription">
-				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
+				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
 					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() && author.entry().mainPicture ? author.entry().mainPicture.urlSmallThumb : null }" />
 				</a>
 
@@ -414,7 +414,7 @@
 					</div>
 					}
 					<h3 class="media-heading" data-bind="visible: !author.isEmpty()">
-						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
+						<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
 					</h3>
 					<div data-bind="visible: !editing()">
 						<p data-bind="markdown: text"></p>
@@ -548,8 +548,8 @@
 
 		var jsonModel = @Html.Raw(Model.Json);
 		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper(rootPath);
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var repo = repoFactory.songRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
@@ -557,7 +557,7 @@
 
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.SongReportTypeNames, SongReport.ReportTypesWithRequiredNotes));
 
-		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, 
+		var viewModel = new app.SongDetailsViewModel(repo, userRepo, 
 			artistRepo,
 			resources,
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
@@ -565,10 +565,10 @@
 			reportTypes,
 			@UserContext.LoggedUserId, 
 			@LanguagePreferenceInt, 
-			canDeleteAllComments, vdb.ui.showThankYouForRatingMessage);
+			canDeleteAllComments, app.ui.showThankYouForRatingMessage);
 		ko.applyBindings(viewModel);
 
-		viewModel.songListDialog.addedToList = function() { vdb.ui.showSuccessMessage(resources.addedToList); };
+		viewModel.songListDialog.addedToList = function() { app.ui.showSuccessMessage(resources.addedToList); };
 
 		initPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 	});

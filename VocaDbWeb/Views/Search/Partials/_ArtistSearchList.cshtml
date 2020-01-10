@@ -29,12 +29,12 @@
 		<tbody data-bind="foreach: page">
 			<tr>
 				<td style="width: 80px">
-					<a data-bind="visible: $data.mainPicture && mainPicture.urlTinyThumb, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id), title: $data.additionalNames }" href="#" class="coverPicThumb">
+					<a data-bind="visible: $data.mainPicture && mainPicture.urlTinyThumb, attr: { href: app.EntryUrlMapper.details('Artist', id), title: $data.additionalNames }" href="#" class="coverPicThumb">
 						<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlTinyThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
 					</a>
 				</td>
 				<td>
-					<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }" href="#"></a>
+					<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details('Artist', id) }" href="#"></a>
 					&nbsp;
 					<span data-bind="artistTypeLabel: artistType"></span>
 					@KnockoutHelpers.DraftIcon("status")

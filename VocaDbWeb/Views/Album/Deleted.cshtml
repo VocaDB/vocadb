@@ -19,8 +19,8 @@
 		
 		$(function () {
 
-			var repo = new vdb.repositories.AlbumRepository('@RootPath', @LanguagePreferenceInt);
-			var viewModel = new vdb.viewModels.DeletedAlbumsViewModel(repo);
+			var repo = new app.AlbumRepository('@RootPath', @LanguagePreferenceInt);
+			var viewModel = new app.DeletedAlbumsViewModel(repo);
 			ko.applyBindings(viewModel);
 
 		});

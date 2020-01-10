@@ -88,7 +88,7 @@
 	$(document).ready(function () {
 
 		var json = @Html.Raw(JsonHelpers.Serialize(Model));
-		var vm = new vdb.viewModels.ViewAuditLogViewModel(json);
+		var vm = new app.ViewAuditLogViewModel(json);
 		ko.applyBindings(vm);
 		
 		$("#loadMoreLink").click(function () {

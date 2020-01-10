@@ -47,9 +47,9 @@
 
 		$(function () {
 
-			var repo = new vdb.repositories.TagRepository('@RootPath');
+			var repo = new app.TagRepository('@RootPath');
 			var data = @ToJS(Model);
-			var vm = new vdb.viewModels.tags.TagMergeViewModel(repo, data);
+			var vm = new app.TagMergeViewModel(repo, data);
 			ko.applyBindings(vm);
 
 			$("#mergeBtn").click(function () {

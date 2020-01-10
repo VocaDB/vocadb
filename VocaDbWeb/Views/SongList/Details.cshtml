@@ -178,7 +178,7 @@
 		<tbody data-bind="foreach: page">
 			<tr>
 				<td style="width: 75px">
-					<a data-bind="visible: song.thumbUrl, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#">
+					<a data-bind="visible: song.thumbUrl, attr: { href: app.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#">
 						<img data-bind="attr: { src: song.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" />
 					</a>
 				</td>
@@ -192,7 +192,7 @@
 					</div>
 
 					<span data-bind="text: order"></span>.
-					<a data-bind="text: song.name, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
+					<a data-bind="text: song.name, attr: { href: app.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
 
 					<span data-bind="visible: notes">
 						(<span data-bind="text: notes"></span>)
@@ -260,8 +260,8 @@
 			var listId = @Model.SongList.Id;
 
 			var rootPath = '@RootPath';
-			var urlMapper = new vdb.UrlMapper(rootPath);
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
+			var urlMapper = new app.UrlMapper(rootPath);
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
 			var userRepo = repoFactory.userRepository();
 			var songRepo = repoFactory.songRepository();
 			var artistRepo = repoFactory.artistRepository();
@@ -270,12 +270,12 @@
 			var defaultSortRuleName = @ToJS(Res.DefaultSortRule);
 			var cultureCode = '@UICulture';
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
-			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
+			var pvPlayersFactory = new app.PVPlayersFactory(pvPlayerElem);
 			var latestComments = @ToJS(Model.SongList.LatestComments);
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 			var tagUsages = @ToJS(Model.SongList.Tags);
 
-			var vm = new vdb.viewModels.songList.SongListViewModel(
+			var vm = new app.SongListViewModel(
 				urlMapper,
 				songListRepo,
 				songRepo,

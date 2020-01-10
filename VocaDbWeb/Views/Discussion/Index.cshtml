@@ -39,11 +39,11 @@
 
 			ko.punches.enableAll();
 
-			var urlMapper = new vdb.UrlMapper('@RootPath');
+			var urlMapper = new app.UrlMapper('@RootPath');
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 			var repo = repoFactory.discussionRepository();
-			ko.applyBindings(new vdb.viewModels.discussions.DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments, @UserContext.LoggedUserId));
+			ko.applyBindings(new app.DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments, @UserContext.LoggedUserId));
 
 		});
 

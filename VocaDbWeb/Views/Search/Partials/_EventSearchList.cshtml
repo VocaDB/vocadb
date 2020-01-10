@@ -37,12 +37,12 @@
 	<tbody data-bind="foreach: page">
 	<tr>
 		<td style="width: 80px">
-			<a data-bind="visible: $data.mainPicture && mainPicture.urlSmallThumb, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#">
+			<a data-bind="visible: $data.mainPicture && mainPicture.urlSmallThumb, attr: { href: app.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#">
 				<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlSmallThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
 			</a>			
 		</td>
 		<td>
-			<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#"></a>
+			<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#"></a>
 				
 			@KnockoutHelpers.DraftIcon("status")
 				
@@ -53,7 +53,7 @@
 			<span data-bind="visible: $data.date, text: $parent.formatDate($data.date)"></span>
 		</td>
 		<td>
-			<a data-bind="visible: $data.series, text: $data.series ? series.name : null, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEventSeries), $data.seriesId, $data.series ? series.urlSlug : null) }"></a>
+			<a data-bind="visible: $data.series, text: $data.series ? series.name : null, attr: { href: app.EntryUrlMapper.details(@((int)EntryType.ReleaseEventSeries), $data.seriesId, $data.series ? series.urlSlug : null) }"></a>
 		</td>
 	</tr>
 	</tbody>

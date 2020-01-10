@@ -126,10 +126,10 @@
     <script type="text/javascript">
 
 		$(document).ready(function () {
-			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var repo = repoFactory.artistRepository();
             var json = @Html.Raw(JsonHelpers.Serialize(Model));
-            ko.applyBindings(new vdb.viewModels.ArtistCreateViewModel(repo, json));
+            ko.applyBindings(new app.ArtistCreateViewModel(repo, json));
         });
 
     </script>

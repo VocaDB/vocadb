@@ -83,7 +83,7 @@
 				</td>
 				<td>
 					{{#if: $data.matchedSong}}
-						<a href="{{ vdb.utils.EntryUrlMapper.details('Song', matchedSong.id) }}">{{ matchedSong.name }}</a>
+						<a href="{{ app.EntryUrlMapper.details('Song', matchedSong.id) }}">{{ matchedSong.name }}</a>
 					{{/if}}
 					{{#ifnot: $data.matchedSong}}
 						<span>@Res.SongMissing</span>
@@ -114,8 +114,8 @@
 	ko.punches.enableAll();
 
 	$(function () {
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var viewModel = new vdb.viewModels.songList.ImportSongListViewModel(urlMapper);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var viewModel = new app.ImportSongListViewModel(urlMapper);
 		ko.applyBindings(viewModel);
 	});
 

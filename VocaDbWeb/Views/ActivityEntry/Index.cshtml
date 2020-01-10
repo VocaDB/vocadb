@@ -40,12 +40,12 @@
 			moment.locale('@Culture');
 			ko.punches.enableAll();
 
-			var urlMapper = new vdb.UrlMapper("@RootPath");
-			var resourceRepo = new vdb.repositories.ResourceRepository('@RootPath');
+			var urlMapper = new app.UrlMapper("@RootPath");
+			var resourceRepo = new app.ResourceRepository('@RootPath');
 			var languageSelection = '@UserContext.LanguagePreference';
 			var cultureCode = '@UICulture';
 
-			var vm = new vdb.viewModels.activityEntry.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode);
+			var vm = new app.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode);
 			ko.applyBindings(vm);
 
 		});

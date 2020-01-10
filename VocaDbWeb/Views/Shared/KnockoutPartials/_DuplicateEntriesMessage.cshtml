@@ -7,7 +7,7 @@
 	@ViewRes.EntryCreateStrings.FoundPossibleDuplicates
 	<ul data-bind="foreach: dupeEntries">
 		<li>
-			<a data-bind="text: entry.name.displayName, attr: { href: vdb.utils.EntryUrlMapper.details_entry(entry) }, entryToolTip: entry"></a> 
+			<a data-bind="text: entry.name.displayName, attr: { href: app.EntryUrlMapper.details_entry(entry) }, entryToolTip: entry"></a> 
 			(<span data-bind="text: entry.entryTypeName"></span>)
 			<div data-bind="if: entry.artistString">
 				<span data-bind="text: entry.artistString"></span>

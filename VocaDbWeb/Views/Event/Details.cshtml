@@ -237,16 +237,16 @@
 
 		var loggedUserId = @UserContext.LoggedUserId;
 		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
-		var eventRepo = new vdb.repositories.ReleaseEventRepository(urlMapper);
-		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
+		var urlMapper = new app.UrlMapper(rootPath);
+		var eventRepo = new app.ReleaseEventRepository(urlMapper);
+		var userRepo = new app.UserRepository(urlMapper, loggedUserId);
 		var latestComments = @ToJS(Model.LatestComments);
 		var users = @ToJS(Model.UsersAttending);
 		var tags = @ToJS(Model.Tags);
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.EventReportTypeNames, EventReport.ReportTypesWithRequiredNotes));
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventDetailsViewModel(urlMapper, eventRepo, userRepo, latestComments,
+		var vm = new app.ReleaseEventDetailsViewModel(urlMapper, eventRepo, userRepo, latestComments,
 			reportTypes, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), users, tags, canDeleteAllComments);
 		ko.applyBindings(vm);
 

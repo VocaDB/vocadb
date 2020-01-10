@@ -29,12 +29,12 @@
 
 		initPage();
 
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var tagRepo = new vdb.repositories.TagRepository('@RootPath');
-		var userRepo = new vdb.repositories.UserRepository(urlMapper);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var tagRepo = new app.TagRepository('@RootPath');
+		var userRepo = new app.UserRepository(urlMapper);
 
 		tagRepo.getById('@Model.Id', "AliasedTo,TranslatedDescription,Names,Parent,RelatedTags,WebLinks", '@UserContext.LanguagePreference.ToString()', function (contract) {
-			var viewModel = new vdb.viewModels.tags.TagEditViewModel(urlMapper, userRepo, contract);
+			var viewModel = new app.TagEditViewModel(urlMapper, userRepo, contract);
 			ko.applyBindings(viewModel);
 		});
 
@@ -145,7 +145,7 @@
 			<tbody data-bind="foreach: relatedTags">
 				<tr>
 					<td>
-						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_tag(id, urlSlug) }, text: name"></a>
+						<a data-bind="attr: { href: app.EntryUrlMapper.details_tag(id, urlSlug) }, text: name"></a>
 					</td>
 					<td>
 						<a data-bind="click: function () { $parent.relatedTags.remove($data); }" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>

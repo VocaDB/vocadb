@@ -98,11 +98,11 @@
 
 		var loggedUserId = @UserContext.LoggedUserId;
 		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
-		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
+		var urlMapper = new app.UrlMapper(rootPath);
+		var userRepo = new app.UserRepository(urlMapper, loggedUserId);
 		var tags = @ToJS(Model.Tags);
 
-		var vm = new vdb.viewModels.releaseEvents.EventSeriesDetailsViewModel(userRepo, @Model.Id, tags);
+		var vm = new app.EventSeriesDetailsViewModel(userRepo, @Model.Id, tags);
 		ko.applyBindings(vm);
 
 	});

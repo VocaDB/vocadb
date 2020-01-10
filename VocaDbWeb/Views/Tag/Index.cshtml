@@ -65,8 +65,8 @@
 
 		$(function () {
 
-			var tagRepo = new vdb.repositories.TagRepository('@RootPath');
-			var viewModel = new vdb.viewModels.tags.TagCreateViewModel(tagRepo);
+			var tagRepo = new app.TagRepository('@RootPath');
+			var viewModel = new app.TagCreateViewModel(tagRepo);
 			ko.applyBindings(viewModel);
 
 		});

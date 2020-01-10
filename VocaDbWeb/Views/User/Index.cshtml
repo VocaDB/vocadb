@@ -21,11 +21,11 @@
 			var model = @ToJS(Model);
 			var filter = model.filter;
 			var groupId = model.groupId;
-			var urlMapper = new vdb.UrlMapper('@RootPath');
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper);
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var repoFactory = new app.RepositoryFactory(urlMapper);
 			var repo = repoFactory.userRepository();
 			var resourceRepo = repoFactory.resourceRepository();
-			var viewModel = new vdb.viewModels.user.ListUsersViewModel(repo, resourceRepo, uiCultureCode, filter, groupId);
+			var viewModel = new app.ListUsersViewModel(repo, resourceRepo, uiCultureCode, filter, groupId);
 			ko.applyBindings(viewModel);
 
 		});
