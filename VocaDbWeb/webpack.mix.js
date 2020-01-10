@@ -34,7 +34,7 @@ const mix = require('laravel-mix');
 
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
-	.scripts([
+	/*.scripts([
 		"Scripts/Shared/TopBar.js", 
 		"Scripts/Shared/MessagesTyped.js",
 		"Scripts/Shared/GlobalFunctions.js",
@@ -47,10 +47,10 @@ const mix = require('laravel-mix');
 		"Scripts/Models/SongVoteRating.js",               // Referred by UserRepository
 		"Scripts/ViewModels/TopBarViewModel.js",
 		"Scripts/ViewModels/PVRatingButtonsViewModel.js"
-	], "bundles/shared/common.js")
+	], "bundles/shared/common.js")*/
 
 	// Included on all pages except the front page (to optimize front page load time).
-	.scripts([
+	/*.scripts([
 		"Scripts/moment-with-locales.js",
 		"Scripts/Helpers/HtmlHelper.js",
 		"Scripts/Helpers/DateTimeHelper.js",
@@ -93,10 +93,10 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/ReportEntryViewModel.js",
 		"Scripts/ViewModels/Globalization/EnglishTranslatedStringViewModel.js",
 		"Scripts/ViewModels/SelfDescriptionViewModel.js"
-	], "bundles/shared/main.js")
+	], "bundles/shared/main.js")*/
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
-	.scripts([
+	/*.scripts([
 		"Scripts/knockout-sortable.js",
 		"Scripts/Models/WebLinkCategory.js",
 		"Scripts/Models/EntryStatus.js",
@@ -114,34 +114,35 @@ const mix = require('laravel-mix');
 		"Scripts/KnockoutExtensions/SongAutoComplete.js",
 		"Scripts/KnockoutExtensions/FocusOut.js",
 		"Scripts/KnockoutExtensions/InitialValue.js"
-	], "bundles/shared/edit.js")
+	], "bundles/shared/edit.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/jquery.tools.min.js",
 		"Scripts/ViewModels/NewsListViewModel.js",
 		"Scripts/Home/Index.js"
-	], "bundles/Home/Index.js")
+	], "bundles/Home/Index.js")*/
 
 	.scripts([
-		"Scripts/jqwidgets27/jqxcore.js", "Scripts/jqwidgets27/jqxrating.js"], "bundles/jqxRating.js")
+		"Scripts/jqwidgets27/jqxcore.js", "Scripts/jqwidgets27/jqxrating.js"
+	], "bundles/jqxRating.js")
 
 
 	// VIEW-SPECIFIC BUNDLES
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 		"Scripts/Models/ActivityEntries/EntryEditEvent.js",
 		"Scripts/Models/ResourcesManager.js",
 		"Scripts/Repositories/ResourceRepository.js",
 		"Scripts/ViewModels/ActivityEntry/ActivityEntryListViewModel.js"
-	], "bundles/ActivityEntry/Index.js")
+	], "bundles/ActivityEntry/Index.js")*/
 
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Repositories/AlbumRepository.js",
 		"Scripts/ViewModels/Album/AlbumCreateViewModel.js"
-	], "bundles/Album/Create.js")
+	], "bundles/Album/Create.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 		"Scripts/KnockoutExtensions/FormatDateFilter.js",
 		"Scripts/Repositories/AlbumRepository.js",
@@ -149,9 +150,9 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
 		"Scripts/ViewModels/Album/AlbumDetailsViewModel.js",
 		"Scripts/Album/Details.js"
-	], "bundles/Album/Details.js")
+	], "bundles/Album/Details.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/ParseInteger.js",
 		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
@@ -174,20 +175,20 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Album/AlbumDiscPropertiesEditViewModel.js",
 		"Scripts/ViewModels/Album/AlbumEditViewModel.js",
 		"Scripts/Album/Edit.js"
-	], "bundles/Album/Edit.js")
+	], "bundles/Album/Edit.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Helpers/EntryMergeValidationHelper.js",
 		"Scripts/KnockoutExtensions/AlbumAutoComplete.js",
 		"Scripts/Repositories/AlbumRepository.js",
 		"Scripts/ViewModels/Album/AlbumMergeViewModel.js"
-	], "bundles/Album/Merge.js")
+	], "bundles/Album/Merge.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/ViewModels/ArtistCreateViewModel.js"
-	], "bundles/Artist/Create.js")
+	], "bundles/Artist/Create.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/soundcloud-api.js",				
 		"Scripts/Repositories/AlbumRepository.js",
 		"Scripts/Repositories/ResourceRepository.js",
@@ -220,9 +221,9 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
 		"Scripts/ViewModels/Artist/ArtistDetailsViewModel.js",
 		"Scripts/Artist/Details.js"
-	], "bundles/Artist/Details.js")
+	], "bundles/Artist/Details.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.js",
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
@@ -231,48 +232,48 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/EntryPictureFileListEditViewModel.js",
 		"Scripts/ViewModels/Artist/ArtistEditViewModel.js",
 		"Scripts/Artist/Edit.js"
-	], "bundles/Artist/Edit.js")
+	], "bundles/Artist/Edit.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Helpers/EntryMergeValidationHelper.js",
 		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 		"Scripts/ViewModels/Artist/ArtistMergeViewModel.js"
-	], "bundles/Artist/Merge.js")
+	], "bundles/Artist/Merge.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/page.js",
 		"Scripts/KnockoutExtensions/FormatDateFilter.js",
 		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 		"Scripts/Repositories/DiscussionRepository.js",
 		"Scripts/ViewModels/Discussion/DiscussionTopicViewModel.js",
 		"Scripts/ViewModels/Discussion/DiscussionIndexViewModel.js"
-	], "bundles/Discussion/Index.js")
+	], "bundles/Discussion/Index.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/ViewModels/Tag/TagListViewModel.js",
 		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
 		"Scripts/ViewModels/ReleaseEvent/EventSeriesDetailsViewModel.js"
-	], "bundles/EventSeries/Details.js")
+	], "bundles/EventSeries/Details.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.js",
 		"Scripts/Repositories/ReleaseEventRepository.js",
 		"Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 		"Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 		"Scripts/ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel.js",
 		"Scripts/Event/SeriesEdit.js"
-	], "bundles/EventSeries/Edit.js")
+	], "bundles/EventSeries/Edit.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Models/Users/UserEventRelationshipType.js",
 		"Scripts/Repositories/CommentRepository.js",
 		"Scripts/Repositories/ReleaseEventRepository.js",
 		"Scripts/ViewModels/Tag/TagListViewModel.js",
 		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
 		"Scripts/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel.js"
-	], "bundles/ReleaseEvent/Details.js")
+	], "bundles/ReleaseEvent/Details.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.js",
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 		"Scripts/KnockoutExtensions/ReleaseEventSeriesAutoComplete.js",
@@ -289,9 +290,9 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/ReleaseEvent/ArtistForEventEditViewModel.js",
 		"Scripts/ViewModels/ReleaseEvent/ReleaseEventEditViewModel.js",
 		"Scripts/Event/Edit.js"
-	], "bundles/ReleaseEvent/Edit.js")
+	], "bundles/ReleaseEvent/Edit.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/soundcloud-api.js",				
 		"Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.js",
 		"Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",
@@ -333,24 +334,24 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Search/EventSearchViewModel.js",
 		"Scripts/ViewModels/Search/SongSearchViewModel.js",
 		"Scripts/ViewModels/Search/TagSearchViewModel.js"
-	], "bundles/Search/Index.js")
+	], "bundles/Search/Index.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.js",
 		"Scripts/Helpers/SongHelper.js",
 		"Scripts/ViewModels/SongCreateViewModel.js"
-	], "bundles/Song/Create.js")
+	], "bundles/Song/Create.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/MediaElement/mediaelement-and-player.min.js",
 		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 		"Scripts/ViewModels/Tag/TagListViewModel.js",
 		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
 		"Scripts/ViewModels/Song/SongDetailsViewModel.js",
 		"Scripts/Song/Details.js"
-	], "bundles/Song/Details.js")
+	], "bundles/Song/Details.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/FormatDateFilter.js",
 		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
@@ -372,23 +373,23 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Song/LyricsForSongEditViewModel.js",
 		"Scripts/ViewModels/Song/SongEditViewModel.js",
 		"Scripts/Song/Edit.js"
-	], "bundles/Song/Edit.js")
+	], "bundles/Song/Edit.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Helpers/EntryMergeValidationHelper.js",
 		"Scripts/ViewModels/Song/SongMergeViewModel.js"
-	], "bundles/Song/Merge.js")
+	], "bundles/Song/Merge.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/url.js",
 		"Scripts/Shared/Routing/ObservableUrlParamRouter.js",
 		"Scripts/KnockoutExtensions/SlideVisible.js",				
 		"Scripts/KnockoutExtensions/FormatDateFilter.js",
 		"Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 		"Scripts/ViewModels/Song/RankingsViewModel.js"
-	], "bundles/Song/TopRated.js")
+	], "bundles/Song/TopRated.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/soundcloud-api.js",				
 		"Scripts/KnockoutExtensions/SlideVisible.js",				
 		"Scripts/KnockoutExtensions/ScrollEnd.js",
@@ -415,16 +416,16 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Tag/TagListViewModel.js",
 		"Scripts/ViewModels/Tag/TagsEditViewModel.js",
 		"Scripts/ViewModels/SongList/SongListViewModel.js"
-	], "bundles/SongList/Details.js")
+	], "bundles/SongList/Details.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 		"Scripts/Repositories/SongListRepository.js",
 		"Scripts/ViewModels/SongList/SongListEditViewModel.js",
 		"Scripts/SongList/Edit.js"
-	], "bundles/SongList/Edit.js")
+	], "bundles/SongList/Edit.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/FormatDateFilter.js",
 		"Scripts/Repositories/ResourceRepository.js",
 		"Scripts/Repositories/SongListRepository.js",
@@ -433,20 +434,20 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Search/TagFilters.js",
 		"Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
 		"Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
-	], "bundles/SongList/Featured.js")
+	], "bundles/SongList/Featured.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/ViewModels/SongList/ImportSongListViewModel.js"
-	], "bundles/SongList/Import.js")
+	], "bundles/SongList/Import.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 		"Scripts/Repositories/TagRepository.js",
 		"Scripts/ViewModels/Tag/TagDetailsViewModel.js",
 		"Scripts/Tag/Details.js"
-	], "bundles/Tag/Details.js")
+	], "bundles/Tag/Details.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",
 		"Scripts/Repositories/TagRepository.js",
 		"Scripts/Helpers/KnockoutHelper.js",
@@ -454,29 +455,29 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 		"Scripts/ViewModels/TagEditViewModel.js",
 		"Scripts/Tag/Edit.js"
-	], "bundles/Tag/Edit.js")
+	], "bundles/Tag/Edit.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Repositories/TagRepository.js",
 		"Scripts/ViewModels/Tag/TagCreateViewModel.js"
-	], "bundles/Tag/Index.js")
+	], "bundles/Tag/Index.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Helpers/EntryMergeValidationHelper.js",
 		"Scripts/Repositories/TagRepository.js",
 		"Scripts/ViewModels/Tag/TagMergeViewModel.js"
-	], "bundles/Tag/Merge.js")
+	], "bundles/Tag/Merge.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 		"Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
 		"Scripts/Repositories/ResourceRepository.js",
 		"Scripts/ViewModels/Search/AdvancedSearchFilter.js",
 		"Scripts/ViewModels/Search/AdvancedSearchFilters.js",
 		"Scripts/ViewModels/User/AlbumCollectionViewModel.js"
-	], "bundles/User/AlbumCollection.js")
+	], "bundles/User/AlbumCollection.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/soundcloud-api.js",
 		"Scripts/Models/Users/UserEventRelationshipType.js",
 		"Scripts/KnockoutExtensions/SlideVisible.js",				
@@ -512,24 +513,24 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/User/AlbumCollectionViewModel.js",
 		"Scripts/ViewModels/User/UserDetailsViewModel.js",
 		"Scripts/User/Details.js"
-	], "bundles/User/Details.js")
+	], "bundles/User/Details.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/Repositories/ResourceRepository.js",
 		"Scripts/Models/ResourcesManager.js",
 		"Scripts/ViewModels/User/ListUsersViewModel.js"
-	], "bundles/User/Index.js")
+	], "bundles/User/Index.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/KnockoutExtensions/BindingHandlers/UserAutocomplete.js",
 		"Scripts/ViewModels/User/UserMessagesViewModel.js"
-	], "bundles/User/Messages.js")
+	], "bundles/User/Messages.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/ViewModels/User/MySettingsViewModel.js"
-	], "bundles/User/MySettings.js")
+	], "bundles/User/MySettings.js")*/
 
-	.scripts([
+	/*.scripts([
 		"Scripts/soundcloud-api.js",				
 		"Scripts/KnockoutExtensions/SlideVisible.js",				
 		"Scripts/KnockoutExtensions/ArtistAutoComplete.js",
@@ -546,7 +547,7 @@ const mix = require('laravel-mix');
 		"Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.js",
 		"Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 		"Scripts/ViewModels/User/RatedSongsSearchViewModel.js"
-	], "bundles/User/RatedSongs.js")
+	], "bundles/User/RatedSongs.js")*/
 
 
 	// TODO
