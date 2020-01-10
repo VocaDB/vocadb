@@ -1,27 +1,27 @@
-﻿
-module vdb.helpers {
 
-	import cls = vdb.models;
-	import SongType = cls.songs.SongType;
+import ContentFocus from '../Models/ContentFocus';
+import SongType from '../Models/Songs/SongType';
 
-	export class SongHelper {
+//module vdb.helpers {
+
+	export default class SongHelper {
 
 		public static originalVersionTypes = [
 			SongType.Unspecified, SongType.Original, SongType.Remaster, SongType.Remix, SongType.Cover, SongType.Mashup, SongType.DramaPV, SongType.Other
 		];
 
-		public static originalVersionTypesString = () => _.map(SongHelper.originalVersionTypes, s => cls.songs.SongType[s]).join(",");
+		public static originalVersionTypesString = () => _.map(SongHelper.originalVersionTypes, s => SongType[s]).join(",");
 		
 		// Checks whether a song type is to be considered animation where animators are considered as the main role
-		public static getContentFocus(songType: cls.songs.SongType) {
-			return (songType === cls.songs.SongType.MusicPV || songType === cls.songs.SongType.DramaPV ? cls.ContentFocus.Video : cls.ContentFocus.Music);
+		public static getContentFocus(songType: SongType) {
+			return (songType === SongType.MusicPV || songType === SongType.DramaPV ? ContentFocus.Video : ContentFocus.Music);
 		}
 
 		// Checks whether a song type is to be considered instrumental where the song is allowed to have no vocalists
-		public static isInstrumental(songType: cls.songs.SongType) {
-			return songType === cls.songs.SongType.Instrumental || songType === cls.songs.SongType.DramaPV;
+		public static isInstrumental(songType: SongType) {
+			return songType === SongType.Instrumental || songType === SongType.DramaPV;
 		}
 
 	}
 
-}
+//}

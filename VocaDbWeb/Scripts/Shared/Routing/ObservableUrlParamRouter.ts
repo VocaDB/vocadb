@@ -1,12 +1,14 @@
-﻿
-interface JQueryStatic {
-	url: (param: string) => string;
+
+declare global {
+	interface JQueryStatic {
+		url: (param: string) => string;
+	}
 }
 
-module vdb.routing {
+//module vdb.routing {
 
 	// Uses HTML5 history API to update URL query string from a set of observables
-	export class ObservableUrlParamRouter {
+	export default class ObservableUrlParamRouter {
 		
 		constructor(routes: { [key: string]: KnockoutObservable<string | number>; }, private win: Window = window) {
 			
@@ -84,4 +86,4 @@ module vdb.routing {
 
 	}
 
-}
+//}

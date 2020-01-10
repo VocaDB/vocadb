@@ -1,9 +1,11 @@
-﻿
-module vdb.viewModels.search {
 
-	export class TagFilter {
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 
-		public static fromContract = (tag: dc.TagBaseContract) => {
+//module vdb.viewModels.search {
+
+	export default class TagFilter {
+
+		public static fromContract = (tag: TagBaseContract) => {
 			return new TagFilter(tag.id, tag.name, tag.urlSlug);
 		}
 
@@ -18,4 +20,4 @@ module vdb.viewModels.search {
 
 	}
 
-} 
+//} 

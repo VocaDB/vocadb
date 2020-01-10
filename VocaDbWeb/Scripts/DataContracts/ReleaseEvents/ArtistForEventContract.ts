@@ -1,7 +1,9 @@
-﻿
-namespace vdb.dataContracts.events {
 
-	export interface ArtistForEventContract {
+import ArtistContract from '../Artist/ArtistContract';
+
+//namespace vdb.dataContracts.events {
+
+	export default interface ArtistForEventContract {
 
 		artist?: ArtistContract;
 
@@ -13,4 +15,4 @@ namespace vdb.dataContracts.events {
 
 	}
 
-}
+//}

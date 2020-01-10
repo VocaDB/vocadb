@@ -2,25 +2,32 @@
 /// <reference path="../../Models/WebLinkCategory.ts" />
 /// <reference path="../../ViewModels/Song/SongEditViewModel.ts" />
 
-module vdb.tests.viewModels {
+import ArtistForAlbumEditViewModel from '../../ViewModels/ArtistForAlbumEditViewModel';
+import ArtistHelper from '../../Helpers/ArtistHelper';
+import ArtistRoles from '../../Models/Artists/ArtistRoles';
+import ArtistType from '../../Models/Artists/ArtistType';
+import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
+import FakeSongRepository from '../TestSupport/FakeSongRepository';
+import FakeUserRepository from '../TestSupport/FakeUserRepository';
+import SongEditViewModel from '../../ViewModels/Song/SongEditViewModel';
+import SongForEditContract from '../../DataContracts/Song/SongForEditContract';
+import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
+import UrlMapper from '../../Shared/UrlMapper';
 
-	import cls = vdb.models;
-	import vm = vdb.viewModels;
-	import dc = vdb.dataContracts;
-	import sup = vdb.tests.testSupport;
+//module vdb.tests.viewModels {
 
-	var categories: dc.TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
+	var categories: TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
 	var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
-	var data: dc.songs.SongForEditContract;
-	var songRepo = new sup.FakeSongRepository();
-	var artistRepo = new sup.FakeArtistRepository();
+	var data: SongForEditContract;
+	var songRepo = new FakeSongRepository();
+	var artistRepo = new FakeArtistRepository();
 	var pvRepo = null;
-	var userRepo = new sup.FakeUserRepository();
-	resources.song = { addExtraArtist: 'Add extra artist' };
+	var userRepo = new FakeUserRepository();
+	vdb.resources.song = { addExtraArtist: 'Add extra artist' };
 
-	function addArtist(viewModel: vm.SongEditViewModel, artistType: cls.artists.ArtistType, roles: cls.artists.ArtistRoles) {		
-		const artist = artistType != null ? { id: 39, name: 'Clean Tears', artistType: cls.artists.ArtistType[artistType] } : null;
-		viewModel.artistLinks.push(new vm.ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: false, roles: vdb.helpers.ArtistHelper.getRolesList(roles) }));
+	function addArtist(viewModel: SongEditViewModel, artistType: ArtistType, roles: ArtistRoles) {		
+		const artist = artistType != null ? { id: 39, name: 'Clean Tears', artistType: ArtistType[artistType] } : null;
+		viewModel.artistLinks.push(new ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: false, roles: ArtistHelper.getRolesList(roles) }));
 	}
 
 	QUnit.module("SongEditViewModelTests", {
@@ -37,7 +44,7 @@ module vdb.tests.viewModels {
     });
 
     function createViewModel() {
-		return new vm.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, new vdb.UrlMapper(''), {}, categories, data, false, null, 0, null);
+		return new SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, new UrlMapper(''), {}, categories, data, false, null, 0, null);
     }
 
     QUnit.test("constructor", () => {
@@ -126,7 +133,7 @@ module vdb.tests.viewModels {
 	QUnit.test("validationError_duplicateArtist", () => {
 
         var target = createViewModel();
-		var artist = new vm.ArtistForAlbumEditViewModel(null, { artist: { id: 1, name: '164' }, roles: '' });
+		var artist = new ArtistForAlbumEditViewModel(null, { artist: { id: 1, name: '164' }, roles: '' });
 
 		target.artistLinks.push(artist);
 		target.artistLinks.push(artist);
@@ -140,11 +147,11 @@ module vdb.tests.viewModels {
 		const target = createViewModel();
 
 		const artist = { id: 39, name: 'Clean Tears' };
-		target.artistLinks.push(new vm.ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: false, roles: '' }));
-		target.artistLinks.push(new vm.ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: true, roles: '' }));
+		target.artistLinks.push(new ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: false, roles: '' }));
+		target.artistLinks.push(new ArtistForAlbumEditViewModel(null, { artist: artist, isSupport: true, roles: '' }));
 
 		equal(target.validationError_duplicateArtist(), true, "validationError_duplicateArtist");
 
 	});
 
-}
+//}

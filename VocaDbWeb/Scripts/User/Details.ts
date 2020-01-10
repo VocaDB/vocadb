@@ -1,5 +1,3 @@
-import rep = vdb.repositories;
-
 function initPage(confirmDisableStr: string) {
 
 	$("#mySettingsLink").button({ icons: { primary: 'ui-icon-wrench' } });

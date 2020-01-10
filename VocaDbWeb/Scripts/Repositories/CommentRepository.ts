@@ -1,42 +1,46 @@
-﻿
-namespace vdb.repositories {
 
-	import cls = vdb.models;
+import BaseRepository from './BaseRepository';
+import CommentContract from '../DataContracts/CommentContract';
+import EntryType from '../Models/EntryType';
+import ICommentRepository from './ICommentRepository';
+import UrlMapper from '../Shared/UrlMapper';
 
-	export class CommentRepository extends BaseRepository implements ICommentRepository {
+//namespace vdb.repositories {
 
-		constructor(private urlMapper: vdb.UrlMapper, private entryType: cls.EntryType) {
+	export default class CommentRepository extends BaseRepository implements ICommentRepository {
+
+		constructor(private urlMapper: UrlMapper, private entryType: EntryType) {
 			super(urlMapper.baseUrl);
 		}
 
-		public createComment = (entryId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+		public createComment = (entryId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
-			contract.entry = { entryType: cls.EntryType[this.entryType], id: entryId };
-			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + cls.EntryType[this.entryType] + "-comments"));
+			contract.entry = { entryType: EntryType[this.entryType], id: entryId };
+			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + EntryType[this.entryType] + "-comments"));
 			$.post(url, contract, callback, 'json');
 
 		}
 
 		public deleteComment = (commentId: number, callback?: () => void) => {
 
-			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + cls.EntryType[this.entryType] + "-comments/", commentId.toString()));
+			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + EntryType[this.entryType] + "-comments/", commentId.toString()));
 			$.ajax(url, { type: 'DELETE', success: callback });
 
 		}
 
-		public getComments = (listId: number, callback: (contract: dc.CommentContract[]) => void) => {
+		public getComments = (listId: number, callback: (contract: CommentContract[]) => void) => {
 
-			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + cls.EntryType[this.entryType] + "-comments/"));
+			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + EntryType[this.entryType] + "-comments/"));
 			$.getJSON(url, { entryId: listId }, result => callback(result.items));
 
 		}
 
-		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
+		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
-			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + cls.EntryType[this.entryType] + "-comments/", commentId.toString()));
+			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + EntryType[this.entryType] + "-comments/", commentId.toString()));
 			$.post(url, contract, callback, 'json');
 
 		}
 	}
 
-}
+//}

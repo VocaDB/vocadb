@@ -1,13 +1,18 @@
-﻿
-interface KnockoutBindingHandlers {
-	// Album autocomplete search box.
-	albumAutoComplete: KnockoutBindingHandler;
+
+import { AlbumAutoCompleteParams } from './AutoCompleteParams';
+import AlbumContract from '../DataContracts/Album/AlbumContract';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import { initEntrySearch } from '../Shared/EntryAutoComplete';
+
+declare global {
+	interface KnockoutBindingHandlers {
+		// Album autocomplete search box.
+		albumAutoComplete: KnockoutBindingHandler;
+	}
 }
 
-module vdb.knockoutExtensions {
+//module vdb.knockoutExtensions {
 	
-	import dc = vdb.dataContracts;
-
 	export function albumAutoComplete(element: HTMLElement, valueAccessor) {
 
 		var properties: AlbumAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
@@ -30,20 +35,20 @@ module vdb.knockoutExtensions {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 15
 		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/albums"),
+		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/albums"),
 			{
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,
 				createCustomItem: properties.createCustomItem,
-				createOptionFirstRow: (item: dc.AlbumContract) => (item.name + " (" + item.discType + ")"),
-				createOptionSecondRow: (item: dc.AlbumContract) => (item.artistString),
+				createOptionFirstRow: (item: AlbumContract) => (item.name + " (" + item.discType + ")"),
+				createOptionSecondRow: (item: AlbumContract) => (item.artistString),
 				extraQueryParams: queryParams,
 				filter: filter,
 				termParamName: 'query'
@@ -52,8 +57,8 @@ module vdb.knockoutExtensions {
 
 	}
 
-}
+//}
 
 ko.bindingHandlers.albumAutoComplete = {
-	init: vdb.knockoutExtensions.albumAutoComplete
+	init: albumAutoComplete
 }

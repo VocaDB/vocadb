@@ -1,31 +1,50 @@
 
-module vdb.viewModels.user {
+import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
+import ArtistFilters from '../Search/ArtistFilters';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import PlayListRepositoryForRatedSongsAdapter from '../Song/PlayList/PlayListRepositoryForRatedSongsAdapter';
+import PlayListViewModel from '../Song/PlayList/PlayListViewModel';
+import PVPlayersFactory from '../PVs/PVPlayersFactory';
+import PVPlayerViewModel from '../PVs/PVPlayerViewModel';
+import PVServiceIcons from '../../Models/PVServiceIcons';
+import RatedSongForUserForApiContract from '../../DataContracts/User/RatedSongForUserForApiContract';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
+import SongApiContract from '../../DataContracts/Song/SongApiContract';
+import SongListBaseContract from '../../DataContracts/SongListBaseContract';
+import SongRepository from '../../Repositories/SongRepository';
+import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
+import TagFilters from '../Search/TagFilters';
+import TagRepository from '../../Repositories/TagRepository';
+import ui from '../../Shared/MessagesTyped';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+//module vdb.viewModels.user {
 
-	export class RatedSongsSearchViewModel {
+	export default class RatedSongsSearchViewModel {
 		
 		constructor(
 			urlMapper: UrlMapper,
-			private userRepo: rep.UserRepository, private artistRepo: rep.ArtistRepository,
-			private songRepo: rep.SongRepository,
-			private resourceRepo: rep.ResourceRepository,
-			tagRepo: rep.TagRepository,
+			private userRepo: UserRepository, private artistRepo: ArtistRepository,
+			private songRepo: SongRepository,
+			private resourceRepo: ResourceRepository,
+			tagRepo: TagRepository,
 			private languageSelection: string, private loggedUserId: number, private cultureCode: string,
 			sort: string, groupByRating: boolean,
-			pvPlayersFactory: pvs.PVPlayersFactory,
+			pvPlayersFactory: PVPlayersFactory,
 			initialize = true,
 			artistId?: number,
 			childVoicebanks?: boolean) {	
 
-			this.artistFilters = new viewModels.search.ArtistFilters(artistRepo, childVoicebanks);
+			this.artistFilters = new ArtistFilters(artistRepo, childVoicebanks);
 
 			if (artistId)
 				this.artistFilters.selectArtist(artistId);
 
-			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
+			this.pvServiceIcons = new PVServiceIcons(urlMapper);
 
 			if (sort)
 				this.sort(sort);
@@ -33,7 +52,7 @@ module vdb.viewModels.user {
 			if (groupByRating != null)
 				this.groupByRating(groupByRating);
 
-			this.tagFilters = new viewModels.search.TagFilters(tagRepo, languageSelection);
+			this.tagFilters = new TagFilters(tagRepo, languageSelection);
 
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
@@ -48,39 +67,39 @@ module vdb.viewModels.user {
 			this.tagFilters.tags.subscribe(this.updateResultsWithTotalCount);
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
-			this.pvPlayerViewModel = new pvs.PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
-			var songsRepoAdapter = new vdb.viewModels.songs.PlayListRepositoryForRatedSongsAdapter(userRepo, loggedUserId, this.searchTerm, this.sort,
+			this.pvPlayerViewModel = new PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory);
+			var songsRepoAdapter = new PlayListRepositoryForRatedSongsAdapter(userRepo, loggedUserId, this.searchTerm, this.sort,
 				this.tagFilters.tagIds, this.artistFilters.artistIds, this.artistFilters.childVoicebanks,
 				this.rating, this.songListId, this.advancedFilters.filters, this.groupByRating, ko.observable("AdditionalNames,ThumbUrl"));
-			this.playListViewModel = new vdb.viewModels.songs.PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
-				cls.globalization.ContentLanguagePreference[languageSelection]);
+			this.playListViewModel = new PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
+				ContentLanguagePreference[languageSelection]);
 
 			if (initialize)
 				this.init();
 
 		}
 
-		public advancedFilters = new viewModels.search.AdvancedSearchFilters;
-		public artistFilters: viewModels.search.ArtistFilters;
+		public advancedFilters = new AdvancedSearchFilters;
+		public artistFilters: ArtistFilters;
 		public groupByRating = ko.observable(true);
 		public isInit = false;
 		public loading = ko.observable(true); // Currently loading for data
 		public page = ko.observableArray<IRatedSongSearchItem>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
-		public playListViewModel: vdb.viewModels.songs.PlayListViewModel;
-		public pvPlayerViewModel: pvs.PVPlayerViewModel;
-		public pvServiceIcons: vdb.models.PVServiceIcons;
+		public playListViewModel: PlayListViewModel;
+		public pvPlayerViewModel: PVPlayerViewModel;
+		public pvServiceIcons: PVServiceIcons;
 		public rating = ko.observable("Nothing");
 		public resources = ko.observable<any>();
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public showTags = ko.observable(false);
 		public songListId = ko.observable<number>(undefined);
-		public songLists = ko.observableArray<dc.SongListBaseContract>([]);
+		public songLists = ko.observableArray<SongListBaseContract>([]);
 		public sort = ko.observable("Name");
 		public sortName = ko.computed(() => this.resources() != null ? (this.resources().user_ratedSongForUserSortRuleNames[this.sort()]
 			|| this.resources().songSortRuleNames[this.sort()]) : "");
-		public tagFilters: viewModels.search.TagFilters;
+		public tagFilters: TagFilters;
 		public viewMode = ko.observable("Details");
 
 		public fields = ko.computed(() => {
@@ -146,7 +165,7 @@ module vdb.viewModels.user {
 				null,
 				this.fields(),
 				this.sort(),
-				(result: dc.PartialFindResultContract<dc.RatedSongForUserForApiContract>) => {
+				(result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
 
 					var songs: IRatedSongSearchItem[] = [];
 
@@ -158,7 +177,7 @@ module vdb.viewModels.user {
 
 						if (song.pvServices && song.pvServices !== 'Nothing') {
 							song.previewViewModel = new SongWithPreviewViewModel(this.songRepo, this.userRepo, song.id, song.pvServices);
-							song.previewViewModel.ratingComplete = vdb.ui.showThankYouForRatingMessage;
+							song.previewViewModel.ratingComplete = ui.showThankYouForRatingMessage;
 						} else {
 							song.previewViewModel = null;
 						}
@@ -181,7 +200,7 @@ module vdb.viewModels.user {
 
 	}
 
-	export interface IRatedSongSearchItem extends dc.SongApiContract {
+	export interface IRatedSongSearchItem extends SongApiContract {
 
 		previewViewModel?: SongWithPreviewViewModel;
 
@@ -189,4 +208,4 @@ module vdb.viewModels.user {
 
 	}
 
-}
+//}

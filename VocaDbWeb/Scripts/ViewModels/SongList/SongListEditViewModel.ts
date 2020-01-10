@@ -1,12 +1,20 @@
-﻿
-module vdb.viewModels.songList {
 
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+import DeleteEntryViewModel from '../DeleteEntryViewModel';
+import EntryType from '../../Models/EntryType';
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import SongApiContract from '../../DataContracts/Song/SongApiContract';
+import SongContract from '../../DataContracts/Song/SongContract';
+import SongInListEditContract from '../../DataContracts/Song/SongInListEditContract';
+import SongListRepository from '../../Repositories/SongListRepository';
+import SongRepository from '../../Repositories/SongRepository';
+import UrlMapper from '../../Shared/UrlMapper';
+
+//module vdb.viewModels.songList {
 
 	export class SongInListEditViewModel {
 		
-		constructor(data: dc.songs.SongInListEditContract) {
+		constructor(data: SongInListEditContract) {
 
 			this.songInListId = data.songInListId;
 			this.notes = ko.observable(data.notes);
@@ -19,18 +27,18 @@ module vdb.viewModels.songList {
 
 		public order: KnockoutObservable<number>;
 
-		public song: dc.SongApiContract;
+		public song: SongApiContract;
 
 		public songInListId: number;
 
 	}
 
-	export class SongListEditViewModel {
+	export default class SongListEditViewModel {
 
 		constructor(
-			private readonly songListRepo: rep.SongListRepository,
-			private readonly songRepo: rep.SongRepository,
-			private readonly urlMapper: vdb.UrlMapper,
+			private readonly songListRepo: SongListRepository,
+			private readonly songRepo: SongRepository,
+			private readonly urlMapper: UrlMapper,
 			id: number) {
 
 			this.id = id;
@@ -43,7 +51,7 @@ module vdb.viewModels.songList {
 			if (!songId)
 				return;
 
-			this.songRepo.getOne(songId, (song: dc.SongContract) => {
+			this.songRepo.getOne(songId, (song: SongContract) => {
 				var songInList = new SongInListEditViewModel({ songInListId: 0, order: 0, notes: "", song: song });
 				this.songLinks.push(songInList);
 			});
@@ -108,7 +116,7 @@ module vdb.viewModels.songList {
 		public name: KnockoutObservable<string>;
 
 		private redirectToDetails = () => {
-			window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.SongList, this.id));
+			window.location.href = this.urlMapper.mapRelative(EntryUrlMapper.details(EntryType.SongList, this.id));
 		}
 
 		private redirectToRoot = () => {
@@ -121,7 +129,7 @@ module vdb.viewModels.songList {
 
 		public songLinks: KnockoutObservableArray<SongInListEditViewModel>;
 
-		public songSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams = {
+		public songSearchParams: SongAutoCompleteParams = {
 			acceptSelection: this.acceptSongSelection
 		};
 
@@ -143,4 +151,4 @@ module vdb.viewModels.songList {
 	};
 
 
-}
+//}

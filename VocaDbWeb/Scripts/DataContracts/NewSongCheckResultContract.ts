@@ -1,8 +1,11 @@
 /// <reference path="DuplicateEntryResultContract.ts" />
 
-module vdb.dataContracts {
+import ArtistContract from './Artist/ArtistContract';
+import DuplicateEntryResultContract from './DuplicateEntryResultContract';
 
-    export interface NewSongCheckResultContract {
+//module vdb.dataContracts {
+
+    export default interface NewSongCheckResultContract {
 
 		artists: ArtistContract[];
 
@@ -16,4 +19,4 @@ module vdb.dataContracts {
 
     }
 
-}
+//}

@@ -1,7 +1,10 @@
-﻿
-module vdb.views.artist {
 
-	export function initPage(artistId: number, saveStr, urlMapper, viewModel: viewModels.ArtistDetailsViewModel, songRepo: repositories.SongRepository) {
+import ArtistDetailsViewModel from '../ViewModels/Artist/ArtistDetailsViewModel';
+import SongRepository from '../Repositories/SongRepository';
+
+//module vdb.views.artist {
+
+	export function initPage(artistId: number, saveStr, urlMapper, viewModel: ArtistDetailsViewModel, songRepo: SongRepository) {
 
 		$("#addToUserLink").button({ disabled: $("#addToUserLink").hasClass("disabled"), icons: { primary: 'ui-icon-heart' } });
 		$("#removeFromUserLink").button({ disabled: $("#removeFromUserLink").hasClass("disabled"), icons: { primary: 'ui-icon-close' } })
@@ -45,4 +48,4 @@ module vdb.views.artist {
 
 	}
 
-}
+//}

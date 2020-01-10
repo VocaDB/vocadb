@@ -1,12 +1,20 @@
 
-module vdb.repositories {
+import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import EntryCommentRepository from './EntryCommentRepository';
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import SongInListContract from '../DataContracts/Song/SongInListContract';
+import SongListContract from '../DataContracts/Song/SongListContract';
+import SongListForEditContract from '../DataContracts/Song/SongListForEditContract';
+import { SongOptionalFields } from '../Models/EntryOptionalFields';
+import UrlMapper from '../Shared/UrlMapper';
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
+//module vdb.repositories {
 
-	export class SongListRepository {
+	export default class SongListRepository {
 
-		constructor(private readonly urlMapper: vdb.UrlMapper) {}
+		constructor(private readonly urlMapper: UrlMapper) {}
 
 		public delete = (id: number, notes: string, hardDelete: boolean, callback?: () => void) => {
 			$.ajax(this.urlMapper.mapRelative("/api/songLists/" + id + "?hardDelete=" + hardDelete + "&notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
@@ -17,10 +25,10 @@ module vdb.repositories {
 		public getFeatured = (
 			query: string,
 			category: string,
-			paging: dc.PagingProperties,
+			paging: PagingProperties,
 			tagIds: number[],
 			sort: string,
-			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
+			callback: (result: PartialFindResultContract<SongListContract>) => void) => {
 			
 			var url = this.urlMapper.mapRelative("/api/songLists/featured");
 			$.getJSON(url, {
@@ -33,7 +41,7 @@ module vdb.repositories {
 
 		}
 
-		public getForEdit = (id: number, callback: (result: dc.songs.SongListForEditContract) => void) => {
+		public getForEdit = (id: number, callback: (result: SongListForEditContract) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songLists/" + id + "/for-edit");
 			$.getJSON(url, callback);
@@ -49,13 +57,13 @@ module vdb.repositories {
 			artistIds: number[],
 			artistParticipationStatus: string,
 			childVoicebanks: boolean,
-			advancedFilters: viewModels.search.AdvancedSearchFilter[],
+			advancedFilters: AdvancedSearchFilter[],
 			pvServices: string,
-			paging: dc.PagingProperties,
-			fields: cls.SongOptionalFields,
+			paging: PagingProperties,
+			fields: SongOptionalFields,
 			sort: string,
-			lang: cls.globalization.ContentLanguagePreference,
-			callback: (result: dc.PartialFindResultContract<dc.songs.SongInListContract>) => void) => {
+			lang: ContentLanguagePreference,
+			callback: (result: PartialFindResultContract<SongInListContract>) => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songLists/" + listId + "/songs");
 			var data = {
@@ -70,7 +78,7 @@ module vdb.repositories {
 				pvServices: pvServices,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				fields: fields.fields, 
-				lang: cls.globalization.ContentLanguagePreference[lang],
+				lang: ContentLanguagePreference[lang],
 				sort: sort
 			};
 
@@ -80,4 +88,4 @@ module vdb.repositories {
 
 	}
 
-}
+//}

@@ -1,11 +1,11 @@
 
-module vdb.viewModels.globalization {
+import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
+import LocalizedStringWithIdContract from '../../DataContracts/Globalization/LocalizedStringWithIdContract';
+import LocalizedStringWithIdEditViewModel from './LocalizedStringWithIdEditViewModel';
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	var langSelection = vdb.models.globalization.ContentLanguageSelection;
+//module vdb.viewModels.globalization {
 
-	export class NamesEditViewModel {
+	export default class NamesEditViewModel {
 
 		public aliases: KnockoutObservableArray<LocalizedStringWithIdEditViewModel>;
 		public englishName: LocalizedStringWithIdEditViewModel;
@@ -41,7 +41,7 @@ module vdb.viewModels.globalization {
 
 			return _.map(this.getAllNames(), (name) => {
 
-				var contract: dc.globalization.LocalizedStringWithIdContract = {
+				var contract: LocalizedStringWithIdContract = {
 					id: name.id,
 					language: name.languageStr(),
 					value: name.value()
@@ -52,11 +52,11 @@ module vdb.viewModels.globalization {
 			});
 		}
 
-		public static fromContracts(contracts: dc.globalization.LocalizedStringWithIdContract[]) {
-			return new NamesEditViewModel(_.map(contracts, contract => globalization.LocalizedStringWithIdEditViewModel.fromContract(contract)));
+		public static fromContracts(contracts: LocalizedStringWithIdContract[]) {
+			return new NamesEditViewModel(_.map(contracts, contract => LocalizedStringWithIdEditViewModel.fromContract(contract)));
 		}
 
-		private static nameOrEmpty(names: LocalizedStringWithIdEditViewModel[], lang: cls.globalization.ContentLanguageSelection) {
+		private static nameOrEmpty(names: LocalizedStringWithIdEditViewModel[], lang: ContentLanguageSelection) {
 
 			const name = _.find(names, n => n.language() === lang);
 			return name || new LocalizedStringWithIdEditViewModel(lang, "");
@@ -65,9 +65,9 @@ module vdb.viewModels.globalization {
 
 		constructor(names: LocalizedStringWithIdEditViewModel[] = []) {
 
-			this.englishName = NamesEditViewModel.nameOrEmpty(names, langSelection.English);
-			this.originalName = NamesEditViewModel.nameOrEmpty(names, langSelection.Japanese);
-			this.romajiName = NamesEditViewModel.nameOrEmpty(names, langSelection.Romaji);
+			this.englishName = NamesEditViewModel.nameOrEmpty(names, ContentLanguageSelection.English);
+			this.originalName = NamesEditViewModel.nameOrEmpty(names, ContentLanguageSelection.Japanese);
+			this.romajiName = NamesEditViewModel.nameOrEmpty(names, ContentLanguageSelection.Romaji);
 
 			this.aliases = ko.observableArray(_.filter(names, n => n.id !== this.englishName.id && n.id !== this.originalName.id && n.id !== this.romajiName.id));
 
@@ -75,4 +75,4 @@ module vdb.viewModels.globalization {
 
 	}
 
-} 
+//} 

@@ -1,11 +1,11 @@
-﻿
-module vdb.viewModels {
 
-	import dc = vdb.dataContracts;
+import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract';
 
-	export class EntryPictureFileEditViewModel {
+//module vdb.viewModels {
 
-		constructor(data?: dc.EntryPictureFileContract) {
+	export default class EntryPictureFileEditViewModel {
+
+		constructor(data?: EntryPictureFileContract) {
 
 			if (data) {
 				this.entryType = data.entryType;
@@ -27,4 +27,4 @@ module vdb.viewModels {
 
 	}
 
-}
+//}

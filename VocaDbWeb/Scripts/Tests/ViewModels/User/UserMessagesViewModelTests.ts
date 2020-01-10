@@ -1,23 +1,26 @@
 /// <reference path="../../../typings/qunit/qunit.d.ts" />
 /// <reference path="../../TestSupport/FakeUserRepository.ts" />
 
-module vdb.tests.viewModels {
+import FakeUserRepository from '../../TestSupport/FakeUserRepository';
+import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
+import UserApiContract from '../../../DataContracts/User/UserApiContract';
+import { UserInboxType } from '../../../Repositories/UserRepository';
+import UserMessageSummaryContract from '../../../DataContracts/User/UserMessageSummaryContract';
+import UserMessagesViewModel from '../../../ViewModels/User/UserMessagesViewModel';
 
-    import dc = vdb.dataContracts;
-    import vm = vdb.viewModels;
-    import sup = vdb.tests.testSupport;
+//module vdb.tests.viewModels {
 
-    var receiver: dc.user.UserApiContract;
-    var data: dc.PartialFindResultContract<dc.UserMessageSummaryContract>;
-    var sender: dc.user.UserApiContract;
-    var repository: sup.FakeUserRepository;
+    var receiver: UserApiContract;
+    var data: PartialFindResultContract<UserMessageSummaryContract>;
+    var sender: UserApiContract;
+    var repository: FakeUserRepository;
 
-    var createMessage = (id: number, subject: string, sender?: dc.user.UserApiContract) => {
+    var createMessage = (id: number, subject: string, sender?: UserApiContract) => {
 		return { createdFormatted: "2039.3.9", highPriority: false, id: id, inbox: 'Received', read: false, sender: sender, receiver: receiver, subject: subject }
     };
 
     var createViewModel = () => {
-        return new vm.UserMessagesViewModel(repository, null, repositories.UserInboxType.Received);
+        return new UserMessagesViewModel(repository, null, UserInboxType.Received);
     };
 
     QUnit.module("UserMessagesViewModel", {
@@ -33,7 +36,7 @@ module vdb.tests.viewModels {
 				totalCount: 0
             };
 
-            repository = new sup.FakeUserRepository();
+            repository = new FakeUserRepository();
             repository.message = { body: "Message body", createdFormatted: null, highPriority: false, id: 39, inbox: 'Received', read: false, receiver: null, sender: null, subject: 'New message' };
 			repository.messages = data.items;
 
@@ -86,4 +89,4 @@ module vdb.tests.viewModels {
 
     });
 
-}
+//}

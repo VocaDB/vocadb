@@ -1,15 +1,21 @@
 
-namespace vdb.viewModels.search {
+import ArtistFilters from './ArtistFilters';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
+import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
+import SearchViewModel from './SearchViewModel';
 
-	import dc = vdb.dataContracts;
+//namespace vdb.viewModels.search {
 
-	export class EventSearchViewModel extends SearchCategoryBaseViewModel<dc.ReleaseEventContract> {
+	export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 
 		constructor(
 			searchViewModel: SearchViewModel,
-			lang: vdb.models.globalization.ContentLanguagePreference,
-			private readonly eventRepo: rep.ReleaseEventRepository,
-			artistRepo: rep.ArtistRepository,
+			lang: ContentLanguagePreference,
+			private readonly eventRepo: ReleaseEventRepository,
+			artistRepo: ArtistRepository,
 			public loggedUserId: number,
 			sort: string,
 			artistId: number[],
@@ -66,7 +72,7 @@ namespace vdb.viewModels.search {
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
 
-		public getCategoryName = (event: dc.ReleaseEventContract) => {
+		public getCategoryName = (event: ReleaseEventContract) => {
 
 			var inherited = event.series ? event.series.category : event.category;
 
@@ -79,4 +85,4 @@ namespace vdb.viewModels.search {
 
 	}
 
-}
+//}

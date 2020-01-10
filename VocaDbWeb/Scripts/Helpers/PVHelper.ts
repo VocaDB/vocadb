@@ -1,9 +1,9 @@
-﻿
-module vdb.helpers {
 
-	import cls = vdb.models;
+import PVService from '../Models/PVs/PVService';
 
-	export class PVHelper {
+//module vdb.helpers {
+
+	export default class PVHelper {
 		
 		public static pvServicesArrayFromString = (pvServices: string) => {
 
@@ -11,7 +11,7 @@ module vdb.helpers {
 				return [];
 
 			var values = pvServices.split(",");
-			var services: cls.pvs.PVService[] = _.map(values, val => cls.pvs.PVService[val.trim()]);
+			var services: PVService[] = _.map(values, val => PVService[val.trim()]);
 
 			return services;
 
@@ -19,4 +19,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

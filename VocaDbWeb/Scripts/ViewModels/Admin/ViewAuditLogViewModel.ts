@@ -2,9 +2,9 @@
 /// <reference path="../../typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
-module vdb.viewModels {
+//module vdb.viewModels {
 
-    export class ViewAuditLogViewModel {
+    export default class ViewAuditLogViewModel {
 
         public excludeUsers = ko.observable("");
 
@@ -35,8 +35,8 @@ module vdb.viewModels {
             this.onlyNewUsers(data.onlyNewUsers);
             this.userName(data.userName);
             this.filterVisible(!vdb.functions.isNullOrWhiteSpace(data.userName)
-                || !vdb.functions.isNullOrWhiteSpace(data.excludeUsers)
-                || !vdb.functions.isNullOrWhiteSpace(data.filter)
+				|| !vdb.functions.isNullOrWhiteSpace(data.excludeUsers)
+				|| !vdb.functions.isNullOrWhiteSpace(data.filter)
                 || data.onlyNewUsers);
             
             $("#userNameField").autocomplete({
@@ -100,4 +100,4 @@ module vdb.viewModels {
 
     }
 
-}
+//}

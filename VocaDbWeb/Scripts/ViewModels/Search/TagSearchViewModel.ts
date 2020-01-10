@@ -1,13 +1,17 @@
-﻿
-module vdb.viewModels.search {
 
-	import dc = vdb.dataContracts;
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
+import SearchViewModel from './SearchViewModel';
+import TagApiContract from '../../DataContracts/Tag/TagApiContract';
+import TagRepository from '../../Repositories/TagRepository';
 
-	export class TagSearchViewModel extends SearchCategoryBaseViewModel<dc.TagApiContract> {
+//module vdb.viewModels.search {
+
+	export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContract> {
 
 		constructor(searchViewModel: SearchViewModel,
-			lang: vdb.models.globalization.ContentLanguagePreference,
-			private tagRepo: rep.TagRepository) {
+			lang: ContentLanguagePreference,
+			private tagRepo: TagRepository) {
 
 			super(searchViewModel);
 
@@ -32,4 +36,4 @@ module vdb.viewModels.search {
 
 	}
 
-}
+//}

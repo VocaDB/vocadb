@@ -1,8 +1,8 @@
 /// <reference path="GlobalFunctions.ts" />
 
-module vdb {
+//module vdb {
 
-    export class UrlMapper {
+    export default class UrlMapper {
 
 		public static buildUrl = (...args: string[]): string => {
 
@@ -33,4 +33,4 @@ module vdb {
 
     }
 
-}
+//}

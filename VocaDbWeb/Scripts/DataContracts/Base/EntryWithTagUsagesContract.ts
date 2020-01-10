@@ -1,14 +1,16 @@
-﻿
-module vdb.dataContracts {
+
+import TagUsageForApiContract from '../Tag/TagUsageForApiContract';
+
+//module vdb.dataContracts {
 	
-	export interface EntryWithTagUsagesContract {
+	export default interface EntryWithTagUsagesContract {
 		
 		id: number;
 
 		name: string;
 
-		tags?: tags.TagUsageForApiContract[];
+		tags?: TagUsageForApiContract[];
 
 	}
 
-}
+//}

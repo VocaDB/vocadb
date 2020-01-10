@@ -1,15 +1,23 @@
-﻿ 
-module vdb.viewModels.songs {
+
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import ObservableUrlParamRouter from '../../Shared/Routing/ObservableUrlParamRouter';
+import PVServiceIcons from '../../Models/PVServiceIcons'
+import SongApiContract from '../../DataContracts/Song/SongApiContract';
+import SongRepository from '../../Repositories/SongRepository';
+import SongWithPreviewViewModel from './SongWithPreviewViewModel';
+import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import ui from '../../Shared/MessagesTyped';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
+
+//module vdb.viewModels.songs {
 	
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-
-	export class RankingsViewModel {
+	export default class RankingsViewModel {
 		
-		constructor(private urlMapper: vdb.UrlMapper, private songRepo: rep.SongRepository,
-			private userRepo: rep.UserRepository, private languagePreference: number) {
+		constructor(private urlMapper: UrlMapper, private songRepo: SongRepository,
+			private userRepo: UserRepository, private languagePreference: number) {
 
-			this.router = new vdb.routing.ObservableUrlParamRouter({
+			this.router = new ObservableUrlParamRouter({
 				dateFilterType: this.dateFilterType,
 				durationHours: this.durationHours,
 				vocalistSelection: this.vocalistSelection
@@ -18,7 +26,7 @@ module vdb.viewModels.songs {
 			this.dateFilterType.subscribe(this.getSongs);
 			this.durationHours.subscribe(this.getSongs);
 			this.vocalistSelection.subscribe(this.getSongs);
-			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
+			this.pvServiceIcons = new PVServiceIcons(urlMapper);
 			
 			this.getSongs();
 
@@ -42,13 +50,13 @@ module vdb.viewModels.songs {
 					filterBy: this.dateFilterType(),
 					languagePreference: this.languagePreference
 				},
-				(songs: dc.SongApiContract[]) => {
+				(songs: SongApiContract[]) => {
 
 				_.each(songs, (song: any) => {
 
 					if (song.pvServices && song.pvServices != 'Nothing') {
 						song.previewViewModel = new SongWithPreviewViewModel(this.songRepo, this.userRepo, song.id, song.pvServices);
-						song.previewViewModel.ratingComplete = vdb.ui.showThankYouForRatingMessage;
+						song.previewViewModel.ratingComplete = ui.showThankYouForRatingMessage;
 					} else {
 						song.previewViewModel = null;
 					}
@@ -61,18 +69,18 @@ module vdb.viewModels.songs {
 				
 		}
 
-		public getTagUrl = (tag: dc.tags.TagUsageForApiContract) => {
-			return utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
+		public getTagUrl = (tag: TagUsageForApiContract) => {
+			return EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug);
 		}
 
-		private pvServiceIcons: vdb.models.PVServiceIcons;
+		private pvServiceIcons: PVServiceIcons;
 
-		private router: vdb.routing.ObservableUrlParamRouter;
+		private router: ObservableUrlParamRouter;
 
-		public songs = ko.observableArray<dc.SongApiContract>(null);
+		public songs = ko.observableArray<SongApiContract>(null);
 
 		public vocalistSelection = ko.observable<string>(null);
 
 	}
 
-}
+//}

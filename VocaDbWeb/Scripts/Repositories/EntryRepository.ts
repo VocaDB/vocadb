@@ -1,11 +1,11 @@
-﻿
-module vdb.repositories {
 
-	import dc = vdb.dataContracts;
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
+
+//module vdb.repositories {
 
 	// Repository for finding base class of common entry types.
 	// Corresponds to the EntryApiController.
-	export class EntryRepository {
+	export default class EntryRepository {
 
 		// Maps a relative URL to an absolute one.
 		private mapUrl = (relative: string) => {
@@ -16,7 +16,7 @@ module vdb.repositories {
 
 		}
 
-		getList = (paging: dc.PagingProperties, lang: string, query: string, tags: number[],
+		getList = (paging: PagingProperties, lang: string, query: string, tags: number[],
 			childTags: boolean,
 			fields: string, status: string, callback) => {
 
@@ -35,4 +35,4 @@ module vdb.repositories {
 
     }
 
-}
+//}

@@ -1,7 +1,7 @@
-﻿
-namespace vdb.viewModels.search {
 
-	export interface AdvancedSearchFilter {
+//namespace vdb.viewModels.search {
+
+	export default interface AdvancedSearchFilter {
 
 		description?: string;
 
@@ -13,4 +13,4 @@ namespace vdb.viewModels.search {
 
 	}
 
-}
+//}

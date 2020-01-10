@@ -1,7 +1,7 @@
 
-module vdb.viewModels {
+//module vdb.viewModels {
 	
-	export class StatsViewModel {
+	export default class StatsViewModel {
 
 		public categories: IReportCategory[];
 		public chartData = ko.observable<any>(null);
@@ -109,4 +109,4 @@ module vdb.viewModels {
 
 	}
 
-} 
+//} 

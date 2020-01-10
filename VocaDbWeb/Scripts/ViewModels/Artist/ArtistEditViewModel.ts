@@ -2,13 +2,28 @@
 /// <reference path="../../DataContracts/WebLinkContract.ts" />
 /// <reference path="../WebLinksEditViewModel.ts" />
 
-module vdb.viewModels {
+import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import ArtistForArtistContract from '../../DataContracts/Artist/ArtistForArtistContract';
+import ArtistForEditContract from '../../DataContracts/Artist/ArtistForEditContract';
+import ArtistHelper from '../../Helpers/ArtistHelper';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ArtistType from '../../Models/Artists/ArtistType';
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import DeleteEntryViewModel from '../DeleteEntryViewModel';
+import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
+import EntryPictureFileListEditViewModel from '../EntryPictureFileListEditViewModel';
+import EntryType from '../../Models/EntryType';
+import { IDialogService } from '../../Shared/DialogService';
+import NamesEditViewModel from '../Globalization/NamesEditViewModel';
+import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
+import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+//module vdb.viewModels {
 
-    export class ArtistEditViewModel {
+    export default class ArtistEditViewModel {
 
 		public addAssociatedArtist = () => {
 
@@ -24,19 +39,19 @@ module vdb.viewModels {
 		private addGroup = (artistId: number) => {
 			
 			if (artistId) {
-				this.artistRepo.getOne(artistId, (artist: dc.ArtistContract) => {
+				this.artistRepo.getOne(artistId, (artist: ArtistContract) => {
 					this.groups.push({ id: 0, parent: artist });
 				});
 			}
 
 		}
 
-		public artistType: KnockoutComputed<cls.artists.ArtistType>;
+		public artistType: KnockoutComputed<ArtistType>;
 		public artistTypeStr: KnockoutObservable<string>;
 		public allowBaseVoicebank: KnockoutComputed<boolean>;
 		public associatedArtists: KnockoutObservableArray<ArtistForArtistEditViewModel>;
-		public baseVoicebank: BasicEntryLinkViewModel<dc.ArtistContract>;
-		public baseVoicebankSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
+		public baseVoicebank: BasicEntryLinkViewModel<ArtistContract>;
+		public baseVoicebankSearchParams: ArtistAutoCompleteParams;
 		public canHaveCircles: KnockoutComputed<boolean>;
 		// Can have related artists (associatedArtists) such as voice provider and illustrator
 		public canHaveRelatedArtists: KnockoutComputed<boolean>;
@@ -73,10 +88,10 @@ module vdb.viewModels {
 			});
 		});
 
-		public description: globalization.EnglishTranslatedStringEditViewModel;
-		public groups: KnockoutObservableArray<dc.artists.ArtistForArtistContract>;
+		public description: EnglishTranslatedStringEditViewModel;
+		public groups: KnockoutObservableArray<ArtistForArtistContract>;
 
-		public groupSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams = {
+		public groupSearchParams: ArtistAutoCompleteParams = {
 			acceptSelection: this.addGroup,
 			extraQueryParams: { artistTypes: "Label,Circle,OtherGroup,Band" },
 			height: 300
@@ -84,15 +99,15 @@ module vdb.viewModels {
 
 		public hasValidationErrors: KnockoutComputed<boolean>;
 		public id: number;
-		public illustrator: BasicEntryLinkViewModel<dc.ArtistContract>;
+		public illustrator: BasicEntryLinkViewModel<ArtistContract>;
 
-		public names: globalization.NamesEditViewModel;
-		public newAssociatedArtist: BasicEntryLinkViewModel<dc.ArtistContract>;
+		public names: NamesEditViewModel;
+		public newAssociatedArtist: BasicEntryLinkViewModel<ArtistContract>;
 		public newAssociatedArtistType = ko.observable<string>();
 		public pictures: EntryPictureFileListEditViewModel;
 		public releaseDate: KnockoutObservable<Date>;
 
-		public removeGroup = (group: dc.artists.ArtistForArtistContract) => {
+		public removeGroup = (group: ArtistForArtistContract) => {
 			this.groups.remove(group);
 		}
 
@@ -111,7 +126,7 @@ module vdb.viewModels {
 
 			this.submitting(true);
 
-			var submittedModel: dc.artists.ArtistForEditContract = {
+			var submittedModel: ArtistForEditContract = {
 				artistType: this.artistTypeStr(),
 				associatedArtists: _.map(this.associatedArtists(), a => a.toContract()),
 				baseVoicebank: this.baseVoicebank.entry(),
@@ -145,32 +160,32 @@ module vdb.viewModels {
 		public validationError_needType: KnockoutComputed<boolean>;
 		public validationError_unnecessaryPName: KnockoutComputed<boolean>;
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
-		public voiceProvider: BasicEntryLinkViewModel<dc.ArtistContract>;
+		public voiceProvider: BasicEntryLinkViewModel<ArtistContract>;
 		public webLinks: WebLinksEditViewModel;
 
-		private canHaveBaseVoicebank(at: cls.artists.ArtistType) {
-			return (helpers.ArtistHelper.isVocalistType(at) || at === cls.artists.ArtistType.OtherIndividual) && at !== cls.artists.ArtistType.Vocalist;
+		private canHaveBaseVoicebank(at: ArtistType) {
+			return (ArtistHelper.isVocalistType(at) || at === ArtistType.OtherIndividual) && at !== ArtistType.Vocalist;
 		}
 
         constructor(
-			private artistRepo: rep.ArtistRepository,
-			userRepository: rep.UserRepository,
-			private urlMapper: vdb.UrlMapper,
-			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
-			data: dc.artists.ArtistForEditContract,
-			private dialogService: vdb.ui_dialog.IDialogService) {
+			private artistRepo: ArtistRepository,
+			userRepository: UserRepository,
+			private urlMapper: UrlMapper,
+			webLinkCategories: TranslatedEnumField[],
+			data: ArtistForEditContract,
+			private dialogService: IDialogService) {
 
 			this.artistTypeStr = ko.observable(data.artistType);
-			this.artistType = ko.computed(() => cls.artists.ArtistType[this.artistTypeStr()]);
+			this.artistType = ko.computed(() => ArtistType[this.artistTypeStr()]);
 			this.allowBaseVoicebank = ko.computed(() => this.canHaveBaseVoicebank(this.artistType()));
 			this.associatedArtists = ko.observableArray(_.map(data.associatedArtists, a => new ArtistForArtistEditViewModel(a)));
 			this.baseVoicebank = new BasicEntryLinkViewModel(data.baseVoicebank, artistRepo.getOne);
-			this.description = new globalization.EnglishTranslatedStringEditViewModel(data.description);
+			this.description = new EnglishTranslatedStringEditViewModel(data.description);
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
 			this.groups = ko.observableArray(data.groups);
 			this.id = data.id;
 			this.illustrator = new BasicEntryLinkViewModel(data.illustrator, artistRepo.getOne);
-			this.names = globalization.NamesEditViewModel.fromContracts(data.names);
+			this.names = NamesEditViewModel.fromContracts(data.names);
 			this.newAssociatedArtist = new BasicEntryLinkViewModel(null, artistRepo.getOne);
 			this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
 			this.releaseDate = ko.observable(data.releaseDate ? moment(data.releaseDate).toDate() : null); // Assume server date is UTC
@@ -185,17 +200,17 @@ module vdb.viewModels {
 			};
 
 			this.canHaveCircles = ko.computed(() => {
-				return this.artistType() !== cls.artists.ArtistType.Label;
+				return this.artistType() !== ArtistType.Label;
 			});
 
 			this.canHaveRelatedArtists = ko.computed(() => {
-				return helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType());
+				return ArtistHelper.canHaveChildVoicebanks(this.artistType());
 			});
 
 			this.canHaveReleaseDate = ko.computed(() => {
 				const vocaloidTypes = [
-					cls.artists.ArtistType.Vocaloid, cls.artists.ArtistType.UTAU,
-					cls.artists.ArtistType.CeVIO, cls.artists.ArtistType.OtherVoiceSynthesizer
+					ArtistType.Vocaloid, ArtistType.UTAU,
+					ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer
 				];
 				return _.includes(vocaloidTypes, this.artistType());
 			});
@@ -203,7 +218,7 @@ module vdb.viewModels {
 			this.newAssociatedArtist.entry.subscribe(this.addAssociatedArtist);
 
 			this.validationError_needReferences = ko.computed(() => (this.description.original() == null || this.description.original().length) == 0 && this.webLinks.webLinks().length == 0);
-			this.validationError_needType = ko.computed(() => this.artistType() === cls.artists.ArtistType.Unknown);
+			this.validationError_needType = ko.computed(() => this.artistType() === ArtistType.Unknown);
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 			this.validationError_unnecessaryPName = ko.computed(() => {
 				var allNames = this.names.getAllNames();
@@ -222,7 +237,7 @@ module vdb.viewModels {
 				this.validationError_unnecessaryPName()
 			);
 			    
-			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Artist, data.id), 10000);			
+			window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Artist, data.id), 10000);			
 
         }
 
@@ -230,21 +245,21 @@ module vdb.viewModels {
 
 	export class ArtistForArtistEditViewModel {
 
-		constructor(link: dc.artists.ArtistForArtistContract) {
+		constructor(link: ArtistForArtistContract) {
 			this.linkType = ko.observable(link.linkType);
 			this.parent = link.parent;
 		}
 
 		public linkType: KnockoutObservable<string>;
 
-		public parent: dc.ArtistContract;
+		public parent: ArtistContract;
 
 		public toContract = () => {
 			return {
 				linkType: this.linkType(), parent: this.parent
-			} as dc.artists.ArtistForArtistContract;
+			} as ArtistForArtistContract;
 		}
 
 	}
 
-}
+//}

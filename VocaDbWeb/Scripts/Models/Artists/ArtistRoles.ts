@@ -1,7 +1,7 @@
-﻿
-namespace vdb.models.artists {
+
+//namespace vdb.models.artists {
 	
-	export enum ArtistRoles {
+	enum ArtistRoles {
 		
 		Default				= 0,
 
@@ -67,4 +67,6 @@ namespace vdb.models.artists {
 
 	}
 
-}
+	export default ArtistRoles;
+
+//}

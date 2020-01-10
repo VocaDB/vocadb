@@ -1,10 +1,10 @@
-﻿
-module vdb.viewModels {
-	
-	import dc = vdb.dataContracts;
 
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+
+//module vdb.viewModels {
+	
 	// Generic viewmodel that supports simple paging by loading more items
-	export class PagedItemsViewModel<TModel> {
+	export default class PagedItemsViewModel<TModel> {
 		
 		public clear = () => {
 			this.items([]);
@@ -36,9 +36,9 @@ module vdb.viewModels {
 			});
 		}
 
-		public loadMoreItems = (callback: (result: dc.PartialFindResultContract<TModel>) => void) => { };
+		public loadMoreItems = (callback: (result: PartialFindResultContract<TModel>) => void) => { };
 
-		public itemsLoaded = (result: dc.PartialFindResultContract<TModel>) => {
+		public itemsLoaded = (result: PartialFindResultContract<TModel>) => {
 			ko.utils.arrayPushAll(this.items, result.items);
 			this.start = this.start + result.items.length;
 			this.hasMore(result.totalCount > this.start);			
@@ -48,4 +48,4 @@ module vdb.viewModels {
 
 	}
 
-} 
+//} 

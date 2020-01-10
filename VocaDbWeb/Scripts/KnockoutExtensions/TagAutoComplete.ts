@@ -1,6 +1,13 @@
-﻿
-interface KnockoutBindingHandlers {
-	tagAutoComplete: KnockoutBindingHandler;
+
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import { EntryAutoCompleteParams } from '../Shared/EntryAutoComplete';
+import { initEntrySearch } from '../Shared/EntryAutoComplete';
+import TagApiContract from '../DataContracts/Tag/TagApiContract';
+
+declare global {
+	interface KnockoutBindingHandlers {
+		tagAutoComplete: KnockoutBindingHandler;
+	}
 }
 
 // Tag autocomplete search box.
@@ -17,7 +24,7 @@ ko.bindingHandlers.tagAutoComplete = {
 		var queryParams = {
 			nameMatchMode: 'Auto',
 			fields: 'AdditionalNames,CategoryName',
-			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 20,
 			sort: 'Name',
@@ -25,7 +32,7 @@ ko.bindingHandlers.tagAutoComplete = {
 			target: ko.unwrap(allBindingsAccessor().tagTarget) || undefined
 		};
 
-		var params: vdb.EntryAutoCompleteParams<dc.TagApiContract> = {
+		var params: EntryAutoCompleteParams<TagApiContract> = {
 			acceptSelection: (id, term, itemType, item) => {
 				valueAccessor()(item);
 			},
@@ -38,7 +45,7 @@ ko.bindingHandlers.tagAutoComplete = {
 			singleRow: true
 		};
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/tags"), params);
+		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/tags"), params);
 
 	}
 }

@@ -1,12 +1,38 @@
 
-module vdb.viewModels {
+import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
+import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
+import { AlbumDiscPropertiesListEditViewModel } from './AlbumDiscPropertiesEditViewModel';
+import AlbumRepository from '../../Repositories/AlbumRepository';
+import AlbumType from '../../Models/Albums/AlbumType';
+import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import ArtistForAlbumContract from '../../DataContracts/ArtistForAlbumContract';
+import ArtistForAlbumEditViewModel from '../ArtistForAlbumEditViewModel';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import CustomNameEditViewModel from '../CustomNameEditViewModel';
+import DeleteEntryViewModel from '../DeleteEntryViewModel';
+import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
+import EntryPictureFileListEditViewModel from '../EntryPictureFileListEditViewModel';
+import EntryType from '../../Models/EntryType';
+import { IDialogService } from '../../Shared/DialogService';
+import NamesEditViewModel from '../Globalization/NamesEditViewModel';
+import PVListEditViewModel from '../PVs/PVListEditViewModel';
+import PVRepository from '../../Repositories/PVRepository';
+import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
+import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import SongInAlbumEditViewModel from '../SongInAlbumEditViewModel';
+import SongRepository from '../../Repositories/SongRepository';
+import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
+import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-	import cls = vdb.models;
-    import dc = vdb.dataContracts;
-    import rep = vdb.repositories;
+//module vdb.viewModels {
 
     // Edit view model for album.
-    export class AlbumEditViewModel {
+    export default class AlbumEditViewModel {
         
         // Adds a song to the album, by either id (existing song) or name (new song).
         public acceptTrackSelection: (songId: number, songName: string, itemType?: string) => void;
@@ -20,7 +46,7 @@ module vdb.viewModels {
 
 				this.artistRepository.getOne(artistId, artist => {
 
-					var data: dc.ArtistForAlbumContract = {
+					var data: ArtistForAlbumContract = {
 						artist: artist,
 						isSupport: false,
 						name: artist.name,
@@ -35,7 +61,7 @@ module vdb.viewModels {
 
 			} else {
 				
-				var data: dc.ArtistForAlbumContract = {
+				var data: ArtistForAlbumContract = {
 					artist: null,
 					name: customArtistName,
 					isSupport: false,
@@ -56,14 +82,14 @@ module vdb.viewModels {
         // Whether all tracks should be selected.
         public allTracksSelected: KnockoutObservable<boolean>;
 
-        private artistsForTracks: () => dc.ArtistContract[];
+        private artistsForTracks: () => ArtistContract[];
 
-		artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
+		artistSearchParams: ArtistAutoCompleteParams;
 
         // List of artist links for this album.
         public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
 
-		public artistRolesEditViewModel: artists.AlbumArtistRolesEditViewModel;
+		public artistRolesEditViewModel: AlbumArtistRolesEditViewModel;
 
 		public catalogNumber: KnockoutObservable<string>;
 
@@ -90,13 +116,13 @@ module vdb.viewModels {
 			});
 		});
 
-		public description: globalization.EnglishTranslatedStringEditViewModel;
+		public description: EnglishTranslatedStringEditViewModel;
 
         // Album disc type.
-		public discType: KnockoutObservable<cls.albums.AlbumType>;
+		public discType: KnockoutObservable<AlbumType>;
 		public discTypeStr: KnockoutObservable<string>;
 
-		public discs: viewModels.albums.AlbumDiscPropertiesListEditViewModel;
+		public discs: AlbumDiscPropertiesListEditViewModel;
 
 		public editArtistRoles = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistRolesEditViewModel.show(artist);
@@ -124,7 +150,7 @@ module vdb.viewModels {
 
 		public identifiers: KnockoutObservableArray<string>;
 
-		public names: globalization.NamesEditViewModel;
+		public names: NamesEditViewModel;
 
 		public newIdentifier = ko.observable("");
 
@@ -132,13 +158,13 @@ module vdb.viewModels {
 
 		public releaseDay: KnockoutObservable<number>;
 
-		public releaseEvent: BasicEntryLinkViewModel<dc.ReleaseEventContract>;
+		public releaseEvent: BasicEntryLinkViewModel<ReleaseEventContract>;
 
 		public releaseMonth: KnockoutObservable<number>;
 
 		public pictures: EntryPictureFileListEditViewModel;
 
-		public pvs: pvs.PVListEditViewModel;
+		public pvs: PVListEditViewModel;
 
 		public releaseYear: KnockoutObservable<number>;
 
@@ -167,7 +193,7 @@ module vdb.viewModels {
 
 			this.submitting(true);
 
-			var submittedModel: dc.albums.AlbumForEditContract = {
+			var submittedModel: AlbumForEditContract = {
 				artistLinks: _.map(this.artistLinks(), artist => artist.toContract()),
 				defaultNameLanguage: this.defaultNameLanguage(),
 				description: this.description.toContract(),
@@ -212,7 +238,7 @@ module vdb.viewModels {
         public tracks: KnockoutObservableArray<SongInAlbumEditViewModel>;
 
         // Search parameters for new tracks.
-        public trackSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
+        public trackSearchParams: SongAutoCompleteParams;
 
         // Gets a translated name for an artist role.
         public translateArtistRole: (role: string) => string;
@@ -237,31 +263,31 @@ module vdb.viewModels {
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
 
 		constructor(
-			public repository: rep.AlbumRepository,
-			songRepository: rep.SongRepository,
-			private artistRepository: rep.ArtistRepository,
-			pvRepository: rep.PVRepository,
-			userRepository: rep.UserRepository,
-			eventRepository: rep.ReleaseEventRepository,
-			private urlMapper: vdb.UrlMapper,
+			public repository: AlbumRepository,
+			songRepository: SongRepository,
+			private artistRepository: ArtistRepository,
+			pvRepository: PVRepository,
+			userRepository: UserRepository,
+			eventRepository: ReleaseEventRepository,
+			private urlMapper: UrlMapper,
 			artistRoleNames: { [key: string]: string; },
-			webLinkCategories: dc.TranslatedEnumField[],
-			data: dc.albums.AlbumForEditContract,
+			webLinkCategories: TranslatedEnumField[],
+			data: AlbumForEditContract,
 			allowCustomTracks: boolean,
 			canBulkDeletePVs: boolean,
-			private dialogService: ui_dialog.IDialogService) {
+			private dialogService: IDialogService) {
 
 			this.catalogNumber = ko.observable(data.originalRelease.catNum);
 			this.defaultNameLanguage = ko.observable(data.defaultNameLanguage);
-			this.description = new globalization.EnglishTranslatedStringEditViewModel(data.description);
+			this.description = new EnglishTranslatedStringEditViewModel(data.description);
 			this.discTypeStr = ko.observable(data.discType);
-			this.discType = ko.computed(() => cls.albums.AlbumType[this.discTypeStr()]);
+			this.discType = ko.computed(() => AlbumType[this.discTypeStr()]);
 			this.id = data.id;
-			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, true, false);
+			this.pvs = new PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, true, false);
 			this.releaseDay = ko.observable(data.originalRelease.releaseDate.day).extend({ parseInteger: {} });
 			this.releaseMonth = ko.observable(data.originalRelease.releaseDate.month).extend({ parseInteger: {} });
 			this.releaseYear = ko.observable(data.originalRelease.releaseDate.year).extend({ parseInteger: {} });
-			this.releaseEvent = new BasicEntryLinkViewModel<dc.ReleaseEventContract>(data.originalRelease.releaseEvent, null);
+			this.releaseEvent = new BasicEntryLinkViewModel<ReleaseEventContract>(data.originalRelease.releaseEvent, null);
 			this.status = ko.observable(data.status);
 
 			this.artistSearchParams = {
@@ -327,9 +353,9 @@ module vdb.viewModels {
 
             this.artistLinks = ko.observableArray(_.map(data.artistLinks, artist => new ArtistForAlbumEditViewModel(repository, artist)));
 
-			this.artistRolesEditViewModel = new artists.AlbumArtistRolesEditViewModel(artistRoleNames);
+			this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(artistRoleNames);
 
-			this.discs = new albums.AlbumDiscPropertiesListEditViewModel(data.discs);
+			this.discs = new AlbumDiscPropertiesListEditViewModel(data.discs);
 
             this.editMultipleTrackProperties = () => {
 
@@ -362,7 +388,7 @@ module vdb.viewModels {
 
 			this.identifiers = ko.observableArray(data.identifiers);
 
-			this.names = globalization.NamesEditViewModel.fromContracts(data.names);
+			this.names = NamesEditViewModel.fromContracts(data.names);
 
 			this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
 
@@ -465,8 +491,8 @@ module vdb.viewModels {
 				var num = !_.isNumber(this.releaseYear()) || this.releaseYear() == null;
 				return num;
 			});
-			this.validationError_needTracks = ko.computed(() => this.discType() !== cls.albums.AlbumType.Artbook && _.isEmpty(this.tracks()));
-			this.validationError_needType = ko.computed(() => this.discType() === cls.albums.AlbumType.Unknown);
+			this.validationError_needTracks = ko.computed(() => this.discType() !== AlbumType.Artbook && _.isEmpty(this.tracks()));
+			this.validationError_needType = ko.computed(() => this.discType() === AlbumType.Unknown);
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 
 			this.hasValidationErrors = ko.computed(() =>
@@ -493,7 +519,7 @@ module vdb.viewModels {
 				}
 			});
 
-			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Album, data.id), 10000);			
+			window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Album, data.id), 10000);			
 
         }
 
@@ -508,7 +534,7 @@ module vdb.viewModels {
         // Whether this selection is visible according to current filter.
         visible: KnockoutComputed<boolean>;
 
-        constructor(public artist: dc.ArtistContract, selected: boolean, filter: KnockoutObservable<string>) {
+        constructor(public artist: ArtistContract, selected: boolean, filter: KnockoutObservable<string>) {
 
             this.selected = ko.observable(selected);   
 
@@ -543,7 +569,7 @@ module vdb.viewModels {
         // At least one artist selectable (not selected and visible).
         somethingSelectable: KnockoutComputed<boolean>;
 
-        constructor(artists: dc.ArtistContract[], public song: SongInAlbumEditViewModel) {
+        constructor(artists: ArtistContract[], public song: SongInAlbumEditViewModel) {
             
             this.artistSelections = _.map(artists, a =>
                 new TrackArtistSelectionViewModel(a, song != null && _.some(song.artists(), sa => a.id == sa.id), this.filter));
@@ -560,4 +586,4 @@ module vdb.viewModels {
     
     }
 
-}
+//}

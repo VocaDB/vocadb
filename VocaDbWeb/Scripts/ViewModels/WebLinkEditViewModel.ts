@@ -3,11 +3,13 @@
 /// <reference path="../Models/WebLinkCategory.ts" />
 /// <reference path="../Shared/WebLinkMatcher.ts" />
 
-module vdb.viewModels {
+import WebLinkCategory from '../Models/WebLinkCategory';
+import WebLinkContract from '../DataContracts/WebLinkContract';
+import WebLinkMatcher from '../Shared/WebLinkMatcher';
 
-    import cls = vdb.models;
+//module vdb.viewModels {
 
-    export class WebLinkEditViewModel {
+    export default class WebLinkEditViewModel {
         
         public category: KnockoutObservable<string>;
 
@@ -17,7 +19,7 @@ module vdb.viewModels {
 
         public url: KnockoutObservable<string>;
 
-        constructor(data?: vdb.dataContracts.WebLinkContract) {
+        constructor(data?: WebLinkContract) {
             
             if (data) {
 
@@ -28,7 +30,7 @@ module vdb.viewModels {
 
             } else {
 
-                this.category = ko.observable(cls.WebLinkCategory[cls.WebLinkCategory.Other]);
+                this.category = ko.observable(WebLinkCategory[WebLinkCategory.Other]);
                 this.description = ko.observable("");
                 this.id = 0;
                 this.url = ko.observable("");
@@ -39,11 +41,11 @@ module vdb.viewModels {
 
                 if (!this.description()) {
 
-                    var matcher = vdb.utils.WebLinkMatcher.matchWebLink(url);
+                    var matcher = WebLinkMatcher.matchWebLink(url);
 
                     if (matcher) {
                         this.description(matcher.desc);
-                        this.category(cls.WebLinkCategory[matcher.cat]);
+                        this.category(WebLinkCategory[matcher.cat]);
                     }
 
                 }
@@ -54,4 +56,4 @@ module vdb.viewModels {
     
     }
 
-}
+//}

@@ -1,9 +1,10 @@
-﻿
-module vdb.viewModels {
 
-	import rep = repositories;
+import ReportEntryViewModel from './ReportEntryViewModel';
+import ui from '../Shared/MessagesTyped';
 
-	export class ArchivedEntryViewModel {
+//module vdb.viewModels {
+
+	export default class ArchivedEntryViewModel {
 		
 		constructor(entryId: number, versionNumber: number, private readonly repository: IEntryReportsRepository) {
 			
@@ -11,7 +12,7 @@ module vdb.viewModels {
 
 				repository.createReport(entryId, reportType, notes, versionNumber);
 
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 
 			}, { notesRequired: true, id: 'Other', name: null });
 
@@ -25,4 +26,4 @@ module vdb.viewModels {
 		createReport(entryId: number, reportType: string, notes: string, version?: number);
 	}
 
-} 
+//} 

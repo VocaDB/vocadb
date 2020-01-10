@@ -1,7 +1,7 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 	
-	export class KnockoutHelper {
+	export default class KnockoutHelper {
 
 		public static stringEnum<T>(observable: KnockoutObservable<T>, enumType: any): KnockoutComputed<string> {
 
@@ -17,4 +17,4 @@ module vdb.helpers {
 
 	}
 
-}
+//}

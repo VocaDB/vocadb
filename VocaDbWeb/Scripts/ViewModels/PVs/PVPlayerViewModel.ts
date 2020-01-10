@@ -1,19 +1,23 @@
-﻿
-module vdb.viewModels.pvs {
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-	import serv = cls.pvs.PVService;
+import PVPlayersFactory from './PVPlayersFactory';
+import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
+import PVService from '../../Models/PVs/PVService';
+import SongApiContract from '../../DataContracts/Song/SongApiContract';
+import SongRepository from '../../Repositories/SongRepository';
+import ui from '../../Shared/MessagesTyped';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
 
-	export class PVPlayerViewModel {
+//module vdb.viewModels.pvs {
+
+	export default class PVPlayerViewModel {
 		
 		public static autoplayPVServicesString = "File, LocalFile, NicoNicoDouga, SoundCloud, Youtube";
 
 		constructor(
 			private urlMapper: UrlMapper,
-			private songRepo: rep.SongRepository,
-			userRepo: rep.UserRepository,
+			private songRepo: SongRepository,
+			userRepo: UserRepository,
 			pvPlayersFactory: PVPlayersFactory,
 			autoplay?: boolean,
 			shuffle?: boolean
@@ -58,13 +62,13 @@ module vdb.viewModels.pvs {
 						this.currentPlayer = null;						
 					}
 
-					var services = this.autoplay() ? vdb.viewModels.pvs.PVPlayerViewModel.autoplayPVServicesString : null;
+					var services = this.autoplay() ? PVPlayerViewModel.autoplayPVServicesString : null;
 
 					// Load new player from server and attach it
 					songRepo.pvPlayer(song.song.id, { elementId: pvPlayersFactory.playerElementId, enableScriptAccess: true, pvServices: services }, result => {
 
 						this.playerHtml(result.playerHtml);
-						this.playerService = serv[result.pvService];
+						this.playerService = PVService[result.pvService];
 						this.currentPlayer = this.players[result.pvService];
 
 						if (this.currentPlayer) {
@@ -100,7 +104,7 @@ module vdb.viewModels.pvs {
 					if (newService) {
 
 						this.playerService = newService;
-						this.currentPlayer = this.players[serv[newService]];
+						this.currentPlayer = this.players[PVService[newService]];
 						this.currentPlayer.attach(true, () => {
 							this.loadPVId(this.currentPlayer.service, this.selectedSong().song.id, this.currentPlayer.play);
 						});
@@ -119,21 +123,21 @@ module vdb.viewModels.pvs {
 		}
 
 		public autoplay = ko.observable(false);
-		private autoplayServices = [serv.File, serv.Youtube, serv.SoundCloud];
+		private autoplayServices = [PVService.File, PVService.Youtube, PVService.SoundCloud];
 		private currentPlayer: IPVPlayer = null;
 
-		private loadPVId = (service: serv, songId: number, callback: (pvId: string) => void) => {
+		private loadPVId = (service: PVService, songId: number, callback: (pvId: string) => void) => {
 			this.songRepo.getPvId(songId, service, callback);
 		}
 
 		private players: { [index: string]: IPVPlayer; };
 		public nextSong: () => void;
 		public playerHtml = ko.observable<string>(null);
-		public playerService: serv = null;
+		public playerService: PVService = null;
 		public ratingButtonsViewModel: KnockoutObservable<PVRatingButtonsViewModel> = ko.observable(null);
 		public resetSong: () => void = null;
 		public selectedSong = ko.observable<IPVPlayerSong>(null);
-		private static serviceName = (service: serv) => serv[service];
+		private static serviceName = (service: PVService) => PVService[service];
 		public shuffle = ko.observable(false);
 
 		private songFinishedPlayback = () => {
@@ -143,7 +147,7 @@ module vdb.viewModels.pvs {
 
 		}
 
-		private songHasPVService = (song: IPVPlayerSong, service: serv) => {
+		private songHasPVService = (song: IPVPlayerSong, service: PVService) => {
 			return _.includes(song.song.pvServicesArray, service);
 		}
 
@@ -155,7 +159,7 @@ module vdb.viewModels.pvs {
 
 	export interface IPVPlayerSong {
 
-		song: dc.SongApiContract;
+		song: SongApiContract;
 
 	}
 
@@ -174,8 +178,8 @@ module vdb.viewModels.pvs {
 		// Start playing the video.
 		// pvId: ID of the PV being played. Note: this can be undefined, in which case the player should be attached and started playback without loading a new PV.
 		play: (pvId?: string) => void;
-		service: cls.pvs.PVService;
+		service: PVService;
 
 	}
 
-}
+//}

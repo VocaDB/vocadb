@@ -3,15 +3,17 @@
 /// <reference path="../Repositories/ArtistRepository.ts" />
 /// <reference path="WebLinkEditViewModel.ts" />
 
-module vdb.viewModels {
+import ArtistRepository from '../Repositories/ArtistRepository';
+import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
+import WebLinkEditViewModel from './WebLinkEditViewModel';
 
-    import dc = vdb.dataContracts;
+//module vdb.viewModels {
 
-    export class ArtistCreateViewModel {
+    export default class ArtistCreateViewModel {
         
         public checkDuplicates: () => void;
         
-        public dupeEntries = ko.observableArray<dc.DuplicateEntryResultContract>([]);
+        public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
         public nameOriginal = ko.observable("");
         public nameRomaji = ko.observable("");
@@ -26,7 +28,7 @@ module vdb.viewModels {
 
         public webLink: WebLinkEditViewModel = new WebLinkEditViewModel();
 
-        constructor(artistRepository: vdb.repositories.ArtistRepository, data?) {
+        constructor(artistRepository: ArtistRepository, data?) {
             
             if (data) {
                 this.nameOriginal(data.nameOriginal || "");
@@ -51,4 +53,4 @@ module vdb.viewModels {
     
     }
 
-}
+//}

@@ -1,4 +1,4 @@
-﻿
+
 interface KnockoutBindingHandlers {
 	tagCategoryAutoComplete: KnockoutBindingHandler;
 }

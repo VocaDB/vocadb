@@ -1,9 +1,9 @@
 
-namespace vdb.dataContracts {
+//namespace vdb.dataContracts {
 
-	export interface EntryTypeAndSubTypeContract {
+	export default interface EntryTypeAndSubTypeContract {
 		entryType: string;
 		subType: string;
 	}
 
-}
+//}

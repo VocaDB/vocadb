@@ -1,7 +1,7 @@
-﻿
-module vdb.helpers {
+
+//module vdb.helpers {
 	
-	export class SearchTextQueryHelper {
+	export default class SearchTextQueryHelper {
 		
 		// Test whether a query text contains a wildcard - either quotes for exact match or asterisk for prefix.
 		public static isWildcardQuery = (queryText: string) => {
@@ -15,4 +15,4 @@ module vdb.helpers {
 
 	}
 
-} 
+//} 
