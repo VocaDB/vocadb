@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.Song.CreateStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.Create>
@@ -157,6 +157,14 @@
 			</div>	
 			
 			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
+
+			<div class="alert alert-info js-cloak" visible="{{songTypeInfo}}" data-bind="show">				
+				<h3>
+					<a href="{{songTypeTagUrl}}">{{songTypeName}}</a>
+				</h3>
+				<span data-bind="markdown: songTypeInfo, maxLength: 500"></span>
+			</div>
+
 		</div>
 		
 	</div>
@@ -169,11 +177,14 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
+			ko.punches.enableAll();
 			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var repo = repoFactory.songRepository();
 			var artistRepo = repoFactory.artistRepository();
+			var tagRepo = repoFactory.tagRepository();
+			var resourceRepo = repoFactory.resourceRepository();
 			var json = @Html.Raw(JsonHelpers.Serialize(Model));
-			ko.applyBindings(new vdb.viewModels.SongCreateViewModel(repo, artistRepo, json));
+			ko.applyBindings(new vdb.viewModels.SongCreateViewModel(repo, artistRepo, resourceRepo, tagRepo, '@UICulture', json));
 
 			$("#pvLoader")
 				.ajaxStart(function() { $(this).show(); })

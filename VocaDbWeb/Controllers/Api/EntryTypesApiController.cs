@@ -21,7 +21,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public TagForApiContract GetMappedTag(EntryType entryType, string subType = null, TagOptionalFields fields = TagOptionalFields.None) {
 
 			return tagQueries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) 
-				=> new TagForApiContract(tag, lang, fields));
+				=> new TagForApiContract(tag, lang, fields), true);
 
 		}
 

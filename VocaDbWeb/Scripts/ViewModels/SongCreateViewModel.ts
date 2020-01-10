@@ -71,6 +71,11 @@ module vdb.viewModels {
 			 
 		}
 
+		private getSongTypeTag = async (songType: string) => {
+			const tag = await this.tagRepository.getEntryTypeTag(cls.EntryType.Song, songType);
+			this.songTypeTag(tag);
+		}
+
         dupeEntries = ko.observableArray<dc.DuplicateEntryResultContract>([]);
 
         isDuplicatePV: KnockoutComputed<boolean>;
@@ -86,7 +91,12 @@ module vdb.viewModels {
 
         pv1 = ko.observable("");
         pv2 = ko.observable("");
-        songType = ko.observable("Original");
+		private resources: cls.ResourcesManager;
+		songType = ko.observable("Original");
+		songTypeTag = ko.observable<dc.TagApiContract>(null);
+		songTypeInfo: KnockoutComputed<string>;
+		songTypeName: KnockoutComputed<string>;
+		songTypeTagUrl: KnockoutComputed<string>;
 
 		canHaveOriginalVersion = ko.computed(() => cls.songs.SongType[this.songType()] !== cls.songs.SongType.Original);
 
@@ -105,7 +115,13 @@ module vdb.viewModels {
 
         removeArtist: (artist: dc.ArtistContract) => void;
 
-        constructor(private songRepository: vdb.repositories.SongRepository, artistRepository: vdb.repositories.ArtistRepository, data?) {
+		constructor(
+			private readonly songRepository: vdb.repositories.SongRepository,
+			artistRepository: vdb.repositories.ArtistRepository,
+			resourceRepo: rep.ResourceRepository,
+			private readonly tagRepository: vdb.repositories.TagRepository,
+			cultureCode: string,
+			data?) {
 
             if (data) {
                 this.nameOriginal(data.nameOriginal || "");
@@ -162,7 +178,17 @@ module vdb.viewModels {
             
             if (this.pv1()) {
                 this.checkDuplicatesAndPV();
-            }
+			}
+
+			this.resources = new cls.ResourcesManager(resourceRepo, cultureCode);
+			this.resources.loadResources(null, cls.ResourceSetNames.songTypeNames);
+
+			this.songTypeName = ko.computed(() => this.resources.resources().songTypeNames ? this.resources.resources().songTypeNames[this.songType()] : null);
+			this.songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
+			this.songTypeTagUrl = ko.computed(() => this.songTypeTag() ? vdb.utils.EntryUrlMapper.details_tag(this.songTypeTag().id, this.songTypeTag().urlSlug) : null);
+
+			this.songType.subscribe(this.getSongTypeTag);
+			this.getSongTypeTag(this.songType());
 
         }
     

@@ -10,7 +10,9 @@ module vdb.tests.viewModels {
     import dc = vdb.dataContracts;
 
     var repository = new vdb.tests.testSupport.FakeSongRepository();
-    var artistRepository = new vdb.tests.testSupport.FakeArtistRepository();
+	var artistRepository = new vdb.tests.testSupport.FakeArtistRepository();
+	var tagRepository: vdb.repositories.TagRepository = null;
+	var resourceRepository: vdb.repositories.ResourceRepository = null;
     var producer: dc.ArtistContract = { artistType: "Producer", id: 1, name: "Tripshots", additionalNames: "" };
     artistRepository.result = producer;
     repository.results = { title: "Nebula", titleLanguage: "English", artists: [producer], matches: [], songType: "Original" };
@@ -18,7 +20,7 @@ module vdb.tests.viewModels {
     QUnit.module("SongCreateViewModelTests");
 
     function createViewModel() {
-        return new vm.SongCreateViewModel(repository, artistRepository);
+		return new vm.SongCreateViewModel(repository, artistRepository, resourceRepository, tagRepository, 'en-US');
     }
 
     test("constructor empty", () => {
@@ -35,7 +37,7 @@ module vdb.tests.viewModels {
 
     test("constructor with data", () => {
 
-        var target = new vm.SongCreateViewModel(repository, artistRepository, { nameEnglish: "Nebula", artists: [producer] });
+		var target = new vm.SongCreateViewModel(repository, artistRepository, resourceRepository, tagRepository, 'en-US', { nameEnglish: "Nebula", artists: [producer] });
 
 		equal(target.nameEnglish(), "Nebula", "nameEnglish");
         ok(target.artists(), "artists");
