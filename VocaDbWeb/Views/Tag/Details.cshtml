@@ -44,10 +44,10 @@
 		$(function () {
 
 			var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
-			var jsonModel = @ToJS(new { Model.Name, Model.Parent, Model.Children, Model.Siblings });
+			var jsonModel = @ToJS(Model.JsonModel);
 			var vm;
 
-			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children);
+			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children, jsonModel.hasMoreSiblings, jsonModel.hasMoreChildren);
 
 			var repo = new vdb.repositories.TagRepository('@RootPath');
 			var userRepo = new vdb.repositories.UserRepository(urlMapper);
@@ -134,7 +134,14 @@
 					@Res.ValidFor: @string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined && Model.Targets.HasFlag((TagTargetTypes)e)))
 				</p>
 			}
-			
+
+			@if (Model.RelatedEntryType.HasValue) {
+				var text = Translate.EntryTypeNames[Model.RelatedEntryType.EntryType] + (Model.RelatedEntryType.HasSubType ? " (" + Translate.EntrySubTypeName(Model.RelatedEntryType) + ")" : "");
+				<p>
+					@Res.AssociatedEntryType: <a href="@Url.EntryIndex(Model.RelatedEntryType)">@text</a>
+				</p>
+			}
+
 			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
 
 			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Helpers.UniversalTimeLabel(Model.CreateDate)</p>

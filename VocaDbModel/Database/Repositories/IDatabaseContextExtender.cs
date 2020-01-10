@@ -5,6 +5,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Database.Repositories {
 
@@ -70,9 +71,8 @@ namespace VocaDb.Model.Database.Repositories {
 
 		public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithIntId entry) => ctx.Load<T>(entry.Id);
 
-		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : IEntryWithIntId {
-			return ctx.OfType<T2>().Query().Where(e => ids.Contains(e.Id));
-		}
+		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : IEntryWithIntId 
+			=> ctx.OfType<T2>().Query().WhereIdIn(ids);
 
 		/// <summary>
 		/// Loads an entry based on a reference, or returns null if the reference is null or points to an entry that shouldn't exist (Id is 0).
@@ -87,6 +87,10 @@ namespace VocaDb.Model.Database.Repositories {
 
 		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, int id) {
 			return id != 0 ? ctx.Load(id) : default(T);
+		}
+
+		public static T NullSafeLoad<T>(this IDatabaseContext ctx, int id) {
+			return id != 0 ? ctx.Load<T>(id) : default(T);
 		}
 
 		public static T NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithIntId entry) {
@@ -109,6 +113,15 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
+		/// <summary>
+		/// Synchronizes the given changes to database, meaning calls
+		/// insert, update and delete as appropriate.
+		/// </summary>
+		/// <typeparam name="T">Context type.</typeparam>
+		/// <typeparam name="T2">Element type.</typeparam>
+		/// <param name="ctx">Database context.</param>
+		/// <param name="diff">Element diff.</param>
+		/// <returns><paramref name="diff"/></returns>
 		public static CollectionDiff<T2, T2> Sync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff) {
 
 			ParamIs.NotNull(() => ctx);

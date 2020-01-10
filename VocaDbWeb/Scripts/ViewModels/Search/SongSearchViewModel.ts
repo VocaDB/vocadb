@@ -88,12 +88,15 @@ import UserRepository from '../../Repositories/UserRepository';
 			this.since = ko.observable(since);
 			this.viewMode = ko.observable(viewMode || "Details");
 
+			this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(null, this.songRepo.getOne);
+
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.afterDate.subscribe(this.updateResultsWithTotalCount);
 			this.releaseEvent.subscribe(this.updateResultsWithTotalCount);
 			this.minScore.subscribe(this.updateResultsWithTotalCount);
 			this.onlyRatedSongs.subscribe(this.updateResultsWithTotalCount);
+			this.parentVersion.subscribe(this.updateResultsWithTotalCount);
 			this.pvPlayerViewModel = new PVPlayerViewModel(urlMapper, songRepo, userRepo, pvPlayersFactory, autoplay, shuffle);
 			this.pvsOnly.subscribe(this.updateResultsWithTotalCount);
 			this.since.subscribe(this.updateResultsWithTotalCount);
@@ -113,7 +116,10 @@ import UserRepository from '../../Repositories/UserRepository';
 				this.releaseEvent.id,
 				this.pvsOnly, this.since,
 				this.minScore,
-				this.onlyRatedSongs, this.loggedUserId, this.fields, this.draftsOnly, this.advancedFilters.filters);
+				this.onlyRatedSongs,
+				this.loggedUserId,
+				this.parentVersion.id,
+				this.fields, this.draftsOnly, this.advancedFilters.filters);
 
 			this.playListViewModel = new PlayListViewModel(urlMapper, songsRepoAdapter, songRepo, userRepo, this.pvPlayerViewModel,
 				ContentLanguagePreference[lang]);
@@ -141,6 +147,7 @@ import UserRepository from '../../Repositories/UserRepository';
 						this.since(),
 						this.minScore(),
 						this.onlyRatedSongs() ? this.loggedUserId : null,
+						this.parentVersion.id(),
 						this.fields(),
 						status,
 						this.advancedFilters.filters(),
@@ -173,6 +180,7 @@ import UserRepository from '../../Repositories/UserRepository';
 		public releaseEvent: BasicEntryLinkViewModel<IEntryWithIdAndName>;
 		public minScore: KnockoutObservable<number>;
 		public onlyRatedSongs = ko.observable(false);
+		public parentVersion: BasicEntryLinkViewModel<IEntryWithIdAndName>;
 		public playListViewModel: PlayListViewModel;
 		public pvPlayerViewModel: PVPlayerViewModel;
 		public pvsOnly = ko.observable(false);

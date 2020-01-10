@@ -12,6 +12,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Albums {
 
@@ -21,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public AlbumDetailsContract() { }
 
 		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IEntryThumbPersister thumbPersister,
-			IEntryImagePersister imageStoreOld, Func<Song, SongVoteRating?> getSongRating = null)
+			IEntryImagePersister imageStoreOld, Func<Song, SongVoteRating?> getSongRating = null, Tag discTypeTag = null)
 			: base(album, languagePreference) {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
@@ -29,6 +30,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, album);
 			Description = album.Description;
 			Discs = album.Songs.Any(s => s.DiscNumber > 1) ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToDictionary(a => a.DiscNumber) : new Dictionary<int, AlbumDiscPropertiesContract>(0);
+			DiscTypeTypeTag = discTypeTag != null ? new TagBaseContract(discTypeTag, languagePreference) : null;
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease, languagePreference) : null);
 			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p, imageStoreOld)).ToArray();
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
@@ -65,6 +67,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public Dictionary<int, AlbumDiscPropertiesContract> Discs { get; set; }
+
+		[DataMember]
+		public TagBaseContract DiscTypeTypeTag { get; set; }
 
 		[DataMember]
 		public int Hits { get; set; }

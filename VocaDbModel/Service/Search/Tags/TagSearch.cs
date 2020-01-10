@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
@@ -56,6 +56,7 @@ namespace VocaDb.Model.Service.Search.Tags {
 				tags = orderedAndPaged.Select(t => new Tag {
 					Id = t.Id,
 					CategoryName = t.CategoryName,
+					CreateDate = t.CreateDate,
 					Status = t.Status,
 					Version = t.Version,
 					Names = new NameManager<TagName> { SortNames = {

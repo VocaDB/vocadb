@@ -141,6 +141,9 @@
   <data name="AllSongs" xml:space="preserve">
     <value>All songs</value>
   </data>
+  <data name="AssociatedEntryType" xml:space="preserve">
+    <value>Associated entry type</value>
+  </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>

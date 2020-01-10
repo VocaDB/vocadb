@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
@@ -90,13 +92,31 @@ namespace VocaDb.Tests.Helpers {
 			var entries = EntityList("Meiko", "Rin", "Miku", "Luka", "Kaito");
 			var idList = new[] { 1, 5, 3, 2, 4 }; // Meiko, Kaito, Miku, Rin, Luka
 
-			var result = CollectionHelper.SortByIds(entries, idList);
+			var result = CollectionHelper.SortByIds(entries, idList).Select(e => e?.Val);
 
-			Assert.AreEqual("Meiko", result[0].Val);
-			Assert.AreEqual("Kaito", result[1].Val);
-			Assert.AreEqual("Miku", result[2].Val);
-			Assert.AreEqual("Rin", result[3].Val);
-			Assert.AreEqual("Luka", result[4].Val);
+			result.Should().ContainInOrder("Meiko", "Kaito", "Miku", "Rin", "Luka");
+
+		}
+
+		[TestMethod]
+		public void SortByIds_EntryNotFound() {
+			
+			var entries = EntityList("Meiko", "Rin", "Miku", "Luka");
+			var idList = new[] { 1, 5, 3, 2, 4 }; // Meiko, (not found), Miku, Rin, Luka
+
+			var result = CollectionHelper.SortByIds(entries, idList).Select(e => e?.Val);
+
+			result.Should().ContainInOrder("Meiko", null, "Miku", "Rin", "Luka");
+
+		}
+
+		[TestMethod]
+		public void SortByIds_IdNotFound() {
+			
+			var entries = EntityList("Meiko", "Rin", "Miku", "Luka", "Kaito");
+			var idList = new[] { 1, 5, 3, 2 }; // Meiko, Kaito, Miku, Rin
+
+			this.Invoking(_ => CollectionHelper.SortByIds(entries, idList)).Should().Throw<InvalidOperationException>();
 
 		}
 

@@ -137,6 +137,7 @@ import UrlMapper from '../Shared/UrlMapper';
 			since: number,
 			minScore: number,
 			userCollectionId: number,
+			parentSongId: number,
 			fields: string,
 			status: string,
 			advancedFilters: AdvancedSearchFilter[],
@@ -161,6 +162,7 @@ import UrlMapper from '../Shared/UrlMapper';
 				since: since,
 				minScore: minScore,
 				userCollectionId: userCollectionId,
+				parentSongId: parentSongId || undefined,
 				status: status,
 				advancedFilters: advancedFilters
 			};

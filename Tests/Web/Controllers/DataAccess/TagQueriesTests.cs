@@ -256,7 +256,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(3, target.AllSongTagUsages.Count, "Number of song tag usages");
 			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of usages for the first song");
 
-			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Song == song);
+			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Entry == song);
 			Assert.IsNotNull(usage, "Found usage");
 			Assert.AreEqual(1, usage.Votes.Count, "Number of votes");
 			Assert.IsTrue(song.Tags.Usages.Contains(usage), "Same usage was added to song");

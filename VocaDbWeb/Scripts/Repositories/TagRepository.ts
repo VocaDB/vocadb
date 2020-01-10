@@ -3,6 +3,7 @@ import AjaxHelper from '../Helpers/AjaxHelper';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 import EntryCommentRepository from './EntryCommentRepository';
+import EntryTagMappingContract from '../DataContracts/Tag/EntryTagMappingContract';
 import { mergeUrls } from '../Shared/GlobalFunctions';
 import NameMatchMode from '../Models/NameMatchMode';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
@@ -63,6 +64,10 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		}
 
+		public getEntryTagMappings = (): Promise<EntryTagMappingContract[]> => {
+			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/entry-type-mappings"));
+		}
+
 		public getMappings = (paging: PagingProperties): Promise<PartialFindResultContract<TagMappingContract>> => {
 			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/mappings"), paging);
 		}
@@ -74,6 +79,11 @@ import UrlMapper from '../Shared/UrlMapper';
 
 			$.getJSON(url, data, callback);
 
+		}
+
+		public saveEntryMappings = (mappings: EntryTagMappingContract[]): Promise<any> => {
+			var url = this.urlMapper.mapRelative("/api/tags/entry-type-mappings");
+			return Promise.resolve(AjaxHelper.putJSON(url, mappings));
 		}
 
 		public saveMappings = (mappings: TagMappingContract[]): Promise<any> => {

@@ -24,7 +24,14 @@ function initTagsPage(vm: TagDetailsViewModel) {
 
 }
 
-function initChart(urlMapper: UrlMapper, thisTag: string, parent: TagBaseContract, siblings: TagBaseContract[], children: TagBaseContract[]) {
+function initChart(
+	urlMapper: UrlMapper,
+	thisTag: string,
+	parent: TagBaseContract,
+	siblings: TagBaseContract[],
+	children: TagBaseContract[],
+	hasMoreSiblings: boolean,
+	hasMoreChildren: boolean) {
 
 	var tagUrl = (tag: TagBaseContract) => urlMapper.mapRelative("/T/" + tag.id + "/" + tag.urlSlug);
 	var tagLink = (tag: TagBaseContract) => {
@@ -35,13 +42,14 @@ function initChart(urlMapper: UrlMapper, thisTag: string, parent: TagBaseContrac
 	var tagLinks = (tagList: TagBaseContract[]) => {
 
 		var str = "";
-		var links = _.map(tagList, item => tagLink(item));
+		const links = _.map(tagList, item => tagLink(item));
+		const tagsPerRow = 7;
 
-		for (var i = 0; i < tagList.length; i += 7) {
+		for (var i = 0; i < tagList.length; i += tagsPerRow) {
 			
-			str += _.reduce<string, string>(_.take(_.drop(links, i), 7), (list, item) => list + ", " + item);
+			str += _.reduce<string, string>(_.take(_.drop(links, i), tagsPerRow), (list, item) => list + ", " + item);
 
-			if (i < tagList.length + 7)
+			if (i < tagList.length + tagsPerRow)
 				str += "<br/>";
 
 		}
@@ -102,7 +110,9 @@ function initChart(urlMapper: UrlMapper, thisTag: string, parent: TagBaseContrac
 								})
 								.add();
 
-							ren.label("Siblings:<br/>" + tagLinks(siblings), 150, y + 115)
+							const siblingsText = "Siblings:<br/>" + tagLinks(siblings) + (hasMoreSiblings ? " (+ more)" : "");
+
+							ren.label(siblingsText, 150, y + 115)
 								.attr({
 									fill: colors[4],
 									stroke: 'white',
@@ -147,7 +157,9 @@ function initChart(urlMapper: UrlMapper, thisTag: string, parent: TagBaseContrac
 							})
 							.add();
 
-						ren.label("Children:<br/>" + tagLinks(children), 10, y + 115)
+						const childrenText = "Children:<br/>" + tagLinks(children) + (hasMoreChildren ? " (+ more)" : "");
+
+						ren.label(childrenText, 10, y + 115)
 							.attr({
 								fill: colors[4],
 								stroke: 'white',

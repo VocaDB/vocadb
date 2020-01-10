@@ -192,11 +192,10 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ManageTagMappings() {
+		public ActionResult ManageEntryTagMappings() => View();
 
-			return View();
-
-		}
+		[Authorize]
+		public ActionResult ManageTagMappings() => View();
 
 		public ActionResult PVAuthorNames(string term) {
 

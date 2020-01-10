@@ -1,4 +1,4 @@
-@using Resources
+﻿@using Resources
 @using VocaDb.Model.Service.Search
 @using VocaDb.Web.Resources.Domain
 @using Res = ViewRes.Search.IndexStrings;
@@ -58,6 +58,13 @@
 		<div class="controls">
 			<input type="number" data-bind="textInput: dateYear" class="input-small" maxlength="4" max="2100" min="1900" placeholder="Year" />
 			<input type="number" data-bind="textInput: dateMonth, visible: dateYear" class="input-small" maxlength="2" max="12" min="1" placeholder="Month" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.ParentVersion</div>
+		<div class="controls">
+			@KnockoutHelpers.SongLockingAutoComplete("parentVersion")
 		</div>
 	</div>
 

@@ -199,6 +199,8 @@ namespace VocaDb.Web.Controllers
 			}
 
 		}
+
+		private int InstrumentalTagId => queries.HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
        
         //
         // GET: /Song/Edit/5 
@@ -209,7 +211,7 @@ namespace VocaDb.Web.Controllers
 			CheckConcurrentEdit(EntryType.Song, id);
 
 			var model = Service.GetSong(id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
-				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), albumId: albumId));
+				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, albumId: albumId));
 
 			return View(model);
 
@@ -247,7 +249,7 @@ namespace VocaDb.Web.Controllers
 
 			if (!ModelState.IsValid) {
 				return View(Service.GetSong(model.Id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
-					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), model)));
+					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, model)));
 			}
 
 			queries.UpdateBasicProperties(model);

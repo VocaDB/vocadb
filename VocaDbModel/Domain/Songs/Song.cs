@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -21,6 +21,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
+using VocaDb.Model.Service;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -267,20 +268,21 @@ namespace VocaDb.Model.Domain.Songs {
 		/// This is mostly the case when the instrumental version is in the middle, for example original -> instrumental -> cover (with lyrics)
 		/// </param>
 		/// <param name="levels">Current level of traversing the parent chain.</param>
-		private IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, bool allowInstrumental, int levels) {
+		private IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, bool allowInstrumental, int levels) {
 
 			int maxLevels = 10;
 
 			if (specialTags != null 
+				&& entryTypeTags != null
 				&& (allowInstrumental || SongType != SongType.Instrumental)
 				&& HasOriginalVersion 
 				&& !OriginalVersion.Deleted
 				&& !Lyrics.Any()
 				&& !Tags.HasTag(specialTags.ChangedLyrics)
-				&& (allowInstrumental || !Tags.HasTag(specialTags.Instrumental))
+				&& (allowInstrumental || !Tags.HasTag(entryTypeTags.Instrumental))
 				&& levels < maxLevels) {
 
-				return OriginalVersion.GetLyricsFromParents(specialTags, true, levels + 1);
+				return OriginalVersion.GetLyricsFromParents(specialTags, entryTypeTags, true, levels + 1);
 
 			}
 
@@ -292,9 +294,9 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Lyrics for this song, either from the song entry itself, or its original version.
 		/// </summary>
 		/// <param name="specialTags">Special tags. Can be null, which will cause no lyrics to be inherited.</param>
-		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags) {
+		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags) {
 
-			return GetLyricsFromParents(specialTags, false, 0);
+			return GetLyricsFromParents(specialTags, entryTypeTags, false, 0);
 
 		}
 

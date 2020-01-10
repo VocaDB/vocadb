@@ -89,6 +89,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return new List<T>().AsQueryable();
 		}
 
+		public static IQueryable<T> WhereIdIn<T>(this IQueryable<T> query, IEnumerable<int> ids) where T : IEntryWithIntId 
+			=> query.Where(e => ids.Contains(e.Id));
+
 	}
 
 	public enum SortDirection {

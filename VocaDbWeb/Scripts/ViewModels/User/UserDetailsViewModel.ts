@@ -67,7 +67,7 @@ import UserRepository from '../../Repositories/UserRepository';
                     this.reportUserViewModel.notes("");
 				}
 			});
-		});
+		}, true);
 
 		public initComments = () => {
 

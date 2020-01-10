@@ -15,7 +15,7 @@
 
 		public dialogVisible = ko.observable(false);
 
-		// Report is valid to be sent (either notes are specified or not required)
+		/** Report is valid to be sent (either notes are specified or not required) */
 		public isValid: KnockoutComputed<boolean>;
 
 		public notes = ko.observable("");
