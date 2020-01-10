@@ -296,7 +296,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagContract FindTagForEntryType(EntryTypeAndSubType entryType) {
+		public TResult FindTagForEntryType<TResult>(EntryTypeAndSubType entryType, Func<Tag, ContentLanguagePreference, TResult> fac) {
 
 			return HandleQuery(ctx => {
 
@@ -319,7 +319,7 @@ namespace VocaDb.Model.Database.Queries {
 						.FirstOrDefault();
 				}
 
-				return tag != null ? new TagContract(tag, LanguagePreference) : null;
+				return tag != null ? fac(tag, LanguagePreference) : default;
 			});
 
 		}
