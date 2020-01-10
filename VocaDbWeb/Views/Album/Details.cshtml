@@ -21,7 +21,7 @@
 @section Head {
 	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
 	<link rel="canonical" href="@url" />
-	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
+	@Styles.Render("~/Scripts/jqwidgets27/styles/css.css")
 }
 
 @section Toolbar {
@@ -486,7 +486,7 @@
 @EntryDetailsHelpers.ReportEntryPopupKnockout()
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Album/Details", "~/bundles/jqxRating")
+	@Scripts.Render("~/bundles/Album/Details.js", "~/bundles/jqxRating.js")
 	<script type="text/javascript">
 
 		$(document).ready(function() {

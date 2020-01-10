@@ -2187,6 +2187,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.pt.designer.cs</LastGenOutput>
     </Content>
+    <Content Include="webpack.mix.js" />
     <EmbeddedResource Include="Resources\Domain\EntryTypeNames.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.pt.designer.cs</LastGenOutput>
@@ -3507,6 +3508,8 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Album\Partials\_AlbumReviews.cshtml" />
+    <Content Include="package.json" />
+    <Content Include="tsconfig.json" />
     <Content Include="Views\Admin\ManageEntryTagMappings.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
