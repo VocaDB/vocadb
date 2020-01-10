@@ -94,7 +94,7 @@
 		if (editedModel) {
 
 			viewModel = new app.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
-				artistRoleJson, webLinkCategoryJson, editedModel, allowCustomTracks, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
+				artistRoleJson, webLinkCategoryJson, editedModel, allowCustomTracks, canBulkDeletePVs, new app.DialogService());
 
 			ko.applyBindings(viewModel);
 
@@ -103,7 +103,7 @@
 			repo.getForEdit(@Model.Id, function (model) {
 
 				viewModel = new app.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
-					artistRoleJson, webLinkCategoryJson, model, allowCustomTracks, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
+					artistRoleJson, webLinkCategoryJson, model, allowCustomTracks, canBulkDeletePVs, new app.DialogService());
 
 				ko.applyBindings(viewModel);
 

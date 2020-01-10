@@ -3,7 +3,7 @@ import AlbumDetailsViewModel from '../ViewModels/Album/AlbumDetailsViewModel';
 import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
 
-function initAlbumDetailsPage(
+export function initAlbumDetailsPage(
 	albumId: number,
 	collectionRating: number,
 	saveStr,

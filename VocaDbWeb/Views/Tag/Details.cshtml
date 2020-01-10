@@ -47,7 +47,7 @@
 			var jsonModel = @ToJS(Model.JsonModel);
 			var vm;
 
-			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children, jsonModel.hasMoreSiblings, jsonModel.hasMoreChildren);
+			app.initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children, jsonModel.hasMoreSiblings, jsonModel.hasMoreChildren);
 
 			var repo = new app.TagRepository('@RootPath');
 			var userRepo = new app.UserRepository(urlMapper);
@@ -58,7 +58,7 @@
 			vm = new app.TagDetailsViewModel(repo, userRepo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
 				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)), @ToJS(Model.IsFollowing));
 			ko.applyBindings(vm);
-			initTagsPage(vm);
+			app.initTagsPage(vm);
 
 		});
 

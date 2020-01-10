@@ -2450,6 +2450,7 @@
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.zh-Hans.resx" />
     <TypeScriptCompile Include="Scripts\Album\Details.ts" />
+    <TypeScriptCompile Include="Scripts\App.ts" />
     <TypeScriptCompile Include="Scripts\Artist\Details.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ActivityEntry\ActivityEntryContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Aggregate\CountPerDayContract.ts" />

@@ -523,7 +523,7 @@
 				canDeleteAllComments, formatString, @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
 			ko.applyBindings(viewModel);
 
-			initAlbumDetailsPage(@Model.Id, @Model.CollectionRating,
+			app.initAlbumDetailsPage(@Model.Id, @Model.CollectionRating,
 				"@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 
 		});

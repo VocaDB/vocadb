@@ -1,4 +1,4 @@
-﻿
+
 
 function initPage(repoFactory, listId) {
 
@@ -9,7 +9,7 @@ function initPage(repoFactory, listId) {
 	var songListRepo = repoFactory.songListRepository();
 	var songRepo = repoFactory.songRepository();
 
-	var viewModel = new vdb.viewModels.songList.SongListEditViewModel(songListRepo, songRepo, urlMapper, listId);
+	var viewModel = new app.SongListEditViewModel(songListRepo, songRepo, urlMapper, listId);
 	viewModel.init(function () {
 		ko.applyBindings(viewModel);
 	});

@@ -32,8 +32,13 @@ mix
 	// Legacy common scripts - should be phased out
 	.scripts(["Scripts/VocaDB.js"], "bundles/VocaDB.js")
 
+	.ts("Scripts/App.ts", "bundles/app.js")
+
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
+	.scripts([
+		"Scripts/Shared/GlobalFunctions.js",	// HACK TODO remove
+	], "bundles/shared/common.js")
 	/*.scripts([
 		"Scripts/Shared/TopBar.ts", 
 		"Scripts/Shared/MessagesTyped.ts",
@@ -50,6 +55,9 @@ mix
 	], "bundles/shared/common.js")*/
 
 	// Included on all pages except the front page (to optimize front page load time).
+	.scripts([
+		"Scripts/moment-with-locales.js",
+	], "bundles/shared/main.js")
 	/*.scripts([
 		"Scripts/moment-with-locales.js",
 		"Scripts/Helpers/HtmlHelper.ts",
@@ -96,6 +104,9 @@ mix
 	], "bundles/shared/main.js")*/
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
+	.scripts([
+		"Scripts/knockout-sortable.js"
+	], "bundles/shared/edit.js")
 	/*.scripts([
 		"Scripts/knockout-sortable.js",
 		"Scripts/Models/WebLinkCategory.ts",
@@ -152,6 +163,9 @@ mix
 		"Scripts/Album/Details.ts"
 	], "bundles/Album/Details.js")*/
 
+	.scripts([
+		"Scripts/Album/Edit.js"
+	], "bundles/Album/Edit.js")
 	/*.scripts([
 		"Scripts/KnockoutExtensions/ParseInteger.ts",
 		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.ts",
@@ -188,6 +202,9 @@ mix
 		"Scripts/ViewModels/ArtistCreateViewModel.ts"
 	], "bundles/Artist/Create.js")*/
 
+	.scripts([
+		"Scripts/soundcloud-api.js"	// REVIEW
+	], "bundles/Artist/Details.js")
 	/*.scripts([
 		"Scripts/soundcloud-api.js",				
 		"Scripts/Repositories/AlbumRepository.ts",
@@ -223,6 +240,9 @@ mix
 		"Scripts/Artist/Details.ts"
 	], "bundles/Artist/Details.js")*/
 
+	.scripts([
+		"Scripts/Artist/Edit.js"
+	], "bundles/Artist/Edit.js")
 	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.ts",
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
@@ -240,6 +260,9 @@ mix
 		"Scripts/ViewModels/Artist/ArtistMergeViewModel.ts"
 	], "bundles/Artist/Merge.js")*/
 
+	.scripts([
+		"Scripts/page.js"
+	], "bundles/Discussion/Index.js")
 	/*.scripts([
 		"Scripts/page.js",
 		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
@@ -255,6 +278,9 @@ mix
 		"Scripts/ViewModels/ReleaseEvent/EventSeriesDetailsViewModel.ts"
 	], "bundles/EventSeries/Details.js")*/
 
+	.scripts([
+		"Scripts/Event/SeriesEdit.js"
+	], "bundles/EventSeries/Edit.js")
 	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.ts",
 		"Scripts/Repositories/ReleaseEventRepository.ts",
@@ -273,6 +299,9 @@ mix
 		"Scripts/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel.ts"
 	], "bundles/ReleaseEvent/Details.js")*/
 
+	.scripts([
+		"Scripts/Event/Edit.js"
+	], "bundles/ReleaseEvent/Edit.js")
 	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.ts",
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
@@ -292,6 +321,9 @@ mix
 		"Scripts/Event/Edit.js"
 	], "bundles/ReleaseEvent/Edit.js")*/
 
+	.scripts([
+		"Scripts/soundcloud-api.js"	// REVIEW
+	], "bundles/Search/Index.js")
 	/*.scripts([
 		"Scripts/soundcloud-api.js",				
 		"Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.ts",
@@ -342,6 +374,10 @@ mix
 		"Scripts/ViewModels/SongCreateViewModel.ts"
 	], "bundles/Song/Create.js")*/
 
+	.scripts([
+		"Scripts/MediaElement/mediaelement-and-player.min.js",
+		"Scripts/Song/Details.js"
+	], "bundles/Song/Details.js")
 	/*.scripts([
 		"Scripts/MediaElement/mediaelement-and-player.min.js",
 		"Scripts/KnockoutExtensions/MomentJsTimeAgo.ts",
@@ -351,6 +387,9 @@ mix
 		"Scripts/Song/Details.js"
 	], "bundles/Song/Details.js")*/
 
+	.scripts([
+		"Scripts/Song/Edit.js"
+	], "bundles/Song/Edit.js")
 	/*.scripts([
 		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
 		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.ts",
@@ -380,6 +419,9 @@ mix
 		"Scripts/ViewModels/Song/SongMergeViewModel.ts"
 	], "bundles/Song/Merge.js")*/
 
+	.scripts([
+		"Scripts/url.js"
+	], "bundles/Song/TopRated.js")
 	/*.scripts([
 		"Scripts/url.js",
 		"Scripts/Shared/Routing/ObservableUrlParamRouter.ts",
@@ -389,6 +431,9 @@ mix
 		"Scripts/ViewModels/Song/RankingsViewModel.ts"
 	], "bundles/Song/TopRated.js")*/
 
+	.scripts([
+		"Scripts/soundcloud-api.js"	// REVIEW
+	], "bundles/SongList/Details.js")
 	/*.scripts([
 		"Scripts/soundcloud-api.js",				
 		"Scripts/KnockoutExtensions/SlideVisible.ts",				
@@ -418,6 +463,9 @@ mix
 		"Scripts/ViewModels/SongList/SongListViewModel.ts"
 	], "bundles/SongList/Details.js")*/
 
+	.scripts([
+		"Scripts/SongList/Edit.js"
+	], "bundles/SongList/Edit.js")
 	/*.scripts([
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
 		"Scripts/Repositories/SongListRepository.ts",
@@ -447,6 +495,9 @@ mix
 		"Scripts/Tag/Details.ts"
 	], "bundles/Tag/Details.js")*/
 
+	.scripts([
+		"Scripts/Tag/Edit.js"
+	], "bundles/Tag/Edit.js")
 	/*.scripts([
 		"Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.ts",
 		"Scripts/Repositories/TagRepository.ts",
@@ -477,6 +528,9 @@ mix
 		"Scripts/ViewModels/User/AlbumCollectionViewModel.ts"
 	], "bundles/User/AlbumCollection.js")*/
 
+	.scripts([
+		"Scripts/soundcloud-api.js"	// REVIEW
+	], "bundles/User/Details.js")
 	/*.scripts([
 		"Scripts/soundcloud-api.js",
 		"Scripts/Models/Users/UserEventRelationshipType.ts",
@@ -530,6 +584,9 @@ mix
 		"Scripts/ViewModels/User/MySettingsViewModel.ts"
 	], "bundles/User/MySettings.js")*/
 
+	.scripts([
+		"Scripts/soundcloud-api.js"	// REVIEW
+	], "bundles/User/RatedSongs.js")
 	/*.scripts([
 		"Scripts/soundcloud-api.js",				
 		"Scripts/KnockoutExtensions/SlideVisible.ts",				
@@ -575,3 +632,9 @@ mix
 	// CSS for jqxRating
 	.styles([
 		"Scripts/jqwidgets27/styles/jqx.base.css"], "Scripts/jqwidgets27/styles/css.css");
+
+mix.webpackConfig({
+	output: {
+		library: 'app'
+	}
+});

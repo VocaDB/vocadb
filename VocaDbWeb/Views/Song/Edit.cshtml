@@ -375,12 +375,12 @@
 
 		if (editedModel) {
 			vm = new app.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, webLinkCategoryJson, 
-				editedModel, canBulkDeletePVs, new vdb.ui_dialog.DialogService(), instrumentalTagId, languageNames);
+				editedModel, canBulkDeletePVs, new app.DialogService(), instrumentalTagId, languageNames);
 			ko.applyBindings(vm);
 		} else {
 			songRepo.getForEdit(@Model.Id, function (model) {
 				vm = new app.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, 
-					webLinkCategoryJson, model, canBulkDeletePVs, new vdb.ui_dialog.DialogService(), instrumentalTagId, languageNames);
+					webLinkCategoryJson, model, canBulkDeletePVs, new app.DialogService(), instrumentalTagId, languageNames);
 				ko.applyBindings(vm);
 			});
 		}

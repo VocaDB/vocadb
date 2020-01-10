@@ -2,7 +2,7 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 import TagDetailsViewModel from '../ViewModels/Tag/TagDetailsViewModel';
 import UrlMapper from '../Shared/UrlMapper';
 
-function initTagsPage(vm: TagDetailsViewModel) {
+export function initTagsPage(vm: TagDetailsViewModel) {
 
 	$("#tabs").tabs({
 		activate: (event, ui) => {
@@ -24,7 +24,7 @@ function initTagsPage(vm: TagDetailsViewModel) {
 
 }
 
-function initChart(
+export function initChart(
 	urlMapper: UrlMapper,
 	thisTag: string,
 	parent: TagBaseContract,

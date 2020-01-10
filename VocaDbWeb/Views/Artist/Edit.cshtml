@@ -276,11 +276,11 @@
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
 
 		if (editedModel) {
-			ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, editedModel, new vdb.ui_dialog.DialogService()));
+			ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, editedModel, new app.DialogService()));
 		} else {
 
 			artistRepo.getForEdit(@Model.Artist.Id, function (model) {
-				ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, model, new vdb.ui_dialog.DialogService()));
+				ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, model, new app.DialogService()));
 			});
 
 		}
