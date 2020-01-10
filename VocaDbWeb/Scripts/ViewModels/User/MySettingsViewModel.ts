@@ -10,7 +10,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 //namespace vdb.viewModels {
 
 	// User my settings view model
-	export class MySettingsViewModel {
+	export default class MySettingsViewModel {
 
 		aboutMe: KnockoutObservable<string>;
 

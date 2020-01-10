@@ -16,7 +16,7 @@ import UserRepository from './UserRepository';
 
 //module vdb.repositories {
 
-	export class RepositoryFactory {
+	export default class RepositoryFactory {
 		
 		constructor(
 			private readonly urlMapper: UrlMapper,

@@ -7,7 +7,7 @@ import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper
 
 //module vdb.viewModels.albums {
 
-	export class AlbumMergeViewModel {
+	export default class AlbumMergeViewModel {
 
 		constructor(repo: AlbumRepository, id: number) {
 

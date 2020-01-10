@@ -23,7 +23,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 //module vdb.viewModels {
 
-    export class ArtistEditViewModel {
+    export default class ArtistEditViewModel {
 
 		public addAssociatedArtist = () => {
 

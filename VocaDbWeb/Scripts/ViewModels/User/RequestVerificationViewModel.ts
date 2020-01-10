@@ -5,7 +5,7 @@ import ArtistRepository from '../../Repositories/ArtistRepository';
 
 //module vdb.viewModels {
 
-    export class RequestVerificationViewModel {
+    export default class RequestVerificationViewModel {
     
 		constructor(
 			private readonly artistRepository: ArtistRepository) { }

@@ -8,7 +8,7 @@ import DuplicateEntryResultContract from '../../DataContracts/DuplicateEntryResu
 
 //module vdb.viewModels {
 
-    export class AlbumCreateViewModel {
+    export default class AlbumCreateViewModel {
 
 		constructor(private albumRepo: AlbumRepository, private artistRepo: ArtistRepository) {
 			

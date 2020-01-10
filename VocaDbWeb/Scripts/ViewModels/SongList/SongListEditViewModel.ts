@@ -33,7 +33,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 	}
 
-	export class SongListEditViewModel {
+	export default class SongListEditViewModel {
 
 		constructor(
 			private readonly songListRepo: SongListRepository,

@@ -5,7 +5,7 @@ import ui from '../../Shared/MessagesTyped';
 
 //module vdb.viewModels.songs {
 
-	export class ArchivedSongViewModel {
+	export default class ArchivedSongViewModel {
 		
 		constructor(songId: number, versionNumber: number, private repository: SongRepository) {
 			

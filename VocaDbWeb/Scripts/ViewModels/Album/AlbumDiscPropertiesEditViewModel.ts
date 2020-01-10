@@ -4,7 +4,7 @@ import BasicListEditViewModel from '../BasicListEditViewModel';
 
 //module vdb.viewModels.albums {
 	
-	export class AlbumDiscPropertiesEditViewModel {
+	export default class AlbumDiscPropertiesEditViewModel {
 		
 		constructor(contract: AlbumDiscPropertiesContract) {
 

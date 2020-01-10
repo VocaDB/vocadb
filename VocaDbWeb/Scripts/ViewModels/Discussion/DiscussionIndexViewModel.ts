@@ -9,7 +9,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 //module vdb.viewModels.discussions {
 	
-	export class DiscussionIndexViewModel {
+	export default class DiscussionIndexViewModel {
 		
 		constructor(private readonly repo: DiscussionRepository,
 			private readonly urlMapper: UrlMapper,

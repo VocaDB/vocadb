@@ -7,7 +7,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //module vdb.viewModels.user {
 	
-	export class ListUsersViewModel {
+	export default class ListUsersViewModel {
 		
 		constructor(
 			private readonly repo: UserRepository,

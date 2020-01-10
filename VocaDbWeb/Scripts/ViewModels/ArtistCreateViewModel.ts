@@ -9,7 +9,7 @@ import WebLinkEditViewModel from './WebLinkEditViewModel';
 
 //module vdb.viewModels {
 
-    export class ArtistCreateViewModel {
+    export default class ArtistCreateViewModel {
         
         public checkDuplicates: () => void;
         

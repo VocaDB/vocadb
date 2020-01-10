@@ -13,7 +13,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 //module vdb.viewModels.activityEntry {
 	
-	export class ActivityEntryListViewModel {
+	export default class ActivityEntryListViewModel {
 		
 		constructor(private urlMapper: UrlMapper,
 			resourceRepo: ResourceRepository,

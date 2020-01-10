@@ -17,7 +17,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //namespace vdb.viewModels.releaseEvents {
 
-	export class ReleaseEventDetailsViewModel {
+	export default class ReleaseEventDetailsViewModel {
 
 		constructor(
 			urlMapper: UrlMapper,

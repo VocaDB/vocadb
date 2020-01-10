@@ -5,7 +5,7 @@ import TagRepository from '../../Repositories/TagRepository';
 
 //module vdb.viewModels.tags {
 	
-	export class TagCreateViewModel {
+	export default class TagCreateViewModel {
 
 		constructor(private tagRepo: TagRepository) {
 

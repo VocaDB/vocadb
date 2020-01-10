@@ -4,7 +4,7 @@ import ui from '../Shared/MessagesTyped';
 
 //module vdb.viewModels {
 
-	export class ArchivedEntryViewModel {
+	export default class ArchivedEntryViewModel {
 		
 		constructor(entryId: number, versionNumber: number, private readonly repository: IEntryReportsRepository) {
 			

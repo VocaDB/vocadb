@@ -16,7 +16,7 @@ import ui from '../../Shared/MessagesTyped';
 
 //namespace vdb.viewModels.admin {
 
-	export class ManageEntryTagMappingsViewModel {
+	export default class ManageEntryTagMappingsViewModel {
 
 		constructor(
 			private readonly tagRepo: TagRepository) {

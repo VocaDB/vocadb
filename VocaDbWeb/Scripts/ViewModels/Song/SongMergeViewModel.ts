@@ -7,7 +7,7 @@ import SongRepository from '../../Repositories/SongRepository';
 
 //module vdb.viewModels.songs {
 
-	export class SongMergeViewModel {
+	export default class SongMergeViewModel {
 
 		constructor(songRepo: SongRepository, private base: SongContract) {
 

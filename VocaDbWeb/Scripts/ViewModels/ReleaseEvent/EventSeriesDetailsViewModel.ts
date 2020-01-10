@@ -7,7 +7,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //namespace vdb.viewModels.releaseEvents {
 
-	export class EventSeriesDetailsViewModel {
+	export default class EventSeriesDetailsViewModel {
 
 		constructor(
 			private readonly userRepo: UserRepository,

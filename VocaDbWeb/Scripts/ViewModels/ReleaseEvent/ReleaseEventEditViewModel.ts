@@ -22,7 +22,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 //module vdb.viewModels.releaseEvents {
 
-	export class ReleaseEventEditViewModel {
+	export default class ReleaseEventEditViewModel {
 
 		constructor(
 			private readonly repo: ReleaseEventRepository,

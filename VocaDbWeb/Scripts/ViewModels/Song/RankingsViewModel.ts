@@ -12,7 +12,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //module vdb.viewModels.songs {
 	
-	export class RankingsViewModel {
+	export default class RankingsViewModel {
 		
 		constructor(private urlMapper: UrlMapper, private songRepo: SongRepository,
 			private userRepo: UserRepository, private languagePreference: number) {

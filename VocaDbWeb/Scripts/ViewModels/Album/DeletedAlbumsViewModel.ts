@@ -5,7 +5,7 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
 //module vdb.viewModels {
 
-	export class DeletedAlbumsViewModel {
+	export default class DeletedAlbumsViewModel {
 
 		constructor(private albumRepo: AlbumRepository) {
 			this.updateResults(true);

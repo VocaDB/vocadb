@@ -33,7 +33,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //module vdb.viewModels.songList {
 
-	export class SongListViewModel {
+	export default class SongListViewModel {
 
 		constructor(
 			urlMapper: UrlMapper,

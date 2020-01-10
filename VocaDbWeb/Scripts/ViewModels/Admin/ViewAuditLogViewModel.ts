@@ -4,7 +4,7 @@
 
 //module vdb.viewModels {
 
-    export class ViewAuditLogViewModel {
+    export default class ViewAuditLogViewModel {
 
         public excludeUsers = ko.observable("");
 

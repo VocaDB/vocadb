@@ -20,7 +20,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 //module vdb.viewModels.user {
 
-    export class UserDetailsViewModel {
+    export default class UserDetailsViewModel {
 
 		private static overview = "Overview";
 

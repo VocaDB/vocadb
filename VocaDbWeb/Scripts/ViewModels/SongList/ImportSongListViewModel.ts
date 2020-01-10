@@ -8,7 +8,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 //module vdb.viewModels.songList {
 	
-	export class ImportSongListViewModel {
+	export default class ImportSongListViewModel {
 		
 		constructor(private urlMapper: UrlMapper) {}
 

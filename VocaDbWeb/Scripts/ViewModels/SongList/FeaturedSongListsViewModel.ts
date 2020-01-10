@@ -8,7 +8,7 @@ import TagRepository from '../../Repositories/TagRepository';
 
 //module vdb.viewModels.songList {
 	
-	export class FeaturedSongListsViewModel {
+	export default class FeaturedSongListsViewModel {
 
 		constructor(listRepo: SongListRepository,
 			resourceRepo: ResourceRepository,

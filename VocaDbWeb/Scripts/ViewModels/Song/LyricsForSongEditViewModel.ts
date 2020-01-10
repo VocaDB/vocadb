@@ -6,7 +6,7 @@ import TranslationType from '../../Models/Globalization/TranslationType';
 
 //namespace vdb.viewModels.songs {
 
-	export class LyricsForSongEditViewModel {
+	export default class LyricsForSongEditViewModel {
 
 		constructor(contract?: LyricsForSongContract) {
 			

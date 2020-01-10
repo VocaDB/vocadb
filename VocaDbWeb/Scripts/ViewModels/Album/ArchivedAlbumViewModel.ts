@@ -5,7 +5,7 @@ import ui from '../../Shared/MessagesTyped';
 
 //module vdb.viewModels.albums {
 
-	export class ArchivedAlbumViewModel {
+	export default class ArchivedAlbumViewModel {
 
 		constructor(albumId: number, versionNumber: number, private repository: AlbumRepository) {
 

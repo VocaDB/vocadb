@@ -9,7 +9,7 @@ import ui from '../../Shared/MessagesTyped';
 
 //namespace vdb.viewModels.admin {
 
-	export class ManageTagMappingsViewModel {
+	export default class ManageTagMappingsViewModel {
 
 		constructor(
 			private readonly tagRepo: TagRepository) {

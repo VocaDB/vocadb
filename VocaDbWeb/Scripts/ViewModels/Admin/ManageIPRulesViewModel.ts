@@ -6,7 +6,7 @@ import ui from '../../Shared/MessagesTyped';
 
 //module vdb.viewModels {
 
-    export class ManageIPRulesViewModel {
+    export default class ManageIPRulesViewModel {
 
         public add = () => {
 
