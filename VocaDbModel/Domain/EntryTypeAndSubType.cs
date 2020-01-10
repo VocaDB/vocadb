@@ -3,7 +3,7 @@ using System;
 namespace VocaDb.Model.Domain {
 
 	/// <summary>
-	/// Combination of <see cref="EntryType"/> and sub-type (for example SongType).
+	/// Combination of <see cref="EntryType"/> and optional sub-type (for example SongType).
 	/// </summary>
 	public readonly struct EntryTypeAndSubType {
 
@@ -24,6 +24,7 @@ namespace VocaDb.Model.Domain {
 		/// <summary>
 		/// Sub-type, for example "Remix".
 		/// This value is from one of the sub-type enums (ArtistType, SongType etc.).
+		/// Can be empty, if not specified.
 		/// </summary>
 		public string SubType { get; }
 

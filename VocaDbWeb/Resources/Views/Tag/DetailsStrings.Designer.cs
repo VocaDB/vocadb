@@ -133,6 +133,15 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Associated entry type.
+        /// </summary>
+        public static string AssociatedEntryType {
+            get {
+                return ResourceManager.GetString("AssociatedEntryType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string Category {

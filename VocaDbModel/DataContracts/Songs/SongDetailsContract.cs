@@ -22,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongDetailsContract() {}
 
 		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
-			SongListBaseContract[] pools, ISpecialTags specialTags, IEntryTypeTags entryTypeTags, IUserPermissionContext userContext, 
+			SongListBaseContract[] pools, ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, IUserPermissionContext userContext, 
 			IEntryThumbPersister thumbPersister, Tag songTypeTag = null) {
 
 			Song = new SongContract(song, languagePreference);

@@ -27,12 +27,13 @@ namespace VocaDb.Tests.Domain.Songs {
 			public int ChangedLyrics { get; set; }
 		}
 
-		private class EntryTypeTags : IEntryTypeTags {
+		private class EntryTypeTags : IEntryTypeTagRepository {
 			public int Cover { get; set; }
 			public int Instrumental { get; set; }
 			public int Remix { get; set; }
 			public int SongTypeTagId(SongType songType) => 0;
-			Tag IEntryTypeTags.GetTag<TSubType>(EntryType entryType, TSubType subType) => null;
+			public Tag GetTag<TSubType>(EntryType entryType, TSubType subType) where TSubType : Enum => null;
+			public Tag GetTag(EntryTypeAndSubType fullEntryType) => null;
 		}
 
 		private Artist artist;

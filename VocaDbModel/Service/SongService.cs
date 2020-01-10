@@ -135,7 +135,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private IEntryTypeTags GetEntryTypeTags(ISession session) => new EntryTypeTags(new NHibernateDatabaseContext(session, PermissionContext));
+		private IEntryTypeTagRepository GetEntryTypeTags(ISession session) => new EntryTypeTags(new NHibernateDatabaseContext(session, PermissionContext));
 
 		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery) {
 

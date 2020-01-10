@@ -136,9 +136,9 @@
 			}
 
 			@if (Model.RelatedEntryType.HasValue) {
-				var text = Model.RelatedEntryType.EntryType.ToString() + (Model.RelatedEntryType.HasSubType ? " (" + Model.RelatedEntryType.SubType + ")" : "");
+				var text = Translate.EntryTypeNames[Model.RelatedEntryType.EntryType] + (Model.RelatedEntryType.HasSubType ? " (" + Translate.EntrySubTypeName(Model.RelatedEntryType) + ")" : "");
 				<p>
-					Associated entry type: <a href="@Url.EntryIndex(Model.RelatedEntryType)">@text</a>
+					@Res.AssociatedEntryType: <a href="@Url.EntryIndex(Model.RelatedEntryType)">@text</a>
 				</p>
 			}
 

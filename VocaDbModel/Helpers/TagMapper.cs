@@ -14,7 +14,7 @@ namespace VocaDb.Model.Helpers {
 		/// <summary>
 		/// Tests if a particular tag is redundant for a song and should be skipped from automatic mapping.
 		/// </summary>
-		public bool TagIsRedundantForSong(SongType songType, int tagId, IEntryTypeTags specialTags) {
+		public bool TagIsRedundantForSong(SongType songType, int tagId, IEntryTypeTagRepository specialTags) {
 
 			if (tagId == specialTags.SongTypeTagId(songType))
 				return true;

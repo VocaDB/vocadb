@@ -204,7 +204,8 @@ namespace VocaDb.Model.Database.Queries {
 						.FirstOrDefault();
 				}
 
-				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, userIconFactory) {	
+				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, userIconFactory,
+					new EntryTypeTags(ctx)) {	
 					EventAssociationType = eventAssociation,
 					LatestComments = new CommentQueries<ReleaseEventComment, ReleaseEvent>(
 						ctx, PermissionContext, userIconFactory, entryLinkFactory).GetList(id, 3)
