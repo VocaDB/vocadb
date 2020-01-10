@@ -1,9 +1,6 @@
 /// <reference path="GlobalValues.ts" />
 
-import { baseAddress } from './GlobalValues';
-import { hostAddress } from './GlobalValues';
-
-//module vdb.functions {
+module vdb.functions {
 
 	export function getId(elem: HTMLElement) {
 		if ($(elem) == null || $(elem).attr('id') == null)
@@ -24,13 +21,13 @@ import { hostAddress } from './GlobalValues';
 
     export function mapAbsoluteUrl(relative: string) {
 
-        return mergeUrls(baseAddress, relative);
+        return mergeUrls(vdb.values.baseAddress, relative);
 
     };
 
     export function mapFullUrl(relative: string) {
 
-        return mergeUrls(hostAddress, relative);
+        return mergeUrls(vdb.values.hostAddress, relative);
 
     };
 
@@ -78,7 +75,7 @@ import { hostAddress } from './GlobalValues';
 
 	}
 
-//}
+}
 
 interface Navigator {
 	// sendBeacon is not available in older TS versions

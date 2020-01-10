@@ -1,5 +1,4 @@
 
-import { mergeUrls } from '../Shared/GlobalFunctions';
 import ResourcesContract from '../DataContracts/ResourcesContract';
 
 //module vdb.repositories {
@@ -10,7 +9,7 @@ import ResourcesContract from '../DataContracts/ResourcesContract';
 
 		public getList = (cultureCode: string, setNames: string[], success: (resources: ResourcesContract) => void) => {
 
-			var url = mergeUrls(this.baseUrl, "/api/resources/" + cultureCode + "/");
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/resources/" + cultureCode + "/");
 			$.getJSON(url, { setNames: setNames }, success);
 
 		}

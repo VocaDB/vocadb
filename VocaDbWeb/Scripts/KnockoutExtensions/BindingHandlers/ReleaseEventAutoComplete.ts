@@ -2,8 +2,6 @@
 import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '../../Shared/EntryAutoComplete';
 import { initEntrySearch } from '../../Shared/EntryAutoComplete';
-import { languagePreference } from '../../Shared/GlobalValues';
-import { mapAbsoluteUrl } from '../../Shared/GlobalFunctions';
 import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
 
 declare global {
@@ -18,7 +16,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: ContentLanguagePreference[languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 20,
 			sort: 'Name'
@@ -33,7 +31,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
 			extraQueryParams: queryParams
 		};
 
-		initEntrySearch(element, mapAbsoluteUrl("/api/releaseEvents"), params);
+		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/releaseEvents"), params);
 
 	}
 

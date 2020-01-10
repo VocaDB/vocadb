@@ -1,5 +1,5 @@
 
-//module vdb.values {
+module vdb.values {
 
     // URL of the site path, for example "/"
     export var baseAddress: string;
@@ -15,4 +15,4 @@
 	// UI language code, for example "en"
 	export var uiLanguage: string;
 
-//}
+}

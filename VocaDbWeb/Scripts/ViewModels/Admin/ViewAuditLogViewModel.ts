@@ -2,9 +2,6 @@
 /// <reference path="../../typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
-import { isNullOrWhiteSpace } from '../../Shared/GlobalFunctions';
-import { mapAbsoluteUrl } from '../../Shared/GlobalFunctions';
-
 //module vdb.viewModels {
 
     export class ViewAuditLogViewModel {
@@ -37,14 +34,14 @@ import { mapAbsoluteUrl } from '../../Shared/GlobalFunctions';
             this.filter(data.filter);
             this.onlyNewUsers(data.onlyNewUsers);
             this.userName(data.userName);
-            this.filterVisible(!isNullOrWhiteSpace(data.userName)
-                || !isNullOrWhiteSpace(data.excludeUsers)
-                || !isNullOrWhiteSpace(data.filter)
+            this.filterVisible(!vdb.functions.isNullOrWhiteSpace(data.userName)
+				|| !vdb.functions.isNullOrWhiteSpace(data.excludeUsers)
+				|| !vdb.functions.isNullOrWhiteSpace(data.filter)
                 || data.onlyNewUsers);
             
             $("#userNameField").autocomplete({
                 source: (ui, callback) => {
-					var url = mapAbsoluteUrl("/api/users/names");
+					var url = vdb.functions.mapAbsoluteUrl("/api/users/names");
 					$.getJSON(url, { query: ui.term }, callback);
                 },
                 select: (event, ui) => {

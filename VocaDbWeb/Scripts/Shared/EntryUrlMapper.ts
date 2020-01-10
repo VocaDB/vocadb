@@ -3,7 +3,6 @@
 
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import EntryType from '../Models/EntryType';
-import { mapAbsoluteUrl } from './GlobalFunctions';
 import SongApiContract from '../DataContracts/Song/SongApiContract';
 import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 
@@ -25,28 +24,28 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 
 			switch (typeName) {
 				case EntryType.Album:
-					prefix = mapAbsoluteUrl("/Al/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/Al/" + id);
 					break;
 				case EntryType.Artist:
-					prefix = mapAbsoluteUrl("/Ar/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/Ar/" + id);
 					break;
 				case EntryType.ReleaseEvent:
-					prefix = mapAbsoluteUrl("/E/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/E/" + id);
 					break;
 				case EntryType.ReleaseEventSeries:
-					prefix = mapAbsoluteUrl("/Es/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/Es/" + id);
 					break;
 				case EntryType.Song:
-					prefix = mapAbsoluteUrl("/S/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/S/" + id);
 					break;
 				case EntryType.SongList:
-					prefix = mapAbsoluteUrl("/L/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/L/" + id);
 					break;
 				case EntryType.Tag:
-					prefix = mapAbsoluteUrl("/T/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/T/" + id);
 					break;
 				default:
-					prefix = mapAbsoluteUrl("/" + typeName + "/Details/" + id);
+					prefix = vdb.functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
 					break;
 			}
 
@@ -81,7 +80,7 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 		}
     
 		public static details_user_byName(name: string) {
-			return mapAbsoluteUrl("/Profile/" + name);
+			return vdb.functions.mapAbsoluteUrl("/Profile/" + name);
 		}
     }
 

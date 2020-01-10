@@ -5,10 +5,6 @@
 
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryRefContract from '../DataContracts/EntryRefContract';
-import { languagePreference } from '../Shared/GlobalValues';
-import { mapAbsoluteUrl } from '../Shared/GlobalFunctions';
-import { mergeUrls } from '../Shared/GlobalFunctions';
-import { uiLanguage } from '../Shared/GlobalValues';
 
 declare global {
 	interface KnockoutBindingHandlers {
@@ -28,7 +24,7 @@ declare global {
 
 		const whitelistedDomains = ["http://vocadb.net", "https://vocadb.net", "http://utaitedb.net", "https://utaitedb.net", "https://touhoudb.com"];
 		const url = foreignDomain && _.some(whitelistedDomains, domain => _.includes(foreignDomain.toLocaleLowerCase(), domain)) ?
-			mergeUrls(foreignDomain, relativeUrl) : mapAbsoluteUrl(relativeUrl);
+			vdb.functions.mergeUrls(foreignDomain, relativeUrl) : vdb.functions.mapAbsoluteUrl(relativeUrl);
 		const data = _.assign({ id: id }, params);
 
         $(element).qtip({
@@ -89,7 +85,7 @@ ko.bindingHandlers.artistToolTip = {
 
 ko.bindingHandlers.eventToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		const culture = uiLanguage || undefined;
+		const culture = vdb.values.uiLanguage || undefined;
 		initToolTip(element, '/Event/PopupContent', ko.unwrap(valueAccessor()), { culture: culture });
 	}
 }
@@ -103,15 +99,15 @@ ko.bindingHandlers.songToolTip = {
 
 ko.bindingHandlers.tagToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		var culture = uiLanguage || undefined;
-		var lang = ContentLanguagePreference[languagePreference] || undefined;
+		var culture = vdb.values.uiLanguage || undefined;
+		var lang = ContentLanguagePreference[vdb.values.languagePreference] || undefined;
 		initToolTip(element, '/Tag/PopupContent', ko.unwrap(valueAccessor()), { culture: culture, lang: lang });
 	}
 }
 
 ko.bindingHandlers.userToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<number>) => {
-		var culture = uiLanguage || undefined;
+		var culture = vdb.values.uiLanguage || undefined;
 		initToolTip(element, '/User/PopupContent', ko.unwrap(valueAccessor()), { culture: culture });
 	}
 }

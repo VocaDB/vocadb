@@ -1,17 +1,13 @@
 
-import { mapAbsoluteUrl } from '../../Shared/GlobalFunctions';
-
-declare global {
-	interface KnockoutBindingHandlers {
-		tagCategoryAutoComplete: KnockoutBindingHandler;
-	}
+interface KnockoutBindingHandlers {
+	tagCategoryAutoComplete: KnockoutBindingHandler;
 }
 
 // Tag category autocomplete search box.
 ko.bindingHandlers.tagCategoryAutoComplete = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<string>, allBindingsAccessor: () => any) => {
 
-		var url = mapAbsoluteUrl("/api/tags/categoryNames");
+		var url = vdb.functions.mapAbsoluteUrl("/api/tags/categoryNames");
 		var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
 
 		$(element).autocomplete({

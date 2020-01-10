@@ -4,7 +4,6 @@ import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 import EntryCommentRepository from './EntryCommentRepository';
 import EntryTagMappingContract from '../DataContracts/Tag/EntryTagMappingContract';
-import { mergeUrls } from '../Shared/GlobalFunctions';
 import NameMatchMode from '../Models/NameMatchMode';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
@@ -25,19 +24,19 @@ import UrlMapper from '../Shared/UrlMapper';
 		}
 
 		public create = (name: string, callback?: (result: TagBaseContract) => void) => {
-			var url = mergeUrls(this.baseUrl, "/api/tags?name=" + name);
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags?name=" + name);
 			$.post(url, callback);
 		}
 
 		public createReport = (tagId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
 
-			var url = mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
 			$.post(url, callback);
 
 		}
 
 		public getById = (id: number, fields: string, lang: string, callback?: (result: TagApiContract) => void) => {
-			var url = mergeUrls(this.baseUrl, "/api/tags/" + id);
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
 			$.getJSON(url, { fields: fields || undefined, lang: lang }, callback);
 		}
 
@@ -48,7 +47,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 			var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
-			var url = mergeUrls(this.baseUrl, "/api/tags");
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags");
 			var data = {
 				start: queryParams.start, getTotalCount: queryParams.getTotalCount, maxResults: queryParams.maxResults,
 				query: queryParams.query,
@@ -74,7 +73,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: TagBaseContract[]) => void) => {
 			
-			var url = mergeUrls(this.baseUrl, "/api/tags/top");
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/top");
 			var data = { lang: lang, categoryName: categoryName };
 
 			$.getJSON(url, data, callback);

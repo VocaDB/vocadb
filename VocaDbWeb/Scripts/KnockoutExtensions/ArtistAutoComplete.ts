@@ -8,8 +8,6 @@ import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '../Shared/EntryAutoComplete';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
-import { languagePreference } from '../Shared/GlobalValues';
-import { mapAbsoluteUrl } from '../Shared/GlobalFunctions';
 
 declare global {
 	interface KnockoutBindingHandlers {
@@ -42,7 +40,7 @@ declare global {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: ContentLanguagePreference[languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			fields: 'AdditionalNames',
 			preferAccurateMatches: true,
 			maxResults: 20
@@ -60,7 +58,7 @@ declare global {
 			termParamName: 'query'
 		};
 
-		initEntrySearch(element, mapAbsoluteUrl("/api/artists"), params);
+		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/artists"), params);
 
 	}
 //}

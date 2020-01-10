@@ -3,8 +3,6 @@ import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePr
 import { EntryAutoCompleteParams } from '../Shared/EntryAutoComplete';
 import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
-import { languagePreference } from '../Shared/GlobalValues';
-import { mapAbsoluteUrl } from '../Shared/GlobalFunctions';
 
 declare global {
 	interface KnockoutBindingHandlers {
@@ -25,7 +23,7 @@ ko.bindingHandlers.releaseEventSeriesAutoComplete = {
 		var queryParams = {
 			nameMatchMode: 'Auto',
 			preferAccurateMatches: true,
-			lang: ContentLanguagePreference[languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			maxResults: 20,
 			sort: 'Name'
 		};
@@ -42,7 +40,7 @@ ko.bindingHandlers.releaseEventSeriesAutoComplete = {
 			termParamName: 'query'
 		};
 
-		initEntrySearch(element, mapAbsoluteUrl("/api/releaseEventSeries"), params);
+		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/releaseEventSeries"), params);
 
 	}
 }

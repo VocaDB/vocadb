@@ -3,8 +3,6 @@ import { AlbumAutoCompleteParams } from './AutoCompleteParams';
 import AlbumContract from '../DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
-import { languagePreference } from '../Shared/GlobalValues';
-import { mapAbsoluteUrl } from '../Shared/GlobalFunctions';
 
 declare global {
 	interface KnockoutBindingHandlers {
@@ -37,14 +35,14 @@ declare global {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: ContentLanguagePreference[languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 15
 		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		initEntrySearch(element, mapAbsoluteUrl("/api/albums"),
+		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/albums"),
 			{
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,

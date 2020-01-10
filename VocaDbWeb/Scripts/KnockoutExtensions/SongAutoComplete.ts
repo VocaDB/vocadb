@@ -5,8 +5,6 @@
 
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
-import { languagePreference } from '../Shared/GlobalValues';
-import { mapAbsoluteUrl } from '../Shared/GlobalFunctions';
 import NameMatchMode from '../Models/NameMatchMode';
 import SearchTextQueryHelper from '../Helpers/SearchTextQueryHelper';
 import { SongAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
@@ -44,13 +42,13 @@ declare global {
 
 		var queryParams = {
 			nameMatchMode: NameMatchMode[NameMatchMode.Auto],
-			lang: ContentLanguagePreference[languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true
 		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		initEntrySearch(element, mapAbsoluteUrl("/api/songs"),
+		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/songs"),
 			{
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,

@@ -1,6 +1,4 @@
 
-import { baseAddress } from '../Shared/GlobalValues';
-import { isLoggedIn } from '../Shared/GlobalValues';
 import PVRatingButtonsViewModel from '../ViewModels/PVRatingButtonsViewModel';
 import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
@@ -13,7 +11,7 @@ interface JQuery {
 $(() => {
 
 	function initRatingButtons() {
-		const urlMapper = new UrlMapper(baseAddress);
+		const urlMapper = new UrlMapper(vdb.values.baseAddress);
 		const repo = new UserRepository(urlMapper);
 		const ratingBar = $("#rating-bar");
 
@@ -25,7 +23,7 @@ $(() => {
 		const rating = ratingBar.data('rating');
 		const viewModel = new PVRatingButtonsViewModel(repo, { id: songId, vote: rating }, () => {
 			ui.showSuccessMessage(vdb.resources.song.thanksForRating);				
-		}, isLoggedIn);
+		}, vdb.values.isLoggedIn);
 		ko.applyBindings(viewModel, ratingBar[0]);		
 	}
 

@@ -12,7 +12,6 @@ import { CommonQueryParams } from './BaseRepository';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
 import ICommentRepository from './ICommentRepository';
-import { mergeUrls } from '../Shared/GlobalFunctions';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
@@ -52,21 +51,21 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public getForEdit = (id: number, callback: (result: ArtistForEditContract) => void) => {
 	
-			var url = mergeUrls(this.baseUrl, "/api/artists/" + id + "/for-edit");
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists/" + id + "/for-edit");
 			$.getJSON(url, callback);
 					
 		}
 
 		public getOne = (id: number, callback: (result: ArtistContract) => void) => {
 
-			var url = mergeUrls(this.baseUrl, "/api/artists/" + id);
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists/" + id);
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);
 
 		};
 
 		public getOneWithComponents = (id: number, fields: string, callback: (result: ArtistApiContract) => void) => {
 
-			var url = mergeUrls(this.baseUrl, "/api/artists/" + id);
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists/" + id);
 			$.getJSON(url, { fields: fields, lang: this.languagePreferenceStr }, callback);
 
 		};
@@ -80,7 +79,7 @@ import UrlMapper from '../Shared/UrlMapper';
 			advancedFilters: AdvancedSearchFilter[],
 			callback) => {
 
-			var url = mergeUrls(this.baseUrl, "/api/artists");
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/artists");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
@@ -121,7 +120,7 @@ import UrlMapper from '../Shared/UrlMapper';
 			this.urlMapper = new UrlMapper(baseUrl);
 
             this.mapUrl = (relative: string) => {
-                return mergeUrls(baseUrl, "/Artist") + relative;
+				return vdb.functions.mergeUrls(baseUrl, "/Artist") + relative;
             };
 
             this.findDuplicate = (params, callback: (result: DuplicateEntryResultContract[]) => void ) => {
