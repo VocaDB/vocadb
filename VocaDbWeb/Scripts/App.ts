@@ -1,5 +1,6 @@
 
 // ~/bundles/shared/common
+export { setLanguagePreferenceCookie } from './Shared/TopBar';
 export { default as ui } from './Shared/MessagesTyped';
 export { default as UrlMapper } from './Shared/UrlMapper';
 import './KnockoutExtensions/StopBinding';
@@ -36,6 +37,7 @@ import './KnockoutExtensions/InitialValue';
 
 // ~/bundles/Home/Index
 export { default as NewsListViewModel } from './ViewModels/NewsListViewModel';
+export { initPage as initHomeIndexPage } from './Home/Index';
 
 // ~/bundles/ActivityEntry/Index
 import './KnockoutExtensions/MomentJsTimeAgo';

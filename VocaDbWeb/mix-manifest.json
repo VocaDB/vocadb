@@ -6,6 +6,7 @@
     "/bundles/shared/common.js": "/bundles/shared/common.js",
     "/bundles/shared/main.js": "/bundles/shared/main.js",
     "/bundles/shared/edit.js": "/bundles/shared/edit.js",
+    "/bundles/Home/Index.js": "/bundles/Home/Index.js",
     "/bundles/jqxRating.js": "/bundles/jqxRating.js",
     "/bundles/Artist/Details.js": "/bundles/Artist/Details.js",
     "/bundles/Discussion/Index.js": "/bundles/Discussion/Index.js",

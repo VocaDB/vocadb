@@ -53,7 +53,7 @@ $(() => {
 
 });
 
-function setLanguagePreferenceCookie(languagePreference: string) {
+export function setLanguagePreferenceCookie(languagePreference: string) {
 
 	var userRepo = new UserRepository(new UrlMapper(vdb.values.baseAddress), 0);
 	userRepo.updateUserSetting(null, 'languagePreference', languagePreference, () => {

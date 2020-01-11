@@ -127,6 +127,9 @@ mix
 		"Scripts/KnockoutExtensions/InitialValue.ts"
 	], "bundles/shared/edit.js")*/
 
+	.scripts([
+		"Scripts/jquery.tools.min.js"	// REVIEW
+	], "bundles/Home/Index.js")
 	/*.scripts([
 		"Scripts/jquery.tools.min.js",
 		"Scripts/ViewModels/NewsListViewModel.ts",

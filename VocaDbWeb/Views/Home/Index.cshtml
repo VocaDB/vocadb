@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
@@ -110,7 +110,9 @@
     	$(function () {
 
     		var viewModel = new app.NewsListViewModel('@Config.SiteSettings.BlogUrl');
-    		ko.applyBindings(viewModel);
+			ko.applyBindings(viewModel);
+
+			app.initHomeIndexPage();
 
     	});
     </script>

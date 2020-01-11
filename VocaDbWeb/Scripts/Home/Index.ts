@@ -4,11 +4,13 @@ import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
 
-interface JQuery {
-	scrollable: (params: any) => void;
+declare global {
+	interface JQuery {
+		scrollable: (params: any) => void;
+	}
 }
 
-$(() => {
+export function initPage() {
 
 	function initRatingButtons() {
 		const urlMapper = new UrlMapper(vdb.values.baseAddress);
@@ -22,9 +24,9 @@ $(() => {
 		const songId = ratingBar.data('song-id');
 		const rating = ratingBar.data('rating');
 		const viewModel = new PVRatingButtonsViewModel(repo, { id: songId, vote: rating }, () => {
-			ui.showSuccessMessage(vdb.resources.song.thanksForRating);				
+			ui.showSuccessMessage(vdb.resources.song.thanksForRating);
 		}, vdb.values.isLoggedIn);
-		ko.applyBindings(viewModel, ratingBar[0]);		
+		ko.applyBindings(viewModel, ratingBar[0]);
 	}
 
 	initRatingButtons();
@@ -49,4 +51,4 @@ $(() => {
 	$("#newAlbums img").vdbAlbumToolTip();
 	$("#topAlbums img").vdbAlbumToolTip();
 
-});
+}
