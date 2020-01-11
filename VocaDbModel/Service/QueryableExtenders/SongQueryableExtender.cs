@@ -279,6 +279,16 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		}
 
+		public static IQueryable<Song> WhereHasTypeOrTag(this IQueryable<Song> query, EntryTypeAndTagCollection<SongType> entryTypeAndTagCollection) {
+
+			if (entryTypeAndTagCollection == null || entryTypeAndTagCollection.IsEmpty)
+				return query;
+
+			return query.Where(song => entryTypeAndTagCollection.SubTypes.Contains(song.SongType) 
+				|| song.Tags.Usages.Any(u => entryTypeAndTagCollection.TagIds.Contains(u.Tag.Id)));
+
+		}
+
 		public static IQueryable<Song> WhereHasType(this IQueryable<Song> query, SongType? songType) {
 
 			if (songType == null)

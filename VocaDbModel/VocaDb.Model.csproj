@@ -846,6 +846,7 @@
     <Compile Include="Service\QueryableExtenders\ArtistLinkWithRolesQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\ArtistParticipationQueryParams.cs" />
     <Compile Include="Service\QueryableExtenders\EntryReportQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\EntryTypeToTagMappingQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithArtistsQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithLinksQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithNamesQueryableExtender.cs" />
@@ -938,6 +939,7 @@
     <Compile Include="Service\Search\Artists\ArtistSearchTextQuery.cs" />
     <Compile Include="Service\Search\Artists\ParsedArtistQuery.cs" />
     <Compile Include="Service\Search\EntryIdsCollection.cs" />
+    <Compile Include="Service\Search\EntryTypeAndTagCollection.cs" />
     <Compile Include="Service\Search\Events\EventQueryParams.cs" />
     <Compile Include="Service\Search\QueryProcessor.cs" />
     <Compile Include="Service\Search\ReleaseEventSearch.cs" />

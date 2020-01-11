@@ -33,6 +33,14 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			textQuery = ProcessAdvancedSearch(textQuery, queryParams);
 
+			EntryTypeAndTagCollection<SongType> typesAndTags = null;
+
+			if (queryParams.UnifyEntryTypesAndTags) {
+				typesAndTags = EntryTypeAndTagCollection<SongType>.Create(EntryType.Song, queryParams.SongTypes, queryParams.TagIds, querySource);
+				queryParams.TagIds = queryParams.TagIds.Except(typesAndTags.TagIds).ToArray();
+				queryParams.SongTypes = queryParams.SongTypes.Except(typesAndTags.SubTypes).ToArray();
+			}
+
 			var query = Query<Song>()
 				.WhereNotDeleted()
 				.WhereHasName(textQuery)
@@ -43,6 +51,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
 				.WhereHasTags(queryParams.Tags)
 				.WhereHasTag(parsedQuery.TagName)
+				.WhereHasTypeOrTag(typesAndTags)
 				.WhereArtistHasTag(parsedQuery.ArtistTag)
 				.WhereArtistHasType(parsedQuery.ArtistType)
 				.WhereHasNicoId(parsedQuery.NicoId)
