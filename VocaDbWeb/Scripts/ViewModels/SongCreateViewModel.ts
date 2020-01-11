@@ -91,12 +91,11 @@ module vdb.viewModels {
 
         pv1 = ko.observable("");
         pv2 = ko.observable("");
-		private resources: cls.ResourcesManager;
 		songType = ko.observable("Original");
 		songTypeTag = ko.observable<dc.TagApiContract>(null);
-		songTypeInfo: KnockoutComputed<string>;
-		songTypeName: KnockoutComputed<string>;
-		songTypeTagUrl: KnockoutComputed<string>;
+		songTypeName = ko.computed(() => this.songTypeTag()?.name);
+		songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
+		songTypeTagUrl = ko.computed(() => vdb.utils.EntryUrlMapper.details_tag_contract(this.songTypeTag()));
 
 		canHaveOriginalVersion = ko.computed(() => cls.songs.SongType[this.songType()] !== cls.songs.SongType.Original);
 
@@ -177,10 +176,6 @@ module vdb.viewModels {
             if (this.pv1()) {
                 this.checkDuplicatesAndPV();
 			}
-
-			this.songTypeName = ko.computed(() => this.songTypeTag()?.name);
-			this.songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
-			this.songTypeTagUrl = ko.computed(() => this.songTypeTag() ? vdb.utils.EntryUrlMapper.details_tag(this.songTypeTag().id, this.songTypeTag().urlSlug) : null);
 
 			this.songType.subscribe(this.getSongTypeTag);
 			this.getSongTypeTag(this.songType());
