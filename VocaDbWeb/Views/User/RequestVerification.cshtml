@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers
 @using Res = ViewRes.User.RequestVerificationStrings
 @inherits VocaDb.Web.Code.VocaDbPage<string>
@@ -73,8 +73,6 @@
 @section BodyScripts {
 
 	@Scripts.Render("~/bundles/shared/edit.js")
-	<script type="text/javascript" src="@Url.Content("~/Scripts/Repositories/ArtistRepository.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/User/RequestVerificationViewModel.js")"></script>
 	<script type="text/javascript">
 
 		$(document).ready(function () {

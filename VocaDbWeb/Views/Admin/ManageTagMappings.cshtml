@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
@@ -91,9 +91,6 @@
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/shared/edit.js")
-	<script type="text/javascript" src="@Url.Content("~/Scripts/KnockoutExtensions/TagAutoComplete.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Admin/ManageTagMappingsViewModel.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/Repositories/TagRepository.js")"></script>
 	<script type="text/javascript">
 		$(function () {
 

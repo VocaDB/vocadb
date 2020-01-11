@@ -42,6 +42,22 @@ import './KnockoutExtensions/MomentJsTimeAgo';
 //export { default as ResourceRepository } from './Repositories/ResourceRepository';
 export { default as ActivityEntryListViewModel } from './ViewModels/ActivityEntry/ActivityEntryListViewModel';
 
+// ~/bundles/Admin/ManageEntryTagMappings
+import './KnockoutExtensions/TagAutoComplete';
+export { default as ManageEntryTagMappingsViewModel } from './ViewModels/Admin/ManageEntryTagMappingsViewModel';
+
+// ~/bundles/Admin/ManageTagMappings
+import './KnockoutExtensions/TagAutoComplete';
+export { default as ManageTagMappingsViewModel } from './ViewModels/Admin/ManageTagMappingsViewModel';
+
+// ~/bundles/Admin/ManageIPRules
+import './KnockoutExtensions/FormatDateFilter';
+export { default as AdminRepository } from './Repositories/AdminRepository';
+export { default as ManageIPRulesViewModel } from './ViewModels/Admin/ManageIPRulesViewModel';
+
+// ~/bundles/Admin/ViewAuditLog
+export { default as ViewAuditLogViewModel } from './ViewModels/Admin/ViewAuditLogViewModel';
+
 // ~/bundles/Album/Create
 export { default as AlbumCreateViewModel } from './ViewModels/Album/AlbumCreateViewModel';
 
@@ -215,3 +231,6 @@ import './KnockoutExtensions/ArtistAutoComplete';
 import './KnockoutExtensions/ScrollEnd';
 //export { default as PVPlayersFactory } from './ViewModels/PVs/PVPlayersFactory';
 //export { default as RatedSongsSearchViewModel } from './ViewModels/User/RatedSongsSearchViewModel';
+
+// ~/bundles/User/RequestVerification
+export { default as RequestVerificationViewModel } from './ViewModels/User/RequestVerificationViewModel';
