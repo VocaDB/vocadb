@@ -262,6 +262,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="tagName">Filter by one or more tag names (optional).</param>
 		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
 		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
+		/// <param name="unifyTypesAndTags">When searching by song type, search by associated tag as well, and vice versa.</param>
 		/// <param name="artistId">Filter by artist Id.</param>
 		/// <param name="artistParticipationStatus">
 		/// Filter by artist participation status. Only valid if artistId is specified.
@@ -306,6 +307,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
+			bool unifyTypesAndTags = false,
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
@@ -341,6 +343,7 @@ namespace VocaDb.Web.Controllers.Api {
 				TagIds = tagId,
 				Tags = tagName, 
 				ChildTags = childTags,
+				UnifyEntryTypesAndTags = unifyTypesAndTags,
 				OnlyWithPVs = onlyWithPvs,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,
 				MinScore = minScore ?? 0,

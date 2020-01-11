@@ -33,13 +33,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			textQuery = ProcessAdvancedSearch(textQuery, queryParams);
 
-			EntryTypeAndTagCollection<SongType> typesAndTags = null;
-
-			if (queryParams.UnifyEntryTypesAndTags) {
-				typesAndTags = EntryTypeAndTagCollection<SongType>.Create(EntryType.Song, queryParams.SongTypes, queryParams.TagIds, querySource);
-				queryParams.TagIds = queryParams.TagIds.Except(typesAndTags.TagIds).ToArray();
-				queryParams.SongTypes = queryParams.SongTypes.Except(typesAndTags.SubTypes).ToArray();
-			}
+			var typesAndTags = ProcessUnifiedTypesAndTags(queryParams);
 
 			var query = Query<Song>()
 				.WhereNotDeleted()
@@ -77,6 +71,20 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		private SearchWord GetTerm(string query, params string[] testTerms) {
 
 			return SearchWord.GetTerm(query, testTerms);
+
+		}
+
+		private EntryTypeAndTagCollection<SongType> ProcessUnifiedTypesAndTags(SongQueryParams queryParams) {
+
+			EntryTypeAndTagCollection<SongType> typesAndTags = null;
+
+			if (queryParams.UnifyEntryTypesAndTags) {
+				typesAndTags = EntryTypeAndTagCollection<SongType>.Create(EntryType.Song, queryParams.SongTypes, queryParams.TagIds, querySource);
+				queryParams.TagIds = queryParams.TagIds.Except(typesAndTags.TagIds).ToArray();
+				queryParams.SongTypes = queryParams.SongTypes.Except(typesAndTags.SubTypes).ToArray();
+			}
+
+			return typesAndTags;
 
 		}
 

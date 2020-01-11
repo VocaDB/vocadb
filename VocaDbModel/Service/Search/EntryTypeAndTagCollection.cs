@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
@@ -13,11 +14,14 @@ namespace VocaDb.Model.Service.Search {
 	/// <typeparam name="TSubType">Entry sub-type type. For example SongType.</typeparam>
 	public class EntryTypeAndTagCollection<TSubType> where TSubType : struct, Enum {
 
-		public static EntryTypeAndTagCollection<TSubType> Create(EntryType entryType, TSubType[] subTypes, int[] tagIds, IDatabaseContext ctx) {
+		public static EntryTypeAndTagCollection<TSubType> Create(
+			EntryType entryType, IReadOnlyCollection<TSubType> subTypes, 
+			IReadOnlyCollection<int> tagIds, IDatabaseContext ctx) {
 
 			TSubType[] allTypes;
 			int[] songTypeTagIds;
 			int[] allTagIds;
+
 			if (tagIds.Any()) {
 
 				var songTypesAndTagsFromTags = ctx.Query<EntryTypeToTagMapping>()
@@ -31,7 +35,7 @@ namespace VocaDb.Model.Service.Search {
 				allTypes = subTypes.Union(songTypesFromTags).ToArray();
 
 			} else {
-				allTypes = subTypes;
+				allTypes = subTypes.ToArray();
 				songTypeTagIds = new int[0];
 			}
 
