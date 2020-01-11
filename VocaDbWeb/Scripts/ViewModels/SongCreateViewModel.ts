@@ -118,9 +118,7 @@ module vdb.viewModels {
 		constructor(
 			private readonly songRepository: vdb.repositories.SongRepository,
 			artistRepository: vdb.repositories.ArtistRepository,
-			resourceRepo: rep.ResourceRepository,
 			private readonly tagRepository: vdb.repositories.TagRepository,
-			cultureCode: string,
 			data?) {
 
             if (data) {
@@ -180,10 +178,7 @@ module vdb.viewModels {
                 this.checkDuplicatesAndPV();
 			}
 
-			this.resources = new cls.ResourcesManager(resourceRepo, cultureCode);
-			this.resources.loadResources(null, cls.ResourceSetNames.songTypeNames);
-
-			this.songTypeName = ko.computed(() => this.resources.resources().songTypeNames ? this.resources.resources().songTypeNames[this.songType()] : null);
+			this.songTypeName = ko.computed(() => this.songTypeTag()?.name);
 			this.songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
 			this.songTypeTagUrl = ko.computed(() => this.songTypeTag() ? vdb.utils.EntryUrlMapper.details_tag(this.songTypeTag().id, this.songTypeTag().urlSlug) : null);
 
