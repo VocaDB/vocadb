@@ -591,6 +591,7 @@
     </Compile>
     <Compile Include="Code\EntrySubTypeNameFactory.cs" />
     <Compile Include="Controllers\Api\CommentApiController.cs" />
+    <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">

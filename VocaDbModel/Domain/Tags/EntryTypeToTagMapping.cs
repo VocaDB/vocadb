@@ -18,6 +18,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		/// <summary>
 		/// Entry subtype, such as <see cref="SongType.Remix"/>.
+		/// Can be empty.
 		/// </summary>
 		public virtual string SubType { get; set; }
 

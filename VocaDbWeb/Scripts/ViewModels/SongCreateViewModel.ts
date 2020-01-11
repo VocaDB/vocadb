@@ -6,11 +6,18 @@ import ArtistRepository from '../Repositories/ArtistRepository';
 import ArtistRoles from '../Models/Artists/ArtistRoles';
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
+import EntryType from '../Models/EntryType';
+import EntryUrlMapper from '../Shared/EntryUrlMapper';
+import ResourceRepository from '../Repositories/ResourceRepository';
+import { ResourceSetNames } from '../Models/ResourcesManager';
+import ResourcesManager from '../Models/ResourcesManager';
 import { SongAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
 import SongContract from '../DataContracts/Song/SongContract';
 import SongHelper from '../Helpers/SongHelper';
 import SongRepository from '../Repositories/SongRepository';
 import SongType from '../Models/Songs/SongType';
+import TagApiContract from '../DataContracts/Tag/TagApiContract';
+import TagRepository from '../Repositories/TagRepository';
 
 //module vdb.viewModels {
 
@@ -81,6 +88,11 @@ import SongType from '../Models/Songs/SongType';
 			 
 		}
 
+		private getSongTypeTag = async (songType: string) => {
+			const tag = await this.tagRepository.getEntryTypeTag(EntryType.Song, songType);
+			this.songTypeTag(tag);
+		}
+
         dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
         isDuplicatePV: KnockoutComputed<boolean>;
@@ -96,7 +108,12 @@ import SongType from '../Models/Songs/SongType';
 
         pv1 = ko.observable("");
         pv2 = ko.observable("");
-        songType = ko.observable("Original");
+		private resources: ResourcesManager;
+		songType = ko.observable("Original");
+		songTypeTag = ko.observable<TagApiContract>(null);
+		songTypeInfo: KnockoutComputed<string>;
+		songTypeName: KnockoutComputed<string>;
+		songTypeTagUrl: KnockoutComputed<string>;
 
 		canHaveOriginalVersion = ko.computed(() => SongType[this.songType()] !== SongType.Original);
 
@@ -115,7 +132,13 @@ import SongType from '../Models/Songs/SongType';
 
         removeArtist: (artist: ArtistContract) => void;
 
-        constructor(private songRepository: SongRepository, artistRepository: ArtistRepository, data?) {
+		constructor(
+			private readonly songRepository: SongRepository,
+			artistRepository: ArtistRepository,
+			resourceRepo: ResourceRepository,
+			private readonly tagRepository: TagRepository,
+			cultureCode: string,
+			data?) {
 
             if (data) {
                 this.nameOriginal(data.nameOriginal || "");
@@ -172,7 +195,17 @@ import SongType from '../Models/Songs/SongType';
             
             if (this.pv1()) {
                 this.checkDuplicatesAndPV();
-            }
+			}
+
+			this.resources = new ResourcesManager(resourceRepo, cultureCode);
+			this.resources.loadResources(null, ResourceSetNames.songTypeNames);
+
+			this.songTypeName = ko.computed(() => this.resources.resources().songTypeNames ? this.resources.resources().songTypeNames[this.songType()] : null);
+			this.songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
+			this.songTypeTagUrl = ko.computed(() => this.songTypeTag() ? EntryUrlMapper.details_tag(this.songTypeTag().id, this.songTypeTag().urlSlug) : null);
+
+			this.songType.subscribe(this.getSongTypeTag);
+			this.getSongTypeTag(this.songType());
 
         }
     

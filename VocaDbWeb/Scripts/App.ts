@@ -23,6 +23,8 @@ import './KnockoutExtensions/qTip';
 import './KnockoutExtensions/TagAutoComplete';
 import './KnockoutExtensions/Filters/Truncate';
 export { default as RepositoryFactory } from './Repositories/RepositoryFactory';
+export { default as TagRepository } from './Repositories/TagRepository';
+export { default as ResourceRepository } from './Repositories/ResourceRepository';
 export { default as SongRepository } from './Repositories/SongRepository';
 
 // ~/bundles/shared/edit
@@ -37,7 +39,7 @@ export { default as NewsListViewModel } from './ViewModels/NewsListViewModel';
 
 // ~/bundles/ActivityEntry/Index
 import './KnockoutExtensions/MomentJsTimeAgo';
-export { default as ResourceRepository } from './Repositories/ResourceRepository';
+//export { default as ResourceRepository } from './Repositories/ResourceRepository';
 export { default as ActivityEntryListViewModel } from './ViewModels/ActivityEntry/ActivityEntryListViewModel';
 
 // ~/bundles/Album/Create
@@ -160,7 +162,7 @@ export { default as ImportSongListViewModel } from './ViewModels/SongList/Import
 
 // ~/bundles/Tag/Details
 import './KnockoutExtensions/MomentJsTimeAgo';
-export { default as TagRepository } from './Repositories/TagRepository';
+//export { default as TagRepository } from './Repositories/TagRepository';
 export { default as TagDetailsViewModel } from './ViewModels/Tag/TagDetailsViewModel';
 export { initTagsPage, initChart } from './Tag/Details';
 

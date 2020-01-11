@@ -296,7 +296,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagContract FindTagForEntryType(EntryTypeAndSubType entryType) {
+		public TResult FindTagForEntryType<TResult>(EntryTypeAndSubType entryType, Func<Tag, ContentLanguagePreference, TResult> fac, bool exactOnly = false) {
 
 			return HandleQuery(ctx => {
 
@@ -305,21 +305,21 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(m => m.Tag)
 					.FirstOrDefault();
 
-				if (tag == null) {
+				if (tag == null && !exactOnly) {
 					tag = ctx.Query<EntryTypeToTagMapping>()
 						.Where(m => m.EntryType == entryType.EntryType && m.SubType == "")
 						.Select(m => m.Tag)
 						.FirstOrDefault();
 				}
 
-				if (tag == null) {
+				if (tag == null && !exactOnly) {
 					tag = ctx.Query<EntryTypeToTagMapping>()
 						.Where(m => m.EntryType == EntryType.Undefined)				
 						.Select(m => m.Tag)
 						.FirstOrDefault();
 				}
 
-				return tag != null ? new TagContract(tag, LanguagePreference) : null;
+				return tag != null ? fac(tag, LanguagePreference) : default;
 			});
 
 		}

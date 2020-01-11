@@ -14,7 +14,7 @@ namespace VocaDb.Model.Domain {
 
 		public EntryTypeAndSubType(EntryType entryType, string subType = "") {
 			EntryType = entryType;
-			SubType = subType;
+			SubType = subType ?? string.Empty;
 		}
 
 		public EntryType EntryType { get; }

@@ -2,8 +2,10 @@
 import AjaxHelper from '../Helpers/AjaxHelper';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryCommentRepository from './EntryCommentRepository';
 import EntryTagMappingContract from '../DataContracts/Tag/EntryTagMappingContract';
+import EntryType from '../Models/EntryType';
 import NameMatchMode from '../Models/NameMatchMode';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
@@ -18,8 +20,8 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		private readonly urlMapper: UrlMapper;
 
-		constructor(baseUrl: string) {
-			super(baseUrl);
+		constructor(baseUrl: string, lang?: ContentLanguagePreference) {
+			super(baseUrl, lang);
 			this.urlMapper = new UrlMapper(baseUrl);
 		}
 
@@ -41,6 +43,11 @@ import UrlMapper from '../Shared/UrlMapper';
 		}
 
 		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
+
+		public getEntryTypeTag = (entryType: EntryType, subType: string = "") => {
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/entry-types/" + EntryType[entryType] + "/" + subType + "/tag");
+			return this.getJsonPromise<TagApiContract>(url, { fields: "Description", lang: this.languagePreferenceStr });
+		}
 
 		public getList = (queryParams: TagQueryParams,
 			callback?: (result: PartialFindResultContract<TagApiContract>) => void) => {

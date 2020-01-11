@@ -64,7 +64,7 @@ import UserRepository from './UserRepository';
 		}
 
 		public tagRepository = () => {
-			return new TagRepository(this.urlMapper.baseUrl);
+			return new TagRepository(this.urlMapper.baseUrl, this.lang);
 		}
 
 		public userRepository = () => {

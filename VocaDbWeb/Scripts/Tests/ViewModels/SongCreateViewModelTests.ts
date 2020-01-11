@@ -7,12 +7,16 @@
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';
+import ResourceRepository from '../../Repositories/ResourceRepository';
 import SongCreateViewModel from '../../ViewModels/SongCreateViewModel';
+import TagRepository from '../../Repositories/TagRepository';
 
 //module vdb.tests.viewModels {
 
     var repository = new FakeSongRepository();
-    var artistRepository = new FakeArtistRepository();
+var artistRepository = new FakeArtistRepository();
+var tagRepository: TagRepository = null;
+var resourceRepository: ResourceRepository = null;
     var producer: ArtistContract = { artistType: "Producer", id: 1, name: "Tripshots", additionalNames: "" };
     artistRepository.result = producer;
     repository.results = { title: "Nebula", titleLanguage: "English", artists: [producer], matches: [], songType: "Original" };
@@ -20,7 +24,7 @@ import SongCreateViewModel from '../../ViewModels/SongCreateViewModel';
     QUnit.module("SongCreateViewModelTests");
 
     function createViewModel() {
-        return new SongCreateViewModel(repository, artistRepository);
+		return new SongCreateViewModel(repository, artistRepository, resourceRepository, tagRepository, 'en-US');
     }
 
     test("constructor empty", () => {
@@ -37,7 +41,7 @@ import SongCreateViewModel from '../../ViewModels/SongCreateViewModel';
 
     test("constructor with data", () => {
 
-        var target = new SongCreateViewModel(repository, artistRepository, { nameEnglish: "Nebula", artists: [producer] });
+		var target = new SongCreateViewModel(repository, artistRepository, resourceRepository, tagRepository, 'en-US', { nameEnglish: "Nebula", artists: [producer] });
 
 		equal(target.nameEnglish(), "Nebula", "nameEnglish");
         ok(target.artists(), "artists");

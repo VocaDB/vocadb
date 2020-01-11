@@ -97,7 +97,7 @@ namespace VocaDb.Web.Controllers {
 		/// </summary>
 		public ActionResult DetailsByEntryType(EntryType entryType, string subType = "") {
 
-			var tag = queries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType));
+			var tag = queries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) => new TagBaseContract(tag, lang));
 
 			if (tag != null) { 
 				return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.UrlSlug });
