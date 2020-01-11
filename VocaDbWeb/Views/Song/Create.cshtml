@@ -182,9 +182,8 @@
 			var repo = repoFactory.songRepository();
 			var artistRepo = repoFactory.artistRepository();
 			var tagRepo = repoFactory.tagRepository();
-			var resourceRepo = repoFactory.resourceRepository();
 			var json = @Html.Raw(JsonHelpers.Serialize(Model));
-			ko.applyBindings(new app.SongCreateViewModel(repo, artistRepo, resourceRepo, tagRepo, '@UICulture', json));
+			ko.applyBindings(new app.SongCreateViewModel(repo, artistRepo, tagRepo, json));
 
 			$("#pvLoader")
 				.ajaxStart(function() { $(this).show(); })

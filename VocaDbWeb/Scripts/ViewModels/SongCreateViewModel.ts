@@ -8,9 +8,6 @@ import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
 import EntryType from '../Models/EntryType';
 import EntryUrlMapper from '../Shared/EntryUrlMapper';
-import ResourceRepository from '../Repositories/ResourceRepository';
-import { ResourceSetNames } from '../Models/ResourcesManager';
-import ResourcesManager from '../Models/ResourcesManager';
 import { SongAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
 import SongContract from '../DataContracts/Song/SongContract';
 import SongHelper from '../Helpers/SongHelper';
@@ -108,12 +105,11 @@ import TagRepository from '../Repositories/TagRepository';
 
         pv1 = ko.observable("");
         pv2 = ko.observable("");
-		private resources: ResourcesManager;
 		songType = ko.observable("Original");
 		songTypeTag = ko.observable<TagApiContract>(null);
-		songTypeInfo: KnockoutComputed<string>;
-		songTypeName: KnockoutComputed<string>;
-		songTypeTagUrl: KnockoutComputed<string>;
+		songTypeName = ko.computed(() => this.songTypeTag()?.name);
+		songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
+		songTypeTagUrl = ko.computed(() => EntryUrlMapper.details_tag_contract(this.songTypeTag()));
 
 		canHaveOriginalVersion = ko.computed(() => SongType[this.songType()] !== SongType.Original);
 
@@ -135,9 +131,7 @@ import TagRepository from '../Repositories/TagRepository';
 		constructor(
 			private readonly songRepository: SongRepository,
 			artistRepository: ArtistRepository,
-			resourceRepo: ResourceRepository,
 			private readonly tagRepository: TagRepository,
-			cultureCode: string,
 			data?) {
 
             if (data) {
@@ -196,13 +190,6 @@ import TagRepository from '../Repositories/TagRepository';
             if (this.pv1()) {
                 this.checkDuplicatesAndPV();
 			}
-
-			this.resources = new ResourcesManager(resourceRepo, cultureCode);
-			this.resources.loadResources(null, ResourceSetNames.songTypeNames);
-
-			this.songTypeName = ko.computed(() => this.resources.resources().songTypeNames ? this.resources.resources().songTypeNames[this.songType()] : null);
-			this.songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
-			this.songTypeTagUrl = ko.computed(() => this.songTypeTag() ? EntryUrlMapper.details_tag(this.songTypeTag().id, this.songTypeTag().urlSlug) : null);
 
 			this.songType.subscribe(this.getSongTypeTag);
 			this.getSongTypeTag(this.songType());

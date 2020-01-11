@@ -4,6 +4,7 @@
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import EntryType from '../Models/EntryType';
 import SongApiContract from '../DataContracts/Song/SongApiContract';
+import TagApiContract from '../DataContracts/Tag/TagApiContract';
 import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 
 //module vdb.utils {
@@ -67,7 +68,7 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 			return EntryUrlMapper.details(EntryType.Tag, id, slug);
 		}
 
-		public static details_tag_contract(tag: TagBaseContract) {
+		public static details_tag_contract(tag: TagBaseContract | TagApiContract) {
 
 			if (!tag)
 				return null;

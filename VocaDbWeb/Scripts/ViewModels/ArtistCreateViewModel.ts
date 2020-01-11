@@ -4,16 +4,32 @@
 /// <reference path="WebLinkEditViewModel.ts" />
 
 import ArtistRepository from '../Repositories/ArtistRepository';
+import ArtistType from '../Models/Artists/ArtistType';
 import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
+import EntryType from '../Models/EntryType';
+import EntryUrlMapper from '../Shared/EntryUrlMapper';
+import TagApiContract from '../DataContracts/Tag/TagApiContract';
+import TagRepository from '../Repositories/TagRepository';
 import WebLinkEditViewModel from './WebLinkEditViewModel';
 
 //module vdb.viewModels {
 
     export default class ArtistCreateViewModel {
-        
+
+		artistType = ko.observable(ArtistType[ArtistType.Producer]);
+		artistTypeTag = ko.observable<TagApiContract>(null);
+		artistTypeName = ko.computed(() => this.artistTypeTag()?.name);
+		artistTypeInfo = ko.computed(() => this.artistTypeTag()?.description);
+		artistTypeTagUrl = ko.computed(() => EntryUrlMapper.details_tag_contract(this.artistTypeTag()));
+
         public checkDuplicates: () => void;
         
         public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
+
+		private getArtistTypeTag = async (artistType: string) => {
+			const tag = await this.tagRepository.getEntryTypeTag(EntryType.Artist, artistType);
+			this.artistTypeTag(tag);
+		}
 
         public nameOriginal = ko.observable("");
         public nameRomaji = ko.observable("");
@@ -28,7 +44,10 @@ import WebLinkEditViewModel from './WebLinkEditViewModel';
 
         public webLink: WebLinkEditViewModel = new WebLinkEditViewModel();
 
-        constructor(artistRepository: ArtistRepository, data?) {
+		constructor(
+			artistRepository: ArtistRepository,
+			private readonly tagRepository: TagRepository,
+			data?) {
             
             if (data) {
                 this.nameOriginal(data.nameOriginal || "");
@@ -48,6 +67,9 @@ import WebLinkEditViewModel from './WebLinkEditViewModel';
                 });
 
             }
+
+			this.artistType.subscribe(this.getArtistTypeTag);
+			this.getArtistTypeTag(this.artistType());
 
         }
     
