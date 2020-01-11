@@ -2432,8 +2432,8 @@
     <EmbeddedResource Include="Resources\Swagger\index.html" />
     <EmbeddedResource Include="Resources\Swagger\styles.css" />
     <Content Include="robots.txt" />
-    <Content Include="Scripts\Album\Edit.js" />
-    <Content Include="Scripts\Artist\Edit.js" />
+    <TypeScriptCompile Include="Scripts\Album\Edit.ts" />
+    <TypeScriptCompile Include="Scripts\Artist\Edit.ts" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.de.resx" />
@@ -2522,8 +2522,8 @@
       <DependentUpon>UserBaseContract.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserMessageSummaryContract.ts" />
-    <Content Include="Scripts\Event\Edit.js" />
-    <Content Include="Scripts\Event\SeriesEdit.js" />
+    <TypeScriptCompile Include="Scripts\Event\Edit.ts" />
+    <TypeScriptCompile Include="Scripts\Event\SeriesEdit.ts" />
     <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.js" />
     <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.src.js" />
     <Content Include="Scripts\highcharts\4.2.0\highcharts-3d.js" />
@@ -2946,7 +2946,7 @@
     <Content Include="Scripts\marked.min.js" />
     <Content Include="Scripts\MediaElement\mediaelement.min.js" />
     <Content Include="Scripts\MediaElement\mediaelementplayer.min.css" />
-    <Content Include="Scripts\MikuDbAlbums\PrepareForImport.js" />
+    <TypeScriptCompile Include="Scripts\MikuDbAlbums\PrepareForImport.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\TagAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Tag\TagCategoryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ToggleClick.ts" />
@@ -3125,11 +3125,11 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\page.js" />
     <Content Include="Scripts\qTip\jquery.qtip.js" />
-    <Content Include="Scripts\SongList\Edit.js" />
-    <Content Include="Scripts\Song\Details.js" />
-    <Content Include="Scripts\Song\Edit.js" />
+    <TypeScriptCompile Include="Scripts\SongList\Edit.ts" />
+    <TypeScriptCompile Include="Scripts\Song\Details.ts" />
+    <TypeScriptCompile Include="Scripts\Song\Edit.ts" />
     <Content Include="Scripts\soundcloud-api.js" />
-    <Content Include="Scripts\Tag\Edit.js" />
+    <TypeScriptCompile Include="Scripts\Tag\Edit.ts" />
     <Content Include="Scripts\ui\i18n\jquery-ui-i18n.js" />
     <Content Include="Scripts\ui\i18n\jquery.ui.datepicker-af.js" />
     <Content Include="Scripts\ui\i18n\jquery.ui.datepicker-ar-DZ.js" />
@@ -3320,7 +3320,7 @@
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
     <Content Include="Scripts\url.js" />
     <Content Include="Scripts\url.min.js" />
-    <Content Include="Scripts\User\Edit.js" />
+    <TypeScriptCompile Include="Scripts\User\Edit.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\FeaturedSongListsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\ImportSongListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListEditViewModel.ts" />

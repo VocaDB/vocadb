@@ -570,7 +570,7 @@
 
 		viewModel.songListDialog.addedToList = function() { app.ui.showSuccessMessage(resources.addedToList); };
 
-		initPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
+		app.initSongDetailsPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 	});
 
 </script>

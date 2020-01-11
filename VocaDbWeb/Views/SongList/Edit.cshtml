@@ -42,7 +42,7 @@
 	$(document).ready(function () {
 		var urlMapper = new app.UrlMapper('@RootPath');
 		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		initPage(repoFactory, @Model.Id);
+		app.initSongListEditPage(repoFactory, urlMapper, @Model.Id);
 	});
 
 </script>

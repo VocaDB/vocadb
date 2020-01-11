@@ -1,6 +1,7 @@
 
+import SongListEditViewModel from "../ViewModels/SongList/SongListEditViewModel";
 
-function initPage(repoFactory, listId) {
+export function initPage(repoFactory, urlMapper, listId) {
 
 	$("#tabs").tabs();
 	$("#deleteLink").button({ icons: { primary: 'ui-icon-trash'} });
@@ -9,7 +10,7 @@ function initPage(repoFactory, listId) {
 	var songListRepo = repoFactory.songListRepository();
 	var songRepo = repoFactory.songRepository();
 
-	var viewModel = new app.SongListEditViewModel(songListRepo, songRepo, urlMapper, listId);
+	var viewModel = new SongListEditViewModel(songListRepo, songRepo, urlMapper, listId);
 	viewModel.init(function () {
 		ko.applyBindings(viewModel);
 	});

@@ -73,6 +73,7 @@ import './KnockoutExtensions/FormatLengthSecondsFilter';
 import './KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete';
 import './KnockoutExtensions/FormatDateFilter';
 export { default as AlbumEditViewModel } from './ViewModels/Album/AlbumEditViewModel';
+export { initPage as initAlbumEditPage } from './Album/Edit';
 
 // ~/bundles/Album/Merge
 import './KnockoutExtensions/AlbumAutoComplete';
@@ -94,6 +95,7 @@ export { initPage as initArtistDetailsPage } from './Artist/Details';
 // ~/bundles/Artist/Edit
 import './KnockoutExtensions/BindingHandlers/DatePicker';
 export { default as ArtistEditViewModel } from './ViewModels/Artist/ArtistEditViewModel';
+export { initPage as initArtistEditPage } from './Artist/Edit';
 
 // ~/bundles/Artist/Merge
 import './KnockoutExtensions/ArtistAutoComplete';
@@ -110,6 +112,10 @@ export { default as EventSeriesDetailsViewModel } from './ViewModels/ReleaseEven
 // ~/bundles/EventSeries/Edit
 export { default as ReleaseEventRepository } from './Repositories/ReleaseEventRepository';
 export { default as ReleaseEventSeriesEditViewModel } from './ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel';
+export { initPage as initEventSeriesEditPage } from './Event/SeriesEdit';
+
+// ~/bundles/MikuDbAlbum/PrepareForImport
+export { initPage as initMikuDbAlbumPrepareForImportPage } from './MikuDbAlbums/PrepareForImport';
 
 // ~/bundles/ReleaseEvent/Details
 //export { default as ReleaseEventRepository } from './Repositories/ReleaseEventRepository';
@@ -122,6 +128,7 @@ import './KnockoutExtensions/BindingHandlers/SongListAutoComplete';
 import './KnockoutExtensions/FormatDateFilter';
 import './KnockoutExtensions/FormatLengthSecondsFilter';
 export { default as ReleaseEventEditViewModel } from './ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
+export { initPage as initReleaseEventEditPage } from './Event/Edit';
 
 // ~/bundles/Search/Index
 import './KnockoutExtensions/Artist/ArtistTypeLabel';
@@ -142,6 +149,7 @@ export { default as SongCreateViewModel } from './ViewModels/SongCreateViewModel
 // ~/bundles/Song/Details
 import './KnockoutExtensions/MomentJsTimeAgo';
 export { default as SongDetailsViewModel } from './ViewModels/Song/SongDetailsViewModel';
+export { initPage as initSongDetailsPage } from './Song/Details';
 
 // ~/bundles/Song/Edit
 import './KnockoutExtensions/FormatDateFilter';
@@ -149,6 +157,7 @@ import './KnockoutExtensions/FormatLengthSecondsFilter';
 import './KnockoutExtensions/BindingHandlers/DatePicker';
 import './KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete';
 export { default as SongEditViewModel } from './ViewModels/Song/SongEditViewModel';
+export { initPage as initSongEditPage } from './Song/Edit';
 
 // ~/bundles/Song/Merge
 export { default as SongMergeViewModel } from './ViewModels/Song/SongMergeViewModel';
@@ -168,6 +177,7 @@ export { default as SongListViewModel } from './ViewModels/SongList/SongListView
 // ~/bundles/SongList/Edit
 import './KnockoutExtensions/BindingHandlers/DatePicker';
 export { default as SongListEditViewModel } from './ViewModels/SongList/SongListEditViewModel';
+export { initPage as initSongListEditPage } from './SongList/Edit';
 
 // ~/bundles/SongList/Featured
 import './KnockoutExtensions/FormatDateFilter';
@@ -186,6 +196,7 @@ export { initTagsPage, initChart } from './Tag/Details';
 import './KnockoutExtensions/Tag/TagCategoryAutoComplete';
 //export { default as TagRepository } from './Repositories/TagRepository';
 export { default as TagEditViewModel } from './ViewModels/TagEditViewModel';
+export { initPage as initTagEditPage } from './Tag/Edit';
 
 // ~/bundles/Tag/Index
 //export { default as TagRepository } from './Repositories/TagRepository';
@@ -214,6 +225,9 @@ export { default as RatedSongsSearchViewModel } from './ViewModels/User/RatedSon
 //export { default as AlbumCollectionViewModel } from './ViewModels/User/AlbumCollectionViewModel';
 export { default as UserDetailsViewModel } from './ViewModels/User/UserDetailsViewModel';
 export { initPage as initUserDetailsPage } from './User/Details';
+
+// ~/bundles/User/Edit
+export { initPage as initUserEditPage } from './User/Edit';
 
 // ~/bundles/User/Index
 export { default as ListUsersViewModel } from './ViewModels/User/ListUsersViewModel';

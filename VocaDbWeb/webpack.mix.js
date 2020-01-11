@@ -163,9 +163,6 @@ mix
 		"Scripts/Album/Details.ts"
 	], "bundles/Album/Details.js")*/
 
-	.scripts([
-		"Scripts/Album/Edit.js"
-	], "bundles/Album/Edit.js")
 	/*.scripts([
 		"Scripts/KnockoutExtensions/ParseInteger.ts",
 		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.ts",
@@ -240,9 +237,6 @@ mix
 		"Scripts/Artist/Details.ts"
 	], "bundles/Artist/Details.js")*/
 
-	.scripts([
-		"Scripts/Artist/Edit.js"
-	], "bundles/Artist/Edit.js")
 	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.ts",
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
@@ -278,9 +272,6 @@ mix
 		"Scripts/ViewModels/ReleaseEvent/EventSeriesDetailsViewModel.ts"
 	], "bundles/EventSeries/Details.js")*/
 
-	.scripts([
-		"Scripts/Event/SeriesEdit.js"
-	], "bundles/EventSeries/Edit.js")
 	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.ts",
 		"Scripts/Repositories/ReleaseEventRepository.ts",
@@ -299,9 +290,6 @@ mix
 		"Scripts/ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel.ts"
 	], "bundles/ReleaseEvent/Details.js")*/
 
-	.scripts([
-		"Scripts/Event/Edit.js"
-	], "bundles/ReleaseEvent/Edit.js")
 	/*.scripts([
 		"Scripts/Helpers/KnockoutHelper.ts",
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
@@ -376,7 +364,6 @@ mix
 
 	.scripts([
 		"Scripts/MediaElement/mediaelement-and-player.min.js",
-		"Scripts/Song/Details.js"
 	], "bundles/Song/Details.js")
 	/*.scripts([
 		"Scripts/MediaElement/mediaelement-and-player.min.js",
@@ -387,9 +374,6 @@ mix
 		"Scripts/Song/Details.js"
 	], "bundles/Song/Details.js")*/
 
-	.scripts([
-		"Scripts/Song/Edit.js"
-	], "bundles/Song/Edit.js")
 	/*.scripts([
 		"Scripts/KnockoutExtensions/FormatDateFilter.ts",
 		"Scripts/KnockoutExtensions/FormatLengthSecondsFilter.ts",
@@ -463,9 +447,6 @@ mix
 		"Scripts/ViewModels/SongList/SongListViewModel.ts"
 	], "bundles/SongList/Details.js")*/
 
-	.scripts([
-		"Scripts/SongList/Edit.js"
-	], "bundles/SongList/Edit.js")
 	/*.scripts([
 		"Scripts/KnockoutExtensions/BindingHandlers/DatePicker.ts",
 		"Scripts/Repositories/SongListRepository.ts",
@@ -495,9 +476,6 @@ mix
 		"Scripts/Tag/Details.ts"
 	], "bundles/Tag/Details.js")*/
 
-	.scripts([
-		"Scripts/Tag/Edit.js"
-	], "bundles/Tag/Edit.js")
 	/*.scripts([
 		"Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.ts",
 		"Scripts/Repositories/TagRepository.ts",

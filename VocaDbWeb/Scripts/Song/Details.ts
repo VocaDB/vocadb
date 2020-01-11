@@ -1,5 +1,5 @@
-﻿
-function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
+
+export function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	function initMediaPlayer() {
 		$('audio').mediaelementplayer({
@@ -39,7 +39,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	$(".pvLink:not(.disabled)").click(function () {
 
-		var id = getId(this);
+		var id = window.getId(this);
 		$.post(urlMapper.mapRelative("/Song/PVForSong"), { pvId: id }, function (content) {
 			$("#pvPlayer").html(content);
 			initMediaPlayer();
@@ -53,4 +53,10 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 	$("#albumList a").vdbAlbumWithCoverToolTip();
 	initMediaPlayer();
 
+}
+
+declare global {
+	interface Window {
+		getId: (elem) => void;
+	}
 }
