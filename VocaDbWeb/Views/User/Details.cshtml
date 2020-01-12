@@ -1,5 +1,4 @@
 ﻿@using System.Globalization
-@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Users;
 @using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.Users
@@ -422,14 +421,14 @@
 @EntryDetailsHelpers.EntryDeletePopupBase("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm")
 
 @section Head {
-	@Styles.Render("~/Scripts/jqwidgets27/styles/css.css")
+	@LaravelMixHelper.RenderStyles("~/Scripts/jqwidgets27/styles/css.css")
 	<link rel="canonical" href="@url" />
 }
 
 @section BodyScripts {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script src="https://code.highcharts.com/highcharts.js" type="text/javascript"></script>
-	@Scripts.Render("~/bundles/jqxRating.js", "~/bundles/User/Details.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/jqxRating.js", "~/bundles/User/Details.js")
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 

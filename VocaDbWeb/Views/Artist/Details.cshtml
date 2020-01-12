@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.DataContracts.Artists;
+﻿@using VocaDb.Model.DataContracts.Artists;
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
@@ -424,7 +423,7 @@
 }
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Artist/Details.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/Artist/Details.js")
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 

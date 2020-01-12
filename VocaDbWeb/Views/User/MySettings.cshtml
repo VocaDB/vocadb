@@ -1,5 +1,4 @@
 ﻿@using System.Activities.Expressions
-@using System.Web.Optimization
 @using VocaDb.Web.Models
 @using VocaDb.Web.Helpers
 @using R = ViewRes.User;
@@ -278,7 +277,7 @@
 }
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit.js", "~/bundles/User/MySettings.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/User/MySettings.js")
 	<script type="text/javascript">
 
 		$(document).ready(function () {

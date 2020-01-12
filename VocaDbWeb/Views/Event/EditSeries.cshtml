@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Helpers
+﻿@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
 @using EditRes = ViewRes.EntryEditStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.SeriesEdit>
@@ -141,7 +140,7 @@
 @EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit.js", "~/bundles/EventSeries/Edit.js")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/EventSeries/Edit.js")
 <script type="text/javascript">
 
 	$(function () {

@@ -1,11 +1,11 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserBaseContract>
 
 @{
 	PageProperties.Title = "Entry edits - " + Model.Name;
-	ViewBag.Parents = new[] { 
-		Html.ActionLink("Users", "Index"), 
-		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 		
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Users", "Index"),
+		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
 	};
 }
 
@@ -30,7 +30,7 @@
 </h3>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/ActivityEntry/Index.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/ActivityEntry/Index.js")
 	<script type="text/javascript">
 		$(function () {
 

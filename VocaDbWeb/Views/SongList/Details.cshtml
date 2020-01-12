@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using Resources
+﻿@using Resources
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.Search
@@ -247,7 +246,7 @@
 @section BodyScripts {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
-	@Scripts.Render("~/bundles/SongList/Details.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/SongList/Details.js")
 	<script type="text/javascript">
 
 		$(function () {

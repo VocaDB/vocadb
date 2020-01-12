@@ -1,9 +1,8 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Service.Security
+﻿@using VocaDb.Model.Service.Security
 @using VocaDb.Web.Helpers
 @model VocaDb.Web.Models.Ext.EmbedSongViewModel
 
-@Styles.Render("~/Content/embedSong.css")
+@LaravelMixHelper.RenderStyles("~/Content/embedSong.css")
 
 @{
 	var current = Model.CurrentPV;

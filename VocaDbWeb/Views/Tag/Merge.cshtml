@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagBaseContract>
 
 @{
@@ -11,7 +11,8 @@
 
 }
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
 
 	@Helpers.MergeEntryInfo()
 
@@ -42,7 +43,7 @@
 }
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit.js", "~/bundles/Tag/Merge.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Tag/Merge.js")
 	<script type="text/javascript">
 
 		$(function () {

@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Resources.Views.Event
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
 
@@ -89,7 +88,7 @@
 </div>
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/EventSeries/Details.js")
+@LaravelMixHelper.RenderScripts("~/bundles/EventSeries/Details.js")
 <script type="text/javascript">
 	$(function () {
 		$("#editEventLink").button({ icons: { primary: 'ui-icon-wrench' } });

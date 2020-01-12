@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Songs
+﻿@using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage
 @using Res = ViewRes.Song.RankingsStrings;
@@ -114,7 +113,7 @@
 </table>
 
 @section BodyScripts {	
-@Scripts.Render("~/bundles/Song/TopRated.js")
+@LaravelMixHelper.RenderScripts("~/bundles/Song/TopRated.js")
 <script type="text/javascript">
 
 	moment.locale('@Culture');

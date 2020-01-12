@@ -1,13 +1,13 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @using Res = ViewRes.User.FavoriteSongsStrings;
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.FavoriteSongs>
 
 @{
-    PageProperties.Title = "Songs rated by " + Model.User.Name;
+	PageProperties.Title = "Songs rated by " + Model.User.Name;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(Model.User.Name, "Details", "User", new {id = Model.User.Id}, null)
-	};	
+	};
 }
 
 @{ Html.RenderPartial("Partials/_RatedSongs"); }
@@ -15,7 +15,7 @@
 @section BodyScripts {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
-	@Scripts.Render("~/bundles/User/RatedSongs.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/User/RatedSongs.js")
 
 	<script type="text/javascript">
 

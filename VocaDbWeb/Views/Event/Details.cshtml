@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.DataContracts.ReleaseEvents
+﻿@using VocaDb.Model.DataContracts.ReleaseEvents
 @using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.ReleaseEvents
@@ -227,7 +226,7 @@
 @EntryDetailsHelpers.ReportEntryPopupKnockout()
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/ReleaseEvent/Details.js")
+@LaravelMixHelper.RenderScripts("~/bundles/ReleaseEvent/Details.js")
 <script type="text/javascript">
 	$(function () {
 		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });

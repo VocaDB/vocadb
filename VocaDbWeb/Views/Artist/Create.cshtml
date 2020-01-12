@@ -1,6 +1,5 @@
 ﻿@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
-@using System.Web.Optimization
 @using R = ViewRes.Artist;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.Create>
 
@@ -129,7 +128,7 @@
 </form>
 
 @section BodyScripts {
-    @Scripts.Render("~/bundles/shared/edit.js", "~/bundles/Artist/Create.js")
+    @LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Artist/Create.js")
     <script type="text/javascript">
 
 		$(document).ready(function () {

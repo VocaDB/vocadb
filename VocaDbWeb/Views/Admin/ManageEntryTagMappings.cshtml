@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
@@ -80,7 +80,7 @@
 </form>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit")
 	<script type="text/javascript">
 		$(function () {
 

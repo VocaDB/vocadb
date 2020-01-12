@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Security
+﻿@using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -30,7 +29,7 @@
 </div>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Discussion/Index.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/Discussion/Index.js")
 	<script type="text/javascript">
 
 		$(function () {
