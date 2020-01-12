@@ -1,4 +1,6 @@
 
+import functions from "../Shared/GlobalFunctions";
+
 export function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	function initMediaPlayer() {
@@ -39,7 +41,7 @@ export function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	$(".pvLink:not(.disabled)").click(function () {
 
-		var id = window.getId(this);
+		var id = functions.getId(this);
 		$.post(urlMapper.mapRelative("/Song/PVForSong"), { pvId: id }, function (content) {
 			$("#pvPlayer").html(content);
 			initMediaPlayer();
@@ -53,10 +55,4 @@ export function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 	$("#albumList a").vdbAlbumWithCoverToolTip();
 	initMediaPlayer();
 
-}
-
-declare global {
-	interface Window {
-		getId: (elem) => void;
-	}
 }
