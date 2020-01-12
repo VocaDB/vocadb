@@ -15,7 +15,7 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 	public static class SongQueryableExtender {
 
-		public static IQueryable<Song> OrderByPublishDate(this IQueryable<Song> criteria, SortDirection direction) {
+		public static IOrderedQueryable<Song> OrderByPublishDate(this IQueryable<Song> criteria, SortDirection direction) {
 
 			return criteria.OrderBy(a => a.PublishDate, direction)
 				.ThenBy(a => a.CreateDate, direction);
@@ -36,6 +36,8 @@ namespace VocaDb.Model.Service.QueryableExtenders
 					return query.OrderByPublishDate(SortDirection.Descending);
 				case SongSortRule.RatingScore:
 					return query.OrderByDescending(a => a.RatingScore);
+				case SongSortRule.TagUsageCount:
+					return query.OrderByTagUsage(tagId);
 			}
 
 			return query;
@@ -58,7 +60,7 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		}
 
-		public static IQueryable<Song> OrderByTagUsage(this IQueryable<Song> query, int tagId) {
+		public static IMaybeOrderedQueryable<Song> OrderByTagUsage(this IQueryable<Song> query, int tagId) {
 			return query.OrderByTagUsage<Song, SongTagUsage>(tagId);
 		}
 

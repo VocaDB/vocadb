@@ -79,11 +79,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private TagTopUsagesAndCount<TEntry> GetTopUsagesAndCountUnified<TUsage, TEntry, TSort, TSubType>(
+		private TagTopUsagesAndCount<TEntry> GetTopUsagesAndCount<TUsage, TEntry, TSort, TSubType>(
 			IDatabaseContext<Tag> ctx, int tagId, 
 			EntryType entryType,
 			Func<IQueryable<TEntry>, EntryTypeAndTagCollection<TSubType>, IQueryable<TEntry>> whereExpression, 
-			Expression<Func<TEntry, TSort>> createDateExpression,
 			int maxCount = 12)
 			where TEntry : IEntryBase, IEntryWithTags<TUsage>
 			where TUsage: TagUsage
@@ -369,8 +368,7 @@ namespace VocaDb.Model.Database.Queries {
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
 				var songLists = GetTopUsagesAndCount<SongListTagUsage, SongList, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
-				//var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingScore, t => t.Entry);
-				var songs = GetTopUsagesAndCountUnified<SongTagUsage, Song, int, SongType>(ctx, tagId, EntryType.Song, (query, etm) => query.WhereHasTypeOrTag(etm), t => t.Id);
+				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int, SongType>(ctx, tagId, EntryType.Song, (query, etm) => query.WhereHasTypeOrTag(etm));
 				var eventSeries = GetTopUsagesAndCount<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var seriesIds = eventSeries.TopUsages.Select(e => e.Id).ToArray();
 

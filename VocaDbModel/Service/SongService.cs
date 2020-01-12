@@ -500,7 +500,9 @@ namespace VocaDb.Model.Service {
 
 		FavoritedTimes,
 
-		RatingScore
+		RatingScore,
+
+		TagUsageCount
 
 	}
 

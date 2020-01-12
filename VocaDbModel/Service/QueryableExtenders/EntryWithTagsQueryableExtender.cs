@@ -1,7 +1,6 @@
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
@@ -12,10 +11,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			where TTagLink : TagUsage {
 
 			if (tagId != 0) {
-				query = query.OrderByDescending(e => e.Tags.Usages.Count(u => u.Tag.Id == tagId));
+				return MaybeOrderedQueryable.Create(query.OrderByDescending(e => e.Tags.Usages.Where(u => u.Tag.Id == tagId).Sum(u => u.Count)));
 			}
 
-			return new MaybeOrderedQueryable<TEntry>(query);
+			return MaybeOrderedQueryable.Create(query);
 
 		}
 

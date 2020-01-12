@@ -113,5 +113,14 @@ namespace Resources {
                 return ResourceManager.GetString("RatingScore", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag usage count.
+        /// </summary>
+        internal static string TagUsageCount {
+            get {
+                return ResourceManager.GetString("TagUsageCount", resourceCulture);
+            }
+        }
     }
 }
