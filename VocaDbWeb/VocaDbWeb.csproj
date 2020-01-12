@@ -2189,6 +2189,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.pt.designer.cs</LastGenOutput>
     </Content>
+    <Content Include="webpack.css.js" />
     <Content Include="webpack.mix.js" />
     <EmbeddedResource Include="Resources\Domain\EntryTypeNames.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
