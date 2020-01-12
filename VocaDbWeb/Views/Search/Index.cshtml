@@ -1,5 +1,4 @@
-@using System.Web.Optimization
-@using Resources
+﻿@using Resources
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers
@@ -180,7 +179,7 @@
 
 <!-- Scripts -->
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Search/Index.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/Search/Index.js")
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 
 	<script type="text/javascript">

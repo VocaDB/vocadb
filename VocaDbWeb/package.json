@@ -7,11 +7,16 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "css-dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --env.mixfile=webpack.css.js --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "css-prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --env.mixfile=webpack.css.js --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
         "cross-env": "^5.1",
         "laravel-mix": "^4.0.7",
+        "laravel-mix-merge-manifest": "^0.1.2",
+        "less": "^3.10.3",
+        "less-loader": "^5.0.0",
         "ts-loader": "^6.2.1",
         "typescript": "^3.7.4"
     }

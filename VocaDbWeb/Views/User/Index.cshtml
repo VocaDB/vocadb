@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Index>
 
 @{
@@ -8,8 +8,8 @@
 @{ Html.RenderPartial("Partials/_ListUsers"); }
 
 @section BodyScripts {
-    
-	@Scripts.Render("~/bundles/User/Index.js")
+
+	@LaravelMixHelper.RenderScripts("~/bundles/User/Index.js")
 
 	<script type="text/javascript">
 		$(function () {

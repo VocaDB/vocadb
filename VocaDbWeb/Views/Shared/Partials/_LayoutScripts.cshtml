@@ -1,5 +1,4 @@
 ﻿@using VocaDb.Web.Helpers
-@using System.Web.Optimization
 @using VocaDb.Web.Resources.Domain
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -8,10 +7,10 @@
 }
 
 <!-- Common scripts -->
-@Scripts.Render("~/bundles/shared/libs.js", "~/bundles/shared/jqui.js", "~/bundles/VocaDB.js", "~/bundles/shared/common.js", "~/bundles/app.js")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/libs.js", "~/bundles/shared/jqui.js", "~/bundles/VocaDB.js", "~/bundles/shared/common.js", "~/bundles/App.js")
 
 @if (PageProperties.AddMainScripts) {
-	@Scripts.Render("~/bundles/shared/main.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/main.js")
 }
 
 <script type="text/javascript">

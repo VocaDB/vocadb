@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
 @using Res = VocaDb.Web.Resources.Views.ActivityEntry.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -33,7 +32,7 @@
 </h3>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/ActivityEntry/Index.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/ActivityEntry/Index.js")
 	<script type="text/javascript">
 		$(function () {
 

@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
 @using SharedRes = ViewRes.SharedStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.AlbumCollection>
 
@@ -13,7 +12,7 @@
 @{ Html.RenderPartial("Partials/_AlbumCollection"); }
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/User/AlbumCollection.js")
+@LaravelMixHelper.RenderScripts("~/bundles/User/AlbumCollection.js")
 
 <script type="text/javascript">
 

@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain
+﻿@using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
 @using Res = ViewRes.Home.IndexStrings;
@@ -104,7 +103,7 @@
             thanksForRating: '@Html.Raw(AjaxRes.SongStrings.ThanksForRating)'
         };
     </script>
-	@Scripts.Render("~/bundles/Home/Index.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/Home/Index.js")
 
     <script type="text/javascript">
     	$(function () {

@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Helpers
+﻿@using VocaDb.Model.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using R = ViewRes.Album;
@@ -62,7 +61,7 @@
 	});
 </script>
 
-@Scripts.Render("~/bundles/shared/edit.js", "~/bundles/Album/Edit.js")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Album/Edit.js")
 
 <script type="text/javascript">
 	$(function() {

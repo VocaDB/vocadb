@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain
+﻿@using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Domain.Albums
@@ -21,7 +20,7 @@
 @section Head {
 	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
 	<link rel="canonical" href="@url" />
-	@Styles.Render("~/Scripts/jqwidgets27/styles/css.css")
+	@LaravelMixHelper.RenderStyles("~/Scripts/jqwidgets27/styles/css.css")
 }
 
 @section Toolbar {
@@ -486,7 +485,7 @@
 @EntryDetailsHelpers.ReportEntryPopupKnockout()
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Album/Details.js", "~/bundles/jqxRating.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/Album/Details.js", "~/bundles/jqxRating.js")
 	<script type="text/javascript">
 
 		$(document).ready(function() {

@@ -11,7 +11,18 @@ const mix = require('laravel-mix');
  |
  */
 
+require('laravel-mix-merge-manifest');
+
 mix
+	.mergeManifest()
+	.setPublicPath('./')
+	.version()
+	.webpackConfig({
+		output: {
+			library: 'app'
+		}
+	})
+
 
 	.scripts([
 		"Scripts/jquery-2.2.1.js",
@@ -32,7 +43,7 @@ mix
 	// Legacy common scripts - should be phased out
 	.scripts(["Scripts/VocaDB.js"], "bundles/VocaDB.js")
 
-	.ts("Scripts/App.ts", "bundles/app.js")
+	.ts("Scripts/App.ts", "bundles")
 
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
@@ -172,34 +183,3 @@ mix
 
 
 	// TODO
-
-
-	// Base CSS
-	.styles([
-		"Content/bootstrap.css",
-		"Content/bootstrap-responsive.css",
-		"Content/Site.css",
-		"Content/Styles/base.css",
-		//"Content/Styles/Snow2013.css",
-		"Content/Styles/PVViewer_Black.css",
-		"Content/Styles/ExtLinks.css",
-		"Content/Styles/Overrides.css",
-		"Content/Styles/StyleOverrides.css",
-		"Content/Styles/Search.css",
-		"Content/Styles/song.css",
-		"Content/Styles/userpage.css"
-	], "Content/css.css")
-
-	.styles([
-		"Content/bootstrap.css", "Content/Styles/embedSong.css"], "Content/embedSong.css")
-
-	// CSS for jqxRating
-	.styles([
-		"Scripts/jqwidgets27/styles/jqx.base.css"], "Scripts/jqwidgets27/styles/css.css");
-
-mix
-	.webpackConfig({
-		output: {
-			library: 'app'
-		}
-	});

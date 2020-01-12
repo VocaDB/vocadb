@@ -1,6 +1,5 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
 @using VocaDb.Web.Helpers
-@using System.Web.Optimization
 @using VocaDb.Model.Domain.Users
 @using Res = ViewRes.User.MessagesStrings;
 
@@ -118,7 +117,7 @@
 </div>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit.js", "~/bundles/User/Messages.js")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/User/Messages.js")
 	<script type="text/javascript">
 
 		$(function () {

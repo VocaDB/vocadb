@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Security
+﻿@using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.SongLists
@@ -42,7 +41,7 @@
 </div>
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/SongList/Featured.js")
+@LaravelMixHelper.RenderScripts("~/bundles/SongList/Featured.js")
 <script type="text/javascript">
 	
 	moment.locale('@Culture');
