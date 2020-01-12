@@ -36,8 +36,8 @@ mix
 
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
-	/*.scripts([
-	], "bundles/shared/common.js")*/
+	.scripts([
+	], "bundles/shared/common.js")
 
 	// Included on all pages except the front page (to optimize front page load time).
 	.scripts([
@@ -59,67 +59,67 @@ mix
 
 
 	// VIEW-SPECIFIC BUNDLES
-	/*.scripts([
-	], "bundles/ActivityEntry/Index.js")*/
+	.scripts([
+	], "bundles/ActivityEntry/Index.js")
 
 
-	/*.scripts([
-	], "bundles/Album/Create.js")*/
+	.scripts([
+	], "bundles/Album/Create.js")
 
-	/*.scripts([
-	], "bundles/Album/Details.js")*/
+	.scripts([
+	], "bundles/Album/Details.js")
 
-	/*.scripts([
-	], "bundles/Album/Edit.js")*/
+	.scripts([
+	], "bundles/Album/Edit.js")
 
-	/*.scripts([
-	], "bundles/Album/Merge.js")*/
+	.scripts([
+	], "bundles/Album/Merge.js")
 
-	/*.scripts([
-	], "bundles/Artist/Create.js")*/
+	.scripts([
+	], "bundles/Artist/Create.js")
 
 	.scripts([
 		"Scripts/soundcloud-api.js"	// REVIEW
 	], "bundles/Artist/Details.js")
 
-	/*.scripts([
-	], "bundles/Artist/Edit.js")*/
+	.scripts([
+	], "bundles/Artist/Edit.js")
 
-	/*.scripts([
-	], "bundles/Artist/Merge.js")*/
+	.scripts([
+	], "bundles/Artist/Merge.js")
 
 	.scripts([
 		"Scripts/page.js"
 	], "bundles/Discussion/Index.js")
 
-	/*.scripts([
-	], "bundles/EventSeries/Details.js")*/
+	.scripts([
+	], "bundles/EventSeries/Details.js")
 
-	/*.scripts([
-	], "bundles/EventSeries/Edit.js")*/
+	.scripts([
+	], "bundles/EventSeries/Edit.js")
 
-	/*.scripts([
-	], "bundles/ReleaseEvent/Details.js")*/
+	.scripts([
+	], "bundles/ReleaseEvent/Details.js")
 
-	/*.scripts([
-	], "bundles/ReleaseEvent/Edit.js")*/
+	.scripts([
+	], "bundles/ReleaseEvent/Edit.js")
 
 	.scripts([
 		"Scripts/soundcloud-api.js"	// REVIEW
 	], "bundles/Search/Index.js")
 
-	/*.scripts([
-	], "bundles/Song/Create.js")*/
+	.scripts([
+	], "bundles/Song/Create.js")
 
 	.scripts([
 		"Scripts/MediaElement/mediaelement-and-player.min.js",
 	], "bundles/Song/Details.js")
 
-	/*.scripts([
-	], "bundles/Song/Edit.js")*/
+	.scripts([
+	], "bundles/Song/Edit.js")
 
-	/*.scripts([
-	], "bundles/Song/Merge.js")*/
+	.scripts([
+	], "bundles/Song/Merge.js")
 
 	.scripts([
 		"Scripts/url.js"
@@ -129,42 +129,42 @@ mix
 		"Scripts/soundcloud-api.js"	// REVIEW
 	], "bundles/SongList/Details.js")
 
-	/*.scripts([
-	], "bundles/SongList/Edit.js")*/
+	.scripts([
+	], "bundles/SongList/Edit.js")
 
-	/*.scripts([
-	], "bundles/SongList/Featured.js")*/
+	.scripts([
+	], "bundles/SongList/Featured.js")
 
-	/*.scripts([
-	], "bundles/SongList/Import.js")*/
+	.scripts([
+	], "bundles/SongList/Import.js")
 
-	/*.scripts([
-	], "bundles/Tag/Details.js")*/
+	.scripts([
+	], "bundles/Tag/Details.js")
 
-	/*.scripts([
-	], "bundles/Tag/Edit.js")*/
+	.scripts([
+	], "bundles/Tag/Edit.js")
 
-	/*.scripts([
-	], "bundles/Tag/Index.js")*/
+	.scripts([
+	], "bundles/Tag/Index.js")
 
-	/*.scripts([
-	], "bundles/Tag/Merge.js")*/
+	.scripts([
+	], "bundles/Tag/Merge.js")
 
-	/*.scripts([
-	], "bundles/User/AlbumCollection.js")*/
+	.scripts([
+	], "bundles/User/AlbumCollection.js")
 
 	.scripts([
 		"Scripts/soundcloud-api.js"	// REVIEW
 	], "bundles/User/Details.js")
 
-	/*.scripts([
-	], "bundles/User/Index.js")*/
+	.scripts([
+	], "bundles/User/Index.js")
 
-	/*.scripts([
-	], "bundles/User/Messages.js")*/
+	.scripts([
+	], "bundles/User/Messages.js")
 
-	/*.scripts([
-	], "bundles/User/MySettings.js")*/
+	.scripts([
+	], "bundles/User/MySettings.js")
 
 	.scripts([
 		"Scripts/soundcloud-api.js"	// REVIEW
