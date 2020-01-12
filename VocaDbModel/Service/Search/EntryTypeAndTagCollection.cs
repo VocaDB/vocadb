@@ -15,8 +15,13 @@ namespace VocaDb.Model.Service.Search {
 	public class EntryTypeAndTagCollection<TSubType> where TSubType : struct, Enum {
 
 		public static EntryTypeAndTagCollection<TSubType> Create(
+			EntryType entryType, int tagId, IDatabaseContext ctx, bool allowAllTags = false) {
+			return Create(entryType, new TSubType[0], new int[] { tagId }, ctx, allowAllTags);
+		}
+
+		public static EntryTypeAndTagCollection<TSubType> Create(
 			EntryType entryType, IReadOnlyCollection<TSubType> subTypes, 
-			IReadOnlyCollection<int> tagIds, IDatabaseContext ctx) {
+			IReadOnlyCollection<int> tagIds, IDatabaseContext ctx, bool allowAllTags = false) {
 
 			TSubType[] allTypes;
 			int[] songTypeTagIds;
@@ -48,6 +53,9 @@ namespace VocaDb.Model.Service.Search {
 			} else {
 				allTagIds = songTypeTagIds;
 			}
+
+			if (allowAllTags)
+				allTagIds = allTagIds.Union(tagIds).ToArray();
 
 			return new EntryTypeAndTagCollection<TSubType>(allTypes, allTagIds);
 

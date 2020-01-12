@@ -22,7 +22,8 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		}
 
-		public static IQueryable<Song> OrderBy(this IQueryable<Song> query, SongSortRule sortRule, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+		public static IQueryable<Song> OrderBy(this IQueryable<Song> query, SongSortRule sortRule, 
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, int tagId = 0) {
 			
 			switch (sortRule) {
 				case SongSortRule.Name:
@@ -55,6 +56,10 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 			return query;
 
+		}
+
+		public static IQueryable<Song> OrderByTagUsage(this IQueryable<Song> query, int tagId) {
+			return query.OrderByTagUsage<Song, SongTagUsage>(tagId);
 		}
 
 		public static IQueryable<Song> WhereArtistHasTag(this IQueryable<Song> query, string tagName) {

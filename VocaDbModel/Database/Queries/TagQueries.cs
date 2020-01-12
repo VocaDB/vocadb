@@ -79,6 +79,36 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private TagTopUsagesAndCount<TEntry> GetTopUsagesAndCountUnified<TUsage, TEntry, TSort, TSubType>(
+			IDatabaseContext<Tag> ctx, int tagId, 
+			EntryType entryType,
+			Func<IQueryable<TEntry>, EntryTypeAndTagCollection<TSubType>, IQueryable<TEntry>> whereExpression, 
+			Expression<Func<TEntry, TSort>> createDateExpression,
+			int maxCount = 12)
+			where TEntry : IEntryBase, IEntryWithTags<TUsage>
+			where TUsage: TagUsage
+			where TSubType : struct, Enum {
+			
+			var typeAndTag = EntryTypeAndTagCollection<TSubType>.Create(entryType, tagId, ctx, allowAllTags: true);
+
+			var q = ctx.Query<TEntry>()
+				.WhereNotDeleted();
+
+			q = whereExpression(q, typeAndTag);
+
+			var topUsages = q
+				.OrderByTagUsage<TEntry, TUsage>(tagId)
+				.Take(maxCount)
+				.ToArray();
+
+			var usageCount = q.Count();
+
+			return new TagTopUsagesAndCount<TEntry> {
+				TopUsages = topUsages, TotalCount = usageCount
+			};
+
+		}
+
 		private Tag GetRealTag(IDatabaseContext<Tag> ctx, ITag tag, Tag ignoreSelf) {
 
 			if (tag == null || tag.Id == 0)
@@ -339,7 +369,8 @@ namespace VocaDb.Model.Database.Queries {
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
 				var songLists = GetTopUsagesAndCount<SongListTagUsage, SongList, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
-				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingScore, t => t.Entry);
+				//var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingScore, t => t.Entry);
+				var songs = GetTopUsagesAndCountUnified<SongTagUsage, Song, int, SongType>(ctx, tagId, EntryType.Song, (query, etm) => query.WhereHasTypeOrTag(etm), t => t.Id);
 				var eventSeries = GetTopUsagesAndCount<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var seriesIds = eventSeries.TopUsages.Select(e => e.Id).ToArray();
 
