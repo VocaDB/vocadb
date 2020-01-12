@@ -15,6 +15,8 @@ require('laravel-mix-merge-manifest');
 
 mix
 	.mergeManifest()
+	.setPublicPath('./')
+	.version()
 	.webpackConfig({
 		output: {
 			library: 'app'

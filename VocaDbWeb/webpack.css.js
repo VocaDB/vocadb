@@ -20,6 +20,8 @@ mix
 	.options({
 		processCssUrls: false
 	})
+	.setPublicPath('./')
+	.version()
 
 
 	// Base CSS
