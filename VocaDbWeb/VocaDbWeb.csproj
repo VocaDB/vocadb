@@ -3508,6 +3508,8 @@
     <Content Include="Views\Admin\ManageTagMappings.cshtml" />
     <Content Include="Views\Admin\ActiveEdits.cshtml" />
     <Content Include="Content\Styles\DarkAngel.less" />
+    <Content Include="Content\css.less" />
+    <Content Include="Content\embedSong.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
