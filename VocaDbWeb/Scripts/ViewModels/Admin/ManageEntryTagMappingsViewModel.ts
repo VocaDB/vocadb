@@ -8,6 +8,7 @@ import EntryType from "../../Models/EntryType";
 import EntryTypeAndSubTypeContract from "../../DataContracts/EntryTypeAndSubTypeContract";
 import EntryUrlMapper from "../../Shared/EntryUrlMapper";
 import EventCategory from "../../Models/Events/EventCategory";
+import functions from "../../Shared/GlobalFunctions";
 import ServerSidePagingViewModel from "../ServerSidePagingViewModel";
 import SongType from "../../Models/Songs/SongType";
 import TagBaseContract from "../../DataContracts/Tag/TagBaseContract";
@@ -47,7 +48,7 @@ import ui from '../../Shared/MessagesTyped';
 		}
 
 		public getTagUrl = (tag: EditTagMappingViewModel) => {
-			return vdb.functions.mapFullUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
+			return functions.mapFullUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		private loadMappings = async () => {

@@ -1,6 +1,7 @@
 
 import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '../../Shared/EntryAutoComplete';
+import functions from '../../Shared/GlobalFunctions';
 import { initEntrySearch } from '../../Shared/EntryAutoComplete';
 import SongListContract from '../../DataContracts/Song/SongListContract';
 
@@ -35,7 +36,7 @@ ko.bindingHandlers.songListAutoComplete = {
 			extraQueryParams: queryParams
 		};
 
-		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/songLists/featured"), params);
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/songLists/featured"), params);
 
 	}
 

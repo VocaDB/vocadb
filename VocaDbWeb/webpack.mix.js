@@ -36,9 +36,6 @@ mix
 
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
-	.scripts([
-		"Scripts/Shared/GlobalFunctions.js",	// HACK TODO remove
-	], "bundles/shared/common.js")
 	/*.scripts([
 		"Scripts/Shared/TopBar.ts", 
 		"Scripts/Shared/MessagesTyped.ts",
@@ -614,8 +611,9 @@ mix
 	.styles([
 		"Scripts/jqwidgets27/styles/jqx.base.css"], "Scripts/jqwidgets27/styles/css.css");
 
-mix.webpackConfig({
-	output: {
-		library: 'app'
-	}
-});
+mix
+	.webpackConfig({
+		output: {
+			library: 'app'
+		}
+	});

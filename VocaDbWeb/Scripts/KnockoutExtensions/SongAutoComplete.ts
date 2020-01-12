@@ -4,6 +4,7 @@
 /// <reference path="AutoCompleteParams.ts" />
 
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import functions from '../Shared/GlobalFunctions';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 import NameMatchMode from '../Models/NameMatchMode';
 import SearchTextQueryHelper from '../Helpers/SearchTextQueryHelper';
@@ -48,7 +49,7 @@ declare global {
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/songs"),
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/songs"),
 			{
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,

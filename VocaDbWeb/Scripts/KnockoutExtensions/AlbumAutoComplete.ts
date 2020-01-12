@@ -2,6 +2,7 @@
 import { AlbumAutoCompleteParams } from './AutoCompleteParams';
 import AlbumContract from '../DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import functions from '../Shared/GlobalFunctions';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
 declare global {
@@ -42,7 +43,7 @@ declare global {
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/albums"),
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/albums"),
 			{
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,

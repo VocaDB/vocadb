@@ -5,6 +5,7 @@
 
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryRefContract from '../DataContracts/EntryRefContract';
+import functions from '../Shared/GlobalFunctions';
 
 declare global {
 	interface KnockoutBindingHandlers {
@@ -24,7 +25,7 @@ declare global {
 
 		const whitelistedDomains = ["http://vocadb.net", "https://vocadb.net", "http://utaitedb.net", "https://utaitedb.net", "https://touhoudb.com"];
 		const url = foreignDomain && _.some(whitelistedDomains, domain => _.includes(foreignDomain.toLocaleLowerCase(), domain)) ?
-			vdb.functions.mergeUrls(foreignDomain, relativeUrl) : vdb.functions.mapAbsoluteUrl(relativeUrl);
+			functions.mergeUrls(foreignDomain, relativeUrl) : functions.mapAbsoluteUrl(relativeUrl);
 		const data = _.assign({ id: id }, params);
 
         $(element).qtip({

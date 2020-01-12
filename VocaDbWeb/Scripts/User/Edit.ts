@@ -1,13 +1,14 @@
 
 import ArtistContract from "../DataContracts/Artist/ArtistContract";
 import ContentLanguagePreference from "../Models/Globalization/ContentLanguagePreference";
+import functions from "../Shared/GlobalFunctions";
 import { initEntrySearch } from "../Shared/EntryAutoComplete";
 
 export function initPage() {
 
 	function acceptArtistSelection(artistId, term) {
 
-		if (!vdb.functions.isNullOrWhiteSpace(artistId)) {
+		if (!functions.isNullOrWhiteSpace(artistId)) {
 			$.post("../../User/OwnedArtistForUserEditRow", { artistId: artistId }, artistAdded);
 		}
 

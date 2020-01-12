@@ -2,6 +2,7 @@
 // ~/bundles/shared/common
 export { setLanguagePreferenceCookie } from './Shared/TopBar';
 export { default as ui } from './Shared/MessagesTyped';
+export { default as functions } from './Shared/GlobalFunctions';
 export { default as UrlMapper } from './Shared/UrlMapper';
 import './KnockoutExtensions/StopBinding';
 import './KnockoutExtensions/Show';

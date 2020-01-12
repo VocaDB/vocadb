@@ -6,6 +6,7 @@ import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePr
 import EntryCommentRepository from './EntryCommentRepository';
 import EntryTagMappingContract from '../DataContracts/Tag/EntryTagMappingContract';
 import EntryType from '../Models/EntryType';
+import functions from '../Shared/GlobalFunctions';
 import NameMatchMode from '../Models/NameMatchMode';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
@@ -26,26 +27,26 @@ import UrlMapper from '../Shared/UrlMapper';
 		}
 
 		public create = (name: string, callback?: (result: TagBaseContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags?name=" + name);
+			var url = functions.mergeUrls(this.baseUrl, "/api/tags?name=" + name);
 			$.post(url, callback);
 		}
 
 		public createReport = (tagId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
+			var url = functions.mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
 			$.post(url, callback);
 
 		}
 
 		public getById = (id: number, fields: string, lang: string, callback?: (result: TagApiContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
+			var url = functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
 			$.getJSON(url, { fields: fields || undefined, lang: lang }, callback);
 		}
 
 		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
 
 		public getEntryTypeTag = (entryType: EntryType, subType: string = "") => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/entry-types/" + EntryType[entryType] + "/" + subType + "/tag");
+			var url = functions.mergeUrls(this.baseUrl, "/api/entry-types/" + EntryType[entryType] + "/" + subType + "/tag");
 			return this.getJsonPromise<TagApiContract>(url, { fields: "Description", lang: this.languagePreferenceStr });
 		}
 
@@ -54,7 +55,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 			var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags");
+			var url = functions.mergeUrls(this.baseUrl, "/api/tags");
 			var data = {
 				start: queryParams.start, getTotalCount: queryParams.getTotalCount, maxResults: queryParams.maxResults,
 				query: queryParams.query,
@@ -80,7 +81,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: TagBaseContract[]) => void) => {
 			
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/top");
+			var url = functions.mergeUrls(this.baseUrl, "/api/tags/top");
 			var data = { lang: lang, categoryName: categoryName };
 
 			$.getJSON(url, data, callback);

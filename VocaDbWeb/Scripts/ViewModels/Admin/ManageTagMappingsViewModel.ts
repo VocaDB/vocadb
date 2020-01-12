@@ -1,6 +1,7 @@
 
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import functions from '../../Shared/GlobalFunctions';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagMappingContract from '../../DataContracts/Tag/TagMappingContract';
@@ -47,7 +48,7 @@ import ui from '../../Shared/MessagesTyped';
 		}
 
 		public getTagUrl = (tag: EditTagMappingViewModel) => {
-			return vdb.functions.mapFullUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
+			return functions.mapFullUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		private loadMappings = async () => {

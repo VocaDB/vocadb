@@ -7,6 +7,7 @@ import { ArtistAutoCompleteParams } from '../KnockoutExtensions/AutoCompletePara
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '../Shared/EntryAutoComplete';
+import functions from '../Shared/GlobalFunctions';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
 declare global {
@@ -58,7 +59,7 @@ declare global {
 			termParamName: 'query'
 		};
 
-		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/artists"), params);
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/artists"), params);
 
 	}
 //}

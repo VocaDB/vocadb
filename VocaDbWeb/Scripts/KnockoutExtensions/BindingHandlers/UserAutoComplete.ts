@@ -1,5 +1,6 @@
 
 import { EntryAutoCompleteParams } from '../../Shared/EntryAutoComplete';
+import functions from '../../Shared/GlobalFunctions';
 import { initEntrySearch } from '../../Shared/EntryAutoComplete';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 
@@ -24,7 +25,7 @@ declare global {
 			singleRow: true
 		};
 
-		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/users"), params);
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/users"), params);
 
 	}
 

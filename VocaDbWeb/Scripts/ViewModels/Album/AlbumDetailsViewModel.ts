@@ -13,6 +13,7 @@ import ContentLanguagePreference from '../../Models/Globalization/ContentLanguag
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
 import EntryType from '../../Models/EntryType';
+import functions from '../../Shared/GlobalFunctions';
 import { IEntryReportType } from '../ReportEntryViewModel';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
@@ -49,7 +50,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
         public getUsers = () => {
 
-            $.post(vdb.functions.mapAbsoluteUrl("/Album/UsersWithAlbumInCollection"), { albumId: this.id }, result => {
+			$.post(functions.mapAbsoluteUrl("/Album/UsersWithAlbumInCollection"), { albumId: this.id }, result => {
 
                 this.usersContent(result);
                 $("#userCollectionsPopup").dialog("open");

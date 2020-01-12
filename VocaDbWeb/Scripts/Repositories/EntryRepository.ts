@@ -1,4 +1,5 @@
 
+import functions from '../Shared/GlobalFunctions';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 
 //module vdb.repositories {
@@ -9,7 +10,7 @@ import PagingProperties from '../DataContracts/PagingPropertiesContract';
 
 		// Maps a relative URL to an absolute one.
 		private mapUrl = (relative: string) => {
-			return vdb.functions.mergeUrls(vdb.functions.mergeUrls(this.baseUrl, "/api/entries"), relative);
+			return functions.mergeUrls(functions.mergeUrls(this.baseUrl, "/api/entries"), relative);
 		};
 
 		constructor(private baseUrl: string) {

@@ -13,6 +13,7 @@ import CommentContract from '../DataContracts/CommentContract';
 import { CommonQueryParams } from './BaseRepository';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
+import functions from '../Shared/GlobalFunctions';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
@@ -35,8 +36,8 @@ import UrlMapper from '../Shared/UrlMapper';
 
 			this.urlMapper = new UrlMapper(baseUrl);
 
-            this.mapUrl = (relative) => {
-                return vdb.functions.mergeUrls(baseUrl, "/Album") + relative;
+			this.mapUrl = (relative) => {
+				return functions.mergeUrls(baseUrl, "/Album") + relative;
             };
 
 		}
@@ -49,7 +50,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public createOrUpdateReview(albumId: number, reviewContract: AlbumReviewContract) {
 
-			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
+			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
 			return this.handleJqueryPromise<AlbumReviewContract>($.post(url, reviewContract, null, 'json'));
 
 		}
@@ -69,14 +70,14 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public deleteReview(albumId: number, reviewId: number) {
 
-			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews/" + reviewId);
+			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews/" + reviewId);
 			return this.handleJqueryPromise($.ajax(url, { type: 'DELETE' }));
 
 		}
 
 		public findDuplicate = (params, callback: (result: DuplicateEntryResultContract[]) => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/Album/FindDuplicate");
+			var url = functions.mergeUrls(this.baseUrl, "/Album/FindDuplicate");
 			$.getJSON(url, params, callback);
 
 		};
@@ -89,18 +90,18 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public getForEdit = (id: number, callback: (result: AlbumForEditContract) => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + id + "/for-edit");
+			var url = functions.mergeUrls(this.baseUrl, "/api/albums/" + id + "/for-edit");
 			$.getJSON(url, callback);
 
 		}
 
 		public getOne = (id: number, callback: (result: AlbumContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + id);
+			var url = functions.mergeUrls(this.baseUrl, "/api/albums/" + id);
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);
 		}
 
 		public getOneWithComponents = (id: number, fields: string, languagePreference: string, callback: (result: AlbumForApiContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + id);
+			var url = functions.mergeUrls(this.baseUrl, "/api/albums/" + id);
 			$.getJSON(url, { fields: fields, lang: this.languagePreferenceStr }, callback);
 		}
 
@@ -117,7 +118,7 @@ import UrlMapper from '../Shared/UrlMapper';
 			advancedFilters: AdvancedSearchFilter[],
 			callback: (result: PartialFindResultContract<AlbumContract>) => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums");
+			var url = functions.mergeUrls(this.baseUrl, "/api/albums");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
@@ -139,7 +140,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public async getReviews(albumId: number) {
 
-			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
+			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
 			return await this.getJsonPromise<AlbumReviewContract[]>(url);
 
 		}
@@ -150,7 +151,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public async getUserCollections(albumId: number) {
 
-			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/user-collections");
+			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/user-collections");
 			const jqueryPromise = $.getJSON(url);
 
 			const promise = Promise.resolve(jqueryPromise);

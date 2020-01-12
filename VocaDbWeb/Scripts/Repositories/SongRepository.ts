@@ -13,6 +13,7 @@ import CommentContract from '../DataContracts/CommentContract';
 import { CommonQueryParams } from './BaseRepository';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import CountPerDayContract from '../DataContracts/Aggregate/CountPerDayContract';
+import functions from '../Shared/GlobalFunctions';
 import ICommentRepository from './ICommentRepository';
 import LyricsForSongContract from '../DataContracts/Song/LyricsForSongContract';
 import NewSongCheckResultContract from '../DataContracts/NewSongCheckResultContract';
@@ -68,7 +69,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 	    public getByNames(names: string[], ignoreIds: number[], songTypes?: SongType[]) {
 
-		    const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/by-names");
+			const url = functions.mergeUrls(this.baseUrl, "/api/songs/by-names");
 			const jqueryPromise = $.getJSON(url, { names: names, songTypes: songTypes, lang: this.languagePreferenceStr, ignoreIds: ignoreIds });
 
 		    const promise = Promise.resolve(jqueryPromise);
@@ -84,7 +85,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public getForEdit = (id: number, callback: (result: SongForEditContract) => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/" + id + "/for-edit");
+			var url = functions.mergeUrls(this.baseUrl, "/api/songs/" + id + "/for-edit");
 			$.getJSON(url, callback);
 
 		}
@@ -96,18 +97,18 @@ import UrlMapper from '../Shared/UrlMapper';
         private getJSON: (relative: string, params: any, callback: any) => void;
 
 		public getOneWithComponents = (id: number, fields: string, languagePreference: string, callback?: (result: SongApiContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
+			var url = functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
 			$.getJSON(url, { fields: fields, lang: languagePreference || this.languagePreferenceStr }, callback);
         }
 
 		public getOne = (id: number, callback?: (result: SongContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
+			var url = functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);         
 		}
 
 		public getListByParams(params: SongQueryParams, callback) {
 
-			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs");
+			const url = functions.mergeUrls(this.baseUrl, "/api/songs");
 			const jqueryPromise = $.getJSON(url, params);
 
 			const promise = Promise.resolve(jqueryPromise);
@@ -142,7 +143,7 @@ import UrlMapper from '../Shared/UrlMapper';
 			advancedFilters: AdvancedSearchFilter[],
 			callback) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs");
+			var url = functions.mergeUrls(this.baseUrl, "/api/songs");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
@@ -243,7 +244,7 @@ import UrlMapper from '../Shared/UrlMapper';
             }
 
             this.mapUrl = (relative: string) => {
-				return vdb.functions.mergeUrls(baseUrl, "/Song") + relative;
+				return functions.mergeUrls(baseUrl, "/Song") + relative;
             };
 
             this.post = (relative, params, callback) => {

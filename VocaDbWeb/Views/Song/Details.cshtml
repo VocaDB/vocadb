@@ -462,7 +462,7 @@
 			<div data-bind="with: selectedLyrics">
 				<p data-bind="visible: source || url">
 					(@Res.LyricsFrom
-					<span data-bind="visible: url"><a class="extLink" data-bind="text: source || url, attr: { href: url, onclick: 'vdb.functions.trackOutboundLink(event)' }"></a>)</span>					
+					<span data-bind="visible: url"><a class="extLink" data-bind="text: source || url, attr: { href: url, onclick: 'app.functions.trackOutboundLink(event)' }"></a>)</span>					
 					<span data-bind="visible: !url, text: source + ')'"></span>
 				</p>
 
@@ -589,7 +589,7 @@
 		</a>
 		if (VideoServiceHelper.ShowExternalSiteLink(pv.Service)) {
 			@Html.Raw("&nbsp;")
-			<a href="@pv.Url" onclick="vdb.functions.trackOutboundLink(event)" target="_blank">
+			<a href="@pv.Url" onclick="app.functions.trackOutboundLink(event)" target="_blank">
 				<i class="icon-eye-open"></i>
 				@Res.ViewExternal
 			</a>

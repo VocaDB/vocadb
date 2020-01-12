@@ -2,6 +2,8 @@
 /// <reference path="../../typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
+import functions from "../../Shared/GlobalFunctions";
+
 //module vdb.viewModels {
 
     export default class ViewAuditLogViewModel {
@@ -33,15 +35,15 @@
             this.excludeUsers(data.excludeUsers);
             this.filter(data.filter);
             this.onlyNewUsers(data.onlyNewUsers);
-            this.userName(data.userName);
-            this.filterVisible(!vdb.functions.isNullOrWhiteSpace(data.userName)
-				|| !vdb.functions.isNullOrWhiteSpace(data.excludeUsers)
-				|| !vdb.functions.isNullOrWhiteSpace(data.filter)
+			this.userName(data.userName);
+			this.filterVisible(!functions.isNullOrWhiteSpace(data.userName)
+				|| !functions.isNullOrWhiteSpace(data.excludeUsers)
+				|| !functions.isNullOrWhiteSpace(data.filter)
                 || data.onlyNewUsers);
             
             $("#userNameField").autocomplete({
                 source: (ui, callback) => {
-					var url = vdb.functions.mapAbsoluteUrl("/api/users/names");
+					var url = functions.mapAbsoluteUrl("/api/users/names");
 					$.getJSON(url, { query: ui.term }, callback);
                 },
                 select: (event, ui) => {

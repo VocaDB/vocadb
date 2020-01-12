@@ -1,6 +1,7 @@
 
 import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
 import { EntryAutoCompleteParams } from '../../Shared/EntryAutoComplete';
+import functions from '../../Shared/GlobalFunctions';
 import { initEntrySearch } from '../../Shared/EntryAutoComplete';
 import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
 
@@ -31,7 +32,7 @@ ko.bindingHandlers.releaseEventAutoComplete = {
 			extraQueryParams: queryParams
 		};
 
-		initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/releaseEvents"), params);
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/releaseEvents"), params);
 
 	}
 
