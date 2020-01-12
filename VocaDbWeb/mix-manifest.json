@@ -1,5 +1,5 @@
 {
-    "/bundles/app.js": "/bundles/app.js",
+    "/bundles/App.js": "/bundles/App.js",
     "/bundles/shared/libs.js": "/bundles/shared/libs.js",
     "/bundles/shared/jqui.js": "/bundles/shared/jqui.js",
     "/bundles/VocaDB.js": "/bundles/VocaDB.js",
