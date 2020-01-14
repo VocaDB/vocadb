@@ -1,4 +1,4 @@
-@inherits VocaDb.Web.Code.HelperPage
+﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers;
@@ -16,9 +16,15 @@
 	</div>
 }
 
-@* Transforms Markdown-formatted text into HTML. The input will be sanitized for any HTML tags first. *@
+@*  Transforms Markdown-formatted text into HTML. 
+	The input will be sanitized for any HTML tags first. 
+	Note that markdown parser will always surround the block in <p> tags,
+	and <p> tags are not allowed inside other <p> tags.
+*@
 @helper FormatMarkdown(string text) {
+	<!-- ko stopBinding -->
 	@Html.Raw(MarkdownParser.GetHtml(text))
+	<!-- /ko -->
 }
 
 @helper LanguageFlag(string languageCode) {
