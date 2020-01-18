@@ -24,7 +24,7 @@ mix
 	})
 
 
-	.scripts([
+	/*.scripts([
 		"Scripts/jquery-2.2.1.js",
 		"Scripts/bootstrap.js",
 		//"Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
@@ -37,7 +37,8 @@ mix
 
 	.scripts([
 		"Scripts/jquery-ui-1.10.4.js"
-	], "bundles/shared/jqui.js")
+	], "bundles/shared/jqui.js")*/
+	.js("Scripts/libs.js", "bundles/shared")
 
 	// SHARED BUNDLES
 	// Legacy common scripts - should be phased out

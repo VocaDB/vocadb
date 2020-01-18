@@ -7,7 +7,7 @@
 }
 
 <!-- Common scripts -->
-@LaravelMixHelper.RenderScripts("~/bundles/shared/libs.js", "~/bundles/shared/jqui.js", "~/bundles/VocaDB.js", "~/bundles/shared/common.js", "~/bundles/App.js")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/libs.js"/*, "~/bundles/shared/jqui.js"*/, "~/bundles/VocaDB.js", "~/bundles/shared/common.js", "~/bundles/App.js")
 
 @if (PageProperties.AddMainScripts) {
 	@LaravelMixHelper.RenderScripts("~/bundles/shared/main.js")
