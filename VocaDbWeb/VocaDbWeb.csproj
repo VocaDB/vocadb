@@ -4934,7 +4934,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" />
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Debug npm run dev &amp;&amp; npm run css-dev
-if $(ConfigurationName) == Release npm run prod &amp;&amp; npm run css-prod</PreBuildEvent>
+    <PreBuildEvent>if $(ConfigurationName) == Debug npm run css-dev &amp;&amp; npm run dev
+if $(ConfigurationName) == Release npm run css-prod &amp;&amp; npm run prod</PreBuildEvent>
   </PropertyGroup>
 </Project>
