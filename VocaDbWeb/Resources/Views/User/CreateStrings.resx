@@ -126,6 +126,9 @@
   <data name="DoRegister" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="DuplicateUserWarning" xml:space="preserve">
+    <value>Please keep in mind that making multiple accounts is absolutely forbidden and will result in account termination.</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email address (required)</value>
   </data>

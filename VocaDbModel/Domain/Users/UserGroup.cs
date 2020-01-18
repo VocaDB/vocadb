@@ -51,6 +51,7 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.MoveToTrash, 
 			PermissionToken.RestoreRevisions, 
 			PermissionToken.ViewAuditLog,
+			PermissionToken.ViewHiddenRatings,
 			PermissionToken.UploadMedia
 		);
 

@@ -18,7 +18,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 			this.Date = ratedSong.Date;
 			this.Rating = ratedSong.Rating;
-			if (ratedSong.User.Options.PublicRatings || userPermissionContext.UserGroupId >= UserGroupId.Moderator) {
+			if (ratedSong.User.Options.PublicRatings || userPermissionContext.HasPermission(PermissionToken.ViewHiddenRatings)) {
 				User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
 			}
 

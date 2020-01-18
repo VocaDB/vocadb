@@ -88,6 +88,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please keep in mind that making multiple accounts is absolutely forbidden and will result in account termination..
+        /// </summary>
+        public static string DuplicateUserWarning {
+            get {
+                return ResourceManager.GetString("DuplicateUserWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email address (required).
         /// </summary>
         public static string Email {
