@@ -282,7 +282,7 @@
 	<!-- binding context: WebLinksEditViewModel -->
 	<table>
 		<thead>
-			<tr data-bind="visible: webLinks && webLinks().length">
+			<tr data-bind="visible: items && items().length">
 				<th>
 					@HelperRes.HelperStrings.WebLinkUrlTitle
 					@Helpers.RequiredField()
@@ -294,7 +294,7 @@
 				<th></th>
 			</tr>
 		</thead>
-		<tbody data-bind="foreach: webLinks">
+		<tbody data-bind="foreach: items">
 			<tr>
 				<td><input type="text" data-bind="value: url" maxlength="512" class="input-xlarge" /></td>
 				<td><input type="text" data-bind="value: description" maxlength="512" /></td>

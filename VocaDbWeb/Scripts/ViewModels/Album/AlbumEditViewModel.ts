@@ -484,7 +484,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 			this.validationError_needReferences = ko.computed(() =>
 				_.isEmpty(this.description.original())
-				&& _.isEmpty(this.webLinks.webLinks())
+				&& _.isEmpty(this.webLinks.items())
 				&& _.isEmpty(this.pvs.pvs()));
 
 			this.validationError_needReleaseYear = ko.computed(() => {
