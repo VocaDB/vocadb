@@ -2438,8 +2438,6 @@
     <Content Include="robots.txt" />
     <TypeScriptCompile Include="Scripts\Album\Edit.ts" />
     <TypeScriptCompile Include="Scripts\Artist\Edit.ts" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Artist\EditStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.de.resx" />
@@ -2590,10 +2588,6 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Scripts\jquery-2.2.1.js" />
-    <Content Include="Scripts\jquery-2.2.1.min.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\jquery.tools.min.js" />
     <Content Include="Scripts\jqwidgets27\globalization\globalize.js" />
     <Content Include="Scripts\jqwidgets27\globalization\jquery.glob.cs-CZ.js" />
@@ -2927,8 +2921,6 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Show.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\SlideVisible.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ArtistAutoComplete.ts" />
-    <Content Include="Scripts\knockout-3.4.1.debug.js" />
-    <Content Include="Scripts\knockout-3.4.1.js" />
     <Content Include="Scripts\knockout-sortable.js" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FocusOut.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\EntryToolTip.ts" />
@@ -2940,14 +2932,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Song\SongTypeLabel.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Sortable.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\StopBinding.ts" />
-    <Content Include="Scripts\knockout.punches.min.js" />
     <Content Include="Scripts\Libraries\qunit-1.19.0.js" />
-    <Content Include="Scripts\lodash.core.js" />
-    <Content Include="Scripts\lodash.core.min.js" />
-    <Content Include="Scripts\lodash.js" />
-    <Content Include="Scripts\lodash.min.js" />
-    <Content Include="Scripts\marked.js" />
-    <Content Include="Scripts\marked.min.js" />
     <Content Include="Scripts\MediaElement\mediaelement.min.js" />
     <Content Include="Scripts\MediaElement\mediaelementplayer.min.css" />
     <TypeScriptCompile Include="Scripts\MikuDbAlbums\PrepareForImport.ts" />
@@ -3128,7 +3113,6 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\page.js" />
-    <Content Include="Scripts\qTip\jquery.qtip.js" />
     <TypeScriptCompile Include="Scripts\SongList\Edit.ts" />
     <TypeScriptCompile Include="Scripts\Song\Details.ts" />
     <TypeScriptCompile Include="Scripts\Song\Edit.ts" />
@@ -3384,6 +3368,7 @@
     <Folder Include="Resources\Views\Help\" />
     <Folder Include="Scripts\Admin\" />
     <Folder Include="Scripts\KnockoutExtensions\Album\" />
+    <Folder Include="Scripts\qTip\" />
     <Folder Include="Views\Integration\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
     <Folder Include="Views\Shared\KnockoutTemplates\" />
@@ -3505,7 +3490,6 @@
     <Content Include="Views\Discussion\Partials\_ViewTopic.cshtml" />
     <Content Include="Views\Discussion\Partials\_EditTopic.cshtml" />
     <Content Include="Views\Discussion\Partials\_ViewFolders.cshtml" />
-    <Content Include="Scripts\jquery-2.2.1.min.map" />
     <Content Include="Views\Error\IPForbidden.cshtml" />
     <Content Include="Views\Admin\ManageTagMappings.cshtml" />
     <Content Include="Views\Admin\ActiveEdits.cshtml" />
