@@ -40,7 +40,10 @@ namespace VocaDb.Web.Code.Markdown {
 		/// Transforms a block of text with Markdown. The input will be sanitized. The result will be cached.
 		/// </summary>
 		/// <param name="markdownText">Markdown text to be transformed. HTML will be encoded.</param>
-		/// <returns>Markdown-transformed text. This will include HTML.</returns>
+		/// <returns>
+		/// Markdown-transformed text. This will include HTML. 
+		/// The block is usually surrounded by "p" tags.
+		/// </returns>
 		public string GetHtml(string markdownText) {
 			
 			if (string.IsNullOrEmpty(markdownText))
