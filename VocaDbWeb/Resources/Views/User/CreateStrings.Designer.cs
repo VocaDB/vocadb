@@ -88,7 +88,7 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please note that making multiple accounts is absolutely forbidden and will result in account termination. If you forget your password, reset it or contact a staff member..
+        ///   Looks up a localized string similar to Please note that making multiple accounts in order to boost ratings is forbidden and will result in account termination. If you forget your password, reset it or contact a staff member..
         /// </summary>
         public static string DuplicateUserWarning {
             get {

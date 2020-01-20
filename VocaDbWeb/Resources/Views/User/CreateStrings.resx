@@ -127,7 +127,7 @@
     <value>Register</value>
   </data>
   <data name="DuplicateUserWarning" xml:space="preserve">
-    <value>Please note that making multiple accounts is absolutely forbidden and will result in account termination. If you forget your password, reset it or contact a staff member.</value>
+    <value>Please note that making multiple accounts in order to boost ratings is forbidden and will result in account termination. If you forget your password, reset it or contact a staff member.</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email address (required)</value>
