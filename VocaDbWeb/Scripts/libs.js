@@ -28,4 +28,4 @@ window._ = require('lodash');
 
 require('qtip2');
 
-require('marked');
+window.marked = require('marked');

@@ -21,7 +21,6 @@ mix
 		processCssUrls: false
 	})
 	.setPublicPath('./')
-	.version()
 
 
 	// Base CSS
@@ -34,3 +33,7 @@ mix
 		"Scripts/jqwidgets27/styles/jqx.base.css"
 	], "Scripts/jqwidgets27/styles/css.css");
 
+
+if (mix.inProduction()) {
+	mix.version();
+}

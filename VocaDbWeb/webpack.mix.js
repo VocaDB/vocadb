@@ -16,7 +16,6 @@ require('laravel-mix-merge-manifest');
 mix
 	.mergeManifest()
 	.setPublicPath('./')
-	.version()
 	.webpackConfig({
 		output: {
 			library: 'app'
@@ -180,7 +179,16 @@ mix
 
 	.scripts([
 		"Scripts/soundcloud-api.js"	// REVIEW
-	], "bundles/User/RatedSongs.js")
+	], "bundles/User/RatedSongs.js");
 
 
-	// TODO
+if (mix.inProduction()) {
+	mix.scripts([], "bundles/tests.js");
+} else {
+	mix.ts("Scripts/tests.ts", "bundles");
+}
+
+
+if (mix.inProduction()) {
+	mix.version();
+}
