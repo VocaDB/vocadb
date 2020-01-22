@@ -1,4 +1,4 @@
-@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Album;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract>
 
@@ -43,8 +43,6 @@
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 
 @section BodyScripts {
-	<script src="@Url.Content("~/Scripts/Repositories/AlbumRepository.js")"></script>
-	<script src="@Url.Content("~/Scripts/ViewModels/Album/ArchivedAlbumViewModel.js")"></script>
     <script type="text/javascript">
 
 		$(function () {
