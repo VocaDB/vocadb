@@ -133,6 +133,7 @@ namespace VocaDb.Web.Controllers.Api {
 				TextQuery = textQuery,
 				FeaturedCategory = featuredCategory,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				SortRule = sort,
 				TagIds = tagId,
 				ChildTags = childTags
 			};
