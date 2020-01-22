@@ -182,7 +182,11 @@ mix
 	], "bundles/User/RatedSongs.js");
 
 
-// TODO
+if (mix.inProduction()) {
+	mix.scripts([], "bundles/tests.js");
+} else {
+	mix.ts("Scripts/tests.ts", "bundles");
+}
 
 
 if (mix.inProduction()) {

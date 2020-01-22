@@ -2975,6 +2975,7 @@
     <TypeScriptCompile Include="Scripts\Shared\Routing\ObservableUrlParamRouter.ts" />
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />
+    <TypeScriptCompile Include="Scripts\tests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\AjaxHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\DateTimeHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\EntryMergeValidationHelperTests.ts" />
