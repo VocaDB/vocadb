@@ -1,4 +1,4 @@
-﻿using System.Web.Http;
+using System.Web.Http;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Globalization;
@@ -64,6 +64,14 @@ namespace VocaDb.Web.Controllers.Api {
 			return queries.FindSeries(s => new ReleaseEventSeriesContract(s, lang), SearchTextQuery.Create(query, nameMatchMode), 
 				new PagingProperties(start, maxResults, getTotalCount));
 
+		}
+
+		[Route("{id:int}")]
+		public ReleaseEventSeriesForApiContract GetOne(
+			int id,
+			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+			return queries.GetOneSeries(id, lang, fields);
 		}
 
 	}
