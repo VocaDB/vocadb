@@ -18,6 +18,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			Id = series.Id;
 			Name = series.TranslatedName[languagePreference];
 			Status = series.Status;
+			UrlSlug = series.UrlSlug;
 			Version = series.Version;
 
 			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.AdditionalNames)) {
@@ -29,7 +30,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			}
 
 			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Events)) {
-				Events = series.Events.Select(e => new ReleaseEventContract(e, languagePreference)).ToArray();
+				Events = series.Events.Select(e => new ReleaseEventForApiContract(e, languagePreference, ReleaseEventOptionalFields.None, thumbPersister)).ToArray();
 			}
 
 			if (thumbPersister != null && fields.HasFlag(ReleaseEventSeriesOptionalFields.MainPicture)) {
@@ -58,8 +59,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }
 
-		[DataMember]
-		public ReleaseEventContract[] Events { get; set; }
+		[DataMember(EmitDefaultValue = false)]
+		public ReleaseEventForApiContract[] Events { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -80,9 +81,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public EntryStatus Status { get; set; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public string UrlSlug { get; set; }
 
 		[DataMember]
+		public int Version { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
 
 	}
