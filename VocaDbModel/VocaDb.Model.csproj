@@ -185,6 +185,7 @@
     <Compile Include="DataContracts\ReleaseEvents\ComparedEventSeriesContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForEditContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventSeriesForApiContract.cs" />
     <Compile Include="DataContracts\SongImport\PartialImportedSongs.cs" />
     <Compile Include="DataContracts\SongLists\SongListDetailsContract.cs" />
     <Compile Include="DataContracts\SongLists\SongListForApiContract.cs" />

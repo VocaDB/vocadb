@@ -129,7 +129,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public string SeriesSuffix { get; set; }
 
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public SongListBaseContract SongList { get; set; }
 
 		[DataMember]
@@ -144,7 +144,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public int Version { get; set; }
 
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
 
 	}

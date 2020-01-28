@@ -236,6 +236,10 @@ namespace VocaDb.Model.Database.Queries {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
 		}
 
+		public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields) {
+			return repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, imagePersister));
+		}
+
 		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {
 
 			return HandleQuery(session =>
