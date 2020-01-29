@@ -265,7 +265,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			int count;
 			int[] ids;
 			var exactResults = exactQ
-				.OrderBy(sortRule, LanguagePreference, queryParams.TagIds.FirstOrDefault())
+				.OrderBy(sortRule, LanguagePreference, queryParams.TagIds?.FirstOrDefault() ?? 0)
 				.Select(s => s.Id)
 				.Take(maxResults)
 				.ToArray();
@@ -309,7 +309,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			var query = CreateQuery(queryParams, parsedQuery);
 
 			var ids = query
-				.OrderBy(queryParams.SortRule, LanguagePreference, queryParams.TagIds.FirstOrDefault())
+				.OrderBy(queryParams.SortRule, LanguagePreference, queryParams.TagIds?.FirstOrDefault() ?? 0)
 				.Select(s => s.Id)
 				.Paged(queryParams.Paging)
 				.ToArray();
