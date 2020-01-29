@@ -123,6 +123,11 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		public TimeSpan TimeFilter { get; set; }
 
 		/// <summary>
+		/// When searching by entry type, search also by associated tag and vice versa.
+		/// </summary>
+		public bool UnifyEntryTypesAndTags { get; set; }
+
+		/// <summary>
 		/// Filter to include only songs rated by the specified user.
 		/// 0 = no filtering (default).
 		/// </summary>

@@ -83,6 +83,7 @@ module vdb.viewModels.search {
 			this.since.subscribe(this.updateResultsWithTotalCount);
 			this.songType.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithTotalCount);
+			this.unifyEntryTypesAndTags.subscribe(this.updateResultsWithTotalCount);
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
@@ -91,6 +92,7 @@ module vdb.viewModels.search {
 				this.afterDate,
                 this.beforeDate,
 				this.tagIds, this.childTags,
+				this.unifyEntryTypesAndTags,
 				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus,
 				this.artistFilters.childVoicebanks,
 				this.artistFilters.includeMembers,
@@ -118,6 +120,7 @@ module vdb.viewModels.search {
                         this.beforeDate(),
 						tag,
 						childTags,
+						this.unifyEntryTypesAndTags(),
 						this.artistFilters.artistIds(),
 						this.artistFilters.artistParticipationStatus(),
 						this.artistFilters.childVoicebanks(),
@@ -168,9 +171,10 @@ module vdb.viewModels.search {
 		private pvServiceIcons: vdb.models.PVServiceIcons;
 		private resourceManager: cls.ResourcesManager;
 		public since: KnockoutObservable<number>;
-		public songType = ko.observable("Unspecified");
+		public songType = ko.observable(cls.songs.SongType[cls.songs.SongType.Unspecified]);
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
+		public unifyEntryTypesAndTags = ko.observable(false);
 		public viewMode: KnockoutObservable<string>;
 
         // Remember, JavaScript months start from 0 (who came up with that??)
@@ -185,6 +189,10 @@ module vdb.viewModels.search {
 		}
 
 		public showTags: KnockoutObservable<boolean>;
+
+		public showUnifyEntryTypesAndTags = ko.computed(() =>
+			this.songType() !== cls.songs.SongType[cls.songs.SongType.Unspecified]
+				&& this.songType() !== cls.songs.SongType[cls.songs.SongType.Original]);
 
 	}
 

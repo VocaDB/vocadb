@@ -833,6 +833,7 @@
     <Compile Include="Service\Helpers\EntryReportNotifier.cs" />
     <Compile Include="Service\Helpers\FollowedTagNotifier.cs" />
     <Compile Include="Service\LogicalGrouping.cs" />
+    <Compile Include="Service\MaybeOrderedQueryable.cs" />
     <Compile Include="Service\NameMatchMode.cs" />
     <Compile Include="Service\PredicateBuilder.cs" />
     <Compile Include="Service\QueriesBase.cs" />
@@ -847,6 +848,7 @@
     <Compile Include="Service\QueryableExtenders\ArtistLinkWithRolesQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\ArtistParticipationQueryParams.cs" />
     <Compile Include="Service\QueryableExtenders\EntryReportQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\EntryTypeToTagMappingQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithArtistsQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithLinksQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithNamesQueryableExtender.cs" />
@@ -939,6 +941,7 @@
     <Compile Include="Service\Search\Artists\ArtistSearchTextQuery.cs" />
     <Compile Include="Service\Search\Artists\ParsedArtistQuery.cs" />
     <Compile Include="Service\Search\EntryIdsCollection.cs" />
+    <Compile Include="Service\Search\EntryTypeAndTagCollection.cs" />
     <Compile Include="Service\Search\Events\EventQueryParams.cs" />
     <Compile Include="Service\Search\QueryProcessor.cs" />
     <Compile Include="Service\Search\ReleaseEventSearch.cs" />

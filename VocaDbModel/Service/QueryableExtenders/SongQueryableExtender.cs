@@ -15,14 +15,15 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 	public static class SongQueryableExtender {
 
-		public static IQueryable<Song> OrderByPublishDate(this IQueryable<Song> criteria, SortDirection direction) {
+		public static IOrderedQueryable<Song> OrderByPublishDate(this IQueryable<Song> criteria, SortDirection direction) {
 
 			return criteria.OrderBy(a => a.PublishDate, direction)
 				.ThenBy(a => a.CreateDate, direction);
 
 		}
 
-		public static IQueryable<Song> OrderBy(this IQueryable<Song> query, SongSortRule sortRule, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+		public static IQueryable<Song> OrderBy(this IQueryable<Song> query, SongSortRule sortRule, 
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, int tagId = 0) {
 			
 			switch (sortRule) {
 				case SongSortRule.Name:
@@ -35,6 +36,8 @@ namespace VocaDb.Model.Service.QueryableExtenders
 					return query.OrderByPublishDate(SortDirection.Descending);
 				case SongSortRule.RatingScore:
 					return query.OrderByDescending(a => a.RatingScore);
+				case SongSortRule.TagUsageCount:
+					return query.OrderByTagUsage(tagId);
 			}
 
 			return query;
@@ -55,6 +58,10 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 			return query;
 
+		}
+
+		public static IMaybeOrderedQueryable<Song> OrderByTagUsage(this IQueryable<Song> query, int tagId) {
+			return query.OrderByTagUsage<Song, SongTagUsage>(tagId);
 		}
 
 		public static IQueryable<Song> WhereArtistHasTag(this IQueryable<Song> query, string tagName) {
@@ -276,6 +283,16 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				return query;
 
 			return query.Where(m => songTypes.Contains(m.SongType));
+
+		}
+
+		public static IQueryable<Song> WhereHasTypeOrTag(this IQueryable<Song> query, EntryTypeAndTagCollection<SongType> entryTypeAndTagCollection) {
+
+			if (entryTypeAndTagCollection == null || entryTypeAndTagCollection.IsEmpty)
+				return query;
+
+			return query.Where(song => entryTypeAndTagCollection.SubTypes.Contains(song.SongType) 
+				|| song.Tags.Usages.Any(u => entryTypeAndTagCollection.TagIds.Contains(u.Tag.Id)));
 
 		}
 

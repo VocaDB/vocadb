@@ -147,6 +147,7 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<SongSortRule> SongSortRuleNames =
 			new TranslateableEnum<SongSortRule>(() => global::Resources.SongSortRuleNames.ResourceManager, new[] {
 				SongSortRule.Name, SongSortRule.AdditionDate, SongSortRule.PublishDate, SongSortRule.RatingScore, SongSortRule.FavoritedTimes,
+				SongSortRule.TagUsageCount
 			});
 
 		public static readonly DerivedTranslateableEnum<RatedSongForUserSortRule, SongSortRule> RatedSongForUserSortRuleNames =

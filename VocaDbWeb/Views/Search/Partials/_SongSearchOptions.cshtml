@@ -10,7 +10,15 @@
 	<div class="control-group">
 		<div class="control-label">@Res.SongType</div>
 		<div class="controls">
-			@SongHelpers.SongTypesDropdownKnockout("songType")
+			<div class="control-group">
+				@SongHelpers.SongTypesDropdownKnockout("songType")
+			</div>
+			<div class="control-group" data-bind="visible: showUnifyEntryTypesAndTags">
+				<label class="checkbox" >
+					<input type="checkbox" data-bind="checked: unifyEntryTypesAndTags" />
+					Also search associated tag
+				</label>
+			</div>
 		</div>
 	</div>
 
