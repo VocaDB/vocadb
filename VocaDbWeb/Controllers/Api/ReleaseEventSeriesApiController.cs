@@ -66,6 +66,9 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets single event series by ID.
+		/// </summary>
 		[Route("{id:int}")]
 		public ReleaseEventSeriesForApiContract GetOne(
 			int id,
