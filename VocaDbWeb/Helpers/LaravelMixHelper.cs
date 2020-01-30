@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,9 +15,7 @@ namespace VocaDb.Web.Helpers {
 			var manifestPath = HttpContext.Current.Server.MapPath("~/mix-manifest.json");
 			var json = File.ReadAllText(manifestPath);
 			var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-
-			return dict[path];
-
+			return dict.TryGetValue(path, out var ret) ? ret : throw new Exception($"Unable to locate Mix file: {path}");
 		}
 
 		private static string GetPath(string virtualPath) => VirtualPathUtility.ToAbsolute(virtualPath);
