@@ -167,6 +167,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public PartialFindResult<ReleaseEventSeriesForApiContract> FindSeries(SearchTextQuery textQuery, PagingProperties paging,
+			ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None) {
+			return FindSeries(s => new ReleaseEventSeriesForApiContract(s, lang, fields, imagePersister), textQuery, paging);
+		}
+
 		public PartialFindResult<TResult> FindSeries<TResult>(Func<ReleaseEventSeries, TResult> fac, 
 			SearchTextQuery textQuery, PagingProperties paging) {
 

@@ -48,6 +48,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a page of event series.
 		/// </summary>
 		/// <param name="query">Text query.</param>
+		/// <param name="fields">Optional fields to include.</param>
 		/// <param name="start">First item to be retrieved (optional).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional).</param>
@@ -55,14 +56,15 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of event series.</returns>
 		[Route("")]
-		public PartialFindResult<ReleaseEventSeriesContract> GetList(
+		public PartialFindResult<ReleaseEventSeriesForApiContract> GetList(
 			string query = "", 
+			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.FindSeries(s => new ReleaseEventSeriesContract(s, lang), SearchTextQuery.Create(query, nameMatchMode), 
-				new PagingProperties(start, maxResults, getTotalCount));
+			return queries.FindSeries(SearchTextQuery.Create(query, nameMatchMode), 
+				new PagingProperties(start, maxResults, getTotalCount), lang, fields);
 
 		}
 

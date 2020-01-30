@@ -1,7 +1,7 @@
 
 namespace vdb.dataContracts {
 
-	export interface EventSeriesContract extends models.IEntryWithIdAndName {
+	export interface ReleaseEventSeriesForApiContract {
 
 		category: string;
 

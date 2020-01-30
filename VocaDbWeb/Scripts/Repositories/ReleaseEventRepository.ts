@@ -62,7 +62,7 @@ module vdb.repositories {
 			$.getJSON(url, { }, result => callback(result && result.items && result.items.length ? result.items[0] : null));
 		}
 
-		public getSeriesList = (query: string, nameMatchMode: models.NameMatchMode, maxResults: number, callback?: (result: dc.PartialFindResultContract<dc.EventSeriesContract>) => void) => {
+		public getSeriesList = (query: string, nameMatchMode: models.NameMatchMode, maxResults: number, callback?: (result: dc.PartialFindResultContract<dc.ReleaseEventSeriesForApiContract>) => void) => {
 
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEventSeries");
 			var data = {

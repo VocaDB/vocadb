@@ -2473,6 +2473,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ArtistForEventContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\EventSeriesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ReleaseEventContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ReleaseEventSeriesForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ResourcesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\SongList\ImportedSongInListContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\SongList\ImportedSongListContract.ts" />
