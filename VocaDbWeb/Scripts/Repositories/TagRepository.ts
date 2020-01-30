@@ -66,10 +66,10 @@ module vdb.repositories {
 			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/mappings"), paging);
 		}
 
-		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: dc.TagBaseContract[]) => void) => {
+		public getTopTags = (lang: string, categoryName?: string, entryType?: cls.EntryType, callback?: (tags: dc.TagBaseContract[]) => void) => {
 			
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/top");
-			var data = { lang: lang, categoryName: categoryName };
+			var data = { lang: lang, categoryName: categoryName, entryType: entryType || undefined };
 
 			$.getJSON(url, data, callback);
 
