@@ -8,10 +8,13 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
+	/// <summary>
+	/// Extensions for <see cref="IQueryable{Tag}"/>.
+	/// </summary>
 	public static class TagQueryableExtender {
 
 		/// <summary>
-		/// Order by <see cref="TagSortRule"/>.
+		/// Order query by <see cref="TagSortRule"/>.
 		/// </summary>
 		public static IQueryable<Tag> OrderBy(this IQueryable<Tag> query, TagSortRule sortRule, ContentLanguagePreference languagePreference) {
 
@@ -29,7 +32,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 		/// <summary>
-		/// Order by <see cref="EntrySortRule"/>.
+		/// Order query by <see cref="EntrySortRule"/>.
 		/// </summary>
 		public static IQueryable<Tag> OrderBy(
 			this IQueryable<Tag> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) {
@@ -45,6 +48,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		/// <summary>
+		/// Order query by usages of specific entry type.
+		/// </summary>
 		public static IQueryable<Tag> OrderByUsageCount(this IQueryable<Tag> query, EntryType? usageType) {
 
 			Expression<Func<Tag, int>> sortExpression;
