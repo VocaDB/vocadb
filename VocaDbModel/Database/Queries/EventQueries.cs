@@ -167,6 +167,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public PartialFindResult<ReleaseEventSeriesForApiContract> FindSeries(SearchTextQuery textQuery, PagingProperties paging,
+			ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None) {
+			return FindSeries(s => new ReleaseEventSeriesForApiContract(s, lang, fields, imagePersister), textQuery, paging);
+		}
+
 		public PartialFindResult<TResult> FindSeries<TResult>(Func<ReleaseEventSeries, TResult> fac, 
 			SearchTextQuery textQuery, PagingProperties paging) {
 
@@ -234,6 +239,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields) {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
+		}
+
+		public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields) {
+			return repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, imagePersister));
 		}
 
 		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {

@@ -1,10 +1,22 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
 	public static class EntryWithTagsQueryableExtender {
+
+		public static IMaybeOrderedQueryable<TEntry> OrderByTagUsage<TEntry, TTagLink>(this IQueryable<TEntry> query, int tagId)
+			where TEntry : IEntryWithTags<TTagLink> 
+			where TTagLink : TagUsage {
+
+			if (tagId != 0) {
+				return MaybeOrderedQueryable.Create(query.OrderByDescending(e => e.Tags.Usages.Where(u => u.Tag.Id == tagId).Sum(u => u.Count)));
+			}
+
+			return MaybeOrderedQueryable.Create(query);
+
+		}
 
 		public static IQueryable<TEntry> WhereHasTag<TEntry, TTagLink>(this IQueryable<TEntry> query, string tagName) 
 			where TEntry : IEntryWithTags<TTagLink> where TTagLink : TagUsage {

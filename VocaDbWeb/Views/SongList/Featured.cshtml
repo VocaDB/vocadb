@@ -22,7 +22,7 @@
 <div id="tabs" class="js-cloak" data-bind="show">
 	<ul>
 		@foreach (var cat in categories) {
-			<li><a href="@("#" + cat.Id + "Tab")" data-bind="click: function() { initCategory('@cat.Id'); }">@cat.Name</a></li>
+			<li><a href="@("#" + cat.Id + "Tab")">@cat.Name</a></li>
 		}
 	</ul>	
 

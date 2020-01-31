@@ -1,4 +1,4 @@
-@using R = ViewRes.User.CreateStrings;
+﻿@using R = ViewRes.User.CreateStrings;
 
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.RegisterModel>
 
@@ -85,6 +85,9 @@
 				</div>
 				<div class="alert alert-info">
 					@R.TwitterNote
+				</div>
+				<div class="alert alert-info">
+					@R.DuplicateUserWarning
 				</div>
 			</div>
 		</div>

@@ -79,10 +79,10 @@ import UrlMapper from '../Shared/UrlMapper';
 			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/mappings"), paging);
 		}
 
-		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: TagBaseContract[]) => void) => {
+		public getTopTags = (lang: string, categoryName?: string, entryType?: EntryType, callback?: (tags: TagBaseContract[]) => void) => {
 			
 			var url = functions.mergeUrls(this.baseUrl, "/api/tags/top");
-			var data = { lang: lang, categoryName: categoryName };
+			var data = { lang: lang, categoryName: categoryName, entryType: entryType || undefined };
 
 			$.getJSON(url, data, callback);
 

@@ -148,7 +148,7 @@ import UserRepository from '../../Repositories/UserRepository';
 				this.updateResults();
 			});
 
-			tagRepo.getTopTags(languageSelection, Tag.commonCategory_Genres, result => {
+			tagRepo.getTopTags(languageSelection, Tag.commonCategory_Genres, null, result => {
 				this.genreTags(result);
 			});
 

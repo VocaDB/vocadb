@@ -347,5 +347,14 @@ namespace Resources {
                 return ResourceManager.GetString("ViewAuditLog", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View hidden ratings.
+        /// </summary>
+        internal static string ViewHiddenRatings {
+            get {
+                return ResourceManager.GetString("ViewHiddenRatings", resourceCulture);
+            }
+        }
     }
 }

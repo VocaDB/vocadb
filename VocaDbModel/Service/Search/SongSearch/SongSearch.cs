@@ -33,6 +33,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			textQuery = ProcessAdvancedSearch(textQuery, queryParams);
 
+			var typesAndTags = ProcessUnifiedTypesAndTags(queryParams);
+
 			var query = Query<Song>()
 				.WhereNotDeleted()
 				.WhereHasName(textQuery)
@@ -43,6 +45,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
 				.WhereHasTags(queryParams.Tags)
 				.WhereHasTag(parsedQuery.TagName)
+				.WhereHasTypeOrTag(typesAndTags)
 				.WhereArtistHasTag(parsedQuery.ArtistTag)
 				.WhereArtistHasType(parsedQuery.ArtistType)
 				.WhereHasNicoId(parsedQuery.NicoId)
@@ -68,6 +71,20 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		private SearchWord GetTerm(string query, params string[] testTerms) {
 
 			return SearchWord.GetTerm(query, testTerms);
+
+		}
+
+		private EntryTypeAndTagCollection<SongType> ProcessUnifiedTypesAndTags(SongQueryParams queryParams) {
+
+			EntryTypeAndTagCollection<SongType> typesAndTags = null;
+
+			if (queryParams.UnifyEntryTypesAndTags) {
+				typesAndTags = EntryTypeAndTagCollection<SongType>.Create(EntryType.Song, queryParams.SongTypes, queryParams.TagIds, querySource);
+				queryParams.TagIds = queryParams.TagIds.Except(typesAndTags.TagIds).ToArray();
+				queryParams.SongTypes = queryParams.SongTypes.Except(typesAndTags.SubTypes).ToArray();
+			}
+
+			return typesAndTags;
 
 		}
 
@@ -248,7 +265,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			int count;
 			int[] ids;
 			var exactResults = exactQ
-				.OrderBy(sortRule, LanguagePreference)
+				.OrderBy(sortRule, LanguagePreference, queryParams.TagIds?.FirstOrDefault() ?? 0)
 				.Select(s => s.Id)
 				.Take(maxResults)
 				.ToArray();
@@ -263,7 +280,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				var directQ = CreateQuery(queryParams, parsedQuery);
 
 				var direct = directQ
-					.OrderBy(sortRule, LanguagePreference)
+					.OrderBy(sortRule, LanguagePreference, queryParams.TagIds.FirstOrDefault())
 					.Select(s => s.Id)
 					.Take(maxResults)
 					.ToArray();
@@ -292,7 +309,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			var query = CreateQuery(queryParams, parsedQuery);
 
 			var ids = query
-				.OrderBy(queryParams.SortRule, LanguagePreference)
+				.OrderBy(queryParams.SortRule, LanguagePreference, queryParams.TagIds?.FirstOrDefault() ?? 0)
 				.Select(s => s.Id)
 				.Paged(queryParams.Paging)
 				.ToArray();

@@ -102,6 +102,7 @@ import UserRepository from '../../Repositories/UserRepository';
 			this.since.subscribe(this.updateResultsWithTotalCount);
 			this.songType.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithTotalCount);
+			this.unifyEntryTypesAndTags.subscribe(this.updateResultsWithTotalCount);
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
@@ -110,6 +111,7 @@ import UserRepository from '../../Repositories/UserRepository';
 				this.afterDate,
                 this.beforeDate,
 				this.tagIds, this.childTags,
+				this.unifyEntryTypesAndTags,
 				this.artistFilters.artistIds, this.artistFilters.artistParticipationStatus,
 				this.artistFilters.childVoicebanks,
 				this.artistFilters.includeMembers,
@@ -137,6 +139,7 @@ import UserRepository from '../../Repositories/UserRepository';
                         this.beforeDate(),
 						tag,
 						childTags,
+						this.unifyEntryTypesAndTags(),
 						this.artistFilters.artistIds(),
 						this.artistFilters.artistParticipationStatus(),
 						this.artistFilters.childVoicebanks(),
@@ -187,9 +190,10 @@ import UserRepository from '../../Repositories/UserRepository';
 		private pvServiceIcons: PVServiceIcons;
 		private resourceManager: ResourcesManager;
 		public since: KnockoutObservable<number>;
-		public songType = ko.observable("Unspecified");
+		public songType = ko.observable(SongType[SongType.Unspecified]);
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
+		public unifyEntryTypesAndTags = ko.observable(false);
 		public viewMode: KnockoutObservable<string>;
 
         // Remember, JavaScript months start from 0 (who came up with that??)
@@ -204,6 +208,10 @@ import UserRepository from '../../Repositories/UserRepository';
 		}
 
 		public showTags: KnockoutObservable<boolean>;
+
+		public showUnifyEntryTypesAndTags = ko.computed(() =>
+			this.songType() !== SongType[SongType.Unspecified]
+				&& this.songType() !== SongType[SongType.Original]);
 
 	}
 

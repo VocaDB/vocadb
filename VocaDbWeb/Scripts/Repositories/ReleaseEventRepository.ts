@@ -2,11 +2,11 @@
 import AjaxHelper from '../Helpers/AjaxHelper';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
-import EventSeriesContract from '../DataContracts/ReleaseEvents/EventSeriesContract';
 import functions from '../Shared/GlobalFunctions';
 import NameMatchMode from '../Models/NameMatchMode';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventSeriesForApiContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
 
 //module vdb.repositories {
@@ -69,7 +69,7 @@ import UrlMapper from '../Shared/UrlMapper';
 			$.getJSON(url, { }, result => callback(result && result.items && result.items.length ? result.items[0] : null));
 		}
 
-		public getSeriesList = (query: string, nameMatchMode: NameMatchMode, maxResults: number, callback?: (result: PartialFindResultContract<EventSeriesContract>) => void) => {
+		public getSeriesList = (query: string, nameMatchMode: NameMatchMode, maxResults: number, callback?: (result: PartialFindResultContract<ReleaseEventSeriesForApiContract>) => void) => {
 
 			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEventSeries");
 			var data = {

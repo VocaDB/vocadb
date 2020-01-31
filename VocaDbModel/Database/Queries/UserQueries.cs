@@ -621,9 +621,11 @@ namespace VocaDb.Model.Database.Queries {
 		/// Staff members cannot be cleared.
 		/// </summary>
 		/// <param name="id">User Id.</param>
-		public void ClearRatings(int id) {
-			
+		public void ClearRatings(int id, EntryTypes? entryTypes = null) {			
+
 			PermissionContext.VerifyPermission(PermissionToken.DisableUsers);
+
+			var entryTypeFlags = entryTypes ?? EnumVal<EntryTypes>.All;
 
 			repository.HandleTransaction(ctx => {
 				
@@ -634,21 +636,21 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.AuditLog(string.Format("clearing ratings by {0}", user));
 
-				while (user.AllAlbums.Any()) {
+				while (entryTypeFlags.HasFlag(EntryTypes.Album) && user.AllAlbums.Any()) {
 					var albumLink = user.AllAlbums[0];
 					albumLink.Delete();		
 					ctx.Delete(albumLink);
 					ctx.Update(albumLink.Album); // Update album ratings
 				}
 
-				while (user.FavoriteSongs.Any()) {
+				while (entryTypeFlags.HasFlag(EntryTypes.Song) && user.FavoriteSongs.Any()) {
 					var songLink = user.FavoriteSongs[0];
 					songLink.Delete();
 					ctx.Delete(songLink);
 					ctx.Update(songLink.Song); // Update song ratings
 				}
 
-				while (user.AllArtists.Any()) {
+				while (entryTypeFlags.HasFlag(EntryTypes.Artist) && user.AllArtists.Any()) {
 					var artistLink = user.AllArtists[0];
 					ctx.Delete(artistLink);
 					artistLink.Delete();
