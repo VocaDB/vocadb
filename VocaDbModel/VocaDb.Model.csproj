@@ -63,10 +63,11 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=5.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.5.2.5\lib\net461\NHibernate.dll</HintPath>
+      <HintPath>..\packages\NHibernate.5.2.7\lib\net461\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.Caches.SysCache2, Version=5.5.0.0, Culture=neutral, PublicKeyToken=6876f2ea66c9f443, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.Caches.SysCache2.5.5.1\lib\net461\NHibernate.Caches.SysCache2.dll</HintPath>
+    <Reference Include="NHibernate.Caches.SysCache2, Version=5.6.0.0, Culture=neutral, PublicKeyToken=6876f2ea66c9f443, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.Caches.SysCache2.5.6.0\lib\net461\NHibernate.Caches.SysCache2.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NicoApiClient, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NicoApiClient.1.0.1\lib\netstandard2.0\NicoApiClient.dll</HintPath>
