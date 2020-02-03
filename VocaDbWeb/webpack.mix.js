@@ -74,6 +74,8 @@ mix
 	], "bundles/ActivityEntry/Index.js")
 
 
+	// HACK: this produces an empty file called Create.js to prevent 404 errors.
+	// TODO: these scripts commands must be removed along with the corresponding RenderScripts in .cshtml files.
 	.scripts([
 	], "bundles/Album/Create.js")
 
