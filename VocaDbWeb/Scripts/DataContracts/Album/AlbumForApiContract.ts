@@ -1,9 +1,12 @@
-﻿module vdb.dataContracts {
+import AlbumContract from './AlbumContract';
+import ArtistForAlbumContract from '../ArtistForAlbumContract';
 
-	export interface AlbumForApiContract extends AlbumContract {
+//module vdb.dataContracts {
+
+	export default interface AlbumForApiContract extends AlbumContract {
 
 		artists?: ArtistForAlbumContract[];		
 
 	}
 
-} 
+//} 

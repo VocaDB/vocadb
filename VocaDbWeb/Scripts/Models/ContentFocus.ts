@@ -1,10 +1,12 @@
-﻿
-namespace vdb.models {
 
-	export enum ContentFocus {
+//namespace vdb.models {
+
+	enum ContentFocus {
 		Music,
 		Video,
 		Illustration
 	}
 
-}
+	export default ContentFocus;
+
+//}

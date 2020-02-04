@@ -1,11 +1,11 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserBaseContract>
 
 @{
 	PageProperties.Title = "Entry edits - " + Model.Name;
-	ViewBag.Parents = new[] { 
-		Html.ActionLink("Users", "Index"), 
-		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 		
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Users", "Index"),
+		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
 	};
 }
 
@@ -30,21 +30,21 @@
 </h3>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/ActivityEntry/Index")
+	@LaravelMixHelper.RenderScripts("~/bundles/ActivityEntry/Index.js")
 	<script type="text/javascript">
 		$(function () {
 
 			moment.locale('@Culture');
 			ko.punches.enableAll();
 
-			var urlMapper = new vdb.UrlMapper("@RootPath");
-			var resourceRepo = new vdb.repositories.ResourceRepository('@RootPath');
+			var urlMapper = new app.UrlMapper("@RootPath");
+			var resourceRepo = new app.ResourceRepository('@RootPath');
 			var languageSelection = '@UserContext.LanguagePreference';
 			var cultureCode = '@UICulture';
 			var userId = @Model.Id;
 			var editEvent = @ToJS((int?)ViewBag.EditEvent);
 
-			var vm = new vdb.viewModels.activityEntry.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode, userId, editEvent);
+			var vm = new app.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode, userId, editEvent);
 			ko.applyBindings(vm);
 
 		});

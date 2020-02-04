@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Helpers
+﻿@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
 @using EditRes = ViewRes.EntryEditStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.SeriesEdit>
@@ -141,14 +140,14 @@
 @EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/EventSeries/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/EventSeries/Edit.js")
 <script type="text/javascript">
 
 	$(function () {
 
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var eventRepo = new vdb.repositories.ReleaseEventRepository(urlMapper);
-		var userRepo = new vdb.repositories.UserRepository(urlMapper);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var eventRepo = new app.ReleaseEventRepository(urlMapper);
+		var userRepo = new app.UserRepository(urlMapper);
 		var model = @ToJS(new {
 			 DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
 			 Model.Id,
@@ -156,10 +155,10 @@
 			 Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventSeriesEditViewModel(eventRepo, userRepo, urlMapper, model.id, model.defaultNameLanguage, model.names, model.webLinks);
+		var vm = new app.ReleaseEventSeriesEditViewModel(eventRepo, userRepo, urlMapper, model.id, model.defaultNameLanguage, model.names, model.webLinks);
 		ko.applyBindings(vm);
 
-		initPage();
+		app.initEventSeriesEditPage();
 
 	});
 

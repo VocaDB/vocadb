@@ -1,7 +1,7 @@
 
-module vdb.dataContracts {
+//module vdb.dataContracts {
 
-    export interface TranslatedEnumField {
+    export default interface TranslatedEnumField {
 
         // Enum value.
         id: string;
@@ -11,4 +11,4 @@ module vdb.dataContracts {
 
     }
 
-}
+//}

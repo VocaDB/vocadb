@@ -1,49 +1,53 @@
 /// <reference path="../DataContracts/EntryRefContract.ts" />
 /// <reference path="GlobalFunctions.ts" />
 
-module vdb.utils {
+import EntryRefContract from '../DataContracts/EntryRefContract';
+import EntryType from '../Models/EntryType';
+import functions from './GlobalFunctions';
+import SongApiContract from '../DataContracts/Song/SongApiContract';
+import TagApiContract from '../DataContracts/Tag/TagApiContract';
+import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 
-	import cls = models;
-	import dc = vdb.dataContracts;
+//module vdb.utils {
 
     // Maps view URLs for common entry types.
-    export class EntryUrlMapper {
+    export default class EntryUrlMapper {
     
         // URL to details view.
         // typeName: entry type name.
         // id: entry Id.
-		public static details(typeName: string | cls.EntryType, id: number, urlFriendlyName?: string) {
+		public static details(typeName: string | EntryType, id: number, urlFriendlyName?: string) {
 
 			var prefix;
 
 			if (typeof typeName  === "string") {
-				typeName = cls.EntryType[typeName];
+				typeName = EntryType[typeName];
 			}
 
 			switch (typeName) {
-				case cls.EntryType.Album:
-					prefix = vdb.functions.mapAbsoluteUrl("/Al/" + id);
+				case EntryType.Album:
+					prefix = functions.mapAbsoluteUrl("/Al/" + id);
 					break;
-				case cls.EntryType.Artist:
-					prefix = vdb.functions.mapAbsoluteUrl("/Ar/" + id);
+				case EntryType.Artist:
+					prefix = functions.mapAbsoluteUrl("/Ar/" + id);
 					break;
-				case cls.EntryType.ReleaseEvent:
-					prefix = vdb.functions.mapAbsoluteUrl("/E/" + id);
+				case EntryType.ReleaseEvent:
+					prefix = functions.mapAbsoluteUrl("/E/" + id);
 					break;
-				case cls.EntryType.ReleaseEventSeries:
-					prefix = vdb.functions.mapAbsoluteUrl("/Es/" + id);
+				case EntryType.ReleaseEventSeries:
+					prefix = functions.mapAbsoluteUrl("/Es/" + id);
 					break;
-				case cls.EntryType.Song:
-					prefix = vdb.functions.mapAbsoluteUrl("/S/" + id);
+				case EntryType.Song:
+					prefix = functions.mapAbsoluteUrl("/S/" + id);
 					break;
-				case cls.EntryType.SongList:
-					prefix = vdb.functions.mapAbsoluteUrl("/L/" + id);
+				case EntryType.SongList:
+					prefix = functions.mapAbsoluteUrl("/L/" + id);
 					break;
-				case cls.EntryType.Tag:
-					prefix = vdb.functions.mapAbsoluteUrl("/T/" + id);
+				case EntryType.Tag:
+					prefix = functions.mapAbsoluteUrl("/T/" + id);
 					break;
 				default:
-					prefix = vdb.functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
+					prefix = functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
 					break;
 			}
 
@@ -53,19 +57,19 @@ module vdb.utils {
 
         }
 
-        public static details_entry(entry: dc.EntryRefContract, slug?: string) {       		
+        public static details_entry(entry: EntryRefContract, slug?: string) {       		
             return EntryUrlMapper.details(entry.entryType, entry.id, slug);        
 		}
 
-		public static details_song(entry: dc.SongApiContract) {
-			return EntryUrlMapper.details(cls.EntryType.Song, entry.id, entry.urlFriendlyName);
+		public static details_song(entry: SongApiContract) {
+			return EntryUrlMapper.details(EntryType.Song, entry.id, entry.urlFriendlyName);
 		}
 
 		public static details_tag(id: number, slug?: string) {
-			return EntryUrlMapper.details(cls.EntryType.Tag, id, slug);
+			return EntryUrlMapper.details(EntryType.Tag, id, slug);
 		}
 
-		public static details_tag_contract(tag: dc.TagBaseContract | dc.TagApiContract) {
+		public static details_tag_contract(tag: TagBaseContract | TagApiContract) {
 
 			if (!tag)
 				return null;
@@ -73,13 +77,13 @@ module vdb.utils {
 			if (!tag.id)
 				return "/Tag/Details/" + tag.name; // Legacy URL, this will be removed
 
-			return EntryUrlMapper.details(cls.EntryType.Tag, tag.id, tag.urlSlug);
+			return EntryUrlMapper.details(EntryType.Tag, tag.id, tag.urlSlug);
 
 		}
     
 		public static details_user_byName(name: string) {
-			return vdb.functions.mapAbsoluteUrl("/Profile/" + name);
+			return functions.mapAbsoluteUrl("/Profile/" + name);
 		}
     }
 
-}
+//}

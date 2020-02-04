@@ -1,9 +1,9 @@
-﻿
-namespace vdb.dataContracts.globalization {
 
-	export interface LocalizedStringContract {
+//namespace vdb.dataContracts.globalization {
+
+	export default interface LocalizedStringContract {
 		language: string;
 		value: string;
 	}
 
-}
+//}

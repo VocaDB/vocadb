@@ -1,7 +1,10 @@
-﻿
-module vdb.viewModels.artists {
 
-	export class ArtistRolesEditViewModel {
+import ArtistRoles from '../../Models/Artists/ArtistRoles';
+import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
+
+//module vdb.viewModels.artists {
+
+	export default class ArtistRolesEditViewModel {
 		
 		constructor(
 			roleNames: { [key: string]: string; },
@@ -38,7 +41,7 @@ module vdb.viewModels.artists {
 
 		}
 
-		public selectedArtist = ko.observable<vdb.viewModels.IEditableArtistWithSupport>(null);
+		public selectedArtist = ko.observable<IEditableArtistWithSupport>(null);
 
 		public show = (artist: IEditableArtistWithSupport) => {
 			
@@ -56,7 +59,7 @@ module vdb.viewModels.artists {
 	export class AlbumArtistRolesEditViewModel extends ArtistRolesEditViewModel {
 
 		constructor(roleNames: { [key: string]: string; }) {
-			super(roleNames, models.artists.ArtistRoles[models.artists.ArtistRoles.Default]);
+			super(roleNames, ArtistRoles[ArtistRoles.Default]);
 		}
 
 	}
@@ -73,4 +76,4 @@ module vdb.viewModels.artists {
 
 	}
 
-} 
+//} 

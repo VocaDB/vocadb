@@ -1,11 +1,12 @@
-﻿
-namespace vdb.models {
 
-	import dc = vdb.dataContracts;
+import ResourceRepository from '../Repositories/ResourceRepository';
+import ResourcesContract from '../DataContracts/ResourcesContract';
 
-	export class ResourcesManager {
+//namespace vdb.models {
 
-		constructor(private resourcesRepo: vdb.repositories.ResourceRepository,
+	export default class ResourcesManager {
+
+		constructor(private resourcesRepo: ResourceRepository,
 			private cultureCode: string) { }
 
 		private setsToLoad = (setNames: string[]) => {
@@ -13,7 +14,7 @@ namespace vdb.models {
 			return missing;
 		}
 
-		public resources: KnockoutObservable<dc.ResourcesContract> = ko.observable({});
+		public resources: KnockoutObservable<ResourcesContract> = ko.observable({});
 
 		public loadResources = (callback?: () => void, ...setNames: string[]) => {
 			var setsToLoad = this.setsToLoad(setNames);
@@ -88,4 +89,4 @@ namespace vdb.models {
 
 	}
 
-}
+//}

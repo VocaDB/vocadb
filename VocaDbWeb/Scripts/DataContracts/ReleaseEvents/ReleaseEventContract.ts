@@ -1,10 +1,18 @@
-﻿
-namespace vdb.dataContracts {
+
+import ArtistForEventContract from './ArtistForEventContract';
+import EntryThumbContract from '../EntryThumbContract';
+import EventSeriesContract from './EventSeriesContract';
+import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
+import PVContract from '../PVs/PVContract';
+import SongListBaseContract from '../SongListBaseContract';
+import WebLinkContract from '../WebLinkContract';
+
+//namespace vdb.dataContracts {
 
 	// Matches ReleaseEventForApiContract
-	export interface ReleaseEventContract {
+	export default interface ReleaseEventContract {
 
-		artists: events.ArtistForEventContract[];
+		artists: ArtistForEventContract[];
 
 		category: string;
 
@@ -20,9 +28,9 @@ namespace vdb.dataContracts {
 
 		name: string;
 
-		names?: globalization.LocalizedStringWithIdContract[];
+		names?: LocalizedStringWithIdContract[];
 
-		pvs?: pvs.PVContract[];
+		pvs?: PVContract[];
 
 		series?: EventSeriesContract;
 
@@ -32,4 +40,4 @@ namespace vdb.dataContracts {
 
 	}
 
-}
+//}

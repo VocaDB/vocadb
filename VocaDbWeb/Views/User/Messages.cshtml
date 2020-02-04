@@ -1,6 +1,5 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
 @using VocaDb.Web.Helpers
-@using System.Web.Optimization
 @using VocaDb.Model.Domain.Users
 @using Res = ViewRes.User.MessagesStrings;
 
@@ -118,19 +117,19 @@
 </div>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit", "~/bundles/User/Messages")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/User/Messages.js")
 	<script type="text/javascript">
 
 		$(function () {
 
 			$("#tabs").tabs();
 
-			var urlMapper = new vdb.UrlMapper('@RootPath');
-			var repository = new vdb.repositories.UserRepository(urlMapper);
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var repository = new app.UserRepository(urlMapper);
 			var receiverName = @ToJS(Model.ReceiverName);
-			var viewModel = new vdb.viewModels.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @((int)Model.Inbox), @ToJS(Model.SelectedMessageId), receiverName);
+			var viewModel = new app.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @((int)Model.Inbox), @ToJS(Model.SelectedMessageId), receiverName);
 			viewModel.messageSent = function () {
-				vdb.ui.showSuccessMessage(@ToJS(Res.MessageSent));
+				app.ui.showSuccessMessage(@ToJS(Res.MessageSent));
 			};
 			ko.applyBindings(viewModel);
 

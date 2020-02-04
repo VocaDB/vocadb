@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Security
+﻿@using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -30,7 +29,7 @@
 </div>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Discussion/Index")
+	@LaravelMixHelper.RenderScripts("~/bundles/Discussion/Index.js")
 	<script type="text/javascript">
 
 		$(function () {
@@ -39,11 +38,11 @@
 
 			ko.punches.enableAll();
 
-			var urlMapper = new vdb.UrlMapper('@RootPath');
+			var urlMapper = new app.UrlMapper('@RootPath');
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 			var repo = repoFactory.discussionRepository();
-			ko.applyBindings(new vdb.viewModels.discussions.DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments, @UserContext.LoggedUserId));
+			ko.applyBindings(new app.DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments, @UserContext.LoggedUserId));
 
 		});
 

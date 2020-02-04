@@ -82,13 +82,12 @@
 @Html.Hidden("start", 200)
 
 @section BodyScripts {
-<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Admin/ViewAuditLogViewModel.js")"></script>
 <script type="text/javascript">
 
 	$(document).ready(function () {
 
 		var json = @Html.Raw(JsonHelpers.Serialize(Model));
-		var vm = new vdb.viewModels.ViewAuditLogViewModel(json);
+		var vm = new app.ViewAuditLogViewModel(json);
 		ko.applyBindings(vm);
 		
 		$("#loadMoreLink").click(function () {

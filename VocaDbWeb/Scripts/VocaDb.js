@@ -1,21 +1,3 @@
-﻿
-function getId(elem) {
-
-	if ($(elem) == null || $(elem).attr('id') == null)
-		return null;
-
-	var parts = $(elem).attr('id').split("_");
-	return (parts.length >= 2 ? parts[1] : null);
-}
-
-function isNullOrWhiteSpace(str) {
-
-	if (str == null || str.length == 0)
-		return true;
-
-	return !(/\S/.test(str));
-
-}
 
 vdb = {};
 vdb.functions = vdb.functions || {};
@@ -45,7 +27,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-                    	url: vdb.functions.mapFullUrl('/Artist/PopupContent'),
+                    	url: app.functions.mapFullUrl('/Artist/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -72,7 +54,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-                    	url: vdb.functions.mapFullUrl('/Album/PopupContent'),
+						url: app.functions.mapFullUrl('/Album/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -96,7 +78,7 @@ vdb.functions.showLoginPopup = function() {
 				content: {
 					text: 'Loading...',
 					ajax: {
-						url: vdb.functions.mapFullUrl('/Album/PopupWithCoverContent'),
+						url: app.functions.mapFullUrl('/Album/PopupWithCoverContent'),
 						type: 'GET',
 						data: { id: $(elem).data("entryId") }
 					}

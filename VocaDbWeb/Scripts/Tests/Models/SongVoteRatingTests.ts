@@ -1,26 +1,27 @@
 /// <reference path="../../typings/qunit/qunit.d.ts" />
 /// <reference path="../../Models/SongVoteRating.ts" />
 
-module vdb.tests.models {
+import { parseSongVoteRating } from '../../Models/SongVoteRating';
+import SongVoteRating from '../../Models/SongVoteRating';
 
-    import cls = vdb.models;
+//module vdb.tests.models {
 
     QUnit.module("SongVoteRating");
 
     test("parseSongVoteRating nothing", () => {
 
-        var result = cls.parseSongVoteRating("Nothing");
+        var result = parseSongVoteRating("Nothing");
 
-        equal(result, cls.SongVoteRating.Nothing, "result");
+        equal(result, SongVoteRating.Nothing, "result");
 
     });
 
     test("parseSongVoteRating like", () => {
 
-        var result = cls.parseSongVoteRating("Like");
+        var result = parseSongVoteRating("Like");
 
-        equal(result, cls.SongVoteRating.Like, "result");
+        equal(result, SongVoteRating.Like, "result");
 
     });
 
-}
+//}

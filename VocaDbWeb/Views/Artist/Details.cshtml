@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.DataContracts.Artists;
+﻿@using VocaDb.Model.DataContracts.Artists;
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
@@ -424,7 +423,7 @@
 }
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Artist/Details")
+	@LaravelMixHelper.RenderScripts("~/bundles/Artist/Details.js")
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 
@@ -432,21 +431,21 @@
 
 			moment.locale('@Culture');
 
-			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
+			var urlMapper = new app.UrlMapper("@Url.Content("~/")");
 
 			var cultureCode = '@UICulture';
 			var loggedUserId = @ToJS(UserContext.LoggedUserId);
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, loggedUserId);
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, loggedUserId);
 			var artistRepo = repoFactory.artistRepository();
 			var albumRepository = repoFactory.albumRepository();
 			var songRepo = repoFactory.songRepository();
 			var resourceRepo = repoFactory.resourceRepository();
 			var userRepository = repoFactory.userRepository();
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
-			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
+			var pvPlayersFactory = new app.PVPlayersFactory(pvPlayerElem);
 			var tagUsages = @Html.Raw(JsonHelpers.Serialize(Model.Tags));
 			var latestComments = @ToJS(Model.LatestComments);
 
@@ -456,7 +455,7 @@
 				NotesRequired = ArtistReport.ReportTypesWithRequiredNotes.Contains(r.Id)
 			}));
 
-			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(artistRepo, @Model.Id,
+			var viewModel = new app.ArtistDetailsViewModel(artistRepo, @Model.Id,
 				tagUsages,
 				@ToJS(Model.IsAdded),
 				@ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
@@ -471,7 +470,7 @@
 				latestComments);
 			ko.applyBindings(viewModel);
 
-			vdb.views.artist.initPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
+			app.initArtistDetailsPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 
 		});
 

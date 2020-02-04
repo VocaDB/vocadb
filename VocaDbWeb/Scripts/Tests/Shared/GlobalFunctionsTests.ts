@@ -1,19 +1,15 @@
 /// <reference path="../../typings/qunit/qunit.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
-module vdb.tests.functions {
+import functions from "../../Shared/GlobalFunctions";
 
-    import fu = vdb.functions;
+//module vdb.tests.functions {
 
     QUnit.module("GlobalFunctions");
 
-    function mergeUrls(base: string, relative: string) {
-        return fu.mergeUrls(base, relative);
-    }
-
     test("mergeUrls bothWithSlash", () => {
-        
-        var result = mergeUrls("/", "/Song");
+
+		var result = functions.mergeUrls("/", "/Song");
 
         equal(result, "/Song", "result")
 
@@ -21,7 +17,7 @@ module vdb.tests.functions {
 
     test("mergeUrls baseWithSlash", () => {
 
-        var result = mergeUrls("/", "Song");
+		var result = functions.mergeUrls("/", "Song");
 
         equal(result, "/Song", "result")
 
@@ -29,7 +25,7 @@ module vdb.tests.functions {
 
     test("mergeUrls relativeWithSlash", () => {
 
-        var result = mergeUrls("", "/Song");
+		var result = functions.mergeUrls("", "/Song");
 
         equal(result, "/Song", "result")
 
@@ -37,9 +33,9 @@ module vdb.tests.functions {
 
     test("mergeUrls neitherWithSlash", () => {
 
-        var result = mergeUrls("", "Song");
+		var result = functions.mergeUrls("", "Song");
 
         equal(result, "/Song", "result")
 
     });
-}
+//}

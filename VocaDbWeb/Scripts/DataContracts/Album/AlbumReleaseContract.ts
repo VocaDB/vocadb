@@ -1,7 +1,10 @@
-﻿
-module vdb.dataContracts.albums {
+
+import OptionalDateTimeContract from '../OptionalDateTimeContract';
+import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
+
+//module vdb.dataContracts.albums {
 	
-	export interface AlbumReleaseContract {
+	export default interface AlbumReleaseContract {
 
 		catNum: string;
 
@@ -11,4 +14,4 @@ module vdb.dataContracts.albums {
 
 	}
 
-}
+//}

@@ -1,10 +1,12 @@
-﻿
-module vdb.tests.helpers {
+
+import AjaxHelper from '../../Helpers/AjaxHelper';
+
+//module vdb.tests.helpers {
 
 	QUnit.module("AjaxHelper");
 
 	var testCreateUrl = (params: { [key: string]: any[]; }, expected: string) => {
-		var actual = vdb.helpers.AjaxHelper.createUrl(params);
+		var actual = AjaxHelper.createUrl(params);
 		QUnit.equal(actual, expected);
 	}
 
@@ -16,4 +18,4 @@ module vdb.tests.helpers {
 		testCreateUrl({ vocaloid: ["miku"], song: ["Nebula"] }, "vocaloid=miku&song=Nebula");
 	});
 
-}
+//}

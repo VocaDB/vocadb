@@ -1,12 +1,14 @@
 
-module vdb.models {
+//module vdb.models {
 
-    export enum WebLinkCategory {
+    enum WebLinkCategory {
         Official,
         Commercial,
         Reference,
         Other
     }
+
+	export default WebLinkCategory;
 
     export function parseWebLinkCategory(rating: string) {
 
@@ -19,4 +21,4 @@ module vdb.models {
 
     }
 
-}
+//}

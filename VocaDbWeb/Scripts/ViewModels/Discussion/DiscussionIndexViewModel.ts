@@ -1,13 +1,18 @@
-﻿
-module vdb.viewModels.discussions {
-	
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
 
-	export class DiscussionIndexViewModel {
+import DiscussionRepository from '../../Repositories/DiscussionRepository';
+import DiscussionFolderContract from '../../DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '../../DataContracts/Discussion/DiscussionTopicContract';
+import { DiscussionTopicEditViewModel } from './DiscussionTopicViewModel';
+import DiscussionTopicViewModel from './DiscussionTopicViewModel';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
+import UrlMapper from '../../Shared/UrlMapper';
+
+//module vdb.viewModels.discussions {
+	
+	export default class DiscussionIndexViewModel {
 		
-		constructor(private readonly repo: rep.DiscussionRepository,
-			private readonly urlMapper: vdb.UrlMapper,
+		constructor(private readonly repo: DiscussionRepository,
+			private readonly urlMapper: UrlMapper,
 			private readonly canDeleteAllComments: boolean,
 			private readonly loggedUserId: number) {
 		
@@ -57,11 +62,11 @@ module vdb.viewModels.discussions {
 
 		}
 
-		private canDeleteTopic = (topic: dc.discussions.DiscussionTopicContract) => {
+		private canDeleteTopic = (topic: DiscussionTopicContract) => {
 			return (this.canDeleteAllComments || (topic.author && topic.author.id === this.loggedUserId));
 		}
 
-		private canEditTopic = (topic: dc.discussions.DiscussionTopicContract) => {
+		private canEditTopic = (topic: DiscussionTopicContract) => {
 			return (this.canDeleteAllComments || (topic.author && topic.author.id === this.loggedUserId));
 		}
 
@@ -80,7 +85,7 @@ module vdb.viewModels.discussions {
 
 		}
 
-		public deleteTopic = (topic: dc.discussions.DiscussionTopicContract) => {
+		public deleteTopic = (topic: DiscussionTopicContract) => {
 			
 			this.repo.deleteTopic(topic.id, () => {
 				this.selectTopic(null);				
@@ -88,7 +93,7 @@ module vdb.viewModels.discussions {
 
 		}
 
-		public folders = ko.observableArray<dc.discussions.DiscussionFolderContract>([]);
+		public folders = ko.observableArray<DiscussionFolderContract>([]);
 
 		private getFolder = (folderId: number) => {
 			return _.find(this.folders(), f => f.id === folderId);
@@ -98,7 +103,7 @@ module vdb.viewModels.discussions {
 			this.loadTopics(this.selectedFolder());
 		}
 
-		private loadTopics = (folder: dc.discussions.DiscussionFolderContract, callback?: () => void) => {
+		private loadTopics = (folder: DiscussionFolderContract, callback?: () => void) => {
 		
 			if (!folder) {
 
@@ -136,9 +141,9 @@ module vdb.viewModels.discussions {
 
 		public paging = new ServerSidePagingViewModel(30); // Paging view model
 
-		public recentTopics = ko.observableArray<dc.discussions.DiscussionTopicContract>([]);
+		public recentTopics = ko.observableArray<DiscussionTopicContract>([]);
 
-		public selectFolder = (folder: dc.discussions.DiscussionFolderContract) => {
+		public selectFolder = (folder: DiscussionFolderContract) => {
 			
 			if (!folder) {
 				page("/discussion");
@@ -154,7 +159,7 @@ module vdb.viewModels.discussions {
 
 		}
 
-		public selectTopic = (topic: dc.discussions.DiscussionTopicContract) => {
+		public selectTopic = (topic: DiscussionTopicContract) => {
 			
 			if (!topic) {
 				page("/discussion/topics");
@@ -183,14 +188,14 @@ module vdb.viewModels.discussions {
 
 		}
 
-		public selectedFolder = ko.observable<dc.discussions.DiscussionFolderContract>(null);
+		public selectedFolder = ko.observable<DiscussionFolderContract>(null);
 
 		public selectedTopic = ko.observable<DiscussionTopicViewModel>(null);
 
 		public showCreateNewTopic = ko.observable(false);
 
-		public topics = ko.observableArray<dc.discussions.DiscussionTopicContract>([]);
+		public topics = ko.observableArray<DiscussionTopicContract>([]);
 
 	}
 
-} 
+//} 

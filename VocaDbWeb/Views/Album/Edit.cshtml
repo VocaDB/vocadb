@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Helpers
+﻿@using VocaDb.Model.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using R = ViewRes.Album;
@@ -62,7 +61,7 @@
 	});
 </script>
 
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/Album/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Album/Edit.js")
 
 <script type="text/javascript">
 	$(function() {
@@ -76,9 +75,9 @@
 
 		var canBulkDeletePVs = @ToJS(Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.BulkDeletePVs));
 		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
+		var urlMapper = new app.UrlMapper(rootPath);
 
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var repo = repoFactory.albumRepository();
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();
@@ -93,8 +92,8 @@
 
 		if (editedModel) {
 
-			viewModel = new vdb.viewModels.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
-				artistRoleJson, webLinkCategoryJson, editedModel, allowCustomTracks, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
+			viewModel = new app.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
+				artistRoleJson, webLinkCategoryJson, editedModel, allowCustomTracks, canBulkDeletePVs, new app.DialogService());
 
 			ko.applyBindings(viewModel);
 
@@ -102,8 +101,8 @@
 
 			repo.getForEdit(@Model.Id, function (model) {
 
-				viewModel = new vdb.viewModels.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
-					artistRoleJson, webLinkCategoryJson, model, allowCustomTracks, canBulkDeletePVs, new vdb.ui_dialog.DialogService());
+				viewModel = new app.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
+					artistRoleJson, webLinkCategoryJson, model, allowCustomTracks, canBulkDeletePVs, new app.DialogService());
 
 				ko.applyBindings(viewModel);
 
@@ -111,7 +110,7 @@
 
 		}
 
-		initPage();
+		app.initAlbumEditPage();
 
 	});
 </script>

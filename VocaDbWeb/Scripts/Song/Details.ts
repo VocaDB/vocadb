@@ -1,5 +1,7 @@
-﻿
-function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
+
+import functions from "../Shared/GlobalFunctions";
+
+export function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	function initMediaPlayer() {
 		$('audio').mediaelementplayer({
@@ -39,7 +41,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	$(".pvLink:not(.disabled)").click(function () {
 
-		var id = getId(this);
+		var id = functions.getId(this);
 		$.post(urlMapper.mapRelative("/Song/PVForSong"), { pvId: id }, function (content) {
 			$("#pvPlayer").html(content);
 			initMediaPlayer();

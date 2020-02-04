@@ -1,11 +1,16 @@
-﻿
-module vdb.viewModels.search {
 
-	import dc = vdb.dataContracts;
+import EntryContract from '../../DataContracts/EntryContract';
+import EntryRepository from '../../Repositories/EntryRepository';
+import EntryType from '../../Models/EntryType';
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
+import SearchViewModel from './SearchViewModel';
 
-	export class AnythingSearchViewModel extends SearchCategoryBaseViewModel<dc.EntryContract> {
+//module vdb.viewModels.search {
 
-		constructor(searchViewModel: SearchViewModel, lang: string, private entryRepo: rep.EntryRepository) {
+	export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel<EntryContract> {
+
+		constructor(searchViewModel: SearchViewModel, lang: string, private entryRepo: EntryRepository) {
 
 			super(searchViewModel);
 
@@ -14,16 +19,16 @@ module vdb.viewModels.search {
 
 		}
 
-		public entryCategoryName = (entry: dc.EntryContract) => {
+		public entryCategoryName = (entry: EntryContract) => {
 
-			switch (models.EntryType[entry.entryType]) {
-				case models.EntryType.Artist:
+			switch (EntryType[entry.entryType]) {
+				case EntryType.Artist:
 					return this.searchViewModel.resources().artistTypeNames[entry.artistType];
-				case models.EntryType.Album:
+				case EntryType.Album:
 					return this.searchViewModel.resources().discTypeNames[entry.discType];
-				case models.EntryType.ReleaseEvent:
+				case EntryType.ReleaseEvent:
 					return this.searchViewModel.resources().eventCategoryNames[entry.eventCategory];
-				case models.EntryType.Song:
+				case EntryType.Song:
 					return this.searchViewModel.resources().songTypeNames[entry.songType];
 			}
 
@@ -31,9 +36,9 @@ module vdb.viewModels.search {
 
 		}
 
-		public entryUrl = (entry: dc.EntryContract) => {
+		public entryUrl = (entry: EntryContract) => {
 
-			return vdb.utils.EntryUrlMapper.details(entry.entryType, entry.id);
+			return EntryUrlMapper.details(entry.entryType, entry.id);
 
 		}
 
@@ -41,4 +46,4 @@ module vdb.viewModels.search {
 
 	}
 
-}
+//}

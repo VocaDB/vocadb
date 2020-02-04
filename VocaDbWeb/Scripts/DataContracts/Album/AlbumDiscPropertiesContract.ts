@@ -1,7 +1,7 @@
-﻿
-module vdb.dataContracts.albums {
+
+//module vdb.dataContracts.albums {
 	
-	export interface AlbumDiscPropertiesContract {
+	export default interface AlbumDiscPropertiesContract {
 
 		discNumber: number;
 
@@ -13,4 +13,4 @@ module vdb.dataContracts.albums {
 		
 	}
 
-}
+//}

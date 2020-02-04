@@ -1,17 +1,19 @@
-﻿
-module vdb.viewModels.artists {
 
-	import rep = repositories;
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ReportEntryViewModel from '../ReportEntryViewModel';
+import ui from '../../Shared/MessagesTyped';
 
-	export class ArchivedArtistViewModel {
+//module vdb.viewModels.artists {
 
-		constructor(artistId: number, versionNumber: number, private repository: rep.ArtistRepository) {
+	export default class ArchivedArtistViewModel {
+
+		constructor(artistId: number, versionNumber: number, private repository: ArtistRepository) {
 
 			this.reportViewModel = new ReportEntryViewModel(null, (reportType, notes) => {
 
 				repository.createReport(artistId, reportType, notes, versionNumber);
 
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 
 			}, { notesRequired: true, id: 'Other', name: null });
 
@@ -21,4 +23,4 @@ module vdb.viewModels.artists {
 
 	}
 
-} 
+//} 

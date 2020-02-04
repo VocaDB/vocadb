@@ -1,7 +1,7 @@
-﻿
-module vdb.models.songs {
+
+//module vdb.models.songs {
 	
-	export enum SongType {
+	enum SongType {
 		
 		Unspecified = 0,
 
@@ -31,4 +31,6 @@ module vdb.models.songs {
 
 	}
 
-} 
+	export default SongType;
+
+//} 

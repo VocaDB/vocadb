@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.ReleaseEvents
+﻿@using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.Service.VideoServices
@@ -237,7 +236,7 @@
 							<tr>
 								<td>
 									<div data-bind="with: artist">
-										<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
+										<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
 										<br />
 										<span data-bind="text: additionalNames" class="extraInfo"></span>
 									</div>
@@ -319,14 +318,14 @@
 @EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/ReleaseEvent/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/ReleaseEvent/Edit.js")
 <script type="text/javascript">
 	$(function () {
 
 		ko.punches.enableAll();
 
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();
 		var pvRepo = repoFactory.pvRepository();
@@ -344,10 +343,10 @@
 			Model.SongList, Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, artistRoleJson, contract);
+		var vm = new app.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, artistRoleJson, contract);
 		ko.applyBindings(vm);
 
-		initPage();
+		app.initReleaseEventEditPage();
 
 	});
 </script>

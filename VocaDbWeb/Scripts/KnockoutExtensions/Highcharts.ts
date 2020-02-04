@@ -1,10 +1,12 @@
-﻿/// <reference path="../typings/highcharts/highcharts.d.ts" />
+/// <reference path="../typings/highcharts/highcharts.d.ts" />
 
-interface KnockoutBindingHandlers {
-	highcharts: KnockoutBindingHandler;
+declare global {
+	interface KnockoutBindingHandlers {
+		highcharts: KnockoutBindingHandler;
+	}
 }
 
-module vdb.knockoutExtensions.highcharts {
+//module vdb.knockoutExtensions.highcharts {
 
 	export function setHighcharts(element: HTMLElement, result: HighchartsOptions) {
 	
@@ -16,7 +18,7 @@ module vdb.knockoutExtensions.highcharts {
 			
 	}
 
-}
+//}
 
 ko.bindingHandlers.highcharts = {
 	update: (element: HTMLElement, valueAccessor) => {
@@ -26,11 +28,11 @@ ko.bindingHandlers.highcharts = {
 
 			var func = unwrapped;
 
-			func((result: HighchartsOptions) => vdb.knockoutExtensions.highcharts.setHighcharts(element, result));
+			func((result: HighchartsOptions) => setHighcharts(element, result));
 			
 		} else {
 			
-			vdb.knockoutExtensions.highcharts.setHighcharts(element, unwrapped);
+			setHighcharts(element, unwrapped);
 
 		}
 

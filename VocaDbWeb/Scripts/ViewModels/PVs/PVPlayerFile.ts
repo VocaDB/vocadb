@@ -1,15 +1,16 @@
-﻿
-module vdb.viewModels.pvs {
 
-	import cls = vdb.models;
+import { IPVPlayer } from './PVPlayerViewModel';
+import PVService from '../../Models/PVs/PVService';
 
-	export class PVPlayerFile implements IPVPlayer {
+//module vdb.viewModels.pvs {
+
+	export default class PVPlayerFile implements IPVPlayer {
 
 		constructor(
 			private playerElementId: string,
 			private wrapperElement: HTMLElement,
 			public songFinishedCallback: () => void = null,
-			service: cls.pvs.PVService = cls.pvs.PVService.File) {
+			service: PVService = PVService.File) {
 
 			this.service = service;
 
@@ -66,8 +67,8 @@ module vdb.viewModels.pvs {
 
 		}
 
-		public service: cls.pvs.PVService;
+		public service: PVService;
 
 	}
 
-}
+//}

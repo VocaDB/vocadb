@@ -1,7 +1,7 @@
-﻿
-module vdb.dataContracts {
+
+//module vdb.dataContracts {
 	
-	export interface TagBaseContract {
+	export default interface TagBaseContract {
 		// Additional names list - optional field
 		additionalNames?: string; 
 		id: number;
@@ -9,4 +9,4 @@ module vdb.dataContracts {
 		urlSlug?: string;
 	}
 
-}
+//}

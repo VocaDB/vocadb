@@ -1,4 +1,4 @@
-@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Artist;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Artists.ArchivedArtistVersionDetailsContract>
 
@@ -37,7 +37,6 @@
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 
 @section BodyScripts {
-	<script src="@Url.Content("~/Scripts/ViewModels/Artist/ArchivedArtistViewModel.js")"></script>
     <script type="text/javascript">
 
 		$(function () {
@@ -46,9 +45,9 @@
             $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
             $("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
 
-            var rep = new vdb.repositories.ArtistRepository('@RootPath', @LanguagePreferenceInt);
+            var rep = new app.ArtistRepository('@RootPath', @LanguagePreferenceInt);
 
-            var viewModel = new vdb.viewModels.artists.ArchivedArtistViewModel(@Model.Artist.Id, @Model.ArchivedVersion.Version, rep);
+            var viewModel = new app.ArchivedArtistViewModel(@Model.Artist.Id, @Model.ArchivedVersion.Version, rep);
             ko.applyBindings(viewModel);
 
         });

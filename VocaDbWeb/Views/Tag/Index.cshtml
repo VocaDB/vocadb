@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagCategoryContract[]>
 
 @{
@@ -60,13 +59,13 @@
 </div>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Tag/Index")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Tag/Index.js")
 	<script type="text/javascript">
 
 		$(function () {
 
-			var tagRepo = new vdb.repositories.TagRepository('@RootPath');
-			var viewModel = new vdb.viewModels.tags.TagCreateViewModel(tagRepo);
+			var tagRepo = new app.TagRepository('@RootPath');
+			var viewModel = new app.TagCreateViewModel(tagRepo);
 			ko.applyBindings(viewModel);
 
 		});

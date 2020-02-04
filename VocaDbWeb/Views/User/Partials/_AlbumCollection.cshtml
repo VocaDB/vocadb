@@ -142,12 +142,12 @@
 		<tbody data-bind="foreach: page">
 			<tr>
 				<td style="width: 80px">
-					<a data-bind="visible: album.mainPicture && album.mainPicture.urlTinyThumb, attr: { href: vdb.utils.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#" class="coverPicThumb">
+					<a data-bind="visible: album.mainPicture && album.mainPicture.urlTinyThumb, attr: { href: app.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#" class="coverPicThumb">
 						<img data-bind="attr: { src: (album.mainPicture ? album.mainPicture.urlTinyThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
 					</a>
 				</td>
 				<td>
-					<a data-bind="text: album.name, attr: { href: vdb.utils.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#"></a><br />
+					<a data-bind="text: album.name, attr: { href: app.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#"></a><br />
 					@KnockoutHelpers.DraftIcon("status")
 					<small class="extraInfo" data-bind="text: album.artistString"></small><br />
 					<small class="extraInfo" data-bind="text: $parent.resources().discTypeNames[album.discType]"></small>
@@ -177,7 +177,7 @@
 	<!-- ko if: viewMode() == 'Tiles' -->
 	<ul class="smallThumbs" data-bind="foreach: page">
 		<li>
-			<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#">
+			<a data-bind="attr: { href: app.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#">
 				<div class="pictureFrame">
 					<img data-bind="attr: { src: (album.mainPicture ? album.mainPicture.urlSmallThumb : '') }, albumToolTip: album.id" alt="Preview" class="coverPic img-rounded" />
 				</div>

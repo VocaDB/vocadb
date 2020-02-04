@@ -1,7 +1,11 @@
 
-namespace vdb.dataContracts {
+import EntryThumbContract from "../EntryThumbContract";
+import LocalizedStringWithIdContract from "../Globalization/LocalizedStringWithIdContract";
+import WebLinkContract from "../WebLinkContract";
 
-	export interface ReleaseEventSeriesForApiContract {
+//namespace vdb.dataContracts {
+
+	export default interface ReleaseEventSeriesForApiContract {
 
 		category: string;
 
@@ -11,10 +15,10 @@ namespace vdb.dataContracts {
 
 		name: string;
 
-		names?: globalization.LocalizedStringWithIdContract[];
+		names?: LocalizedStringWithIdContract[];
 
 		webLinks: WebLinkContract[];
 
 	}
 
-}
+//}

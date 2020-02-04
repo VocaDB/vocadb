@@ -1,21 +1,25 @@
 
-module vdb.viewModels {
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import PagedItemsViewModel from '../PagedItemsViewModel';
+import UserApiContract from '../../DataContracts/User/UserApiContract';
+import { UserInboxType } from '../../Repositories/UserRepository';
+import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
+import UserRepository from '../../Repositories/UserRepository';
 
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+//module vdb.viewModels {
 
-	export class UserMessagesViewModel {
+	export default class UserMessagesViewModel {
 
 		constructor(
-			private readonly userRepository: vdb.repositories.UserRepository,
+			private readonly userRepository: UserRepository,
 			private readonly userId: number,
-			inboxType: rep.UserInboxType,
+			inboxType: UserInboxType,
 			selectedMessageId?: number,
 			receiverName?: string) {
 
-            this.notifications = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Notifications, userId, inboxType !== rep.UserInboxType.Notifications);
-            this.receivedMessages = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Received, userId, inboxType !== rep.UserInboxType.Received);
-            this.sentMessages = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Sent, userId, false);
+            this.notifications = new UserMessageFolderViewModel(userRepository, UserInboxType.Notifications, userId, inboxType !== UserInboxType.Notifications);
+            this.receivedMessages = new UserMessageFolderViewModel(userRepository, UserInboxType.Received, userId, inboxType !== UserInboxType.Received);
+            this.sentMessages = new UserMessageFolderViewModel(userRepository, UserInboxType.Sent, userId, false);
 
 			this.inboxes = [this.receivedMessages, this.notifications, this.sentMessages];
 
@@ -33,14 +37,14 @@ module vdb.viewModels {
 
         }
 
-		private getInboxTabName = (inbox: rep.UserInboxType) => {
+		private getInboxTabName = (inbox: UserInboxType) => {
 			
 			switch (inbox) {
-				case rep.UserInboxType.Received:
+				case UserInboxType.Received:
 					return "#receivedTab";
-				case rep.UserInboxType.Notifications:
+				case UserInboxType.Notifications:
 					return "#notificationsTab";
-				case rep.UserInboxType.Sent:
+				case UserInboxType.Sent:
 					return "#sentTab";
 			}
 
@@ -104,7 +108,7 @@ module vdb.viewModels {
 
         };
 
-		private selectInbox = (inbox: rep.UserInboxType) => {
+		private selectInbox = (inbox: UserInboxType) => {
 			this.selectTab(this.getInboxTabName(inbox));
 		}
 
@@ -125,7 +129,7 @@ module vdb.viewModels {
 			this.userRepository.createMessage(this.userId, message, () => {
 				this.newMessageViewModel.clear();
 				this.sentMessages.clear();
-				this.selectInbox(rep.UserInboxType.Sent);
+				this.selectInbox(UserInboxType.Sent);
 				if (this.messageSent)
 					this.messageSent();
 			}).always(() => this.newMessageViewModel.isSending(false));
@@ -137,8 +141,8 @@ module vdb.viewModels {
     export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageViewModel> {
 
 		constructor(
-			private readonly userRepo: rep.UserRepository,
-			public readonly inbox: rep.UserInboxType,
+			private readonly userRepo: UserRepository,
+			public readonly inbox: UserInboxType,
 			private readonly userId,
 			getMessageCount: boolean) {
 
@@ -157,14 +161,14 @@ module vdb.viewModels {
 				_.forEach(this.items(), m => m.checked(selected));
 			});
 
-			this.anotherUser = new BasicEntryLinkViewModel<dc.user.UserApiContract>(null, null);
+			this.anotherUser = new BasicEntryLinkViewModel<UserApiContract>(null, null);
 			this.anotherUser.id.subscribe(this.clear);
 
 		}
 
-		public anotherUser: BasicEntryLinkViewModel<dc.user.UserApiContract>;
+		public anotherUser: BasicEntryLinkViewModel<UserApiContract>;
 
-		public canFilterByUser = () => this.inbox === rep.UserInboxType.Received || this.inbox === rep.UserInboxType.Sent;
+		public canFilterByUser = () => this.inbox === UserInboxType.Received || this.inbox === UserInboxType.Sent;
 
         private deleteMessage = (message: UserMessageViewModel) => {
 
@@ -212,7 +216,7 @@ module vdb.viewModels {
 
 	export class UserMessageViewModel {
 
-		constructor(data: dc.UserMessageSummaryContract) {
+		constructor(data: UserMessageSummaryContract) {
             this.created = data.createdFormatted;
             this.highPriority = data.highPriority;
 			this.id = data.id;
@@ -235,11 +239,11 @@ module vdb.viewModels {
 
         read: KnockoutObservable<boolean>;
 
-        receiver: vdb.dataContracts.user.UserApiContract;
+        receiver: UserApiContract;
 
 		selected = ko.observable(false);
 
-		sender: vdb.dataContracts.user.UserApiContract;
+		sender: UserApiContract;
 
 		subject: string;
 
@@ -259,7 +263,7 @@ module vdb.viewModels {
 
 		isSending = ko.observable(false);
 
-		receiver = new BasicEntryLinkViewModel<dc.user.UserApiContract>();
+		receiver = new BasicEntryLinkViewModel<UserApiContract>();
 
 		subject = ko.observable<string>("");
 
@@ -275,12 +279,12 @@ module vdb.viewModels {
 				body: this.body(),
 				highPriority: this.highPriority(),
 				receiver: this.receiver.entry(),
-				sender: { id: senderId } as dc.user.UserApiContract,
+				sender: { id: senderId } as UserApiContract,
 				subject: this.subject(),
 				id: null
-			} as dc.user.UserApiContract;
+			} as UserApiContract;
 		};
 
 	}
 
-}
+//}

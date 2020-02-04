@@ -1,5 +1,4 @@
-@using System.Web.Optimization
-@using Resources
+﻿@using Resources
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers
@@ -180,7 +179,7 @@
 
 <!-- Scripts -->
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Search/Index")
+	@LaravelMixHelper.RenderScripts("~/bundles/Search/Index.js")
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 
 	<script type="text/javascript">
@@ -214,8 +213,8 @@
 			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
 
 			var rootPath = '@RootPath';
-			var urlMapper = new vdb.UrlMapper(rootPath);
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, loggedUserId);
+			var urlMapper = new app.UrlMapper(rootPath);
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, loggedUserId);
 			var resourceRepo = repoFactory.resourceRepository();
 			var entryRepo = repoFactory.entryRepository();
 			var artistRepo = repoFactory.artistRepository();
@@ -225,9 +224,9 @@
 			var tagRepo = repoFactory.tagRepository();
 			var userRepo = repoFactory.userRepository();
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
-			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
+			var pvPlayersFactory = new app.PVPlayersFactory(pvPlayerElem);
 
-			var vm = new vdb.viewModels.search.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo,
+			var vm = new app.SearchViewModel(urlMapper, entryRepo, artistRepo, albumRepo, songRepo,
 				eventRepo,
 				tagRepo, resourceRepo,
 				userRepo,

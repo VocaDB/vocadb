@@ -4,22 +4,25 @@
 /// <reference path="../TestSupport/FakeSongRepository.ts" />
 /// <reference path="../TestSupport/FakeArtistRepository.ts" />
 
-module vdb.tests.viewModels {
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
+import FakeSongRepository from '../TestSupport/FakeSongRepository';
+import SongCreateViewModel from '../../ViewModels/SongCreateViewModel';
+import TagRepository from '../../Repositories/TagRepository';
 
-    import vm = vdb.viewModels;
-    import dc = vdb.dataContracts;
+//module vdb.tests.viewModels {
 
-    var repository = new vdb.tests.testSupport.FakeSongRepository();
-	var artistRepository = new vdb.tests.testSupport.FakeArtistRepository();
-	var tagRepository: vdb.repositories.TagRepository = null;
-    var producer: dc.ArtistContract = { artistType: "Producer", id: 1, name: "Tripshots", additionalNames: "" };
+    var repository = new FakeSongRepository();
+	var artistRepository = new FakeArtistRepository();
+	var tagRepository: TagRepository = null;
+    var producer: ArtistContract = { artistType: "Producer", id: 1, name: "Tripshots", additionalNames: "" };
     artistRepository.result = producer;
     repository.results = { title: "Nebula", titleLanguage: "English", artists: [producer], matches: [], songType: "Original" };
 
     QUnit.module("SongCreateViewModelTests");
 
     function createViewModel() {
-		return new vm.SongCreateViewModel(repository, artistRepository, tagRepository);
+		return new SongCreateViewModel(repository, artistRepository, tagRepository);
     }
 
     test("constructor empty", () => {
@@ -36,7 +39,7 @@ module vdb.tests.viewModels {
 
     test("constructor with data", () => {
 
-		var target = new vm.SongCreateViewModel(repository, artistRepository, tagRepository, { nameEnglish: "Nebula", artists: [producer] });
+		var target = new SongCreateViewModel(repository, artistRepository, tagRepository, { nameEnglish: "Nebula", artists: [producer] });
 
 		equal(target.nameEnglish(), "Nebula", "nameEnglish");
         ok(target.artists(), "artists");
@@ -79,4 +82,4 @@ module vdb.tests.viewModels {
 
     });
 
-}
+//}

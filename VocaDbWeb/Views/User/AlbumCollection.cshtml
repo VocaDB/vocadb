@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
 @using SharedRes = ViewRes.SharedStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.AlbumCollection>
 
@@ -13,7 +12,7 @@
 @{ Html.RenderPartial("Partials/_AlbumCollection"); }
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/User/AlbumCollection")
+@LaravelMixHelper.RenderScripts("~/bundles/User/AlbumCollection.js")
 
 <script type="text/javascript">
 
@@ -25,13 +24,13 @@
 		var publicCollection = @ToJS(Model.User.PublicAlbumCollection || Model.User.Id == Login.Manager.LoggedUserId);
 
 		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper(rootPath);
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var resourceRepo = repoFactory.resourceRepository();
 
-		var vm = new vdb.viewModels.user.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
+		var vm = new app.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
 			publicCollection);
 		ko.applyBindings(vm);
 

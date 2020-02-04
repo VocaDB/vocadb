@@ -1,10 +1,10 @@
-﻿body {
+body {
   background-color: transparent;
 }
 div.pvViewerContent {
   overflow: hidden;
   padding: 5px;
-  background-color: #333333;
+  background-color: #333;
 }
 div.pvViewerContent .songPreviewTitle {
   color: white;

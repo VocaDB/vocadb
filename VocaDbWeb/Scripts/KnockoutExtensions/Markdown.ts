@@ -2,10 +2,14 @@
 /// <reference path="../typings/jqueryui/jqueryui.d.ts" />
 /// <reference path="../typings/knockout/knockout.d.ts" />
 
-interface KnockoutBindingHandlers {
+import HtmlHelper from "../Helpers/HtmlHelper";
 
-	markdown: KnockoutBindingHandler;
+declare global {
+	interface KnockoutBindingHandlers {
 
+		markdown: KnockoutBindingHandler;
+
+	}
 }
 
 // Renders an observable as HTML processed by Markdown (marked library, https://github.com/chjj/marked). 
@@ -22,7 +26,7 @@ ko.bindingHandlers.markdown = {
 			return;
 		}
 
-		vdb.helpers.HtmlHelper.formatMarkdown(truncated, (err, content) => {
+		HtmlHelper.formatMarkdown(truncated, (err, content) => {
 			const text: string = err ?? content;
 			$(element).html(text);
 		});

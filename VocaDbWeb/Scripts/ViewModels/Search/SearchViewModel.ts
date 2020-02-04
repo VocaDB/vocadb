@@ -1,19 +1,40 @@
 
-module vdb.viewModels.search {
+import AlbumRepository from '../../Repositories/AlbumRepository';
+import AlbumSearchViewModel from './AlbumSearchViewModel';
+import AnythingSearchViewModel from './AnythingSearchViewModel';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ArtistSearchViewModel from './ArtistSearchViewModel';
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import EntryRepository from '../../Repositories/EntryRepository';
+import EventSearchViewModel from './EventSearchViewModel';
+import { ISearchCategoryBaseViewModel } from './SearchCategoryBaseViewModel';
+import PVPlayersFactory from '../PVs/PVPlayersFactory';
+import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import ResourcesContract from '../../DataContracts/ResourcesContract';
+import ResourcesManager from '../../Models/ResourcesManager';
+import SongRepository from '../../Repositories/SongRepository';
+import SongSearchViewModel from './SongSearchViewModel';
+import Tag from '../../Models/Tags/Tag';
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import TagFilters from './TagFilters';
+import TagRepository from '../../Repositories/TagRepository';
+import TagSearchViewModel from './TagSearchViewModel';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
 
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+//module vdb.viewModels.search {
 
-	export class SearchViewModel {
+	export default class SearchViewModel {
 
 		constructor(
-			urlMapper: vdb.UrlMapper,
-			entryRepo: rep.EntryRepository, artistRepo: rep.ArtistRepository,
-			albumRepo: rep.AlbumRepository, songRepo: rep.SongRepository,
-			eventRepo: rep.ReleaseEventRepository,
-			tagRepo: rep.TagRepository,
-			resourceRepo: rep.ResourceRepository,
-			userRepo: rep.UserRepository,
+			urlMapper: UrlMapper,
+			entryRepo: EntryRepository, artistRepo: ArtistRepository,
+			albumRepo: AlbumRepository, songRepo: SongRepository,
+			eventRepo: ReleaseEventRepository,
+			tagRepo: TagRepository,
+			resourceRepo: ResourceRepository,
+			userRepo: UserRepository,
 			unknownPictureUrl: string,
 			private languageSelection: string,
 			loggedUserId: number,
@@ -38,9 +59,9 @@ module vdb.viewModels.search {
 			autoplay: boolean,
 			shuffle: boolean,
 			pageSize: number,
-			pvPlayersFactory: pvs.PVPlayersFactory) {
+			pvPlayersFactory: PVPlayersFactory) {
 
-			this.resourcesManager = new vdb.models.ResourcesManager(resourceRepo, cultureCode);
+			this.resourcesManager = new ResourcesManager(resourceRepo, cultureCode);
 			this.resources = this.resourcesManager.resources;
 			this.tagFilters = new TagFilters(tagRepo, languageSelection);
 
@@ -61,7 +82,7 @@ module vdb.viewModels.search {
 				albumType,
 				isAlbum ? viewMode : null);
 
-			this.eventSearchViewModel = new EventSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], eventRepo, artistRepo,
+			this.eventSearchViewModel = new EventSearchViewModel(this, ContentLanguagePreference[languageSelection], eventRepo, artistRepo,
 				loggedUserId, sort, artistId, eventCategory);
 
 			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection,
@@ -83,7 +104,7 @@ module vdb.viewModels.search {
 				shuffle,
 				pvPlayersFactory);
 
-			this.tagSearchViewModel = new TagSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], tagRepo);
+			this.tagSearchViewModel = new TagSearchViewModel(this, ContentLanguagePreference[languageSelection], tagRepo);
 
 			if (tagIds != null || !!artistId || !!eventId || artistType || albumType || songType || eventCategory || onlyWithPVs != null || since || minScore)
 				this.showAdvancedFilters(true);
@@ -127,7 +148,7 @@ module vdb.viewModels.search {
 				this.updateResults();
 			});
 
-			tagRepo.getTopTags(languageSelection, models.tags.Tag.commonCategory_Genres, null, result => {
+			tagRepo.getTopTags(languageSelection, Tag.commonCategory_Genres, null, result => {
 				this.genreTags(result);
 			});
 
@@ -142,10 +163,10 @@ module vdb.viewModels.search {
 
 		private currentSearchType = ko.observable(SearchType.Anything);
 		public draftsOnly = ko.observable(false);
-		public genreTags = ko.observableArray<dc.TagBaseContract>();
+		public genreTags = ko.observableArray<TagBaseContract>();
 		public pageSize = ko.observable(10);
-		public resourcesManager: vdb.models.ResourcesManager;
-		public resources: KnockoutObservable<dc.ResourcesContract>;
+		public resourcesManager: ResourcesManager;
+		public resources: KnockoutObservable<ResourcesContract>;
 		public showAdvancedFilters = ko.observable(false);
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public searchType = ko.observable(SearchType.Anything);
@@ -204,4 +225,4 @@ module vdb.viewModels.search {
 		public static Tag = "Tag";
 	}
 
-}
+//}

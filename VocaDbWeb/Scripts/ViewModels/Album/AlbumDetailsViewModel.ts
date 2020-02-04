@@ -2,13 +2,31 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" />
 /// <reference path="../../Shared/GlobalFunctions.ts" />
 
-module vdb.viewModels {
+import AlbumForUserForApiContract from '../../DataContracts/User/AlbumForUserForApiContract';
+import AlbumReviewContract from '../../DataContracts/Album/AlbumReviewContract';
+import AlbumRepository from '../../Repositories/AlbumRepository';
+import ArtistApiContract from '../../DataContracts/Artist/ArtistApiContract';
+import ArtistHelper from '../../Helpers/ArtistHelper';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import CommentContract from '../../DataContracts/CommentContract';
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
+import EntryType from '../../Models/EntryType';
+import functions from '../../Shared/GlobalFunctions';
+import { IEntryReportType } from '../ReportEntryViewModel';
+import ReportEntryViewModel from '../ReportEntryViewModel';
+import SelfDescriptionViewModel from '../SelfDescriptionViewModel';
+import TagsEditViewModel from '../Tag/TagsEditViewModel';
+import TagListViewModel from '../Tag/TagListViewModel';
+import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import ui from '../../Shared/MessagesTyped';
+import UserApiContract from '../../DataContracts/User/UserApiContract';
+import UserRepository from '../../Repositories/UserRepository';
 
-	import cls = vdb.models;
-	import dc = dataContracts;
-	import rep = repositories;
+//module vdb.viewModels {
 
-    export class AlbumDetailsViewModel {
+    export default class AlbumDetailsViewModel {
 
 		public comments: EditableCommentsViewModel;
 
@@ -18,21 +36,21 @@ module vdb.viewModels {
 
 		public reportViewModel: ReportEntryViewModel;
 
-		public description: globalization.EnglishTranslatedStringViewModel;
+		public description: EnglishTranslatedStringViewModel;
 
 		public personalDescription: SelfDescriptionViewModel;
 
 		public reviewsViewModel: AlbumReviewsViewModel;
 
-		public tagsEditViewModel: tags.TagsEditViewModel;
+		public tagsEditViewModel: TagsEditViewModel;
 
-		public tagUsages: tags.TagListViewModel;
+		public tagUsages: TagListViewModel;
 
         public usersContent = ko.observable<string>();
 
         public getUsers = () => {
 
-            $.post(vdb.functions.mapAbsoluteUrl("/Album/UsersWithAlbumInCollection"), { albumId: this.id }, result => {
+			$.post(functions.mapAbsoluteUrl("/Album/UsersWithAlbumInCollection"), { albumId: this.id }, result => {
 
                 this.usersContent(result);
                 $("#userCollectionsPopup").dialog("open");
@@ -44,43 +62,43 @@ module vdb.viewModels {
         };
 
         constructor(
-			repo: rep.AlbumRepository,
-			userRepo: rep.UserRepository,
-			artistRepository: rep.ArtistRepository,
+			repo: AlbumRepository,
+			userRepo: UserRepository,
+			artistRepository: ArtistRepository,
 			data: AlbumDetailsAjax,
 			reportTypes: IEntryReportType[],
 			loggedUserId: number,
-			languagePreference: models.globalization.ContentLanguagePreference,
+			languagePreference: ContentLanguagePreference,
 			canDeleteAllComments: boolean,
 			formatString: string,
 			showTranslatedDescription: boolean) {
 
 			this.id = data.id;
             this.downloadTagsDialog = new DownloadTagsViewModel(this.id, formatString);
-			this.description = new globalization.EnglishTranslatedStringViewModel(showTranslatedDescription);
+			this.description = new EnglishTranslatedStringViewModel(showTranslatedDescription);
 			this.comments = new EditableCommentsViewModel(repo, this.id, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, data.latestComments, true);
 
 			this.personalDescription = new SelfDescriptionViewModel(data.personalDescriptionAuthor, data.personalDescriptionText, artistRepository, callback => {
-				repo.getOneWithComponents(this.id, 'Artists', cls.globalization.ContentLanguagePreference[languagePreference], result => {
+				repo.getOneWithComponents(this.id, 'Artists', ContentLanguagePreference[languagePreference], result => {
 					var artists = _.chain(result.artists)
-						.filter(helpers.ArtistHelper.isValidForPersonalDescription)
+						.filter(ArtistHelper.isValidForPersonalDescription)
 						.map(a => a.artist).value();
 					callback(artists);
 				});
 			}, vm => repo.updatePersonalDescription(this.id, vm.text(), vm.author.entry()));
 
-			this.tagsEditViewModel = new tags.TagsEditViewModel({
+			this.tagsEditViewModel = new TagsEditViewModel({
 				getTagSelections: callback => userRepo.getAlbumTagSelections(this.id, callback),
 				saveTagSelections: tags => userRepo.updateAlbumTags(this.id, tags, this.tagUsages.updateTagUsages)
-			}, cls.EntryType.Album, callback => repo.getTagSuggestions(this.id, callback));
+			}, EntryType.Album, callback => repo.getTagSuggestions(this.id, callback));
 
-			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
+			this.tagUsages = new TagListViewModel(data.tagUsages);
 
 			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 
 				repo.createReport(this.id, reportType, notes, null);
 
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 
 			});
 
@@ -93,10 +111,10 @@ module vdb.viewModels {
     export interface AlbumDetailsAjax {
 
         id: number;
-		latestComments: dc.CommentContract[];
+		latestComments: CommentContract[];
 		personalDescriptionText?: string;
-		personalDescriptionAuthor?: dc.ArtistApiContract;
-		tagUsages: dc.tags.TagUsageForApiContract[];
+		personalDescriptionAuthor?: ArtistApiContract;
+		tagUsages: TagUsageForApiContract[];
 
     }
 
@@ -134,7 +152,7 @@ module vdb.viewModels {
 	export class AlbumReviewsViewModel {
 
 		constructor(
-			private readonly albumRepository: rep.AlbumRepository,
+			private readonly albumRepository: AlbumRepository,
 			private readonly albumId: number,
 			private readonly canDeleteAllComments: boolean,
 			private readonly canEditAllComments: boolean,
@@ -153,12 +171,12 @@ module vdb.viewModels {
 			this.editReviewModel(null);
 		}
 
-		private canDeleteReview = (comment: dc.albums.AlbumReviewContract) => {
+		private canDeleteReview = (comment: AlbumReviewContract) => {
 			// If one can edit they can also delete
 			return (this.canDeleteAllComments || this.canEditAllComments || (comment.user && comment.user.id === this.loggedUserId));
 		}
 
-		private canEditReview = (comment: dc.albums.AlbumReviewContract) => {
+		private canEditReview = (comment: AlbumReviewContract) => {
 			return (this.canEditAllComments || (comment.user && comment.user.id === this.loggedUserId));
 		}
 
@@ -241,13 +259,13 @@ module vdb.viewModels {
 			return _.some(this.reviews(), review => review.user.id === this.loggedUserId && review.languageCode() === this.languageCode());
 		});
 
-		private userRatings = ko.observableArray<dc.AlbumForUserForApiContract>();
+		private userRatings = ko.observableArray<AlbumForUserForApiContract>();
 
 	}
 
 	export class AlbumReviewViewModel {
 
-		constructor(contract: dc.albums.AlbumReviewContract, public canBeDeleted: boolean, public canBeEdited: boolean) {
+		constructor(contract: AlbumReviewContract, public canBeDeleted: boolean, public canBeEdited: boolean) {
 			this.date = new Date(contract.date);
 			this.id = contract.id;
 			this.languageCode = ko.observable(contract.languageCode);
@@ -266,7 +284,7 @@ module vdb.viewModels {
 			this.title(this.editedTitle());
 		}
 
-		public toContract: () => dc.albums.AlbumReviewContract = () => {
+		public toContract: () => AlbumReviewContract = () => {
 			return { date: this.date.toISOString(), id: this.id, languageCode: this.languageCode(), text: this.text(), title: this.title(), user: this.user };
 		}
 
@@ -284,8 +302,8 @@ module vdb.viewModels {
 
 		public title: KnockoutObservable<string>;
 
-		public user: dc.user.UserApiContract;
+		public user: UserApiContract;
 
 	}
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿
-module vdb.ui_dialog {
+
+//module vdb.ui_dialog {
 	
 	export interface IDialogService {
 		
@@ -7,10 +7,10 @@ module vdb.ui_dialog {
 
 	}
 
-	export class DialogService implements IDialogService {
+	export default class DialogService implements IDialogService {
 		
 		public confirm = (message: string) => confirm(message);
 
 	}
 
-}
+//}

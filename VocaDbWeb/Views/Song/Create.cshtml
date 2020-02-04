@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Helpers;
 @using Res = ViewRes.Song.CreateStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.Create>
 
@@ -91,7 +90,7 @@
 					<table data-bind="foreach: originalSongSuggestions">
 						<tr >
 							<td>
-								<a data-bind="text: entry.name.displayName, attr: { href: vdb.utils.EntryUrlMapper.details_entry(entry) }, entryToolTip: entry" href="#" target="_blank"></a>
+								<a data-bind="text: entry.name.displayName, attr: { href: app.EntryUrlMapper.details_entry(entry) }, entryToolTip: entry" href="#" target="_blank"></a>
 								(<span data-bind="text: entry.entryTypeName"></span>)
 								<div data-bind="if: entry.artistString">
 									<span data-bind="text: entry.artistString"></span>
@@ -119,7 +118,7 @@
 					<tbody>
 						<tr>
 							<td>
-								<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, text: name, artistToolTip: id"></a>								
+								<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', id) }, text: name, artistToolTip: id"></a>								
 								<span data-bind="artistTypeLabel: artistType, typeLabelShowTitle: true"></span>
 							</td>
 							<td>
@@ -173,17 +172,17 @@
 
 @section BodyScripts {
 
-	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Song/Create")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Song/Create.js")
 	<script type="text/javascript">
 
 		$(document).ready(function () {
 			ko.punches.enableAll();
-			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var repo = repoFactory.songRepository();
 			var artistRepo = repoFactory.artistRepository();
 			var tagRepo = repoFactory.tagRepository();
 			var json = @Html.Raw(JsonHelpers.Serialize(Model));
-			ko.applyBindings(new vdb.viewModels.SongCreateViewModel(repo, artistRepo, tagRepo, json));
+			ko.applyBindings(new app.SongCreateViewModel(repo, artistRepo, tagRepo, json));
 
 			$("#pvLoader")
 				.ajaxStart(function() { $(this).show(); })

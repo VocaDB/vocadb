@@ -1,8 +1,10 @@
 /// <reference path="../../Repositories/AlbumRepository.ts" />
 
-module vdb.tests.testSupport {
+import AlbumRepository from '../../Repositories/AlbumRepository';
 
-    export class FakeAlbumRepository extends vdb.repositories.AlbumRepository {
+//module vdb.tests.testSupport {
+
+    export default class FakeAlbumRepository extends AlbumRepository {
 
         public deletedId: number;
         public updatedId: number;
@@ -15,4 +17,4 @@ module vdb.tests.testSupport {
 
     }
 
-}
+//}

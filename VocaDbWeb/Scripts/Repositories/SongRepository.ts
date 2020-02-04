@@ -6,20 +6,43 @@
 /// <reference path="../DataContracts/Song/SongWithPVPlayerAndVoteContract.ts" />
 /// <reference path="../Shared/GlobalFunctions.ts" />
 
-module vdb.repositories {
+import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
+import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import BaseRepository from './BaseRepository';
+import CommentContract from '../DataContracts/CommentContract';
+import { CommonQueryParams } from './BaseRepository';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import CountPerDayContract from '../DataContracts/Aggregate/CountPerDayContract';
+import functions from '../Shared/GlobalFunctions';
+import ICommentRepository from './ICommentRepository';
+import LyricsForSongContract from '../DataContracts/Song/LyricsForSongContract';
+import NewSongCheckResultContract from '../DataContracts/NewSongCheckResultContract';
+import PagingProperties from '../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import PVService from '../Models/PVs/PVService';
+import RatedSongForUserForApiContract from '../DataContracts/User/RatedSongForUserForApiContract';
+import SongApiContract from '../DataContracts/Song/SongApiContract';
+import SongContract from '../DataContracts/Song/SongContract';
+import SongForEditContract from '../DataContracts/Song/SongForEditContract';
+import SongListBaseContract from '../DataContracts/SongListBaseContract';
+import SongType from '../Models/Songs/SongType';
+import SongVoteRating from '../Models/SongVoteRating';
+import SongWithPVPlayerAndVoteContract from '../DataContracts/Song/SongWithPVPlayerAndVoteContract';
+import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
+import TimeUnit from '../Models/Aggregate/TimeUnit';
+import UrlMapper from '../Shared/UrlMapper';
 
-    import dc = vdb.dataContracts;
-	import cls = vdb.models;
+//module vdb.repositories {
 
     // Repository for managing songs and related objects.
     // Corresponds to the SongController class.
-    export class SongRepository extends BaseRepository implements ICommentRepository {
+    export default class SongRepository extends BaseRepository implements ICommentRepository {
 
         public addSongToList = (listId: number, songId: number, notes: string, newListName: string, callback?: Function) => {
 			this.post("/AddSongToList", { listId: listId, songId: songId, notes: notes, newListName: newListName }, callback);	        
         }
 
-		public createComment = (songId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
+		public createComment = (songId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/songs/" + songId + "/comments"), contract, callback, 'json');
 
@@ -38,65 +61,65 @@ module vdb.repositories {
 
 		}
 
-        public findDuplicate = (params, callback: (result: dc.NewSongCheckResultContract) => void) => {
+        public findDuplicate = (params, callback: (result: NewSongCheckResultContract) => void) => {
 			$.getJSON(this.urlMapper.mapRelative("/api/songs/findDuplicate"), params, callback);
 		}
 
         private get: (relative: string, params: any, callback: any) => void;
 
-	    public getByNames(names: string[], ignoreIds: number[], songTypes?: cls.songs.SongType[]) {
+	    public getByNames(names: string[], ignoreIds: number[], songTypes?: SongType[]) {
 
-		    const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/by-names");
+			const url = functions.mergeUrls(this.baseUrl, "/api/songs/by-names");
 			const jqueryPromise = $.getJSON(url, { names: names, songTypes: songTypes, lang: this.languagePreferenceStr, ignoreIds: ignoreIds });
 
 		    const promise = Promise.resolve(jqueryPromise);
-		    return promise as Promise<dc.SongApiContract[]>;
+		    return promise as Promise<SongApiContract[]>;
 
 	    }
 
-		public getComments = (songId: number, callback: (contract: dc.CommentContract[]) => void) => {
+		public getComments = (songId: number, callback: (contract: CommentContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/comments"), callback);
 
 		}
 
-		public getForEdit = (id: number, callback: (result: dc.songs.SongForEditContract) => void) => {
+		public getForEdit = (id: number, callback: (result: SongForEditContract) => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/" + id + "/for-edit");
+			var url = functions.mergeUrls(this.baseUrl, "/api/songs/" + id + "/for-edit");
 			$.getJSON(url, callback);
 
 		}
 
-		public getLyrics = (lyricsId: number, songVersion: number, callback: (contract: dc.songs.LyricsForSongContract) => void) => {
+		public getLyrics = (lyricsId: number, songVersion: number, callback: (contract: LyricsForSongContract) => void) => {
 			$.getJSON(this.urlMapper.mapRelative("/api/songs/lyrics/" + lyricsId + "?v=" + songVersion), callback);
 		}
 
         private getJSON: (relative: string, params: any, callback: any) => void;
 
-		public getOneWithComponents = (id: number, fields: string, languagePreference: string, callback?: (result: dc.SongApiContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
+		public getOneWithComponents = (id: number, fields: string, languagePreference: string, callback?: (result: SongApiContract) => void) => {
+			var url = functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
 			$.getJSON(url, { fields: fields, lang: languagePreference || this.languagePreferenceStr }, callback);
         }
 
-		public getOne = (id: number, callback?: (result: dc.SongContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
+		public getOne = (id: number, callback?: (result: SongContract) => void) => {
+			var url = functions.mergeUrls(this.baseUrl, "/api/songs/" + id);
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);         
 		}
 
 		public getListByParams(params: SongQueryParams, callback) {
 
-			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs");
+			const url = functions.mergeUrls(this.baseUrl, "/api/songs");
 			const jqueryPromise = $.getJSON(url, params);
 
 			const promise = Promise.resolve(jqueryPromise);
 
-			return promise as Promise<dc.PartialFindResultContract<dc.SongApiContract>>;
+			return promise as Promise<PartialFindResultContract<SongApiContract>>;
 
 			//jqueryPromise.then(result => promise.)
 
 		}
 
-		public getList = (paging: dc.PagingProperties, lang: string,
+		public getList = (paging: PagingProperties, lang: string,
 			query: string,
 			sort: string,
 			songTypes: string,
@@ -118,10 +141,10 @@ module vdb.repositories {
 			parentSongId: number,
 			fields: string,
 			status: string,
-			advancedFilters: viewModels.search.AdvancedSearchFilter[],
+			advancedFilters: AdvancedSearchFilter[],
 			callback) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs");
+			var url = functions.mergeUrls(this.baseUrl, "/api/songs");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
@@ -150,21 +173,21 @@ module vdb.repositories {
 
 		}
 
-		public getOverTime = (timeUnit: models.aggregate.TimeUnit, artistId: number, callback?: (points: dataContracts.aggregate.CountPerDayContract[]) => void) => {
+		public getOverTime = (timeUnit: TimeUnit, artistId: number, callback?: (points: CountPerDayContract[]) => void) => {
 			var url = this.urlMapper.mapRelative("/api/songs/over-time");
-			return $.getJSON(url, { timeUnit: models.aggregate.TimeUnit[timeUnit], artistId: artistId }, callback);
+			return $.getJSON(url, { timeUnit: TimeUnit[timeUnit], artistId: artistId }, callback);
 		}
 
 		// Get PV ID by song ID and PV service.
-		public getPvId = (songId: number, pvService: cls.pvs.PVService, callback: (pvId: string) => void) => {
-			return $.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/pvs"), { service: cls.pvs.PVService[pvService] }, callback);			
+		public getPvId = (songId: number, pvService: PVService, callback: (pvId: string) => void) => {
+			return $.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/pvs"), { service: PVService[pvService] }, callback);			
 		}
 
-		public getRatings = (songId: number, callback: (ratings: dc.RatedSongForUserForApiContract[]) => void) => {
+		public getRatings = (songId: number, callback: (ratings: RatedSongForUserForApiContract[]) => void) => {
 			return $.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings"), { userFields: 'MainPicture' }, callback);			
 		}
 
-	    public getTagSuggestions = (songId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
+	    public getTagSuggestions = (songId: number, callback: (contract: TagUsageForApiContract[]) => void) => {
 			$.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/tagSuggestions"), callback);
 	    }
 
@@ -173,42 +196,42 @@ module vdb.repositories {
 
         private post: (relative: string, params: any, callback: any) => void;
 
-		public pvForSongAndService: (songId: number, pvService: cls.pvs.PVService, callback: (result: string) => void) => void; 
+		public pvForSongAndService: (songId: number, pvService: PVService, callback: (result: string) => void) => void; 
 
-		public pvPlayer = (songId: number, params: PVEmbedParams, callback: (result: dc.songs.SongWithPVPlayerAndVoteContract) => void) => {
+		public pvPlayer = (songId: number, params: PVEmbedParams, callback: (result: SongWithPVPlayerAndVoteContract) => void) => {
 			this.getJSON("/PVPlayer/" + songId, params, callback);
 		}
 
-        public pvPlayerWithRating: (songId: number, callback: (result: dc.songs.SongWithPVPlayerAndVoteContract) => void) => void; 
+        public pvPlayerWithRating: (songId: number, callback: (result: SongWithPVPlayerAndVoteContract) => void) => void; 
 
-        //public songListsForSong: (songId: number, callback: (result: dc.SongListContract[]) => void) => void;
+        //public songListsForSong: (songId: number, callback: (result: SongListContract[]) => void) => void;
 
         public songListsForSong: (songId: number, callback: (result: string) => void ) => void;
 
-        public songListsForUser: (ignoreSongId: number, callback: (result: dc.SongListBaseContract[]) => void ) => void;
+        public songListsForUser: (ignoreSongId: number, callback: (result: SongListBaseContract[]) => void ) => void;
 
-		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {
+		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/songs/comments/" + commentId), contract, callback, 'json');
 
 		}
 
-		public updatePersonalDescription = (songId: number, text: string, author: dc.ArtistContract) => {
+		public updatePersonalDescription = (songId: number, text: string, author: ArtistContract) => {
 
 			$.post(this.urlMapper.mapRelative("/api/songs/" + songId + "/personal-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
 
 		}
 
-		public updateSongRating = (songId: number, rating: vdb.models.SongVoteRating, callback: () => void) => {
+		public updateSongRating = (songId: number, rating: SongVoteRating, callback: () => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings");
-			$.post(url, { rating: vdb.models.SongVoteRating[rating] }, callback);
+			$.post(url, { rating: SongVoteRating[rating] }, callback);
 
 		}
 
 		private urlMapper: UrlMapper;
 
-        constructor(baseUrl: string, languagePreference = cls.globalization.ContentLanguagePreference.Default) {
+        constructor(baseUrl: string, languagePreference = ContentLanguagePreference.Default) {
 
 			super(baseUrl, languagePreference);
 
@@ -223,15 +246,15 @@ module vdb.repositories {
             }
 
             this.mapUrl = (relative: string) => {
-                return vdb.functions.mergeUrls(baseUrl, "/Song") + relative;
+				return functions.mergeUrls(baseUrl, "/Song") + relative;
             };
 
             this.post = (relative, params, callback) => {
                 $.post(this.mapUrl(relative), params, callback);
             }
 
-			this.pvForSongAndService = (songId: number, pvService: cls.pvs.PVService, callback: (result: string) => void) => {
-				this.get("/PVForSongAndService", { songId: songId, service: cls.pvs.PVService[pvService] }, callback);
+			this.pvForSongAndService = (songId: number, pvService: PVService, callback: (result: string) => void) => {
+				this.get("/PVForSongAndService", { songId: songId, service: PVService[pvService] }, callback);
             }
 
 			this.pvPlayerWithRating = (songId, callback) => {
@@ -268,4 +291,4 @@ module vdb.repositories {
 
 	}
 
-}
+//}

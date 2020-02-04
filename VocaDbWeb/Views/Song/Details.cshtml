@@ -1,6 +1,5 @@
 ﻿@inherits VocaDb.Web.Code.VocaDbPage<SongDetails>
 @using System.Globalization
-@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Albums
 @using VocaDb.Model.DataContracts.PVs
 @using VocaDb.Model.DataContracts.Songs
@@ -403,7 +402,7 @@
 				@EntryRes.PersonalDescription
 			</h3>
 			<div class="media" data-bind="with: personalDescription">
-				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
+				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
 					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() && author.entry().mainPicture ? author.entry().mainPicture.urlSmallThumb : null }" />
 				</a>
 
@@ -414,7 +413,7 @@
 					</div>
 					}
 					<h3 class="media-heading" data-bind="visible: !author.isEmpty()">
-						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
+						<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
 					</h3>
 					<div data-bind="visible: !editing()">
 						<p data-bind="markdown: text"></p>
@@ -462,7 +461,7 @@
 			<div data-bind="with: selectedLyrics">
 				<p data-bind="visible: source || url">
 					(@Res.LyricsFrom
-					<span data-bind="visible: url"><a class="extLink" data-bind="text: source || url, attr: { href: url, onclick: 'vdb.functions.trackOutboundLink(event)' }"></a>)</span>					
+					<span data-bind="visible: url"><a class="extLink" data-bind="text: source || url, attr: { href: url, onclick: 'app.functions.trackOutboundLink(event)' }"></a>)</span>					
 					<span data-bind="visible: !url, text: source + ')'"></span>
 				</p>
 
@@ -536,7 +535,7 @@
 </div>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Song/Details")
+	@LaravelMixHelper.RenderScripts("~/bundles/Song/Details.js")
 	<script type="text/javascript">
 
 	$(document).ready(function() {
@@ -548,8 +547,8 @@
 
 		var jsonModel = @Html.Raw(Model.Json);
 		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper(rootPath);
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var repo = repoFactory.songRepository();
 		var userRepo = repoFactory.userRepository();
 		var artistRepo = repoFactory.artistRepository();
@@ -557,7 +556,7 @@
 
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.SongReportTypeNames, SongReport.ReportTypesWithRequiredNotes));
 
-		var viewModel = new vdb.viewModels.SongDetailsViewModel(repo, userRepo, 
+		var viewModel = new app.SongDetailsViewModel(repo, userRepo, 
 			artistRepo,
 			resources,
 			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
@@ -565,12 +564,12 @@
 			reportTypes,
 			@UserContext.LoggedUserId, 
 			@LanguagePreferenceInt, 
-			canDeleteAllComments, vdb.ui.showThankYouForRatingMessage);
+			canDeleteAllComments, app.ui.showThankYouForRatingMessage);
 		ko.applyBindings(viewModel);
 
-		viewModel.songListDialog.addedToList = function() { vdb.ui.showSuccessMessage(resources.addedToList); };
+		viewModel.songListDialog.addedToList = function() { app.ui.showSuccessMessage(resources.addedToList); };
 
-		initPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
+		app.initSongDetailsPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 	});
 
 </script>
@@ -589,7 +588,7 @@
 		</a>
 		if (VideoServiceHelper.ShowExternalSiteLink(pv.Service)) {
 			@Html.Raw("&nbsp;")
-			<a href="@pv.Url" onclick="vdb.functions.trackOutboundLink(event)" target="_blank">
+			<a href="@pv.Url" onclick="app.functions.trackOutboundLink(event)" target="_blank">
 				<i class="icon-eye-open"></i>
 				@Res.ViewExternal
 			</a>

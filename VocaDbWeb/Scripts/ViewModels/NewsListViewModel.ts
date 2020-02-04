@@ -1,9 +1,11 @@
 /// <reference path="../typings/knockout/knockout.d.ts" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
 
-module vdb.viewModels {
+import UrlMapper from '../Shared/UrlMapper';
 
-    export class NewsListViewModel {
+//module vdb.viewModels {
+
+    export default class NewsListViewModel {
 
         constructor(readonly blogUrl: string) {
 
@@ -72,4 +74,4 @@ module vdb.viewModels {
 
     }
 
-}
+//}

@@ -84,12 +84,12 @@
 		<tbody data-bind="foreach: page">
 			<tr>
 				<td style="width: 85px">
-					<a data-bind="visible: $data.mainPicture && mainPicture.urlThumb, attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }" href="#">
+					<a data-bind="visible: $data.mainPicture && mainPicture.urlThumb, attr: { href: app.EntryUrlMapper.details_user_byName(name) }" href="#">
 						<img data-bind="attr: { src: $data.mainPicture ? mainPicture.urlThumb : '' }" title="Picture" class="img-rounded" />
 					</a>
 				</td>
 				<td>
-					<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }, text: name, css: { muted: !active }" href="#"></a>
+					<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(name) }, text: name, css: { muted: !active }" href="#"></a>
 				</td>
 				<td>
 					<span data-bind="text: moment(memberSince).format('L')"></span>

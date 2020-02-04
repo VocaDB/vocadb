@@ -1,21 +1,23 @@
 
-module vdb.viewModels {
+import TranslatedEnumField from '../DataContracts/TranslatedEnumField';
+import WebLinkContract from '../DataContracts/WebLinkContract';
+import WebLinkEditViewModel from './WebLinkEditViewModel';
 
-    import dc = vdb.dataContracts;
+//module vdb.viewModels {
 
-    export class WebLinksEditViewModel {
+    export default class WebLinksEditViewModel {
 
         public add: () => void;
 
         public remove: (webLink) => void;
 
-		public toContracts: () => dc.WebLinkContract[] = () => {
+		public toContracts: () => WebLinkContract[] = () => {
 			return ko.toJS(this.webLinks);
 		}
 
         public webLinks: KnockoutObservableArray<WebLinkEditViewModel>;
 
-        constructor(webLinkContracts: dc.WebLinkContract[], public categories?: dc.TranslatedEnumField[]) {
+        constructor(webLinkContracts: WebLinkContract[], public categories?: TranslatedEnumField[]) {
             
             this.webLinks = ko.observableArray(_.map(webLinkContracts, contract => new WebLinkEditViewModel(contract)));
             
@@ -31,5 +33,5 @@ module vdb.viewModels {
 
     }
 
-}
+//}
 

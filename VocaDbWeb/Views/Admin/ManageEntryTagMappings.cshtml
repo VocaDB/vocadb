@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
@@ -80,19 +80,16 @@
 </form>
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit")
-	<script type="text/javascript" src="@Url.Content("~/Scripts/KnockoutExtensions/TagAutoComplete.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/Admin/ManageEntryTagMappingsViewModel.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/Repositories/TagRepository.js")"></script>
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit")
 	<script type="text/javascript">
 		$(function () {
 
 			ko.punches.enableAll();
 
-			var urlMapper = new vdb.UrlMapper('@RootPath');
-			var tagRepo = new vdb.repositories.TagRepository('@RootPath');
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var tagRepo = new app.TagRepository('@RootPath');
 
-			var viewModel = new vdb.viewModels.admin.ManageEntryTagMappingsViewModel(tagRepo);
+			var viewModel = new app.ManageEntryTagMappingsViewModel(tagRepo);
 			ko.applyBindings(viewModel);
 
 		});

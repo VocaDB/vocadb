@@ -1,13 +1,16 @@
 /// <reference path="../../typings/knockout/knockout.d.ts" />
 
-module vdb.viewModels {
+import AlbumRepository from '../../Repositories/AlbumRepository';
+import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import DuplicateEntryResultContract from '../../DataContracts/DuplicateEntryResultContract';
 
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+//module vdb.viewModels {
 
-    export class AlbumCreateViewModel {
+    export default class AlbumCreateViewModel {
 
-		constructor(private albumRepo: rep.AlbumRepository, private artistRepo: rep.ArtistRepository) {
+		constructor(private albumRepo: AlbumRepository, private artistRepo: ArtistRepository) {
 			
 		}
 
@@ -19,9 +22,9 @@ module vdb.viewModels {
 
 		};
 
-		public artists = ko.observableArray<dc.ArtistContract>([]);
+		public artists = ko.observableArray<ArtistContract>([]);
 
-		public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams = {
+		public artistSearchParams: ArtistAutoCompleteParams = {
 			acceptSelection: this.addArtist
 		};
 
@@ -39,13 +42,13 @@ module vdb.viewModels {
 
 		};
 
-		public dupeEntries = ko.observableArray<dc.DuplicateEntryResultContract>([]);
+		public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
 		public nameOriginal = ko.observable("");
 		public nameRomaji = ko.observable("");
 		public nameEnglish = ko.observable("");
 
-		public removeArtist = (artist: dc.ArtistContract) => {
+		public removeArtist = (artist: ArtistContract) => {
 			this.artists.remove(artist);
 		};
 
@@ -58,4 +61,4 @@ module vdb.viewModels {
 
     }
 
-}
+//}

@@ -1,7 +1,9 @@
 
-module vdb.dataContracts.songs {
+import SongWithPVAndVoteContract from './SongWithPVAndVoteContract';
 
-    export interface SongWithPVPlayerAndVoteContract {
+//module vdb.dataContracts.songs {
+
+    export default interface SongWithPVPlayerAndVoteContract {
         
         playerHtml: string;
 
@@ -11,4 +13,4 @@ module vdb.dataContracts.songs {
     
     }
 
-}
+//}

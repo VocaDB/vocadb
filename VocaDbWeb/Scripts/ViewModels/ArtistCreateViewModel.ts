@@ -3,25 +3,31 @@
 /// <reference path="../Repositories/ArtistRepository.ts" />
 /// <reference path="WebLinkEditViewModel.ts" />
 
-module vdb.viewModels {
+import ArtistRepository from '../Repositories/ArtistRepository';
+import ArtistType from '../Models/Artists/ArtistType';
+import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
+import EntryType from '../Models/EntryType';
+import EntryUrlMapper from '../Shared/EntryUrlMapper';
+import TagApiContract from '../DataContracts/Tag/TagApiContract';
+import TagRepository from '../Repositories/TagRepository';
+import WebLinkEditViewModel from './WebLinkEditViewModel';
 
-	import cls = models;
-    import dc = vdb.dataContracts;
+//module vdb.viewModels {
 
-    export class ArtistCreateViewModel {
+    export default class ArtistCreateViewModel {
 
-		artistType = ko.observable(cls.artists.ArtistType[cls.artists.ArtistType.Producer]);
-		artistTypeTag = ko.observable<dc.TagApiContract>(null);
+		artistType = ko.observable(ArtistType[ArtistType.Producer]);
+		artistTypeTag = ko.observable<TagApiContract>(null);
 		artistTypeName = ko.computed(() => this.artistTypeTag()?.name);
 		artistTypeInfo = ko.computed(() => this.artistTypeTag()?.description);
-		artistTypeTagUrl = ko.computed(() => vdb.utils.EntryUrlMapper.details_tag_contract(this.artistTypeTag()));
+		artistTypeTagUrl = ko.computed(() => EntryUrlMapper.details_tag_contract(this.artistTypeTag()));
 
         public checkDuplicates: () => void;
         
-        public dupeEntries = ko.observableArray<dc.DuplicateEntryResultContract>([]);
+        public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);
 
 		private getArtistTypeTag = async (artistType: string) => {
-			const tag = await this.tagRepository.getEntryTypeTag(cls.EntryType.Artist, artistType);
+			const tag = await this.tagRepository.getEntryTypeTag(EntryType.Artist, artistType);
 			this.artistTypeTag(tag);
 		}
 
@@ -39,8 +45,8 @@ module vdb.viewModels {
         public webLink: WebLinkEditViewModel = new WebLinkEditViewModel();
 
 		constructor(
-			artistRepository: vdb.repositories.ArtistRepository,
-			private readonly tagRepository: vdb.repositories.TagRepository,
+			artistRepository: ArtistRepository,
+			private readonly tagRepository: TagRepository,
 			data?) {
             
             if (data) {
@@ -69,4 +75,4 @@ module vdb.viewModels {
     
     }
 
-}
+//}

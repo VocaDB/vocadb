@@ -1,7 +1,9 @@
-﻿
-module vdb.dataContracts.songList {
+
+import PartialImportedSongs from './PartialImportedSongs';
+
+//module vdb.dataContracts.songList {
 	
-	export interface ImportedSongListContract {
+	export default interface ImportedSongListContract {
 		
 		createDate: string;
 
@@ -15,4 +17,4 @@ module vdb.dataContracts.songList {
 
 	}
 
-} 
+//} 

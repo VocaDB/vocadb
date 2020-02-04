@@ -39,8 +39,6 @@
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 
 @section BodyScripts {
-	<script src="@Url.Content("~/Scripts/Repositories/TagRepository.js")"></script>
-	<script src="@Url.Content("~/Scripts/ViewModels/ArchivedEntryViewModel.js")"></script>
 	<script type="text/javascript">
 
 		$(function () {
@@ -48,8 +46,8 @@
             $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
 			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
 
-			var rep = new vdb.repositories.TagRepository('@RootPath');
-			var viewModel = new vdb.viewModels.ArchivedEntryViewModel(@Model.Entry.Tag.Id, @Model.Entry.ArchivedVersion.Version, rep);
+			var rep = new app.TagRepository('@RootPath');
+			var viewModel = new app.ArchivedEntryViewModel(@Model.Entry.Tag.Id, @Model.Entry.ArchivedVersion.Version, rep);
 			ko.applyBindings(viewModel);
 
         });

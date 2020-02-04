@@ -1,16 +1,17 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.AlbumContract>
 
 @{
-    PageProperties.Title = "Merge album - " + Model.Name;
-	ViewBag.Parents = new[] { 
-		Html.ActionLink("Albums", "Index"), 
+	PageProperties.Title = "Merge album - " + Model.Name;
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Albums", "Index"),
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }),
 		Html.ActionLink("Edit", "Edit", new { id = Model.Id }),
-	};		
+	};
 }
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
 
 	@Helpers.MergeEntryInfo()
 
@@ -41,13 +42,13 @@
 }
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Album/Merge")
-    <script type="text/javascript">
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Album/Merge.js")
+	<script type="text/javascript">
 
-	    $(function() { 
-		    
-	    	var repo = new vdb.repositories.AlbumRepository('@RootPath', @LanguagePreferenceInt);
-	    	var vm = new vdb.viewModels.albums.AlbumMergeViewModel(repo, @Model.Id);
+	    $(function() {
+
+	    	var repo = new app.AlbumRepository('@RootPath', @LanguagePreferenceInt);
+	    	var vm = new app.AlbumMergeViewModel(repo, @Model.Id);
 	    	ko.applyBindings(vm);
 
 	    	$("#mergeBtn").click(function () {
@@ -56,5 +57,5 @@
 
 	    });
 
-    </script>
+	</script>
 }

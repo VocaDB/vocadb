@@ -1,9 +1,11 @@
-﻿
-interface KnockoutBindingHandlers {
-	songTypeLabel: KnockoutBindingHandler;
+
+declare global {
+	interface KnockoutBindingHandlers {
+		songTypeLabel: KnockoutBindingHandler;
+	}
 }
 
-module vdb.knockoutExtensions.song {
+//module vdb.knockoutExtensions.song {
 
 	interface SongTypeLabelInfo {
 		addClass: string;
@@ -82,8 +84,8 @@ module vdb.knockoutExtensions.song {
 
 	}
 
-}
+//}
 
 ko.bindingHandlers.songTypeLabel = {
-	init: vdb.knockoutExtensions.song.songTypeLabel
+	init: songTypeLabel
 };

@@ -1,4 +1,4 @@
-﻿/* Validation
+/* Validation
 -----------------------------------------------------------*/
 .field-validation-error {
   color: #ff0000;
@@ -116,10 +116,7 @@ body {
   margin-top: 1px;
   margin-left: 10px;
   background-color: #081A21;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2c8fb2), to(#216b88));
-  background-image: -webkit-linear-gradient(top, #2c8fb2, #216b88);
-  background-image: -o-linear-gradient(top, #2c8fb2, #216b88);
-  background-image: -moz-linear-gradient(center top, #2c8fb2, #216b88);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#2c8fb2), to(#216b88));
   background-image: linear-gradient(top, #2c8fb2, #216b88);
 }
 .vdb .navbar-inverse .btn-navbar:hover {

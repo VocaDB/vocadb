@@ -1,9 +1,12 @@
 
-namespace vdb.dataContracts.tags {
+import EntryTypeAndSubTypeContract from "../EntryTypeAndSubTypeContract";
+import TagBaseContract from "./TagBaseContract";
 
-	export interface EntryTagMappingContract {
+//namespace vdb.dataContracts.tags {
+
+	export default interface EntryTagMappingContract {
 		entryType: EntryTypeAndSubTypeContract;
 		tag: TagBaseContract;
 	}
 
-}
+//}
