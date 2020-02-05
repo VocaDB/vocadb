@@ -5,6 +5,20 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_02_05_1900)]
+	public class EventDescriptionLength : Migration {
+
+		public override void Up() {
+			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEvents).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.AlbumReleaseEvents).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEventSeries).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.AlbumReleaseEventSeries).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+		public override void Down() {}
+
+	}
+
 	[Migration(2020_01_05_1600)]
 	public class TagRelatedEntries : AutoReversingMigration {
 		public override void Up() {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using VocaDb.Model;
@@ -80,7 +80,7 @@ namespace VocaDb.Web.Models.Event {
 
 		public bool Deleted { get; set; }
 
-		[StringLength(400)]
+		[StringLength(1000)]
 		public string Description { get; set; }
 
 		[FromJson]
