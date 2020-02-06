@@ -78,7 +78,9 @@ export default class functions {
 
 }
 
-interface Navigator {
-	// sendBeacon is not available in older TS versions
-	sendBeacon(url: any, data?: any): boolean;
+declare global {
+	interface Navigator {
+		// sendBeacon is not available in older TS versions
+		sendBeacon(url: any, data?: any): boolean;
+	}
 }
