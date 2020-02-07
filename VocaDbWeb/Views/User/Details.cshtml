@@ -151,6 +151,9 @@
 				@if (Model.IsVeteran) {
 					<span class="label label-success">@string.Format(R.Veteran, BrandableStrings.Layout.SiteName)</span>
 				}
+				@if (!string.IsNullOrEmpty(Model.CustomTitle)) {
+					<span class="label label-info">@Model.CustomTitle</span>
+				}
 				@if (!Model.Active)
 				{
 					<span class="label">@R.AccountDisabled</span>
