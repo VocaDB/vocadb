@@ -5,6 +5,13 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_02_08_1800)]
+	public class IPRuleAddressUniqueIndex : AutoReversingMigration {
+		public override void Up() {
+			Create.Index("UX_IPRules_Address").OnTable(TableNames.IPRules).OnColumn("Address").Ascending().WithOptions().Unique();
+		}
+	}
+
 	[Migration(2020_02_07_2000)]
 	public class UserCustomTitle : AutoReversingMigration {
 		public override void Up() {
