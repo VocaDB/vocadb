@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Users {
 	/// Various additional properties for user that are not needed in most cases.
 	/// For example, for authentication and user profile.
 	/// </summary>
-	public class UserOptions {
+	public class UserOptions : IDatabaseObject {
 
 		private string aboutMe;
 		private string albumFormatString;

@@ -6,7 +6,7 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Domain {
 
-	public abstract class EntryReport {
+	public abstract class EntryReport : IEntryWithIntId {
 		
 		public const int MaxNotesLength = 400;
 

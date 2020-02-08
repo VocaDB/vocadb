@@ -239,7 +239,8 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func, string title, string seriesName) {
+		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func, string title, string seriesName)
+			where T : class, IDatabaseObject {
 
 			var values = GetTopValues(func);
 
@@ -296,7 +297,8 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func) {
+		private LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func)
+			where T : class, IDatabaseObject {
 			
 			var cached = GetCachedReport<LocalizedValue[]>();
 

@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Database.Repositories {
 
@@ -22,13 +23,13 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		/// <typeparam name="T2">New entity type.</typeparam>
 		/// <returns>Child context for that entity type. Cannot be null.</returns>
-		IDatabaseContext<T2> OfType<T2>();
+		IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject;
 
 		/// <summary>
 		/// LINQ query against the repository.
 		/// </summary>
 		/// <returns>Queryable interface. Cannot be null.</returns>
-		IQueryable<T2> Query<T2>();
+		IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject;
 
 	}
 

@@ -1,4 +1,4 @@
-﻿namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain {
 
 	/// <summary>
 	/// Record of one entry being merged to another.
@@ -8,7 +8,8 @@
 	/// Merge record is saved separately from the entry itself so it can be made into a weak link
 	/// and the original entry deleted.
 	/// </remarks>
-	public abstract class MergeRecord<T> where T : class, IEntryBase {
+	public abstract class MergeRecord<T> : IEntryWithIntId 
+		where T : class, IEntryBase {
 
 		private T target;
 

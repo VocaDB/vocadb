@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Xml.Linq;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -6,7 +6,7 @@ using VocaDb.Model.Domain.Activityfeed;
 
 namespace VocaDb.Model.Domain.Versioning {
 
-	public abstract class ArchivedObjectVersion {
+	public abstract class ArchivedObjectVersion : IDatabaseObject {
 
 		private string notes;
 

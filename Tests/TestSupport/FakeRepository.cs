@@ -14,7 +14,8 @@ namespace VocaDb.Tests.TestSupport {
 	/// Fake in-memory repository for testing.
 	/// </summary>
 	/// <typeparam name="T">Type of entities this repository contains.</typeparam>
-	public class FakeRepository<T> : IRepository<T> {
+	public class FakeRepository<T> : IRepository<T> 
+		where T : class, IDatabaseObject {
 
 		protected readonly QuerySourceList querySource;
 
@@ -37,7 +38,7 @@ namespace VocaDb.Tests.TestSupport {
 		/// </summary>
 		/// <typeparam name="TEntity">Type of entities to be added.</typeparam>
 		/// <param name="entities">List of entities to be added. Cannot be null.</param>
-		public void Add<TEntity>(params TEntity[] entities) {
+		public void Add<TEntity>(params TEntity[] entities) where TEntity : class, IDatabaseObject {
 			querySource.AddRange(entities);
 		}
 
@@ -89,11 +90,11 @@ namespace VocaDb.Tests.TestSupport {
 			return HandleQuery(ctx => ctx.Load(id));
 		}
 
-		public T2 Load<T2>(object id) {
+		public T2 Load<T2>(object id) where T2 : class, IDatabaseObject {
 			return OfType<T2>().Load(id);
 		}
 
-		public FakeRepository<T2> OfType<T2>() {
+		public FakeRepository<T2> OfType<T2>() where T2 : class, IDatabaseObject {
 			return new FakeRepository<T2>(querySource);
 		}
 
@@ -103,12 +104,12 @@ namespace VocaDb.Tests.TestSupport {
 		/// </summary>
 		/// <typeparam name="T2">Type of entity to be saved.</typeparam>
 		/// <param name="objs">Entity to be saved. Cannot be null.</param>
-		public void Save<T2>(params T2[] objs) {
+		public void Save<T2>(params T2[] objs) where T2 : class, IDatabaseObject {
 			foreach (var obj in objs)
 				CreateContext().Save(obj);
 		}
 
-		public void Save<T2>(ICollection<T2> objs) {
+		public void Save<T2>(ICollection<T2> objs) where T2 : class, IDatabaseObject {
 			foreach (var obj in objs)
 				CreateContext().Save(obj);
 		}
@@ -119,7 +120,7 @@ namespace VocaDb.Tests.TestSupport {
 		/// </summary>
 		/// <typeparam name="T2">Type of entity to be saved.</typeparam>
 		/// <param name="obj">Entity to be saved. Cannot be null.</param>
-		public T2 Save<T2>(T2 obj) {
+		public T2 Save<T2>(T2 obj) where T2 : class, IDatabaseObject {
 			CreateContext().Save(obj);
 			return obj;
 		}
@@ -144,7 +145,9 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public TEntry SaveWithNames<TEntry, TName>(TEntry entry) where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId {
+		public TEntry SaveWithNames<TEntry, TName>(TEntry entry) 
+			where TEntry : class, IEntryWithNames<TName> 
+			where TName : LocalizedStringWithId {
 
 			CreateContext().Save(entry);
 			SaveNames(entry);
@@ -153,7 +156,8 @@ namespace VocaDb.Tests.TestSupport {
 		}
 	}
 
-	public class ListDatabaseContext<T> : IDatabaseContext<T> {
+	public class ListDatabaseContext<T> : IDatabaseContext<T> 
+		where T : class, IDatabaseObject {
 
 		private static readonly bool isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || typeof(IEntryWithLongId).IsAssignableFrom(typeof(T));
 
@@ -226,7 +230,7 @@ namespace VocaDb.Tests.TestSupport {
 
 		public IAuditLogger AuditLogger => new FakeAuditLogger();
 
-		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) => new FakeTransaction();
+		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) => querySource.BeginTransaction(isolationLevel);
 
 		public void Delete(T entity) => querySource.List<T>().Remove(entity);
 
@@ -258,11 +262,12 @@ namespace VocaDb.Tests.TestSupport {
 
 		public Task<T> LoadAsync(object id) => Task.FromResult(Load(id));
 
-		public virtual IDatabaseContext<T2> OfType<T2>() => new ListDatabaseContext<T2>(querySource);
+		public virtual IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject
+			=> new ListDatabaseContext<T2>(querySource);
 
 		public IQueryable<T> Query() => querySource.Query<T>();
 
-		public IQueryable<T2> Query<T2>() => OfType<T2>().Query();
+		public IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject => OfType<T2>().Query();
 
 		public T Save(T obj) {
 

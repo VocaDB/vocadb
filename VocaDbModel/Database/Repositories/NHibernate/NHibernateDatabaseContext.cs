@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate {
@@ -29,11 +30,11 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 		public void Flush() => Session.Flush();
 
-		public IDatabaseContext<T2> OfType<T2>() {
+		public IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject {
 			return new NHibernateDatabaseContext<T2>(Session, PermissionContext);
 		}
 
-		public IQueryable<T2> Query<T2>() => OfType<T2>().Query();
+		public IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject => OfType<T2>().Query();
 
 	}
 

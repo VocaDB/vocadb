@@ -92,7 +92,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				return new ArtistForSongContract { Name = artistName, Roles = roles };
 		}
 
-		private T Save<T>(T entry) {
+		private T Save<T>(T entry) where T : class, IDatabaseObject {
 			return repository.Save(entry);
 		}
 
@@ -654,7 +654,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Save(song.AddTag(tag).Result);
 			var matchingTag = Save(CreateEntry.Song());
-			Save(matchingTag.AddTag(tag));
+			Save(matchingTag.AddTag(tag).Result);
 
 			Save(user.AddSongToFavorites(song, SongVoteRating.Like));
 			var matchingLike = Save(CreateEntry.Song());

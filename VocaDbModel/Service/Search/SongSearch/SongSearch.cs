@@ -118,7 +118,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		} 
 
-		private IQueryable<T> Query<T>() {
+		private IQueryable<T> Query<T>() where T : class, IDatabaseObject {
 			return querySource.Query<T>();
 		}
 

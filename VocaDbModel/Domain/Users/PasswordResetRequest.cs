@@ -2,7 +2,7 @@ using System;
 
 namespace VocaDb.Model.Domain.Users {
 
-	public class PasswordResetRequest {
+	public class PasswordResetRequest : IDatabaseObject {
 
 		public static readonly TimeSpan ExpirationTime = TimeSpan.FromDays(1);
 

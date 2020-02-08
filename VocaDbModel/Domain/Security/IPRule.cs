@@ -2,7 +2,7 @@ using System;
 
 namespace VocaDb.Model.Domain.Security {
 
-	public class IPRule {
+	public class IPRule : IEntryWithIntId {
 
 		private string address;
 		private string notes;

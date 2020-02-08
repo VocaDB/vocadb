@@ -2,7 +2,7 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Domain.Users {
 
-	public class AlbumForUser : IAlbumLink {
+	public class AlbumForUser : IAlbumLink, IEntryWithIntId {
 
 		public const int NotRated = 0;
 
