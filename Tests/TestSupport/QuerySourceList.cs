@@ -57,6 +57,9 @@ namespace VocaDb.Tests.TestSupport {
 			
 		}
 
+		public bool IsCommitted<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject 
+			=> committed.Contains(entity);
+
 		public IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject => new ListDatabaseContext<T2>(this);
 
 		public List<TEntity> List<TEntity>() {
