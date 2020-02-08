@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
 namespace VocaDb.Model.Service.Security {
 
+	public interface IHostCollection {
+		IReadOnlyCollection<string> Hosts { get; }
+	}
+
 	/// <summary>
 	/// Thread-safe collection of hostnames.
 	/// </summary>
-	public class HostCollection {
+	public class HostCollection : IHostCollection {
 
 		private HashSet<string> ips;
 		private readonly ReaderWriterLockSlim readerWriterLock = new ReaderWriterLockSlim();
@@ -61,6 +65,8 @@ namespace VocaDb.Model.Service.Security {
 				}
 			}
 		}
+
+		IReadOnlyCollection<string> IHostCollection.Hosts => Hosts;
 
 	}
 }

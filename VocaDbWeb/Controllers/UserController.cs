@@ -547,7 +547,7 @@ namespace VocaDb.Web.Controllers
 				var user = Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
 					Request.UserAgent,
 					WebHelper.GetInterfaceCultureName(Request),
-					time, ipRuleManager.TempBannedIPs, url);
+					time, ipRuleManager, url);
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 		        return RedirectToAction("Index", "Home");
 

@@ -1296,7 +1296,6 @@
     <Compile Include="Code\PagePropertiesData.cs" />
     <Compile Include="Code\PropertyModelBinder.cs" />
     <Compile Include="Code\Security\StopForumSpam\StopForumSpamClient.cs" />
-    <Compile Include="Code\Security\IPRuleManager.cs" />
     <Compile Include="Code\Security\InMemoryTokenManager.cs" />
     <Compile Include="Code\Security\LogFileReader.cs" />
     <Compile Include="Code\Security\Membership\VocaDbMembershipProvider.cs" />

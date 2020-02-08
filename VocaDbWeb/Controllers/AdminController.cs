@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Security;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;

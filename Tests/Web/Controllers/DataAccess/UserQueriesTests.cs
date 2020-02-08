@@ -39,7 +39,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private PasswordResetRequest request;
 		private FakePermissionContext permissionContext;
 		private FakeUserRepository repository;
-		private HostCollection softBannedIPs;
+		private readonly IPRuleManager ipRuleManager = new IPRuleManager();
 		private FakeStopForumSpamClient stopForumSpamClient;
 		private User userWithEmail;
 		private User userWithoutEmail;
@@ -63,7 +63,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			return data.Create(name, pass, email, hostname, null, 
 				culture,
-				timeSpan ?? TimeSpan.FromMinutes(39), softBannedIPs, string.Empty);
+				timeSpan ?? TimeSpan.FromMinutes(39), ipRuleManager, string.Empty);
 
 		}
 
@@ -99,7 +99,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			mailer = new FakeUserMessageMailer();
 			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer, 
 				new FakeUserIconFactory(), null, new InMemoryImagePersister(), new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager(), new EnumTranslations());
-			softBannedIPs = new HostCollection();
 
 			request = new PasswordResetRequest(userWithEmail) { Id = Guid.NewGuid() };
 			repository.Add(request);
@@ -265,9 +264,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_PossibleSpammer() {
+		public void Create_FlaggedUser_Reported() {
 
-			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 50d, Frequency = 50 };
+			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 30d, Frequency = 50 };
 			var result = CallCreate();
 
 			result.Should().NotBeNull();
@@ -282,9 +281,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_MalicousIP() {
+		public void Create_LikelyMaliciousIP_Limited() {
 
-			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
+			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 60d, Frequency = 100 };
 			var result = CallCreate();
 
 			Assert.IsNotNull(result, "result");
@@ -299,11 +298,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Create_MalicousIP_Banned() {
+
+			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
+			this.Invoking(self => self.CallCreate()).Should().Throw<RestrictedIPException>("User is malicious");
+			ipRuleManager.IsAllowed(defaultHostname).Should().BeFalse("User was banned");
+		
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(TooFastRegistrationException))]
 		public void Create_RegistrationTimeTrigger() {
 
 			CallCreate(timeSpan: TimeSpan.FromSeconds(4));
-			Assert.IsFalse(softBannedIPs.Contains(defaultHostname), "Was not banned");
+			Assert.IsTrue(ipRuleManager.IsAllowed(defaultHostname), "Was not banned");
 
 		}
 
@@ -312,7 +320,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void Create_RegistrationTimeAndBanTrigger() {
 
 			CallCreate(timeSpan: TimeSpan.FromSeconds(1));
-			Assert.IsTrue(softBannedIPs.Contains(defaultHostname), "Was banned");
+			Assert.IsFalse(ipRuleManager.IsAllowed(defaultHostname), "Was banned");
 
 		}
 

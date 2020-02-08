@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace VocaDb.Model.Domain.Security {
 
@@ -13,6 +13,12 @@ namespace VocaDb.Model.Domain.Security {
 			Created = DateTime.Now;
 			Notes = string.Empty;
 
+		}
+
+		public IPRule(string address, string notes = "") {
+			Address = address;
+			Notes = notes;
+			Created = DateTime.Now;
 		}
 
 		public virtual string Address {

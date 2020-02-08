@@ -676,11 +676,12 @@ namespace VocaDb.Model.Database.Queries {
 		/// <exception cref="UserNameAlreadyExistsException">If the user name was already taken.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
 		/// <exception cref="TooFastRegistrationException">If the user registered too fast.</exception>
+		/// <exception cref="RestrictedIPException">User's IP was banned, or determined to be malicious.</exception>
 		public UserContract Create(string name, string pass, string email, string hostname, 
 			string userAgent,
 			string culture,
 			TimeSpan timeSpan,
-			HostCollection softbannedIPs, string verifyEmailUrl) {
+			IPRuleManager ipRuleManager, string verifyEmailUrl) {
 
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNullOrEmpty(() => pass);
@@ -691,7 +692,7 @@ namespace VocaDb.Model.Database.Queries {
 				log.Warn("Suspicious registration form fill time ({0}) from {1}.", timeSpan, hostname);
 
 				if (timeSpan < TimeSpan.FromSeconds(2)) {
-					softbannedIPs.Add(hostname);
+					ipRuleManager.AddTempBannedIP(hostname, "Suspicious registration form fill time");
 				}
 
 				throw new TooFastRegistrationException();
@@ -718,15 +719,23 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				// All ok, create user
-				var sfsCheckResult = sfsClient.CallApi(hostname);
+				var confidenceLimited = 60;
+				var confidenceAutoban = 90;
+				var sfsCheckResult = sfsClient.CallApi(hostname) ?? new SFSResponseContract();
 				var sfsStr = GetSFSCheckStr(sfsCheckResult);
 
+				if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceAutoban) {
+					ctx.AuditLogger.AuditLog($"flagged by SFS, conficence {sfsCheckResult.Confidence}%, user banned", name);
+					ipRuleManager.AddPermBannedIP(ctx, hostname, $"SFS: {name}");
+					throw new RestrictedIPException();
+				}
+
+				// All ok, create user
 				var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
 				user.UpdateLastLogin(hostname, culture);
 				ctx.Save(user);
 
-				if (sfsCheckResult != null && sfsCheckResult.Appears) {
+				if (sfsCheckResult.Appears) {
 
 					var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
 						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
@@ -734,11 +743,10 @@ namespace VocaDb.Model.Database.Queries {
 
 					ctx.OfType<UserReport>().Save(report);
 
-					if (sfsCheckResult.Conclusion == SFSCheckResultType.Malicious) {
+					if (sfsCheckResult.Confidence >= confidenceLimited) { 
 						user.GroupId = UserGroupId.Limited;
 						ctx.Update(user);
 					}
-
 				}
 
 				if (!string.IsNullOrEmpty(user.Email)) {

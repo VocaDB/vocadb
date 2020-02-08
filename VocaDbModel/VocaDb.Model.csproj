@@ -826,6 +826,7 @@
     <Compile Include="Service\Exceptions\NoPasswordException.cs" />
     <Compile Include="Service\Exceptions\RequestNotValidException.cs" />
     <Compile Include="Service\Exceptions\DuplicateTagNameException.cs" />
+    <Compile Include="Service\Exceptions\RestrictedIPException.cs" />
     <Compile Include="Service\Exceptions\TooFastRegistrationException.cs" />
     <Compile Include="Service\Expressions\AlbumLinkExpressions.cs" />
     <Compile Include="Service\ExtSites\AlbumDescriptionGenerator.cs" />
@@ -957,6 +958,7 @@
     <Compile Include="Service\Search\User\UserQueryParams.cs" />
     <Compile Include="Service\Security\HostCollection.cs" />
     <Compile Include="Service\Security\IPasswordHashAlgorithm.cs" />
+    <Compile Include="Service\Security\IPRuleManager.cs" />
     <Compile Include="Service\Security\PasswordHashAlgorithms.cs" />
     <Compile Include="Service\Security\HMICSHA1PasswordHashAlgorithm.cs" />
     <Compile Include="Service\Security\SHA1PasswordHashAlgorithm.cs" />
