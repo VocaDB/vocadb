@@ -40,5 +40,9 @@ namespace VocaDb.Model.Domain.Security {
 				notes = value; 
 			}
 		}
+
+		public override string ToString() {
+			return $"IPRule for {Address}, created at {Created}, notes {Notes}";
+		}
 	}
 }
