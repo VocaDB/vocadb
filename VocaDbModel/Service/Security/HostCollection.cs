@@ -6,6 +6,7 @@ namespace VocaDb.Model.Service.Security {
 
 	public interface IHostCollection {
 		IReadOnlyCollection<string> Hosts { get; }
+		bool Contains(string host);
 	}
 
 	/// <summary>

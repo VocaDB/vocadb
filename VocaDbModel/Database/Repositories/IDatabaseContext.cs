@@ -13,7 +13,7 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		IAuditLogger AuditLogger { get; }
 
-		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel);
+		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadUncommitted);
 
 		void Flush();
 

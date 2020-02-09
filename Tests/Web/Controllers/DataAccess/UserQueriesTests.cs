@@ -302,7 +302,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
 			this.Invoking(self => self.CallCreate()).Should().Throw<RestrictedIPException>("User is malicious");
-			ipRuleManager.IsAllowed(defaultHostname).Should().BeFalse("User was banned");
+			ipRuleManager.PermBannedIPs.Contains(defaultHostname).Should().BeTrue("User was banned");
+
+			repository.List<UserReport>().Should().BeEmpty("Report was not created");
+
+			var ipRule = repository.List<IPRule>().Should().Contain(rule => rule.Address == defaultHostname).Subject;
+			repository.IsCommitted(ipRule).Should().BeTrue("IPRule was committed despite exception");
 		
 		}
 

@@ -32,6 +32,9 @@ namespace VocaDb.Tests.TestSupport {
 			this.querySource = querySource;
 		}
 
+		public int AbortedTransactionCount => querySource.AbortedTransactionCount;
+		public int CommittedTransactionCount => querySource.CommittedTransactionCount;
+
 		/// <summary>
 		/// Adds a list of entities to the repository without performing any additional persisting logic.
 		/// For example, Ids will not be generated this way.
@@ -42,13 +45,11 @@ namespace VocaDb.Tests.TestSupport {
 			querySource.AddRange(entities);
 		}
 
-		public bool Contains<TEntity>(TEntity entity) {
-			return querySource.List<TEntity>().Contains(entity);
-		}
+		public bool Contains<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject 
+			=> querySource.List<TEntity>().Contains(entity);
 
-		public int Count<TEntity>() {
-			return querySource.List<TEntity>().Count;
-		}
+		public int Count<TEntity>() where TEntity : class, IDatabaseObject 
+			=> querySource.List<TEntity>().Count;
 
 		public virtual ListDatabaseContext<T> CreateContext() {
 			return new ListDatabaseContext<T>(querySource);
@@ -78,21 +79,17 @@ namespace VocaDb.Tests.TestSupport {
 			return func(CreateContext());
 		}
 
-		public List<TEntity> List<TEntity>() {
-			return querySource.List<TEntity>();
-		}
+		public bool IsCommitted<T2>(T2 entity) where T2 : class, IDatabaseObject 
+			=> querySource.IsCommitted(entity);
 
-		public T Load(int id) {
-			return HandleQuery(ctx => ctx.Load(id));
-		}
+		public List<TEntity> List<TEntity>() where TEntity : class, IDatabaseObject 
+			=> querySource.List<TEntity>();
 
-		public T Load(object id) {
-			return HandleQuery(ctx => ctx.Load(id));
-		}
+		public T Load(int id) => HandleQuery(ctx => ctx.Load(id));
 
-		public T2 Load<T2>(object id) where T2 : class, IDatabaseObject {
-			return OfType<T2>().Load(id);
-		}
+		public T Load(object id) => HandleQuery(ctx => ctx.Load(id));
+
+		public T2 Load<T2>(object id) where T2 : class, IDatabaseObject => OfType<T2>().Load(id);
 
 		public FakeRepository<T2> OfType<T2>() where T2 : class, IDatabaseObject {
 			return new FakeRepository<T2>(querySource);

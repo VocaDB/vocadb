@@ -27,6 +27,8 @@ namespace VocaDb.Tests.TestSupport {
 		}
 
 		public void Commit() {
+			if (Disposed)
+				throw new InvalidOperationException("Cannot commit after dispose");
 			commitAction?.Invoke();
 			Committed = true;
 		}

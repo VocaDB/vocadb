@@ -10,13 +10,18 @@ namespace VocaDb.Tests.TestSupport {
 
 	public class QuerySourceList : IDatabaseContext {
 
+		// Objects added (but not yet committed) during this transaction
 		private readonly List<IDatabaseObject> added = new List<IDatabaseObject>();
+		// Objects that were committed
 		private readonly List<IDatabaseObject> committed = new List<IDatabaseObject>();
 		private readonly Dictionary<Type, IList> entities;
 
 		public QuerySourceList() {
 			entities = new Dictionary<Type, IList>();
 		}
+
+		public int AbortedTransactionCount { get; private set; }
+		public int CommittedTransactionCount { get; private set; }
 
 		public void Add<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject {
 			added.Add(entity);
@@ -30,12 +35,17 @@ namespace VocaDb.Tests.TestSupport {
 
 		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
 
+			added.Clear();
+			committed.Clear();
+
 			void CommitTransaction() {
+				CommittedTransactionCount++;
 				committed.AddRange(added);
 				added.Clear();
 			}
 
 			void RollbackTransaction() {
+				AbortedTransactionCount++;
 				added.Clear();
 			}
 
@@ -62,7 +72,7 @@ namespace VocaDb.Tests.TestSupport {
 
 		public IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject => new ListDatabaseContext<T2>(this);
 
-		public List<TEntity> List<TEntity>() {
+		public List<TEntity> List<TEntity>() where TEntity : class, IDatabaseObject {
 
 			var t = typeof(TEntity);
 
@@ -73,7 +83,7 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public T Load<T>(object id) {
+		public T Load<T>(object id) where T : class, IDatabaseObject {
 
 			if (!typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || !(id is int))
 			{
@@ -102,6 +112,7 @@ namespace VocaDb.Tests.TestSupport {
 		public void Reset() {
 			added.Clear();
 			committed.Clear();
+			CommittedTransactionCount = AbortedTransactionCount = 0;
 		}
 
 	}

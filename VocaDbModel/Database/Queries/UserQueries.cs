@@ -699,7 +699,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			}
 
-			return repository.HandleTransaction(ctx => {
+			return repository.HandleQuery(ctx => {
 
 				// Verification
 				var lc = name.ToLowerInvariant();
@@ -719,46 +719,62 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var confidenceLimited = 60;
 				var confidenceAutoban = 90;
 				var sfsCheckResult = sfsClient.CallApi(hostname) ?? new SFSResponseContract();
 				var sfsStr = GetSFSCheckStr(sfsCheckResult);
 
 				if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceAutoban) {
-					ctx.AuditLogger.AuditLog($"flagged by SFS, conficence {sfsCheckResult.Confidence}%, user banned", name);
-					ipRuleManager.AddPermBannedIP(ctx, hostname, $"SFS: {name}");
+					using (var tx = ctx.BeginTransaction()) {
+						ctx.AuditLogger.AuditLog($"flagged by SFS, conficence {sfsCheckResult.Confidence}%, user banned", name);
+						ipRuleManager.AddPermBannedIP(ctx, hostname, $"SFS: {name}");
+						tx.Commit();
+					}
 					throw new RestrictedIPException();
 				}
 
 				// All ok, create user
-				var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
-				user.UpdateLastLogin(hostname, culture);
-				ctx.Save(user);
-
-				if (sfsCheckResult.Appears) {
-
-					var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
-						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
-						sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
-
-					ctx.OfType<UserReport>().Save(report);
-
-					if (sfsCheckResult.Confidence >= confidenceLimited) { 
-						user.GroupId = UserGroupId.Limited;
-						ctx.Update(user);
-					}
+				User user;
+				using (var tx = ctx.BeginTransaction()) {
+					user = CreateUser(ctx, name, pass, email, hostname, culture, sfsCheckResult, verifyEmailUrl);
+					ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}, UA '{3}').", MakeGeoIpToolLink(hostname), timeSpan, sfsStr, userAgent), user);
+					tx.Commit();
 				}
-
-				if (!string.IsNullOrEmpty(user.Email)) {
-					var subject = string.Format(UserAccountStrings.AccountCreatedSubject, brandableStringsManager.Layout.SiteName);
-					SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
-				}
-
-				ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}, UA '{3}').", MakeGeoIpToolLink(hostname), timeSpan, sfsStr, userAgent), user);
 
 				return new UserContract(user);
 
 			});
+
+		}
+
+		private User CreateUser(IDatabaseContext<User> ctx, string name, string pass, string email, string hostname, string culture,
+			SFSResponseContract sfsCheckResult, string verifyEmailUrl) {
+
+			var confidenceLimited = 60;
+
+			var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
+			user.UpdateLastLogin(hostname, culture);
+			ctx.Save(user);
+
+			if (sfsCheckResult.Appears) {
+
+				var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
+					string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
+					sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
+
+				ctx.OfType<UserReport>().Save(report);
+
+				if (sfsCheckResult.Confidence >= confidenceLimited) { 
+					user.GroupId = UserGroupId.Limited;
+					ctx.Update(user);
+				}
+			}
+
+			if (!string.IsNullOrEmpty(user.Email)) {
+				var subject = string.Format(UserAccountStrings.AccountCreatedSubject, brandableStringsManager.Layout.SiteName);
+				SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
+			}
+
+			return user;
 
 		}
 
