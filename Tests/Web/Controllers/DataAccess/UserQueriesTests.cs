@@ -214,6 +214,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual("mikumiku@crypton.jp", user.Email, "Email");
 			Assert.AreEqual(UserGroupId.Regular, user.GroupId, "GroupId");
 			repository.List<UserReport>().Should().BeEmpty();
+			repository.IsCommitted(user).Should().BeTrue();
 
 			var verificationRequest = repository.List<PasswordResetRequest>().FirstOrDefault(r => r.User.Equals(user));
 			Assert.IsNotNull(verificationRequest, "Verification request was created");
@@ -277,6 +278,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var user = GetUserFromRepo(result.Name);
 			user.GroupId.Should().Be(UserGroupId.Regular, because: "User is not limited");
+			repository.IsCommitted(user).Should().BeTrue();
 
 		}
 
@@ -294,6 +296,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var user = GetUserFromRepo(result.Name);
 			user.GroupId.Should().Be(UserGroupId.Limited, because: "User was limited");
+			repository.IsCommitted(user).Should().BeTrue();
 		
 		}
 

@@ -67,6 +67,9 @@ namespace VocaDb.Tests.TestSupport {
 			
 		}
 
+		/// <summary>
+		/// Tests that an object was saved to database during an active transaction and the transaction was committed.
+		/// </summary>
 		public bool IsCommitted<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject 
 			=> committed.Contains(entity);
 

@@ -79,6 +79,9 @@ namespace VocaDb.Tests.TestSupport {
 			return func(CreateContext());
 		}
 
+		/// <summary>
+		/// Tests that an object was saved to database during an active transaction and the transaction was committed.
+		/// </summary>
 		public bool IsCommitted<T2>(T2 entity) where T2 : class, IDatabaseObject 
 			=> querySource.IsCommitted(entity);
 
