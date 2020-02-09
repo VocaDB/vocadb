@@ -552,26 +552,21 @@ namespace VocaDb.Web.Controllers
 		        return RedirectToAction("Index", "Home");
 
 	        } catch (UserNameAlreadyExistsException) {
-
 		        ModelState.AddModelError("UserName", ViewRes.User.CreateStrings.UsernameTaken);
 		        return View(model);
-
 	        } catch (UserEmailAlreadyExistsException) {
-
 				ModelState.AddModelError("Email", ViewRes.User.CreateStrings.EmailTaken);
-				return View(model);
-      
+				return View(model);   
 	        } catch (InvalidEmailFormatException) {
-
 				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
 				return View(model);
-
 	        } catch (TooFastRegistrationException) {
-
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
-
-	        }
+	        } catch (RestrictedIPException) {
+				ModelState.AddModelError("Restricted", restrictedErr);
+				return View(model);
+			}
 
         }
 
