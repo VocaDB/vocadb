@@ -36,6 +36,10 @@ namespace VocaDb.Model.Database.Repositories {
 			ctx.OfType<T>().Delete(obj);
 		}
 
+		public static Task DeleteAsync<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject {
+			return ctx.OfType<T>().DeleteAsync(obj);
+		}
+
 		public static void Delete<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject {
 			ctx.OfType<T2>().Delete(obj);
 		}

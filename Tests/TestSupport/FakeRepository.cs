@@ -234,6 +234,11 @@ namespace VocaDb.Tests.TestSupport {
 
 		public void Delete(T entity) => querySource.List<T>().Remove(entity);
 
+		public Task DeleteAsync(T entity) {
+			Delete(entity);
+			return Task.CompletedTask;
+		}
+
 		public void Dispose() {
 			
 		}

@@ -1,3 +1,6 @@
+using NHibernate.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Repositories;
@@ -23,6 +26,31 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly IPRuleManager ipRuleManager;
 		private readonly IRepository repo;
 		private readonly IUserPermissionContext userContext;
+
+		[Route("{id:int}")]
+		public async Task DeleteIPRule(int ruleID) {
+
+			userContext.VerifyPermission(PermissionToken.ManageIPRules);
+
+			await repo.HandleTransactionAsync(async ctx => {
+				var rule = await ctx.LoadAsync<IPRule>(ruleID);
+				await ctx.DeleteAsync(rule);
+				ipRuleManager.RemovePermBannedIP(rule.Address);
+				ctx.AuditLogger.SysLog($"removed {rule.Address} from banned IPs");
+			});
+
+		}
+
+		[Route("")]
+		public async Task<IEnumerable<IPRule>> GetIPRules() {
+
+			userContext.VerifyPermission(PermissionToken.ManageIPRules);
+
+			return await repo.HandleQueryAsync(async ctx => {
+				return await ctx.Query<IPRule>().ToListAsync();
+			});
+
+		}
 
 		[Route("")]
 		public bool PostNewIPRule(IPRule rule) {

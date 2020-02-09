@@ -68,6 +68,10 @@ namespace VocaDb.Model.Service.Security {
 			return !permBannedIPs.Contains(hostAddress) && !tempBannedIPs.Contains(hostAddress);
 		}
 
+		public void RemovePermBannedIP(string address) {
+			permBannedIPs.Remove(address);
+		}
+
 		public void Reset(IEnumerable<string> ips) {
 			permBannedIPs.Reset(ips);
 		}

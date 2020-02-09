@@ -47,6 +47,8 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 		public void Delete(T entity) => Session.Delete(entity);
 
+		public Task DeleteAsync(T entity) => Session.DeleteAsync(entity);
+
 		public T Get(object id) => Session.Get<T>(id);
 
 		public T Load(object id) => Session.Load<T>(id);

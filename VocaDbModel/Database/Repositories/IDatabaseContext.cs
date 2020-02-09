@@ -59,6 +59,8 @@ namespace VocaDb.Model.Database.Repositories {
 		/// <param name="entity">Entity to be deleted. Cannot be null.</param>
 		void Delete(T entity);
 
+		Task DeleteAsync(T entity);
+
 		/// <summary>
 		/// Loads an entity from the repository, assuming the entity exists.
 		/// </summary>

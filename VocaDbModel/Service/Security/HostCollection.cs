@@ -56,6 +56,15 @@ namespace VocaDb.Model.Service.Security {
 			}
 		}
 
+		public void Remove(string host) {
+			readerWriterLock.EnterWriteLock();
+			try {
+				ips.Remove(host);
+			} finally {
+				readerWriterLock.ExitWriteLock();
+			}
+		}
+
 		public string[] Hosts {
 			get {
 				readerWriterLock.EnterReadLock();
