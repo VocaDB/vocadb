@@ -13,6 +13,12 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		IAuditLogger AuditLogger { get; }
 
+		/// <summary>
+		/// Begins an explicit transaction.
+		/// The transaction object must be committed and disposed upon successful completion.
+		/// </summary>
+		/// <param name="isolationLevel">Isolation level.</param>
+		/// <returns>Transaction object.</returns>
 		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadUncommitted);
 
 		void Flush();
