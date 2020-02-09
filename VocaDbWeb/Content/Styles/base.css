@@ -210,6 +210,10 @@ body {
 .archived-entry-compare-modified {
   font-weight: bold;
 }
+.entry-report-notes {
+  overflow: hidden;
+  max-width: 500px;
+}
 .event-teaser,
 .event-teaser-tiny {
   width: 29%;
