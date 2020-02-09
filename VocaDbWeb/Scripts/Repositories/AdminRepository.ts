@@ -8,7 +8,7 @@ module vdb.repositories {
         constructor(private urlMapper: vdb.UrlMapper) { }
 
 		public addIpToBanList = (rule: vdb.viewModels.IPRuleContract, callback: (result: boolean) => void) => {
-            return $.post(this.urlMapper.mapRelative("/api/admin/permBannedIPs"), rule, callback);
+			return $.post(this.urlMapper.mapRelative("/api/ip-rules"), rule, callback);
 		}
 
         public checkSFS = (ip: string, callback: (html: string) => void) => {
