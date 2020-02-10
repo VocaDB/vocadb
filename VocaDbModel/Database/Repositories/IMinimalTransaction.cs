@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 
 namespace VocaDb.Model.Database.Repositories {
 
@@ -11,6 +12,8 @@ namespace VocaDb.Model.Database.Repositories {
 	public interface IMinimalTransaction : IDisposable {
 
 		void Commit();
+
+		Task CommitAsync();
 
 		void Rollback();
 

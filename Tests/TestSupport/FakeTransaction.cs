@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 
 namespace VocaDb.Tests.TestSupport {
@@ -31,6 +32,11 @@ namespace VocaDb.Tests.TestSupport {
 				throw new InvalidOperationException("Cannot commit after dispose");
 			commitAction?.Invoke();
 			Committed = true;
+		}
+
+		public Task CommitAsync() {
+			Commit();
+			return Task.CompletedTask;
 		}
 
 		public void Rollback() {
