@@ -583,11 +583,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void RequestPasswordReset() {
+		public async Task RequestPasswordReset() {
 			
 			var num = repository.List<PasswordResetRequest>().Count;
 
-			data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
+			await data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
 
 			Assert.AreEqual("Password reset requested.", mailer.Subject, "Subject");
 			Assert.AreEqual(userWithEmail.Email, mailer.ToEmail, "ToEmail");
@@ -597,18 +597,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNotFoundException))]
-		public void RequestPasswordReset_NotFound() {
+		public async Task RequestPasswordReset_NotFound() {
 
-			data.RequestPasswordReset(userWithEmail.Name, "notfound@vocadb.net", string.Empty);
+			await data.RequestPasswordReset(userWithEmail.Name, "notfound@vocadb.net", string.Empty);
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNotFoundException))]
-		public void RequestPasswordReset_Disabled() {
+		public async Task RequestPasswordReset_Disabled() {
 
 			userWithEmail.Active = false;
-			data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
+			await data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
 
 		}
 

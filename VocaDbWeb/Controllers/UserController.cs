@@ -196,9 +196,10 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult ForgotPassword(ForgotPassword model) {
+		public async Task<ActionResult> ForgotPassword(ForgotPassword model) {
 
-			if (!ReCaptcha2.Validate(Request, AppConfig.ReCAPTCHAKey).Success)
+			var captchaResult = await ReCaptcha2.ValidateAsync(Request, AppConfig.ReCAPTCHAKey);
+			if (!captchaResult.Success)
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
 
 			if (!ModelState.IsValid) {
@@ -206,7 +207,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			try {
-				Data.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
+				await Data.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
 			} catch (UserNotFoundException) {}
 
 			TempData.SetStatusMessage(ViewRes.User.ForgotPasswordStrings.MessageSent);

@@ -1321,16 +1321,16 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="email">User email. Must belong to that user. Cannot be null or empty.</param>
 		/// <param name="resetUrl">Password reset URL. Cannot be null or empty.</param>
 		/// <exception cref="UserNotFoundException">If no active user matching the email was found.</exception>
-		public void RequestPasswordReset(string username, string email, string resetUrl) {
+		public async Task RequestPasswordReset(string username, string email, string resetUrl) {
 
 			ParamIs.NotNullOrEmpty(() => username);
 			ParamIs.NotNullOrEmpty(() => email);
 
 			var lc = username.ToLowerInvariant();
 
-			repository.HandleTransaction(ctx => {
+			await repository.HandleTransactionAsync(async ctx => {
 
-				var user = ctx.Query().FirstOrDefault(u => u.Active && u.NameLC.Equals(lc) && email.Equals(u.Email));
+				var user = await ctx.Query().Where(u => u.Active && u.NameLC.Equals(lc) && email.Equals(u.Email)).VdbFirstOrDefaultAsync();
 
 				if (user == null) {
 					log.Info("User not found or not active: {0}", username);
@@ -1338,13 +1338,13 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var request = new PasswordResetRequest(user);
-				ctx.Save(request);
+				await ctx.SaveAsync(request);
 
 				var resetFullUrl = string.Format("{0}/{1}", resetUrl, request.Id);
 				var subject = UserAccountStrings.PasswordResetSubject;
 				var body = string.Format(UserAccountStrings.PasswordResetBody, resetFullUrl);
 
-				mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
+				await mailer.SendEmailAsync(request.User.Email, request.User.Name, subject, body);
 
 				ctx.AuditLogger.SysLog($"requested password reset with ID {CryptoHelper.HashSHA1(request.Id.ToString())}", username);
 
