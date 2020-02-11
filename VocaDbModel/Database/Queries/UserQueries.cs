@@ -5,8 +5,10 @@ using System.Net.Mail;
 using System.Runtime.Caching;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using NHibernate;
+using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -677,7 +679,7 @@ namespace VocaDb.Model.Database.Queries {
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
 		/// <exception cref="TooFastRegistrationException">If the user registered too fast.</exception>
 		/// <exception cref="RestrictedIPException">User's IP was banned, or determined to be malicious.</exception>
-		public UserContract Create(string name, string pass, string email, string hostname, 
+		public async Task<UserContract> Create(string name, string pass, string email, string hostname, 
 			string userAgent,
 			string culture,
 			TimeSpan timeSpan,
@@ -699,11 +701,11 @@ namespace VocaDb.Model.Database.Queries {
 
 			}
 
-			return repository.HandleQuery(ctx => {
+			return await repository.HandleQueryAsync(async ctx => {
 
 				// Verification
 				var lc = name.ToLowerInvariant();
-				var existing = ctx.Query().FirstOrDefault(u => u.NameLC == lc);
+				var existing = await ctx.Query().Where(u => u.NameLC == lc).VdbFirstOrDefaultAsync();
 
 				if (existing != null)
 					throw new UserNameAlreadyExistsException();
@@ -712,7 +714,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					existing = ctx.Query().FirstOrDefault(u => u.Active && u.Email == email);
+					existing = await ctx.Query().Where(u => u.Active && u.Email == email).VdbFirstOrDefaultAsync();
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();
@@ -720,14 +722,14 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var confidenceAutoban = 90;
-				var sfsCheckResult = sfsClient.CallApi(hostname) ?? new SFSResponseContract();
+				var sfsCheckResult = await sfsClient.CallApiAsync(hostname) ?? new SFSResponseContract();
 				var sfsStr = GetSFSCheckStr(sfsCheckResult);
 
 				if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceAutoban) {
 					using (var tx = ctx.BeginTransaction()) {
 						ctx.AuditLogger.AuditLog($"flagged by SFS, conficence {sfsCheckResult.Confidence}%, user banned", name);
 						ipRuleManager.AddPermBannedIP(ctx, hostname, $"SFS: {name}");
-						tx.Commit();
+						await tx.CommitAsync();
 					}
 					throw new RestrictedIPException();
 				}
@@ -735,9 +737,9 @@ namespace VocaDb.Model.Database.Queries {
 				// All ok, create user
 				User user;
 				using (var tx = ctx.BeginTransaction()) {
-					user = CreateUser(ctx, name, pass, email, hostname, culture, sfsCheckResult, verifyEmailUrl);
+					user = await CreateUser(ctx, name, pass, email, hostname, culture, sfsCheckResult, verifyEmailUrl);
 					ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}, UA '{3}').", MakeGeoIpToolLink(hostname), timeSpan, sfsStr, userAgent), user);
-					tx.Commit();
+					await tx.CommitAsync();
 				}
 
 				return new UserContract(user);
@@ -746,14 +748,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private User CreateUser(IDatabaseContext<User> ctx, string name, string pass, string email, string hostname, string culture,
+		private async Task<User> CreateUser(IDatabaseContext<User> ctx, string name, string pass, string email, string hostname, string culture,
 			SFSResponseContract sfsCheckResult, string verifyEmailUrl) {
 
 			var confidenceLimited = 60;
 
 			var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
 			user.UpdateLastLogin(hostname, culture);
-			ctx.Save(user);
+			await ctx.SaveAsync(user);
 
 			if (sfsCheckResult.Appears) {
 
@@ -761,11 +763,11 @@ namespace VocaDb.Model.Database.Queries {
 					string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
 					sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
 
-				ctx.OfType<UserReport>().Save(report);
+				await ctx.OfType<UserReport>().SaveAsync(report);
 
 				if (sfsCheckResult.Confidence >= confidenceLimited) { 
 					user.GroupId = UserGroupId.Limited;
-					ctx.Update(user);
+					await ctx.UpdateAsync(user);
 				}
 			}
 

@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.Service.BrandableStrings;
 
@@ -53,6 +54,11 @@ namespace VocaDb.Model.Service.Helpers {
 
 			return true;
 
+		}
+
+		public Task<bool> SendEmailAsync(string toEmail, string receiverName, string subject, string body) {
+			// TODO
+			return Task.FromResult(SendEmail(toEmail, receiverName, subject, body));
 		}
 
 	}

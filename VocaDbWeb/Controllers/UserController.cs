@@ -35,6 +35,7 @@ using VocaDb.Web.Models.User;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Code.Exceptions;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -506,7 +507,7 @@ namespace VocaDb.Web.Controllers
         // POST: /User/Create
 
         [HttpPost]
-        public ActionResult Create(RegisterModel model) {
+        public async Task<ActionResult> Create(RegisterModel model) {
 
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
@@ -520,7 +521,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			var recaptchaResult = ReCaptcha2.Validate(Request, AppConfig.ReCAPTCHAKey);
+			var recaptchaResult = await ReCaptcha2.ValidateAsync(Request, AppConfig.ReCAPTCHAKey);
 			if (!recaptchaResult.Success) {
 
 				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (error {0})", recaptchaResult.Error), LogLevel.Warn);
@@ -544,7 +545,7 @@ namespace VocaDb.Web.Controllers
 	        try {
 
 				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
-				var user = Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
+				var user = await Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
 					Request.UserAgent,
 					WebHelper.GetInterfaceCultureName(Request),
 					time, ipRuleManager, url);

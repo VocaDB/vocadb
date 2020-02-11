@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -58,7 +59,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsTrue(userWithEmail.Albums.Any(a => a.Album == album), "User has album");
 		}
 
-		private UserContract CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, 
+		private Task<UserContract> CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, 
 			string culture = defaultCulture, TimeSpan? timeSpan = null) {
 
 			return data.Create(name, pass, email, hostname, null, 
@@ -200,10 +201,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create() {
+		public async Task Create() {
 
 			var name = "hatsune_miku";
-			var result = CallCreate(name: name, email: "mikumiku@crypton.jp");
+			var result = await CallCreate(name: name, email: "mikumiku@crypton.jp");
 
 			Assert.IsNotNull(result, "Result is not null");
 			Assert.AreEqual(name, result.Name, "Name");
@@ -223,33 +224,33 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public void Create_NameAlreadyExists() {
+		public async Task  Create_NameAlreadyExists() {
 
-			CallCreate(name: "already_exists");
+			await CallCreate(name: "already_exists");
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public void Create_NameAlreadyExistsDifferentCase() {
+		public async Task  Create_NameAlreadyExistsDifferentCase() {
 
-			CallCreate(name: "Already_Exists");
+			await CallCreate(name: "Already_Exists");
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
-		public void Create_EmailAlreadyExists() {
+		public async Task Create_EmailAlreadyExists() {
 
-			CallCreate(email: "already_in_use@vocadb.net");
+			await CallCreate(email: "already_in_use@vocadb.net");
 
 		}
 
 		[TestMethod]
-		public void Create_EmailAlreadyExistsButDisabled() {
+		public async Task Create_EmailAlreadyExistsButDisabled() {
 
 			userWithEmail.Active = false;
-			var result = CallCreate(email: "already_in_use@vocadb.net");
+			var result = await CallCreate(email: "already_in_use@vocadb.net");
 
 			Assert.IsNotNull(result, "Result is not null");
 			Assert.AreEqual("hatsune_miku", result.Name, "Name");
@@ -258,17 +259,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidEmailFormatException))]
-		public void Create_InvalidEmailFormat() {
+		public async Task Create_InvalidEmailFormat() {
 
-			CallCreate(email: "mikumiku");
+			await CallCreate(email: "mikumiku");
 
 		}
 
 		[TestMethod]
-		public void Create_FlaggedUser_Reported() {
+		public async Task Create_FlaggedUser_Reported() {
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 30d, Frequency = 50 };
-			var result = CallCreate();
+			var result = await CallCreate();
 
 			result.Should().NotBeNull();
 			var report = repository.List<UserReport>().FirstOrDefault();
@@ -283,10 +284,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_LikelyMaliciousIP_Limited() {
+		public async Task Create_LikelyMaliciousIP_Limited() {
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 60d, Frequency = 100 };
-			var result = CallCreate();
+			var result = await CallCreate();
 
 			Assert.IsNotNull(result, "result");
 			var report = repository.List<UserReport>().FirstOrDefault();
@@ -316,18 +317,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(TooFastRegistrationException))]
-		public void Create_RegistrationTimeTrigger() {
+		public async Task Create_RegistrationTimeTrigger() {
 
-			CallCreate(timeSpan: TimeSpan.FromSeconds(4));
+			await CallCreate(timeSpan: TimeSpan.FromSeconds(4));
 			Assert.IsTrue(ipRuleManager.IsAllowed(defaultHostname), "Was not banned");
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(TooFastRegistrationException))]
-		public void Create_RegistrationTimeAndBanTrigger() {
+		public async Task Create_RegistrationTimeAndBanTrigger() {
 
-			CallCreate(timeSpan: TimeSpan.FromSeconds(1));
+			await CallCreate(timeSpan: TimeSpan.FromSeconds(1));
 			Assert.IsFalse(ipRuleManager.IsAllowed(defaultHostname), "Was banned");
 
 		}
