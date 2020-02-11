@@ -570,11 +570,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void RequestEmailVerification() {
+		public async Task RequestEmailVerification() {
 			
 			var num = repository.List<PasswordResetRequest>().Count;
 
-			data.RequestEmailVerification(userWithEmail.Id, string.Empty);
+			await data.RequestEmailVerification(userWithEmail.Id, string.Empty);
 
 			Assert.AreEqual("Verify your email at VocaDB.", mailer.Subject, "Subject");
 			Assert.AreEqual(userWithEmail.Email, mailer.ToEmail, "ToEmail");

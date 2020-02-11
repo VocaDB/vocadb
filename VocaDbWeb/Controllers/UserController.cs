@@ -722,10 +722,10 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public void RequestEmailVerification() {
+		public async Task RequestEmailVerification() {
 			
 			var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User"));
-			Data.RequestEmailVerification(LoggedUserId, url.ToString());
+			await Data.RequestEmailVerification(LoggedUserId, url.ToString());
 
 		}
 

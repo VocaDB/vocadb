@@ -160,6 +160,9 @@ namespace VocaDb.Model.Database.Repositories {
 		public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject => 
 			ctx.OfType<T2>().Save(obj);
 
+		public static Task<T2> SaveAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject => 
+			ctx.OfType<T2>().SaveAsync(obj);
+
 		public static T Save<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
 			=> ctx.OfType<T>().Save(obj);
 

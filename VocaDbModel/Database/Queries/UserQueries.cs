@@ -331,14 +331,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject) {
+		private async Task SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject) {
 			
 			var request = new PasswordResetRequest(user);
-			ctx.Save(request);
-
+			await ctx.SaveAsync(request);
 			var body = string.Format(UserAccountStrings.VerifyEmailBody, brandableStringsManager.Layout.SiteName, resetUrl, request.Id);
 
-			mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
+			await mailer.SendEmailAsync(request.User.Email, request.User.Name, subject, body);
 
 		}
 
@@ -773,7 +772,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			if (!string.IsNullOrEmpty(user.Email)) {
 				var subject = string.Format(UserAccountStrings.AccountCreatedSubject, brandableStringsManager.Layout.SiteName);
-				SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
+				await SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
 			}
 
 			return user;
@@ -1299,16 +1298,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void RequestEmailVerification(int userId, string resetUrl) {
+		public async Task RequestEmailVerification(int userId, string resetUrl) {
 
-			repository.HandleTransaction(ctx => {
+			await repository.HandleTransactionAsync(async ctx => {
 
-				var user = ctx.Load(userId);
+				var user = await ctx.LoadAsync(userId);
 				ctx.AuditLogger.SysLog(string.Format("requesting email verification ({0})", user.Email), user.Name);
 
 				var subject = string.Format(UserAccountStrings.VerifyEmailSubject, brandableStringsManager.Layout.SiteName);
 
-				SendEmailVerificationRequest(ctx, user, resetUrl, subject);
+				await SendEmailVerificationRequest(ctx, user, resetUrl, subject);
 
 			});
 
