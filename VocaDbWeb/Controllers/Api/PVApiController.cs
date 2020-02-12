@@ -36,21 +36,33 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of PVs for songs.
 		/// </summary>
+		/// <param name="name">PV title (optional).</param>
 		/// <param name="author">Uploader name (optional).</param>
+		/// <param name="service">PV service (optional).</param>
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of PVs.</returns>
 		[Route("for-songs")]
-		public PartialFindResult<PVForSongContract> GetList(string author = null, int maxResults = 10, bool getTotalCount = false, 
+		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null, 
+			PVService? service = null,
+			int maxResults = 10, bool getTotalCount = false, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
 			return repository.HandleQuery(db => {
 
 				var query = db.Query<PVForSong>();
 
+				if (!string.IsNullOrEmpty(name)) {
+					query = query.Where(pv => pv.Name == name);
+				}
+
 				if (!string.IsNullOrEmpty(author)) {
-					query = query.Where(p => p.Author == author);
+					query = query.Where(pv => pv.Author == author);
+				}
+
+				if (service.HasValue) {
+					query = query.Where(pv => pv.Service == service);
 				}
 
 				var count = getTotalCount ? query.Count() : 0;

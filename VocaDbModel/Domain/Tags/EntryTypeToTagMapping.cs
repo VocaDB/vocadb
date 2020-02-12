@@ -1,6 +1,6 @@
 namespace VocaDb.Model.Domain.Tags {
 
-	public class EntryTypeToTagMapping {
+	public class EntryTypeToTagMapping : IEntryWithIntId {
 
 		public EntryTypeToTagMapping() { }
 

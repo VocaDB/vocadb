@@ -1,6 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Tags {
+namespace VocaDb.Model.Domain.Tags {
 
-	public class RelatedTag {
+	public class RelatedTag : IEntryWithIntId {
 
 		private Tag ownerTag;
 		private Tag linkedTag;

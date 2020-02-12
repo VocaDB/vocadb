@@ -185,8 +185,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(new TagReport(tag, TagReportType.InvalidInfo, user, "test", "test", null));
 			repository.Save(new TagReport(tag2, TagReportType.InvalidInfo, user, "test", "test", null));			
 			var song = repository.Save(CreateEntry.Song());
-			var tagUsage = repository.Save(song.AddTag(tag));
-			tag.AllSongTagUsages.Add(tagUsage.Result);
+			var tagUsage = repository.Save(song.AddTag(tag).Result);
+			tag.AllSongTagUsages.Add(tagUsage);
 
 			queries.MoveToTrash(tag.Id, "test");
 

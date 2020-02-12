@@ -605,6 +605,7 @@
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
     <Compile Include="Helpers\LaravelMixHelper.cs" />
+    <Compile Include="Controllers\Api\IPRuleApiController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">
@@ -1298,7 +1299,6 @@
     <Compile Include="Code\PagePropertiesData.cs" />
     <Compile Include="Code\PropertyModelBinder.cs" />
     <Compile Include="Code\Security\StopForumSpam\StopForumSpamClient.cs" />
-    <Compile Include="Code\Security\IPRuleManager.cs" />
     <Compile Include="Code\Security\InMemoryTokenManager.cs" />
     <Compile Include="Code\Security\LogFileReader.cs" />
     <Compile Include="Code\Security\Membership\VocaDbMembershipProvider.cs" />

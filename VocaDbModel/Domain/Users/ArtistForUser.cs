@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Domain.Users {
 
@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Users {
 	/// User following an artist.
 	/// </summary>
 	/// <remarks>For owned artists see <see cref="OwnedArtistForUser"/>.</remarks>
-	public class ArtistForUser : IArtistLink {
+	public class ArtistForUser : IArtistLink, IEntryWithIntId {
 
 		private Artist artist;
 		private User user;

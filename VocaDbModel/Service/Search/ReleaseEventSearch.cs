@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 
@@ -16,7 +17,7 @@ namespace VocaDb.Model.Service.Search {
 
 		private readonly IDatabaseContext querySource;
 
-		private IQueryable<T> Query<T>() {
+		private IQueryable<T> Query<T>() where T : class, IDatabaseObject {
 			return querySource.Query<T>();
 		}
 

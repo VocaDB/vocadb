@@ -22,6 +22,7 @@ namespace VocaDb.Model.DataContracts.Users {
 			: base(user, permissionContext.LanguagePreference, getPublicCollection: true) {
 
 			AboutMe = user.Options.AboutMe;
+			CustomTitle = user.Options.CustomTitle;
 			EmailVerified = user.Options.EmailVerified;
 			LastLogin = user.LastLogin;
 			LastLoginAddress = user.Options.LastLoginAddress;
@@ -41,6 +42,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public int ArtistCount { get; set; }
 
 		public int CommentCount { get; set; }
+
+		public string CustomTitle { get; set; }
 
 		public bool EmailVerified { get; set; }
 

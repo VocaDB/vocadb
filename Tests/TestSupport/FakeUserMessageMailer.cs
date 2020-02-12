@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Service.Helpers;
+using System.Threading.Tasks;
+using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Tests.TestSupport {
 
@@ -21,6 +22,10 @@ namespace VocaDb.Tests.TestSupport {
 
 			return true;
 
+		}
+
+		public Task<bool> SendEmailAsync(string toEmail, string receiverName, string subject, string body) {
+			return Task.FromResult(SendEmail(toEmail, receiverName, subject, body));
 		}
 
 	}

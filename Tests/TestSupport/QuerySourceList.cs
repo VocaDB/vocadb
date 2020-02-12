@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -10,22 +10,47 @@ namespace VocaDb.Tests.TestSupport {
 
 	public class QuerySourceList : IDatabaseContext {
 
+		// Objects added (but not yet committed) during this transaction
+		private readonly List<IDatabaseObject> added = new List<IDatabaseObject>();
+		// Objects that were committed
+		private readonly List<IDatabaseObject> committed = new List<IDatabaseObject>();
 		private readonly Dictionary<Type, IList> entities;
 
 		public QuerySourceList() {
 			entities = new Dictionary<Type, IList>();
 		}
 
-		public void Add<TEntity>(TEntity entity) {
+		public int AbortedTransactionCount { get; private set; }
+		public int CommittedTransactionCount { get; private set; }
+
+		public void Add<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject {
+			added.Add(entity);
 			List<TEntity>().Add(entity);
 		}
 
-		public void AddRange<TEntity>(params TEntity[] entities) {
+		public void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IDatabaseObject {
+			added.AddRange(entities);
 			List<TEntity>().AddRange(entities);
 		}
 
 		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
-			return new FakeTransaction();
+
+			added.Clear();
+			committed.Clear();
+
+			void CommitTransaction() {
+				CommittedTransactionCount++;
+				committed.AddRange(added);
+				added.Clear();
+			}
+
+			void RollbackTransaction() {
+				AbortedTransactionCount++;
+				added.Clear();
+			}
+
+			return new FakeTransaction(CommitTransaction, RollbackTransaction);
+
         }
 
 		public void Dispose() {
@@ -42,11 +67,15 @@ namespace VocaDb.Tests.TestSupport {
 			
 		}
 
-		public IDatabaseContext<T2> OfType<T2>() {
-			return new ListDatabaseContext<T2>(this);
-		}
+		/// <summary>
+		/// Tests that an object was saved to database during an active transaction and the transaction was committed.
+		/// </summary>
+		public bool IsCommitted<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject 
+			=> committed.Contains(entity);
 
-		public List<TEntity> List<TEntity>() {
+		public IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject => new ListDatabaseContext<T2>(this);
+
+		public List<TEntity> List<TEntity>() where TEntity : class, IDatabaseObject {
 
 			var t = typeof(TEntity);
 
@@ -57,7 +86,7 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public T Load<T>(object id) {
+		public T Load<T>(object id) where T : class, IDatabaseObject {
 
 			if (!typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || !(id is int))
 			{
@@ -69,7 +98,7 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public IQueryable<T> Query<T>() {
+		public IQueryable<T> Query<T>() where T : class, IDatabaseObject {
 		
 			var t = typeof(T);
 
@@ -78,6 +107,15 @@ namespace VocaDb.Tests.TestSupport {
 			else
 				return (new T[] { }).AsQueryable();
 
+		}
+
+		/// <summary>
+		/// Clears added and committed objects
+		/// </summary>
+		public void Reset() {
+			added.Clear();
+			committed.Clear();
+			CommittedTransactionCount = AbortedTransactionCount = 0;
 		}
 
 	}

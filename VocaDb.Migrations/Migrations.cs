@@ -5,6 +5,34 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_02_08_1800)]
+	public class IPRuleAddressUniqueIndex : AutoReversingMigration {
+		public override void Up() {
+			Create.Index("UX_IPRules_Address").OnTable(TableNames.IPRules).OnColumn("Address").Ascending().WithOptions().Unique();
+		}
+	}
+
+	[Migration(2020_02_07_2000)]
+	public class UserCustomTitle : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("CustomTitle").OnTable(TableNames.UserOptions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
+		}
+	}
+
+	[Migration(2020_02_05_1900)]
+	public class EventDescriptionLength : Migration {
+
+		public override void Up() {
+			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEvents).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.AlbumReleaseEvents).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEventSeries).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.AlbumReleaseEventSeries).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+		public override void Down() {}
+
+	}
+
 	[Migration(2020_01_05_1600)]
 	public class TagRelatedEntries : AutoReversingMigration {
 		public override void Up() {

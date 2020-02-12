@@ -87,11 +87,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			}		
 		}
 
-		private void Save<T>(params T[] entity) {
+		private void Save<T>(params T[] entity) where T : class, IDatabaseObject {
 			repository.Save(entity);
 		}
 
-		private T Save<T>(T entity) {
+		private T Save<T>(T entity) where T : class, IDatabaseObject {
 			return repository.Save(entity);
 		}
 

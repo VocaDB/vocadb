@@ -26,6 +26,7 @@ namespace VocaDb.Migrations {
 		public const string EventSeriesNames = nameof(EventSeriesNames);
 		public const string FavoriteSongsForUsers = "FavoriteSongsForUsers";
 		public const string GroupsForArtists = "GroupsForArtists";
+		public const string IPRules = nameof(IPRules);
 		public const string LyricsForSongs = "LyricsForSongs";
 		public const string OldUsernames = "OldUsernames";
 		public const string PVsForAlbums = "PVsForAlbums";

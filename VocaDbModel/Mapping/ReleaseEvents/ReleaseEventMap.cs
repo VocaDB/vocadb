@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Mapping.ReleaseEvents {
@@ -15,7 +15,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.CustomName).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
-			Map(m => m.Description).Length(400).Not.Nullable();
+			Map(m => m.Description).Length(1000).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();
 			Map(m => m.SeriesNumber).Not.Nullable();
 			Map(m => m.SeriesSuffix).Length(50).Not.Nullable();

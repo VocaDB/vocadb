@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Discussions {
 
-	public class DiscussionFolder {
+	public class DiscussionFolder : IEntryWithIntId {
 
 		private string description;
 		private string title;

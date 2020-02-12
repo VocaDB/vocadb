@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -163,7 +164,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
-		private IQueryable<T> Query<T>() {
+		private IQueryable<T> Query<T>() where T : class, IDatabaseObject {
 			return querySource.Query<T>();
 		}
 

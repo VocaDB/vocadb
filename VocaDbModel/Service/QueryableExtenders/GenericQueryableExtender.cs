@@ -66,6 +66,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static Task<TSource> VdbFirstOrDefaultAsync<TSource>(this IQueryable<TSource> source) {
+
+			if (source.Provider is INhQueryProvider) {
+				return source.FirstOrDefaultAsync();
+			}
+
+			return Task.FromResult(source.FirstOrDefault());
+
+		}
+
 		/// <summary>
 		/// Executes the query and returns its result as <see cref="IList{T}"/>.
 		/// To be used instead of the NHibernate extension method to make the query testable.

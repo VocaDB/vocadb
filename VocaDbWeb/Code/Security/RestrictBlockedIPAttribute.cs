@@ -1,5 +1,6 @@
-﻿using System.Web.Mvc;
+using System.Web.Mvc;
 using NLog;
+using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Web.Code.Security {
 

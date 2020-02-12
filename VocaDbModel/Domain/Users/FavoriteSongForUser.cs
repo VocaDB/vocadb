@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Domain.Users {
@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Users {
 	/// <summary>
 	/// Song rated by a user.
 	/// </summary>
-	public class FavoriteSongForUser : ISongLink {
+	public class FavoriteSongForUser : ISongLink, IEntryWithIntId {
 
 		public static int GetRatingScore(SongVoteRating rating) {
 

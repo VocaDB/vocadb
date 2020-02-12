@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -39,7 +40,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private PasswordResetRequest request;
 		private FakePermissionContext permissionContext;
 		private FakeUserRepository repository;
-		private HostCollection softBannedIPs;
+		private readonly IPRuleManager ipRuleManager = new IPRuleManager();
 		private FakeStopForumSpamClient stopForumSpamClient;
 		private User userWithEmail;
 		private User userWithoutEmail;
@@ -58,12 +59,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsTrue(userWithEmail.Albums.Any(a => a.Album == album), "User has album");
 		}
 
-		private UserContract CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, 
+		private Task<UserContract> CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, 
 			string culture = defaultCulture, TimeSpan? timeSpan = null) {
 
 			return data.Create(name, pass, email, hostname, null, 
 				culture,
-				timeSpan ?? TimeSpan.FromMinutes(39), softBannedIPs, string.Empty);
+				timeSpan ?? TimeSpan.FromMinutes(39), ipRuleManager, string.Empty);
 
 		}
 
@@ -99,7 +100,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			mailer = new FakeUserMessageMailer();
 			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer, 
 				new FakeUserIconFactory(), null, new InMemoryImagePersister(), new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager(), new EnumTranslations());
-			softBannedIPs = new HostCollection();
 
 			request = new PasswordResetRequest(userWithEmail) { Id = Guid.NewGuid() };
 			repository.Add(request);
@@ -201,10 +201,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create() {
+		public async Task Create() {
 
 			var name = "hatsune_miku";
-			var result = CallCreate(name: name, email: "mikumiku@crypton.jp");
+			var result = await CallCreate(name: name, email: "mikumiku@crypton.jp");
 
 			Assert.IsNotNull(result, "Result is not null");
 			Assert.AreEqual(name, result.Name, "Name");
@@ -215,6 +215,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual("mikumiku@crypton.jp", user.Email, "Email");
 			Assert.AreEqual(UserGroupId.Regular, user.GroupId, "GroupId");
 			repository.List<UserReport>().Should().BeEmpty();
+			repository.IsCommitted(user).Should().BeTrue();
 
 			var verificationRequest = repository.List<PasswordResetRequest>().FirstOrDefault(r => r.User.Equals(user));
 			Assert.IsNotNull(verificationRequest, "Verification request was created");
@@ -223,33 +224,33 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public void Create_NameAlreadyExists() {
+		public async Task  Create_NameAlreadyExists() {
 
-			CallCreate(name: "already_exists");
+			await CallCreate(name: "already_exists");
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public void Create_NameAlreadyExistsDifferentCase() {
+		public async Task  Create_NameAlreadyExistsDifferentCase() {
 
-			CallCreate(name: "Already_Exists");
+			await CallCreate(name: "Already_Exists");
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
-		public void Create_EmailAlreadyExists() {
+		public async Task Create_EmailAlreadyExists() {
 
-			CallCreate(email: "already_in_use@vocadb.net");
+			await CallCreate(email: "already_in_use@vocadb.net");
 
 		}
 
 		[TestMethod]
-		public void Create_EmailAlreadyExistsButDisabled() {
+		public async Task Create_EmailAlreadyExistsButDisabled() {
 
 			userWithEmail.Active = false;
-			var result = CallCreate(email: "already_in_use@vocadb.net");
+			var result = await CallCreate(email: "already_in_use@vocadb.net");
 
 			Assert.IsNotNull(result, "Result is not null");
 			Assert.AreEqual("hatsune_miku", result.Name, "Name");
@@ -258,17 +259,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidEmailFormatException))]
-		public void Create_InvalidEmailFormat() {
+		public async Task Create_InvalidEmailFormat() {
 
-			CallCreate(email: "mikumiku");
+			await CallCreate(email: "mikumiku");
 
 		}
 
 		[TestMethod]
-		public void Create_PossibleSpammer() {
+		public async Task Create_FlaggedUser_Reported() {
 
-			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 50d, Frequency = 50 };
-			var result = CallCreate();
+			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 30d, Frequency = 50 };
+			var result = await CallCreate();
 
 			result.Should().NotBeNull();
 			var report = repository.List<UserReport>().FirstOrDefault();
@@ -278,14 +279,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var user = GetUserFromRepo(result.Name);
 			user.GroupId.Should().Be(UserGroupId.Regular, because: "User is not limited");
+			repository.IsCommitted(user).Should().BeTrue();
 
 		}
 
 		[TestMethod]
-		public void Create_MalicousIP() {
+		public async Task Create_LikelyMaliciousIP_Limited() {
 
-			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
-			var result = CallCreate();
+			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 60d, Frequency = 100 };
+			var result = await CallCreate();
 
 			Assert.IsNotNull(result, "result");
 			var report = repository.List<UserReport>().FirstOrDefault();
@@ -295,24 +297,39 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var user = GetUserFromRepo(result.Name);
 			user.GroupId.Should().Be(UserGroupId.Limited, because: "User was limited");
+			repository.IsCommitted(user).Should().BeTrue();
+		
+		}
+
+		[TestMethod]
+		public void Create_MalicousIP_Banned() {
+
+			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
+			this.Invoking(self => self.CallCreate()).Should().Throw<RestrictedIPException>("User is malicious");
+			ipRuleManager.PermBannedIPs.Contains(defaultHostname).Should().BeTrue("User was banned");
+
+			repository.List<UserReport>().Should().BeEmpty("Report was not created");
+
+			var ipRule = repository.List<IPRule>().Should().Contain(rule => rule.Address == defaultHostname).Subject;
+			repository.IsCommitted(ipRule).Should().BeTrue("IPRule was committed despite exception");
 		
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(TooFastRegistrationException))]
-		public void Create_RegistrationTimeTrigger() {
+		public async Task Create_RegistrationTimeTrigger() {
 
-			CallCreate(timeSpan: TimeSpan.FromSeconds(4));
-			Assert.IsFalse(softBannedIPs.Contains(defaultHostname), "Was not banned");
+			await CallCreate(timeSpan: TimeSpan.FromSeconds(4));
+			Assert.IsTrue(ipRuleManager.IsAllowed(defaultHostname), "Was not banned");
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(TooFastRegistrationException))]
-		public void Create_RegistrationTimeAndBanTrigger() {
+		public async Task Create_RegistrationTimeAndBanTrigger() {
 
-			CallCreate(timeSpan: TimeSpan.FromSeconds(1));
-			Assert.IsTrue(softBannedIPs.Contains(defaultHostname), "Was banned");
+			await CallCreate(timeSpan: TimeSpan.FromSeconds(1));
+			Assert.IsFalse(ipRuleManager.IsAllowed(defaultHostname), "Was banned");
 
 		}
 
@@ -553,11 +570,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void RequestEmailVerification() {
+		public async Task RequestEmailVerification() {
 			
 			var num = repository.List<PasswordResetRequest>().Count;
 
-			data.RequestEmailVerification(userWithEmail.Id, string.Empty);
+			await data.RequestEmailVerification(userWithEmail.Id, string.Empty);
 
 			Assert.AreEqual("Verify your email at VocaDB.", mailer.Subject, "Subject");
 			Assert.AreEqual(userWithEmail.Email, mailer.ToEmail, "ToEmail");
@@ -566,11 +583,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void RequestPasswordReset() {
+		public async Task RequestPasswordReset() {
 			
 			var num = repository.List<PasswordResetRequest>().Count;
 
-			data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
+			await data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
 
 			Assert.AreEqual("Password reset requested.", mailer.Subject, "Subject");
 			Assert.AreEqual(userWithEmail.Email, mailer.ToEmail, "ToEmail");
@@ -580,18 +597,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNotFoundException))]
-		public void RequestPasswordReset_NotFound() {
+		public async Task RequestPasswordReset_NotFound() {
 
-			data.RequestPasswordReset(userWithEmail.Name, "notfound@vocadb.net", string.Empty);
+			await data.RequestPasswordReset(userWithEmail.Name, "notfound@vocadb.net", string.Empty);
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNotFoundException))]
-		public void RequestPasswordReset_Disabled() {
+		public async Task RequestPasswordReset_Disabled() {
 
 			userWithEmail.Active = false;
-			data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
+			await data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
 
 		}
 

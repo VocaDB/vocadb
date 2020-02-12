@@ -139,7 +139,7 @@
 				@Html.LabelFor(m => m.Description)
 			</div>
 			<div class="editor-field">
-				@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, @cssClass: "span4", maxLength: 400)
+				@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, @cssClass: "span4", maxLength: 1000)
 
 				Live preview
 				<div data-bind="markdown: description"></div>
