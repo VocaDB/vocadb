@@ -6,6 +6,7 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
@@ -95,7 +96,10 @@ namespace VocaDb.Model.Service.Queries {
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
 
 				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
-				new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
+
+				if (!((entry is SongList songList) && !songList.FeaturedList)) {
+					new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
+				}
 
 				var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
 				var tagCtx = ctx.OfType<Tag>();
