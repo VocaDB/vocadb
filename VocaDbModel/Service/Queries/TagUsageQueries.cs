@@ -6,7 +6,6 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
@@ -97,7 +96,7 @@ namespace VocaDb.Model.Service.Queries {
 
 				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
 
-				if (AllowNotifications(entry)) {
+				if (entry.AllowNotifications) {
 					new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
 				}
 
@@ -114,16 +113,6 @@ namespace VocaDb.Model.Service.Queries {
 				return tagFunc(entry).ActiveUsages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
 
 			});
-
-		}
-
-		private bool AllowNotifications<TEntry>(TEntry entry)
-			where TEntry : class, IEntryWithNames, IEntryWithTags {
-
-			if ((entry is SongList songList) && !songList.FeaturedList)
-				return false;
-
-			return true;
 
 		}
 
