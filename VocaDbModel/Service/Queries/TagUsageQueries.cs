@@ -97,7 +97,7 @@ namespace VocaDb.Model.Service.Queries {
 
 				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
 
-				if (!((entry is SongList songList) && !songList.FeaturedList)) {
+				if (AllowNotifications(entry)) {
 					new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
 				}
 
@@ -114,6 +114,16 @@ namespace VocaDb.Model.Service.Queries {
 				return tagFunc(entry).ActiveUsages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
 
 			});
+
+		}
+
+		private bool AllowNotifications<TEntry>(TEntry entry)
+			where TEntry : class, IEntryWithNames, IEntryWithTags {
+
+			if ((entry is SongList songList) && !songList.FeaturedList)
+				return false;
+
+			return true;
 
 		}
 
