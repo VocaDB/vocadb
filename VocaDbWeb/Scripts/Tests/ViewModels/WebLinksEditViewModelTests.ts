@@ -17,7 +17,7 @@ import WebLinksEditViewModel from '../../ViewModels/WebLinksEditViewModel';
 
         var target = new WebLinksEditViewModel([webLinkData], categories);
 
-        equal(target.webLinks().length, 1, "webLinks.length");
+		equal(target.items().length, 1, "webLinks.length");
         equal(target.categories.length, 2, "categories.length");
 
     });
@@ -28,7 +28,7 @@ import WebLinksEditViewModel from '../../ViewModels/WebLinksEditViewModel';
 
         target.add();
 
-        equal(target.webLinks().length, 1, "webLinks.length");
+		equal(target.items().length, 1, "webLinks.length");
 
     });
 
@@ -36,9 +36,9 @@ import WebLinksEditViewModel from '../../ViewModels/WebLinksEditViewModel';
 
         var target = new WebLinksEditViewModel([webLinkData]);
 
-        target.remove(target.webLinks()[0]);
+		target.remove(target.items()[0]);
 
-        equal(target.webLinks().length, 0, "webLinks.length");
+		equal(target.items().length, 0, "webLinks.length");
 
     });
 
