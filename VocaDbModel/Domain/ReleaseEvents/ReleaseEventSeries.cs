@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -63,6 +63,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				events = value;
 			}
 		}
+
+		public virtual bool AllowNotifications => true;
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
