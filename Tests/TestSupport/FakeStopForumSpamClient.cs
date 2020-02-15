@@ -11,7 +11,7 @@ namespace VocaDb.Tests.TestSupport {
 
 		public SFSResponseContract Response { get; set; }
 
-		public SFSResponseContract CallApi(string ip) {
+		private SFSResponseContract CallApi(string ip) {
 			if (Response != null)
 				Response.IP = ip;
 			return Response;

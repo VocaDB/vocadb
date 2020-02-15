@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using NHibernate;
 using VocaDb.Model.DataContracts.Songs;
@@ -64,11 +65,11 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult CheckSFS(string ip) {
+		public async Task<ActionResult> CheckSFS(string ip) {
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
-			var result = new StopForumSpamClient().CallApi(ip);
+			var result = await new StopForumSpamClient().CallApiAsync(ip);
 
 			if (result == null)
 				return new EmptyResult();
