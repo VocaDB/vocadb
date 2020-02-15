@@ -11,6 +11,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 	/// </summary>
 	public static class EntryTypeToTagMappingQueryableExtender {
 
+		public static IQueryable<EntryTypeToTagMapping> WhereEntryTypeIs(this IQueryable<EntryTypeToTagMapping> queryable, EntryType entryType) 
+			=> queryable.Where(etm => etm.EntryType == entryType);
+
 		public static IQueryable<EntryTypeToTagMapping> WhereEntryTypeIs<TSubType>(this IQueryable<EntryTypeToTagMapping> queryable, 
 			EntryType entryType, IEnumerable<TSubType> subTypes) where TSubType : struct, Enum {
 
@@ -19,6 +22,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return queryable.Where(etm => etm.EntryType == entryType && subTypeStrings.Contains(etm.SubType));
 
 		}
+
+		public static IQueryable<EntryTypeToTagMapping> WhereHasSubType(this IQueryable<EntryTypeToTagMapping> queryable) 
+			=> queryable.Where(etm => etm.SubType != "");
 
 	}
 }
