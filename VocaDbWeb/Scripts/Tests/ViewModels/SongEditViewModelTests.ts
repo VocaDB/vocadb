@@ -53,7 +53,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 
         equal(target.length(), 39, "length");
         equal(target.lengthFormatted(), "0:39", "lengthFormatted");
-        equal(target.webLinks.webLinks().length, 1, "webLinks.length");
+		equal(target.webLinks.items().length, 1, "webLinks.length");
 		equal(target.validationError_duplicateArtist(), false, "validationError_duplicateArtist");
 
     });

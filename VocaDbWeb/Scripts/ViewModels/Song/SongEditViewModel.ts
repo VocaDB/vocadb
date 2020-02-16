@@ -317,7 +317,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.validationError_needReferences = ko.computed(() =>
 				!this.hasAlbums
 				&& _.isEmpty(this.notes.original())
-				&& _.isEmpty(this.webLinks.webLinks())
+				&& _.isEmpty(this.webLinks.items())
 				&& _.isEmpty(this.pvs.pvs()));
 
 			this.validationError_needType = ko.computed(() => this.songType() === SongType.Unspecified);

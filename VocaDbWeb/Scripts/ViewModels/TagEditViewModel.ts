@@ -35,7 +35,7 @@ import WebLinksEditViewModel from './WebLinksEditViewModel';
 
 			this.validationError_needDescription = ko.computed(() =>
 				!this.description.original() &&
-				_.isEmpty(this.webLinks.webLinks())
+				_.isEmpty(this.webLinks.items())
 			);
 
 			this.parentName = ko.computed(() => this.parent() ? this.parent().name : null);

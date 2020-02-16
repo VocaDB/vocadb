@@ -127,8 +127,8 @@ import UrlMapper from '../../Shared/UrlMapper';
         equal(target.tracks()[0].selected(), false, "tracks[0].selected");
 		equal(target.tracks()[0].trackNumber(), 1, "tracks[0].trackNumber");
 
-        equal(target.webLinks.webLinks().length, 1, "webLinks.length");
-        equal(target.webLinks.webLinks()[0].id, 123, "webLinks[0].id");
+        equal(target.webLinks.items().length, 1, "webLinks.length");
+		equal(target.webLinks.items()[0].id, 123, "webLinks[0].id");
 
     });
 
