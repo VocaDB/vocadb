@@ -625,7 +625,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void SendMessage() {
+		public async Task SendMessage() {
 
 			var sender = CreateEntry.User(name: "sender");
 			var receiver = CreateEntry.User(name: "receiver", email: "test@vocadb.net");
@@ -633,7 +633,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext.SetLoggedUser(sender);
 			var contract = new UserMessageContract { Sender = new UserForApiContract(sender), Receiver = new UserForApiContract(receiver), Subject = "Subject", Body = "Body" };
 
-			data.SendMessage(contract, string.Empty, string.Empty);
+			await data.SendMessage(contract, string.Empty, string.Empty);
 
 			Assert.AreEqual(1, sender.Messages.Count, "Number of messages for sender");
 			Assert.AreEqual(1, receiver.Messages.Count, "Number of messages for receiver");
@@ -664,14 +664,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void SendMessage_NoPermission() {
+		public async Task SendMessage_NoPermission() {
 
 			var sender = CreateEntry.User(name: "sender");
 			var receiver = CreateEntry.User(name: "receiver");
 			repository.Save(sender, receiver);
 
 			var contract = new UserMessageContract { Sender = new UserForApiContract(sender), Receiver = new UserForApiContract(receiver), Subject = "Subject", Body = "Body" };
-			data.SendMessage(contract, string.Empty, string.Empty);
+			await data.SendMessage(contract, string.Empty, string.Empty);
 
 		}
 

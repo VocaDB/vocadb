@@ -35,6 +35,7 @@ using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -673,12 +674,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Message data.</returns>
 		[Route("{id:int}/messages")]
 		[Authorize]
-		public UserMessageContract PostNewMessage(int id, UserMessageContract contract) {
+		public async Task<UserMessageContract> PostNewMessage(int id, UserMessageContract contract) {
 
 			var mySettingsUrl = VocaUriBuilder.CreateAbsolute("User/MySettings").ToString();
 			var messagesUrl = VocaUriBuilder.CreateAbsolute("User/Messages").ToString();
 
-			return queries.SendMessage(contract, mySettingsUrl, messagesUrl);
+			return await queries.SendMessage(contract, mySettingsUrl, messagesUrl);
 
 		}
 
